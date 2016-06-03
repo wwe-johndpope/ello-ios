@@ -1640,7 +1640,6 @@
 		EA34DAC31AD851DC002F566D /* DynamicSettingsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSettingsSpec.swift; sourceTree = "<group>"; };
 		EA34DAC51AD85808002F566D /* DynamicSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSettingsViewController.swift; sourceTree = "<group>"; };
 		EA587A9E1ACDC6F4002AF389 /* ElloEditableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloEditableTextView.swift; sourceTree = "<group>"; };
-		EA587AA01AD319B1002AF389 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
 		EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectClassName.swift; sourceTree = "<group>"; };
 		EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewNibLoading.swift; sourceTree = "<group>"; };
 		EA68A0DE1AADF4AB003F0425 /* InviteServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteServiceSpec.swift; sourceTree = "<group>"; };
@@ -3146,7 +3145,6 @@
 				126DF2351C595C53003AB563 /* Pods.framework */,
 				1219BA7B1C48417C0057A7D3 /* CoreText.framework */,
 				A824F716382ED3E3CB5E30F4 /* Pods.framework */,
-				EA587AA01AD319B1002AF389 /* ReactiveCocoa.framework */,
 				31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */,
 				0A54199AC75D0009416AD802 /* Pods_ShareExtension.framework */,
 				91944BE577C550B17C0B263D /* Pods_Specs.framework */,
