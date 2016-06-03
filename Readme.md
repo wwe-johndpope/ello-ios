@@ -36,7 +36,7 @@ Once you have staging and production client credentials, you can switch between 
 
 ### Testing out Push Notifications with APNS Pusher
 
-- Download apns pusher https://github.com/KnuffApp/APNS-Pusher/releases
+- Download apns pusher https://github.com/KnuffApp/Knuff/releases
 - Install `ElloDevPushSandbox.p12` in your keychain (talk to @steam to get it)
 - Print out your device's APNS Token in the function `updateToken()` in `PushNotificationController`
 - Build to device in `Debug` mode
