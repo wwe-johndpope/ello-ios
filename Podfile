@@ -53,7 +53,7 @@ def spec_pods
   pod 'FBSnapshotTestCase'
   pod 'Quick', '~> 0.9'
   pod 'Nimble', '~> 4.0'
-  pod 'Nimble-Snapshots', git: 'git@github.com:ashfurrow/Nimble-Snapshots'
+  pod 'Nimble-Snapshots', git: 'https://github.com/ashfurrow/Nimble-Snapshots'
   pod 'OHHTTPStubs', '~> 4.3'
 end
 
