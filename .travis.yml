@@ -29,7 +29,7 @@ notifications:
   email: false
   slack:
     rooms:
-      secure: TOBjMSoMgnn5XuLVWOhRKp5kMo1FWFIhMxpFkQRTPiOjPd7BUa63tD/0tq/YScgVRfre5Xf52siT71AkupxeEMdF309M+4TLbk5SKrHRBPbMDrYwpoT/kt0ph3OrPCJ39YNnwyXaoIoU4SgEehFl5m+EEe/ZMifaSKIz479dhHg=
+      secure: Rew+SaUriW54jGxs1A5s0QX282QOjXLErm4E6uAMexbwJK5HePAU157rp+/EynEUttykYHIkj4yI91p17xfH5MiCy5wLz6nd1EZX/8zJ2gBg+b1HnqA3MHG/VSXysnug7htQXoC5wkMOUqJJvWBCO0xqeI7cGZR+p0hCrwZR9WA=
 env:
   global:
   - secure: NlynF9hcXA5hGxY3ApAMmYrTDmszD5ocS8/aKPYZXdlBXOJ0c2DC6EiPhNXxFsWXOfIS8cO8r0cxGCRDU1bsmw0MR8t9/i4o1uw3l+F8ftHZQHKCC6BDbTrPYgi79ojNjjNtO/BM98U2ew6Rk8eqN+tjpxX0DWU+3Mwp30NaZm8=

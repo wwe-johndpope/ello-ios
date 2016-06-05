@@ -2,7 +2,7 @@
 
 ## Ello iOS App
 
-[![Build Status](https://magnum.travis-ci.com/ello/ello-ios.svg?token=ToN4xptFXQMEWzgrf8nh&branch=master)](https://magnum.travis-ci.com/ello/ello-ios)
+[![Build Status](https://travis-ci.org/ello/ello-ios.svg?branch=master)](https://travis-ci.org/ello/ello-ios)
 
 ### Environment Variables
 
