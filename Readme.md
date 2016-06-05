@@ -37,7 +37,7 @@ Once you have staging and production client credentials, you can switch between 
 ### Testing out Push Notifications with APNS Pusher
 
 - Download apns pusher https://github.com/KnuffApp/Knuff/releases
-- Install `ElloDevPushSandbox.p12` in your keychain (talk to @steam to get it)
+- Install `ElloDevPushSandbox.p12` in your keychain (talk to [@steam](https://github.com/steam) to get it)
 - Print out your device's APNS Token in the function `updateToken()` in `PushNotificationController`
 - Build to device in `Debug` mode
 - Code Signing Identity: `iPhone Distribution: Ello PBC (ABC12345)`
@@ -50,7 +50,7 @@ Starting with iOS 9 Apple added support for [Universal Links](https://developer.
 
 `aasa.json`
 
-```
+```json
 {
     "applinks": {
         "apps": [],
@@ -74,7 +74,7 @@ Starting with iOS 9 Apple added support for [Universal Links](https://developer.
 
 `STAR_ello_co.key`, `STAR_ello_co.crt` and `STAR_ello_co.pem` are in the Ello Ops 1Password vault
 
-```
+```bash
 cat aasa.json | openssl smime \
  -sign \
  -inkey STAR_ello_co.key \
@@ -91,7 +91,7 @@ We use pinned certificates to avoid man-in-the-middle SSL attacks.  We use a rol
 
 When new `.pem`/certificates are installed on ello.co and ello.ninja, we need to create and install a pinned certificate `.cer` file in the iOS app.  Get the `.pem` files from DevOps / Jay, and convert it using something like this:
 
-```
+```bash
 openssl x509 -inform PEM -in ~/Downloads/ello_ninja_cert.pem -outform DER -out Resources/SSL/STAR_ello_ninja_3_2_2016.cer
 openssl x509 -inform PEM -in ~/Downloads/ello_co_cert.pem -outform DER -out Resources/SSL/STAR_ello_co_3_2_2016.cer
 ```
@@ -101,14 +101,14 @@ openssl x509 -inform PEM -in ~/Downloads/ello_co_cert.pem -outform DER -out Reso
 Add it to Xcode and you're ready!  To test the new cert:
 
 1. In `ElloManager.swift`, make sure `ello.ninja` is associated with `ServerTrustPolicy.publicKeysInBundle()`
-2. Compile the iOS app, pointing it at ello.ninja
-3. You can make this fail by *excluding* the cert that is used for ello.ninja
+2. Compile the iOS app, pointing it at `ello.ninja`
+3. You can make this fail by *excluding* the cert that is used for `ello.ninja`
 
 To test the production cert
 
 1. Add the new cert to `ssl.ello.co`
-2. Compile the iOS app, pointing it at (staging) ssl.ello.co
-3. Make it fail again by excluding the new ello.co cert
+2. Compile the iOS app, pointing it at (staging) `ssl.ello.co`
+3. Make it fail again by excluding the new `ello.co` cert
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/ello/ello-ios.
