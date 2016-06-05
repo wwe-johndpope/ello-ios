@@ -50,7 +50,7 @@ Starting with iOS 9 Apple added support for [Universal Links](https://developer.
 
 `aasa.json`
 
-```
+```json
 {
     "applinks": {
         "apps": [],
@@ -74,7 +74,7 @@ Starting with iOS 9 Apple added support for [Universal Links](https://developer.
 
 `STAR_ello_co.key`, `STAR_ello_co.crt` and `STAR_ello_co.pem` are in the Ello Ops 1Password vault
 
-```
+```bash
 cat aasa.json | openssl smime \
  -sign \
  -inkey STAR_ello_co.key \
@@ -91,7 +91,7 @@ We use pinned certificates to avoid man-in-the-middle SSL attacks.  We use a rol
 
 When new `.pem`/certificates are installed on ello.co and ello.ninja, we need to create and install a pinned certificate `.cer` file in the iOS app.  Get the `.pem` files from DevOps / Jay, and convert it using something like this:
 
-```
+```bash
 openssl x509 -inform PEM -in ~/Downloads/ello_ninja_cert.pem -outform DER -out Resources/SSL/STAR_ello_ninja_3_2_2016.cer
 openssl x509 -inform PEM -in ~/Downloads/ello_co_cert.pem -outform DER -out Resources/SSL/STAR_ello_co_3_2_2016.cer
 ```
