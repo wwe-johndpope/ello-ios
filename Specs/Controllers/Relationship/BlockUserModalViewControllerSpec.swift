@@ -101,20 +101,20 @@ class BlockUserModalViewControllerSpec: QuickSpec {
 
                 it("sets state properly when initialized with mute") {
                     let (_, muteButton, blockButton) = blockButtons(.Mute)
-                    expect(muteButton?.selected).to(beTrue())
-                    expect(blockButton?.selected).to(beFalse())
+                    expect(muteButton?.selected) == true
+                    expect(blockButton?.selected) == false
                 }
 
                 it("sets state properly when set to friend") {
                     let (_, muteButton, blockButton) = blockButtons(.Following)
-                    expect(muteButton?.selected).to(beFalse())
-                    expect(blockButton?.selected).to(beFalse())
+                    expect(muteButton?.selected) == false
+                    expect(blockButton?.selected) == false
                 }
 
                 it("sets state properly when set to block") {
                     let (_, muteButton, blockButton) = blockButtons(.Block)
-                    expect(muteButton?.selected).to(beFalse())
-                    expect(blockButton?.selected).to(beTrue())
+                    expect(muteButton?.selected) == false
+                    expect(blockButton?.selected) == true
                 }
             }
         }

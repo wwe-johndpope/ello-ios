@@ -97,7 +97,7 @@ class BlockUserModalScreenSpec: QuickSpec {
                 describe("@flagButton") {
                     it("triggers") {
                         flagButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-                        expect(controller.calledFlagTapped).to(beTrue())
+                        expect(controller.calledFlagTapped) == true
                     }
                 }
             }
