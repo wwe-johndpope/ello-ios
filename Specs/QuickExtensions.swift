@@ -214,3 +214,28 @@ public func haveImageRegion<S: OmnibarScreenProtocol>(equal image: UIImage) -> N
         return false
     }
 }
+
+private func allSubviews(view: UIView) -> [UIView] {
+    return view.subviews + view.subviews.flatMap { allSubviews($0) }
+}
+
+public func subviewThatMatches(view: UIView, test: (UIView) -> Bool) -> UIView? {
+    for subview in allSubviews(view) {
+        if test(subview) {
+            return subview
+        }
+    }
+    return nil
+}
+
+public func haveSubview<V: UIView>(thatMatches test: (UIView) -> Bool) -> NonNilMatcherFunc<V> {
+    return NonNilMatcherFunc { actualExpression, failureMessage in
+        failureMessage.postfixMessage = "have subview that matches"
+
+        let view = try! actualExpression.evaluate()
+        if let view = view {
+            return subviewThatMatches(view, test: test) != nil
+        }
+        return false
+    }
+}

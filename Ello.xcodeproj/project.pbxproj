@@ -565,6 +565,7 @@
 		1DD829A21BD93D3600105CDE /* relationship_following.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8299F1BD93D3600105CDE /* relationship_following.json */; };
 		1DD829A31BD93D3600105CDE /* relationship_inactive.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DD829A01BD93D3600105CDE /* relationship_inactive.json */; };
 		1DD829A41BD93D3600105CDE /* relationship_starred.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DD829A11BD93D3600105CDE /* relationship_starred.json */; };
+		1DDF39E71D072FCD00C1A75E /* BlockUserModalScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF39E61D072FCD00C1A75E /* BlockUserModalScreenSpec.swift */; };
 		1DDF3C491A9D0D05000D0945 /* ElloNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF3C481A9D0D05000D0945 /* ElloNavigationBar.swift */; };
 		1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF3C4F1A9D2592000D0945 /* ElloScrollLogic.swift */; };
 		1DE176FC1B82626E00272145 /* OmnibarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE176FB1B82626E00272145 /* OmnibarScreen.swift */; };
@@ -1363,6 +1364,7 @@
 		1DD8299F1BD93D3600105CDE /* relationship_following.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship_following.json; sourceTree = "<group>"; };
 		1DD829A01BD93D3600105CDE /* relationship_inactive.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship_inactive.json; sourceTree = "<group>"; };
 		1DD829A11BD93D3600105CDE /* relationship_starred.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship_starred.json; sourceTree = "<group>"; };
+		1DDF39E61D072FCD00C1A75E /* BlockUserModalScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalScreenSpec.swift; sourceTree = "<group>"; };
 		1DDF3C481A9D0D05000D0945 /* ElloNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationBar.swift; sourceTree = "<group>"; };
 		1DDF3C4F1A9D2592000D0945 /* ElloScrollLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogic.swift; sourceTree = "<group>"; };
 		1DE176FB1B82626E00272145 /* OmnibarScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreen.swift; sourceTree = "<group>"; };
@@ -3086,6 +3088,7 @@
 		76FF80571A9691DB00617A1E /* Relationship */ = {
 			isa = PBXGroup;
 			children = (
+				1DDF39E61D072FCD00C1A75E /* BlockUserModalScreenSpec.swift */,
 				76FF805C1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift */,
 				76FF80581A96921100617A1E /* RelationshipControllerSpec.swift */,
 				76F90E5C1A97992D00F5B42F /* RelationshipControlSpec.swift */,
@@ -4149,6 +4152,7 @@
 				127BAD5E1A850D6400628696 /* StreamTextCellHTMLSpec.swift in Sources */,
 				12D24A5A1A9F765300F53D44 /* AddFriendsViewControllerSpec.swift in Sources */,
 				76BE9C591B2B85CF007575AA /* StreamInviteFriendsCellPresenterSpec.swift in Sources */,
+				1DDF39E71D072FCD00C1A75E /* BlockUserModalScreenSpec.swift in Sources */,
 				1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */,
 				76B2ADDC1A7C43F700D5CAD7 /* StreamDataSourceSpec.swift in Sources */,
 				EAC605461ADD95CB009B9426 /* DynamicSettingCellSpec.swift in Sources */,
