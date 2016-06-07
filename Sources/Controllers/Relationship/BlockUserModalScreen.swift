@@ -6,6 +6,8 @@
 //  Copyright (c) 2016 Ello. All rights reserved.
 //
 
+import SnapKit
+
 public protocol BlockUserModalDelegate {
     func updateRelationship(newRelationship: RelationshipPriority)
     func flagTapped()
@@ -14,7 +16,8 @@ public protocol BlockUserModalDelegate {
 
 public class BlockUserModalScreen: UIView {
     private let backgroundButton = UIButton()
-    private let modalView = UIView()
+    private let modalView = UIScrollView()
+    private let innerWidthView = UIView()
     private let closeButton = UIButton()
     private let titleLabel = UILabel()
     private let muteButton = WhiteElloButton()
@@ -23,9 +26,28 @@ public class BlockUserModalScreen: UIView {
     private let blockLabel = UILabel()
     private let flagButton = WhiteElloButton()
     private let flagLabel = UILabel()
+    private var scrollHeight: Constraint?
+    private var scrollWidth: Constraint?
 
     private var delegate: BlockUserModalDelegate? {
         get { return nextResponder() as? BlockUserModalDelegate }
+    }
+
+    private var scrollWidthConstant: CGFloat = 0 {
+        didSet {
+            if let scrollWidth = scrollWidth
+                where scrollWidthConstant != oldValue {
+                scrollWidth.updateOffset(scrollWidthConstant)
+            }
+        }
+    }
+    private var scrollHeightConstant: CGFloat = 0 {
+        didSet {
+            if let scrollHeight = scrollHeight
+                where scrollHeightConstant != oldValue {
+                scrollHeight.updateOffset(scrollHeightConstant)
+            }
+        }
     }
 
     override public init(frame: CGRect) {
@@ -157,14 +179,31 @@ extension BlockUserModalScreen {
 }
 
 extension BlockUserModalScreen {
+    override public func updateConstraints() {
+        super.updateConstraints()
+    }
+
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+
+        scrollWidthConstant = modalView.frame.size.width - 40
+        scrollHeightConstant = modalView.contentSize.height
+
+        titleLabel.preferredMaxLayoutWidth = scrollWidthConstant
+        muteLabel.preferredMaxLayoutWidth = scrollWidthConstant
+        blockLabel.preferredMaxLayoutWidth = scrollWidthConstant
+        flagLabel.preferredMaxLayoutWidth = scrollWidthConstant
+    }
+
     private func arrange() {
         addSubview(backgroundButton)
         addSubview(modalView)
 
-        let modalViews: [UIView] = [closeButton, titleLabel, muteButton, muteLabel, blockButton, blockLabel, flagButton, flagLabel]
+        let modalViews: [UIView] = [innerWidthView, closeButton, titleLabel, muteButton, muteLabel, blockButton, blockLabel, flagButton, flagLabel]
         for view in modalViews {
             modalView.addSubview(view)
         }
+        innerWidthView.setContentHuggingPriority(UILayoutPriorityRequired, forAxis: .Horizontal)
 
         backgroundButton.snp_makeConstraints { make in
             make.edges.equalTo(self)
@@ -174,8 +213,17 @@ extension BlockUserModalScreen {
             make.left.equalTo(self).offset(10)
             make.right.equalTo(self).offset(-10)
             make.top.equalTo(self).offset(50)
-            make.bottom.equalTo(flagLabel.snp_bottom).offset(20).priorityMedium()
+            make.bottom.equalTo(innerWidthView)
+            self.scrollHeight = make.height.equalTo(scrollHeightConstant).priorityMedium().constraint
             make.bottom.lessThanOrEqualTo(self.snp_bottom).priorityHigh()
+        }
+
+        innerWidthView.snp_makeConstraints { make in
+            make.top.equalTo(modalView).offset(20).priorityHigh()
+            make.bottom.equalTo(flagLabel).offset(20).priorityHigh()
+            make.left.equalTo(modalView).offset(20).priorityHigh()
+            make.right.equalTo(modalView).offset(-20).priorityHigh()
+            self.scrollWidth = make.width.equalTo(scrollWidthConstant).priorityHigh().constraint
         }
 
         closeButton.snp_makeConstraints { make in
@@ -185,48 +233,48 @@ extension BlockUserModalScreen {
         }
 
         titleLabel.snp_makeConstraints { make in
-            make.top.equalTo(modalView).offset(20)
-            make.left.equalTo(modalView).offset(20)
+            make.top.equalTo(innerWidthView)
+            make.left.equalTo(innerWidthView)
             make.right.equalTo(closeButton.snp_left).offset(-10)
         }
 
         muteButton.snp_makeConstraints { make in
             make.top.equalTo(titleLabel.snp_bottom).offset(40)
-            make.left.equalTo(modalView).offset(20)
-            make.right.equalTo(modalView).offset(-20)
+            make.left.equalTo(innerWidthView)
+            make.right.equalTo(innerWidthView)
             make.height.equalTo(50)
         }
 
         muteLabel.snp_makeConstraints { make in
             make.top.equalTo(muteButton.snp_bottom).offset(20)
-            make.left.equalTo(modalView).offset(20)
-            make.right.equalTo(modalView).offset(-20)
+            make.left.equalTo(innerWidthView)
+            make.right.equalTo(innerWidthView)
         }
 
         blockButton.snp_makeConstraints { make in
             make.top.equalTo(muteLabel.snp_bottom).offset(40)
-            make.left.equalTo(modalView).offset(20)
-            make.right.equalTo(modalView).offset(-20)
+            make.left.equalTo(innerWidthView)
+            make.right.equalTo(innerWidthView)
             make.height.equalTo(50)
         }
 
         blockLabel.snp_makeConstraints { make in
             make.top.equalTo(blockButton.snp_bottom).offset(20)
-            make.left.equalTo(modalView).offset(20)
-            make.right.equalTo(modalView).offset(-20)
+            make.left.equalTo(innerWidthView)
+            make.right.equalTo(innerWidthView)
         }
 
         flagButton.snp_makeConstraints { make in
             make.top.equalTo(blockLabel.snp_bottom).offset(40)
-            make.left.equalTo(modalView).offset(20)
-            make.right.equalTo(modalView).offset(-20)
+            make.left.equalTo(innerWidthView)
+            make.right.equalTo(innerWidthView)
             make.height.equalTo(50)
         }
 
         flagLabel.snp_makeConstraints { make in
             make.top.equalTo(flagButton.snp_bottom).offset(20)
-            make.left.equalTo(modalView).offset(20)
-            make.right.equalTo(modalView).offset(-20)
+            make.left.equalTo(innerWidthView)
+            make.right.equalTo(innerWidthView)
         }
     }
 

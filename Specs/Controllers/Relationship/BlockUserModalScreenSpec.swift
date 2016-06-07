@@ -52,6 +52,12 @@ class BlockUserModalScreenSpec: QuickSpec {
                 flagButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.FlagButton }) as! UIButton
             }
 
+            describe("snapshots") {
+                let subject = BlockUserModalScreen()
+                    subject.setDetails(userAtName: "@foo", relationshipPriority: .Following)
+                validateAllSnapshots(subject, named: "BlockUserModalScreen")
+            }
+
             describe("button targets") {
 
                 describe("@muteButton") {
