@@ -125,7 +125,7 @@ DEPENDENCIES:
   - Analytics/Segmentio
   - Crashlytics (~> 3.4)
   - CRToast (from `https://github.com/ello/CRToast`)
-  - ElloCerts (~> 1.0.0)
+  - ElloCerts (from `git@github.com:ello/Ello-iOS-Certs.git`)
   - ElloUIFonts (~> 1.1.0)
   - Fabric (~> 1.6)
   - FBSnapshotTestCase
@@ -157,6 +157,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/ello/onepassword-app-extension
   CRToast:
     :git: https://github.com/ello/CRToast
+  ElloCerts:
+    :git: git@github.com:ello/Ello-iOS-Certs.git
   JTSImageViewController:
     :git: https://github.com/ello/JTSImageViewController
   Keys:
@@ -183,6 +185,9 @@ CHECKOUT OPTIONS:
   CRToast:
     :commit: c84bf5ff9ee16b99e45f3bf25bb5db9c386fa728
     :git: https://github.com/ello/CRToast
+  ElloCerts:
+    :commit: 852763a15d5c96f586b1967ae86f447172a738a3
+    :git: git@github.com:ello/Ello-iOS-Certs.git
   JTSImageViewController:
     :commit: 4f0a918c38c7606fc5f876774cd3b96701b3f548
     :git: https://github.com/ello/JTSImageViewController
@@ -212,7 +217,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
-  ElloCerts: a7e40fa4a302d04b7d923a677bc1964d8ff3ca0b
+  ElloCerts: 25b1323d435ca7924266193f3279e927cdf21d58
   ElloUIFonts: 16c31ba0b19e82d613df50fb6498f43560a603a2
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
@@ -242,6 +247,6 @@ SPEC CHECKSUMS:
   WebLinking: d5b5ab4f7305bcf29821deb5cecd775f6c37efae
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: b5c8bfed8aee3090cf54cda7a205d9815b36f1bb
+PODFILE CHECKSUM: e9b2c6ae073447238b6467d7e98bbc35b9d5ebc5
 
 COCOAPODS: 1.0.0
