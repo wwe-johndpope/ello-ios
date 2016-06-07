@@ -39,9 +39,10 @@ public class BlockUserModalScreen: UIView {
             modalView.addSubview(view)
         }
 
-        styleView()
+        style()
+        bindActions()
         setText()
-        arrangeViews()
+        arrange()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -84,16 +85,13 @@ public class BlockUserModalScreen: UIView {
         muteButton.selected = false
         blockButton.selected = false
     }
+}
 
 // MARK: STYLING
 
-    private func styleView() {
+extension BlockUserModalScreen {
+    private func style() {
         backgroundButton.backgroundColor = UIColor.modalBackground()
-        backgroundButton.addTarget(self, action: #selector(closeModal), forControlEvents: .TouchUpInside)
-        blockButton.addTarget(self, action: #selector(blockTapped(_:)), forControlEvents: .TouchUpInside)
-        muteButton.addTarget(self, action: #selector(muteTapped(_:)), forControlEvents: .TouchUpInside)
-        flagButton.addTarget(self, action: #selector(flagTapped), forControlEvents: .TouchUpInside)
-        closeButton.addTarget(self, action: #selector(closeModal), forControlEvents: .TouchUpInside)
         modalView.backgroundColor = UIColor.redColor()
         for label in [titleLabel, muteLabel, blockLabel, flagLabel] {
             styleLabel(label)
@@ -116,14 +114,58 @@ public class BlockUserModalScreen: UIView {
         button.titleLabel?.font = .defaultFont()
         button.titleLabel?.textColor = .whiteColor()
     }
+}
 
+extension BlockUserModalScreen {
+    private func bindActions() {
+        backgroundButton.addTarget(self, action: #selector(closeModal), forControlEvents: .TouchUpInside)
+        blockButton.addTarget(self, action: #selector(blockTapped(_:)), forControlEvents: .TouchUpInside)
+        muteButton.addTarget(self, action: #selector(muteTapped(_:)), forControlEvents: .TouchUpInside)
+        flagButton.addTarget(self, action: #selector(flagTapped), forControlEvents: .TouchUpInside)
+        closeButton.addTarget(self, action: #selector(closeModal), forControlEvents: .TouchUpInside)
+    }
+
+// MARK: ACTIONS
+
+    func blockTapped(sender: UIButton) {
+        let relationshipPriority: RelationshipPriority
+        if sender.selected == true {
+            relationshipPriority = .Inactive
+        } else {
+            relationshipPriority = .Block
+        }
+        delegate?.updateRelationship(relationshipPriority)
+    }
+
+    func muteTapped(sender: UIButton) {
+        let relationshipPriority: RelationshipPriority
+        if sender.selected == true {
+            relationshipPriority = .Inactive
+        } else {
+            relationshipPriority = .Mute
+        }
+        delegate?.updateRelationship(relationshipPriority)
+    }
+
+    func flagTapped() {
+        delegate?.flagTapped()
+    }
+
+    func closeModal() {
+        delegate?.closeModal()
+    }
+}
+
+extension BlockUserModalScreen {
     private func setText() {
         muteButton.setTitle(InterfaceString.Relationship.MuteButton, forState: UIControlState.Normal)
         blockButton.setTitle(InterfaceString.Relationship.BlockButton, forState: UIControlState.Normal)
         flagButton.setTitle(InterfaceString.Relationship.FlagButton, forState: UIControlState.Normal)
     }
+}
 
-    private func arrangeViews() {
+extension BlockUserModalScreen {
+    private func arrange() {
         backgroundButton.snp_makeConstraints { make in
             make.edges.equalTo(self)
         }
@@ -186,36 +228,6 @@ public class BlockUserModalScreen: UIView {
             make.left.equalTo(modalView).offset(20)
             make.right.equalTo(modalView).offset(-20)
         }
-    }
-
-// MARK: ACTIONS
-
-    func blockTapped(sender: UIButton) {
-        let relationshipPriority: RelationshipPriority
-        if sender.selected == true {
-            relationshipPriority = .Inactive
-        } else {
-            relationshipPriority = .Block
-        }
-        delegate?.updateRelationship(relationshipPriority)
-    }
-
-    func muteTapped(sender: UIButton) {
-        let relationshipPriority: RelationshipPriority
-        if sender.selected == true {
-            relationshipPriority = .Inactive
-        } else {
-            relationshipPriority = .Mute
-        }
-        delegate?.updateRelationship(relationshipPriority)
-    }
-
-    func flagTapped() {
-        delegate?.flagTapped()
-    }
-
-    func closeModal() {
-        delegate?.closeModal()
     }
 
 }
