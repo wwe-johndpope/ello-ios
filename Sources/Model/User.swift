@@ -254,6 +254,6 @@ extension User {
     }
 
     func isOwnParentPost(comment: ElloComment) -> Bool {
-        return id == comment.loadedFromPost?.authorId
+        return id == comment.loadedFromPost?.authorId || id == comment.loadedFromPost?.repostAuthor?.id
     }
 }
