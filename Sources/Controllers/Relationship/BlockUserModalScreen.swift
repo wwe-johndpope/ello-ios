@@ -31,14 +31,6 @@ public class BlockUserModalScreen: UIView {
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.addSubview(backgroundButton)
-        self.addSubview(modalView)
-
-        let modalViews: [UIView] = [closeButton, titleLabel, muteButton, muteLabel, blockButton, blockLabel, flagButton, flagLabel]
-        for view in modalViews {
-            modalView.addSubview(view)
-        }
-
         style()
         bindActions()
         setText()
@@ -166,6 +158,14 @@ extension BlockUserModalScreen {
 
 extension BlockUserModalScreen {
     private func arrange() {
+        addSubview(backgroundButton)
+        addSubview(modalView)
+
+        let modalViews: [UIView] = [closeButton, titleLabel, muteButton, muteLabel, blockButton, blockLabel, flagButton, flagLabel]
+        for view in modalViews {
+            modalView.addSubview(view)
+        }
+
         backgroundButton.snp_makeConstraints { make in
             make.edges.equalTo(self)
         }
