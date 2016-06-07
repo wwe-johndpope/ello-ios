@@ -91,17 +91,17 @@ public class BlockUserModalViewController: BaseElloViewController, BlockUserModa
                 contentType: .User
             )
 
-            closeModal() {
+            closeModalAndThen {
                 flagger.displayFlaggingSheet()
             }
         }
     }
 
     public func closeModal() {
-        closeModal {}
+        closeModalAndThen {}
     }
 
-    public func closeModal(completion: BasicBlock) {
+    public func closeModalAndThen(completion: BasicBlock) {
         Tracker.sharedTracker.userBlockCanceled(userId)
         self.dismissViewControllerAnimated(true, completion: completion)
     }
