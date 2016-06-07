@@ -35,7 +35,7 @@ def common_pods
     pod 'ElloUIFonts', '~> 1.1.0'
     pod 'ElloCerts', git: 'git@github.com:ello/Ello-iOS-Certs.git'
   else
-    pod 'ElloOSSUIFonts', '~> 1.0.0'
+    pod 'ElloOSSUIFonts', '~> 1.0.1'
     pod 'ElloCerts', git: 'https://github.com/ello/Ello-OSS-iOS-Certs'
   end
   pod 'MBProgressHUD', '~> 0.9.0'
