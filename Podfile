@@ -36,7 +36,7 @@ def common_pods
     pod 'ElloCerts'
   else
     pod 'ElloOSSUIFonts', '~> 1.0.1'
-    pod 'ElloOSSCerts'
+    pod 'ElloOSSCerts', '~> 1.0.1'
   end
   pod 'MBProgressHUD', '~> 0.9.0'
   pod 'SVGKit', git: 'https://github.com/SVGKit/SVGKit'
