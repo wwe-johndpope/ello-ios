@@ -51,26 +51,28 @@ class ElloManagerSpec: QuickSpec {
                     expect(elloManager).notTo(beIdenticalTo(defaultManager))
                 }
 
-                it("includes 2 ssl certificates in the app") {
-                    AppSetup.sharedState.isSimulator = false
-                    let policy = ElloManager.serverTrustPolicies["ello.co"]!
-                    var doesValidatesChain = false
-                    var doesValidateHost = false
-                    var keys = [SecKey]()
-                    switch policy {
-                    case let .PinPublicKeys(publicKeys, validateCertificateChain, validateHost):
-                        doesValidatesChain = validateCertificateChain
-                        doesValidateHost = validateHost
-                        keys = publicKeys
-                    default: break
-                    }
+                if !ElloCerts.isPublic {
+                    it("includes 2 ssl certificates in the app") {
+                        AppSetup.sharedState.isSimulator = false
+                        let policy = ElloManager.serverTrustPolicies["ello.co"]!
+                        var doesValidatesChain = false
+                        var doesValidateHost = false
+                        var keys = [SecKey]()
+                        switch policy {
+                        case let .PinPublicKeys(publicKeys, validateCertificateChain, validateHost):
+                            doesValidatesChain = validateCertificateChain
+                            doesValidateHost = validateHost
+                            keys = publicKeys
+                        default: break
+                        }
 
-                    expect(doesValidatesChain) == true
-                    expect(doesValidateHost) == true
-                    let numberOfCerts = 2
-                    // Charles installs a cert, and we should allow that, so test
-                    // for numberOfCerts OR numberOfCerts + 1
-                    expect(keys.count == numberOfCerts || keys.count == numberOfCerts + 1) == true
+                        expect(doesValidatesChain) == true
+                        expect(doesValidateHost) == true
+                        let numberOfCerts = 2
+                        // Charles installs a cert, and we should allow that, so test
+                        // for numberOfCerts OR numberOfCerts + 1
+                        expect(keys.count == numberOfCerts || keys.count == numberOfCerts + 1) == true
+                    }
                 }
             }
         }
