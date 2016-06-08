@@ -339,7 +339,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                         expect(cell.ownComment) == false
                     }
                 }
-                fcontext("when currentUser is the repost author") {
+                context("when currentUser is the repost author") {
                     beforeEach {
                         let reposter: User = stub([:])
                         let post: Post = stub([
