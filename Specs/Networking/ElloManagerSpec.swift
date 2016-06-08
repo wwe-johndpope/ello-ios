@@ -11,6 +11,7 @@ import Quick
 import Moya
 import Nimble
 import Alamofire
+import ElloCerts
 
 class ElloManagerSpec: QuickSpec {
     override func spec() {
@@ -22,10 +23,17 @@ class ElloManagerSpec: QuickSpec {
 
             describe("serverTrustPolicies") {
 
-                it("has one when not in the simulator") {
-                    AppSetup.sharedState.isSimulator = false
-                    // TODO: figure out how to mock UIDevice.currentDevice().model
-                    expect(ElloManager.serverTrustPolicies["ello.co"]).notTo(beNil())
+                if ElloCerts.isPublic {
+                    it("has zero when running as open source app") {
+                        AppSetup.sharedState.isSimulator = false
+                        expect(ElloManager.serverTrustPolicies["ello.co"]).to(beNil())
+                    }
+                }
+                else {
+                    it("has one when not in the simulator") {
+                        AppSetup.sharedState.isSimulator = false
+                        expect(ElloManager.serverTrustPolicies["ello.co"]).notTo(beNil())
+                    }
                 }
 
                 it("has zero when in the simulator") {
