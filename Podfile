@@ -33,10 +33,10 @@ end
 def common_pods
   if ENV['ELLO_STAFF']
     pod 'ElloUIFonts', '~> 1.1.0'
-    pod 'ElloCerts', git: 'git@github.com:ello/Ello-iOS-Certs.git'
+    pod 'ElloCerts'
   else
     pod 'ElloOSSUIFonts', '~> 1.0.1'
-    pod 'ElloCerts', git: 'https://github.com/ello/Ello-OSS-iOS-Certs'
+    pod 'ElloOSSCerts'
   end
   pod 'MBProgressHUD', '~> 0.9.0'
   pod 'SVGKit', git: 'https://github.com/SVGKit/SVGKit'
