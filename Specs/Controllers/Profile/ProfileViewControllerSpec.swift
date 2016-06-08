@@ -34,6 +34,9 @@ class ProfileViewControllerSpec: QuickSpec {
                     it("has navigationBar") {
                         expect(subject.navigationBar).toNot(beNil())
                     }
+                    it("has whiteSolidView") {
+                        expect(subject.whiteSolidView).toNot(beNil())
+                    }
                     it("has noPostsView") {
                         expect(subject.noPostsView).toNot(beNil())
                     }

@@ -57,6 +57,7 @@ public class ProfileViewController: StreamableViewController {
     private var isSetup = false
 
     @IBOutlet weak var navigationBar: ElloNavigationBar!
+    @IBOutlet weak var whiteSolidView: UIView!
     @IBOutlet weak var noPostsView: UIView!
     @IBOutlet weak var noPostsHeader: UILabel!
     @IBOutlet weak var noPostsBody: UILabel!
@@ -71,6 +72,7 @@ public class ProfileViewController: StreamableViewController {
     let gradientLayer = CAGradientLayer()
 
     @IBOutlet weak var coverImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var whiteSolidTop: NSLayoutConstraint!
     @IBOutlet weak var noPostsViewHeight: NSLayoutConstraint!
     @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var gradientViewTopConstraint: NSLayoutConstraint!
@@ -83,6 +85,7 @@ public class ProfileViewController: StreamableViewController {
 
         streamViewController.streamKind = initialStreamKind
         streamViewController.initialLoadClosure = reloadEntireProfile
+        streamViewController.toggleClosure = toggleGrid
         relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [unowned self] user in
             if self.user?.id == user.id {
                 self.updateRelationshipPriority(user.relationshipPriority)
@@ -226,6 +229,7 @@ public class ProfileViewController: StreamableViewController {
 
     private func reloadEntireProfile() {
         let localToken = streamViewController.resetInitialPageLoadingToken()
+        coverImage.alpha = 0
 
         streamViewController.streamService.loadUser(
             initialStreamKind.endpoint,
@@ -385,7 +389,18 @@ public class ProfileViewController: StreamableViewController {
         }
     }
 
-    private func userLoaded(user: User, responseConfig: ResponseConfig) {
+    private func toggleGrid(isGridView: Bool) {
+        guard let user = user, responseConfig = streamViewController.responseConfig else { return }
+
+        ElloHUD.showLoadingHudInView(view)
+        let items = Array(streamViewController.dataSource.visibleCellItems[0...2])
+        streamViewController.dataSource.removeAllCellItems()
+        streamViewController.dataSource.appendStreamCellItems(items)
+        streamViewController.collectionView.reloadData()
+        userLoaded(user, responseConfig: responseConfig, isReload: false)
+    }
+
+    private func userLoaded(user: User, responseConfig: ResponseConfig, isReload: Bool = true) {
         if self.user == nil {
             Tracker.sharedTracker.profileViewed(user.atName ?? "(no name)")
         }
@@ -415,11 +430,15 @@ public class ProfileViewController: StreamableViewController {
                 self.coverImage.alpha = 1.0
             }
         }
-        var items: [StreamCellItem] = [
-            StreamCellItem(jsonable: user, type: .ProfileHeader),
-            StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
-            StreamCellItem(jsonable: user, type: .ColumnToggle),
-        ]
+        var items: [StreamCellItem] = []
+        if isReload {
+            items += [
+                StreamCellItem(jsonable: user, type: .ProfileHeader),
+                StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
+                StreamCellItem(jsonable: user, type: .ColumnToggle),
+            ]
+        }
+
         if let posts = user.posts {
             items += StreamCellItemParser().parse(posts, streamKind: streamViewController.streamKind, currentUser: currentUser)
         }
@@ -534,6 +553,7 @@ extension ProfileViewController {
     override public func streamViewDidScroll(scrollView: UIScrollView) {
         if let start = coverImageHeightStart {
             coverImageHeight.constant = max(start - scrollView.contentOffset.y, start)
+            whiteSolidTop.constant = max(start - scrollView.contentOffset.y, 0)
         }
 
         updateGradientViewConstraint()

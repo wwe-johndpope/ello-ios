@@ -273,6 +273,8 @@ public class StreamViewController: BaseElloViewController {
     }
 
     public var initialLoadClosure: ElloEmptyCompletion?
+    public typealias ToggleClosure = (Bool) -> Void
+    public var toggleClosure: ToggleClosure?
 
     public func loadInitialPage() {
 
@@ -592,14 +594,19 @@ extension StreamViewController: ColumnToggleDelegate {
     }
 
     private func toggleGrid(isGridView: Bool) {
-        self.removeAllCellItems()
-        let items = generateStreamCellItems(self.currentJSONables)
-        self.appendUnsizedCellItems(items, withWidth: nil) { indexPaths in
-            animate {
-                self.collectionView.alpha = 1
-            }
+        if let toggleClosure = toggleClosure {
+            toggleClosure(isGridView)
         }
-        self.setupCollectionViewLayout()
+        else {
+            self.removeAllCellItems()
+            let items = generateStreamCellItems(self.currentJSONables)
+            self.appendUnsizedCellItems(items, withWidth: nil) { indexPaths in
+                animate {
+                    self.collectionView.alpha = 1
+                }
+            }
+            self.setupCollectionViewLayout()
+        }
     }
 }
 
