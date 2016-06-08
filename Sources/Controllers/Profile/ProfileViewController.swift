@@ -418,6 +418,7 @@ public class ProfileViewController: StreamableViewController {
         var items: [StreamCellItem] = [
             StreamCellItem(jsonable: user, type: .ProfileHeader),
             StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
+            StreamCellItem(jsonable: user, type: .ColumnToggle),
         ]
         if let posts = user.posts {
             items += StreamCellItemParser().parse(posts, streamKind: streamViewController.streamKind, currentUser: currentUser)
