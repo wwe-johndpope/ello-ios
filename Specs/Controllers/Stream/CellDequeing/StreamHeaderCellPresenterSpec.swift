@@ -342,17 +342,10 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 context("when currentUser is the repost author") {
                     beforeEach {
                         let reposter: User = stub([:])
-                        let post: Post = stub([
-                            "id" : "768",
-                            "author": currentUser,
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 14,
-                            ])
                         let repost: Post = stub([
                             "id" : "901",
                             "author": reposter,
+                            "repostAuthor": currentUser,
                             "viewsCount" : 9,
                             "repostsCount" : 4,
                             "commentsCount" : 6,
@@ -360,7 +353,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                             ])
                         let comment: ElloComment = stub([
                             "id" : "362",
-                            "parentPost" : post,
+                            "parentPost" : repost,
                             "loadedFromPost": repost,
                             "content" : content
                             ])
