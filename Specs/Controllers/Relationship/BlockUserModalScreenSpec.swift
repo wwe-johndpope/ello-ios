@@ -36,25 +36,24 @@ class BlockUserModalScreenSpec: QuickSpec {
             var blockButton: UIButton!
             var flagButton: UIButton!
 
-            beforeEach {
+            func setupScreen(atName atName: String = "@archer", relationshipPriority: RelationshipPriority = .Inactive) {
+                let config = BlockUserModalConfig(userId: "666", userAtName: atName, relationshipPriority: relationshipPriority, changeClosure: { _ in })
                 controller = FakeBlockUserModalController()
-                subject = BlockUserModalScreen()
+                subject = BlockUserModalScreen(config: config)
                 controller.view = subject
                 showController(controller)
-
-                subject.setDetails(
-                    userAtName: "@archer",
-                    relationshipPriority: .Inactive
-                    )
 
                 muteButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.MuteButton }) as! UIButton
                 blockButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.BlockButton }) as! UIButton
                 flagButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.FlagButton }) as! UIButton
             }
 
+            beforeEach {
+                setupScreen(relationshipPriority: .Inactive)
+            }
+
             describe("snapshots") {
-                let subject = BlockUserModalScreen()
-                    subject.setDetails(userAtName: "@foo", relationshipPriority: .Following)
+                setupScreen(atName: "@foo", relationshipPriority: .Following)
                 validateAllSnapshots(subject, named: "BlockUserModalScreen")
             }
 
@@ -62,19 +61,13 @@ class BlockUserModalScreenSpec: QuickSpec {
 
                 describe("@muteButton") {
                     it("not selected") {
-                        subject.setDetails(
-                            userAtName: "@archer",
-                            relationshipPriority: .Following
-                            )
+                        setupScreen(atName: "@archer", relationshipPriority: .Following)
                         muteButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(controller.relationshipPriority).to(equal(RelationshipPriority.Mute))
                     }
 
                     it("selected") {
-                        subject.setDetails(
-                            userAtName: "@archer",
-                            relationshipPriority: .Mute
-                            )
+                        setupScreen(atName: "@archer", relationshipPriority: .Mute)
                         muteButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(controller.relationshipPriority).to(equal(RelationshipPriority.Inactive))
                     }
@@ -82,19 +75,13 @@ class BlockUserModalScreenSpec: QuickSpec {
 
                 describe("@blockButton") {
                     it("not selected") {
-                        subject.setDetails(
-                            userAtName: "@archer",
-                            relationshipPriority: .Following
-                            )
+                        setupScreen(atName: "@archer", relationshipPriority: .Following)
                         blockButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(controller.relationshipPriority).to(equal(RelationshipPriority.Block))
                     }
 
                     it("selected") {
-                        subject.setDetails(
-                            userAtName: "@archer",
-                            relationshipPriority: .Block
-                            )
+                        setupScreen(atName: "@archer", relationshipPriority: .Block)
                         blockButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(controller.relationshipPriority).to(equal(RelationshipPriority.Inactive))
                     }
