@@ -13,18 +13,16 @@ import SnapKit
 public class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelegate {
     weak public var relationshipDelegate: RelationshipDelegate?
 
-    let relationshipPriority: RelationshipPriority
-    let userId: String
-    let userAtName: String
+    let config: BlockUserModalConfig
+    var relationshipPriority: RelationshipPriority { return config.relationshipPriority }
+    var userId: String { return config.userId }
+    var userAtName: String { return config.userAtName }
+    var changeClosure: RelationshipChangeClosure { return config.changeClosure }
 
-    let changeClosure: RelationshipChangeClosure
     var screen: BlockUserModalScreen!
 
-    required public init(userId: String, userAtName: String, relationshipPriority: RelationshipPriority, changeClosure: RelationshipChangeClosure) {
-        self.userId = userId
-        self.userAtName = userAtName
-        self.relationshipPriority = relationshipPriority
-        self.changeClosure = changeClosure
+    required public init(config: BlockUserModalConfig) {
+        self.config = config
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .Custom
         self.modalTransitionStyle = .CrossDissolve
@@ -35,14 +33,9 @@ public class BlockUserModalViewController: BaseElloViewController, BlockUserModa
     }
 
     override public func loadView() {
-        let screen = BlockUserModalScreen()
+        let screen = BlockUserModalScreen(config: config)
         self.screen = screen
         self.view = screen
-
-        screen.setDetails(
-            userAtName: userAtName,
-            relationshipPriority: relationshipPriority
-            )
     }
 
     override public func viewDidAppear(animated: Bool) {

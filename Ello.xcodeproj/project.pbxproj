@@ -450,6 +450,7 @@
 		1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */; };
 		1D24AA511B7E8CD5004BAAFA /* DebugTodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D24AA501B7E8CD5004BAAFA /* DebugTodoController.swift */; };
 		1D26E1681C52E26D0034448D /* NotificationCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */; };
+		1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */; };
 		1D2B6A7C1BE3FB0900D27DC9 /* AvatarButtonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B6A7B1BE3FB0900D27DC9 /* AvatarButtonSpec.swift */; };
 		1D2D18651AC322070078AA05 /* UIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2D18641AC322070078AA05 /* UIWebView.swift */; };
 		1D2D18681AC322170078AA05 /* UIWebViewSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2D18671AC322170078AA05 /* UIWebViewSpecs.swift */; };
@@ -1250,6 +1251,7 @@
 		1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D24AA501B7E8CD5004BAAFA /* DebugTodoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTodoController.swift; sourceTree = "<group>"; };
 		1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCellSpec.swift; sourceTree = "<group>"; };
+		1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalConfig.swift; sourceTree = "<group>"; };
 		1D2B6A7B1BE3FB0900D27DC9 /* AvatarButtonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarButtonSpec.swift; sourceTree = "<group>"; };
 		1D2D18641AC322070078AA05 /* UIWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebView.swift; sourceTree = "<group>"; };
 		1D2D18671AC322170078AA05 /* UIWebViewSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebViewSpecs.swift; sourceTree = "<group>"; };
@@ -3077,6 +3079,7 @@
 		76E5CBE71A92678500D6483F /* Relationship */ = {
 			isa = PBXGroup;
 			children = (
+				1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */,
 				1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */,
 				76629C6E1A95067400E1F92B /* BlockUserModalViewController.swift */,
 				86D8D8FD1B1798B200CC8D6C /* RelationshipControl.swift */,
@@ -4507,6 +4510,7 @@
 				1207C9801C73FEE000939ADB /* ErrorStatusCode.swift in Sources */,
 				122B30D71C6A3FBC00C1B9D8 /* Post.swift in Sources */,
 				1DFC0AF51B0BE6FE004AE8C4 /* ProfileInfoViewController.swift in Sources */,
+				1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */,
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
 				12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */,
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,

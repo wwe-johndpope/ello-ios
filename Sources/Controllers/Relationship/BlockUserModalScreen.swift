@@ -50,20 +50,25 @@ public class BlockUserModalScreen: UIView {
         }
     }
 
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
+    required public init(config: BlockUserModalConfig) {
+        super.init(frame: .zero)
 
         style()
         bindActions()
         setText()
         arrange()
+        setDetails(userAtName: config.userAtName, relationshipPriority: config.relationshipPriority)
+    }
+
+    required public override init(frame: CGRect) {
+        fatalError("init(frame:) has not been implemented")
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func setDetails(userAtName userAtName: String, relationshipPriority: RelationshipPriority) {
+    private func setDetails(userAtName userAtName: String, relationshipPriority: RelationshipPriority) {
         let titleText: String
         switch relationshipPriority {
         case .Mute: titleText = String(format: InterfaceString.Relationship.UnmuteAlertTemplate, userAtName)
