@@ -15,11 +15,12 @@ install:
 - bundle exec pod keys set ClientKey $ELLO_CLIENT_KEY Ello
 - bundle exec pod keys set ClientSecret $ELLO_CLIENT_SECRET Ello
 - bundle exec pod keys set Domain $ELLO_DOMAIN Ello
-- bundle exec pod keys set Salt $ELLO_SALT Ello
+- bundle exec pod keys set Salt $INVITE_FRIENDS_SALT Ello
 - bundle exec pod keys set CrashlyticsKey $ELLO_CRASHLYTICS_KEY Ello
 - bundle exec pod keys set FirebaseKey $ELLO_FIREBASE_KEY Ello
 - bundle exec pod keys set HttpProtocol $ELLO_HTTP_PROTOCOL Ello
 - bundle exec pod keys set SegmentKey $ELLO_SEGMENT_KEY Ello
+- bundle exec pod keys set TeamId ABC123 Ello
 - bundle exec pod install
 before_script:
 - export LANG=en_US.UTF-8

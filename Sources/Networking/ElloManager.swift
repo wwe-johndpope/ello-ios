@@ -33,7 +33,6 @@ public struct ElloManager {
         )
     }
 
-
     public static var shareExtensionManager: Manager {
         let config = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("co.ello.shareextension.background")
         config.sharedContainerIdentifier = "group.ello.Ello"
@@ -43,4 +42,5 @@ public struct ElloManager {
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: ElloManager.serverTrustPolicies)
         )
     }
+
 }

@@ -11,6 +11,7 @@ import Quick
 import Moya
 import Nimble
 import Alamofire
+import ElloCerts
 
 class ElloManagerSpec: QuickSpec {
     override func spec() {
@@ -22,10 +23,17 @@ class ElloManagerSpec: QuickSpec {
 
             describe("serverTrustPolicies") {
 
-                it("has one when not in the simulator") {
-                    AppSetup.sharedState.isSimulator = false
-                    // TODO: figure out how to mock UIDevice.currentDevice().model
-                    expect(ElloManager.serverTrustPolicies["ello.co"]).notTo(beNil())
+                if ElloCerts.isPublic {
+                    it("has zero when running as open source app") {
+                        AppSetup.sharedState.isSimulator = false
+                        expect(ElloManager.serverTrustPolicies["ello.co"]).to(beNil())
+                    }
+                }
+                else {
+                    it("has one when not in the simulator") {
+                        AppSetup.sharedState.isSimulator = false
+                        expect(ElloManager.serverTrustPolicies["ello.co"]).notTo(beNil())
+                    }
                 }
 
                 it("has zero when in the simulator") {
@@ -43,26 +51,28 @@ class ElloManagerSpec: QuickSpec {
                     expect(elloManager).notTo(beIdenticalTo(defaultManager))
                 }
 
-                it("includes 2 ssl certificates in the app") {
-                    AppSetup.sharedState.isSimulator = false
-                    let policy = ElloManager.serverTrustPolicies["ello.co"]!
-                    var doesValidatesChain = false
-                    var doesValidateHost = false
-                    var keys = [SecKey]()
-                    switch policy {
-                    case let .PinPublicKeys(publicKeys, validateCertificateChain, validateHost):
-                        doesValidatesChain = validateCertificateChain
-                        doesValidateHost = validateHost
-                        keys = publicKeys
-                    default: break
-                    }
+                if !ElloCerts.isPublic {
+                    it("includes 2 ssl certificates in the app") {
+                        AppSetup.sharedState.isSimulator = false
+                        let policy = ElloManager.serverTrustPolicies["ello.co"]!
+                        var doesValidatesChain = false
+                        var doesValidateHost = false
+                        var keys = [SecKey]()
+                        switch policy {
+                        case let .PinPublicKeys(publicKeys, validateCertificateChain, validateHost):
+                            doesValidatesChain = validateCertificateChain
+                            doesValidateHost = validateHost
+                            keys = publicKeys
+                        default: break
+                        }
 
-                    expect(doesValidatesChain) == true
-                    expect(doesValidateHost) == true
-                    let numberOfCerts = 2
-                    // Charles installs a cert, and we should allow that, so test
-                    // for numberOfCerts OR numberOfCerts + 1
-                    expect(keys.count == numberOfCerts || keys.count == numberOfCerts + 1) == true
+                        expect(doesValidatesChain) == true
+                        expect(doesValidateHost) == true
+                        let numberOfCerts = 2
+                        // Charles installs a cert, and we should allow that, so test
+                        // for numberOfCerts OR numberOfCerts + 1
+                        expect(keys.count == numberOfCerts || keys.count == numberOfCerts + 1) == true
+                    }
                 }
             }
         }

@@ -1,5 +1,5 @@
-source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/ello/cocoapod-specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
 
 # Uncomment this line to define a global platform for your project
 platform :ios, '8.0'
@@ -27,15 +27,16 @@ def ello_app_pods
   # swift pods
   pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
   pod 'WebLinking', '~> 1.0'
+  pod 'SnapKit'
 end
 
 def common_pods
   if ENV['ELLO_STAFF']
     pod 'ElloUIFonts', '~> 1.1.0'
-    pod 'ElloCerts', '~> 1.0.0'
+    pod 'ElloCerts', '~> 1.1'
   else
-    pod 'ElloOSSUIFonts', '~> 1.0.0'
-    pod 'ElloCerts', '~> 1.0.0'
+    pod 'ElloOSSUIFonts', '~> 1.0.1'
+    pod 'ElloOSSCerts', '~> 1.1'
   end
   pod 'MBProgressHUD', '~> 0.9.0'
   pod 'SVGKit', git: 'https://github.com/SVGKit/SVGKit'

@@ -165,32 +165,32 @@ class ProfileViewControllerSpec: QuickSpec {
                         user.relationshipPriority = .Inactive
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.blockButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-                        expect(user.relationshipPriority).to(equal(RelationshipPriority.Block))
+                        presentedVC.updateRelationship(.Block)
+                        expect(user.relationshipPriority) == RelationshipPriority.Block
                     }
 
                     it("not selected mute") {
                         user.relationshipPriority = .Inactive
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.muteButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-                        expect(user.relationshipPriority).to(equal(RelationshipPriority.Mute))
+                        presentedVC.updateRelationship(.Mute)
+                        expect(user.relationshipPriority) == RelationshipPriority.Mute
                     }
 
                     it("selected block") {
                         user.relationshipPriority = .Block
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.blockButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-                        expect(user.relationshipPriority).to(equal(RelationshipPriority.Inactive))
+                        presentedVC.updateRelationship(.Inactive)
+                        expect(user.relationshipPriority) == RelationshipPriority.Inactive
                     }
 
                     it("selected mute") {
                         user.relationshipPriority = .Mute
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.muteButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-                        expect(user.relationshipPriority).to(equal(RelationshipPriority.Inactive))
+                        presentedVC.updateRelationship(.Inactive)
+                        expect(user.relationshipPriority) == RelationshipPriority.Inactive
                     }
 
                 }
@@ -213,7 +213,7 @@ class ProfileViewControllerSpec: QuickSpec {
                         user.relationshipPriority = .Inactive
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.blockButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        presentedVC.updateRelationship(.Block)
                         expect(user.relationshipPriority).to(equal(RelationshipPriority.Inactive))
                     }
 
@@ -221,7 +221,7 @@ class ProfileViewControllerSpec: QuickSpec {
                         user.relationshipPriority = .Inactive
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.muteButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        presentedVC.updateRelationship(.Mute)
                         expect(user.relationshipPriority).to(equal(RelationshipPriority.Inactive))
                     }
 
@@ -229,7 +229,7 @@ class ProfileViewControllerSpec: QuickSpec {
                         user.relationshipPriority = .Block
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.blockButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        presentedVC.updateRelationship(.Inactive)
                         expect(user.relationshipPriority).to(equal(RelationshipPriority.Block))
                     }
 
@@ -237,7 +237,7 @@ class ProfileViewControllerSpec: QuickSpec {
                         user.relationshipPriority = .Mute
                         subject.moreButtonTapped()
                         let presentedVC = subject.presentedViewController as! BlockUserModalViewController
-                        presentedVC.muteButton!.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        presentedVC.updateRelationship(.Inactive)
                         expect(user.relationshipPriority).to(equal(RelationshipPriority.Mute))
                     }
                 }
