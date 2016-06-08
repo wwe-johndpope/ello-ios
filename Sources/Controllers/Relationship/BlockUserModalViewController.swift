@@ -33,8 +33,7 @@ public class BlockUserModalViewController: BaseElloViewController, BlockUserModa
     }
 
     override public func loadView() {
-        let screen = BlockUserModalScreen(config: config)
-        self.screen = screen
+        self.screen = BlockUserModalScreen(config: config)
         self.view = screen
     }
 
