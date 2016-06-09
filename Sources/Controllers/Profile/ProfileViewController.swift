@@ -389,14 +389,15 @@ public class ProfileViewController: StreamableViewController {
         }
     }
 
-    private func toggleGrid(isGridView: Bool) {
+    func toggleGrid(isGridView: Bool) {
         guard let user = user, responseConfig = streamViewController.responseConfig else { return }
 
-        ElloHUD.showLoadingHudInView(view)
-        let items = Array(streamViewController.dataSource.visibleCellItems[0...2])
+        let items = Array(streamViewController.dataSource.visibleCellItems[0..<3])
+        // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
+        // triggering pagination at this time will, inexplicably, cause the cells to disappear
+        streamViewController.canLoadNext = false
         streamViewController.dataSource.removeAllCellItems()
-        streamViewController.dataSource.appendStreamCellItems(items)
-        streamViewController.collectionView.reloadData()
+        streamViewController.appendStreamCellItems(items)
         userLoaded(user, responseConfig: responseConfig, isReload: false)
     }
 
@@ -413,12 +414,6 @@ public class ProfileViewController: StreamableViewController {
 
         // need to reassign the userParam to the id for paging
         userParam = user.id
-        // need to reassign the streamKind so that the currentUser can page based off the user.id from the ElloAPI.path
-        // same for when tapping on a username in a post this will replace '~666' with the correct id for paging to work
-        streamViewController.streamKind = .UserStream(userParam: userParam)
-        streamViewController.responseConfig = responseConfig
-        // clear out this view
-        streamViewController.clearForInitialLoad()
         title = user.atName ?? InterfaceString.Profile.Title
         if let cachedImage = cachedImage(.CoverImage) {
             coverImage.image = cachedImage
@@ -432,6 +427,13 @@ public class ProfileViewController: StreamableViewController {
         }
         var items: [StreamCellItem] = []
         if isReload {
+            // need to reassign the streamKind so that the currentUser can page based off the user.id from the ElloAPI.path
+            // same for when tapping on a username in a post this will replace '~666' with the correct id for paging to work
+            streamViewController.streamKind = .UserStream(userParam: userParam)
+            streamViewController.responseConfig = responseConfig
+            // clear out this view
+            streamViewController.clearForInitialLoad()
+
             items += [
                 StreamCellItem(jsonable: user, type: .ProfileHeader),
                 StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
