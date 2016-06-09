@@ -392,7 +392,10 @@ public class ProfileViewController: StreamableViewController {
     func toggleGrid(isGridView: Bool) {
         guard let user = user, responseConfig = streamViewController.responseConfig else { return }
 
-        let items = Array(streamViewController.dataSource.visibleCellItems[0..<3])
+        // the first three items are (1) ProfileHeader (2) Spacer (3) ColumnToggle
+        // (see below, in userLoaded)
+        let numHeaderItems = 3
+        let headerItems = Array(streamViewController.dataSource.visibleCellItems[0..<numHeaderItems])
         // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
         // triggering pagination at this time will, inexplicably, cause the cells to disappear
         streamViewController.canLoadNext = false
@@ -434,6 +437,8 @@ public class ProfileViewController: StreamableViewController {
             // clear out this view
             streamViewController.clearForInitialLoad()
 
+            // if these items change, you should also update the magic number
+            // `numHeaderItems = 3` in `toggleGrid()`
             items += [
                 StreamCellItem(jsonable: user, type: .ProfileHeader),
                 StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
