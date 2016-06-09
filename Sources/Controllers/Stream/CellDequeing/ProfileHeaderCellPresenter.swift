@@ -28,7 +28,7 @@ public struct ProfileHeaderCellPresenter {
                 let webViewHeight = webView.windowContentSize()?.height ?? 0
                 let actualHeight = ProfileHeaderCellSizeCalculator.calculateHeightBasedOn(
                     webViewHeight: webViewHeight,
-                    nameSize: cell.nameLabel.frame.size,
+                    nameSize: cell.nameLabel.intrinsicContentSize(),
                     width: cell.frame.size.width
                     )
                 if actualHeight != streamCellItem.calculatedOneColumnCellHeight {

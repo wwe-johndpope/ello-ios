@@ -75,7 +75,7 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         height += 146 // size without webview and name label
         height += max(webViewHeight, 0)
         height += nameSize.height
-        return height
+        return ceil(height)
     }
 
 }
