@@ -323,7 +323,38 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                             ])
                         let comment: ElloComment = stub([
                             "id" : "362",
-                            "parentPost" : post,
+                            "loadedFromPost" : post,
+                            "content" : content
+                            ])
+
+                        cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
+                        item = StreamCellItem(jsonable: comment, type: .CommentHeader)
+                    }
+                    it("ownPost should be true") {
+                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
+                        expect(cell.ownPost) == true
+                    }
+                    it("ownComment should be false") {
+                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
+                        expect(cell.ownComment) == false
+                    }
+                }
+                context("when currentUser is the repost author") {
+                    beforeEach {
+                        let reposter: User = stub([:])
+                        let repost: Post = stub([
+                            "id" : "901",
+                            "author": reposter,
+                            "repostAuthor": currentUser,
+                            "viewsCount" : 9,
+                            "repostsCount" : 4,
+                            "commentsCount" : 6,
+                            "lovesCount" : 14,
+                            ])
+                        let comment: ElloComment = stub([
+                            "id" : "362",
+                            "parentPost" : repost,
+                            "loadedFromPost": repost,
                             "content" : content
                             ])
 
