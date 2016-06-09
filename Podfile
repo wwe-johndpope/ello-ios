@@ -43,7 +43,7 @@ def common_pods
   pod 'FLAnimatedImage', '~> 1.0'
   pod 'YapDatabase', '2.8.1'
   pod 'Alamofire', '~> 3.0'
-  pod 'Moya', '~> 6.0.0'
+  pod 'Moya', '~> 6.5'
   pod 'KeychainAccess', '~> 2.3'
   pod 'SwiftyUserDefaults', '~> 1.3.0'
   pod 'SwiftyJSON', git: 'https://github.com/ello/SwiftyJSON', branch: 'Swift-2.0'
