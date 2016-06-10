@@ -14,26 +14,27 @@ let thousand = 1_000.0
 
 public extension Int {
 
-    func numberToHuman(showZero showZero: Bool = false) -> String {
+    func numberToHuman(rounding rounding: Int = 2, showZero: Bool = false) -> String {
         if self == 0 && !showZero { return "" }
 
+        let roundingFactor: Double = pow(10, Double(rounding))
         let double = Double(self)
         let num: Float
         let suffix: String
         if double >= billion {
-            num = Float(round(double / billion * 100.0) / 100.0)
+            num = Float(round(double / billion * roundingFactor) / roundingFactor)
             suffix = "B"
         }
         else if double >= million {
-            num = Float(round(double / million * 100.0) / 100.0)
+            num = Float(round(double / million * roundingFactor) / roundingFactor)
             suffix = "M"
         }
         else if double >= thousand {
-            num = Float(round(double / thousand * 100.0) / 100.0)
+            num = Float(round(double / thousand * roundingFactor) / roundingFactor)
             suffix = "K"
         }
         else {
-            num = Float(round(double * 100.0) / 100.0)
+            num = Float(round(double * roundingFactor) / roundingFactor)
             suffix = ""
         }
         var strNum = "\(num)"
