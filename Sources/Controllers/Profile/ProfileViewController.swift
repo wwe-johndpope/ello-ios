@@ -400,7 +400,7 @@ public class ProfileViewController: StreamableViewController {
         // triggering pagination at this time will, inexplicably, cause the cells to disappear
         streamViewController.canLoadNext = false
         streamViewController.dataSource.removeAllCellItems()
-        streamViewController.appendStreamCellItems(items)
+        streamViewController.appendStreamCellItems(headerItems)
         userLoaded(user, responseConfig: responseConfig, isReload: false)
     }
 
