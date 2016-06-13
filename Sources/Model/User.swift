@@ -24,10 +24,10 @@ public final class User: JSONAble {
     public var relationshipPriority: RelationshipPriority
     public let postsAdultContent: Bool
     public let viewsAdultContent: Bool
-    public let hasCommentingEnabled: Bool
-    public let hasSharingEnabled: Bool
-    public let hasRepostingEnabled: Bool
-    public let hasLovesEnabled: Bool
+    public var hasCommentingEnabled: Bool
+    public var hasSharingEnabled: Bool
+    public var hasRepostingEnabled: Bool
+    public var hasLovesEnabled: Bool
     // optional
     public var avatar: Asset? // required, but kinda optional due to it being nested in json
     public var identifiableBy: String?
@@ -234,13 +234,28 @@ extension User {
     }
 
     func propertyForSettingsKey(key: String) -> Bool {
-        var value: Bool? = false
-        if profile?.respondsToSelector(Selector(key.camelCase)) == true {
-            value = profile?.valueForKey(key.camelCase) as? Bool
-        } else if respondsToSelector(Selector(key.camelCase)) {
-            value = valueForKey(key.camelCase) as? Bool
+        let kvo = key.camelCase
+        let selector = Selector(kvo)
+        let value: Bool?
+        if profile?.respondsToSelector(selector) == true {
+            value = profile?.valueForKey(kvo) as? Bool
+        } else if respondsToSelector(selector) {
+            value = valueForKey(kvo) as? Bool
+        }
+        else {
+            value = false
         }
         return value ?? false
+    }
+
+    func setPropertyForSettingsKey(key: String, value: Bool) {
+        let kvo = key.camelCase
+        let selector = Selector(kvo)
+        if profile?.respondsToSelector(selector) == true {
+            profile?.setValue(value, forKey: kvo)
+        } else if respondsToSelector(selector) {
+            setValue(value, forKey: kvo)
+        }
     }
 }
 

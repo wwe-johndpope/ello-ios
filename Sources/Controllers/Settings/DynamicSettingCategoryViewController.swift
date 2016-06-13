@@ -73,23 +73,40 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
 extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
     func toggleSetting(setting: DynamicSetting, value: Bool) {
         if let nav = self.navigationController as? ElloNavigationController {
-            var visibility: [(NSIndexPath, Bool)] = []
+            var visibility: [(NSIndexPath, value: Bool, isVisible: Bool)] = []
             if let settings = self.category?.settings,
                 currentUser = currentUser {
                 for (index, setting) in settings.enumerate() {
-                    visibility.append((NSIndexPath(forRow: index, inSection: 0), DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: currentUser)))
+                    visibility.append((
+                        NSIndexPath(forRow: index, inSection: 0),
+                        value: currentUser.propertyForSettingsKey(setting.key),
+                        isVisible: DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: currentUser)
+                    ))
                 }
             }
 
-            ProfileService().updateUserProfile([setting.key: value],
+            var updatedValues: [String: AnyObject] = [
+                setting.key: value,
+            ]
+            if let settings = self.category?.settings {
+                for anotherSetting in settings {
+                    if let anotherValue = setting.sets(anotherSetting, when: value) {
+                        updatedValues[anotherSetting.key] = anotherValue
+                    }
+                }
+            }
+            ProfileService().updateUserProfile(updatedValues,
                 success: { user in
                     nav.setProfileData(user)
 
                     if let settings = self.category?.settings {
                         var changedPaths: [NSIndexPath] = []
-                        for (indexPath, prevVisibility) in visibility {
+                        for (indexPath, value, prevVisibility) in visibility {
                             let setting = settings[indexPath.row]
                             if prevVisibility != DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: user) {
+                                changedPaths.append(indexPath)
+                            }
+                            else if user.propertyForSettingsKey(setting.key) != value {
                                 changedPaths.append(indexPath)
                             }
                         }

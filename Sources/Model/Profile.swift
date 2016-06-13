@@ -21,11 +21,11 @@ public final class Profile: JSONAble {
     public let shortBio: String
     public let email: String
     public let confirmedAt: NSDate
-    public let isPublic: Bool
+    public var isPublic: Bool
     public var mutedCount: Int
     public var blockedCount: Int
-    public let hasSharingEnabled: Bool
-    public let hasAdNotificationsEnabled: Bool
+    public var hasSharingEnabled: Bool
+    public var hasAdNotificationsEnabled: Bool
     public let allowsAnalytics: Bool
     public let notifyOfCommentsViaEmail: Bool
     public let notifyOfLovesViaEmail: Bool
