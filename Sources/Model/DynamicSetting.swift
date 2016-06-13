@@ -14,9 +14,9 @@ let DynamicSetAnotherVersion = 1
 
 @objc(DynamicSetAnother)
 public final class DynamicSetAnother: JSONAble {
-    let when: Bool?
-    let key: String
-    let value: Bool
+    public let when: Bool?
+    public let key: String
+    public let value: Bool
 
     public required init(when: Bool?, key: String, value: Bool) {
         self.when = when
