@@ -34,12 +34,15 @@ public enum ContentChange {
         }
         for post in affectedPosts {
             if let post = post, let count = post.commentsCount {
+                postNotification(PostCommentsCountChangedNotification, value: (post, delta))
+                postNotification(PostChangedNotification, value: (post, .Update))
+
+                // this must happen AFTER the notification, otherwise the
+                // storedPost will be in-memory, and the notification will update the comment count
                 if let storedPost = ElloLinkedStore.sharedInstance.getObject(post.id, inCollection: MappingType.PostsType.rawValue) as? Post {
                     storedPost.commentsCount = count + delta
                     ElloLinkedStore.sharedInstance.setObject(storedPost, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
                 }
-                postNotification(PostCommentsCountChangedNotification, value: (post, delta))
-                postNotification(PostChangedNotification, value: (post, .Update))
             }
         }
 
