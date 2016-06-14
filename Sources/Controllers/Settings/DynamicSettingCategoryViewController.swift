@@ -73,12 +73,12 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
 extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
     func toggleSetting(setting: DynamicSetting, value: Bool) {
         if let nav = self.navigationController as? ElloNavigationController {
-            var visibility: [(NSIndexPath, value: Bool, isVisible: Bool)] = []
+            var visibility: [(path: NSIndexPath, value: Bool, isVisible: Bool)] = []
             if let settings = self.category?.settings,
                 currentUser = currentUser {
                 for (index, setting) in settings.enumerate() {
                     visibility.append((
-                        NSIndexPath(forRow: index, inSection: 0),
+                        path: NSIndexPath(forRow: index, inSection: 0),
                         value: currentUser.propertyForSettingsKey(setting.key),
                         isVisible: DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: currentUser)
                     ))
