@@ -71,53 +71,52 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
 }
 
 extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
+
+    typealias SettingConfig = (indexPath: NSIndexPath, value: Bool, setting: DynamicSetting)
+
     func toggleSetting(setting: DynamicSetting, value: Bool) {
-        if let nav = self.navigationController as? ElloNavigationController {
-            var visibility: [(path: NSIndexPath, value: Bool, isVisible: Bool)] = []
-            if let settings = self.category?.settings,
-                currentUser = currentUser {
-                for (index, setting) in settings.enumerate() {
-                    visibility.append((
-                        path: NSIndexPath(forRow: index, inSection: 0),
-                        value: currentUser.propertyForSettingsKey(setting.key),
-                        isVisible: DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: currentUser)
-                    ))
-                }
-            }
+        guard let nav = self.navigationController as? ElloNavigationController,
+            currentUser = currentUser,
+            category = self.category else { return }
 
-            var updatedValues: [String: AnyObject] = [
-                setting.key: value,
-            ]
-            if let settings = self.category?.settings {
-                for anotherSetting in settings {
-                    if let anotherValue = setting.sets(anotherSetting, when: value) {
-                        updatedValues[anotherSetting.key] = anotherValue
-                    }
-                }
-            }
-            ProfileService().updateUserProfile(updatedValues,
-                success: { user in
-                    nav.setProfileData(user)
-
-                    if let settings = self.category?.settings {
-                        var changedPaths: [NSIndexPath] = []
-                        for (indexPath, value, prevVisibility) in visibility {
-                            let setting = settings[indexPath.row]
-                            if prevVisibility != DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: user) {
-                                changedPaths.append(indexPath)
-                            }
-                            else if user.propertyForSettingsKey(setting.key) != value {
-                                changedPaths.append(indexPath)
-                            }
-                        }
-                        self.tableView.reloadRowsAtIndexPaths(changedPaths, withRowAnimation: .Automatic)
-                    }
-
-                },
-                failure: { (_, _) in
-                    self.tableView.reloadData()
-                })
+        let visibility = category.settings.enumerate().map { (index, setting) in
+            return (
+                indexPath: NSIndexPath(forRow: index, inSection: 0),
+                value: currentUser.propertyForSettingsKey(setting.key),
+                setting: category.settings[index]
+            )
         }
+
+        var updatedValues: [String: AnyObject] = [
+            setting.key: value,
+        ]
+
+        for anotherSetting in category.settings {
+            if let anotherValue = setting.sets(anotherSetting, when: value) {
+                updatedValues[anotherSetting.key] = anotherValue
+            }
+        }
+
+        ProfileService().updateUserProfile(updatedValues,
+            success: { user in
+                nav.setProfileData(user)
+
+                let changedPaths = visibility.filter { config in
+                    return self.settingChanged(config, user: currentUser)
+                }.map { config in
+                    return config.indexPath
+                }
+
+                self.tableView.reloadRowsAtIndexPaths(changedPaths, withRowAnimation: .Automatic)
+            },
+            failure: { (_, _) in
+                self.tableView.reloadData()
+            })
+    }
+
+    func settingChanged(config: SettingConfig, user: User) -> Bool {
+        return DynamicSettingCellPresenter.isVisible(setting: config.setting, currentUser: user) ||
+            user.propertyForSettingsKey(config.setting.key) != config.value
     }
 
     func deleteAccount() {
