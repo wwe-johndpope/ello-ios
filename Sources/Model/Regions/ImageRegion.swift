@@ -15,7 +15,7 @@ let ImageRegionVersion = 1
 @objc(ImageRegion)
 public final class ImageRegion: JSONAble, Regionable {
     public var isRepost: Bool  = false
-    
+
     // required
     public let alt: String
     // optional
@@ -74,7 +74,7 @@ public final class ImageRegion: JSONAble, Regionable {
 // MARK: Regionable
 
     public var kind: String { return RegionKind.Image.rawValue }
-    
+
     public func coding() -> NSCoding {
         return self
     }

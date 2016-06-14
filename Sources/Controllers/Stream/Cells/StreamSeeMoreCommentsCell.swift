@@ -11,7 +11,7 @@ import Foundation
 
 public class StreamSeeMoreCommentsCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamSeeMoreCommentsCell"
-    
+
     @IBOutlet weak public var buttonContainer: UIView!
     @IBOutlet weak public var seeMoreButton: UIButton!
 

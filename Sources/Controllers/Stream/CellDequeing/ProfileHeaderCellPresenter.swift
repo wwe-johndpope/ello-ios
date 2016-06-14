@@ -54,7 +54,7 @@ public struct ProfileHeaderCellPresenter {
             }
             else if let url = user.avatarURL {
                 cell.setAvatarURL(url)
-            } 
+            }
 
             cell.viewTopConstraint.constant = UIWindow.windowWidth() / ratio
             if let height = streamCellItem.calculatedWebHeight {

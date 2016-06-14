@@ -9,7 +9,7 @@
 extension UITabBar {
 
     var itemViews: [UIView] {
-        return subviews.filter { $0 is UIControl } 
+        return subviews.filter { $0 is UIControl }
     }
 
     func itemPositionsIn(view: UIView) -> [CGRect] {

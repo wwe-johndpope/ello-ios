@@ -10,9 +10,9 @@ import Foundation
 import Crashlytics
 
 class IntroPageController: UIViewController {
-    
+
     var pageIndex: Int?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if self.isKindOfClass(WelcomePageController) {
