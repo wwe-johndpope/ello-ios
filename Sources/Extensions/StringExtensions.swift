@@ -400,4 +400,3 @@ public extension String {
         return capSplits.joinWithSeparator("")
     }
 }
-

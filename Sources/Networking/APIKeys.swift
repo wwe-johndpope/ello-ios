@@ -50,4 +50,3 @@ public struct APIKeys {
         self.init(key: key, secret: secret)
     }
 }
-

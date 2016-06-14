@@ -40,4 +40,3 @@ public extension Keyboard {
         postNotification(Notifications.KeyboardWillHide, value: self)
     }
 }
-

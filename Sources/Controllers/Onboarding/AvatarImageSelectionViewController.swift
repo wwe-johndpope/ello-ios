@@ -158,4 +158,3 @@ extension AvatarImageSelectionViewController {
     }
 
 }
-

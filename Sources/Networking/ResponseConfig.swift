@@ -45,4 +45,3 @@ public class ResponseConfig: CustomStringConvertible {
             || nextQueryItems == nil
     }
 }
-

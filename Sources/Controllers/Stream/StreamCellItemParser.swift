@@ -145,4 +145,3 @@ public extension StreamCellItemParser {
         return footerStreamCellItems(post)
     }
 }
-

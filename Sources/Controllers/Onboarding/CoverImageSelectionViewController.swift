@@ -150,4 +150,3 @@ extension CoverImageSelectionViewController {
     }
 
 }
-
