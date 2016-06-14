@@ -476,7 +476,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
         repositionBottomContent()
 
         if scrollView.contentOffset.x < 0 {
-            scrollView.contentOffset = CGPointZero;
+            scrollView.contentOffset = CGPointZero
         }
 
         if scrollView.contentOffset.x >= revealWidth {

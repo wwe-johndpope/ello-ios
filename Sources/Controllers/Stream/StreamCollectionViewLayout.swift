@@ -214,7 +214,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
 
         for i in 0 ..< end {
             if CGRectIntersectsRect(rect, unionRects[i]) {
-                begin = i * unionSize;
+                begin = i * unionSize
                 break
             }
         }
@@ -256,7 +256,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
         switch (itemRenderDirection) {
         case .ShortestFirst: return shortestColumnIndex()
         case .LeftToRight: return (item % columnCount)
-        case .RightToLeft: return (columnCount - 1) - (item % columnCount);
+        case .RightToLeft: return (columnCount - 1) - (item % columnCount)
         }
     }
 }

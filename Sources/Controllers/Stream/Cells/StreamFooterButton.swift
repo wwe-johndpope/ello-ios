@@ -18,7 +18,7 @@ public class StreamFooterButton: UIButton {
             setButtonTitle(title, color: UIColor.blackColor(), forState: .Selected)
         }
 
-        let titleInsets = UIEdgeInsetsMake(0.0, titlePadding, 0.0, -(titlePadding));
+        let titleInsets = UIEdgeInsetsMake(0.0, titlePadding, 0.0, -(titlePadding))
 
         let contentInsets = UIEdgeInsetsMake(0.0, contentPadding, 0.0, contentPadding)
 
