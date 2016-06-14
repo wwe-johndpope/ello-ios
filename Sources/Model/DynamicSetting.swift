@@ -57,22 +57,22 @@ public final class DynamicSetAnother: JSONAble {
 public final class DynamicSetting: JSONAble {
     public let label: String
     public let key: String
-    public let dependentOn: [String]
-    public let conflictsWith: [String]
-    public let setsAnother: [DynamicSetAnother]
     public let info: String?
     public let linkLabel: String?
     public let linkURL: NSURL?
+    public let dependentOn: [String]
+    public let conflictsWith: [String]
+    public let setsAnother: [DynamicSetAnother]
 
-    public init(label: String, key: String, dependentOn: [String], conflictsWith: [String], setsAnother: [DynamicSetAnother], info: String?, linkLabel: String?, linkURL: NSURL?) {
+    public init(label: String, key: String, info: String? = nil, linkLabel: String? = nil, linkURL: NSURL? = nil, dependentOn: [String] = [], conflictsWith: [String] = [], setsAnother: [DynamicSetAnother] = []) {
         self.label = label
         self.key = key
-        self.dependentOn = dependentOn
-        self.conflictsWith = conflictsWith
-        self.setsAnother = setsAnother
         self.info = info
         self.linkLabel = linkLabel
         self.linkURL = linkURL
+        self.dependentOn = dependentOn
+        self.conflictsWith = conflictsWith
+        self.setsAnother = setsAnother
         super.init(version: DynamicSettingVersion)
     }
 
@@ -80,12 +80,12 @@ public final class DynamicSetting: JSONAble {
         let decoder = Coder(aDecoder)
         self.label = decoder.decodeKey("label")
         self.key = decoder.decodeKey("key")
-        self.dependentOn = decoder.decodeKey("dependentOn")
-        self.conflictsWith = decoder.decodeKey("conflictsWith")
-        self.setsAnother = decoder.decodeKey("setsAnother")
         self.info = decoder.decodeOptionalKey("info")
         self.linkLabel = decoder.decodeOptionalKey("linkLabel")
         self.linkURL = decoder.decodeOptionalKey("linkURL")
+        self.dependentOn = decoder.decodeKey("dependentOn")
+        self.conflictsWith = decoder.decodeKey("conflictsWith")
+        self.setsAnother = decoder.decodeKey("setsAnother")
         super.init(coder: decoder.coder)
     }
 
@@ -93,12 +93,12 @@ public final class DynamicSetting: JSONAble {
         let coder = Coder(encoder)
         coder.encodeObject(label, forKey: "label")
         coder.encodeObject(key, forKey: "key")
-        coder.encodeObject(dependentOn, forKey: "dependentOn")
-        coder.encodeObject(conflictsWith, forKey: "conflictsWith")
-        coder.encodeObject(setsAnother, forKey: "setsAnother")
         coder.encodeObject(info, forKey: "info")
         coder.encodeObject(linkLabel, forKey: "linkLabel")
         coder.encodeObject(linkURL, forKey: "linkURL")
+        coder.encodeObject(dependentOn, forKey: "dependentOn")
+        coder.encodeObject(conflictsWith, forKey: "conflictsWith")
+        coder.encodeObject(setsAnother, forKey: "setsAnother")
         super.encodeWithCoder(coder.coder)
     }
 
@@ -152,7 +152,7 @@ extension DynamicSetting {
         let linkLabel = json["link"]["label"].string
         let linkURL = json["link"]["url"].URL
 
-        return DynamicSetting(label: label, key: key, dependentOn: dependentOn, conflictsWith: conflictsWith, setsAnother: setsAnother, info: info, linkLabel: linkLabel, linkURL: linkURL)
+        return DynamicSetting(label: label, key: key, info: info, linkLabel: linkLabel, linkURL: linkURL, dependentOn: dependentOn, conflictsWith: conflictsWith, setsAnother: setsAnother)
     }
 }
 
@@ -160,16 +160,16 @@ public extension DynamicSetting {
     static var blockedSetting: DynamicSetting {
         let label = InterfaceString.Settings.BlockedTitle
         let info = InterfaceString.Settings.BlockedTitle
-        return DynamicSetting(label: label, key: "delete_account", dependentOn: [], conflictsWith: [], setsAnother: [], info: info, linkLabel: .None, linkURL: .None)
+        return DynamicSetting(label: label, key: "delete_account", info: info)
     }
     static var mutedSetting: DynamicSetting {
         let label = InterfaceString.Settings.MutedTitle
         let info = InterfaceString.Settings.MutedTitle
-        return DynamicSetting(label: label, key: "delete_account", dependentOn: [], conflictsWith: [], setsAnother: [], info: info, linkLabel: .None, linkURL: .None)
+        return DynamicSetting(label: label, key: "delete_account", info: info)
     }
     static var accountDeletionSetting: DynamicSetting {
         let label = InterfaceString.Settings.DeleteAccount
         let info = InterfaceString.Settings.DeleteAccountExplanation
-        return DynamicSetting(label: label, key: "delete_account", dependentOn: [], conflictsWith: [], setsAnother: [], info: info, linkLabel: .None, linkURL: .None)
+        return DynamicSetting(label: label, key: "delete_account", info: info)
     }
 }
