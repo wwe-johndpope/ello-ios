@@ -120,20 +120,33 @@ extension DynamicSetting {
         let key = json["key"].stringValue
 
         let dependentOn: [String]
-        if let jsonConflictsWith = json["dependent_on"].array {
-            dependentOn = jsonConflictsWith.flatMap { $0.string }
+        if let jsonDependentOn = json["dependent_on"].array {
+            dependentOn = jsonDependentOn.flatMap { $0.string }
         }
         else {
             dependentOn = []
         }
 
-        let conflictsWith: [String] = json["conflicts_with"].array?.flatMap { $0.string } ?? []
-        let setsAnother: [DynamicSetAnother] = json["sets_another"].array?.flatMap { json in
-            if let val = json.object as? [String: AnyObject] {
-                return DynamicSetAnother.fromJSON(val) as? DynamicSetAnother
+        let conflictsWith: [String]
+        if let jsonConflictsWith = json["conflicts_with"].array {
+            conflictsWith = jsonConflictsWith.flatMap { $0.string }
+        }
+        else {
+            conflictsWith = []
+        }
+
+        let setsAnother: [DynamicSetAnother]
+        if let jsonSetsAnother = json["sets_another"].array {
+            setsAnother = jsonSetsAnother.flatMap { json in
+                if let val = json.object as? [String: AnyObject] {
+                    return DynamicSetAnother.fromJSON(val) as? DynamicSetAnother
+                }
+                return nil
             }
-            return nil
-        } ?? []
+        }
+        else {
+            setsAnother = []
+        }
 
         let info = json["info"].string
         let linkLabel = json["link"]["label"].string
