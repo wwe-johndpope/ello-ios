@@ -46,6 +46,7 @@ public class ProfileViewController: StreamableViewController {
     }
 
     var user: User?
+    var headerItems: [StreamCellItem]?
     var responseConfig: ResponseConfig?
     var userParam: String!
     var coverImageHeightStart: CGFloat?
@@ -83,9 +84,7 @@ public class ProfileViewController: StreamableViewController {
         self.initialStreamKind = .UserStream(userParam: self.userParam)
         super.init(nibName: "ProfileViewController", bundle: nil)
 
-        streamViewController.streamKind = initialStreamKind
-        streamViewController.initialLoadClosure = reloadEntireProfile
-        streamViewController.toggleClosure = toggleGrid
+        sharedInit()
         relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [unowned self] user in
             if self.user?.id == user.id {
                 self.updateRelationshipPriority(user.relationshipPriority)
@@ -101,8 +100,7 @@ public class ProfileViewController: StreamableViewController {
         self.initialStreamKind = .CurrentUserStream
         super.init(nibName: "ProfileViewController", bundle: nil)
 
-        streamViewController.streamKind = initialStreamKind
-        streamViewController.initialLoadClosure = reloadEntireProfile
+        sharedInit()
         currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [unowned self] _ in
             self.updateCachedImages()
         }
@@ -113,7 +111,13 @@ public class ProfileViewController: StreamableViewController {
         }
     }
 
-     deinit {
+    private func sharedInit() {
+        streamViewController.streamKind = initialStreamKind
+        streamViewController.initialLoadClosure = reloadEntireProfile
+        streamViewController.toggleClosure = toggleGrid
+    }
+
+    deinit {
         currentUserChangedNotification?.removeObserver()
         currentUserChangedNotification = nil
         postChangedNotification?.removeObserver()
@@ -394,13 +398,9 @@ public class ProfileViewController: StreamableViewController {
 
         // the first three items are (1) ProfileHeader (2) Spacer (3) ColumnToggle
         // (see below, in userLoaded)
-        let numHeaderItems = 3
-        let headerItems = Array(streamViewController.dataSource.visibleCellItems[0..<numHeaderItems])
-        // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
-        // triggering pagination at this time will, inexplicably, cause the cells to disappear
-        streamViewController.canLoadNext = false
-        streamViewController.dataSource.removeAllCellItems()
-        streamViewController.appendStreamCellItems(headerItems)
+        if let headerItems = headerItems {
+            streamViewController.appendStreamCellItems(headerItems)
+        }
         userLoaded(user, responseConfig: responseConfig, isReload: false)
     }
 
@@ -437,13 +437,13 @@ public class ProfileViewController: StreamableViewController {
             // clear out this view
             streamViewController.clearForInitialLoad()
 
-            // if these items change, you should also update the magic number
-            // `numHeaderItems = 3` in `toggleGrid()`
-            items += [
+            let headerItems = [
                 StreamCellItem(jsonable: user, type: .ProfileHeader),
                 StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
                 StreamCellItem(jsonable: user, type: .ColumnToggle),
             ]
+            self.headerItems = headerItems
+            items += headerItems
         }
 
         if let posts = user.posts {
