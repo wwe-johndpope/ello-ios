@@ -396,8 +396,6 @@ public class ProfileViewController: StreamableViewController {
     func toggleGrid(isGridView: Bool) {
         guard let user = user, responseConfig = streamViewController.responseConfig else { return }
 
-        // the first three items are (1) ProfileHeader (2) Spacer (3) ColumnToggle
-        // (see below, in userLoaded)
         if let headerItems = headerItems {
             streamViewController.appendStreamCellItems(headerItems)
         }
