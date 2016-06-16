@@ -437,8 +437,9 @@ public class ProfileViewController: StreamableViewController {
 
             let headerItems = [
                 StreamCellItem(jsonable: user, type: .ProfileHeader),
-                StreamCellItem(jsonable: user, type: .Spacer(height: 54)),
+                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3)),
                 StreamCellItem(jsonable: user, type: .ColumnToggle),
+                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5)),
             ]
             self.headerItems = headerItems
             items += headerItems
