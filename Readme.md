@@ -10,7 +10,7 @@ We use the `dotenv` gem to access application secrets in the terminal, and `coco
 
 
 - `ELLO_STAFF`: set this in your bash/zsh startup script to access private cocoapods.
-- `GITHUB_API_TOKEN`: used for generating release notes during distrubution
+- `GITHUB_API_TOKEN`: used for generating release notes during distribution
 - `INVITE_FRIENDS_SALT`: used for generating the salt for sending emails to the API.
 - STAGING/PROD environment specific:
   - `#{ENV}_CLIENT_KEY`: the key or id used for oauth (e.g. `STAGING_CLIENT_KEY`)
