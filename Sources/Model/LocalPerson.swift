@@ -11,7 +11,7 @@ public final class LocalPerson: JSONAble {
     public var identifier: String {
         return "\(id)"
     }
-    
+
     public init(name: String, emails: [String], id: Int32) {
         self.name = name
         self.emails = emails
@@ -34,7 +34,7 @@ public final class LocalPerson: JSONAble {
         coder.encodeObject(id, forKey: "id")
         super.encodeWithCoder(coder.coder)
     }
-    
+
     // this shouldn't ever get called
     public override class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
         return LocalPerson(name: "Unknown", emails: ["unknown@example.com"], id: 1)

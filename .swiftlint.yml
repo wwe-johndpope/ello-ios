@@ -6,7 +6,6 @@ disabled_rules:
   - force_cast
   - force_try
   - function_body_length
-  - leading_whitespace
   - legacy_constant
   - legacy_constructor
   - line_length
@@ -15,9 +14,6 @@ disabled_rules:
   - return_arrow_whitespace
   - statement_position
   - todo
-  - trailing_newline
-  - trailing_semicolon
-  - trailing_whitespace
   - type_body_length
   - type_name
   - valid_docs

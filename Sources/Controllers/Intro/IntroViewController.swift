@@ -20,7 +20,7 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
         pageViewController = storyboard.instantiateViewControllerWithIdentifier("IntroPager") as? UIPageViewController
 
         let width = UIScreen.mainScreen().bounds.size.width
-        let height = UIScreen.mainScreen().bounds.size.height;
+        let height = UIScreen.mainScreen().bounds.size.height
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
 
         pageViewController?.view.frame = frame
@@ -52,13 +52,13 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
 
         pageViewController!.setViewControllers([welcomePageViewController],
             direction: .Forward, animated: false, completion: nil)
-        pageViewController!.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height);
+        pageViewController!.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
 
         // Setup the page control
         pageControl.frame = CGRect(x: 0, y: 20, width: 80, height: 37)
         pageControl.frame.origin.x = view.bounds.size.width / 2 - pageControl.frame.size.width / 2
-        pageControl.currentPage = 0;
-        pageControl.numberOfPages = viewControllers.count;
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = viewControllers.count
         pageControl.currentPageIndicatorTintColor = .blackColor()
         pageControl.pageIndicatorTintColor = .greyA()
         pageControl.autoresizingMask = [.FlexibleBottomMargin, .FlexibleRightMargin, .FlexibleLeftMargin]

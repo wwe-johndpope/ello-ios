@@ -36,8 +36,7 @@ public extension Keyboard {
         else {
             external = true
         }
-        
+
         postNotification(Notifications.KeyboardWillHide, value: self)
     }
 }
-

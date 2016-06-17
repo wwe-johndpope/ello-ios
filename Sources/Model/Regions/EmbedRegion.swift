@@ -27,7 +27,7 @@ public enum EmbedType: String {
 @objc(EmbedRegion)
 public final class EmbedRegion: JSONAble, Regionable {
     public var isRepost: Bool = false
-    
+
     // active record
     public let id: String
     // required
@@ -110,7 +110,7 @@ public final class EmbedRegion: JSONAble, Regionable {
 // MARK: Regionable
 
     public var kind: String { return RegionKind.Embed.rawValue }
-    
+
     public func coding() -> NSCoding {
         return self
     }

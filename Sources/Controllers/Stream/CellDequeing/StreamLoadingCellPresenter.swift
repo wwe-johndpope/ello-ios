@@ -21,5 +21,4 @@ public struct StreamLoadingCellPresenter {
             cell.start()
         }
     }
-
 }

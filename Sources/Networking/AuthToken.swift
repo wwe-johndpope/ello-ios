@@ -89,7 +89,7 @@ public struct AuthToken {
             log("failed to create JSON and store authToken")
         }
     }
-    
+
     static func reset() {
         var keychain = sharedKeychain
         keychain.authToken = nil

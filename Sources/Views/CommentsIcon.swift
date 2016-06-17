@@ -36,7 +36,7 @@ public class CommentsIcon: BasicIcon {
 extension CommentsIcon {
     public func animate() {
         let animation = CAKeyframeAnimation()
-        animation.keyPath = "position.x";
+        animation.keyPath = "position.x"
         animation.values = [0, 8.9, 9.9, 9.9, 0.1, 0, 0]
         animation.keyTimes = [0, 0.25, 0.45, 0.55, 0.75, 0.95, 0]
         animation.duration = 0.6

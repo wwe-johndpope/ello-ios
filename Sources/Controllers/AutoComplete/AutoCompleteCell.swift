@@ -25,4 +25,3 @@ public extension AutoCompleteCell {
         return 49
     }
 }
-

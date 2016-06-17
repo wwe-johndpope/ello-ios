@@ -281,7 +281,7 @@ public struct InterfaceString {
         }
         public struct Avatar {
             static let Button = NSLocalizedString("Select your profile avatar", comment: "Choose avatar button")
-        } 
+        }
         public struct CoverImage {
             static let Button = NSLocalizedString("Select your header image", comment: "Choose header image button")
             static let Title = NSLocalizedString("Create your profile.", comment: "Header Image Selection text")
