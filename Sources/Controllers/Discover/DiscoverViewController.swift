@@ -14,12 +14,26 @@ public class DiscoverViewController: StreamableViewController {
         set { self.tabBarItem = newValue }
     }
 
+    required public init(category: Category) {
+        super.init(nibName: nil, bundle: nil)
+
+        sharedInit(title: category.name)
+        streamViewController.streamKind = .Discover(slug: category.slug)
+        streamViewController.customStreamCellItems = { jsonables, defaultItems in
+            var items: [StreamCellItem] = []
+
+            let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
+            items += [toggleCellItem]
+
+            items += defaultItems()
+            return items
+        }
+    }
+
     required public init() {
         super.init(nibName: nil, bundle: nil)
 
-        addSearchButton()
-        title = InterfaceString.Discover.Title
-        elloNavigationItem.title = title
+        sharedInit()
         streamViewController.streamKind = .Discover(slug: "recommended")
         streamViewController.customStreamCellItems = { jsonables, defaultItems in
             var items: [StreamCellItem] = []
@@ -31,6 +45,19 @@ public class DiscoverViewController: StreamableViewController {
             items += defaultItems()
             return items
         }
+    }
+
+    private func sharedInit(title title: String = InterfaceString.Discover.Title) {
+        self.title = title
+        elloNavigationItem.title = title
+
+        if title != InterfaceString.Discover.Title {
+            let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+            elloNavigationItem.leftBarButtonItems = [leftItem]
+            elloNavigationItem.fixNavBarItemPadding()
+        }
+
+        addSearchButton()
     }
 
     required public init?(coder aDecoder: NSCoder) {

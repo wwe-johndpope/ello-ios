@@ -777,6 +777,15 @@ extension StreamViewController {
     }
 }
 
+// MARK: StreamViewController: Open category
+extension StreamViewController {
+    public func categoryTapped(category: Category) {
+        let vc = DiscoverViewController(category: category)
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
 // MARK: StreamViewController: UserDelegate
 extension StreamViewController: UserDelegate {
 
@@ -970,6 +979,9 @@ extension StreamViewController: UICollectionViewDelegate {
             let post = comment.loadedFromPost
         {
             createCommentTapped(post)
+        }
+        else if let category = dataSource.jsonableForIndexPath(indexPath) as? Category {
+            categoryTapped(category)
         }
     }
 

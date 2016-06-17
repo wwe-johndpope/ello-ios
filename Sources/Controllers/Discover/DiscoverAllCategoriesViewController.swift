@@ -14,6 +14,11 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
 
         title = InterfaceString.Discover.Categories
         elloNavigationItem.title = title
+
+        let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+        elloNavigationItem.leftBarButtonItems = [leftItem]
+        elloNavigationItem.fixNavBarItemPadding()
+
         streamViewController.streamKind = .Categories
         streamViewController.customStreamCellItems = { jsonables, defaultItems in
             var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
@@ -24,6 +29,8 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
                 for category in sortedCategories {
                     items.append(StreamCellItem(jsonable: category, type: .Category))
                 }
+                let seeAllCategory = Category(id: "", name: InterfaceString.Discover.SeeAllCategories, slug: "see_all", order: -1, level: .Primary)
+                items.append(StreamCellItem(jsonable: seeAllCategory, type: .Category))
             }
             return items
         }

@@ -145,7 +145,7 @@ public enum StreamCellType: Equatable {
 
     public var selectable: Bool {
         switch self {
-        case CreateComment, Header, InviteFriends, Notification, RepostHeader, SeeMoreComments, Toggle, UserListItem:
+        case Category, CreateComment, Header, InviteFriends, Notification, RepostHeader, SeeMoreComments, Toggle, UserListItem:
              return true
         default: return false
         }

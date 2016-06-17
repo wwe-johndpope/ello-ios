@@ -126,8 +126,12 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func commentForIndexPath(indexPath: NSIndexPath) -> ElloComment? {
+        return jsonableForIndexPath(indexPath) as? ElloComment
+    }
+
+    public func jsonableForIndexPath(indexPath: NSIndexPath) -> JSONAble? {
         let item = visibleStreamCellItem(at: indexPath)
-        return item?.jsonable as? ElloComment
+        return item?.jsonable
     }
 
     public func visibleStreamCellItem(at indexPath: NSIndexPath) -> StreamCellItem? {
