@@ -38,7 +38,6 @@ public struct StreamFooterCellPresenter {
             configureDisplayCounts(cell, post: post, streamKind: streamKind)
             configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
             configureCommentControl(cell, streamCellItem: streamCellItem, streamKind: streamKind)
-            configureGridSpecificLayout(cell, streamKind: streamKind)
         }
     }
 
@@ -48,8 +47,6 @@ public struct StreamFooterCellPresenter {
         currentUser: User?,
         streamKind: StreamKind)
     {
-        cell.comments = post.commentsCount?.numberToHuman()
-
         let ownPost = (currentUser?.id == post.authorId || (post.repostAuthor?.id != nil && currentUser?.id == post.repostAuthor?.id))
 
         let repostingEnabled = post.author?.hasRepostingEnabled ?? true
@@ -114,26 +111,22 @@ public struct StreamFooterCellPresenter {
         }
     }
 
-    private static func configureGridSpecificLayout(
-        cell: StreamFooterCell,
-        streamKind: StreamKind)
-    {
-    }
-
     private static func configureDisplayCounts(
         cell: StreamFooterCell,
         post: Post,
         streamKind: StreamKind)
     {
-        if streamKind.isGridView {
+        let rounding = streamKind.isGridView ? 0 : 2
+        if cell.frame.width < 155 {
             cell.views = ""
             cell.reposts = ""
             cell.loves = ""
         }
         else {
-            cell.views = post.viewsCount?.numberToHuman()
-            cell.reposts = post.repostsCount?.numberToHuman()
-            cell.loves = post.lovesCount?.numberToHuman()
+            cell.views = post.viewsCount?.numberToHuman(rounding: rounding)
+            cell.reposts = post.repostsCount?.numberToHuman(rounding: rounding)
+            cell.loves = post.lovesCount?.numberToHuman(rounding: rounding)
         }
+        cell.comments = post.commentsCount?.numberToHuman(rounding: rounding)
     }
 }

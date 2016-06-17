@@ -34,7 +34,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
             context("grid layout") {
 
-                it("configures a stream footer cell") {
+                it("configures a thin stream footer cell") {
                     let post: Post = stub([
                         "id" : "768",
                         "viewsCount" : 9,
@@ -43,6 +43,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount" : 14
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
+                    cell.frame = CGRect(origin: .zero, size: CGSize(width: 150, height: 60))
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Footer)
 
                     GroupDefaults["StarredIsGridView"] = true
@@ -54,6 +55,29 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     expect(cell.reposts) == ""
                     expect(cell.comments) == "6"
                     expect(cell.loves) == ""
+                }
+
+                it("configures a wide stream footer cell") {
+                    let post: Post = stub([
+                        "id" : "768",
+                        "viewsCount" : 9,
+                        "repostsCount" : 4,
+                        "commentsCount" : 6,
+                        "lovesCount" : 14
+                    ])
+                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
+                    cell.frame = CGRect(origin: .zero, size: CGSize(width: 180, height: 60))
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Footer)
+
+                    GroupDefaults["StarredIsGridView"] = true
+                    StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .Starred, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
+
+                    expect(cell.commentsControl.selected).to(beFalse())
+                    expect(cell.commentsOpened).to(beFalse())
+                    expect(cell.views) == "9"
+                    expect(cell.reposts) == "4"
+                    expect(cell.comments) == "6"
+                    expect(cell.loves) == "14"
                 }
             }
 
