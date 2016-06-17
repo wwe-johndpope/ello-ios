@@ -47,10 +47,10 @@ public struct ElloAttributedString {
         for i in 0..<nsCount {
             let letter = NSMutableAttributedString(attributedString: text)
             if i < nsCount - 1 {
-                letter.deleteCharactersInRange(NSMakeRange(i + 1, nsCount - i - 1))
+                letter.deleteCharactersInRange(NSRange(location: i + 1, length: nsCount - i - 1))
             }
             if i > 0 {
-                letter.deleteCharactersInRange(NSMakeRange(0, i))
+                letter.deleteCharactersInRange(NSRange(location: 0, length: i))
             }
 
             if letter.string == "\n" {

@@ -116,7 +116,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
 
     private func stripImageSrc(html: String) -> String {
         // finds image tags, replaces them with data:image/png (inlines image data)
-        let range = NSMakeRange(0, html.characters.count)
+        let range = NSRange(location: 0, length: html.characters.count)
 
 //MARK: warning - is '.ReportCompletion' what we want?
         if let srcRegex = srcRegex {

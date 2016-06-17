@@ -175,7 +175,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
             }
 
             attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            attributes.frame = CGRectMake(xOffset, yOffset, calculatedItemWidth, itemHeight)
+            attributes.frame = CGRect(x: xOffset, y: yOffset, width: calculatedItemWidth, height: itemHeight)
             itemAttributes.append(attributes)
 
             allItemAttributes.append(attributes)
@@ -253,7 +253,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
     }
 
     private func nextColumnIndexForItem (item: NSInteger) -> Int {
-        switch (itemRenderDirection) {
+        switch itemRenderDirection {
         case .ShortestFirst: return shortestColumnIndex()
         case .LeftToRight: return (item % columnCount)
         case .RightToLeft: return (columnCount - 1) - (item % columnCount)

@@ -25,13 +25,14 @@ public class CreateCommentBackgroundView: UIView {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
-        bezierPath.moveToPoint(CGPointMake(0, midY))
-        bezierPath.addLineToPoint(CGPointMake(margin, midY - margin))
-        bezierPath.addLineToPoint(CGPointMake(margin, 0))
-        bezierPath.addLineToPoint(CGPointMake(self.frame.width, 0))
-        bezierPath.addLineToPoint(CGPointMake(self.frame.width, self.frame.height))
-        bezierPath.addLineToPoint(CGPointMake(margin, self.frame.height))
-        bezierPath.addLineToPoint(CGPointMake(margin, midY + margin))
+
+        bezierPath.moveToPoint(CGPoint(x: 0, y: midY))
+        bezierPath.addLineToPoint(CGPoint(x: margin, y: midY - margin))
+        bezierPath.addLineToPoint(CGPoint(x: margin, y: 0))
+        bezierPath.addLineToPoint(CGPoint(x: self.frame.width, y: 0))
+        bezierPath.addLineToPoint(CGPoint(x: self.frame.width, y: self.frame.height))
+        bezierPath.addLineToPoint(CGPoint(x: margin, y: self.frame.height))
+        bezierPath.addLineToPoint(CGPoint(x: margin, y: midY + margin))
         bezierPath.closePath()
         color.setFill()
         bezierPath.fill()

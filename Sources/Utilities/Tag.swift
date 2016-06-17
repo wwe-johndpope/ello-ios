@@ -229,7 +229,7 @@ public class Tag: CustomStringConvertible {
                 }
 
                 let newTag = Tag()
-                let name = (value as NSString).substringWithRange(NSMakeRange(1, value.characters.count - 1))
+                let name = (value as NSString).substringWithRange(NSRange(location: 1, length: value.characters.count - 1))
                 newTag.name = name
                 newTag.isSingleton = Singletons.contains(name)
                 lastTag.tags.append(newTag)

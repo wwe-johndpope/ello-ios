@@ -11,7 +11,7 @@ public class StreamLoadingCell: UICollectionViewCell {
 
     lazy var elloLogo: ElloLogoView = {
         let logo = ElloLogoView()
-        logo.bounds = CGRectMake(0, 0, 30, 30)
+        logo.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
         return logo
     }()
 
@@ -40,7 +40,7 @@ public class StreamLoadingCell: UICollectionViewCell {
     override public func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundColor = UIColor.whiteColor()
-        elloLogo.center = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0)
+        elloLogo.center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
     }
 
     class func streamCellItem() -> StreamCellItem {

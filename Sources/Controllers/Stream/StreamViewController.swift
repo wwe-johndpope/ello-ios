@@ -664,7 +664,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     public func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSizeMake(UIWindow.windowWidth(), dataSource.heightForIndexPath(indexPath, numberOfColumns: 1))
+            return CGSize(width: UIWindow.windowWidth(), height: dataSource.heightForIndexPath(indexPath, numberOfColumns: 1))
     }
 
     public func collectionView(collectionView: UICollectionView,
