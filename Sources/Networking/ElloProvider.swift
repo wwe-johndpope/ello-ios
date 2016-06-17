@@ -103,7 +103,9 @@ public class ElloProvider {
 
     private func requestFailed(failure: ElloFailureCompletion) {
         let elloError = NSError(domain: ElloErrorDomain, code: 401, userInfo: [NSLocalizedFailureReasonErrorKey: "Logged Out"])
-        failure(error: elloError, statusCode: 401)
+        inForeground {
+            failure(error: elloError, statusCode: 401)
+        }
     }
 
     var waitList: [ElloRequestClosure] = []
