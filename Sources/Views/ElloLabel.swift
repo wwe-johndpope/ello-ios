@@ -28,9 +28,9 @@ public class ElloLabel: UILabel {
         paragraphStyle.alignment = alignment
 
         return [
-            NSFontAttributeName : UIFont.defaultFont(),
-            NSForegroundColorAttributeName : color,
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphStyle
         ]
     }
 }
@@ -75,15 +75,15 @@ public class ElloErrorLabel: ElloLabel {
 }
 
 public class ElloSizeableLabel: ElloLabel {
-    override public func attributes(color: UIColor, alignment: NSTextAlignment) -> [String : AnyObject] {
+    override public func attributes(color: UIColor, alignment: NSTextAlignment) -> [String: AnyObject] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = alignment
 
         return [
-            NSFontAttributeName : font,
-            NSForegroundColorAttributeName : color,
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphStyle
         ]
     }
 }

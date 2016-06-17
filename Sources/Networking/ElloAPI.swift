@@ -86,7 +86,7 @@ public enum ElloAPI {
     public var mappingType: MappingType {
         switch self {
         case .Categories:
-            return .PostCategoriesType
+            return .CategoriesType
         case .AmazonCredentials:
             return .AmazonCredentialsType
         case .Availability:

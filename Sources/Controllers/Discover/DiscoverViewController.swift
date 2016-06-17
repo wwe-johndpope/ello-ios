@@ -25,7 +25,7 @@ public class DiscoverViewController: StreamableViewController {
             var items: [StreamCellItem] = []
 
             let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
-            let categoryListItem = StreamCellItem(jsonable: CategoryList.tmp(), type: .CategoryList)
+            let categoryListItem = StreamCellItem(jsonable: CategoryList.hardCodedPrimaries(), type: .CategoryList)
             items += [toggleCellItem, categoryListItem]
 
             items += defaultItems()

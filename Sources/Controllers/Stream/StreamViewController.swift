@@ -635,6 +635,9 @@ extension StreamViewController: DiscoverCategoryPickerDelegate {
     }
 
     public func discoverAllCategoriesTapped() {
+        let vc = DiscoverAllCategoriesViewController()
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }

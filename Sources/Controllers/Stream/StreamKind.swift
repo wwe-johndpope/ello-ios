@@ -11,6 +11,7 @@ import SwiftyUserDefaults
 
 public enum StreamKind {
     case CurrentUserStream
+    case Categories
     case Discover(slug: String)
     case Following
     case Starred
@@ -22,12 +23,13 @@ public enum StreamKind {
 
     public var name: String {
         switch self {
+        case .CurrentUserStream: return InterfaceString.Profile.Title
+        case .Categories: return InterfaceString.Discover.Categories
         case .Discover: return InterfaceString.Discover.Title
         case .Following: return InterfaceString.FollowingStream.Title
         case .Starred: return InterfaceString.StarredStream.Title
         case .Notifications: return InterfaceString.Notifications.Title
         case .PostDetail: return ""
-        case .CurrentUserStream: return InterfaceString.Profile.Title
         case let .SimpleStream(_, title): return title
         case .Unknown: return ""
         case .UserStream: return ""
@@ -36,12 +38,13 @@ public enum StreamKind {
 
     public var cacheKey: String {
         switch self {
+        case .CurrentUserStream: return "Profile"
+        case .Categories: return "Categories"
         case .Discover: return "Discover"
         case .Following: return "Following"
         case .Starred: return "Starred"
         case .Notifications: return "Notifications"
         case .PostDetail: return "PostDetail"
-        case .CurrentUserStream: return "Profile"
         case .Unknown: return "unknown"
         case let .UserStream(userParam):
             return "UserStream_\(userParam)"
@@ -81,12 +84,13 @@ public enum StreamKind {
 
     public var endpoint: ElloAPI {
         switch self {
+        case .CurrentUserStream: return .CurrentUserStream
+        case .Categories: return .Categories
         case let .Discover(slug): return .Discover(slug: slug)
         case .Following: return .FriendStream
         case .Starred: return .NoiseStream
         case let .Notifications(category): return .NotificationsStream(category: category)
         case let .PostDetail(postParam): return .PostDetail(postParam: postParam, commentCount: 10)
-        case .CurrentUserStream: return .CurrentUserStream
         case let .SimpleStream(endpoint, _): return endpoint
         case .Unknown: return .NotificationsStream(category: nil) // doesn't really get used
         case let .UserStream(userParam): return .UserStream(userParam: userParam)

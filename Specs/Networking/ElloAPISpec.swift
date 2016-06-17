@@ -133,7 +133,7 @@ class ElloAPISpec: QuickSpec {
                     (.Availability(content: ["":""]), .AvailabilityType),
                     (.AwesomePeopleStream, .UsersType),
                     (.CommentDetail(postId: "", commentId: ""), .CommentsType),
-                    (.Categories, .PostCategoriesType),
+                    (.Categories, .CategoriesType),
                     (.CommunitiesStream, .UsersType),
                     (.CreateComment(parentPostId: "", body: ["": ""]), .CommentsType),
                     (.CreateLove(postId: ""), .LovesType),

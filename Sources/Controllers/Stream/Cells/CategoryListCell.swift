@@ -62,7 +62,6 @@ public class CategoryListCell: UICollectionViewCell {
 
         style()
         bindActions()
-        // setText()
         arrange()
     }
 
