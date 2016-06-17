@@ -79,6 +79,7 @@ public enum InterfaceImage: String {
     // Generic
     case X = "x"
     case Dots = "dots"
+    case DotsLight = "dots_light"
     case PlusSmall = "plussmall"
     case CheckSmall = "checksmall"
     case AngleBracket = "abracket"

@@ -72,7 +72,7 @@ public class CategoryListCell: UICollectionViewCell {
 
     private func style() {
         backgroundColor = .whiteColor()
-        allCategoriesButton.setImage(.Dots, imageStyle: .Normal, forState: .Normal)
+        allCategoriesButton.setImage(.DotsLight, imageStyle: .Normal, forState: .Normal)
     }
 
     private func bindActions() {

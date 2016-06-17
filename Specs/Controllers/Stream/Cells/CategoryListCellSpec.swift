@@ -35,17 +35,6 @@ class CategoryListCellSpec: QuickSpec {
                     (title: "Featured", slug: "featured"),
                     (title: "MMMMMMMMM", slug: "mmmmmmmmm1"),
                     (title: "MMMMMMMMM", slug: "mmmmmmmmm2"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm3"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm4"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm5"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm6"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm7"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm8"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm9"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm10"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm11"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm12"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm13"),
                 ]
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())
