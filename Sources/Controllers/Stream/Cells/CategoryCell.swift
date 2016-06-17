@@ -28,7 +28,7 @@ public class CategoryCell: UICollectionViewCell {
         static let lineHeight: CGFloat = 1
     }
 
-    var category: String {
+    var title: String {
         set { label.text = newValue }
         get { return label.text ?? "" }
     }
@@ -52,11 +52,18 @@ public class CategoryCell: UICollectionViewCell {
     }
 
     private func arrange() {
+        contentView.addSubview(colorFillView)
+        contentView.addSubview(label)
+
         colorFillView.snp_makeConstraints { make in
-            make.edges.equalTo(contentView) // .inset(UIEdgeInsets(bottom: Size.lineHeight))
+            make.top.equalTo(contentView)
+            make.left.equalTo(contentView)
+            make.bottom.equalTo(contentView).offset(-Size.lineHeight)
+            make.right.equalTo(contentView)
         }
         label.snp_makeConstraints { make in
-            make.edges.equalTo(contentView) // .inset(UIEdgeInsets(left: Size.sideMargins))
+            make.centerY.equalTo(contentView)
+            make.left.equalTo(contentView).offset(Size.sideMargins)
         }
     }
 }

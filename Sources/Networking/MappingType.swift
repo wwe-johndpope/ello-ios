@@ -40,6 +40,8 @@ public enum MappingType: String {
             return AutoCompleteResult.fromJSON
         case AvailabilityType:
             return Availability.fromJSON
+        case CategoriesType:
+            return Category.fromJSON
         case CommentsType:
             return ElloComment.fromJSON
         case DynamicSettingsType:
@@ -58,7 +60,7 @@ public enum MappingType: String {
             return User.fromJSON
         case UsernamesType:
             return Username.fromJSON
-        default:
+        case NoContentType:
             return UnknownJSONAble.fromJSON
         }
     }

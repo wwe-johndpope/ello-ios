@@ -11,10 +11,18 @@ import UIKit
 import ElloUIFonts
 
 public class ElloLabel: UILabel {
+    override public var text: String? {
+        didSet {
+            if let text = text {
+                setLabelText(text, color: textColor, alignment: textAlignment)
+            }
+        }
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if let text = self.text {
-            self.setLabelText(text, color: textColor)
+        if let text = text {
+            setLabelText(text, color: textColor)
         }
     }
 
@@ -46,6 +54,8 @@ extension ElloLabel {
 
 public extension ElloLabel {
     func setLabelText(title: String, color: UIColor = UIColor.whiteColor(), alignment: NSTextAlignment = .Left) {
+        textColor = color
+        textAlignment = alignment
         let attrs = attributes(color, alignment: alignment)
         attributedText = NSAttributedString(string: title, attributes: attrs)
     }

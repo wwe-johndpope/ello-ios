@@ -15,6 +15,12 @@ public struct CategoryCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
+        if let cell = cell as? CategoryCell,
+            category = streamCellItem.jsonable as? Category
+        {
+            cell.title = category.name
+            cell.highlight = category.level == .Meta ? .Gray : .White
+        }
     }
 
 }

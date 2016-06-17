@@ -6,5 +6,5 @@
 //  Copyright (c) 2016 Ello. All rights reserved.
 //
 
-class DiscoverAllCategoriesScreen: UIView {
+public class DiscoverAllCategoriesScreen: ElloScreen {
 }

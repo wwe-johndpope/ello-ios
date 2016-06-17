@@ -484,6 +484,10 @@
 		1D59338C1D147EA400EAF03D /* CategoryCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933871D147E8500EAF03D /* CategoryCellPresenter.swift */; };
 		1D59338D1D147EA800EAF03D /* DiscoverAllCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933841D147E7000EAF03D /* DiscoverAllCategoriesViewController.swift */; };
 		1D59338E1D147EAB00EAF03D /* DiscoverAllCategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933831D147E7000EAF03D /* DiscoverAllCategoriesScreen.swift */; };
+		1D5933911D14855B00EAF03D /* ElloScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933901D14855B00EAF03D /* ElloScreen.swift */; };
+		1D5933921D1492D100EAF03D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336A1D10ADA600EAF03D /* Category.swift */; };
+		1D5933931D1492D700EAF03D /* CategoryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933741D10BC8100EAF03D /* CategoryLevel.swift */; };
+		1D5933941D1492DC00EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */; };
 		1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */; };
 		1D5F97791A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */; };
@@ -1297,6 +1301,7 @@
 		1D5933841D147E7000EAF03D /* DiscoverAllCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverAllCategoriesViewController.swift; path = Sources/Controllers/Discover/DiscoverAllCategoriesViewController.swift; sourceTree = SOURCE_ROOT; };
 		1D5933871D147E8500EAF03D /* CategoryCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCellPresenter.swift; sourceTree = "<group>"; };
 		1D5933891D147E8A00EAF03D /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		1D5933901D14855B00EAF03D /* ElloScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScreen.swift; sourceTree = "<group>"; };
 		1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
 		1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarControllerSpec.swift; sourceTree = "<group>"; };
@@ -2604,6 +2609,7 @@
 		12F6AE641A4339D100493660 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1D59338F1D14854700EAF03D /* Screens */,
 				762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */,
 				1289F3971AF17937008A938C /* BasicIcon.swift */,
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
@@ -2815,6 +2821,14 @@
 				1D33284D1AE74D7A00446591 /* SearchViewController.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		1D59338F1D14854700EAF03D /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				1D5933901D14855B00EAF03D /* ElloScreen.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		1D652F5F1BC3055E00AF3B06 /* Onboarding */ = {
@@ -4029,6 +4043,7 @@
 				1DF806541CDD1AFE002D60AD /* Username.swift in Sources */,
 				122D1BB91C64036A001386CE /* ImageExtensions.swift in Sources */,
 				12DEB2511C5BFB6F00D4CDCE /* StringExtensions.swift in Sources */,
+				1D5933921D1492D100EAF03D /* Category.swift in Sources */,
 				122B30DD1C6A3FBF00C1B9D8 /* User.swift in Sources */,
 				122D1B501C602355001386CE /* CrashlyticsKey.swift in Sources */,
 				122D1B4E1C602337001386CE /* BoxType.swift in Sources */,
@@ -4044,6 +4059,7 @@
 				1207C99C1C750F8400939ADB /* AuthState.swift in Sources */,
 				1207C99A1C750E4B00939ADB /* ShareTrackerOverrides.swift in Sources */,
 				122B30C11C6A3FBB00C1B9D8 /* Post.swift in Sources */,
+				1D5933931D1492D700EAF03D /* CategoryLevel.swift in Sources */,
 				1207C9A01C752F0400939ADB /* NetworkError.swift in Sources */,
 				122B30BE1C6A3FBB00C1B9D8 /* Love.swift in Sources */,
 				122B30DB1C6A3FBF00C1B9D8 /* RelationshipPriority.swift in Sources */,
@@ -4077,6 +4093,7 @@
 				1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */,
 				122D1BAB1C613976001386CE /* AlertPresentationController.swift in Sources */,
 				122D1BAC1C6139A4001386CE /* CGRectExtensions.swift in Sources */,
+				1D5933941D1492DC00EAF03D /* CategoryList.swift in Sources */,
 				12DEB24A1C5BED4600D4CDCE /* RegexExtensions.swift in Sources */,
 				122B30E91C6A3FC400C1B9D8 /* RegionParser.swift in Sources */,
 				12DEB2491C5BED4000D4CDCE /* Array.swift in Sources */,
@@ -4433,6 +4450,7 @@
 				1266E50D1A9E2B9E00270E1C /* ContentFlagger.swift in Sources */,
 				767399811AA679CB00C4222C /* ElloTextView.swift in Sources */,
 				1207C98D1C73FEE000939ADB /* RePostService.swift in Sources */,
+				1D5933911D14855B00EAF03D /* ElloScreen.swift in Sources */,
 				121700B31A7841C400EBACA5 /* StreamViewController.swift in Sources */,
 				122B30D61C6A3FBC00C1B9D8 /* NotificationAttributedTitle.swift in Sources */,
 				F8A3B6451AC457CA00806224 /* Array.swift in Sources */,
