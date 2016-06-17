@@ -286,7 +286,7 @@ public class ProfileViewController: StreamableViewController {
         noPostsHeader.font = UIFont.regularBoldFont(18)
         let paragraphStyle = NSMutableParagraphStyle()
         let attrString = NSMutableAttributedString(string: noPostsBodyText)
-        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSRange(location: 0, length: attrString.length))
         paragraphStyle.lineSpacing = 4
 
         noPostsBody.font = UIFont.defaultFont()

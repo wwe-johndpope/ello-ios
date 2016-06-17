@@ -45,6 +45,6 @@ public class StreamFooterButton: UIButton {
 
     override public func sizeThatFits(size: CGSize) -> CGSize {
         let size = super.sizeThatFits(size)
-        return CGSizeMake(max(44.0, size.width), 44.0)
+        return CGSize(width: max(44.0, size.width), height: 44.0)
     }
 }

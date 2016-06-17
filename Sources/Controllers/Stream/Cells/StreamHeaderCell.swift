@@ -172,7 +172,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         bottomToolBar.frame = bounds
         goToPostView.frame = bounds
         chevronButton.setImages(.AngleBracket)
-        scrollView.contentSize = CGSizeMake(contentView.frame.size.width + revealWidth, scrollView.frame.size.height)
+        scrollView.contentSize = CGSize(width: contentView.frame.size.width + revealWidth, height: scrollView.frame.size.height)
         positionTopContent()
         repositionBottomContent()
     }
@@ -419,7 +419,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func chevronButtonTapped(sender: StreamFooterButton) {
-        let contentOffset = isOpen ? CGPointZero : CGPointMake(revealWidth, 0)
+        let contentOffset = isOpen ? CGPointZero : CGPoint(x: revealWidth, y: 0)
         UIView.animateWithDuration(0.25) {
             self.scrollView.contentOffset = contentOffset
             self.openChevron(isOpen: self.isOpen)

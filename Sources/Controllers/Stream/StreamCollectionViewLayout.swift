@@ -175,7 +175,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
             }
 
             attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            attributes.frame = CGRectMake(xOffset, yOffset, calculatedItemWidth, itemHeight)
+            attributes.frame = CGRect(x: xOffset, y: yOffset, width: calculatedItemWidth, height: itemHeight)
             itemAttributes.append(attributes)
 
             allItemAttributes.append(attributes)

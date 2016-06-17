@@ -61,7 +61,7 @@ public extension UIImage {
         let posX = (originalWidth  - edge) / 2.0
         let posY = (originalHeight - edge) / 2.0
 
-        let cropSquare = CGRectMake(posX, posY, edge, edge)
+        let cropSquare = CGRect(x: posX, y: posY, width: edge, height: edge)
 
         let imageRef = CGImageCreateWithImageInRect(self.CGImage, cropSquare)
         if let imageRef = imageRef {
@@ -74,7 +74,7 @@ public extension UIImage {
         let newSize = self.size.scaledSize(targetSize)
 
         // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
 
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
@@ -87,7 +87,7 @@ public extension UIImage {
 
     func roundCorners() -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-        let rect = CGRectMake(0.0, 0.0, self.size.width, self.size.height)
+        let rect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
         UIBezierPath(roundedRect: rect, cornerRadius: size.width / 2.0).addClip()
         self.drawInRect(rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()

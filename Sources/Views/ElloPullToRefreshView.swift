@@ -18,7 +18,7 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
     lazy var elloLogo: ElloLogoView = {
         let logo = ElloLogoView()
         logo.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        logo.bounds = CGRectMake(0, 0, 30, 30)
+        logo.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
         return logo
     }()
 
@@ -38,7 +38,7 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        elloLogo.center = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0)
+        elloLogo.center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
     }
 
 // MARK: SSPullToRefreshContentView
