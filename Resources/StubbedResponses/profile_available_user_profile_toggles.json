@@ -5,6 +5,9 @@
                 {
                     "info": "Make my profile viewable to people outside of the Ello network.",
                     "key": "is_public",
+                    "sets_another": [
+                        { "key": "has_reposting_enabled", "value": false, "when": false }
+                    ],
                     "label": "Public Profile"
                 },
                 {
@@ -20,6 +23,7 @@
                 {
                     "info": "Allow people to share my posts.",
                     "key": "has_sharing_enabled",
+                    "dependent_on": ["is_public"],
                     "label": "Sharing"
                 },
                 {

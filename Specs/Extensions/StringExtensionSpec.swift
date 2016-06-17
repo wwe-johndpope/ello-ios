@@ -141,8 +141,8 @@ class StringExtensionSpec: QuickSpec {
         }
         describe("camelCase") {
             it("converts a string from snake case to camel case") {
-                let snake = "sssss_sssss"
-                expect(snake.camelCase) == "sssssSssss"
+                let snake = "hhhhh_sssss"
+                expect(snake.camelCase) == "hhhhhSssss"
             }
         }
     }
