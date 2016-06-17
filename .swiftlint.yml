@@ -6,7 +6,6 @@ disabled_rules:
   - force_cast
   - force_try
   - function_body_length
-  - legacy_constant
   - legacy_constructor
   - line_length
   - missing_docs
