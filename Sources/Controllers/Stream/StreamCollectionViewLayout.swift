@@ -253,7 +253,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
     }
 
     private func nextColumnIndexForItem (item: NSInteger) -> Int {
-        switch (itemRenderDirection) {
+        switch itemRenderDirection {
         case .ShortestFirst: return shortestColumnIndex()
         case .LeftToRight: return (item % columnCount)
         case .RightToLeft: return (columnCount - 1) - (item % columnCount)

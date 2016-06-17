@@ -494,7 +494,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
     }
 
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if (velocity.x > 0) {
+        if velocity.x > 0 {
             targetContentOffset.memory.x = revealWidth
         }
         else {
