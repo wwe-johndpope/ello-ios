@@ -47,7 +47,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").cacheKey) == "SearchForPosts"
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").cacheKey) == "SimpleStream.meat"
                     expect(StreamKind.Unknown.cacheKey) == "unknown"
-                    expect(StreamKind.UserStream(userParam: "n/a").cacheKey) == "UserStream"
+                    expect(StreamKind.UserStream(userParam: "NA").cacheKey) == "UserStream_NA"
                 }
             }
 
@@ -63,7 +63,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").lastViewedCreatedAtKey) == "SearchForPosts_createdAt"
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").lastViewedCreatedAtKey) == "SimpleStream.meat_createdAt"
                     expect(StreamKind.Unknown.lastViewedCreatedAtKey) == "unknown_createdAt"
-                    expect(StreamKind.UserStream(userParam: "n/a").lastViewedCreatedAtKey) == "UserStream_createdAt"
+                    expect(StreamKind.UserStream(userParam: "NA").lastViewedCreatedAtKey) == "UserStream_NA_createdAt"
                 }
             }
 
@@ -79,7 +79,7 @@ class StreamKindSpec: QuickSpec {
                     StreamKind.Following.setIsGridView(false)
                     StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").setIsGridView(false)
                     StreamKind.Unknown.setIsGridView(false)
-                    StreamKind.UserStream(userParam: "n/a").setIsGridView(false)
+                    StreamKind.UserStream(userParam: "NA").setIsGridView(false)
                 }
 
                 it("is correct for all cases") {
@@ -112,7 +112,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").columnCount) == 1
 
                     expect(StreamKind.Unknown.columnCount) == 1
-                    expect(StreamKind.UserStream(userParam: "n/a").columnCount) == 1
+                    expect(StreamKind.UserStream(userParam: "NA").columnCount) == 1
                 }
             }
 
@@ -139,7 +139,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.CurrentUserStream.tappingTextOpensDetail) == false
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").tappingTextOpensDetail) == true
                     expect(StreamKind.Unknown.tappingTextOpensDetail) == true
-                    expect(StreamKind.UserStream(userParam: "n/a").tappingTextOpensDetail) == false
+                    expect(StreamKind.UserStream(userParam: "NA").tappingTextOpensDetail) == false
                 }
             }
 
@@ -156,7 +156,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts"
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/users"
                     expect(StreamKind.Unknown.endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"
-                    expect(StreamKind.UserStream(userParam: "n/a").endpoint.path) == "/api/\(ElloAPI.apiVersion)/users/n/a"
+                    expect(StreamKind.UserStream(userParam: "NA").endpoint.path) == "/api/\(ElloAPI.apiVersion)/users/NA"
                 }
             }
 
@@ -171,7 +171,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.CurrentUserStream.relationship) == RelationshipPriority.Null
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").relationship) == RelationshipPriority.Null
                     expect(StreamKind.Unknown.relationship) == RelationshipPriority.Null
-                    expect(StreamKind.UserStream(userParam: "n/a").relationship) == RelationshipPriority.Null
+                    expect(StreamKind.UserStream(userParam: "NA").relationship) == RelationshipPriority.Null
                 }
             }
 
@@ -196,7 +196,7 @@ class StreamKindSpec: QuickSpec {
                         userJsonables = [user1, user2, user3]
                     }
 
-                    context(".Recommended") {
+                    context("Recommended") {
                         it("returns the correct posts regardless of views adult content") {
                             let kind = StreamKind.Discover(type: .Recommended, perPage: 5)
                             var filtered = kind.filter(postJsonables, viewsAdultContent: false) as! [Post]
@@ -215,7 +215,7 @@ class StreamKindSpec: QuickSpec {
                         }
                     }
 
-                    context(".Trending") {
+                    context("Trending") {
                         it("returns the correct posts regardless of views adult content") {
                             let kind = StreamKind.Discover(type: .Trending, perPage: 5)
                             var filtered = kind.filter(userJsonables, viewsAdultContent: false) as! [Post]
@@ -234,7 +234,7 @@ class StreamKindSpec: QuickSpec {
                         }
                     }
 
-                    context(".Recent") {
+                    context("Recent") {
                         it("returns the correct posts regardless of views adult content") {
                             let kind = StreamKind.Discover(type: .Recent, perPage: 5)
                             var filtered = kind.filter(postJsonables, viewsAdultContent: false) as! [Post]
@@ -265,7 +265,7 @@ class StreamKindSpec: QuickSpec {
                     (true, StreamKind.PostDetail(postParam: "param")),
                     (true, StreamKind.CurrentUserStream),
                     (true, StreamKind.Unknown),
-                    (true, StreamKind.UserStream(userParam: "n/a")),
+                    (true, StreamKind.UserStream(userParam: "NA")),
                     (true, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
                     (true, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "12345"), title: "")),
                     (false, StreamKind.SimpleStream(endpoint: ElloAPI.AwesomePeopleStream, title: "")),
@@ -284,12 +284,12 @@ class StreamKindSpec: QuickSpec {
                     (nil, StreamKind.Discover(type: .Recommended, perPage: 1)),
                     (one, StreamKind.Following),
                     (nil, StreamKind.Starred),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "n/a")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
                     (nil, StreamKind.Notifications(category: "")),
                     (nil, StreamKind.PostDetail(postParam: "param")),
                     (one, StreamKind.CurrentUserStream),
                     (nil, StreamKind.Unknown),
-                    (nil, StreamKind.UserStream(userParam: "n/a")),
+                    (nil, StreamKind.UserStream(userParam: "NA")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
                     (one, StreamKind.UserStream(userParam: "12345")),
@@ -316,12 +316,12 @@ class StreamKindSpec: QuickSpec {
                     (nil, StreamKind.Discover(type: .Recommended, perPage: 1)),
                     (nil, StreamKind.Following),
                     (nil, StreamKind.Starred),
-                    (one, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "n/a")),
+                    (one, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
                     (nil, StreamKind.Notifications(category: "")),
                     (nil, StreamKind.PostDetail(postParam: "param")),
                     (nil, StreamKind.CurrentUserStream),
                     (nil, StreamKind.Unknown),
-                    (nil, StreamKind.UserStream(userParam: "n/a")),
+                    (nil, StreamKind.UserStream(userParam: "NA")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
                     (nil, StreamKind.UserStream(userParam: "12345")),
@@ -355,7 +355,7 @@ class StreamKindSpec: QuickSpec {
                     StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").setIsGridView(false)
                     StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "123"), title: "123").setIsGridView(false)
                     StreamKind.Unknown.setIsGridView(false)
-                    StreamKind.UserStream(userParam: "n/a").setIsGridView(false)
+                    StreamKind.UserStream(userParam: "NA").setIsGridView(false)
                 }
 
 
@@ -396,7 +396,7 @@ class StreamKindSpec: QuickSpec {
 
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").isGridView) == false
                     expect(StreamKind.Unknown.isGridView) == false
-                    expect(StreamKind.UserStream(userParam: "n/a").isGridView) == false
+                    expect(StreamKind.UserStream(userParam: "NA").isGridView) == false
                 }
             }
 
@@ -415,7 +415,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "123"), title: "123").hasGridViewToggle) == true
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").hasGridViewToggle) == false
                     expect(StreamKind.Unknown.hasGridViewToggle) == false
-                    expect(StreamKind.UserStream(userParam: "n/a").hasGridViewToggle) == false
+                    expect(StreamKind.UserStream(userParam: "NA").hasGridViewToggle) == false
                 }
             }
 
@@ -469,7 +469,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").gridPreferenceSetOffset) == normalOffset
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "123"), title: "123").gridPreferenceSetOffset) == normalOffset
                     expect(StreamKind.Unknown.gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.UserStream(userParam: "n/a").gridPreferenceSetOffset) == normalOffset
+                    expect(StreamKind.UserStream(userParam: "NA").gridPreferenceSetOffset) == normalOffset
                 }
             }
 
@@ -485,7 +485,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").isDetail) == false
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").isDetail) == false
                     expect(StreamKind.Unknown.isDetail) == false
-                    expect(StreamKind.UserStream(userParam: "n/a").isDetail) == false
+                    expect(StreamKind.UserStream(userParam: "NA").isDetail) == false
                 }
             }
 
@@ -501,7 +501,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").supportsLargeImages) == false
                     expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").supportsLargeImages) == false
                     expect(StreamKind.Unknown.supportsLargeImages) == false
-                    expect(StreamKind.UserStream(userParam: "n/a").supportsLargeImages) == false
+                    expect(StreamKind.UserStream(userParam: "NA").supportsLargeImages) == false
                 }
             }
         }

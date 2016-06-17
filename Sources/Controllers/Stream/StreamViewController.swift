@@ -273,6 +273,8 @@ public class StreamViewController: BaseElloViewController {
     }
 
     public var initialLoadClosure: ElloEmptyCompletion?
+    public typealias ToggleClosure = (Bool) -> Void
+    public var toggleClosure: ToggleClosure?
 
     public func loadInitialPage() {
 
@@ -583,12 +585,24 @@ extension StreamViewController: ColumnToggleDelegate {
         guard self.streamKind.isGridView != isGridView else {
             return
         }
+
         self.streamKind.setIsGridView(isGridView)
-        UIView.animateWithDuration(0.2, animations: {
-            self.collectionView.alpha = 0
-            }, completion: { _ in
-                self.toggleGrid(isGridView)
-            })
+        if let toggleClosure = toggleClosure {
+            // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
+            // triggering pagination at this time will, inexplicably, cause the cells to disappear
+            canLoadNext = false
+            dataSource.removeAllCellItems()
+            setupCollectionViewLayout()
+
+            toggleClosure(isGridView)
+        }
+        else {
+            UIView.animateWithDuration(0.2, animations: {
+                self.collectionView.alpha = 0
+                }, completion: { _ in
+                    self.toggleGrid(isGridView)
+                })
+        }
     }
 
     private func toggleGrid(isGridView: Bool) {

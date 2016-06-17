@@ -25,8 +25,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Keyboard.setup()
         Rate.sharedRate.setup()
-	AutoCompleteService.loadEmojiJSON("emojis")
-	UIFont.loadFonts()
+        AutoCompleteService.loadEmojiJSON("emojis")
+        UIFont.loadFonts()
 
         if AppSetup.sharedState.isTesting {
             if UIScreen.mainScreen().scale > 2 {

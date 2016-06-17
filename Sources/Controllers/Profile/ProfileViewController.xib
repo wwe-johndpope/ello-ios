@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -26,6 +26,8 @@
                 <outlet property="relationshipControlsViewTopConstraint" destination="2Pz-hn-YLD" id="Xnm-tg-NrE"/>
                 <outlet property="view" destination="iN0-l3-epB" id="6s2-PA-CIX"/>
                 <outlet property="viewContainer" destination="wlf-zL-93E" id="IUa-jv-6Wt"/>
+                <outlet property="whiteSolidTop" destination="GPV-Sg-5ba" id="Bg0-Ql-8Qj"/>
+                <outlet property="whiteSolidView" destination="nKT-Aq-qnw" id="aHs-3o-uv5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,6 +42,10 @@
                         <constraint firstAttribute="width" secondItem="A2p-8r-avy" secondAttribute="height" multiplier="16:9" id="kN1-ds-Pba" userLabel="coverImage - ratio"/>
                     </constraints>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKT-Aq-qnw" userLabel="White Solid Color View">
+                    <rect key="frame" x="0.0" y="338" width="600" height="262"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wlf-zL-93E" userLabel="viewContainer">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -178,12 +184,16 @@ Follow or mention them to help them get started!  </string>
             <constraints>
                 <constraint firstItem="51L-yd-xBc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2Pz-hn-YLD"/>
                 <constraint firstAttribute="trailing" secondItem="Dl8-ha-LxN" secondAttribute="trailing" id="4VW-hR-wV5" userLabel="navigationBar - right"/>
+                <constraint firstItem="nKT-Aq-qnw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="576-H2-aBf"/>
                 <constraint firstItem="hfy-he-l1y" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="8IL-1x-9Hi"/>
+                <constraint firstAttribute="trailing" secondItem="nKT-Aq-qnw" secondAttribute="trailing" id="BEc-VC-Hxv"/>
+                <constraint firstItem="nKT-Aq-qnw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="338" id="GPV-Sg-5ba"/>
                 <constraint firstAttribute="top" secondItem="Dl8-ha-LxN" secondAttribute="top" id="HAg-hv-aOW" userLabel="navigationBar - top"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="K3x-o1-2W5" userLabel="viewContainer - left"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="Kzz-uf-eqd" userLabel="viewContainer - bottom"/>
                 <constraint firstItem="51L-yd-xBc" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Lp5-SP-DOE"/>
                 <constraint firstItem="51L-yd-xBc" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="OQD-yi-J6S"/>
+                <constraint firstAttribute="bottom" secondItem="nKT-Aq-qnw" secondAttribute="bottom" id="OYe-pk-Nh9"/>
                 <constraint firstAttribute="bottom" secondItem="83s-Z9-BEn" secondAttribute="bottom" id="PdW-uX-5p2" userLabel="noPostsView - bottom"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="Rwp-mf-G91" userLabel="viewContainer - right"/>
                 <constraint firstAttribute="trailing" secondItem="83s-Z9-BEn" secondAttribute="trailing" id="j9j-3T-w8g" userLabel="noPostsView - right"/>
