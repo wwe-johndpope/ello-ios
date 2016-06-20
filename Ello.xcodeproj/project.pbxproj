@@ -454,6 +454,10 @@
 		1D2F65A71D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65A61D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift */; };
 		1D2F65A91D185AB90099D036 /* DiscoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65A81D185AB90099D036 /* DiscoverType.swift */; };
 		1D2F65AA1D185B120099D036 /* DiscoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65A81D185AB90099D036 /* DiscoverType.swift */; };
+		1D2F65AC1D186E7A0099D036 /* CategoryCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */; };
+		1D2F65AE1D186E7F0099D036 /* CategoryCardCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */; };
+		1D2F65B11D1870020099D036 /* DiscoverAllCategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65AF1D1870020099D036 /* DiscoverAllCategoriesScreen.swift */; };
+		1D2F65B21D1870020099D036 /* DiscoverAllCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */; };
 		1D3128C01B557BD500E3D5B6 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */; };
 		1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */; };
 		1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284D1AE74D7A00446591 /* SearchViewController.swift */; };
@@ -1273,6 +1277,10 @@
 		1D2D18671AC322170078AA05 /* UIWebViewSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebViewSpecs.swift; sourceTree = "<group>"; };
 		1D2F65A61D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllCategoriesCellPresenter.swift; sourceTree = "<group>"; };
 		1D2F65A81D185AB90099D036 /* DiscoverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverType.swift; sourceTree = "<group>"; };
+		1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCardCell.swift; sourceTree = "<group>"; };
+		1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCardCellPresenter.swift; sourceTree = "<group>"; };
+		1D2F65AF1D1870020099D036 /* DiscoverAllCategoriesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverAllCategoriesScreen.swift; path = Sources/Controllers/Discover/DiscoverAllCategoriesScreen.swift; sourceTree = SOURCE_ROOT; };
+		1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverAllCategoriesViewController.swift; path = Sources/Controllers/Discover/DiscoverAllCategoriesViewController.swift; sourceTree = SOURCE_ROOT; };
 		1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OnboardingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D33284D1AE74D7A00446591 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -1854,6 +1862,7 @@
 		122B18CC1A867BCE00247A05 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */,
 				1D5933891D147E8A00EAF03D /* CategoryCell.swift */,
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
 				127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */,
@@ -2070,6 +2079,7 @@
 		128D36A81A95192300622833 /* CellDequeing */ = {
 			isa = PBXGroup;
 			children = (
+				1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */,
 				1D5933871D147E8500EAF03D /* CategoryCellPresenter.swift */,
 				1D5933701D10ADC300EAF03D /* CategoryListCellPresenter.swift */,
 				127B8C741BC320AD00E17D0A /* ColumnToggleCellPresenter.swift */,
@@ -2107,6 +2117,8 @@
 		129C1E221AB7CF580013C1D7 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				1D2F65AF1D1870020099D036 /* DiscoverAllCategoriesScreen.swift */,
+				1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */,
 				1D5933831D147E7000EAF03D /* DiscoverMoreCategoriesScreen.swift */,
 				1D5933841D147E7000EAF03D /* DiscoverMoreCategoriesViewController.swift */,
 				1D5169C81D106A27002D133B /* DiscoverScreen.swift */,
@@ -4358,6 +4370,7 @@
 				1D15C2791C7D12890013B192 /* InterfaceString.swift in Sources */,
 				128D36AA1A951A6400622833 /* StreamFooterCellPresenter.swift in Sources */,
 				122B30F21C6A3FC500C1B9D8 /* RegionParser.swift in Sources */,
+				1D2F65AE1D186E7F0099D036 /* CategoryCardCellPresenter.swift in Sources */,
 				1D7751011ABCE78800D92191 /* UINavigationItem.swift in Sources */,
 				1D807D9C1B0517F1009B0F71 /* FollowAllCell.swift in Sources */,
 				12F6AE2F1A43390900493660 /* NumberExtensions.swift in Sources */,
@@ -4439,6 +4452,7 @@
 				1207C9881C73FEE000939ADB /* PostEditingService.swift in Sources */,
 				12F6ADFF1A43380C00493660 /* ProfileViewController.swift in Sources */,
 				1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */,
+				1D2F65B21D1870020099D036 /* DiscoverAllCategoriesViewController.swift in Sources */,
 				1DA46D4E1B0BAE88003C5DFE /* OnboardingHeaderView.swift in Sources */,
 				1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */,
 				122B30C91C6A3FBC00C1B9D8 /* Availability.swift in Sources */,
@@ -4449,6 +4463,7 @@
 				76C050AA1AA8C8CF0094E69A /* UserListItemCell.swift in Sources */,
 				12F6AE301A43390900493660 /* Optionals.swift in Sources */,
 				1234661A1C654D3A00E61110 /* StreamRepostHeaderCellPresenter.swift in Sources */,
+				1D2F65AC1D186E7A0099D036 /* CategoryCardCell.swift in Sources */,
 				1DCB124A1B5EB0E60023664C /* CGSizeExtensions.swift in Sources */,
 				1207C98F1C73FEE000939ADB /* S3UploadingService.swift in Sources */,
 				1D783A2B1B838FDD00BD6BF4 /* OmnibarTextCell.swift in Sources */,
@@ -4546,6 +4561,7 @@
 				122B19071A867C7D00247A05 /* StreamTextCellSizeCalculator.swift in Sources */,
 				1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */,
 				122B19031A867C7D00247A05 /* StreamTextCell.swift in Sources */,
+				1D2F65B11D1870020099D036 /* DiscoverAllCategoriesScreen.swift in Sources */,
 				1DADC57A1AF449B3000DAC88 /* ElloWebBrowserViewController.swift in Sources */,
 				122DEA201AB0A024005DF1F1 /* NSFileManagerExtensions.swift in Sources */,
 				1267C7391BA232530000D809 /* MutableBox.swift in Sources */,

@@ -11,7 +11,8 @@ import SwiftyUserDefaults
 
 public enum StreamKind {
     case CurrentUserStream
-    case Categories
+    case MoreCategories
+    case AllCategories
     case Discover(type: DiscoverType)
     case CategoryPosts(slug: String)
     case Following
@@ -25,7 +26,8 @@ public enum StreamKind {
     public var name: String {
         switch self {
         case .CurrentUserStream: return InterfaceString.Profile.Title
-        case .Categories: return InterfaceString.Discover.Categories
+        case .MoreCategories: return InterfaceString.Discover.MoreCategories
+        case .AllCategories: return InterfaceString.Discover.AllCategories
         case .CategoryPosts: return ""
         case .Discover: return InterfaceString.Discover.Title
         case .Following: return InterfaceString.FollowingStream.Title
@@ -41,7 +43,8 @@ public enum StreamKind {
     public var cacheKey: String {
         switch self {
         case .CurrentUserStream: return "Profile"
-        case .Categories: return "Categories"
+        case .MoreCategories: return "MoreCategories"
+        case .AllCategories: return "AllCategories"
         case let .CategoryPosts(slug): return "Category_\(slug)"
         case .Discover: return "Discover"
         case .Following: return "Following"
@@ -63,6 +66,13 @@ public enum StreamKind {
 
     public var lastViewedCreatedAtKey: String {
         return self.cacheKey + "_createdAt"
+    }
+
+    public var columnSpacing: CGFloat {
+        switch self {
+        case .AllCategories: return 2
+        default: return 12
+        }
     }
 
     public var columnCount: Int {
@@ -88,7 +98,8 @@ public enum StreamKind {
     public var endpoint: ElloAPI {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
-        case .Categories: return .Categories
+        case .MoreCategories: return .Categories
+        case .AllCategories: return .Categories
         case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
         case let .Discover(type): return .Discover(type: type)
         case .Following: return .FriendStream
@@ -196,7 +207,13 @@ public enum StreamKind {
     }
 
     public var isGridView: Bool {
-        return GroupDefaults["\(cacheKey)IsGridView"].bool ?? false
+        var defaultGrid: Bool
+        switch self {
+        case .AllCategories: defaultGrid = true
+        case .MoreCategories: defaultGrid = false
+        default: defaultGrid = false
+        }
+        return GroupDefaults["\(cacheKey)IsGridView"].bool ?? defaultGrid
     }
 
     public func clientSidePostInsertIndexPath(currentUserId: String?) -> NSIndexPath? {

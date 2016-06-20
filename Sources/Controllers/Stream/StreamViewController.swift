@@ -509,7 +509,7 @@ public class StreamViewController: BaseElloViewController {
         if let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout {
             layout.columnCount = streamKind.columnCount
             layout.sectionInset = UIEdgeInsetsZero
-            layout.minimumColumnSpacing = 12
+            layout.minimumColumnSpacing = streamKind.columnSpacing
             layout.minimumInteritemSpacing = 0
         }
     }
@@ -793,6 +793,9 @@ extension StreamViewController {
     }
 
     public func seeAllCategoriesTapped() {
+        let vc = DiscoverAllCategoriesViewController()
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

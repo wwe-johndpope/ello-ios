@@ -66,7 +66,8 @@ public struct InterfaceString {
 
     public struct Discover {
         static let Title = NSLocalizedString("Discover", comment: "Discover title")
-        static let Categories = NSLocalizedString("Categories", comment: "All Categories title")
+        static let MoreCategories = NSLocalizedString("Categories", comment: "All Categories title")
+        static let AllCategories = NSLocalizedString("All", comment: "All Categories title")
         static let SeeAllCategories = NSLocalizedString("See All", comment: "See All Categories title")
         static let Featured = NSLocalizedString("Featured", comment: "Discover tab titled Featured")
         static let Trending = NSLocalizedString("Trending", comment: "Discover tab titled Trending")

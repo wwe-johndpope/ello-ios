@@ -1,35 +1,33 @@
 //
-//  DiscoverMoreCategoriesViewController.swift
+//  DiscoverAllCategoriesViewController.swift
 //  Ello
 //
 //  Created by Colin Gray on 6/17/2016.
 //  Copyright (c) 2016 Ello. All rights reserved.
 //
 
-public class DiscoverMoreCategoriesViewController: StreamableViewController {
+public class DiscoverAllCategoriesViewController: StreamableViewController {
     var screen: DiscoverMoreCategoriesScreen!
 
     required public init() {
         super.init(nibName: nil, bundle: nil)
 
-        title = InterfaceString.Discover.MoreCategories
+        title = InterfaceString.Discover.AllCategories
         elloNavigationItem.title = title
 
         let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
         elloNavigationItem.leftBarButtonItems = [leftItem]
         elloNavigationItem.fixNavBarItemPadding()
 
-        streamViewController.streamKind = .MoreCategories
+        streamViewController.streamKind = .AllCategories
         streamViewController.customStreamCellItems = { jsonables, defaultItems in
-            var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
+            var items: [StreamCellItem] = []
             if let categories = jsonables as? [Category] {
                 let sortedCategories = categories
-                    .filter { $0.level == .Primary }
                     .sort { $0.order < $1.order }
                 for category in sortedCategories {
-                    items.append(StreamCellItem(jsonable: category, type: .Category))
+                    items.append(StreamCellItem(jsonable: category, type: .CategoryCard))
                 }
-                items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .SeeAllCategories))
             }
             return items
         }
