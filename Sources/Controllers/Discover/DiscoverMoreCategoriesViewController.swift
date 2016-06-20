@@ -1,13 +1,13 @@
 //
-//  DiscoverAllCategoriesViewController.swift
+//  DiscoverMoreCategoriesViewController.swift
 //  Ello
 //
 //  Created by Colin Gray on 6/17/2016.
 //  Copyright (c) 2016 Ello. All rights reserved.
 //
 
-public class DiscoverAllCategoriesViewController: StreamableViewController {
-    var screen: DiscoverAllCategoriesScreen!
+public class DiscoverMoreCategoriesViewController: StreamableViewController {
+    var screen: DiscoverMoreCategoriesScreen!
 
     required public init() {
         super.init(nibName: nil, bundle: nil)
@@ -40,7 +40,7 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        self.screen = DiscoverAllCategoriesScreen(navigationItem: elloNavigationItem)
+        self.screen = DiscoverMoreCategoriesScreen(navigationItem: elloNavigationItem)
         self.view = screen
         viewContainer = screen.streamContainer
     }
