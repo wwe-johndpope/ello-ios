@@ -125,7 +125,8 @@ public enum ElloAPI {
         case .CreateLove,
              .Loves:
             return .LovesType
-        case .CreatePost,
+        case .CategoryPosts,
+             .CreatePost,
              .PostDetail,
              .RePost,
              .SearchForPosts,
@@ -144,8 +145,7 @@ public enum ElloAPI {
              .PushSubscriptions,
              .RelationshipBatch:
             return .NoContentType
-        case .CategoryPosts,
-             .FriendStream,
+        case .FriendStream,
              .NoiseStream,
              .NotificationsStream:
             return .ActivitiesType
@@ -270,7 +270,7 @@ extension ElloAPI: Moya.TargetType {
         case let .DeleteSubscriptions(tokenData):
             return "/\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .CategoryPosts(slug):
-            return "/api/\(ElloAPI.apiVersion)/category/\(slug)/recent"
+            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .Discover(type):
             switch type {
             case .Trending:

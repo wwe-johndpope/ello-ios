@@ -147,7 +147,7 @@ class ElloAPISpec: QuickSpec {
                     (.DeleteLove(postId: ""), .NoContentType),
                     (.DeletePost(postId: ""), .ErrorType),
                     (.DeleteSubscriptions(token: NSData()), .NoContentType),
-                    (.Discover(type: .Recommended), .PostsType),
+                    (.Discover(type: .Featured), .PostsType),
                     (.Discover(type: .Trending), .UsersType),
                     (.Discover(type: .Recent), .PostsType),
                     (.CategoryPosts(slug: "art"), .PostsType),
@@ -377,7 +377,7 @@ class ElloAPISpec: QuickSpec {
                 }
 
                 it("Discover") {
-                    let params = ElloAPI.Discover(type: .Recommended).parameters!
+                    let params = ElloAPI.Discover(type: .Featured).parameters!
                     expect(params["per_page"] as? Int) == 10
                     expect(params["include_recent_posts"] as? Bool) == true
                     expect(params["seed"]).notTo(beNil())
@@ -399,7 +399,7 @@ class ElloAPISpec: QuickSpec {
 
                 it("InfiniteScroll") {
                     let queryItems = NSURLComponents(string: "ttp://ello.co/api/v2/posts/278/comments?after=2014-06-02T00%3A00%3A00.000000000%2B0000&per_page=2")!.queryItems
-                    let infiniteScroll = ElloAPI.InfiniteScroll(queryItems: queryItems!) { return ElloAPI.Discover(type: .Recommended) }
+                    let infiniteScroll = ElloAPI.InfiniteScroll(queryItems: queryItems!) { return ElloAPI.Discover(type: .Featured) }
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
                     expect(params["include_recent_posts"] as? Bool) == true

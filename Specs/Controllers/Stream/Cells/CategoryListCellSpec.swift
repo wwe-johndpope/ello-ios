@@ -22,55 +22,42 @@ class CategoryListCellSpec: QuickSpec {
             }
 
             it("displays categories") {
-                subject.categories = [
-                    (title: "Featured", slug: "featured"),
-                    (title: "Art", slug: "art"),
+                subject.categoriesInfo = [
+                    (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
+                    (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
                 ]
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())
             }
 
             it("hides categories that are off screen") {
-                subject.categories = [
-                    (title: "Featured", slug: "featured"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm1"),
-                    (title: "MMMMMMMMM", slug: "mmmmmmmmm2"),
+                subject.categoriesInfo = [
+                    (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
+                    (title: "MMMMMMMMM", endpoint: .CategoryPosts(slug: "mmmmmmmmm1"), selected: false),
+                    (title: "MMMMMMMMM", endpoint: .CategoryPosts(slug: "mmmmmmmmm2"), selected: false),
                 ]
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())
             }
 
             it("highlights the selected category") {
-                subject.categories = [
-                    (title: "Featured", slug: "featured"),
-                    (title: "Art", slug: "art"),
-                ]
-                subject.selectedCategory = "featured"
-                subject.layoutIfNeeded()
-                expect(subject).to(haveValidSnapshot())
-            }
-
-            it("highlights the selected category, regardless of assignment order") {
-                subject.selectedCategory = "featured"
-                subject.categories = [
-                    (title: "Featured", slug: "featured"),
-                    (title: "Art", slug: "art"),
+                subject.categoriesInfo = [
+                    (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: true),
+                    (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
                 ]
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())
             }
 
             it("highlights the selected category, after assigning duplicates") {
-                subject.categories = [
-                    (title: "Featured", slug: "featured"),
-                    (title: "Art", slug: "art"),
+                subject.categoriesInfo = [
+                    (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: true),
+                    (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
                 ]
-                subject.selectedCategory = "featured"
-                subject.categories = [
-                    (title: "Featured", slug: "featured"),
-                    (title: "Art", slug: "art"),
+                subject.categoriesInfo = [
+                    (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
+                    (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: true),
                 ]
-                subject.selectedCategory = "art"
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())
             }
