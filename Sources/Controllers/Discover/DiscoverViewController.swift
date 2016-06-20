@@ -18,7 +18,15 @@ public class DiscoverViewController: StreamableViewController {
         super.init(nibName: nil, bundle: nil)
 
         sharedInit(title: category.name)
-        streamViewController.streamKind = .Discover(slug: category.slug)
+        switch category.endpoint {
+        case let .CategoryPosts(slug):
+            streamViewController.streamKind = .CategoryPosts(slug: slug)
+        case let .Discover(type):
+            streamViewController.streamKind = .Discover(type: type)
+        default:
+            fatalError("invalid endpoint \(category.endpoint)")
+        }
+
         streamViewController.customStreamCellItems = { jsonables, defaultItems in
             var items: [StreamCellItem] = []
 
@@ -34,7 +42,7 @@ public class DiscoverViewController: StreamableViewController {
         super.init(nibName: nil, bundle: nil)
 
         sharedInit()
-        streamViewController.streamKind = .Discover(slug: "recommended")
+        streamViewController.streamKind = .Discover(type: .Featured)
         streamViewController.customStreamCellItems = { jsonables, defaultItems in
             var items: [StreamCellItem] = []
 

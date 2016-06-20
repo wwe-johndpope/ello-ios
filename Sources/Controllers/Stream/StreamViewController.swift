@@ -52,7 +52,7 @@ public protocol ColumnToggleDelegate: class {
 }
 
 public protocol DiscoverCategoryPickerDelegate: class {
-    func discoverCategoryTapped(type: String)
+    func discoverCategoryTapped(endpoint: ElloAPI)
     func discoverAllCategoriesTapped()
 }
 
@@ -626,9 +626,16 @@ extension StreamViewController: ColumnToggleDelegate {
 // MARK: StreamViewController: DiscoverCategoryPickerDelegate
 extension StreamViewController: DiscoverCategoryPickerDelegate {
 
-    public func discoverCategoryTapped(slug: String) {
+    public func discoverCategoryTapped(endpoint: ElloAPI) {
         hideNoResults()
-        streamKind = .Discover(slug: slug)
+        switch endpoint {
+        case let .CategoryPosts(slug):
+            streamKind = .CategoryPosts(slug: slug)
+        case let .Discover(type):
+            streamKind = .Discover(type: type)
+        default:
+            fatalError("invalid endpoint \(endpoint)")
+        }
         removeAllCellItems()
         ElloHUD.showLoadingHudInView(view)
         loadInitialPage()
@@ -783,6 +790,9 @@ extension StreamViewController {
         let vc = DiscoverViewController(category: category)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
+    }
+
+    public func seeAllCategoriesTapped() {
     }
 }
 
@@ -982,6 +992,10 @@ extension StreamViewController: UICollectionViewDelegate {
         }
         else if let category = dataSource.jsonableForIndexPath(indexPath) as? Category {
             categoryTapped(category)
+        }
+        else if let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
+        where cellItemType == .SeeAllCategories {
+            seeAllCategoriesTapped()
         }
     }
 

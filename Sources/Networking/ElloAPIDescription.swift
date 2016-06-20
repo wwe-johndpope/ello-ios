@@ -25,6 +25,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "DeleteSubscriptions(tokenData: \(tokenData))"
         case let .Discover(type):
             return "Discover(type: \(type))"
+        case let .CategoryPosts(slug):
+            return "CategoryPosts(slug: \(slug))"
         case let .EmojiAutoComplete(terms):
             return "EmojiAutoComplete(terms: \(terms))"
         case .FlagComment(_, _, _):
@@ -115,6 +117,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "DeleteSubscriptions"
         case .Discover:
             return "Discover"
+        case .CategoryPosts:
+            return "CategoryPosts"
         case .EmojiAutoComplete:
             return "EmojiAutoComplete"
         case .FindFriends:

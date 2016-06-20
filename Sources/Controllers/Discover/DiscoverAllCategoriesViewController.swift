@@ -29,8 +29,7 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
                 for category in sortedCategories {
                     items.append(StreamCellItem(jsonable: category, type: .Category))
                 }
-                let seeAllCategory = Category(id: "", name: InterfaceString.Discover.SeeAllCategories, slug: "see_all", order: -1, level: .Primary)
-                items.append(StreamCellItem(jsonable: seeAllCategory, type: .Category))
+                items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .SeeAllCategories))
             }
             return items
         }

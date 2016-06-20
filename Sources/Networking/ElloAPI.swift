@@ -27,7 +27,8 @@ public enum ElloAPI {
     case DeleteLove(postId: String)
     case DeletePost(postId: String)
     case DeleteSubscriptions(token: NSData)
-    case Discover(slug: String)
+    case CategoryPosts(slug: String)
+    case Discover(type: DiscoverType)
     case EmojiAutoComplete(terms: String)
     case FindFriends(contacts: [String: [String]])
     case FlagComment(postId: String, commentId: String, kind: String)
@@ -109,9 +110,9 @@ public enum ElloAPI {
              .UserStreamFollowers,
              .UserStreamFollowing:
             return .UsersType
-        case let .Discover(slug):
-            switch slug {
-            case "trending":
+        case let .Discover(type):
+            switch type {
+            case .Trending:
                 return .UsersType
             default:
                 return .PostsType
@@ -143,7 +144,8 @@ public enum ElloAPI {
              .PushSubscriptions,
              .RelationshipBatch:
             return .NoContentType
-        case .FriendStream,
+        case .CategoryPosts,
+             .FriendStream,
              .NoiseStream,
              .NotificationsStream:
             return .ActivitiesType
@@ -267,12 +269,14 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .DeleteSubscriptions(tokenData):
             return "/\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
-        case let .Discover(slug):
-            switch slug {
-            case "trending":
-                return "/api/\(ElloAPI.apiVersion)/discover/users/\(slug)"
+        case let .CategoryPosts(slug):
+            return "/api/\(ElloAPI.apiVersion)/category/\(slug)/recent"
+        case let .Discover(type):
+            switch type {
+            case .Trending:
+                return "/api/\(ElloAPI.apiVersion)/discover/users/trending"
             default:
-                return "/api/\(ElloAPI.apiVersion)/discover/posts/\(slug)"
+                return "/api/\(ElloAPI.apiVersion)/discover/posts/\(type.slug)"
             }
         case .EmojiAutoComplete(_):
             return "/api/\(ElloAPI.apiVersion)/emoji/autocomplete"
@@ -388,6 +392,8 @@ extension ElloAPI: Moya.TargetType {
              .FlagPost,
              .FlagUser:
             return stubbedData("empty")
+        case .CategoryPosts:
+            return stubbedData("friends")
         case .Discover:
             return stubbedData("friends")
         case .EmojiAutoComplete:
@@ -523,6 +529,10 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .CreatePost(body):
             return body
+        case .CategoryPosts:
+            return [
+                "per_page": 10,
+            ]
         case .Discover:
             return [
                 "per_page": 10,

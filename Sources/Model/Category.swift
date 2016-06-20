@@ -16,6 +16,12 @@ public class Category: JSONAble {
     public let slug: String
     public let order: Int
     public let level: CategoryLevel
+    public var endpoint: ElloAPI {
+        switch level {
+        case .Meta: return .Discover(type: DiscoverType(rawValue: slug)!)
+        default: return .CategoryPosts(slug: slug)
+        }
+    }
 
     public init(id: String,
         name: String,

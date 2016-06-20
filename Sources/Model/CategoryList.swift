@@ -58,9 +58,9 @@ public class CategoryList: JSONAble {
 extension CategoryList {
     class func hardCodedPrimaries() -> CategoryList {
         return CategoryList(categories: [
-            Category(id: "1", name: "Featured", slug: "recommended", order: 0, level: .Primary),
-            Category(id: "2", name: "Art", slug: "trending", order: 1, level: .Primary),
-            Category(id: "3", name: "Architecture", slug: "recent", order: 2, level: .Primary),
+            Category(id: "meta1", name: "Featured", slug: "recommended", order: 0, level: .Meta),
+            Category(id: "2", name: "Art", slug: "art", order: 1, level: .Primary),
+            Category(id: "3", name: "Architecture", slug: "architecture", order: 2, level: .Primary),
             Category(id: "4", name: "Design", slug: "design", order: 3, level: .Primary),
             Category(id: "5", name: "GIFs", slug: "gifs", order: 4, level: .Primary),
             Category(id: "6", name: "Literature", slug: "literature", order: 5, level: .Primary),

@@ -12,7 +12,8 @@ import SwiftyUserDefaults
 public enum StreamKind {
     case CurrentUserStream
     case Categories
-    case Discover(slug: String)
+    case Discover(type: DiscoverType)
+    case CategoryPosts(slug: String)
     case Following
     case Starred
     case Notifications(category: String?)
@@ -25,6 +26,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return InterfaceString.Profile.Title
         case .Categories: return InterfaceString.Discover.Categories
+        case .CategoryPosts: return ""
         case .Discover: return InterfaceString.Discover.Title
         case .Following: return InterfaceString.FollowingStream.Title
         case .Starred: return InterfaceString.StarredStream.Title
@@ -40,6 +42,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return "Profile"
         case .Categories: return "Categories"
+        case let .CategoryPosts(slug): return "Category_\(slug)"
         case .Discover: return "Discover"
         case .Following: return "Following"
         case .Starred: return "Starred"
@@ -86,7 +89,8 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
         case .Categories: return .Categories
-        case let .Discover(slug): return .Discover(slug: slug)
+        case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
+        case let .Discover(type): return .Discover(type: type)
         case .Following: return .FriendStream
         case .Starred: return .NoiseStream
         case let .Notifications(category): return .NotificationsStream(category: category)
@@ -123,6 +127,8 @@ public enum StreamKind {
             default:
                 return jsonables
             }
+        case .CategoryPosts:
+            return jsonables
         case .Discover:
             if let users = jsonables as? [User] {
                 return users.reduce([]) { accum, user in
@@ -162,7 +168,7 @@ public enum StreamKind {
 
     public var gridPreferenceSetOffset: CGPoint {
         switch self {
-        case .Discover: return CGPoint(x: 0, y: -80)
+        case .Discover, .CategoryPosts: return CGPoint(x: 0, y: -80)
         default: return CGPoint(x: 0, y: -20)
         }
     }
@@ -219,7 +225,7 @@ public enum StreamKind {
 
     public var hasGridViewToggle: Bool {
         switch self {
-        case .Following, .Starred, .Discover: return true
+        case .Following, .Starred, .Discover, .CategoryPosts: return true
         case let .SimpleStream(endpoint, _):
             switch endpoint {
             case .SearchForPosts, .Loves:

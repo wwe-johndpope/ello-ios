@@ -19,23 +19,17 @@ public struct CategoryListCellPresenter {
             categoryList = streamCellItem.jsonable as? CategoryList
         {
             let searchFor: String?
-            if case let .Discover(category) = streamKind {
+            if case let .CategoryPosts(category) = streamKind {
                 searchFor = category
+            }
+            else if case let .Discover(type) = streamKind {
+                searchFor = type.slug
             }
             else {
                 searchFor = nil
             }
 
-            var selectedCategory: String? = nil
-            for category in categoryList.categories {
-                if category.slug == searchFor {
-                    selectedCategory = category.slug
-                    break
-                }
-            }
-
-            cell.selectedCategory = selectedCategory
-            cell.categories = categoryList.categories.map { (title: $0.name, slug: $0.slug) }
+            cell.categoriesInfo = categoryList.categories.map { (title: $0.name, endpoint: $0.endpoint, selected: $0.slug == searchFor) }
         }
     }
 
