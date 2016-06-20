@@ -13,14 +13,18 @@ import YapDatabase
 @objc
 public protocol Authorable {
     var createdAt: NSDate { get }
-    var groupId: String { get }
     var author: User? { get }
+}
+
+@objc
+public protocol Groupable {
+    var groupId: String { get }
 }
 
 let PostVersion = 1
 
 @objc(Post)
-public final class Post: JSONAble, Authorable {
+public final class Post: JSONAble, Authorable, Groupable {
 
     // active record
     public let id: String

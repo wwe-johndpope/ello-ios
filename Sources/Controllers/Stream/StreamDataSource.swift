@@ -242,7 +242,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     public func groupForIndexPath(indexPath: NSIndexPath) -> String {
         if !isValidIndexPath(indexPath) { return "0" }
 
-        return (visibleCellItems[indexPath.item].jsonable as? Authorable)?.groupId ?? "0"
+        return (visibleCellItems[indexPath.item].jsonable as? Groupable)?.groupId ?? "0"
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

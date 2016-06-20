@@ -49,7 +49,7 @@ public enum NotificationFilterType: String {
 let NotificationVersion = 1
 
 @objc(Notification)
-public final class Notification: JSONAble, Authorable {
+public final class Notification: JSONAble, Authorable, Groupable {
 
     // required
     public let activity: Activity

@@ -10,8 +10,9 @@ import SwiftyJSON
 
 public let CategoryVersion = 1
 
-public class Category: JSONAble {
+public class Category: JSONAble, Groupable {
     public let id: String
+    public var groupId: String { return id }
     public let name: String
     public let slug: String
     public let order: Int
