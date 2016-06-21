@@ -249,75 +249,69 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return visibleCellItems.count ?? 0
     }
 
-    public func willDisplayCell(cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.item < visibleCellItems.count {
-            let streamCellItem = visibleCellItems[indexPath.item]
-
-            switch streamCellItem.type {
-            case .ColumnToggle:
-                (cell as! ColumnToggleCell).columnToggleDelegate = columnToggleDelegate
-            case .CategoryList:
-                (cell as! CategoryListCell).discoverCategoryPickerDelegate = discoverCategoryPickerDelegate
-            case .Footer:
-                (cell as! StreamFooterCell).delegate = postbarDelegate
-                (cell as! StreamFooterCell).streamEditingDelegate = editingDelegate
-            case .CreateComment:
-                (cell as! StreamCreateCommentCell).delegate = postbarDelegate
-            case .Header, .CommentHeader:
-                (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
-                (cell as! StreamHeaderCell).postbarDelegate = postbarDelegate
-                (cell as! StreamHeaderCell).userDelegate = userDelegate
-                (cell as! StreamHeaderCell).streamEditingDelegate = editingDelegate
-            case .Image:
-                (cell as! StreamImageCell).streamImageCellDelegate = imageDelegate
-                (cell as! StreamImageCell).streamEditingDelegate = editingDelegate
-            case .InviteFriends:
-                (cell as! StreamInviteFriendsCell).inviteDelegate = inviteDelegate
-                (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
-            case .Notification:
-                (cell as! NotificationCell).relationshipControl.relationshipDelegate = relationshipDelegate
-                (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
-                (cell as! NotificationCell).userDelegate = userDelegate
-                (cell as! NotificationCell).delegate = notificationDelegate
-            case .ProfileHeader:
-                (cell as! ProfileHeaderCell).simpleStreamDelegate = simpleStreamDelegate
-                (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
-            case .RepostHeader:
-                (cell as! StreamRepostHeaderCell).userDelegate = userDelegate
-            case .Text:
-                (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
-                (cell as! StreamTextCell).userDelegate = userDelegate
-                (cell as! StreamTextCell).streamEditingDelegate = editingDelegate
-            case .UserAvatars:
-                (cell as! UserAvatarsCell).simpleStreamDelegate = simpleStreamDelegate
-                (cell as! UserAvatarsCell).userDelegate = userDelegate
-            case .UserListItem:
-                (cell as! UserListItemCell).relationshipControl.relationshipDelegate = relationshipDelegate
-                (cell as! UserListItemCell).userDelegate = userDelegate
-            default:
-                break
-            }
-
-            streamCellItem.type.configure(
-                cell: cell,
-                streamCellItem: streamCellItem,
-                streamKind: streamKind,
-                indexPath: indexPath,
-                currentUser: currentUser
-            )
-        }
-    }
-
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if indexPath.item < visibleCellItems.count {
-            let streamCellItem = visibleCellItems[indexPath.item]
-
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(streamCellItem.type.name, forIndexPath: indexPath)
-
-            return cell
-
+        guard indexPath.item < visibleCellItems.count else {
+            return UICollectionViewCell()
         }
-        return UICollectionViewCell()
+
+        let streamCellItem = visibleCellItems[indexPath.item]
+
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(streamCellItem.type.name, forIndexPath: indexPath)
+
+        switch streamCellItem.type {
+        case .ColumnToggle:
+            (cell as! ColumnToggleCell).columnToggleDelegate = columnToggleDelegate
+        case .CategoryList:
+            (cell as! CategoryListCell).discoverCategoryPickerDelegate = discoverCategoryPickerDelegate
+        case .Footer:
+            (cell as! StreamFooterCell).delegate = postbarDelegate
+            (cell as! StreamFooterCell).streamEditingDelegate = editingDelegate
+        case .CreateComment:
+            (cell as! StreamCreateCommentCell).delegate = postbarDelegate
+        case .Header, .CommentHeader:
+            (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
+            (cell as! StreamHeaderCell).postbarDelegate = postbarDelegate
+            (cell as! StreamHeaderCell).userDelegate = userDelegate
+            (cell as! StreamHeaderCell).streamEditingDelegate = editingDelegate
+        case .Image:
+            (cell as! StreamImageCell).streamImageCellDelegate = imageDelegate
+            (cell as! StreamImageCell).streamEditingDelegate = editingDelegate
+        case .InviteFriends:
+            (cell as! StreamInviteFriendsCell).inviteDelegate = inviteDelegate
+            (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
+        case .Notification:
+            (cell as! NotificationCell).relationshipControl.relationshipDelegate = relationshipDelegate
+            (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
+            (cell as! NotificationCell).userDelegate = userDelegate
+            (cell as! NotificationCell).delegate = notificationDelegate
+        case .ProfileHeader:
+            (cell as! ProfileHeaderCell).simpleStreamDelegate = simpleStreamDelegate
+            (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
+        case .RepostHeader:
+            (cell as! StreamRepostHeaderCell).userDelegate = userDelegate
+        case .Text:
+            (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
+            (cell as! StreamTextCell).userDelegate = userDelegate
+            (cell as! StreamTextCell).streamEditingDelegate = editingDelegate
+        case .UserAvatars:
+            (cell as! UserAvatarsCell).simpleStreamDelegate = simpleStreamDelegate
+            (cell as! UserAvatarsCell).userDelegate = userDelegate
+        case .UserListItem:
+            (cell as! UserListItemCell).relationshipControl.relationshipDelegate = relationshipDelegate
+            (cell as! UserListItemCell).userDelegate = userDelegate
+        default:
+            break
+        }
+
+        streamCellItem.type.configure(
+            cell: cell,
+            streamCellItem: streamCellItem,
+            streamKind: streamKind,
+            indexPath: indexPath,
+            currentUser: currentUser
+        )
+
+        return cell
     }
 
     public func modifyItems(jsonable: JSONAble, change: ContentChange, collectionView: UICollectionView) {

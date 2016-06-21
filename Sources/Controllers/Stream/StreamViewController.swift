@@ -951,10 +951,6 @@ extension StreamViewController: WebLinkDelegate {
 // MARK: StreamViewController: UICollectionViewDelegate
 extension StreamViewController: UICollectionViewDelegate {
 
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        dataSource.willDisplayCell(cell, forItemAtIndexPath: indexPath)
-    }
-
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tappedCell = collectionView.cellForItemAtIndexPath(indexPath)
 
