@@ -29,8 +29,10 @@ public protocol StreamEditingDelegate: class {
     func cellLongPressed(cell: UICollectionViewCell)
 }
 
+public typealias StreamCellItemGenerator = () -> [StreamCellItem]
 public protocol StreamViewDelegate: class {
     func streamViewCustomLoadFailed() -> Bool
+    func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator: StreamCellItemGenerator) -> [StreamCellItem]?
     func streamViewDidScroll(scrollView: UIScrollView)
     func streamViewWillBeginDragging(scrollView: UIScrollView)
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
@@ -102,7 +104,6 @@ public class StreamViewController: BaseElloViewController {
     }
 
     public typealias ToggleClosure = (Bool) -> Void
-    public typealias CustomItemsGenerator = ([JSONAble], () -> [StreamCellItem]) -> [StreamCellItem]
 
     public var dataSource: StreamDataSource!
     public var postbarController: PostbarController?
@@ -113,7 +114,6 @@ public class StreamViewController: BaseElloViewController {
     var allOlderPagesLoaded = false
     public var initialLoadClosure: ElloEmptyCompletion?
     public var toggleClosure: ToggleClosure?
-    public var customStreamCellItems: CustomItemsGenerator?
     var initialDataLoaded = false
     var parentTabBarController: ElloTabBarController? {
         if  let parentViewController = self.parentViewController,
@@ -323,12 +323,12 @@ public class StreamViewController: BaseElloViewController {
     }
 
     private func generateStreamCellItems(jsonables: [JSONAble]) -> [StreamCellItem] {
-        let defaultItems: () -> [StreamCellItem] = {
+        let defaultGenerator: StreamCellItemGenerator = {
             return StreamCellItemParser().parse(jsonables, streamKind: self.streamKind, currentUser: self.currentUser)
         }
 
-        if let customStreamCellItems = customStreamCellItems {
-            return customStreamCellItems(jsonables, defaultItems)
+        if let items = streamViewDelegate?.streamViewStreamCellItems(jsonables, defaultGenerator: defaultGenerator) {
+            return items
         }
 
         var items: [StreamCellItem] = []
@@ -337,7 +337,7 @@ public class StreamViewController: BaseElloViewController {
             items += [toggleCellItem]
         }
 
-        items += defaultItems()
+        items += defaultGenerator()
         return items
     }
 

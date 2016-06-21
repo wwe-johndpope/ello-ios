@@ -280,6 +280,10 @@ extension StreamableViewController: StreamViewDelegate {
         return false
     }
 
+    public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+        return nil
+    }
+
     public func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }

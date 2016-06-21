@@ -20,19 +20,6 @@ public class DiscoverMoreCategoriesViewController: StreamableViewController {
         elloNavigationItem.fixNavBarItemPadding()
 
         streamViewController.streamKind = .MoreCategories
-        streamViewController.customStreamCellItems = { jsonables, defaultItems in
-            var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
-            if let categories = jsonables as? [Category] {
-                let sortedCategories = categories
-                    .filter { $0.level == .Primary }
-                    .sort { $0.order < $1.order }
-                for category in sortedCategories {
-                    items.append(StreamCellItem(jsonable: category, type: .Category))
-                }
-                items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .SeeAllCategories))
-            }
-            return items
-        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -73,4 +60,21 @@ public class DiscoverMoreCategoriesViewController: StreamableViewController {
         updateInsets()
     }
 
+}
+
+// MARK: StreamViewDelegate
+extension DiscoverMoreCategoriesViewController {
+    override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+        var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
+        if let categories = jsonables as? [Category] {
+            let sortedCategories = categories
+                .filter { $0.level == .Primary }
+                .sort { $0.order < $1.order }
+            for category in sortedCategories {
+                items.append(StreamCellItem(jsonable: category, type: .Category))
+            }
+            items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .SeeAllCategories))
+        }
+        return items
+    }
 }

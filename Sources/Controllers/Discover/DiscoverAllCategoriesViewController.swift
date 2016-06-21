@@ -20,17 +20,6 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
         elloNavigationItem.fixNavBarItemPadding()
 
         streamViewController.streamKind = .AllCategories
-        streamViewController.customStreamCellItems = { jsonables, defaultItems in
-            var items: [StreamCellItem] = []
-            if let categories = jsonables as? [Category] {
-                let sortedCategories = categories
-                    .sort { $0.order < $1.order }
-                for category in sortedCategories {
-                    items.append(StreamCellItem(jsonable: category, type: .CategoryCard))
-                }
-            }
-            return items
-        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -71,4 +60,19 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
         updateInsets()
     }
 
+}
+
+// MARK: StreamViewDelegate
+extension DiscoverAllCategoriesViewController {
+    override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+        var items: [StreamCellItem] = []
+        if let categories = jsonables as? [Category] {
+            let sortedCategories = categories
+                .sort { $0.order < $1.order }
+            for category in sortedCategories {
+                items.append(StreamCellItem(jsonable: category, type: .CategoryCard))
+            }
+        }
+        return items
+    }
 }

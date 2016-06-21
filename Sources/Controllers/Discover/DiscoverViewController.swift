@@ -8,6 +8,7 @@
 
 public class DiscoverViewController: StreamableViewController {
     var screen: DiscoverScreen!
+    private var includeCategoryPicker: Bool
 
     override public var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.Sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
@@ -15,6 +16,7 @@ public class DiscoverViewController: StreamableViewController {
     }
 
     required public init(category: Category) {
+        includeCategoryPicker = false
         super.init(nibName: nil, bundle: nil)
 
         sharedInit(title: category.name)
@@ -26,33 +28,14 @@ public class DiscoverViewController: StreamableViewController {
         default:
             fatalError("invalid endpoint \(category.endpoint)")
         }
-
-        streamViewController.customStreamCellItems = { jsonables, defaultItems in
-            var items: [StreamCellItem] = []
-
-            let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
-            items += [toggleCellItem]
-
-            items += defaultItems()
-            return items
-        }
     }
 
     required public init() {
+        includeCategoryPicker = true
         super.init(nibName: nil, bundle: nil)
 
         sharedInit()
         streamViewController.streamKind = .Discover(type: .Featured)
-        streamViewController.customStreamCellItems = { jsonables, defaultItems in
-            var items: [StreamCellItem] = []
-
-            let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
-            let categoryListItem = StreamCellItem(jsonable: CategoryList.hardCodedPrimaries(), type: .CategoryList)
-            items += [toggleCellItem, categoryListItem]
-
-            items += defaultItems()
-            return items
-        }
     }
 
     private func sharedInit(title title: String = InterfaceString.Discover.Title) {
@@ -116,5 +99,19 @@ extension DiscoverViewController {
             return true
         }
         return false
+    }
+
+    override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+        var items: [StreamCellItem] = []
+
+        let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
+        items.append(toggleCellItem)
+        if includeCategoryPicker {
+            let categoryListItem = StreamCellItem(jsonable: CategoryList.hardCodedPrimaries(), type: .CategoryList)
+            items.append(categoryListItem)
+        }
+
+        items += generator()
+        return items
     }
 }
