@@ -309,8 +309,16 @@ public class StreamViewController: BaseElloViewController {
                     self.initialLoadFailure()
                     self.doneLoading()
                 }, noContent: {
-                    print("nothing new")
-                    self.doneLoading()
+                    self.clearForInitialLoad()
+                    self.currentJSONables = []
+                    var items = self.generateStreamCellItems([])
+                    items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .Text(data: TextRegion(content: "Nothing to see here"))))
+                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
+                        if self.streamKind.gridViewPreferenceSet {
+                            self.collectionView.layoutIfNeeded()
+                            self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
+                        }
+                    })
                 })
         }
     }
