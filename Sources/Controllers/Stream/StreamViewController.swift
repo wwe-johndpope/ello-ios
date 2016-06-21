@@ -30,10 +30,10 @@ public protocol StreamEditingDelegate: class {
 }
 
 public protocol StreamViewDelegate: class {
-    func streamViewInitialLoadFailed()
+    func streamViewCustomLoadFailed() -> Bool
     func streamViewDidScroll(scrollView: UIScrollView)
     func streamViewWillBeginDragging(scrollView: UIScrollView)
-    func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
 }
 
 public protocol UserDelegate: class {
@@ -307,7 +307,6 @@ public class StreamViewController: BaseElloViewController {
                 }, failure: { (error, statusCode) in
                     print("failed to load \(self.streamKind.cacheKey) stream (reason: \(error))")
                     self.initialLoadFailure()
-                    self.doneLoading()
                 }, noContent: {
                     self.clearForInitialLoad()
                     self.currentJSONables = []
@@ -371,6 +370,11 @@ public class StreamViewController: BaseElloViewController {
 // MARK: Private Functions
 
     private func initialLoadFailure() {
+        guard streamViewDelegate?.streamViewCustomLoadFailed() != true else {
+            return
+        }
+        self.doneLoading()
+
         var isVisible = false
         var view: UIView? = self.view
         while view != nil {

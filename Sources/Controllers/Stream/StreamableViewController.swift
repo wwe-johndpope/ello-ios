@@ -276,7 +276,9 @@ extension StreamableViewController: CreatePostDelegate {
 
 // MARK: StreamViewDelegate
 extension StreamableViewController: StreamViewDelegate {
-    public func streamViewInitialLoadFailed() {}
+    public func streamViewCustomLoadFailed() -> Bool {
+        return false
+    }
 
     public func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
