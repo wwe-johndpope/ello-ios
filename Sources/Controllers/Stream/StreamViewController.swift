@@ -304,7 +304,7 @@ public class StreamViewController: BaseElloViewController {
                         }
                     })
                 }, failure: { (error, statusCode) in
-                    print("failed to load \(self.streamKind.name) stream (reason: \(error))")
+                    print("failed to load \(self.streamKind.cacheKey) stream (reason: \(error))")
                     self.initialLoadFailure()
                     self.doneLoading()
                 }, noContent: {
