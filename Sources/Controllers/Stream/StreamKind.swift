@@ -28,7 +28,7 @@ public enum StreamKind {
         case .CurrentUserStream: return InterfaceString.Profile.Title
         case .MoreCategories: return InterfaceString.Discover.MoreCategories
         case .AllCategories: return InterfaceString.Discover.AllCategories
-        case .CategoryPosts: return ""
+        case .CategoryPosts: return InterfaceString.Discover.MoreCategories
         case .Discover: return InterfaceString.Discover.Title
         case .Following: return InterfaceString.FollowingStream.Title
         case .Starred: return InterfaceString.StarredStream.Title
