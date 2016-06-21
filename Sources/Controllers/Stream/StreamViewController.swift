@@ -29,11 +29,10 @@ public protocol StreamEditingDelegate: class {
     func cellLongPressed(cell: UICollectionViewCell)
 }
 
-@objc
 public protocol StreamScrollDelegate: class {
     func streamViewDidScroll(scrollView: UIScrollView)
-    optional func streamViewWillBeginDragging(scrollView: UIScrollView)
-    optional func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    func streamViewWillBeginDragging(scrollView: UIScrollView)
+    func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
 }
 
 public protocol UserDelegate: class {
@@ -1032,11 +1031,11 @@ extension StreamViewController: UIScrollViewDelegate {
 
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         canLoadNext = true
-        streamScrollDelegate?.streamViewWillBeginDragging?(scrollView)
+        streamScrollDelegate?.streamViewWillBeginDragging(scrollView)
     }
 
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool) {
-        streamScrollDelegate?.streamViewDidEndDragging?(scrollView, willDecelerate: willDecelerate)
+        streamScrollDelegate?.streamViewDidEndDragging(scrollView, willDecelerate: willDecelerate)
     }
 
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
