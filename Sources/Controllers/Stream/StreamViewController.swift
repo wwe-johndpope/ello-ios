@@ -388,11 +388,15 @@ public class StreamViewController: BaseElloViewController {
             alertController.addAction(action)
             logPresentingAlert("StreamViewController")
             presentViewController(alertController, animated: true) {
-                self.navigationController?.popViewControllerAnimated(true)
+                if let navigationController = self.navigationController
+                where navigationController.childViewControllers.count > 1 {
+                    navigationController.popViewControllerAnimated(true)
+                }
             }
         }
-        else {
-            navigationController?.popViewControllerAnimated(false)
+        else if let navigationController = navigationController
+        where navigationController.childViewControllers.count > 1 {
+            navigationController.popViewControllerAnimated(false)
         }
     }
 
