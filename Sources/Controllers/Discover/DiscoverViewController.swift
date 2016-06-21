@@ -107,3 +107,14 @@ public class DiscoverViewController: StreamableViewController {
         updateInsets()
     }
 }
+
+// MARK: StreamViewDelegate
+extension DiscoverViewController {
+    override public func streamViewCustomLoadFailed() -> Bool {
+        if case .CategoryPosts = streamViewController.streamKind {
+            streamViewController.discoverCategoryTapped(.Discover(type: .Featured))
+            return true
+        }
+        return false
+    }
+}
