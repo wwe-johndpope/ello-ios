@@ -268,7 +268,7 @@ extension ElloAPI: Moya.TargetType {
         case let .DeletePost(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .DeleteSubscriptions(tokenData):
-            return "/\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+            return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .CategoryPosts(slug):
             return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .Discover(type):
@@ -329,9 +329,9 @@ extension ElloAPI: Moya.TargetType {
         case .CurrentUserMutedList:
             return "/api/\(ElloAPI.apiVersion)/profile/muted"
         case .ProfileToggles:
-            return "/\(ElloAPI.CurrentUserStream.path)/available_toggles"
+            return "\(ElloAPI.CurrentUserStream.path)/settings"
         case let .PushSubscriptions(tokenData):
-            return "/\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+            return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .Relationship(userId, relationship):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/add/\(relationship)"
         case .RelationshipBatch(_, _):
