@@ -29,7 +29,8 @@ public protocol StreamEditingDelegate: class {
     func cellLongPressed(cell: UICollectionViewCell)
 }
 
-public protocol StreamScrollDelegate: class {
+public protocol StreamViewDelegate: class {
+    func streamViewInitialLoadFailed()
     func streamViewDidScroll(scrollView: UIScrollView)
     func streamViewWillBeginDragging(scrollView: UIScrollView)
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
@@ -144,7 +145,7 @@ public class StreamViewController: BaseElloViewController {
     weak var createPostDelegate: CreatePostDelegate?
     weak var postTappedDelegate: PostTappedDelegate?
     weak var userTappedDelegate: UserTappedDelegate?
-    weak var streamScrollDelegate: StreamScrollDelegate?
+    weak var streamViewDelegate: StreamViewDelegate?
     var notificationDelegate: NotificationDelegate? {
         get { return dataSource.notificationDelegate }
         set { dataSource.notificationDelegate = newValue }
@@ -1022,7 +1023,7 @@ extension StreamViewController: UICollectionViewDelegate {
 extension StreamViewController: UIScrollViewDelegate {
 
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        streamScrollDelegate?.streamViewDidScroll(scrollView)
+        streamViewDelegate?.streamViewDidScroll(scrollView)
         if !noResultsLabel.hidden {
             noResultsTopConstraint.constant = -scrollView.contentOffset.y + defaultNoResultsTopConstant
             self.view.layoutIfNeeded()
@@ -1035,11 +1036,11 @@ extension StreamViewController: UIScrollViewDelegate {
 
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         canLoadNext = true
-        streamScrollDelegate?.streamViewWillBeginDragging(scrollView)
+        streamViewDelegate?.streamViewWillBeginDragging(scrollView)
     }
 
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool) {
-        streamScrollDelegate?.streamViewDidEndDragging(scrollView, willDecelerate: willDecelerate)
+        streamViewDelegate?.streamViewDidEndDragging(scrollView, willDecelerate: willDecelerate)
     }
 
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {

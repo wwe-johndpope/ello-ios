@@ -524,7 +524,7 @@ extension ProfileViewController: EditProfileResponder {
     }
 }
 
-// MARK: ProfileViewController: StreamScrollDelegate
+// MARK: ProfileViewController: StreamViewDelegate
 extension ProfileViewController {
 
     override public func streamViewDidScroll(scrollView: UIScrollView) {

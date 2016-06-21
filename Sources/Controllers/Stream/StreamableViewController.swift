@@ -36,7 +36,7 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
 
     func setupStreamController() {
         streamViewController.currentUser = currentUser
-        streamViewController.streamScrollDelegate = self
+        streamViewController.streamViewDelegate = self
         streamViewController.userTappedDelegate = self
         streamViewController.postTappedDelegate = self
         streamViewController.createPostDelegate = self
@@ -274,8 +274,10 @@ extension StreamableViewController: CreatePostDelegate {
     }
 }
 
-// MARK: StreamScrollDelegate
-extension StreamableViewController: StreamScrollDelegate {
+// MARK: StreamViewDelegate
+extension StreamableViewController: StreamViewDelegate {
+    public func streamViewInitialLoadFailed() {}
+
     public func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }

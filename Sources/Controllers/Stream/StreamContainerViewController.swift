@@ -167,7 +167,7 @@ public class StreamContainerViewController: StreamableViewController {
             vc.createPostDelegate = self
             vc.postTappedDelegate = self
             vc.userTappedDelegate = self
-            vc.streamScrollDelegate = self
+            vc.streamViewDelegate = self
             vc.collectionView.scrollsToTop = false
 
             vc.willMoveToParentViewController(self)
