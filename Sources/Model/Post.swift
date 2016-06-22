@@ -56,7 +56,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         return getLinkArray("assets") as? [Asset]
     }
     public var author: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.authorId, inCollection: MappingType.UsersType.rawValue) as? User
+        return getLinkObject("author") as? User
     }
     public var repostAuthor: User? {
         return getLinkObject("repost_author") as? User

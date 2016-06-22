@@ -23,11 +23,11 @@ public final class Relationship: JSONAble {
     public let subjectId: String
     // computed
     public var owner: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.ownerId, inCollection: MappingType.UsersType.rawValue) as? User
+        return getLinkObject("owner") as? User
     }
 
     public var subject: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.subjectId, inCollection: MappingType.UsersType.rawValue) as? User
+        return getLinkObject("subject") as? User
     }
 
     public init(id: String, createdAt: NSDate, ownerId: String, subjectId: String) {
