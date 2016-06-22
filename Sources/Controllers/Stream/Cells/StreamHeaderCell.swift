@@ -82,7 +82,12 @@ public class StreamHeaderCell: UICollectionViewCell {
     var timeStamp: String {
         get { return self.timestampLabel.text ?? "" }
         set {
-            timestampLabel.text = newValue
+            if isGridLayout {
+                timestampLabel.text = ""
+            }
+            else {
+                timestampLabel.text = newValue
+            }
             timestampLabel.sizeToFit()
             setNeedsLayout()
         }
@@ -262,6 +267,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         }
 
         replyButton.frame.size.width = buttonWidth
+        replyButton.frame.size.height = contentView.frame.size.height
         replyButton.frame.origin.x = timestampX - buttonWidth - buttonMargin - buttonMargin - rightSidePadding
         replyButton.hidden = isGridLayout || !canReply
 
