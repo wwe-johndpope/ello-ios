@@ -48,14 +48,14 @@ public class OnboardingUserListViewController: StreamableViewController, Onboard
     }
 
     func appendHeaderCellItem(header header: String, message: String) {
-        let headerItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .OnboardingHeader(data: (header, message)))
+        let headerItem = StreamCellItem(type: .OnboardingHeader(data: (header, message)))
         self.headerItem = headerItem
         streamViewController.appendStreamCellItems([headerItem])
     }
 
     func appendFollowAllCellItem(userCount userCount: Int) {
         let data = FollowAllCounts(userCount: userCount, followedCount: 0)
-        let followAllItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .FollowAll(data: data))
+        let followAllItem = StreamCellItem(type: .FollowAll(data: data))
         self.followAllItem = followAllItem
         streamViewController.appendStreamCellItems([followAllItem])
     }

@@ -620,6 +620,11 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         insertUnsizedCellItems(cellItems, withWidth: withWidth, startingIndexPath: startingIndexPath, completion: completion)
     }
 
+    public func replaceItem(at indexPath: NSIndexPath, with streamCellItems: [StreamCellItem] = []) {
+        removeItemAtIndexPath(indexPath)
+        insertStreamCellItems(streamCellItems, startingIndexPath: indexPath)
+    }
+
     public func insertStreamCellItems(cellItems: [StreamCellItem], startingIndexPath: NSIndexPath) -> [NSIndexPath] {
         // startingIndex represents the filtered index,
         // arrayIndex is the streamCellItems index

@@ -61,6 +61,7 @@ public class CategoryListCell: UICollectionViewCell {
     private func style() {
         backgroundColor = .whiteColor()
         allCategoriesButton.setImage(.DotsLight, imageStyle: .Normal, forState: .Normal)
+        allCategoriesButton.contentMode = .ScaleAspectFill
     }
 
     private func bindActions() {
@@ -68,11 +69,12 @@ public class CategoryListCell: UICollectionViewCell {
     }
 
     private func arrange() {
-        addSubview(allCategoriesButton)
+        contentView.addSubview(allCategoriesButton)
 
         allCategoriesButton.snp_makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.trailing.equalTo(contentView).offset(-Size.sideMargins).priorityRequired()
+            make.top.bottom.equalTo(contentView)
+            make.width.equalTo(contentView.snp_height)
+            make.trailing.equalTo(contentView)
         }
     }
 

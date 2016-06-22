@@ -34,6 +34,10 @@ public final class StreamCellItem: NSObject, NSCopying {
     public var calculatedMultiColumnCellHeight: CGFloat?
     public var state: StreamCellState = .None
 
+    public convenience init(type: StreamCellType) {
+        self.init(jsonable: JSONAble(version: 1), type: type)
+    }
+
     public required init(jsonable: JSONAble, type: StreamCellType) {
         self.jsonable = jsonable
         self.type = type

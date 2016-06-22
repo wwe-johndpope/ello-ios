@@ -264,6 +264,13 @@ public class StreamViewController: BaseElloViewController {
         }
     }
 
+    public func replacePlaceholder(placeholderType: StreamCellType.PlaceholderType, @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem]) {
+        if let indexPath = dataSource.indexPathForItem(StreamCellItem(type: .Placeholder(placeholderType))) {
+            let streamCellItems = streamCellItemsGenerator()
+            dataSource.replaceItem(at: indexPath, with: streamCellItems)
+        }
+    }
+
     public var loadInitialPageLoadingToken: String = ""
     public func resetInitialPageLoadingToken() -> String {
         let newToken = NSUUID().UUIDString
@@ -311,7 +318,7 @@ public class StreamViewController: BaseElloViewController {
                     self.clearForInitialLoad()
                     self.currentJSONables = []
                     var items = self.generateStreamCellItems([])
-                    items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .Text(data: TextRegion(content: "Nothing to see here"))))
+                    items.append(StreamCellItem(type: .Text(data: TextRegion(content: "Nothing to see here"))))
                     self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
                         if self.streamKind.gridViewPreferenceSet {
                             self.collectionView.layoutIfNeeded()
@@ -333,7 +340,7 @@ public class StreamViewController: BaseElloViewController {
 
         var items: [StreamCellItem] = []
         if self.streamKind.hasGridViewToggle {
-            let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
+            let toggleCellItem = StreamCellItem(type: .ColumnToggle)
             items += [toggleCellItem]
         }
 

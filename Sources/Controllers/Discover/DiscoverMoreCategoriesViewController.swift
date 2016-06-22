@@ -73,7 +73,7 @@ extension DiscoverMoreCategoriesViewController {
             for category in sortedCategories {
                 items.append(StreamCellItem(jsonable: category, type: .Category))
             }
-            items.append(StreamCellItem(jsonable: JSONAble(version: 1), type: .SeeAllCategories))
+            items.append(StreamCellItem(type: .SeeAllCategories))
         }
         return items
     }
