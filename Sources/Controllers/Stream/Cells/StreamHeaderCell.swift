@@ -51,6 +51,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var innerContentView: UIView!
     @IBOutlet var bottomContentView: UIView!
+    @IBOutlet var categoryButton: UIButton!
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var chevronButton: StreamFooterButton!
     @IBOutlet var usernameButton: UIButton!
@@ -136,6 +137,26 @@ public class StreamHeaderCell: UICollectionViewCell {
             repostIconView.hidden = true
         }
         setNeedsLayout()
+    }
+
+    func setCategory(category: Category?) {
+        let reposted = !repostedByButton.hidden
+        guard let category = category
+        where !isGridLayout && !reposted else {
+            categoryButton.hidden = true
+            return
+        }
+
+        let attributedString = NSAttributedString(string: "in ", attributes: [
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: UIColor.greyA(),
+            ])
+        let categoryName = NSAttributedString(string: category.name, attributes: [
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+            ])
+        categoryButton.setAttributedTitle(attributedString + categoryName, forState: UIControlState.Normal)
     }
 
     override public func awakeFromNib() {
@@ -296,27 +317,33 @@ public class StreamHeaderCell: UICollectionViewCell {
         let repostedWidth = max(minimumRepostedWidth, min(repostedByButton.frame.width, maxRepostedWidth))
 
         let hasRepostAuthor = !isGridLayout && !repostedByButton.hidden
+        let hasCategory = !isGridLayout && !categoryButton.hidden
         let usernameButtonHeight: CGFloat
         let usernameButtonY: CGFloat
-        let repostByLabelY: CGFloat
-        if hasRepostAuthor {
+
+        if hasRepostAuthor || hasCategory {
             usernameButtonHeight = 27
             usernameButtonY = contentView.frame.height / 2 - usernameButtonHeight
-
-            if followButtonVisible {
-                let relationshipControlCorrection: CGFloat = 2
-                let repostLabelCorrection: CGFloat = 2
-                relationshipControl.frame.origin.y -= usernameButtonHeight / 2 - relationshipControlCorrection
-                repostByLabelY = relationshipControl.frame.maxY + repostLabelCorrection
-            }
-            else {
-                repostByLabelY = contentView.frame.height / 2
-            }
         }
         else {
             usernameButtonHeight = contentView.frame.height
             usernameButtonY = 0
-            repostByLabelY = 0
+        }
+
+        let secondaryLabelY: CGFloat
+        if hasRepostAuthor || hasCategory {
+            if followButtonVisible {
+                let relationshipControlCorrection: CGFloat = 2
+                let repostLabelCorrection: CGFloat = 2
+                relationshipControl.frame.origin.y -= usernameButtonHeight / 2 - relationshipControlCorrection
+                secondaryLabelY = relationshipControl.frame.maxY + repostLabelCorrection
+            }
+            else {
+                secondaryLabelY = contentView.frame.height / 2
+            }
+        }
+        else {
+            secondaryLabelY = 0
         }
 
         usernameButton.frame = CGRect(
@@ -329,15 +356,17 @@ public class StreamHeaderCell: UICollectionViewCell {
             width: repostedWidth,
             height: usernameButtonHeight
         )
-        let repostIconY = repostByLabelY + (repostedByButton.frame.size.height - repostIconView.frame.height) / 2
+        let repostIconY = secondaryLabelY + (repostedByButton.frame.size.height - repostIconView.frame.height) / 2
         repostIconView.frame.origin = CGPoint(
             x: usernameX,
             y: repostIconY
         )
         repostedByButton.frame.origin = CGPoint(
             x: repostIconView.frame.maxX + 6,
-            y: repostByLabelY
+            y: secondaryLabelY
         )
+        let delta = repostedByButton.frame.origin.x - usernameX
+        categoryButton.frame = repostedByButton.frame.growLeft(delta)
     }
 
     private func fixedItem(width: CGFloat) -> UIBarButtonItem {
@@ -402,6 +431,9 @@ public class StreamHeaderCell: UICollectionViewCell {
 
     @IBAction func usernameTapped(sender: UIButton) {
         userDelegate?.userTappedAuthor(self)
+    }
+
+    @IBAction func categoryTapped(sender: UIButton) {
     }
 
     @IBAction func reposterTapped(sender: UIButton) {

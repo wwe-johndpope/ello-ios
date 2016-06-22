@@ -58,6 +58,18 @@ public final class Post: JSONAble, Authorable, Groupable {
     public var author: User? {
         return getLinkObject("author") as? User
     }
+    public var categories: [Category] {
+        guard let categories = getLinkArray("categories") as? [Category] else {
+            return []
+        }
+        return categories
+    }
+    public var category: Category? {
+        guard let category = categories.first else {
+            return nil
+        }
+        return category
+    }
     public var repostAuthor: User? {
         return getLinkObject("repost_author") as? User
     }
