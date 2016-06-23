@@ -112,7 +112,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         return self.deleteItem.customView as! ImageLabelControl
     }
 
-    func setUser(user: User?) {
+    func setDetails(user user: User?, repostedBy: User?, category: Category?) {
         avatarButton.setUser(user)
         let username = user?.atName ?? ""
         usernameButton.setTitle(username, forState: UIControlState.Normal)
@@ -121,41 +121,41 @@ public class StreamHeaderCell: UICollectionViewCell {
         relationshipControl.relationshipPriority = user?.relationshipPriority ?? .Inactive
         relationshipControl.userId = user?.id ?? ""
         relationshipControl.userAtName = user?.atName ?? ""
-    }
 
-    func setRepostedBy(user: User?) {
-        if let atName = user?.atName
+        let reposted: Bool
+        if let atName = repostedBy?.atName
         where !isGridLayout {
+            reposted = true
             repostedByButton.hidden = false
             repostIconView.hidden = false
             repostedByButton.setTitle("by \(atName)", forState: .Normal)
             repostedByButton.sizeToFit()
         }
         else {
+            reposted = false
             repostedByButton.hidden = true
             repostIconView.hidden = true
         }
-        setNeedsLayout()
-    }
 
-    func setCategory(category: Category?) {
-        let reposted = !repostedByButton.hidden
-        guard let category = category
-        where !isGridLayout && !reposted else {
+        if let category = category
+        where isGridLayout || !reposted {
+            let attributedString = NSAttributedString(string: "in ", attributes: [
+                NSFontAttributeName: UIFont.defaultFont(),
+                NSForegroundColorAttributeName: UIColor.greyA(),
+                ])
+            let categoryName = NSAttributedString(string: category.name, attributes: [
+                NSFontAttributeName: UIFont.defaultFont(),
+                NSForegroundColorAttributeName: UIColor.greyA(),
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+                ])
+            categoryButton.setAttributedTitle(attributedString + categoryName, forState: UIControlState.Normal)
+            categoryButton.hidden = false
+        }
+        else {
             categoryButton.hidden = true
-            return
         }
 
-        let attributedString = NSAttributedString(string: "in ", attributes: [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA(),
-            ])
-        let categoryName = NSAttributedString(string: category.name, attributes: [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA(),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-            ])
-        categoryButton.setAttributedTitle(attributedString + categoryName, forState: UIControlState.Normal)
+        setNeedsLayout()
     }
 
     override public func awakeFromNib() {

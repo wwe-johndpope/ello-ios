@@ -79,15 +79,13 @@ public struct StreamHeaderCellPresenter {
                 followButtonVisible = false
             }
 
-            cell.setUser(author)
-            cell.setRepostedBy(repostedBy)
+            let category: Category? = streamKind.isGridView ? nil : post?.category
+            cell.setDetails(user: author, repostedBy: repostedBy, category: category)
             cell.followButtonVisible = followButtonVisible
             if streamKind.isGridView {
                 cell.timeStamp = ""
-                cell.setCategory(nil)
             }
             else {
-                cell.setCategory(post?.category)
                 cell.timeStamp = authorable.createdAt.timeAgoInWords()
             }
             cell.layoutIfNeeded()
