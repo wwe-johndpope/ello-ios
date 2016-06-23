@@ -316,7 +316,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         let repostedWidth = max(minimumRepostedWidth, min(repostedByButton.frame.width, maxRepostedWidth))
 
         let hasRepostAuthor = !isGridLayout && !repostedByButton.hidden
-        let hasCategory = !isGridLayout && !categoryButton.hidden
+        let hasCategory = !categoryButton.hidden
         let usernameButtonHeight: CGFloat
         let usernameButtonY: CGFloat
 

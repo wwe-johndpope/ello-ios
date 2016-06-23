@@ -10,7 +10,7 @@ import SwiftyJSON
 
 public let CategoryVersion = 1
 
-public class Category: JSONAble, Groupable {
+public final class Category: JSONAble, Groupable {
     static let featured = Category(id: "meta1", name: "Featured", slug: "recommended", order: 0, level: .Meta)
     static let trending = Category(id: "meta2", name: "Trending", slug: "trending", order: 1, level: .Meta)
     static let recent = Category(id: "meta3", name: "Recent", slug: "recent", order: 2, level: .Meta)
