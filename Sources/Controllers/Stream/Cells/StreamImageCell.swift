@@ -143,7 +143,6 @@ public class StreamImageCell: StreamRegionableCell {
     }
 
     private func imageLoadFailed() {
-        imageButton.userInteractionEnabled = false
         failImage.hidden = false
         failBackgroundView.hidden = false
         circle.stopPulse()
