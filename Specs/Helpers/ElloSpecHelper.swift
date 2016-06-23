@@ -42,7 +42,7 @@ class ElloConfiguration: QuickConfiguration {
         }
         config.afterSuite {
             AuthToken.sharedKeychain = ElloKeychain()
-            ElloLinkedStore.sharedInstance.database.newConnection().readWriteWithBlock { transaction in
+            ElloLinkedStore.sharedInstance.writeConnection.readWriteWithBlock { transaction in
                 transaction.removeAllObjectsInAllCollections()
             }
             ElloProvider.sharedProvider = ElloProvider.DefaultProvider()

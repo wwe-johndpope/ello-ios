@@ -22,8 +22,8 @@ public struct ElloLinkedStore {
         connection.objectCacheLimit = 500
         return connection
     }
+    public var writeConnection: YapDatabaseConnection
     private var database: YapDatabase
-    private var writeConnection: YapDatabaseConnection
 
     public init() {
         ElloLinkedStore.deleteNonSharedDB()
