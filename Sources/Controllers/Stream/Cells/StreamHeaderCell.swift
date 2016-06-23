@@ -74,6 +74,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     }
     public weak var postbarDelegate: PostbarDelegate?
     public weak var userDelegate: UserDelegate?
+    public weak var categoryDelegate: CategoryDelegate?
     public weak var streamEditingDelegate: StreamEditingDelegate?
 
     var avatarHeight: CGFloat = 60.0 {
@@ -434,6 +435,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func categoryTapped(sender: UIButton) {
+        categoryDelegate?.categoryCellTapped(self)
     }
 
     @IBAction func reposterTapped(sender: UIButton) {

@@ -38,6 +38,10 @@ public protocol StreamViewDelegate: class {
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
 }
 
+public protocol CategoryDelegate: class {
+    func categoryCellTapped(cell: UICollectionViewCell)
+}
+
 public protocol UserDelegate: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
@@ -576,6 +580,7 @@ public class StreamViewController: BaseElloViewController {
         dataSource.editingDelegate = self
         dataSource.inviteDelegate = self
         dataSource.simpleStreamDelegate = self
+        dataSource.categoryDelegate = self
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.columnToggleDelegate = self
@@ -820,6 +825,20 @@ extension StreamViewController {
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
+}
+
+// MARK: StreamViewController: CategoryDelegate
+extension StreamViewController: CategoryDelegate {
+
+    public func categoryCellTapped(cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPathForCell(cell),
+           post = dataSource.jsonableForIndexPath(indexPath) as? Post,
+           category = post.category
+        {
+            categoryTapped(category)
+        }
+    }
+
 }
 
 // MARK: StreamViewController: UserDelegate

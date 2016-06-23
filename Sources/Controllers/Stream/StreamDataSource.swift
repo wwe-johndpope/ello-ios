@@ -44,6 +44,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak public var webLinkDelegate: WebLinkDelegate?
     weak public var imageDelegate: StreamImageCellDelegate?
     weak public var editingDelegate: StreamEditingDelegate?
+    weak public var categoryDelegate: CategoryDelegate?
     weak public var userDelegate: UserDelegate?
     weak public var relationshipDelegate: RelationshipDelegate?
     weak public var simpleStreamDelegate: SimpleStreamDelegate?
@@ -271,6 +272,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .Header, .CommentHeader:
             (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
             (cell as! StreamHeaderCell).postbarDelegate = postbarDelegate
+            (cell as! StreamHeaderCell).categoryDelegate = categoryDelegate
             (cell as! StreamHeaderCell).userDelegate = userDelegate
             (cell as! StreamHeaderCell).streamEditingDelegate = editingDelegate
         case .Image:
