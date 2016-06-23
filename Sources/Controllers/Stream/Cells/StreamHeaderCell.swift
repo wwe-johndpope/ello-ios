@@ -97,8 +97,6 @@ public class StreamHeaderCell: UICollectionViewCell {
 
     var chevronHidden = false
 
-    var streamKind: StreamKind?
-
     let flagItem = ElloPostToolBarOption.Flag.barButtonItem()
     public var flagControl: ImageLabelControl {
         return self.flagItem.customView as! ImageLabelControl

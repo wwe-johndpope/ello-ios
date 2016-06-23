@@ -55,11 +55,6 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
                     expect(cell.ownComment) == false
                 }
-                it("sets streamKind") {
-                    cell.streamKind = StreamKind.Starred
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
-                    expect(cell.streamKind?.name) == StreamKind.Following.name
-                }
                 it("sets scrollView.scrollEnabled") {
                     cell.scrollView.scrollEnabled = true
                     StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)

@@ -25,7 +25,6 @@ public struct StreamHeaderCellPresenter {
 
             cell.close()
             cell.indexPath = indexPath
-            cell.streamKind = streamKind
             cell.ownPost = false
             cell.ownComment = false
             cell.isGridLayout = streamKind.isGridView
