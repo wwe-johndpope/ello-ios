@@ -21,7 +21,7 @@ install:
 - bundle exec pod keys set HttpProtocol $ELLO_HTTP_PROTOCOL Ello
 - bundle exec pod keys set SegmentKey $ELLO_SEGMENT_KEY Ello
 - bundle exec pod keys set TeamId ABC123 Ello
-- bundle exec pod repo update
+- bundle exec pod repo update --silent
 - bundle exec pod install
 before_script:
 - export LANG=en_US.UTF-8
