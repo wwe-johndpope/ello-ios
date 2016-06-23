@@ -25,11 +25,11 @@ public final class Love: JSONAble {
     public let userId: String
 
     public var post: Post? {
-        return getLinkObject("post") as? Post
+        return ElloLinkedStore.sharedInstance.getObject(self.postId, inCollection: MappingType.PostsType.rawValue) as? Post
     }
 
     public var user: User? {
-        return getLinkObject("user") as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.userId, inCollection: MappingType.UsersType.rawValue) as? User
     }
 
 // MARK: Initialization
