@@ -129,7 +129,7 @@ class PreloaderSpec: QuickSpec {
             ])
         }
 
-        describe("preloadImages(_:streamKind:)") {
+        describe("preloadImages(_)") {
 
             it("preloads activity image assets and avatars") {
 
@@ -143,19 +143,19 @@ class PreloaderSpec: QuickSpec {
                     "id" : "345",
                 ])
 
-                subject.preloadImages([activityOne, activityTwo], streamKind: StreamKind.Following)
+                subject.preloadImages([activityOne, activityTwo])
 
                 expect(fakeManager.downloads.count) == 5
             }
 
             it("preloads posts image assets and avatars") {
-                subject.preloadImages([oneImagePost, twoImagePost, threeImagePost], streamKind: StreamKind.Following)
+                subject.preloadImages([oneImagePost, twoImagePost, threeImagePost])
 
                 expect(fakeManager.downloads.count) == 9
             }
 
             it("preloads comments image assets and avatars") {
-                subject.preloadImages([oneImageComment, threeImageComment], streamKind: StreamKind.Following)
+                subject.preloadImages([oneImageComment, threeImageComment])
 
                 expect(fakeManager.downloads.count) == 6
             }
@@ -167,14 +167,14 @@ class PreloaderSpec: QuickSpec {
                     "posts" : [twoImagePost, threeImagePost]
                 ])
 
-                subject.preloadImages([user], streamKind: StreamKind.CurrentUserStream)
+                subject.preloadImages([user])
 
                 expect(fakeManager.downloads.count) == 8
             }
 
             it("loads hdpi for single column StreamKinds") {
                 StreamKind.Following.setIsGridView(false)
-                subject.preloadImages([oneImagePost], streamKind: StreamKind.Following)
+                subject.preloadImages([oneImagePost])
 
                 // grab the second image, first is the avatar of post's author
                 expect(fakeManager.downloads[1].absoluteString) == "http://www.example.com/hdpi.jpg"
@@ -182,7 +182,7 @@ class PreloaderSpec: QuickSpec {
 
             it("loads hpdi for grid layout StreamKinds") {
                 StreamKind.Starred.setIsGridView(true)
-                subject.preloadImages([imagePostWithSummary], streamKind: StreamKind.Starred)
+                subject.preloadImages([imagePostWithSummary])
 
                 // grab the second image, first is the avatar of post's author
                 expect(fakeManager.downloads[1].absoluteString) == "http://www.example.com/hdpi.jpg"
@@ -194,7 +194,7 @@ class PreloaderSpec: QuickSpec {
                     "avatar" : avatarAsset1,
                 ])
 
-                subject.preloadImages([user], streamKind: StreamKind.PostDetail(postParam: "fake-id"))
+                subject.preloadImages([user])
 
                 expect(fakeManager.downloads.first?.absoluteString) == "http://www.example.com/regular.jpg"
             }

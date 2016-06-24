@@ -50,7 +50,7 @@ class ElloAPISpec: QuickSpec {
                         expect(ElloAPI.CreatePost(body: [:]).path) == "/api/v2/posts"
                     }
                     it("Discover(type: .Featured) is valid") {
-                        expect(ElloAPI.Discover(type: .Featured).path) == "/api/v2/discover/posts/recommended"
+                        expect(ElloAPI.Discover(type: .Featured).path) == "/api/v2/categories/posts/recent"
                     }
                     it("Discover(type: .Trending) is valid") {
                         expect(ElloAPI.Discover(type: .Trending).path) == "/api/v2/discover/users/trending"

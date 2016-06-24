@@ -255,8 +255,8 @@ class PostSpec: QuickSpec {
                     expect(unArchivedPost.reposted) == true
                     expect(unArchivedPost.loved) == true
                     // links
-                    expect(unArchivedPost.author!.id) == "555"
-                    expect(unArchivedPost.assets!.count) == 1
+                    expect(unArchivedPost.author?.id) == "555"
+                    expect(unArchivedPost.assets?.count) == 1
                     expect(unArchivedPost.comments!.count) == 1
                     expect(unArchivedPost.comments![0]).to(beAKindOf(ElloComment.self))
                     // computed

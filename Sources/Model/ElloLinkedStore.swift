@@ -17,15 +17,17 @@ public struct ElloLinkedStore {
     public static var sharedInstance: ElloLinkedStore { return _ElloLinkedStore }
     public static var databaseName = "ello.sqlite"
 
-    public var database: YapDatabase
-    public var readConnection: YapDatabaseConnection
-    private var writeConnection: YapDatabaseConnection
+    public var readConnection: YapDatabaseConnection {
+        let connection = database.newConnection()
+        connection.objectCacheLimit = 500
+        return connection
+    }
+    public var writeConnection: YapDatabaseConnection
+    private var database: YapDatabase
 
     public init() {
         ElloLinkedStore.deleteNonSharedDB()
         database = YapDatabase(path: ElloLinkedStore.databasePath())
-        readConnection = database.newConnection()
-        readConnection.objectCacheLimit = 500
         writeConnection = database.newConnection()
     }
 

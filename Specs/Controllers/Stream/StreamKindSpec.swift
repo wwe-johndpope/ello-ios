@@ -156,7 +156,7 @@ class StreamKindSpec: QuickSpec {
             describe("endpoint") {
 
                 it("is correct for all cases") {
-                    expect(StreamKind.Discover(type: .Featured).endpoint.path) == "/api/\(ElloAPI.apiVersion)/discover/posts/recommended"
+                    expect(StreamKind.Discover(type: .Featured).endpoint.path) == "/api/\(ElloAPI.apiVersion)/categories/posts/recent"
                     expect(StreamKind.CategoryPosts(slug: "art").endpoint.path) == "/api/\(ElloAPI.apiVersion)/categories/art/posts/recent"
                     expect(StreamKind.Following.endpoint.path) == "/api/\(ElloAPI.apiVersion)/streams/friend"
                     expect(StreamKind.Starred.endpoint.path) == "/api/\(ElloAPI.apiVersion)/streams/noise"

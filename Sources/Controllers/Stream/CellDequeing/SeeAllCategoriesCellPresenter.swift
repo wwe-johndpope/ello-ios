@@ -16,7 +16,7 @@ public struct SeeAllCategoriesCellPresenter {
         currentUser: User?)
     {
         if let cell = cell as? CategoryCell {
-            cell.title = InterfaceString.Discover.SeeAllCategories
+            cell.title = InterfaceString.SeeAll
             cell.highlight = .White
         }
     }

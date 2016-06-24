@@ -275,6 +275,8 @@ extension ElloAPI: Moya.TargetType {
             switch type {
             case .Trending:
                 return "/api/\(ElloAPI.apiVersion)/discover/users/trending"
+            case .Featured:
+                return "/api/\(ElloAPI.apiVersion)/categories/posts/recent"
             default:
                 return "/api/\(ElloAPI.apiVersion)/discover/posts/\(type.slug)"
             }
@@ -393,7 +395,7 @@ extension ElloAPI: Moya.TargetType {
              .FlagUser:
             return stubbedData("empty")
         case .CategoryPosts:
-            return stubbedData("friends")
+            return stubbedData("posts")
         case .Discover:
             return stubbedData("friends")
         case .EmojiAutoComplete:

@@ -28,7 +28,7 @@ public class ElloScreen: UIView {
 
         navigationBar.snp_makeConstraints { make in
             let c = make.top.equalTo(self).constraint
-            self.navigationBarTopConstraint = c.nativeConstraints().first!
+            self.navigationBarTopConstraint = c.layoutConstraints.first!
             make.left.equalTo(self)
             make.right.equalTo(self)
         }

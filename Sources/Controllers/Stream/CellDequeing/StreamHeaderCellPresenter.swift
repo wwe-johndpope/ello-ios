@@ -21,9 +21,10 @@ public struct StreamHeaderCellPresenter {
         if let cell = cell as? StreamHeaderCell,
             authorable = streamCellItem.jsonable as? Authorable
         {
+            let post = streamCellItem.jsonable as? Post
+
             cell.close()
             cell.indexPath = indexPath
-            cell.streamKind = streamKind
             cell.ownPost = false
             cell.ownComment = false
             cell.isGridLayout = streamKind.isGridView
@@ -55,7 +56,7 @@ public struct StreamHeaderCellPresenter {
                 cell.chevronHidden = true
                 cell.goToPostView.hidden = false
 
-                if let repostAuthor = (streamCellItem.jsonable as? Post)?.repostAuthor {
+                if let repostAuthor = post?.repostAuthor {
                     repostedBy = author
                     author = repostAuthor
                 }
@@ -78,10 +79,15 @@ public struct StreamHeaderCellPresenter {
                 followButtonVisible = false
             }
 
-            cell.setUser(author)
-            cell.setRepostedBy(repostedBy)
+            let category: Category? = streamKind.isGridView ? nil : post?.category
+            cell.setDetails(user: author, repostedBy: repostedBy, category: category)
             cell.followButtonVisible = followButtonVisible
-            cell.timeStamp = streamKind.isGridView ? "" : authorable.createdAt.timeAgoInWords()
+            if streamKind.isGridView {
+                cell.timeStamp = ""
+            }
+            else {
+                cell.timeStamp = authorable.createdAt.timeAgoInWords()
+            }
             cell.layoutIfNeeded()
         }
     }

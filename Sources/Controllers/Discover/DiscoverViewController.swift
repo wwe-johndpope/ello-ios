@@ -9,6 +9,7 @@
 public class DiscoverViewController: StreamableViewController {
     var screen: DiscoverScreen!
     private var includeCategoryPicker: Bool
+    private var categoryList: CategoryList?
 
     override public var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.Sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
@@ -49,6 +50,17 @@ public class DiscoverViewController: StreamableViewController {
         }
 
         addSearchButton()
+
+        ElloProvider.shared.elloRequest(.Categories) { [weak self] (data, responseConfig) in
+            if let categories = data as? [Category], sself = self {
+                let categoriesPlusFeatured = [Category.featured] + categories
+                let categoryList = CategoryList(categories: categoriesPlusFeatured)
+                sself.categoryList = categoryList
+                sself.streamViewController.replacePlaceholder(.CategoryList, with: [
+                    StreamCellItem(jsonable: categoryList, type: .CategoryList),
+                ])
+            }
+        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -104,10 +116,17 @@ extension DiscoverViewController {
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         var items: [StreamCellItem] = []
 
-        let toggleCellItem = StreamCellItem(jsonable: JSONAble(version: 1), type: .ColumnToggle)
+        let toggleCellItem = StreamCellItem(type: .ColumnToggle)
         items.append(toggleCellItem)
+
         if includeCategoryPicker {
-            let categoryListItem = StreamCellItem(jsonable: CategoryList.hardCodedPrimaries(), type: .CategoryList)
+            let categoryListItem: StreamCellItem
+            if let categoryList = categoryList {
+                categoryListItem = StreamCellItem(jsonable: categoryList, type: .CategoryList)
+            }
+            else {
+                categoryListItem = StreamCellItem(type: .Placeholder(.CategoryList))
+            }
             items.append(categoryListItem)
         }
 

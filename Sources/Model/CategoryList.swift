@@ -69,9 +69,9 @@ extension CategoryList {
 
     class func metaCategories() -> [Category] {
         return [
-            Category(id: "meta1", name: "Featured", slug: "recommended", order: 0, level: .Meta),
-            Category(id: "meta2", name: "Trending", slug: "trending", order: 1, level: .Meta),
-            Category(id: "meta3", name: "Recent", slug: "recent", order: 2, level: .Meta),
+            Category.featured,
+            Category.trending,
+            Category.recent,
         ]
     }
 }

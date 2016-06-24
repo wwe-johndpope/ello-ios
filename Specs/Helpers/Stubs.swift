@@ -424,3 +424,15 @@ extension StreamCellItem: Stubbable {
         )
     }
 }
+
+extension Ello.Category: Stubbable {
+    class func stub(values: [String: AnyObject]) -> Ello.Category {
+        return Category(
+            id: (values["id"] as? String) ?? "666",
+            name: (values["name"] as? String) ?? "Art",
+            slug: (values["slug"] as? String) ?? "art",
+            order: (values["order"] as? Int) ?? 0,
+            level: CategoryLevel(rawValue: (values["level"] as? String) ?? "primary")!
+        )
+    }
+}

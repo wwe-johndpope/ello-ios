@@ -194,9 +194,10 @@ extension StreamableViewController: UserTappedDelegate {
     }
 
     public func userParamTapped(param: String) {
-        if alreadyOnUserProfile(param) {
+        guard !alreadyOnUserProfile(param) else {
             return
         }
+
         let vc = ProfileViewController(userParam: param)
         vc.currentUser = currentUser
         self.navigationController?.pushViewController(vc, animated: true)
