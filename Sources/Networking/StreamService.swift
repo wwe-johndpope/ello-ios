@@ -29,7 +29,7 @@ public class StreamService: NSObject {
             success: { (data, responseConfig) in
                 if let jsonables = data as? [JSONAble] {
                     if let streamKind = streamKind {
-                        Preloader().preloadImages(jsonables,  streamKind: streamKind)
+                        Preloader().preloadImages(jsonables)
                         NewContentService().updateCreatedAt(jsonables, streamKind: streamKind)
                     }
                     success(jsonables: jsonables, responseConfig: responseConfig)
@@ -57,9 +57,7 @@ public class StreamService: NSObject {
             endpoint,
             success: { (data, responseConfig) in
                 if let user = data as? User {
-                    if let streamKind = streamKind {
-                        Preloader().preloadImages([user], streamKind: streamKind)
-                    }
+                    Preloader().preloadImages([user])
                     success(user: user, responseConfig: responseConfig)
                 }
                 else {
@@ -86,9 +84,7 @@ public class StreamService: NSObject {
                         comment.loadedFromPostId = postId
                     }
 
-                    if let streamKind = streamKind {
-                        Preloader().preloadImages(comments, streamKind: streamKind)
-                    }
+                    Preloader().preloadImages(comments)
                     success(jsonables: comments, responseConfig: responseConfig)
                 }
                 else if let noContent = noContent {
