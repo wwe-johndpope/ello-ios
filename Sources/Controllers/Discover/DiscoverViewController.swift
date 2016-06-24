@@ -120,14 +120,14 @@ extension DiscoverViewController {
         items.append(toggleCellItem)
 
         if includeCategoryPicker {
+            let categoryListItem: StreamCellItem
             if let categoryList = categoryList {
-                let categoryListItem = StreamCellItem(jsonable: categoryList, type: .CategoryList)
-                items.append(categoryListItem)
+                categoryListItem = StreamCellItem(jsonable: categoryList, type: .CategoryList)
             }
             else {
-                let categoryListItem = StreamCellItem(type: .Placeholder(.CategoryList))
-                items.append(categoryListItem)
+                categoryListItem = StreamCellItem(type: .Placeholder(.CategoryList))
             }
+            items.append(categoryListItem)
         }
 
         items += generator()
