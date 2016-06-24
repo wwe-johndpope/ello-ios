@@ -47,7 +47,9 @@ class CategoryListCellSpec: QuickSpec {
                         (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
                         (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
                     ]
-                    let categoryButton: UIButton = subviewThatMatches(subject) { view in (view as? UIButton)?.currentTitle == "Featured" } as! UIButton
+                    let categoryButton: UIButton = subviewThatMatches(subject) { view in
+                        (view as? UIButton)?.currentAttributedTitle?.string == "Featured"
+                    } as! UIButton
                     categoryButton.sendActionsForControlEvents(.TouchUpInside)
                     expect(delegate.categoryTapped) == true
                     expect(delegate.endpointPath) == ElloAPI.CategoryPosts(slug: "featured").path
