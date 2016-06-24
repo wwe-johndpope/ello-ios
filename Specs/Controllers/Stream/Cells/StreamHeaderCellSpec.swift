@@ -164,7 +164,7 @@ class StreamHeaderCellSpec: QuickSpec {
 
                         subject.layoutIfNeeded()
                         showView(subject)
-                        expect(subject).to(recordSnapshot())
+                        expect(subject).to(haveValidSnapshot())
                     }
                 }
             }
