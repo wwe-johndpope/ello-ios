@@ -15,7 +15,7 @@ public struct Preloader {
 
     public init(){}
 
-    public func preloadImages(jsonables: [JSONAble], streamKind: StreamKind) {
+    public func preloadImages(jsonables: [JSONAble]) {
 
         for jsonable in jsonables {
 
@@ -57,17 +57,17 @@ public struct Preloader {
             if  let activity = jsonable as? Activity,
                 let post = activity.subject as? Post
             {
-                preloadImagesinPost(post, streamKind: streamKind)
+                preloadImagesinPost(post)
             }
 
             // post image regions
             else if let post = jsonable as? Post {
-                preloadImagesinPost(post, streamKind: streamKind)
+                preloadImagesinPost(post)
             }
 
             // comment image regions
             else if let comment = jsonable as? ElloComment {
-                preloadImagesInRegions(comment.content, streamKind: streamKind)
+                preloadImagesInRegions(comment.content)
             }
 
             // user's posts image regions
@@ -75,7 +75,7 @@ public struct Preloader {
                     let posts = user.posts
             {
                 for post in posts {
-                    preloadImagesinPost(post, streamKind: streamKind)
+                    preloadImagesinPost(post)
                 }
             }
 
@@ -97,13 +97,13 @@ public struct Preloader {
         }
     }
 
-    private func preloadImagesinPost(post: Post, streamKind: StreamKind) {
+    private func preloadImagesinPost(post: Post) {
         if let content = post.content {
-            preloadImagesInRegions(content, streamKind: streamKind)
+            preloadImagesInRegions(content)
         }
     }
 
-    private func preloadImagesInRegions(regions: [Regionable], streamKind: StreamKind) {
+    private func preloadImagesInRegions(regions: [Regionable]) {
         for region in regions {
             if  let imageRegion = region as? ImageRegion,
                 let asset = imageRegion.asset,
