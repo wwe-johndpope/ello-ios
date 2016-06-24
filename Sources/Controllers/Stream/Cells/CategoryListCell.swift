@@ -72,9 +72,8 @@ public class CategoryListCell: UICollectionViewCell {
         contentView.addSubview(allCategoriesButton)
 
         allCategoriesButton.snp_makeConstraints { make in
-            make.top.bottom.equalTo(contentView)
+            make.top.bottom.trailing.equalTo(contentView)
             make.width.equalTo(contentView.snp_height)
-            make.trailing.equalTo(contentView)
         }
     }
 
