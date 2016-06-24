@@ -34,9 +34,9 @@ Once you have staging and production client credentials, you can switch between 
 - List available rake tasks: `bundle exec rake -T`
 
 
-### Testing out Push Notifications with APNS Pusher
+### Testing out Push Notifications with Knuff
 
-- Download apns pusher https://github.com/KnuffApp/Knuff/releases
+- Download Knuff https://github.com/KnuffApp/Knuff/releases
 - Install `ElloDevPushSandbox.p12` in your keychain (talk to [@steam](https://github.com/steam) to get it)
 - Print out your device's APNS Token in the function `updateToken()` in `PushNotificationController`
 - Build to device in `Debug` mode
