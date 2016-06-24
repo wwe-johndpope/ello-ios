@@ -11,14 +11,14 @@ import SnapKit
 public class CategoryListCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryListCell"
     weak var discoverCategoryPickerDelegate: DiscoverCategoryPickerDelegate?
-    private var buttonEndpointLookup: [UIButton: ElloAPI] = [:]
 
     struct Size {
         static let sideMargins: CGFloat = 15
         static let spacing: CGFloat = 15
     }
 
-    var categoriesInfo: [(title: String, endpoint: ElloAPI, selected: Bool)] = [] {
+    public typealias CategoryInfo = (title: String, endpoint: ElloAPI, selected: Bool)
+    public var categoriesInfo: [CategoryInfo] = [] {
         didSet {
             let changed: Bool = (categoriesInfo.count != oldValue.count) || oldValue.enumerate().any { (index, info) in
                 return info.title != categoriesInfo[index].title || info.selected != categoriesInfo[index].selected || info.endpoint.path != categoriesInfo[index].endpoint.path
@@ -28,6 +28,8 @@ public class CategoryListCell: UICollectionViewCell {
             }
         }
     }
+
+    private var buttonEndpointLookup: [UIButton: ElloAPI] = [:]
     private var categoryButtons: [UIButton] = []
     private var allCategoriesButton = UIButton()
 
@@ -65,7 +67,7 @@ public class CategoryListCell: UICollectionViewCell {
     }
 
     private func bindActions() {
-        allCategoriesButton.addTarget(self, action: #selector(allTapped), forControlEvents: .TouchUpInside)
+        allCategoriesButton.addTarget(self, action: #selector(allButtonTapped), forControlEvents: .TouchUpInside)
     }
 
     private func arrange() {
@@ -78,13 +80,13 @@ public class CategoryListCell: UICollectionViewCell {
     }
 
     @objc
-    func valueChanged(button: UIButton) {
+    func categoryButtonTapped(button: UIButton) {
         guard let endpoint = buttonEndpointLookup[button] else { return }
         discoverCategoryPickerDelegate?.discoverCategoryTapped(endpoint)
     }
 
     @objc
-    func allTapped() {
+    func allButtonTapped() {
         discoverCategoryPickerDelegate?.discoverAllCategoriesTapped()
     }
 
@@ -98,7 +100,7 @@ public class CategoryListCell: UICollectionViewCell {
             let button = UIButton()
             buttonEndpointLookup[button] = endpoint
             button.backgroundColor = .clearColor()
-            button.addTarget(self, action: #selector(valueChanged(_:)), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(categoryButtonTapped(_:)), forControlEvents: .TouchUpInside)
             let attributedString = CategoryListCell.buttonTitle(category, selected: selected)
             button.setAttributedTitle(attributedString, forState: UIControlState.Normal)
 

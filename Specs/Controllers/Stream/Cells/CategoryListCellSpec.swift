@@ -13,12 +13,55 @@ import Nimble_Snapshots
 
 
 class CategoryListCellSpec: QuickSpec {
+    class Delegate: DiscoverCategoryPickerDelegate {
+        var categoryTapped = false
+        var endpointPath: String?
+        var allCategoriesTapped = false
+
+        func discoverCategoryTapped(endpoint: ElloAPI) {
+            categoryTapped = true
+            endpointPath = endpoint.path
+        }
+
+        func discoverAllCategoriesTapped() {
+            allCategoriesTapped = true
+        }
+    }
+
     override func spec() {
         describe("CategoryListCell") {
             var subject: CategoryListCell!
+            var delegate: Delegate!
+
             beforeEach {
-                subject = CategoryListCell(frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 66)))
+                delegate = Delegate()
+                let frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 66))
+                subject = CategoryListCell(frame: frame)
+                subject.discoverCategoryPickerDelegate = delegate
                 showView(subject)
+            }
+
+            describe("actions") {
+                it("sends action when tapping on a category") {
+                    subject.categoriesInfo = [
+                        (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
+                        (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
+                    ]
+                    let categoryButton: UIButton = subviewThatMatches(subject) { view in (view as? UIButton)?.currentTitle == "Featured" } as! UIButton
+                    categoryButton.sendActionsForControlEvents(.TouchUpInside)
+                    expect(delegate.categoryTapped) == true
+                    expect(delegate.endpointPath) == ElloAPI.CategoryPosts(slug: "featured").path
+                }
+
+                it("sends action when tapping 'all' button") {
+                    subject.categoriesInfo = [
+                        (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
+                        (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
+                    ]
+                    let allButton: UIButton = subviewThatMatches(subject) { view in (view as? UIButton)?.currentImage != nil } as! UIButton
+                    allButton.sendActionsForControlEvents(.TouchUpInside)
+                    expect(delegate.allCategoriesTapped) == true
+                }
             }
 
             it("displays categories") {
