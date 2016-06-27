@@ -20,7 +20,7 @@ public class DiscoverViewController: StreamableViewController {
         includeCategoryPicker = false
         super.init(nibName: nil, bundle: nil)
 
-        sharedInit(title: category.name)
+        sharedInit(category: category)
         switch category.endpoint {
         case let .CategoryPosts(slug):
             streamViewController.streamKind = .CategoryPosts(slug: slug)
@@ -39,11 +39,12 @@ public class DiscoverViewController: StreamableViewController {
         streamViewController.streamKind = .Discover(type: .Featured)
     }
 
-    private func sharedInit(title title: String = InterfaceString.Discover.Title) {
-        self.title = title
+    private func sharedInit(category category: Category? = nil) {
+        title = category?.name ?? InterfaceString.Discover.Title
         elloNavigationItem.title = title
 
-        if title != InterfaceString.Discover.Title {
+        let hasBackButton = category != nil
+        if hasBackButton {
             let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
             elloNavigationItem.leftBarButtonItems = [leftItem]
             elloNavigationItem.fixNavBarItemPadding()
