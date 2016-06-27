@@ -65,13 +65,16 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
 // MARK: StreamViewDelegate
 extension DiscoverAllCategoriesViewController {
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
-        var items: [StreamCellItem] = []
+        let items: [StreamCellItem]
         if let categories = jsonables as? [Category] {
-            let sortedCategories = categories
-                .sort { $0.order < $1.order }
-            for category in sortedCategories {
-                items.append(StreamCellItem(jsonable: category, type: .CategoryCard))
+            items = categories.sort {
+                return $0.order < $1.order
+                }.map {
+                    return StreamCellItem(jsonable: $0, type: .CategoryCard)
             }
+        }
+        else {
+            items = []
         }
         return items
     }
