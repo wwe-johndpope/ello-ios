@@ -15,6 +15,11 @@ public class CategoryCardCell: UICollectionViewCell {
         set { label.text = newValue }
         get { return label.text ?? "" }
     }
+    var imageURL: NSURL? {
+        didSet {
+            imageView.pin_setImageFromURL(imageURL)
+        }
+    }
 
     private let label = ElloLabel()
     private let colorFillView = UIView()
@@ -29,6 +34,12 @@ public class CategoryCardCell: UICollectionViewCell {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override public func prepareForReuse() {
+        super.prepareForReuse()
+        label.text = ""
+        imageView.image = nil
     }
 
     private func style() {

@@ -19,6 +19,7 @@ public final class Category: JSONAble, Groupable {
     public var groupId: String { return id }
     public let name: String
     public let slug: String
+    public var cardURL: NSURL? { return nil }
     public let order: Int
     public let level: CategoryLevel
     public var endpoint: ElloAPI {

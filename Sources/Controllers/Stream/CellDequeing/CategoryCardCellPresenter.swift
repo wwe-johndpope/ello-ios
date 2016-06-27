@@ -19,6 +19,7 @@ public struct CategoryCardCellPresenter {
             category = streamCellItem.jsonable as? Category
         {
             cell.title = category.name
+            cell.imageURL = category.cardURL
         }
     }
 
