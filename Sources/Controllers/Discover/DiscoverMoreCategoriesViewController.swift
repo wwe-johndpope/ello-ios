@@ -7,7 +7,7 @@
 //
 
 public class DiscoverMoreCategoriesViewController: StreamableViewController {
-    var screen: DiscoverMoreCategoriesScreen!
+    var screen: DiscoverMoreCategoriesScreen { return self.view as! DiscoverMoreCategoriesScreen }
 
     required public init() {
         super.init(nibName: nil, bundle: nil)
@@ -27,7 +27,7 @@ public class DiscoverMoreCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        self.screen = DiscoverMoreCategoriesScreen(navigationItem: elloNavigationItem)
+        let screen = DiscoverMoreCategoriesScreen(navigationItem: elloNavigationItem)
         self.view = screen
         viewContainer = screen.streamContainer
     }

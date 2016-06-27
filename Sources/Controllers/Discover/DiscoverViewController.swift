@@ -7,7 +7,7 @@
 //
 
 public class DiscoverViewController: StreamableViewController {
-    var screen: DiscoverScreen!
+    var screen: DiscoverScreen { return self.view as! DiscoverScreen }
     private var includeCategoryPicker: Bool
     private var categoryList: CategoryList?
 
@@ -69,7 +69,7 @@ public class DiscoverViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        self.screen = DiscoverScreen(navigationItem: elloNavigationItem)
+        let screen = DiscoverScreen(navigationItem: elloNavigationItem)
         self.view = screen
         viewContainer = screen.streamContainer
     }
