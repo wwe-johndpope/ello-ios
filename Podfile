@@ -27,7 +27,7 @@ def ello_app_pods
   # swift pods
   pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
   pod 'WebLinking', '~> 1.0'
-  pod 'SnapKit', '~> 0.30'
+  pod 'SnapKit', git: 'https://github.com/SnapKit/SnapKit', tag: '0.30.0.beta2'
 end
 
 def common_pods
