@@ -831,12 +831,14 @@ extension StreamViewController {
 extension StreamViewController: CategoryDelegate {
 
     public func categoryCellTapped(cell: UICollectionViewCell) {
-        if let indexPath = collectionView.indexPathForCell(cell),
+        guard let indexPath = collectionView.indexPathForCell(cell),
            post = dataSource.jsonableForIndexPath(indexPath) as? Post,
            category = post.category
-        {
-            categoryTapped(category)
+        else {
+            return
         }
+
+        categoryTapped(category)
     }
 
 }
