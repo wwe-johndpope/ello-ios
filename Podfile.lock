@@ -66,7 +66,7 @@ PODS:
     - PINRemoteImage/Core
   - Quick (0.9.2)
   - Result (2.0.0)
-  - SnapKit (0.30.0.beta2)
+  - SnapKit (0.21.1)
   - SSPullToRefresh (1.2.4)
   - SVGKit (2.0.1):
     - CocoaLumberjack (~> 2.x)
@@ -143,7 +143,7 @@ DEPENDENCIES:
   - OHHTTPStubs (~> 4.3)
   - PINRemoteImage (from `https://github.com/pinterest/PINRemoteImage.git`, commit `af312667f0ce830264198366f481f1b222675a31`)
   - Quick (~> 0.9)
-  - SnapKit (from `https://github.com/SnapKit/SnapKit`, tag `0.30.0.beta2`)
+  - SnapKit (from `https://github.com/SnapKit/SnapKit`, commit `307d03ec433d61fbb25c9c4a6bb32689537db4d6`)
   - SSPullToRefresh (~> 1.2)
   - SVGKit (from `https://github.com/SVGKit/SVGKit`)
   - SwiftyJSON (from `https://github.com/ello/SwiftyJSON`, branch `Swift-2.0`)
@@ -169,8 +169,8 @@ EXTERNAL SOURCES:
     :commit: af312667f0ce830264198366f481f1b222675a31
     :git: https://github.com/pinterest/PINRemoteImage.git
   SnapKit:
+    :commit: 307d03ec433d61fbb25c9c4a6bb32689537db4d6
     :git: https://github.com/SnapKit/SnapKit
-    :tag: 0.30.0.beta2
   SVGKit:
     :git: https://github.com/SVGKit/SVGKit
   SwiftyJSON:
@@ -199,8 +199,8 @@ CHECKOUT OPTIONS:
     :commit: af312667f0ce830264198366f481f1b222675a31
     :git: https://github.com/pinterest/PINRemoteImage.git
   SnapKit:
+    :commit: 307d03ec433d61fbb25c9c4a6bb32689537db4d6
     :git: https://github.com/SnapKit/SnapKit
-    :tag: 0.30.0.beta2
   SVGKit:
     :commit: d9ae846e78d697ffb72366b9e3944034a35bafbd
     :git: https://github.com/SVGKit/SVGKit
@@ -238,7 +238,7 @@ SPEC CHECKSUMS:
   PINRemoteImage: 77a7f7bfacd2b4040786a0e31192a81003fdd41f
   Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
   Result: 9e75e1111c774c6ac594e14907b15057053a7959
-  SnapKit: c4bb32b1d3c5d18ff63bf95ffcbc599d2bab964c
+  SnapKit: bbad04cb016c7cead63965f16b00c09318d271ee
   SSPullToRefresh: 369e862c1d6528c7a354fc85cd4763d4e670e9af
   SVGKit: 2afbeaf2c2be4615476951284750c3ddb790d0c7
   SwiftyJSON: 6f102a82daf888b0e39fe71ff12e36605c02babb
@@ -248,6 +248,6 @@ SPEC CHECKSUMS:
   WebLinking: d5b5ab4f7305bcf29821deb5cecd775f6c37efae
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: a952d2e1afaf0ca57c06c0fed7f83e62ec0a4392
+PODFILE CHECKSUM: 8da9daaffbd60b129ee09e5a44dd8f00c947103d
 
 COCOAPODS: 1.0.0

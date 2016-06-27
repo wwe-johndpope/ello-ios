@@ -63,7 +63,7 @@ public class CategoryCardCell: UICollectionViewCell {
             make.edges.equalTo(colorFillView)
         }
         label.snp_makeConstraints { make in
-            make.center.equalTo(colorFillView)
+            make.centerX.centerY.equalTo(colorFillView)
         }
     }
 }
