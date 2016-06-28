@@ -11,9 +11,9 @@ import SwiftyJSON
 public let CategoryVersion = 1
 
 public final class Category: JSONAble, Groupable {
-    static let featured = Category(id: "meta1", name: "Featured", slug: "recommended", order: 0, level: .Meta)
-    static let trending = Category(id: "meta2", name: "Trending", slug: "trending", order: 1, level: .Meta)
-    static let recent = Category(id: "meta3", name: "Recent", slug: "recent", order: 2, level: .Meta)
+    static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "recommended", order: 0, level: .Meta)
+    static let trending = Category(id: "meta2", name: InterfaceString.Discover.Trending, slug: "trending", order: 1, level: .Meta)
+    static let recent = Category(id: "meta3", name: InterfaceString.Discover.Recent, slug: "recent", order: 2, level: .Meta)
 
     public let id: String
     public var groupId: String { return id }
