@@ -15,6 +15,31 @@ import Nimble
 class UserSpec: QuickSpec {
     override func spec() {
         describe("User") {
+            describe("coverImageURL") {
+                let original: Attachment = stub(["url": "http://original"])
+                let hdpi: Attachment = stub(["url": "http://hdpi"])
+                let asset: Asset = stub(["original": original, "hdpi": hdpi])
+                let emptyAsset: Asset = stub([:])
+
+                it("should return nil if there is no image") {
+                    let subject: User = stub(["coverImage": emptyAsset])
+                    expect(subject.coverImageURL(true)).to(beNil())
+                    expect(subject.coverImageURL(false)).to(beNil())
+                }
+                it("should return original if its not adult content") {
+                    let subject: User = stub(["coverImage": asset, "postsAdultContent": false])
+                    expect(subject.coverImageURL(true)) == original.url
+                    expect(subject.coverImageURL(false)) == original.url
+                }
+                it("should return hdpi if it is adult content") {
+                    let subject: User = stub(["coverImage": asset, "postsAdultContent": true])
+                    expect(subject.coverImageURL(false)) == hdpi.url
+                }
+                it("should return hdpi if it is adult content, but current user views adult content") {
+                    let subject: User = stub(["coverImage": asset, "postsAdultContent": true])
+                    expect(subject.coverImageURL(true)) == original.url
+                }
+            }
             describe("isOwnPost(_:)") {
                 let subject: User = stub(["id": "correctId"])
                 it("should return true if post's author is the current user") {
@@ -148,7 +173,7 @@ class UserSpec: QuickSpec {
                         expect(unArchivedUser.version) == 1
 
                         expect(unArchivedUser.avatarURL?.absoluteString) == "http://www.example.com"
-                        expect(unArchivedUser.coverImageURL?.absoluteString) == "http://www.example2.com"
+                        expect(unArchivedUser.coverImageURL(true)?.absoluteString) == "http://www.example2.com"
                         expect(unArchivedUser.experimentalFeatures).to(beTrue())
                         expect(unArchivedUser.followersCount) == "6"
                         expect(unArchivedUser.followingCount) == 8

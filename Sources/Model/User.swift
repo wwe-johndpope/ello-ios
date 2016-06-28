@@ -45,7 +45,6 @@ public final class User: JSONAble {
     // computed
     public var atName: String { return "@\(username)"}
     public var avatarURL: NSURL? { return avatar?.largeOrBest?.url }
-    public var coverImageURL: NSURL? { return coverImage?.hdpi?.url }
     public var isCurrentUser: Bool { return self.profile != nil }
     public var headerHTMLContent: String {
         var htmlContent = formattedShortBio ?? ""
@@ -270,5 +269,14 @@ extension User {
 
     func isOwnParentPost(comment: ElloComment) -> Bool {
         return id == comment.loadedFromPost?.authorId || id == comment.loadedFromPost?.repostAuthor?.id
+    }
+}
+
+extension User {
+    public func coverImageURL(viewsAdultContent: Bool?) -> NSURL? {
+        if !postsAdultContent || viewsAdultContent == true {
+            return coverImage?.original?.url
+        }
+        return coverImage?.hdpi?.url
     }
 }

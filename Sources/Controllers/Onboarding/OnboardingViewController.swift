@@ -235,7 +235,7 @@ private extension OnboardingViewController {
                 }
             }
 
-            if let url = currentUser.coverImageURL
+            if let url = currentUser.coverImageURL(true)
             where url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.sharedImageManager().downloadImageWithURL(url) { result in
