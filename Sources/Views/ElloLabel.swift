@@ -11,10 +11,18 @@ import UIKit
 import ElloUIFonts
 
 public class ElloLabel: UILabel {
+    override public var text: String? {
+        didSet {
+            if let text = text {
+                setLabelText(text, color: textColor, alignment: textAlignment)
+            }
+        }
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if let text = self.text {
-            self.setLabelText(text, color: textColor)
+        if let text = text {
+            setLabelText(text, color: textColor)
         }
     }
 
@@ -28,9 +36,9 @@ public class ElloLabel: UILabel {
         paragraphStyle.alignment = alignment
 
         return [
-            NSFontAttributeName : UIFont.defaultFont(),
-            NSForegroundColorAttributeName : color,
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphStyle
         ]
     }
 }
@@ -46,6 +54,8 @@ extension ElloLabel {
 
 public extension ElloLabel {
     func setLabelText(title: String, color: UIColor = UIColor.whiteColor(), alignment: NSTextAlignment = .Left) {
+        textColor = color
+        textAlignment = alignment
         let attrs = attributes(color, alignment: alignment)
         attributedText = NSAttributedString(string: title, attributes: attrs)
     }
@@ -75,15 +85,15 @@ public class ElloErrorLabel: ElloLabel {
 }
 
 public class ElloSizeableLabel: ElloLabel {
-    override public func attributes(color: UIColor, alignment: NSTextAlignment) -> [String : AnyObject] {
+    override public func attributes(color: UIColor, alignment: NSTextAlignment) -> [String: AnyObject] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = alignment
 
         return [
-            NSFontAttributeName : font,
-            NSForegroundColorAttributeName : color,
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphStyle
         ]
     }
 }

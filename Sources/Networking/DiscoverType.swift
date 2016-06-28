@@ -7,13 +7,14 @@
 //
 
 public enum DiscoverType: String {
-    case Recommended = "recommended"
+    case Featured = "recommended"
     case Trending = "trending"
     case Recent = "recent"
 
+    public var slug: String { return rawValue }
     public var name: String {
         switch self {
-        case Recommended: return InterfaceString.Discover.Featured
+        case Featured: return InterfaceString.Discover.Featured
         case Trending: return InterfaceString.Discover.Trending
         case Recent: return InterfaceString.Discover.Recent
         }

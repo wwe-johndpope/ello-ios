@@ -36,7 +36,7 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
 
     func setupStreamController() {
         streamViewController.currentUser = currentUser
-        streamViewController.streamScrollDelegate = self
+        streamViewController.streamViewDelegate = self
         streamViewController.userTappedDelegate = self
         streamViewController.postTappedDelegate = self
         streamViewController.createPostDelegate = self
@@ -194,9 +194,10 @@ extension StreamableViewController: UserTappedDelegate {
     }
 
     public func userParamTapped(param: String) {
-        if alreadyOnUserProfile(param) {
+        guard !alreadyOnUserProfile(param) else {
             return
         }
+
         let vc = ProfileViewController(userParam: param)
         vc.currentUser = currentUser
         self.navigationController?.pushViewController(vc, animated: true)
@@ -274,8 +275,16 @@ extension StreamableViewController: CreatePostDelegate {
     }
 }
 
-// MARK: StreamScrollDelegate
-extension StreamableViewController: StreamScrollDelegate {
+// MARK: StreamViewDelegate
+extension StreamableViewController: StreamViewDelegate {
+    public func streamViewCustomLoadFailed() -> Bool {
+        return false
+    }
+
+    public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+        return nil
+    }
+
     public func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }

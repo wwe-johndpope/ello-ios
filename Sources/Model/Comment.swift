@@ -12,7 +12,7 @@ import SwiftyJSON
 let CommentVersion = 1
 
 @objc(ElloComment)
-public final class ElloComment: JSONAble, Authorable {
+public final class ElloComment: JSONAble, Authorable, Groupable {
 
     // active record
     public let id: String

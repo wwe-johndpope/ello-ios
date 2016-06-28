@@ -1323,11 +1323,11 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(subject.groupForIndexPath(indexPathInvalidSection)) == "0"
                 }
 
-                it("returns '0' if StreamCellItem's jsonable is not Authorable") {
+                it("returns '0' if StreamCellItem's jsonable is not Groupable") {
                     let lastIndexPath = NSIndexPath(forItem: subject.visibleCellItems.count, inSection: 0)
-                    let nonAuthorable: Asset = stub(["id": "123"])
+                    let nonGroupable: Asset = stub(["id": "123"])
 
-                    let item = StreamCellItem(jsonable: nonAuthorable, type: .Image(data: ImageRegion.stub([:])))
+                    let item = StreamCellItem(jsonable: nonGroupable, type: .Image(data: ImageRegion.stub([:])))
 
                     subject.appendUnsizedCellItems([item], withWidth: webView.frame.width) { cellCount in
                         vc.collectionView.dataSource = subject

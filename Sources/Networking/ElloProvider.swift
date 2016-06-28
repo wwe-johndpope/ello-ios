@@ -103,7 +103,9 @@ public class ElloProvider {
 
     private func requestFailed(failure: ElloFailureCompletion) {
         let elloError = NSError(domain: ElloErrorDomain, code: 401, userInfo: [NSLocalizedFailureReasonErrorKey: "Logged Out"])
-        failure(error: elloError, statusCode: 401)
+        inForeground {
+            failure(error: elloError, statusCode: 401)
+        }
     }
 
     var waitList: [ElloRequestClosure] = []
@@ -310,8 +312,8 @@ extension ElloProvider {
 
     private func parseLinked(elloAPI: ElloAPI, dict: [String:AnyObject], responseConfig: ResponseConfig, success: ElloSuccessCompletion, failure: ElloFailureCompletion) {
         var newResponseConfig: ResponseConfig?
-        var mappedObjects: AnyObject?
         let completion: ElloEmptyCompletion = {
+            let mappedObjects: AnyObject?
             if let node = dict[elloAPI.mappingType.rawValue] as? [[String:AnyObject]] {
                 mappedObjects = Mapper.mapToObjectArray(node, fromJSON: elloAPI.mappingType.fromJSON)
             }
@@ -326,7 +328,11 @@ extension ElloProvider {
                     }
                 }
             }
-            if let mappedObjects: AnyObject = mappedObjects {
+            else {
+                mappedObjects = nil
+            }
+
+            if let mappedObjects = mappedObjects {
                 success(data: mappedObjects, responseConfig: newResponseConfig ?? responseConfig)
             }
             else {
@@ -346,7 +352,7 @@ extension ElloProvider {
         let (mappedJSON, error): (AnyObject?, NSError?) = Mapper.mapJSON(data)
         let responseConfig = parseResponse(response)
         if mappedJSON != nil && error == nil {
-            if let dict = mappedJSON as? [String:AnyObject] {
+            if let dict = mappedJSON as? [String: AnyObject] {
                 parseLinked(elloAPI, dict: dict, responseConfig: responseConfig, success: success, failure: failure)
             }
             else {

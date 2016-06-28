@@ -22,8 +22,11 @@ public func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
 }
 
 public enum StreamCellType: Equatable {
+    case Category
+    case CategoryCard
+    case SeeAllCategories
+    case CategoryList
     case ColumnToggle
-    case DiscoverStreamPicker
     case CommentHeader
     case CreateComment
     case Embed(data: Regionable?)
@@ -34,6 +37,7 @@ public enum StreamCellType: Equatable {
     case InviteFriends
     case Notification
     case OnboardingHeader(data: (String, String)?)
+    case Placeholder(PlaceholderType)
     case ProfileHeader
     case RepostHeader(height: CGFloat)
     case SeeMoreComments
@@ -46,9 +50,19 @@ public enum StreamCellType: Equatable {
     case UserAvatars
     case UserListItem
 
+    public enum PlaceholderType {
+        case CategoryList
+        case PeopleToFollow
+        case Lovers
+        case Reposters
+        case Comments
+    }
+
     static let all = [
+        Category, SeeAllCategories,
+        CategoryCard,
+        CategoryList,
         ColumnToggle,
-        DiscoverStreamPicker,
         CommentHeader,
         CreateComment,
         Embed(data: nil),
@@ -64,6 +78,7 @@ public enum StreamCellType: Equatable {
         SeeMoreComments,
         Spacer(height: 0.0),
         FullWidthSpacer(height: 0.0),
+        Placeholder(.Comments),
         StreamLoading,
         Text(data: nil),
         Toggle,
@@ -96,26 +111,39 @@ public enum StreamCellType: Equatable {
         case InviteFriends: return 7
         case Notification: return 8
         case OnboardingHeader: return 9
-        case ProfileHeader: return 10
-        case RepostHeader: return 11
-        case SeeMoreComments: return 12
-        case Spacer: return 13
-        case FullWidthSpacer: return 14
-        case StreamLoading: return 15
-        case Text: return 16
-        case Toggle: return 17
-        case Unknown: return 18
-        case UserAvatars: return 19
-        case UserListItem: return 20
-        case ColumnToggle: return 21
-        case DiscoverStreamPicker: return 22
+        case ProfileHeader: return 11
+        case let Placeholder(type):
+            switch type {
+            case .CategoryList: return 1001
+            case .PeopleToFollow: return 1002
+            case .Lovers: return 1003
+            case .Reposters: return 1004
+            case .Comments: return 1005
+            }
+        case RepostHeader: return 12
+        case SeeMoreComments: return 13
+        case Spacer: return 14
+        case FullWidthSpacer: return 15
+        case StreamLoading: return 16
+        case Text: return 17
+        case Toggle: return 18
+        case Unknown: return 19
+        case UserAvatars: return 20
+        case UserListItem: return 21
+        case ColumnToggle: return 22
+        case Category: return 23
+        case CategoryCard: return 24
+        case SeeAllCategories: return 25
+        case CategoryList: return 26
         }
     }
 
     public var name: String {
         switch self {
+        case Category, SeeAllCategories: return CategoryCell.reuseIdentifier
+        case CategoryCard: return CategoryCardCell.reuseIdentifier
+        case CategoryList: return CategoryListCell.reuseIdentifier
         case ColumnToggle: return ColumnToggleCell.reuseIdentifier
-        case DiscoverStreamPicker: return DiscoverStreamPickerCell.reuseIdentifier
         case CommentHeader, Header: return StreamHeaderCell.reuseIdentifier
         case CreateComment: return StreamCreateCommentCell.reuseIdentifier
         case Embed: return StreamEmbedCell.reuseEmbedIdentifier
@@ -125,6 +153,7 @@ public enum StreamCellType: Equatable {
         case InviteFriends: return StreamInviteFriendsCell.reuseIdentifier
         case Notification: return NotificationCell.reuseIdentifier
         case OnboardingHeader: return OnboardingHeaderCell.reuseIdentifier
+        case Placeholder: return "Placeholder"
         case ProfileHeader: return ProfileHeaderCell.reuseIdentifier
         case RepostHeader: return StreamRepostHeaderCell.reuseIdentifier
         case SeeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
@@ -141,16 +170,29 @@ public enum StreamCellType: Equatable {
 
     public var selectable: Bool {
         switch self {
-        case CreateComment, Header, InviteFriends, Notification, RepostHeader, SeeMoreComments, Toggle, UserListItem:
-             return true
+        case Category,
+             CategoryCard,
+             SeeAllCategories,
+             CreateComment,
+             Header,
+             InviteFriends,
+             Notification,
+             RepostHeader,
+             SeeMoreComments,
+             Toggle,
+             UserListItem:
+            return true
         default: return false
         }
     }
 
     public var configure: CellConfigClosure {
         switch self {
+        case Category: return CategoryCellPresenter.configure
+        case CategoryCard: return CategoryCardCellPresenter.configure
+        case SeeAllCategories: return SeeAllCategoriesCellPresenter.configure
+        case CategoryList: return CategoryListCellPresenter.configure
         case ColumnToggle: return ColumnToggleCellPresenter.configure
-        case DiscoverStreamPicker: return DiscoverStreamPickerCellPresenter.configure
         case CommentHeader, Header: return StreamHeaderCellPresenter.configure
         case CreateComment: return StreamCreateCommentCellPresenter.configure
         case Embed: return StreamEmbedCellPresenter.configure
@@ -176,8 +218,10 @@ public enum StreamCellType: Equatable {
 
     public var classType: UICollectionViewCell.Type {
         switch self {
+        case Category, SeeAllCategories: return CategoryCell.self
+        case CategoryCard: return CategoryCardCell.self
+        case CategoryList: return CategoryListCell.self
         case ColumnToggle: return ColumnToggleCell.self
-        case DiscoverStreamPicker: return DiscoverStreamPickerCell.self
         case CommentHeader, Header: return StreamHeaderCell.self
         case CreateComment: return StreamCreateCommentCell.self
         case Embed: return StreamEmbedCell.self
@@ -187,6 +231,7 @@ public enum StreamCellType: Equatable {
         case InviteFriends: return StreamInviteFriendsCell.self
         case Notification: return NotificationCell.self
         case OnboardingHeader: return OnboardingHeaderCell.self
+        case Placeholder: return UICollectionViewCell.self
         case ProfileHeader: return ProfileHeaderCell.self
         case RepostHeader: return StreamRepostHeaderCell.self
         case SeeMoreComments: return StreamSeeMoreCommentsCell.self
@@ -201,10 +246,14 @@ public enum StreamCellType: Equatable {
 
     public var oneColumnHeight: CGFloat {
         switch self {
+        case Category, SeeAllCategories:
+            return 56
+        case CategoryCard:
+            return 110
+        case CategoryList:
+            return 66
         case ColumnToggle:
             return 40
-        case DiscoverStreamPicker:
-            return 50
         case CommentHeader,
              InviteFriends,
              SeeMoreComments:
@@ -249,8 +298,10 @@ public enum StreamCellType: Equatable {
 
     public var isFullWidth: Bool {
         switch self {
-        case ColumnToggle,
-             DiscoverStreamPicker,
+        case Category,
+             SeeAllCategories,
+             CategoryList,
+             ColumnToggle,
              CreateComment,
              FollowAll,
              FullWidthSpacer,
@@ -262,12 +313,14 @@ public enum StreamCellType: Equatable {
              UserAvatars,
              UserListItem:
             return true
-        case CommentHeader,
+        case CategoryCard,
+             CommentHeader,
              Embed,
              Footer,
              Header,
              Image,
              Notification,
+             Placeholder,
              RepostHeader,
              Spacer,
              Text,
@@ -286,9 +339,14 @@ public enum StreamCellType: Equatable {
 
     static func registerAll(collectionView: UICollectionView) {
         let noNibTypes = [
+            Category,
+            SeeAllCategories,
+            CategoryCard,
+            CategoryList,
             CreateComment,
             FollowAll(data: nil),
             Notification,
+            Placeholder(.Comments),
             OnboardingHeader(data: nil),
             Spacer(height: 0.0),
             FullWidthSpacer(height: 0.0),

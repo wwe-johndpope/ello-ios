@@ -17,6 +17,7 @@ public enum ElloAPI {
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
     case AwesomePeopleStream
+    case Categories
     case CommentDetail(postId: String, commentId: String)
     case CommunitiesStream
     case CreateComment(parentPostId: String, body: [String: AnyObject])
@@ -26,7 +27,8 @@ public enum ElloAPI {
     case DeleteLove(postId: String)
     case DeletePost(postId: String)
     case DeleteSubscriptions(token: NSData)
-    case Discover(type: DiscoverType, perPage: Int)
+    case CategoryPosts(slug: String)
+    case Discover(type: DiscoverType)
     case EmojiAutoComplete(terms: String)
     case FindFriends(contacts: [String: [String]])
     case FlagComment(postId: String, commentId: String, kind: String)
@@ -84,6 +86,8 @@ public enum ElloAPI {
 
     public var mappingType: MappingType {
         switch self {
+        case .Categories:
+            return .CategoriesType
         case .AmazonCredentials:
             return .AmazonCredentialsType
         case .Availability:
@@ -106,8 +110,8 @@ public enum ElloAPI {
              .UserStreamFollowers,
              .UserStreamFollowing:
             return .UsersType
-        case let .Discover(discoverType, _):
-            switch discoverType {
+        case let .Discover(type):
+            switch type {
             case .Trending:
                 return .UsersType
             default:
@@ -121,7 +125,8 @@ public enum ElloAPI {
         case .CreateLove,
              .Loves:
             return .LovesType
-        case .CreatePost,
+        case .CategoryPosts,
+             .CreatePost,
              .PostDetail,
              .RePost,
              .SearchForPosts,
@@ -152,7 +157,7 @@ public enum ElloAPI {
             }
             return api.mappingType
         case .ProfileToggles:
-            return .CategoriesType
+            return .DynamicSettingsType
         case .Relationship:
             return .RelationshipsType
         default:
@@ -245,6 +250,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/discover/users/onboarding"
         case let .CommentDetail(postId, commentId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
+        case .Categories:
+            return "/api/\(ElloAPI.apiVersion)/categories"
         case .CommunitiesStream:
             return "/api/\(ElloAPI.apiVersion)/interest_categories/members"
         case let .CreateComment(parentPostId, _):
@@ -261,13 +268,17 @@ extension ElloAPI: Moya.TargetType {
         case let .DeletePost(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .DeleteSubscriptions(tokenData):
-            return "/\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
-        case let .Discover(type, _):
+            return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+        case let .CategoryPosts(slug):
+            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
+        case let .Discover(type):
             switch type {
             case .Trending:
-                return "/api/\(ElloAPI.apiVersion)/discover/users/\(type.rawValue)"
+                return "/api/\(ElloAPI.apiVersion)/discover/users/trending"
+            case .Featured:
+                return "/api/\(ElloAPI.apiVersion)/categories/posts/recent"
             default:
-                return "/api/\(ElloAPI.apiVersion)/discover/posts/\(type.rawValue)"
+                return "/api/\(ElloAPI.apiVersion)/discover/posts/\(type.slug)"
             }
         case .EmojiAutoComplete(_):
             return "/api/\(ElloAPI.apiVersion)/emoji/autocomplete"
@@ -320,9 +331,9 @@ extension ElloAPI: Moya.TargetType {
         case .CurrentUserMutedList:
             return "/api/\(ElloAPI.apiVersion)/profile/muted"
         case .ProfileToggles:
-            return "/\(ElloAPI.CurrentUserStream.path)/available_toggles"
+            return "\(ElloAPI.CurrentUserStream.path)/settings"
         case let .PushSubscriptions(tokenData):
-            return "/\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+            return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .Relationship(userId, relationship):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/add/\(relationship)"
         case .RelationshipBatch(_, _):
@@ -365,6 +376,8 @@ extension ElloAPI: Moya.TargetType {
         case .CreatePost,
              .RePost:
             return stubbedData("create-post")
+        case .Categories:
+            return stubbedData("categories")
         case .CommunitiesStream:
             return stubbedData("communities")
         case .DeleteComment,
@@ -381,6 +394,8 @@ extension ElloAPI: Moya.TargetType {
              .FlagPost,
              .FlagUser:
             return stubbedData("empty")
+        case .CategoryPosts:
+            return stubbedData("posts")
         case .Discover:
             return stubbedData("friends")
         case .EmojiAutoComplete:
@@ -516,9 +531,13 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .CreatePost(body):
             return body
-        case let .Discover(_, perPage):
+        case .CategoryPosts:
             return [
-                "per_page": perPage,
+                "per_page": 10,
+            ]
+        case .Discover:
+            return [
+                "per_page": 10,
                 "include_recent_posts": true,
                 "seed": ElloAPI.generateSeed()
             ]

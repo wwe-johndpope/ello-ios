@@ -51,12 +51,12 @@ extension JSONAble {
     public func getLinkObject(identifier: String) -> JSONAble? {
         var obj: JSONAble?
         if let key = links?[identifier]?["id"] as? String, let collection = links?[identifier]?["type"] as? String {
-            ElloLinkedStore.sharedInstance.database.newConnection().readWithBlock { transaction in
+            ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
                 obj = transaction.objectForKey(key, inCollection: collection) as? JSONAble
             }
         }
         else if let key = links?[identifier] as? String {
-            ElloLinkedStore.sharedInstance.database.newConnection().readWithBlock { transaction in
+            ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
                 obj = transaction.objectForKey(key, inCollection: identifier) as? JSONAble
             }
         }
@@ -67,7 +67,7 @@ extension JSONAble {
         var arr = [JSONAble]()
         let ids: [String]? = self.links?[identifier] as? [String] ?? self.links?[identifier]?["ids"] as? [String]
         if let ids = ids {
-            ElloLinkedStore.sharedInstance.database.newConnection().readWithBlock { transaction in
+            ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
                 for key in ids {
                     if let jsonable = transaction.objectForKey(key, inCollection: identifier) as? JSONAble {
                         arr += [jsonable]

@@ -11,7 +11,6 @@ import Foundation
 public struct Mapper {
 
     public static func mapJSON(data: NSData) -> (AnyObject?, NSError?) {
-
         var error: NSError?
         var json: AnyObject?
         do {
@@ -29,26 +28,11 @@ public struct Mapper {
         return (json, error)
     }
 
-    public static func mapToObjectArray(object: AnyObject?, fromJSON: FromJSONClosure) -> [JSONAble]? {
-
-        if let dicts = object as? [[String:AnyObject]] {
-            let jsonables: [JSONAble] =  dicts.map {
-                let jsonable = fromJSON(data: $0, fromLinked: false)
-                return jsonable
-            }
-            return jsonables
-        }
-
-        return nil
+    public static func mapToObjectArray(dicts: [[String:AnyObject]], fromJSON: FromJSONClosure) -> [JSONAble] {
+        return dicts.map { fromJSON(data: $0, fromLinked: false) }
     }
 
     public static func mapToObject(object: AnyObject?, fromJSON: FromJSONClosure) -> JSONAble? {
-        if let dict = object as? [String:AnyObject] {
-            let jsonable = fromJSON(data: dict, fromLinked: false)
-            return jsonable
-        }
-        else {
-            return nil
-        }
+        return (object as? [String:AnyObject]).flatMap { fromJSON(data: $0, fromLinked: false) }
     }
 }

@@ -13,14 +13,18 @@ import YapDatabase
 @objc
 public protocol Authorable {
     var createdAt: NSDate { get }
-    var groupId: String { get }
     var author: User? { get }
+}
+
+@objc
+public protocol Groupable {
+    var groupId: String { get }
 }
 
 let PostVersion = 1
 
 @objc(Post)
-public final class Post: JSONAble, Authorable {
+public final class Post: JSONAble, Authorable, Groupable {
 
     // active record
     public let id: String
@@ -53,6 +57,15 @@ public final class Post: JSONAble, Authorable {
     }
     public var author: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.authorId, inCollection: MappingType.UsersType.rawValue) as? User
+    }
+    public var categories: [Category] {
+        guard let categories = getLinkArray("categories") as? [Category] else {
+            return []
+        }
+        return categories
+    }
+    public var category: Category? {
+        return categories.first
     }
     public var repostAuthor: User? {
         return getLinkObject("repost_author") as? User

@@ -17,19 +17,21 @@ public struct ElloLinkedStore {
     public static var sharedInstance: ElloLinkedStore { return _ElloLinkedStore }
     public static var databaseName = "ello.sqlite"
 
-    public var database: YapDatabase
-    public var readConnection: YapDatabaseConnection
-    private var writeConnection: YapDatabaseConnection
+    public var readConnection: YapDatabaseConnection {
+        let connection = database.newConnection()
+        connection.objectCacheLimit = 500
+        return connection
+    }
+    public var writeConnection: YapDatabaseConnection
+    private var database: YapDatabase
 
     public init() {
         ElloLinkedStore.deleteNonSharedDB()
         database = YapDatabase(path: ElloLinkedStore.databasePath())
-        readConnection = database.newConnection()
-        readConnection.objectCacheLimit = 500
         writeConnection = database.newConnection()
     }
 
-    public func parseLinked(linked: [String:[[String:AnyObject]]], completion: ElloEmptyCompletion) {
+    public func parseLinked(linked: [String:[[String: AnyObject]]], completion: ElloEmptyCompletion) {
         if AppSetup.sharedState.isTesting {
             parseLinkedSync(linked)
             completion()
@@ -116,9 +118,9 @@ private extension ElloLinkedStore {
     }
 
     func parseLinkedSync(linked: [String: [[String: AnyObject]]]) {
-        for (type, typeObjects): (String, [[String:AnyObject]]) in linked {
+        for (type, typeObjects): (String, [[String: AnyObject]]) in linked {
             if let mappingType = MappingType(rawValue: type) {
-                for object: [String:AnyObject] in typeObjects {
+                for object: [String: AnyObject] in typeObjects {
                     if let id = object["id"] as? String {
                         let jsonable = mappingType.fromJSON(data: object, fromLinked: true)
 

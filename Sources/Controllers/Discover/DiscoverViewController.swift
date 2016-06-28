@@ -7,43 +7,89 @@
 //
 
 public class DiscoverViewController: StreamableViewController {
-
-    @IBOutlet weak var navigationContainer: UIView!
-    weak var navigationBar: ElloNavigationBar!
-    @IBOutlet weak var inviteButton: UIButton!
-    @IBOutlet weak var chevron: UIImageView!
-    @IBOutlet weak var inviteLabel: UILabel!
+    var screen: DiscoverScreen { return self.view as! DiscoverScreen }
+    private var includeCategoryPicker: Bool
+    private var categoryList: CategoryList?
 
     override public var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.Sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
         set { self.tabBarItem = newValue }
     }
 
+    required public init(category: Category) {
+        includeCategoryPicker = false
+        super.init(nibName: nil, bundle: nil)
+
+        sharedInit(category: category)
+        switch category.endpoint {
+        case let .CategoryPosts(slug):
+            streamViewController.streamKind = .CategoryPosts(slug: slug)
+        case let .Discover(type):
+            streamViewController.streamKind = .Discover(type: type)
+        default:
+            fatalError("invalid endpoint \(category.endpoint)")
+        }
+    }
+
     required public init() {
-        super.init(nibName: "DiscoverViewController", bundle: nil)
-        title = InterfaceString.Discover.Title
-        streamViewController.streamKind = .Discover(type: .Recommended, perPage: 10)
+        includeCategoryPicker = true
+        super.init(nibName: nil, bundle: nil)
+
+        sharedInit()
+        streamViewController.streamKind = .Discover(type: .Featured)
+    }
+
+    private func sharedInit(category category: Category? = nil) {
+        title = category?.name ?? InterfaceString.Discover.Title
+        elloNavigationItem.title = title
+
+        let hasBackButton = category != nil
+        if hasBackButton {
+            let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+            elloNavigationItem.leftBarButtonItems = [leftItem]
+            elloNavigationItem.fixNavBarItemPadding()
+        }
+
+        addSearchButton()
+
+        ElloProvider.shared.elloRequest(.Categories) { [weak self] (data, responseConfig) in
+            if let categories = data as? [Category], sself = self {
+                let categoriesPlusFeatured = [Category.featured] + categories
+                let categoryList = CategoryList(categories: categoriesPlusFeatured)
+                sself.categoryList = categoryList
+                sself.streamViewController.replacePlaceholder(.CategoryList, with: [
+                    StreamCellItem(jsonable: categoryList, type: .CategoryList),
+                ])
+            }
+        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override public func loadView() {
+        let screen = DiscoverScreen(navigationItem: elloNavigationItem)
+        self.view = screen
+        viewContainer = screen.streamContainer
+    }
+
     override public func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
+        navigationController?.navigationBarHidden = true
+
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }
 
     private func updateInsets() {
-        updateInsets(navBar: navigationContainer, streamController: streamViewController)
+        updateInsets(navBar: screen.navigationBar, streamController: streamViewController)
     }
 
     override public func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        positionNavBar(navigationContainer, visible: true)
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
 
         if scrollToBottom {
@@ -53,31 +99,39 @@ public class DiscoverViewController: StreamableViewController {
 
     override public func hideNavBars() {
         super.hideNavBars()
-        positionNavBar(navigationContainer, visible: false)
+        positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
     }
+}
 
-    // MARK: - IBActions
-
-    @IBAction func importMyContactsTapped() {
-        let responder = targetForAction(#selector(InviteResponder.onInviteFriends), withSender: self) as? InviteResponder
-        responder?.onInviteFriends()
+// MARK: StreamViewDelegate
+extension DiscoverViewController {
+    override public func streamViewCustomLoadFailed() -> Bool {
+        if case .CategoryPosts = streamViewController.streamKind {
+            streamViewController.discoverCategoryTapped(.Discover(type: .Featured))
+            return true
+        }
+        return false
     }
 
-    // MARK: - Private
+    override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+        var items: [StreamCellItem] = []
 
-    private func setupNavigationBar() {
-        navigationController?.navigationBarHidden = true
-        addSearchButton()
-        elloNavigationItem.title = title
-        navigationBar.items = [elloNavigationItem]
-        setupInviteFriendsButton()
-    }
+        let toggleCellItem = StreamCellItem(type: .ColumnToggle)
+        items.append(toggleCellItem)
 
-    private func setupInviteFriendsButton() {
-        chevron.image = InterfaceImage.AngleBracket.whiteImage
-        inviteLabel.text = InterfaceString.Friends.FindAndInvite
-        inviteLabel.font = UIFont.defaultFont()
-        inviteLabel.textColor = .whiteColor()
+        if includeCategoryPicker {
+            let categoryListItem: StreamCellItem
+            if let categoryList = categoryList {
+                categoryListItem = StreamCellItem(jsonable: categoryList, type: .CategoryList)
+            }
+            else {
+                categoryListItem = StreamCellItem(type: .Placeholder(.CategoryList))
+            }
+            items.append(categoryListItem)
+        }
+
+        items += generator()
+        return items
     }
 }

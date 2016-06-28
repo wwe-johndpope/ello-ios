@@ -74,8 +74,8 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
 
     override init(){
         columnCount = 2
-        minimumInteritemSpacing = 10
-        minimumColumnSpacing = 10
+        minimumInteritemSpacing = 0
+        minimumColumnSpacing = 12
         sectionInset = UIEdgeInsetsZero
         itemRenderDirection = .ShortestFirst
         super.init()
@@ -83,8 +83,8 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
 
     required public init?(coder aDecoder: NSCoder) {
         columnCount = 2
-        minimumInteritemSpacing = 10
-        minimumColumnSpacing = 10
+        minimumInteritemSpacing = 0
+        minimumColumnSpacing = 12
         sectionInset = UIEdgeInsetsZero
         itemRenderDirection = .ShortestFirst
         super.init(coder: aDecoder)

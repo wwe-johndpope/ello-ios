@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="AtlasGroteskRegular.otf">
+            <string>AtlasGrotesk-Regular</string>
             <string>AtlasGrotesk-Regular</string>
             <string>AtlasGrotesk-Regular</string>
             <string>AtlasGrotesk-Regular</string>
@@ -72,7 +73,9 @@
                                         <rect key="frame" x="46" y="0.0" width="288" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
-                                        <state key="normal" title="@username"/>
+                                        <state key="normal" title="@username">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="usernameTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gnL-P6-2WP"/>
                                         </connections>
@@ -104,6 +107,17 @@
                                             <action selector="reposterTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gWP-Of-jwC"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="hn9-Xb-cM5" userLabel="categoryButton">
+                                        <rect key="frame" x="150" y="13" width="291" height="14"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                                        <state key="normal" title="in Art">
+                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="categoryTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gbm-Yb-ZFl"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -122,6 +136,7 @@
                 <outlet property="avatarButton" destination="xgh-dM-cqB" id="osM-tD-Nz0"/>
                 <outlet property="bottomContentView" destination="ksw-W9-asc" id="Vh3-6x-aVT"/>
                 <outlet property="bottomToolBar" destination="YYm-0T-f6n" id="48X-3t-cxK"/>
+                <outlet property="categoryButton" destination="hn9-Xb-cM5" id="PUM-Me-TPg"/>
                 <outlet property="chevronButton" destination="imV-Ww-GEq" id="gAf-z8-PWU"/>
                 <outlet property="goToPostView" destination="JtJ-e8-xTH" id="d3f-SA-Fpq"/>
                 <outlet property="innerContentView" destination="GaF-Tx-YnB" id="MaJ-m3-eBU"/>
