@@ -29,20 +29,10 @@ public struct Mapper {
     }
 
     public static func mapToObjectArray(dicts: [[String:AnyObject]], fromJSON: FromJSONClosure) -> [JSONAble] {
-        let jsonables: [JSONAble] = dicts.map {
-            let jsonable = fromJSON(data: $0, fromLinked: false)
-            return jsonable
-        }
-        return jsonables
+        return dicts.map { fromJSON(data: $0, fromLinked: false) }
     }
 
     public static func mapToObject(object: AnyObject?, fromJSON: FromJSONClosure) -> JSONAble? {
-        if let dict = object as? [String:AnyObject] {
-            let jsonable = fromJSON(data: dict, fromLinked: false)
-            return jsonable
-        }
-        else {
-            return nil
-        }
+        return (object as? [String:AnyObject]).flatMap { fromJSON(data: $0, fromLinked: false) }
     }
 }

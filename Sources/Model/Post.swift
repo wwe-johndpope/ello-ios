@@ -65,10 +65,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         return categories
     }
     public var category: Category? {
-        guard let category = categories.first else {
-            return nil
-        }
-        return category
+        return categories.first
     }
     public var repostAuthor: User? {
         return getLinkObject("repost_author") as? User
