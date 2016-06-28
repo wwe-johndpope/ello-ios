@@ -23,7 +23,7 @@ public struct Preloader {
             if  let activity = jsonable as? Activity,
                 let authorable = activity.subject as? Authorable,
                 let author = authorable.author,
-                let avatarURL = author.avatarURL
+                let avatarURL = author.avatarURL()
             {
                 preloadUrl(avatarURL)
             }
@@ -31,7 +31,7 @@ public struct Preloader {
             // post / comment avatars
             else if let authorable = jsonable as? Authorable,
                     let author = authorable.author,
-                    let avatarURL = author.avatarURL
+                    let avatarURL = author.avatarURL()
             {
                 preloadUrl(avatarURL)
             }
@@ -40,13 +40,13 @@ public struct Preloader {
             else if let user = jsonable as? User,
                     let posts = user.posts
             {
-                if let userAvatarURL = user.avatarURL {
+                if let userAvatarURL = user.avatarURL() {
                     preloadUrl(userAvatarURL)
                 }
 
                 for post in posts {
                     if  let author = post.author,
-                        let avatarURL = author.avatarURL
+                        let avatarURL = author.avatarURL()
                         {
                             preloadUrl(avatarURL)
                         }

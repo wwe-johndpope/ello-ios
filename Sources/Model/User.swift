@@ -44,7 +44,6 @@ public final class User: JSONAble {
     public var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
     // computed
     public var atName: String { return "@\(username)"}
-    public var avatarURL: NSURL? { return avatar?.largeOrBest?.url }
     public var isCurrentUser: Bool { return self.profile != nil }
     public var headerHTMLContent: String {
         var htmlContent = formattedShortBio ?? ""
@@ -273,10 +272,17 @@ extension User {
 }
 
 extension User {
-    public func coverImageURL(viewsAdultContent: Bool?) -> NSURL? {
-        if !postsAdultContent || viewsAdultContent == true {
+    public func coverImageURL(viewsAdultContent viewsAdultContent: Bool?) -> NSURL? {
+        if (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.endsWith(".gif") == true {
             return coverImage?.original?.url
         }
         return coverImage?.hdpi?.url
+    }
+
+    public func avatarURL(viewsAdultContent viewsAdultContent: Bool? = false) -> NSURL? {
+        if (!postsAdultContent || viewsAdultContent == true) && avatar?.original?.url.absoluteString.endsWith(".gif") == true {
+            return avatar?.original?.url
+        }
+        return avatar?.largeOrBest?.url
     }
 }

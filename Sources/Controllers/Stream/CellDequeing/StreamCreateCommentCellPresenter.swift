@@ -24,7 +24,7 @@ public struct StreamCreateCommentCellPresenter {
             let replyAllVisibility: InteractionVisibility = ownPost ? .Enabled : .Hidden
 
             cell.indexPath = indexPath
-            cell.avatarURL = user.avatarURL
+            cell.avatarURL = user.avatarURL()
             cell.replyAllVisibility = replyAllVisibility
         }
     }

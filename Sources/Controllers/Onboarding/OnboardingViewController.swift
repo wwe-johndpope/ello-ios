@@ -225,7 +225,7 @@ private extension OnboardingViewController {
                 }
             }
 
-            if let url = currentUser.avatarURL
+            if let url = currentUser.avatarURL(viewsAdultContent: true)
             where url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.sharedImageManager().downloadImageWithURL(url) { result in
@@ -235,7 +235,7 @@ private extension OnboardingViewController {
                 }
             }
 
-            if let url = currentUser.coverImageURL(true)
+            if let url = currentUser.coverImageURL(viewsAdultContent: true)
             where url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.sharedImageManager().downloadImageWithURL(url) { result in

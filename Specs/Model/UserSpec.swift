@@ -16,28 +16,69 @@ class UserSpec: QuickSpec {
     override func spec() {
         describe("User") {
             describe("coverImageURL") {
-                let original: Attachment = stub(["url": "http://original"])
-                let hdpi: Attachment = stub(["url": "http://hdpi"])
-                let asset: Asset = stub(["original": original, "hdpi": hdpi])
+                let originalPng: Attachment = stub(["url": "http://original.png"])
+                let originalGif: Attachment = stub(["url": "http://original.gif"])
+                let optimized: Attachment = stub(["url": "http://optimized.png"])
+                let hdpi: Attachment = stub(["url": "http://hdpi.png"])
+                let asset: Asset = stub(["original": originalPng, "hdpi": hdpi, "optimized": optimized])
+                let assetGif: Asset = stub(["original": originalGif, "hdpi": hdpi, "optimized": optimized])
                 let emptyAsset: Asset = stub([:])
 
                 it("should return nil if there is no image") {
                     let subject: User = stub(["coverImage": emptyAsset])
-                    expect(subject.coverImageURL(true)).to(beNil())
-                    expect(subject.coverImageURL(false)).to(beNil())
+                    expect(subject.coverImageURL(viewsAdultContent: true)).to(beNil())
+                    expect(subject.coverImageURL(viewsAdultContent: false)).to(beNil())
                 }
-                it("should return original if its not adult content") {
+                it("should return original if its not adult content, and is a gif") {
+                    let subject: User = stub(["coverImage": assetGif, "postsAdultContent": false])
+                    expect(subject.coverImageURL(viewsAdultContent: true)) == originalGif.url
+                    expect(subject.coverImageURL(viewsAdultContent: false)) == originalGif.url
+                }
+                it("should return hdpi if its not adult content, and is not a gif") {
                     let subject: User = stub(["coverImage": asset, "postsAdultContent": false])
-                    expect(subject.coverImageURL(true)) == original.url
-                    expect(subject.coverImageURL(false)) == original.url
+                    expect(subject.coverImageURL(viewsAdultContent: true)) == hdpi.url
+                    expect(subject.coverImageURL(viewsAdultContent: false)) == hdpi.url
                 }
-                it("should return hdpi if it is adult content") {
-                    let subject: User = stub(["coverImage": asset, "postsAdultContent": true])
-                    expect(subject.coverImageURL(false)) == hdpi.url
+                it("should return hdpi if it is adult content and a gif") {
+                    let subject: User = stub(["coverImage": assetGif, "postsAdultContent": true])
+                    expect(subject.coverImageURL(viewsAdultContent: false)) == hdpi.url
                 }
-                it("should return hdpi if it is adult content, but current user views adult content") {
-                    let subject: User = stub(["coverImage": asset, "postsAdultContent": true])
-                    expect(subject.coverImageURL(true)) == original.url
+                it("should return original if it is adult content, but current user views adult content") {
+                    let subject: User = stub(["coverImage": assetGif, "postsAdultContent": true])
+                    expect(subject.coverImageURL(viewsAdultContent: true)) == originalGif.url
+                }
+            }
+            describe("avatarURL") {
+                let originalPng: Attachment = stub(["url": "http://original.png"])
+                let originalGif: Attachment = stub(["url": "http://original.gif"])
+                let large: Attachment = stub(["url": "http://large.png"])
+                let hdpi: Attachment = stub(["url": "http://large.png"])
+                let asset: Asset = stub(["original": originalPng, "large": large, "hdpi": hdpi])
+                let assetGif: Asset = stub(["original": originalGif, "large": large, "hdpi": hdpi])
+                let emptyAsset: Asset = stub([:])
+
+                it("should return nil if there is no image") {
+                    let subject: User = stub(["avatar": emptyAsset])
+                    expect(subject.avatarURL(viewsAdultContent: true)).to(beNil())
+                    expect(subject.avatarURL(viewsAdultContent: false)).to(beNil())
+                }
+                it("should return original if its not adult content, and is a gif") {
+                    let subject: User = stub(["avatar": assetGif, "postsAdultContent": false])
+                    expect(subject.avatarURL(viewsAdultContent: true)) == originalGif.url
+                    expect(subject.avatarURL(viewsAdultContent: false)) == originalGif.url
+                }
+                it("should return large if its not adult content, and is not a gif") {
+                    let subject: User = stub(["avatar": asset, "postsAdultContent": false])
+                    expect(subject.avatarURL(viewsAdultContent: true)) == large.url
+                    expect(subject.avatarURL(viewsAdultContent: false)) == large.url
+                }
+                it("should return large if it is adult content and a gif") {
+                    let subject: User = stub(["avatar": assetGif, "postsAdultContent": true])
+                    expect(subject.avatarURL(viewsAdultContent: false)) == large.url
+                }
+                it("should return original if it is adult content, but current user views adult content") {
+                    let subject: User = stub(["avatar": assetGif, "postsAdultContent": true])
+                    expect(subject.avatarURL(viewsAdultContent: true)) == originalGif.url
                 }
             }
             describe("isOwnPost(_:)") {
@@ -172,8 +213,8 @@ class UserSpec: QuickSpec {
                         expect(unArchivedUser).toNot(beNil())
                         expect(unArchivedUser.version) == 1
 
-                        expect(unArchivedUser.avatarURL?.absoluteString) == "http://www.example.com"
-                        expect(unArchivedUser.coverImageURL(true)?.absoluteString) == "http://www.example2.com"
+                        expect(unArchivedUser.avatarURL()?.absoluteString) == "http://www.example.com"
+                        expect(unArchivedUser.coverImageURL(viewsAdultContent: true)?.absoluteString) == "http://www.example2.com"
                         expect(unArchivedUser.experimentalFeatures).to(beTrue())
                         expect(unArchivedUser.followersCount) == "6"
                         expect(unArchivedUser.followingCount) == 8

@@ -56,7 +56,7 @@ class StreamServiceSpec: QuickSpec {
                         expect(post0Author.name) == "Sterling"
                         expect(post0Author.experimentalFeatures) == true
                         expect(post0Author.relationshipPriority) == RelationshipPriority.Following
-                        expect(post0Author.avatarURL!.absoluteString) == "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/large_ello-09fd7088-2e4f-4781-87db-433d5dbc88a5.png"
+                        expect(post0Author.avatarURL()?.absoluteString) == "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/large_ello-09fd7088-2e4f-4781-87db-433d5dbc88a5.png"
                     }
 
                     xit("handles assets") {
@@ -113,7 +113,7 @@ class StreamServiceSpec: QuickSpec {
                         expect(commentAuthor.username) == "pam"
                         expect(commentAuthor.href) == "/api/v2/users/420"
                         expect(commentAuthor.experimentalFeatures) == true
-                        expect(commentAuthor.avatarURL!.absoluteString) == "https://abc123.cloudfront.net/uploads/user/avatar/420/ello-large-91c0f710.png"
+                        expect(commentAuthor.avatarURL()?.absoluteString) == "https://abc123.cloudfront.net/uploads/user/avatar/420/ello-large-91c0f710.png"
                     }
                 }
             }
