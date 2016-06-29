@@ -272,15 +272,15 @@ extension User {
 }
 
 extension User {
-    public func coverImageURL(viewsAdultContent viewsAdultContent: Bool?) -> NSURL? {
-        if (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.endsWith(".gif") == true {
+    public func coverImageURL(viewsAdultContent viewsAdultContent: Bool?, animated: Bool = false) -> NSURL? {
+        if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.endsWith(".gif") == true {
             return coverImage?.original?.url
         }
         return coverImage?.hdpi?.url
     }
 
-    public func avatarURL(viewsAdultContent viewsAdultContent: Bool? = false) -> NSURL? {
-        if (!postsAdultContent || viewsAdultContent == true) && avatar?.original?.url.absoluteString.endsWith(".gif") == true {
+    public func avatarURL(viewsAdultContent viewsAdultContent: Bool? = false, animated: Bool = false) -> NSURL? {
+        if animated && (!postsAdultContent || viewsAdultContent == true) && avatar?.original?.url.absoluteString.endsWith(".gif") == true {
             return avatar?.original?.url
         }
         return avatar?.largeOrBest?.url

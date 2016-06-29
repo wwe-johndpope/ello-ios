@@ -176,7 +176,7 @@ public class OmnibarViewController: BaseElloViewController, OmnibarScreenDelegat
             screen.avatarImage = cachedImage
         }
         else {
-            screen.avatarURL = currentUser?.avatarURL(viewsAdultContent: true)
+            screen.avatarURL = currentUser?.avatarURL()
         }
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)
@@ -281,7 +281,7 @@ public class OmnibarViewController: BaseElloViewController, OmnibarScreenDelegat
                 screen.avatarImage = cachedImage
             }
             else {
-                screen.avatarURL = currentUser?.avatarURL(viewsAdultContent: true)
+                screen.avatarURL = currentUser?.avatarURL()
             }
         }
     }

@@ -48,7 +48,7 @@ public struct ProfileHeaderCellPresenter {
             {
                 cell.setAvatar(cachedImage)
             }
-            else if let url = user.avatarURL(viewsAdultContent: currentUser?.viewsAdultContent) {
+            else if let url = user.avatarURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true) {
                 cell.setAvatarURL(url)
             }
 
