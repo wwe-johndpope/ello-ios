@@ -272,7 +272,7 @@ extension User {
 }
 
 extension User {
-    public func coverImageURL(viewsAdultContent viewsAdultContent: Bool?, animated: Bool = false) -> NSURL? {
+    public func coverImageURL(viewsAdultContent viewsAdultContent: Bool? = false, animated: Bool = false) -> NSURL? {
         if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.endsWith(".gif") == true {
             return coverImage?.original?.url
         }
