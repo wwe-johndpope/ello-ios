@@ -34,10 +34,10 @@ class UserSpec: QuickSpec {
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: true)) == originalGif.url
                     expect(subject.coverImageURL(viewsAdultContent: false, animated: true)) == originalGif.url
                 }
-                it("should return original if its not adult content, and is a gif, but animated is disabled") {
+                it("should return hdpi if its not adult content, and is a gif, but animated is disabled") {
                     let subject: User = stub(["coverImage": assetGif, "postsAdultContent": false])
-                    expect(subject.coverImageURL(viewsAdultContent: true, animated: false)) == originalGif.url
-                    expect(subject.coverImageURL(viewsAdultContent: false, animated: false)) == originalGif.url
+                    expect(subject.coverImageURL(viewsAdultContent: true, animated: false)) == hdpi.url
+                    expect(subject.coverImageURL(viewsAdultContent: false, animated: false)) == hdpi.url
                 }
                 it("should return hdpi if its not adult content, and is not a gif") {
                     let subject: User = stub(["coverImage": asset, "postsAdultContent": false])
@@ -74,8 +74,8 @@ class UserSpec: QuickSpec {
                 }
                 it("should return large if its not adult content, and is a gif, but is not animated") {
                     let subject: User = stub(["avatar": assetGif, "postsAdultContent": false])
-                    expect(subject.avatarURL(viewsAdultContent: true, animated: false)) == originalGif.url
-                    expect(subject.avatarURL(viewsAdultContent: false, animated: false)) == originalGif.url
+                    expect(subject.avatarURL(viewsAdultContent: true, animated: false)) == large.url
+                    expect(subject.avatarURL(viewsAdultContent: false, animated: false)) == large.url
                 }
                 it("should return large if its not adult content, and is not a gif") {
                     let subject: User = stub(["avatar": asset, "postsAdultContent": false])
