@@ -212,7 +212,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         if let cachedImage = TemporaryCache.load(.CoverImage) {
             coverImage.image = cachedImage
         }
-        else if let imageURL = currentUser?.coverImageURL {
+        else if let imageURL = currentUser?.coverImageURL(viewsAdultContent: true, animated: true) {
             coverImage.pin_setImageFromURL(imageURL)
         }
 

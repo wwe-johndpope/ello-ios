@@ -40,7 +40,7 @@ public class AvatarButton: UIButton {
 
         starIcon.hidden = starIconHidden || (user?.relationshipPriority != .Starred)
 
-        if let url = user?.avatarURL {
+        if let url = user?.avatarURL() {
             self.url = url
 
             self.pin_setImageFromURL(url) { result in
