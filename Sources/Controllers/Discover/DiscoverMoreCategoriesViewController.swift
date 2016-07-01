@@ -67,9 +67,9 @@ extension DiscoverMoreCategoriesViewController {
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
         if let categories = jsonables as? [Category] {
-            let sortedCategories = categories
+            let filteredCategories = categories
                 .filter { $0.level == .Primary || $0.level == .Secondary }
-                .sort { $0.order < $1.order }
+            let sortedCategories = CategoryList(categories: filteredCategories).categories
             for category in sortedCategories {
                 items.append(StreamCellItem(jsonable: category, type: .Category))
             }
