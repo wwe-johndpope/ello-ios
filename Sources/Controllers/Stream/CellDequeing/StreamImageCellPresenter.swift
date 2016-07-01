@@ -75,11 +75,12 @@ public struct StreamImageCellPresenter {
             }
 
             let columnWidth: CGFloat
+            let columnCount: CGFloat = CGFloat(streamKind.columnCount)
             if streamKind.isGridView {
                 cell.failWidthConstraint.constant = StreamImageCellPresenter.multiColumnFailWidth
                 cell.failHeightConstraint.constant = StreamImageCellPresenter.multiColumnFailHeight
                 attachmentToLoad = attachmentToLoad ?? imageRegion.asset?.gridLayoutAttachment
-                columnWidth = (UIWindow.windowWidth() - 10) / 2
+                columnWidth = (UIWindow.windowWidth() - 10 * (columnCount - 1)) / columnCount
             }
             else {
                 cell.failWidthConstraint.constant = StreamImageCellPresenter.singleColumnFailWidth
