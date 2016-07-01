@@ -23,5 +23,5 @@ extension UIWindow {
 
 
 public class Window {
-    static public var size: CGSize { return UIWindow.mainWindow.frame.size }
+    static public var isWide: Bool { return UIWindow.mainWindow.frame.size.width > 1000 }
 }

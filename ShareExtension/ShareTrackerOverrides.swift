@@ -31,11 +31,5 @@ public class Tracker {
 }
 
 public class Window {
-    static public var size: Size { return .zero }
-}
-
-public struct Size {
-    static let zero = Size(width: 0, height: 0)
-    let width: Float
-    let height: Float
+    static let isWide = false
 }
