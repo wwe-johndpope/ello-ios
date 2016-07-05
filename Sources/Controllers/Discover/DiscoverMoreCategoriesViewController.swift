@@ -37,8 +37,7 @@ public class DiscoverMoreCategoriesViewController: StreamableViewController {
         CategoryService().loadCategories({ [weak self] categories in
             guard let sself = self else { return }
 
-            let filteredCategories = categories
-                .filter { $0.level == .Primary || $0.level == .Secondary }
+            let filteredCategories = categories.filter { $0.visibleOnSeeMore }
             let sortedCategories = CategoryList(categories: filteredCategories).categories
 
             sself.streamViewController.showInitialJSONAbles(sortedCategories)

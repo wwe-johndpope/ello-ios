@@ -30,6 +30,10 @@ public final class Category: JSONAble, Groupable {
         }
     }
 
+    var visibleOnSeeMore: Bool {
+        return level == .Primary || level == .Secondary
+    }
+
     public init(id: String,
         name: String,
         slug: String,
