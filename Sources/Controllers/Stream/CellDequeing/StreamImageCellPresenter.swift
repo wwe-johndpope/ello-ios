@@ -91,7 +91,7 @@ public struct StreamImageCellPresenter {
             cell.hideBorder()
             let margin = configureCellWidthAndLayout(cell, imageRegion: imageRegion, streamCellItem: streamCellItem)
             if let attachmentWidth = attachmentToLoad?.width {
-                let columnWidth: CGFloat = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCount)
+                let columnWidth: CGFloat = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCountFor(width: cell.frame.width))
                 preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: margin)
             }
             cell.layoutIfNeeded()

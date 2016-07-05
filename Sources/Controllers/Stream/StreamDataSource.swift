@@ -226,12 +226,22 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     public func heightForIndexPath(indexPath: NSIndexPath, numberOfColumns: NSInteger) -> CGFloat {
         if !isValidIndexPath(indexPath) { return 0 }
 
-        // alway try to return a calculated value before the default
+        // always try to return a calculated value before the default
         if numberOfColumns == 1 {
-            return visibleCellItems[indexPath.item].calculatedOneColumnCellHeight ?? visibleCellItems[indexPath.item].type.oneColumnHeight ?? 0.0
+            if let height = visibleCellItems[indexPath.item].calculatedOneColumnCellHeight {
+                return height
+            }
+            else {
+                return visibleCellItems[indexPath.item].type.oneColumnHeight
+            }
         }
         else {
-            return visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight ?? visibleCellItems[indexPath.item].type.multiColumnHeight
+            if let height = visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight {
+                return height
+            }
+            else {
+                return visibleCellItems[indexPath.item].type.multiColumnHeight
+            }
         }
     }
 
