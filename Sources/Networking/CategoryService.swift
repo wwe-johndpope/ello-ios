@@ -6,7 +6,7 @@ private var cachedCategories: [Category]?
 
 public class CategoryService {
 
-    public func getCategories(success: CategoriesCompletion, failure: ElloFailureCompletion = { _ in }) {
+    public func loadCategories(success: CategoriesCompletion, failure: ElloFailureCompletion = { _ in }) {
         if let categories = cachedCategories {
             success(categories: categories)
             return

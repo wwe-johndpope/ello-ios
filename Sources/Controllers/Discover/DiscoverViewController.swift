@@ -52,7 +52,7 @@ public class DiscoverViewController: StreamableViewController {
 
         addSearchButton()
 
-        CategoryService().getCategories({ [weak self] categories in
+        CategoryService().loadCategories({ [weak self] categories in
             guard let sself = self else { return }
 
             let categoriesPlusFeatured = [Category.featured] + categories
