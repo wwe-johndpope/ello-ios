@@ -242,8 +242,10 @@ public class StreamViewController: BaseElloViewController {
     }
 
     public func imageCellHeightUpdated(cell: StreamImageCell) {
-        if let indexPath = collectionView.indexPathForCell(cell) {
-            updateCellHeight(indexPath, height: cell.calculatedHeight)
+        if let indexPath = collectionView.indexPathForCell(cell),
+            calculatedHeight = cell.calculatedHeight
+        {
+            updateCellHeight(indexPath, height: calculatedHeight)
         }
     }
 
