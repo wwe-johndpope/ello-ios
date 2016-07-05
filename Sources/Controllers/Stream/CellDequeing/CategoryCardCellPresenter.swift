@@ -25,7 +25,7 @@ public struct CategoryCardCellPresenter {
                 postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
             }
             cell.title = category.name
-            cell.imageURL = category.cardURL
+            cell.imageURL = category.tileURL
         }
     }
 
