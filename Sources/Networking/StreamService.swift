@@ -38,6 +38,7 @@ public class StreamService: NSObject {
                     noContent()
                 }
 
+                // this must be the last thing, after success() or noContent() is called.
                 if let streamKind = streamKind {
                     postNotification(StreamLoadedNotifications.streamLoaded, value: streamKind)
                 }
