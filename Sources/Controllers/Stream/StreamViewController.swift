@@ -432,7 +432,11 @@ public class StreamViewController: BaseElloViewController {
         rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [unowned self] _ in
             self.collectionView.reloadData()
         }
-        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeDidChange) { [unowned self] _ in
+        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeDidChange) { [unowned self] size in
+            if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
+                layout.columnCount = self.streamKind.columnCountFor(width: size.width)
+                layout.invalidateLayout()
+            }
             self.collectionView.reloadData()
         }
 
