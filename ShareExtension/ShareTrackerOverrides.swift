@@ -29,3 +29,7 @@ public class Tracker {
     func createdAtCrash(identifier: String, json: String?) {}
     func encounteredNetworkError(path: String, error: NSError, statusCode: Int?) {}
 }
+
+public class Window {
+    static let isWide = false
+}

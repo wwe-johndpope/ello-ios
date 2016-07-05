@@ -76,8 +76,17 @@ public enum StreamKind {
     }
 
     public var columnCount: Int {
+        let gridColumns: Int
+        let isWide = Window.isWide
+        if case .AllCategories = self where isWide {
+            gridColumns = 3
+        }
+        else {
+            gridColumns = 2
+        }
+
         if self.isGridView {
-            return 2
+            return gridColumns
         }
         else {
             return 1

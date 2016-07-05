@@ -304,17 +304,8 @@ public class StreamViewController: BaseElloViewController {
                 success: { (jsonables, responseConfig) in
                     guard self.isValidInitialPageLoadingToken(localToken) else { return }
 
-                    self.clearForInitialLoad()
                     self.responseConfig = responseConfig
-                    self.currentJSONables = jsonables
-
-                    let items = self.generateStreamCellItems(jsonables)
-                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
-                        if self.streamKind.gridViewPreferenceSet {
-                            self.collectionView.layoutIfNeeded()
-                            self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
-                        }
-                    })
+                    self.showInitialJSONAbles(jsonables)
                 }, failure: { (error, statusCode) in
                     print("failed to load \(self.streamKind.cacheKey) stream (reason: \(error))")
                     self.initialLoadFailure()
@@ -331,6 +322,21 @@ public class StreamViewController: BaseElloViewController {
                     })
                 })
         }
+    }
+
+    /// This method can be called by a `StreamableViewController` if it wants to
+    /// override `loadInitialPage`, but doesn't need to customize the cell generation.
+    public func showInitialJSONAbles(jsonables: [JSONAble]) {
+        self.clearForInitialLoad()
+        self.currentJSONables = jsonables
+
+        let items = self.generateStreamCellItems(jsonables)
+        self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
+            if self.streamKind.gridViewPreferenceSet {
+                self.collectionView.layoutIfNeeded()
+                self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
+            }
+        })
     }
 
     private func generateStreamCellItems(jsonables: [JSONAble]) -> [StreamCellItem] {
