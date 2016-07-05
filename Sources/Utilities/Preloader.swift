@@ -83,7 +83,7 @@ public struct Preloader {
             else if let category = jsonable as? Category,
                 url = category.tileURL
             {
-                preloadURL(url)
+                preloadUrl(url)
             }
 
             // TODO: account for discovery when the api includes assets in the discovery
