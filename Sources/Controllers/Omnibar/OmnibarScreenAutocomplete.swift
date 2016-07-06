@@ -96,7 +96,7 @@ extension OmnibarScreen: UITextViewDelegate {
             italicButton.selected = false
         }
 
-        if let _ = textView.typingAttributes[NSLinkAttributeName] as? NSURL {
+        if textView.typingAttributes[NSLinkAttributeName] is NSURL {
             linkButton.selected = true
             linkButton.enabled = true
         }

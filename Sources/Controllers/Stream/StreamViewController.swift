@@ -579,7 +579,7 @@ public class StreamViewController: BaseElloViewController {
             if !item.type.collapsable {
                 return true
             }
-            if let _ = item.jsonable as? Post {
+            if item.jsonable is Post {
                 return item.state != .Collapsed
             }
             return true

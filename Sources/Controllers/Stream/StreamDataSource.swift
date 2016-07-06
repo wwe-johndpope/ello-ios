@@ -348,12 +348,12 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
             // else if post, add new post cells
-            else if let _ = jsonable as? Post {
+            else if jsonable is Post {
                 indexPath = streamKind.clientSidePostInsertIndexPath(currentUser?.id)
             }
 
             // else if love, add post to loves
-            else if let _ = jsonable as? Love {
+            else if jsonable is Love {
                 indexPath = streamKind.clientSideLoveInsertIndexPath
             }
 
@@ -533,7 +533,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     public func modifyUserSettingsItems(user: User, collectionView: UICollectionView) {
         let (changedPaths, changedItems) = elementsForJSONAble(user, change: .Update)
         for item in changedItems {
-            if let _ = item.jsonable as? User {
+            if item.jsonable is User {
                 item.jsonable = user
             }
         }

@@ -35,7 +35,7 @@ public struct StreamImageCellPresenter {
             cell.leadingConstraint.constant = StreamTextCellPresenter.repostMargin
             cell.showBorder()
         }
-        else if let _ = streamCellItem.jsonable as? ElloComment {
+        else if streamCellItem.jsonable is ElloComment {
             cell.leadingConstraint.constant = StreamTextCellPresenter.commentMargin
         }
         else {
