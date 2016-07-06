@@ -320,9 +320,9 @@ public extension Tracker {
 
 public extension UIViewController {
     func trackerName() -> String { return readableClassName() }
-    func trackerProps() -> [NSObject:AnyObject]? { return nil }
+    func trackerProps() -> [String: AnyObject]? { return nil }
 
-    func trackerData() -> (String, [NSObject:AnyObject]?) {
+    func trackerData() -> (String, [String: AnyObject]?) {
         return (trackerName(), trackerProps())
     }
 }
@@ -338,7 +338,7 @@ public extension Tracker {
         screenAppeared(viewController)
     }
 
-    func screenAppeared(name: String, properties: [NSObject:AnyObject]? = nil) {
+    func screenAppeared(name: String, properties: [String: AnyObject]? = nil) {
         log("Screen: \(name)")
         agent.screen(name, properties: properties)
     }
