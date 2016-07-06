@@ -13,11 +13,11 @@ public class SpecsTrackingAgent: AnalyticsAgent {
     public var resetCalled = false
     public var lastEvent = ""
     public var lastUserId = ""
-    public var lastTraits: [NSObject : AnyObject] = [:]
+    public var lastTraits: [NSObject: AnyObject] = [:]
     public var lastScreenTitle = ""
     public var lastProperties: [NSObject: AnyObject] = [:]
 
-    public func identify(userId: String!, traits: [NSObject : AnyObject]!) {
+    public func identify(userId: String!, traits: [NSObject: AnyObject]!) {
         lastUserId = userId
         lastTraits = traits
     }
