@@ -122,23 +122,17 @@ public class StreamHeaderCell: UICollectionViewCell {
         relationshipControl.userId = user?.id ?? ""
         relationshipControl.userAtName = user?.atName ?? ""
 
-        let reposted: Bool
-        if let atName = repostedBy?.atName
-        where !isGridLayout {
-            reposted = true
-            repostedByButton.hidden = false
-            repostIconView.hidden = false
+        if let atName = repostedBy?.atName {
             repostedByButton.setTitle("by \(atName)", forState: .Normal)
             repostedByButton.sizeToFit()
         }
-        else {
-            reposted = false
-            repostedByButton.hidden = true
-            repostIconView.hidden = true
-        }
+
+        let repostedHidden: Bool = isGridLayout
+        repostedByButton.hidden = repostedHidden
+        repostIconView.hidden = repostedHidden
 
         if let category = category
-        where isGridLayout || !reposted {
+        where repostedHidden {
             let attributedString = NSAttributedString(string: "in ", attributes: [
                 NSFontAttributeName: UIFont.defaultFont(),
                 NSForegroundColorAttributeName: UIColor.greyA(),
