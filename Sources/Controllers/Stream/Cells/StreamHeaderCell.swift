@@ -320,17 +320,11 @@ public class StreamHeaderCell: UICollectionViewCell {
         let usernameButtonHeight: CGFloat
         let usernameButtonY: CGFloat
 
+        let secondaryLabelY: CGFloat
         if hasRepostAuthor || hasCategory {
             usernameButtonHeight = 27
             usernameButtonY = contentView.frame.height / 2 - usernameButtonHeight
-        }
-        else {
-            usernameButtonHeight = contentView.frame.height
-            usernameButtonY = 0
-        }
 
-        let secondaryLabelY: CGFloat
-        if hasRepostAuthor || hasCategory {
             if followButtonVisible {
                 let relationshipControlCorrection: CGFloat = 2
                 let repostLabelCorrection: CGFloat = 2
@@ -342,6 +336,8 @@ public class StreamHeaderCell: UICollectionViewCell {
             }
         }
         else {
+            usernameButtonHeight = contentView.frame.height
+            usernameButtonY = 0
             secondaryLabelY = 0
         }
 
