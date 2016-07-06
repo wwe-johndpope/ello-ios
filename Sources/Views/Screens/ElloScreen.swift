@@ -41,5 +41,7 @@ public class ElloScreen: UIView {
             make.edges.equalTo(self)
             streamContainer.frame = self.bounds
         }
+
+        layoutIfNeeded()
     }
 }
