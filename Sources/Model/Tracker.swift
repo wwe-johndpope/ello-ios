@@ -334,8 +334,8 @@ public extension Tracker {
         screenAppeared(name, properties: props)
     }
 
-    func tabAppeared(viewController: UIViewController) {
-        screenAppeared(viewController)
+    func discoverCategory(category: String) {
+        agent.track("DiscoverViewController category filter", properties: ["category": category])
     }
 
     func screenAppeared(name: String, properties: [String: AnyObject]? = nil) {

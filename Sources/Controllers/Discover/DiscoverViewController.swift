@@ -26,7 +26,7 @@ public class DiscoverViewController: StreamableViewController {
     }
 
     required public init(category: Category) {
-        trackerCategoryName = category.name
+        trackerCategoryName = category.slug
         includeCategoryPicker = false
         super.init(nibName: nil, bundle: nil)
 

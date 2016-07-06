@@ -676,8 +676,10 @@ extension StreamViewController: DiscoverCategoryPickerDelegate {
         hideNoResults()
         switch endpoint {
         case let .CategoryPosts(slug):
+            Tracker.sharedTracker.discoverCategory(slug)
             streamKind = .CategoryPosts(slug: slug)
         case let .Discover(type):
+            Tracker.sharedTracker.discoverCategory(type.rawValue)
             streamKind = .Discover(type: type)
         default:
             fatalError("invalid endpoint \(endpoint)")
