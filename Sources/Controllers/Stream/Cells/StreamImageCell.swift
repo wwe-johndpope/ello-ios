@@ -113,10 +113,9 @@ public class StreamImageCell: StreamRegionableCell {
 
         guard let aspectRatio = aspectRatio, imageSize = imageSize else { return }
 
-        let viewRatio = self.imageView.frame.width / self.imageView.frame.height
-        if viewRatio != aspectRatio {
-            let width = min(imageSize.width, self.frame.width)
-            let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
+        let width = min(imageSize.width, self.frame.width)
+        let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
+        if actualHeight != frame.height {
             self.onHeightMismatch?(actualHeight)
         }
     }
@@ -126,7 +125,6 @@ public class StreamImageCell: StreamRegionableCell {
             let success = result.image != nil || result.animatedImage != nil
             let isAnimated = result.animatedImage != nil
             if success {
-                self.layoutIfNeeded()
                 let imageSize = isAnimated ? result.animatedImage.size : result.image.size
                 self.imageSize = imageSize
 
@@ -149,6 +147,8 @@ public class StreamImageCell: StreamRegionableCell {
                     self.imageView.alpha = 1.0
                     self.circle.stopPulse()
                 }
+
+                self.layoutIfNeeded()
             }
             else {
                 self.imageLoadFailed()

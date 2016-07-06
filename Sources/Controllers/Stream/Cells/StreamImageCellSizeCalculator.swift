@@ -65,7 +65,7 @@ public class StreamImageCellSizeCalculator: NSObject {
                 item.calculatedMultiColumnCellHeight = StreamImageCell.Size.bottomMargin + multiColumnImageHeight(imageRegion)
             }
             else if let embedRegion = item.type.data as? EmbedRegion {
-                var ratio: CGFloat!
+                var ratio: CGFloat
                 if embedRegion.isAudioEmbed || embedRegion.service == .UStream {
                     ratio = 1.0
                 }
@@ -87,7 +87,7 @@ public class StreamImageCellSizeCalculator: NSObject {
         if let assetWidth = imageRegion.asset?.oneColumnAttachment?.width {
             imageWidth = min(maxWidth, CGFloat(assetWidth))
         }
-        return (imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)) + 10
+        return ceil(imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion))
     }
 
     private func multiColumnImageHeight(imageBlock: ImageRegion) -> CGFloat {
@@ -95,7 +95,7 @@ public class StreamImageCellSizeCalculator: NSObject {
         if let assetWidth = imageBlock.asset?.gridLayoutAttachment?.width {
             imageWidth = min(imageWidth, CGFloat(assetWidth))
         }
-        return ceil((imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock)) + 10)
+        return ceil((imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock)))
     }
 
 }

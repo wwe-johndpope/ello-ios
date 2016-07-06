@@ -708,9 +708,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
         let afterAll = after(4, block: completion)
 
-        self.imageSizeCalculator.processCells(imageCells.normal, withWidth: withWidth, columnCount: streamKind.columnCount) {
-            self.imageSizeCalculator.processCells(imageCells.repost, withWidth: withWidth - 30.0, columnCount: self.streamKind.columnCount, completion: afterAll)
-        }
+        self.imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: self.streamKind.columnCount, completion: afterAll)
+
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCellPresenter.postMargin * 2)
         self.textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount) {
