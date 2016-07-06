@@ -399,7 +399,7 @@ public extension AppViewController {
 // MARK: Push Notification Handling
 extension AppViewController {
     func receivedPushNotification(payload: PushPayload) {
-        if let _ = self.visibleViewController as? ElloTabBarController {
+        if self.visibleViewController is ElloTabBarController {
             navigateToDeepLink(payload.applicationTarget)
         } else {
             self.pushPayload = payload
