@@ -57,7 +57,7 @@ public final class Category: JSONAble, Groupable {
         slug = decoder.decodeKey("slug")
         order = decoder.decodeKey("order")
         level = CategoryLevel(rawValue: decoder.decodeKey("level"))!
-        tileImage = decoder.decodeKey("tileImage")
+        tileImage = decoder.decodeOptionalKey("tileImage")
         super.init(coder: coder)
     }
 

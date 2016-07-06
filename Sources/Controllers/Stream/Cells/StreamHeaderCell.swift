@@ -122,23 +122,21 @@ public class StreamHeaderCell: UICollectionViewCell {
         relationshipControl.userId = user?.id ?? ""
         relationshipControl.userAtName = user?.atName ?? ""
 
-        let reposted: Bool
-        if let atName = repostedBy?.atName
-        where !isGridLayout {
-            reposted = true
-            repostedByButton.hidden = false
-            repostIconView.hidden = false
+        let repostedHidden: Bool
+        if let atName = repostedBy?.atName {
             repostedByButton.setTitle("by \(atName)", forState: .Normal)
-            repostedByButton.sizeToFit()
+            repostedHidden = isGridLayout
         }
         else {
-            reposted = false
-            repostedByButton.hidden = true
-            repostIconView.hidden = true
+            repostedByButton.setTitle("", forState: .Normal)
+            repostedHidden = true
         }
+        repostedByButton.sizeToFit()
+        repostedByButton.hidden = repostedHidden
+        repostIconView.hidden = repostedHidden
 
         if let category = category
-        where isGridLayout || !reposted {
+        where repostedHidden {
             let attributedString = NSAttributedString(string: "in ", attributes: [
                 NSFontAttributeName: UIFont.defaultFont(),
                 NSForegroundColorAttributeName: UIColor.greyA(),
@@ -320,17 +318,11 @@ public class StreamHeaderCell: UICollectionViewCell {
         let usernameButtonHeight: CGFloat
         let usernameButtonY: CGFloat
 
+        let secondaryLabelY: CGFloat
         if hasRepostAuthor || hasCategory {
             usernameButtonHeight = 27
             usernameButtonY = contentView.frame.height / 2 - usernameButtonHeight
-        }
-        else {
-            usernameButtonHeight = contentView.frame.height
-            usernameButtonY = 0
-        }
 
-        let secondaryLabelY: CGFloat
-        if hasRepostAuthor || hasCategory {
             if followButtonVisible {
                 let relationshipControlCorrection: CGFloat = 2
                 let repostLabelCorrection: CGFloat = 2
@@ -342,6 +334,8 @@ public class StreamHeaderCell: UICollectionViewCell {
             }
         }
         else {
+            usernameButtonHeight = contentView.frame.height
+            usernameButtonY = 0
             secondaryLabelY = 0
         }
 

@@ -70,7 +70,7 @@ extension JSONAble {
             ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
                 for key in ids {
                     if let jsonable = transaction.objectForKey(key, inCollection: identifier) as? JSONAble {
-                        arr += [jsonable]
+                        arr.append(jsonable)
                     }
                 }
             }

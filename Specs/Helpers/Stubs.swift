@@ -193,6 +193,13 @@ extension Post: Stubbable {
             post.addLinkObject("repost_author", key: repostAuthor.id, collection: MappingType.UsersType.rawValue)
         }
 
+        if let categories = values["categories"] as? [Ello.Category] {
+            for category in categories {
+                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, inCollection: MappingType.CategoriesType.rawValue)
+            }
+            post.addLinkArray("categories", array: categories.map { $0.id })
+        }
+
         // optional
         post.body = (values["body"] as? [Regionable]) ?? [stubbedTextRegion]
         post.content = (values["content"] as? [Regionable]) ?? [stubbedTextRegion]
