@@ -122,12 +122,16 @@ public class StreamHeaderCell: UICollectionViewCell {
         relationshipControl.userId = user?.id ?? ""
         relationshipControl.userAtName = user?.atName ?? ""
 
+        let repostedHidden: Bool
         if let atName = repostedBy?.atName {
             repostedByButton.setTitle("by \(atName)", forState: .Normal)
-            repostedByButton.sizeToFit()
+            repostedHidden = isGridLayout
         }
-
-        let repostedHidden: Bool = isGridLayout
+        else {
+            repostedByButton.setTitle("", forState: .Normal)
+            repostedHidden = true
+        }
+        repostedByButton.sizeToFit()
         repostedByButton.hidden = repostedHidden
         repostIconView.hidden = repostedHidden
 

@@ -21,6 +21,11 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
             var cell: StreamHeaderCell!
             var item: StreamCellItem!
 
+            beforeEach {
+                StreamKind.Starred.setIsGridView(true)
+                StreamKind.Following.setIsGridView(false)
+            }
+
             context("when item is a Post Header") {
                 beforeEach {
                     let post: Post = stub([
@@ -229,6 +234,32 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     expect(cell.relationshipControl.userId) == "reposterId"
                     expect(cell.relationshipControl.userAtName) == "@reposter"
                     expect(cell.relationshipControl.relationshipPriority) == RelationshipPriority.Starred
+                }
+            }
+
+            context("when item is a Post Header with Category and PostDetail streamKind") {
+                beforeEach {
+                    let category: Ello.Category = stub(["name": "Art"])
+                    let post: Post = stub([
+                        "id" : "768",
+                        "author": currentUser,
+                        "viewsCount" : 9,
+                        "repostsCount" : 4,
+                        "commentsCount" : 6,
+                        "lovesCount" : 14,
+                        "categories": [category],
+                    ])
+
+                    cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
+                    item = StreamCellItem(jsonable: post, type: .Header)
+                }
+                it("sets followButtonVisible") {
+                    cell.followButtonVisible = false
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .PostDetail(postParam: "768"), indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
+                    expect(cell.followButtonVisible) == false
+                    expect(cell.relationshipControl.hidden) == true
+                    expect(cell.categoryButton.currentTitle) == "in Art"
+                    expect(cell.categoryButton.hidden) == false
                 }
             }
 
