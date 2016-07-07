@@ -123,7 +123,9 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
         else {
             upAmount = navBar.frame.size.height + 1
         }
-        navigationBarTopConstraint?.constant = upAmount
+        if let navigationBarTopConstraint = navigationBarTopConstraint {
+            navigationBarTopConstraint.constant = upAmount
+        }
         animate(animated: animated) {
             navBar.frame.origin.y = -upAmount
         }
