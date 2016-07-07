@@ -22,7 +22,7 @@ public enum ContentType: String {
 }
 
 public protocol AnalyticsAgent {
-    func identify(userId: String!, traits: [NSObject : AnyObject]!)
+    func identify(userId: String!, traits: [NSObject: AnyObject]!)
     func track(event: String!)
     func track(event: String!, properties: [NSObject: AnyObject]!)
     func screen(screenTitle: String!)
@@ -31,7 +31,7 @@ public protocol AnalyticsAgent {
 }
 
 public struct NullAgent: AnalyticsAgent {
-    public func identify(userId: String!, traits: [NSObject : AnyObject]!) { }
+    public func identify(userId: String!, traits: [NSObject: AnyObject]!) { }
     public func track(event: String!) { }
     public func track(event: String!, properties: [NSObject: AnyObject]!) { }
     public func screen(screenTitle: String!) { }
@@ -320,9 +320,9 @@ public extension Tracker {
 
 public extension UIViewController {
     func trackerName() -> String { return readableClassName() }
-    func trackerProps() -> [NSObject:AnyObject]? { return nil }
+    func trackerProps() -> [String: AnyObject]? { return nil }
 
-    func trackerData() -> (String, [NSObject:AnyObject]?) {
+    func trackerData() -> (String, [String: AnyObject]?) {
         return (trackerName(), trackerProps())
     }
 }
@@ -334,11 +334,11 @@ public extension Tracker {
         screenAppeared(name, properties: props)
     }
 
-    func tabAppeared(viewController: UIViewController) {
-        screenAppeared(viewController)
+    func discoverCategory(category: String) {
+        agent.track("DiscoverViewController category filter", properties: ["category": category])
     }
 
-    func screenAppeared(name: String, properties: [NSObject:AnyObject]? = nil) {
+    func screenAppeared(name: String, properties: [String: AnyObject]? = nil) {
         log("Screen: \(name)")
         agent.screen(name, properties: properties)
     }

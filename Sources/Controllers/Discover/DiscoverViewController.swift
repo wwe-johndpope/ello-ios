@@ -10,6 +10,15 @@ public class DiscoverViewController: StreamableViewController {
     var screen: DiscoverScreen { return self.view as! DiscoverScreen }
     private var includeCategoryPicker: Bool
     private var categoryList: CategoryList?
+    private var trackerCategoryName: String?
+
+    override public func trackerProps() -> [String: AnyObject]? {
+        guard let trackerCategoryName = trackerCategoryName else {
+            return super.trackerProps()
+        }
+
+        return ["category": trackerCategoryName]
+    }
 
     override public var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.Sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
@@ -17,6 +26,7 @@ public class DiscoverViewController: StreamableViewController {
     }
 
     required public init(category: Category) {
+        trackerCategoryName = category.slug
         includeCategoryPicker = false
         super.init(nibName: nil, bundle: nil)
 
