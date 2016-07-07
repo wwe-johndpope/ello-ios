@@ -236,7 +236,7 @@ public struct InterfaceString {
     }
 
     public struct SignIn {
-        static let EmailInvalid = NSLocalizedString("Invalid email", comment: "Invalid email message")
+        static let EmailInvalid = NSLocalizedString("Invalid email or username", comment: "Invalid email or username message")
         static let PasswordInvalid = NSLocalizedString("Invalid password", comment: "Invalid password message")
         static let CredentialsInvalid = NSLocalizedString("Invalid credentials", comment: "Invalid credentials message")
         static let LoadUserError = NSLocalizedString("Unable to load user.", comment: "Unable to load user message")

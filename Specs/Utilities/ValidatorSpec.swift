@@ -15,59 +15,66 @@ class ValidatorSpec: QuickSpec {
     override func spec() {
 
         context("email validation") {
+            let expectations: [(String, Bool)] = [
+                ("name@test.com", true),
+                ("n@t.co", true),
+                ("n@t.shopping", true),
+                ("some.name@domain.co.uk", true),
+                ("some+name@domain.somethingreallylong", true),
+                ("test.com", false),
+                ("name@test", false),
+                ("name@.com", false),
+                ("name@name.com.", false),
+                ("name@name.t", false),
+                ("", false),
+            ]
 
-            it("returns true for a valid email") {
-                var email = "name@test.com"
-                expect(email.isValidEmail()) == true
-
-                email = "n@t.co"
-                expect(email.isValidEmail()) == true
-
-                email = "n@t.shopping"
-                expect(email.isValidEmail()) == true
-
-                email = "some.name@domain.co.uk"
-                expect(email.isValidEmail()) == true
-
-                email = "some+name@domain.somethingreallylong"
-                expect(email.isValidEmail()) == true
+            for (test, expected) in expectations {
+                it("returns \(expected) for \(test)") {
+                    expect(test.isValidEmail()) == expected
+                }
             }
 
-            it("returns false for an invalid email") {
-                var email = "test.com"
-                expect(email.isValidEmail()) == false
+        }
 
-                email = "name@test"
-                expect(email.isValidEmail()) == false
+        context("username validation") {
+            let expectations: [(String, Bool)] = [
+                ("", false),
+                ("a", false),
+                ("aa", true),
+                ("-a", true),
+                ("a-", true),
+                ("--", true),
+                ("user%", false),
+            ]
 
-                email = "name@.com"
-                expect(email.isValidEmail()) == false
-
-                email = "name@name.com."
-                expect(email.isValidEmail()) == false
-
-                email = "name@name.t"
-                expect(email.isValidEmail()) == false
-
-                email = ""
-                expect(email.isValidEmail()) == false
+            for (test, expected) in expectations {
+                it("returns \(expected) for \(test)") {
+                    expect(test.isValidUsername()) == expected
+                }
             }
 
         }
 
         context("password validation") {
+            let expectations: [(String, Bool)] = [
+                ("asdfasdf", true),
+                ("12345678", true),
+                ("123456789", true),
+                ("", false),
+                ("1", false),
+                ("12", false),
+                ("123", false),
+                ("1234", false),
+                ("12345", false),
+                ("123456", false),
+                ("1234567", false),
+            ]
 
-            it("returns true for a valid password") {
-                var password = "asdfasdf"
-                expect(password.isValidPassword()) == true
-
-                password = "123456789"
-                expect(password.isValidPassword()) == true
-            }
-
-            it("returns false for an invalid password") {
-                let password = ""
-                expect(password.isValidPassword()) == false
+            for (test, expected) in expectations {
+                it("returns \(expected) for \(test)") {
+                    expect(test.isValidPassword()) == expected
+                }
             }
         }
     }

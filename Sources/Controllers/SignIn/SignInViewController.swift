@@ -91,7 +91,7 @@ public class SignInViewController: BaseElloViewController, HasAppController {
     private var password: String { return passwordTextField.text ?? "" }
 
     private func hasValidCredentials() -> Bool {
-        return trimmedEmail.isValidEmail() && password.isValidPassword()
+        return (trimmedEmail.isValidEmail() || trimmedEmail.isValidUsername()) && password.isValidPassword()
     }
 
     private func invalidCredentialsReason() -> String {

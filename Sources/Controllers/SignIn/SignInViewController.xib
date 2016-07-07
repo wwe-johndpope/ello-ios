@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -93,7 +93,7 @@
                                                 <action selector="enterTapped:" destination="-1" eventType="touchUpInside" id="Xvx-43-uxr"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your email address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-FV-Pbi" userLabel="emailTextField" customClass="ElloTextField" customModule="Ello" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your username or email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-FV-Pbi" userLabel="emailTextField" customClass="ElloTextField" customModule="Ello" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="120" width="374" height="49"/>
                                             <color key="backgroundColor" red="0.78030639889999998" green="0.78044152259999999" blue="0.78029787539999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>

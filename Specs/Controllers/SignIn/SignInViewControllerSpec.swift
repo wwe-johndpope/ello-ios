@@ -134,10 +134,24 @@ class SignInViewControllerSpec: QuickSpec {
                         expect(subject.passwordTextField.isFirstResponder()) == false
                     }
 
-                    context("input is valid") {
+                    context("input is valid email") {
 
                         it("disables input") {
                             subject.emailTextField.text = "name@example.com"
+                            subject.passwordTextField.text = "12345678"
+
+                            subject.enterTapped(subject.enterButton)
+                            expect(subject.emailTextField.enabled) == false
+                            expect(subject.passwordTextField.enabled) == false
+                            expect(subject.view.userInteractionEnabled) == false
+                        }
+
+                    }
+
+                    context("input is valid username") {
+
+                        it("disables input") {
+                            subject.emailTextField.text = "name"
                             subject.passwordTextField.text = "12345678"
 
                             subject.enterTapped(subject.enterButton)
