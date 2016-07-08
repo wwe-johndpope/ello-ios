@@ -94,6 +94,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         let twoHundredFiftyMegaBytes: UInt = 250000000
         manager.cache.diskCache.byteLimit = twoHundredFiftyMegaBytes
         manager.cache.diskCache.ageLimit = twoWeeks
+
+        CategoryService().loadCategories({ _ in })
     }
 
     public func applicationDidEnterBackground(application: UIApplication) {
