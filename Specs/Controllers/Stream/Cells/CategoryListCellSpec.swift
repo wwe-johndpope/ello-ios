@@ -60,7 +60,7 @@ class CategoryListCellSpec: QuickSpec {
                         (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
                         (title: "Art", endpoint: .CategoryPosts(slug: "art"), selected: false),
                     ]
-                    let allButton: UIButton = subviewThatMatches(subject) { view in (view as? UIButton)?.currentImage != nil } as! UIButton
+                    let allButton: UIButton = subviewThatMatches(subject) { view in (view as? UIButton)?.currentTitle == InterfaceString.SeeAll } as! UIButton
                     allButton.sendActionsForControlEvents(.TouchUpInside)
                     expect(delegate.allCategoriesTapped) == true
                 }
