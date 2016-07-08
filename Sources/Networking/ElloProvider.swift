@@ -250,10 +250,12 @@ public class ElloProvider {
             else if nextState.isAuthenticated {
                 AuthState.uuid = NSUUID()
 
-                for request in self.waitList {
-                    self.elloRequest(request)
+                dispatch_async(dispatch_get_main_queue()) {
+                    for request in self.waitList {
+                        self.elloRequest(request)
+                    }
+                    self.waitList = []
                 }
-                self.waitList = []
             }
             else {
                 sleep(1)
