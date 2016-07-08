@@ -250,11 +250,17 @@ public class ElloProvider {
             else if nextState.isAuthenticated {
                 AuthState.uuid = NSUUID()
 
-                dispatch_async(dispatch_get_main_queue()) {
+                let flushWaitList: ElloEmptyCompletion = {
                     for request in self.waitList {
                         self.elloRequest(request)
                     }
                     self.waitList = []
+                }
+                if self.queue == nil {
+                    flushWaitList()
+                }
+                else {
+                    dispatch_async(dispatch_get_main_queue(), flushWaitList)
                 }
             }
             else {
