@@ -31,7 +31,10 @@ public class CategoryListCell: UICollectionViewCell {
 
     private var buttonEndpointLookup: [UIButton: ElloAPI] = [:]
     private var categoryButtons: [UIButton] = []
-    private var allCategoriesButton = UIButton()
+    private var gradientView = UIView()
+    private var buttonViews = UIScrollView()
+    private var gradientLayer = CAGradientLayer()
+    private var allCategoriesButton = WhiteElloButton()
 
     private class func buttonTitle(category: String, selected: Bool) -> NSAttributedString {
         var attrs: [String: AnyObject] = [
@@ -60,10 +63,24 @@ public class CategoryListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = gradientView.bounds
+    }
+
     private func style() {
         backgroundColor = .whiteColor()
-        allCategoriesButton.setImage(.DotsLight, imageStyle: .Normal, forState: .Normal)
-        allCategoriesButton.contentMode = .ScaleAspectFill
+        allCategoriesButton.setTitle(InterfaceString.SeeAll, forState: .Normal)
+        allCategoriesButton.backgroundColor = .whiteColor()
+
+        gradientLayer.locations = [0, 1]
+        gradientLayer.colors = [
+            UIColor.whiteColor().CGColor,
+            UIColor.whiteColor().colorWithAlphaComponent(0).CGColor,
+        ]
+        gradientLayer.startPoint = CGPoint(x: 1, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 0)
+        gradientView.layer.addSublayer(gradientLayer)
     }
 
     private func bindActions() {
@@ -71,11 +88,24 @@ public class CategoryListCell: UICollectionViewCell {
     }
 
     private func arrange() {
+        contentView.addSubview(buttonViews)
         contentView.addSubview(allCategoriesButton)
+        contentView.addSubview(gradientView)
 
         allCategoriesButton.snp_makeConstraints { make in
             make.top.bottom.trailing.equalTo(contentView)
             make.width.equalTo(contentView.snp_height)
+        }
+
+        gradientView.snp_makeConstraints { make in
+            make.trailing.equalTo(allCategoriesButton.snp_leading)
+            make.top.bottom.equalTo(contentView)
+            make.width.equalTo(30)
+        }
+
+        buttonViews.snp_makeConstraints { make in
+            make.top.leading.bottom.equalTo(contentView)
+            make.trailing.equalTo(gradientView.snp_trailing)
         }
     }
 
@@ -109,27 +139,25 @@ public class CategoryListCell: UICollectionViewCell {
 
         var prevView: UIView? = nil
         for view in categoryButtons {
-            contentView.addSubview(view)
+            buttonViews.addSubview(view)
 
             view.snp_makeConstraints { make in
-                make.centerY.equalTo(contentView)
+                make.centerY.equalTo(buttonViews)
 
                 if let prevView = prevView {
                     make.leading.equalTo(prevView.snp_trailing).offset(Size.spacing)
                 }
                 else {
-                    make.leading.equalTo(contentView.snp_leading).offset(Size.sideMargins)
+                    make.leading.equalTo(buttonViews.snp_leading).offset(Size.sideMargins)
                 }
             }
 
             prevView = view
         }
 
-        layoutIfNeeded()
-
-        for view in categoryButtons {
-            if view.frame.maxX > allCategoriesButton.frame.minX {
-                view.hidden = true
+        if let prevView = prevView {
+            prevView.snp_makeConstraints { make in
+                make.trailing.equalTo(buttonViews.snp_trailing).offset(-Size.sideMargins)
             }
         }
     }
