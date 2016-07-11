@@ -144,7 +144,8 @@ public enum StreamKind {
                         }
                         return accum
                     }
-                } else {
+                }
+                else {
                     return []
                 }
             default:
@@ -160,18 +161,22 @@ public enum StreamKind {
                     }
                     return accum
                 }
-            } else if let comments = jsonables as? [ElloComment]  {
+            }
+            else if let comments = jsonables as? [ElloComment]  {
                 return comments
-            } else if let posts = jsonables as? [Post]  {
+            }
+            else if let posts = jsonables as? [Post]  {
                 return posts
-            } else {
+            }
+            else {
                 return []
             }
         case .Notifications:
             if let activities = jsonables as? [Activity] {
                 let notifications: [Notification] = activities.map { return Notification(activity: $0) }
                 return notifications.filter { return $0.isValidKind }
-            } else {
+            }
+            else {
                 return []
             }
         default:
@@ -182,9 +187,11 @@ public enum StreamKind {
                     }
                     return accum
                 }
-            } else if let comments = jsonables as? [ElloComment] {
+            }
+            else if let comments = jsonables as? [ElloComment] {
                 return comments
-            } else if let posts = jsonables as? [Post] {
+            }
+            else if let posts = jsonables as? [Post] {
                 return posts
             }
         }
