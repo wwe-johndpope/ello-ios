@@ -115,13 +115,6 @@ public class ProfileViewController: StreamableViewController {
 
         setupGradient()
 
-        if let handle = currentUser?.atName,
-            let userHandle = user?.atName
-            where handle == userHandle
-        {
-            Tracker.sharedTracker.ownProfileViewed(handle)
-        }
-
         if let user = user {
             updateCurrentUser(user)
         }
@@ -374,9 +367,6 @@ public class ProfileViewController: StreamableViewController {
     }
 
     private func userLoaded(user: User, responseConfig: ResponseConfig, isReload: Bool = true) {
-        if self.user == nil {
-            Tracker.sharedTracker.profileViewed(user.atName ?? "(no name)")
-        }
         self.user = user
         updateCurrentUser(user)
 
