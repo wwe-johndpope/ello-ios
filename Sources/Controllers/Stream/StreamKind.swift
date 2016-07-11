@@ -160,6 +160,8 @@ public enum StreamKind {
                     }
                     return accum
                 }
+            } else if let comments = jsonables as? [ElloComment]  {
+                return comments
             } else if let posts = jsonables as? [Post]  {
                 return posts
             } else {
