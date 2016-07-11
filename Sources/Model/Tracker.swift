@@ -358,24 +358,9 @@ public extension Tracker {
         agent.track("Profile Loaded", properties: ["handle": handle])
     }
 
-    func ownProfileViewed(handle: String) {
-        log("Screen: Own Profile Viewed, [handle: \(handle)]")
-        agent.screen("Own Profile Viewed", properties: ["handle": handle])
-    }
-
-    func profileViewed(handle: String) {
-        log("Screen: Profile Viewed, [handle: \(handle)]")
-        agent.screen("Profile Viewed", properties: ["handle": handle])
-    }
-
     func postLoaded(id: String) {
         log("Post Loaded, [id: \(id)]")
         agent.track("Post Loaded", properties: ["id": id])
-    }
-
-    func postViewed(id: String) {
-        log("Post Viewed, [id: \(id)]")
-        agent.screen("Post Viewed", properties: ["id": id])
     }
 
     func viewedImage(asset: Asset, post: Post) {

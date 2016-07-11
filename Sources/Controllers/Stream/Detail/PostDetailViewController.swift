@@ -131,9 +131,6 @@ public class PostDetailViewController: StreamableViewController {
     }
 
     private func postLoaded(post: Post, responseConfig: ResponseConfig) {
-        if self.post == nil {
-            Tracker.sharedTracker.postViewed(post.id)
-        }
         self.post = post
         // need to reassign the userParam to the id for paging
         postParam = post.id

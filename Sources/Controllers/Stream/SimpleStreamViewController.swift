@@ -9,6 +9,9 @@
 import Foundation
 
 public class SimpleStreamViewController: StreamableViewController {
+    override public func trackerName() -> String {
+        return "\(endpoint.description)ViewController"
+    }
 
     var navigationBar: ElloNavigationBar!
     let endpoint: ElloAPI
