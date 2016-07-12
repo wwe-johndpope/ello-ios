@@ -78,8 +78,9 @@ class CategoryListCellSpec: QuickSpec {
             it("hides categories that are off screen") {
                 subject.categoriesInfo = [
                     (title: "Featured", endpoint: .CategoryPosts(slug: "featured"), selected: false),
-                    (title: "MMMMMMMMM", endpoint: .CategoryPosts(slug: "mmmmmmmmm1"), selected: false),
-                    (title: "MMMMMMMMM", endpoint: .CategoryPosts(slug: "mmmmmmmmm2"), selected: false),
+                    (title: "MMMMMMMM", endpoint: .CategoryPosts(slug: "mmmmmmmm"), selected: false),
+                    (title: "iiiiiiii", endpoint: .CategoryPosts(slug: "iiiiiiii"), selected: false),
+                    (title: "llllllll", endpoint: .CategoryPosts(slug: "llllllll"), selected: false),
                 ]
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())

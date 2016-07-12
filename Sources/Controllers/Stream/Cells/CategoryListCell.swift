@@ -160,6 +160,7 @@ public class CategoryListCell: UICollectionViewCell {
                 make.trailing.equalTo(buttonViews.snp_trailing).offset(-Size.sideMargins)
             }
         }
+        setNeedsLayout()
     }
 
 }

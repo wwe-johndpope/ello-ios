@@ -161,10 +161,10 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
 
                 context("gridLayout streamKind") {
-                    it("only shows author") {
+                    it("shows reposter and author") {
                         StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Starred, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
-                        expect(cell.repostedByButton.hidden) == true
-                        expect(cell.repostIconView.hidden) == true
+                        expect(cell.repostedByButton.hidden) == false
+                        expect(cell.repostIconView.hidden) == false
                     }
                 }
 

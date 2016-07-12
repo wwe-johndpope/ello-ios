@@ -57,7 +57,6 @@ public class StreamHeaderCell: UICollectionViewCell {
     @IBOutlet var usernameButton: UIButton!
     @IBOutlet var relationshipControl: RelationshipControl!
     @IBOutlet var replyButton: UIButton!
-
     @IBOutlet var repostedByButton: UIButton!
     @IBOutlet var repostIconView: UIImageView!
 
@@ -90,7 +89,6 @@ public class StreamHeaderCell: UICollectionViewCell {
             else {
                 timestampLabel.text = newValue
             }
-            timestampLabel.sizeToFit()
             setNeedsLayout()
         }
     }
@@ -125,7 +123,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         let repostedHidden: Bool
         if let atName = repostedBy?.atName {
             repostedByButton.setTitle("by \(atName)", forState: .Normal)
-            repostedHidden = isGridLayout
+            repostedHidden = false
         }
         else {
             repostedByButton.setTitle("", forState: .Normal)
@@ -136,7 +134,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         repostIconView.hidden = repostedHidden
 
         if let category = category
-        where repostedHidden {
+        where repostedBy == nil {
             let attributedString = NSAttributedString(string: "in ", attributes: [
                 NSFontAttributeName: UIFont.defaultFont(),
                 NSForegroundColorAttributeName: UIColor.greyA(),
@@ -290,16 +288,16 @@ public class StreamHeaderCell: UICollectionViewCell {
         replyButton.hidden = isGridLayout || !canReply
 
         var maxUsernameWidth: CGFloat = 0
-        if !isGridLayout {
+        if isGridLayout {
+            maxUsernameWidth = contentView.frame.width - usernameX - rightSidePadding
+        }
+        else {
             maxUsernameWidth = timestampX - usernameX - rightSidePadding
 
             if canReply {
                 maxUsernameWidth -= replyButton.frame.width - timestampMargin
                 timestampX -= timestampMargin
             }
-        }
-        else {
-            maxUsernameWidth = contentView.frame.width - usernameX - rightSidePadding
         }
         let maxRepostedWidth = maxUsernameWidth - 26
 
@@ -313,7 +311,7 @@ public class StreamHeaderCell: UICollectionViewCell {
         let usernameWidth = max(minimumUsernameWidth, min(usernameButton.frame.width, maxUsernameWidth))
         let repostedWidth = max(minimumRepostedWidth, min(repostedByButton.frame.width, maxRepostedWidth))
 
-        let hasRepostAuthor = !isGridLayout && !repostedByButton.hidden
+        let hasRepostAuthor = !repostedByButton.hidden
         let hasCategory = !categoryButton.hidden
         let usernameButtonHeight: CGFloat
         let usernameButtonY: CGFloat

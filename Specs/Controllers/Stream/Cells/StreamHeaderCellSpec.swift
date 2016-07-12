@@ -105,6 +105,21 @@ class StreamHeaderCellSpec: QuickSpec {
                         subject.isGridLayout = inGrid
                         subject.followButtonVisible = hasFollow
 
+                        if content == .Comment {
+                            subject.showUsername = true
+                            subject.avatarHeight = 30.0
+                            subject.chevronHidden = false
+                            subject.goToPostView.hidden = true
+                            subject.canReply = true
+                        }
+                        else {
+                            subject.showUsername = !inDetail
+                            subject.avatarHeight = inGrid ? 30 : 60
+                            subject.chevronHidden = true
+                            subject.goToPostView.hidden = false
+                            subject.canReply = false
+                        }
+
                         let user: User?
                         let repostedBy: User?
                         let cellCategory: Ello.Category?
@@ -124,20 +139,6 @@ class StreamHeaderCellSpec: QuickSpec {
                             user = other
                         }
 
-                        if content == .Repost {
-                            repostedBy = reposter
-                        }
-                        else {
-                            repostedBy = nil
-                        }
-
-                        if hasCategory {
-                            cellCategory = category
-                        }
-                        else {
-                            cellCategory = nil
-                        }
-
                         if content == .Comment {
                             subject.showUsername = true
                             subject.avatarHeight = 30.0
@@ -153,12 +154,21 @@ class StreamHeaderCellSpec: QuickSpec {
                             subject.canReply = false
                         }
 
-                        if inGrid {
-                            subject.timeStamp = ""
+                        if content == .Repost {
+                            repostedBy = reposter
                         }
                         else {
-                            subject.timeStamp = "1m"
+                            repostedBy = nil
                         }
+
+                        if hasCategory {
+                            cellCategory = category
+                        }
+                        else {
+                            cellCategory = nil
+                        }
+
+                        subject.timeStamp = "1m"
                         subject.setDetails(user: user, repostedBy: repostedBy, category: cellCategory)
                         subject.avatarButton.setImage(UIImage(named: "specs-avatar", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil), forState: .Normal)
 
