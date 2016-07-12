@@ -126,7 +126,7 @@ public class DiscoverViewController: StreamableViewController {
 
         if slug != currentSlug {
             let endpoint: ElloAPI
-            if let discoverType = DiscoverType(rawValue: slug) {
+            if let discoverType = DiscoverType.fromURL(slug) {
                 endpoint = .Discover(type: discoverType)
             }
             else {

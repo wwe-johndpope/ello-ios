@@ -11,6 +11,19 @@ public enum DiscoverType: String {
     case Trending = "trending"
     case Recent = "recent"
 
+    static func fromURL(slug: String) -> DiscoverType? {
+        switch slug {
+        case "featured", "recommended", "":
+            return .Featured
+        case "trending":
+            return .Trending
+        case "recent":
+            return .Recent
+        default:
+            return nil
+        }
+    }
+
     public var slug: String { return rawValue }
     public var name: String {
         switch self {

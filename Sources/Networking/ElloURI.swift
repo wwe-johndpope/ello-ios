@@ -11,7 +11,7 @@ import Keys
 
 public enum ElloURI: String {
     // matching stream or page in app
-    case Discover = "discover"
+    case Discover = "discover(/featured|/recommended)?/?$"
     case DiscoverRandom = "discover/random"
     case DiscoverRecent = "discover/recent"
     case DiscoverRelated = "discover/related"
@@ -189,6 +189,16 @@ public enum ElloURI: String {
     private func data(url: String) -> String {
         let regex = Regex(self.regexPattern)
         switch self {
+        case .Discover:
+            return "recommended"
+        case .DiscoverRandom:
+            return "random"
+        case .DiscoverRecent:
+            return "recent"
+        case .DiscoverRelated:
+            return "related"
+        case .DiscoverTrending:
+            return "trending"
         case .Category:
             return regex?.matchingGroups(url).safeValue(2) ?? url
         case .PushNotificationUser:

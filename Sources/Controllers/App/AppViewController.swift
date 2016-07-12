@@ -436,16 +436,16 @@ extension AppViewController {
         }
 
         switch type {
+        case .ExploreRecommended,
+             .ExploreRecent,
+             .ExploreTrending:
+            showDiscoverScreen(vc)
         case .Discover,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
              .DiscoverTrending,
-             .ExploreRecommended,
-             .ExploreRecent,
-             .ExploreTrending:
-            showDiscoverScreen(vc)
-        case .Category:
+             .Category:
             showDiscoverScreen(vc)
             if let nav = vc.selectedViewController as? UINavigationController,
                 discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
