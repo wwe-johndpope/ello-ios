@@ -226,7 +226,7 @@ class StreamDataSourceSpec: QuickSpec {
                         }
                         it("returns the correct number of rows") {
                             // there should be 10 reposts
-                            // 10 * 5(number of cells for a repost w/ 2 regions) = 50
+                            // 10 * 4(number of cells for a repost w/ 2 regions) = 40
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 40
                         }
                     }
