@@ -112,6 +112,29 @@ public class DiscoverViewController: StreamableViewController {
         positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
     }
+
+    public func showCategory(slug: String) {
+        let currentSlug: String?
+        switch streamViewController.streamKind {
+        case let .Discover(type):
+            currentSlug = type.rawValue
+        case let .CategoryPosts(categorySlug):
+            currentSlug = categorySlug
+        default:
+            currentSlug = nil
+        }
+
+        if slug != currentSlug {
+            let endpoint: ElloAPI
+            if let discoverType = DiscoverType(rawValue: slug) {
+                endpoint = .Discover(type: discoverType)
+            }
+            else {
+                endpoint = .CategoryPosts(slug: slug)
+            }
+            streamViewController.discoverCategoryTapped(endpoint)
+        }
+    }
 }
 
 // MARK: StreamViewDelegate

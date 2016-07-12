@@ -90,7 +90,6 @@ class ElloURISpec: QuickSpec {
 
                 describe("specific urls") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
-
                         "with ello://notification url schemes": (
                             input: "ello://notifications",
                             outputURI: .Notifications,
@@ -105,6 +104,11 @@ class ElloURISpec: QuickSpec {
                             input: "https://flowers.ello.co",
                             outputURI: .Subdomain,
                             outputData: "https://flowers.ello.co"
+                        ),
+                        "with Category urls": (
+                            input: "https://ello.co/discover/art",
+                            outputURI: .Category,
+                            outputData: "art"
                         ),
                         "with Subdomain(long) urls": (
                             input: "https://wallpapers.ello.co/any/thing/else/here",
@@ -160,7 +164,7 @@ class ElloURISpec: QuickSpec {
                     }
                 }
 
-                describe("push notifiation routes") {
+                describe("push notification routes") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
                         "with User urls": (input: "notifications/users/696", outputURI: .PushNotificationUser, outputData: "696"),
                         "with Post urls": (input: "notifications/posts/2345", outputURI: .PushNotificationPost, outputData: "2345"),
@@ -188,6 +192,7 @@ class ElloURISpec: QuickSpec {
                         "with ProfileFollowing urls": (input: "888/following", outputURI: .ProfileFollowing, outputData: "888"),
                         "with ProfileLoves urls": (input: "999/loves", outputURI: .ProfileLoves, outputData: "999"),
                         "with Post urls": (input: "666/post/2345", outputURI: .Post, outputData: "2345"),
+                        "with Category urls": (input: "discover/art", outputURI: .Category, outputData: "art"),
                         "with Notifications urls": (input: "notifications", outputURI: .Notifications, outputData: "notifications"),
                         "with Notifications/all urls": (input: "notifications/all", outputURI: .Notifications, outputData: "all"),
                         "with Notifications/comments urls": (input: "notifications/comments", outputURI: .Notifications, outputData: "comments"),
