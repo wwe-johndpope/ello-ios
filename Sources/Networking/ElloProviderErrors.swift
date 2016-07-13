@@ -1,9 +1,5 @@
-//
-//  ElloProviderErrors.swift
-//  Ello
-//
-//  Created by Sean on 2/1/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ElloProviderErrors.swift
 //
 
 import Foundation

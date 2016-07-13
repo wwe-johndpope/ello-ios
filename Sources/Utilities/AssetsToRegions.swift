@@ -1,9 +1,5 @@
-//
-//  AssetsToRegions.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/16/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  AssetsToRegions.swift
 //
 
 import Photos

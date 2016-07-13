@@ -1,9 +1,5 @@
-//
-//  ReplyButton.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/4/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  ReplyButton.swift
 //
 
 class ReplyButton: RoundedElloButton {

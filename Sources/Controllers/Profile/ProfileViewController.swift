@@ -1,9 +1,5 @@
-//
-//  ProfileViewController.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 11/21/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  ProfileViewController.swift
 //
 
 import FLAnimatedImage

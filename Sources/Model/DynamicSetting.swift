@@ -1,9 +1,5 @@
-//
-//  DynamicSetting.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 4/10/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  DynamicSetting.swift
 //
 
 import Crashlytics

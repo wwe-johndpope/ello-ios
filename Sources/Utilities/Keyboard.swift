@@ -1,9 +1,5 @@
-//
-//  Keyboard.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/26/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Keyboard.swift
 //
 
 import UIKit
@@ -17,7 +13,7 @@ public class Keyboard {
         public static let KeyboardWillHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillHide")
         public static let KeyboardDidHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardDidHide")
     }
-    
+
     public static let shared = Keyboard()
 
     public class func setup() {

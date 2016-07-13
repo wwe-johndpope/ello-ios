@@ -1,9 +1,5 @@
-//
-//  NotificationCell.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/12/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NotificationCell.swift
 //
 
 import FLAnimatedImage

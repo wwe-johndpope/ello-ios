@@ -1,9 +1,5 @@
-//
-//  Application.swift
-//  Ello
-//
-//  Created by Sean on 8/4/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Application.swift
 //
 
 private let sharedApplication = Application()

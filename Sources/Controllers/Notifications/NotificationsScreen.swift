@@ -1,9 +1,5 @@
-//
-//  NotificationsScreen.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/19/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NotificationsScreen.swift
 //
 
 @objc

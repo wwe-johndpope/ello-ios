@@ -1,9 +1,5 @@
-//
-//  ResponseConfig.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 2/25/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ResponseConfig.swift
 //
 
 import Foundation

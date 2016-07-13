@@ -1,9 +1,5 @@
-//
-//  ElloAPI.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 11/20/2014.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  ElloAPI.swift
 //
 
 import Moya

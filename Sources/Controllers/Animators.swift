@@ -1,9 +1,5 @@
-//
-//  Animators.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 3/18/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Animators.swift
 //
 
 let DefaultAnimationDuration: NSTimeInterval = 0.25

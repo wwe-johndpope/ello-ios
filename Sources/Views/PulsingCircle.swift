@@ -1,9 +1,5 @@
-//
-//  PulsingCircle.swift
-//  Ello
-//
-//  Created by Sean on 2/2/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  PulsingCircle.swift
 //
 
 import QuartzCore

@@ -1,9 +1,5 @@
-//
-//  ElloNavigationBar.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/24/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloNavigationBar.swift
 //
 
 public class ElloNavigationBar: UINavigationBar {

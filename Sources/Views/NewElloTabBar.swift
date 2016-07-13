@@ -1,9 +1,5 @@
-//
-//  NewElloTabBar.swift
-//  Ello
-//
-//  Created by Colin Gray on 10/30/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NewElloTabBar.swift
 //
 
 class NewElloTabBar: UIView {

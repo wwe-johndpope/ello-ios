@@ -1,9 +1,5 @@
-//
-//  UIImagePickerController.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 4/21/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  UIImagePickerController.swift
 //
 
 import ImagePickerSheetController

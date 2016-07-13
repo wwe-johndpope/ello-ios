@@ -1,9 +1,5 @@
-//
-//  CredentialsAuthService.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 11/30/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  CredentialsAuthService.swift
 //
 
 import Moya

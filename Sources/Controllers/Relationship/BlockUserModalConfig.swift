@@ -1,9 +1,5 @@
-//
-//  BlockUserModalConfig.swift
-//  Ello
-//
-//  Created by Colin Gray on 6/8/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  BlockUserModalConfig.swift
 //
 
 public struct BlockUserModalConfig {

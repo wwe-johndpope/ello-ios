@@ -1,9 +1,5 @@
-//
-//  DynamicSettingCategoryViewController.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 4/13/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  DynamicSettingCategoryViewController.swift
 //
 
 class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ControllerThatMightHaveTheCurrentUser {

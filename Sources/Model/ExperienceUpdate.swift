@@ -1,9 +1,5 @@
-//
-//  ExperienceUpdate.swift
-//  Ello
-//
-//  Created by Sean on 4/15/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ExperienceUpdate.swift
 //
 
 public let CommentChangedNotification = TypedNotification<(ElloComment, ContentChange)>(name: "commentChangedNotification")

@@ -1,9 +1,5 @@
-//
-//  PushPayload.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 5/20/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  PushPayload.swift
 //
 
 public struct PushPayload {

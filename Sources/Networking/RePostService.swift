@@ -1,9 +1,5 @@
-//
-//  RePostService.swift
-//  Ello
-//
-//  Created by Colin Gray on 4/28/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  RePostService.swift
 //
 
 public class RePostService: NSObject {

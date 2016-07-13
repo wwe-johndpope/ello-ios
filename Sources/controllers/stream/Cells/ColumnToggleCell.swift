@@ -1,9 +1,5 @@
-//
-//  ColumnToggleCell.swift
-//  Ello
-//
-//  Created by Sean on 10/5/15.
-//  Copyright © 2015 Ello. All rights reserved.
+////
+///  ColumnToggleCell.swift
 //
 
 public class ColumnToggleCell: UICollectionViewCell {

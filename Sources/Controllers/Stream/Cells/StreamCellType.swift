@@ -1,9 +1,5 @@
-//
-//  StreamCellType.swift
-//  Ello
-//
-//  Created by Sean on 2/7/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamCellType.swift
 //
 
 import Foundation

@@ -1,9 +1,5 @@
-//
-//  ErrorStatusCode.swift
-//  Ello
-//
-//  Created by Colin Gray on 1/13/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  ErrorStatusCode.swift
 //
 
 import Foundation

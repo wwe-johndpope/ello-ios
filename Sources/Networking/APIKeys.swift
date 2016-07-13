@@ -1,9 +1,5 @@
-//
-//  APIKeys.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 11/26/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  APIKeys.swift
 //
 
 import Foundation

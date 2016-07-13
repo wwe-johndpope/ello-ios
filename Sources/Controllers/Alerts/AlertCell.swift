@@ -1,9 +1,5 @@
-//
-//  AlertCell.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 4/2/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AlertCell.swift
 //
 
 import UIKit

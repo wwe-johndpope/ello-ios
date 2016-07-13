@@ -1,9 +1,5 @@
-//
-//  AddressBookError.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 3/3/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AddressBookError.swift
 //
 
 public enum AddressBookError: String, ErrorType {

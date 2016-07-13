@@ -1,9 +1,5 @@
-//
-//  DrawerViewController.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 3/5/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  DrawerViewController.swift
 //
 
 import Crashlytics

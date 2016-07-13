@@ -1,9 +1,5 @@
-//
-//  OmnibarErrorCell.swift
-//  Ello
-//
-//  Created by Colin Gray on 8/18/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  OmnibarErrorCell.swift
 //
 
 public class OmnibarErrorCell: UITableViewCell {

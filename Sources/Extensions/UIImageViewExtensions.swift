@@ -1,9 +1,5 @@
-//
-//  UIImageViewExtensions.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/20/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  UIImageViewExtensions.swift
 //
 
 extension UIImageView {

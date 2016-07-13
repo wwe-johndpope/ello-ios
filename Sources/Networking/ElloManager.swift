@@ -1,9 +1,5 @@
-//
-//  ElloManager.swift
-//  Ello
-//
-//  Created by Sean on 1/29/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ElloManager.swift
 //
 
 import Foundation

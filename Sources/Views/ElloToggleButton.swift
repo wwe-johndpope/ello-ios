@@ -1,9 +1,5 @@
-//
-//  ElloToggleButton.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 4/13/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloToggleButton.swift
 //
 
 public class ElloToggleButton: UIButton {

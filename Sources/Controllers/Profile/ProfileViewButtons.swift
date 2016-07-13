@@ -1,9 +1,5 @@
-//
-//  ProfileViewButtons.swift
-//  Ello
-//
-//  Created by Colin Gray on 6/21/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  ProfileViewButtons.swift
 //
 
 public class ProfileButton: RoundedElloButton {

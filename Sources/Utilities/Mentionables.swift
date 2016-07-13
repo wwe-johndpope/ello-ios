@@ -1,9 +1,5 @@
-//
-//  Mentionables.swift
-//  Ello
-//
-//  Created by Colin Gray on 9/23/15.
-//  Copyright © 2015 Ello. All rights reserved.
+////
+///  Mentionables.swift
 //
 
 struct Mentionables {

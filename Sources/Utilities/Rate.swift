@@ -1,9 +1,5 @@
-//
-//  Rate.swift
-//  Ello
-//
-//  Created by Sean on 10/1/15.
-//  Copyright © 2015 Ello. All rights reserved.
+////
+///  Rate.swift
 //
 
 import Foundation
