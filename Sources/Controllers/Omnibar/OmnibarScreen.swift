@@ -587,14 +587,14 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     public func keyboardWillShow() {
         self.setNeedsLayout()
-        animate(duration: Keyboard.shared().duration, options: Keyboard.shared().options) {
+        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
             self.layoutIfNeeded()
         }
     }
 
     public func keyboardWillHide() {
         self.setNeedsLayout()
-        animate(duration: Keyboard.shared().duration, options: Keyboard.shared().options) {
+        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
             self.layoutIfNeeded()
         }
     }
@@ -638,7 +638,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.frame = CGRect(x: 0, y: avatarButton.frame.maxY + Size.toolbarMargin, right: bounds.size.width, bottom: bounds.size.height)
         textScrollView.frame = regionsTableView.frame
 
-        var bottomInset = Keyboard.shared().keyboardBottomInset(inView: self)
+        var bottomInset = Keyboard.shared.keyboardBottomInset(inView: self)
 
         if bottomInset == 0 {
             bottomInset = ElloTabBar.Size.height + Size.keyboardButtonSize.height
@@ -655,7 +655,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         keyboardButtonView.frame.size = CGSize(width: frame.width, height: Size.keyboardButtonSize.height)
         tabbarSubmitButton.frame.size = CGSize(width: frame.width, height: Size.keyboardButtonSize.height)
 
-        if Keyboard.shared().active {
+        if Keyboard.shared.active {
             tabbarSubmitButton.frame.origin.y = frame.height
         }
         else {
