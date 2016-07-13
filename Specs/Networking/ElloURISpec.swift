@@ -90,7 +90,6 @@ class ElloURISpec: QuickSpec {
 
                 describe("specific urls") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
-
                         "with ello://notification url schemes": (
                             input: "ello://notifications",
                             outputURI: .Notifications,
@@ -105,6 +104,11 @@ class ElloURISpec: QuickSpec {
                             input: "https://flowers.ello.co",
                             outputURI: .Subdomain,
                             outputData: "https://flowers.ello.co"
+                        ),
+                        "with Category urls": (
+                            input: "https://ello.co/discover/art",
+                            outputURI: .Category,
+                            outputData: "art"
                         ),
                         "with Subdomain(long) urls": (
                             input: "https://wallpapers.ello.co/any/thing/else/here",
@@ -160,7 +164,7 @@ class ElloURISpec: QuickSpec {
                     }
                 }
 
-                describe("push notifiation routes") {
+                describe("push notification routes") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
                         "with User urls": (input: "notifications/users/696", outputURI: .PushNotificationUser, outputData: "696"),
                         "with Post urls": (input: "notifications/posts/2345", outputURI: .PushNotificationPost, outputData: "2345"),
@@ -187,7 +191,13 @@ class ElloURISpec: QuickSpec {
                         "with ProfileFollowers urls": (input: "777/followers", outputURI: .ProfileFollowers, outputData: "777"),
                         "with ProfileFollowing urls": (input: "888/following", outputURI: .ProfileFollowing, outputData: "888"),
                         "with ProfileLoves urls": (input: "999/loves", outputURI: .ProfileLoves, outputData: "999"),
+                        "with Discover urls": (input: "discover", outputURI: .Discover, outputData: "recommended"),
+                        "with DiscoverRandom urls": (input: "discover/random", outputURI: .DiscoverRandom, outputData: "random"),
+                        "with DiscoverRecent urls": (input: "discover/recent", outputURI: .DiscoverRecent, outputData: "recent"),
+                        "with DiscoverRelated urls": (input: "discover/related", outputURI: .DiscoverRelated, outputData: "related"),
+                        "with DiscoverTrending urls": (input: "discover/trending", outputURI: .DiscoverTrending, outputData: "trending"),
                         "with Post urls": (input: "666/post/2345", outputURI: .Post, outputData: "2345"),
+                        "with Category urls": (input: "discover/art", outputURI: .Category, outputData: "art"),
                         "with Notifications urls": (input: "notifications", outputURI: .Notifications, outputData: "notifications"),
                         "with Notifications/all urls": (input: "notifications/all", outputURI: .Notifications, outputData: "all"),
                         "with Notifications/comments urls": (input: "notifications/comments", outputURI: .Notifications, outputData: "comments"),
@@ -251,11 +261,6 @@ class ElloURISpec: QuickSpec {
                     let tests: [String: (input: String, output: ElloURI)] = [
                         "with Confirm urls": (input: "confirm", output: .Confirm),
                         "with BetaPublicProfiles urls": (input: "beta-public-profiles", output: .BetaPublicProfiles),
-                        "with Discover urls": (input: "discover", output: .Discover),
-                        "with DiscoverRandom urls": (input: "discover/random", output: .DiscoverRandom),
-                        "with DiscoverRelated urls": (input: "discover/related", output: .DiscoverRelated),
-                        "with DiscoverRecent urls": (input: "discover/recent", output: .DiscoverRecent),
-                        "with DiscoverTrending urls": (input: "discover/trending", output: .DiscoverTrending),
                         "with Downloads urls": (input: "downloads", output: .Downloads),
                         "with Enter urls": (input: "enter", output: .Enter),
                         "with Explore urls": (input: "explore", output: .Explore),

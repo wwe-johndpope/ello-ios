@@ -436,15 +436,23 @@ extension AppViewController {
         }
 
         switch type {
+        case .ExploreRecommended,
+             .ExploreRecent,
+             .ExploreTrending:
+            showDiscoverScreen(vc)
         case .Discover,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
              .DiscoverTrending,
-             .ExploreRecommended,
-             .ExploreRecent,
-             .ExploreTrending:
+             .Category:
             showDiscoverScreen(vc)
+            if let nav = vc.selectedViewController as? UINavigationController,
+                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
+            {
+                nav.popToRootViewControllerAnimated(false)
+                discoverViewController.showCategory(data)
+            }
         case .Invitations:
             showInvitationScreen(vc)
         case .Enter, .Exit, .Root, .Explore:

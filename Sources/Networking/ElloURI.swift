@@ -11,11 +11,12 @@ import Keys
 
 public enum ElloURI: String {
     // matching stream or page in app
-    case Discover = "discover"
+    case Discover = "discover(/featured|/recommended)?/?$"
     case DiscoverRandom = "discover/random"
     case DiscoverRecent = "discover/recent"
     case DiscoverRelated = "discover/related"
     case DiscoverTrending = "discover/trending"
+    case Category = "discover/([^\\/]+)/?$"
     case Enter = "enter"
     case Friends = "friends"
     case Following = "following"
@@ -157,7 +158,7 @@ public enum ElloURI: String {
         case .Email,
              .External:
             return rawValue
-        case .Notifications:
+        case .Category, .Notifications, .Search:
             return "\(ElloURI.fuzzyDomain)\\/\(rawValue)"
         case .Post:
             return "\(ElloURI.userPathRegex)\(rawValue)"
@@ -171,8 +172,6 @@ public enum ElloURI: String {
              .ProfileFollowing,
              .ProfileLoves:
             return "\(ElloURI.userPathRegex)\(rawValue)"
-        case .Search:
-            return "\(ElloURI.fuzzyDomain)\\/\(rawValue)"
         case .Subdomain:
             return "\(rawValue)\(ElloURI.fuzzyDomain)"
         default:
@@ -190,6 +189,18 @@ public enum ElloURI: String {
     private func data(url: String) -> String {
         let regex = Regex(self.regexPattern)
         switch self {
+        case .Discover:
+            return "recommended"
+        case .DiscoverRandom:
+            return "random"
+        case .DiscoverRecent:
+            return "recent"
+        case .DiscoverRelated:
+            return "related"
+        case .DiscoverTrending:
+            return "trending"
+        case .Category:
+            return regex?.matchingGroups(url).safeValue(2) ?? url
         case .PushNotificationUser:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .PushNotificationComment:
@@ -235,6 +246,7 @@ public enum ElloURI: String {
         DiscoverRecent,
         DiscoverRelated,
         DiscoverTrending,
+        Category,
         Downloads,
         Enter,
         Exit,

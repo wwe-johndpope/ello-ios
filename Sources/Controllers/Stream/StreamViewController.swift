@@ -945,6 +945,8 @@ extension StreamViewController: WebLinkDelegate {
              .ExploreRecent,
              .ExploreTrending:
             selectTab(.Discover)
+        case .Category:
+            selectTab(.Discover)
         case .Email: break // this is handled in ElloWebViewHelper
         case .BetaPublicProfiles,
              .Enter,
