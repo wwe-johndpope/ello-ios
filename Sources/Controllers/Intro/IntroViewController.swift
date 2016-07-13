@@ -25,6 +25,7 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
 
         pageViewController?.view.frame = frame
         pageViewController?.dataSource = self
+        pageViewController?.delegate = self
 
         // Load and set views/pages
         let welcomePageViewController = storyboard
