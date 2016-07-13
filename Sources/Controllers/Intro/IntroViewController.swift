@@ -105,8 +105,6 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
     {
         var index = (viewController as! IntroPageController).pageIndex!
 
-        pageControl.currentPage = index
-
         if index <= 0 {
             return nil
         }
@@ -120,8 +118,6 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
     {
         var index = (viewController as! IntroPageController).pageIndex!
 
-        pageControl.currentPage = index
-
         index += 1
 
         if index >= viewControllers.count {
@@ -130,13 +126,28 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
 
         return viewControllerAtIndex(index)
     }
+    
+    /// Source of truth for if you're on a new page
+    public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        guard
+            finished && completed,
+            let newCurrentPage = pageViewController.viewControllers?.first as? IntroPageController,
+            let pageIndex = newCurrentPage.pageIndex
+            else  { return }
+        
+        pageControl.currentPage = pageIndex
+    }
 
     func viewControllerAtIndex(index: Int) -> UIViewController? {
 
         if index >= viewControllers.count {
             return nil
         }
-
-        return viewControllers[index] as UIViewController
+        
+        let viewController = viewControllers[index]
+        viewController.pageIndex = index
+        
+        return viewController
     }
 }
