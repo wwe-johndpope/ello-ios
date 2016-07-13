@@ -127,16 +127,16 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
 
         return viewControllerAtIndex(index)
     }
-    
+
     /// Source of truth for if you're on a new page
     public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        
+
         guard
             finished && completed,
             let newCurrentPage = pageViewController.viewControllers?.first as? IntroPageController,
             let pageIndex = newCurrentPage.pageIndex
             else  { return }
-        
+
         pageControl.currentPage = pageIndex
     }
 
@@ -145,10 +145,10 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
         if index >= viewControllers.count {
             return nil
         }
-        
+
         let viewController = viewControllers[index]
         viewController.pageIndex = index
-        
+
         return viewController
     }
 }
