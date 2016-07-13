@@ -7,7 +7,7 @@
 //
 
 
-private let textViewForSizing = ElloTextView(frame: CGRectZero, textContainer: nil)
+private let textViewForSizing = ElloTextView(frame: .zero, textContainer: nil)
 
 public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
 
@@ -47,7 +47,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     private func loadNext() {
         if let activity = self.cellItems.safeValue(0) {
             if let notification = activity.jsonable as? Notification,
-                let textRegion = notification.textRegion
+                textRegion = notification.textRegion
             {
                 let content = textRegion.content
                 let strippedContent = self.stripImageSrc(content)

@@ -333,8 +333,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             var reloadPaths: [NSIndexPath]?
 
             // if comment, add new comment cells
-            if  let comment = jsonable as? ElloComment,
-                let parentPost = comment.loadedFromPost
+            if let comment = jsonable as? ElloComment,
+                parentPost = comment.loadedFromPost
             {
                 let indexPaths = self.commentIndexPathsForPost(parentPost)
                 if let first = indexPaths.first {
@@ -677,7 +677,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public func toggleCollapsedForIndexPath(indexPath: NSIndexPath) {
         if let post = self.postForIndexPath(indexPath),
-            let cellItem = self.visibleStreamCellItem(at: indexPath)
+            cellItem = self.visibleStreamCellItem(at: indexPath)
         {
             let newState: StreamCellState = cellItem.state == .Expanded ? .Collapsed : .Expanded
             let cellItems = self.cellItemsForPost(post)

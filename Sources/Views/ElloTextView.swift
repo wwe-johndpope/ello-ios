@@ -124,11 +124,12 @@ class ElloTextView: UITextView {
 
     func textViewTapped(gesture: UITapGestureRecognizer) {
         let location = gesture.locationInView(self)
-        if CGRectContainsPoint(self.frame.atOrigin(CGPointZero), location) {
+        if self.frame.atOrigin(.zero).contains(location) {
             if let range = characterRangeAtPoint(location) {
                 if let pos = closestPositionToPoint(location, withinRange: range) {
                     if let style = textStylingAtPosition(pos, inDirection: .Forward),
-                        let link = style[ElloAttributedText.Link] as? String {
+                        link = style[ElloAttributedText.Link] as? String
+                    {
                         let object: AnyObject? = style[ElloAttributedText.Object]
                         let attributedObject = ElloAttributedObject.generate(link, object)
                         textViewDelegate?.textViewTapped(link, object: attributedObject)

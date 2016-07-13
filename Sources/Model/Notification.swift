@@ -114,7 +114,7 @@ public final class Notification: JSONAble, Authorable, Groupable {
             self.author = user
         }
         else if let love = activity.subject as? Love,
-            let user = love.user
+            user = love.user
         {
             self.postId = love.postId
             self.author = user

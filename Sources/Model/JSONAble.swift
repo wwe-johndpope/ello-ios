@@ -50,7 +50,7 @@ public class JSONAble: NSObject, NSCoding {
 extension JSONAble {
     public func getLinkObject(identifier: String) -> JSONAble? {
         var obj: JSONAble?
-        if let key = links?[identifier]?["id"] as? String, let collection = links?[identifier]?["type"] as? String {
+        if let key = links?[identifier]?["id"] as? String, collection = links?[identifier]?["type"] as? String {
             ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
                 obj = transaction.objectForKey(key, inCollection: collection) as? JSONAble
             }

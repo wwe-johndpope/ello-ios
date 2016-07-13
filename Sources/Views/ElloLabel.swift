@@ -27,7 +27,7 @@ public class ElloLabel: UILabel {
     }
 
     public init() {
-        super.init(frame: CGRectZero)
+        super.init(frame: .zero)
     }
 
     func attributes(color: UIColor, alignment: NSTextAlignment) -> [String : AnyObject] {

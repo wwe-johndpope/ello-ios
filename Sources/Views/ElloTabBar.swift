@@ -19,7 +19,7 @@ public class ElloTabBar: UITabBar {
     }
 
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: .zero)
         privateInit()
     }
 
@@ -62,7 +62,7 @@ public class ElloTabBar: UITabBar {
         }.sort {
             $0.frame.minX < $1.frame.minX
         }
-        return tabBarButtons.safeValue(index)?.frame ?? CGRectZero
+        return tabBarButtons.safeValue(index)?.frame ?? .zero
     }
 
     private func positionRedDot(redDot: UIView, atIndex index: Int) {

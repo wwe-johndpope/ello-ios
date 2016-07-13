@@ -338,9 +338,9 @@ public class ProfileViewController: StreamableViewController {
     }
 
     func sharePostTapped() {
-        if  let user = user,
-            let shareLink = user.shareLink,
-            let shareURL = NSURL(string: shareLink)
+        if let user = user,
+            shareLink = user.shareLink,
+            shareURL = NSURL(string: shareLink)
         {
             Tracker.sharedTracker.userShared(user)
             let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])

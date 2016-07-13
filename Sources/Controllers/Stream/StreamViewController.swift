@@ -120,8 +120,8 @@ public class StreamViewController: BaseElloViewController {
     public var toggleClosure: ToggleClosure?
     var initialDataLoaded = false
     var parentTabBarController: ElloTabBarController? {
-        if  let parentViewController = self.parentViewController,
-            let elloController = parentViewController as? BaseElloViewController
+        if let parentViewController = self.parentViewController,
+            elloController = parentViewController as? BaseElloViewController
         {
             return elloController.elloTabBarController
         }
@@ -210,7 +210,7 @@ public class StreamViewController: BaseElloViewController {
         super.viewDidLoad()
 
         pullToRefreshView = SSPullToRefreshView(scrollView: collectionView, delegate: self)
-        pullToRefreshView?.contentView = ElloPullToRefreshView(frame: CGRectZero)
+        pullToRefreshView?.contentView = ElloPullToRefreshView(frame: .zero)
         pullToRefreshView?.hidden = !pullToRefreshEnabled
 
         setupCollectionView()
@@ -1024,8 +1024,8 @@ extension StreamViewController: UICollectionViewDelegate {
             }
         }
         else if tappedCell is StreamSeeMoreCommentsCell {
-            if  let lastComment = dataSource.commentForIndexPath(indexPath),
-                let post = lastComment.loadedFromPost
+            if let lastComment = dataSource.commentForIndexPath(indexPath),
+                post = lastComment.loadedFromPost
             {
                 postTappedDelegate?.postTapped(post, scrollToComment: lastComment)
             }
@@ -1034,19 +1034,19 @@ extension StreamViewController: UICollectionViewDelegate {
             postTappedDelegate?.postTapped(post)
         }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            let notification = item.jsonable as? Notification,
-            let postId = notification.postId
+            notification = item.jsonable as? Notification,
+            postId = notification.postId
         {
             postTappedDelegate?.postTapped(postId: postId)
         }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            let notification = item.jsonable as? Notification,
-            let user = notification.subject as? User
+            notification = item.jsonable as? Notification,
+            user = notification.subject as? User
         {
             userTapped(user)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath),
-            let post = comment.loadedFromPost
+            post = comment.loadedFromPost
         {
             createCommentTapped(post)
         }

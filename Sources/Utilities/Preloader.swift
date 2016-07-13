@@ -20,42 +20,42 @@ public struct Preloader {
         for jsonable in jsonables {
 
             // activities avatar
-            if  let activity = jsonable as? Activity,
-                let authorable = activity.subject as? Authorable,
-                let author = authorable.author,
-                let avatarURL = author.avatarURL()
+            if let activity = jsonable as? Activity,
+                authorable = activity.subject as? Authorable,
+                author = authorable.author,
+                avatarURL = author.avatarURL()
             {
                 preloadUrl(avatarURL)
             }
 
             // post / comment avatars
             else if let authorable = jsonable as? Authorable,
-                    let author = authorable.author,
-                    let avatarURL = author.avatarURL()
+                author = authorable.author,
+                avatarURL = author.avatarURL()
             {
                 preloadUrl(avatarURL)
             }
 
             // user's posts avatars
             else if let user = jsonable as? User,
-                    let posts = user.posts
+                posts = user.posts
             {
                 if let userAvatarURL = user.avatarURL() {
                     preloadUrl(userAvatarURL)
                 }
 
                 for post in posts {
-                    if  let author = post.author,
-                        let avatarURL = author.avatarURL()
-                        {
-                            preloadUrl(avatarURL)
-                        }
+                    if let author = post.author,
+                        avatarURL = author.avatarURL()
+                    {
+                        preloadUrl(avatarURL)
+                    }
                 }
             }
 
             // activity image regions
-            if  let activity = jsonable as? Activity,
-                let post = activity.subject as? Post
+            if let activity = jsonable as? Activity,
+                post = activity.subject as? Post
             {
                 preloadImagesinPost(post)
             }
@@ -72,7 +72,7 @@ public struct Preloader {
 
             // user's posts image regions
             else if let user = jsonable as? User,
-                    let posts = user.posts
+                posts = user.posts
             {
                 for post in posts {
                     preloadImagesinPost(post)
@@ -95,8 +95,8 @@ public struct Preloader {
         if let content = post.content {
             for region in content {
                 if let imageRegion = region as? ImageRegion,
-                    let asset = imageRegion.asset,
-                    let attachment = asset.oneColumnAttachment
+                    asset = imageRegion.asset,
+                    attachment = asset.oneColumnAttachment
                 {
                     preloadUrl(attachment.url)
                 }
@@ -112,9 +112,9 @@ public struct Preloader {
 
     private func preloadImagesInRegions(regions: [Regionable]) {
         for region in regions {
-            if  let imageRegion = region as? ImageRegion,
-                let asset = imageRegion.asset,
-                let attachment = asset.oneColumnAttachment
+            if let imageRegion = region as? ImageRegion,
+                asset = imageRegion.asset,
+                attachment = asset.oneColumnAttachment
             {
                 preloadUrl(attachment.url)
             }

@@ -17,7 +17,9 @@ public struct StreamInviteFriendsCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? StreamInviteFriendsCell, let person = streamCellItem.jsonable as? LocalPerson {
+        if let cell = cell as? StreamInviteFriendsCell,
+            person = streamCellItem.jsonable as? LocalPerson
+        {
             cell.person = person
         }
     }

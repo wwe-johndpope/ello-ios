@@ -109,9 +109,9 @@ public struct NotificationAttributedTitle {
                 }
             case .CommentOnOriginalPostNotification:
                 if let comment = subject as? ElloComment,
-                    let repost = comment.loadedFromPost,
-                    let repostAuthor = repost.author,
-                    let source = repost.repostSource
+                    repost = comment.loadedFromPost,
+                    repostAuthor = repost.author,
+                    source = repost.repostSource
                 {
                     return styleUser(author)
                         .append(styleText(" commented on "))
@@ -142,7 +142,7 @@ public struct NotificationAttributedTitle {
                     .append(styleText(" accepted your invitation."))
             case .LoveNotification:
                 if let love = subject as? Love,
-                    let post = love.post
+                    post = love.post
                 {
                     return styleUser(author)
                         .append(styleText(" loved your "))
@@ -154,7 +154,7 @@ public struct NotificationAttributedTitle {
                 }
             case .LoveOnRepostNotification:
                 if let love = subject as? Love,
-                    let post = love.post
+                    post = love.post
                 {
                     return styleUser(author)
                         .append(styleText(" loved your "))
@@ -166,9 +166,9 @@ public struct NotificationAttributedTitle {
                 }
             case .LoveOnOriginalPostNotification:
                 if let love = subject as? Love,
-                    let repost = love.post,
-                    let repostAuthor = repost.author,
-                    let source = repost.repostSource
+                    repost = love.post,
+                    repostAuthor = repost.author,
+                    source = repost.repostSource
                 {
                     return styleUser(author)
                         .append(styleText(" loved "))

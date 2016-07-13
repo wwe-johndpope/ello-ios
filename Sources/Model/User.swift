@@ -50,7 +50,7 @@ public final class User: JSONAble {
         if let links = externalLinksList {
             htmlContent += "<p class='user-links'>"
             for link in links {
-                if let url = link["url"], let text = link["text"] {
+                if let url = link["url"], text = link["text"] {
                     htmlContent += "<a href='\(url)'>\(text)</a> "
                 }
             }

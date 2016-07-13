@@ -139,7 +139,7 @@ public class PostEditingService: NSObject {
         var replacedContent = content
         for (index, regionable) in content.enumerate() {
             if let _ = regionable as? ImageRegion,
-                let replaceRegion = regions.safeValue(index) as? ImageRegion
+                replaceRegion = regions.safeValue(index) as? ImageRegion
             {
                 replacedContent[index] = replaceRegion
             }

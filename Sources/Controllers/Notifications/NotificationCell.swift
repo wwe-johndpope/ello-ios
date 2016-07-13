@@ -163,7 +163,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
         avatarButton = AvatarButton()
         avatarButton.addTarget(self, action: #selector(avatarTapped), forControlEvents: .TouchUpInside)
-        titleTextView = ElloTextView(frame: CGRectZero, textContainer: nil)
+        titleTextView = ElloTextView(frame: .zero, textContainer: nil)
         titleTextView.textViewDelegate = self
 
         replyButton = ReplyButton()
@@ -229,7 +229,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         avatarButton.frame = outerFrame.withSize(CGSize(width: Size.AvatarSize, height: Size.AvatarSize))
 
         if imageURL == nil {
-            notificationImageView.frame = CGRectZero
+            notificationImageView.frame = .zero
         }
         else {
             notificationImageView.frame = outerFrame.fromRight()

@@ -27,7 +27,7 @@ public class Keyboard {
     public var active = false
     public var external = false
     public var bottomInset: CGFloat = 0.0
-    public var endFrame = CGRectZero
+    public var endFrame: CGRect = .zero
     public var curve = UIViewAnimationCurve.Linear
     public var options = UIViewAnimationOptions.CurveLinear
     public var duration: Double = 0.0

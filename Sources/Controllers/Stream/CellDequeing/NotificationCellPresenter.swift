@@ -16,7 +16,7 @@ public struct NotificationCellPresenter {
         currentUser: User?)
     {
         if let cell = cell as? NotificationCell,
-            let notification = streamCellItem.jsonable as? Notification
+            notification = streamCellItem.jsonable as? Notification
         {
             cell.onWebContentReady { webView in
                 if let actualHeight = webView.windowContentSize()?.height

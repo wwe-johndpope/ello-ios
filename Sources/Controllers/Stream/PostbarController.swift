@@ -67,9 +67,9 @@ public class PostbarController: NSObject, PostbarDelegate {
             return
         }
 
-        if  let indexPath = collectionView.indexPathForCell(cell),
-            let item = dataSource.visibleStreamCellItem(at: indexPath),
-            let post = item.jsonable as? Post
+        if let indexPath = collectionView.indexPathForCell(cell),
+            item = dataSource.visibleStreamCellItem(at: indexPath),
+            post = item.jsonable as? Post
         {
             imageLabelControl.selected = cell.commentsOpened
             cell.commentsControl.enabled = false
@@ -152,7 +152,7 @@ public class PostbarController: NSObject, PostbarDelegate {
         // controller's createPostDelegate. Can this use the responder chain when we have
         // parameters to pass?
         if let comment = self.commentForIndexPath(indexPath),
-            let presentingController = presentingController
+            presentingController = presentingController
         {
             presentingController.createPostDelegate?.editComment(comment, fromController: presentingController)
         }
@@ -174,7 +174,7 @@ public class PostbarController: NSObject, PostbarDelegate {
             post.loved = false
             postNotification(PostChangedNotification, value: (post, .Loved))
         }
-        if let user = currentUser, let userLoveCount = user.lovesCount {
+        if let user = currentUser, userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount - 1
             postNotification(CurrentUserChangedNotification, value: user)
         }
@@ -197,7 +197,7 @@ public class PostbarController: NSObject, PostbarDelegate {
             post.loved = true
             postNotification(PostChangedNotification, value: (post, .Loved))
         }
-        if let user = currentUser, let userLoveCount = user.lovesCount {
+        if let user = currentUser, userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount + 1
             postNotification(CurrentUserChangedNotification, value: user)
         }
@@ -241,12 +241,12 @@ public class PostbarController: NSObject, PostbarDelegate {
         alertController.dismissable = false
 
         let spinnerContainer = UIView(frame: CGRect(x: 0, y: 0, width: alertController.view.frame.size.width, height: 200))
-        let spinner = ElloLogoView(frame: CGRect(origin: CGPointZero, size: ElloLogoView.Size.Natural))
+        let spinner = ElloLogoView(frame: CGRect(origin: .zero, size: ElloLogoView.Size.Natural))
         spinner.center = spinnerContainer.bounds.center
         spinnerContainer.addSubview(spinner)
         alertController.contentView = spinnerContainer
         spinner.animateLogo()
-        if let user = currentUser, let userPostsCount = user.postsCount {
+        if let user = currentUser, userPostsCount = user.postsCount {
             user.postsCount = userPostsCount + 1
             postNotification(CurrentUserChangedNotification, value: user)
         }
@@ -269,9 +269,9 @@ public class PostbarController: NSObject, PostbarDelegate {
     }
 
     public func shareButtonTapped(indexPath: NSIndexPath, sourceView: UIView) {
-        if  let post = dataSource.postForIndexPath(indexPath),
-            let shareLink = post.shareLink,
-            let shareURL = NSURL(string: shareLink)
+        if let post = dataSource.postForIndexPath(indexPath),
+            shareLink = post.shareLink,
+            shareURL = NSURL(string: shareLink)
         {
             Tracker.sharedTracker.postShared(post)
             let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
@@ -310,8 +310,8 @@ public class PostbarController: NSObject, PostbarDelegate {
             // controller's createPostDelegate. Can this use the responder chain when we have
             // parameters to pass?
             if let presentingController = presentingController,
-                let post = comment.loadedFromPost,
-                let atName = comment.author?.atName
+                post = comment.loadedFromPost,
+                atName = comment.author?.atName
             {
                 presentingController.createPostDelegate?.createComment(post, text: "\(atName) ", fromController: presentingController)
             }

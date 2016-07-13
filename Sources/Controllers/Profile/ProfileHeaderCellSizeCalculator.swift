@@ -36,7 +36,7 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
 
     private func loadNext() {
         if let item = cellItems.safeValue(0),
-            let user = item.jsonable as? User
+            user = item.jsonable as? User
         {
             let html = StreamTextCellHTML.postHTML(user.headerHTMLContent)
             label.setLabelText(user.name)

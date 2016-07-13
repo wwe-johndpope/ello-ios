@@ -258,6 +258,6 @@ public extension CredentialSettingsViewController {
 
 public extension CredentialSettingsViewController {
     public override func scrollViewDidScroll(scrollView: UIScrollView) {
-        tableView.setContentOffset(CGPointZero, animated: false)
+        tableView.setContentOffset(.zero, animated: false)
     }
 }

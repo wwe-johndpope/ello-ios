@@ -68,7 +68,7 @@ public class UserAvatarsCell: UICollectionViewCell {
     }
 
     @IBAction func seeMoreTapped(sender: UIButton) {
-        if let model = userAvatarCellModel, let endpoint = model.endpoint {
+        if let model = userAvatarCellModel, endpoint = model.endpoint {
             simpleStreamDelegate?.showSimpleStream(endpoint, title: model.seeMoreTitle, noResultsMessages: nil)
         }
     }

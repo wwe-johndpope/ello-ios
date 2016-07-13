@@ -327,9 +327,9 @@ extension ElloProvider {
             }
             else if let node = dict[elloAPI.mappingType.rawValue] as? [String:AnyObject] {
                 mappedObjects = Mapper.mapToObject(node, fromJSON: elloAPI.mappingType.fromJSON)
-                if  let pagingPath = elloAPI.pagingPath,
-                    let links = node["links"] as? [String:AnyObject],
-                    let pagingPathNode = links[pagingPath] as? [String:AnyObject]
+                if let pagingPath = elloAPI.pagingPath,
+                    links = node["links"] as? [String:AnyObject],
+                    pagingPathNode = links[pagingPath] as? [String:AnyObject]
                 {
                     if let pagination = pagingPathNode["pagination"] as? [String:String] {
                         newResponseConfig = self.parsePagination(pagination)

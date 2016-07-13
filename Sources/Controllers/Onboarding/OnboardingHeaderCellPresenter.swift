@@ -16,7 +16,7 @@ public struct OnboardingHeaderCellPresenter {
         currentUser: User?)
     {
         if let cell = cell as? OnboardingHeaderCell,
-            let (header, message) = streamCellItem.type.data as? (String, String)
+            (header, message) = streamCellItem.type.data as? (String, String)
         {
             cell.header = header
             cell.message = message
