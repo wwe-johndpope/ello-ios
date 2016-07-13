@@ -10,8 +10,6 @@ import UIKit
 import Foundation
 import CoreGraphics
 
-private let sharedKeyboard = Keyboard()
-
 public class Keyboard {
     public struct Notifications {
         public static let KeyboardWillShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillShow")
@@ -19,13 +17,11 @@ public class Keyboard {
         public static let KeyboardWillHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillHide")
         public static let KeyboardDidHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardDidHide")
     }
-
-    public class func shared() -> Keyboard {
-        return sharedKeyboard
-    }
+    
+    public static let shared = Keyboard()
 
     public class func setup() {
-        let _ = shared()
+        let _ = shared
     }
 
     public var active = false

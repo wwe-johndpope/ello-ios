@@ -184,8 +184,8 @@ class SignInViewControllerSpec: QuickSpec {
                     context("keyboard is docked") {
 
                         it("adjusts scrollview") {
-                            Keyboard.shared().bottomInset = screenHeight - 303.0
-                            postNotification(Keyboard.Notifications.KeyboardWillShow, value: Keyboard.shared())
+                            Keyboard.shared.bottomInset = screenHeight - 303.0
+                            postNotification(Keyboard.Notifications.KeyboardWillShow, value: Keyboard.shared)
 
                             expect(subject.scrollView.contentInset.bottom) > 50
                         }
@@ -194,8 +194,8 @@ class SignInViewControllerSpec: QuickSpec {
                     context("keyboard is not docked") {
                         xit("does NOT adjust scrollview") {
                             // this is not easily faked with Keyboard unfortunately
-                            Keyboard.shared().bottomInset = screenHeight - 100.0
-                            postNotification(Keyboard.Notifications.KeyboardWillShow, value: Keyboard.shared())
+                            Keyboard.shared.bottomInset = screenHeight - 100.0
+                            postNotification(Keyboard.Notifications.KeyboardWillShow, value: Keyboard.shared)
 
                             expect(subject.scrollView.contentInset.bottom) == 0
                         }
@@ -205,8 +205,8 @@ class SignInViewControllerSpec: QuickSpec {
                 describe("UIKeyboardWillHideNotification") {
 
                     it("adjusts scrollview") {
-                        Keyboard.shared().bottomInset = 0.0
-                        postNotification(Keyboard.Notifications.KeyboardWillHide, value: Keyboard.shared())
+                        Keyboard.shared.bottomInset = 0.0
+                        postNotification(Keyboard.Notifications.KeyboardWillHide, value: Keyboard.shared)
 
                         expect(subject.scrollView.contentInset.bottom) == 0.0
                     }
