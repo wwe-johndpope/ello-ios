@@ -1,9 +1,5 @@
-//
-//  Tmp.swift
-//  Ello
-//
-//  Created by Colin Gray on 3/18/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Tmp.swift
 //
 
 public struct Tmp {

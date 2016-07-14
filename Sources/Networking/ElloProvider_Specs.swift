@@ -1,9 +1,5 @@
-//
-//  ElloProvider_Specs.swift
-//  Ello
-//
-//  Created by Colin Gray on 1/13/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  ElloProvider_Specs.swift
 //
 
 import Moya

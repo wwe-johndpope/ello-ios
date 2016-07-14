@@ -1,9 +1,5 @@
-//
-//  ElloAPI.swift
-//  Ello
-//
-//  Created by Colin Gray on 9/8/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloAPI.swift
 //
 
 extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {

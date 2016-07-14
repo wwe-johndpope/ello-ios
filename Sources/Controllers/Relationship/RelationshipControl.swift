@@ -1,9 +1,5 @@
-//
-//  RelationshipControl.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 2/16/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  RelationshipControl.swift
 //
 
 private let ViewHeight: CGFloat = 30

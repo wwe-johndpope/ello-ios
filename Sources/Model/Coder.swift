@@ -1,9 +1,5 @@
-//
-//  Decoder.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 3/30/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Decoder.swift
 //
 
 import Foundation

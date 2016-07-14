@@ -1,9 +1,5 @@
-//
-//  SettingsViewController.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 3/19/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  SettingsViewController.swift
 //
 
 import Foundation

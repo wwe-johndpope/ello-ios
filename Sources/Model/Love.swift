@@ -1,9 +1,5 @@
-//
-//  Love.swift
-//  Ello
-//
-//  Created by Sean on 5/17/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Love.swift
 //
 
 import Crashlytics

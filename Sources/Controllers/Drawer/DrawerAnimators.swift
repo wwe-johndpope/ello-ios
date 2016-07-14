@@ -1,9 +1,5 @@
-//
-//  DrawerAnimators.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/11/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  DrawerAnimators.swift
 //
 
 public typealias Animator = (animations: () -> Void, completion: (Bool) -> Void) -> Void

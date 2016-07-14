@@ -1,3 +1,7 @@
+////
+///  BlackBar.swift
+//
+
 class BlackBar: UIView {
 
     override init(frame: CGRect) {

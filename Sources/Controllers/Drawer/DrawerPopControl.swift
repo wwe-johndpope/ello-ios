@@ -1,9 +1,5 @@
-//
-//  DrawerPopControl.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/15/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  DrawerPopControl.swift
 //
 
 public class DrawerPopControl: UIControl {

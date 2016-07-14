@@ -1,9 +1,5 @@
-//
-//  ElloEditableTextView.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 4/2/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloEditableTextView.swift
 //
 
 public class ElloEditableTextView: UITextView {

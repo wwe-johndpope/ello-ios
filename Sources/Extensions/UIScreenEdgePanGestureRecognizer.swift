@@ -1,9 +1,5 @@
-//
-//  UIScreenEdgePanGestureRecognizer.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 3/23/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  UIScreenEdgePanGestureRecognizer.swift
 //
 
 extension UIScreenEdgePanGestureRecognizer {

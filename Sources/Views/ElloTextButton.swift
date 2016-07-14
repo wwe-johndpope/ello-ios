@@ -1,9 +1,5 @@
-//
-//  ElloTextButton.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 11/24/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  ElloTextButton.swift
 //
 
 public class ElloTextButton: UIButton {

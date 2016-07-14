@@ -1,9 +1,5 @@
-//
-//  Username.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/6/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  Username.swift
 //
 
 import SwiftyJSON

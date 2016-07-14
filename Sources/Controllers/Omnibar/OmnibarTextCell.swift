@@ -1,9 +1,5 @@
-//
-//  OmnibarTextCell.swift
-//  Ello
-//
-//  Created by Colin Gray on 8/18/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  OmnibarTextCell.swift
 //
 
 public class OmnibarTextCell: UITableViewCell {

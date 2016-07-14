@@ -1,9 +1,5 @@
-//
-//  ColumnToggleCellPresenter.swift
-//  Ello
-//
-//  Created by Sean on 10/5/15.
-//  Copyright © 2015 Ello. All rights reserved.
+////
+///  ColumnToggleCellPresenter.swift
 //
 
 public struct ColumnToggleCellPresenter {

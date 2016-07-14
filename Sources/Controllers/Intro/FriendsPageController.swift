@@ -1,9 +1,5 @@
-//
-//  FriendsPageController.swift
-//  Ello
-//
-//  Created by Brandon Brisbon on 5/26/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  FriendsPageController.swift
 //
 
 import Foundation

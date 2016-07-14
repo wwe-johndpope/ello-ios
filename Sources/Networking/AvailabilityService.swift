@@ -1,9 +1,5 @@
-//
-//  AvailabilityService.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 3/30/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AvailabilityService.swift
 //
 
 import Moya

@@ -1,9 +1,5 @@
-//
-//  AddFriendsViewController.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 5/22/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AddFriendsViewController.swift
 //
 
 public class AddFriendsViewController: StreamableViewController {

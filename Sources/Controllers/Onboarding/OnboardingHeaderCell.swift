@@ -1,9 +1,5 @@
-//
-//  OnboardingHeaderCell.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/13/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  OnboardingHeaderCell.swift
 //
 
 public class OnboardingHeaderCell: UICollectionViewCell {

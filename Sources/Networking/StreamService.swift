@@ -1,9 +1,5 @@
-//
-//  StreamService.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 12/1/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  StreamService.swift
 //
 
 import Moya

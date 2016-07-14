@@ -1,9 +1,5 @@
-//
-//  Preloader.swift
-//  Ello
-//
-//  Created by Sean on 4/25/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  Preloader.swift
 //
 
 import PINRemoteImage

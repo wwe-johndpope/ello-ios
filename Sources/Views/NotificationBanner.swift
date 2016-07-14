@@ -1,9 +1,5 @@
-//
-//  NotificationBanner.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 5/21/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NotificationBanner.swift
 //
 
 import CRToast

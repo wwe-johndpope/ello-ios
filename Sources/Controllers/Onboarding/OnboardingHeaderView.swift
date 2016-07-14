@@ -1,9 +1,5 @@
-//
-//  OnboardingHeaderView.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/19/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  OnboardingHeaderView.swift
 //
 
 public class OnboardingHeaderView: UIView {

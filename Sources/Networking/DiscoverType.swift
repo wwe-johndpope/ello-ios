@@ -1,9 +1,5 @@
-//
-//  DiscoverType.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/23/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  DiscoverType.swift
 //
 
 public enum DiscoverType: String {

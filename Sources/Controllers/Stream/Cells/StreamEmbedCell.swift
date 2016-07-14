@@ -1,9 +1,5 @@
-//
-//  StreamEmbedCell.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 4/20/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamEmbedCell.swift
 //
 
 public class StreamEmbedCell: StreamImageCell {

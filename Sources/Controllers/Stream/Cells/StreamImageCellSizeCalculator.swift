@@ -1,9 +1,5 @@
-//
-//  StreamImageCellSizeCalculator.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 4/27/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamImageCellSizeCalculator.swift
 //
 
 import Foundation

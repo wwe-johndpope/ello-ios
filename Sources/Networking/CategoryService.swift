@@ -1,3 +1,7 @@
+////
+///  CategoryService.swift
+//
+
 import PINRemoteImage
 
 public typealias CategoriesCompletion = (categories: [Category]) -> Void

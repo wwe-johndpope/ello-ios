@@ -1,9 +1,5 @@
-//
-//  OmnibarProtocols.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/2/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  OmnibarProtocols.swift
 //
 
 public protocol OmnibarScreenDelegate: class {

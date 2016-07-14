@@ -1,9 +1,5 @@
-//
-//  SearchViewController.swift
-//  Ello
-//
-//  Created by Colin Gray on 4/21/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  SearchViewController.swift
 //
 
 public class SearchViewController: StreamableViewController {

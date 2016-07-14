@@ -1,9 +1,5 @@
-//
-//  StreamFooterButton.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 12/10/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  StreamFooterButton.swift
 //
 
 public class StreamFooterButton: UIButton {

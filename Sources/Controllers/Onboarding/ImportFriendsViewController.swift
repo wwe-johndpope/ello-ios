@@ -1,9 +1,5 @@
-//
-//  ImportFriendsViewController.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/15/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ImportFriendsViewController.swift
 //
 
 public class ImportFriendsViewController: OnboardingUserListViewController {

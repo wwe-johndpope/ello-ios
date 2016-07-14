@@ -1,9 +1,5 @@
-//
-//  ElloAttributedString.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/27/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloAttributedString.swift
 //
 
 public struct ElloAttributedString {
