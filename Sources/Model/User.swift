@@ -35,6 +35,7 @@ public final class User: JSONAble {
     public var externalLinksList: [[String: String]]?
     public var coverImage: Asset?
     public var backgroundPosition: String?
+    public var onboardingVersion: Int?
     // links
     public var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     public var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
@@ -121,6 +122,7 @@ public final class User: JSONAble {
         self.externalLinksList = decoder.decodeOptionalKey("externalLinksList")
         self.coverImage = decoder.decodeOptionalKey("coverImage")
         self.backgroundPosition = decoder.decodeOptionalKey("backgroundPosition")
+        self.onboardingVersion = decoder.decodeOptionalKey("onboardingVersion")
         // profile
         self.profile = decoder.decodeOptionalKey("profile")
         super.init(coder: decoder.coder)
@@ -153,6 +155,7 @@ public final class User: JSONAble {
         coder.encodeObject(externalLinksList, forKey: "externalLinksList")
         coder.encodeObject(coverImage, forKey: "coverImage")
         coder.encodeObject(backgroundPosition, forKey: "backgroundPosition")
+        coder.encodeObject(onboardingVersion, forKey: "onboardingVersion")
         // profile
         coder.encodeObject(profile, forKey: "profile")
         super.encodeWithCoder(coder.coder)
@@ -202,6 +205,9 @@ public final class User: JSONAble {
         user.externalLinksList = json["external_links_list"].arrayValue.map { ["text": $0["text"].stringValue, "url": $0["url"].stringValue] }
         user.coverImage = Asset.parseAsset("user_cover_image_\(user.id)", node: data["cover_image"] as? [String: AnyObject])
         user.backgroundPosition = json["background_positiion"].stringValue
+        if let webOnboardingVersion = json["web_onboarding_version"].string {
+            user.onboardingVersion = Int(webOnboardingVersion)
+        }
         // links
         user.links = data["links"] as? [String: AnyObject]
         // profile

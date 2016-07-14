@@ -9,13 +9,13 @@ private let _sharedInstance = Onboarding()
 private let _currentVersion = 1
 
 public class Onboarding {
-    private var version: Int {
+    public private(set) var version: Int {
         didSet {
             GroupDefaults["ViewedOnboardingVersion"] = version
         }
     }
 
-    public class func currentVersion() -> Int {
+    public static var currentVersion: Int {
         return _currentVersion
     }
 
@@ -35,8 +35,23 @@ public class Onboarding {
         version = GroupDefaults["ViewedOnboardingVersion"].int ?? 0
     }
 
-    public func hasSeenLatestVersion() -> Bool {
-        return version >= _currentVersion
+    // only show if webVersion is set and
+    // localVersion < currentVersion and
+    // webVersion < currentVersion
+    public func showOnboarding(user: User) -> Bool {
+        guard let webVersion = user.onboardingVersion else {
+            return false
+        }
+        return version < _currentVersion && webVersion < _currentVersion
+    }
+
+    // save to API if webVersion is nil,
+    // or less than currentVersion
+    public func saveOnboarding(user: User) -> Bool {
+        guard let webVersion = user.onboardingVersion else {
+            return true
+        }
+        return webVersion < _currentVersion
     }
 
 }

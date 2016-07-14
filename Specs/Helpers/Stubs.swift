@@ -77,6 +77,7 @@ extension User: Stubbable {
         user.externalLinksList = (values["externalLinksList"] as? [[String:String]]) ?? [["text": "ello.co", "url": "http://ello.co"]]
         user.coverImage = values["coverImage"] as? Asset
         user.backgroundPosition = (values["backgroundPosition"] as? String) ?? "stub-user-background-position"
+        user.onboardingVersion = (values["onboardingVersion"] as? Int)
         // links / nested resources
         if let posts = values["posts"] as? [Post] {
             var postIds = [String]()
