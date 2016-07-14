@@ -121,8 +121,10 @@ public class ProfileViewController: StreamableViewController {
         let ratio: CGFloat = ProfileHeaderCellSizeCalculator.ratio
         let height: CGFloat = view.frame.width / ratio
         let maxHeight = height - streamViewController.collectionView.contentOffset.y
-        coverImageHeight.constant = max(maxHeight, height)
-        coverImageHeightStart = height
+        let constant = max(maxHeight, height)
+        coverImageHeight.constant = constant
+        whiteSolidTop.constant = max(constant, 0)
+        coverImageHeightStart = maxHeight
 
         gradientLayer.frame.size = gradientView.frame.size
     }
@@ -302,7 +304,7 @@ public class ProfileViewController: StreamableViewController {
 
         var rightBarButtonItems: [UIBarButtonItem] = []
         if user.hasSharingEnabled {
-            rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped)))
+            rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:))))
         }
         rightBarButtonItems.append(UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped)))
         elloNavigationItem.rightBarButtonItems = rightBarButtonItems
@@ -333,7 +335,7 @@ public class ProfileViewController: StreamableViewController {
         }
     }
 
-    func sharePostTapped() {
+    func sharePostTapped(sourceView: UIView) {
         if let user = user,
             shareLink = user.shareLink,
             shareURL = NSURL(string: shareLink)
@@ -347,6 +349,7 @@ public class ProfileViewController: StreamableViewController {
             }
             else {
                 activityVC.modalPresentationStyle = .Popover
+                activityVC.popoverPresentationController?.sourceView = sourceView
                 logPresentingAlert(readableClassName() ?? "ProfileViewController")
                 presentViewController(activityVC, animated: true) { }
             }
