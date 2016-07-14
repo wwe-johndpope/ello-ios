@@ -133,7 +133,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     weak public var delegate: OmnibarScreenDelegate?
 
     let statusBarUnderlay = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 20))
-    let navigationBar = ElloNavigationBar(frame: CGRectZero)
+    let navigationBar = ElloNavigationBar(frame: .zero)
 
 // MARK: toolbar buttons
     var toolbarButtonViews: [UIView]!
@@ -618,7 +618,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
         else {
             screenTop = CGFloat(20)
-            navigationBar.frame = CGRectZero
+            navigationBar.frame = .zero
             statusBarUnderlay.hidden = false
         }
 

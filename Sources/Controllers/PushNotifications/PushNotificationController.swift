@@ -89,8 +89,8 @@ public extension PushNotificationController {
     }
 
     func updateBadgeCount(userInfo: [NSObject: AnyObject]) {
-        if  let aps = userInfo["aps"] as? [NSObject: AnyObject],
-            let badges = aps["badge"] as? Int
+        if let aps = userInfo["aps"] as? [NSObject: AnyObject],
+            badges = aps["badge"] as? Int
         {
             updateBadgeCount(badges)
         }
@@ -101,8 +101,8 @@ public extension PushNotificationController {
     }
 
     func hasAlert(userInfo: [NSObject: AnyObject]) -> Bool {
-        if  let aps = userInfo["aps"] as? [NSObject: AnyObject],
-            let _ = aps["alert"] as? [NSObject: AnyObject]
+        if let aps = userInfo["aps"] as? [NSObject: AnyObject]
+            where aps["alert"] is [NSObject: AnyObject]
         {
             return true
         }

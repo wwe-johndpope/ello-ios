@@ -48,9 +48,9 @@ public class ImageLabelControl: UIControl {
     let minWidth: CGFloat = 44
     let height: CGFloat = 44
     let titleFont = UIFont.defaultFont()
-    let contentContainer = UIView(frame: CGRectZero)
-    let label = UILabel(frame: CGRectZero)
-    let button = UIButton(frame: CGRectZero)
+    let contentContainer = UIView(frame: .zero)
+    let label = UILabel(frame: .zero)
+    let button = UIButton(frame: .zero)
     var icon: ImageLabelAnimatable
     var attributedNormalTitle: NSAttributedString!
     var attributedSelectedTitle: NSAttributedString!
@@ -60,7 +60,7 @@ public class ImageLabelControl: UIControl {
 
     public init(icon: ImageLabelAnimatable, title: String) {
         self.icon = icon
-        super.init(frame: CGRectZero)
+        super.init(frame: .zero)
         addSubviews()
         addTargets()
         self.title = title

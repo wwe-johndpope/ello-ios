@@ -22,7 +22,7 @@ public extension CGRect {
 
     init(x: CGFloat, y: CGFloat) {
         self.origin = CGPoint(x: x, y: y)
-        self.size = CGSizeZero
+        self.size = .zero
     }
 
 // MARK: helpers

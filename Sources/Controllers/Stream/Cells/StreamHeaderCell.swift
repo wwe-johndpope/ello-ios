@@ -203,7 +203,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     public func close() {
         isOpen = false
         closeChevron()
-        scrollView.contentOffset = CGPointZero
+        scrollView.contentOffset = .zero
     }
 
 // MARK: - Private
@@ -449,7 +449,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func chevronButtonTapped(sender: StreamFooterButton) {
-        let contentOffset = isOpen ? CGPointZero : CGPoint(x: revealWidth, y: 0)
+        let contentOffset = isOpen ? .zero : CGPoint(x: revealWidth, y: 0)
         UIView.animateWithDuration(0.25) {
             self.scrollView.contentOffset = contentOffset
             self.openChevron(isOpen: self.isOpen)
@@ -506,7 +506,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
         repositionBottomContent()
 
         if scrollView.contentOffset.x < 0 {
-            scrollView.contentOffset = CGPointZero
+            scrollView.contentOffset = .zero
         }
 
         if scrollView.contentOffset.x >= revealWidth {

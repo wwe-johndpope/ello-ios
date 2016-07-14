@@ -71,7 +71,7 @@ class NewElloTabBar: UIView {
                 self.underlineView = nil
             }
 
-            super.init(frame: CGRectZero)
+            super.init(frame: .zero)
 
             if !item.redDotHidden {
                 addSubview(redDot)

@@ -70,7 +70,7 @@ public class ImportFriendsViewController: OnboardingUserListViewController {
                 foundItems.append(StreamCellItem(jsonable: user, type: .UserListItem))
             }
             else {
-                if let currentUser = currentUser, let profile = currentUser.profile {
+                if let currentUser = currentUser, profile = currentUser.profile {
                     if !person.emails.contains(profile.email) {
                         inviteItems.append(StreamCellItem(jsonable: person, type: .InviteFriends))
                     }

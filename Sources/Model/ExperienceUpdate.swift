@@ -33,7 +33,7 @@ public enum ContentChange {
             affectedPosts = [comment.parentPost, comment.loadedFromPost]
         }
         for post in affectedPosts {
-            if let post = post, let count = post.commentsCount {
+            if let post = post, count = post.commentsCount {
                 postNotification(PostCommentsCountChangedNotification, value: (post, delta))
                 postNotification(PostChangedNotification, value: (post, .Update))
 

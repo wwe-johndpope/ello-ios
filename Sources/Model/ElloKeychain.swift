@@ -115,7 +115,7 @@ public struct ElloKeychain: KeychainType {
             do {
                 let data = try keychain.getData(AuthTokenAuthenticated)
                 if let data = data,
-                    let number = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSNumber
+                    number = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSNumber
                 {
                     return number.boolValue
                 }

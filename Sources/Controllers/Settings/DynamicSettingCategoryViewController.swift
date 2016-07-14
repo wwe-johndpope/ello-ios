@@ -46,8 +46,8 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("DynamicSettingCell", forIndexPath: indexPath) as! DynamicSettingCell
 
-        if  let setting = category?.settings.safeValue(indexPath.row),
-            let user = currentUser
+        if let setting = category?.settings.safeValue(indexPath.row),
+            user = currentUser
         {
             DynamicSettingCellPresenter.configure(cell, setting: setting, currentUser: user)
             cell.setting = setting
@@ -57,8 +57,8 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if  let setting = category?.settings.safeValue(indexPath.row),
-            let user = currentUser
+        if let setting = category?.settings.safeValue(indexPath.row),
+            user = currentUser
         {
             let isVisible = DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: user)
             if !isVisible {

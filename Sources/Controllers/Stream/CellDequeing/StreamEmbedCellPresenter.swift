@@ -17,8 +17,8 @@ public struct StreamEmbedCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if  let cell = cell as? StreamEmbedCell,
-            let embedData = streamCellItem.type.data as? EmbedRegion
+        if let cell = cell as? StreamEmbedCell,
+            embedData = streamCellItem.type.data as? EmbedRegion
         {
             var photoToLoad: NSURL?
             if streamKind.isGridView {

@@ -10,8 +10,8 @@ public struct Tmp {
     public static let uniqDir = Tmp.uniqueName()
 
     public static func fileExists(fileName: String) -> Bool {
-        if  let fileURL = self.fileURL(fileName),
-            let filePath = fileURL.path
+        if let fileURL = self.fileURL(fileName),
+            filePath = fileURL.path
         {
             return NSFileManager.defaultManager().fileExistsAtPath(filePath)
         }

@@ -151,7 +151,7 @@ public enum ElloAPI {
             return .ActivitiesType
         case let .InfiniteScroll(_, elloApi):
             let api = elloApi()
-            if  let pagingPath = api.pagingPath,
+            if let pagingPath = api.pagingPath,
                 mappingType = MappingType(rawValue: pagingPath) {
                 return mappingType
             }

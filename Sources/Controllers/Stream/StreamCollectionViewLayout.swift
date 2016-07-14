@@ -126,7 +126,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
             let rect1 = allItemAttributes[index].frame
             index = min(index + unionSize, itemCounts) - 1
             let rect2 = allItemAttributes[index].frame
-            unionRects.append(CGRectUnion(rect1, rect2))
+            unionRects.append(rect1.union(rect2))
             index += 1
         }
     }
@@ -189,7 +189,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
             itemAttributes.append(attributes)
 
             allItemAttributes.append(attributes)
-            let maxY = CGRectGetMaxY(attributes.frame)
+            let maxY = attributes.frame.maxY
             if isFullWidth {
                 for (index, _) in columnHeights.enumerate() {
                     columnHeights[index] = maxY
@@ -206,7 +206,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
     override public func collectionViewContentSize() -> CGSize {
         let numberOfSections = collectionView!.numberOfSections()
         if numberOfSections == 0 {
-            return CGSizeZero
+            return .zero
         }
 
         let contentWidth = self.collectionView!.bounds.size.width
@@ -223,13 +223,13 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
         var attrs = [UICollectionViewLayoutAttributes]()
 
         for i in 0 ..< end {
-            if CGRectIntersectsRect(rect, unionRects[i]) {
+            if rect.intersects(unionRects[i]) {
                 begin = i * unionSize
                 break
             }
         }
         for i in (0 ..< self.unionRects.count).reverse() {
-            if CGRectIntersectsRect(rect, unionRects[i]) {
+            if rect.intersects(unionRects[i]) {
                 end = min((i+1) * unionSize, allItemAttributes.count)
                 break
             }
@@ -237,7 +237,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
 
         for i in begin ..< end {
             let attr = allItemAttributes[i]
-            if CGRectIntersectsRect(rect, attr.frame) {
+            if rect.intersects(attr.frame) {
                 attrs.append(attr)
             }
         }
@@ -251,7 +251,7 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
 
     override public func shouldInvalidateLayoutForBoundsChange (newBounds: CGRect) -> Bool {
         let oldBounds = collectionView!.bounds
-        return CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds)
+        return newBounds.width != oldBounds.width
     }
 
     private func shortestColumnIndex() -> Int {

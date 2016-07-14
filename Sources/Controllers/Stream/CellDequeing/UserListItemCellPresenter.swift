@@ -18,7 +18,7 @@ public struct UserListItemCellPresenter {
         currentUser: User?)
     {
         if let cell = cell as? UserListItemCell,
-            let user = streamCellItem.jsonable as? User
+            user = streamCellItem.jsonable as? User
         {
             cell.relationshipControl.hidden = false
 

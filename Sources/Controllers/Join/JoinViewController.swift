@@ -327,7 +327,7 @@ extension JoinViewController {
     }
 
     private func extraHeight() -> CGFloat {
-        let spacing = CGRectGetMaxY(termsButton.frame) - view.bounds.height + 10
+        let spacing = termsButton.frame.maxY - view.bounds.height + 10
         return spacing > 0 ? spacing : 0
     }
 

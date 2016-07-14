@@ -212,7 +212,7 @@ public class RelationshipControl: UIView {
             starButtonWidth = style.starButtonWidth + style.starButtonMargin
         }
         else {
-            starButton.frame = CGRectZero
+            starButton.frame = .zero
             starButtonWidth = 0
         }
 

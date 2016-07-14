@@ -251,7 +251,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         linksTextFieldView.textField.autocorrectionType = .No
         linksTextFieldView.textField.keyboardAppearance = .Dark
         linksTextFieldView.textField.keyboardType = .ASCIICapable
-        if let user = currentUser, let links = user.externalLinksList {
+        if let user = currentUser, links = user.externalLinksList {
             var urls = [String]()
             for link in links {
                 if let url = link["url"] {
@@ -280,7 +280,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
             updateLinksFunction()
         }
 
-        bioTextView.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 30)
+        bioTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 30)
         bioTextView.attributedText = ElloAttributedString.style(currentUser?.profile?.shortBio ?? "")
         bioTextView.delegate = self
 

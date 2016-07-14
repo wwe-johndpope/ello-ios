@@ -31,8 +31,8 @@ public struct StreamFooterCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if  let cell = cell as? StreamFooterCell,
-            let post = streamCellItem.jsonable as? Post
+        if let cell = cell as? StreamFooterCell,
+            post = streamCellItem.jsonable as? Post
         {
             cell.indexPath = indexPath
             configureDisplayCounts(cell, post: post, streamKind: streamKind)
