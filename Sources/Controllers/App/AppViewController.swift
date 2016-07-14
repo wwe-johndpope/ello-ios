@@ -117,12 +117,19 @@ public class AppViewController: BaseElloViewController {
                 self.logoView.stopAnimatingLogo()
                 self.currentUser = user
 
-                let shouldShowOnboarding = !Onboarding.shared().hasSeenLatestVersion()
+                let shouldShowOnboarding = Onboarding.shared().showOnboarding(user)
+                let shouldSaveOnboarding = Onboarding.shared().saveOnboarding(user)
+
                 if shouldShowOnboarding {
                     self.showOnboardingScreen(user)
                 }
                 else {
+                    Onboarding.shared().updateVersionToLatest()
                     self.showMainScreen(user)
+                }
+
+                if shouldSaveOnboarding {
+                    profileService.updateUserProfile(["web_onboarding_version": Onboarding.currentVersion], success: { _ in }, failure: { _ in })
                 }
             },
             failure: { (error, _) in
