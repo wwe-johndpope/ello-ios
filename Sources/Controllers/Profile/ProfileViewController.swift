@@ -125,8 +125,10 @@ public class ProfileViewController: StreamableViewController {
         let ratio: CGFloat = ProfileHeaderCellSizeCalculator.ratio
         let height: CGFloat = view.frame.width / ratio
         let maxHeight = height - streamViewController.collectionView.contentOffset.y
-        coverImageHeight.constant = max(maxHeight, height)
-        coverImageHeightStart = height
+        let constant = max(maxHeight, height)
+        coverImageHeight.constant = constant
+        whiteSolidTop.constant = max(constant, 0)
+        coverImageHeightStart = maxHeight
 
         gradientLayer.frame.size = gradientView.frame.size
     }
