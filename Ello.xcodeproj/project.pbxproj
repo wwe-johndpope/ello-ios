@@ -571,6 +571,9 @@
 		1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */; };
 		1DC10FA51C3DEB7600846ED6 /* availability__error.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC10FA31C3DEB7600846ED6 /* availability__error.json */; };
 		1DC10FA61C3DEB7600846ED6 /* availability.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC10FA41C3DEB7600846ED6 /* availability.json */; };
+		1DC29BB51D3824720041B1DC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */; };
+		1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
+		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309F81B03E64E00EAD920 /* CommunitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC309F51B03E64E00EAD920 /* CommunitySelectionViewController.swift */; };
 		1DC309F91B03E64E00EAD920 /* OnboardingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC309F61B03E64E00EAD920 /* OnboardingHeaderCell.swift */; };
 		1DC309FA1B03E64E00EAD920 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC309F71B03E64E00EAD920 /* OnboardingViewController.swift */; };
@@ -1378,6 +1381,7 @@
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DC10FA31C3DEB7600846ED6 /* availability__error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability__error.json; sourceTree = "<group>"; };
 		1DC10FA41C3DEB7600846ED6 /* availability.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability.json; sourceTree = "<group>"; };
+		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309F51B03E64E00EAD920 /* CommunitySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunitySelectionViewController.swift; sourceTree = "<group>"; };
 		1DC309F61B03E64E00EAD920 /* OnboardingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingHeaderCell.swift; sourceTree = "<group>"; };
 		1DC309F71B03E64E00EAD920 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -2600,6 +2604,7 @@
 				1D7750F81ABB68DF00D92191 /* ToNSData.swift */,
 				127128251A77373300695F15 /* TypedNotifications.swift */,
 				12F6AE611A4339C600493660 /* Validator.swift */,
+				1DC29BB61D3824D30041B1DC /* Defaults.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -3993,6 +3998,7 @@
 				1207C9A11C752F1300939ADB /* ElloURI.swift in Sources */,
 				122B30B61C6A3FBB00C1B9D8 /* DynamicSetting.swift in Sources */,
 				1D2F65AA1D185B120099D036 /* DiscoverType.swift in Sources */,
+				1DC29BB51D3824720041B1DC /* Onboarding.swift in Sources */,
 				122B30FA1C6A429E00C1B9D8 /* AttributedStringExtensions.swift in Sources */,
 				122D1BA61C6134D5001386CE /* UIViewNibLoading.swift in Sources */,
 				122B30B31C6A3FBB00C1B9D8 /* Availability.swift in Sources */,
@@ -4073,6 +4079,7 @@
 				122B30C21C6A3FBB00C1B9D8 /* Profile.swift in Sources */,
 				122B30EB1C6A3FC400C1B9D8 /* UnknownRegion.swift in Sources */,
 				122D1B4F1C602337001386CE /* MutableBox.swift in Sources */,
+				1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */,
 				122D1B9A1C6130B4001386CE /* NSObjectClassName.swift in Sources */,
 				122D1B991C61308F001386CE /* AlertAction.swift in Sources */,
 				122B30C01C6A3FBB00C1B9D8 /* NotificationAttributedTitle.swift in Sources */,
@@ -4377,6 +4384,7 @@
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
 				1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */,
 				1D807DAC1B06B725009B0F71 /* ImportFriendsViewController.swift in Sources */,
+				1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */,
 				1207C9771C73FEE000939ADB /* DateFormatting.swift in Sources */,
 				122B30E11C6A3FBF00C1B9D8 /* Tracker.swift in Sources */,
 				12551FBA1A68729900ABC5D9 /* OmnibarViewController.swift in Sources */,
