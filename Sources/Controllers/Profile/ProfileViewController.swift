@@ -308,7 +308,7 @@ public class ProfileViewController: StreamableViewController {
 
         var rightBarButtonItems: [UIBarButtonItem] = []
         if user.hasSharingEnabled {
-            rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped)))
+            rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:))))
         }
         rightBarButtonItems.append(UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped)))
         elloNavigationItem.rightBarButtonItems = rightBarButtonItems
@@ -339,7 +339,7 @@ public class ProfileViewController: StreamableViewController {
         }
     }
 
-    func sharePostTapped() {
+    func sharePostTapped(sourceView: UIView) {
         if let user = user,
             shareLink = user.shareLink,
             shareURL = NSURL(string: shareLink)
@@ -353,6 +353,7 @@ public class ProfileViewController: StreamableViewController {
             }
             else {
                 activityVC.modalPresentationStyle = .Popover
+                activityVC.popoverPresentationController?.sourceView = sourceView
                 logPresentingAlert(readableClassName() ?? "ProfileViewController")
                 presentViewController(activityVC, animated: true) { }
             }
