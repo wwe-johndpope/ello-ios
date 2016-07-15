@@ -693,12 +693,12 @@ class StreamDataSourceSpec: QuickSpec {
 
                         context("StreamKind.Profile") {
 
-                            it("inserts the new post at 1, 0") {
+                            it("inserts the new post at 4, 0") {
                                 subject.streamKind = .CurrentUserStream
                                 expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
                                 subject.modifyItems(Post.stub(["id": "new_post"]), change: .Create, collectionView: fakeCollectionView)
                                 expect(subject.postForIndexPath(indexPath0)!.id) == "1"
-                                expect(subject.postForIndexPath(NSIndexPath(forItem: 1, inSection: 0))!.id) == "new_post"
+                                expect(subject.postForIndexPath(NSIndexPath(forItem: 4, inSection: 0))!.id) == "new_post"
                                 expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 24
                             }
 
@@ -706,7 +706,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                         context("StreamKind.UserStream") {
 
-                            it("inserts the new post at 1, 0") {
+                            it("inserts the new post at 4, 0") {
                                 subject.currentUser = User.stub(["id" : "user-id-here"])
                                 subject.streamKind = .UserStream(userParam: "user-id-here")
 
@@ -715,7 +715,7 @@ class StreamDataSourceSpec: QuickSpec {
                                 subject.modifyItems(Post.stub(["id": "new_post"]), change: .Create, collectionView: fakeCollectionView)
 
                                 expect(subject.postForIndexPath(indexPath0)!.id) == "1"
-                                expect(subject.postForIndexPath(NSIndexPath(forItem: 1, inSection: 0))!.id) == "new_post"
+                                expect(subject.postForIndexPath(NSIndexPath(forItem: 4, inSection: 0))!.id) == "new_post"
                                 expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 24
                             }
 
