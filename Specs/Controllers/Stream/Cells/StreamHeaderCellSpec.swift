@@ -114,7 +114,7 @@ class StreamHeaderCellSpec: QuickSpec {
                         }
                         else {
                             subject.showUsername = !inDetail
-                            subject.avatarHeight = inGrid ? 30 : 60
+                            subject.avatarHeight = inGrid ? 30 : 40
                             subject.chevronHidden = true
                             subject.goToPostView.hidden = false
                             subject.canReply = false
@@ -148,7 +148,7 @@ class StreamHeaderCellSpec: QuickSpec {
                         }
                         else {
                             subject.showUsername = !inDetail
-                            subject.avatarHeight = inGrid ? 30 : 60
+                            subject.avatarHeight = inGrid ? 30 : 40
                             subject.chevronHidden = true
                             subject.goToPostView.hidden = false
                             subject.canReply = false

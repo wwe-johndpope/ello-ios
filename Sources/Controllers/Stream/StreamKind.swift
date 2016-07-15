@@ -209,7 +209,7 @@ public enum StreamKind {
     }
 
     public var avatarHeight: CGFloat {
-        return self.isGridView ? 30.0 : 60.0
+        return self.isGridView ? 30 : 40
     }
 
     public func contentForPost(post: Post) -> [Regionable]? {
