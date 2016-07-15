@@ -17,7 +17,11 @@ public class StreamImageCell: StreamRegionableCell {
     }
 
     public struct Size {
-        static let bottomMargin = CGFloat(10)
+        static let bottomMargin: CGFloat = 10
+        static let singleColumnFailWidth: CGFloat = 140
+        static let singleColumnFailHeight: CGFloat = 160
+        static let multiColumnFailWidth: CGFloat = 70
+        static let multiColumnFailHeight: CGFloat = 80
     }
 
     @IBOutlet public weak var imageView: FLAnimatedImageView!
@@ -26,8 +30,8 @@ public class StreamImageCell: StreamRegionableCell {
     @IBOutlet public weak var failImage: UIImageView!
     @IBOutlet public weak var failBackgroundView: UIView!
     @IBOutlet public weak var leadingConstraint: NSLayoutConstraint!
-    @IBOutlet public weak var failWidthConstraint: NSLayoutConstraint!
-    @IBOutlet public weak var failHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var failWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var failHeightConstraint: NSLayoutConstraint!
 
     // not used in StreamEmbedCell
     @IBOutlet public weak var largeImagePlayButton: UIImageView?
@@ -38,7 +42,6 @@ public class StreamImageCell: StreamRegionableCell {
     public var isGif = false
     public typealias OnHeightMismatch = (CGFloat) -> Void
     public var onHeightMismatch: OnHeightMismatch?
-    var request: Request?
     public var tallEnoughForFailToShow = true
     public var presentedImageUrl: NSURL?
     var serverProvidedAspectRatio: CGFloat?
@@ -47,6 +50,18 @@ public class StreamImageCell: StreamRegionableCell {
         set {
             largeImagePlayButton?.image = InterfaceImage.VideoPlay.normalImage
             largeImagePlayButton?.hidden = !newValue
+        }
+    }
+    public var isGridView: Bool = false {
+        didSet {
+            if isGridView {
+                failWidthConstraint.constant = Size.multiColumnFailWidth
+                failHeightConstraint.constant = Size.multiColumnFailHeight
+            }
+            else {
+                failWidthConstraint.constant = Size.singleColumnFailWidth
+                failHeightConstraint.constant = Size.singleColumnFailHeight
+            }
         }
     }
 
@@ -170,13 +185,15 @@ public class StreamImageCell: StreamRegionableCell {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
+
         imageButton.userInteractionEnabled = true
         onHeightMismatch = nil
-        request?.cancel()
         imageView.image = nil
         imageView.animatedImage = nil
         imageView.pin_cancelImageDownload()
+        imageRightConstraint?.constant = 0
 
+        hideBorder()
         isGif = false
         presentedImageUrl = nil
         isLargeImage = false
