@@ -238,7 +238,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         let imageRegion: ImageRegion = stub([
                             "alt" : "some-altness",
-                            "link_url" : NSURL(string: "https://amazon.com")!
+                            "affiliateURL" : NSURL(string: "https://amazon.com")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
