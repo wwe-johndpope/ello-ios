@@ -134,8 +134,10 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
         guard
             finished && completed,
             let newCurrentPage = pageViewController.viewControllers?.first as? IntroPageController,
-            let pageIndex = newCurrentPage.pageIndex
-            else  { return }
+            pageIndex = newCurrentPage.pageIndex
+        else {
+            return
+        }
 
         pageControl.currentPage = pageIndex
     }
