@@ -164,7 +164,7 @@ class StreamViewControllerSpec: QuickSpec {
                     it("posts a notification if type .External") {
 
                         var link = ""
-                        externalWebObserver = NotificationObserver(notification: externalWebNotification) { url in
+                        externalWebObserver = NotificationObserver(notification: ExternalWebNotification) { url in
                             link = url
                         }
 

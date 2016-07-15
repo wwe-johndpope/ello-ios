@@ -157,7 +157,7 @@ public class AppViewController: BaseElloViewController {
         receivedPushNotificationObserver = NotificationObserver(notification: PushNotificationNotifications.interactedWithPushNotification) { [unowned self] payload in
             self.receivedPushNotification(payload)
         }
-        externalWebObserver = NotificationObserver(notification: externalWebNotification) { [unowned self] url in
+        externalWebObserver = NotificationObserver(notification: ExternalWebNotification) { [unowned self] url in
             self.showExternalWebView(url)
         }
         apiOutOfDateObserver = NotificationObserver(notification: ErrorStatusCode.Status410.notification) { [unowned self] error in

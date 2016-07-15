@@ -10,7 +10,7 @@ public class StreamEmbedCell: StreamImageCell {
 
     @IBAction override func imageTapped() {
         if let url = embedUrl {
-            postNotification(externalWebNotification, value: url.URLString)
+            postNotification(ExternalWebNotification, value: url.URLString)
         }
     }
 
