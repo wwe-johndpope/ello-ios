@@ -27,12 +27,10 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Image(data: imageRegion))
 
                 context("single column") {
-
                     it("configures fail constraints correctly") {
                         StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
 
-                        expect(cell.failWidthConstraint.constant) == 140
-                        expect(cell.failHeightConstraint.constant) == 160
+                        expect(cell.isGridView) == false
                     }
                 }
 
@@ -41,8 +39,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                     it("configures fail constraints correctly") {
                         StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Starred, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
 
-                        expect(cell.failWidthConstraint.constant) == 70
-                        expect(cell.failHeightConstraint.constant) == 80
+                        expect(cell.isGridView) == true
                     }
                 }
             }
@@ -180,7 +177,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 }
 
                 context("small filesize gif") {
-
                     it("configures a stream image cell") {
                         let post: Post = stub(["id" : "768"])
 
@@ -217,6 +213,41 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isLargeImage) == false
                         expect(cell.largeImagePlayButton?.hidden) == true
                         expect(cell.presentedImageUrl).to(beNil())
+                    }
+                }
+
+                context("affiliate link") {
+                    it("hides affiliateButton by default") {
+                        let post: Post = stub(["id" : "768"])
+
+                        let imageRegion: ImageRegion = stub([
+                            "alt" : "some-altness",
+                            ])
+
+                        let cell: StreamImageCell = StreamImageCell.loadFromNib()
+                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Image(data: imageRegion))
+
+                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
+
+                        expect(cell.affiliateButton?.hidden) == true
+                        expect(cell.affiliateGreen?.hidden) == true
+                    }
+
+                    it("shows affiliateButton if link is present") {
+                        let post: Post = stub(["id" : "768"])
+
+                        let imageRegion: ImageRegion = stub([
+                            "alt" : "some-altness",
+                            "link_url" : NSURL(string: "https://amazon.com")!
+                            ])
+
+                        let cell: StreamImageCell = StreamImageCell.loadFromNib()
+                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Image(data: imageRegion))
+
+                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
+
+                        expect(cell.affiliateButton?.hidden) == false
+                        expect(cell.affiliateGreen?.hidden) == false
                     }
                 }
             }

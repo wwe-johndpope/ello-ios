@@ -85,6 +85,7 @@ public struct StreamImageCellPresenter {
             let columnWidth: CGFloat = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCountFor(width: cell.frame.width))
             preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: margin)
         }
+
         cell.onHeightMismatch = { actualHeight in
             streamCellItem.calculatedWebHeight = actualHeight
             streamCellItem.calculatedOneColumnCellHeight = actualHeight
@@ -104,6 +105,7 @@ public struct StreamImageCellPresenter {
             cell.setImageURL(imageURL)
         }
 
+        cell.affiliateURL = imageRegion.affiliateURL
         cell.layoutIfNeeded()
     }
 }

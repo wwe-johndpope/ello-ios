@@ -16,7 +16,7 @@ class ImageRegionSpec: QuickSpec {
 
         describe("+fromJSON:") {
 
-            it("parses correctly") {
+            it("parses image region correctly") {
                 let data = stubbedJSONData("image-region", "region")
                 let region = ImageRegion.fromJSON(data) as! ImageRegion
 
@@ -43,6 +43,36 @@ class ImageRegionSpec: QuickSpec {
                 expect(xxhdpi.width) == 2560
                 expect(xxhdpi.height) == 1094
             }
+
+            it("parses affiliate region correctly") {
+                let data = stubbedJSONData("affiliate-image-region", "region")
+                let region = ImageRegion.fromJSON(data) as! ImageRegion
+
+                expect(region.url!.absoluteString) == "https://example.com/test.jpg"
+                expect(region.affiliateURL!.absoluteString) == "https://amazon.com"
+                expect(region.alt) == "region-alt.jpeg"
+
+                let asset = region.asset!
+
+                expect(asset.id) == "85"
+
+                let hdpi = asset.hdpi!
+
+                expect(hdpi.url.absoluteString) == "https://example.com/85/hdpi.jpg"
+                expect(hdpi.size) == 77464
+                expect(hdpi.type) == "image/jpeg"
+                expect(hdpi.width) == 750
+                expect(hdpi.height) == 321
+
+                let xxhdpi = asset.xxhdpi!
+
+                expect(xxhdpi.url.absoluteString) == "https://example.com/85/xxhdpi.jpg"
+                expect(xxhdpi.size) == 728689
+                expect(xxhdpi.type) == "image/jpeg"
+                expect(xxhdpi.width) == 2560
+                expect(xxhdpi.height) == 1094
+            }
+
         }
 
         context("NSCoding") {

@@ -26,6 +26,8 @@ public class StreamImageCell: StreamRegionableCell {
 
     @IBOutlet public weak var imageView: FLAnimatedImageView!
     @IBOutlet public weak var imageButton: UIView!
+    @IBOutlet public weak var affiliateButton: UIButton?
+    @IBOutlet public weak var affiliateGreen: UIView?
     @IBOutlet public weak var circle: PulsingCircle!
     @IBOutlet public weak var failImage: UIImageView!
     @IBOutlet public weak var failBackgroundView: UIView!
@@ -44,6 +46,13 @@ public class StreamImageCell: StreamRegionableCell {
     public var onHeightMismatch: OnHeightMismatch?
     public var tallEnoughForFailToShow = true
     public var presentedImageUrl: NSURL?
+    public var affiliateURL: NSURL? {
+        didSet {
+            let hidden = (affiliateURL == nil)
+            affiliateButton?.hidden = hidden
+            affiliateGreen?.hidden = hidden
+        }
+    }
     var serverProvidedAspectRatio: CGFloat?
     public var isLargeImage: Bool {
         get { return !(largeImagePlayButton?.hidden ?? true) }
@@ -82,6 +91,14 @@ public class StreamImageCell: StreamRegionableCell {
         super.awakeFromNib()
         if let playButton = largeImagePlayButton {
             playButton.image = InterfaceImage.VideoPlay.normalImage
+        }
+        if let affiliateButton = affiliateButton, affiliateGreen = affiliateGreen {
+            affiliateButton.hidden = true
+            affiliateGreen.hidden = true
+            affiliateButton.setTitle(nil, forState: .Normal)
+            affiliateButton.setImage(.Dollar, imageStyle: .Normal, forState: .Normal)
+            affiliateGreen.backgroundColor = .greenD1()
+            affiliateGreen.layer.cornerRadius = affiliateGreen.frame.size.width / 2
         }
 
         let doubleTapGesture = UITapGestureRecognizer()
@@ -129,6 +146,10 @@ public class StreamImageCell: StreamRegionableCell {
         if actualHeight != frame.height {
             self.onHeightMismatch?(actualHeight)
         }
+
+        if let affiliateGreen = affiliateGreen {
+            affiliateGreen.layer.cornerRadius = affiliateGreen.frame.size.width / 2
+        }
     }
 
     private func loadImage(url: NSURL) {
@@ -168,6 +189,8 @@ public class StreamImageCell: StreamRegionableCell {
     }
 
     private func imageLoadFailed() {
+        affiliateButton?.hidden = true
+        affiliateGreen?.hidden = true
         failImage.hidden = false
         failBackgroundView.hidden = false
         circle.stopPulse()
@@ -192,6 +215,8 @@ public class StreamImageCell: StreamRegionableCell {
         imageView.animatedImage = nil
         imageView.pin_cancelImageDownload()
         imageRightConstraint?.constant = 0
+        affiliateButton?.hidden = true
+        affiliateGreen?.hidden = true
 
         hideBorder()
         isGif = false
@@ -205,6 +230,12 @@ public class StreamImageCell: StreamRegionableCell {
 
     @IBAction func imageTapped() {
         streamImageCellDelegate?.imageTapped(self.imageView, cell: self)
+    }
+
+    @IBAction func affiliateTapped() {
+        if let affiliateURL = affiliateURL {
+            postNotification(ExternalWebNotification, value: affiliateURL.URLString)
+        }
     }
 
     @IBAction func imageDoubleTapped(gesture: UIGestureRecognizer) {
