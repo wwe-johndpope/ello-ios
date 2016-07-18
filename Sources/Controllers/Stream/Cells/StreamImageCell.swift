@@ -233,9 +233,10 @@ public class StreamImageCell: StreamRegionableCell {
     }
 
     @IBAction func affiliateTapped() {
-        if let affiliateURL = affiliateURL {
-            postNotification(ExternalWebNotification, value: affiliateURL.URLString)
+        guard let affiliateURL = affiliateURL else {
+            return
         }
+        postNotification(ExternalWebNotification, value: affiliateURL.URLString)
     }
 
     @IBAction func imageDoubleTapped(gesture: UIGestureRecognizer) {
