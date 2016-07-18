@@ -29,6 +29,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: ElloLabel!
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var webViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var avatarWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var bioWebView: UIWebView!
     @IBOutlet weak var postsButton: TwoLineButton!
     @IBOutlet weak var followersButton: TwoLineButton!
@@ -53,7 +54,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
-        avatarImage.layer.cornerRadius = avatarImage.bounds.size.height / CGFloat(2)
+        avatarImage.layer.cornerRadius = avatarWidthConstraint.constant / 2
         bioWebView.scrollView.scrollEnabled = false
         bioWebView.scrollView.scrollsToTop = false
     }

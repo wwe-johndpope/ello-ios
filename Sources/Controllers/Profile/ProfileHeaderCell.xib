@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -106,7 +106,7 @@
                             <constraint firstItem="FV1-FS-QMz" firstAttribute="leading" secondItem="gWi-lG-cJp" secondAttribute="trailing" constant="25" id="WyN-Ml-Ufz"/>
                             <constraint firstItem="4sI-yA-gkk" firstAttribute="leading" secondItem="6nJ-r0-lN7" secondAttribute="leading" id="Ysh-gS-ng4"/>
                             <constraint firstAttribute="bottom" secondItem="PtF-QI-fk2" secondAttribute="bottom" id="asL-h7-HRo" userLabel="bioWebView - bottom"/>
-                            <constraint firstItem="GKO-1x-QWx" firstAttribute="centerY" secondItem="U6M-uB-CWv" secondAttribute="top" id="dw5-Cp-ekQ" userLabel="avatarImage - top"/>
+                            <constraint firstItem="GKO-1x-QWx" firstAttribute="centerY" secondItem="U6M-uB-CWv" secondAttribute="top" id="dw5-Cp-ekQ" userLabel="avatarImage - centerY"/>
                             <constraint firstItem="FV1-FS-QMz" firstAttribute="top" secondItem="rQa-MW-cCK" secondAttribute="top" id="fLE-9x-27E"/>
                             <constraint firstItem="gWi-lG-cJp" firstAttribute="top" secondItem="FV1-FS-QMz" secondAttribute="top" id="gHh-Cw-fxe"/>
                             <constraint firstAttribute="trailing" secondItem="PtF-QI-fk2" secondAttribute="trailing" constant="15" id="hke-ib-z8g" userLabel="bioWebView - right"/>
@@ -129,6 +129,7 @@
             <size key="customSize" width="320" height="460"/>
             <connections>
                 <outlet property="avatarImage" destination="GKO-1x-QWx" id="dbf-G3-Qty"/>
+                <outlet property="avatarWidthConstraint" destination="7G6-ms-sEZ" id="Jin-E4-yRA"/>
                 <outlet property="bioWebView" destination="PtF-QI-fk2" id="WKn-ZP-Rnw"/>
                 <outlet property="followersButton" destination="FV1-FS-QMz" id="z6Y-Re-O1r"/>
                 <outlet property="followingButton" destination="gWi-lG-cJp" id="aqG-Wn-ZAX"/>
