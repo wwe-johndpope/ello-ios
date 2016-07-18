@@ -125,6 +125,31 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
+            describe("showsCategory") {
+                let expectations: [(StreamKind, Bool)] = [
+                    (.CurrentUserStream, false),
+                    (.MoreCategories, false),
+                    (.AllCategories, false),
+                    (.Discover(type: .Featured), true),
+                    (.Discover(type: .Trending), false),
+                    (.Discover(type: .Recent), false),
+                    (.CategoryPosts(slug: "art"), false),
+                    (.Following, false),
+                    (.Starred, false),
+                    (.Notifications(category: nil), false),
+                    (.Notifications(category: "comments"), false),
+                    (.PostDetail(postParam: "postId"), false),
+                    (.SimpleStream(endpoint: .AwesomePeopleStream, title: "Awesome People"), false),
+                    (.UserStream(userParam: "userId"), false),
+                    (.Unknown, false),
+                ]
+                for (streamKind, expectedValue) in expectations {
+                    it("\(streamKind) \(expectedValue ? "can" : "cannot") show category") {
+                        expect(streamKind.showsCategory) == expectedValue
+                    }
+                }
+            }
+
             describe("tappingTextOpensDetail") {
                 var followingIsGrid = false
                 var starredIsGrid = false

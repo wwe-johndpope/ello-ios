@@ -92,6 +92,13 @@ public enum StreamKind {
         }
     }
 
+    public var showsCategory: Bool {
+        if case let .Discover(type) = self where type == .Featured {
+            return true
+        }
+        return false
+    }
+
     public var tappingTextOpensDetail: Bool {
         switch self {
         case .Following, .Starred:
