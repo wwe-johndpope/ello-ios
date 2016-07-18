@@ -472,6 +472,10 @@ extension ElloAPI: Moya.TargetType {
             ]
         }
 
+        if let sharingHeaders = self.sharingHeaders {
+            assigned += sharingHeaders
+        }
+
         switch self {
         case let .FriendNewContent(createdAt):
             assigned += [
