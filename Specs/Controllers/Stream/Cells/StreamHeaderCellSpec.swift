@@ -33,7 +33,7 @@ class StreamHeaderCellSpec: QuickSpec {
                 let me: User = stub(["username": "me"])
                 let other: User = stub(["username": "other"])
                 let reposter: User = stub(["username": "reposter"])
-                let category: Ello.Category = stub([:])
+                let category: Ello.Category = stub(["name": "Illustrations"])
                 let expectations: [
                     (String, owner: Owner, content: Content, category: Bool, follow: Bool, style: Style)
                 ] = [
