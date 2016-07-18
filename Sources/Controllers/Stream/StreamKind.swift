@@ -235,11 +235,13 @@ public enum StreamKind {
 
     public func clientSidePostInsertIndexPath(currentUserId: String?) -> NSIndexPath? {
         switch self {
-        case .Following, .CurrentUserStream:
+        case .Following:
             return NSIndexPath(forItem: 1, inSection: 0)
+        case .CurrentUserStream:
+            return NSIndexPath(forItem: 4, inSection: 0)
         case let .UserStream(userParam):
             if currentUserId == userParam {
-                return NSIndexPath(forItem: 1, inSection: 0)
+                return NSIndexPath(forItem: 4, inSection: 0)
             }
         default: return nil
         }

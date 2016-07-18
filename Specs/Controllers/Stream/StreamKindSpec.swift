@@ -293,6 +293,7 @@ class StreamKindSpec: QuickSpec {
 
             describe("clientSidePostInsertIndexPath(currentUserId:)") {
                 let one = NSIndexPath(forItem: 1, inSection: 0)
+                let four = NSIndexPath(forItem: 4, inSection: 0)
                 let tests: [(NSIndexPath?, StreamKind)] = [
                     (nil, StreamKind.Discover(type: .Featured)),
                     (nil, StreamKind.CategoryPosts(slug: "art")),
@@ -301,12 +302,12 @@ class StreamKindSpec: QuickSpec {
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
                     (nil, StreamKind.Notifications(category: "")),
                     (nil, StreamKind.PostDetail(postParam: "param")),
-                    (one, StreamKind.CurrentUserStream),
+                    (four, StreamKind.CurrentUserStream),
                     (nil, StreamKind.Unknown),
                     (nil, StreamKind.UserStream(userParam: "NA")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
-                    (one, StreamKind.UserStream(userParam: "12345")),
+                    (four, StreamKind.UserStream(userParam: "12345")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.AwesomePeopleStream, title: "")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.CommunitiesStream, title: "")),
