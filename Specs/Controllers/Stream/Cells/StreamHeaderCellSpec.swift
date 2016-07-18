@@ -70,9 +70,9 @@ class StreamHeaderCellSpec: QuickSpec {
                     ("other comment in detail", owner: .Other, content: .Comment, category: false, follow: false, style: .Detail),
                     ("other comment in grid", owner: .Other, content: .Comment, category: false, follow: false, style: .Grid),
                 ]
-                let detailFrame = CGRect(x: 0, y: 0, width: 320, height: 90)
-                let commentFrame = CGRect(x: 0, y: 0, width: 320, height: 60)
-                let gridFrame = CGRect(x: 0, y: 0, width: 154, height: 60)
+                let detailFrame = CGRect(x: 0, y: 0, width: 320, height: StreamCellType.Header.oneColumnHeight)
+                let commentFrame = CGRect(x: 0, y: 0, width: 320, height: StreamCellType.CommentHeader.oneColumnHeight)
+                let gridFrame = CGRect(x: 0, y: 0, width: 154, height: StreamCellType.Header.multiColumnHeight)
                 for (desc, owner, content, hasCategory, hasFollow, style) in expectations {
                     it("has valid screenshot for \(desc)") {
                         let inGrid: Bool
