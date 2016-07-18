@@ -144,8 +144,10 @@ public class StreamHeaderCell: UICollectionViewCell {
             categoryButton.hidden = false
         }
         else {
+            categoryButton.setTitle("", forState: UIControlState.Normal)
             categoryButton.hidden = true
         }
+        categoryButton.sizeToFit()
 
         setNeedsLayout()
     }
@@ -306,6 +308,7 @@ public class StreamHeaderCell: UICollectionViewCell {
 
         let usernameWidth = max(minimumUsernameWidth, min(usernameButton.frame.width, maxUsernameWidth))
         let repostedWidth = max(minimumRepostedWidth, min(repostedByButton.frame.width, maxRepostedWidth))
+        let categoryWidth = max(minimumRepostedWidth, min(categoryButton.frame.width, maxRepostedWidth))
 
         let hasRepostAuthor = !repostedByButton.hidden
         let hasCategory = !categoryButton.hidden
@@ -339,21 +342,23 @@ public class StreamHeaderCell: UICollectionViewCell {
             width: usernameWidth,
             height: usernameButtonHeight
         )
-        repostedByButton.frame.size = CGSize(
-            width: repostedWidth,
-            height: usernameButtonHeight
-        )
-        let repostIconY = secondaryLabelY + (repostedByButton.frame.size.height - repostIconView.frame.height) / 2
+        let repostIconY = secondaryLabelY + (usernameButtonHeight - repostIconView.frame.height) / 2
         repostIconView.frame.origin = CGPoint(
             x: usernameX,
             y: repostIconY
         )
-        repostedByButton.frame.origin = CGPoint(
+        repostedByButton.frame = CGRect(
             x: repostIconView.frame.maxX + 6,
-            y: secondaryLabelY
+            y: secondaryLabelY,
+            width: repostedWidth,
+            height: usernameButtonHeight
         )
-        let delta = repostedByButton.frame.origin.x - usernameX
-        categoryButton.frame = repostedByButton.frame.growLeft(delta)
+        categoryButton.frame = CGRect(
+            x: usernameX,
+            y: secondaryLabelY,
+            width: categoryWidth,
+            height: usernameButtonHeight
+            )
     }
 
     private func fixedItem(width: CGFloat) -> UIBarButtonItem {
