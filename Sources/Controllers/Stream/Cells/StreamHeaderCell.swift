@@ -308,7 +308,7 @@ public class StreamHeaderCell: UICollectionViewCell {
 
         let usernameWidth = max(minimumUsernameWidth, min(usernameButton.frame.width, maxUsernameWidth))
         let repostedWidth = max(minimumRepostedWidth, min(repostedByButton.frame.width, maxRepostedWidth))
-        let categoryWidth = max(minimumRepostedWidth, min(categoryButton.frame.width, maxRepostedWidth))
+        let categoryWidth = max(minimumRepostedWidth, min(categoryButton.frame.width, maxUsernameWidth))
 
         let hasRepostAuthor = !repostedByButton.hidden
         let hasCategory = !categoryButton.hidden
