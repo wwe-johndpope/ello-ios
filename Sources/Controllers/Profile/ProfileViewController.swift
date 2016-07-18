@@ -123,7 +123,7 @@ public class ProfileViewController: StreamableViewController {
         let maxHeight = height - streamViewController.collectionView.contentOffset.y
         let constant = max(maxHeight, height)
         coverImageHeight.constant = constant
-        whiteSolidTop.constant = max(constant, 0)
+        whiteSolidTop.constant = max(maxHeight, 0)
         coverImageHeightStart = maxHeight
 
         gradientLayer.frame.size = gradientView.frame.size
