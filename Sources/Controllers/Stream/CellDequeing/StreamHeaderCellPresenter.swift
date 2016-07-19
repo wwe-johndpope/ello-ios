@@ -75,7 +75,12 @@ public struct StreamHeaderCellPresenter {
                 followButtonVisible = false
             }
 
-            cell.setDetails(user: author, repostedBy: repostedBy, category: post?.category)
+            var category: Category?
+            if streamKind.showsCategory {
+                category = post?.category
+            }
+
+            cell.setDetails(user: author, repostedBy: repostedBy, category: category)
             cell.followButtonVisible = followButtonVisible
             if streamKind.isGridView {
                 cell.timeStamp = ""

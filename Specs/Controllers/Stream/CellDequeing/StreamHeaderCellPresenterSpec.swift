@@ -253,13 +253,20 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
                     item = StreamCellItem(jsonable: post, type: .Header)
                 }
-                it("sets followButtonVisible") {
+                it("sets categoryButton in .Featured stream") {
                     cell.followButtonVisible = false
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .PostDetail(postParam: "768"), indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Discover(type: .Featured), indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
                     expect(cell.followButtonVisible) == false
                     expect(cell.relationshipControl.hidden) == true
                     expect(cell.categoryButton.currentTitle) == "in Art"
                     expect(cell.categoryButton.hidden) == false
+                }
+                it("hides categoryButton if not in .Featured stream") {
+                    cell.followButtonVisible = false
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .PostDetail(postParam: "768"), indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
+                    expect(cell.followButtonVisible) == false
+                    expect(cell.relationshipControl.hidden) == true
+                    expect(cell.categoryButton.hidden) == true
                 }
             }
 
