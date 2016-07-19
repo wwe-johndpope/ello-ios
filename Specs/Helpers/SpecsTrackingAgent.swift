@@ -1,9 +1,5 @@
-//
-//  SpecsTrackingAgent.swift
-//  Ello
-//
-//  Created by Sean on 10/2/15.
-//  Copyright © 2015 Ello. All rights reserved.
+////
+///  SpecsTrackingAgent.swift
 //
 
 import Ello

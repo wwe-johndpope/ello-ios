@@ -1,9 +1,5 @@
-//
-//  NotificationsFilterBar.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/10/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NotificationsFilterBar.swift
 //
 
 import Ello
@@ -111,7 +107,7 @@ class NotificationsFilterBarSpec: QuickSpec {
                     }
                 }
             }
-            
+
             it("selectButton") {
                 subject.selectButton(button1)
                 expect(button1.selected).to(equal(true))

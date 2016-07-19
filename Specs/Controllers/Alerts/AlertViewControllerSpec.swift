@@ -1,9 +1,5 @@
-//
-//  AlertViewControllerSpec.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 4/7/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AlertViewControllerSpec.swift
 //
 
 @testable import Ello

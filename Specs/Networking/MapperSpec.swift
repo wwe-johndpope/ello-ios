@@ -1,9 +1,5 @@
-//
-//  MapperSpec.swift
-//  Ello
-//
-//  Created by Sean on 3/5/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  MapperSpec.swift
 //
 
 import Ello
@@ -51,9 +47,9 @@ class MapperSpec: QuickSpec {
                     expect(error).toNot(beNil())
                 }
             }
-            
+
         }
-        
+
         describe("+mapToObjectArray:fromJSON:") {
 
             context("valid input") {
@@ -66,7 +62,7 @@ class MapperSpec: QuickSpec {
                 }
             }
         }
-        
+
         describe("+mapToObject:fromJSON:") {
 
             context("valid input") {

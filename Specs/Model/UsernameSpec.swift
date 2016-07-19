@@ -1,9 +1,5 @@
-//
-//  UsernameSpec.swift
-//  Ello
-//
-//  Created by Sean on 5/10/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  UsernameSpec.swift
 //
 
 import Ello

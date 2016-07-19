@@ -1,9 +1,5 @@
-//
-//  StreamHeaderCellPresenterSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 10/27/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamHeaderCellPresenterSpec.swift
 //
 
 @testable import Ello

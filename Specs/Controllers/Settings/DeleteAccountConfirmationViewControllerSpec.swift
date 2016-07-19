@@ -1,9 +1,5 @@
-//
-//  DeleteAccountConfirmationViewControllerSpec.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 4/24/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  DeleteAccountConfirmationViewControllerSpec.swift
 //
 
 import Ello

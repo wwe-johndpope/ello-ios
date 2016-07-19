@@ -1,9 +1,5 @@
-//
-//  NSURLSpec.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 5/20/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NSURLSpec.swift
 //
 
 import Ello

@@ -1,9 +1,5 @@
-//
-//  SettingsViewControllerSpec.swift
-//  Ello
-//
-//  Created by Tony DiPasquale on 3/23/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  SettingsViewControllerSpec.swift
 //
 
 import Ello

@@ -1,9 +1,5 @@
-//
-//  SearchScreenSpec.swift
-//  Ello
-//
-//  Created by Sean on 7/28/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  SearchScreenSpec.swift
 //
 
 import Quick

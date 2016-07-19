@@ -1,9 +1,5 @@
-//
-//  InterfaceSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 12/14/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  InterfaceSpec.swift
 //
 
 @testable import Ello

@@ -1,9 +1,5 @@
-//
-//  ShareRegionProcessor.swift
-//  Ello
-//
-//  Created by Sean on 2/11/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ShareRegionProcessor.swift
 //
 
 import Foundation

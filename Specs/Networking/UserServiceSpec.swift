@@ -1,9 +1,5 @@
-//
-//  UserServiceSpec.swift
-//  Ello
-//
-//  Created by Sean on 4/8/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  UserServiceSpec.swift
 //
 
 import Foundation

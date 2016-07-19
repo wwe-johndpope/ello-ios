@@ -1,9 +1,5 @@
-//
-//  IntroViewControllerSpec.swift
-//  Ello
-//
-//  Created by Brandon Brisbon on 5/28/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  IntroViewControllerSpec.swift
 //
 
 import Ello

@@ -1,9 +1,5 @@
-//
-//  KeyboardSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 3/2/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  KeyboardSpec.swift
 //
 
 import Ello

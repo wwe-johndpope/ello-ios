@@ -1,9 +1,5 @@
-//
-//  ShareAttachmentProcessor.swift
-//  Ello
-//
-//  Created by Sean on 2/8/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ShareAttachmentProcessor.swift
 //
 
 import Foundation

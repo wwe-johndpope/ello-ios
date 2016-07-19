@@ -1,9 +1,5 @@
-//
-//  SimpleStreamViewControllerSpec.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 3/5/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  SimpleStreamViewControllerSpec.swift
 //
 
 import Ello

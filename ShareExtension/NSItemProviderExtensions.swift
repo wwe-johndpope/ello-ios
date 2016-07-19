@@ -1,9 +1,5 @@
-//
-//  NSItemProviderExtensions.swift
-//  Ello
-//
-//  Created by Sean on 2/5/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  NSItemProviderExtensions.swift
 //
 
 import Foundation

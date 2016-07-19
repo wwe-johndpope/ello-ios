@@ -1,9 +1,5 @@
-//
-//  StreamKindSpec.swift
-//  Ello
-//
-//  Created by Sean on 8/11/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamKindSpec.swift
 //
 
 import Ello

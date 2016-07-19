@@ -1,9 +1,5 @@
-//
-//  DrawerViewDataSourceSpec.swift
-//  Ello
-//
-//  Created by Gordon Fontenot on 3/16/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  DrawerViewDataSourceSpec.swift
 //
 
 @testable import Ello

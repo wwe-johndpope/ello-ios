@@ -1,9 +1,5 @@
-//
-//  FakeStreamNotificationCellSizeCalculator.swift
-//  Ello
-//
-//  Created by Sean on 3/3/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  FakeStreamNotificationCellSizeCalculator.swift
 //
 
 import Ello

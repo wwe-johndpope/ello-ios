@@ -1,9 +1,5 @@
-//
-//  AppSetupSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 9/29/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AppSetupSpec.swift
 //
 
 import Ello
