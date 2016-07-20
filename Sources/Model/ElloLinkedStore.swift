@@ -66,11 +66,8 @@ private extension ElloLinkedStore {
         if let overrideDefaults = overrideDefaults {
             defaults = overrideDefaults
         }
-        else if let groupDefaults = NSUserDefaults(suiteName: "group.ello.Ello") {
-            defaults = groupDefaults
-        }
         else {
-            defaults = NSUserDefaults.standardUserDefaults()
+            defaults = GroupDefaults
         }
 
         let didDeleteNonSharedDB = defaults["DidDeleteNonSharedDB"].bool ?? false
@@ -107,7 +104,7 @@ private extension ElloLinkedStore {
 
     static func databasePath() -> String {
         var path = ""
-        if let baseURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.ello.Ello") {
+        if let baseURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(ElloGroupName) {
             path = baseURL.URLByAppendingPathComponent(ElloLinkedStore.databaseName).path ?? ""
         }
         return path

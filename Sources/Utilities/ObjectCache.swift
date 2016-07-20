@@ -18,7 +18,7 @@ public class ObjectCache<T: AnyObject> {
 
     public init(name: String) {
         self.name = name
-        persistentLayer = NSUserDefaults(suiteName: "group.ello.Ello") ?? NSUserDefaults.standardUserDefaults()
+        persistentLayer = GroupDefaults
     }
 
     public init(name: String, persistentLayer: PersistentLayer) {

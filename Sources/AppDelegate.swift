@@ -9,8 +9,6 @@ import PINRemoteImage
 import PINCache
 import ElloUIFonts
 
-public let GroupDefaults = NSUserDefaults(suiteName: "group.ello.Ello") ?? NSUserDefaults.standardUserDefaults()
-
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
 
