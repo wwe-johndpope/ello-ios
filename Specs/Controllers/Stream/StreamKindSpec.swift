@@ -468,12 +468,12 @@ class StreamKindSpec: QuickSpec {
 
                 it("is correct for list mode") {
                     StreamKind.Following.setIsGridView(false)
-                    expect(StreamKind.Following.avatarHeight) == 60.0
+                    expect(StreamKind.Following.avatarHeight) == 40
                 }
 
                 it("is correct for grid mode") {
                     StreamKind.Following.setIsGridView(true)
-                    expect(StreamKind.Following.avatarHeight) == 30.0
+                    expect(StreamKind.Following.avatarHeight) == 30
                 }
             }
 

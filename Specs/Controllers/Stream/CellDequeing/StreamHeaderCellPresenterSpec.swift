@@ -116,7 +116,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     it("sets avatarHeight") {
                         cell.avatarHeight = 0
                         StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
-                        expect(cell.avatarHeight) == 60.0
+                        expect(cell.avatarHeight) == 40
                     }
                 }
             }

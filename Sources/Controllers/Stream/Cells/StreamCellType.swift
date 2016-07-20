@@ -253,7 +253,7 @@ public enum StreamCellType: Equatable {
         case Footer:
             return 44
         case Header:
-            return 90
+            return 70
         case Notification:
             return 117
         case OnboardingHeader:

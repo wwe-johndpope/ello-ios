@@ -317,7 +317,7 @@ public class StreamHeaderCell: UICollectionViewCell {
 
         let secondaryLabelY: CGFloat
         if hasRepostAuthor || hasCategory {
-            usernameButtonHeight = 27
+            usernameButtonHeight = 20
             usernameButtonY = contentView.frame.height / 2 - usernameButtonHeight
 
             if followButtonVisible {

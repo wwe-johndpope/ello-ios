@@ -2164,7 +2164,6 @@
 				1D3DED791AE170A100F1D514 /* QuickExtensions.swift */,
 				1D08320B1AAA4C360076C67D /* Resources */,
 				1DFC5DC11AAB568B008DA855 /* Styling */,
-				12D14C5F1A4375C200C6F8E8 /* SupportingFiles */,
 				12D14C601A4375CA00C6F8E8 /* Utilities */,
 				1D66803F1A8AAA06003E93C8 /* Views */,
 			);
@@ -2292,13 +2291,6 @@
 				122CD3601C6E770200B37624 /* ElloManagerSpec.swift */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		12D14C5F1A4375C200C6F8E8 /* SupportingFiles */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		12D14C601A4375CA00C6F8E8 /* Utilities */ = {
