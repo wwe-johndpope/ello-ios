@@ -1,9 +1,5 @@
-//
-//  MentionablesSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 9/23/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  MentionablesSpec.swift
 //
 
 @testable

@@ -1,9 +1,5 @@
-//
-//  PostServiceSpec.swift
-//  Ello
-//
-//  Created by Sean on 4/10/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  PostServiceSpec.swift
 //
 
 import Ello

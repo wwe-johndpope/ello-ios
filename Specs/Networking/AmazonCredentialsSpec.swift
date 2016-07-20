@@ -1,9 +1,5 @@
-//
-//  AmazonCredentialsSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 3/6/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  AmazonCredentialsSpec.swift
 //
 
 import Ello

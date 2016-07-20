@@ -1,9 +1,5 @@
-//
-//  TextRegionSpec.swift
-//  Ello
-//
-//  Created by Sean on 3/11/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  TextRegionSpec.swift
 //
 
 import Ello
@@ -61,7 +57,7 @@ class TextRegionSpec: QuickSpec {
 
                     NSKeyedArchiver.archiveRootObject(region, toFile: filePath)
                     let unArchivedRegion = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as! TextRegion
-                    
+
                     expect(unArchivedRegion).toNot(beNil())
                     expect(unArchivedRegion.version) == 1
                     expect(unArchivedRegion.content) == "test-content"

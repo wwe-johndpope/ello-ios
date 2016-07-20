@@ -1,9 +1,5 @@
-//
-//  StreamSeeMoreCommentsCellSpec.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 5/14/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamSeeMoreCommentsCellSpec.swift
 //
 
 import Ello

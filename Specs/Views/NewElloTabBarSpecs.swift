@@ -1,9 +1,5 @@
-//
-//  NewElloTabBarSpecs.swift
-//  Ello
-//
-//  Created by Colin Gray on 11/2/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NewElloTabBarSpecs.swift
 //
 
 @testable import Ello

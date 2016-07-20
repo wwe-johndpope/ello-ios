@@ -1,9 +1,5 @@
-//
-//  NSItemProviderExtensionsSpec.swift
-//  Ello
-//
-//  Created by Sean on 2/10/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  NSItemProviderExtensionsSpec.swift
 //
 
 import Ello

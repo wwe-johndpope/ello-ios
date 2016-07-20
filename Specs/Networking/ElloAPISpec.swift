@@ -1,9 +1,5 @@
-//
-//  ElloAPISpec.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 11/22/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  ElloAPISpec.swift
 //
 
 import Foundation

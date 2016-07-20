@@ -1,9 +1,5 @@
-//
-//  OnboardingSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 7/14/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  OnboardingSpec.swift
 //
 
 import Quick

@@ -1,9 +1,5 @@
-//
-//  ShareViewControllerSpec.swift
-//  Ello
-//
-//  Created by Sean on 2/9/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ShareViewControllerSpec.swift
 //
 
 import Ello

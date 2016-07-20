@@ -1,9 +1,5 @@
-//
-//  NSDateSpecs.swift
-//  Ello
-//
-//  Created by Sean on 8/6/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  NSDateSpecs.swift
 //
 
 import Foundation

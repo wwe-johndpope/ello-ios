@@ -1,9 +1,5 @@
-//
-//  AppDelegateSpec.swift
-//  Ello
-//
-//  Created by Sean on 10/27/15.
-//  Copyright © 2015 Ello. All rights reserved.
+////
+///  AppDelegateSpec.swift
 //
 
 @testable import Ello

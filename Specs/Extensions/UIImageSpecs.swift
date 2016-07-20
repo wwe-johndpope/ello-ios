@@ -1,9 +1,5 @@
-//
-//  UIImageSpecs.swift
-//  Ello
-//
-//  Created by Colin Gray on 3/30/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  UIImageSpecs.swift
 //
 
 import Ello

@@ -1,9 +1,5 @@
-//
-//  ElloNavigationControllerSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/9/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloNavigationControllerSpec.swift
 //
 
 import Ello

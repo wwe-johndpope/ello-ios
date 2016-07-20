@@ -1,9 +1,5 @@
-//
-//  ExperienceUpdateSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 1/4/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  ExperienceUpdateSpec.swift
 //
 
 @testable import Ello

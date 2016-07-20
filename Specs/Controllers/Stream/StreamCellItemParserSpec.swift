@@ -1,9 +1,5 @@
-//
-//  StreamCellItemParserSpec.swift
-//  Ello
-//
-//  Created by Sean on 2/5/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamCellItemParserSpec.swift
 //
 
 import Ello

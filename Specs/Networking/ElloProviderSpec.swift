@@ -1,9 +1,5 @@
- //
-//  ElloProviderSpec.swift
-//  Ello
-//
-//  Created by Sean Dougherty on 12/4/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+ ////
+///  ElloProviderSpec.swift
 //
 
 import Ello

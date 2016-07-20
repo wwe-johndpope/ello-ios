@@ -1,9 +1,5 @@
-//
-//  ShareTrackerOverrides.swift
-//  Ello
-//
-//  Created by Sean on 2/17/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ShareTrackerOverrides.swift
 //
 
 import Foundation

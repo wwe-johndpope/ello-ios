@@ -1,9 +1,5 @@
-//
-//  AnonymousAuthenticationSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 1/26/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  AnonymousAuthenticationSpec.swift
 //
 
 @testable import Ello

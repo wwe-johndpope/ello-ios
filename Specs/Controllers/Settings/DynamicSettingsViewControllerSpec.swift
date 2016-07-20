@@ -1,9 +1,5 @@
-//
-//  DynamicSettingsViewControllerSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 5/3/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  DynamicSettingsViewControllerSpec.swift
 //
 
 @testable import Ello

@@ -1,9 +1,5 @@
-//
-//  NotificationCellSpec.swift
-//  Ello
-//
-//  Created by Colin Gray on 1/22/2016.
-//  Copyright (c) 2016 Ello. All rights reserved.
+////
+///  NotificationCellSpec.swift
 //
 
 @testable import Ello

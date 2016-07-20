@@ -1,9 +1,5 @@
-//
-//  StreamInviteFriendsCellSpec.swift
-//  Ello
-//
-//  Created by Ryan Boyajian on 6/12/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  StreamInviteFriendsCellSpec.swift
 //
 
 import Ello
@@ -14,7 +10,7 @@ class StreamInviteFriendsCellSpec: QuickSpec {
 
     override func spec() {
         let subject: StreamInviteFriendsCell = StreamInviteFriendsCell.loadFromNib()
-        
+
         describe("initialization") {
 
             describe("nib") {

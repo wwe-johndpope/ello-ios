@@ -1,9 +1,5 @@
-//
-//  UIViewExtensionsSpec.swift
-//  Ello
-//
-//  Created by Sean on 1/25/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  UIViewExtensionsSpec.swift
 //
 
 import Ello

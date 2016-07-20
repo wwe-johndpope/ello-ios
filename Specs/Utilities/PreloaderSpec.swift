@@ -1,9 +1,5 @@
-//
-//  PreloaderSpec.swift
-//  Ello
-//
-//  Created by Sean on 4/28/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  PreloaderSpec.swift
 //
 
 @testable
