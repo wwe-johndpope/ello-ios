@@ -292,6 +292,7 @@ extension ImageRegion: Stubbable {
     class func stub(values: [String: AnyObject]) -> ImageRegion {
         let imageRegion = ImageRegion(alt: (values["alt"] as? String) ?? "imageRegion")
         imageRegion.url = urlFromValue(values["url"])
+        imageRegion.affiliateURL = urlFromValue(values["affiliateURL"])
         if let asset = values["asset"] as? Asset {
             imageRegion.addLinkObject("assets", key: asset.id, collection: MappingType.AssetsType.rawValue)
             ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)

@@ -2,7 +2,7 @@
 ///  ElloNavigationController.swift
 //
 
-public let externalWebNotification = TypedNotification<String>(name: "externalWebNotification")
+public let ExternalWebNotification = TypedNotification<String>(name: "ExternalWebNotification")
 
 public class ElloNavigationController: UINavigationController {
 

@@ -7,7 +7,7 @@ import Foundation
 extension RegionKind {
     public func streamCellTypes(regionable: Regionable) -> [StreamCellType] {
         switch self {
-        case .Image:
+        case .Image, .AffiliateImage:
             return [.Image(data: regionable)]
         case .Text:
             if let textRegion = regionable as? TextRegion {

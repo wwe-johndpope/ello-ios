@@ -931,7 +931,7 @@ extension StreamViewController: WebLinkDelegate {
              .Subdomain,
              .WhoMadeThis,
              .WTF:
-            postNotification(externalWebNotification, value: data)
+            postNotification(ExternalWebNotification, value: data)
         case .Discover,
              .DiscoverRandom,
              .DiscoverRecent,

@@ -16,6 +16,8 @@ public final class ImageRegion: JSONAble, Regionable {
     public let alt: String
     // optional
     public var url: NSURL?
+    public var affiliateURL: NSURL?
+
     // links
     public var asset: Asset? { return getLinkObject("assets") as? Asset }
 
@@ -36,6 +38,7 @@ public final class ImageRegion: JSONAble, Regionable {
         self.isRepost = decoder.decodeKey("isRepost")
         // optional
         self.url = decoder.decodeOptionalKey("url")
+        self.affiliateURL = decoder.decodeOptionalKey("affiliateURL")
         super.init(coder: decoder.coder)
     }
 
@@ -46,6 +49,7 @@ public final class ImageRegion: JSONAble, Regionable {
         coder.encodeObject(isRepost, forKey: "isRepost")
         // optional
         coder.encodeObject(url, forKey: "url")
+        coder.encodeObject(affiliateURL, forKey: "affiliateURL")
         super.encodeWithCoder(coder.coder)
     }
 
@@ -61,6 +65,9 @@ public final class ImageRegion: JSONAble, Regionable {
         // optional
         if let urlStr = json["data"]["url"].string {
             imageRegion.url = NSURL(string: urlStr)
+        }
+        if let urlStr = json["data"]["link_url"].string {
+            imageRegion.affiliateURL = NSURL(string: urlStr)
         }
         // links
         imageRegion.links = data["links"] as? [String: AnyObject]

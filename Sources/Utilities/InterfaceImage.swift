@@ -72,6 +72,9 @@ public enum InterfaceImage: String {
     // Alert
     case Question = "question"
 
+    // Affiliate
+    case Dollar = "$"
+
     // Generic
     case X = "x"
     case Dots = "dots"
@@ -96,6 +99,10 @@ public enum InterfaceImage: String {
 
     var normalImage: UIImage! {
         switch self {
+        case .Dollar:
+            let svgkImage = SVGKImage(named: "\(self.rawValue).svg")
+            svgkImage.size = CGSize(width: 6, height: 11)
+            return svgkImage.UIImage
         case .ElloLogo,
             .GiantHeart,
             .AudioPlay,
