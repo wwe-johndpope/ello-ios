@@ -67,6 +67,7 @@
                 <constraint firstItem="y6x-Lt-XSe" firstAttribute="top" secondItem="kSa-cX-STU" secondAttribute="top" constant="5" id="0Ox-QI-x5i"/>
                 <constraint firstItem="dCD-fe-L2b" firstAttribute="leading" secondItem="miB-hg-eZF" secondAttribute="leading" id="1sP-s0-8fy"/>
                 <constraint firstItem="y6x-Lt-XSe" firstAttribute="leading" secondItem="kSa-cX-STU" secondAttribute="leading" constant="5" id="5Fl-X8-Waf"/>
+                <constraint firstItem="gia-lK-VuN" firstAttribute="trailing" secondItem="y6x-Lt-XSe" secondAttribute="trailing" constant="10" id="DJB-JZ-6b0"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="trailing" secondItem="gia-lK-VuN" secondAttribute="trailing" id="Fnq-8H-pKy"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="trailing" secondItem="gia-lK-VuN" secondAttribute="trailing" id="G6D-7n-Sp9"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="top" secondItem="gia-lK-VuN" secondAttribute="top" id="H69-zr-fGU"/>
@@ -74,11 +75,11 @@
                 <constraint firstItem="qxJ-iY-xGS" firstAttribute="top" secondItem="miB-hg-eZF" secondAttribute="top" id="KIA-Af-0Ti" userLabel="Image Button.top"/>
                 <constraint firstAttribute="bottom" secondItem="gia-lK-VuN" secondAttribute="bottom" constant="10" id="Oan-UI-8ly" userLabel="imageView Bottom"/>
                 <constraint firstItem="qxJ-iY-xGS" firstAttribute="leading" secondItem="miB-hg-eZF" secondAttribute="leading" id="T34-EX-cFO" userLabel="Image Button.leading"/>
+                <constraint firstItem="y6x-Lt-XSe" firstAttribute="top" secondItem="gia-lK-VuN" secondAttribute="top" constant="10" id="TO0-EK-CDt"/>
                 <constraint firstAttribute="bottom" secondItem="qxJ-iY-xGS" secondAttribute="bottom" constant="10" id="WQQ-vD-g3W" userLabel="Image Button.bottom"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="bottom" secondItem="gia-lK-VuN" secondAttribute="bottom" constant="10" id="WWI-Th-9Du"/>
                 <constraint firstAttribute="centerY" secondItem="dZ3-hW-f3i" secondAttribute="centerY" id="XON-R3-iBY"/>
                 <constraint firstAttribute="trailing" secondItem="qxJ-iY-xGS" secondAttribute="trailing" id="d2S-3w-LCR" userLabel="Image Button.trailing"/>
-                <constraint firstAttribute="trailing" secondItem="kSa-cX-STU" secondAttribute="trailing" constant="5" id="eHl-oS-ZIC"/>
                 <constraint firstItem="gia-lK-VuN" firstAttribute="leading" secondItem="miB-hg-eZF" secondAttribute="leading" id="fgY-B3-cIH" userLabel="imageView Left"/>
                 <constraint firstItem="dCD-fe-L2b" firstAttribute="top" secondItem="miB-hg-eZF" secondAttribute="top" id="g3T-CZ-pfr"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="leading" secondItem="gia-lK-VuN" secondAttribute="leading" id="h5N-ki-gYL"/>
@@ -86,7 +87,6 @@
                 <constraint firstItem="gia-lK-VuN" firstAttribute="top" secondItem="miB-hg-eZF" secondAttribute="top" id="k2F-Aw-sEU" userLabel="imageView Top"/>
                 <constraint firstItem="kSa-cX-STU" firstAttribute="trailing" secondItem="y6x-Lt-XSe" secondAttribute="trailing" constant="5" id="kGJ-Kc-Ayy"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="top" secondItem="gia-lK-VuN" secondAttribute="top" id="ldy-Lp-cGf"/>
-                <constraint firstItem="kSa-cX-STU" firstAttribute="top" secondItem="miB-hg-eZF" secondAttribute="top" constant="5" id="lv6-Ds-9BI"/>
                 <constraint firstAttribute="centerX" secondItem="dZ3-hW-f3i" secondAttribute="centerX" id="p9H-76-dWp"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="leading" secondItem="gia-lK-VuN" secondAttribute="leading" id="pxC-Kc-Blg"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="bottom" secondItem="gia-lK-VuN" secondAttribute="bottom" constant="10" id="qHP-Rx-9dH"/>

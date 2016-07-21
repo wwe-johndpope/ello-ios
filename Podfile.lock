@@ -20,10 +20,10 @@ PODS:
     - Alamofire (~> 3.0)
   - ElloUIFonts (1.1.0)
   - Fabric (1.6.7)
-  - FBSnapshotTestCase (2.1.0):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.0)
-  - FBSnapshotTestCase/Core (2.1.0)
-  - FBSnapshotTestCase/SwiftSupport (2.1.0):
+  - FBSnapshotTestCase (2.1.2):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.2)
+  - FBSnapshotTestCase/Core (2.1.2)
+  - FBSnapshotTestCase/SwiftSupport (2.1.2):
     - FBSnapshotTestCase/Core
   - FLAnimatedImage (1.0.12)
   - ImagePickerSheetController (0.9.1)
@@ -128,7 +128,7 @@ DEPENDENCIES:
   - ElloCerts (~> 1.1)
   - ElloUIFonts (~> 1.1.0)
   - Fabric (~> 1.6)
-  - FBSnapshotTestCase
+  - FBSnapshotTestCase (from `https://github.com/ello/ios-snapshot-test-case`)
   - FLAnimatedImage (~> 1.0)
   - ImagePickerSheetController
   - iRate (~> 1.11)
@@ -157,6 +157,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/ello/onepassword-app-extension
   CRToast:
     :git: https://github.com/ello/CRToast
+  FBSnapshotTestCase:
+    :git: https://github.com/ello/ios-snapshot-test-case
   JTSImageViewController:
     :git: https://github.com/ello/JTSImageViewController
   Keys:
@@ -186,6 +188,9 @@ CHECKOUT OPTIONS:
   CRToast:
     :commit: c84bf5ff9ee16b99e45f3bf25bb5db9c386fa728
     :git: https://github.com/ello/CRToast
+  FBSnapshotTestCase:
+    :commit: 9dd0dd1ddb177adc3555df0c2dfd3b6848eaba9b
+    :git: https://github.com/ello/ios-snapshot-test-case
   JTSImageViewController:
     :commit: 4f0a918c38c7606fc5f876774cd3b96701b3f548
     :git: https://github.com/ello/JTSImageViewController
@@ -221,7 +226,7 @@ SPEC CHECKSUMS:
   ElloCerts: 13ecb93c2189b5d3bafa2b3445ccdeab4428f372
   ElloUIFonts: 16c31ba0b19e82d613df50fb6498f43560a603a2
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
-  FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
+  FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   ImagePickerSheetController: 3c58c9fee6dcf36485222358a021f6b734f997ba
   iRate: 599ed07c854e0695f3c605d1b2a64c67d912acb7
@@ -248,6 +253,6 @@ SPEC CHECKSUMS:
   WebLinking: d5b5ab4f7305bcf29821deb5cecd775f6c37efae
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 8da9daaffbd60b129ee09e5a44dd8f00c947103d
+PODFILE CHECKSUM: 067a9a85892dd3d4b719738ab3d4a726d8f8ba86
 
 COCOAPODS: 1.0.0

@@ -1,9 +1,9 @@
 {
   "region" : {
         "kind": "image",
+        "link_url": "https://amazon.com",
         "data": {
             "url": "https://example.com/test.jpg",
-            "link_url": "https://amazon.com",
             "alt": "region-alt.jpeg"
         },
         "links": {
