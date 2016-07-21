@@ -66,7 +66,7 @@ public final class ImageRegion: JSONAble, Regionable {
         if let urlStr = json["data"]["url"].string {
             imageRegion.url = NSURL(string: urlStr)
         }
-        if let urlStr = json["data"]["link_url"].string {
+        if let urlStr = json["link_url"].string {
             imageRegion.affiliateURL = NSURL(string: urlStr)
         }
         // links
