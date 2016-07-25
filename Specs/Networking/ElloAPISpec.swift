@@ -272,6 +272,15 @@ class ElloAPISpec: QuickSpec {
                     }
                 }
 
+                context("build number header") {
+                    let endpoint: ElloAPI = .AmazonCredentials
+                    it("should include build number") {
+                        let expected = NSBundle.mainBundle().infoDictionary![kCFBundleVersionKey as String] as! String
+                        expect(endpoint.headers()["X-iOS-Build-Number"]) == expected
+                        expect(endpoint.headers()["X-iOS-Build-Number"]).to(match("^\\d+$"))
+                    }
+                }
+
                 context("normal authorization required") {
                     let endpoints: [ElloAPI] = [
                         .AmazonCredentials,

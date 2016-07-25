@@ -464,7 +464,17 @@ extension ElloAPI: Moya.TargetType {
     }
 
     public func headers() -> [String: String] {
-        var assigned: [String: String] = ["Accept": "application/json", "Accept-Language": "", "Content-Type": "application/json"]
+        var assigned: [String: String] = [
+            "Accept": "application/json",
+            "Accept-Language": "",
+            "Content-Type": "application/json",
+        ]
+
+        if let info = NSBundle.mainBundle().infoDictionary,
+            buildNumber = info[kCFBundleVersionKey as String] as? String
+        {
+            assigned["X-iOS-Build-Number"] = buildNumber
+        }
 
         if self.requiresAnyToken {
             assigned += [
