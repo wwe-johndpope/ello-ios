@@ -14,7 +14,7 @@ public struct RegionParser {
                 switch kind {
                 case .Text:
                     regionable = TextRegion.fromJSON(contentDict) as! TextRegion
-                case .Image, .AffiliateImage:
+                case .Image:
                     regionable = ImageRegion.fromJSON(contentDict) as! ImageRegion
                 case .Embed:
                     regionable = EmbedRegion.fromJSON(contentDict) as! EmbedRegion
