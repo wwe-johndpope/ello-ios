@@ -277,6 +277,7 @@ class ElloAPISpec: QuickSpec {
                     it("should include build number") {
                         let expected = NSBundle.mainBundle().infoDictionary![kCFBundleVersionKey as String] as! String
                         expect(endpoint.headers()["X-iOS-Build-Number"]) == expected
+                        expect(endpoint.headers()["X-iOS-Build-Number"]).to(match("^\\d+$"))
                     }
                 }
 
