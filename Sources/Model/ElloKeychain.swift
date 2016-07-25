@@ -34,14 +34,7 @@ public struct ElloKeychain: KeychainType {
 
     public var pushToken: NSData? {
         get { return keychain[data: PushToken] }
-        set {
-            if let data = newValue {
-                _ = try? keychain.set(data, key: PushToken)
-            }
-            else {
-                _ = try? keychain.remove(PushToken)
-            }
-        }
+        set { keychain[data: PushToken] = newValue }
     }
 
     public var authToken: String? {
