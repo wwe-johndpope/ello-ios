@@ -3240,16 +3240,13 @@
 			buildConfigurationList = 124CFBA61C5976E500727D11 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
 				789575318398B341EB6741F3 /* 📦 Check Pods Manifest.lock */,
-				0CC8184F7CE566A5DDE5A6D6 /* Check Pods Manifest.lock */,
 				124CFB931C5976E500727D11 /* Sources */,
 				124CFB941C5976E500727D11 /* Frameworks */,
 				124CFB951C5976E500727D11 /* Resources */,
 				A156A84962927AEA0C15D925 /* 📦 Embed Pods Frameworks */,
 				797290A622F4D4497408142A /* 📦 Copy Pods Resources */,
 				1DB68E9A1D470D5900D446C7 /* Set version information */,
-				AB18806B68FEB9C061A54089 /* Embed Pods Frameworks */,
 				12B3D43A1C7D670500E0B975 /* Remove Frameworks */,
-				4C8C2672377DC66A319C5ECE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3265,14 +3262,11 @@
 			buildConfigurationList = 12D14C571A43752200C6F8E8 /* Build configuration list for PBXNativeTarget "Specs" */;
 			buildPhases = (
 				AE416FBABC6EBBC091565DC2 /* 📦 Check Pods Manifest.lock */,
-				4843A8A14F270258F5CCCDF6 /* Check Pods Manifest.lock */,
 				12D14C4B1A43752200C6F8E8 /* Sources */,
 				12D14C4C1A43752200C6F8E8 /* Frameworks */,
 				12D14C4D1A43752200C6F8E8 /* Resources */,
 				10DE5D897C2E614E09EEF629 /* 📦 Embed Pods Frameworks */,
 				009A461F3B7B60C67D38FF88 /* 📦 Copy Pods Resources */,
-				D7DAAD8ED76BA9D60B7997F8 /* Embed Pods Frameworks */,
-				E2F754FB63624F4908BF8F24 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3289,7 +3283,6 @@
 			buildConfigurationList = 12FEBD201A4225F600933A02 /* Build configuration list for PBXNativeTarget "Ello" */;
 			buildPhases = (
 				B76969302EEBCE6197F00D01 /* 📦 Check Pods Manifest.lock */,
-				927184C56FA8FEBB33090D9F /* Check Pods Manifest.lock */,
 				12FEBCFD1A4225F600933A02 /* Sources */,
 				12FEBCFE1A4225F600933A02 /* Frameworks */,
 				1246CD8C1CEE328400A5D77A /* SwiftLint */,
@@ -3300,8 +3293,6 @@
 				124CFBA71C5976E500727D11 /* Embed App Extensions */,
 				3E1A272FC989C6AE7364045C /* 📦 Embed Pods Frameworks */,
 				7819AAEAAFEF89C6080D0BE7 /* 📦 Copy Pods Resources */,
-				E66FC763CD7F0ADEC925CD3D /* Embed Pods Frameworks */,
-				7D35699AFAA83899DC6B8352 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3681,21 +3672,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0CC8184F7CE566A5DDE5A6D6 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		10DE5D897C2E614E09EEF629 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3768,36 +3744,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ello/Pods-Ello-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4843A8A14F270258F5CCCDF6 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		4C8C2672377DC66A319C5ECE /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7819AAEAAFEF89C6080D0BE7 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3843,36 +3789,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7D35699AFAA83899DC6B8352 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ello/Pods-Ello-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		927184C56FA8FEBB33090D9F /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		A156A84962927AEA0C15D925 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3881,21 +3797,6 @@
 			inputPaths = (
 			);
 			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AB18806B68FEB9C061A54089 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3931,51 +3832,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		D7DAAD8ED76BA9D60B7997F8 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E2F754FB63624F4908BF8F24 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E66FC763CD7F0ADEC925CD3D /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ello/Pods-Ello-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */ = {
