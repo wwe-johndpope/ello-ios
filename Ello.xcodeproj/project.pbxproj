@@ -496,10 +496,10 @@
 		1D5933931D1492D700EAF03D /* CategoryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933741D10BC8100EAF03D /* CategoryLevel.swift */; };
 		1D5933941D1492DC00EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */; };
-		1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */; };
-		1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5A90181D39747E00C2AEFF /* $.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A90171D39747E00C2AEFF /* $.svg */; };
 		1D5A901C1D3991CC00C2AEFF /* affiliate-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */; };
+		1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */; };
+		1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */; };
 		1D5F97791A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */; };
 		1D652F5A1BC2D66200AF3B06 /* PostbarControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */; };
@@ -1311,10 +1311,10 @@
 		1D5933891D147E8A00EAF03D /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		1D5933901D14855B00EAF03D /* ElloScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScreen.swift; sourceTree = "<group>"; };
 		1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
-		1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
-		1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D5A90171D39747E00C2AEFF /* $.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $.svg; sourceTree = "<group>"; };
 		1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "affiliate-image-region.json"; sourceTree = "<group>"; };
+		1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
+		1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarControllerSpec.swift; sourceTree = "<group>"; };
 		1D652F5D1BC2FDCD00AF3B06 /* ElloTabBarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTabBarSpec.swift; sourceTree = "<group>"; };
