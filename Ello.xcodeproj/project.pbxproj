@@ -3246,6 +3246,7 @@
 				124CFB951C5976E500727D11 /* Resources */,
 				A156A84962927AEA0C15D925 /* 📦 Embed Pods Frameworks */,
 				797290A622F4D4497408142A /* 📦 Copy Pods Resources */,
+				1DB68E9A1D470D5900D446C7 /* Set version information */,
 				AB18806B68FEB9C061A54089 /* Embed Pods Frameworks */,
 				12B3D43A1C7D670500E0B975 /* Remove Frameworks */,
 				4C8C2672377DC66A319C5ECE /* Copy Pods Resources */,
@@ -3737,6 +3738,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\nrm -fr Frameworks\nfi";
+		};
+		1DB68E9A1D470D5900D446C7 /* Set version information */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set version information";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list master | wc -l | tr -d ' ')\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\nfi\ndone";
 		};
 		3E1A272FC989C6AE7364045C /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
