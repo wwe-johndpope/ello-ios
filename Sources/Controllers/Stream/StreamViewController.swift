@@ -1116,9 +1116,10 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         guard let nextQueryItems = responseConfig?.nextQueryItems else { return }
-
+        var placeholderType: StreamCellType.PlaceholderType? = nil
         if dataSource.visibleCellItems.count > 0 {
             let lastCellItem: StreamCellItem = dataSource.visibleCellItems[dataSource.visibleCellItems.count - 1]
+            placeholderType = lastCellItem.placeholderType
             if lastCellItem.type == .StreamLoading { return }
             appendStreamCellItems([StreamLoadingCell.streamCellItem()])
         }
@@ -1129,7 +1130,7 @@ extension StreamViewController: UIScrollViewDelegate {
             streamKind: streamKind,
             success: {
                 (jsonables, responseConfig) in
-                self.scrollLoaded(jsonables)
+                self.scrollLoaded(jsonables, placeholderType: placeholderType)
                 self.responseConfig = responseConfig
             },
             failure: { (error, statusCode) in
