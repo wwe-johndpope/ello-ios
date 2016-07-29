@@ -437,6 +437,7 @@
 		1D22C8281AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8271AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift */; };
 		1D22C82B1AB100340048D415 /* create-comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D22C82A1AB100340048D415 /* create-comment.json */; };
 		1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */; };
+		1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */; };
 		1D24AA511B7E8CD5004BAAFA /* DebugTodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D24AA501B7E8CD5004BAAFA /* DebugTodoController.swift */; };
 		1D26E1681C52E26D0034448D /* NotificationCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */; };
 		1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */; };
@@ -1256,6 +1257,7 @@
 		1D22C8271AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentBackgroundViewSpec.swift; sourceTree = "<group>"; };
 		1D22C82A1AB100340048D415 /* create-comment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "create-comment.json"; sourceTree = "<group>"; };
 		1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewControllerSpec.swift; sourceTree = "<group>"; };
+		1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloKeychainSpec.swift; sourceTree = "<group>"; };
 		1D24AA501B7E8CD5004BAAFA /* DebugTodoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTodoController.swift; sourceTree = "<group>"; };
 		1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCellSpec.swift; sourceTree = "<group>"; };
 		1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalConfig.swift; sourceTree = "<group>"; };
@@ -2297,6 +2299,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */,
+				1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */,
 				1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */,
 				76224E441B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift */,
 				1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */,
@@ -4137,6 +4140,7 @@
 				12D14C701A43762400C6F8E8 /* ActivitySpec.swift in Sources */,
 				1229432E1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift in Sources */,
 				76FF805B1A96A28D00617A1E /* RelationshipServiceSpec.swift in Sources */,
+				1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */,
 				EA0848451AB1DCDE00B80CDA /* FakePersistentLayer.swift in Sources */,
 				12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */,
 				122C663A1B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift in Sources */,
