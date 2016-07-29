@@ -31,10 +31,10 @@ class ImageRegionSpec: QuickSpec {
 
                 let xhdpi = asset.xhdpi!
                 expect(xhdpi.url.absoluteString) == "https://example.com/85/xhdpi.jpg"
-                expect(xhdpi.size) == 728689
+                expect(xhdpi.size) == 274363
                 expect(xhdpi.type) == "image/jpeg"
-                expect(xhdpi.width) == 2560
-                expect(xhdpi.height) == 1094
+                expect(xhdpi.width) == 1500
+                expect(xhdpi.height) == 641
             }
 
             it("parses affiliate region correctly") {
@@ -57,10 +57,10 @@ class ImageRegionSpec: QuickSpec {
 
                 let xhdpi = asset.xhdpi!
                 expect(xhdpi.url.absoluteString) == "https://example.com/85/xhdpi.jpg"
-                expect(xhdpi.size) == 728689
+                expect(xhdpi.size) == 274363
                 expect(xhdpi.type) == "image/jpeg"
-                expect(xhdpi.width) == 2560
-                expect(xhdpi.height) == 1094
+                expect(xhdpi.width) == 1500
+                expect(xhdpi.height) == 641
             }
 
         }
