@@ -115,7 +115,9 @@ private extension ProfileGenerator {
                 sself.posts = posts
                 let userPostItems = sself.parse(posts)
                 displayPostsOperation.run {
-                    sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
+                    }
                 }
             },
             failure: { [weak self] _ in

@@ -106,7 +106,9 @@ private extension PostDetailGenerator {
             guard let currentUser = sself.currentUser where commentingEnabled else { return }
 
             let barItems = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .CreateComment)]
-            sself.destination?.replacePlaceholder(.PostCommentBar, items: barItems)
+            inForeground {
+                sself.destination?.replacePlaceholder(.PostCommentBar, items: barItems)
+            }
         }
     }
 
@@ -131,7 +133,9 @@ private extension PostDetailGenerator {
                 let commentItems = sself.parse(comments)
                 displayCommentsOperation.run {
                     sself.destination?.setPagingConfig(responseConfig)
-                    sself.destination?.replacePlaceholder(.PostComments, items: commentItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.PostComments, items: commentItems)
+                    }
                 }
             },
             failure: { _ in
@@ -159,7 +163,9 @@ private extension PostDetailGenerator {
                     seeMoreTitle: InterfaceString.Post.LovedByList
                 )
                 displayLoversOperation.run {
-                    sself.destination?.replacePlaceholder(.PostLovers, items: loversItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.PostLovers, items: loversItems)
+                    }
                 }
             },
             failure: { _ in
@@ -187,7 +193,9 @@ private extension PostDetailGenerator {
                     seeMoreTitle: InterfaceString.Post.RepostedByList
                 )
                 displayRepostersOperation.run {
-                    sself.destination?.replacePlaceholder(.PostReposters, items: repostersItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.PostReposters, items: repostersItems)
+                    }
                 }
             },
             failure: { _ in
