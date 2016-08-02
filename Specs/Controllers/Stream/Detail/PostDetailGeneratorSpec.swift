@@ -26,7 +26,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                 streamKind: streamKind,
                 destination: destination
             )
-            
+
             describe("load()") {
 
                 it("sets 4 placeholders") {
@@ -91,7 +91,7 @@ class PostDetailDestination: NSObject, StreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem]) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
         switch type {
         case .PostHeader:
             headerItems = items()

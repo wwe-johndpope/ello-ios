@@ -78,7 +78,7 @@ class ProfileDestination: NSObject, StreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem]) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
         switch type {
         case .ProfileHeader:
             headerItems = items()

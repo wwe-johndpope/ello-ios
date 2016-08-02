@@ -281,7 +281,12 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func replacePlaceholder(placeholderType: StreamCellType.PlaceholderType, @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem]) {
+    public func replacePlaceholder(
+        placeholderType: StreamCellType.PlaceholderType,
+        @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem],
+        completion: ElloEmptyCompletion = {}
+        )
+    {
         let streamCellItems = streamCellItemsGenerator()
         for item in streamCellItems {
             item.placeholderType = placeholderType
@@ -296,8 +301,9 @@ public final class StreamViewController: BaseElloViewController {
             self.collectionView.performBatchUpdates({
                 self.collectionView.deleteItemsAtIndexPaths(indexPathsToReplace)
                 self.collectionView.insertItemsAtIndexPaths(newIndexPaths)
-                }, completion: { finished in
-                    UIView.setAnimationsEnabled(true)
+            }, completion: { finished in
+                UIView.setAnimationsEnabled(true)
+                completion()
             })
         }
     }

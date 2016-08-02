@@ -211,8 +211,13 @@ public final class PostDetailViewController: StreamableViewController {
 // MARK: PostDetailViewController: StreamDestination
 extension PostDetailViewController: StreamDestination {
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem]) {
-        streamViewController.replacePlaceholder(type, with: items)
+    public var pagingEnabled: Bool {
+        get { return streamViewController.pagingEnabled }
+        set { streamViewController.pagingEnabled = newValue }
+    }
+
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+        streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 
     public func setPlaceholders(items: [StreamCellItem]) {
