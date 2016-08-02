@@ -236,6 +236,7 @@ public class StreamImageCell: StreamRegionableCell {
         guard let buyButtonURL = buyButtonURL else {
             return
         }
+        Tracker.sharedTracker.affiliateLinkVisited(buyButtonURL.URLString)
         postNotification(ExternalWebNotification, value: buyButtonURL.URLString)
     }
 
