@@ -62,6 +62,7 @@ class ProfileDestination: NSObject, StreamDestination {
     var otherPlaceHolderLoaded = false
     var user: User?
     var responseConfig: ResponseConfig?
+    var pagingEnabled: Bool = false
 
     override init(){ super.init() }
 

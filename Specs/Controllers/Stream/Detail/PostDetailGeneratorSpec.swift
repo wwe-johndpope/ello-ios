@@ -71,6 +71,7 @@ class PostDetailDestination: NSObject, StreamDestination {
     var otherPlaceHolderLoaded = false
     var post: Post?
     var responseConfig: ResponseConfig?
+    var pagingEnabled: Bool = false
 
     override init(){ super.init() }
 
