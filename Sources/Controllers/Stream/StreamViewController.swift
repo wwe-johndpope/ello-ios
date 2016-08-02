@@ -106,6 +106,7 @@ public final class StreamViewController: BaseElloViewController {
     public var postbarController: PostbarController?
     var relationshipController: RelationshipController?
     public var responseConfig: ResponseConfig?
+    public var pagingEnabled = false
     private var scrollToPaginateGuard = false
 
     public let streamService = StreamService()
@@ -302,8 +303,9 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     public func loadInitialPage(reload reload: Bool = false) {
-
         if let reloadClosure = reloadClosure where reload {
+            responseConfig = nil
+            pagingEnabled = false
             reloadClosure()
         }
         else if let initialLoadClosure = initialLoadClosure {
@@ -346,6 +348,7 @@ public final class StreamViewController: BaseElloViewController {
 
         let items = self.generateStreamCellItems(jsonables)
         self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
+            self.pagingEnabled = true
             if self.streamKind.gridViewPreferenceSet {
                 self.collectionView.layoutIfNeeded()
                 self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
@@ -1114,6 +1117,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
     private func loadNextPage(scrollView: UIScrollView) {
         guard
+            pagingEnabled &&
             scrollView.contentOffset.y + (self.view.frame.height * 1.666)
             > scrollView.contentSize.height
         else { return }
