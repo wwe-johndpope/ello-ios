@@ -83,7 +83,7 @@ private extension ProfileGenerator {
         StreamService().loadUser(
             streamKind.endpoint,
             streamKind: streamKind,
-            success: { [weak self] (user, responseConfig) in
+            success: { [weak self] (user, _) in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
 

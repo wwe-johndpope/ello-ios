@@ -77,7 +77,7 @@ private extension PostDetailGenerator {
         PostService().loadPost(
             postParam,
             needsComments: false,
-            success: { [weak self] (post, responseConfig) in
+            success: { [weak self] (post, _) in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.post = post
