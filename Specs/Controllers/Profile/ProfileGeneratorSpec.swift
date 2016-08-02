@@ -54,7 +54,7 @@ class ProfileGeneratorSpec: QuickSpec {
     }
 }
 
-class ProfileDestination: NSObject, StreamDestination {
+class ProfileDestination: StreamDestination {
 
     var placeholderItems: [StreamCellItem] = []
     var headerItems: [StreamCellItem] = []
@@ -63,8 +63,6 @@ class ProfileDestination: NSObject, StreamDestination {
     var user: User?
     var responseConfig: ResponseConfig?
     var pagingEnabled: Bool = false
-
-    override init(){ super.init() }
 
     func reset() {
         placeholderItems = []
