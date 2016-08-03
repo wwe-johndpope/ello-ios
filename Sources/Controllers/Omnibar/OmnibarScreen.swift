@@ -885,31 +885,13 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         let okCancelAction = AlertAction(title: "", style: .OKCancel) { _ in
             if let urlString = alertController.actionInputs.safeValue(0) {
-                handler(self.requestLinkValidator(urlString))
+                handler(NSURL.shorthand(urlString))
             }
         }
         alertController.addAction(okCancelAction)
 
         logPresentingAlert("OmnibarViewController")
         delegate?.omnibarPresentController(alertController)
-    }
-
-    func requestLinkValidator(urlString: String) -> NSURL? {
-        var url: NSURL?
-        if let urlTest = NSURL(string: urlString) where urlTest.scheme != "" {
-            url = urlTest
-        }
-        else if let urlTest = NSURL(string: "http://\(urlString)") {
-            url = urlTest
-        }
-        else {
-            return nil
-        }
-
-        if let host = url?.host where host =~ "\\w+\\.\\w+" {
-            return url
-        }
-        return nil
     }
 
 // MARK: Post logic

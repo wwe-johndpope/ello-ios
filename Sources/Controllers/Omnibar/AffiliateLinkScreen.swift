@@ -139,26 +139,12 @@ public class AffiliateLinkScreen: UIView {
     }
 
     func productLinkDidChange() {
-        submitButton.enabled = isValidLink(productLinkField.text)
-    }
-
-    func isValidLink(urlString: String?) -> Bool {
-        guard let urlString = urlString else {
-            return false
+        if let url = productLinkField.text {
+            submitButton.enabled = NSURL.isValidShorthand(url)
         }
-
-        var url: NSURL?
-        if let urlTest = NSURL(string: urlString) where urlTest.scheme != "" {
-            url = urlTest
+        else {
+            submitButton.enabled = false
         }
-        else if let urlTest = NSURL(string: "http://\(urlString)") {
-            url = urlTest
-        }
-
-        if let host = url?.host where host =~ "\\w+\\.\\w+" {
-            return true
-        }
-        return false
     }
 
     func closeModal() {
@@ -170,15 +156,7 @@ public class AffiliateLinkScreen: UIView {
             return
         }
 
-        var url: NSURL?
-        if let urlTest = NSURL(string: urlString) where urlTest.scheme != "" {
-            url = urlTest
-        }
-        else if let urlTest = NSURL(string: "http://\(urlString)") {
-            url = urlTest
-        }
-
-        if let url = url {
+        if let url = NSURL.shorthand(urlString) {
             delegate?.submitLink(url)
         }
         closeModal()
