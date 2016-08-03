@@ -6,7 +6,7 @@ public protocol OmnibarScreenDelegate: class {
     func omnibarCancel()
     func omnibarPushController(controller: UIViewController)
     func omnibarPresentController(controller: UIViewController)
-    func omnibarDismissController(controller: UIViewController)
+    func omnibarDismissController()
     func omnibarSubmitted(regions: [OmnibarRegion], affiliateURL: NSURL?)
 }
 

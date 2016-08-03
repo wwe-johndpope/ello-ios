@@ -341,7 +341,7 @@ extension OmnibarViewController: OmnibarScreenDelegate {
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
-    public func omnibarDismissController(controller: UIViewController) {
+    public func omnibarDismissController() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 

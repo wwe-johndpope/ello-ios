@@ -31,7 +31,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
 
     public func imagePickerController(controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
         func done() {
-            self.delegate?.omnibarDismissController(controller)
+            self.delegate?.omnibarDismissController()
         }
 
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -53,7 +53,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
     }
 
     public func imagePickerControllerDidCancel(controller: UIImagePickerController) {
-        delegate?.omnibarDismissController(controller)
+        delegate?.omnibarDismissController()
     }
 
     private func isGif(buffer: UnsafeMutablePointer<UInt8>, length: Int) -> Bool {
