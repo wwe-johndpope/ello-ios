@@ -101,7 +101,7 @@ public final class ImageRegion: JSONAble, Regionable {
         }
 
         if let affiliateURL = affiliateURL {
-            json["link_url"] = affiliateURL
+            json["link_url"] = affiliateURL.absoluteString
         }
         return json
     }
