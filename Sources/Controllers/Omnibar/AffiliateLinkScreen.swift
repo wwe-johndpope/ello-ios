@@ -11,6 +11,15 @@ public protocol AffiliateLinkDelegate: class {
 }
 
 public class AffiliateLinkScreen: UIView {
+    struct Size {
+        static let topMargin: CGFloat = 120
+        static let sideMargin: CGFloat = 10
+        static let textFieldOffset: CGFloat = 40
+        static let textFieldHeight: CGFloat = 60
+        static let buttonHeight: CGFloat = 60
+        static let cancelOffset: CGFloat = 25
+    }
+
     let backgroundButton = UIButton()
     let titleLabel = UILabel()
     let productLinkField = ElloTextField()
@@ -105,36 +114,36 @@ public class AffiliateLinkScreen: UIView {
         }
 
         titleLabel.snp_makeConstraints { make in
-            make.top.equalTo(self).offset(120)
-            make.leading.equalTo(self).offset(10)
+            make.top.equalTo(self).offset(Size.topMargin)
+            make.leading.equalTo(self).offset(Size.sideMargin)
         }
 
         productLinkField.snp_makeConstraints { make in
-            make.top.equalTo(titleLabel.snp_bottom).offset(40)
-            make.leading.equalTo(self).offset(10)
-            make.trailing.equalTo(self).offset(-10)
-            make.height.equalTo(60)
+            make.top.equalTo(titleLabel.snp_bottom).offset(Size.textFieldOffset)
+            make.leading.equalTo(self).offset(Size.sideMargin)
+            make.trailing.equalTo(self).offset(-Size.sideMargin)
+            make.height.equalTo(Size.textFieldHeight)
         }
 
         submitButton.snp_makeConstraints { make in
-            make.top.equalTo(productLinkField.snp_bottom).offset(10)
-            make.leading.equalTo(self).offset(10)
-            submitButtonTrailingRight = make.trailing.equalTo(self).offset(-10).constraint
-            submitButtonTrailingRemove = make.trailing.equalTo(removeButton.snp_leading).offset(-10).constraint
-            make.height.equalTo(60)
+            make.top.equalTo(productLinkField.snp_bottom).offset(Size.sideMargin)
+            make.leading.equalTo(self).offset(Size.sideMargin)
+            submitButtonTrailingRight = make.trailing.equalTo(self).offset(-Size.sideMargin).constraint
+            submitButtonTrailingRemove = make.trailing.equalTo(removeButton.snp_leading).offset(-Size.sideMargin).constraint
+            make.height.equalTo(Size.buttonHeight)
         }
         submitButtonTrailingRemove!.deactivate()
 
         removeButton.snp_makeConstraints { make in
-            make.top.equalTo(productLinkField.snp_bottom).offset(10)
-            make.width.equalTo(self).dividedBy(2).offset(-20)
-            make.trailing.equalTo(self).offset(-10).constraint
-            make.height.equalTo(60)
+            make.top.equalTo(productLinkField.snp_bottom).offset(Size.sideMargin)
+            make.width.equalTo(self).dividedBy(2).offset(-2 * Size.sideMargin)
+            make.trailing.equalTo(self).offset(-Size.sideMargin).constraint
+            make.height.equalTo(Size.buttonHeight)
         }
 
         cancelLabel.snp_makeConstraints { make in
-            make.top.equalTo(submitButton.snp_bottom).offset(25)
-            make.leading.equalTo(self).offset(10)
+            make.top.equalTo(submitButton.snp_bottom).offset(Size.cancelOffset)
+            make.leading.equalTo(self).offset(Size.sideMargin)
         }
     }
 
