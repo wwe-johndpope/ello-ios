@@ -29,24 +29,31 @@ public class OmnibarImageCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        self.style()
+        arrange()
+    }
+
+    required public init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func style() {
         flImageView.clipsToBounds = true
         flImageView.contentMode = .ScaleAspectFit
-        contentView.addSubview(flImageView)
-
         affiliateButton.backgroundColor = .greenD1()
         affiliateButton.adjustsImageWhenDisabled = false
         affiliateButton.adjustsImageWhenHighlighted = false
         affiliateButton.setImage(.Affiliate, imageStyle: .Normal, forState: .Normal)
         affiliateButton.setImage(.Affiliate, imageStyle: .Normal, forState: .Disabled)
-        affiliateButton.frame.size = CGSize(width: 35, height: 35)
         affiliateButton.layer.cornerRadius = affiliateButton.frame.size.width / 2
         affiliateButton.hidden = true
         affiliateButton.enabled = false
-        contentView.addSubview(affiliateButton)
     }
 
-    required public init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func arrange() {
+        affiliateButton.frame.size = CGSize(width: 35, height: 35)
+        contentView.addSubview(flImageView)
+        contentView.addSubview(affiliateButton)
     }
 
     override public func layoutSubviews() {
