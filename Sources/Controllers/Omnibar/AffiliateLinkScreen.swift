@@ -27,8 +27,8 @@ public class AffiliateLinkScreen: UIView {
     let removeButton = GreenElloButton()
     let cancelLabel = UILabel()
 
-    var submitButtonTrailingRight: Constraint?
-    var submitButtonTrailingRemove: Constraint?
+    var submitButtonTrailingRight: Constraint!
+    var submitButtonTrailingRemove: Constraint!
 
     weak var delegate: AffiliateLinkDelegate?
 
@@ -37,14 +37,14 @@ public class AffiliateLinkScreen: UIView {
         set {
             if let affiliateURL = newValue {
                 productLinkField.text = affiliateURL.absoluteString
-                submitButtonTrailingRight?.deactivate()
-                submitButtonTrailingRemove?.activate()
+                submitButtonTrailingRight.deactivate()
+                submitButtonTrailingRemove.activate()
                 removeButton.hidden = false
             }
             else {
                 productLinkField.text = ""
-                submitButtonTrailingRight?.activate()
-                submitButtonTrailingRemove?.deactivate()
+                submitButtonTrailingRight.activate()
+                submitButtonTrailingRemove.deactivate()
                 removeButton.hidden = true
             }
             productLinkDidChange()
@@ -132,7 +132,7 @@ public class AffiliateLinkScreen: UIView {
             submitButtonTrailingRemove = make.trailing.equalTo(removeButton.snp_leading).offset(-Size.sideMargin).constraint
             make.height.equalTo(Size.buttonHeight)
         }
-        submitButtonTrailingRemove!.deactivate()
+        submitButtonTrailingRemove.deactivate()
 
         removeButton.snp_makeConstraints { make in
             make.top.equalTo(productLinkField.snp_bottom).offset(Size.sideMargin)
