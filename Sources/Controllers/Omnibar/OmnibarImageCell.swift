@@ -29,8 +29,8 @@ public class OmnibarImageCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.style()
         arrange()
+        self.style()
     }
 
     required public init(coder: NSCoder) {
