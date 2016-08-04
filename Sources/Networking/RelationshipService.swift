@@ -24,8 +24,11 @@ public class RelationshipService: NSObject {
                 subjectId: userId
             )
 
-        optimisticRelationship.subject?.relationshipPriority = relationshipPriority
-        success(data: optimisticRelationship, responseConfig: ResponseConfig(isFinalValue: false))
+        if let subject = optimisticRelationship.subject {
+            subject.relationshipPriority = relationshipPriority
+            ElloLinkedStore.sharedInstance.setObject(subject, forKey: subject.id, inCollection: MappingType.UsersType.rawValue)
+            success(data: optimisticRelationship, responseConfig: ResponseConfig(isFinalValue: false))
+        }
 
         let endpoint = ElloAPI.Relationship(userId: userId, relationship: relationshipPriority.rawValue)
         ElloProvider.shared.elloRequest(endpoint, success: { (data, responseConfig) in
