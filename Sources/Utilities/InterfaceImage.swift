@@ -72,10 +72,10 @@ public enum InterfaceImage: String {
     // Alert
     case Question = "question"
 
-    // Affiliate
-    case Affiliate = "$"
-    case AddAffiliate = "$_add"
-    case SetAffiliate = "$_set"
+    // BuyButton
+    case BuyButton = "$"
+    case AddBuyButton = "$_add"
+    case SetBuyButton = "$_set"
 
     // Generic
     case X = "x"
@@ -101,9 +101,9 @@ public enum InterfaceImage: String {
 
     var overrideImageSize: CGSize? {
         switch self {
-        case .Affiliate: return CGSize(width: 6, height: 11)
-        case .AddAffiliate: return CGSize(width: 12, height: 16.5)
-        case .SetAffiliate: return CGSize(width: 12, height: 16.5)
+        case .BuyButton: return CGSize(width: 6, height: 11)
+        case .AddBuyButton: return CGSize(width: 12, height: 16.5)
+        case .SetBuyButton: return CGSize(width: 12, height: 16.5)
         default: return nil
         }
     }
@@ -119,7 +119,7 @@ public enum InterfaceImage: String {
     var normalImage: UIImage! {
         switch self {
         case .ElloLogo,
-            .Affiliate,
+            .BuyButton,
             .GiantHeart,
             .AudioPlay,
             .VideoPlay,
@@ -159,7 +159,7 @@ public enum InterfaceImage: String {
     }
     var disabledImage: UIImage? {
         switch self {
-        case .Repost, .AngleBracket, .AddAffiliate:
+        case .Repost, .AngleBracket, .AddBuyButton:
             return svgNamed("\(self.rawValue)_disabled")
         default:
             return nil

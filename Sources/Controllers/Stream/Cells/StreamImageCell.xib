@@ -40,11 +40,11 @@
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rkb-Ls-8Ph" userLabel="largeImagePlayButton">
                         <rect key="frame" x="0.0" y="0.0" width="587" height="119"/>
                     </imageView>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-Lt-XSe" userLabel="affiliateGreen">
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-Lt-XSe" userLabel="buyButtonGreen">
                         <rect key="frame" x="547" y="10" width="30" height="30"/>
                         <color key="backgroundColor" red="0.42269808050000002" green="0.96766740080000002" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSa-cX-STU" userLabel="affiliateButton">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSa-cX-STU" userLabel="buyButton">
                         <rect key="frame" x="542" y="5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="kSa-cX-STU" secondAttribute="height" multiplier="1:1" id="GBy-k3-n2q"/>
@@ -55,7 +55,7 @@
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="affiliateTapped" destination="miB-hg-eZF" eventType="touchUpInside" id="B9i-yp-Xts"/>
+                            <action selector="buyButtonTapped" destination="miB-hg-eZF" eventType="touchUpInside" id="B9i-yp-Xts"/>
                         </connections>
                     </button>
                 </subviews>
@@ -95,8 +95,8 @@
             </constraints>
             <size key="customSize" width="587" height="119"/>
             <connections>
-                <outlet property="affiliateButton" destination="kSa-cX-STU" id="G82-ui-I2c"/>
-                <outlet property="affiliateGreen" destination="y6x-Lt-XSe" id="MeT-fk-oQt"/>
+                <outlet property="buyButton" destination="kSa-cX-STU" id="G82-ui-I2c"/>
+                <outlet property="buyButtonGreen" destination="y6x-Lt-XSe" id="MeT-fk-oQt"/>
                 <outlet property="circle" destination="oJN-Vf-OgU" id="Q8k-qa-AY4"/>
                 <outlet property="failBackgroundView" destination="dCD-fe-L2b" id="e57-v3-v7X"/>
                 <outlet property="failHeightConstraint" destination="rrc-8v-4Nf" id="0CL-Ew-7CO"/>

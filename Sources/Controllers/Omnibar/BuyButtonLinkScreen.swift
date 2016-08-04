@@ -1,16 +1,16 @@
 ////
-///  AffiliateLinkScreen.swift
+///  BuyButtonLinkScreen.swift
 //
 
 import SnapKit
 
-public protocol AffiliateLinkDelegate: class {
+public protocol BuyButtonLinkDelegate: class {
     func closeModal()
     func submitLink(url: NSURL)
     func clearLink()
 }
 
-public class AffiliateLinkScreen: UIView {
+public class BuyButtonLinkScreen: UIView {
     struct Size {
         static let topMargin: CGFloat = 120
         static let sideMargin: CGFloat = 10
@@ -30,13 +30,13 @@ public class AffiliateLinkScreen: UIView {
     var submitButtonTrailingRight: Constraint!
     var submitButtonTrailingRemove: Constraint!
 
-    weak var delegate: AffiliateLinkDelegate?
+    weak var delegate: BuyButtonLinkDelegate?
 
-    var affiliateURL: NSURL? {
+    var buyButtonURL: NSURL? {
         get { return NSURL(string: productLinkField.text ?? "") }
         set {
-            if let affiliateURL = newValue {
-                productLinkField.text = affiliateURL.absoluteString
+            if let buyButtonURL = newValue {
+                productLinkField.text = buyButtonURL.absoluteString
                 submitButtonTrailingRight.deactivate()
                 submitButtonTrailingRemove.activate()
                 removeButton.hidden = false

@@ -34,20 +34,20 @@ public struct ImageRegionData {
     let image: UIImage
     let data: NSData?
     let contentType: String?
-    let affiliateURL: NSURL?
+    let buyButtonURL: NSURL?
 
-    public init(image: UIImage, affiliateURL: NSURL?) {
+    public init(image: UIImage, buyButtonURL: NSURL?) {
         self.image = image
         self.data = nil
         self.contentType = nil
-        self.affiliateURL = affiliateURL
+        self.buyButtonURL = buyButtonURL
     }
 
-    public init(image: UIImage, data: NSData, contentType: String, affiliateURL: NSURL?) {
+    public init(image: UIImage, data: NSData, contentType: String, buyButtonURL: NSURL?) {
         self.image = image
         self.data = data
         self.contentType = contentType
-        self.affiliateURL = affiliateURL
+        self.buyButtonURL = buyButtonURL
     }
 
 }
@@ -84,7 +84,7 @@ public class PostEditingService: NSObject {
     }
 
     // rawSections is String or UIImage objects
-    func create(content rawContent: [PostContentRegion], affiliateURL: NSURL?, success: CreatePostSuccessCompletion, failure: ElloFailureCompletion) {
+    func create(content rawContent: [PostContentRegion], buyButtonURL: NSURL?, success: CreatePostSuccessCompletion, failure: ElloFailureCompletion) {
         var textEntries = [(Int, String)]()
         var imageDataEntries = [(Int, ImageRegionData)]()
 
@@ -95,9 +95,9 @@ public class PostEditingService: NSObject {
             case let .Text(text):
                 textEntries.append((index, text))
             case let .Image(image):
-                imageDataEntries.append((index, ImageRegionData(image: image, affiliateURL: affiliateURL)))
+                imageDataEntries.append((index, ImageRegionData(image: image, buyButtonURL: buyButtonURL)))
             case let .ImageData(image, data, type):
-                imageDataEntries.append((index, ImageRegionData(image: image, data: data, contentType: type, affiliateURL: affiliateURL)))
+                imageDataEntries.append((index, ImageRegionData(image: image, data: data, contentType: type, buyButtonURL: buyButtonURL)))
             }
         }
 
@@ -206,7 +206,7 @@ public class PostEditingService: NSObject {
                 }
 
                 let (imageIndex, imageRegionData) = dataEntry
-                let (image, data, contentType, affiliateURL) = (imageRegionData.image, imageRegionData.data, imageRegionData.contentType, imageRegionData.affiliateURL)
+                let (image, data, contentType, buyButtonURL) = (imageRegionData.image, imageRegionData.data, imageRegionData.contentType, imageRegionData.buyButtonURL)
 
                 let filename: String
                 switch contentType ?? "" {
@@ -230,7 +230,7 @@ public class PostEditingService: NSObject {
                         success: { url in
                             let imageRegion = ImageRegion(alt: filename)
                             imageRegion.url = url
-                            imageRegion.affiliateURL = affiliateURL
+                            imageRegion.buyButtonURL = buyButtonURL
 
                             if let url = url {
                                 let asset = Asset(url: url, gifData: data, posterImage: image)
@@ -249,7 +249,7 @@ public class PostEditingService: NSObject {
                         success: { url in
                             let imageRegion = ImageRegion(alt: filename)
                             imageRegion.url = url
-                            imageRegion.affiliateURL = affiliateURL
+                            imageRegion.buyButtonURL = buyButtonURL
 
                             if let url = url {
                                 let asset = Asset(url: url, image: image)

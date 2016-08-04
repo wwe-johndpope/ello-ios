@@ -42,14 +42,14 @@ class OmnibarScreenSnapshotSpecs: QuickSpec {
                     subject.regions = [.Image(smallImage)]
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
                 } }
-                context("with image and affiliate link") { it("should have a valid snapshot") {
+                context("with image and buyButton link") { it("should have a valid snapshot") {
                     subject.regions = [.Image(image)]
-                    subject.affiliateURL = NSURL(string: "https://ello.co")
+                    subject.buyButtonURL = NSURL(string: "https://ello.co")
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
                 } }
-                context("with small image and affiliate link") { it("should have a valid snapshot") {
+                context("with small image and buyButton link") { it("should have a valid snapshot") {
                     subject.regions = [.Image(smallImage)]
-                    subject.affiliateURL = NSURL(string: "https://ello.co")
+                    subject.buyButtonURL = NSURL(string: "https://ello.co")
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
                 } }
             }
@@ -69,9 +69,9 @@ class OmnibarScreenSnapshotSpecs: QuickSpec {
                     subject.regions = [.Image(image)]
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
                 } }
-                context("with image and affiliate link") { it("should have a valid snapshot") {
+                context("with image and buyButton link") { it("should have a valid snapshot") {
                     subject.regions = [.Image(image)]
-                    subject.affiliateURL = NSURL(string: "https://ello.co")
+                    subject.buyButtonURL = NSURL(string: "https://ello.co")
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
                 } }
             }

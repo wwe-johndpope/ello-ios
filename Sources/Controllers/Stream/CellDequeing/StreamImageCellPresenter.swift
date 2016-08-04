@@ -105,7 +105,7 @@ public struct StreamImageCellPresenter {
             cell.setImageURL(imageURL)
         }
 
-        cell.affiliateURL = imageRegion.affiliateURL
+        cell.buyButtonURL = imageRegion.buyButtonURL
         cell.layoutIfNeeded()
     }
 }

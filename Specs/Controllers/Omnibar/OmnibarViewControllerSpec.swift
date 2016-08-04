@@ -16,7 +16,7 @@ class OmnibarMockScreen: OmnibarScreenProtocol {
     var title: String = ""
     var submitTitle: String = ""
     var avatarURL: NSURL?
-    var affiliateURL: NSURL?
+    var buyButtonURL: NSURL?
     var avatarImage: UIImage?
     var currentUser: User?
     var regions = [OmnibarRegion]()
@@ -199,7 +199,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         screen = OmnibarMockScreen()
                         subject.screen = screen
                         showController(subject)
-                        subject.omnibarSubmitted(regions, affiliateURL: nil)
+                        subject.omnibarSubmitted(regions, buyButtonURL: nil)
 
                         expect(screen.interactionEnabled) == false
                         ElloProvider.sharedProvider = ElloProvider.StubbingProvider()
@@ -214,7 +214,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         screen = OmnibarMockScreen()
                         subject.screen = screen
                         showController(subject)
-                        subject.omnibarSubmitted(regions, affiliateURL: nil)
+                        subject.omnibarSubmitted(regions, buyButtonURL: nil)
 
                         expect(screen.interactionEnabled) == true
                     }

@@ -47,7 +47,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     public typealias IndexedRegion = (Int?, OmnibarRegion)
-    public var affiliateURL: NSURL? {
+    public var buyButtonURL: NSURL? {
         didSet { updateButtons() }
     }
     public var regions: [OmnibarRegion] {
@@ -140,7 +140,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 // MARK: toolbar buttons
     var toolbarButtonViews: [UIView]!
     let avatarButton = UIButton()
-    let affiliateButton = UIButton()
+    let buyButton = UIButton()
     let cancelButton = UIButton()
     let reorderButton = UIButton()
     let cameraButton = UIButton()
@@ -253,13 +253,13 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     // buttons that make up the "toolbar"
     private func setupToolbarButtons() {
-        affiliateButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 11, bottom: 4, right: 8)
-        affiliateButton.adjustsImageWhenDisabled = false
-        affiliateButton.adjustsImageWhenHighlighted = false
-        affiliateButton.setImages(.AddAffiliate)
-        affiliateButton.setImage(.AddAffiliate, imageStyle: .Disabled, forState: .Disabled)
-        affiliateButton.enabled = false
-        affiliateButton.addTarget(self, action: #selector(affiliateButtonTapped), forControlEvents: .TouchUpInside)
+        buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 11, bottom: 4, right: 8)
+        buyButton.adjustsImageWhenDisabled = false
+        buyButton.adjustsImageWhenHighlighted = false
+        buyButton.setImages(.AddBuyButton)
+        buyButton.setImage(.AddBuyButton, imageStyle: .Disabled, forState: .Disabled)
+        buyButton.enabled = false
+        buyButton.addTarget(self, action: #selector(buyButtonTapped), forControlEvents: .TouchUpInside)
 
         cancelButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
         cancelButton.setImages(.X)
@@ -381,7 +381,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
 
         toolbarButtonViews = [
-            affiliateButton,
+            buyButton,
             cancelButton,
             reorderButton,
             cameraButton,
@@ -702,8 +702,8 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     public func updateButtons() {
-        if !hasImage() && affiliateURL != nil {
-            affiliateURL = nil  // this calls updateButtons() again
+        if !hasImage() && buyButtonURL != nil {
+            buyButtonURL = nil  // this calls updateButtons() again
             return
         }
 
@@ -711,15 +711,15 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         keyboardSubmitButton.enabled = canSubmit
         tabbarSubmitButton.enabled = canSubmit
 
-        let canAddAffiliateLink = !reordering && hasImage()
-        affiliateButton.enabled = canAddAffiliateLink
-        affiliateButton.hidden = isComment
+        let canAddBuyButtonLink = !reordering && hasImage()
+        buyButton.enabled = canAddBuyButtonLink
+        buyButton.hidden = isComment
 
-        if affiliateURL == nil {
-            affiliateButton.setImages(.AddAffiliate)
+        if buyButtonURL == nil {
+            buyButton.setImages(.AddBuyButton)
         }
         else {
-            affiliateButton.setImages(.SetAffiliate)
+            buyButton.setImages(.SetBuyButton)
         }
     }
 
@@ -754,12 +754,12 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     public func submitAction() {
         if canPost() {
             stopEditing()
-            delegate?.omnibarSubmitted(submitableRegions, affiliateURL: affiliateURL)
+            delegate?.omnibarSubmitted(submitableRegions, buyButtonURL: buyButtonURL)
         }
     }
 
-    public func affiliateButtonTapped() {
-        let vc = AffiliateLinkViewController(affiliateURL: affiliateURL)
+    public func buyButtonTapped() {
+        let vc = BuyButtonLinkViewController(buyButtonURL: buyButtonURL)
         vc.delegate = self
         delegate?.omnibarPresentController(vc)
     }

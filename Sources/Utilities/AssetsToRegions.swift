@@ -31,12 +31,12 @@ public struct AssetsToRegions {
             }
 
             if UIImage.isGif(imageData) {
-                newStack.append(ImageRegionData(image: image, data: imageData, contentType: "image/gif", affiliateURL: nil))
+                newStack.append(ImageRegionData(image: image, data: imageData, contentType: "image/gif", buyButtonURL: nil))
                 done()
             }
             else {
                 image.copyWithCorrectOrientationAndSize() { image in
-                    newStack.append(ImageRegionData(image: image, affiliateURL: nil))
+                    newStack.append(ImageRegionData(image: image, buyButtonURL: nil))
                     done()
                 }
             }

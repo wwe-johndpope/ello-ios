@@ -499,7 +499,7 @@
 		1D5933941D1492DC00EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */; };
 		1D5A90181D39747E00C2AEFF /* $.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A90171D39747E00C2AEFF /* $.svg */; };
-		1D5A901C1D3991CC00C2AEFF /* affiliate-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */; };
+		1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */; };
 		1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */; };
@@ -557,9 +557,9 @@
 		1D9B74D51BB1E62500ACD028 /* bubble_tail.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */; };
 		1D9BF3D01A8E815E00A5F5C2 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */; };
 		1D9CF9971D47F6C1004A95B7 /* 422_sparse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9961D47F6C1004A95B7 /* 422_sparse.json */; };
-		1D9CF9991D4800AE004A95B7 /* AffiliateLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF9981D4800AE004A95B7 /* AffiliateLinkViewController.swift */; };
-		1D9CF99B1D4800C4004A95B7 /* AffiliateLinkScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99A1D4800C4004A95B7 /* AffiliateLinkScreen.swift */; };
-		1D9CF99D1D481F70004A95B7 /* OmnibarScreenAffiliateLinkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99C1D481F70004A95B7 /* OmnibarScreenAffiliateLinkControllerDelegate.swift */; };
+		1D9CF9991D4800AE004A95B7 /* BuyButtonLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF9981D4800AE004A95B7 /* BuyButtonLinkViewController.swift */; };
+		1D9CF99B1D4800C4004A95B7 /* BuyButtonLinkScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */; };
+		1D9CF99D1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */; };
 		1D9CF9A01D4925BE004A95B7 /* OmnibarCacheData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */; };
 		1D9CF9A11D4925BE004A95B7 /* OmnibarImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */; };
 		1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9A21D496639004A95B7 /* $_set_normal.svg */; };
@@ -1327,7 +1327,7 @@
 		1D5933901D14855B00EAF03D /* ElloScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScreen.swift; sourceTree = "<group>"; };
 		1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
 		1D5A90171D39747E00C2AEFF /* $.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $.svg; sourceTree = "<group>"; };
-		1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "affiliate-image-region.json"; sourceTree = "<group>"; };
+		1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "buy-button-image-region.json"; sourceTree = "<group>"; };
 		1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
@@ -1386,9 +1386,9 @@
 		1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bubble_tail.svg; sourceTree = "<group>"; };
 		1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		1D9CF9961D47F6C1004A95B7 /* 422_sparse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 422_sparse.json; sourceTree = "<group>"; };
-		1D9CF9981D4800AE004A95B7 /* AffiliateLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateLinkViewController.swift; sourceTree = "<group>"; };
-		1D9CF99A1D4800C4004A95B7 /* AffiliateLinkScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AffiliateLinkScreen.swift; sourceTree = "<group>"; };
-		1D9CF99C1D481F70004A95B7 /* OmnibarScreenAffiliateLinkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenAffiliateLinkControllerDelegate.swift; sourceTree = "<group>"; };
+		1D9CF9981D4800AE004A95B7 /* BuyButtonLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyButtonLinkViewController.swift; sourceTree = "<group>"; };
+		1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyButtonLinkScreen.swift; sourceTree = "<group>"; };
+		1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenBuyButtonLinkControllerDelegate.swift; sourceTree = "<group>"; };
 		1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarCacheData.swift; sourceTree = "<group>"; };
 		1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarImageData.swift; sourceTree = "<group>"; };
 		1D9CF9A21D496639004A95B7 /* $_set_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_set_normal.svg; sourceTree = "<group>"; };
@@ -2048,8 +2048,8 @@
 		12551FB81A68725100ABC5D9 /* Omnibar */ = {
 			isa = PBXGroup;
 			children = (
-				1D9CF99A1D4800C4004A95B7 /* AffiliateLinkScreen.swift */,
-				1D9CF9981D4800AE004A95B7 /* AffiliateLinkViewController.swift */,
+				1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */,
+				1D9CF9981D4800AE004A95B7 /* BuyButtonLinkViewController.swift */,
 				1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */,
 				1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */,
 				1D783A281B838FDD00BD6BF4 /* OmnibarImageCell.swift */,
@@ -2059,7 +2059,7 @@
 				1DF50C8F1C614C4400C62D89 /* OmnibarProtocols.swift */,
 				1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */,
 				1DE176FB1B82626E00272145 /* OmnibarScreen.swift */,
-				1D9CF99C1D481F70004A95B7 /* OmnibarScreenAffiliateLinkControllerDelegate.swift */,
+				1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */,
 				1DF50C961C614C6900C62D89 /* OmnibarScreenAutocomplete.swift */,
 				1DF50C911C614C4400C62D89 /* OmnibarScreenTableViewDelegate.swift */,
 				1D783A291B838FDD00BD6BF4 /* OmnibarTextCell.swift */,
@@ -2930,7 +2930,7 @@
 			isa = PBXGroup;
 			children = (
 				1D9CF9961D47F6C1004A95B7 /* 422_sparse.json */,
-				1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */,
+				1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */,
 				1DC10FA31C3DEB7600846ED6 /* availability__error.json */,
 				1DC10FA41C3DEB7600846ED6 /* availability.json */,
 				1D5933721D10BB5B00EAF03D /* categories.json */,
@@ -3612,7 +3612,7 @@
 				128C5AF51C59802600EFC226 /* (null) in Resources */,
 				1217A3EE1B0CFCDA00DF8495 /* ImportPromptViewController.xib in Resources */,
 				1D9B74D31BB1E62500ACD028 /* bubble_body_white.svg in Resources */,
-				1D5A901C1D3991CC00C2AEFF /* affiliate-image-region.json in Resources */,
+				1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */,
 				1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */,
 				76F8DEB61B6C0BC4009BCF61 /* bubble_normal.svg in Resources */,
 				12A313D91C73ECAA009727DD /* unselected-pixel@2x.png in Resources */,
@@ -4327,7 +4327,7 @@
 				1DE261351B0D38A400475325 /* UIImageViewExtensions.swift in Sources */,
 				1D9D17111AE72394009841A4 /* UIViewController.swift in Sources */,
 				122B30E21C6A3FBF00C1B9D8 /* User.swift in Sources */,
-				1D9CF99B1D4800C4004A95B7 /* AffiliateLinkScreen.swift in Sources */,
+				1D9CF99B1D4800C4004A95B7 /* BuyButtonLinkScreen.swift in Sources */,
 				1D783A2A1B838FDD00BD6BF4 /* OmnibarImageCell.swift in Sources */,
 				1DFF43521A8D520E00D43CFF /* NotificationCell.swift in Sources */,
 				1D807DAE1B06B88E009B0F71 /* CoverImageSelectionViewController.swift in Sources */,
@@ -4342,7 +4342,7 @@
 				1DA46D4E1B0BAE88003C5DFE /* OnboardingHeaderView.swift in Sources */,
 				1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */,
 				1D2B50BD1D2C2FC000F6CE90 /* CategoryService.swift in Sources */,
-				1D9CF9991D4800AE004A95B7 /* AffiliateLinkViewController.swift in Sources */,
+				1D9CF9991D4800AE004A95B7 /* BuyButtonLinkViewController.swift in Sources */,
 				122B30C91C6A3FBC00C1B9D8 /* Availability.swift in Sources */,
 				122B30F31C6A3FC500C1B9D8 /* TextRegion.swift in Sources */,
 				12DD85C61B015A76004D3EEF /* UITabBarItem.swift in Sources */,
@@ -4426,7 +4426,7 @@
 				F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */,
 				122B30E31C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */,
 				1D3328501AE751D200446591 /* SearchScreen.swift in Sources */,
-				1D9CF99D1D481F70004A95B7 /* OmnibarScreenAffiliateLinkControllerDelegate.swift in Sources */,
+				1D9CF99D1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift in Sources */,
 				1207C9851C73FEE000939ADB /* MultipartRequestBuilder.swift in Sources */,
 				122B30D51C6A3FBC00C1B9D8 /* Notification.swift in Sources */,
 				128D36B91A951F7400622833 /* ProfileHeaderCellPresenter.swift in Sources */,

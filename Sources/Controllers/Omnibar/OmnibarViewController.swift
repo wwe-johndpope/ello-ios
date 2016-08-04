@@ -225,7 +225,7 @@ public class OmnibarViewController: BaseElloViewController {
 
     func prepareScreenForEditing(content: [Regionable], isComment: Bool) {
         var regions: [OmnibarRegion] = []
-        var affiliateURL: NSURL?
+        var buyButtonURL: NSURL?
         var downloads: [(Int, NSURL)] = []  // the 'index' is used to replace the ImageURL region after it is downloaded
         for (index, region) in content.enumerate() {
             if let region = region as? TextRegion,
@@ -236,8 +236,8 @@ public class OmnibarViewController: BaseElloViewController {
             else if let region = region as? ImageRegion,
                 url = region.url
             {
-                if let imageRegionURL = region.affiliateURL {
-                    affiliateURL = imageRegionURL
+                if let imageRegionURL = region.buyButtonURL {
+                    buyButtonURL = imageRegionURL
                 }
                 downloads.append((index, url))
                 regions.append(.ImageURL(url))
@@ -245,7 +245,7 @@ public class OmnibarViewController: BaseElloViewController {
         }
         screen.regions = regions
         screen.isComment = isComment
-        screen.affiliateURL = affiliateURL
+        screen.buyButtonURL = buyButtonURL
 
         let completed = after(downloads.count) {
             ElloHUD.hideLoadingHudInView(self.view)
@@ -345,14 +345,14 @@ extension OmnibarViewController: OmnibarScreenDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    public func omnibarSubmitted(regions: [OmnibarRegion], affiliateURL: NSURL?) {
+    public func omnibarSubmitted(regions: [OmnibarRegion], buyButtonURL: NSURL?) {
         let content = generatePostContent(regions)
         guard content.count > 0 else {
             return
         }
 
         if let authorId = currentUser?.id {
-            startPosting(authorId, content, affiliateURL: affiliateURL)
+            startPosting(authorId, content, buyButtonURL: buyButtonURL)
         }
         else {
             contentCreationFailed(InterfaceString.App.LoggedOutError)
@@ -390,7 +390,7 @@ extension OmnibarViewController {
         return content
     }
 
-    private func startPosting(authorId: String, _ content: [PostEditingService.PostContentRegion], affiliateURL: NSURL?) {
+    private func startPosting(authorId: String, _ content: [PostEditingService.PostContentRegion], buyButtonURL: NSURL?) {
         let service: PostEditingService
         let didGoToPreviousTab: Bool
 
@@ -417,7 +417,7 @@ extension OmnibarViewController {
         screen.interactionEnabled = false
         service.create(
             content: content,
-            affiliateURL: affiliateURL,
+            buyButtonURL: buyButtonURL,
             success: { postOrComment in
                 ElloHUD.hideLoadingHudInView(self.view)
                 self.screen.interactionEnabled = true

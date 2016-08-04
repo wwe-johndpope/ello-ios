@@ -212,8 +212,8 @@ class StreamImageCellPresenterSpec: QuickSpec {
                     }
                 }
 
-                context("affiliate link") {
-                    it("hides affiliateButton by default") {
+                context("buyButton link") {
+                    it("hides buyButton by default") {
                         let post: Post = stub(["id" : "768"])
 
                         let imageRegion: ImageRegion = stub([
@@ -225,16 +225,16 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
 
-                        expect(cell.affiliateButton?.hidden) == true
-                        expect(cell.affiliateGreen?.hidden) == true
+                        expect(cell.buyButton?.hidden) == true
+                        expect(cell.buyButtonGreen?.hidden) == true
                     }
 
-                    it("shows affiliateButton if link is present") {
+                    it("shows buyButton if link is present") {
                         let post: Post = stub(["id" : "768"])
 
                         let imageRegion: ImageRegion = stub([
                             "alt" : "some-altness",
-                            "affiliateURL" : NSURL(string: "https://amazon.com")!
+                            "buyButtonURL" : NSURL(string: "https://amazon.com")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -242,8 +242,8 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
 
-                        expect(cell.affiliateButton?.hidden) == false
-                        expect(cell.affiliateGreen?.hidden) == false
+                        expect(cell.buyButton?.hidden) == false
+                        expect(cell.buyButtonGreen?.hidden) == false
                     }
                 }
             }

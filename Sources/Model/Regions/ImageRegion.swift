@@ -16,7 +16,7 @@ public final class ImageRegion: JSONAble, Regionable {
     public let alt: String
     // optional
     public var url: NSURL?
-    public var affiliateURL: NSURL?
+    public var buyButtonURL: NSURL?
 
     // links
     public var asset: Asset? { return getLinkObject("assets") as? Asset }
@@ -38,7 +38,7 @@ public final class ImageRegion: JSONAble, Regionable {
         self.isRepost = decoder.decodeKey("isRepost")
         // optional
         self.url = decoder.decodeOptionalKey("url")
-        self.affiliateURL = decoder.decodeOptionalKey("affiliateURL")
+        self.buyButtonURL = decoder.decodeOptionalKey("buyButtonURL")
         super.init(coder: decoder.coder)
     }
 
@@ -49,7 +49,7 @@ public final class ImageRegion: JSONAble, Regionable {
         coder.encodeObject(isRepost, forKey: "isRepost")
         // optional
         coder.encodeObject(url, forKey: "url")
-        coder.encodeObject(affiliateURL, forKey: "affiliateURL")
+        coder.encodeObject(buyButtonURL, forKey: "buyButtonURL")
         super.encodeWithCoder(coder.coder)
     }
 
@@ -67,7 +67,7 @@ public final class ImageRegion: JSONAble, Regionable {
             imageRegion.url = NSURL(string: urlStr)
         }
         if let urlStr = json["link_url"].string {
-            imageRegion.affiliateURL = NSURL(string: urlStr)
+            imageRegion.buyButtonURL = NSURL(string: urlStr)
         }
         // links
         imageRegion.links = data["links"] as? [String: AnyObject]
@@ -100,8 +100,8 @@ public final class ImageRegion: JSONAble, Regionable {
             ]
         }
 
-        if let affiliateURL = affiliateURL {
-            json["link_url"] = affiliateURL.absoluteString
+        if let buyButtonURL = buyButtonURL {
+            json["link_url"] = buyButtonURL.absoluteString
         }
         return json
     }

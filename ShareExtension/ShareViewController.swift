@@ -78,7 +78,7 @@ private extension ShareViewController {
     func postContent(content: [PostEditingService.PostContentRegion]) {
         postService.create(
             content: content,
-            affiliateURL: nil,
+            buyButtonURL: nil,
             success: { post in
 //                Tracker.sharedTracker.shareSuccessful()
                 self.donePosting()

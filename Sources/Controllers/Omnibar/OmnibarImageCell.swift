@@ -12,9 +12,9 @@ public class OmnibarImageCell: UITableViewCell {
     }
 
     public let flImageView = FLAnimatedImageView()
-    public let affiliateButton = UIButton()
+    public let buyButton = UIButton()
     public var reordering = false
-    public var hasAffiliateURL = false
+    public var hasBuyButtonURL = false
 
     public var omnibarImage: UIImage? {
         get { return flImageView.image }
@@ -40,20 +40,20 @@ public class OmnibarImageCell: UITableViewCell {
     private func style() {
         flImageView.clipsToBounds = true
         flImageView.contentMode = .ScaleAspectFit
-        affiliateButton.backgroundColor = .greenD1()
-        affiliateButton.adjustsImageWhenDisabled = false
-        affiliateButton.adjustsImageWhenHighlighted = false
-        affiliateButton.setImage(.Affiliate, imageStyle: .Normal, forState: .Normal)
-        affiliateButton.setImage(.Affiliate, imageStyle: .Normal, forState: .Disabled)
-        affiliateButton.layer.cornerRadius = affiliateButton.frame.size.width / 2
-        affiliateButton.hidden = true
-        affiliateButton.enabled = false
+        buyButton.backgroundColor = .greenD1()
+        buyButton.adjustsImageWhenDisabled = false
+        buyButton.adjustsImageWhenHighlighted = false
+        buyButton.setImage(.BuyButton, imageStyle: .Normal, forState: .Normal)
+        buyButton.setImage(.BuyButton, imageStyle: .Normal, forState: .Disabled)
+        buyButton.layer.cornerRadius = buyButton.frame.size.width / 2
+        buyButton.hidden = true
+        buyButton.enabled = false
     }
 
     private func arrange() {
-        affiliateButton.frame.size = CGSize(width: 35, height: 35)
+        buyButton.frame.size = CGSize(width: 35, height: 35)
         contentView.addSubview(flImageView)
-        contentView.addSubview(affiliateButton)
+        contentView.addSubview(buyButton)
     }
 
     override public func layoutSubviews() {
@@ -64,13 +64,13 @@ public class OmnibarImageCell: UITableViewCell {
             margins = Size.editingMargins
 
             flImageView.contentMode = .ScaleAspectFill
-            affiliateButton.hidden = true
+            buyButton.hidden = true
         }
         else {
             margins = UIEdgeInsets(all: 0)
 
             flImageView.contentMode = .ScaleAspectFit
-            affiliateButton.hidden = !hasAffiliateURL
+            buyButton.hidden = !hasBuyButtonURL
         }
 
         let innerFrame = contentView.bounds
@@ -82,8 +82,8 @@ public class OmnibarImageCell: UITableViewCell {
                 height: min(intrinsicSize.height, innerFrame.size.height)
             )).inset(margins)
 
-        affiliateButton.frame.origin = CGPoint(
-            x: flImageView.frame.maxX - 10 - affiliateButton.frame.size.width,
+        buyButton.frame.origin = CGPoint(
+            x: flImageView.frame.maxX - 10 - buyButton.frame.size.width,
             y: 10
             )
     }

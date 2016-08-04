@@ -13,7 +13,7 @@ class OmnibarScreenMockDelegate : OmnibarScreenDelegate {
     var didDismissController = false
     var didPushController = false
     var submitted = false
-    var hasAffiliateURL = false
+    var hasBuyButtonURL = false
 
     func omnibarCancel() {
         didGoBack = true
@@ -27,9 +27,9 @@ class OmnibarScreenMockDelegate : OmnibarScreenDelegate {
     func omnibarDismissController() {
         didDismissController = true
     }
-    func omnibarSubmitted(regions: [OmnibarRegion], affiliateURL: NSURL?) {
+    func omnibarSubmitted(regions: [OmnibarRegion], buyButtonURL: NSURL?) {
         submitted = true
-        hasAffiliateURL = affiliateURL != nil
+        hasBuyButtonURL = buyButtonURL != nil
     }
 }
 
@@ -145,16 +145,16 @@ class OmnibarScreenSpec: QuickSpec {
                         beforeEach {
                             subject.isComment = false
                         }
-                        it("should show the affiliateButton") {
-                            expect(subject.affiliateButton.hidden) == false
+                        it("should show the buyButton") {
+                            expect(subject.buyButton.hidden) == false
                         }
                     }
                     context("when true") {
                         beforeEach {
                             subject.isComment = true
                         }
-                        it("should hide the affiliateButton") {
-                            expect(subject.affiliateButton.hidden) == true
+                        it("should hide the buyButton") {
+                            expect(subject.buyButton.hidden) == true
                         }
                     }
                 }
@@ -354,8 +354,8 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.keyboardSubmitButton.enabled) == false
                             expect(subject.tabbarSubmitButton.enabled) == false
                         }
-                        it("should disable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == false
+                        it("should disable buyButton") {
+                            expect(subject.buyButton.enabled) == false
                         }
                     }
                     context("if posts have text") {
@@ -367,8 +367,8 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.keyboardSubmitButton.enabled) == true
                             expect(subject.tabbarSubmitButton.enabled) == true
                         }
-                        it("should disable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == false
+                        it("should disable buyButton") {
+                            expect(subject.buyButton.enabled) == false
                         }
                     }
                     context("if posts have text and images") {
@@ -380,8 +380,8 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.keyboardSubmitButton.enabled) == true
                             expect(subject.tabbarSubmitButton.enabled) == true
                         }
-                        it("should enable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == true
+                        it("should enable buyButton") {
+                            expect(subject.buyButton.enabled) == true
                         }
                     }
                     context("if reordering and posts have text") {
@@ -397,8 +397,8 @@ class OmnibarScreenSpec: QuickSpec {
                         it("should enable cancelling") {
                             expect(subject.cancelButton.enabled) == true
                         }
-                        it("should disable affiliate button") {
-                            expect(subject.affiliateButton.enabled) == false
+                        it("should disable buyButton button") {
+                            expect(subject.buyButton.enabled) == false
                         }
                     }
                     context("if reordering and posts have text and images") {
@@ -414,8 +414,8 @@ class OmnibarScreenSpec: QuickSpec {
                         it("should enable cancelling") {
                             expect(subject.cancelButton.enabled) == true
                         }
-                        it("should disable affiliate button") {
-                            expect(subject.affiliateButton.enabled) == false
+                        it("should disable buyButton button") {
+                            expect(subject.buyButton.enabled) == false
                         }
                     }
                     context("if not reordering") {
@@ -437,8 +437,8 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.regions[0].isText) == true
                             expect(subject.regions[0].empty) == true
                         }
-                        it("should disable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == false
+                        it("should disable buyButton") {
+                            expect(subject.buyButton.enabled) == false
                         }
                     }
                     context("setting to one text region array") {
@@ -450,8 +450,8 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.regions[0].isText) == true
                             expect(subject.regions[0].empty) == false
                         }
-                        it("should disable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == false
+                        it("should disable buyButton") {
+                            expect(subject.buyButton.enabled) == false
                         }
                     }
                     context("setting to one image region") {
@@ -464,8 +464,8 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.regions[1].isText) == true
                             expect(subject.regions[1].text?.string) == ""
                         }
-                        it("should enable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == true
+                        it("should enable buyButton") {
+                            expect(subject.buyButton.enabled) == true
                         }
                     }
                 }
@@ -842,7 +842,7 @@ class OmnibarScreenSpec: QuickSpec {
                 ]
                 for (name, regions, path, expectations) in expectationRules {
                     describe("for \(name) at row \(path.row)") {
-                        let expectedAffiliateButton = expectations.reduce(false) { return $0 || $1.matches(.Image(UIImage())) }
+                        let expectedBuyButton = expectations.reduce(false) { return $0 || $1.matches(.Image(UIImage())) }
                         beforeEach {
                             subject.regions = regions
                             subject.reorderingTable(true)
@@ -858,8 +858,8 @@ class OmnibarScreenSpec: QuickSpec {
                             }
                         }
 
-                        it("should set affiliateButton.enabled to \(expectedAffiliateButton)") {
-                            expect(subject.affiliateButton.enabled) == expectedAffiliateButton
+                        it("should set buyButton.enabled to \(expectedBuyButton)") {
+                            expect(subject.buyButton.enabled) == expectedBuyButton
                         }
                     }
                 }
@@ -895,8 +895,8 @@ class OmnibarScreenSpec: QuickSpec {
                                 expect(expectation.matches(region)) == true
                             }
                         }
-                        it("should enable affiliateButton") {
-                            expect(subject.affiliateButton.enabled) == true
+                        it("should enable buyButton") {
+                            expect(subject.buyButton.enabled) == true
                         }
                     }
                 }
