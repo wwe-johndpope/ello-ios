@@ -99,21 +99,8 @@ public enum InterfaceImage: String {
         }
     }
 
-    var overrideImageSize: CGSize? {
-        switch self {
-        case .BuyButton: return CGSize(width: 6, height: 11)
-        case .AddBuyButton: return CGSize(width: 12, height: 16.5)
-        case .SetBuyButton: return CGSize(width: 12, height: 16.5)
-        default: return nil
-        }
-    }
-
     private func svgNamed(name: String) -> UIImage {
-        let svgkImage = SVGKImage(named: "\(name).svg")
-        if let overrideImageSize = overrideImageSize {
-            svgkImage.size = overrideImageSize
-        }
-        return svgkImage.UIImage
+        return SVGKImage(named: "\(name).svg").UIImage
     }
 
     var normalImage: UIImage! {
