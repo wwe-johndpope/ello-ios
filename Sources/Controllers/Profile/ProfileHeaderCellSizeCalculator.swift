@@ -37,7 +37,9 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
 
     private func processJob(job: CellJob) {
         self.completion = {
-            self.cellJobs.removeAtIndex(0)
+            if self.cellJobs.count > 0 {
+                self.cellJobs.removeAtIndex(0)
+            }
             job.completion()
             if let nextJob = self.cellJobs.safeValue(0) {
                 self.processJob(nextJob)
