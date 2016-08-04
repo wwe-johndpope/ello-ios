@@ -390,6 +390,12 @@ public extension Tracker {
         log("Deep Link Visited, [path: \(path)]")
         agent.track("Deep Link Visited", properties: ["path": path])
     }
+    
+    func affiliateLinkVisited(path: String) {
+        log("Affliliate Link Visited, [link: \(path)]")
+        agent.track("Affiliate Link Visited", properties: ["link": path])
+    }
+
 }
 
 // MARK: Content Actions
