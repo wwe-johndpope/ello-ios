@@ -25,12 +25,19 @@ class NSURLExtensionSpec: QuickSpec {
 
         describe("isValidShorthand") {
             let expectations: [(String, Bool)] = [
-                ("http://ello.co", true),
-                ("https://ello.co/destination", true),
+                ("", false),
+                ("http://", false),
+                ("://", false),
+                ("://ello.co", false),
+                ("ello", false),
+                ("http://ello", false),
+                ("http://ello.", false),
+                ("http://ello/foo.html", false),
+
                 ("ello.co", true),
-                ("ello.co/destination", true),
-                ("bla", false),
-                ("bla/bla/bla", false),
+                ("http://ello.co", true),
+                ("https://ello.co", true),
+                ("http://any.where/foo", true),
             ]
             for (url, expected) in expectations {
                 it("\(url) should\(expected ? "" : " not") be valid") {
