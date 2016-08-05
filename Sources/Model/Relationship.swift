@@ -21,7 +21,6 @@ public final class Relationship: JSONAble {
     public var owner: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.ownerId, inCollection: MappingType.UsersType.rawValue) as? User
     }
-
     public var subject: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.subjectId, inCollection: MappingType.UsersType.rawValue) as? User
     }

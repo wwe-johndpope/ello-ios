@@ -55,7 +55,6 @@ extension RelationshipController: RelationshipDelegate {
     }
 
     public func updateRelationship(currentUserId: String, userId: String, prev prevPriority: RelationshipPriority, relationshipPriority newRelationshipPriority: RelationshipPriority, complete: RelationshipChangeCompletion) {
-
         var prevRelationshipPriority = prevPriority
         RelationshipService().updateRelationship(currentUserId: currentUserId, userId: userId, relationshipPriority: newRelationshipPriority,
             success: { (data, responseConfig) in
