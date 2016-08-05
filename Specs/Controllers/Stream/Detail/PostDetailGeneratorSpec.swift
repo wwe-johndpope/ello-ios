@@ -9,33 +9,34 @@ import Nimble
 class PostDetailGeneratorSpec: QuickSpec {
     override func spec() {
         describe("PostDetailGenerator") {
-            let destination = PostDetailDestination()
-
-            beforeEach {
-                destination.reset()
-            }
-
             let currentUser: User = stub(["id": "42"])
             let post: Post = stub(["id": "123"])
             let streamKind: StreamKind = .CurrentUserStream
+            var destination: PostDetailDestination!
+            var subject: PostDetailGenerator!
 
-            let subject = PostDetailGenerator(
-                currentUser: currentUser,
-                postParam: "123",
-                post: post,
-                streamKind: streamKind,
-                destination: destination
-            )
-            
+            beforeEach {
+                destination = PostDetailDestination()
+                subject = PostDetailGenerator(
+                    currentUser: currentUser,
+                    postParam: "123",
+                    post: post,
+                    streamKind: streamKind,
+                    destination: destination
+                )
+            }
+
             describe("load()") {
 
-                it("sets 4 placeholders") {
+                beforeEach {
                     subject.load()
+                }
+
+                it("sets placeholders") {
                     expect(destination.placeholderItems.count) == 6
                 }
 
-                it("replaces only PostHeader, PostLovers, PostReposters and PostComment") {
-                    subject.load()
+                it("replaces the appropriate placeholders") {
                     expect(destination.headerItems.count) > 0
                     expect(destination.postLoverItems.count) > 0
                     expect(destination.postReposterItems.count) > 0
@@ -46,12 +47,11 @@ class PostDetailGeneratorSpec: QuickSpec {
                 }
 
                 it("sets the primary jsonable") {
-                    subject.load()
                     expect(destination.post).toNot(beNil())
+                    expect(destination.post?.id) == "123"
                 }
 
                 it("sets the config response") {
-                    subject.load()
                     expect(destination.responseConfig).toNot(beNil())
                 }
             }
@@ -59,7 +59,7 @@ class PostDetailGeneratorSpec: QuickSpec {
     }
 }
 
-class PostDetailDestination: NSObject, StreamDestination {
+class PostDetailDestination: StreamDestination {
 
     var placeholderItems: [StreamCellItem] = []
     var headerItems: [StreamCellItem] = []
@@ -71,8 +71,7 @@ class PostDetailDestination: NSObject, StreamDestination {
     var otherPlaceHolderLoaded = false
     var post: Post?
     var responseConfig: ResponseConfig?
-
-    override init(){ super.init() }
+    var pagingEnabled: Bool = false
 
     func reset() {
         placeholderItems = []
@@ -91,7 +90,7 @@ class PostDetailDestination: NSObject, StreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem]) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
         switch type {
         case .PostHeader:
             headerItems = items()

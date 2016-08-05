@@ -677,9 +677,13 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "terms": terms
             ]
+        case .UserStream:
+            return [
+                "post_count": "false"
+            ]
         case .UserStreamPosts:
             return [
-                "per_page": 10
+                "post_count": 10
             ]
         default:
             return nil

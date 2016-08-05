@@ -12,6 +12,9 @@ public class AsyncOperation: NSOperation {
         set {
             guard _block == nil else { return }
             _block = newValue
+            if AppSetup.sharedState.isTesting {
+                usleep(1000)
+            }
             if cancelled && _executing {
                 executing = false
             }

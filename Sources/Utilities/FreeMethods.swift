@@ -126,7 +126,7 @@ public func once(block: BasicBlock) -> BasicBlock {
 }
 
 public func inBackground(block: BasicBlock) {
-    if AppSetup.sharedState.isTesting && NSThread.isMainThread() {
+    if AppSetup.sharedState.isTesting {
         block()
     }
     else {
@@ -139,8 +139,13 @@ public func inForeground(block: BasicBlock) {
 }
 
 public func nextTick(block: BasicBlock) {
-    if AppSetup.sharedState.isTesting && NSThread.isMainThread() {
-        block()
+    if AppSetup.sharedState.isTesting {
+        if NSThread.isMainThread() {
+            block()
+        }
+        else {
+            dispatch_sync(dispatch_get_main_queue(), block)
+        }
     }
     else {
         nextTick(on: dispatch_get_main_queue(), block: block)

@@ -65,7 +65,7 @@ private extension PostDetailGenerator {
         destination?.setPrimaryJSONAble(post)
         if post.content?.count > 0 || post.repostContent?.count > 0 {
             let postItems = parse([post])
-            destination?.replacePlaceholder(.PostHeader, items: postItems)
+            destination?.replacePlaceholder(.PostHeader, items: postItems) {}
             doneOperation.run()
         }
     }
@@ -77,13 +77,13 @@ private extension PostDetailGenerator {
         PostService().loadPost(
             postParam,
             needsComments: false,
-            success: { [weak self] (post, responseConfig) in
+            success: { [weak self] (post, _) in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.post = post
                 sself.destination?.setPrimaryJSONAble(post)
                 let postItems = sself.parse([post])
-                sself.destination?.replacePlaceholder(.PostHeader, items: postItems)
+                sself.destination?.replacePlaceholder(.PostHeader, items: postItems) {}
                 doneOperation.run()
             },
             failure: { [weak self] _ in
@@ -106,13 +106,15 @@ private extension PostDetailGenerator {
             guard let currentUser = sself.currentUser where commentingEnabled else { return }
 
             let barItems = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .CreateComment)]
-            sself.destination?.replacePlaceholder(.PostCommentBar, items: barItems)
+            inForeground {
+                sself.destination?.replacePlaceholder(.PostCommentBar, items: barItems) {}
+            }
         }
     }
 
     func displaySocialPadding() {
         let padding = [StreamCellItem(jsonable: JSONAble.fromJSON([:], fromLinked: false), type: .Spacer(height: 8.0))]
-        destination?.replacePlaceholder(.PostSocialPadding, items: padding)
+        destination?.replacePlaceholder(.PostSocialPadding, items: padding) {}
     }
 
     func loadPostComments(doneOperation: AsyncOperation) {
@@ -131,7 +133,11 @@ private extension PostDetailGenerator {
                 let commentItems = sself.parse(comments)
                 displayCommentsOperation.run {
                     sself.destination?.setPagingConfig(responseConfig)
-                    sself.destination?.replacePlaceholder(.PostComments, items: commentItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.PostComments, items: commentItems) {
+                            sself.destination?.pagingEnabled = true
+                        }
+                    }
                 }
             },
             failure: { _ in
@@ -159,7 +165,9 @@ private extension PostDetailGenerator {
                     seeMoreTitle: InterfaceString.Post.LovedByList
                 )
                 displayLoversOperation.run {
-                    sself.destination?.replacePlaceholder(.PostLovers, items: loversItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.PostLovers, items: loversItems) {}
+                    }
                 }
             },
             failure: { _ in
@@ -187,7 +195,9 @@ private extension PostDetailGenerator {
                     seeMoreTitle: InterfaceString.Post.RepostedByList
                 )
                 displayRepostersOperation.run {
-                    sself.destination?.replacePlaceholder(.PostReposters, items: repostersItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.PostReposters, items: repostersItems) {}
+                    }
                 }
             },
             failure: { _ in

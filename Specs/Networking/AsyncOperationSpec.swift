@@ -78,11 +78,16 @@ class AsyncOperationSpec: QuickSpec {
                     var executed = false
                     let subject = AsyncOperation()
                     queue.addOperation(subject)
-                    queue.cancelAllOperations()
-                    subject.run {
-                        executed = true
+                    waitUntil { done in
+                        delay(0.1) {
+                            expect(subject.executing) == true
+                            queue.cancelAllOperations()
+                            subject.run {
+                                executed = true
+                            }
+                            done()
+                        }
                     }
-                    queue.waitUntilAllOperationsAreFinished()
 
                     expect(executed) == false
                 }

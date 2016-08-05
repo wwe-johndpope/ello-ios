@@ -54,7 +54,7 @@ public final class ProfileGenerator: StreamGenerator {
 
     public func toggleGrid() {
         guard let posts = posts else { return }
-        destination?.replacePlaceholder(.ProfilePosts, items: parse(posts))
+        destination?.replacePlaceholder(.ProfilePosts, items: parse(posts)) {}
     }
 
 }
@@ -72,7 +72,7 @@ private extension ProfileGenerator {
         guard let user = user else { return }
 
         destination?.setPrimaryJSONAble(user)
-        destination?.replacePlaceholder(.ProfileHeader, items: headerItems())
+        destination?.replacePlaceholder(.ProfileHeader, items: headerItems()) {}
         doneOperation.run()
     }
 
@@ -83,13 +83,13 @@ private extension ProfileGenerator {
         StreamService().loadUser(
             streamKind.endpoint,
             streamKind: streamKind,
-            success: { [weak self] (user, responseConfig) in
+            success: { [weak self] (user, _) in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
 
                 sself.user = user
                 sself.destination?.setPrimaryJSONAble(user)
-                sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems())
+                sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems()) {}
                 doneOperation.run()
             },
             failure: { [weak self] _ in
@@ -115,7 +115,11 @@ private extension ProfileGenerator {
                 sself.posts = posts
                 let userPostItems = sself.parse(posts)
                 displayPostsOperation.run {
-                    sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
+                    inForeground {
+                        sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems) {
+                            sself.destination?.pagingEnabled = true
+                        }
+                    }
                 }
             },
             failure: { [weak self] _ in

@@ -71,7 +71,6 @@ public final class StreamViewController: BaseElloViewController {
     @IBOutlet weak public var noResultsLabel: UILabel!
     @IBOutlet weak public var noResultsTopConstraint: NSLayoutConstraint!
     private let defaultNoResultsTopConstant: CGFloat = 113
-    var canLoadNext = false
 
     var currentJSONables = [JSONAble]()
 
@@ -107,6 +106,9 @@ public final class StreamViewController: BaseElloViewController {
     public var postbarController: PostbarController?
     var relationshipController: RelationshipController?
     public var responseConfig: ResponseConfig?
+    public var pagingEnabled = false
+    private var scrollToPaginateGuard = false
+
     public let streamService = StreamService()
     lazy public var loadingToken: LoadingToken = {
         var token = LoadingToken()
@@ -279,7 +281,12 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func replacePlaceholder(placeholderType: StreamCellType.PlaceholderType, @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem]) {
+    public func replacePlaceholder(
+        placeholderType: StreamCellType.PlaceholderType,
+        @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem],
+        completion: ElloEmptyCompletion = {}
+        )
+    {
         let streamCellItems = streamCellItemsGenerator()
         for item in streamCellItems {
             item.placeholderType = placeholderType
@@ -294,15 +301,17 @@ public final class StreamViewController: BaseElloViewController {
             self.collectionView.performBatchUpdates({
                 self.collectionView.deleteItemsAtIndexPaths(indexPathsToReplace)
                 self.collectionView.insertItemsAtIndexPaths(newIndexPaths)
-                }, completion: { finished in
-                    UIView.setAnimationsEnabled(true)
+            }, completion: { finished in
+                UIView.setAnimationsEnabled(true)
+                completion()
             })
         }
     }
 
     public func loadInitialPage(reload reload: Bool = false) {
-
         if let reloadClosure = reloadClosure where reload {
+            responseConfig = nil
+            pagingEnabled = false
             reloadClosure()
         }
         else if let initialLoadClosure = initialLoadClosure {
@@ -345,6 +354,7 @@ public final class StreamViewController: BaseElloViewController {
 
         let items = self.generateStreamCellItems(jsonables)
         self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
+            self.pagingEnabled = true
             if self.streamKind.gridViewPreferenceSet {
                 self.collectionView.layoutIfNeeded()
                 self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
@@ -645,9 +655,9 @@ extension StreamViewController: ColumnToggleDelegate {
 
         self.streamKind.setIsGridView(isGridView)
         if let toggleClosure = toggleClosure {
-            // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
+            // setting 'scrollToPaginateGuard' to false will prevent pagination from triggering when this profile has no posts
             // triggering pagination at this time will, inexplicably, cause the cells to disappear
-            canLoadNext = false
+            scrollToPaginateGuard = false
             setupCollectionViewLayout()
 
             toggleClosure(isGridView)
@@ -1093,13 +1103,13 @@ extension StreamViewController: UIScrollViewDelegate {
             self.view.layoutIfNeeded()
         }
 
-        if canLoadNext {
+        if scrollToPaginateGuard {
             self.loadNextPage(scrollView)
         }
     }
 
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        canLoadNext = true
+        scrollToPaginateGuard = true
         streamViewDelegate?.streamViewWillBeginDragging(scrollView)
     }
 
@@ -1108,11 +1118,12 @@ extension StreamViewController: UIScrollViewDelegate {
     }
 
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        canLoadNext = false
+        scrollToPaginateGuard = false
     }
 
     private func loadNextPage(scrollView: UIScrollView) {
         guard
+            pagingEnabled &&
             scrollView.contentOffset.y + (self.view.frame.height * 1.666)
             > scrollView.contentSize.height
         else { return }
@@ -1133,7 +1144,7 @@ extension StreamViewController: UIScrollViewDelegate {
         let placeholderType = lastCellItem.placeholderType
         appendStreamCellItems([StreamLoadingCell.streamCellItem()])
 
-        canLoadNext = false
+        scrollToPaginateGuard = false
 
         let scrollAPI = ElloAPI.InfiniteScroll(queryItems: nextQueryItems) { return self.streamKind.endpoint }
         streamService.loadStream(scrollAPI,
