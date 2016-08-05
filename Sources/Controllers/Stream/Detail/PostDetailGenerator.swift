@@ -73,6 +73,8 @@ private extension PostDetailGenerator {
     func loadPost(doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.finished || reload else { return }
 
+        self.destination?.replacePlaceholder(.PostHeader, items: [StreamCellItem(type: .StreamLoading)]) {}
+
         // load the post with no comments
         PostService().loadPost(
             postParam,
