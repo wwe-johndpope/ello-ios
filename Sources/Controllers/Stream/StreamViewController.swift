@@ -1142,7 +1142,7 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         let placeholderType = lastCellItem.placeholderType
-        appendStreamCellItems([StreamLoadingCell.streamCellItem()])
+        appendStreamCellItems([StreamCellItem(type: .StreamLoading)])
 
         scrollToPaginateGuard = false
 
