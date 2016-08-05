@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -27,6 +27,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6M-uB-CWv">
                         <rect key="frame" x="0.0" y="110" width="600" height="490"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r63-kr-bnU" userLabel="circle" customClass="PulsingCircle" customModule="Ello" customModuleProvider="target">
+                                <rect key="frame" x="463" y="-61" width="122" height="122"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKO-1x-QWx" userLabel="avatarImage" customClass="FLAnimatedImageView">
                                 <rect key="frame" x="463" y="-61" width="122" height="122"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -41,6 +45,28 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thS-dm-rOt" userLabel="usernamePlaceholder">
+                                <rect key="frame" x="15" y="22" width="120" height="18"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Lcv-HB-fje"/>
+                                    <constraint firstAttribute="height" constant="18" id="rnr-kz-xvW"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Full Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4sI-yA-gkk" userLabel="nameLabel" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                                <rect key="frame" x="15" y="50" width="69" height="14"/>
+                                <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="As6-ex-2K1" userLabel="namePlaceholder">
+                                <rect key="frame" x="15" y="50" width="100" height="14"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="jrk-5M-n3o"/>
+                                    <constraint firstAttribute="width" constant="100" id="yaw-U1-SH1"/>
+                                </constraints>
+                            </view>
                             <webView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PtF-QI-fk2" userLabel="bioWebView">
                                 <rect key="frame" x="15" y="158" width="570" height="332"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -67,12 +93,6 @@
                                     <action selector="followingTapped:" destination="OE9-ll-CIs" eventType="touchUpInside" id="1U1-mi-ilG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Full Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4sI-yA-gkk" userLabel="nameLabel" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
-                                <rect key="frame" x="15" y="50" width="69" height="14"/>
-                                <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
-                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="34" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FV1-FS-QMz" customClass="TwoLineButton" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="165" y="94" width="50" height="34"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -92,6 +112,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="r63-kr-bnU" firstAttribute="leading" secondItem="GKO-1x-QWx" secondAttribute="leading" id="0Z7-vp-Jzs"/>
                             <constraint firstItem="FV1-FS-QMz" firstAttribute="height" secondItem="zV5-bQ-18e" secondAttribute="height" id="1UZ-yb-GbT"/>
                             <constraint firstItem="zV5-bQ-18e" firstAttribute="leading" secondItem="6nJ-r0-lN7" secondAttribute="leading" id="2Ge-Eg-zcP"/>
                             <constraint firstItem="zV5-bQ-18e" firstAttribute="top" secondItem="4sI-yA-gkk" secondAttribute="bottom" constant="30" id="8lf-xk-RmT"/>
@@ -101,19 +122,26 @@
                             <constraint firstAttribute="trailing" secondItem="GKO-1x-QWx" secondAttribute="trailing" constant="15" id="M2I-u4-D8V"/>
                             <constraint firstItem="rQa-MW-cCK" firstAttribute="height" secondItem="zV5-bQ-18e" secondAttribute="height" id="NLY-dq-RWS"/>
                             <constraint firstItem="4sI-yA-gkk" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="GKO-1x-QWx" secondAttribute="leading" constant="-5" id="NVv-N6-GR7"/>
+                            <constraint firstItem="thS-dm-rOt" firstAttribute="leading" secondItem="6nJ-r0-lN7" secondAttribute="leading" id="P9b-3v-x40"/>
+                            <constraint firstItem="As6-ex-2K1" firstAttribute="top" secondItem="thS-dm-rOt" secondAttribute="bottom" constant="10" id="QlX-8p-vo1"/>
+                            <constraint firstItem="r63-kr-bnU" firstAttribute="top" secondItem="GKO-1x-QWx" secondAttribute="top" id="RZp-OW-hhM"/>
                             <constraint firstItem="4sI-yA-gkk" firstAttribute="top" secondItem="6nJ-r0-lN7" secondAttribute="bottom" constant="10" id="T3z-Gz-rKC"/>
                             <constraint firstItem="gWi-lG-cJp" firstAttribute="top" secondItem="zV5-bQ-18e" secondAttribute="top" id="TuL-FF-5Vx"/>
+                            <constraint firstItem="r63-kr-bnU" firstAttribute="bottom" secondItem="GKO-1x-QWx" secondAttribute="bottom" id="UfZ-Im-9e1"/>
                             <constraint firstItem="FV1-FS-QMz" firstAttribute="leading" secondItem="gWi-lG-cJp" secondAttribute="trailing" constant="25" id="WyN-Ml-Ufz"/>
                             <constraint firstItem="4sI-yA-gkk" firstAttribute="leading" secondItem="6nJ-r0-lN7" secondAttribute="leading" id="Ysh-gS-ng4"/>
                             <constraint firstAttribute="bottom" secondItem="PtF-QI-fk2" secondAttribute="bottom" id="asL-h7-HRo" userLabel="bioWebView - bottom"/>
+                            <constraint firstItem="thS-dm-rOt" firstAttribute="top" secondItem="6nJ-r0-lN7" secondAttribute="top" id="c1a-vf-2H5"/>
                             <constraint firstItem="GKO-1x-QWx" firstAttribute="centerY" secondItem="U6M-uB-CWv" secondAttribute="top" id="dw5-Cp-ekQ" userLabel="avatarImage - centerY"/>
                             <constraint firstItem="FV1-FS-QMz" firstAttribute="top" secondItem="rQa-MW-cCK" secondAttribute="top" id="fLE-9x-27E"/>
                             <constraint firstItem="gWi-lG-cJp" firstAttribute="top" secondItem="FV1-FS-QMz" secondAttribute="top" id="gHh-Cw-fxe"/>
                             <constraint firstAttribute="trailing" secondItem="PtF-QI-fk2" secondAttribute="trailing" constant="15" id="hke-ib-z8g" userLabel="bioWebView - right"/>
                             <constraint firstItem="6nJ-r0-lN7" firstAttribute="leading" secondItem="U6M-uB-CWv" secondAttribute="leading" constant="15" id="hxF-e7-Mft" userLabel="usernameLabel - left"/>
+                            <constraint firstItem="As6-ex-2K1" firstAttribute="leading" secondItem="thS-dm-rOt" secondAttribute="leading" id="lSR-dt-MCs"/>
                             <constraint firstItem="PtF-QI-fk2" firstAttribute="top" secondItem="zV5-bQ-18e" secondAttribute="bottom" constant="30" id="lxA-cc-mIY"/>
                             <constraint firstItem="rQa-MW-cCK" firstAttribute="leading" secondItem="FV1-FS-QMz" secondAttribute="trailing" constant="25" id="nGC-2a-7Pa"/>
                             <constraint firstItem="4sI-yA-gkk" firstAttribute="firstBaseline" secondItem="GKO-1x-QWx" secondAttribute="bottom" id="p63-LA-Zui"/>
+                            <constraint firstItem="r63-kr-bnU" firstAttribute="trailing" secondItem="GKO-1x-QWx" secondAttribute="trailing" id="rPH-gS-MLY"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -131,14 +159,17 @@
                 <outlet property="avatarImage" destination="GKO-1x-QWx" id="dbf-G3-Qty"/>
                 <outlet property="avatarWidthConstraint" destination="7G6-ms-sEZ" id="Jin-E4-yRA"/>
                 <outlet property="bioWebView" destination="PtF-QI-fk2" id="WKn-ZP-Rnw"/>
+                <outlet property="circle" destination="r63-kr-bnU" id="gXn-xu-Beo"/>
                 <outlet property="followersButton" destination="FV1-FS-QMz" id="z6Y-Re-O1r"/>
                 <outlet property="followingButton" destination="gWi-lG-cJp" id="aqG-Wn-ZAX"/>
                 <outlet property="lovesButton" destination="rQa-MW-cCK" id="jPK-SM-55L"/>
                 <outlet property="nameLabel" destination="4sI-yA-gkk" id="I9n-2e-2mB"/>
+                <outlet property="namePlaceholder" destination="As6-ex-2K1" id="LZB-oF-kGP"/>
                 <outlet property="postsButton" destination="zV5-bQ-18e" id="sSJ-kH-vgM"/>
                 <outlet property="usernameLabel" destination="6nJ-r0-lN7" id="l3X-Xg-ciD"/>
+                <outlet property="usernamePlaceholder" destination="thS-dm-rOt" id="KLb-Mt-V08"/>
                 <outlet property="viewTopConstraint" destination="joA-XB-bkx" id="KPR-mq-9Eo"/>
-                <outlet property="webViewHeight" destination="LxD-oH-hiP" id="EKi-yI-jvB"/>
+                <outlet property="webViewHeightConstraint" destination="LxD-oH-hiP" id="EKi-yI-jvB"/>
             </connections>
             <point key="canvasLocation" x="822" y="484"/>
         </collectionViewCell>

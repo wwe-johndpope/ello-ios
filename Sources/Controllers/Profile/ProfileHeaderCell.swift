@@ -24,17 +24,28 @@ public class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
+    @IBOutlet weak var circle: PulsingCircle!
     @IBOutlet weak var avatarImage: FLAnimatedImageView!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var usernamePlaceholder: UIView!
     @IBOutlet weak var nameLabel: ElloLabel!
+    @IBOutlet weak var namePlaceholder: UIView!
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var webViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var avatarWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var bioWebView: UIWebView!
     @IBOutlet weak var postsButton: TwoLineButton!
     @IBOutlet weak var followersButton: TwoLineButton!
     @IBOutlet weak var followingButton: TwoLineButton!
     @IBOutlet weak var lovesButton: TwoLineButton!
+
+    var webViewHeight: CGFloat {
+        get { return webViewHeightConstraint.constant }
+        set {
+            webViewHeightConstraint.constant = newValue
+            bioWebView.frame.size.height = newValue
+        }
+    }
 
     weak var webLinkDelegate: WebLinkDelegate?
     weak var simpleStreamDelegate: SimpleStreamDelegate?
@@ -45,7 +56,11 @@ public class ProfileHeaderCell: UICollectionViewCell {
     override public func awakeFromNib() {
         super.awakeFromNib()
         style()
+        setText()
         bioWebView.delegate = self
+        circle.pulse()
+        usernameLabel.text = ""
+        nameLabel.text = ""
     }
 
     func onWebContentReady(handler: WebContentReady?) {
@@ -61,18 +76,39 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
-        setAvatar(nil)
+        circle.pulse()
+        avatarImage.pin_cancelImageDownload()
+        avatarImage.image = nil
         bioWebView.stopLoading()
+        bioWebView.loadHTMLString("", baseURL: nil)
+        currentUser = nil
+        user = nil
+        usernameLabel.text = ""
+        nameLabel.text = ""
+        postsButton.count = ""
+        followingButton.count = ""
+        lovesButton.count = ""
+        followersButton.count = ""
+        usernamePlaceholder.hidden = true
+        namePlaceholder.hidden = true
+    }
+
+    func showPlaceholders() {
+        usernamePlaceholder.hidden = false
+        namePlaceholder.hidden = false
+        usernamePlaceholder.backgroundColor = .greyA()
+        namePlaceholder.backgroundColor = .greyA()
     }
 
     func setAvatar(image: UIImage?) {
-        avatarImage.pin_cancelImageDownload()
         avatarImage.image = image
+        circle.stopPulse()
     }
 
     func setAvatarURL(url: NSURL) {
-        setAvatar(nil)
-        avatarImage.pin_setImageFromURL(url) { result in }
+        avatarImage.pin_setImageFromURL(url) { result in
+            self.circle.stopPulse()
+        }
     }
 
     private func style() {
@@ -82,6 +118,13 @@ public class ProfileHeaderCell: UICollectionViewCell {
         nameLabel.font = UIFont.defaultFont()
         nameLabel.textColor = UIColor.greyA()
         nameLabel.lineBreakMode = .ByWordWrapping
+    }
+
+    private func setText() {
+        postsButton.title = InterfaceString.Profile.PostsCount
+        followingButton.title = InterfaceString.Profile.FollowingCount
+        lovesButton.title = InterfaceString.Profile.LovesCount
+        followersButton.title = InterfaceString.Profile.FollowersCount
     }
 
     @IBAction func editProfileTapped(sender: UIButton) {

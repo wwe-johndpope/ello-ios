@@ -31,6 +31,7 @@ public final class ProfileViewController: StreamableViewController {
     @IBOutlet weak var noPostsHeader: UILabel!
     @IBOutlet weak var noPostsBody: UILabel!
 
+    @IBOutlet weak var circle: PulsingCircle!
     @IBOutlet weak var coverImage: FLAnimatedImageView!
     @IBOutlet weak var relationshipControl: RelationshipControl!
     @IBOutlet weak var mentionButton: UIButton!
@@ -508,7 +509,9 @@ extension ProfileViewController:  StreamDestination {
         }
         else if let cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true), coverImage = coverImage
         {
+            circle.pulse()
             coverImage.pin_setImageFromURL(cover) { result in
+                self.circle.stopPulse()
                 self.coverImage.alpha = 1.0
             }
         }
