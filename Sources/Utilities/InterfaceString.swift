@@ -320,6 +320,7 @@ public struct InterfaceString {
     static let AreYouSure = NSLocalizedString("Are You Sure?", comment: "are you sure question")
     static let ThatIsOK = NSLocalizedString("It’s OK, I understand!", comment: "It’s OK, I understand!")
     static let Delete = NSLocalizedString("Delete", comment: "Delete")
+    static let Remove = NSLocalizedString("Remove", comment: "Remove")
     static let Next = NSLocalizedString("Next", comment: "Next button")
     static let Done = NSLocalizedString("Done", comment: "Done button title")
     static let Skip = NSLocalizedString("Skip", comment: "Skip action")

@@ -97,7 +97,7 @@ public class BuyButtonLinkScreen: UIView {
         titleLabel.text = InterfaceString.Omnibar.SellYourWorkTitle
         productLinkField.placeholder = InterfaceString.Omnibar.ProductLinkPlaceholder
         submitButton.setTitle(InterfaceString.Submit, forState: .Normal)
-        removeButton.setTitle(InterfaceString.Delete, forState: .Normal)
+        removeButton.setTitle(InterfaceString.Remove, forState: .Normal)
         cancelLabel.text = InterfaceString.Cancel
     }
 
