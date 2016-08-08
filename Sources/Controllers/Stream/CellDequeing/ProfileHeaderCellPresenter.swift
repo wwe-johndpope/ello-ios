@@ -83,10 +83,18 @@ public struct ProfileHeaderCellPresenter {
                     fCount = user.followersCount ?? "0"
                 }
                 cell.followersButton.count = fCount
+                cell.followingButton.enabled = true
+                cell.lovesButton.enabled = true
+                cell.followersButton.enabled = true
             }
             else {
                 cell.bioWebView.loadHTMLString("", baseURL: nil)
                 cell.showPlaceholders()
+
+                cell.postsButton.enabled = false
+                cell.followingButton.enabled = false
+                cell.lovesButton.enabled = false
+                cell.followersButton.enabled = false
             }
         }
     }
