@@ -133,54 +133,56 @@ public class ProfileHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func followingTapped(sender: UIButton) {
-        if let user = user {
-            let noResultsTitle: String
-            let noResultsBody: String
-            if user.id == currentUser?.id {
-                noResultsTitle = InterfaceString.Following.CurrentUserNoResultsTitle
-                noResultsBody = InterfaceString.Following.CurrentUserNoResultsBody
-            }
-            else {
-                noResultsTitle = InterfaceString.Following.NoResultsTitle
-                noResultsBody = InterfaceString.Following.NoResultsBody
-            }
-            simpleStreamDelegate?.showSimpleStream(.UserStreamFollowing(userId: user.id), title: InterfaceString.Following.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+        guard let user = user else { return }
+
+        let noResultsTitle: String
+        let noResultsBody: String
+        if user.id == currentUser?.id {
+            noResultsTitle = InterfaceString.Following.CurrentUserNoResultsTitle
+            noResultsBody = InterfaceString.Following.CurrentUserNoResultsBody
         }
+        else {
+            noResultsTitle = InterfaceString.Following.NoResultsTitle
+            noResultsBody = InterfaceString.Following.NoResultsBody
+        }
+        simpleStreamDelegate?.showSimpleStream(.UserStreamFollowing(userId: user.id), title: InterfaceString.Following.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
     }
 
     @IBAction func followersTapped(sender: UIButton) {
-        if let user = user {
-            let noResultsTitle: String
-            let noResultsBody: String
-            if user.id == currentUser?.id {
-                noResultsTitle = InterfaceString.Followers.CurrentUserNoResultsTitle
-                noResultsBody = InterfaceString.Followers.CurrentUserNoResultsBody
-            }
-            else {
-                noResultsTitle = InterfaceString.Followers.NoResultsTitle
-                noResultsBody = InterfaceString.Followers.NoResultsBody
-            }
-            simpleStreamDelegate?.showSimpleStream(.UserStreamFollowers(userId: user.id), title: InterfaceString.Followers.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+        guard let user = user else { return }
+
+        let noResultsTitle: String
+        let noResultsBody: String
+        if user.id == currentUser?.id {
+            noResultsTitle = InterfaceString.Followers.CurrentUserNoResultsTitle
+            noResultsBody = InterfaceString.Followers.CurrentUserNoResultsBody
         }
+        else {
+            noResultsTitle = InterfaceString.Followers.NoResultsTitle
+            noResultsBody = InterfaceString.Followers.NoResultsBody
+        }
+        simpleStreamDelegate?.showSimpleStream(.UserStreamFollowers(userId: user.id), title: InterfaceString.Followers.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
     }
 
     @IBAction func lovesTapped(sender: UIButton) {
-        if let user = user {
-            let noResultsTitle: String
-            let noResultsBody: String
-            if user.id == currentUser?.id {
-                noResultsTitle = InterfaceString.Loves.CurrentUserNoResultsTitle
-                noResultsBody = InterfaceString.Loves.CurrentUserNoResultsBody
-            }
-            else {
-                noResultsTitle = InterfaceString.Loves.NoResultsTitle
-                noResultsBody = InterfaceString.Loves.NoResultsBody
-            }
-            simpleStreamDelegate?.showSimpleStream(.Loves(userId: user.id), title: InterfaceString.Loves.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+        guard let user = user else { return }
+
+        let noResultsTitle: String
+        let noResultsBody: String
+        if user.id == currentUser?.id {
+            noResultsTitle = InterfaceString.Loves.CurrentUserNoResultsTitle
+            noResultsBody = InterfaceString.Loves.CurrentUserNoResultsBody
         }
+        else {
+            noResultsTitle = InterfaceString.Loves.NoResultsTitle
+            noResultsBody = InterfaceString.Loves.NoResultsBody
+        }
+        simpleStreamDelegate?.showSimpleStream(.Loves(userId: user.id), title: InterfaceString.Loves.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
     }
 
     @IBAction func postsTapped(sender: UIButton) {
+        guard user != nil else { return }
+
         let responder = targetForAction(#selector(PostsTappedResponder.onPostsTapped), withSender: self) as? PostsTappedResponder
         responder?.onPostsTapped()
     }
