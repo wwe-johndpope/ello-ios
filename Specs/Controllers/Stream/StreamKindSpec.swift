@@ -34,7 +34,7 @@ class StreamKindSpec: QuickSpec {
             describe("cacheKey") {
 
                 it("is correct for all cases") {
-                    expect(StreamKind.Discover(type: .Featured).cacheKey) == "Discover"
+                    expect(StreamKind.Discover(type: .Featured).cacheKey) == "CategoryPosts"
                     expect(StreamKind.CategoryPosts(slug: "art").cacheKey) == "CategoryPosts"
                     expect(StreamKind.Following.cacheKey) == "Following"
                     expect(StreamKind.Starred.cacheKey) == "Starred"
@@ -51,7 +51,7 @@ class StreamKindSpec: QuickSpec {
             describe("lastViewedCreatedAtKey") {
 
                 it("is correct for all cases") {
-                    expect(StreamKind.Discover(type: .Featured).lastViewedCreatedAtKey) == "Discover_createdAt"
+                    expect(StreamKind.Discover(type: .Featured).lastViewedCreatedAtKey) == "CategoryPosts_createdAt"
                     expect(StreamKind.CategoryPosts(slug: "art").lastViewedCreatedAtKey) == "CategoryPosts_createdAt"
                     expect(StreamKind.Following.lastViewedCreatedAtKey) == "Following_createdAt"
                     expect(StreamKind.Starred.lastViewedCreatedAtKey) == "Starred_createdAt"
