@@ -6,12 +6,14 @@ public protocol OmnibarScreenDelegate: class {
     func omnibarCancel()
     func omnibarPushController(controller: UIViewController)
     func omnibarPresentController(controller: UIViewController)
-    func omnibarDismissController(controller: UIViewController)
-    func omnibarSubmitted(regions: [OmnibarRegion])
+    func omnibarDismissController()
+    func omnibarSubmitted(regions: [OmnibarRegion], buyButtonURL: NSURL?)
 }
 
 public protocol OmnibarScreenProtocol: class {
     var delegate: OmnibarScreenDelegate? { get set }
+    var isComment: Bool { get set }
+    var buyButtonURL: NSURL? { get set }
     var title: String { get set }
     var submitTitle: String { get set }
     var regions: [OmnibarRegion] { get set }

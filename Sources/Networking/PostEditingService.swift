@@ -20,11 +20,36 @@ public func == (lhs: PostEditingService.PostContentRegion, rhs: PostEditingServi
     switch (lhs, rhs) {
     case let (.Text(a), .Text(b)):
         return a == b
-    case let (.ImageData(la, _, _), .ImageData(ra, _, _)):
-        return la == ra
+    case let (.ImageData(leftImage, leftData, _), .ImageData(rightImage, rightData, _)):
+        return leftImage == rightImage && leftData == rightData
+    case let (.Image(leftImage), .Image(rightImage)):
+        return leftImage == rightImage
     default:
         return false
     }
+}
+
+
+public struct ImageRegionData {
+    let image: UIImage
+    let data: NSData?
+    let contentType: String?
+    let buyButtonURL: NSURL?
+
+    public init(image: UIImage, buyButtonURL: NSURL?) {
+        self.image = image
+        self.data = nil
+        self.contentType = nil
+        self.buyButtonURL = buyButtonURL
+    }
+
+    public init(image: UIImage, data: NSData, contentType: String, buyButtonURL: NSURL?) {
+        self.image = image
+        self.data = data
+        self.contentType = contentType
+        self.buyButtonURL = buyButtonURL
+    }
+
 }
 
 
@@ -33,10 +58,10 @@ public class PostEditingService: NSObject {
     typealias CreatePostSuccessCompletion = (post: AnyObject) -> Void
     typealias UploadImagesSuccessCompletion = ([(Int, ImageRegion)]) -> Void
 
-    public typealias ImageData = (UIImage, NSData?, String?)
     public enum PostContentRegion {
         case Text(String)
-        case ImageData(UIImage, NSData?, String?)
+        case ImageData(UIImage, NSData, String)
+        case Image(UIImage)
     }
 
     var editPost: Post?
@@ -59,9 +84,9 @@ public class PostEditingService: NSObject {
     }
 
     // rawSections is String or UIImage objects
-    func create(content rawContent: [PostContentRegion], success: CreatePostSuccessCompletion, failure: ElloFailureCompletion) {
+    func create(content rawContent: [PostContentRegion], buyButtonURL: NSURL?, success: CreatePostSuccessCompletion, failure: ElloFailureCompletion) {
         var textEntries = [(Int, String)]()
-        var imageDataEntries = [(Int, ImageData)]()
+        var imageDataEntries = [(Int, ImageRegionData)]()
 
         // if necessary, the rawSource should be converted to API-ready content,
         // e.g. entitizing Strings and adding HTML markup to NSAttributedStrings
@@ -69,8 +94,10 @@ public class PostEditingService: NSObject {
             switch section {
             case let .Text(text):
                 textEntries.append((index, text))
+            case let .Image(image):
+                imageDataEntries.append((index, ImageRegionData(image: image, buyButtonURL: buyButtonURL)))
             case let .ImageData(image, data, type):
-                imageDataEntries.append((index, (image, data, type)))
+                imageDataEntries.append((index, ImageRegionData(image: image, data: data, contentType: type, buyButtonURL: buyButtonURL)))
             }
         }
 
@@ -153,7 +180,7 @@ public class PostEditingService: NSObject {
     // Another way to upload the images would be to generate one AmazonCredentials
     // object, and pass that to the uploader.  The uploader would need to
     // generate unique image names in that case.
-    func uploadImages(imageEntries: [(Int, ImageData)], success: UploadImagesSuccessCompletion, failure: ElloFailureCompletion) {
+    func uploadImages(imageEntries: [(Int, ImageRegionData)], success: UploadImagesSuccessCompletion, failure: ElloFailureCompletion) {
         var uploaded = [(Int, ImageRegion)]()
 
         // if any upload fails, the entire post creationg fails
@@ -178,7 +205,8 @@ public class PostEditingService: NSObject {
                     return
                 }
 
-                let (imageIndex, (image, data, contentType)) = dataEntry
+                let (imageIndex, imageRegionData) = dataEntry
+                let (image, data, contentType, buyButtonURL) = (imageRegionData.image, imageRegionData.data, imageRegionData.contentType, imageRegionData.buyButtonURL)
 
                 let filename: String
                 switch contentType ?? "" {
@@ -202,19 +230,10 @@ public class PostEditingService: NSObject {
                         success: { url in
                             let imageRegion = ImageRegion(alt: filename)
                             imageRegion.url = url
+                            imageRegion.buyButtonURL = buyButtonURL
 
                             if let url = url {
-                                let asset = Asset(url: url)
-                                asset.optimized?.type = contentType
-                                asset.optimized?.size = data.length
-                                asset.optimized?.width = Int(image.size.width)
-                                asset.optimized?.height = Int(image.size.height)
-
-                                let attachment = Attachment(url: url)
-                                attachment.width = Int(image.size.width)
-                                attachment.height = Int(image.size.height)
-                                attachment.image = image
-                                asset.hdpi = attachment
+                                let asset = Asset(url: url, gifData: data, posterImage: image)
 
                                 ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
                                 imageRegion.addLinkObject("assets", key: asset.id, collection: MappingType.AssetsType.rawValue)
@@ -230,9 +249,10 @@ public class PostEditingService: NSObject {
                         success: { url in
                             let imageRegion = ImageRegion(alt: filename)
                             imageRegion.url = url
+                            imageRegion.buyButtonURL = buyButtonURL
 
                             if let url = url {
-                                let asset = Asset(image: image, url: url)
+                                let asset = Asset(url: url, image: image)
                                 ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
                                 imageRegion.addLinkObject("assets", key: asset.id, collection: MappingType.AssetsType.rawValue)
                             }

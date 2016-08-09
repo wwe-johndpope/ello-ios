@@ -19,10 +19,10 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
 
     private func processPHAssets(assets: [PHAsset], done: ElloEmptyCompletion = {}) {
         self.interactionEnabled = false
-        AssetsToRegions.processPHAssets(assets) { imageData in
+        AssetsToRegions.processPHAssets(assets) { (imageData: [ImageRegionData]) in
             self.interactionEnabled = true
             for imageDatum in imageData {
-                let (image, imageData, type) = imageDatum
+                let (image, imageData, type) = (imageDatum.image, imageDatum.data, imageDatum.contentType)
                 self.addImage(image, data: imageData, type: type)
             }
             done()
@@ -31,7 +31,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
 
     public func imagePickerController(controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
         func done() {
-            self.delegate?.omnibarDismissController(controller)
+            self.delegate?.omnibarDismissController()
         }
 
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -53,7 +53,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
     }
 
     public func imagePickerControllerDidCancel(controller: UIImagePickerController) {
-        delegate?.omnibarDismissController(controller)
+        delegate?.omnibarDismissController()
     }
 
     private func isGif(buffer: UnsafeMutablePointer<UInt8>, length: Int) -> Bool {

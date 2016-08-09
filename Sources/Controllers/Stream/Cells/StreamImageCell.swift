@@ -26,8 +26,8 @@ public class StreamImageCell: StreamRegionableCell {
 
     @IBOutlet public weak var imageView: FLAnimatedImageView!
     @IBOutlet public weak var imageButton: UIView!
-    @IBOutlet public weak var affiliateButton: UIButton?
-    @IBOutlet public weak var affiliateGreen: UIView?
+    @IBOutlet public weak var buyButton: UIButton?
+    @IBOutlet public weak var buyButtonGreen: UIView?
     @IBOutlet public weak var circle: PulsingCircle!
     @IBOutlet public weak var failImage: UIImageView!
     @IBOutlet public weak var failBackgroundView: UIView!
@@ -46,11 +46,11 @@ public class StreamImageCell: StreamRegionableCell {
     public var onHeightMismatch: OnHeightMismatch?
     public var tallEnoughForFailToShow = true
     public var presentedImageUrl: NSURL?
-    public var affiliateURL: NSURL? {
+    public var buyButtonURL: NSURL? {
         didSet {
-            let hidden = (affiliateURL == nil)
-            affiliateButton?.hidden = hidden
-            affiliateGreen?.hidden = hidden
+            let hidden = (buyButtonURL == nil)
+            buyButton?.hidden = hidden
+            buyButtonGreen?.hidden = hidden
         }
     }
     var serverProvidedAspectRatio: CGFloat?
@@ -92,13 +92,13 @@ public class StreamImageCell: StreamRegionableCell {
         if let playButton = largeImagePlayButton {
             playButton.image = InterfaceImage.VideoPlay.normalImage
         }
-        if let affiliateButton = affiliateButton, affiliateGreen = affiliateGreen {
-            affiliateButton.hidden = true
-            affiliateGreen.hidden = true
-            affiliateButton.setTitle(nil, forState: .Normal)
-            affiliateButton.setImage(.Dollar, imageStyle: .Normal, forState: .Normal)
-            affiliateGreen.backgroundColor = .greenD1()
-            affiliateGreen.layer.cornerRadius = affiliateGreen.frame.size.width / 2
+        if let buyButton = buyButton, buyButtonGreen = buyButtonGreen {
+            buyButton.hidden = true
+            buyButtonGreen.hidden = true
+            buyButton.setTitle(nil, forState: .Normal)
+            buyButton.setImage(.BuyButton, imageStyle: .Normal, forState: .Normal)
+            buyButtonGreen.backgroundColor = .greenD1()
+            buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
         }
 
         let doubleTapGesture = UITapGestureRecognizer()
@@ -147,8 +147,8 @@ public class StreamImageCell: StreamRegionableCell {
             self.onHeightMismatch?(actualHeight)
         }
 
-        if let affiliateGreen = affiliateGreen {
-            affiliateGreen.layer.cornerRadius = affiliateGreen.frame.size.width / 2
+        if let buyButtonGreen = buyButtonGreen {
+            buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
         }
     }
 
@@ -189,8 +189,8 @@ public class StreamImageCell: StreamRegionableCell {
     }
 
     private func imageLoadFailed() {
-        affiliateButton?.hidden = true
-        affiliateGreen?.hidden = true
+        buyButton?.hidden = true
+        buyButtonGreen?.hidden = true
         failImage.hidden = false
         failBackgroundView.hidden = false
         circle.stopPulse()
@@ -215,8 +215,8 @@ public class StreamImageCell: StreamRegionableCell {
         imageView.animatedImage = nil
         imageView.pin_cancelImageDownload()
         imageRightConstraint?.constant = 0
-        affiliateButton?.hidden = true
-        affiliateGreen?.hidden = true
+        buyButton?.hidden = true
+        buyButtonGreen?.hidden = true
 
         hideBorder()
         isGif = false
@@ -232,12 +232,12 @@ public class StreamImageCell: StreamRegionableCell {
         streamImageCellDelegate?.imageTapped(self.imageView, cell: self)
     }
 
-    @IBAction func affiliateTapped() {
-        guard let affiliateURL = affiliateURL else {
+    @IBAction func buyButtonTapped() {
+        guard let buyButtonURL = buyButtonURL else {
             return
         }
-        Tracker.sharedTracker.affiliateLinkVisited(affiliateURL.URLString)
-        postNotification(ExternalWebNotification, value: affiliateURL.URLString)
+        Tracker.sharedTracker.affiliateLinkVisited(buyButtonURL.URLString)
+        postNotification(ExternalWebNotification, value: buyButtonURL.URLString)
     }
 
     @IBAction func imageDoubleTapped(gesture: UIGestureRecognizer) {

@@ -37,12 +37,12 @@ class ImageRegionSpec: QuickSpec {
                 expect(xhdpi.height) == 641
             }
 
-            it("parses affiliate region correctly") {
-                let data = stubbedJSONData("affiliate-image-region", "region")
+            it("parses buy-button region correctly") {
+                let data = stubbedJSONData("buy-button-image-region", "region")
                 let region = ImageRegion.fromJSON(data) as! ImageRegion
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
-                expect(region.affiliateURL!.absoluteString) == "https://amazon.com"
+                expect(region.buyButtonURL!.absoluteString) == "https://amazon.com"
                 expect(region.alt) == "region-alt.jpeg"
 
                 let asset = region.asset!

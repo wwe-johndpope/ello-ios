@@ -30,6 +30,9 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     var autoCompleteVC = AutoCompleteViewController()
 
+    public var isComment: Bool = false {
+        didSet { updateButtons() }
+    }
     public var isEditing = false
     public var reordering = false
 
@@ -44,6 +47,9 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     public typealias IndexedRegion = (Int?, OmnibarRegion)
+    public var buyButtonURL: NSURL? {
+        didSet { updateButtons() }
+    }
     public var regions: [OmnibarRegion] {
         set {
             var regions = newValue
@@ -134,6 +140,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 // MARK: toolbar buttons
     var toolbarButtonViews: [UIView]!
     let avatarButton = UIButton()
+    let buyButton = UIButton()
     let cancelButton = UIButton()
     let reorderButton = UIButton()
     let cameraButton = UIButton()
@@ -229,11 +236,11 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     private func setupAvatarView() {
         avatarButton.backgroundColor = UIColor.blackColor()
         avatarButton.clipsToBounds = true
-        avatarButton.addTarget(self, action: #selector(OmnibarScreen.profileImageTapped), forControlEvents: .TouchUpInside)
+        avatarButton.addTarget(self, action: #selector(profileImageTapped), forControlEvents: .TouchUpInside)
     }
 
     private func setupNavigationBar() {
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(OmnibarScreen.backAction))
+        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backAction))
         navigationItem.leftBarButtonItem = backItem
         navigationItem.fixNavBarItemPadding()
         navigationBar.items = [navigationItem]
@@ -246,17 +253,25 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     // buttons that make up the "toolbar"
     private func setupToolbarButtons() {
-        cancelButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 9.5, bottom: 4, right: 9.5)
+        buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 11, bottom: 4, right: 3)
+        buyButton.adjustsImageWhenDisabled = false
+        buyButton.adjustsImageWhenHighlighted = false
+        buyButton.setImages(.AddBuyButton)
+        buyButton.setImage(.AddBuyButton, imageStyle: .Disabled, forState: .Disabled)
+        buyButton.enabled = false
+        buyButton.addTarget(self, action: #selector(buyButtonTapped), forControlEvents: .TouchUpInside)
+
+        cancelButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
         cancelButton.setImages(.X)
-        cancelButton.addTarget(self, action: #selector(OmnibarScreen.cancelEditingAction), forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelEditingAction), forControlEvents: .TouchUpInside)
 
-        reorderButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 9.5, bottom: 4, right: 9.5)
+        reorderButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
         reorderButton.setImages(.Reorder)
-        reorderButton.addTarget(self, action: #selector(OmnibarScreen.toggleReorderingTable), forControlEvents: .TouchUpInside)
+        reorderButton.addTarget(self, action: #selector(toggleReorderingTable), forControlEvents: .TouchUpInside)
 
-        cameraButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 9.5, bottom: 4, right: 9.5)
+        cameraButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
         cameraButton.setImages(.Camera)
-        cameraButton.addTarget(self, action: #selector(OmnibarScreen.addImageAction), forControlEvents: .TouchUpInside)
+        cameraButton.addTarget(self, action: #selector(addImageAction), forControlEvents: .TouchUpInside)
 
         for button in [tabbarSubmitButton, keyboardSubmitButton] {
             button.backgroundColor = UIColor.blackColor()
@@ -267,7 +282,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             button.titleLabel?.font = UIFont.defaultFont()
             button.contentEdgeInsets.left = -5
             button.imageEdgeInsets.right = 5
-            button.addTarget(self, action: #selector(OmnibarScreen.submitAction), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(submitAction), forControlEvents: .TouchUpInside)
             button.frame.size.height = Size.keyboardButtonSize.height
         }
     }
@@ -285,13 +300,13 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: OmnibarRegion.OmnibarSpacerCell)
         regionsTableView.registerClass(OmnibarErrorCell.self, forCellReuseIdentifier: OmnibarErrorCell.reuseIdentifier())
 
-        textEditingControl.addTarget(self, action: #selector(OmnibarScreen.startEditingLast), forControlEvents: .TouchUpInside)
+        textEditingControl.addTarget(self, action: #selector(startEditingLast), forControlEvents: .TouchUpInside)
         regionsTableView.addSubview(textEditingControl)
 
         textScrollView.delegate = self
-        let stopEditingTapGesture = UITapGestureRecognizer(target: self, action: #selector(OmnibarScreen.stopEditing))
+        let stopEditingTapGesture = UITapGestureRecognizer(target: self, action: #selector(stopEditing))
         textScrollView.addGestureRecognizer(stopEditingTapGesture)
-        let stopEditingSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(OmnibarScreen.stopEditing))
+        let stopEditingSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(stopEditing))
         stopEditingSwipeGesture.direction = .Down
         textScrollView.addGestureRecognizer(stopEditingSwipeGesture)
         textScrollView.clipsToBounds = true
@@ -320,7 +335,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             button.frame.size = Size.keyboardButtonSize
         }
 
-        boldButton.addTarget(self, action: #selector(OmnibarScreen.boldButtonTapped), forControlEvents: .TouchUpInside)
+        boldButton.addTarget(self, action: #selector(boldButtonTapped), forControlEvents: .TouchUpInside)
         boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
             NSFontAttributeName: UIFont.defaultBoldFont(),
             NSForegroundColorAttributeName: UIColor.whiteColor()
@@ -334,7 +349,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             NSForegroundColorAttributeName: UIColor.blackColor()
             ]), forState: .Selected)
 
-        italicButton.addTarget(self, action: #selector(OmnibarScreen.italicButtonTapped), forControlEvents: .TouchUpInside)
+        italicButton.addTarget(self, action: #selector(italicButtonTapped), forControlEvents: .TouchUpInside)
         italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
             NSFontAttributeName: UIFont.defaultItalicFont(),
             NSForegroundColorAttributeName: UIColor.whiteColor()
@@ -348,7 +363,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             NSForegroundColorAttributeName: UIColor.blackColor()
             ]), forState: .Selected)
 
-        linkButton.addTarget(self, action: #selector(OmnibarScreen.linkButtonTapped), forControlEvents: .TouchUpInside)
+        linkButton.addTarget(self, action: #selector(linkButtonTapped), forControlEvents: .TouchUpInside)
         linkButton.enabled = false
         linkButton.setImage(.Link, imageStyle: .White, forState: .Normal)
         linkButton.setImage(.BreakLink, imageStyle: .White, forState: .Selected)
@@ -366,6 +381,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
 
         toolbarButtonViews = [
+            buyButton,
             cancelButton,
             reorderButton,
             cameraButton,
@@ -524,7 +540,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             case let .AttributedText(text):
                 buffer = buffer.joinWithNewlines(text)
                 lastRegionIsText = true
-            case .Image:
+            case .ImageData, .Image:
                 if buffer.string.characters.count > 0 {
                     regions.append(.AttributedText(buffer))
                 }
@@ -676,19 +692,35 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     private func resetEditor() {
-        hideAutoComplete(textView)
-        stopEditing()
         textView.text = ""
-        updateButtons()
         submitableRegions = [.Text("")]
         editableRegions = generateEditableRegions(submitableRegions)
+        hideAutoComplete(textView)
+        stopEditing()
+        updateButtons()
         regionsTableView.reloadData()
     }
 
     public func updateButtons() {
+        if !hasImage() && buyButtonURL != nil {
+            buyButtonURL = nil  // this calls updateButtons() again
+            return
+        }
+
         let canSubmit = !reordering && canPost()
         keyboardSubmitButton.enabled = canSubmit
         tabbarSubmitButton.enabled = canSubmit
+
+        let canAddBuyButtonLink = !reordering && hasImage()
+        buyButton.enabled = canAddBuyButtonLink
+        buyButton.hidden = isComment
+
+        if buyButtonURL == nil {
+            buyButton.setImages(.AddBuyButton)
+        }
+        else {
+            buyButton.setImages(.SetBuyButton)
+        }
     }
 
 // MARK: Button Actions
@@ -722,8 +754,14 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     public func submitAction() {
         if canPost() {
             stopEditing()
-            delegate?.omnibarSubmitted(submitableRegions)
+            delegate?.omnibarSubmitted(submitableRegions, buyButtonURL: buyButtonURL)
         }
+    }
+
+    public func buyButtonTapped() {
+        let vc = BuyButtonLinkViewController(buyButtonURL: buyButtonURL)
+        vc.delegate = self
+        delegate?.omnibarPresentController(vc)
     }
 
     func boldButtonTapped() {
@@ -749,23 +787,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             boldButton.selected = true
         }
 
-        if let selection = textView.selectedTextRange
-            where !selection.empty
-        {
-            let range = textView.selectedRange
-            let currentText = NSMutableAttributedString(attributedString: textView.attributedText)
-            let attributes = [NSFontAttributeName: newFont]
-            currentText.addAttributes(attributes, range: textView.selectedRange)
-            textView.attributedText = currentText
-            textView.selectedRange = range
-
-            updateCurrentText(currentText)
-        }
-        else {
-            textView.typingAttributes = ElloAttributedString.attrs([
-                NSFontAttributeName: newFont,
-            ])
-        }
+        applyFont(newFont)
     }
 
     func italicButtonTapped() {
@@ -791,6 +813,10 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
             italicButton.selected = true
         }
 
+        applyFont(newFont)
+    }
+
+    func applyFont(newFont: UIFont) {
         if let selection = textView.selectedTextRange
             where !selection.empty
         {
@@ -834,15 +860,17 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
         else {
             requestLinkURL() { url in
-                if let url = url {
-                    self.textView.textStorage.addAttributes([
-                        NSLinkAttributeName: url,
-                        NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                        ], range: range)
-                    self.linkButton.selected = true
-                    self.linkButton.enabled = true
-                    self.updateCurrentText(self.textView.textStorage)
+                guard let url = url else {
+                    return
                 }
+
+                self.textView.textStorage.addAttributes([
+                    NSLinkAttributeName: url,
+                    NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+                    ], range: range)
+                self.linkButton.selected = true
+                self.linkButton.enabled = true
+                self.updateCurrentText(self.textView.textStorage)
             }
         }
 
@@ -857,7 +885,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         let okCancelAction = AlertAction(title: "", style: .OKCancel) { _ in
             if let urlString = alertController.actionInputs.safeValue(0) {
-                handler(self.requestLinkValidator(urlString))
+                handler(NSURL.shorthand(urlString))
             }
         }
         alertController.addAction(okCancelAction)
@@ -866,33 +894,14 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         delegate?.omnibarPresentController(alertController)
     }
 
-    func requestLinkValidator(urlString: String) -> NSURL? {
-        var url: NSURL?
-        if let urlTest = NSURL(string: urlString) where urlTest.scheme != "" {
-            url = urlTest
-        }
-        else if let urlTest = NSURL(string: "http://\(urlString)") {
-            url = urlTest
-        }
-        else {
-            return nil
-        }
-
-        if let host = url?.host where host =~ "\\w+\\.\\w+" {
-            return url
-        }
-        return nil
-    }
-
 // MARK: Post logic
 
     public func canPost() -> Bool {
-        for region in submitableRegions {
-            if !region.empty {
-                return true
-            }
-        }
-        return false
+        return submitableRegions.any { !$0.empty }
+    }
+
+    public func hasImage() -> Bool {
+        return submitableRegions.any { $0.isImage }
     }
 
 // MARK: Images
@@ -901,20 +910,27 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     // animations only added complicated logic, no visual "bonus".  `reloadData`
     // is the way to go on this one.
     public func addImage(image: UIImage?, data: NSData? = nil, type: String? = nil) {
-        if let image = image {
-            if let region = submitableRegions.last where region.empty {
-                let lastIndex = submitableRegions.count - 1
-                submitableRegions.removeAtIndex(lastIndex)
-            }
-
-            submitableRegions.append(.Image(image, data, type))
-            submitableRegions.append(.Text(""))
-            editableRegions = generateEditableRegions(submitableRegions)
-            reorderableRegions = generateReorderableRegions(submitableRegions)
-
-            regionsTableView.reloadData()
-            regionsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.tableViewRegions.count - 1, inSection: 0), atScrollPosition: .None, animated: true)
+        guard let image = image else {
+            return
         }
+
+        if let region = submitableRegions.last where region.empty {
+            let lastIndex = submitableRegions.count - 1
+            submitableRegions.removeAtIndex(lastIndex)
+        }
+
+        if let data = data, type = type {
+            submitableRegions.append(.ImageData(image, data, type))
+        }
+        else {
+            submitableRegions.append(.Image(image))
+        }
+        submitableRegions.append(.Text(""))
+        editableRegions = generateEditableRegions(submitableRegions)
+        reorderableRegions = generateReorderableRegions(submitableRegions)
+
+        regionsTableView.reloadData()
+        regionsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.tableViewRegions.count - 1, inSection: 0), atScrollPosition: .None, animated: true)
 
         updateButtons()
     }

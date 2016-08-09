@@ -159,6 +159,8 @@ public struct InterfaceString {
         static let CreateCommentButton = NSLocalizedString("Comment", comment: "Comment")
         static let TooLongError = NSLocalizedString("Your text is too long.\n\nThe character limit is 5,000.", comment: "Post too long (maximum characters is 5000) error message")
         static let CreatedPost = NSLocalizedString("Post successfully created!", comment: "Post successfully created!")
+        static let SellYourWorkTitle = NSLocalizedString("Sell your work", comment: "Sell your work title")
+        static let ProductLinkPlaceholder = NSLocalizedString("Product detail URL", comment: "Product detail URL prompt")
     }
 
     public struct Loves {
@@ -310,14 +312,16 @@ public struct InterfaceString {
     static let GenericError = NSLocalizedString("Something went wrong. Thank you for your patience with Ello Beta!", comment: "Generic error message")
     static let UnknownError = NSLocalizedString("Unknown error", comment: "Unknown error message")
 
+    static let OK = NSLocalizedString("OK", comment: "OK")
     static let Yes = NSLocalizedString("Yes", comment: "Yes")
     static let No = NSLocalizedString("No", comment: "No")
     static let Cancel = NSLocalizedString("Cancel", comment: "Cancel")
+    static let Submit = NSLocalizedString("Submit", comment: "Submit")
     static let Retry = NSLocalizedString("Retry", comment: "Retry")
     static let AreYouSure = NSLocalizedString("Are You Sure?", comment: "are you sure question")
-    static let OK = NSLocalizedString("OK", comment: "OK")
     static let ThatIsOK = NSLocalizedString("It’s OK, I understand!", comment: "It’s OK, I understand!")
     static let Delete = NSLocalizedString("Delete", comment: "Delete")
+    static let Remove = NSLocalizedString("Remove", comment: "Remove")
     static let Next = NSLocalizedString("Next", comment: "Next button")
     static let Done = NSLocalizedString("Done", comment: "Done button title")
     static let Skip = NSLocalizedString("Skip", comment: "Skip action")

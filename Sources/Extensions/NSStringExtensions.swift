@@ -1,5 +1,5 @@
 ////
-///  NSString.swift
+///  NSStringExtensions.swift
 //
 
 import Foundation

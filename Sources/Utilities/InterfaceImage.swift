@@ -72,8 +72,10 @@ public enum InterfaceImage: String {
     // Alert
     case Question = "question"
 
-    // Affiliate
-    case Dollar = "$"
+    // BuyButton
+    case BuyButton = "$"
+    case AddBuyButton = "$_add"
+    case SetBuyButton = "$_set"
 
     // Generic
     case X = "x"
@@ -97,13 +99,14 @@ public enum InterfaceImage: String {
         }
     }
 
+    private func svgNamed(name: String) -> UIImage {
+        return SVGKImage(named: "\(name).svg").UIImage
+    }
+
     var normalImage: UIImage! {
         switch self {
-        case .Dollar:
-            let svgkImage = SVGKImage(named: "\(self.rawValue).svg")
-            svgkImage.size = CGSize(width: 6, height: 11)
-            return svgkImage.UIImage
         case .ElloLogo,
+            .BuyButton,
             .GiantHeart,
             .AudioPlay,
             .VideoPlay,
@@ -111,20 +114,50 @@ public enum InterfaceImage: String {
             .NarrationPointer,
             .ValidationError,
             .ValidationOK:
-            return SVGKImage(named: "\(self.rawValue).svg").UIImage
+            return svgNamed(self.rawValue)
         default:
-            return SVGKImage(named: "\(self.rawValue)_normal.svg").UIImage
+            return svgNamed("\(self.rawValue)_normal")
         }
     }
-    var selectedImage: UIImage! { return SVGKImage(named: "\(self.rawValue)_selected.svg").UIImage }
-    var whiteImage: UIImage? { return SVGKImage(named: "\(self.rawValue)_white.svg").UIImage }
-    var disabledImage: UIImage? {
+    var selectedImage: UIImage! {
+        return svgNamed("\(self.rawValue)_selected")
+    }
+    var whiteImage: UIImage? {
         switch self {
-        case .Repost, .AngleBracket:
-            return SVGKImage(named: "\(self.rawValue)_disabled.svg").UIImage
+        case .AngleBracket,
+             .Arrow,
+             .BreakLink,
+             .BubbleBody,
+             .Camera,
+             .CheckSmall,
+             .Comments,
+             .Heart,
+             .Invite,
+             .Link,
+             .Pencil,
+             .PlusSmall,
+             .Repost,
+             .Star,
+             .X:
+            return svgNamed("\(self.rawValue)_white")
         default:
             return nil
         }
     }
-    var redImage: UIImage? { return SVGKImage(named: "\(self.rawValue)_red.svg").UIImage }
+    var disabledImage: UIImage? {
+        switch self {
+        case .Repost, .AngleBracket, .AddBuyButton:
+            return svgNamed("\(self.rawValue)_disabled")
+        default:
+            return nil
+        }
+    }
+    var redImage: UIImage? {
+        switch self {
+        case .X:
+            return svgNamed("\(self.rawValue)_red")
+        default:
+            return nil
+        }
+    }
 }

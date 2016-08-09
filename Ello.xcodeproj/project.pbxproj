@@ -200,7 +200,7 @@
 		122D1B501C602355001386CE /* CrashlyticsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */; };
 		122D1B591C6025D2001386CE /* ShareCryptoStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B581C6025D2001386CE /* ShareCryptoStringExtensions.swift */; };
 		122D1B631C6028EF001386CE /* AuthenticationNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE791A433B1C00493660 /* AuthenticationNotifications.swift */; };
-		122D1B7C1C610892001386CE /* NSString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSString.swift */; };
+		122D1B7C1C610892001386CE /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */; };
 		122D1B981C613085001386CE /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87928671ACC6D6600579BE1 /* AlertViewController.swift */; };
 		122D1B991C61308F001386CE /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C481ACDD4C1008C15A1 /* AlertAction.swift */; };
 		122D1B9A1C6130B4001386CE /* NSObjectClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */; };
@@ -227,7 +227,7 @@
 		122D1BBF1C6411D6001386CE /* ElloHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE661A4339EF00493660 /* ElloHUD.swift */; };
 		122D1BC01C6411E0001386CE /* ElloLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B531001A93B75700E01D72 /* ElloLogoView.swift */; };
 		122DEA201AB0A024005DF1F1 /* NSFileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DEA1F1AB0A024005DF1F1 /* NSFileManagerExtensions.swift */; };
-		123297B31B0BB9FA00A6E590 /* NSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123297B21B0BB9FA00A6E590 /* NSURL.swift */; };
+		123297B31B0BB9FA00A6E590 /* NSURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123297B21B0BB9FA00A6E590 /* NSURLExtensions.swift */; };
 		123438B71BBD9846001267DE /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123438B61BBD9846001267DE /* Rate.swift */; };
 		123466151C650B3000E61110 /* NSItemProviderExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123466141C650B3000E61110 /* NSItemProviderExtensions.swift */; };
 		123466161C65468100E61110 /* ello_logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 769051001AFD2A720011B09A /* ello_logo.svg */; };
@@ -289,7 +289,7 @@
 		127502D41AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json in Resources */ = {isa = PBXBuildFile; fileRef = 127502D01AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json */; };
 		127502D71AE99D6500FED224 /* full_examples_full_post_details.json in Resources */ = {isa = PBXBuildFile; fileRef = 127502D31AE99D6500FED224 /* full_examples_full_post_details.json */; };
 		1275351D1B73D155006B9A0F /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* NSDate.swift */; };
-		1275351F1B73D1D1006B9A0F /* NSString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSString.swift */; };
+		1275351F1B73D1D1006B9A0F /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */; };
 		127535211B73F7B2006B9A0F /* NSDateSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127535201B73F7B2006B9A0F /* NSDateSpecs.swift */; };
 		127B8C711BC319A700E17D0A /* ColumnToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */; };
 		127B8C731BC319D100E17D0A /* ColumnToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 127B8C721BC319D100E17D0A /* ColumnToggleCell.xib */; };
@@ -452,6 +452,7 @@
 		1D2B50BB1D272A6400F6CE90 /* BlackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */; };
 		1D2B50BD1D2C2FC000F6CE90 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B50BC1D2C2FC000F6CE90 /* CategoryService.swift */; };
 		1D2B6A7C1BE3FB0900D27DC9 /* AvatarButtonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B6A7B1BE3FB0900D27DC9 /* AvatarButtonSpec.swift */; };
+		1D2C12AA1D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2C12A91D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift */; };
 		1D2D18651AC322070078AA05 /* UIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2D18641AC322070078AA05 /* UIWebView.swift */; };
 		1D2D18681AC322170078AA05 /* UIWebViewSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2D18671AC322170078AA05 /* UIWebViewSpecs.swift */; };
 		1D2F65A71D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65A61D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift */; };
@@ -506,11 +507,13 @@
 		1D5933941D1492DC00EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */; };
 		1D5A90181D39747E00C2AEFF /* $.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A90171D39747E00C2AEFF /* $.svg */; };
-		1D5A901C1D3991CC00C2AEFF /* affiliate-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */; };
+		1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */; };
 		1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */; };
 		1D5F97791A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */; };
+		1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF51D3EA39500B4079C /* $_add_selected.svg */; };
+		1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF71D3EA41700B4079C /* $_add_normal.svg */; };
 		1D652F5A1BC2D66200AF3B06 /* PostbarControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */; };
 		1D652F5E1BC2FDCD00AF3B06 /* ElloTabBarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D652F5D1BC2FDCD00AF3B06 /* ElloTabBarSpec.swift */; };
 		1D6680201A89B873003E93C8 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D66801F1A89B873003E93C8 /* ProfileViewController.xib */; };
@@ -561,6 +564,14 @@
 		1D9B74D31BB1E62500ACD028 /* bubble_body_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */; };
 		1D9B74D51BB1E62500ACD028 /* bubble_tail.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */; };
 		1D9BF3D01A8E815E00A5F5C2 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */; };
+		1D9CF9971D47F6C1004A95B7 /* 422_sparse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9961D47F6C1004A95B7 /* 422_sparse.json */; };
+		1D9CF9991D4800AE004A95B7 /* BuyButtonLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF9981D4800AE004A95B7 /* BuyButtonLinkViewController.swift */; };
+		1D9CF99B1D4800C4004A95B7 /* BuyButtonLinkScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */; };
+		1D9CF99D1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */; };
+		1D9CF9A01D4925BE004A95B7 /* OmnibarCacheData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */; };
+		1D9CF9A11D4925BE004A95B7 /* OmnibarImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */; };
+		1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9A21D496639004A95B7 /* $_set_normal.svg */; };
+		1D9CF9A51D4966F7004A95B7 /* $_set_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */; };
 		1D9D170F1AE72372009841A4 /* UIViewControllerExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9D170E1AE72372009841A4 /* UIViewControllerExtensionSpec.swift */; };
 		1D9D17111AE72394009841A4 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9D17101AE72394009841A4 /* UIViewController.swift */; };
 		1DA46D4E1B0BAE88003C5DFE /* OnboardingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA46D4D1B0BAE88003C5DFE /* OnboardingHeaderView.swift */; };
@@ -578,6 +589,7 @@
 		1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */; };
 		1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
+		1DB68E991D46CE0F00D446C7 /* $_add_disabled.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */; };
 		1DBC4A9C1B6044EE00ECF576 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
 		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
@@ -887,7 +899,7 @@
 		F8158C4B1ACDD4EF008C15A1 /* AlertCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */; };
 		F8158C4D1ACDD52D008C15A1 /* AlertPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C4C1ACDD52D008C15A1 /* AlertPresentationController.swift */; };
 		F81ED61D1AAF499D00A20794 /* DrawerViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81ED61C1AAF499D00A20794 /* DrawerViewControllerSpec.swift */; };
-		F83648F21B0CE62E000CDBC5 /* NSURLSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83648F11B0CE62E000CDBC5 /* NSURLSpec.swift */; };
+		F83648F21B0CE62E000CDBC5 /* NSURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83648F11B0CE62E000CDBC5 /* NSURLExtensionsSpec.swift */; };
 		F847BC241B0E1FE8006E5F3E /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */; };
 		F864AD971AD467D8009645BF /* AlertViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F864AD961AD467D8009645BF /* AlertViewControllerSpec.swift */; };
 		F870D8F51ACB0BB000E25AA2 /* ResponseConfigSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F870D8F41ACB0BB000E25AA2 /* ResponseConfigSpec.swift */; };
@@ -1040,7 +1052,7 @@
 		122D1BAF1C613A9D001386CE /* ShareKeyboardOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareKeyboardOverrides.swift; sourceTree = "<group>"; };
 		122D1BBD1C641188001386CE /* ElloHUDWindowExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ElloHUDWindowExtensions.swift; path = sources/Views/ElloHUDWindowExtensions.swift; sourceTree = SOURCE_ROOT; };
 		122DEA1F1AB0A024005DF1F1 /* NSFileManagerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSFileManagerExtensions.swift; path = sources/Extensions/NSFileManagerExtensions.swift; sourceTree = SOURCE_ROOT; };
-		123297B21B0BB9FA00A6E590 /* NSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSURL.swift; path = sources/Extensions/NSURL.swift; sourceTree = SOURCE_ROOT; };
+		123297B21B0BB9FA00A6E590 /* NSURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSURLExtensions.swift; path = sources/Extensions/NSURLExtensions.swift; sourceTree = SOURCE_ROOT; };
 		123438B61BBD9846001267DE /* Rate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rate.swift; path = sources/Utilities/Rate.swift; sourceTree = SOURCE_ROOT; };
 		123466141C650B3000E61110 /* NSItemProviderExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSItemProviderExtensions.swift; sourceTree = "<group>"; };
 		12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = sources/Extensions/UIViewExtensions.swift; sourceTree = SOURCE_ROOT; };
@@ -1106,7 +1118,7 @@
 		127502D01AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json; path = resources/stubbedresponses/push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json; sourceTree = SOURCE_ROOT; };
 		127502D31AE99D6500FED224 /* full_examples_full_post_details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = full_examples_full_post_details.json; path = resources/stubbedresponses/full_examples_full_post_details.json; sourceTree = SOURCE_ROOT; };
 		1275351C1B73D155006B9A0F /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDate.swift; path = sources/Extensions/NSDate.swift; sourceTree = SOURCE_ROOT; };
-		1275351E1B73D1D1006B9A0F /* NSString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSString.swift; path = sources/Extensions/NSString.swift; sourceTree = SOURCE_ROOT; };
+		1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSStringExtensions.swift; path = sources/Extensions/NSStringExtensions.swift; sourceTree = SOURCE_ROOT; };
 		127535201B73F7B2006B9A0F /* NSDateSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateSpecs.swift; path = specs/Extensions/NSDateSpecs.swift; sourceTree = SOURCE_ROOT; };
 		127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColumnToggleCell.swift; path = sources/controllers/stream/Cells/ColumnToggleCell.swift; sourceTree = SOURCE_ROOT; };
 		127B8C721BC319D100E17D0A /* ColumnToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColumnToggleCell.xib; sourceTree = "<group>"; };
@@ -1280,6 +1292,7 @@
 		1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBar.swift; sourceTree = "<group>"; };
 		1D2B50BC1D2C2FC000F6CE90 /* CategoryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		1D2B6A7B1BE3FB0900D27DC9 /* AvatarButtonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarButtonSpec.swift; sourceTree = "<group>"; };
+		1D2C12A91D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenSnapshotSpecs.swift; sourceTree = "<group>"; };
 		1D2D18641AC322070078AA05 /* UIWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebView.swift; sourceTree = "<group>"; };
 		1D2D18671AC322170078AA05 /* UIWebViewSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebViewSpecs.swift; sourceTree = "<group>"; };
 		1D2F65A61D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllCategoriesCellPresenter.swift; sourceTree = "<group>"; };
@@ -1330,10 +1343,12 @@
 		1D5933901D14855B00EAF03D /* ElloScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScreen.swift; sourceTree = "<group>"; };
 		1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
 		1D5A90171D39747E00C2AEFF /* $.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $.svg; sourceTree = "<group>"; };
-		1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "affiliate-image-region.json"; sourceTree = "<group>"; };
+		1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "buy-button-image-region.json"; sourceTree = "<group>"; };
 		1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
+		1D612BF51D3EA39500B4079C /* $_add_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_selected.svg; sourceTree = "<group>"; };
+		1D612BF71D3EA41700B4079C /* $_add_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_normal.svg; sourceTree = "<group>"; };
 		1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarControllerSpec.swift; sourceTree = "<group>"; };
 		1D652F5D1BC2FDCD00AF3B06 /* ElloTabBarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTabBarSpec.swift; sourceTree = "<group>"; };
 		1D66801F1A89B873003E93C8 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -1386,6 +1401,14 @@
 		1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bubble_body_white.svg; sourceTree = "<group>"; };
 		1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bubble_tail.svg; sourceTree = "<group>"; };
 		1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		1D9CF9961D47F6C1004A95B7 /* 422_sparse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 422_sparse.json; sourceTree = "<group>"; };
+		1D9CF9981D4800AE004A95B7 /* BuyButtonLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyButtonLinkViewController.swift; sourceTree = "<group>"; };
+		1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyButtonLinkScreen.swift; sourceTree = "<group>"; };
+		1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenBuyButtonLinkControllerDelegate.swift; sourceTree = "<group>"; };
+		1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarCacheData.swift; sourceTree = "<group>"; };
+		1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarImageData.swift; sourceTree = "<group>"; };
+		1D9CF9A21D496639004A95B7 /* $_set_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_set_normal.svg; sourceTree = "<group>"; };
+		1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_set_selected.svg; sourceTree = "<group>"; };
 		1D9D170E1AE72372009841A4 /* UIViewControllerExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensionSpec.swift; sourceTree = "<group>"; };
 		1D9D17101AE72394009841A4 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1DA46D4D1B0BAE88003C5DFE /* OnboardingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingHeaderView.swift; sourceTree = "<group>"; };
@@ -1403,6 +1426,7 @@
 		1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarErrorCell.swift; sourceTree = "<group>"; };
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
+		1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_disabled.svg; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DC10FA31C3DEB7600846ED6 /* availability__error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability__error.json; sourceTree = "<group>"; };
@@ -1731,7 +1755,7 @@
 		F81ED61C1AAF499D00A20794 /* DrawerViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewControllerSpec.swift; sourceTree = "<group>"; };
 		F82B8B6D1AEFFA6E00A9FC97 /* ElloKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloKeychain.swift; sourceTree = "<group>"; };
 		F83648ED1B0CDDC0000CDBC5 /* PushPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPayload.swift; sourceTree = "<group>"; };
-		F83648F11B0CE62E000CDBC5 /* NSURLSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSpec.swift; sourceTree = "<group>"; };
+		F83648F11B0CE62E000CDBC5 /* NSURLExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtensionsSpec.swift; sourceTree = "<group>"; };
 		F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
 		F864AD961AD467D8009645BF /* AlertViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewControllerSpec.swift; sourceTree = "<group>"; };
 		F870D8F41ACB0BB000E25AA2 /* ResponseConfigSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseConfigSpec.swift; sourceTree = "<group>"; };
@@ -2050,13 +2074,18 @@
 		12551FB81A68725100ABC5D9 /* Omnibar */ = {
 			isa = PBXGroup;
 			children = (
+				1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */,
+				1D9CF9981D4800AE004A95B7 /* BuyButtonLinkViewController.swift */,
+				1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */,
 				1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */,
 				1D783A281B838FDD00BD6BF4 /* OmnibarImageCell.swift */,
+				1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */,
 				1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */,
 				1DF50C8E1C614C4400C62D89 /* OmnibarImagePickerExtension.swift */,
 				1DF50C8F1C614C4400C62D89 /* OmnibarProtocols.swift */,
 				1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */,
 				1DE176FB1B82626E00272145 /* OmnibarScreen.swift */,
+				1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */,
 				1DF50C961C614C6900C62D89 /* OmnibarScreenAutocomplete.swift */,
 				1DF50C911C614C4400C62D89 /* OmnibarScreenTableViewDelegate.swift */,
 				1D783A291B838FDD00BD6BF4 /* OmnibarTextCell.swift */,
@@ -2068,6 +2097,7 @@
 		12551FBC1A6873A300ABC5D9 /* Omnibar */ = {
 			isa = PBXGroup;
 			children = (
+				1D2C12A91D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift */,
 				1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */,
 				12551FBD1A6873D600ABC5D9 /* OmnibarViewControllerSpec.swift */,
 			);
@@ -2237,7 +2267,7 @@
 				1DF233661A9655860096DA65 /* FreeMethodsTests.swift */,
 				1DF50C9D1C61512000C62D89 /* NSAttributedStringSpec.swift */,
 				127535201B73F7B2006B9A0F /* NSDateSpecs.swift */,
-				F83648F11B0CE62E000CDBC5 /* NSURLSpec.swift */,
+				F83648F11B0CE62E000CDBC5 /* NSURLExtensionsSpec.swift */,
 				762385C81B0143A500138780 /* NumberExtensionsSpec.swift */,
 				1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */,
 				1D061B511AAA1C6D00493435 /* StringExtensionSpec.swift */,
@@ -2528,8 +2558,8 @@
 				1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */,
 				122DEA1F1AB0A024005DF1F1 /* NSFileManagerExtensions.swift */,
 				EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */,
-				1275351E1B73D1D1006B9A0F /* NSString.swift */,
-				123297B21B0BB9FA00A6E590 /* NSURL.swift */,
+				1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */,
+				123297B21B0BB9FA00A6E590 /* NSURLExtensions.swift */,
 				12F6AE281A43390900493660 /* NumberExtensions.swift */,
 				12F6AE291A43390900493660 /* Optionals.swift */,
 				1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */,
@@ -2929,16 +2959,17 @@
 		1DD8299C1BD93B7F00105CDE /* CustomResponses */ = {
 			isa = PBXGroup;
 			children = (
-				1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */,
-				123DEBF01D3D5F32007B5F86 /* users_posts.json */,
+				1D9CF9961D47F6C1004A95B7 /* 422_sparse.json */,
 				1DC10FA31C3DEB7600846ED6 /* availability__error.json */,
 				1DC10FA41C3DEB7600846ED6 /* availability.json */,
+				1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */,
 				1D5933721D10BB5B00EAF03D /* categories.json */,
 				1DA9AA7B1C694F32000562E4 /* profile__no_sharing.json */,
 				1DD8299F1BD93D3600105CDE /* relationship_following.json */,
 				1DD829A01BD93D3600105CDE /* relationship_inactive.json */,
 				1DD829A11BD93D3600105CDE /* relationship_starred.json */,
 				1D6C97F71CE179E600E7B929 /* usernames.json */,
+				123DEBF01D3D5F32007B5F86 /* users_posts.json */,
 			);
 			path = CustomResponses;
 			sourceTree = "<group>";
@@ -2991,6 +3022,11 @@
 		1DF404061B150CE50073460B /* CustomSVGs */ = {
 			isa = PBXGroup;
 			children = (
+				1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */,
+				1D612BF71D3EA41700B4079C /* $_add_normal.svg */,
+				1D612BF51D3EA39500B4079C /* $_add_selected.svg */,
+				1D9CF9A21D496639004A95B7 /* $_set_normal.svg */,
+				1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */,
 				1D5A90171D39747E00C2AEFF /* $.svg */,
 				1D472C251C1F349E00B61E55 /* breaklink_normal.svg */,
 				1DF741701BFAAC02000F5349 /* breaklink_white.svg */,
@@ -3440,8 +3476,10 @@
 				76B53AD11B0AA89B00534548 /* profile_available_user_profile_toggles.json in Resources */,
 				76F8DEE71B6C0BC4009BCF61 /* plussmall_normal.svg in Resources */,
 				76F8DEC11B6C0BC4009BCF61 /* checksmall_selected.svg in Resources */,
+				1D9CF9971D47F6C1004A95B7 /* 422_sparse.json in Resources */,
 				EAD1ABCE1AB9CBD500779A48 /* 410.json in Resources */,
 				12CFF68B1B16760C007CE68F /* posts_listing_users_who_have_loved_a_post.json in Resources */,
+				1D9CF9A51D4966F7004A95B7 /* $_set_selected.svg in Resources */,
 				128C5AF71C59812D00EFC226 /* (null) in Resources */,
 				76F8DF021B6C0BC4009BCF61 /* x_selected.svg in Resources */,
 				7689B4E31AD4ED3B00E4A4A3 /* comments_creating_a_comment.json in Resources */,
@@ -3564,6 +3602,7 @@
 				76F8DEFE1B6C0BC4009BCF61 /* trash_selected.svg in Resources */,
 				76F8DEC71B6C0BC4009BCF61 /* danger_normal.svg in Resources */,
 				1212FDEA1A66377100AD4AF7 /* comments.json in Resources */,
+				1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */,
 				1DA8FD701B98A63600472B1E /* reorder_normal.svg in Resources */,
 				76F8DED71B6C0BC4009BCF61 /* hearts_selected.svg in Resources */,
 				122B19131A8695BF00247A05 /* StreamTextCell.xib in Resources */,
@@ -3606,7 +3645,8 @@
 				128C5AF51C59802600EFC226 /* (null) in Resources */,
 				1217A3EE1B0CFCDA00DF8495 /* ImportPromptViewController.xib in Resources */,
 				1D9B74D31BB1E62500ACD028 /* bubble_body_white.svg in Resources */,
-				1D5A901C1D3991CC00C2AEFF /* affiliate-image-region.json in Resources */,
+				1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */,
+				1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */,
 				76F8DEB61B6C0BC4009BCF61 /* bubble_normal.svg in Resources */,
 				12A313D91C73ECAA009727DD /* unselected-pixel@2x.png in Resources */,
 				7689B4D81AD4ED3B00E4A4A3 /* access_tokens_user_access_token_(refresh_token).json in Resources */,
@@ -3653,6 +3693,7 @@
 				76F8DECD1B6C0BC4009BCF61 /* ello_selected.svg in Resources */,
 				76F8DEE21B6C0BC4009BCF61 /* person_selected.svg in Resources */,
 				1D9B74D11BB1E62500ACD028 /* bubble_body_normal.svg in Resources */,
+				1DB68E991D46CE0F00D446C7 /* $_add_disabled.svg in Resources */,
 				7689B4D51AD4ED3B00E4A4A3 /* access_tokens__when_the_user_has_been_locked_out.json in Resources */,
 				7689B4D61AD4ED3B00E4A4A3 /* access_tokens_client_access_token_(client_credentials).json in Resources */,
 				1DA9AA7C1C694F32000562E4 /* profile__no_sharing.json in Resources */,
@@ -3665,6 +3706,7 @@
 				1D6C97F81CE179E600E7B929 /* usernames.json in Resources */,
 				7689B5041AD4ED3B00E4A4A3 /* relationships_following_a_user_as_friend.json in Resources */,
 				12931BD71BFE8E30009B26F9 /* list_normal.svg in Resources */,
+				1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */,
 				76F8DEF81B6C0BC4009BCF61 /* share_selected.svg in Resources */,
 				12931BD51BFE8E30009B26F9 /* grid_normal.svg in Resources */,
 				7689B4E71AD4ED3B00E4A4A3 /* comments_updating_a_comment.json in Resources */,
@@ -3916,7 +3958,7 @@
 				122D1BA61C6134D5001386CE /* UIViewNibLoading.swift in Sources */,
 				1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */,
 				122B30B31C6A3FBB00C1B9D8 /* Availability.swift in Sources */,
-				122D1B7C1C610892001386CE /* NSString.swift in Sources */,
+				122D1B7C1C610892001386CE /* NSStringExtensions.swift in Sources */,
 				122B30E51C6A3FC400C1B9D8 /* Attachment.swift in Sources */,
 				1207C99D1C750F8A00939ADB /* ElloManager.swift in Sources */,
 				122B30C31C6A3FBB00C1B9D8 /* PushPayload.swift in Sources */,
@@ -4031,7 +4073,7 @@
 				1D1C88AB1AC9B71600AFC56D /* UIImageSpecs.swift in Sources */,
 				1D5933821D14635B00EAF03D /* UIEdgeInsetsSpec.swift in Sources */,
 				1D7750F01AB9F0D900D92191 /* BaseElloViewControllerSpec.swift in Sources */,
-				F83648F21B0CE62E000CDBC5 /* NSURLSpec.swift in Sources */,
+				F83648F21B0CE62E000CDBC5 /* NSURLExtensionsSpec.swift in Sources */,
 				1DE87FC81BB32060007A7325 /* MentionablesSpec.swift in Sources */,
 				1DA809C21B8F6DE9000BB590 /* OmnibarScreenSpec.swift in Sources */,
 				EA9624E51ACB103700E94306 /* AvailabilitySpec.swift in Sources */,
@@ -4206,6 +4248,7 @@
 				12687A181BBF295E0055D0BA /* RateSpec.swift in Sources */,
 				76F90E5D1A97992D00F5B42F /* RelationshipControlSpec.swift in Sources */,
 				1DF942351A9FC92D00838E9C /* NotificationsFilterBarSpec.swift in Sources */,
+				1D2C12AA1D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift in Sources */,
 				1D066FF31B8BA19E002B303D /* ArraySpec.swift in Sources */,
 				1DADA1691A96F4C60000DDA1 /* ColorsSpec.swift in Sources */,
 			);
@@ -4250,6 +4293,7 @@
 				1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */,
 				1D807D9C1B0517F1009B0F71 /* FollowAllCell.swift in Sources */,
 				12F6AE2F1A43390900493660 /* NumberExtensions.swift in Sources */,
+				1D9CF9A01D4925BE004A95B7 /* OmnibarCacheData.swift in Sources */,
 				1D3128C01B557BD500E3D5B6 /* Onboarding.swift in Sources */,
 				1DF806531CDD1A42002D60AD /* Username.swift in Sources */,
 				122B19051A867C7D00247A05 /* StreamTextCellHTML.swift in Sources */,
@@ -4320,6 +4364,7 @@
 				1DE261351B0D38A400475325 /* UIImageViewExtensions.swift in Sources */,
 				1D9D17111AE72394009841A4 /* UIViewController.swift in Sources */,
 				122B30E21C6A3FBF00C1B9D8 /* User.swift in Sources */,
+				1D9CF99B1D4800C4004A95B7 /* BuyButtonLinkScreen.swift in Sources */,
 				1D783A2A1B838FDD00BD6BF4 /* OmnibarImageCell.swift in Sources */,
 				1DFF43521A8D520E00D43CFF /* NotificationCell.swift in Sources */,
 				1D807DAE1B06B88E009B0F71 /* CoverImageSelectionViewController.swift in Sources */,
@@ -4334,6 +4379,7 @@
 				1DA46D4E1B0BAE88003C5DFE /* OnboardingHeaderView.swift in Sources */,
 				1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */,
 				1D2B50BD1D2C2FC000F6CE90 /* CategoryService.swift in Sources */,
+				1D9CF9991D4800AE004A95B7 /* BuyButtonLinkViewController.swift in Sources */,
 				122B30C91C6A3FBC00C1B9D8 /* Availability.swift in Sources */,
 				122B30F31C6A3FC500C1B9D8 /* TextRegion.swift in Sources */,
 				12DD85C61B015A76004D3EEF /* UITabBarItem.swift in Sources */,
@@ -4417,6 +4463,7 @@
 				F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */,
 				122B30E31C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */,
 				1D3328501AE751D200446591 /* SearchScreen.swift in Sources */,
+				1D9CF99D1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift in Sources */,
 				1207C9851C73FEE000939ADB /* MultipartRequestBuilder.swift in Sources */,
 				122B30D51C6A3FBC00C1B9D8 /* Notification.swift in Sources */,
 				128D36B91A951F7400622833 /* ProfileHeaderCellPresenter.swift in Sources */,
@@ -4443,6 +4490,7 @@
 				1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */,
 				122B19031A867C7D00247A05 /* StreamTextCell.swift in Sources */,
 				1D2F65B11D1870020099D036 /* DiscoverAllCategoriesScreen.swift in Sources */,
+				1D9CF9A11D4925BE004A95B7 /* OmnibarImageData.swift in Sources */,
 				1DADC57A1AF449B3000DAC88 /* ElloWebBrowserViewController.swift in Sources */,
 				122DEA201AB0A024005DF1F1 /* NSFileManagerExtensions.swift in Sources */,
 				1267C7391BA232530000D809 /* MutableBox.swift in Sources */,
@@ -4521,7 +4569,7 @@
 				1243576A1A8927BF008B24FB /* NotificationsViewController.swift in Sources */,
 				7618E60D1AC1C1470038AF68 /* ProfileHeaderCellSizeCalculator.swift in Sources */,
 				1DF50C9C1C614E1100C62D89 /* OmnibarScreenTableViewDelegate.swift in Sources */,
-				123297B31B0BB9FA00A6E590 /* NSURL.swift in Sources */,
+				123297B31B0BB9FA00A6E590 /* NSURLExtensions.swift in Sources */,
 				1D807DA41B053A5F009B0F71 /* OnboardingUserListViewController.swift in Sources */,
 				122B18FB1A867C7D00247A05 /* StreamFooterButton.swift in Sources */,
 				1D6A02431C73CC9B0054603B /* AssetsToRegions.swift in Sources */,
@@ -4546,7 +4594,7 @@
 				76C050A71AA8C8780094E69A /* UserListItemCellPresenter.swift in Sources */,
 				1DC309F81B03E64E00EAD920 /* CommunitySelectionViewController.swift in Sources */,
 				1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */,
-				1275351F1B73D1D1006B9A0F /* NSString.swift in Sources */,
+				1275351F1B73D1D1006B9A0F /* NSStringExtensions.swift in Sources */,
 				122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */,
 				1D2F65A71D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift in Sources */,
 				C2787E7F5FD7375A624964BF /* IntroViewController.swift in Sources */,
