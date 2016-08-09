@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -43,6 +43,10 @@
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-Lt-XSe" userLabel="buyButtonGreen">
                         <rect key="frame" x="547" y="10" width="30" height="30"/>
                         <color key="backgroundColor" red="0.42269808050000002" green="0.96766740080000002" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="y6x-Lt-XSe" secondAttribute="height" multiplier="1:1" id="GVV-Ih-tKo"/>
+                            <constraint firstAttribute="width" constant="30" id="USf-3g-aIL"/>
+                        </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSa-cX-STU" userLabel="buyButton">
                         <rect key="frame" x="542" y="5" width="40" height="40"/>
@@ -64,9 +68,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="y6x-Lt-XSe" firstAttribute="top" secondItem="kSa-cX-STU" secondAttribute="top" constant="5" id="0Ox-QI-x5i"/>
                 <constraint firstItem="dCD-fe-L2b" firstAttribute="leading" secondItem="miB-hg-eZF" secondAttribute="leading" id="1sP-s0-8fy"/>
-                <constraint firstItem="y6x-Lt-XSe" firstAttribute="leading" secondItem="kSa-cX-STU" secondAttribute="leading" constant="5" id="5Fl-X8-Waf"/>
                 <constraint firstItem="gia-lK-VuN" firstAttribute="trailing" secondItem="y6x-Lt-XSe" secondAttribute="trailing" constant="10" id="DJB-JZ-6b0"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="trailing" secondItem="gia-lK-VuN" secondAttribute="trailing" id="Fnq-8H-pKy"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="trailing" secondItem="gia-lK-VuN" secondAttribute="trailing" id="G6D-7n-Sp9"/>
@@ -79,24 +81,25 @@
                 <constraint firstAttribute="bottom" secondItem="qxJ-iY-xGS" secondAttribute="bottom" constant="10" id="WQQ-vD-g3W" userLabel="Image Button.bottom"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="bottom" secondItem="gia-lK-VuN" secondAttribute="bottom" constant="10" id="WWI-Th-9Du"/>
                 <constraint firstAttribute="centerY" secondItem="dZ3-hW-f3i" secondAttribute="centerY" id="XON-R3-iBY"/>
+                <constraint firstItem="y6x-Lt-XSe" firstAttribute="centerY" secondItem="kSa-cX-STU" secondAttribute="centerY" id="cDJ-Zv-GLx"/>
                 <constraint firstAttribute="trailing" secondItem="qxJ-iY-xGS" secondAttribute="trailing" id="d2S-3w-LCR" userLabel="Image Button.trailing"/>
                 <constraint firstItem="gia-lK-VuN" firstAttribute="leading" secondItem="miB-hg-eZF" secondAttribute="leading" id="fgY-B3-cIH" userLabel="imageView Left"/>
                 <constraint firstItem="dCD-fe-L2b" firstAttribute="top" secondItem="miB-hg-eZF" secondAttribute="top" id="g3T-CZ-pfr"/>
                 <constraint firstItem="rkb-Ls-8Ph" firstAttribute="leading" secondItem="gia-lK-VuN" secondAttribute="leading" id="h5N-ki-gYL"/>
                 <constraint firstAttribute="trailing" secondItem="gia-lK-VuN" secondAttribute="trailing" id="hhW-aX-ev5" userLabel="imageView Right"/>
                 <constraint firstItem="gia-lK-VuN" firstAttribute="top" secondItem="miB-hg-eZF" secondAttribute="top" id="k2F-Aw-sEU" userLabel="imageView Top"/>
-                <constraint firstItem="kSa-cX-STU" firstAttribute="trailing" secondItem="y6x-Lt-XSe" secondAttribute="trailing" constant="5" id="kGJ-Kc-Ayy"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="top" secondItem="gia-lK-VuN" secondAttribute="top" id="ldy-Lp-cGf"/>
                 <constraint firstAttribute="centerX" secondItem="dZ3-hW-f3i" secondAttribute="centerX" id="p9H-76-dWp"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="leading" secondItem="gia-lK-VuN" secondAttribute="leading" id="pxC-Kc-Blg"/>
                 <constraint firstItem="oJN-Vf-OgU" firstAttribute="bottom" secondItem="gia-lK-VuN" secondAttribute="bottom" constant="10" id="qHP-Rx-9dH"/>
+                <constraint firstItem="y6x-Lt-XSe" firstAttribute="centerX" secondItem="kSa-cX-STU" secondAttribute="centerX" id="se5-Nm-ycy"/>
                 <constraint firstItem="dCD-fe-L2b" firstAttribute="bottom" secondItem="gia-lK-VuN" secondAttribute="bottom" constant="10" id="tfd-76-g2u"/>
-                <constraint firstItem="kSa-cX-STU" firstAttribute="bottom" secondItem="y6x-Lt-XSe" secondAttribute="bottom" constant="5" id="vFW-II-fct"/>
             </constraints>
             <size key="customSize" width="587" height="119"/>
             <connections>
                 <outlet property="buyButton" destination="kSa-cX-STU" id="G82-ui-I2c"/>
                 <outlet property="buyButtonGreen" destination="y6x-Lt-XSe" id="MeT-fk-oQt"/>
+                <outlet property="buyButtonWidthConstraint" destination="USf-3g-aIL" id="hMi-mg-BTb"/>
                 <outlet property="circle" destination="oJN-Vf-OgU" id="Q8k-qa-AY4"/>
                 <outlet property="failBackgroundView" destination="dCD-fe-L2b" id="e57-v3-v7X"/>
                 <outlet property="failHeightConstraint" destination="rrc-8v-4Nf" id="0CL-Ew-7CO"/>

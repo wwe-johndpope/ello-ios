@@ -22,12 +22,15 @@ public class StreamImageCell: StreamRegionableCell {
         static let singleColumnFailHeight: CGFloat = 160
         static let multiColumnFailWidth: CGFloat = 70
         static let multiColumnFailHeight: CGFloat = 80
+        static let multiColumnBuyButtonWidth: CGFloat = 30
+        static let singleColumnBuyButtonWidth: CGFloat = 40
     }
 
     @IBOutlet public weak var imageView: FLAnimatedImageView!
     @IBOutlet public weak var imageButton: UIView!
     @IBOutlet public weak var buyButton: UIButton?
     @IBOutlet public weak var buyButtonGreen: UIView?
+    @IBOutlet public weak var buyButtonWidthConstraint: NSLayoutConstraint!
     @IBOutlet public weak var circle: PulsingCircle!
     @IBOutlet public weak var failImage: UIImageView!
     @IBOutlet public weak var failBackgroundView: UIView!
@@ -64,10 +67,12 @@ public class StreamImageCell: StreamRegionableCell {
     public var isGridView: Bool = false {
         didSet {
             if isGridView {
+                buyButtonWidthConstraint.constant = Size.multiColumnBuyButtonWidth
                 failWidthConstraint.constant = Size.multiColumnFailWidth
                 failHeightConstraint.constant = Size.multiColumnFailHeight
             }
             else {
+                buyButtonWidthConstraint.constant = Size.singleColumnBuyButtonWidth
                 failWidthConstraint.constant = Size.singleColumnFailWidth
                 failHeightConstraint.constant = Size.singleColumnFailHeight
             }
