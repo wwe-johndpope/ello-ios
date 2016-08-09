@@ -96,8 +96,8 @@ public class ProfileHeaderCell: UICollectionViewCell {
     func showPlaceholders() {
         usernamePlaceholder.hidden = false
         namePlaceholder.hidden = false
-        usernamePlaceholder.backgroundColor = .greyA()
-        namePlaceholder.backgroundColor = .greyA()
+        usernamePlaceholder.backgroundColor = .greyC()
+        namePlaceholder.backgroundColor = .greyC()
     }
 
     func setAvatar(image: UIImage?) {
