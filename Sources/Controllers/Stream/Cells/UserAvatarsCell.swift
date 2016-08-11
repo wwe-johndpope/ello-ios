@@ -73,7 +73,7 @@ public class UserAvatarsCell: UICollectionViewCell {
         if let index = avatarButtons.indexOf(sender) {
             if users.count > index {
                 let user = users[index]
-                userDelegate?.userTappedParam(user.id)
+                userDelegate?.userTappedUser(user)
             }
         }
     }

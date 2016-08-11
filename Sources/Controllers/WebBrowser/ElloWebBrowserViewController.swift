@@ -166,7 +166,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
     private func showProfile(username: String) {
         let param = "~\(username)"
         if alreadyOnUserProfile(param) { return }
-        let vc = ProfileViewController(userParam: param)
+        let vc = ProfileViewController(userParam: param, username: username)
         vc.currentUser = ElloWebBrowserViewController.currentUser
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -134,7 +134,7 @@ public class NotificationsViewController: StreamableViewController, Notification
             case "users":
                 if let id = components.safeValue(1) {
                     popToRoot = false
-                    userParamTapped(id)
+                    userParamTapped(id, username: nil)
                 }
             default:
                 break

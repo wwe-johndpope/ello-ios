@@ -48,17 +48,24 @@ public final class ProfileViewController: StreamableViewController {
     @IBOutlet weak var gradientViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var relationshipControlsViewTopConstraint: NSLayoutConstraint!
 
-    required public init(userParam: String) {
+    required public init(userParam: String, username: String? = nil) {
         self.userParam = userParam
         self.initialStreamKind = .UserStream(userParam: self.userParam)
         super.init(nibName: "ProfileViewController", bundle: nil)
+
+        if let username = username {
+            title = "@\(username)"
+        }
+
         if self.user == nil {
             if let user = ElloLinkedStore.sharedInstance.getObject(self.userParam,
                inCollection: MappingType.UsersType.rawValue) as? User {
                 self.user = user
             }
         }
+
         sharedInit()
+
         relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [unowned self] user in
             if self.user?.id == user.id {
                 self.updateRelationshipPriority(user.relationshipPriority)

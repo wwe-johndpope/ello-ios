@@ -42,7 +42,7 @@ public protocol UserDelegate: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
     func userTappedText(cell: UICollectionViewCell)
-    func userTappedParam(param: String)
+    func userTappedUser(user: User)
 }
 
 public protocol WebLinkDelegate: class {
@@ -910,8 +910,8 @@ extension StreamViewController: UserDelegate {
         userTapped(reposter)
     }
 
-    public func userTappedParam(param: String) {
-        userTappedDelegate?.userParamTapped(param)
+    public func userTappedUser(user: User) {
+        userTapped(user)
     }
 
 }
@@ -992,7 +992,7 @@ extension StreamViewController: WebLinkDelegate {
     private func showProfile(username: String) {
         let param = "~\(username)"
         if alreadyOnUserProfile(param) { return }
-        let vc = ProfileViewController(userParam: param)
+        let vc = ProfileViewController(userParam: param, username: username)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
