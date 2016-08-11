@@ -114,6 +114,14 @@ public final class ProfileViewController: StreamableViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+
+        if user == nil {
+            mentionButton.enabled = false
+            editButton.enabled = false
+            inviteButton.enabled = false
+            relationshipControl.enabled = false
+        }
+
         self.generator = ProfileGenerator(
             currentUser: self.currentUser,
             userParam: userParam,
@@ -412,6 +420,11 @@ extension ProfileViewController {
     }
 
     public func updateCurrentUser(user: User) {
+        mentionButton.enabled = true
+        editButton.enabled = true
+        inviteButton.enabled = true
+        relationshipControl.enabled = true
+
         guard user.id == self.currentUser?.id else {
             mentionButton.hidden = false
             relationshipControl.hidden = false

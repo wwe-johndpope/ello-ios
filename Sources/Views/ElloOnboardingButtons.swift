@@ -90,22 +90,22 @@ public class FollowAllElloButton: ElloButton {
     }
 
     override public func updateStyle() {
-        self.backgroundColor = selected ? .blackColor() : .whiteColor()
+        backgroundColor = selected ? .blackColor() : .whiteColor()
+        layer.borderWidth = 1
         updateOutline()
     }
 
     override public func sharedSetup() {
-        self.titleLabel?.font = UIFont.defaultFont()
-        self.titleLabel?.numberOfLines = 1
-        self.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        self.setTitleColor(UIColor.whiteColor(), forState: .Selected)
-        self.setTitleColor(UIColor.greyA(), forState: .Disabled)
-        self.backgroundColor = selected ? .blackColor() : .whiteColor()
+        titleLabel?.font = UIFont.defaultFont()
+        titleLabel?.numberOfLines = 1
+        setTitleColor(UIColor.blackColor(), forState: .Normal)
+        setTitleColor(UIColor.whiteColor(), forState: .Selected)
+        setTitleColor(UIColor.greyA(), forState: .Disabled)
+        backgroundColor = selected ? .blackColor() : .whiteColor()
     }
 
     func updateOutline() {
-        self.layer.borderColor = (currentTitleColor ?? UIColor.whiteColor()).CGColor
-        self.layer.borderWidth = 1
+        layer.borderColor = (currentTitleColor ?? UIColor.whiteColor()).CGColor
     }
 
 }
