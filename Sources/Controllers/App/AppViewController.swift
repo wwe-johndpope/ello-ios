@@ -723,7 +723,7 @@ public extension AppViewController {
                 bar.backgroundColor = .blackColor()
                 nav.navigationBar.addSubview(bar)
 
-                let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(AppViewController.closeTodoController))
+                let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(AppViewController.closeTodoControllerTapped))
                 ctlr.navigationItem.leftBarButtonItem = closeItem
 
                 presentViewController(nav, animated: true, completion: nil)
@@ -731,7 +731,11 @@ public extension AppViewController {
         }
     }
 
-    public func closeTodoController(completion: (() -> Void)? = nil) {
+    func closeTodoControllerTapped() {
+        closeTodoController()
+    }
+
+    func closeTodoController(completion: (() -> Void)? = nil) {
         isShowingDebug = false
         dismissViewControllerAnimated(true, completion: completion)
     }

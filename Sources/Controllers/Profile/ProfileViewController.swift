@@ -31,7 +31,7 @@ public final class ProfileViewController: StreamableViewController {
     @IBOutlet weak var noPostsHeader: UILabel!
     @IBOutlet weak var noPostsBody: UILabel!
 
-    @IBOutlet weak var circle: PulsingCircle!
+    @IBOutlet weak var loaderView: InterpolatedLoadingView!
     @IBOutlet weak var coverImage: FLAnimatedImageView!
     @IBOutlet weak var relationshipControl: RelationshipControl!
     @IBOutlet weak var mentionButton: UIButton!
@@ -130,7 +130,6 @@ public final class ProfileViewController: StreamableViewController {
             destination: self
         )
         view.clipsToBounds = true
-        coverImage.alpha = 0
         setupNavigationBar()
         setupNoPosts()
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
@@ -142,7 +141,7 @@ public final class ProfileViewController: StreamableViewController {
         setupGradient()
 
         if let user = user {
-            updateCurrentUser(user)
+            updateUser(user)
         }
     }
 
@@ -229,12 +228,10 @@ public final class ProfileViewController: StreamableViewController {
     // MARK : private
 
     private func loadProfile() {
-        coverImage.alpha = 0
         generator?.load()
     }
 
     private func reloadEntireProfile() {
-        coverImage.alpha = 0
         generator?.load(reload: true)
     }
 
@@ -416,10 +413,9 @@ extension ProfileViewController {
         // to guard against crash #6:
         // https://www.crashlytics.com/ello/ios/apps/co.ello.ello/issues/55725749f505b5ccf00cf76d/sessions/55725654012a0001029d613137326264
         coverImage.image = cachedImage
-        coverImage.alpha = 1.0
     }
 
-    public func updateCurrentUser(user: User) {
+    public func updateUser(user: User) {
         mentionButton.enabled = true
         editButton.enabled = true
         inviteButton.enabled = true
@@ -515,25 +511,22 @@ extension ProfileViewController:  StreamDestination {
         guard let user = jsonable as? User else { return }
 
         self.user = user
-        updateCurrentUser(user)
+        updateUser(user)
 
         relationshipControl.userId = user.id
         relationshipControl.userAtName = user.atName
         relationshipControl.relationshipPriority = user.relationshipPriority
 
         userParam = user.id
-        title = user.atName ?? InterfaceString.Profile.Title
+        title = user.atName
         if let cachedImage = cachedImage(.CoverImage) {
             coverImage.image = cachedImage
-            self.coverImage.alpha = 1.0
         }
-        else if let cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true), coverImage = coverImage
+        else if let
+            cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true),
+            coverImage = coverImage
         {
-            circle.pulse()
-            coverImage.pin_setImageFromURL(cover) { result in
-                self.circle.stopPulse()
-                self.coverImage.alpha = 1.0
-            }
+            coverImage.pin_setImageFromURL(cover) { result in }
         }
 
         assignRightButtons()

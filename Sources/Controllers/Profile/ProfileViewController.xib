@@ -8,13 +8,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="Ello" customModuleProvider="target">
             <connections>
-                <outlet property="circle" destination="OSY-jQ-LMJ" id="zRs-zM-UKX"/>
                 <outlet property="coverImage" destination="A2p-8r-avy" id="rSd-eN-nHc"/>
                 <outlet property="coverImageHeight" destination="Uoo-CU-1JR" id="c4J-Uw-hAx"/>
                 <outlet property="editButton" destination="kD4-Ej-tpx" id="jed-1t-Lhd"/>
                 <outlet property="gradientView" destination="hfy-he-l1y" id="CQV-zA-B37"/>
                 <outlet property="gradientViewTopConstraint" destination="w5L-Z5-pfF" id="eOq-gU-AZ3"/>
                 <outlet property="inviteButton" destination="gLE-mz-Ozo" id="wVp-Pv-k7R"/>
+                <outlet property="loaderView" destination="6IW-ht-EC5" id="ebf-Lw-u20"/>
                 <outlet property="mentionButton" destination="DaU-0S-xWR" id="jTJ-Da-Ecr"/>
                 <outlet property="navigationBar" destination="Dl8-ha-LxN" id="bbX-bK-6CN"/>
                 <outlet property="navigationBarTopConstraint" destination="HAg-hv-aOW" id="jh6-WX-a9E"/>
@@ -36,9 +36,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OSY-jQ-LMJ" userLabel="circle" customClass="PulsingCircle" customModule="Ello" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6IW-ht-EC5" customClass="InterpolatedLoadingView" customModule="Ello" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="338"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A2p-8r-avy" userLabel="coverImage" customClass="FLAnimatedImageView">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="338"/>
@@ -86,7 +86,7 @@
                                                 <action selector="mentionButtonTapped" destination="-1" eventType="touchUpInside" id="Pmg-zf-vvO"/>
                                             </connections>
                                         </button>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="30" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLE-mz-Ozo" userLabel="inviteButton" customClass="ElloMentionButton" customModule="Ello" customModuleProvider="target">
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="30" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLE-mz-Ozo" userLabel="inviteButton" customClass="ElloInviteButton" customModule="Ello" customModuleProvider="target">
                                             <rect key="frame" x="15" y="15" width="100" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="750" constant="100" id="1Ra-Ff-Vi3"/>
@@ -96,7 +96,6 @@
                                             <state key="normal" title="Invite"/>
                                             <connections>
                                                 <action selector="inviteButtonTapped" destination="-1" eventType="touchUpInside" id="tnp-X8-h8l"/>
-                                                <action selector="mentionButtonTapped" destination="-1" eventType="touchUpInside" id="3Xe-yt-EsV"/>
                                             </connections>
                                         </button>
                                         <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="82" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="ggp-mI-YuR" userLabel="relationshipControl" customClass="RelationshipControl" customModule="Ello" customModuleProvider="target">
@@ -196,21 +195,21 @@ Follow or mention them to help them get started!  </string>
                 <constraint firstAttribute="top" secondItem="Dl8-ha-LxN" secondAttribute="top" id="HAg-hv-aOW" userLabel="navigationBar - top"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="K3x-o1-2W5" userLabel="viewContainer - left"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="Kzz-uf-eqd" userLabel="viewContainer - bottom"/>
+                <constraint firstItem="6IW-ht-EC5" firstAttribute="trailing" secondItem="A2p-8r-avy" secondAttribute="trailing" id="LbR-D9-5vk"/>
                 <constraint firstItem="51L-yd-xBc" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Lp5-SP-DOE"/>
                 <constraint firstItem="51L-yd-xBc" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="OQD-yi-J6S"/>
                 <constraint firstAttribute="bottom" secondItem="nKT-Aq-qnw" secondAttribute="bottom" id="OYe-pk-Nh9"/>
                 <constraint firstAttribute="bottom" secondItem="83s-Z9-BEn" secondAttribute="bottom" id="PdW-uX-5p2" userLabel="noPostsView - bottom"/>
-                <constraint firstItem="OSY-jQ-LMJ" firstAttribute="bottom" secondItem="A2p-8r-avy" secondAttribute="bottom" id="R5N-2a-50Y"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="Rwp-mf-G91" userLabel="viewContainer - right"/>
-                <constraint firstItem="OSY-jQ-LMJ" firstAttribute="leading" secondItem="A2p-8r-avy" secondAttribute="leading" id="S8r-Qt-bHV"/>
-                <constraint firstItem="OSY-jQ-LMJ" firstAttribute="top" secondItem="A2p-8r-avy" secondAttribute="top" id="cAq-rG-LeK"/>
+                <constraint firstItem="6IW-ht-EC5" firstAttribute="leading" secondItem="A2p-8r-avy" secondAttribute="leading" id="gYj-Mx-tX2"/>
                 <constraint firstAttribute="trailing" secondItem="83s-Z9-BEn" secondAttribute="trailing" id="j9j-3T-w8g" userLabel="noPostsView - right"/>
                 <constraint firstItem="83s-Z9-BEn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kyP-8W-Ihs" userLabel="noPostsView - left"/>
+                <constraint firstItem="6IW-ht-EC5" firstAttribute="top" secondItem="A2p-8r-avy" secondAttribute="top" id="lQy-5V-AwO"/>
                 <constraint firstAttribute="centerX" secondItem="A2p-8r-avy" secondAttribute="centerX" id="naz-Ui-54x" userLabel="coverImage - centerX"/>
                 <constraint firstItem="Dl8-ha-LxN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sky-eS-kcB" userLabel="navigationBar - left"/>
                 <constraint firstItem="hfy-he-l1y" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="tU5-MR-hv2"/>
                 <constraint firstItem="hfy-he-l1y" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="w5L-Z5-pfF"/>
-                <constraint firstItem="OSY-jQ-LMJ" firstAttribute="trailing" secondItem="A2p-8r-avy" secondAttribute="trailing" id="wot-Zy-zCr"/>
+                <constraint firstItem="6IW-ht-EC5" firstAttribute="bottom" secondItem="A2p-8r-avy" secondAttribute="bottom" id="wFN-im-4bd"/>
                 <constraint firstItem="A2p-8r-avy" firstAttribute="top" secondItem="wlf-zL-93E" secondAttribute="top" id="wz7-ye-x4t" userLabel="coverImage - top"/>
                 <constraint firstItem="wlf-zL-93E" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xTE-z7-na0" userLabel="viewContainer - top"/>
             </constraints>

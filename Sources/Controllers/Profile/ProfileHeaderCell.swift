@@ -24,12 +24,11 @@ public class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
-    @IBOutlet weak var circle: PulsingCircle!
+    @IBOutlet weak var loaderView: InterpolatedLoadingView!
     @IBOutlet weak var avatarImage: FLAnimatedImageView!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var usernamePlaceholder: UIView!
+    @IBOutlet weak var placeholders: UIView!
     @IBOutlet weak var nameLabel: ElloLabel!
-    @IBOutlet weak var namePlaceholder: UIView!
     @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var avatarWidthConstraint: NSLayoutConstraint!
@@ -58,7 +57,6 @@ public class ProfileHeaderCell: UICollectionViewCell {
         style()
         setText()
         bioWebView.delegate = self
-        circle.pulse()
         usernameLabel.text = ""
         nameLabel.text = ""
     }
@@ -76,7 +74,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     override public func prepareForReuse() {
         super.prepareForReuse()
-        circle.pulse()
+        loaderView.hidden = false
         avatarImage.pin_cancelImageDownload()
         avatarImage.image = nil
         bioWebView.stopLoading()
@@ -85,29 +83,37 @@ public class ProfileHeaderCell: UICollectionViewCell {
         user = nil
         usernameLabel.text = ""
         nameLabel.text = ""
+        postsButton.hidden = false
         postsButton.count = ""
+        followersButton.hidden = false
         followingButton.count = ""
+        followingButton.hidden = false
         lovesButton.count = ""
+        lovesButton.hidden = false
         followersButton.count = ""
-        usernamePlaceholder.hidden = true
-        namePlaceholder.hidden = true
+        placeholders.hidden = true
     }
 
     func showPlaceholders() {
-        usernamePlaceholder.hidden = false
-        namePlaceholder.hidden = false
-        usernamePlaceholder.backgroundColor = .greyC()
-        namePlaceholder.backgroundColor = .greyC()
+        postsButton.hidden = true
+        followersButton.hidden = true
+        followingButton.hidden = true
+        lovesButton.hidden = true
+
+        placeholders.hidden = false
+        for view in placeholders.subviews {
+            view.backgroundColor = .greyF2()
+        }
     }
 
     func setAvatar(image: UIImage?) {
         avatarImage.image = image
-        circle.stopPulse()
+        loaderView.hidden = true
     }
 
     func setAvatarURL(url: NSURL) {
         avatarImage.pin_setImageFromURL(url) { result in
-            self.circle.stopPulse()
+            self.loaderView.hidden = false
         }
     }
 

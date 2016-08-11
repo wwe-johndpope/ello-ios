@@ -255,7 +255,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 beforeEach {
                     showController(subject)
                     subject.currentUser = user
-                    subject.updateCurrentUser(user)
+                    subject.updateUser(user)
                 }
                 validateAllSnapshots(subject)
             }
