@@ -33,7 +33,7 @@ end
 def common_pods
   if ENV['ELLO_STAFF']
     pod 'ElloUIFonts', '~> 1.1.0'
-    pod 'ElloCerts', '~> 1.1'
+    pod 'ElloCerts', '~> 1.2'
   elsif ENV['ELLO_UI_FONTS_URL']
     pod 'ElloUIFonts', git: ENV['ELLO_UI_FONTS_URL']
     pod 'ElloOSSCerts', '~> 1.1'
