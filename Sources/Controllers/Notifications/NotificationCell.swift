@@ -17,23 +17,19 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     struct Size {
         static let ButtonHeight = CGFloat(30)
-        static let ButtonMargin = CGFloat(15)
         static let WebHeightCorrection = CGFloat(15)
         static let SideMargins = CGFloat(15)
         static let AvatarSize = CGFloat(30)
         static let ImageWidth = CGFloat(87)
         static let InnerMargin = CGFloat(10)
         static let CreatedAtMargin = CGFloat(-5)
-        static let CreatedAtHeight = CGFloat(10)
-
+        static let CreatedAtHeight = CGFloat(12)
         // height of created at and margin from title / notification text
-        static func createdAtFixedHeight() -> CGFloat {
-            return CreatedAtHeight + InnerMargin
-        }
+        static let CreatedAtFixedHeight = CreatedAtHeight + InnerMargin
 
         static func messageHtmlWidth(forCellWidth cellWidth: CGFloat, hasImage: Bool) -> CGFloat {
             let messageLeftMargin: CGFloat = SideMargins + AvatarSize + InnerMargin
-            var messageRightMargin: CGFloat = InnerMargin
+            var messageRightMargin: CGFloat = SideMargins
             if hasImage {
                 messageRightMargin += InnerMargin + ImageWidth
             }
@@ -43,7 +39,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         static func imageHeight(imageRegion imageRegion: ImageRegion?) -> CGFloat {
             if let imageRegion = imageRegion {
                 let aspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
-                return ImageWidth / aspectRatio
+                return ceil(ImageWidth / aspectRatio)
             }
             else {
                 return 0
@@ -119,9 +115,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
                     self.aspectRatio = imageSize.width / imageSize.height
                     let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
                     if currentRatio != self.aspectRatio {
-                        let width = min(imageSize.width, self.frame.width)
-                        let actualHeight = width / self.aspectRatio
-                        self.onHeightMismatch?(actualHeight)
+                        self.setNeedsLayout()
                     }
                 }
             }
@@ -255,7 +249,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
             x: avatarButton.frame.maxX + Size.InnerMargin,
             y: createdAtY,
             width: titleWidth,
-            height: 12
+            height: Size.CreatedAtHeight
             )
 
         let replyButtonWidth = replyButton.intrinsicContentSize().width
@@ -267,6 +261,25 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
             )
         let relationshipControlWidth = relationshipControl.intrinsicContentSize().width
         relationshipControl.frame = replyButton.frame.withWidth(relationshipControlWidth)
+
+        let bottomControl: UIView
+        if !replyButton.hidden {
+            bottomControl = replyButton
+        }
+        else if !relationshipControl.hidden {
+            bottomControl = relationshipControl
+        }
+        else {
+            bottomControl = createdAtLabel
+        }
+
+        let actualHeight = ceil(max(notificationImageView.frame.maxY, bottomControl.frame.maxY)) + Size.SideMargins
+        // don't update the height if
+        // - imageURL is set, but hasn't finished loading, OR
+        // - messageHTML is set, but hasn't finished loading
+        if actualHeight != frame.size.height && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.hidden) {
+            self.onHeightMismatch?(actualHeight)
+        }
     }
 
     override public func prepareForReuse() {
