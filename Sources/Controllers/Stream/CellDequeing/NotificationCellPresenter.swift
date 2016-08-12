@@ -49,6 +49,7 @@ public struct NotificationCellPresenter {
                 }
                 cell.aspectRatio = aspectRatio
                 cell.imageURL = imageURL
+                cell.buyButtonVisible = (imageRegion.buyButtonURL != nil)
             }
         }
     }

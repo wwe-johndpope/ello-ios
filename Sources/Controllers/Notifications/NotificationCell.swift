@@ -16,6 +16,8 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
 
     struct Size {
+        static let BuyButtonSize: CGFloat = 15
+        static let BuyButtonMargin: CGFloat = 5
         static let ButtonHeight: CGFloat = 30
         static let ButtonMargin: CGFloat = 15
         static let WebHeightCorrection: CGFloat = 15
@@ -61,6 +63,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     var onHeightMismatch: OnHeightMismatch?
 
     var avatarButton: AvatarButton!
+    var buyButtonImage: UIImageView!
     var replyButton: ReplyButton!
     var relationshipControl: RelationshipControl!
     var titleTextView: ElloTextView!
@@ -83,6 +86,10 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
             setNeedsLayout()
         }
         get { return !relationshipControl.hidden }
+    }
+    var buyButtonVisible: Bool {
+        get { return !buyButtonImage.hidden }
+        set { buyButtonImage.hidden = !newValue }
     }
 
     private var messageVisible = false
@@ -162,6 +169,13 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         titleTextView = ElloTextView(frame: .zero, textContainer: nil)
         titleTextView.textViewDelegate = self
 
+        buyButtonImage = UIImageView()
+        buyButtonImage.hidden = true
+        buyButtonImage.image = InterfaceImage.BuyButton.normalImage
+        buyButtonImage.frame.size = CGSize(width: Size.BuyButtonSize, height: Size.BuyButtonSize)
+        buyButtonImage.backgroundColor = .greenD1()
+        buyButtonImage.layer.cornerRadius = Size.BuyButtonSize / 2
+
         replyButton = ReplyButton()
         replyButton.hidden = true
         replyButton.addTarget(self, action: #selector(replyTapped), forControlEvents: .TouchUpInside)
@@ -186,7 +200,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         separator.backgroundColor = .greyE5()
 
         for view in [avatarButton, titleTextView, messageWebView,
-                     notificationImageView, createdAtLabel,
+                     notificationImageView, buyButtonImage, createdAtLabel,
                      replyButton, relationshipControl, separator] {
             self.contentView.addSubview(view)
         }
@@ -231,6 +245,10 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
             notificationImageView.frame = outerFrame.fromRight()
                 .growLeft(Size.ImageWidth)
                 .withHeight(Size.ImageWidth / aspectRatio)
+            buyButtonImage.frame.origin = CGPoint(
+                x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
+                y: notificationImageView.frame.minY + Size.BuyButtonMargin
+                )
         }
 
         titleTextView.frame = avatarButton.frame.fromRight()
