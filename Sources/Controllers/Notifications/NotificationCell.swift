@@ -299,6 +299,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         canReplyToComment = false
         canBackFollow = false
         imageURL = nil
+        buyButtonImage.hidden = true
     }
 
     public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
