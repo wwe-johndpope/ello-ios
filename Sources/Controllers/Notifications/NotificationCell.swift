@@ -16,15 +16,15 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
 
     struct Size {
-        static let ButtonHeight = CGFloat(30)
-        static let ButtonMargin = CGFloat(15)
-        static let WebHeightCorrection = CGFloat(15)
-        static let SideMargins = CGFloat(15)
-        static let AvatarSize = CGFloat(30)
-        static let ImageWidth = CGFloat(87)
-        static let InnerMargin = CGFloat(10)
-        static let CreatedAtMargin = CGFloat(-5)
-        static let CreatedAtHeight = CGFloat(10)
+        static let ButtonHeight: CGFloat = 30
+        static let ButtonMargin: CGFloat = 15
+        static let WebHeightCorrection: CGFloat = 15
+        static let SideMargins: CGFloat = 15
+        static let AvatarSize: CGFloat = 30
+        static let ImageWidth: CGFloat = 87
+        static let InnerMargin: CGFloat = 10
+        static let CreatedAtMargin: CGFloat = -5
+        static let CreatedAtHeight: CGFloat = 10
 
         // height of created at and margin from title / notification text
         static func createdAtFixedHeight() -> CGFloat {
