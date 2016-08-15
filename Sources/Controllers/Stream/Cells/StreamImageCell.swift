@@ -144,12 +144,12 @@ public class StreamImageCell: StreamRegionableCell {
     override public func layoutSubviews() {
         super.layoutSubviews()
 
-        guard let aspectRatio = aspectRatio, imageSize = imageSize else { return }
-
-        let width = min(imageSize.width, self.frame.width)
-        let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
-        if actualHeight != frame.height {
-            self.onHeightMismatch?(actualHeight)
+        if let aspectRatio = aspectRatio, imageSize = imageSize {
+            let width = min(imageSize.width, self.frame.width)
+            let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
+            if actualHeight != frame.height {
+                self.onHeightMismatch?(actualHeight)
+            }
         }
 
         if let buyButtonGreen = buyButtonGreen {
