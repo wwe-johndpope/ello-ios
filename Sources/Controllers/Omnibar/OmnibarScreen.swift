@@ -426,11 +426,11 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     public func profileImageTapped() {
-        if let currentUser = currentUser {
-            let profileVC = ProfileViewController(user: currentUser)
-            profileVC.currentUser = currentUser
-            self.delegate?.omnibarPushController(profileVC)
-        }
+        guard let currentUser = currentUser else { return }
+
+        let profileVC = ProfileViewController(user: currentUser)
+        profileVC.currentUser = currentUser
+        self.delegate?.omnibarPushController(profileVC)
     }
 
     // called on a user action that should resign the keyboard
