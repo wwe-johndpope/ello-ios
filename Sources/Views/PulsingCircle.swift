@@ -5,13 +5,15 @@
 import QuartzCore
 
 public class PulsingCircle: UIView {
+    struct Size {
+        static let size: CGFloat = 60
+    }
 
     private lazy var pulser: UIView = {
-        var size: CGFloat = 60
-        var view = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        var view = UIView(frame: CGRect(x: 0, y: 0, width: Size.size, height: Size.size))
         view.center = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
         view.autoresizingMask = [.FlexibleTopMargin, .FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin]
-        view.layer.cornerRadius = size / 2
+        view.layer.cornerRadius = Size.size / 2
         view.backgroundColor = UIColor.greyA()
         view.clipsToBounds = true
         self.addSubview(view)

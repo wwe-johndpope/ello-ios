@@ -38,8 +38,4 @@ public class StreamLoadingCell: UICollectionViewCell {
         self.backgroundColor = UIColor.whiteColor()
         elloLogo.center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
     }
-
-    class func streamCellItem() -> StreamCellItem {
-        return StreamCellItem(jsonable: JSONAble(version: JSONAbleVersion), type: .StreamLoading)
-    }
 }

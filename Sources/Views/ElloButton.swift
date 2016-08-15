@@ -109,6 +109,7 @@ public class OutlineElloButton: WhiteElloButton {
     override func sharedSetup() {
         super.sharedSetup()
         backgroundColor = .whiteColor()
+        layer.borderWidth = 1
         updateOutline()
     }
 
@@ -120,7 +121,6 @@ public class OutlineElloButton: WhiteElloButton {
 
     private func updateOutline() {
         layer.borderColor = highlighted ? UIColor.greyE5().CGColor : UIColor.blackColor().CGColor
-        layer.borderWidth = 1
     }
 }
 
@@ -143,11 +143,12 @@ public class RoundedElloButton: ElloButton {
     }
 
     override func updateStyle() {
-        backgroundColor = enabled ? .clearColor() : .grey231F20()
+        backgroundColor = enabled ? .clearColor() : .greyF2()
+        updateOutline()
     }
 
     func updateOutline() {
-        layer.borderColor = borderColor.CGColor
+        layer.borderColor = enabled ? borderColor.CGColor : UIColor.greyF2().CGColor
     }
 
     override public func layoutSubviews() {

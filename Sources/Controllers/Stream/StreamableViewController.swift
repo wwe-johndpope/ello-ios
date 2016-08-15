@@ -10,7 +10,7 @@ public protocol PostTappedDelegate: class {
 
 public protocol UserTappedDelegate: class {
     func userTapped(user: User)
-    func userParamTapped(param: String)
+    func userParamTapped(param: String, username: String?)
 }
 
 public protocol CreatePostDelegate: class {
@@ -188,15 +188,15 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
 extension StreamableViewController: UserTappedDelegate {
     public func userTapped(user: User) {
         guard user.relationshipPriority != .Block else { return }
-        userParamTapped(user.id)
+        userParamTapped(user.id, username: user.username)
     }
 
-    public func userParamTapped(param: String) {
+    public func userParamTapped(param: String, username: String?) {
         guard !alreadyOnUserProfile(param) else {
             return
         }
 
-        let vc = ProfileViewController(userParam: param)
+        let vc = ProfileViewController(userParam: param, username: username)
         vc.currentUser = currentUser
         self.navigationController?.pushViewController(vc, animated: true)
     }

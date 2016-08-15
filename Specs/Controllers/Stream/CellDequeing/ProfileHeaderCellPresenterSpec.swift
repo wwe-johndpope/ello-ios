@@ -7,6 +7,17 @@ class ProfileHeaderCellPresenterSpec: QuickSpec {
     override func spec() {
         describe("configure") {
 
+            context("no user") {
+                it("can still configure") {
+                    let cell: ProfileHeaderCell = ProfileHeaderCell.loadFromNib()
+                    let item: StreamCellItem = StreamCellItem(type: .ProfileHeader)
+
+                    expect {
+                        ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .CurrentUserStream, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
+                    } .notTo(raiseException())
+                }
+            }
+
             context("no posts") {
                 it("disables the posts button") {
                     let user: User = stub(["postsCount" : 0])

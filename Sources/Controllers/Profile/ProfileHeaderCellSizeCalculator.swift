@@ -52,14 +52,18 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
     }
 
     private func loadNext() {
-        if let item = cellItems.safeValue(0),
-            user = item.jsonable as? User
-        {
-            let html = StreamTextCellHTML.postHTML(user.headerHTMLContent)
-            label.setLabelText(user.name)
+        if let item = cellItems.safeValue(0) {
+            if let user = item.jsonable as? User {
+                let html = StreamTextCellHTML.postHTML(user.headerHTMLContent)
+                label.setLabelText(user.name)
 
-            // needs to use the same width as the post text region
-            webView.loadHTMLString(html, baseURL: NSURL(string: "/"))
+                // needs to use the same width as the post text region
+                webView.loadHTMLString(html, baseURL: NSURL(string: "/"))
+            }
+            else {
+                label.attributedText = nil
+                assignCellHeight(0)
+            }
         }
         else {
             completion()
@@ -70,8 +74,14 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         if let cellItem = cellItems.safeValue(0) {
             let leftLabelMargin: CGFloat = 15
             let rightLabelMargin: CGFloat = 82
-            let nameSize = label.attributedText!.boundingRectWithSize(CGSize(width: maxWidth - leftLabelMargin - rightLabelMargin, height: CGFloat.max),
-                options: .UsesLineFragmentOrigin, context: nil).size
+            let nameSize: CGSize
+            if let attributedText = label.attributedText {
+                nameSize = attributedText.boundingRectWithSize(CGSize(width: maxWidth - leftLabelMargin - rightLabelMargin, height: CGFloat.max),
+                    options: .UsesLineFragmentOrigin, context: nil).size
+            }
+            else {
+                nameSize = .zero
+            }
 
             let height = ProfileHeaderCellSizeCalculator.calculateHeightBasedOn(
                 webViewHeight: webViewHeight,

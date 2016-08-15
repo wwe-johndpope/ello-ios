@@ -79,6 +79,8 @@ private extension ProfileGenerator {
     func loadUser(doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.finished || reload else { return }
 
+        self.destination?.replacePlaceholder(.ProfileHeader, items: [StreamCellItem(type: .ProfileHeader)]) {}
+
         // load the user with no posts
         StreamService().loadUser(
             streamKind.endpoint,
@@ -104,6 +106,8 @@ private extension ProfileGenerator {
         let displayPostsOperation = AsyncOperation()
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
+
+        self.destination?.replacePlaceholder(.ProfilePosts, items: [StreamCellItem(type: .StreamLoading)]) {}
 
         StreamService().loadUserPosts(
             userParam,

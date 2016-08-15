@@ -24,7 +24,7 @@ public class TwoLineButton: UIButton {
 
     func sharedSetup() {
         titleLabel?.numberOfLines = 0
-        backgroundColor = .whiteColor()
+        backgroundColor = .clearColor()
         contentHorizontalAlignment = .Left
     }
 

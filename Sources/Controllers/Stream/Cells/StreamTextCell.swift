@@ -56,6 +56,7 @@ public class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureR
         super.prepareForReuse()
         hideBorder()
         webView.stopLoading()
+        webView.loadHTMLString("", baseURL: nil)
     }
 
     public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {

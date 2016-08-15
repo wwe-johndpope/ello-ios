@@ -3,30 +3,40 @@
 //
 
 public class ProfileButton: RoundedElloButton {
-    override public func sharedSetup() {
-        super.sharedSetup()
-
-        setTitleColor(UIColor.blackColor(), forState: .Normal)
-        setTitleColor(UIColor.grey6(), forState: .Highlighted)
-        setTitleColor(UIColor.greyC(), forState: .Disabled)
-    }
-
-    override func updateOutline() {
-        super.updateOutline()
-        backgroundColor = highlighted ? UIColor.grey4D() : UIColor.whiteColor()
+    override func updateStyle() {
+        super.updateStyle()
+        if highlighted {
+            backgroundColor = .grey4D()
+        }
+        else if enabled {
+            backgroundColor = .clearColor()
+        }
+        else {
+            backgroundColor = .greyF2()
+        }
     }
 }
 
-public class ElloMentionButton: RoundedElloButton {
+public class ElloMentionButton: ProfileButton {
     override public func sharedSetup() {
         super.sharedSetup()
         setTitle(InterfaceString.Profile.Mention, forState: .Normal)
+        setTitle("", forState: .Disabled)
     }
 }
 
-public class ElloEditProfileButton: RoundedElloButton {
+public class ElloInviteButton: ProfileButton {
+    override public func sharedSetup() {
+        super.sharedSetup()
+        setTitle(InterfaceString.Profile.Invite, forState: .Normal)
+        setTitle("", forState: .Disabled)
+    }
+}
+
+public class ElloEditProfileButton: ProfileButton {
     override public func sharedSetup() {
         super.sharedSetup()
         setTitle(InterfaceString.Profile.EditProfile, forState: .Normal)
+        setTitle("", forState: .Disabled)
     }
 }

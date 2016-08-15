@@ -35,6 +35,13 @@ public class RelationshipControl: UIView {
         }
     }
 
+    public var enabled: Bool {
+        set {
+            followingButton.enabled = newValue
+            starButton.enabled = newValue
+        }
+        get { return followingButton.enabled }
+    }
     public var userId: String
     public var userAtName: String
 
@@ -300,6 +307,7 @@ public class RelationshipControl: UIView {
                 setTitleColor(config.normalTextColor, forState: .Normal)
                 setTitleColor(config.highlightedTextColor, forState: .Highlighted)
                 setTitleColor(UIColor.greyC(), forState: .Disabled)
+                setTitle("", forState: .Disabled)
                 setTitle(config.title, forState: .Normal)
                 setImage(config.image, forState: .Normal)
                 setImage(config.highlightedImage, forState: .Highlighted)
@@ -313,14 +321,19 @@ public class RelationshipControl: UIView {
             contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 10)
             setImage(.PlusSmall, imageStyle: .Selected, forState: .Normal)
 
+            adjustsImageWhenDisabled = false
+            setImage(UIImage(), forState: .Disabled)
+
             config = .None
             backgroundColor = config.normalBackgroundColor
             borderColor = UIColor.greyE5()
         }
 
         override func updateOutline() {
-            layer.borderColor = borderColor.CGColor
-            backgroundColor = highlighted ? config.selectedBackgroundColor : config.normalBackgroundColor
+            super.updateOutline()
+            if enabled {
+                backgroundColor = highlighted ? config.selectedBackgroundColor : config.normalBackgroundColor
+            }
         }
     }
 
@@ -341,6 +354,9 @@ public class RelationshipControl: UIView {
         override func sharedSetup() {
             super.sharedSetup()
 
+            adjustsImageWhenDisabled = false
+            setImage(UIImage(), forState: .Disabled)
+
             config = .None
             updateStyle()
         }
@@ -349,6 +365,7 @@ public class RelationshipControl: UIView {
             super.updateStyle()
 
             let selected = config.starred
+            let backgroundColor: UIColor
             switch style {
                 case .ProfileView:
                     if selected {
@@ -374,6 +391,7 @@ public class RelationshipControl: UIView {
                     imageEdgeInsets.top = 0
             }
 
+            self.backgroundColor = enabled ? backgroundColor : .greyF2()
         }
     }
 }
