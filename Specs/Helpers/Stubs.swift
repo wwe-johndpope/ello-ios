@@ -383,6 +383,7 @@ extension Attachment: Stubbable {
         attachment.width = values["width"] as? Int
         attachment.type = values["type"] as? String
         attachment.size = values["size"] as? Int
+        attachment.image = values["image"] as? UIImage
         return attachment
     }
 }
