@@ -16,7 +16,7 @@ PODS:
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - CRToast (0.0.7)
-  - ElloCerts (1.1.0):
+  - ElloCerts (1.2.0):
     - Alamofire (~> 3.0)
   - ElloUIFonts (1.1.0)
   - Fabric (1.6.7)
@@ -125,7 +125,7 @@ DEPENDENCIES:
   - Analytics/Segmentio
   - Crashlytics (~> 3.4)
   - CRToast (from `https://github.com/ello/CRToast`)
-  - ElloCerts (~> 1.1)
+  - ElloCerts (~> 1.2)
   - ElloUIFonts (~> 1.1.0)
   - Fabric (~> 1.6)
   - FBSnapshotTestCase (from `https://github.com/ello/ios-snapshot-test-case`)
@@ -223,7 +223,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
-  ElloCerts: 13ecb93c2189b5d3bafa2b3445ccdeab4428f372
+  ElloCerts: 75bad99e881ee0c8160fbd32bf57fd10fd217d8b
   ElloUIFonts: 16c31ba0b19e82d613df50fb6498f43560a603a2
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
@@ -253,6 +253,6 @@ SPEC CHECKSUMS:
   WebLinking: d5b5ab4f7305bcf29821deb5cecd775f6c37efae
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: d34ced2f1ed6e85c2075aec77d2c8c2b6659232a
+PODFILE CHECKSUM: 41859bc1ce4ff942a37fd56023db4449b8b0f928
 
 COCOAPODS: 1.0.0

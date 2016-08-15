@@ -88,28 +88,6 @@ cat aasa.json | openssl smime \
 ### Pinning certificates
 
 We use pinned certificates to avoid man-in-the-middle SSL attacks.  We use a rolling "primary + backup" pair of certificates, so if the primary expires or needs to be pulled, the backup is easy to swap in.  Every now and then the primary / backup need to be rotated.
-
-When new `.pem`/certificates are installed on ello.co and ello.ninja, we need to create and install a pinned certificate `.cer` file in the iOS app.  Get the `.pem` files from DevOps / Jay, and convert it using something like this:
-
-```bash
-openssl x509 -inform PEM -in ~/Downloads/ello_ninja_cert.pem -outform DER -out Resources/SSL/STAR_ello_ninja_3_2_2016.cer
-openssl x509 -inform PEM -in ~/Downloads/ello_co_cert.pem -outform DER -out Resources/SSL/STAR_ello_co_3_2_2016.cer
-```
-
-`3_2_2016` is the expiration date of the new certs.
-
-Add it to Xcode and you're ready!  To test the new cert:
-
-1. In `ElloManager.swift`, make sure `ello.ninja` is associated with `ServerTrustPolicy.publicKeysInBundle()`
-2. Compile the iOS app, pointing it at `ello.ninja`
-3. You can make this fail by *excluding* the cert that is used for `ello.ninja`
-
-To test the production cert
-
-1. Add the new cert to `ssl.ello.co`
-2. Compile the iOS app, pointing it at (staging) `ssl.ello.co`
-3. Make it fail again by excluding the new `ello.co` cert
-
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/ello/ello-ios.
 
