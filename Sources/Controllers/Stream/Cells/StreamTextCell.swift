@@ -54,6 +54,7 @@ public class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureR
 
     override public func prepareForReuse() {
         super.prepareForReuse()
+        hideBorder()
         webView.stopLoading()
     }
 
