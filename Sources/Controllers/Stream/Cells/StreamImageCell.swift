@@ -135,7 +135,7 @@ public class StreamImageCell: StreamRegionableCell {
     public func setImage(image: UIImage) {
         imageView.pin_cancelImageDownload()
         imageView.image = image
-        imageView.alpha = 0
+        imageView.alpha = 1
         failImage.hidden = true
         failImage.alpha = 0
         imageView.backgroundColor = UIColor.whiteColor()
