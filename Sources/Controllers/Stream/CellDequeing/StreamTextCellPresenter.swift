@@ -23,7 +23,7 @@ public struct StreamTextCellPresenter {
                     postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
                 }
             }
-            cell.hideBorder()
+
             var isRepost = false
             cell.webView.loadHTMLString("", baseURL: NSURL(string: "/"))
             if let textRegion = streamCellItem.type.data as? TextRegion {

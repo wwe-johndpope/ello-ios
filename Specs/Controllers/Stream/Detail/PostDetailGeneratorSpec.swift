@@ -10,7 +10,10 @@ class PostDetailGeneratorSpec: QuickSpec {
     override func spec() {
         describe("PostDetailGenerator") {
             let currentUser: User = stub(["id": "42"])
-            let post: Post = stub(["id": "123"])
+            let post: Post = stub([
+                "id": "123",
+                "content": [TextRegion.stub([:])]
+                ])
             let streamKind: StreamKind = .CurrentUserStream
             var destination: PostDetailDestination!
             var subject: PostDetailGenerator!

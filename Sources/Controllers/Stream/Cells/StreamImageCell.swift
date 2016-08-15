@@ -22,12 +22,15 @@ public class StreamImageCell: StreamRegionableCell {
         static let singleColumnFailHeight: CGFloat = 160
         static let multiColumnFailWidth: CGFloat = 70
         static let multiColumnFailHeight: CGFloat = 80
+        static let multiColumnBuyButtonWidth: CGFloat = 30
+        static let singleColumnBuyButtonWidth: CGFloat = 40
     }
 
     @IBOutlet public weak var imageView: FLAnimatedImageView!
     @IBOutlet public weak var imageButton: UIView!
     @IBOutlet public weak var buyButton: UIButton?
     @IBOutlet public weak var buyButtonGreen: UIView?
+    @IBOutlet public weak var buyButtonWidthConstraint: NSLayoutConstraint!
     @IBOutlet public weak var circle: PulsingCircle!
     @IBOutlet public weak var failImage: UIImageView!
     @IBOutlet public weak var failBackgroundView: UIView!
@@ -64,12 +67,41 @@ public class StreamImageCell: StreamRegionableCell {
     public var isGridView: Bool = false {
         didSet {
             if isGridView {
+                buyButtonWidthConstraint.constant = Size.multiColumnBuyButtonWidth
                 failWidthConstraint.constant = Size.multiColumnFailWidth
                 failHeightConstraint.constant = Size.multiColumnFailHeight
             }
             else {
+                buyButtonWidthConstraint.constant = Size.singleColumnBuyButtonWidth
                 failWidthConstraint.constant = Size.singleColumnFailWidth
                 failHeightConstraint.constant = Size.singleColumnFailHeight
+            }
+        }
+    }
+
+    public enum StreamImageMargin {
+        case Post
+        case Comment
+        case Repost
+    }
+    public var margin: CGFloat {
+        switch marginType {
+        case .Post:
+            return 0
+        case .Comment:
+            return StreamTextCellPresenter.commentMargin
+        case .Repost:
+            return StreamTextCellPresenter.repostMargin
+        }
+    }
+    public var marginType: StreamImageMargin = .Post {
+        didSet {
+            leadingConstraint.constant = margin
+            if marginType == .Repost {
+                showBorder()
+            }
+            else {
+                hideBorder()
             }
         }
     }
@@ -130,7 +162,7 @@ public class StreamImageCell: StreamRegionableCell {
     public func setImage(image: UIImage) {
         imageView.pin_cancelImageDownload()
         imageView.image = image
-        imageView.alpha = 0
+        imageView.alpha = 1
         failImage.hidden = true
         failImage.alpha = 0
         imageView.backgroundColor = UIColor.whiteColor()
@@ -139,12 +171,12 @@ public class StreamImageCell: StreamRegionableCell {
     override public func layoutSubviews() {
         super.layoutSubviews()
 
-        guard let aspectRatio = aspectRatio, imageSize = imageSize else { return }
-
-        let width = min(imageSize.width, self.frame.width)
-        let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
-        if actualHeight != frame.height {
-            self.onHeightMismatch?(actualHeight)
+        if let aspectRatio = aspectRatio, imageSize = imageSize {
+            let width = min(imageSize.width, self.frame.width)
+            let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
+            if actualHeight != frame.height {
+                self.onHeightMismatch?(actualHeight)
+            }
         }
 
         if let buyButtonGreen = buyButtonGreen {
@@ -209,6 +241,7 @@ public class StreamImageCell: StreamRegionableCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
 
+        marginType = .Post
         imageButton.userInteractionEnabled = true
         onHeightMismatch = nil
         imageView.image = nil

@@ -505,6 +505,7 @@
 		1D5933921D1492D100EAF03D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336A1D10ADA600EAF03D /* Category.swift */; };
 		1D5933931D1492D700EAF03D /* CategoryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933741D10BC8100EAF03D /* CategoryLevel.swift */; };
 		1D5933941D1492DC00EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
+		1D59EF871D62187C0029C106 /* StreamImageCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59EF861D62187C0029C106 /* StreamImageCellSpec.swift */; };
 		1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */; };
 		1D5A90181D39747E00C2AEFF /* $.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A90171D39747E00C2AEFF /* $.svg */; };
 		1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */; };
@@ -1341,6 +1342,7 @@
 		1D5933871D147E8500EAF03D /* CategoryCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCellPresenter.swift; sourceTree = "<group>"; };
 		1D5933891D147E8A00EAF03D /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		1D5933901D14855B00EAF03D /* ElloScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScreen.swift; sourceTree = "<group>"; };
+		1D59EF861D62187C0029C106 /* StreamImageCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCellSpec.swift; sourceTree = "<group>"; };
 		1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
 		1D5A90171D39747E00C2AEFF /* $.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $.svg; sourceTree = "<group>"; };
 		1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "buy-button-image-region.json"; sourceTree = "<group>"; };
@@ -2458,6 +2460,7 @@
 				1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */,
 				1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */,
 				763458E11AEED87700BA91A5 /* StreamImageCellSizeCalculatorSpec.swift */,
+				1D59EF861D62187C0029C106 /* StreamImageCellSpec.swift */,
 				76BE9C541B2B773B007575AA /* StreamInviteFriendsCellSpec.swift */,
 				76A628D61B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift */,
 			);
@@ -4128,6 +4131,7 @@
 				120FF6C61C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift in Sources */,
 				F870D8F51ACB0BB000E25AA2 /* ResponseConfigSpec.swift in Sources */,
 				1247276B1AB14B04000079D7 /* UnknownRegionSpec.swift in Sources */,
+				1D59EF871D62187C0029C106 /* StreamImageCellSpec.swift in Sources */,
 				76BE9C551B2B773B007575AA /* StreamInviteFriendsCellSpec.swift in Sources */,
 				124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */,
 				1266E5151A9E3CA700270E1C /* ContentFlaggingServiceSpec.swift in Sources */,
@@ -4800,7 +4804,7 @@
 				);
 				INFOPLIST_FILE = Support/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev;
@@ -4983,7 +4987,7 @@
 				);
 				INFOPLIST_FILE = Support/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\" -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev;
 				PRODUCT_NAME = Ello;
@@ -5024,7 +5028,7 @@
 				);
 				INFOPLIST_FILE = Support/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev;
@@ -5102,7 +5106,7 @@
 				);
 				INFOPLIST_FILE = Support/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev;

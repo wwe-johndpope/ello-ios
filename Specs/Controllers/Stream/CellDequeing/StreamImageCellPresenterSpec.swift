@@ -10,6 +10,8 @@ class StreamImageCellPresenterSpec: QuickSpec {
     override func spec() {
 
         beforeEach {
+            StreamKind.Following.setIsGridView(false)
+            StreamKind.Starred.setIsGridView(true)
             supressRequestsTo("www.example.com")
         }
 
@@ -45,10 +47,9 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 context("image is a gif") {
 
                     it("configures a stream image cell") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "alt" : "some-altness",
                             "url" : NSURL(string: "http://www.example.com/image.gif")!
                         ])
 
@@ -67,10 +68,9 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 context("image is not a gif") {
 
                     it("configures a stream image cell") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "alt" : "some-altness",
                             "url" : NSURL(string: "http://www.example.com/image.jpg")!
                         ])
 
@@ -93,7 +93,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 context("not a gif") {
 
                     it("configures a stream image cell") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
                             "url" : NSURL(string: "http://www.example.com/optimized.jpg")!,
@@ -115,7 +115,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         let imageRegion: ImageRegion = stub([
                             "asset" : asset,
-                            "alt" : "some-altness",
                             "url" : NSURL(string: "http://www.example.com/image.jpg")!
                             ])
 
@@ -134,7 +133,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 context("large filesize gif") {
 
                     it("configures a stream image cell") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
                             "url" : NSURL(string: "http://www.example.com/optimized.gif")!,
@@ -156,7 +155,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         let imageRegion: ImageRegion = stub([
                             "asset" : asset,
-                            "alt" : "some-altness",
                             "url" : NSURL(string: "http://www.example.com/image.gif")!
                             ])
 
@@ -174,7 +172,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                 context("small filesize gif") {
                     it("configures a stream image cell") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
                             "url" : NSURL(string: "http://www.example.com/optimized.gif")!,
@@ -196,7 +194,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         let imageRegion: ImageRegion = stub([
                             "asset" : asset,
-                            "alt" : "some-altness",
                             "url" : NSURL(string: "http://www.example.com/image.gif")!
                             ])
 
@@ -214,11 +211,9 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                 context("buyButton link") {
                     it("hides buyButton by default") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
-                        let imageRegion: ImageRegion = stub([
-                            "alt" : "some-altness",
-                            ])
+                        let imageRegion: ImageRegion = stub([:])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
                         let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Image(data: imageRegion))
@@ -230,10 +225,9 @@ class StreamImageCellPresenterSpec: QuickSpec {
                     }
 
                     it("shows buyButton if link is present") {
-                        let post: Post = stub(["id" : "768"])
+                        let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "alt" : "some-altness",
                             "buyButtonURL" : NSURL(string: "https://amazon.com")!
                             ])
 
@@ -244,6 +238,38 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
                         expect(cell.buyButton?.hidden) == false
                         expect(cell.buyButtonGreen?.hidden) == false
+                    }
+
+                    it("sets buy button width to 40 in list") {
+                        let post: Post = stub([:])
+
+                        let imageRegion: ImageRegion = stub([
+                            "buyButtonURL" : NSURL(string: "https://amazon.com")!
+                            ])
+
+                        let cell: StreamImageCell = StreamImageCell.loadFromNib()
+                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Image(data: imageRegion))
+
+                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
+                        cell.layoutIfNeeded()
+                        expect(cell.buyButtonGreen?.frame.size.width) == 40
+                        expect(cell.buyButtonGreen?.frame.size.height) == 40
+                    }
+
+                    it("sets buy button width to 30 in grid") {
+                        let post: Post = stub([:])
+
+                        let imageRegion: ImageRegion = stub([
+                            "buyButtonURL" : NSURL(string: "https://amazon.com")!
+                            ])
+
+                        let cell: StreamImageCell = StreamImageCell.loadFromNib()
+                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .Image(data: imageRegion))
+
+                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .Starred, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
+                        cell.layoutIfNeeded()
+                        expect(cell.buyButtonGreen?.frame.size.width) == 30
+                        expect(cell.buyButtonGreen?.frame.size.height) == 30
                     }
                 }
             }

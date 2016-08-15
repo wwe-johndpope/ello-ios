@@ -34,7 +34,7 @@ public struct StreamEmbedCellPresenter {
             if let photoURL = photoToLoad {
                 cell.setImageURL(photoURL)
             }
-            cell.hideBorder()
+
             // Repost specifics
             if embedData.isRepost {
                 cell.leadingConstraint.constant = 30.0

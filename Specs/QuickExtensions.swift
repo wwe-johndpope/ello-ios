@@ -45,6 +45,7 @@ public enum SnapshotDevice {
     case Phone5_Portrait
     case Phone6_Portrait
     case Phone6Plus_Portrait
+    case Custom(CGSize)
 
     static let all: [SnapshotDevice] = [
         .Pad_Landscape,
@@ -57,23 +58,25 @@ public enum SnapshotDevice {
 
     var description: String {
         switch self {
-            case Pad_Landscape: return "iPad in Landscape"
-            case Pad_Portrait: return "iPad in Portrait"
-            case Phone4_Portrait: return "iPhone4 in Portrait"
-            case Phone5_Portrait: return "iPhone5 in Portrait"
-            case Phone6_Portrait: return "iPhone6 in Portrait"
-            case Phone6Plus_Portrait: return "iPhone6Plus in Portrait"
+        case Pad_Landscape: return "iPad in Landscape"
+        case Pad_Portrait: return "iPad in Portrait"
+        case Phone4_Portrait: return "iPhone4 in Portrait"
+        case Phone5_Portrait: return "iPhone5 in Portrait"
+        case Phone6_Portrait: return "iPhone6 in Portrait"
+        case Phone6Plus_Portrait: return "iPhone6Plus in Portrait"
+        case let Custom(size): return "Custom sized \(size)"
         }
     }
 
     var size: CGSize {
         switch self {
-            case Pad_Landscape: return CGSize(width: 1024, height: 768)
-            case Pad_Portrait: return CGSize(width: 768, height: 1024)
-            case Phone4_Portrait: return CGSize(width: 320, height: 480)
-            case Phone5_Portrait: return CGSize(width: 320, height: 568)
-            case Phone6_Portrait: return CGSize(width: 375, height: 667)
-            case Phone6Plus_Portrait: return CGSize(width: 414, height: 736)
+        case Pad_Landscape: return CGSize(width: 1024, height: 768)
+        case Pad_Portrait: return CGSize(width: 768, height: 1024)
+        case Phone4_Portrait: return CGSize(width: 320, height: 480)
+        case Phone5_Portrait: return CGSize(width: 320, height: 568)
+        case Phone6_Portrait: return CGSize(width: 375, height: 667)
+        case Phone6Plus_Portrait: return CGSize(width: 414, height: 736)
+        case let Custom(size): return size
         }
     }
 }
