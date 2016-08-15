@@ -16,20 +16,20 @@ public struct StreamImageCellPresenter {
         }
     }
 
-    static func calculateLeftMargin(
+    static func calculateStreamImageMargin(
         cell: StreamImageCell,
         imageRegion: ImageRegion,
-        streamCellItem: StreamCellItem) -> CGFloat
+        streamCellItem: StreamCellItem) -> StreamImageCell.StreamImageMargin
     {
         // Repost specifics
         if imageRegion.isRepost == true {
-            return StreamTextCellPresenter.repostMargin
+            return .Repost
         }
         else if streamCellItem.jsonable is ElloComment {
-            return StreamTextCellPresenter.commentMargin
+            return .Comment
         }
         else {
-            return 0
+            return .Post
         }
     }
 
@@ -74,16 +74,12 @@ public struct StreamImageCellPresenter {
         let imageToShow = attachmentToLoad?.image
         imageToLoad = imageToLoad ?? attachmentToLoad?.url
 
-        let margin = calculateLeftMargin(cell, imageRegion: imageRegion, streamCellItem: streamCellItem)
-        cell.leadingConstraint.constant = margin
-
-        if imageRegion.isRepost == true {
-            cell.showBorder()
-        }
+        let cellMargin = calculateStreamImageMargin(cell, imageRegion: imageRegion, streamCellItem: streamCellItem)
+        cell.marginType = cellMargin
 
         if let attachmentWidth = attachmentToLoad?.width {
             let columnWidth: CGFloat = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCountFor(width: cell.frame.width))
-            preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: margin)
+            preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: cell.margin)
         }
 
         cell.onHeightMismatch = { actualHeight in

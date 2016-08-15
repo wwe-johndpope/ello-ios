@@ -79,6 +79,33 @@ public class StreamImageCell: StreamRegionableCell {
         }
     }
 
+    public enum StreamImageMargin {
+        case Post
+        case Comment
+        case Repost
+    }
+    public var margin: CGFloat {
+        switch marginType {
+        case .Post:
+            return 0
+        case .Comment:
+            return StreamTextCellPresenter.commentMargin
+        case .Repost:
+            return StreamTextCellPresenter.repostMargin
+        }
+    }
+    public var marginType: StreamImageMargin = .Post {
+        didSet {
+            leadingConstraint.constant = margin
+            if marginType == .Repost {
+                showBorder()
+            }
+            else {
+                hideBorder()
+            }
+        }
+    }
+
     private var imageSize: CGSize?
     private var aspectRatio: CGFloat? {
         guard let imageSize = imageSize else { return nil }
@@ -214,6 +241,7 @@ public class StreamImageCell: StreamRegionableCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
 
+        marginType = .Post
         imageButton.userInteractionEnabled = true
         onHeightMismatch = nil
         imageView.image = nil
