@@ -31,6 +31,57 @@ class NotificationCellSpec: QuickSpec {
 
                 expect(subject.titleTextView.frame.size.height) == 51
             }
+
+            context("snapshots") {
+                let author: User = .stub(["username": "ello"])
+                let post: Post = .stub(["authorId": author.id])
+                let title = NotificationAttributedTitle.attributedTitle(.PostMentionNotification, author: author, subject: post)
+                let createdAt = NSDate(timeIntervalSinceNow: -86_400)
+                let aspectRatio: CGFloat = 1
+                let image = UIImage.imageWithColor(.blueColor(), size: CGSize(width: 300, height: 300))
+                let message = "<p>This is a notification!</p>"
+
+                let expectations: [(hasMessage: Bool, hasImage: Bool, canReply: Bool, buyButton: Bool)] = [
+                    (hasMessage: true, hasImage: false, canReply: false, buyButton: false),
+                    (hasMessage: true, hasImage: false, canReply: true, buyButton: false),
+                    (hasMessage: false, hasImage: true, canReply: false, buyButton: false),
+                    (hasMessage: false, hasImage: true, canReply: false, buyButton: true),
+                    (hasMessage: false, hasImage: true, canReply: true, buyButton: false),
+                    (hasMessage: false, hasImage: true, canReply: true, buyButton: true),
+                    (hasMessage: true, hasImage: true, canReply: false, buyButton: false),
+                    (hasMessage: true, hasImage: true, canReply: false, buyButton: true),
+                    (hasMessage: true, hasImage: true, canReply: true, buyButton: false),
+                    (hasMessage: true, hasImage: true, canReply: true, buyButton: true),
+                ]
+                for (hasMessage, hasImage, canReply, buyButton) in expectations {
+                    it("notification\(hasMessage ? " with message" : "")\(hasImage ? " with image" : "")\(canReply ? " with reply button" : "")\(buyButton ? " with buy button" : "")") {
+                        let subject = NotificationCell()
+                        subject.title = title
+                        subject.createdAt = createdAt
+                        subject.user = author
+                        subject.canReplyToComment = canReply
+                        subject.canBackFollow = false
+                        subject.post = post
+                        subject.comment = nil
+                        subject.aspectRatio = aspectRatio
+                        subject.buyButtonVisible = buyButton
+                        if hasImage {
+                            subject.imageURL = NSURL(string: "http://ello.co/image.png")
+                            subject.notificationImageView.image = image
+                        }
+
+                        if hasMessage {
+                            subject.messageHtml = message
+                            waitUntil(timeout: 30) { done in
+                                subject.onWebContentReady { _ in
+                                    done()
+                                }
+                            }
+                        }
+                        expectValidSnapshot(subject, device: .Phone6_Portrait)
+                    }
+                }
+            }
         }
     }
 }
