@@ -34,7 +34,7 @@ class NotificationCellSpec: QuickSpec {
 
             context("snapshots") {
                 let author: User = .stub(["username": "ello"])
-                let post: Post = .stub(["authorId": author.id])
+                let post: Post = .stub(["author": author])
                 let title = NotificationAttributedTitle.attributedTitle(.PostMentionNotification, author: author, subject: post)
                 let createdAt = NSDate(timeIntervalSinceNow: -86_400)
                 let aspectRatio: CGFloat = 1
@@ -71,11 +71,11 @@ class NotificationCellSpec: QuickSpec {
                         }
 
                         if hasMessage {
-                            subject.messageHtml = message
                             waitUntil(timeout: 30) { done in
                                 subject.onWebContentReady { _ in
                                     done()
                                 }
+                                subject.messageHtml = message
                             }
                         }
                         expectValidSnapshot(subject, device: .Phone6_Portrait)
