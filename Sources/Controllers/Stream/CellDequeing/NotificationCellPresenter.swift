@@ -21,8 +21,9 @@ public struct NotificationCellPresenter {
                     postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
                 }
             }
-            cell.onHeightMismatch = { _ in
-                StreamNotificationCellSizeCalculator.assignTotalHeight(streamCellItem.calculatedWebHeight, cellItem: streamCellItem, cellWidth: cell.frame.width)
+            cell.onHeightMismatch = { height in
+                streamCellItem.calculatedOneColumnCellHeight = height
+                streamCellItem.calculatedMultiColumnCellHeight = height
                 postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
             }
 
