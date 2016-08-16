@@ -128,6 +128,22 @@ public final class User: JSONAble {
         super.init(coder: decoder.coder)
     }
 
+    class func empty() -> User {
+        return User(
+            id: NSUUID().UUIDString,
+            href: "",
+            username: "",
+            name: "",
+            experimentalFeatures: false,
+            relationshipPriority: RelationshipPriority.None,
+            postsAdultContent: false,
+            viewsAdultContent: false,
+            hasCommentingEnabled: true,
+            hasSharingEnabled: true,
+            hasRepostingEnabled: true,
+            hasLovesEnabled: true)
+    }
+
     public override func encodeWithCoder(encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
