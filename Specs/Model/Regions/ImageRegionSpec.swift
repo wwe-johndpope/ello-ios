@@ -13,8 +13,8 @@ class ImageRegionSpec: QuickSpec {
         describe("+fromJSON:") {
 
             it("parses image region correctly") {
-                let data = stubbedJSONData("image-region", "region")
-                let region = ImageRegion.fromJSON(data) as! ImageRegion
+                let imageRegionData = stubbedJSONData("image-region", "region")
+                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
                 expect(region.alt) == "region-alt.jpeg"
@@ -56,8 +56,8 @@ class ImageRegionSpec: QuickSpec {
             }
 
             it("parses buy-button region correctly") {
-                let data = stubbedJSONData("buy-button-image-region", "region")
-                let region = ImageRegion.fromJSON(data) as! ImageRegion
+                let imageRegionData = stubbedJSONData("buy-button-image-region", "region")
+                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
                 expect(region.buyButtonURL!.absoluteString) == "https://amazon.com"
