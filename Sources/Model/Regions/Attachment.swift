@@ -62,7 +62,7 @@ public final class Attachment: JSONAble {
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.AttachmentFromJSON.rawValue)
         var url = json["url"].stringValue
         if url.hasPrefix("//") {
-            url = ElloURI.httpProtocol + ":" + url
+            url = "https:\(url)"
         }
         // create attachment
         let attachment = Attachment(url: NSURL(string: url)!)
@@ -70,7 +70,7 @@ public final class Attachment: JSONAble {
         attachment.size = json["metadata"]["size"].int
         attachment.width = json["metadata"]["width"].int
         attachment.height = json["metadata"]["height"].int
-        attachment.type = json["metadata"]["type"].stringValue
+        attachment.type = json["metadata"]["type"].string
         return attachment
     }
 }

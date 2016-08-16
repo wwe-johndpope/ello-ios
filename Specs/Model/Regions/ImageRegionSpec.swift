@@ -13,8 +13,8 @@ class ImageRegionSpec: QuickSpec {
         describe("+fromJSON:") {
 
             it("parses image region correctly") {
-                let data = stubbedJSONData("image-region", "region")
-                let region = ImageRegion.fromJSON(data) as! ImageRegion
+                let imageRegionData = stubbedJSONData("image-region", "region")
+                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
                 expect(region.alt) == "region-alt.jpeg"
@@ -37,9 +37,27 @@ class ImageRegionSpec: QuickSpec {
                 expect(xhdpi.height) == 641
             }
 
+            it("parses protocol relative URLs correctly") {
+                var imageRegionData = stubbedJSONData("image-region", "region")
+                guard var data = imageRegionData["data"] as? [String: String],
+                    let urlString = data["url"] else
+                {
+                    fail("image-region.json does not have data.url")
+                    return
+                }
+
+                data["url"] = urlString.stringByReplacingOccurrencesOfString("https://", withString: "//")
+                expect(data["url"]) == "//example.com/test.jpg"
+                imageRegionData["data"] = data
+                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
+
+                expect(region.url!.absoluteString) == "https://example.com/test.jpg"
+                expect(region.alt) == "region-alt.jpeg"
+            }
+
             it("parses buy-button region correctly") {
-                let data = stubbedJSONData("buy-button-image-region", "region")
-                let region = ImageRegion.fromJSON(data) as! ImageRegion
+                let imageRegionData = stubbedJSONData("buy-button-image-region", "region")
+                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
                 expect(region.buyButtonURL!.absoluteString) == "https://amazon.com"

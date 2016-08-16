@@ -185,6 +185,12 @@ public class StreamImageCell: StreamRegionableCell {
     }
 
     private func loadImage(url: NSURL) {
+        guard url.scheme != "" else {
+            if let urlWithScheme = NSURL(string: "https:\(url.absoluteString)") {
+                loadImage(urlWithScheme)
+            }
+            return
+        }
         self.imageView.pin_setImageFromURL(url) { result in
             let success = result.image != nil || result.animatedImage != nil
             let isAnimated = result.animatedImage != nil

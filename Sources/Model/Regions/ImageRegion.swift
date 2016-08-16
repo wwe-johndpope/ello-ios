@@ -13,7 +13,7 @@ public final class ImageRegion: JSONAble, Regionable {
     public var isRepost: Bool  = false
 
     // required
-    public let alt: String
+    public let alt: String?
     // optional
     public var url: NSURL?
     public var buyButtonURL: NSURL?
@@ -23,7 +23,7 @@ public final class ImageRegion: JSONAble, Regionable {
 
 // MARK: Initialization
 
-    public init(alt: String)
+    public init(alt: String?)
     {
         self.alt = alt
         super.init(version: ImageRegionVersion)
@@ -60,10 +60,13 @@ public final class ImageRegion: JSONAble, Regionable {
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.ImageRegionFromJSON.rawValue)
         // create region
         let imageRegion = ImageRegion(
-            alt: json["data"]["alt"].stringValue
+            alt: json["data"]["alt"].string
             )
         // optional
-        if let urlStr = json["data"]["url"].string {
+        if var urlStr = json["data"]["url"].string {
+            if urlStr.hasPrefix("//") {
+                urlStr = "https:\(urlStr)"
+            }
             imageRegion.url = NSURL(string: urlStr)
         }
         if let urlStr = json["link_url"].string {
