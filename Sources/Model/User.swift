@@ -145,7 +145,7 @@ public final class User: JSONAble {
         super.init(coder: decoder.coder)
     }
 
-    class func empty(id: String = NSUUID().UUIDString) -> User {
+    class func empty(id id: String = NSUUID().UUIDString) -> User {
         return User(
             id: id,
             href: "",
