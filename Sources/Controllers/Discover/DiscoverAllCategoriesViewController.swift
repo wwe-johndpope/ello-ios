@@ -72,12 +72,9 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
 // MARK: StreamViewDelegate
 extension DiscoverAllCategoriesViewController {
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
-        let items: [StreamCellItem]
+        var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
         if let categories = jsonables as? [Category] {
-            items = categories.map { StreamCellItem(jsonable: $0, type: .CategoryCard) }
-        }
-        else {
-            items = []
+            items += categories.map { StreamCellItem(jsonable: $0, type: .CategoryCard) }
         }
         return items
     }
