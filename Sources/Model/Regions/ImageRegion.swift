@@ -63,7 +63,10 @@ public final class ImageRegion: JSONAble, Regionable {
             alt: json["data"]["alt"].string
             )
         // optional
-        if let urlStr = json["data"]["url"].string {
+        if var urlStr = json["data"]["url"].string {
+            if urlStr.hasPrefix("//") {
+                urlStr = "https:\(urlStr)"
+            }
             imageRegion.url = NSURL(string: urlStr)
         }
         if let urlStr = json["link_url"].string {
