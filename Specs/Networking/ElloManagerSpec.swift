@@ -64,7 +64,7 @@ class ElloManagerSpec: QuickSpec {
 
                         expect(doesValidatesChain) == true
                         expect(doesValidateHost) == true
-                        let numberOfCerts = 2
+                        let numberOfCerts = 3
                         // Charles installs a cert, and we should allow that, so test
                         // for numberOfCerts OR numberOfCerts + 1
                         expect(keys.count == numberOfCerts || keys.count == numberOfCerts + 1) == true
