@@ -34,9 +34,9 @@ public final class ImageRegion: JSONAble, Regionable {
     public required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // required
-        self.alt = decoder.decodeKey("alt")
         self.isRepost = decoder.decodeKey("isRepost")
         // optional
+        self.alt = decoder.decodeOptionalKey("alt")
         self.url = decoder.decodeOptionalKey("url")
         self.buyButtonURL = decoder.decodeOptionalKey("buyButtonURL")
         super.init(coder: decoder.coder)
