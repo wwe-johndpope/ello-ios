@@ -44,7 +44,7 @@ public class InterpolatedLoadingView: UIView {
         self.layer.removeAnimationForKey("interpolate")
         let rotate = CABasicAnimation(keyPath: "backgroundColor")
         rotate.fromValue = UIColor(hex: 0xDDDDDD).CGColor
-        rotate.toValue = UIColor(hex: 0xCCCCCC).CGColor
+        rotate.toValue = UIColor(hex: 0xC4C4C4).CGColor
         rotate.duration = 3
         if round {
             rotate.beginTime = 0.25
