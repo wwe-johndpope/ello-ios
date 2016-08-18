@@ -232,6 +232,8 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     private func reloadEntireProfile() {
+        coverImage.pin_cancelImageDownload()
+        coverImage.image = nil
         generator?.load(reload: true)
     }
 
