@@ -52,8 +52,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 subject.processCells([item], withWidth: 320, columnCount: 1) {
                 }
                 expect(item.calculatedWebHeight) == 50
-                expect(item.calculatedOneColumnCellHeight) == 114
-                expect(item.calculatedMultiColumnCellHeight) == 114
+                expect(item.calculatedOneColumnCellHeight) == 124
+                expect(item.calculatedMultiColumnCellHeight) == 124
             }
             it("should return size that accounts for an image") {
                 let activity: Activity = stub(["kind": "repost_notification", "subject": postWithImage])
@@ -61,8 +61,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 let item = StreamCellItem(jsonable: notification, type: .Notification)
                 subject.processCells([item], withWidth: 320, columnCount: 1) {
                 }
-                expect(item.calculatedOneColumnCellHeight) == 131
-                expect(item.calculatedMultiColumnCellHeight) == 131
+                expect(item.calculatedOneColumnCellHeight) == 141
+                expect(item.calculatedMultiColumnCellHeight) == 141
             }
             it("should return size that accounts for an image with text") {
                 let activity: Activity = stub(["kind": "repost_notification", "subject": postWithTextAndImage])
@@ -71,8 +71,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 subject.processCells([item], withWidth: 320, columnCount: 1) {
                 }
                 expect(item.calculatedWebHeight) == 50
-                expect(item.calculatedOneColumnCellHeight) == 131
-                expect(item.calculatedMultiColumnCellHeight) == 131
+                expect(item.calculatedOneColumnCellHeight) == 141
+                expect(item.calculatedMultiColumnCellHeight) == 141
             }
             xit("should return size that accounts for a follow button") {
                 // title and text and follow buton
@@ -84,8 +84,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 subject.processCells([item], withWidth: 320, columnCount: 1) {
                 }
                 expect(item.calculatedWebHeight) == 50
-                expect(item.calculatedOneColumnCellHeight) == 154
-                expect(item.calculatedMultiColumnCellHeight) == 154
+                expect(item.calculatedOneColumnCellHeight) == 164
+                expect(item.calculatedMultiColumnCellHeight) == 164
             }
         }
     }
