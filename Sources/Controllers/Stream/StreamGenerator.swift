@@ -21,6 +21,7 @@ public protocol StreamDestination: class {
     func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion)
     func setPrimaryJSONAble(jsonable: JSONAble)
     func primaryJSONAbleNotFound()
+    func secondaryJSONAbleNotFound()
     func setPagingConfig(responseConfig: ResponseConfig)
     var pagingEnabled: Bool { get set }
 }

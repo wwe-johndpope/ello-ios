@@ -29,6 +29,10 @@ class ElloConfiguration: QuickConfiguration {
             ElloProvider.shared.authState = .Authenticated
             ElloProvider.shared.queue = nil
             ElloProvider.sharedProvider = ElloProvider.StubbingProvider()
+
+            ElloLinkedStore.sharedInstance.writeConnection.readWriteWithBlock { transaction in
+                transaction.removeAllObjectsInAllCollections()
+            }
         }
         config.afterEach {
             ElloProvider_Specs.errorStatusCode = .Status404

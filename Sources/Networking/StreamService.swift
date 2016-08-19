@@ -74,7 +74,18 @@ public class StreamService: NSObject {
         ElloProvider.shared.elloRequest(
             ElloAPI.UserStreamPosts(userId: userId),
             success: { (data, responseConfig) in
-                if let posts = data as? [Post] {
+                let posts: [Post]?
+                if data as? String == "" {
+                    posts = []
+                }
+                else if let foundPosts = data as? [Post] {
+                    posts = foundPosts
+                }
+                else {
+                    posts = nil
+                }
+
+                if let posts = posts {
                     Preloader().preloadImages(posts)
                     success(posts: posts, responseConfig: responseConfig)
                 }
@@ -97,7 +108,6 @@ public class StreamService: NSObject {
             .PostComments(postId: postId),
             success: { (data, responseConfig) in
                 if let comments: [ElloComment] = data as? [ElloComment] {
-
                     for comment in comments {
                         comment.loadedFromPostId = postId
                     }
@@ -105,7 +115,7 @@ public class StreamService: NSObject {
                     Preloader().preloadImages(comments)
                     success(jsonables: comments, responseConfig: responseConfig)
                 }
-                else if let noContent = noContent {
+                else if let noContent = noContent where (data as? String) == "" {
                     noContent()
                 }
                 else {
