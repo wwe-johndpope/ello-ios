@@ -101,7 +101,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         totalTextHeight += NotificationCell.Size.CreatedAtFixedHeight
 
         if let webContentHeight = webContentHeight where webContentHeight > 0 {
-            totalTextHeight += webContentHeight - NotificationCell.Size.WebHeightCorrection + NotificationCell.Size.InnerMargin
+            totalTextHeight += webContentHeight + NotificationCell.Size.WebHeightCorrection + NotificationCell.Size.InnerMargin
         }
 
         if notification.canReplyToComment || notification.canBackFollow {
