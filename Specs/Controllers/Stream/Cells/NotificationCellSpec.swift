@@ -32,7 +32,7 @@ class NotificationCellSpec: QuickSpec {
                 expect(subject.titleTextView.frame.size.height) == 51
             }
 
-            context("snapshots") {
+            fcontext("snapshots") {
                 let author: User = .stub(["username": "ello"])
                 let post: Post = .stub(["author": author])
                 let title = NotificationAttributedTitle.attributedTitle(.PostMentionNotification, author: author, subject: post)
