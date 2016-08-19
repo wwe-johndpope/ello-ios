@@ -267,6 +267,9 @@ extension PostDetailViewController: StreamDestination {
         streamViewController.responseConfig = responseConfig
     }
 
+    public func secondaryJSONAbleNotFound() {
+    }
+
     public func primaryJSONAbleNotFound() {
         if let deeplinkPath = self.deeplinkPath,
             deeplinkURL = NSURL(string: deeplinkPath)

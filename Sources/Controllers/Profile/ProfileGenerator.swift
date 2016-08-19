@@ -120,8 +120,13 @@ private extension ProfileGenerator {
                 let userPostItems = sself.parse(posts)
                 displayPostsOperation.run {
                     inForeground {
-                        sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems) {
-                            sself.destination?.pagingEnabled = true
+                        if userPostItems.count == 0 {
+                            sself.destination?.secondaryJSONAbleNotFound()
+                        }
+                        else {
+                            sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems) {
+                                sself.destination?.pagingEnabled = true
+                            }
                         }
                     }
                 }

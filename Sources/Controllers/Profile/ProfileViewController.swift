@@ -87,7 +87,7 @@ public final class ProfileViewController: StreamableViewController {
         }
         postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
             if post.authorId == self.currentUser?.id && change == .Create {
-                self.updateNoPostsView(false)
+                self.updateNoPostsView(show: false)
             }
         }
     }
@@ -249,7 +249,6 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     private func setupNoPosts() {
-
         var noPostsHeaderText: String
         var noPostsBodyText: String
         if user?.id == currentUser?.id {
@@ -378,7 +377,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
 
-    private func updateNoPostsView(show: Bool) {
+    private func updateNoPostsView(show show: Bool) {
         guard isViewLoaded() else { return }
 
         if show {
@@ -504,7 +503,6 @@ extension ProfileViewController:  StreamDestination {
 
     public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
-        updateNoPostsView(items.count < 2)
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
         assignRightButtons()
     }
@@ -538,6 +536,10 @@ extension ProfileViewController:  StreamDestination {
 
     public func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
+    }
+
+    public func secondaryJSONAbleNotFound() {
+        updateNoPostsView(show: true)
     }
 
     public func primaryJSONAbleNotFound() {

@@ -117,8 +117,10 @@ class PostDetailDestination: StreamDestination {
         self.post = post
     }
 
-    func primaryJSONAbleNotFound() {
+    func secondaryJSONAbleNotFound() {
+    }
 
+    func primaryJSONAbleNotFound() {
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {

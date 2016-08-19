@@ -93,8 +93,10 @@ class ProfileDestination: StreamDestination {
         self.user = user
     }
 
-    func primaryJSONAbleNotFound() {
+    func secondaryJSONAbleNotFound() {
+    }
 
+    func primaryJSONAbleNotFound() {
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {

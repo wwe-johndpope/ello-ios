@@ -364,8 +364,7 @@ extension ElloProvider {
             }
         }
         else if isEmptySuccess(data, statusCode: statusCode) {
-            let emptyString = ""
-            success(data: emptyString, responseConfig: responseConfig)
+            success(data: "", responseConfig: responseConfig)
         }
         else {
             ElloProvider.failedToMapObjects(failure)
