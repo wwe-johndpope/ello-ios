@@ -881,7 +881,7 @@ extension StreamViewController: CategoryDelegate {
 extension StreamViewController: UserDelegate {
 
     public func userTappedText(cell: UICollectionViewCell) {
-        guard !streamKind.tappingTextOpensDetail,
+        guard streamKind.tappingTextOpensDetail,
             let indexPath = collectionView.indexPathForCell(cell)
         else { return }
 
