@@ -95,8 +95,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                     }
                 }
                 expect(item.calculatedWebHeight) == 63
-                expect(item.calculatedOneColumnCellHeight) == 154
-                expect(item.calculatedMultiColumnCellHeight) == 154
+                expect(item.calculatedOneColumnCellHeight) == 149
+                expect(item.calculatedMultiColumnCellHeight) == 149
             }
             it("should return size that accounts for a reply button") {
                 let activity: Activity = stub(["kind": "comment_notification", "subject": commentWithText])
@@ -108,8 +108,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                     }
                 }
                 expect(item.calculatedWebHeight) == 63
-                expect(item.calculatedOneColumnCellHeight) == 194
-                expect(item.calculatedMultiColumnCellHeight) == 194
+                expect(item.calculatedOneColumnCellHeight) == 189
+                expect(item.calculatedMultiColumnCellHeight) == 189
             }
             it("should return size that accounts for a list item") {
                 let activity: Activity = stub(["kind": "comment_notification", "subject": commentWithListAndText])
