@@ -62,6 +62,8 @@ class PostSpec: QuickSpec {
 
                 let createdAtString = "2015-12-14T17:01:48.122Z"
                 let post = Post.fromJSON(parsedPost) as! Post
+                let author: User = stub(["id": post.authorId, "username": "archer"])
+                ElloLinkedStore.sharedInstance.setObject(author, forKey: post.authorId, inCollection: "users")
                 var createdAt: NSDate = createdAtString.toNSDate()!
                 // active record
                 expect(post.createdAt) == createdAt
