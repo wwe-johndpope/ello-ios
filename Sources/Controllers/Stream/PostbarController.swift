@@ -30,7 +30,6 @@ public class PostbarController: NSObject, PostbarDelegate {
     public init(collectionView: UICollectionView, dataSource: StreamDataSource, presentingController: StreamViewController) {
         self.collectionView = collectionView
         self.dataSource = dataSource
-        self.collectionView.dataSource = dataSource
         self.presentingController = presentingController
     }
 

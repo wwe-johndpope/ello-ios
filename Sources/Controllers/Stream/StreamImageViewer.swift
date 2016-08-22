@@ -8,7 +8,7 @@ import JTSImageViewController
 public class StreamImageViewer: NSObject {
     var prevWindowSize: CGSize?
 
-    let presentingController: StreamViewController
+    weak var presentingController: StreamViewController?
     weak var imageView: UIImageView?
 
     public init(presentingController: StreamViewController) {
@@ -20,6 +20,8 @@ public class StreamImageViewer: NSObject {
 // MARK: Public
 extension StreamImageViewer {
     public func imageTapped(imageView: FLAnimatedImageView, imageURL: NSURL?) {
+        guard let presentingController = presentingController else { return }
+
         // tell AppDelegate to allow rotation
         AppDelegate.restrictRotation = false
         prevWindowSize = UIWindow.windowSize()

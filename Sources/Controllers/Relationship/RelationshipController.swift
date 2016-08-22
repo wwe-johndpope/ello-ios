@@ -24,7 +24,7 @@ public protocol RelationshipDelegate: class {
 public class RelationshipController: NSObject {
     public var currentUser: User?
     public weak var delegate: RelationshipControllerDelegate?
-    public let presentingController: UIViewController
+    public weak var presentingController: UIViewController?
 
     required public init(presentingController: UIViewController) {
         self.presentingController = presentingController
@@ -51,7 +51,7 @@ extension RelationshipController: RelationshipDelegate {
         let vc = BlockUserModalViewController(config: BlockUserModalConfig(userId: userId, userAtName: userAtName, relationshipPriority: relationshipPriority, changeClosure: changeClosure))
         vc.currentUser = currentUser
         vc.relationshipDelegate = self
-        presentingController.presentViewController(vc, animated: true, completion: nil)
+        presentingController?.presentViewController(vc, animated: true, completion: nil)
     }
 
     public func updateRelationship(currentUserId: String, userId: String, prev prevPriority: RelationshipPriority, relationshipPriority newRelationshipPriority: RelationshipPriority, complete: RelationshipChangeCompletion) {

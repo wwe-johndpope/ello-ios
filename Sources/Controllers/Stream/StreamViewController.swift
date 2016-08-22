@@ -112,7 +112,7 @@ public final class StreamViewController: BaseElloViewController {
     public let streamService = StreamService()
     lazy public var loadingToken: LoadingToken = {
         var token = LoadingToken()
-        token.cancelLoadingClosure = {
+        token.cancelLoadingClosure = { [unowned self] in
             self.doneLoading()
         }
         return token
@@ -200,11 +200,12 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     // If we ever create an init() method that doesn't use nib/storyboards,
-    // we'll need to call this.  Called from awakeFromNib and init.
+    // we'll need to call this.
     private func initialSetup() {
         setupDataSource()
         setupImageViewDelegate()
-        addNotificationObservers()
+        // most consumers of StreamViewController expect all outlets (esp collectionView) to be set
+        if !isViewLoaded() { let _ = view }
     }
 
     deinit {
