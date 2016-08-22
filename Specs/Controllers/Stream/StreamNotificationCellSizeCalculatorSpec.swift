@@ -46,7 +46,7 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
             beforeEach {
                 subject = StreamNotificationCellSizeCalculator(webView: UIWebView(frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 568))))
             }
-
+ 
             it("should return minimum size") {
                 let activity: Activity = stub(["kind": "new_follower_post", "subject": user])
                 let notification: Notification = stub(["activity": activity])

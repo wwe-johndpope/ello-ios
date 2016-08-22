@@ -11,7 +11,10 @@ import Nimble
 class SimpleStreamViewControllerSpec: QuickSpec {
     override func spec() {
 
-        let subject = SimpleStreamViewController(endpoint: ElloAPI.UserStreamFollowers(userId: "666"), title: "Followers")
+        var subject: SimpleStreamViewController!
+        beforeEach {
+            subject = SimpleStreamViewController(endpoint: ElloAPI.UserStreamFollowers(userId: "666"), title: "Followers")
+        }
 
         describe("initialization") {
 

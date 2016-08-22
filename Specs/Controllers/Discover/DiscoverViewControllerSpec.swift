@@ -10,9 +10,8 @@ import Nimble
 class DiscoverViewControllerSpec: QuickSpec {
     override func spec() {
 
-        var controller = DiscoverViewController()
         describe("initialization") {
-
+            var controller: DiscoverViewController!
             beforeEach {
                 controller = DiscoverViewController()
             }

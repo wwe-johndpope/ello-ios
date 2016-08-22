@@ -13,8 +13,11 @@ import Nimble_Snapshots
 class CoverImageSelectionViewControllerSpec: QuickSpec {
     override func spec() {
         describe("CoverImageSelectionViewController") {
-            let subject = CoverImageSelectionViewController()
-            validateAllSnapshots(subject)
+            var subject: CoverImageSelectionViewController!
+            beforeEach {
+                subject = CoverImageSelectionViewController()
+            }
+            validateAllSnapshots({ return subject })
         }
     }
 }

@@ -14,9 +14,11 @@ class ProfileViewControllerSpec: QuickSpec {
             let currentUser: User = stub([:])
 
             describe("initialization from storyboard") {
-                let user: User = stub(["id": "42"])
-                let subject = ProfileViewController(userParam: user.id)
-                subject.currentUser = currentUser
+                var subject: ProfileViewController!
+                beforeEach {
+                    subject = ProfileViewController(userParam: "42")
+                    subject.currentUser = currentUser
+                }
 
                 it("can be instantiated") {
                     expect(subject).notTo(beNil())
@@ -59,11 +61,10 @@ class ProfileViewControllerSpec: QuickSpec {
             }
 
             describe("contentInset") {
-                let user: User = stub(["id": "42"])
-                let subject = ProfileViewController(userParam: user.id)
-                subject.currentUser = currentUser
-
+                var subject: ProfileViewController!
                 beforeEach {
+                    subject = ProfileViewController(userParam: "42")
+                    subject.currentUser = currentUser
                     UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .None)
                     showController(subject)
                 }
@@ -243,21 +244,24 @@ class ProfileViewControllerSpec: QuickSpec {
             }
 
             xcontext("snapshots") {
-                let subject = ProfileViewController(userParam: "42")
-                subject.currentUser = currentUser
-                validateAllSnapshots(subject)
+                var subject: ProfileViewController!
+                beforeEach {
+                    subject = ProfileViewController(userParam: "42")
+                    subject.currentUser = currentUser
+                }
+                validateAllSnapshots({ return subject })
             }
 
             xcontext("snapshots - currentUser") {
                 let user: User = stub([:])
-                let subject = ProfileViewController(user: user)
-                subject.currentUser = currentUser
+                var subject: ProfileViewController!
                 beforeEach {
+                    subject = ProfileViewController(user: user)
                     showController(subject)
                     subject.currentUser = user
                     subject.updateUser(user)
                 }
-                validateAllSnapshots(subject)
+                validateAllSnapshots({ return subject })
             }
         }
     }

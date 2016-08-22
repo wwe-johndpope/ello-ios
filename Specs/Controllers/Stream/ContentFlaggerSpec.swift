@@ -13,22 +13,18 @@ class ContentFlaggerSpec: QuickSpec {
     override func spec() {
 
         var subject: ContentFlagger!
-        let presentingController = UIViewController()
+        var presentingController: UIViewController!
         beforeEach {
+            presentingController = UIViewController()
+            subject = ContentFlagger(presentingController: presentingController,
+                flaggableId: "123",
+                contentType: .Post,
+                commentPostId: nil)
             showController(presentingController)
         }
 
         context("post flagging") {
-
-            beforeEach({
-                subject = ContentFlagger(presentingController: presentingController,
-                    flaggableId: "123",
-                    contentType: .Post,
-                    commentPostId: nil)
-            })
-
             it("presents an AlertViewController") {
-
                 subject.displayFlaggingSheet()
                 let presentedVC = subject.presentingController?.presentedViewController as! AlertViewController
 

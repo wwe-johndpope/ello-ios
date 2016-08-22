@@ -7,9 +7,7 @@ class DrawerViewControllerSpec: QuickSpec {
     override func spec() {
         describe("DrawerViewController") {
             describe("nib") {
-
-                var subject = DrawerViewController()
-
+                var subject: DrawerViewController!
                 beforeEach {
                     subject = DrawerViewController()
                     showController(subject)
@@ -32,9 +30,7 @@ class DrawerViewControllerSpec: QuickSpec {
             }
 
             describe("viewDidLoad") {
-
                 var subject: DrawerViewController!
-
                 beforeEach {
                     subject = DrawerViewController()
                     showController(subject)
@@ -47,9 +43,11 @@ class DrawerViewControllerSpec: QuickSpec {
             }
 
             describe("appearance") {
-
-                let subject = DrawerViewController()
-                validateAllSnapshots(subject)
+                var subject: DrawerViewController!
+                beforeEach {
+                    subject = DrawerViewController()
+                }
+                validateAllSnapshots({ return subject })
             }
         }
     }

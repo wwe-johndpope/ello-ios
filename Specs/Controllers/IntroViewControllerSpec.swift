@@ -28,8 +28,11 @@ class IntroViewControllerSpec: QuickSpec {
                 }
             }
             describe("snapshots") {
-                let subject = IntroViewController()
-                validateAllSnapshots(subject, named: "IntroViewController")
+                var subject: IntroViewController!
+                beforeEach {
+                    subject = IntroViewController()
+                }
+                validateAllSnapshots({ return subject }, named: "IntroViewController")
             }
         }
     }

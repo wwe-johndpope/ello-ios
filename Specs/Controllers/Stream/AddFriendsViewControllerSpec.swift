@@ -17,8 +17,11 @@ struct FakeAddressBook: ContactList {
 class AddFriendsViewControllerSpec: QuickSpec {
     override func spec() {
 
-        let subject = AddFriendsViewController(addressBook: FakeAddressBook())
-        showController(subject)
+        var subject: AddFriendsViewController!
+        beforeEach {
+            subject = AddFriendsViewController(addressBook: FakeAddressBook())
+            showController(subject)
+        }
 
         describe("initialization") {
 

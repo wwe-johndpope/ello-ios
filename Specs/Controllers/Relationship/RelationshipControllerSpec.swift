@@ -56,7 +56,7 @@ class RelationshipControllerSpec: QuickSpec {
                     subject.launchBlockModal("user-id", userAtName: "@666", relationshipPriority: RelationshipPriority.Following) {
                         _ in
                     }
-                    let presentedVC = subject.presentingController.presentedViewController as! BlockUserModalViewController
+                    let presentedVC = subject.presentingController?.presentedViewController as? BlockUserModalViewController
                     // TODO: figure this out
 //                    expect(presentedVC.relationshipDelegate).to(beIdenticalTo(subject))
                     expect(presentedVC).to(beAKindOf(BlockUserModalViewController.self))

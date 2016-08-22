@@ -27,12 +27,13 @@ class ElloScrollLogicSpec: QuickSpec {
 
             beforeEach() {
                 logic = ElloScrollLogic(
-                    onShow: { scrollToBottom in
+                    onShow: { [unowned self] scrollToBottom in
                         self.didScrollToBottom = scrollToBottom
                         self.didShow = true
                     },
-                    onHide: { self.didHide = true }
-                    )
+                    onHide: { [unowned self] in
+                        self.didHide = true
+                    })
                 logic.isRunningSpecs = true
 
                 scrollView.contentOffset = CGPoint(x: 0, y: scrollStart)
