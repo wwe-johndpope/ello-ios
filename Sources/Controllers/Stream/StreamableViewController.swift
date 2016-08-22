@@ -73,8 +73,8 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
 
         setupStreamController()
         scrollLogic = ElloScrollLogic(
-            onShow: self.showNavBars,
-            onHide: self.hideNavBars
+            onShow: { [unowned self] scroll in self.showNavBars(scroll) },
+            onHide: { [unowned self] in self.hideNavBars() }
         )
     }
 

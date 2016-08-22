@@ -20,7 +20,7 @@ public class AddFriendsViewController: StreamableViewController {
     required public init(addressBook: ContactList) {
         self.addressBook = addressBook
         super.init(nibName: nil, bundle: nil)
-        streamViewController.initialLoadClosure = findFriendsFromContacts
+        streamViewController.initialLoadClosure = { [unowned self] in self.findFriendsFromContacts() }
         streamViewController.pullToRefreshEnabled = false
     }
 

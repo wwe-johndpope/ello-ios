@@ -94,9 +94,9 @@ public final class ProfileViewController: StreamableViewController {
 
     private func sharedInit() {
         streamViewController.streamKind = initialStreamKind
-        streamViewController.initialLoadClosure = loadProfile
-        streamViewController.reloadClosure = reloadEntireProfile
-        streamViewController.toggleClosure = toggleGrid
+        streamViewController.initialLoadClosure = { [unowned self] in self.loadProfile() }
+        streamViewController.reloadClosure = { [unowned self] in self.reloadEntireProfile() }
+        streamViewController.toggleClosure = { [unowned self] isGridView in self.toggleGrid(isGridView) }
     }
 
     deinit {
