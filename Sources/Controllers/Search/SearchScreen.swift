@@ -21,8 +21,6 @@ public protocol SearchScreenProtocol {
 }
 
 public class SearchScreen: UIView, SearchScreenProtocol {
-    var keyboardWillShowObserver: NotificationObserver?
-    var keyboardWillHideObserver: NotificationObserver?
     private var throttled: ThrottledBlock
     public private(set) var navigationBar: ElloNavigationBar!
     public private(set) var navigationItem: UINavigationItem!
