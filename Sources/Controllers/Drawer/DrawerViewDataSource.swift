@@ -24,7 +24,7 @@ public class DrawerViewDataSource: NSObject {
         return [
             DrawerItem(name: InterfaceString.Drawer.Store, type: .External("http://ello.threadless.com/")),
             DrawerItem(name: InterfaceString.Drawer.Invite, type: .Invite),
-            DrawerItem(name: InterfaceString.Drawer.Help, type: .External("https://ello.co/wtf/help/the-basics/")),
+            DrawerItem(name: InterfaceString.Drawer.Help, type: .External("https://ello.co/wtf/")),
             DrawerItem(name: InterfaceString.Drawer.Resources, type: .External("https://ello.co/wtf/resources/community-directory/")),
             DrawerItem(name: InterfaceString.Drawer.About, type: .External("https://ello.co/wtf/about/what-is-ello/")),
             DrawerItem(name: InterfaceString.Drawer.Logout, type: .Logout),
