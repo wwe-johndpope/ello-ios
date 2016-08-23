@@ -25,7 +25,7 @@ public class ImportFriendsViewController: OnboardingUserListViewController {
         let noResultsTitle = InterfaceString.Onboard.FindYourFriends.NoResultsTitle
         let noResultsBody = InterfaceString.Onboard.FindYourFriends.NoResultsBody
         streamViewController.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
-        streamViewController.initialLoadClosure = findFriendsFromContacts
+        streamViewController.initialLoadClosure = { [unowned self] in self.findFriendsFromContacts() }
     }
 
     private func findFriendsFromContacts() {

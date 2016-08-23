@@ -40,8 +40,8 @@ public final class PostDetailViewController: StreamableViewController {
             destination: self
         )
         ElloHUD.showLoadingHudInView(streamViewController.view)
-        streamViewController.initialLoadClosure = loadEntirePostDetail
-        streamViewController.reloadClosure = reloadEntirePostDetail
+        streamViewController.initialLoadClosure = { [unowned self] in self.loadEntirePostDetail() }
+        streamViewController.reloadClosure = { [unowned self] in self.reloadEntirePostDetail() }
 
         streamViewController.loadInitialPage()
     }

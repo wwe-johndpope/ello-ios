@@ -12,10 +12,11 @@ import Nimble_Snapshots
 class AvatarImageSelectionViewControllerSpec: QuickSpec {
     override func spec() {
         describe("AvatarImageSelectionViewController") {
-            let subject = AvatarImageSelectionViewController()
-            describe("snapshots") {
-                validateAllSnapshots(subject, named: "AvatarImageSelectionViewController")
+            var subject: AvatarImageSelectionViewController!
+            beforeEach {
+                subject = AvatarImageSelectionViewController()
             }
+            validateAllSnapshots({ return subject }, named: "AvatarImageSelectionViewController")
         }
     }
 }

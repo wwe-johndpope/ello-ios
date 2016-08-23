@@ -12,10 +12,16 @@ import Nimble_Snapshots
 class RelationshipControlSpec: QuickSpec {
     override func spec() {
         describe("RelationshipControl") {
-            let subject = RelationshipControl()
-            var presentingController = UIViewController()
-            showController(presentingController)
-            var relationshipController = RelationshipController(presentingController: presentingController)
+            var subject: RelationshipControl!
+            var presentingController: UIViewController!
+            var relationshipController: RelationshipController!
+            beforeEach {
+                subject = RelationshipControl()
+                presentingController = UIViewController()
+                showController(presentingController)
+                relationshipController = RelationshipController(presentingController: presentingController)
+                subject.relationshipDelegate = relationshipController
+            }
 
             describe("@relationship") {
 
@@ -76,13 +82,6 @@ class RelationshipControlSpec: QuickSpec {
             }
 
             describe("button targets") {
-
-                beforeEach {
-                    presentingController = UIViewController()
-                    showController(presentingController)
-                    relationshipController = RelationshipController(presentingController: presentingController)
-                    subject.relationshipDelegate = relationshipController
-                }
 
                 context("not muted") {
 
@@ -158,7 +157,7 @@ class RelationshipControlSpec: QuickSpec {
                         it("launches the block modal") {
                             subject.relationshipPriority = .Mute
                             subject.followingButton.sendActionsForControlEvents(.TouchUpInside)
-                            let presentedVC = relationshipController.presentingController.presentedViewController as? BlockUserModalViewController
+                            let presentedVC = relationshipController.presentingController?.presentedViewController as? BlockUserModalViewController
                             expect(presentedVC).notTo(beNil())
                         }
                     }

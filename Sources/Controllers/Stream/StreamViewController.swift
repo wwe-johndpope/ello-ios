@@ -112,7 +112,7 @@ public final class StreamViewController: BaseElloViewController {
     public let streamService = StreamService()
     lazy public var loadingToken: LoadingToken = {
         var token = LoadingToken()
-        token.cancelLoadingClosure = {
+        token.cancelLoadingClosure = { [unowned self] in
             self.doneLoading()
         }
         return token
@@ -200,11 +200,12 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     // If we ever create an init() method that doesn't use nib/storyboards,
-    // we'll need to call this.  Called from awakeFromNib and init.
+    // we'll need to call this.
     private func initialSetup() {
         setupDataSource()
         setupImageViewDelegate()
-        addNotificationObservers()
+        // most consumers of StreamViewController expect all outlets (esp collectionView) to be set
+        if !isViewLoaded() { let _ = view }
     }
 
     deinit {
@@ -219,6 +220,7 @@ public final class StreamViewController: BaseElloViewController {
         pullToRefreshView?.hidden = !pullToRefreshEnabled
 
         setupCollectionView()
+        addNotificationObservers()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -554,59 +556,14 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     private func setupCollectionView() {
-        collectionView.delegate = self
-        automaticallyAdjustsScrollViewInsets = false
-        collectionView.alwaysBounceHorizontal = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.directionalLockEnabled = true
-        collectionView.keyboardDismissMode = .OnDrag
-        StreamCellType.registerAll(collectionView)
-        setupCollectionViewLayout()
-    }
-
-    // this gets reset whenever the streamKind changes
-    private func setupCollectionViewLayout() {
-        if let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout {
-            layout.columnCount = streamKind.columnCountFor(width: view.frame.width)
-            layout.sectionInset = UIEdgeInsetsZero
-            layout.minimumColumnSpacing = streamKind.columnSpacing
-            layout.minimumInteritemSpacing = 0
-        }
-    }
-
-    private func setupImageViewDelegate() {
-        if imageViewer == nil {
-            imageViewer = StreamImageViewer(presentingController: self)
-        }
-    }
-
-    private func setupDataSource() {
-        let webView = UIWebView(frame: view.bounds)
-        dataSource = StreamDataSource(
-            streamKind: streamKind,
-            textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView(frame: webView.frame)),
-            notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView(frame: webView.frame)),
-            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(webView: UIWebView(frame: webView.frame)),
-            imageSizeCalculator: StreamImageCellSizeCalculator()
-        )
-
-        dataSource.streamCollapsedFilter = { item in
-            if !item.type.collapsable {
-                return true
-            }
-            if item.jsonable is Post {
-                return item.state != .Collapsed
-            }
-            return true
-        }
-
         let postbarController = PostbarController(collectionView: collectionView, dataSource: dataSource, presentingController: self)
         postbarController.currentUser = currentUser
         dataSource.postbarDelegate = postbarController
         self.postbarController = postbarController
 
-        relationshipController = RelationshipController(presentingController: self)
-        relationshipController?.currentUser = self.currentUser
+        let relationshipController = RelationshipController(presentingController: self)
+        relationshipController.currentUser = self.currentUser
+        self.relationshipController = relationshipController
 
         // set delegates
         dataSource.imageDelegate = self
@@ -621,6 +578,49 @@ public final class StreamViewController: BaseElloViewController {
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
+        collectionView.delegate = self
+        automaticallyAdjustsScrollViewInsets = false
+        collectionView.alwaysBounceHorizontal = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.directionalLockEnabled = true
+        collectionView.keyboardDismissMode = .OnDrag
+        StreamCellType.registerAll(collectionView)
+        setupCollectionViewLayout()
+    }
+
+    // this gets reset whenever the streamKind changes
+    private func setupCollectionViewLayout() {
+        guard let layout = collectionView?.collectionViewLayout as? StreamCollectionViewLayout else { return }
+        layout.columnCount = streamKind.columnCountFor(width: view.frame.width)
+        layout.sectionInset = UIEdgeInsetsZero
+        layout.minimumColumnSpacing = streamKind.columnSpacing
+        layout.minimumInteritemSpacing = 0
+    }
+
+    private func setupImageViewDelegate() {
+        if imageViewer == nil {
+            imageViewer = StreamImageViewer(presentingController: self)
+        }
+    }
+
+    private func setupDataSource() {
+        dataSource = StreamDataSource(
+            streamKind: streamKind,
+            textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
+            notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
+            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(webView: UIWebView()),
+            imageSizeCalculator: StreamImageCellSizeCalculator()
+        )
+
+        dataSource.streamCollapsedFilter = { item in
+            if !item.type.collapsable {
+                return true
+            }
+            if item.jsonable is Post {
+                return item.state != .Collapsed
+            }
+            return true
+        }
     }
 
 }

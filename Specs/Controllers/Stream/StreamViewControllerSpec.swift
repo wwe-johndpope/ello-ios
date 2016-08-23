@@ -11,7 +11,7 @@ import SSPullToRefresh
 class StreamViewControllerSpec: QuickSpec {
     override func spec() {
 
-        var controller = StreamViewController.instantiateFromStoryboard()
+        var controller: StreamViewController!
 
         describe("initialization") {
 

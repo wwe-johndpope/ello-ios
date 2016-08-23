@@ -15,7 +15,7 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
         elloNavigationItem.leftBarButtonItems = [leftItem]
         elloNavigationItem.fixNavBarItemPadding()
 
-        streamViewController.initialLoadClosure = loadCategories
+        streamViewController.initialLoadClosure = { [unowned self] in self.loadCategories() }
         streamViewController.streamKind = .AllCategories
     }
 

@@ -15,7 +15,7 @@ public class OnboardingUserListViewController: StreamableViewController, Onboard
 
         streamViewController.pullToRefreshEnabled = false
         streamViewController.allOlderPagesLoaded = true
-        streamViewController.initialLoadClosure = self.loadUsers
+        streamViewController.initialLoadClosure = { [unowned self] in self.loadUsers() }
         streamViewController.relationshipController?.delegate = self
     }
 

@@ -38,28 +38,30 @@ class PostbarControllerSpec: QuickSpec {
             ])
         var controller: StreamViewController!
         let streamKind: StreamKind = .PostDetail(postParam: "post")
-        let webView = UIWebView(frame: CGRectMake(0, 0, 320, 640))
-        let textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView(frame: webView.frame))
-        let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView(frame: webView.frame))
-        let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator(webView: UIWebView(frame: webView.frame))
-        let imageSizeCalculator = StreamImageCellSizeCalculator()
 
         beforeEach {
-            controller = StreamViewController.instantiateFromStoryboard()
-            controller.dataSource =
-                StreamDataSource(streamKind: streamKind,
-                    textSizeCalculator: textSizeCalculator,
-                    notificationSizeCalculator: notificationSizeCalculator,
-                    profileHeaderSizeCalculator: profileHeaderSizeCalculator,
-                    imageSizeCalculator: imageSizeCalculator
+            let textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
+            let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
+            let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator(webView: UIWebView())
+            let imageSizeCalculator = StreamImageCellSizeCalculator()
+
+            let dataSource = StreamDataSource(streamKind: streamKind,
+                textSizeCalculator: textSizeCalculator,
+                notificationSizeCalculator: notificationSizeCalculator,
+                profileHeaderSizeCalculator: profileHeaderSizeCalculator,
+                imageSizeCalculator: imageSizeCalculator
             )
-            controller.collectionView.dataSource = controller.dataSource
+
+            controller = StreamViewController.instantiateFromStoryboard()
             controller.streamKind = streamKind
+            controller.dataSource = dataSource
+            controller.collectionView.dataSource = dataSource
+
+            subject = PostbarController(collectionView: controller.collectionView, dataSource: dataSource, presentingController: controller)
+            subject.currentUser = currentUser
+            dataSource.postbarDelegate = subject
 
             showController(controller)
-
-            subject = PostbarController(collectionView: controller.collectionView, dataSource: controller.dataSource, presentingController: controller)
-            subject.currentUser = currentUser
         }
 
         describe("PostbarController") {
@@ -80,7 +82,6 @@ class PostbarControllerSpec: QuickSpec {
                     delegate = ReplyAllCreatePostDelegate()
                     controller.createPostDelegate = delegate
                     controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
-                        controller.collectionView.dataSource = controller.dataSource
                         controller.collectionView.reloadData()
                     }
                 }
@@ -104,7 +105,6 @@ class PostbarControllerSpec: QuickSpec {
                     let parser = StreamCellItemParser()
                     let postCellItems = parser.parse([post], streamKind: streamKind)
                     controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
-                        controller.collectionView.dataSource = controller.dataSource
                         controller.collectionView.reloadData()
                     }
                 }

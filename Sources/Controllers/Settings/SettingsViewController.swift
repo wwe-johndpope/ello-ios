@@ -118,8 +118,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         super.awakeFromNib()
         setupNavigationBar()
         scrollLogic = ElloScrollLogic(
-            onShow: self.showNavBars,
-            onHide: self.hideNavBars
+            onShow: { [unowned self] scroll in self.showNavBars(scroll) },
+            onHide: { [unowned self] in self.hideNavBars() }
         )
     }
 

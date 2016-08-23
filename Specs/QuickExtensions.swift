@@ -9,7 +9,8 @@ import Nimble
 import Nimble_Snapshots
 
 
-func showController(viewController: UIViewController) -> UIWindow {
+var prevController: UITabBarController?
+func showController(viewController: UIViewController) {
     let frame: CGRect
     let view = viewController.view
     if view.frame.size.width > 0 && view.frame.size.height > 0 {
@@ -23,19 +24,24 @@ func showController(viewController: UIViewController) -> UIWindow {
         viewController.loadViewIfNeeded()
     }
 
-    let window = UIWindow(frame: frame)
+    prevController?.viewControllers = []
+    let window = UIWindow()
+    let parentController = UITabBarController()
+    parentController.tabBar.hidden = true
+    parentController.viewControllers = [viewController]
+    window.rootViewController = parentController
+    window.frame = frame
     window.makeKeyAndVisible()
-    window.rootViewController = viewController
     viewController.view.layoutIfNeeded()
-    return window
+    prevController = parentController
 }
 
-func showView(view: UIView) -> UIWindow {
+func showView(view: UIView) {
     let controller = UIViewController()
     controller.view.frame.size = view.frame.size
     view.frame.origin = CGPointZero
     controller.view.addSubview(view)
-    return showController(controller)
+    showController(controller)
 }
 
 public enum SnapshotDevice {
@@ -93,12 +99,12 @@ func expectValidSnapshot(subject: Snapshotable, named name: String? = nil, devic
     expect(subject, file: file, line: line).to(record ? recordSnapshot(named: localName) : haveValidSnapshot(named: localName))
 }
 
-func validateAllSnapshots(subject: Snapshotable, named name: String? = nil, record: Bool = false, file: String = #file, line: UInt = #line) {
+func validateAllSnapshots(subject: () -> Snapshotable, named name: String? = nil, record: Bool = false, file: String = #file, line: UInt = #line) {
     for device in SnapshotDevice.all {
         context(device.description) {
             describe("view") {
                 it("should match the screenshot", file: file, line: line) {
-                    expectValidSnapshot(subject, named: name, device: device, record: record, file: file, line: line)
+                    expectValidSnapshot(subject(), named: name, device: device, record: record, file: file, line: line)
                 }
             }
         }

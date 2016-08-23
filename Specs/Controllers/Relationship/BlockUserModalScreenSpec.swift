@@ -49,8 +49,10 @@ class BlockUserModalScreenSpec: QuickSpec {
             }
 
             describe("snapshots") {
-                setupScreen(atName: "@foo", relationshipPriority: .Following)
-                validateAllSnapshots(subject, named: "BlockUserModalScreen")
+                beforeEach {
+                    setupScreen(atName: "@foo", relationshipPriority: .Following)
+                }
+                validateAllSnapshots({ return subject }, named: "BlockUserModalScreen")
             }
 
             describe("button targets") {

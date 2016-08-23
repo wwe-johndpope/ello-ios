@@ -90,11 +90,12 @@ class AppViewControllerSpec: QuickSpec {
                 }
             }
             describe("snapshots") {
+                var subject: AppViewController!
                 beforeEach {
                     ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
+                    subject = AppViewController.instantiateFromStoryboard()
                 }
-                let subject = AppViewController.instantiateFromStoryboard()
-                validateAllSnapshots(subject)
+                validateAllSnapshots({ return subject })
             }
         }
     }

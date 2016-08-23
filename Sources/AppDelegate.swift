@@ -14,7 +14,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public static var restrictRotation = true
 
-    public var window: UIWindow?
+    public weak var window: UIWindow?
 
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Keyboard.setup()

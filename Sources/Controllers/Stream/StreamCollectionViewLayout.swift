@@ -71,10 +71,8 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
         } }
     }
 
-    weak var delegate: StreamCollectionViewLayoutDelegate? {
-        get {
-            return collectionView!.delegate as? StreamCollectionViewLayoutDelegate
-        }
+    var delegate: StreamCollectionViewLayoutDelegate? {
+        return collectionView?.delegate as? StreamCollectionViewLayoutDelegate
     }
     var columnHeights = [CGFloat]()
     var sectionItemAttributes = [[UICollectionViewLayoutAttributes]]()
