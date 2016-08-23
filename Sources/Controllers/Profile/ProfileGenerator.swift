@@ -102,7 +102,6 @@ private extension ProfileGenerator {
     }
 
     func loadUserPosts(doneOperation: AsyncOperation) {
-        guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
         let displayPostsOperation = AsyncOperation()
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
