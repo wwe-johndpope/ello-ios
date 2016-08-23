@@ -128,8 +128,8 @@ public struct InterfaceString {
         static let FollowersCount = NSLocalizedString("Followers", comment: "Followers count header")
         static let CurrentUserNoResultsTitle = NSLocalizedString("Welcome to your Profile", comment: "")
         static let CurrentUserNoResultsBody = NSLocalizedString("Everything you post lives here!\n\nThis is the place to find everyone you’re following and everyone that’s following you. You’ll find your Loves here too!", comment: "")
-        static let NoResultsTitle = NSLocalizedString("Ello is more fun with friends!", comment: "")
-        static let NoResultsBody = NSLocalizedString("This person hasn't posted yet.\n\nFollow or mention them to help them get started!", comment: "")
+        static let NoResultsTitle = NSLocalizedString("This person hasn't posted yet.", comment: "")
+        static let NoResultsBody = NSLocalizedString("Follow or mention them to help them get started!", comment: "")
     }
 
     public struct Post {
