@@ -117,9 +117,6 @@ class PostDetailDestination: StreamDestination {
         self.post = post
     }
 
-    func secondaryJSONAbleNotFound() {
-    }
-
     func primaryJSONAbleNotFound() {
     }
 

@@ -31,6 +31,7 @@ public enum StreamCellType: Equatable {
     case Header
     case Image(data: Regionable?)
     case InviteFriends
+    case NoPosts
     case Notification
     case OnboardingHeader(data: (String, String)?)
     case Placeholder
@@ -73,6 +74,7 @@ public enum StreamCellType: Equatable {
         Header,
         Image(data: nil),
         InviteFriends,
+        NoPosts,
         Notification,
         OnboardingHeader(data: nil),
         ProfileHeader,
@@ -117,6 +119,7 @@ public enum StreamCellType: Equatable {
         case Footer: return StreamFooterCell.reuseIdentifier
         case Image: return StreamImageCell.reuseIdentifier
         case InviteFriends: return StreamInviteFriendsCell.reuseIdentifier
+        case NoPosts: return NoPostsCell.reuseIdentifier
         case Notification: return NotificationCell.reuseIdentifier
         case OnboardingHeader: return OnboardingHeaderCell.reuseIdentifier
         case Placeholder: return "Placeholder"
@@ -164,6 +167,7 @@ public enum StreamCellType: Equatable {
         case Footer: return StreamFooterCellPresenter.configure
         case Image: return StreamImageCellPresenter.configure
         case InviteFriends: return StreamInviteFriendsCellPresenter.configure
+        case NoPosts: return NoPostsCellPresenter.configure
         case Notification: return NotificationCellPresenter.configure
         case OnboardingHeader: return OnboardingHeaderCellPresenter.configure
         case ProfileHeader: return ProfileHeaderCellPresenter.configure
@@ -192,6 +196,7 @@ public enum StreamCellType: Equatable {
         case Footer: return StreamFooterCell.self
         case Image: return StreamImageCell.self
         case InviteFriends: return StreamInviteFriendsCell.self
+        case NoPosts: return NoPostsCell.self
         case Notification: return NotificationCell.self
         case OnboardingHeader: return OnboardingHeaderCell.self
         case Placeholder: return UICollectionViewCell.self
@@ -227,6 +232,8 @@ public enum StreamCellType: Equatable {
             return 44
         case Header:
             return 70
+        case NoPosts:
+            return 215
         case Notification:
             return 117
         case OnboardingHeader:
@@ -266,6 +273,8 @@ public enum StreamCellType: Equatable {
              FollowAll,
              FullWidthSpacer,
              InviteFriends,
+             NoPosts,
+             Notification,
              OnboardingHeader,
              ProfileHeader,
              SeeMoreComments,
@@ -279,7 +288,6 @@ public enum StreamCellType: Equatable {
              Footer,
              Header,
              Image,
-             Notification,
              Placeholder,
              Spacer,
              Text,

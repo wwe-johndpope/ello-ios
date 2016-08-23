@@ -93,9 +93,6 @@ class ProfileDestination: StreamDestination {
         self.user = user
     }
 
-    func secondaryJSONAbleNotFound() {
-    }
-
     func primaryJSONAbleNotFound() {
     }
 
