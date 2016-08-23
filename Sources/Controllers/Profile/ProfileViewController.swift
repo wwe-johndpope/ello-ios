@@ -27,9 +27,6 @@ public final class ProfileViewController: StreamableViewController {
 
     @IBOutlet weak var navigationBar: ElloNavigationBar!
     @IBOutlet weak var whiteSolidView: UIView!
-    @IBOutlet weak var noPostsView: UIView!
-    @IBOutlet weak var noPostsHeader: UILabel!
-    @IBOutlet weak var noPostsBody: UILabel!
 
     @IBOutlet weak var loaderView: InterpolatedLoadingView!
     @IBOutlet weak var coverImage: FLAnimatedImageView!
@@ -43,7 +40,6 @@ public final class ProfileViewController: StreamableViewController {
 
     @IBOutlet weak var coverImageHeight: NSLayoutConstraint!
     @IBOutlet weak var whiteSolidTop: NSLayoutConstraint!
-    @IBOutlet weak var noPostsViewHeight: NSLayoutConstraint!
     @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var gradientViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var relationshipControlsViewTopConstraint: NSLayoutConstraint!
@@ -84,11 +80,6 @@ public final class ProfileViewController: StreamableViewController {
         sharedInit()
         currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [unowned self] _ in
             self.updateCachedImages()
-        }
-        postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
-            if post.authorId == self.currentUser?.id && change == .Create {
-                self.updateNoPostsView(show: false)
-            }
         }
     }
 
@@ -131,7 +122,6 @@ public final class ProfileViewController: StreamableViewController {
         )
         view.clipsToBounds = true
         setupNavigationBar()
-        setupNoPosts()
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
@@ -234,7 +224,6 @@ public final class ProfileViewController: StreamableViewController {
     private func reloadEntireProfile() {
         coverImage.pin_cancelImageDownload()
         coverImage.image = nil
-        updateNoPostsView(show: false)
         generator?.load(reload: true)
     }
 
@@ -247,29 +236,6 @@ public final class ProfileViewController: StreamableViewController {
         alertController.addAction(action)
         logPresentingAlert("ProfileViewController")
         presentViewController(alertController, animated: true, completion: nil)
-    }
-
-    private func setupNoPosts() {
-        var noPostsHeaderText: String
-        var noPostsBodyText: String
-        if user?.id == currentUser?.id {
-            noPostsHeaderText = InterfaceString.Profile.CurrentUserNoResultsTitle
-            noPostsBodyText = InterfaceString.Profile.CurrentUserNoResultsBody
-        }
-        else {
-            noPostsHeaderText = InterfaceString.Profile.NoResultsTitle
-            noPostsBodyText = InterfaceString.Profile.NoResultsBody
-        }
-
-        noPostsHeader.text = noPostsHeaderText
-        noPostsHeader.font = UIFont.regularBoldFont(18)
-        let paragraphStyle = NSMutableParagraphStyle()
-        let attrString = NSMutableAttributedString(string: noPostsBodyText)
-        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSRange(location: 0, length: attrString.length))
-        paragraphStyle.lineSpacing = 4
-
-        noPostsBody.font = UIFont.defaultFont()
-        noPostsBody.attributedText = attrString
     }
 
     private func setupNavigationBar() {
@@ -377,24 +343,6 @@ public final class ProfileViewController: StreamableViewController {
         generator?.toggleGrid()
     }
 
-
-    private func updateNoPostsView(show show: Bool) {
-        guard isViewLoaded() else { return }
-
-        if show {
-            noPostsView.hidden = false
-            animate {
-                self.noPostsView.alpha = 1
-            }
-            updateInsets()
-            streamViewController.contentInset.bottom = noPostsViewHeight.constant
-        }
-        else {
-            noPostsView.alpha = 0
-            noPostsView.hidden = true
-            updateInsets()
-        }
-    }
 }
 
 // MARK: Check for cached coverImage and avatar (only for currentUser)
@@ -537,10 +485,6 @@ extension ProfileViewController:  StreamDestination {
 
     public func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
-    }
-
-    public func secondaryJSONAbleNotFound() {
-        updateNoPostsView(show: true)
     }
 
     public func primaryJSONAbleNotFound() {

@@ -11,6 +11,7 @@ public final class ProfileGenerator: StreamGenerator {
     private var user: User?
     private let userParam: String
     private var posts: [Post]?
+    private var hasPosts: Bool?
     private var localToken: String!
     private var loadingToken = LoadingToken()
 
@@ -19,12 +20,17 @@ public final class ProfileGenerator: StreamGenerator {
     func headerItems() -> [StreamCellItem] {
         guard let user = user else { return [] }
 
-        return [
+        var items = [
             StreamCellItem(jsonable: user, type: .ProfileHeader),
-            StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3)),
-            StreamCellItem(jsonable: user, type: .ColumnToggle),
-            StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5))
         ]
+        if hasPosts != false {
+            items += [
+                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3)),
+                StreamCellItem(jsonable: user, type: .ColumnToggle),
+                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5))
+            ]
+        }
+        return items
     }
 
     public init(currentUser: User?,
@@ -121,9 +127,16 @@ private extension ProfileGenerator {
                 displayPostsOperation.run {
                     inForeground {
                         if userPostItems.count == 0 {
-                            sself.destination?.secondaryJSONAbleNotFound()
+                            sself.hasPosts = false
+                            let user: User = sself.user ?? User(id: sself.userParam, href: "", username: "", name: "", experimentalFeatures: false, relationshipPriority: .None, postsAdultContent: false, viewsAdultContent: false, hasCommentingEnabled: false, hasSharingEnabled: false, hasRepostingEnabled: false, hasLovesEnabled: false)
+                            let noItems = [StreamCellItem(jsonable: user, type: .NoPosts)]
+                            sself.destination?.replacePlaceholder(.ProfilePosts, items: noItems) {
+                                sself.destination?.pagingEnabled = false
+                            }
+                            sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems()) {}
                         }
                         else {
+                            sself.hasPosts = true
                             sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems) {
                                 sself.destination?.pagingEnabled = true
                             }
