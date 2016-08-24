@@ -35,15 +35,6 @@ class ProfileViewControllerSpec: QuickSpec {
                     it("has whiteSolidView") {
                         expect(subject.whiteSolidView).toNot(beNil())
                     }
-                    it("has noPostsView") {
-                        expect(subject.noPostsView).toNot(beNil())
-                    }
-                    it("has noPostsHeader") {
-                        expect(subject.noPostsHeader).toNot(beNil())
-                    }
-                    it("has noPostsBody") {
-                        expect(subject.noPostsBody).toNot(beNil())
-                    }
                     it("has navigationBarTopConstraint") {
                         expect(subject.navigationBarTopConstraint).toNot(beNil())
                     }
@@ -52,9 +43,6 @@ class ProfileViewControllerSpec: QuickSpec {
                     }
                     it("has coverImageHeight") {
                         expect(subject.coverImageHeight).toNot(beNil())
-                    }
-                    it("has noPostsViewHeight") {
-                        expect(subject.noPostsViewHeight).toNot(beNil())
                     }
                 }
 
