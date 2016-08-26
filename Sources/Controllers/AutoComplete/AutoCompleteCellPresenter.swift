@@ -16,14 +16,6 @@ public struct AutoCompleteCellPresenter {
             cell.name.text = ""
         }
         cell.selectionStyle = .None
-        if let url = item.result.url {
-            let user = User(id: NSUUID().UUIDString, href: "", username: item.result.name ?? "", name: "", experimentalFeatures: false, relationshipPriority: RelationshipPriority.None, postsAdultContent: false, viewsAdultContent: false, hasCommentingEnabled: true, hasSharingEnabled: true, hasRepostingEnabled: true, hasLovesEnabled: true)
-            let asset = Asset(url: url)
-            user.avatar = asset
-            cell.avatar.setUser(user)
-        }
-        else {
-            cell.avatar.setUser(nil)
-        }
+        cell.avatar.setUserAvatarURL(item.result.url)
     }
 }

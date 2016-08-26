@@ -33,13 +33,19 @@ class AvatarButtonSpec: QuickSpec {
 
                 beforeEach {
                     subject = AvatarButton()
-                    user = User(id: NSUUID().UUIDString, href: "", username: "@ello", name: "", experimentalFeatures: false, relationshipPriority: RelationshipPriority.None, postsAdultContent: false, viewsAdultContent: false, hasCommentingEnabled: true, hasSharingEnabled: true, hasRepostingEnabled: true, hasLovesEnabled: true)
+                    user = User.empty()
                 }
 
-                it("should assign the asset url") {
+                it("should assign the asset url via User") {
                     let asset = Asset(url: url)
                     user.avatar = asset
                     subject.setUser(user)
+                    expect(subject.imageURL) == url
+                }
+
+                it("should assign the asset url") {
+                    subject.setUserAvatarURL(url)
+                    expect(subject.imageURL) == url
                 }
 
                 it("should assign the asset large url") {
@@ -48,6 +54,7 @@ class AvatarButtonSpec: QuickSpec {
                     asset.large = attachment
                     user.avatar = asset
                     subject.setUser(user)
+                    expect(subject.imageURL) == url
                 }
 
                 it("should assign the asset optimized url") {
@@ -56,6 +63,7 @@ class AvatarButtonSpec: QuickSpec {
                     asset.optimized = attachment
                     user.avatar = asset
                     subject.setUser(user)
+                    expect(subject.imageURL) == url
                 }
 
             }

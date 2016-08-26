@@ -24,7 +24,9 @@ public struct AnimationOptions {
     let completion: ((Bool) -> Void)?
 }
 
-public func animate(duration duration: NSTimeInterval = 0.2, delay: NSTimeInterval = 0, options: UIViewAnimationOptions = .TransitionNone, animated: Bool = true, completion: ((Bool) -> Void)? = nil, animations: () -> Void) {
+public let DefaultAnimationDuration: NSTimeInterval = 0.2
+public let DefaultAppleAnimationDuration: NSTimeInterval = 0.3
+public func animate(duration duration: NSTimeInterval = DefaultAnimationDuration, delay: NSTimeInterval = 0, options: UIViewAnimationOptions = .TransitionNone, animated: Bool = true, completion: ((Bool) -> Void)? = nil, animations: () -> Void) {
     let options = AnimationOptions(duration: duration, delay: delay, options: options, completion: completion)
     animate(options, animated: animated, animations: animations)
 }
@@ -164,17 +166,21 @@ public func timeout(duration: NSTimeInterval, block: BasicBlock) -> BasicBlock {
     return handler
 }
 
-public func delay(duration: NSTimeInterval, block: BasicBlock) {
-    let proc = Proc(block)
-    _ = NSTimer.scheduledTimerWithTimeInterval(duration, target: proc, selector: #selector(Proc.run), userInfo: nil, repeats: false)
+public func delay(duration: NSTimeInterval, background: Bool = false, block: BasicBlock) {
+    let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
+    let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+    let queue = background ? dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0) : dispatch_get_main_queue()
+    dispatch_after(killTime, queue, block)
 }
 
 public func cancelableDelay(duration: NSTimeInterval, block: BasicBlock) -> BasicBlock {
-    let proc = Proc(block)
-    let timer = NSTimer.scheduledTimerWithTimeInterval(duration, target: proc, selector: #selector(Proc.run), userInfo: nil, repeats: false)
-    return {
-        timer.invalidate()
+    let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
+    let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+    var cancelled = false
+    dispatch_after(killTime, dispatch_get_main_queue()) {
+        if !cancelled { block() }
     }
+    return { cancelled = true }
 }
 
 public func debounce(timeout: NSTimeInterval, block: BasicBlock) -> BasicBlock {

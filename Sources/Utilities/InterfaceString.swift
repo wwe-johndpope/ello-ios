@@ -120,6 +120,7 @@ public struct InterfaceString {
     public struct Profile {
         static let Title = NSLocalizedString("Profile", comment: "Profile Title")
         static let Mention = NSLocalizedString("@ Mention", comment: "Mention button title")
+        static let Hire = NSLocalizedString("Hire", comment: "Hire button title")
         static let Invite = NSLocalizedString("Invite", comment: "Invite button title")
         static let EditProfile = NSLocalizedString("Edit Profile", comment: "Edit Profile button title")
         static let PostsCount = NSLocalizedString("Posts", comment: "Posts count header")
@@ -149,6 +150,8 @@ public struct InterfaceString {
     }
 
     public struct Omnibar {
+        static let SayEllo = NSLocalizedString("Say Ello...", comment: "Say Ello prompt")
+        static let AddMoreText = NSLocalizedString("Add more text...", comment: "Add more text prompt")
         static let EnterURL = NSLocalizedString("Enter the URL", comment: "Enter the URL")
         static let CreatePostTitle = NSLocalizedString("Post", comment: "Create a post")
         static let CreatePostButton = NSLocalizedString("Post", comment: "Post")
@@ -162,6 +165,10 @@ public struct InterfaceString {
         static let CreatedPost = NSLocalizedString("Post successfully created!", comment: "Post successfully created!")
         static let SellYourWorkTitle = NSLocalizedString("Sell your work", comment: "Sell your work title")
         static let ProductLinkPlaceholder = NSLocalizedString("Product detail URL", comment: "Product detail URL prompt")
+    }
+
+    public struct Hire {
+        static let Send = NSLocalizedString("Send", comment: "Send Button title")
     }
 
     public struct Loves {

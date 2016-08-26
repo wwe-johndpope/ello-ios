@@ -5,7 +5,7 @@
 import Crashlytics
 import SwiftyJSON
 
-let UserVersion: Int = 1
+let UserVersion: Int = 2
 
 @objc(User)
 public final class User: JSONAble {
@@ -16,6 +16,12 @@ public final class User: JSONAble {
     public let href: String
     public let username: String
     public let name: String
+    public var displayName: String {
+        if name.isEmpty {
+            return atName
+        }
+        return name
+    }
     public let experimentalFeatures: Bool
     public var relationshipPriority: RelationshipPriority
     public let postsAdultContent: Bool
@@ -24,6 +30,7 @@ public final class User: JSONAble {
     public var hasSharingEnabled: Bool
     public var hasRepostingEnabled: Bool
     public var hasLovesEnabled: Bool
+    public var isHireable: Bool
     // optional
     public var avatar: Asset? // required, but kinda optional due to it being nested in json
     public var identifiableBy: String?
@@ -75,7 +82,8 @@ public final class User: JSONAble {
         hasCommentingEnabled: Bool,
         hasSharingEnabled: Bool,
         hasRepostingEnabled: Bool,
-        hasLovesEnabled: Bool)
+        hasLovesEnabled: Bool,
+        isHireable: Bool)
     {
         self.id = id
         self.href = href
@@ -89,6 +97,7 @@ public final class User: JSONAble {
         self.hasSharingEnabled = hasSharingEnabled
         self.hasRepostingEnabled = hasRepostingEnabled
         self.hasLovesEnabled = hasLovesEnabled
+        self.isHireable = isHireable
         super.init(version: UserVersion)
     }
 
@@ -111,6 +120,14 @@ public final class User: JSONAble {
         self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
         self.hasRepostingEnabled = decoder.decodeKey("hasRepostingEnabled")
         self.hasLovesEnabled = decoder.decodeKey("hasLovesEnabled")
+        // added
+        let version: Int = decoder.decodeKey("version")
+        if version == 1 {
+            self.isHireable = false
+        }
+        else {
+            self.isHireable = decoder.decodeKey("isHireable")
+        }
         // optional
         self.avatar = decoder.decodeOptionalKey("avatar")
         self.identifiableBy = decoder.decodeOptionalKey("identifiableBy")
@@ -126,6 +143,23 @@ public final class User: JSONAble {
         // profile
         self.profile = decoder.decodeOptionalKey("profile")
         super.init(coder: decoder.coder)
+    }
+
+    class func empty() -> User {
+        return User(
+            id: NSUUID().UUIDString,
+            href: "",
+            username: "",
+            name: "",
+            experimentalFeatures: false,
+            relationshipPriority: RelationshipPriority.None,
+            postsAdultContent: false,
+            viewsAdultContent: false,
+            hasCommentingEnabled: true,
+            hasSharingEnabled: true,
+            hasRepostingEnabled: true,
+            hasLovesEnabled: true,
+            isHireable: false)
     }
 
     public override func encodeWithCoder(encoder: NSCoder) {
@@ -144,6 +178,7 @@ public final class User: JSONAble {
         coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
         coder.encodeObject(hasRepostingEnabled, forKey: "hasRepostingEnabled")
         coder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
+        coder.encodeObject(isHireable, forKey: "isHireable")
         // optional
         coder.encodeObject(avatar, forKey: "avatar")
         coder.encodeObject(identifiableBy, forKey: "identifiableBy")
@@ -190,7 +225,8 @@ public final class User: JSONAble {
             hasCommentingEnabled: json["has_commenting_enabled"].boolValue,
             hasSharingEnabled: json["has_sharing_enabled"].boolValue,
             hasRepostingEnabled: json["has_reposting_enabled"].boolValue,
-            hasLovesEnabled: json["has_loves_enabled"].boolValue
+            hasLovesEnabled: json["has_loves_enabled"].boolValue,
+            isHireable: json["is_hireable"].boolValue
         )
 
         // optional
