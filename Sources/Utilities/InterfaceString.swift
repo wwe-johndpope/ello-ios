@@ -17,7 +17,7 @@ public struct InterfaceString {
         }
 
         public struct PopupText {
-            static let Discover = NSLocalizedString("Explore creators, curated categories & communities", comment: "Discover pop up text")
+            static let Discover = NSLocalizedString("Explore creators, curated categories & communities.", comment: "Discover pop up text")
             static let Notifications = NSLocalizedString("Keep it fresh with real-time alerts.", comment: "Notifications pop up text")
             static let Stream = NSLocalizedString("Two streams: Following & Starred.\nUse them however you like.", comment: "Stream pop up text")
             static let Profile = NSLocalizedString("Everything you create in one place.\nSettings too.", comment: "Profile pop up text")
