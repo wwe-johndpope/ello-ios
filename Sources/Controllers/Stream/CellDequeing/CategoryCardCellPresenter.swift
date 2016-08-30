@@ -20,6 +20,7 @@ public struct CategoryCardCellPresenter {
                 streamCellItem.calculatedMultiColumnCellHeight = desiredHeight
                 postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
             }
+
             cell.title = category.name
             cell.imageURL = category.tileURL
         }

@@ -57,6 +57,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "UpdatePost(postId: \(postId))"
         case let .UpdateComment(postId, commentId, _):
             return "UpdateComment(postId: \(postId), commentId: \(commentId))"
+        case let .UserCategories(userId, categoryIds):
+            return "UserCategories(userId: \(userId), categoryIds: \(categoryIds))"
         case let .UserStream(userParam):
             return "UserStream(userParam: \(userParam))"
         case let .UserStreamFollowers(userId):
@@ -81,14 +83,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "ReAuth"
         case .Availability:
             return "Availability"
-        case .AwesomePeopleStream:
-            return "AwesomePeopleStream"
         case .Categories:
             return "Categories"
         case .CommentDetail:
             return "CommentDetail"
-        case .CommunitiesStream:
-            return "CommunitiesStream"
         case .CreateComment:
             return "CreateComment"
         case .CreateLove:
@@ -179,6 +177,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "UpdatePost"
         case .UpdateComment:
             return "UpdateComment"
+        case .UserCategories:
+            return "UserCategories"
         case .UserStream:
             return "UserStream"
         case .UserStreamFollowers:

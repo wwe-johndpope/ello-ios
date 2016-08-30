@@ -62,7 +62,7 @@ public struct InterfaceString {
 
     public struct Discover {
         static let Title = NSLocalizedString("Discover", comment: "Discover title")
-        static let MoreCategories = NSLocalizedString("Categories", comment: "All Categories title")
+        static let Categories = NSLocalizedString("Categories", comment: "some Categories title")
         static let AllCategories = NSLocalizedString("All", comment: "All Categories title")
         static let Featured = NSLocalizedString("Featured", comment: "Discover tab titled Featured")
         static let Trending = NSLocalizedString("Trending", comment: "Discover tab titled Trending")
@@ -288,38 +288,16 @@ public struct InterfaceString {
     }
 
     public struct Onboard {
-        static let PickAnotherImage = NSLocalizedString("Pick Another", comment: "Pick another button")
+        static let PickCategoriesPrimary = NSLocalizedString("Pick what you’re into.", comment: "pick what you're into")
+        static let PickCategoriesSecondary = NSLocalizedString("Slow down & check out some cool ass shit.", comment: "slow down & check out some cool ass shit.")
+
+        static let CreateProfile = NSLocalizedString("Create Your Profile", comment: "create your profile button")
+        static let InvitePeople = NSLocalizedString("Invite Cool People", comment: "invite cool people button")
+        static let ImDone = NSLocalizedString("I’m done", comment: "I'm done button")
+        static let PickTemplate = NSLocalizedString("Pick %d", comment: "Pick ... prompt")
+
         static let UploadFailed = NSLocalizedString("Oh no! Something went wrong.\n\nTry that again maybe?", comment: "image upload failed during onboarding message")
         static let RelationshipFailed = NSLocalizedString("Oh no! Something went wrong.\n\nTry that again maybe?", comment: "relationship status update failed during onboarding message")
-
-        public struct Community {
-            static let Title = NSLocalizedString("Creative communities.", comment: "Community Selection Header text")
-            static let Description = NSLocalizedString("Follow the communities that interest you.", comment: "Community Selection Body text")
-        }
-        public struct AwesomePeople {
-            static let Title = NSLocalizedString("Talented creators.", comment: "Creators Selection Header text")
-            static let Description = NSLocalizedString("Follow some of Ello’s top creators.", comment: "Creators Selection Body text")
-        }
-        public struct FindYourFriends {
-            static let Title = NSLocalizedString("Connect with your contacts.", comment: "Find Friends Header text")
-            static let Description = NSLocalizedString("See who’s on Ello.", comment: "Find Friends Body text")
-            static let NoResultsTitle = NSLocalizedString("Find your friends!", comment: "Import friends no results title")
-            static let NoResultsBody = NSLocalizedString("Thanks. We didn’t find any of your friends.\n\nWhen your friends join Ello you’ll be able to find and invite them on the Discover and Search screen.", comment: "Import friends no results body.")
-        }
-        public struct Avatar {
-            static let Button = NSLocalizedString("Select your profile avatar", comment: "Choose avatar button")
-        }
-        public struct CoverImage {
-            static let Button = NSLocalizedString("Select your header image", comment: "Choose header image button")
-            static let Title = NSLocalizedString("Create your profile.", comment: "Header Image Selection text")
-            static let Description = NSLocalizedString("Make it rad.", comment: "Header Image Selection text")
-        }
-        public struct Profile {
-            static let Name = NSLocalizedString("Name (optional)", comment: "Name (optional) placeholder text")
-            static let Bio = NSLocalizedString("Bio (optional)", comment: "Bio (optional) placeholder text")
-            static let Links = NSLocalizedString("Links (optional)", comment: "Links (optional) placeholder text")
-            static let LinksFailed = NSLocalizedString("Something is wrong with those links.\n\nThey need to start with ‘http://’ or ‘https://’", comment: "Updating Links failed during onboarding message")
-        }
     }
 
     public struct Share {

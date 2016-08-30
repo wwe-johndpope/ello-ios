@@ -44,6 +44,7 @@ public enum InterfaceImage: String {
     case ValidationLoading = "circ"
     case ValidationError = "x_red"
     case ValidationOK = "check_green"
+    case SmallCheck = "small_check_green"
 
     // NavBar Icons
     case Search = "search"
@@ -119,6 +120,7 @@ public enum InterfaceImage: String {
             .NarrationPointer,
             .ValidationError,
             .ValidationOK,
+            .SmallCheck,
             .VideoPlay:
             return svgNamed(self.rawValue)
         default:

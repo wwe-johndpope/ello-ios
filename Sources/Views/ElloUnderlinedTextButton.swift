@@ -1,8 +1,8 @@
 ////
-///  ElloTextButton.swift
+///  ElloUnderlinedTextButton.swift
 //
 
-public class ElloTextButton: UIButton {
+public class ElloUnderlinedTextButton: UIButton {
 
     required override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +21,7 @@ public class ElloTextButton: UIButton {
             self.titleLabel?.numberOfLines = 1
         }
         self.setTitleColor(UIColor.greyA(), forState: UIControlState.Normal)
+        self.titleLabel?.font = UIFont.defaultFont()
 
         if let title = self.titleLabel?.text {
             let attributedString = NSAttributedString(string: title, attributes: [

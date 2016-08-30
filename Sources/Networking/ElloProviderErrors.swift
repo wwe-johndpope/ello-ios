@@ -7,7 +7,7 @@ import Foundation
 extension ElloProvider {
 
     static func unCastableJSONAble(failure: ElloFailureCompletion) {
-        let elloError = NSError.networkError(nil, code: ElloErrorCode.JSONMapping)
+        let elloError = NSError.uncastableJSONAble()
         failure(error: elloError, statusCode: 200)
     }
 

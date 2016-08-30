@@ -7,7 +7,6 @@ import SwiftyUserDefaults
 
 public enum StreamKind {
     case CurrentUserStream
-    case MoreCategories
     case AllCategories
     case Discover(type: DiscoverType)
     case CategoryPosts(slug: String)
@@ -22,9 +21,8 @@ public enum StreamKind {
     public var name: String {
         switch self {
         case .CurrentUserStream: return InterfaceString.Profile.Title
-        case .MoreCategories: return InterfaceString.Discover.MoreCategories
         case .AllCategories: return InterfaceString.Discover.AllCategories
-        case .CategoryPosts: return InterfaceString.Discover.MoreCategories
+        case .CategoryPosts: return InterfaceString.Discover.Categories
         case .Discover: return InterfaceString.Discover.Title
         case .Following: return InterfaceString.FollowingStream.Title
         case .Starred: return InterfaceString.StarredStream.Title
@@ -39,7 +37,6 @@ public enum StreamKind {
     public var cacheKey: String {
         switch self {
         case .CurrentUserStream: return "Profile"
-        case .MoreCategories: return "MoreCategories"
         case .AllCategories: return "AllCategories"
         case .Discover, .CategoryPosts: return "CategoryPosts"
         case .Following: return "Following"
@@ -112,7 +109,6 @@ public enum StreamKind {
     public var endpoint: ElloAPI {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
-        case .MoreCategories: return .Categories
         case .AllCategories: return .Categories
         case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
         case let .Discover(type): return .Discover(type: type)
@@ -235,7 +231,6 @@ public enum StreamKind {
         var defaultGrid: Bool
         switch self {
         case .AllCategories: defaultGrid = true
-        case .MoreCategories: defaultGrid = false
         default: defaultGrid = false
         }
         return GroupDefaults["\(cacheKey)IsGridView"].bool ?? defaultGrid
@@ -285,13 +280,6 @@ public enum StreamKind {
         switch self {
         case .Notifications:
             return false
-        case let .SimpleStream(endpoint, _):
-            switch endpoint {
-            case .AwesomePeopleStream, .CommunitiesStream:
-                return false
-            default:
-                break
-            }
         default:
             break
         }

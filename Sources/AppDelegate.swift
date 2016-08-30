@@ -8,6 +8,8 @@ import TimeAgoInWords
 import PINRemoteImage
 import PINCache
 import ElloUIFonts
+import Moya
+
 
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +43,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = AppViewController()
         window.makeKeyAndVisible()
         self.window = window
+
+        ElloProvider.sharedProvider = MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
 
         UIApplication.sharedApplication().statusBarStyle = .LightContent
 

@@ -328,7 +328,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         }
     }
 
-    @IBAction func logOutTapped(sender: ElloTextButton) {
+    @IBAction func logOutTapped() {
         Tracker.sharedTracker.tappedLogout()
         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
     }

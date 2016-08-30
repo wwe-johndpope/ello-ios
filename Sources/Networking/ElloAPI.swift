@@ -12,10 +12,8 @@ public enum ElloAPI {
     case AnonymousCredentials
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
-    case AwesomePeopleStream
     case Categories
     case CommentDetail(postId: String, commentId: String)
-    case CommunitiesStream
     case CreateComment(parentPostId: String, body: [String: AnyObject])
     case CreateLove(postId: String)
     case CreatePost(body: [String: AnyObject])
@@ -62,6 +60,7 @@ public enum ElloAPI {
     case SearchForPosts(terms: String)
     case UpdatePost(postId: String, body: [String: AnyObject])
     case UpdateComment(postId: String, commentId: String, body: [String: AnyObject])
+    case UserCategories(userId: String, categoryIds: [String])
     case UserStream(userParam: String)
     case UserStreamFollowers(userId: String)
     case UserStreamFollowing(userId: String)
@@ -92,12 +91,10 @@ public enum ElloAPI {
             return .AvailabilityType
         case .PostReplyAll:
             return .UsernamesType
-        case .AwesomePeopleStream,
-             .CurrentUserBlockedList,
+        case .CurrentUserBlockedList,
              .CurrentUserMutedList,
              .CurrentUserProfile,
              .CurrentUserStream,
-             .CommunitiesStream,
              .FindFriends,
              .Join,
              .PostLovers,
@@ -143,7 +140,8 @@ public enum ElloAPI {
              .InviteFriends,
              .ProfileDelete,
              .PushSubscriptions,
-             .RelationshipBatch:
+             .RelationshipBatch,
+             .UserCategories:
             return .NoContentType
         case .FriendStream,
              .NoiseStream,
@@ -197,43 +195,45 @@ extension ElloAPI: Moya.TargetType {
     public var baseURL: NSURL { return NSURL(string: ElloURI.baseURL)! }
     public var method: Moya.Method {
         switch self {
-            case .AnonymousCredentials,
-                 .Auth,
-                 .Availability,
-                 .CreateComment,
-                 .CreateLove,
-                 .CreatePost,
-                 .FindFriends,
-                 .FlagComment,
-                 .FlagPost,
-                 .FlagUser,
-                 .Hire,
-                 .InviteFriends,
-                 .Join,
-                 .PushSubscriptions,
-                 .ReAuth,
-                 .Relationship,
-                 .RelationshipBatch,
-                 .RePost:
-                return .POST
-            case .DeleteComment,
-                 .DeleteLove,
-                 .DeletePost,
-                 .DeleteSubscriptions,
-                 .ProfileDelete:
-                return .DELETE
-            case .FriendNewContent,
-                 .NoiseNewContent,
-                 .NotificationsNewContent:
-                return .HEAD
-            case .ProfileUpdate,
-                 .UpdateComment,
-                 .UpdatePost:
-                return .PATCH
-            case let .InfiniteScroll(_, elloApi):
-                return elloApi().method
-            default:
-                return .GET
+        case .AnonymousCredentials,
+             .Auth,
+             .Availability,
+             .CreateComment,
+             .CreateLove,
+             .CreatePost,
+             .FindFriends,
+             .FlagComment,
+             .FlagPost,
+             .FlagUser,
+             .Hire,
+             .InviteFriends,
+             .Join,
+             .PushSubscriptions,
+             .ReAuth,
+             .Relationship,
+             .RelationshipBatch,
+             .RePost:
+            return .POST
+        case .UserCategories:
+            return .PUT
+        case .DeleteComment,
+             .DeleteLove,
+             .DeletePost,
+             .DeleteSubscriptions,
+             .ProfileDelete:
+            return .DELETE
+        case .FriendNewContent,
+             .NoiseNewContent,
+             .NotificationsNewContent:
+            return .HEAD
+        case .ProfileUpdate,
+             .UpdateComment,
+             .UpdatePost:
+            return .PATCH
+        case let .InfiniteScroll(_, elloApi):
+            return elloApi().method
+        default:
+            return .GET
         }
     }
 
@@ -247,14 +247,10 @@ extension ElloAPI: Moya.TargetType {
             return "/api/oauth/token"
         case .Availability:
             return "/api/\(ElloAPI.apiVersion)/availability"
-        case .AwesomePeopleStream:
-            return "/api/\(ElloAPI.apiVersion)/discover/users/onboarding"
         case let .CommentDetail(postId, commentId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
         case .Categories:
             return "/api/\(ElloAPI.apiVersion)/categories"
-        case .CommunitiesStream:
-            return "/api/\(ElloAPI.apiVersion)/interest_categories/members"
         case let .CreateComment(parentPostId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(parentPostId)/comments"
         case let .CreateLove(postId):
@@ -349,6 +345,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .UpdateComment(postId, commentId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
+        case let .UserCategories(userId, _):
+            return "/\(ElloAPI.UserStream(userParam: userId).path)/followed_categories"
         case let .UserStream(userParam):
             return "/api/\(ElloAPI.apiVersion)/users/\(userParam)"
         case let .UserStreamFollowers(userId):
@@ -372,8 +370,6 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("auth")
         case .Availability:
             return stubbedData("availability")
-        case .AwesomePeopleStream:
-            return stubbedData("friends")
         case .CreateComment, .CommentDetail:
             return stubbedData("create-comment")
         case .CreateLove:
@@ -383,13 +379,12 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("create-post")
         case .Categories:
             return stubbedData("categories")
-        case .CommunitiesStream:
-            return stubbedData("communities")
         case .DeleteComment,
              .DeleteLove,
              .DeletePost,
              .DeleteSubscriptions,
              .FriendNewContent,
+             .Hire,
              .InviteFriends,
              .NoiseNewContent,
              .NotificationsNewContent,
@@ -397,7 +392,8 @@ extension ElloAPI: Moya.TargetType {
              .PushSubscriptions,
              .FlagComment,
              .FlagPost,
-             .FlagUser:
+             .FlagUser,
+             .UserCategories:
             return stubbedData("empty")
         case .CategoryPosts:
             return stubbedData("posts")
@@ -410,8 +406,6 @@ extension ElloAPI: Moya.TargetType {
         case .FriendStream,
              .InfiniteScroll:
             return stubbedData("activity_streams_friend_stream")
-        case .Hire:
-            return stubbedData("empty")
         case .Join:
             return stubbedData("users_registering_an_account")
         case .Loves:
@@ -539,19 +533,9 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .Availability(content):
             return content
-        case .AwesomePeopleStream:
-            return [
-                "per_page": 25,
-                "seed": ElloAPI.generateSeed()
-            ]
         case .CurrentUserProfile:
             return [
                 "post_count": 0
-            ]
-        case .CommunitiesStream:
-            return [
-                "name": "onboarding",
-                "per_page": 25
             ]
         case let .CreateComment(_, body):
             return body
@@ -684,6 +668,10 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .UpdateComment(_, _, body):
             return body
+        case let .UserCategories(_, categoryIds):
+            return [
+                "followed_category_ids": categoryIds,
+            ]
         case let .UserNameAutoComplete(terms):
             return [
                 "terms": terms

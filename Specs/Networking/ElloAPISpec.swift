@@ -36,12 +36,6 @@ class ElloAPISpec: QuickSpec {
                     it("Availability is valid") {
                         expect(ElloAPI.Availability(content: [:]).path) == "/api/v2/availability"
                     }
-                    it("AwesomePeopleStream is valid") {
-                        expect(ElloAPI.AwesomePeopleStream.path) == "/api/v2/discover/users/onboarding"
-                    }
-                    it("CommunitiesStream is valid") {
-                        expect(ElloAPI.CommunitiesStream.path) == "/api/v2/interest_categories/members"
-                    }
                     it("CreatePost is valid") {
                         expect(ElloAPI.CreatePost(body: [:]).path) == "/api/v2/posts"
                     }
@@ -103,6 +97,9 @@ class ElloAPISpec: QuickSpec {
                     it("Relationship is valid") {
                         expect(ElloAPI.Relationship(userId: "1234", relationship: "friend").path) == "/api/v2/users/1234/add/friend"
                     }
+                    it("UserCategories is valid") {
+                        expect(ElloAPI.UserCategories(userId: "999", categoryIds: ["1"]).path) == "/api/v2/users/999/followed_categories"
+                    }
                     it("UserStream is valid") {
                         expect(ElloAPI.UserStream(userParam: "999").path) == "/api/v2/users/999"
                     }
@@ -130,10 +127,8 @@ class ElloAPISpec: QuickSpec {
                     (.AnonymousCredentials, .ErrorType),
                     (.Auth(email: "", password: ""), .ErrorType),
                     (.Availability(content: ["":""]), .AvailabilityType),
-                    (.AwesomePeopleStream, .UsersType),
                     (.CommentDetail(postId: "", commentId: ""), .CommentsType),
                     (.Categories, .CategoriesType),
-                    (.CommunitiesStream, .UsersType),
                     (.CreateComment(parentPostId: "", body: ["": ""]), .CommentsType),
                     (.CreateLove(postId: ""), .LovesType),
                     (.CreatePost(body: ["": ""]), .PostsType),
@@ -153,7 +148,7 @@ class ElloAPISpec: QuickSpec {
                     (.FlagPost(postId: "", kind: ""), .NoContentType),
                     (.FriendStream, .ActivitiesType),
                     (.FriendNewContent(createdAt: NSDate()), .ErrorType),
-                    (.InfiniteScroll(queryItems: [""], elloApi: { return ElloAPI.AwesomePeopleStream }), .UsersType),
+                    (.InfiniteScroll(queryItems: [""], elloApi: { return ElloAPI.AmazonCredentials }), .UsersType),
                     (.InviteFriends(contact: ""), .NoContentType),
                     (.Join(email: "", username: "", password: "", invitationCode: ""), .UsersType),
                     (.Loves(userId: ""), .LovesType),
@@ -178,6 +173,7 @@ class ElloAPISpec: QuickSpec {
                     (.SearchForPosts(terms: ""), .PostsType),
                     (.UpdatePost(postId: "", body: ["": ""]), .PostsType),
                     (.UpdateComment(postId: "", commentId: "", body: ["": ""]), .CommentsType),
+                    (.UserCategories(userId: "", categoryIds: [""]), .NoContentType),
                     (.UserStream(userParam: ""), .UsersType),
                     (.UserStream(userParam: currentUserId), .UsersType),
                     (.UserStreamFollowers(userId: ""), .UsersType),
@@ -199,8 +195,6 @@ class ElloAPISpec: QuickSpec {
                         .AnonymousCredentials,
                         .Auth(email: "", password: ""),
                         .Availability(content: [:]),
-                        .AwesomePeopleStream,
-                        .CommunitiesStream,
                         .CreateComment(parentPostId: "", body: [:]),
                         .CreateLove(postId: ""),
                         .CreatePost(body: [:]),
@@ -245,6 +239,7 @@ class ElloAPISpec: QuickSpec {
                         .SearchForPosts(terms: ""),
                         .SearchForUsers(terms: ""),
                         .UserNameAutoComplete(terms: ""),
+                        .UserCategories(userId: "", categoryIds: [""]),
                         .UserStream(userParam: ""),
                         .UserStreamFollowers(userId: ""),
                         .UserStreamFollowing(userId: ""),
@@ -285,8 +280,6 @@ class ElloAPISpec: QuickSpec {
                     let endpoints: [ElloAPI] = [
                         .AmazonCredentials,
                         .Availability(content: [:]),
-                        .AwesomePeopleStream,
-                        .CommunitiesStream,
                         .CreateComment(parentPostId: "", body: [:]),
                         .CreateLove(postId: ""),
                         .CreatePost(body: [:]),
@@ -323,6 +316,7 @@ class ElloAPISpec: QuickSpec {
                         .RelationshipBatch(userIds: [""], relationship: ""),
                         .SearchForUsers(terms: ""),
                         .SearchForPosts(terms: ""),
+                        .UserCategories(userId: "", categoryIds: [""]),
                         .UserStream(userParam: ""),
                         .UserStreamFollowers(userId: ""),
                         .UserStreamFollowing(userId: ""),
@@ -357,18 +351,6 @@ class ElloAPISpec: QuickSpec {
                 it("Availability") {
                     let content = ["username": "sterlingarcher"]
                     expect(ElloAPI.Availability(content: content).parameters as? [String: String]) == content
-                }
-
-                it("AwesomePeopleStream") {
-                    let params = ElloAPI.AwesomePeopleStream.parameters!
-                    expect(params["per_page"] as? Int) == 25
-                    expect(params["seed"]).notTo(beNil())
-                }
-
-                it("CommunitiesStream") {
-                    let params = ElloAPI.CommunitiesStream.parameters!
-                    expect(params["name"] as? String) == "onboarding"
-                    expect(params["per_page"] as? Int) == 25
                 }
 
                 it("CreateComment") {
@@ -514,6 +496,11 @@ class ElloAPISpec: QuickSpec {
                 it("UserNameAutoComplete") {
                     let params = ElloAPI.UserNameAutoComplete(terms: "blah").parameters!
                     expect(params["terms"] as? String) == "blah"
+                }
+
+                it("UserCategories") {
+                    let params = ElloAPI.UserCategories(userId: "123", categoryIds: ["456"]).parameters!
+                    expect(params["followed_category_ids"] as? [String]) == ["456"]
                 }
             }
 

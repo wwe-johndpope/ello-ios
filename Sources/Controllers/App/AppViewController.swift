@@ -100,8 +100,8 @@ public class AppViewController: BaseElloViewController {
                 self.screen.stopAnimatingLogo()
                 self.currentUser = user
 
-                let shouldShowOnboarding = Onboarding.shared().showOnboarding(user)
-                let shouldSaveOnboarding = Onboarding.shared().saveOnboarding(user)
+                let shouldShowOnboarding = true//Onboarding.shared().showOnboarding(user)
+                let shouldSaveOnboarding = true//Onboarding.shared().saveOnboarding(user)
 
                 if shouldShowOnboarding {
                     self.showOnboardingScreen(user)
@@ -210,13 +210,13 @@ extension AppViewController {
         let vc = OnboardingViewController()
         vc.parentAppController = self
         vc.currentUser = user
-        self.presentViewController(vc, animated: true, completion: nil)
+
+        swapViewController(vc) {}
     }
 
     public func doneOnboarding() {
         Onboarding.shared().updateVersionToLatest()
 
-        dismissViewControllerAnimated(true, completion: nil)
         self.showMainScreen(currentUser!)
     }
 

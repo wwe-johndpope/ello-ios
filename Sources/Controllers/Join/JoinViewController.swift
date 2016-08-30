@@ -68,24 +68,25 @@ extension JoinViewController: JoinDelegate {
 
                     Tracker.sharedTracker.joinValid()
 
-                    UserService().join(email: email, username: username, password: password, success: { user in
-                        let authService = CredentialsAuthService()
-                        authService.authenticate(email: email,
-                            password: password,
-                            success: {
-                                Tracker.sharedTracker.joinSuccessful()
-                                self.showOnboardingScreen(user)
-                            },
-                            failure: { _, _ in
-                                Tracker.sharedTracker.joinFailed()
-                                self.showLoginScreen(email, password)
-                            })
-                        },
-                        failure: { error, _ in
-                            let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
+                    UserService().join(email: email, username: username, password: password)
+                        .onSuccess { user in
+                            let authService = CredentialsAuthService()
+                            authService.authenticate(email: email,
+                                password: password,
+                                success: {
+                                    Tracker.sharedTracker.joinSuccessful()
+                                    self.showOnboardingScreen(user)
+                                },
+                                failure: { _, _ in
+                                    Tracker.sharedTracker.joinFailed()
+                                    self.showLoginScreen(email, password)
+                                })
+                        }
+                        .onFail { error in
+                            let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
                             self.screen.showError(errorTitle)
                             joinAborted()
-                        })
+                        }
                 }
             }
         }

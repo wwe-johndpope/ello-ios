@@ -57,7 +57,7 @@ class NewElloTabBar: UIView {
             switch item.display {
             case .Title:
                 let label = ElloSizeableLabel()
-                label.font = UIFont.defaultFont(14)
+                label.font = UIFont.defaultFont()
                 self.contentView = label
                 let underlineView = UIView()
                 underlineView.backgroundColor = UIColor.blackColor()

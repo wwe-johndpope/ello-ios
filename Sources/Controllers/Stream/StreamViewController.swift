@@ -38,6 +38,10 @@ public protocol CategoryDelegate: class {
     func categoryCellTapped(cell: UICollectionViewCell)
 }
 
+public protocol SelectedCategoryDelegate: class {
+    func categoriesSelectionChanged(selection: [Category])
+}
+
 public protocol UserDelegate: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
@@ -155,6 +159,7 @@ public final class StreamViewController: BaseElloViewController {
     weak var postTappedDelegate: PostTappedDelegate?
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
+    weak var selectedCategoryDelegate: SelectedCategoryDelegate?
     var notificationDelegate: NotificationDelegate? {
         get { return dataSource.notificationDelegate }
         set { dataSource.notificationDelegate = newValue }
@@ -584,6 +589,9 @@ public final class StreamViewController: BaseElloViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.directionalLockEnabled = true
         collectionView.keyboardDismissMode = .OnDrag
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = true
+
         StreamCellType.registerAll(collectionView)
         setupCollectionViewLayout()
     }
@@ -1035,6 +1043,19 @@ extension StreamViewController: WebLinkDelegate {
 // MARK: StreamViewController: UICollectionViewDelegate
 extension StreamViewController: UICollectionViewDelegate {
 
+    public func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        let tappedCell = collectionView.cellForItemAtIndexPath(indexPath)
+
+        if let item = dataSource.visibleStreamCellItem(at: indexPath),
+            paths = collectionView.indexPathsForSelectedItems()
+        where
+            tappedCell is CategoryCardCell && item.type == .SelectableCategoryCard
+        {
+            let selection = paths.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
+            selectedCategoryDelegate?.categoriesSelectionChanged(selection)
+        }
+    }
+
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tappedCell = collectionView.cellForItemAtIndexPath(indexPath)
 
@@ -1074,8 +1095,17 @@ extension StreamViewController: UICollectionViewDelegate {
         {
             createCommentTapped(post)
         }
-        else if let category = dataSource.jsonableForIndexPath(indexPath) as? Category {
-            categoryTapped(category)
+        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
+            category = dataSource.jsonableForIndexPath(indexPath) as? Category
+        {
+            if item.type == .SelectableCategoryCard {
+                let paths = collectionView.indexPathsForSelectedItems()
+                let selection = paths?.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
+                selectedCategoryDelegate?.categoriesSelectionChanged(selection ?? [Category]())
+            }
+            else {
+                categoryTapped(category)
+            }
         }
         else if let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
         where cellItemType == .SeeAllCategories {
@@ -1085,8 +1115,8 @@ extension StreamViewController: UICollectionViewDelegate {
 
     public func collectionView(collectionView: UICollectionView,
         shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-            guard
-                let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
+            guard let
+                cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
             else { return false }
 
             return cellItemType.selectable

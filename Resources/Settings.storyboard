@@ -173,14 +173,14 @@
                                                         <constraint firstItem="bEB-3t-p7d" firstAttribute="top" secondItem="yfC-cy-c0C" secondAttribute="top" id="oeH-qq-nUN"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coq-pH-vhf" customClass="ElloTextButton" customModule="Ello" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coq-pH-vhf" customClass="ElloUnderlinedTextButton" customModule="Ello" customModuleProvider="target">
                                                     <rect key="frame" x="534" y="18" width="51" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <state key="normal" title="Logout">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="logOutTapped:" destination="co9-Rd-OXG" eventType="touchUpInside" id="3ba-Pw-sE1"/>
+                                                        <action selector="logOutTapped" destination="co9-Rd-OXG" eventType="touchUpInside" id="3ba-Pw-sE1"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
