@@ -40,20 +40,10 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         var items: [StreamCellItem] = []
 
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-        let plain: [String: AnyObject] = [
-            NSForegroundColorAttributeName: UIColor.greyA(),
-            NSFontAttributeName: UIFont.defaultFont(16),
-            NSParagraphStyleAttributeName: paragraphStyle,
-        ]
-        let bold: [String: AnyObject] = [
-            NSForegroundColorAttributeName: UIColor.blackColor(),
-            NSFontAttributeName: UIFont.defaultBoldFont(16),
-            NSParagraphStyleAttributeName: paragraphStyle,
-        ]
-        let header = NSAttributedString(string: InterfaceString.Onboard.PickCategoriesPrimary, attributes: bold) +
-            NSAttributedString(string: " \(InterfaceString.Onboard.PickCategoriesSecondary)", attributes: plain)
+        let header = NSAttributedString(
+            primaryHeader: InterfaceString.Onboard.PickCategoriesPrimary,
+            secondaryHeader: InterfaceString.Onboard.PickCategoriesSecondary
+            )
         let headerCellItem = StreamCellItem(type: .TextHeader(header))
         items.append(headerCellItem)
 

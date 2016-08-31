@@ -68,12 +68,12 @@ public class Screen: UIView {
         let bottomInset = keyboard.keyboardBottomInset(inView: self)
         animate(duration: keyboard.duration, options: keyboard.options, completion: { _ in self.keyboardDidAnimate() }) {
             self.keyboardConstraint.updateOffset(-bottomInset)
+            self.keyboardIsAnimating(keyboard)
             self.layoutIfNeeded()
-            self.keyboardIsAnimating()
         }
     }
 
-    public func keyboardIsAnimating() {}
+    public func keyboardIsAnimating(keyboard: Keyboard) {}
     public func keyboardDidAnimate() {}
 
     func screenInit() {}

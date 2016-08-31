@@ -29,6 +29,7 @@ public class OnboardingScreen: EmptyScreen {
     }
 
     override func style() {
+        buttonContainer.backgroundColor = .greyE5()
         abortButton.hidden = true
         abortButton.titleLabel?.font = UIFont.defaultFont()
         abortButton.setTitleColor(.greyA(), forState: .Normal)
@@ -59,10 +60,11 @@ public class OnboardingScreen: EmptyScreen {
 
         buttonContainer.snp_makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
+            make.top.equalTo(keyboardAnchor.snp_top).offset(-(2 * Size.buttonInset + Size.buttonHeight))
         }
 
         skipButton.snp_makeConstraints { make in
-            make.edges.equalTo(buttonContainer).inset(Size.buttonInset)
+            make.top.leading.trailing.equalTo(buttonContainer).inset(Size.buttonInset)
             make.height.equalTo(Size.buttonHeight)
         }
 

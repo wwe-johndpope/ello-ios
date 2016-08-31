@@ -212,9 +212,9 @@ public class JoinScreen: CredentialsScreen {
         return super.resignFirstResponder()
     }
 
-    override public func keyboardIsAnimating() {
-        termsButtonNormal.hidden = Keyboard.shared.active
-        termsButtonKeyboard.hidden = !Keyboard.shared.active
+    override public func keyboardIsAnimating(keyboard: Keyboard) {
+        termsButtonNormal.hidden = keyboard.active
+        termsButtonKeyboard.hidden = !keyboard.active
     }
 }
 

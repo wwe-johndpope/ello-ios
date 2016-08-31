@@ -565,6 +565,10 @@
 		1D7152DD1D74D950005998FE /* CategoriesSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152DC1D74D950005998FE /* CategoriesSelectionViewController.swift */; };
 		1D7152DF1D74E79D005998FE /* small_check_green.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D7152DE1D74E79D005998FE /* small_check_green.svg */; };
 		1D7152E11D75F2C1005998FE /* OnboardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152E01D75F2C1005998FE /* OnboardingData.swift */; };
+		1D7152E31D761AF0005998FE /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152E21D761AF0005998FE /* CreateProfileViewController.swift */; };
+		1D7152E51D7620D2005998FE /* CreateProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152E41D7620D2005998FE /* CreateProfileScreen.swift */; };
+		1D7152E71D7639F8005998FE /* CreateProfileProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152E61D7639F8005998FE /* CreateProfileProtocols.swift */; };
+		1D7152E91D763EA4005998FE /* ImagePickerSheetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152E81D763EA4005998FE /* ImagePickerSheetConfig.swift */; };
 		1D73AB871C569EAE00D708B9 /* SafariActivitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73AB861C569EAE00D708B9 /* SafariActivitySpec.swift */; };
 		1D73AB8A1C56A01E00D708B9 /* SafariActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73AB881C569EB600D708B9 /* SafariActivity.swift */; };
 		1D73AB901C57C85600D708B9 /* AuthStateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D73AB8F1C57C85600D708B9 /* AuthStateSpec.swift */; };
@@ -1430,6 +1434,10 @@
 		1D7152DC1D74D950005998FE /* CategoriesSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesSelectionViewController.swift; sourceTree = "<group>"; };
 		1D7152DE1D74E79D005998FE /* small_check_green.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = small_check_green.svg; sourceTree = "<group>"; };
 		1D7152E01D75F2C1005998FE /* OnboardingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingData.swift; sourceTree = "<group>"; };
+		1D7152E21D761AF0005998FE /* CreateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
+		1D7152E41D7620D2005998FE /* CreateProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileScreen.swift; sourceTree = "<group>"; };
+		1D7152E61D7639F8005998FE /* CreateProfileProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileProtocols.swift; sourceTree = "<group>"; };
+		1D7152E81D763EA4005998FE /* ImagePickerSheetConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerSheetConfig.swift; sourceTree = "<group>"; };
 		1D73AB861C569EAE00D708B9 /* SafariActivitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariActivitySpec.swift; sourceTree = "<group>"; };
 		1D73AB881C569EB600D708B9 /* SafariActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariActivity.swift; sourceTree = "<group>"; };
 		1D73AB8F1C57C85600D708B9 /* AuthStateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthStateSpec.swift; sourceTree = "<group>"; };
@@ -2718,9 +2726,11 @@
 				1264A7D61B7145E700733179 /* Application.swift */,
 				1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */,
 				765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */,
+				1DC29BB61D3824D30041B1DC /* Defaults.swift */,
 				1DDF3C4F1A9D2592000D0945 /* ElloScrollLogic.swift */,
 				1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */,
 				1DD7711F1AFD194700FBC049 /* FreeMethods.swift */,
+				1D7152E81D763EA4005998FE /* ImagePickerSheetConfig.swift */,
 				1D15C2761C7D12890013B192 /* InterfaceImage.swift */,
 				1D15C2771C7D12890013B192 /* InterfaceString.swift */,
 				EAF43D8D1AB0B5AC0016E110 /* InviteCache.swift */,
@@ -2739,7 +2749,6 @@
 				1D7750F81ABB68DF00D92191 /* ToNSData.swift */,
 				127128251A77373300695F15 /* TypedNotifications.swift */,
 				12F6AE611A4339C600493660 /* Validator.swift */,
-				1DC29BB61D3824D30041B1DC /* Defaults.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -3041,6 +3050,9 @@
 			isa = PBXGroup;
 			children = (
 				1D7152DC1D74D950005998FE /* CategoriesSelectionViewController.swift */,
+				1D7152E61D7639F8005998FE /* CreateProfileProtocols.swift */,
+				1D7152E41D7620D2005998FE /* CreateProfileScreen.swift */,
+				1D7152E21D761AF0005998FE /* CreateProfileViewController.swift */,
 				1D7152E01D75F2C1005998FE /* OnboardingData.swift */,
 				1D7152D61D74C7FD005998FE /* OnboardingProtocols.swift */,
 				1D7152D71D74C7FD005998FE /* OnboardingScreen.swift */,
@@ -4368,6 +4380,7 @@
 				125F28841B1D0CD400BA501E /* DrawerCell.swift in Sources */,
 				122943291C6BF534003FCD20 /* ExtensionItemPreview.swift in Sources */,
 				12F6AE311A43390900493660 /* ScreenExtensions.swift in Sources */,
+				1D7152E71D7639F8005998FE /* CreateProfileProtocols.swift in Sources */,
 				F8158C4B1ACDD4EF008C15A1 /* AlertCellPresenter.swift in Sources */,
 				1D7152E11D75F2C1005998FE /* OnboardingData.swift in Sources */,
 				1267C7371BA232530000D809 /* Box.swift in Sources */,
@@ -4399,6 +4412,7 @@
 				122B19051A867C7D00247A05 /* StreamTextCellHTML.swift in Sources */,
 				765319F51B62AA61009B0D7E /* CrashlyticsKey.swift in Sources */,
 				1207C97C1C73FEE000939ADB /* ElloProvider.swift in Sources */,
+				1D7152E91D763EA4005998FE /* ImagePickerSheetConfig.swift in Sources */,
 				1DF50C981C614E0400C62D89 /* OmnibarImagePickerExtension.swift in Sources */,
 				1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */,
 				76B1A6411AE594DC00110D30 /* StreamEmbedCell.swift in Sources */,
@@ -4633,6 +4647,7 @@
 				86E4F2ED1B14FE6F008EBC5B /* FriendsPageController.swift in Sources */,
 				1207C9801C73FEE000939ADB /* ErrorStatusCode.swift in Sources */,
 				122B30D71C6A3FBC00C1B9D8 /* Post.swift in Sources */,
+				1D7152E51D7620D2005998FE /* CreateProfileScreen.swift in Sources */,
 				123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */,
 				1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */,
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
@@ -4652,6 +4667,7 @@
 				1D59338C1D147EA400EAF03D /* CategoryCellPresenter.swift in Sources */,
 				1DB22FF91BE7E3420016055E /* NewElloTabBar.swift in Sources */,
 				122B30D31C6A3FBC00C1B9D8 /* LocalPerson.swift in Sources */,
+				1D7152E31D761AF0005998FE /* CreateProfileViewController.swift in Sources */,
 				126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */,
 				1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */,
 				12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */,

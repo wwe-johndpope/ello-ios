@@ -23,7 +23,7 @@ class UIImagePickerControllerSpec: QuickSpec {
 
             describe("imagePickerSheetForImagePicker") {
                 it("should present an image picker with actions") {
-                    let subject = UIImagePickerController.imagePickerSheetForImagePicker() { _ in }
+                    let subject = UIImagePickerController.imagePickerSheetForImagePicker(callback: { _ in })
                     expect(subject.actions.count) > 0
                 }
             }

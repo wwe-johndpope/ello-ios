@@ -69,13 +69,17 @@ extension UIImagePickerController {
         return alertController
     }
 
-    class func imagePickerSheetForImagePicker(callback: ImagePickerSheetResult -> Void) -> ImagePickerSheetController {
+    class func imagePickerSheetForImagePicker(
+        config config: ImagePickerSheetConfig = ImagePickerSheetConfig(),
+        callback: ImagePickerSheetResult -> Void
+        ) -> ImagePickerSheetController
+    {
         let controller = ImagePickerSheetController(mediaType: .ImageAndVideo)
 
         if UIImagePickerController.isSourceTypeAvailable(.Camera) {
             controller.addAction(
                 ImagePickerAction(
-                    title: InterfaceString.ImagePicker.TakePhoto,
+                    title: config.cameraAction,
                     handler: { _ in
                         Tracker.sharedTracker.imageAddedFromCamera()
                         callback(.Controller(.elloCameraPickerController))
@@ -84,8 +88,8 @@ extension UIImagePickerController {
         }
         controller.addAction(
             ImagePickerAction(
-                title: InterfaceString.ImagePicker.PhotoLibrary,
-                secondaryTitle: { NSString.localizedStringWithFormat(InterfaceString.ImagePicker.AddImagesTemplate, $0) as String },
+                title: config.photoLibrary,
+                secondaryTitle: config.addImage,
                 handler: { _ in
                     Tracker.sharedTracker.imageAddedFromLibrary()
                     callback(.Controller(.elloPhotoLibraryPickerController))

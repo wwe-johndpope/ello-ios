@@ -10,6 +10,24 @@ extension NSAttributedString {
         retval.appendAttributedString(str)
         return NSAttributedString(attributedString: retval)
     }
+
+    public convenience init(primaryHeader: String, secondaryHeader: String) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+        let plain: [String: AnyObject] = [
+            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSFontAttributeName: UIFont.defaultFont(16),
+            NSParagraphStyleAttributeName: paragraphStyle,
+        ]
+        let bold: [String: AnyObject] = [
+            NSForegroundColorAttributeName: UIColor.blackColor(),
+            NSFontAttributeName: UIFont.defaultBoldFont(16),
+            NSParagraphStyleAttributeName: paragraphStyle,
+        ]
+        let header = NSAttributedString(string: primaryHeader, attributes: bold) +
+            NSAttributedString(string: " \(secondaryHeader)", attributes: plain)
+        self.init(attributedString: header)
+    }
 }
 
 func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {

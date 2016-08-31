@@ -236,6 +236,7 @@ public struct InterfaceString {
         static let TakePhoto = NSLocalizedString("Take Photo Or Video", comment: "Camera button")
         static let PhotoLibrary = NSLocalizedString("Photo Library", comment: "Library button")
         static let AddImagesTemplate = NSLocalizedString("Add %lu Image(s)", comment: "Add Images")
+        static let ChooseImage = NSLocalizedString("Choose Image", comment: "Choose Image")
     }
 
     public struct WebBrowser {
@@ -295,6 +296,14 @@ public struct InterfaceString {
         static let InvitePeople = NSLocalizedString("Invite Cool People", comment: "invite cool people button")
         static let ImDone = NSLocalizedString("I’m done", comment: "I'm done button")
         static let PickTemplate = NSLocalizedString("Pick %d", comment: "Pick ... prompt")
+
+        static let UploadCoverButton = NSLocalizedString("Upload Header", comment: "Upload Header button")
+        static let UploadCoverImagePrompt = NSLocalizedString("2560 x 1440\nAnimated Gifs work, too", comment: "Cover Image size and animated Gifs work, too")
+        static let UploadAvatarButton = NSLocalizedString("Upload Avatar", comment: "Upload Avatar button")
+        static let UploadAvatarPrompt = NSLocalizedString("360 x 360\nAnimated Gifs work, too", comment: "Avatar size and animated Gifs work, too")
+        static let NamePlaceholder = NSLocalizedString("Name", comment: "Name field")
+        static let BioPlaceholder = NSLocalizedString("Bio", comment: "Bio field")
+        static let LinksPlaceholder = NSLocalizedString("Links", comment: "Links field")
 
         static let UploadFailed = NSLocalizedString("Oh no! Something went wrong.\n\nTry that again maybe?", comment: "image upload failed during onboarding message")
         static let RelationshipFailed = NSLocalizedString("Oh no! Something went wrong.\n\nTry that again maybe?", comment: "relationship status update failed during onboarding message")

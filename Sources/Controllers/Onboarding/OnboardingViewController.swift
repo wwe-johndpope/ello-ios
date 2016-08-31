@@ -5,7 +5,6 @@
 import PINRemoteImage
 
 
-class CreateProfileViewController: UIViewController {}
 class InviteFriendsViewController: UIViewController {}
 
 public class OnboardingViewController: BaseElloViewController, HasAppController {
@@ -93,6 +92,11 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
         setupOnboardingControllers()
     }
 
+    override public func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        visibleViewController?.view.frame = screen.controllerContainer.bounds
+    }
+
 }
 
 private extension OnboardingViewController {
@@ -104,8 +108,8 @@ private extension OnboardingViewController {
         addOnboardingViewController(categoriesController)
 
         let createProfileController = CreateProfileViewController()
-//        createProfileController.onboardingViewController = self
-//        createProfileController.currentUser = currentUser
+        createProfileController.onboardingViewController = self
+        createProfileController.currentUser = currentUser
         addOnboardingViewController(createProfileController)
     }
 
