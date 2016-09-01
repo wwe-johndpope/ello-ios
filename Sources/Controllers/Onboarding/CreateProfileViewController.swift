@@ -10,6 +10,9 @@ public class CreateProfileViewController: UIViewController, HasAppController {
 
     public var onboardingViewController: OnboardingViewController?
     public var onboardingData: OnboardingData!
+    var didSetName = false
+    var didSetBio = false
+    var didSetLinks = false
     var didUploadCoverImage = false
     var didUploadAvatarImage = false
     var didSetAnything = false
@@ -33,18 +36,21 @@ extension CreateProfileViewController: CreateProfileDelegate {
     func assignName(name: String?) {
         onboardingData.name = name
         didSetAnything = didSetAnything || (name?.isEmpty == false)
+        didSetName = true
         onboardingViewController?.canGoNext = didSetAnything
     }
 
     func assignBio(bio: String?) {
         onboardingData.bio = bio
         didSetAnything = didSetAnything || (bio?.isEmpty == false)
+        didSetBio = true
         onboardingViewController?.canGoNext = didSetAnything
     }
 
     func assignLinks(links: String?) {
         onboardingData.links = links
         didSetAnything = didSetAnything || (links?.isEmpty == false)
+        didSetLinks = true
         onboardingViewController?.canGoNext = didSetAnything
     }
 
@@ -75,13 +81,13 @@ extension CreateProfileViewController: OnboardingStepController {
         }
 
         var properties: [String: AnyObject] = [:]
-        if let name = onboardingData.name {
+        if let name = onboardingData.name where didSetName {
             properties["name"] = name
         }
-        if let bio = onboardingData.bio {
+        if let bio = onboardingData.bio where didSetBio {
             properties["external_links"] = bio
         }
-        if let links = onboardingData.links {
+        if let links = onboardingData.links where didSetLinks {
             properties["unsanitized_short_bio"] = links
         }
 
@@ -98,7 +104,7 @@ extension CreateProfileViewController: OnboardingStepController {
             ProfileService().updateUserImages(
                 avatarImage: avatarImage, coverImage: coverImage,
                 properties: properties,
-                success: { _, _, user in proceedClosure() },
+                success: { _ in proceedClosure() },
                 failure: { error, _ in
                     failure(error)
                 })
@@ -107,7 +113,7 @@ extension CreateProfileViewController: OnboardingStepController {
             ProfileService().updateUserAvatarImage(
                 avatarImage,
                 properties: properties,
-                success: { _, user in proceedClosure() },
+                success: { _ in proceedClosure() },
                 failure: { error, _ in
                     failure(error)
                 })
@@ -116,10 +122,21 @@ extension CreateProfileViewController: OnboardingStepController {
             ProfileService().updateUserCoverImage(
                 coverImage,
                 properties: properties,
-                success: { _, user in proceedClosure() },
+                success: { _ in proceedClosure() },
                 failure: { error, _ in
                     failure(error)
                 })
+        }
+        else if !properties.isEmpty {
+            ProfileService().updateUserProfile(
+                properties,
+                success: { _ in proceedClosure() },
+                failure: { error, _ in
+                    failure(error)
+                })
+        }
+        else {
+            proceedClosure()
         }
     }
 
