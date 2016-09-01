@@ -8,7 +8,6 @@ public class AddFriendsViewController: StreamableViewController {
 
     public let inviteService = InviteService()
     public var allContacts: [(LocalPerson, User?)] = []
-    public var userTappedDelegate: UserTappedDelegate?
 
     var _mockScreen: SearchScreenProtocol?
     public var screen: SearchScreenProtocol {

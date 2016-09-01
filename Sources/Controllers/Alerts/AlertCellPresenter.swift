@@ -6,32 +6,50 @@ import UIKit
 
 struct AlertCellPresenter {
 
-    static func configureCell(alertCell: AlertCell, type: AlertType = .Normal) {
-        alertCell.input.hidden = true
-        alertCell.okButton.hidden = true
-        alertCell.cancelButton.hidden = true
-        alertCell.contentView.backgroundColor = type.backgroundColor
+    static func configureCell(cell: AlertCell, type: AlertType = .Normal) {
+        cell.background.layer.borderColor = nil
+        cell.background.layer.cornerRadius = 0
+        cell.input.hidden = true
+        cell.okButton.hidden = true
+        cell.cancelButton.hidden = true
+        cell.contentView.backgroundColor = type.backgroundColor
     }
 
     static func configureForWhiteAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, color: UIColor.blackColor(), alignment: textAlignment)
-        cell.background.backgroundColor = UIColor.whiteColor()
+        cell.label.setLabelText(action.title, color: .blackColor(), alignment: textAlignment)
+        cell.background.backgroundColor = .whiteColor()
     }
 
     static func configureForLightAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, color: UIColor.grey6(), alignment: textAlignment)
-        cell.background.backgroundColor = UIColor.greyE5()
+        cell.label.setLabelText(action.title, color: .grey6(), alignment: textAlignment)
+        cell.background.backgroundColor = .greyE5()
     }
 
     static func configureForDarkAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
         cell.label.setLabelText(action.title, alignment: textAlignment)
-        cell.background.backgroundColor = UIColor.blackColor()
+        cell.background.backgroundColor = .blackColor()
+    }
+
+    static func configureForGreenAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
+        configureCell(cell, type: type)
+
+        cell.label.setLabelText(action.title, alignment: textAlignment)
+        cell.background.backgroundColor = .greenD1()
+        cell.background.layer.cornerRadius = 5
+    }
+
+    static func configureForRoundedGrayFillAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
+        configureCell(cell, type: type)
+
+        cell.label.setLabelText(action.title, color: .grey6(), alignment: textAlignment)
+        cell.background.backgroundColor = .greyE5()
+        cell.background.layer.cornerRadius = 5
     }
 
     static func configureForInputAction(cell: AlertCell, type: AlertType, action: AlertAction) {
@@ -48,7 +66,7 @@ struct AlertCellPresenter {
         cell.input.enablesReturnKeyAutomatically = true
         cell.input.returnKeyType = .Default
 
-        cell.background.backgroundColor = UIColor.whiteColor()
+        cell.background.backgroundColor = .whiteColor()
     }
 
     static func configureForURLAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
@@ -61,7 +79,7 @@ struct AlertCellPresenter {
     }
 
     static func configureForOKCancelAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
-        cell.background.backgroundColor = UIColor.clearColor()
+        cell.background.backgroundColor = .clearColor()
         cell.label.hidden = true
         cell.input.hidden = true
         cell.okButton.hidden = false

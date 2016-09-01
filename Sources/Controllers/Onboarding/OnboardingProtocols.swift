@@ -20,7 +20,6 @@ public protocol OnboardingDelegate: class {
     var canGoNext: Bool { get set }
     var prompt: String? { get set }
 
-    func skipAction()
     func nextAction()
     func abortAction()
 }
@@ -36,6 +35,6 @@ public protocol OnboardingScreenProtocol: class {
 public protocol OnboardingStepController: class {
     var onboardingViewController: OnboardingViewController? { get set }
     var onboardingData: OnboardingData! { get set }
-    func onboardingWillProceed(_: () -> Void)
+    func onboardingWillProceed(abort: Bool, proceedClosure: () -> Void)
     func onboardingStepBegin()
 }

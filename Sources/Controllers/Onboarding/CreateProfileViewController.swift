@@ -69,7 +69,7 @@ extension CreateProfileViewController: CreateProfileDelegate {
 }
 
 extension CreateProfileViewController: OnboardingStepController {
-    public func onboardingWillProceed(proceedClosure: () -> Void) {
+    public func onboardingWillProceed(abort: Bool, proceedClosure: () -> Void) {
         if onboardingData.name?.isEmpty == false {
             Tracker.sharedTracker.enteredOnboardName()
         }
@@ -104,7 +104,8 @@ extension CreateProfileViewController: OnboardingStepController {
             ProfileService().updateUserImages(
                 avatarImage: avatarImage, coverImage: coverImage,
                 properties: properties,
-                success: { _ in proceedClosure() },
+                success: { _ in
+                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
                 failure: { error, _ in
                     failure(error)
                 })
@@ -113,7 +114,8 @@ extension CreateProfileViewController: OnboardingStepController {
             ProfileService().updateUserAvatarImage(
                 avatarImage,
                 properties: properties,
-                success: { _ in proceedClosure() },
+                success: { _ in
+                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
                 failure: { error, _ in
                     failure(error)
                 })
@@ -122,7 +124,8 @@ extension CreateProfileViewController: OnboardingStepController {
             ProfileService().updateUserCoverImage(
                 coverImage,
                 properties: properties,
-                success: { _ in proceedClosure() },
+                success: { _ in
+                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
                 failure: { error, _ in
                     failure(error)
                 })
@@ -130,13 +133,39 @@ extension CreateProfileViewController: OnboardingStepController {
         else if !properties.isEmpty {
             ProfileService().updateUserProfile(
                 properties,
-                success: { _ in proceedClosure() },
+                success: { _ in
+                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
                 failure: { error, _ in
                     failure(error)
                 })
         }
         else {
+            goToNextStep(abort, proceedClosure: proceedClosure)
+        }
+    }
+
+    func goToNextStep(abort: Bool, proceedClosure: () -> Void) {
+        guard let
+            presenter = onboardingViewController?.parentAppController
+        where !abort else {
             proceedClosure()
+            return
+        }
+
+        Tracker.sharedTracker.inviteFriendsTapped()
+        AddressBookController.promptForAddressBookAccess(fromController: self) { result in
+            switch result {
+            case let .Success(addressBook):
+                Tracker.sharedTracker.contactAccessPreferenceChanged(true)
+                let vc = AddFriendsViewController(addressBook: addressBook)
+                vc.currentUser = self.currentUser
+                presenter.presentViewController(vc, animated: true, completion: nil)
+            case let .Failure(addressBookError):
+                Tracker.sharedTracker.contactAccessPreferenceChanged(false)
+                let message = addressBookError.rawValue
+                let alertController = AlertViewController(error: "We were unable to access your address book\n\(message)")
+                presenter.presentViewController(alertController, animated: true, completion: .None)
+            }
         }
     }
 

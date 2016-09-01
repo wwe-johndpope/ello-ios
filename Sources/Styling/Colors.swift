@@ -48,6 +48,9 @@ public extension UIColor {
     // background color for text fields
     class func greyE5() -> UIColor { return ElloColors.greyE5 }
 
+    // button title color
+    class func grey6() -> UIColor { return ElloColors.grey6 }
+
     // Used to color @ mention in omnibar/posts
     class func yellowFFFFCC() -> UIColor { return ElloColors.yellowFFFFCC }
 
@@ -55,7 +58,6 @@ public extension UIColor {
     class func redFFCCCC() -> UIColor { return ElloColors.redFFCCCC }
 
     // not popular
-    class func grey6() -> UIColor { return ElloColors.grey6 }
     class func greyF1() -> UIColor { return ElloColors.greyF1 }
     class func greyF2() -> UIColor { return ElloColors.greyF2 }
     class func grey4D() -> UIColor { return ElloColors.grey4D }

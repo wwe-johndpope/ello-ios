@@ -292,78 +292,31 @@ extension StreamableViewController: StreamViewDelegate {
 extension StreamableViewController: InviteResponder {
     public func onInviteFriends() {
         Tracker.sharedTracker.inviteFriendsTapped()
-        switch AddressBook.authenticationStatus() {
-        case .Authorized:
-            proceedWithImport()
-        case .NotDetermined:
-            promptForAddressBookAccess()
-        case .Denied:
-            let message = InterfaceString.Friends.AccessDenied
-            displayAddressBookAlert(message)
-        case .Restricted:
-            let message = InterfaceString.Friends.AccessRestricted
-            displayAddressBookAlert(message)
-        }
-    }
-
-    // MARK: - Private
-
-    private func promptForAddressBookAccess() {
-        let message = InterfaceString.Friends.ImportPermissionPrompt
-        let alertController = AlertViewController(message: message)
-
-        let importMessage = InterfaceString.Friends.ImportAllow
-        let action = AlertAction(title: importMessage, style: .Dark) { action in
-            Tracker.sharedTracker.importContactsInitiated()
-            self.proceedWithImport()
-        }
-        alertController.addAction(action)
-
-        let cancelMessage = InterfaceString.Friends.ImportNotNow
-        let cancelAction = AlertAction(title: cancelMessage, style: .Light) { _ in
-            Tracker.sharedTracker.importContactsDenied()
-        }
-        alertController.addAction(cancelAction)
-
-        logPresentingAlert("StreamableViewController")
-        presentViewController(alertController, animated: true, completion: .None)
-    }
-
-    private func proceedWithImport() {
-        Tracker.sharedTracker.addressBookAccessed()
-        AddressBook.getAddressBook { result in
-            nextTick {
-                switch result {
-                case let .Success(addressBook):
-                    Tracker.sharedTracker.contactAccessPreferenceChanged(true)
-                    let vc = AddFriendsViewController(addressBook: addressBook)
-                    vc.currentUser = self.currentUser
-                    vc.userTappedDelegate = self
-                    if let navigationController = self.navigationController {
-                        navigationController.pushViewController(vc, animated: true)
-                    }
-                    else {
-                        self.presentViewController(vc, animated: true, completion: nil)
-                    }
-                case let .Failure(addressBookError):
-                    Tracker.sharedTracker.contactAccessPreferenceChanged(false)
-                    self.displayAddressBookAlert(addressBookError.rawValue)
-                    return
+        AddressBookController.promptForAddressBookAccess(fromController: self) { result in
+            switch result {
+            case let .Success(addressBook):
+                Tracker.sharedTracker.contactAccessPreferenceChanged(true)
+                let vc = AddFriendsViewController(addressBook: addressBook)
+                vc.currentUser = self.currentUser
+                if let navigationController = self.navigationController {
+                    navigationController.pushViewController(vc, animated: true)
                 }
+                else {
+                    self.presentViewController(vc, animated: true, completion: nil)
+                }
+            case let .Failure(addressBookError):
+                Tracker.sharedTracker.contactAccessPreferenceChanged(false)
+                let message = addressBookError.rawValue
+                let alertController = AlertViewController(
+                    message: "We were unable to access your address book\n\(message)"
+                )
+
+                let action = AlertAction(title: InterfaceString.OK, style: .Dark, handler: .None)
+                alertController.addAction(action)
+
+                self.presentViewController(alertController, animated: true, completion: .None)
             }
         }
-    }
-
-    private func displayAddressBookAlert(message: String) {
-        let alertController = AlertViewController(
-            message: "We were unable to access your address book\n\(message)"
-        )
-
-        let action = AlertAction(title: InterfaceString.OK, style: .Dark, handler: .None)
-        alertController.addAction(action)
-
-        logPresentingAlert("StreamableViewController")
-        presentViewController(alertController, animated: true, completion: .None)
     }
 
 }

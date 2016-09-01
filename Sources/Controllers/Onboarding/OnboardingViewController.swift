@@ -127,9 +127,8 @@ private extension OnboardingViewController {
 }
 
 extension OnboardingViewController: OnboardingDelegate {
-    public func skipAction() { proceedToNextStep(abort: true) }
     public func nextAction() { proceedToNextStep(abort: false) }
-    public func abortAction() { print("abortAction") }
+    public func abortAction() { proceedToNextStep(abort: true) }
 }
 
 // MARK: Child View Controller handling
@@ -161,7 +160,7 @@ extension OnboardingViewController {
 
         let proceedClosure: () -> Void = abort ? doneOnboarding : goToNextStep
         if let onboardingStep = visibleViewController as? OnboardingStepController {
-            onboardingStep.onboardingWillProceed(proceedClosure)
+            onboardingStep.onboardingWillProceed(abort, proceedClosure: proceedClosure)
         }
         else {
             proceedClosure()

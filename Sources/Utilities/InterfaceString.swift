@@ -209,9 +209,10 @@ public struct InterfaceString {
     }
 
     public struct Friends {
-        static let ImportPermissionPrompt = NSLocalizedString("Find your friends on Ello using your contacts.\n\nEllo does not sell user data, and never contacts anyone without your permission.", comment: "Use address book permission prompt")
-        static let ImportAllow = NSLocalizedString("Find my friends", comment: "Find my friends action")
+        static let ImportPermissionPrompt = NSLocalizedString("Import your contacts to invite cool people to Ello.\n\nEllo does not sell user data, and never contacts anyone without your permission.", comment: "Use address book permission prompt")
+        static let ImportAllow = NSLocalizedString("Import my contacts", comment: "Import my contacts action")
         static let ImportNotNow = NSLocalizedString("Not now", comment: "Not now action")
+
         static let ImportErrorTemplate = NSLocalizedString("We were unable to access your address book\n%@", comment: "Unable to access address book and error message")
         static let AccessDenied = NSLocalizedString("Access to your contacts has been denied.  If you want to search for friends, you will need to grant access from Settings.", comment: "Access to contacts denied by user")
         static let AccessRestricted = NSLocalizedString("Access to your contacts has been denied by the system.", comment: "Access to contacts denied by system")

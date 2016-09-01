@@ -629,6 +629,7 @@
 		1DB68E991D46CE0F00D446C7 /* $_add_disabled.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */; };
 		1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A01D789015007E1447 /* ClearTextView.swift */; };
 		1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A21D78C85C007E1447 /* StyledButton.swift */; };
+		1DB8C6A51D78DB12007E1447 /* AddressBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A41D78DB12007E1447 /* AddressBookController.swift */; };
 		1DBC4A9C1B6044EE00ECF576 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
 		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
@@ -1500,6 +1501,7 @@
 		1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_disabled.svg; sourceTree = "<group>"; };
 		1DB8C6A01D789015007E1447 /* ClearTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextView.swift; sourceTree = "<group>"; };
 		1DB8C6A21D78C85C007E1447 /* StyledButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
+		1DB8C6A41D78DB12007E1447 /* AddressBookController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookController.swift; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DC10FA31C3DEB7600846ED6 /* availability__error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability__error.json; sourceTree = "<group>"; };
@@ -2561,6 +2563,7 @@
 		12F6ADF51A4337CE00493660 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1DB8C6A41D78DB12007E1447 /* AddressBookController.swift */,
 				F87928661ACC6CBD00579BE1 /* Alerts */,
 				F8006EE41AB9FE670008BB42 /* Animators.swift */,
 				12F6AE1C1A43385600493660 /* App */,
@@ -4636,6 +4639,7 @@
 				12B531011A93B75700E01D72 /* ElloLogoView.swift in Sources */,
 				1207C96F1C73FEE000939ADB /* APIKeys.swift in Sources */,
 				EAEE2A3A1AC48A2A000B6CDA /* UIViewNibLoading.swift in Sources */,
+				1DB8C6A51D78DB12007E1447 /* AddressBookController.swift in Sources */,
 				76629C6F1A95067400E1F92B /* BlockUserModalViewController.swift in Sources */,
 				1D7152B41D6E4FCE005998FE /* ValidationState.swift in Sources */,
 				1D2F65BB1D1AE5790099D036 /* UIEdgeInsetsExtensions.swift in Sources */,

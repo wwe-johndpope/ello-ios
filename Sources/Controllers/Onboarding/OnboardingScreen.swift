@@ -10,7 +10,7 @@ public class OnboardingScreen: EmptyScreen {
     }
     public var controllerContainer = UIView()
     private var buttonContainer = UIView()
-    private var skipButton = StyledButton(style: .RoundedGray)
+    private var promptButton = StyledButton(style: .RoundedGray)
     private var nextButton = StyledButton(style: .Green)
     private var abortButton = StyledButton(style: .GrayText)
 
@@ -18,14 +18,14 @@ public class OnboardingScreen: EmptyScreen {
 
     public var canGoNext: Bool = false {
         didSet {
-            skipButton.hidden = canGoNext
+            promptButton.hidden = canGoNext
             nextButton.hidden = !canGoNext
             abortButton.hidden = !canGoNext
         }
     }
     public var prompt: String? {
-        get { return skipButton.currentTitle }
-        set { skipButton.setTitle(newValue ?? InterfaceString.Onboard.CreateProfile, forState: .Normal) }
+        get { return promptButton.currentTitle }
+        set { promptButton.setTitle(newValue ?? InterfaceString.Onboard.CreateProfile, forState: .Normal) }
     }
 
     override func style() {
@@ -36,13 +36,13 @@ public class OnboardingScreen: EmptyScreen {
     }
 
     override func bindActions() {
-        skipButton.addTarget(self, action: #selector(skipAction), forControlEvents: .TouchUpInside)
+        promptButton.addTarget(self, action: #selector(nextAction), forControlEvents: .TouchUpInside)
         nextButton.addTarget(self, action: #selector(nextAction), forControlEvents: .TouchUpInside)
         abortButton.addTarget(self, action: #selector(abortAction), forControlEvents: .TouchUpInside)
     }
 
     override func setText() {
-        skipButton.setTitle(InterfaceString.Onboard.CreateProfile, forState: .Normal)
+        promptButton.setTitle(InterfaceString.Onboard.CreateProfile, forState: .Normal)
         nextButton.setTitle(InterfaceString.Onboard.CreateProfile, forState: .Normal)
         abortButton.setTitle(InterfaceString.Onboard.ImDone, forState: .Normal)
     }
@@ -52,7 +52,7 @@ public class OnboardingScreen: EmptyScreen {
 
         addSubview(controllerContainer)
         addSubview(buttonContainer)
-        buttonContainer.addSubview(skipButton)
+        buttonContainer.addSubview(promptButton)
         buttonContainer.addSubview(nextButton)
         buttonContainer.addSubview(abortButton)
 
@@ -61,17 +61,17 @@ public class OnboardingScreen: EmptyScreen {
             make.top.equalTo(keyboardAnchor.snp_top).offset(-(2 * Size.buttonInset + Size.buttonHeight))
         }
 
-        skipButton.snp_makeConstraints { make in
+        promptButton.snp_makeConstraints { make in
             make.top.leading.trailing.equalTo(buttonContainer).inset(Size.buttonInset)
             make.height.equalTo(Size.buttonHeight)
         }
 
         nextButton.snp_makeConstraints { make in
-            make.top.bottom.leading.equalTo(skipButton)
+            make.top.bottom.leading.equalTo(promptButton)
         }
 
         abortButton.snp_makeConstraints { make in
-            make.top.bottom.trailing.equalTo(skipButton)
+            make.top.bottom.trailing.equalTo(promptButton)
             make.leading.equalTo(nextButton.snp_trailing).offset(Size.buttonInset)
             make.width.equalTo(Size.abortButtonWidth)
         }
@@ -91,19 +91,15 @@ public class OnboardingScreen: EmptyScreen {
         case .InviteFriends: nextString = InterfaceString.Join.Discover
         }
 
-        skipButton.hidden = false
+        promptButton.hidden = false
         nextButton.hidden = true
         abortButton.hidden = true
-        skipButton.setTitle(nextString, forState: .Normal)
+        promptButton.setTitle(nextString, forState: .Normal)
         nextButton.setTitle(nextString, forState: .Normal)
     }
 }
 
 extension OnboardingScreen {
-    func skipAction() {
-        delegate?.skipAction()
-    }
-
     func nextAction() {
         delegate?.nextAction()
     }

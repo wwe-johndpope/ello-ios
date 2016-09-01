@@ -58,7 +58,7 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
 }
 
 extension CategoriesSelectionViewController: OnboardingStepController {
-    public func onboardingWillProceed(proceedClosure: () -> Void) {
+    public func onboardingWillProceed(abort: Bool, proceedClosure: () -> Void) {
         if let
             userId = currentUser?.id,
             selection = streamViewController.collectionView.indexPathsForSelectedItems()
