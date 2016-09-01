@@ -628,6 +628,7 @@
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
 		1DB68E991D46CE0F00D446C7 /* $_add_disabled.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */; };
 		1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A01D789015007E1447 /* ClearTextView.swift */; };
+		1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A21D78C85C007E1447 /* StyledButton.swift */; };
 		1DBC4A9C1B6044EE00ECF576 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
 		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
@@ -1498,6 +1499,7 @@
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
 		1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_disabled.svg; sourceTree = "<group>"; };
 		1DB8C6A01D789015007E1447 /* ClearTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextView.swift; sourceTree = "<group>"; };
+		1DB8C6A21D78C85C007E1447 /* StyledButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DC10FA31C3DEB7600846ED6 /* availability__error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability__error.json; sourceTree = "<group>"; };
@@ -2790,6 +2792,7 @@
 				1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */,
 				1D59338F1D14854700EAF03D /* Screens */,
 				1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */,
+				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
 			);
 			path = Views;
@@ -4549,6 +4552,7 @@
 				1207C9731C73FEE000939ADB /* AutoCompleteService.swift in Sources */,
 				1D71528F1D6CA22C005998FE /* Screen.swift in Sources */,
 				76B0B18D1B41AFD2004C2D7B /* UserAvatarsCell.swift in Sources */,
+				1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */,
 				1207C9811C73FEE000939ADB /* InviteService.swift in Sources */,
 				1275351D1B73D155006B9A0F /* NSDate.swift in Sources */,
 				7666C95E1B10055C009AC019 /* AddFriendsViewController.swift in Sources */,

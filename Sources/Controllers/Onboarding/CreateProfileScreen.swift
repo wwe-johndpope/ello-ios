@@ -49,13 +49,11 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     }
     var coverImage: ImageRegionData? {
         didSet {
-            guard let coverImage = coverImage else { return }
             setImage(coverImage, target: .CoverImage)
         }
     }
     var avatarImage: ImageRegionData? {
         didSet {
-            guard let avatarImage = avatarImage else { return }
             setImage(avatarImage, target: .Avatar)
         }
     }
@@ -67,11 +65,11 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     private let headerLabel = UILabel()
 
     private let coverImageView = FLAnimatedImageView()
-    private let uploadCoverImageButton = GreenElloButton()
+    private let uploadCoverImageButton = StyledButton(style: .Green)
     private let uploadCoverImagePrompt = UILabel()
 
     private let avatarImageView = FLAnimatedImageView()
-    private let uploadAvatarButton = GreenElloButton()
+    private let uploadAvatarButton = StyledButton(style: .Green)
     private let uploadAvatarPrompt = UILabel()
 
     private let nameField = ClearTextField()
@@ -301,22 +299,24 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         }
     }
 
-    func setImage(imageRegion: ImageRegionData, target uploading: ImageTarget) {
+    func setImage(imageRegion: ImageRegionData?, target uploading: ImageTarget) {
         let imageView: FLAnimatedImageView
         switch uploading {
         case .CoverImage:
             imageView = coverImageView
-            delegate?.assignCoverImage(imageRegion)
+            if let imageRegion = imageRegion { delegate?.assignCoverImage(imageRegion) }
+            uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGray
         case .Avatar:
             imageView = avatarImageView
-            delegate?.assignAvatar(imageRegion)
+            if let imageRegion = imageRegion { delegate?.assignAvatar(imageRegion) }
+            uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGray
         }
 
-        if let data = imageRegion.data where imageRegion.contentType == "image/gif" {
+        if let data = imageRegion?.data where imageRegion?.contentType == "image/gif" {
             imageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
         }
         else {
-            imageView.image = imageRegion.image
+            imageView.image = imageRegion?.image
         }
     }
 

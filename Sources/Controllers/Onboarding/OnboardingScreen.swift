@@ -10,9 +10,9 @@ public class OnboardingScreen: EmptyScreen {
     }
     public var controllerContainer = UIView()
     private var buttonContainer = UIView()
-    private var skipButton = RoundedGrayElloButton()
-    private var nextButton = GreenElloButton()
-    private var abortButton = UIButton()
+    private var skipButton = StyledButton(style: .RoundedGray)
+    private var nextButton = StyledButton(style: .Green)
+    private var abortButton = StyledButton(style: .GrayText)
 
     public weak var delegate: OnboardingDelegate?
 
@@ -31,8 +31,6 @@ public class OnboardingScreen: EmptyScreen {
     override func style() {
         buttonContainer.backgroundColor = .greyE5()
         abortButton.hidden = true
-        abortButton.titleLabel?.font = UIFont.defaultFont()
-        abortButton.setTitleColor(.greyA(), forState: .Normal)
 
         nextButton.hidden = true
     }

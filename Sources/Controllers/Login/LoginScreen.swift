@@ -32,7 +32,7 @@ public class LoginScreen: CredentialsScreen {
     let errorLabel = ElloSizeableLabel()
 
     let forgotPasswordButton = UIButton()
-    let continueButton = RoundedGrayElloButton()
+    let continueButton = StyledButton(style: .RoundedGray)
     let continueBackground = UIView()
 
     override func setText() {

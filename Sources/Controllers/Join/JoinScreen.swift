@@ -50,7 +50,7 @@ public class JoinScreen: CredentialsScreen {
     let termsButtonNormal = UIButton()
     let termsButtonKeyboard = UIButton()
 
-    let discoverButton = RoundedGrayElloButton()
+    let discoverButton = StyledButton(style: .RoundedGray)
     let continueBackground = UIView()
 
     override func setText() {
@@ -221,16 +221,10 @@ public class JoinScreen: CredentialsScreen {
 extension JoinScreen {
     private func styleDiscoverButton(allValid allValid: Bool) {
         if allValid {
-            discoverButton.layer.borderWidth = 0
-            discoverButton.backgroundColor = .greenD1()
-            discoverButton.setTitleColor(.whiteColor(), forState: .Normal)
-            discoverButton.setTitleColor(.greyA(), forState: .Highlighted)
+            discoverButton.style = .Green
         }
         else {
-            discoverButton.layer.borderWidth = 1
-            discoverButton.backgroundColor = .clearColor()
-            discoverButton.setTitleColor(.greyA(), forState: .Normal)
-            discoverButton.setTitleColor(.blackColor(), forState: .Highlighted)
+            discoverButton.style = .RoundedGray
         }
     }
 
