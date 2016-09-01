@@ -4,7 +4,21 @@
 
 public class ClearTextField: UITextField {
     public let onePasswordButton = OnePasswordButton()
-    var line = UIView()
+    public var lineColor: UIColor? = .grey6() {
+        didSet {
+            if !isFirstResponder() {
+                line.backgroundColor = lineColor
+            }
+        }
+    }
+    public var selectedLineColor: UIColor? = .whiteColor() {
+        didSet {
+            if isFirstResponder() {
+                line.backgroundColor = selectedLineColor
+            }
+        }
+    }
+    private var line = UIView()
     var hasOnePassword = false {
         didSet {
             onePasswordButton.hidden = !hasOnePassword
@@ -28,20 +42,24 @@ public class ClearTextField: UITextField {
     }
 
     func sharedSetup() {
-        line.backgroundColor = .grey6()
         backgroundColor = .clearColor()
         font = .defaultFont(18)
         textColor = .whiteColor()
         rightViewMode = .Always
-        addSubview(line)
 
-        onePasswordButton.hidden = true
         addSubview(onePasswordButton)
-
+        onePasswordButton.hidden = true
         onePasswordButton.snp_makeConstraints { make in
             make.centerY.equalTo(self)
             make.trailing.equalTo(self)
             make.size.equalTo(CGSize.minButton)
+        }
+
+        addSubview(line)
+        line.backgroundColor = lineColor
+        line.snp_makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self)
+            make.height.equalTo(1)
         }
     }
 
@@ -52,18 +70,13 @@ public class ClearTextField: UITextField {
         ])
     }
 
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        line.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 1)
-    }
-
     override public func becomeFirstResponder() -> Bool {
-        line.backgroundColor = .whiteColor()
+        line.backgroundColor = selectedLineColor
         return super.becomeFirstResponder()
     }
 
     override public func resignFirstResponder() -> Bool {
-        line.backgroundColor = .grey6()
+        line.backgroundColor = lineColor
         return super.resignFirstResponder()
     }
 
@@ -94,7 +107,11 @@ public class ClearTextField: UITextField {
     }
 
     private func rectForBounds(bounds: CGRect) -> CGRect {
-        return bounds.shrinkLeft(15).inset(topBottom: 10)
+        var rect = bounds.shrinkLeft(15)
+        if validationState.imageRepresentation != nil {
+            rect = rect.shrinkLeft(20)
+        }
+        return rect
     }
 
 }

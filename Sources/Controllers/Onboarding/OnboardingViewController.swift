@@ -56,8 +56,11 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
             where url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.sharedImageManager().downloadImageWithURL(url) { result in
-                    if let image = result.image {
-                        self.onboardingData.avatarImage = image
+                    if let animatedImage = result.animatedImage {
+                        self.onboardingData.avatarImage = ImageRegionData(image: animatedImage.posterImage, data: animatedImage.data, contentType: "image/gif")
+                    }
+                    else if let image = result.image {
+                        self.onboardingData.avatarImage = ImageRegionData(image: image)
                     }
                 }
             }
@@ -66,8 +69,11 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
             where url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.sharedImageManager().downloadImageWithURL(url) { result in
-                    if let image = result.image {
-                        self.onboardingData.coverImage = image
+                    if let animatedImage = result.animatedImage {
+                        self.onboardingData.coverImage = ImageRegionData(image: animatedImage.posterImage, data: animatedImage.data, contentType: "image/gif")
+                    }
+                    else if let image = result.image {
+                        self.onboardingData.coverImage = ImageRegionData(image: image)
                     }
                 }
             }
@@ -94,7 +100,10 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        visibleViewController?.view.frame = screen.controllerContainer.bounds
+
+        if !isTransitioning {
+            visibleViewController?.view.frame = screen.controllerContainer.bounds
+        }
     }
 
 }
@@ -103,11 +112,13 @@ private extension OnboardingViewController {
 
     func setupOnboardingControllers() {
         let categoriesController = CategoriesSelectionViewController()
+        categoriesController.parentAppController = parentAppController
         categoriesController.onboardingViewController = self
         categoriesController.currentUser = currentUser
         addOnboardingViewController(categoriesController)
 
         let createProfileController = CreateProfileViewController()
+        createProfileController.parentAppController = parentAppController
         createProfileController.onboardingViewController = self
         createProfileController.currentUser = currentUser
         addOnboardingViewController(createProfileController)
@@ -132,13 +143,19 @@ extension OnboardingViewController {
 extension OnboardingViewController {
 
     public func proceedToNextStep(abort abort: Bool) {
-        if self.isKindOfClass(CategoriesSelectionViewController) {
+        if visibleViewController is CategoriesSelectionViewController {
             Tracker.sharedTracker.completedCategories()
+            if abort {
+                Tracker.sharedTracker.skippedNameBio()
+            }
         }
-        else if self.isKindOfClass(CreateProfileViewController) {
+        else if visibleViewController is CreateProfileViewController {
             Tracker.sharedTracker.addedNameBio()
+            if abort {
+                Tracker.sharedTracker.skippedContactImport()
+            }
         }
-        else if self.isKindOfClass(InviteFriendsViewController) {
+        else if visibleViewController is InviteFriendsViewController {
             Tracker.sharedTracker.completedContactImport()
         }
 

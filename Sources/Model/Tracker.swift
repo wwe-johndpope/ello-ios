@@ -237,6 +237,14 @@ public extension Tracker {
         agent.track("skipped categories in onboarding")
     }
 
+    func skippedNameBio() {
+        agent.track("skipped name_bio")
+    }
+
+    func addedNameBio() {
+        agent.track("added name_bio")
+    }
+
     func skippedContactImport() {
         agent.track("skipped contact import")
     }
@@ -245,12 +253,16 @@ public extension Tracker {
         agent.track("completed contact import")
     }
 
-    func skippedNameBio() {
-        agent.track("skipped name_bio")
+    func enteredOnboardName() {
+        agent.track("entered name during onboarding")
     }
 
-    func addedNameBio() {
-        agent.track("added name_bio")
+    func enteredOnboardBio() {
+        agent.track("entered bio during onboarding")
+    }
+
+    func enteredOnboardLinks() {
+        agent.track("entered links during onboarding")
     }
 }
 

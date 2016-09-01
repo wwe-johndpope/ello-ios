@@ -1,8 +1,8 @@
 ////
-///  OmnibarImageData.swift
+///  ImageData.swift
 //
 
-public class OmnibarImageData: NSObject, NSCoding {
+public class ImageData: NSObject, NSCoding {
     public var image: UIImage?
     public var data: NSData?
     public var type: NSString?

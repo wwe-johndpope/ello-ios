@@ -235,16 +235,15 @@ extension JoinScreen {
     }
 
     func applyValidation(emailValid emailValid: Bool, usernameValid: Bool, passwordValid: Bool) {
-        emailField.validationState = emailValid ? .OK : .None
-        usernameField.validationState = usernameValid ? .OK : .None
-        passwordField.validationState = passwordValid ? .OK : .None
+        emailField.validationState = emailValid ? .OKSmall : .None
+        usernameField.validationState = usernameValid ? .OKSmall : .None
+        passwordField.validationState = passwordValid ? .OKSmall : .None
         let allValid = emailValid && usernameValid && passwordValid
         styleDiscoverButton(allValid: allValid)
     }
 }
 
-extension JoinScreen: UITextFieldDelegate {
-
+extension JoinScreen {
     override public func backAction() {
         delegate?.backAction()
     }
@@ -260,6 +259,9 @@ extension JoinScreen: UITextFieldDelegate {
     public func onePasswordAction(sender: UIView) {
         delegate?.onePasswordAction(sender)
     }
+}
+
+extension JoinScreen: UITextFieldDelegate {
 
     public func textFieldDidEndEditing(textField: UITextField) {
         textField.setNeedsLayout()

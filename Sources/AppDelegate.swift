@@ -38,13 +38,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window = window
             return true
         }
+        ElloProvider.sharedProvider = ElloProvider.StubbingProvider()
 
         let window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window.rootViewController = AppViewController()
         window.makeKeyAndVisible()
         self.window = window
-
-        ElloProvider.sharedProvider = MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
 
         UIApplication.sharedApplication().statusBarStyle = .LightContent
 

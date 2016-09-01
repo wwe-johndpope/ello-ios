@@ -336,7 +336,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     @IBAction func coverImageTapped() {
         photoSaveCallback = { image in
             ElloHUD.showLoadingHud()
-            ProfileService().updateUserCoverImage(image, success: { url, _ in
+            ProfileService().updateUserCoverImage(ImageRegionData(image: image), success: { url, _ in
                 ElloHUD.hideLoadingHud()
                 if let user = self.currentUser {
                     let asset = Asset(url: url, image: image)
@@ -356,8 +356,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     @IBAction func avatarImageTapped() {
         photoSaveCallback = { image in
             ElloHUD.showLoadingHud()
-
-            ProfileService().updateUserAvatarImage(image, success: { url, _ in
+            ProfileService().updateUserAvatarImage(ImageRegionData(image: image), success: { url, _ in
                 ElloHUD.hideLoadingHud()
                 if let user = self.currentUser {
                     let asset = Asset(url: url, image: image)

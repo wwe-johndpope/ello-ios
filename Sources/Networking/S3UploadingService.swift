@@ -11,18 +11,36 @@ public class S3UploadingService: NSObject {
 
     var uploader: ElloS3?
 
-    func upload(image: UIImage, filename: String, success: S3UploadSuccessCompletion, failure: ElloFailureCompletion) {
+    func upload(imageRegionData image: ImageRegionData, success: S3UploadSuccessCompletion, failure: ElloFailureCompletion) {
+        if let data = image.data, contentType = image.contentType {
+            upload(data, contentType: contentType, success: success, failure: failure)
+        }
+        else {
+        }
+    }
+
+    func upload(image: UIImage, success: S3UploadSuccessCompletion, failure: ElloFailureCompletion) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             if let data = UIImageJPEGRepresentation(image, 0.8) {
                 // Head back to the thread the original caller was on before heading into the service calls. I may be overthinking it.
                 nextTick {
-                    self.upload(data, filename: filename, contentType: "image/jpeg", success: success, failure: failure)
+                    self.upload(data, contentType: "image/jpeg", success: success, failure: failure)
                 }
             }
         }
     }
 
-    func upload(data: NSData, filename: String, contentType: String, success: S3UploadSuccessCompletion, failure: ElloFailureCompletion) {
+    func upload(data: NSData, contentType: String, success: S3UploadSuccessCompletion, failure: ElloFailureCompletion) {
+        let filename: String
+        switch contentType {
+        case "image/gif":
+            filename = "\(NSUUID().UUIDString).gif"
+        case "image/png":
+            filename = "\(NSUUID().UUIDString).png"
+        default:
+            filename = "\(NSUUID().UUIDString).jpg"
+        }
+
         ElloProvider.shared.elloRequest(ElloAPI.AmazonCredentials,
             success: { credentialsData, responseConfig in
                 if let credentials = credentialsData as? AmazonCredentials {

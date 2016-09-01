@@ -608,7 +608,6 @@
 		1D9CF99B1D4800C4004A95B7 /* BuyButtonLinkScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */; };
 		1D9CF99D1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */; };
 		1D9CF9A01D4925BE004A95B7 /* OmnibarCacheData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */; };
-		1D9CF9A11D4925BE004A95B7 /* OmnibarImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */; };
 		1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9A21D496639004A95B7 /* $_set_normal.svg */; };
 		1D9CF9A51D4966F7004A95B7 /* $_set_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */; };
 		1D9D170F1AE72372009841A4 /* UIViewControllerExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9D170E1AE72372009841A4 /* UIViewControllerExtensionSpec.swift */; };
@@ -628,6 +627,7 @@
 		1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
 		1DB68E991D46CE0F00D446C7 /* $_add_disabled.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */; };
+		1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A01D789015007E1447 /* ClearTextView.swift */; };
 		1DBC4A9C1B6044EE00ECF576 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
 		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
@@ -1478,7 +1478,6 @@
 		1D9CF99A1D4800C4004A95B7 /* BuyButtonLinkScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyButtonLinkScreen.swift; sourceTree = "<group>"; };
 		1D9CF99C1D481F70004A95B7 /* OmnibarScreenBuyButtonLinkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenBuyButtonLinkControllerDelegate.swift; sourceTree = "<group>"; };
 		1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarCacheData.swift; sourceTree = "<group>"; };
-		1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarImageData.swift; sourceTree = "<group>"; };
 		1D9CF9A21D496639004A95B7 /* $_set_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_set_normal.svg; sourceTree = "<group>"; };
 		1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_set_selected.svg; sourceTree = "<group>"; };
 		1D9D170E1AE72372009841A4 /* UIViewControllerExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensionSpec.swift; sourceTree = "<group>"; };
@@ -1498,6 +1497,7 @@
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
 		1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_disabled.svg; sourceTree = "<group>"; };
+		1DB8C6A01D789015007E1447 /* ClearTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextView.swift; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DC10FA31C3DEB7600846ED6 /* availability__error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability__error.json; sourceTree = "<group>"; };
@@ -2144,7 +2144,6 @@
 				1D9CF99E1D4925BE004A95B7 /* OmnibarCacheData.swift */,
 				1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */,
 				1D783A281B838FDD00BD6BF4 /* OmnibarImageCell.swift */,
-				1D9CF99F1D4925BE004A95B7 /* OmnibarImageData.swift */,
 				1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */,
 				1DF50C8E1C614C4400C62D89 /* OmnibarImagePickerExtension.swift */,
 				1DF50C8F1C614C4400C62D89 /* OmnibarProtocols.swift */,
@@ -2760,6 +2759,7 @@
 				1289F3971AF17937008A938C /* BasicIcon.swift */,
 				1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */,
 				1D7152AF1D6E4782005998FE /* ClearTextField.swift */,
+				1DB8C6A01D789015007E1447 /* ClearTextView.swift */,
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
 				1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */,
 				12F6AE651A4339EF00493660 /* ElloButton.swift */,
@@ -4558,6 +4558,7 @@
 				EAF43D8E1AB0B5AC0016E110 /* InviteCache.swift in Sources */,
 				121E46BD1A6B2798004AEAB7 /* StreamContainerViewController.swift in Sources */,
 				12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */,
+				1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */,
 				7659FB831B29F15200DEB6F4 /* StreamInviteFriendsCellPresenter.swift in Sources */,
 				1DD771201AFD194700FBC049 /* FreeMethods.swift in Sources */,
 				EA92992E1AEA95B000E22976 /* DeleteAccountConfirmationViewController.swift in Sources */,
@@ -4606,7 +4607,6 @@
 				1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */,
 				122B19031A867C7D00247A05 /* StreamTextCell.swift in Sources */,
 				1D2F65B11D1870020099D036 /* DiscoverAllCategoriesScreen.swift in Sources */,
-				1D9CF9A11D4925BE004A95B7 /* OmnibarImageData.swift in Sources */,
 				1DADC57A1AF449B3000DAC88 /* ElloWebBrowserViewController.swift in Sources */,
 				1D7152CB1D6FA0D9005998FE /* JoinProtocols.swift in Sources */,
 				1DE3EC4C1D83245D00BDE16F /* OnePasswordButton.swift in Sources */,

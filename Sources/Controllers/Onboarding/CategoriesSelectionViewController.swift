@@ -2,6 +2,9 @@
 ///  CategoriesSelectionViewController.swift
 //
 
+import Moya
+
+
 public class CategoriesSelectionViewController: StreamableViewController, HasAppController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
@@ -63,6 +66,8 @@ extension CategoriesSelectionViewController: OnboardingStepController {
             let categories = selection.flatMap({ (path: NSIndexPath) -> Category? in
                 return streamViewController.dataSource.jsonableForIndexPath(path) as? Category
             })
+
+            ElloProvider.oneTimeProvider = MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             UserService().setUserCategories(userId: userId, categories: categories)
                 .onSuccess { _ in
                     self.onboardingData.categories = categories
