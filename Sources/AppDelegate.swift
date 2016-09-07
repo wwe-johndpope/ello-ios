@@ -8,7 +8,6 @@ import TimeAgoInWords
 import PINRemoteImage
 import PINCache
 import ElloUIFonts
-import Moya
 
 
 @UIApplicationMain
@@ -38,7 +37,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window = window
             return true
         }
-        ElloProvider.sharedProvider = ElloProvider.StubbingProvider()
 
         let window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window.rootViewController = AppViewController()
