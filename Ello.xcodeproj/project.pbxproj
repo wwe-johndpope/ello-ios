@@ -423,9 +423,6 @@
 		1D066FF61B8BAF43002B303D /* OmnibarImageDownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */; };
 		1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */; };
 		1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */; };
-		1D15539C1BCC7DA300507F7D /* AvatarImageSelectionViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1553991BCC7DA300507F7D /* AvatarImageSelectionViewControllerSpec.swift */; };
-		1D15539D1BCC7DA300507F7D /* CoverImageSelectionViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15539A1BCC7DA300507F7D /* CoverImageSelectionViewControllerSpec.swift */; };
-		1D15539E1BCC7DA300507F7D /* ProfileInfoViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15539B1BCC7DA300507F7D /* ProfileInfoViewControllerSpec.swift */; };
 		1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
 		1D15C2791C7D12890013B192 /* InterfaceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2771C7D12890013B192 /* InterfaceString.swift */; };
 		1D15C27B1C7D13050013B192 /* InterfaceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2771C7D12890013B192 /* InterfaceString.swift */; };
@@ -1309,9 +1306,6 @@
 		1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarImageDownloadCell.swift; sourceTree = "<group>"; };
 		1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotificationSpec.swift; sourceTree = "<group>"; };
 		1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentialsSpec.swift; sourceTree = "<group>"; };
-		1D1553991BCC7DA300507F7D /* AvatarImageSelectionViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageSelectionViewControllerSpec.swift; sourceTree = "<group>"; };
-		1D15539A1BCC7DA300507F7D /* CoverImageSelectionViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverImageSelectionViewControllerSpec.swift; sourceTree = "<group>"; };
-		1D15539B1BCC7DA300507F7D /* ProfileInfoViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInfoViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D15C2761C7D12890013B192 /* InterfaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceImage.swift; sourceTree = "<group>"; };
 		1D15C2771C7D12890013B192 /* InterfaceString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceString.swift; sourceTree = "<group>"; };
 		1D1AF6221A83ED7F00E06C93 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
@@ -3020,9 +3014,6 @@
 		1D652F5F1BC3055E00AF3B06 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				1D1553991BCC7DA300507F7D /* AvatarImageSelectionViewControllerSpec.swift */,
-				1D15539A1BCC7DA300507F7D /* CoverImageSelectionViewControllerSpec.swift */,
-				1D15539B1BCC7DA300507F7D /* ProfileInfoViewControllerSpec.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -4295,7 +4286,6 @@
 				1D22C8281AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift in Sources */,
 				124727651AB14AC8000079D7 /* ImageAttachmentSpec.swift in Sources */,
 				122C66441B4303400035F4CD /* AutoCompleteResultSpec.swift in Sources */,
-				1D15539E1BCC7DA300507F7D /* ProfileInfoViewControllerSpec.swift in Sources */,
 				12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */,
 				12CF810E1AEFDFA5008FFC6F /* FakeImageManager.swift in Sources */,
 				12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */,
@@ -4330,7 +4320,6 @@
 				12B093661A6D87C000BF104E /* StreamContainerViewControllerSpec.swift in Sources */,
 				12D14C721A43762400C6F8E8 /* PostSpec.swift in Sources */,
 				122C663C1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift in Sources */,
-				1D15539D1BCC7DA300507F7D /* CoverImageSelectionViewControllerSpec.swift in Sources */,
 				12D14C691A43761A00C6F8E8 /* ElloAPISpec.swift in Sources */,
 				125739161B432EB100EF7792 /* AutoCompleteServiceSpec.swift in Sources */,
 				12CD86DA1B67E61D00687B36 /* SearchScreenSpec.swift in Sources */,
@@ -4366,7 +4355,6 @@
 				1266E5101A9E2BDF00270E1C /* ContentFlaggerSpec.swift in Sources */,
 				12916A421B7AA88D005B9CCF /* StreamKindSpec.swift in Sources */,
 				123DEBF81D3D645A007B5F86 /* PostDetailGeneratorSpec.swift in Sources */,
-				1D15539C1BCC7DA300507F7D /* AvatarImageSelectionViewControllerSpec.swift in Sources */,
 				1D98563F1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift in Sources */,
 				1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */,
 				12D14C731A43762400C6F8E8 /* UserSpec.swift in Sources */,

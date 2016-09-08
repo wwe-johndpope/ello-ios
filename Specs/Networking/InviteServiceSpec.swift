@@ -9,6 +9,16 @@ import Nimble
 
 
 class InviteServiceSpec: QuickSpec {
+    struct FakeAddressBook: AddressBookProtocol {
+        var localPeople: [LocalPerson]
+
+        init(_ people: [Int32: [String]]) {
+            localPeople = people.map { id, emails in
+                return LocalPerson(name: "\(id)", emails: emails, id: id)
+            }
+        }
+    }
+
     override func spec() {
         describe("-invite:success:failure:") {
 
@@ -41,8 +51,9 @@ class InviteServiceSpec: QuickSpec {
             let subject = InviteService()
 
             it("succeeds") {
-                var expectedUsers = [User]()
-                subject.find(["1":["blah"], "2":["blah"]], currentUser: nil, success: {
+                var expectedUsers: [(LocalPerson, User?)] = []
+                let addressBook = FakeAddressBook([1: ["blah"], 2: ["blah"]])
+                subject.find(addressBook, currentUser: nil, success: {
                     users in
                     expectedUsers = users
                 }, failure: { _ in })
@@ -54,7 +65,8 @@ class InviteServiceSpec: QuickSpec {
                 ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
                 var loadedSuccessfully = true
 
-                subject.find(["1":["blah"], "2":["blah"]], currentUser: nil, success: {
+                let addressBook = FakeAddressBook([1: ["blah"], 2: ["blah"]])
+                subject.find(addressBook, currentUser: nil, success: {
                     users in
                     loadedSuccessfully = true
                 }, failure: { (error, statusCode) in

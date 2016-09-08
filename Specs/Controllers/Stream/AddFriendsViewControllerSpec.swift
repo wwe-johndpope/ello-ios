@@ -32,10 +32,6 @@ class AddFriendsViewControllerSpec: QuickSpec {
             it("is a AddFriendsViewController") {
                 expect(subject).to(beAKindOf(AddFriendsViewController.self))
             }
-
-            it("has an invite service") {
-                expect(subject.inviteService).toNot(beNil())
-            }
         }
 
         describe("setContacts") {
@@ -45,14 +41,6 @@ class AddFriendsViewControllerSpec: QuickSpec {
                 subject.setContacts(localPeople)
                 expect(subject.streamViewController.dataSource.streamCellItems.count).toEventually(equal(1))
                 expect((subject.streamViewController.dataSource.visibleCellItems.first?.jsonable as! LocalPerson).name) == localPeople.first?.0.name
-            }
-
-            it("sets the internal list of contacts") {
-                let localPeople: [(LocalPerson, User?)] = [(LocalPerson(name: "name", emails: ["test@testing.com"], id: 123), .None)]
-
-                subject.setContacts(localPeople)
-                expect(subject.allContacts.count) == 1
-                expect(subject.allContacts.first?.0.name) == localPeople.first?.0.name
             }
         }
 
@@ -64,7 +52,7 @@ class AddFriendsViewControllerSpec: QuickSpec {
                         (LocalPerson(name: "name", emails: ["test@testing.com"], id: 123), .None),
                         (LocalPerson(name: "that guy", emails: ["another@email.com"], id: 124), .None)
                     ]
-                    subject.allContacts = localPeople
+                    subject.setContacts(localPeople)
                     subject.searchFieldChanged("", isPostSearch: false)
                     expect(subject.streamViewController.dataSource.visibleCellItems.count) == 2
                 }
