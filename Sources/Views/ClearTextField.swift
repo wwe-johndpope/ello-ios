@@ -19,7 +19,7 @@ public class ClearTextField: UITextField {
         }
     }
     private var line = UIView()
-    var hasOnePassword = true {
+    var hasOnePassword = false {
         didSet {
             onePasswordButton.hidden = !hasOnePassword
             setNeedsLayout()
