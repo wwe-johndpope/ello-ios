@@ -74,7 +74,7 @@ extension UIImagePickerController {
         callback: ImagePickerSheetResult -> Void
         ) -> ImagePickerSheetController
     {
-        let controller = ImagePickerSheetController(mediaType: .ImageAndVideo)
+        let controller = ImagePickerSheetController(mediaType: config.mediaType)
 
         if UIImagePickerController.isSourceTypeAvailable(.Camera) {
             controller.addAction(

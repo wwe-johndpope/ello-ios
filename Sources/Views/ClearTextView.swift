@@ -116,7 +116,6 @@ public class ClearTextView: UITextView {
 
     override public func intrinsicContentSize() -> CGSize {
         let fixedWidth = max(self.frame.size.width, 20)
-        self.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = self.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         return CGSize(width: fixedWidth, height: max(newSize.height + 2.5, Size.minTextViewHeight))
     }

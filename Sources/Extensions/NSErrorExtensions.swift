@@ -9,6 +9,9 @@ extension NSError {
         if let elloNetworkError = self.userInfo[NSLocalizedFailureReasonErrorKey] as? ElloNetworkError {
             return elloNetworkError.title
         }
+        if let reason = self.userInfo[NSLocalizedFailureReasonErrorKey] as? String {
+            return reason
+        }
         return nil
     }
 

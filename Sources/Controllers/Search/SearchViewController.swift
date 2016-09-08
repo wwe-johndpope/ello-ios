@@ -82,12 +82,12 @@ extension SearchViewController: SearchScreenDelegate {
         loadEndpoint(text, isPostSearch: isPostSearch)
     }
 
-    public func searchFieldWillChange() {
+    public func searchShouldReset() {
         streamViewController.hideNoResults()
     }
 
     public func toggleChanged(text: String, isPostSearch: Bool) {
-        searchFieldWillChange()
+        searchShouldReset()
         loadEndpoint(text, isPostSearch: isPostSearch, checkSearchText: false)
     }
 

@@ -8,7 +8,7 @@ import SwiftyJSON
 public typealias AccountDeletionSuccessCompletion = () -> Void
 public typealias ProfileSuccessCompletion = (user: User) -> Void
 public typealias ProfileUploadSuccessCompletion = (url: NSURL, user: User) -> Void
-public typealias ProfileUploadBothSuccessCompletion = (avatarURL: NSURL, coverImageURL: NSURL, user: User) -> Void
+public typealias ProfileUploadBothSuccessCompletion = (avatarURL: NSURL?, coverImageURL: NSURL?, user: User) -> Void
 
 public struct ProfileService {
 
@@ -62,8 +62,8 @@ public struct ProfileService {
     }
 
     public func updateUserImages(
-        avatarImage avatarImage: ImageRegionData,
-        coverImage: ImageRegionData,
+        avatarImage avatarImage: ImageRegionData?,
+        coverImage: ImageRegionData?,
         properties: [String: AnyObject] = [:],
         success: ProfileUploadBothSuccessCompletion,
         failure: ElloFailureCompletion
@@ -76,36 +76,52 @@ public struct ProfileService {
             if let error = error {
                 failure(error: error, statusCode: statusCode)
             }
-            else if let avatarURL = avatarURL, coverImageURL = coverImageURL {
-                TemporaryCache.save(.CoverImage, image: avatarImage.image)
-                TemporaryCache.save(.Avatar, image: coverImage.image)
-                let mergedProperties: [String: AnyObject] = properties + [
-                    "remote_cover_image_url": coverImageURL.absoluteString,
-                    "remote_avatar_url": avatarURL.absoluteString,
-                ]
+            else {
+                var mergedProperties: [String: AnyObject] = properties
+
+                if let avatarImage = avatarImage, avatarURL = avatarURL {
+                    TemporaryCache.save(.Avatar, image: avatarImage.image)
+                    mergedProperties["remote_avatar_url"] = avatarURL.absoluteString
+                }
+
+                if let coverImage = coverImage, coverImageURL = coverImageURL {
+                    TemporaryCache.save(.CoverImage, image: coverImage.image)
+                    mergedProperties["remote_cover_image_url"] = coverImageURL.absoluteString
+                }
+
                 self.updateUserProfile(mergedProperties, success: { user in
                     success(avatarURL: avatarURL, coverImageURL: coverImageURL, user: user)
                 }, failure: failure)
             }
         }
 
-        S3UploadingService().upload(imageRegionData: avatarImage, success: { url in
-            avatarURL = url
+        if let avatarImage = avatarImage {
+            S3UploadingService().upload(imageRegionData: avatarImage, success: { url in
+                avatarURL = url
+                bothImages()
+            }, failure: { uploadError, uploadStatusCode in
+                error = error ?? uploadError
+                statusCode = statusCode ?? uploadStatusCode
+                bothImages()
+            })
+        }
+        else {
             bothImages()
-        }, failure: { uploadError, uploadStatusCode in
-            error = error ?? uploadError
-            statusCode = statusCode ?? uploadStatusCode
-            bothImages()
-        })
+        }
 
-        S3UploadingService().upload(imageRegionData: coverImage, success: { url in
-            coverImageURL = url
+        if let coverImage = coverImage {
+            S3UploadingService().upload(imageRegionData: coverImage, success: { url in
+                coverImageURL = url
+                bothImages()
+            }, failure: { uploadError, uploadStatusCode in
+                error = error ?? uploadError
+                statusCode = statusCode ?? uploadStatusCode
+                bothImages()
+            })
+        }
+        else {
             bothImages()
-        }, failure: { uploadError, uploadStatusCode in
-            error = error ?? uploadError
-            statusCode = statusCode ?? uploadStatusCode
-            bothImages()
-        })
+        }
     }
 
     public func updateUserDeviceToken(token: NSData) {

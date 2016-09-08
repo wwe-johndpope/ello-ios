@@ -16,6 +16,15 @@ public class OnboardingScreen: EmptyScreen {
 
     public weak var delegate: OnboardingDelegate?
 
+    public var isLastOnboardingStep: Bool = false {
+        didSet {
+            promptButton.hidden = !isLastOnboardingStep
+            nextButton.hidden = isLastOnboardingStep
+            abortButton.hidden = isLastOnboardingStep
+
+            promptButton.style = isLastOnboardingStep ? .Green : .RoundedGray
+        }
+    }
     public var canGoNext: Bool = false {
         didSet {
             promptButton.hidden = canGoNext

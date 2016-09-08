@@ -7,7 +7,7 @@ import Quick
 import Nimble
 
 
-struct FakeAddressBook: ContactList {
+struct FakeAddressBook: AddressBookProtocol {
     var localPeople: [LocalPerson] {
         return []
     }

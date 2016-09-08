@@ -6,6 +6,8 @@ import SSPullToRefresh
 import FLAnimatedImage
 import Crashlytics
 import SwiftyUserDefaults
+import DeltaCalculator
+
 
 // MARK: Delegate Implementations
 public protocol InviteDelegate: class {
@@ -60,6 +62,10 @@ public protocol ColumnToggleDelegate: class {
 public protocol DiscoverCategoryPickerDelegate: class {
     func discoverCategoryTapped(endpoint: ElloAPI)
     func discoverAllCategoriesTapped()
+}
+
+public protocol SearchStreamDelegate: class {
+    func searchFieldChanged(text: String)
 }
 
 // MARK: StreamNotification
@@ -160,6 +166,10 @@ public final class StreamViewController: BaseElloViewController {
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
     weak var selectedCategoryDelegate: SelectedCategoryDelegate?
+    var searchStreamDelegate: SearchStreamDelegate? {
+        get { return dataSource.searchStreamDelegate }
+        set { dataSource.searchStreamDelegate = newValue }
+    }
     var notificationDelegate: NotificationDelegate? {
         get { return dataSource.notificationDelegate }
         set { dataSource.notificationDelegate = newValue }
@@ -172,6 +182,14 @@ public final class StreamViewController: BaseElloViewController {
             collectionView.reloadData()
             self.scrollToTop()
         }
+    }
+
+    public func batchUpdateFilter(filter: StreamDataSource.StreamFilter) {
+        let delta = dataSource.updateFilter(filter)
+        let collectionView = self.collectionView
+        collectionView.performBatchUpdates({
+            delta.applyUpdatesToCollectionView(collectionView, inSection: 0)
+        }, completion: nil)
     }
 
     public var contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
@@ -634,6 +652,7 @@ public final class StreamViewController: BaseElloViewController {
 }
 
 // MARK: DELEGATE EXTENSIONS
+
 // MARK: StreamViewController: InviteDelegate
 extension StreamViewController: InviteDelegate {
 
@@ -1042,6 +1061,12 @@ extension StreamViewController: WebLinkDelegate {
 
 // MARK: StreamViewController: UICollectionViewDelegate
 extension StreamViewController: UICollectionViewDelegate {
+
+    public func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        if let cell = cell as? DismissableCell {
+            cell.didEndDisplay()
+        }
+    }
 
     public func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         let tappedCell = collectionView.cellForItemAtIndexPath(indexPath)

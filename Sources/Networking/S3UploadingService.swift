@@ -16,6 +16,7 @@ public class S3UploadingService: NSObject {
             upload(data, contentType: contentType, success: success, failure: failure)
         }
         else {
+            upload(image.image, success: success, failure: failure)
         }
     }
 
@@ -26,6 +27,10 @@ public class S3UploadingService: NSObject {
                 nextTick {
                     self.upload(data, contentType: "image/jpeg", success: success, failure: failure)
                 }
+            }
+            else {
+                let error = NSError(domain: ElloErrorDomain, code: 500, userInfo: [NSLocalizedFailureReasonErrorKey: "Could not compress image as JPEG"])
+                failure(error: error, statusCode: nil)
             }
         }
     }
@@ -51,7 +56,7 @@ public class S3UploadingService: NSObject {
                             success(url: NSURL(string: "\(endpoint)/\(prefix)/\(filename)"))
                         })
                         .onFailure({ (error: NSError) in
-                            _ = failure(error: error, statusCode: nil)
+                            failure(error: error, statusCode: nil)
                         })
                         .start()
                 }

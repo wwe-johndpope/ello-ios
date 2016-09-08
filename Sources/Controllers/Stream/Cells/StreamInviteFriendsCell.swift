@@ -8,7 +8,7 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamInviteFriendsCell"
 
     @IBOutlet weak public var nameLabel: UILabel!
-    @IBOutlet weak public var inviteButton: UIButton!
+    @IBOutlet weak public var inviteButton: StyledButton!
 
     public var inviteDelegate: InviteDelegate?
     public var inviteCache: InviteCache?
@@ -23,10 +23,9 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
 
     override public func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.font = UIFont.defaultFont()
+        nameLabel.font = UIFont.defaultFont(18)
         nameLabel.textColor = UIColor.greyA()
         nameLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        inviteButton.titleLabel?.font = UIFont.defaultFont()
         // bottom border
         bottomBorder.backgroundColor = UIColor.greyF1().CGColor
         self.layer.addSublayer(bottomBorder)
@@ -48,13 +47,11 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
 
     public func styleInviteButton(invited: Bool? = false) {
         if invited == true {
-            inviteButton.backgroundColor = UIColor.greyE5()
-            inviteButton.setTitleColor(UIColor.grey6(), forState: UIControlState.Normal)
+            inviteButton.style = .Invited
             inviteButton.setTitle(InterfaceString.Friends.Resend, forState: UIControlState.Normal)
         }
         else {
-            inviteButton.backgroundColor = UIColor.greyA()
-            inviteButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            inviteButton.style = .InviteFriend
             inviteButton.setTitle(InterfaceString.Friends.Invite, forState: UIControlState.Normal)
         }
     }

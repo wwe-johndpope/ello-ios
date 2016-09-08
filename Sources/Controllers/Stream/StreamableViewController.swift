@@ -305,6 +305,8 @@ extension StreamableViewController: InviteResponder {
                     self.presentViewController(vc, animated: true, completion: nil)
                 }
             case let .Failure(addressBookError):
+                guard addressBookError != .Cancelled else { return }
+
                 Tracker.sharedTracker.contactAccessPreferenceChanged(false)
                 let message = addressBookError.rawValue
                 let alertController = AlertViewController(

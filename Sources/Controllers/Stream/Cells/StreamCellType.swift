@@ -35,6 +35,7 @@ public enum StreamCellType: Equatable {
     case Notification
     case Placeholder
     case ProfileHeader
+    case Search(placeholder: String)
     case SeeMoreComments
     case Spacer(height: CGFloat)
     case FullWidthSpacer(height: CGFloat)
@@ -77,6 +78,7 @@ public enum StreamCellType: Equatable {
         NoPosts,
         Notification,
         ProfileHeader,
+        Search(placeholder: ""),
         SeeMoreComments,
         Spacer(height: 0.0),
         FullWidthSpacer(height: 0.0),
@@ -122,6 +124,7 @@ public enum StreamCellType: Equatable {
         case Notification: return NotificationCell.reuseIdentifier
         case Placeholder: return "Placeholder"
         case ProfileHeader: return ProfileHeaderCell.reuseIdentifier
+        case Search: return SearchStreamCell.reuseIdentifier
         case SeeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
         case Spacer: return "StreamSpacerCell"
         case FullWidthSpacer: return "StreamSpacerCell"
@@ -170,13 +173,13 @@ public enum StreamCellType: Equatable {
         case NoPosts: return NoPostsCellPresenter.configure
         case Notification: return NotificationCellPresenter.configure
         case ProfileHeader: return ProfileHeaderCellPresenter.configure
+        case Search: return SearchStreamCellPresenter.configure
         case Spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .whiteColor() }
         case FullWidthSpacer: return { (cell, _, _, _, _) in cell.backgroundColor = .whiteColor() }
         case StreamLoading: return StreamLoadingCellPresenter.configure
         case Text: return StreamTextCellPresenter.configure
         case TextHeader: return TextHeaderCellPresenter.configure
         case Toggle: return StreamToggleCellPresenter.configure
-        case Unknown: return ProfileHeaderCellPresenter.configure
         case UserAvatars: return UserAvatarsCellPresenter.configure
         case UserListItem: return UserListItemCellPresenter.configure
         default: return { _ in }
@@ -200,6 +203,7 @@ public enum StreamCellType: Equatable {
         case Notification: return NotificationCell.self
         case Placeholder: return UICollectionViewCell.self
         case ProfileHeader: return ProfileHeaderCell.self
+        case Search: return SearchStreamCell.self
         case SeeMoreComments: return StreamSeeMoreCommentsCell.self
         case StreamLoading: return StreamLoadingCell.self
         case Text: return StreamTextCell.self
@@ -239,6 +243,8 @@ public enum StreamCellType: Equatable {
             return height
         case let FullWidthSpacer(height):
             return height
+        case Search:
+            return 68
         case StreamLoading,
              UserAvatars:
             return 50
@@ -274,6 +280,7 @@ public enum StreamCellType: Equatable {
              NoPosts,
              Notification,
              ProfileHeader,
+             Search,
              SeeMoreComments,
              StreamLoading,
              TextHeader,
@@ -314,6 +321,7 @@ public enum StreamCellType: Equatable {
             FullWidthSpacer(height: 0.0),
             Notification,
             Placeholder,
+            Search(placeholder: ""),
             Spacer(height: 0.0),
             StreamLoading,
             TextHeader(nil),

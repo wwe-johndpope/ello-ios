@@ -16,6 +16,7 @@ public enum InterfaceImage: String {
     }
 
     case ElloLogo = "ello_logo"
+    case ElloGrayLineLogo = "ello_gray_line_logo"
 
     // Postbar Icons
     case Eye = "eye"
@@ -116,6 +117,7 @@ public enum InterfaceImage: String {
             .BubbleTail,
             .BuyButton,
             .ElloLogo,
+            .ElloGrayLineLogo,
             .GiantHeart,
             .NarrationPointer,
             .ValidationError,

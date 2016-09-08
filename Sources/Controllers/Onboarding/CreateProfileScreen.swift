@@ -20,17 +20,16 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         static let avatarOffset: CGFloat = 20
         static let fieldsTopOffset: CGFloat = 40
         static let fieldsInnerOffset: CGFloat = 20
-        static let fieldHeight: CGFloat = 30
         static let avatarHeight: CGFloat = 220
         static let uploadSize = CGSize(width: 130, height: 40)
     }
 
     weak var delegate: CreateProfileDelegate?
     var name: String? {
-        get { return nameField.text }
+        get { return nameTextView.text }
         set {
-            nameField.text = newValue
-            nameField.validationState = (newValue?.isEmpty == false) ? .OKSmall : .None
+            nameTextView.text = newValue
+            nameTextView.validationState = (newValue?.isEmpty == false) ? .OKSmall : .None
         }
     }
     var bio: String? {
@@ -49,18 +48,19 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     }
     var coverImage: ImageRegionData? {
         didSet {
-            setImage(coverImage, target: .CoverImage)
+            setImage(coverImage, target: .CoverImage, updateDelegate: false)
         }
     }
     var avatarImage: ImageRegionData? {
         didSet {
-            setImage(avatarImage, target: .Avatar)
+            setImage(avatarImage, target: .Avatar, updateDelegate: false)
         }
     }
 
     private var uploading: ImageTarget?
 
     private let scrollView = UIScrollView()
+    private var prevOffset: CGPoint = .zero
     private var scrollViewWidth: Constraint!
     private let headerLabel = UILabel()
 
@@ -72,7 +72,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     private let uploadAvatarButton = StyledButton(style: .Green)
     private let uploadAvatarPrompt = UILabel()
 
-    private let nameField = ClearTextField()
+    private let nameTextView = ClearTextView()
     private let bioTextView = ClearTextView()
     private let linksTextView = ClearTextView()
 
@@ -89,30 +89,36 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
 
         avatarImageView.backgroundColor = .greyE5()
         avatarImageView.clipsToBounds = true
-        avatarImageView.contentMode = .ScaleAspectFill
+        avatarImageView.contentMode = .Center
+        avatarImageView.image = InterfaceImage.ElloGrayLineLogo.normalImage
         uploadAvatarPrompt.textAlignment = .Center
         uploadAvatarPrompt.textColor = .greyA()
         uploadAvatarPrompt.font = UIFont.defaultFont(12)
         uploadAvatarPrompt.numberOfLines = 2
 
-        nameField.textColor = .blackColor()
-        nameField.lineColor = .greyE5()
-        nameField.selectedLineColor = .blackColor()
-        nameField.delegate = self
+        nameTextView.textColor = .blackColor()
+        nameTextView.scrollEnabled = false
+        nameTextView.lineColor = .greyE5()
+        nameTextView.selectedLineColor = .blackColor()
+        nameTextView.placeholderColor = .greyC()
+        nameTextView.keyboardAppearance = .Dark
+
+        nameTextView.autocapitalizationType = .Words
+        nameTextView.autocorrectionType = .No
+        nameTextView.spellCheckingType = .No
 
         bioTextView.textColor = .blackColor()
         bioTextView.scrollEnabled = false
         bioTextView.lineColor = .greyE5()
         bioTextView.selectedLineColor = .blackColor()
         bioTextView.placeholderColor = .greyC()
-        bioTextView.delegate = self
+        bioTextView.keyboardAppearance = .Dark
 
         linksTextView.textColor = .blackColor()
         linksTextView.scrollEnabled = false
         linksTextView.lineColor = .greyE5()
         linksTextView.selectedLineColor = .blackColor()
         linksTextView.placeholderColor = .greyC()
-        linksTextView.delegate = self
 
         linksTextView.autocapitalizationType = .None
         linksTextView.autocorrectionType = .No
@@ -123,6 +129,10 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     }
 
     override func bindActions() {
+        scrollView.delegate = self
+        nameTextView.delegate = self
+        bioTextView.delegate = self
+        linksTextView.delegate = self
         uploadCoverImageButton.addTarget(self, action: #selector(uploadCoverImageAction), forControlEvents: .TouchUpInside)
         uploadAvatarButton.addTarget(self, action: #selector(uploadAvatarAction), forControlEvents: .TouchUpInside)
     }
@@ -136,7 +146,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
             )
         uploadCoverImagePrompt.text = InterfaceString.Onboard.UploadCoverImagePrompt
         uploadAvatarPrompt.text = InterfaceString.Onboard.UploadAvatarPrompt
-        nameField.placeholder = InterfaceString.Onboard.NamePlaceholder
+        nameTextView.placeholder = InterfaceString.Onboard.NamePlaceholder
         bioTextView.placeholder = InterfaceString.Onboard.BioPlaceholder
         linksTextView.placeholder = InterfaceString.Onboard.LinksPlaceholder
     }
@@ -153,7 +163,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         scrollView.addSubview(avatarImageView)
         scrollView.addSubview(uploadAvatarButton)
         scrollView.addSubview(uploadAvatarPrompt)
-        scrollView.addSubview(nameField)
+        scrollView.addSubview(nameTextView)
         scrollView.addSubview(bioTextView)
         scrollView.addSubview(linksTextView)
 
@@ -202,18 +212,16 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
             make.top.equalTo(uploadAvatarButton.snp_bottom).offset(Size.promptOffset)
         }
 
-        nameField.snp_makeConstraints { make in
+        nameTextView.snp_makeConstraints { make in
             make.top.equalTo(uploadAvatarPrompt.snp_bottom).offset(Size.fieldsTopOffset)
-            make.height.equalTo(Size.fieldHeight)
             make.leading.trailing.equalTo(scrollView).inset(Size.insets)
         }
         bioTextView.snp_makeConstraints { make in
-            make.top.equalTo(nameField.snp_bottom).offset(Size.fieldsInnerOffset)
+            make.top.equalTo(nameTextView.snp_bottom).offset(Size.fieldsInnerOffset)
             make.leading.trailing.equalTo(scrollView).inset(Size.insets)
         }
         linksTextView.snp_makeConstraints { make in
             make.top.equalTo(bioTextView.snp_bottom).offset(Size.fieldsInnerOffset)
-            make.height.equalTo(Size.fieldHeight)
             make.leading.trailing.equalTo(scrollView).inset(Size.insets)
             make.bottom.equalTo(scrollView.snp_bottom).inset(Size.insets)
         }
@@ -226,7 +234,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     }
 
     override public func resignFirstResponder() -> Bool {
-        nameField.resignFirstResponder()
+        nameTextView.resignFirstResponder()
         bioTextView.resignFirstResponder()
         linksTextView.resignFirstResponder()
         return true
@@ -278,7 +286,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         }
         else {
             image.copyWithCorrectOrientationAndSize() { image in
-                self.setImage(ImageRegionData(image: image), target: uploading)
+                self.setImage(ImageRegionData(image: image), target: uploading, updateDelegate: true)
                 self.delegate?.dismissController()
             }
         }
@@ -293,30 +301,42 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
 
         AssetsToRegions.processPHAssets(assets) { (images: [ImageRegionData]) in
             for imageRegion in images {
-                self.setImage(imageRegion, target: uploading)
+                self.setImage(imageRegion, target: uploading, updateDelegate: true)
                 break
             }
         }
     }
 
-    func setImage(imageRegion: ImageRegionData?, target uploading: ImageTarget) {
+    func setImage(imageRegion: ImageRegionData?, target uploading: ImageTarget, updateDelegate: Bool) {
         let imageView: FLAnimatedImageView
         switch uploading {
         case .CoverImage:
             imageView = coverImageView
-            if let imageRegion = imageRegion { delegate?.assignCoverImage(imageRegion) }
             uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGray
+            if let imageRegion = imageRegion
+                where updateDelegate { delegate?.assignCoverImage(imageRegion) }
         case .Avatar:
             imageView = avatarImageView
-            if let imageRegion = imageRegion { delegate?.assignAvatar(imageRegion) }
             uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGray
+            if let imageRegion = imageRegion
+                where updateDelegate  { delegate?.assignAvatar(imageRegion) }
         }
 
-        if let data = imageRegion?.data where imageRegion?.contentType == "image/gif" {
-            imageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
+        if let imageRegion = imageRegion {
+            imageView.contentMode = .ScaleAspectFill
+            if let data = imageRegion.data where imageRegion.contentType == "image/gif" {
+                imageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
+            }
+            else {
+                imageView.image = imageRegion.image
+            }
         }
-        else {
-            imageView.image = imageRegion?.image
+        else if imageView == avatarImageView {
+            imageView.contentMode = .Center
+            imageView.image = InterfaceImage.ElloGrayLineLogo.normalImage
+        }
+        else if imageView == coverImageView {
+            imageView.image = nil
         }
     }
 
@@ -335,11 +355,24 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
 extension CreateProfileScreen: UITextViewDelegate {
     public func textView(textView: UITextView, shouldChangeTextInRange nsrange: NSRange, replacementText: String) -> Bool {
         var text = textView.text ?? ""
+        let originalText = text
         if let range = text.rangeFromNSRange(nsrange) {
             text.replaceRange(range, with: replacementText)
         }
 
         switch textView {
+        case nameTextView:
+            if replacementText == "\n" {
+                text = originalText
+            }
+            delegate?.assignName(text)
+            nameTextView.validationState = text.isEmpty ? .None : .OKSmall
+
+            if replacementText == "\n" {
+                nameTextView.resignFirstResponder()
+                bioTextView.becomeFirstResponder()
+                return false
+            }
         case bioTextView:
             delegate?.assignBio(text)
             bioTextView.validationState = text.isEmpty ? .None : .OKSmall
@@ -348,54 +381,28 @@ extension CreateProfileScreen: UITextViewDelegate {
             linksTextView.validationState = text.isEmpty ? .None : .OKSmall
         default: break
         }
+
         return true
     }
 
     public func textViewDidChange(textView: UITextView) {
         (textView as? ClearTextView)?.textDidChange()
     }
+
+    public func textViewDidChangeSelection(textView: UITextView) {
+        let range = textView.selectedRange
+        textView.scrollRangeToVisible(range)
+    }
 }
 
-extension CreateProfileScreen: UITextFieldDelegate {
+extension CreateProfileScreen: UIScrollViewDelegate {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        guard scrollView == self.scrollView else { return }
 
-    public func textFieldDidEndEditing(textField: UITextField) {
-        textField.setNeedsLayout()
-        textField.layoutIfNeeded()
-    }
-
-    public func textField(textField: UITextField, shouldChangeCharactersInRange nsrange: NSRange, replacementString: String) -> Bool {
-        guard let
-            textField = textField as? ClearTextField
-        else { return true }
-
-        var text = textField.text ?? ""
-        if let range = text.rangeFromNSRange(nsrange) {
-            text.replaceRange(range, with: replacementString)
-        }
-
-        textField.validationState = text.isEmpty ? .None : .OKSmall
-
-        switch textField {
-        case nameField:
-            delegate?.assignName(text)
-        default: break
-        }
-
-        return true
-    }
-
-    public func textFieldShouldReturn(textField: UITextField) -> Bool {
-        switch textField {
-        case nameField:
-            delegate?.assignName(textField.text)
-            bioTextView.becomeFirstResponder()
-            return true
-        case linksTextView:
-            delegate?.assignLinks(textField.text)
-            resignFirstResponder()
-            return true
-        default:
-            return true
+        let delta = scrollView.contentOffset.y - prevOffset.y
+        prevOffset = scrollView.contentOffset
+        if bioTextView.isFirstResponder() && delta == -25 {
+            scrollView.contentOffset.y = scrollView.contentOffset.y + 55
         }
     }
 }

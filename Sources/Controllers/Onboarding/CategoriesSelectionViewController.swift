@@ -2,9 +2,6 @@
 ///  CategoriesSelectionViewController.swift
 //
 
-import Moya
-
-
 public class CategoriesSelectionViewController: StreamableViewController, HasAppController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
@@ -41,14 +38,12 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
     override public func hideNavBars() {}
 
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
-        var items: [StreamCellItem] = []
-
         let header = NSAttributedString(
             primaryHeader: InterfaceString.Onboard.PickCategoriesPrimary,
             secondaryHeader: InterfaceString.Onboard.PickCategoriesSecondary
             )
         let headerCellItem = StreamCellItem(type: .TextHeader(header))
-        items.append(headerCellItem)
+        var items: [StreamCellItem] = [headerCellItem]
 
         if let categories = jsonables as? [Category] {
             items += categories.map { StreamCellItem(jsonable: $0, type: .SelectableCategoryCard) }
@@ -58,7 +53,13 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
 }
 
 extension CategoriesSelectionViewController: OnboardingStepController {
-    public func onboardingWillProceed(abort: Bool, proceedClosure: () -> Void) {
+    public func onboardingStepBegin() {
+        let prompt = NSString(format: InterfaceString.Onboard.PickTemplate, 3) as String
+        onboardingViewController?.canGoNext = false
+        onboardingViewController?.prompt = prompt
+    }
+
+    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void) {
         if let
             userId = currentUser?.id,
             selection = streamViewController.collectionView.indexPathsForSelectedItems()
@@ -67,26 +68,20 @@ extension CategoriesSelectionViewController: OnboardingStepController {
                 return streamViewController.dataSource.jsonableForIndexPath(path) as? Category
             })
 
-            ElloProvider.oneTimeProvider = MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             UserService().setUserCategories(userId: userId, categories: categories)
                 .onSuccess { _ in
                     self.onboardingData.categories = categories
-                    proceedClosure()
+                    proceedClosure(success: true)
                 }
                 .onFail { _ in
                     let alertController = AlertViewController(error: InterfaceString.GenericError)
                     self.parentAppController?.presentViewController(alertController, animated: true, completion: nil)
+                    proceedClosure(success: nil)
                 }
         }
         else {
-            proceedClosure()
+            proceedClosure(success: true)
         }
-    }
-
-    public func onboardingStepBegin() {
-        let prompt = NSString(format: InterfaceString.Onboard.PickTemplate, 3) as String
-        onboardingViewController?.canGoNext = false
-        onboardingViewController?.prompt = prompt
     }
 }
 

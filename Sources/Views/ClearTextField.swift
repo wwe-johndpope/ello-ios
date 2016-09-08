@@ -19,7 +19,7 @@ public class ClearTextField: UITextField {
         }
     }
     private var line = UIView()
-    var hasOnePassword = false {
+    var hasOnePassword = true {
         didSet {
             onePasswordButton.hidden = !hasOnePassword
             setNeedsLayout()
@@ -48,9 +48,9 @@ public class ClearTextField: UITextField {
         rightViewMode = .Always
 
         addSubview(onePasswordButton)
-        onePasswordButton.hidden = true
+        onePasswordButton.hidden = !hasOnePassword
         onePasswordButton.snp_makeConstraints { make in
-            make.centerY.equalTo(self)
+            make.centerY.equalTo(self).offset(-2.5)
             make.trailing.equalTo(self)
             make.size.equalTo(CGSize.minButton)
         }
@@ -61,6 +61,14 @@ public class ClearTextField: UITextField {
             make.leading.trailing.bottom.equalTo(self)
             make.height.equalTo(1)
         }
+    }
+
+    override public func intrinsicContentSize() -> CGSize {
+        var size = super.intrinsicContentSize()
+        if size.height != UIViewNoIntrinsicMetric {
+            size.height += 5
+        }
+        return size
     }
 
     override public func drawPlaceholderInRect(rect: CGRect) {
@@ -101,7 +109,7 @@ public class ClearTextField: UITextField {
         var rect = super.rightViewRectForBounds(bounds)
         rect.origin.x -= 10
         if hasOnePassword {
-            rect.origin.x -= 44
+            rect.origin.x -= 20
         }
         return rect
     }

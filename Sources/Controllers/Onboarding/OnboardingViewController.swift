@@ -5,8 +5,6 @@
 import PINRemoteImage
 
 
-class InviteFriendsViewController: UIViewController {}
-
 public class OnboardingViewController: BaseElloViewController, HasAppController {
     private enum OnboardingDirection: CGFloat {
         case Left = -1
@@ -17,12 +15,27 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
     var screen: OnboardingScreenProtocol { return mockScreen ?? (self.view as! OnboardingScreenProtocol) }
 
     var parentAppController: AppViewController?
-    var isTransitioning = false
+    var inviteFriendsController: InviteFriendsViewController? {
+        willSet {
+            guard inviteFriendsController == nil else {
+                fatalError("inviteFriendsController should only be set once")
+            }
+        }
+        didSet {
+            onboardingViewControllers.append(inviteFriendsController!)
+        }
+    }
+    var isTransitioning: Bool { return transitioningViewController != nil }
     let onboardingData = OnboardingData()
     private var visibleViewController: UIViewController?
+    private var transitioningViewController: UIViewController?
     private var visibleViewControllerIndex: Int = 0
     private var onboardingViewControllers = [UIViewController]()
 
+    public var isLastOnboardingStep: Bool {
+        get { return screen.isLastOnboardingStep }
+        set { screen.isLastOnboardingStep = newValue }
+    }
     public var canGoNext: Bool {
         get { return screen.canGoNext }
         set { screen.canGoNext = newValue }
@@ -101,9 +114,10 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if !isTransitioning {
-            visibleViewController?.view.frame = screen.controllerContainer.bounds
-        }
+        visibleViewController?.view.frame.origin.y = screen.controllerContainer.bounds.origin.y
+        visibleViewController?.view.frame.size.height = screen.controllerContainer.bounds.size.height
+        transitioningViewController?.view.frame.origin.y = screen.controllerContainer.bounds.origin.y
+        transitioningViewController?.view.frame.size.height = screen.controllerContainer.bounds.size.height
     }
 
 }
@@ -158,13 +172,27 @@ extension OnboardingViewController {
             Tracker.sharedTracker.completedContactImport()
         }
 
-        let proceedClosure: () -> Void = abort ? doneOnboarding : goToNextStep
-        if let onboardingStep = visibleViewController as? OnboardingStepController {
-            onboardingStep.onboardingWillProceed(abort, proceedClosure: proceedClosure)
+        let proceedClosure: (success: Bool?) -> Void
+        if abort {
+            proceedClosure = { _ in
+                self.doneOnboarding()
+            }
         }
         else {
-            proceedClosure()
+            proceedClosure = { success in
+                ElloHUD.hideLoadingHudInView(self.view)
+                if success == true {
+                    self.goToNextStep()
+                }
+                else if success == false {
+                    self.doneOnboarding()
+                }
+            }
         }
+
+        ElloHUD.showLoadingHudInView(self.view)
+        let onboardingStep = visibleViewController as! OnboardingStepController
+        onboardingStep.onboardingWillProceed(abort, proceedClosure: proceedClosure)
     }
 
 }
@@ -273,7 +301,7 @@ extension OnboardingViewController {
                 height: screen.controllerContainer.frame.height
             )
 
-        isTransitioning = true
+        transitioningViewController = nextViewController
         transition(
             from: visibleViewController,
             to: nextViewController,
@@ -288,7 +316,7 @@ extension OnboardingViewController {
                 nextViewController.didMoveToParentViewController(self)
                 visibleViewController.removeFromParentViewController()
                 self.visibleViewController = nextViewController
-                self.isTransitioning = false
+                self.transitioningViewController = nil
             })
     }
 

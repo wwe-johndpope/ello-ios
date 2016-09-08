@@ -14,14 +14,14 @@ extension NSAttributedString {
     public convenience init(primaryHeader: String, secondaryHeader: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        let plain: [String: AnyObject] = [
-            NSForegroundColorAttributeName: UIColor.greyA(),
+        let bold: [String: AnyObject] = [
+            NSForegroundColorAttributeName: UIColor.blackColor(),
             NSFontAttributeName: UIFont.defaultFont(16),
             NSParagraphStyleAttributeName: paragraphStyle,
         ]
-        let bold: [String: AnyObject] = [
-            NSForegroundColorAttributeName: UIColor.blackColor(),
-            NSFontAttributeName: UIFont.defaultBoldFont(16),
+        let plain: [String: AnyObject] = [
+            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSFontAttributeName: UIFont.defaultFont(16),
             NSParagraphStyleAttributeName: paragraphStyle,
         ]
         let header = NSAttributedString(string: primaryHeader, attributes: bold) +

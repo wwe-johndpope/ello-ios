@@ -5,11 +5,11 @@
 import AddressBook
 import Result
 
-public protocol ContactList {
+public protocol AddressBookProtocol {
     var localPeople: [LocalPerson] { get }
 }
 
-public struct AddressBook: ContactList {
+public struct AddressBook: AddressBookProtocol {
     private let addressBook: ABAddressBook
     public let localPeople: [LocalPerson]
 

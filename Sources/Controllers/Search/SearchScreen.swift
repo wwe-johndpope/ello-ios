@@ -2,18 +2,16 @@
 ///  SearchScreen.swift
 //
 
-@objc
-public protocol SearchScreenDelegate {
+public protocol SearchScreenDelegate: class {
     func searchCanceled()
     func searchFieldCleared()
     func searchFieldChanged(text: String, isPostSearch: Bool)
-    func searchFieldWillChange()
+    func searchShouldReset()
     func toggleChanged(text: String, isPostSearch: Bool)
     func findFriendsTapped()
 }
 
-@objc
-public protocol SearchScreenProtocol {
+public protocol SearchScreenProtocol: class {
     var delegate: SearchScreenDelegate? { get set }
     var hasBackButton: Bool { get set }
     func viewForStream() -> UIView
@@ -21,10 +19,10 @@ public protocol SearchScreenProtocol {
 }
 
 public class SearchScreen: UIView, SearchScreenProtocol {
-    private var throttled: ThrottledBlock
+    private var debounced: ThrottledBlock
     public private(set) var navigationBar: ElloNavigationBar!
     public private(set) var navigationItem: UINavigationItem!
-    public private(set) var searchField: UITextField!
+    public private(set) var searchField: SearchTextField!
     private var searchControlsContainer: UIView!
     private var postsToggleButton: OutlineElloButton?
     private var peopleToggleButton: OutlineElloButton?
@@ -55,7 +53,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 // MARK: init
 
     public init(frame: CGRect, isSearchView: Bool, navBarTitle: String = InterfaceString.Search.Title, fieldPlaceholderText: String = InterfaceString.Search.Prompt) {
-        throttled = debounce(0.8)
+        debounced = debounce(0.8)
         bottomInset = 0
         self.navBarTitle = navBarTitle
         self.fieldPlaceholderText = fieldPlaceholderText
@@ -126,19 +124,9 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     }
 
     private func setupSearchField() {
-        searchField = UITextField(frame: CGRect(x: 0, y: 0, width: searchControlsContainer.frame.size.width, height: searchControlsContainer.frame.size.height - 10))
+        searchField = SearchTextField(frame: CGRect(x: 0, y: 0, width: searchControlsContainer.frame.size.width, height: searchControlsContainer.frame.size.height - 10))
         searchField.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
-        searchField.clearButtonMode = .WhileEditing
-        searchField.font = UIFont.defaultBoldFont(18)
-        searchField.textColor = UIColor.blackColor()
-        searchField.attributedPlaceholder = NSAttributedString(string: "  \(fieldPlaceholderText)", attributes: [NSForegroundColorAttributeName: UIColor.greyA()])
-        searchField.autocapitalizationType = .None
-        searchField.autocorrectionType = .No
-        searchField.spellCheckingType = .No
-        searchField.enablesReturnKeyAutomatically = true
-        searchField.returnKeyType = .Search
-        searchField.keyboardAppearance = .Dark
-        searchField.keyboardType = .Default
+        searchField.placeholder = fieldPlaceholderText
         searchField.delegate = self
         searchField.addTarget(self, action: #selector(SearchScreen.searchFieldDidChange), forControlEvents: .EditingChanged)
         searchControlsContainer.addSubview(searchField)
@@ -241,7 +229,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     private func clearSearch() {
         delegate?.searchFieldCleared()
-        throttled {}
+        debounced {}
     }
 
     public func updateInsets(bottom bottom: CGFloat) {
@@ -277,14 +265,14 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     @objc
     func searchFieldDidChange() {
-        delegate?.searchFieldWillChange()
+        delegate?.searchShouldReset()
         let text = searchField.text ?? ""
         if text.characters.count == 0 {
             clearSearch()
             showFindFriends()
         }
         else {
-            throttled { [unowned self] in
+            debounced { [unowned self] in
                 self.searchForText()
             }
         }

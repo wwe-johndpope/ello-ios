@@ -293,6 +293,9 @@ public struct InterfaceString {
         static let PickCategoriesPrimary = NSLocalizedString("Pick what you’re into.", comment: "pick what you're into")
         static let PickCategoriesSecondary = NSLocalizedString("Slow down & check out some cool ass shit.", comment: "slow down & check out some cool ass shit.")
 
+        static let InviteFriendsPrimary = NSLocalizedString("Invite some cool people.", comment: "invite some cool people")
+        static let InviteFriendsSecondary = NSLocalizedString("Make Ello better.", comment: "make ello better")
+
         static let CreateProfile = NSLocalizedString("Create Your Profile", comment: "create your profile button")
         static let InvitePeople = NSLocalizedString("Invite Cool People", comment: "invite cool people button")
         static let ImDone = NSLocalizedString("I’m done", comment: "I'm done button")
@@ -305,6 +308,8 @@ public struct InterfaceString {
         static let NamePlaceholder = NSLocalizedString("Name", comment: "Name field")
         static let BioPlaceholder = NSLocalizedString("Bio", comment: "Bio field")
         static let LinksPlaceholder = NSLocalizedString("Links", comment: "Links field")
+
+        static let Search = NSLocalizedString("Name or email", comment: "Name or email search field")
 
         static let UploadFailed = NSLocalizedString("Oh no! Something went wrong.\n\nTry that again maybe?", comment: "image upload failed during onboarding message")
         static let RelationshipFailed = NSLocalizedString("Oh no! Something went wrong.\n\nTry that again maybe?", comment: "relationship status update failed during onboarding message")

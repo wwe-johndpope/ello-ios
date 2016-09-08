@@ -4,10 +4,7 @@
 
 public class AddFriendsViewController: StreamableViewController {
 
-    let addressBook: ContactList
-
-    public let inviteService = InviteService()
-    public var allContacts: [(LocalPerson, User?)] = []
+    let addressBook: AddressBookProtocol
 
     var _mockScreen: SearchScreenProtocol?
     public var screen: SearchScreenProtocol {
@@ -16,7 +13,7 @@ public class AddFriendsViewController: StreamableViewController {
     }
     public var searchScreen: SearchScreen!
 
-    required public init(addressBook: ContactList) {
+    required public init(addressBook: AddressBookProtocol) {
         self.addressBook = addressBook
         super.init(nibName: nil, bundle: nil)
         streamViewController.initialLoadClosure = { [unowned self] in self.findFriendsFromContacts() }
@@ -87,56 +84,23 @@ public class AddFriendsViewController: StreamableViewController {
     }
 
     public func setContacts(contacts: [(LocalPerson, User?)]) {
-        allContacts = contacts
-        var foundItems = [StreamCellItem]()
-        var inviteItems = [StreamCellItem]()
-        for contact in allContacts {
-            let (person, user): (LocalPerson, User?) = contact
-            if user != nil {
-                foundItems.append(StreamCellItem(jsonable: user!, type: .UserListItem))
-            }
-            else {
-                if let currentUser = currentUser, profile = currentUser.profile {
-                    if !person.emails.contains(profile.email) {
-                        inviteItems.append(StreamCellItem(jsonable: person, type: .InviteFriends))
-                    }
-
-                }
-            }
-        }
-        foundItems.sortInPlace { ($0.jsonable as! User).username.lowercaseString < ($1.jsonable as! User).username.lowercaseString }
-        inviteItems.sortInPlace { ($0.jsonable as! LocalPerson).name.lowercaseString < ($1.jsonable as! LocalPerson).name.lowercaseString }
-        // this calls doneLoading when cells are added
-        streamViewController.appendUnsizedCellItems(foundItems + inviteItems, withWidth: self.view.frame.width)
+        let items = AddressBookHelpers.process(contacts, currentUser: currentUser)
+        streamViewController.appendStreamCellItems(items)
     }
 
     // MARK: - Private
 
     private func findFriendsFromContacts() {
-        let localToken = streamViewController.loadingToken.resetInitialPageLoadingToken()
-
-        var contacts = [String: [String]]()
-        for person in addressBook.localPeople {
-            contacts[person.identifier] = person.emails
-        }
-        InviteService().find(contacts,
+        InviteService().find(addressBook,
             currentUser: self.currentUser,
-            success: { users in
-                if !self.streamViewController.loadingToken.isValidInitialPageLoadingToken(localToken) { return }
-
+            success: { mixedContacts in
                 self.streamViewController.clearForInitialLoad()
-                let userIdentifiers = users.map { $0.identifiableBy ?? "" }
-                let mixed: [(LocalPerson, User?)] = self.addressBook.localPeople.map {
-                    if let index = userIdentifiers.indexOf($0.identifier) {
-                        return ($0, users[index])
-                    }
-                    return ($0, .None)
-                }
-                self.setContacts(mixed)
+                self.setContacts(mixedContacts)
+                self.streamViewController.doneLoading()
             },
             failure: { _ in
-                let contacts: [(LocalPerson, User?)] = self.addressBook.localPeople.map { ($0, .None) }
-                self.setContacts(contacts)
+                let mixedContacts: [(LocalPerson, User?)] = self.addressBook.localPeople.map { ($0, .None) }
+                self.setContacts(mixedContacts)
                 self.streamViewController.doneLoading()
             })
     }
@@ -158,23 +122,10 @@ extension AddFriendsViewController: SearchScreenDelegate {
     }
 
     public func searchFieldChanged(text: String, isPostSearch: Bool) {
-        if text.characters.count < 2 { return }
-        if text.isEmpty {
-            streamViewController.streamFilter = nil
-        } else {
-            streamViewController.streamFilter = { item in
-                if let user = item.jsonable as? User {
-                    return user.name.contains(text) || user.username.contains(text)
-                }
-                else if let person = item.jsonable as? LocalPerson {
-                    return person.name.contains(text) || person.emails.any { $0.contains(text) }
-                }
-                return false
-            }
-        }
+        streamViewController.streamFilter = AddressBookHelpers.searchFilter(text)
     }
 
-    public func searchFieldWillChange() {
+    public func searchShouldReset() {
         // noop
     }
 

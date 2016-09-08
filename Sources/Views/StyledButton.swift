@@ -4,23 +4,23 @@
 
 public final class StyledButton: UIButton {
     public struct Style {
-        var disabledBackgroundColor: UIColor?
-        var highlightedBackgroundColor: UIColor?
-        var selectedBackgroundColor: UIColor?
-        var backgroundColor: UIColor?
+        let disabledBackgroundColor: UIColor?
+        let highlightedBackgroundColor: UIColor?
+        let selectedBackgroundColor: UIColor?
+        let backgroundColor: UIColor?
 
-        var disabledTitleColor: UIColor?
-        var selectedTitleColor: UIColor?
-        var highlightedTitleColor: UIColor?
-        var titleColor: UIColor?
+        let disabledTitleColor: UIColor?
+        let selectedTitleColor: UIColor?
+        let highlightedTitleColor: UIColor?
+        let titleColor: UIColor?
 
-        var highlightedBorderColor: UIColor?
-        var selectedBorderColor: UIColor?
-        var borderColor: UIColor?
-        var disabledBorderColor: UIColor?
+        let highlightedBorderColor: UIColor?
+        let selectedBorderColor: UIColor?
+        let borderColor: UIColor?
+        let disabledBorderColor: UIColor?
 
-        var fontSize: CGFloat?
-        var cornerRadius: CGFloat?
+        let fontSize: CGFloat?
+        let cornerRadius: CGFloat?
 
         var font: UIFont {
             guard let size = fontSize else {
@@ -71,6 +71,10 @@ public final class StyledButton: UIButton {
     public var style: Style = .Default {
         didSet { updateStyle() }
     }
+    public var styleName: String = "Default" {
+        didSet { style = Style.byName(styleName) }
+    }
+
     override public var enabled: Bool {
         didSet { updateStyle() }
     }
@@ -93,33 +97,31 @@ public final class StyledButton: UIButton {
     }
 
     private func updateStyle() {
+        let layerBorder: UIColor?
         if !enabled {
             backgroundColor = style.disabledBackgroundColor ?? style.backgroundColor
-            if let borderColor = style.disabledBorderColor ?? style.borderColor {
-                layer.borderColor = borderColor.CGColor
-            }
+            layerBorder = style.disabledBorderColor ?? style.borderColor
         }
         else if highlighted {
             backgroundColor = style.highlightedBackgroundColor ?? style.backgroundColor
-            if let borderColor = style.selectedBorderColor ?? style.borderColor {
-                layer.borderColor = borderColor.CGColor
-            }
+            layerBorder = style.selectedBorderColor ?? style.borderColor
         }
         else if selected {
             backgroundColor = style.selectedBackgroundColor ?? style.backgroundColor
-            if let borderColor = style.highlightedBorderColor ?? style.borderColor {
-                layer.borderColor = borderColor.CGColor
-            }
+            layerBorder = style.highlightedBorderColor ?? style.borderColor
         }
         else {
             backgroundColor = style.backgroundColor
-            if let borderColor = style.borderColor {
-                layer.borderColor = borderColor.CGColor
-            }
+            layerBorder = style.borderColor
         }
 
-        if style.borderColor != nil {
+
+        if let layerBorder = layerBorder {
+            layer.borderColor = layerBorder.CGColor
             layer.borderWidth = 1
+        }
+        else {
+            layer.borderWidth = 0
         }
 
         titleLabel?.font = style.font
@@ -197,6 +199,16 @@ extension StyledButton.Style {
         borderColor: .greyA(), disabledBorderColor: .greyF2(),
         cornerRadius: 5
         )
+    public static let InviteFriend = StyledButton.Style(
+        backgroundColor: .greyA(),
+        titleColor: .whiteColor(),
+        cornerRadius: nil
+        )
+    public static let Invited = StyledButton.Style(
+        backgroundColor: .greyE5(),
+        titleColor: .grey6(),
+        cornerRadius: nil
+        )
     public static let BlockUserModal = StyledButton.Style(
         backgroundColor: .whiteColor(), selectedBackgroundColor: .blackColor(), disabledBackgroundColor: .greyA(),
         titleColor: .blackColor(), highlightedTitleColor: .grey6(), selectedTitleColor: .whiteColor(), disabledTitleColor: .greyC()
@@ -209,4 +221,20 @@ extension StyledButton.Style {
         titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
         cornerRadius: 5
         )
+
+    public static func byName(name: String) -> StyledButton.Style {
+        switch name {
+        case "LightGray": return .LightGray
+        case "White": return .White
+        case "SquareBlack": return .SquareBlack
+        case "RoundedBlack": return .RoundedBlack
+        case "RoundedGray": return .RoundedGray
+        case "InviteFriend": return .InviteFriend
+        case "Invited": return .Invited
+        case "BlockUserModal": return .BlockUserModal
+        case "GrayText": return .GrayText
+        case "Green": return .Green
+        default: return .Default
+        }
+    }
 }

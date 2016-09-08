@@ -3,6 +3,8 @@
 //
 
 import WebKit
+import DeltaCalculator
+
 
 public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
@@ -44,6 +46,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak public var userDelegate: UserDelegate?
     weak public var relationshipDelegate: RelationshipDelegate?
     weak public var simpleStreamDelegate: SimpleStreamDelegate?
+    weak public var searchStreamDelegate: SearchStreamDelegate?
     weak public var inviteDelegate: InviteDelegate?
     weak public var columnToggleDelegate: ColumnToggleDelegate?
     weak public var discoverCategoryPickerDelegate: DiscoverCategoryPickerDelegate?
@@ -69,6 +72,14 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     public func removeAllCellItems() {
         streamCellItems = []
         updateFilteredItems()
+    }
+
+    public func updateFilter(filter: StreamFilter) -> Delta {
+        let prevItems = visibleCellItems
+        streamFilter = filter
+
+        let calculator = DeltaCalculator<StreamCellItem>()
+        return calculator.deltaFromOldArray(prevItems, toNewArray: visibleCellItems)
     }
 
     public func indexPathForItem(item: StreamCellItem) -> NSIndexPath? {
@@ -319,6 +330,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .ProfileHeader:
             (cell as! ProfileHeaderCell).simpleStreamDelegate = simpleStreamDelegate
             (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
+        case .Search:
+            (cell as! SearchStreamCell).delegate = searchStreamDelegate
         case .Text:
             (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
             (cell as! StreamTextCell).userDelegate = userDelegate

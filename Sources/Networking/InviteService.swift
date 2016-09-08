@@ -6,7 +6,7 @@ import Moya
 import SwiftyJSON
 
 public typealias InviteFriendsSuccessCompletion = () -> Void
-public typealias FindFriendsSuccessCompletion = ([User]) -> Void
+public typealias FindFriendsSuccessCompletion = ([(LocalPerson, User?)]) -> Void
 
 public struct InviteService {
 
@@ -18,11 +18,25 @@ public struct InviteService {
             failure: failure)
     }
 
-    public func find(contacts: [String: [String]], currentUser: User?, success: FindFriendsSuccessCompletion, failure: ElloFailureCompletion) {
+    public func find(addressBook: AddressBookProtocol, currentUser: User?, success: FindFriendsSuccessCompletion, failure: ElloFailureCompletion) {
+        var contacts = [String: [String]]()
+        for person in addressBook.localPeople {
+            contacts[person.identifier] = person.emails
+        }
+
         ElloProvider.shared.elloRequest(ElloAPI.FindFriends(contacts: contacts),
             success: { (data, responseConfig) in
                 if let data = data as? [User] {
-                    success(InviteService.filterUsers(data, currentUser: currentUser))
+                    let users = InviteService.filterUsers(data, currentUser: currentUser)
+                    let userIdentifiers = users.map { $0.identifiableBy ?? "" }
+                    let mixed: [(LocalPerson, User?)] = addressBook.localPeople.map {
+                        if let index = userIdentifiers.indexOf($0.identifier) {
+                            return ($0, users[index])
+                        }
+                        return ($0, .None)
+                    }
+
+                    success(mixed)
                 }
                 else {
                     ElloProvider.unCastableJSONAble(failure)

@@ -6,24 +6,26 @@ import AddressBook
 import Result
 
 
+typealias Completion = Result<AddressBook, AddressBookError> -> Void
+
 public struct AddressBookController {
-    static func promptForAddressBookAccess(fromController controller: UIViewController, completion: Result<AddressBook, AddressBookError> -> Void) {
+    static func promptForAddressBookAccess(fromController controller: UIViewController, completion: Completion) {
         switch AddressBookController.authenticationStatus() {
         case .Authorized:
             proceedWithImport(completion)
         case .NotDetermined:
             promptForAddressBookAccess(controller, completion: completion)
         case .Denied:
-            displayAddressBookAlert(controller, message: InterfaceString.Friends.AccessDenied)
+            displayAddressBookAlert(controller, message: InterfaceString.Friends.AccessDenied, completion: completion)
         case .Restricted:
-            displayAddressBookAlert(controller, message: InterfaceString.Friends.AccessRestricted)
+            displayAddressBookAlert(controller, message: InterfaceString.Friends.AccessRestricted, completion: completion)
         }
     }
 }
 
 extension AddressBookController {
 
-    private static func promptForAddressBookAccess(controller: UIViewController, completion: Result<AddressBook, AddressBookError> -> Void) {
+    private static func promptForAddressBookAccess(controller: UIViewController, completion: Completion) {
         let alertController = AlertViewController(message: InterfaceString.Friends.ImportPermissionPrompt, type: .Rounded)
 
         let importMessage = InterfaceString.Friends.ImportAllow
@@ -42,7 +44,7 @@ extension AddressBookController {
         controller.presentViewController(alertController, animated: true, completion: .None)
     }
 
-    private static func proceedWithImport(completion: Result<AddressBook, AddressBookError> -> Void) {
+    private static func proceedWithImport(completion: Completion) {
         Tracker.sharedTracker.addressBookAccessed()
         AddressBookController.getAddressBook { result in
             nextTick {
@@ -51,18 +53,20 @@ extension AddressBookController {
         }
     }
 
-    private static func displayAddressBookAlert(controller: UIViewController, message: String) {
+    private static func displayAddressBookAlert(controller: UIViewController, message: String, completion: Completion) {
         let alertController = AlertViewController(
             message: "We were unable to access your address book\n\(message)"
         )
 
-        let action = AlertAction(title: InterfaceString.OK, style: .Dark, handler: .None)
+        let action = AlertAction(title: InterfaceString.OK, style: .Dark) { _ in
+            completion(.Failure(.Cancelled))
+        }
         alertController.addAction(action)
 
         controller.presentViewController(alertController, animated: true, completion: .None)
     }
 
-    private static func getAddressBook(completion: Result<AddressBook, AddressBookError> -> Void) {
+    private static func getAddressBook(completion: Completion) {
         var error: Unmanaged<CFError>?
         let ab = ABAddressBookCreateWithOptions(nil, &error) as Unmanaged<ABAddressBook>?
 
@@ -75,8 +79,12 @@ extension AddressBookController {
             switch ABAddressBookGetAuthorizationStatus() {
             case .NotDetermined:
                 ABAddressBookRequestAccessWithCompletion(book) { granted, _ in
-                    if granted { completion(.Success(AddressBook(addressBook: book))) }
-                    else { completion(.Failure(.Unauthorized)) }
+                    if granted {
+                        nextTick { completion(.Success(AddressBook(addressBook: book))) }
+                    }
+                    else {
+                        nextTick { completion(.Failure(.Unauthorized)) }
+                    }
                 }
             case .Authorized: completion(.Success(AddressBook(addressBook: book)))
             default: completion(.Failure(.Unauthorized))

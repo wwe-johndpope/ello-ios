@@ -630,6 +630,13 @@
 		1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A01D789015007E1447 /* ClearTextView.swift */; };
 		1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A21D78C85C007E1447 /* StyledButton.swift */; };
 		1DB8C6A51D78DB12007E1447 /* AddressBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A41D78DB12007E1447 /* AddressBookController.swift */; };
+		1DB8C6A71D7A132E007E1447 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A61D7A132E007E1447 /* InviteFriendsViewController.swift */; };
+		1DB8C6A91D7A1BAA007E1447 /* AddressBookHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A81D7A1BAA007E1447 /* AddressBookHelpers.swift */; };
+		1DB8C6AB1D7A2349007E1447 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6AA1D7A2349007E1447 /* SearchTextField.swift */; };
+		1DB8C6AD1D7A26B1007E1447 /* SearchStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6AC1D7A26B1007E1447 /* SearchStreamCell.swift */; };
+		1DB8C6AF1D7A26BE007E1447 /* SearchStreamCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */; };
+		1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */; };
+		1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B21D7F24B4007E1447 /* SearchString.swift */; };
 		1DBC4A9C1B6044EE00ECF576 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
 		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
@@ -654,6 +661,7 @@
 		1DDF39E71D072FCD00C1A75E /* BlockUserModalScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF39E61D072FCD00C1A75E /* BlockUserModalScreenSpec.swift */; };
 		1DDF3C491A9D0D05000D0945 /* ElloNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF3C481A9D0D05000D0945 /* ElloNavigationBar.swift */; };
 		1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF3C4F1A9D2592000D0945 /* ElloScrollLogic.swift */; };
+		1DDF86FB1D80785B0058204A /* ello_gray_line_logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */; };
 		1DE176FC1B82626E00272145 /* OmnibarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE176FB1B82626E00272145 /* OmnibarScreen.swift */; };
 		1DE261351B0D38A400475325 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE261341B0D38A400475325 /* UIImageViewExtensions.swift */; };
 		1DE261371B0D396600475325 /* ElloOnboardingButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */; };
@@ -1502,6 +1510,13 @@
 		1DB8C6A01D789015007E1447 /* ClearTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextView.swift; sourceTree = "<group>"; };
 		1DB8C6A21D78C85C007E1447 /* StyledButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
 		1DB8C6A41D78DB12007E1447 /* AddressBookController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookController.swift; sourceTree = "<group>"; };
+		1DB8C6A61D7A132E007E1447 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
+		1DB8C6A81D7A1BAA007E1447 /* AddressBookHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookHelpers.swift; sourceTree = "<group>"; };
+		1DB8C6AA1D7A2349007E1447 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		1DB8C6AC1D7A26B1007E1447 /* SearchStreamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStreamCell.swift; sourceTree = "<group>"; };
+		1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStreamCellPresenter.swift; sourceTree = "<group>"; };
+		1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissableCell.swift; sourceTree = "<group>"; };
+		1DB8C6B21D7F24B4007E1447 /* SearchString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchString.swift; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DC10FA31C3DEB7600846ED6 /* availability__error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability__error.json; sourceTree = "<group>"; };
@@ -1522,6 +1537,7 @@
 		1DDF39E61D072FCD00C1A75E /* BlockUserModalScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalScreenSpec.swift; sourceTree = "<group>"; };
 		1DDF3C481A9D0D05000D0945 /* ElloNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationBar.swift; sourceTree = "<group>"; };
 		1DDF3C4F1A9D2592000D0945 /* ElloScrollLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogic.swift; sourceTree = "<group>"; };
+		1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_gray_line_logo.svg; sourceTree = "<group>"; };
 		1DE176FB1B82626E00272145 /* OmnibarScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreen.swift; sourceTree = "<group>"; };
 		1DE261341B0D38A400475325 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloOnboardingButtons.swift; sourceTree = "<group>"; };
@@ -1966,9 +1982,11 @@
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
 				127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */,
 				127B8C721BC319D100E17D0A /* ColumnToggleCell.xib */,
+				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */,
 				1D7152951D6CBE0E005998FE /* NoPostsCell.swift */,
 				1D7152971D6CBE24005998FE /* NoPostsCell.xib */,
+				1DB8C6AC1D7A26B1007E1447 /* SearchStreamCell.swift */,
 				122B190C1A86894400247A05 /* StreamCellType.swift */,
 				1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */,
 				76B1A6401AE594DC00110D30 /* StreamEmbedCell.swift */,
@@ -2201,6 +2219,7 @@
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
 				128D36B81A951F7400622833 /* ProfileHeaderCellPresenter.swift */,
+				1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */,
 				1D2F65A61D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift */,
 				1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */,
 				76B1A63E1AE5864900110D30 /* StreamEmbedCellPresenter.swift */,
@@ -2699,6 +2718,7 @@
 				1247E4E71A8B8CB700DDC24A /* Regions */,
 				F872635F1AB0BB1800FCB59D /* Relationship.swift */,
 				122D1B5A1C602621001386CE /* RelationshipPriority.swift */,
+				1DB8C6B21D7F24B4007E1447 /* SearchString.swift */,
 				F81A65C11AD6F6DB001E451A /* Tracker.swift */,
 				12F6AE391A43392D00493660 /* User.swift */,
 				76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */,
@@ -2727,6 +2747,7 @@
 		12F6AE5E1A4339B600493660 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1DB8C6A81D7A1BAA007E1447 /* AddressBookHelpers.swift */,
 				1264A7D61B7145E700733179 /* Application.swift */,
 				1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */,
 				765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */,
@@ -2794,6 +2815,7 @@
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
 				1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */,
 				1D59338F1D14854700EAF03D /* Screens */,
+				1DB8C6AA1D7A2349007E1447 /* SearchTextField.swift */,
 				1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */,
 				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
@@ -3059,6 +3081,7 @@
 				1D7152E61D7639F8005998FE /* CreateProfileProtocols.swift */,
 				1D7152E41D7620D2005998FE /* CreateProfileScreen.swift */,
 				1D7152E21D761AF0005998FE /* CreateProfileViewController.swift */,
+				1DB8C6A61D7A132E007E1447 /* InviteFriendsViewController.swift */,
 				1D7152E01D75F2C1005998FE /* OnboardingData.swift */,
 				1D7152D61D74C7FD005998FE /* OnboardingProtocols.swift */,
 				1D7152D71D74C7FD005998FE /* OnboardingScreen.swift */,
@@ -3139,6 +3162,7 @@
 				1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */,
 				1DF741681BFA61B1000F5349 /* camera_white.svg */,
 				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
+				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
 				769051001AFD2A720011B09A /* ello_logo.svg */,
 				1D472C211C1F2E0400B61E55 /* embetter_audio_play.svg */,
 				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
@@ -3411,12 +3435,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 124CFBA61C5976E500727D11 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
-				789575318398B341EB6741F3 /* 📦 Check Pods Manifest.lock */,
+				789575318398B341EB6741F3 /* [CP] Check Pods Manifest.lock */,
 				124CFB931C5976E500727D11 /* Sources */,
 				124CFB941C5976E500727D11 /* Frameworks */,
 				124CFB951C5976E500727D11 /* Resources */,
-				A156A84962927AEA0C15D925 /* 📦 Embed Pods Frameworks */,
-				797290A622F4D4497408142A /* 📦 Copy Pods Resources */,
+				A156A84962927AEA0C15D925 /* [CP] Embed Pods Frameworks */,
+				797290A622F4D4497408142A /* [CP] Copy Pods Resources */,
 				1DB68E9A1D470D5900D446C7 /* Set version information */,
 				12B3D43A1C7D670500E0B975 /* Remove Frameworks */,
 			);
@@ -3433,12 +3457,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 12D14C571A43752200C6F8E8 /* Build configuration list for PBXNativeTarget "Specs" */;
 			buildPhases = (
-				AE416FBABC6EBBC091565DC2 /* 📦 Check Pods Manifest.lock */,
+				AE416FBABC6EBBC091565DC2 /* [CP] Check Pods Manifest.lock */,
 				12D14C4B1A43752200C6F8E8 /* Sources */,
 				12D14C4C1A43752200C6F8E8 /* Frameworks */,
 				12D14C4D1A43752200C6F8E8 /* Resources */,
-				10DE5D897C2E614E09EEF629 /* 📦 Embed Pods Frameworks */,
-				009A461F3B7B60C67D38FF88 /* 📦 Copy Pods Resources */,
+				10DE5D897C2E614E09EEF629 /* [CP] Embed Pods Frameworks */,
+				009A461F3B7B60C67D38FF88 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3454,7 +3478,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 12FEBD201A4225F600933A02 /* Build configuration list for PBXNativeTarget "Ello" */;
 			buildPhases = (
-				B76969302EEBCE6197F00D01 /* 📦 Check Pods Manifest.lock */,
+				B76969302EEBCE6197F00D01 /* [CP] Check Pods Manifest.lock */,
 				12FEBCFD1A4225F600933A02 /* Sources */,
 				12FEBCFE1A4225F600933A02 /* Frameworks */,
 				1246CD8C1CEE328400A5D77A /* SwiftLint */,
@@ -3463,8 +3487,8 @@
 				F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */,
 				EA78A4FF1AD31FB9008D456B /* Embed Frameworks */,
 				124CFBA71C5976E500727D11 /* Embed App Extensions */,
-				3E1A272FC989C6AE7364045C /* 📦 Embed Pods Frameworks */,
-				7819AAEAAFEF89C6080D0BE7 /* 📦 Copy Pods Resources */,
+				3E1A272FC989C6AE7364045C /* [CP] Embed Pods Frameworks */,
+				7819AAEAAFEF89C6080D0BE7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3607,6 +3631,7 @@
 				76F8DEF21B6C0BC4009BCF61 /* repost_normal.svg in Resources */,
 				76F8DF001B6C0BC4009BCF61 /* x_normal.svg in Resources */,
 				76F8DEAE1B6C0BC4009BCF61 /* abracket_white.svg in Resources */,
+				1DDF86FB1D80785B0058204A /* ello_gray_line_logo.svg in Resources */,
 				1D59EF971D6640C50029C106 /* mail_selected.svg in Resources */,
 				7675CED21AA4D0A5008AA97B /* 0.json in Resources */,
 				12450FD51AC86F630084BDBA /* StreamToggleCell.xib in Resources */,
@@ -3843,14 +3868,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		009A461F3B7B60C67D38FF88 /* 📦 Copy Pods Resources */ = {
+		009A461F3B7B60C67D38FF88 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3858,14 +3883,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		10DE5D897C2E614E09EEF629 /* 📦 Embed Pods Frameworks */ = {
+		10DE5D897C2E614E09EEF629 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3915,14 +3940,14 @@
 			shellPath = /bin/sh;
 			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD | wc -l | tr -d ' ')\n\nsource_plist=\"`pwd`/ShareExtension/Info.plist\"\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\n\nif [[ \"$CONFIGURATION\" == \"Release\" ]]; then\n    sources=(\"$source_plist\" \"$target_plist\" \"$dsym_plist\")\nelse\n    sources=(\"$target_plist\" \"$dsym_plist\")\nfi\n\nfor plist in ${sources[@]}; do\nif [ -f \"$plist\" ]; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\nfi\ndone";
 		};
-		3E1A272FC989C6AE7364045C /* 📦 Embed Pods Frameworks */ = {
+		3E1A272FC989C6AE7364045C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3930,14 +3955,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ello/Pods-Ello-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7819AAEAAFEF89C6080D0BE7 /* 📦 Copy Pods Resources */ = {
+		7819AAEAAFEF89C6080D0BE7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3945,14 +3970,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ello/Pods-Ello-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		789575318398B341EB6741F3 /* 📦 Check Pods Manifest.lock */ = {
+		789575318398B341EB6741F3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3960,14 +3985,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		797290A622F4D4497408142A /* 📦 Copy Pods Resources */ = {
+		797290A622F4D4497408142A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3975,14 +4000,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A156A84962927AEA0C15D925 /* 📦 Embed Pods Frameworks */ = {
+		A156A84962927AEA0C15D925 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3990,14 +4015,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AE416FBABC6EBBC091565DC2 /* 📦 Check Pods Manifest.lock */ = {
+		AE416FBABC6EBBC091565DC2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4005,14 +4030,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B76969302EEBCE6197F00D01 /* 📦 Check Pods Manifest.lock */ = {
+		B76969302EEBCE6197F00D01 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4459,6 +4484,7 @@
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
 				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
 				122B30D91C6A3FBC00C1B9D8 /* PushPayload.swift in Sources */,
+				1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */,
 				121700B61A78428D00EBACA5 /* StreamCollectionViewLayout.swift in Sources */,
 				1D22C8201AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift in Sources */,
 				122B30EF1C6A3FC500C1B9D8 /* EmbedRegion.swift in Sources */,
@@ -4477,8 +4503,10 @@
 				122B18FD1A867C7D00247A05 /* StreamFooterCell.swift in Sources */,
 				1D8835A61CDA85BA00E1C387 /* ReplyButton.swift in Sources */,
 				76DAD9F91ABCBB9B006C8A6C /* StreamLoadingCell.swift in Sources */,
+				1DB8C6A71D7A132E007E1447 /* InviteFriendsViewController.swift in Sources */,
 				1D69BBCF1C3EF5AA00FCBDE0 /* ElloSegmentedControl.swift in Sources */,
 				EAED46DE1ADC5D570081A9F7 /* DynamicSettingCell.swift in Sources */,
+				1DB8C6AB1D7A2349007E1447 /* SearchTextField.swift in Sources */,
 				122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */,
 				76EB15A91B0295AA001BBB2A /* StreamSeeMoreCommentsCell.swift in Sources */,
 				1DE261351B0D38A400475325 /* UIImageViewExtensions.swift in Sources */,
@@ -4633,6 +4661,7 @@
 				122C66331B424DB20035F4CD /* AutoCompleteCell.swift in Sources */,
 				12F6AE451A43397400493660 /* Colors.swift in Sources */,
 				12F6AE6D1A4339EF00493660 /* ElloUnderlinedTextButton.swift in Sources */,
+				1DB8C6AD1D7A26B1007E1447 /* SearchStreamCell.swift in Sources */,
 				EAED46DC1ADC13BF0081A9F7 /* DynamicSettingCategoryViewController.swift in Sources */,
 				1D59EF851D5CFC480029C106 /* InterpolatedLoadingView.swift in Sources */,
 				1D9201BC1B6AD7CD007528BF /* Tag.swift in Sources */,
@@ -4643,7 +4672,9 @@
 				76629C6F1A95067400E1F92B /* BlockUserModalViewController.swift in Sources */,
 				1D7152B41D6E4FCE005998FE /* ValidationState.swift in Sources */,
 				1D2F65BB1D1AE5790099D036 /* UIEdgeInsetsExtensions.swift in Sources */,
+				1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */,
 				1D59EF8E1D64BB3F0029C106 /* HireScreen.swift in Sources */,
+				1DB8C6AF1D7A26BE007E1447 /* SearchStreamCellPresenter.swift in Sources */,
 				1207C9761C73FEE000939ADB /* CredentialsAuthService.swift in Sources */,
 				1207C9AC1C75312900939ADB /* ElloNetworkError.swift in Sources */,
 				1207C98A1C73FEE000939ADB /* ProfileService.swift in Sources */,
@@ -4669,6 +4700,7 @@
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */,
 				1207C9831C73FEE000939ADB /* Mapper.swift in Sources */,
+				1DB8C6A91D7A1BAA007E1447 /* AddressBookHelpers.swift in Sources */,
 				123DEBEF1D3D4B71007B5F86 /* LoadingToken.swift in Sources */,
 				1D7152DD1D74D950005998FE /* CategoriesSelectionViewController.swift in Sources */,
 				1207C9901C73FEE000939ADB /* StreamService.swift in Sources */,

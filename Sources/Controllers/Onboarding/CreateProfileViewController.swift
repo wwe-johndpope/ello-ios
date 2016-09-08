@@ -69,106 +69,6 @@ extension CreateProfileViewController: CreateProfileDelegate {
 }
 
 extension CreateProfileViewController: OnboardingStepController {
-    public func onboardingWillProceed(abort: Bool, proceedClosure: () -> Void) {
-        if onboardingData.name?.isEmpty == false {
-            Tracker.sharedTracker.enteredOnboardName()
-        }
-        if onboardingData.name?.isEmpty == false {
-            Tracker.sharedTracker.enteredOnboardBio()
-        }
-        if onboardingData.name?.isEmpty == false {
-            Tracker.sharedTracker.enteredOnboardLinks()
-        }
-
-        var properties: [String: AnyObject] = [:]
-        if let name = onboardingData.name where didSetName {
-            properties["name"] = name
-        }
-        if let bio = onboardingData.bio where didSetBio {
-            properties["external_links"] = bio
-        }
-        if let links = onboardingData.links where didSetLinks {
-            properties["unsanitized_short_bio"] = links
-        }
-
-        let failure: (NSError) -> Void = { _ in
-            let alertController = AlertViewController(error: InterfaceString.GenericError)
-            self.parentAppController?.presentViewController(alertController, animated: true, completion: nil)
-        }
-
-        if let
-            avatarImage = onboardingData.avatarImage,
-            coverImage = onboardingData.coverImage
-        where didUploadAvatarImage && didUploadCoverImage
-        {
-            ProfileService().updateUserImages(
-                avatarImage: avatarImage, coverImage: coverImage,
-                properties: properties,
-                success: { _ in
-                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
-                failure: { error, _ in
-                    failure(error)
-                })
-        }
-        else if let avatarImage = onboardingData.avatarImage where didUploadAvatarImage {
-            ProfileService().updateUserAvatarImage(
-                avatarImage,
-                properties: properties,
-                success: { _ in
-                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
-                failure: { error, _ in
-                    failure(error)
-                })
-        }
-        else if let coverImage = onboardingData.coverImage where didUploadCoverImage {
-            ProfileService().updateUserCoverImage(
-                coverImage,
-                properties: properties,
-                success: { _ in
-                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
-                failure: { error, _ in
-                    failure(error)
-                })
-        }
-        else if !properties.isEmpty {
-            ProfileService().updateUserProfile(
-                properties,
-                success: { _ in
-                    self.goToNextStep(abort, proceedClosure: proceedClosure) },
-                failure: { error, _ in
-                    failure(error)
-                })
-        }
-        else {
-            goToNextStep(abort, proceedClosure: proceedClosure)
-        }
-    }
-
-    func goToNextStep(abort: Bool, proceedClosure: () -> Void) {
-        guard let
-            presenter = onboardingViewController?.parentAppController
-        where !abort else {
-            proceedClosure()
-            return
-        }
-
-        Tracker.sharedTracker.inviteFriendsTapped()
-        AddressBookController.promptForAddressBookAccess(fromController: self) { result in
-            switch result {
-            case let .Success(addressBook):
-                Tracker.sharedTracker.contactAccessPreferenceChanged(true)
-                let vc = AddFriendsViewController(addressBook: addressBook)
-                vc.currentUser = self.currentUser
-                presenter.presentViewController(vc, animated: true, completion: nil)
-            case let .Failure(addressBookError):
-                Tracker.sharedTracker.contactAccessPreferenceChanged(false)
-                let message = addressBookError.rawValue
-                let alertController = AlertViewController(error: "We were unable to access your address book\n\(message)")
-                presenter.presentViewController(alertController, animated: true, completion: .None)
-            }
-        }
-    }
-
     public func onboardingStepBegin() {
         if onboardingData.name?.isEmpty == false ||
             onboardingData.bio?.isEmpty == false ||
@@ -184,5 +84,80 @@ extension CreateProfileViewController: OnboardingStepController {
         screen.links = onboardingData.links
         screen.coverImage = onboardingData.coverImage
         screen.avatarImage = onboardingData.avatarImage
+    }
+
+    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void) {
+        var properties: [String: AnyObject] = [:]
+        if let name = onboardingData.name where didSetName {
+            Tracker.sharedTracker.enteredOnboardName()
+            properties["name"] = name
+        }
+
+        if let bio = onboardingData.bio where didSetBio {
+            Tracker.sharedTracker.enteredOnboardBio()
+            properties["unsanitized_short_bio"] = bio
+        }
+
+        if let links = onboardingData.links where didSetLinks {
+            Tracker.sharedTracker.enteredOnboardLinks()
+            properties["external_links"] = links
+        }
+
+        let failure: (NSError) -> Void = { error in
+            let alertController = AlertViewController(error: error.elloErrorMessage ?? InterfaceString.GenericError)
+            self.parentAppController?.presentViewController(alertController, animated: true, completion: nil)
+        }
+
+        let avatarImage: ImageRegionData? = didUploadAvatarImage ? onboardingData.avatarImage : nil
+        let coverImage: ImageRegionData? = didUploadCoverImage ? onboardingData.coverImage : nil
+
+        guard avatarImage != nil || coverImage != nil || !properties.isEmpty else {
+            goToNextStep(abort, proceedClosure: proceedClosure)
+            return
+        }
+
+        ProfileService().updateUserImages(
+            avatarImage: avatarImage, coverImage: coverImage,
+            properties: properties,
+            success: { _ in
+                self.goToNextStep(abort, proceedClosure: proceedClosure) },
+            failure: { error, _ in
+                proceedClosure(success: nil)
+                failure(error)
+            })
+    }
+
+    func goToNextStep(abort: Bool, proceedClosure: (success: Bool) -> Void) {
+        guard let
+            presenter = onboardingViewController?.parentAppController
+        where !abort else {
+            proceedClosure(success: false)
+            return
+        }
+
+        Tracker.sharedTracker.inviteFriendsTapped()
+        AddressBookController.promptForAddressBookAccess(fromController: self) { result in
+            switch result {
+            case let .Success(addressBook):
+                Tracker.sharedTracker.contactAccessPreferenceChanged(true)
+
+                let vc = InviteFriendsViewController(addressBook: addressBook)
+                vc.currentUser = self.currentUser
+                vc.onboardingViewController = self.onboardingViewController
+                self.onboardingViewController?.inviteFriendsController = vc
+
+                proceedClosure(success: true)
+            case let .Failure(addressBookError):
+                guard addressBookError != .Cancelled else {
+                    proceedClosure(success: false)
+                    return
+                }
+
+                Tracker.sharedTracker.contactAccessPreferenceChanged(false)
+                let message = addressBookError.rawValue
+                let alertController = AlertViewController(error: "We were unable to access your address book\n\(message)")
+                presenter.presentViewController(alertController, animated: true, completion: .None)
+            }
+        }
     }
 }
