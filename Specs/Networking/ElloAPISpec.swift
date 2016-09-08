@@ -98,7 +98,7 @@ class ElloAPISpec: QuickSpec {
                         expect(ElloAPI.Relationship(userId: "1234", relationship: "friend").path) == "/api/v2/users/1234/add/friend"
                     }
                     it("UserCategories is valid") {
-                        expect(ElloAPI.UserCategories(userId: "999", categoryIds: ["1"]).path) == "/api/v2/users/999/followed_categories"
+                        expect(ElloAPI.UserCategories(categoryIds: ["1"]).path) == "/api/v2/profile/followed_categories"
                     }
                     it("UserStream is valid") {
                         expect(ElloAPI.UserStream(userParam: "999").path) == "/api/v2/users/999"
@@ -148,7 +148,7 @@ class ElloAPISpec: QuickSpec {
                     (.FlagPost(postId: "", kind: ""), .NoContentType),
                     (.FriendStream, .ActivitiesType),
                     (.FriendNewContent(createdAt: NSDate()), .ErrorType),
-                    (.InfiniteScroll(queryItems: [""], elloApi: { return ElloAPI.AmazonCredentials }), .UsersType),
+                    (.InfiniteScroll(queryItems: [""], elloApi: { return ElloAPI.AmazonCredentials }), .AmazonCredentialsType),
                     (.InviteFriends(contact: ""), .NoContentType),
                     (.Join(email: "", username: "", password: "", invitationCode: ""), .UsersType),
                     (.Loves(userId: ""), .LovesType),
@@ -173,7 +173,7 @@ class ElloAPISpec: QuickSpec {
                     (.SearchForPosts(terms: ""), .PostsType),
                     (.UpdatePost(postId: "", body: ["": ""]), .PostsType),
                     (.UpdateComment(postId: "", commentId: "", body: ["": ""]), .CommentsType),
-                    (.UserCategories(userId: "", categoryIds: [""]), .NoContentType),
+                    (.UserCategories(categoryIds: [""]), .NoContentType),
                     (.UserStream(userParam: ""), .UsersType),
                     (.UserStream(userParam: currentUserId), .UsersType),
                     (.UserStreamFollowers(userId: ""), .UsersType),
@@ -239,7 +239,7 @@ class ElloAPISpec: QuickSpec {
                         .SearchForPosts(terms: ""),
                         .SearchForUsers(terms: ""),
                         .UserNameAutoComplete(terms: ""),
-                        .UserCategories(userId: "", categoryIds: [""]),
+                        .UserCategories(categoryIds: [""]),
                         .UserStream(userParam: ""),
                         .UserStreamFollowers(userId: ""),
                         .UserStreamFollowing(userId: ""),
@@ -316,7 +316,7 @@ class ElloAPISpec: QuickSpec {
                         .RelationshipBatch(userIds: [""], relationship: ""),
                         .SearchForUsers(terms: ""),
                         .SearchForPosts(terms: ""),
-                        .UserCategories(userId: "", categoryIds: [""]),
+                        .UserCategories(categoryIds: [""]),
                         .UserStream(userParam: ""),
                         .UserStreamFollowers(userId: ""),
                         .UserStreamFollowing(userId: ""),
@@ -499,7 +499,7 @@ class ElloAPISpec: QuickSpec {
                 }
 
                 it("UserCategories") {
-                    let params = ElloAPI.UserCategories(userId: "123", categoryIds: ["456"]).parameters!
+                    let params = ElloAPI.UserCategories(categoryIds: ["456"]).parameters!
                     expect(params["followed_category_ids"] as? [String]) == ["456"]
                 }
             }

@@ -60,7 +60,7 @@ public enum ElloAPI {
     case SearchForPosts(terms: String)
     case UpdatePost(postId: String, body: [String: AnyObject])
     case UpdateComment(postId: String, commentId: String, body: [String: AnyObject])
-    case UserCategories(userId: String, categoryIds: [String])
+    case UserCategories(categoryIds: [String])
     case UserStream(userParam: String)
     case UserStreamFollowers(userId: String)
     case UserStreamFollowing(userId: String)
@@ -345,8 +345,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .UpdateComment(postId, commentId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
-        case let .UserCategories(userId, _):
-            return "/\(ElloAPI.UserStream(userParam: userId).path)/followed_categories"
+        case .UserCategories:
+            return "\(ElloAPI.CurrentUserStream.path)/followed_categories"
         case let .UserStream(userParam):
             return "/api/\(ElloAPI.apiVersion)/users/\(userParam)"
         case let .UserStreamFollowers(userId):
@@ -668,7 +668,7 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .UpdateComment(_, _, body):
             return body
-        case let .UserCategories(_, categoryIds):
+        case let .UserCategories(categoryIds):
             return [
                 "followed_category_ids": categoryIds,
             ]

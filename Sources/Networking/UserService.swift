@@ -35,10 +35,10 @@ public struct UserService {
         return promise.future
     }
 
-    public func setUserCategories(userId userId: String, categories: [Category]) -> Future<Void> {
+    public func setUserCategories(categories: [Category]) -> Future<Void> {
         let promise = Promise<Void>()
         let categoryIds = categories.map { $0.id }
-        ElloProvider.shared.elloRequest(ElloAPI.UserCategories(userId: userId, categoryIds: categoryIds),
+        ElloProvider.shared.elloRequest(ElloAPI.UserCategories(categoryIds: categoryIds),
             success: { _ in
                 promise.completeWithSuccess(Void())
             },

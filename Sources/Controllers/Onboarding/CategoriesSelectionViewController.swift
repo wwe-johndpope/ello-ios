@@ -61,14 +61,13 @@ extension CategoriesSelectionViewController: OnboardingStepController {
 
     public func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void) {
         if let
-            userId = currentUser?.id,
             selection = streamViewController.collectionView.indexPathsForSelectedItems()
         where selection.count > 0 {
             let categories = selection.flatMap({ (path: NSIndexPath) -> Category? in
                 return streamViewController.dataSource.jsonableForIndexPath(path) as? Category
             })
 
-            UserService().setUserCategories(userId: userId, categories: categories)
+            UserService().setUserCategories(categories)
                 .onSuccess { _ in
                     self.onboardingData.categories = categories
                     proceedClosure(success: true)
