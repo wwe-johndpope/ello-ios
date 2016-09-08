@@ -22,7 +22,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     private var debounced: ThrottledBlock
     public private(set) var navigationBar: ElloNavigationBar!
     public private(set) var navigationItem: UINavigationItem!
-    public private(set) var searchField: SearchTextField!
+    public private(set) var searchField: UITextField!
     private var searchControlsContainer: UIView!
     private var postsToggleButton: OutlineElloButton?
     private var peopleToggleButton: OutlineElloButton?
@@ -124,9 +124,19 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     }
 
     private func setupSearchField() {
-        searchField = SearchTextField(frame: CGRect(x: 0, y: 0, width: searchControlsContainer.frame.size.width, height: searchControlsContainer.frame.size.height - 10))
+        searchField = UITextField(frame: CGRect(x: 0, y: 0, width: searchControlsContainer.frame.size.width, height: searchControlsContainer.frame.size.height - 10))
+        searchField.clearButtonMode = .WhileEditing
+        searchField.font = UIFont.defaultBoldFont(18)
+        searchField.textColor = UIColor.blackColor()
+        searchField.attributedPlaceholder = NSAttributedString(string: "  \(fieldPlaceholderText)", attributes: [NSForegroundColorAttributeName: UIColor.greyA()])
+        searchField.autocapitalizationType = .None
+        searchField.autocorrectionType = .No
+        searchField.spellCheckingType = .No
+        searchField.enablesReturnKeyAutomatically = true
+        searchField.returnKeyType = .Search
+        searchField.keyboardAppearance = .Dark
+        searchField.keyboardType = .Default
         searchField.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
-        searchField.placeholder = fieldPlaceholderText
         searchField.delegate = self
         searchField.addTarget(self, action: #selector(SearchScreen.searchFieldDidChange), forControlEvents: .EditingChanged)
         searchControlsContainer.addSubview(searchField)
