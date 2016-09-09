@@ -165,7 +165,7 @@ class JoinScreenSpec: QuickSpec {
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
                 }
             }
-            fdescribe("snapshot, all invalid") {
+            describe("snapshot, all invalid") {
                 beforeEach {
                     subject.emailValid = false
                     subject.usernameValid = false
