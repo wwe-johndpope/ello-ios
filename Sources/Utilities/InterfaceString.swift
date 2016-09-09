@@ -291,7 +291,9 @@ public struct InterfaceString {
 
     public struct Onboard {
         static let PickCategoriesPrimary = NSLocalizedString("Pick what you’re into.", comment: "pick what you're into")
-        static let PickCategoriesSecondary = NSLocalizedString("Slow down & check out some cool ass shit.", comment: "slow down & check out some cool ass shit.")
+        static let PickCategoriesSecondary = NSLocalizedString("Slow down & check out some cool ass shit.", comment: "slow down & check out some cool ass shit")
+        static let CreateProfilePrimary = NSLocalizedString("Grow your creative influence.", comment: "grow your creative influence")
+        static let CreateProfileSecondary = NSLocalizedString("Completed profiles get way more views.", comment: "completed profiles get way more views")
 
         static let InviteFriendsPrimary = NSLocalizedString("Invite some cool people.", comment: "invite some cool people")
         static let InviteFriendsSecondary = NSLocalizedString("Make Ello better.", comment: "make ello better")
