@@ -368,6 +368,9 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
                 return NSIndexPath(forItem: 1, inSection: 0)
             }
+            else if visibleCellItems.count > 2 && visibleCellItems[2].type != .ColumnToggle {
+                return NSIndexPath(forItem: 1, inSection: 0)
+            }
             return NSIndexPath(forItem: 4, inSection: 0)
         case let .UserStream(userParam):
             if currentUserId == userParam {
@@ -404,19 +407,17 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         switch change {
         case .Create:
             var indexPath: NSIndexPath?
-            var reloadPaths: [NSIndexPath]?
 
             // if comment, add new comment cells
             if let comment = jsonable as? ElloComment,
                 parentPost = comment.loadedFromPost
             {
                 let indexPaths = self.commentIndexPathsForPost(parentPost)
-                if let first = indexPaths.first {
-                    if self.visibleCellItems[first.item].type == .CreateComment {
-                        indexPath = NSIndexPath(forItem: first.item + 1, inSection: first.section)
-                    }
+                if let first = indexPaths.first
+                where self.visibleCellItems[first.item].type == .CreateComment
+                {
+                    indexPath = NSIndexPath(forItem: first.item + 1, inSection: first.section)
                 }
-                reloadPaths = indexPaths
             }
             // else if post, add new post cells
             else if jsonable is Post {
@@ -433,12 +434,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                     withWidth: UIWindow.windowWidth(),
                     startingIndexPath: indexPath)
                     { newIndexPaths in
-                        collectionView.insertItemsAtIndexPaths(newIndexPaths)
-                        if let prevReloadPaths = reloadPaths {
-                            let reloadPaths = prevReloadPaths.map { path in
-                                return NSIndexPath(forItem: path.item + newIndexPaths.count, inSection: path.section)
-                            }
-                            collectionView.reloadItemsAtIndexPaths(reloadPaths)
+                        delay(0.5) {  // no one hates this more than me - colin
+                            collectionView.reloadData()
                         }
                     }
             }
