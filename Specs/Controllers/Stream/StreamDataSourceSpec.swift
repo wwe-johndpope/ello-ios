@@ -1308,16 +1308,16 @@ class StreamDataSourceSpec: QuickSpec {
 
                 it("returns nil if a filter (returns false) is active") {
                     subject.streamFilter = { _ in return false }
-                    let itemExists = subject.streamCellItems.safeValue(0)
-                    expect(itemExists?.type.name) == "StreamCreateCommentCell"
+                    let itemExists = subject.streamCellItems[0]
+                    expect(itemExists.type.name) == "StreamCreateCommentCell"
                     let itemHidden = subject.visibleStreamCellItem(at: NSIndexPath(forItem: 0, inSection:0))
                     expect(itemHidden).to(beNil())
                 }
 
                 it("returns item if a filter (returns true) is active") {
                     subject.streamFilter = { _ in return true }
-                    let itemExists = subject.streamCellItems.safeValue(0)
-                    expect(itemExists?.type.name) == "StreamCreateCommentCell"
+                    let itemExists = subject.streamCellItems[0]
+                    expect(itemExists.type.name) == "StreamCreateCommentCell"
                     let itemHidden = subject.visibleStreamCellItem(at: NSIndexPath(forItem: 0, inSection:0))
                     expect(itemHidden?.type.name) == "StreamCreateCommentCell"
                 }
