@@ -141,8 +141,8 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         uploadCoverImageButton.setTitle(InterfaceString.Onboard.UploadCoverButton, forState: .Normal)
         uploadAvatarButton.setTitle(InterfaceString.Onboard.UploadAvatarButton, forState: .Normal)
         headerLabel.attributedText = NSAttributedString(
-            primaryHeader: InterfaceString.Onboard.PickCategoriesPrimary,
-            secondaryHeader: InterfaceString.Onboard.PickCategoriesSecondary
+            primaryHeader: InterfaceString.Onboard.CreateProfilePrimary,
+            secondaryHeader: InterfaceString.Onboard.CreateProfileSecondary
             )
         uploadCoverImagePrompt.text = InterfaceString.Onboard.UploadCoverImagePrompt
         uploadAvatarPrompt.text = InterfaceString.Onboard.UploadAvatarPrompt
