@@ -25,7 +25,9 @@ install:
 - bundle exec pod install
 before_script:
 - export LANG=en_US.UTF-8
-script: set -o pipefail && xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
+script:
+- gem install danger --no-ri --no-rdoc && danger
+- set -o pipefail && xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
   Debug -destination "OS=9.2,name=iPhone 6s" clean test | xcpretty -f `xcpretty-travis-formatter`
 notifications:
   email: false
@@ -43,3 +45,4 @@ env:
   - secure: MAphXemYWMsswqQH9XHXk+AHfykEStqrVBBlY4BxL5213TDzfZCsH0ERMn5Fx5ppuAatGi0Mk6kFjdj802X0gkF2WXQysFPxR5cl1LPLaL9Cfzmd/k0ZsMCaHmbRLUar4IgHPCIFXItnjti3s/jZTF94BaWho/UCYPmA+MrG/pg=
   - secure: Ba6zrt57BLhlnZdac9s/t35bv5saMveHtM0eMe3jvRVapkTAIRHlRPpgDvGwLdiTSeI+228vT6Sl/W91pEJKvnfNGsBW9va4og1PSiLA/uA9yzGLWnR/XEGqy5QouPFS4J5WhO3tWxesUipF1rdOfywRPTrQ4l3RrUaoYWXzu7M=
   - secure: tbEDsgNiw2IwXMdroMdVSrGnaWZ1RNQk3WX/BbPngwr7DBiAPH+G+SrSFPt+Vuj78fBHrSC18rYj8bRRd8v5LucNSsgb/M9yVYQiUv/nXvtwkaq/CnArgu6Z1s8e4Az195yMJpvJKn9GTTtquLA7GMWDjSjGvjPDaXnEhsFV19Yl5dtcX5OP42mW2RnPKac9czyP09HK8E0wqna8lAcDwZ6PJSJz4QFZm0nxcYcMqBVz1fJnrDyRprEr1Xp3g/H4vjnGGkKlqdgcFk7BxdOSf859+2BLbWpqNG5Xfd1rY4Qq40Tu2AhA7ZXE185fb3rbT+rOvVcySYRl6GbXBGt16MLHg9LKGTjSqbiYBptx90IpaiAjqdpWDZpLPGRZJvNPWLi0bwr3RP2wukTavKNPSXeac4Zgm7QQfTPn4RmPZjrR5pT90JkEWKBnkFbyi9k0hBMh4T2H3XzmDe7nVKw2HfuHsjt7zE2UasbhAiI5Fjs+qDlCYz5/oZL5ZaabuDPknD7iRO5wnXeiSzLxLIdVxqJGIKbEIZraPKP1dsSaXs/FVwq/vY/kQWepn8Ki2ml7NL+2/jmW8+RisFooe0aVjEXCZXqIrx/CzWpTJSxxdH/0ZVKM6hfHDwCP+SzBmNePD8JfeKLLH6CaZ9fGKi1eJkaPt5SqBRBlVuKD8wny97Y=
+  - secure: YKsBcMxk4Nk8V03972a8SpW6r7/Eq1OxOk8F71QgxJ+4/bvccH0X076FC1ayMzu2597lnJ48P3P4MEo3i3cpuzzRCK1HgV9KRUH/AEIXpFu5FqvTCnSx5uCfKi5CtIEDwpr2LVkQGwyV/4gCS/jzpMjWped5PYI9YJgSr9rtx8PIohjXddTkOf2QHP6Onk7f8hlibyyg4i3kBcZK7+t/2+BAqmilo5xi3k4E9TLUNEFU47VoBjsh5B9bw9hXmQLMTbTZwdOwmb/xVs/vLyPfHvAugOpKQiCdneHx0vOApfn0E13HwZgjNQdJjx7YrpI7jvqUezhUmBwduEKfL7TtcWuPpbXy+VZVkez+hi4fXkjcO5Bi5puhjP1mLUS9z3YX/XWY77mbv4L/bx2tSct5+k2Uoqpg3pfBSWgMOB0MrQkdyUJcSkOFtvmzoJKlwUO9VGqJyWSsXc9Qxa54x70q/rH6r4Our+lV2qb8HBt8bBiIcuFJWIPBSFSOm3aK0jp1jSB0eM1dwdc0tWyIbRxhJ+0bwuQgcIt+BvEGHbGNiG8A/4jpT9dZJOybodWoHN1PP4nZadoH1jpJNPchrmVMcLVx8at7RcuhG45WosF+VRlnmla2XqVv8f5+2DQ9Lq513ddlR19JtZkMWr/7Labf2eQESXsDQ+aC6Rl4dymVW3U=
