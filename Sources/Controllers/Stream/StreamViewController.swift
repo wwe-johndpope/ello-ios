@@ -952,6 +952,7 @@ extension StreamViewController: WebLinkDelegate {
              .FaceMaker,
              .FreedomOfSpeech,
              .Invitations,
+             .Invite,
              .Join,
              .Login,
              .NativeRedirect,

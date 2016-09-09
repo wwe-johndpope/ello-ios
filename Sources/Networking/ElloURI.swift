@@ -43,6 +43,7 @@ public enum ElloURI: String {
     case ForgotMyPassword = "forgot-my-password"
     case FreedomOfSpeech = "freedom-of-speech"
     case Invitations = "invitations"
+    case Invite = "join/([^\\/]+)/?$"
     case Join = "join"
     case Login = "login"
     case Manifesto = "manifesto"
@@ -155,7 +156,7 @@ public enum ElloURI: String {
         case .Email,
              .External:
             return rawValue
-        case .Category, .Notifications, .Search:
+        case .Category, .Invite, .Notifications, .Search:
             return "\(ElloURI.fuzzyDomain)\\/\(rawValue)"
         case .Post:
             return "\(ElloURI.userPathRegex)\(rawValue)"
@@ -202,6 +203,8 @@ public enum ElloURI: String {
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .PushNotificationComment:
             return regex?.matchingGroups(url).safeValue(1) ?? url
+        case .Invite:
+            return regex?.matchingGroups(url).safeValue(2) ?? url
         case .Notifications:
             return regex?.matchingGroups(url).safeValue(2) ?? "notifications"
         case .ProfileFollowers, .ProfileFollowing, .ProfileLoves:
@@ -257,6 +260,7 @@ public enum ElloURI: String {
         Friends,
         Following,
         Invitations,
+        Invite,
         Join,
         Login,
         Manifesto,

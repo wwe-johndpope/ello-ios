@@ -172,7 +172,7 @@ extension AppViewController {
         swapViewController(nav, completion: completion)
     }
 
-    public func showJoinScreen(animated animated: Bool) {
+    public func showJoinScreen(animated animated: Bool, inviteCode: String? = nil) {
         guard let nav = visibleViewController as? UINavigationController else {
             showStartupScreen() { self.showJoinScreen(animated: animated) }
             return
@@ -455,6 +455,10 @@ extension AppViewController {
         case .Friends,
              .Following:
             showFriendsScreen(vc)
+        case .Invite:
+            if !isLoggedIn() {
+                showJoinScreen(animated: false, inviteCode: data)
+            }
         case .Join:
             if !isLoggedIn() {
                 showJoinScreen(animated: false)
