@@ -106,7 +106,15 @@ class JoinScreenSpec: QuickSpec {
 
             describe("snapshot, email valid") {
                 beforeEach {
-                    subject.applyValidation(emailValid: true, usernameValid: false, passwordValid: false)
+                    subject.emailValid = true
+                }
+                it("should have a valid snapshot") {
+                    expectValidSnapshot(subject, device: .Phone6_Portrait)
+                }
+            }
+            describe("snapshot, email invalid") {
+                beforeEach {
+                    subject.emailValid = false
                 }
                 it("should have a valid snapshot") {
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
@@ -115,7 +123,15 @@ class JoinScreenSpec: QuickSpec {
 
             describe("snapshot, username valid") {
                 beforeEach {
-                    subject.applyValidation(emailValid: false, usernameValid: true, passwordValid: false)
+                    subject.usernameValid = true
+                }
+                it("should have a valid snapshot") {
+                    expectValidSnapshot(subject, device: .Phone6_Portrait)
+                }
+            }
+            describe("snapshot, username invalid") {
+                beforeEach {
+                    subject.usernameValid = false
                 }
                 it("should have a valid snapshot") {
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
@@ -124,7 +140,15 @@ class JoinScreenSpec: QuickSpec {
 
             describe("snapshot, password valid") {
                 beforeEach {
-                    subject.applyValidation(emailValid: false, usernameValid: false, passwordValid: true)
+                    subject.passwordValid = true
+                }
+                it("should have a valid snapshot") {
+                    expectValidSnapshot(subject, device: .Phone6_Portrait)
+                }
+            }
+            describe("snapshot, password invalid") {
+                beforeEach {
+                    subject.passwordValid = false
                 }
                 it("should have a valid snapshot") {
                     expectValidSnapshot(subject, device: .Phone6_Portrait)
@@ -133,7 +157,19 @@ class JoinScreenSpec: QuickSpec {
 
             describe("snapshot, all valid") {
                 beforeEach {
-                    subject.applyValidation(emailValid: true, usernameValid: true, passwordValid: true)
+                    subject.emailValid = true
+                    subject.usernameValid = true
+                    subject.passwordValid = true
+                }
+                it("should have a valid snapshot") {
+                    expectValidSnapshot(subject, device: .Phone6_Portrait)
+                }
+            }
+            fdescribe("snapshot, all invalid") {
+                beforeEach {
+                    subject.emailValid = false
+                    subject.usernameValid = false
+                    subject.passwordValid = false
                 }
                 it("should have a valid snapshot") {
                     expectValidSnapshot(subject, device: .Phone6_Portrait)

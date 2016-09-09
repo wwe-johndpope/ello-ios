@@ -99,9 +99,9 @@ class JoinViewControllerSpec: QuickSpec {
                         subject.validate(email: "", username: "", password: "")
                     }
                     it("should report error to screen") {
-                        expect(mockScreen.emailValid) == false
-                        expect(mockScreen.usernameValid) == false
-                        expect(mockScreen.passwordValid) == false
+                        expect(mockScreen.emailValid).to(beNil())
+                        expect(mockScreen.usernameValid).to(beNil())
+                        expect(mockScreen.passwordValid).to(beNil())
                     }
                 }
                 context("invalid inputs") {
@@ -109,9 +109,9 @@ class JoinViewControllerSpec: QuickSpec {
                         subject.validate(email: "invalid", username: "a", password: "short")
                     }
                     it("should report error to screen") {
-                        expect(mockScreen.emailValid) == false
-                        expect(mockScreen.usernameValid) == false
-                        expect(mockScreen.passwordValid) == false
+                        expect(mockScreen.emailValid).to(beNil())
+                        expect(mockScreen.usernameValid).to(beNil())
+                        expect(mockScreen.passwordValid).to(beNil())
                     }
                 }
 
@@ -120,7 +120,7 @@ class JoinViewControllerSpec: QuickSpec {
                         subject.validate(email: "", username: "valid", password: "password")
                     }
                     it("should report error to screen") {
-                        expect(mockScreen.emailValid) == false
+                        expect(mockScreen.emailValid).to(beNil())
                         expect(mockScreen.usernameValid) == true
                         expect(mockScreen.passwordValid) == true
                     }
@@ -130,7 +130,7 @@ class JoinViewControllerSpec: QuickSpec {
                         subject.validate(email: "invalid", username: "valid", password: "password")
                     }
                     it("should report error to screen") {
-                        expect(mockScreen.emailValid) == false
+                        expect(mockScreen.emailValid).to(beNil())
                         expect(mockScreen.usernameValid) == true
                         expect(mockScreen.passwordValid) == true
                     }
@@ -142,7 +142,7 @@ class JoinViewControllerSpec: QuickSpec {
                     }
                     it("should report error to screen") {
                         expect(mockScreen.emailValid) == true
-                        expect(mockScreen.usernameValid) == false
+                        expect(mockScreen.usernameValid).to(beNil())
                         expect(mockScreen.passwordValid) == true
                     }
                 }
@@ -152,7 +152,7 @@ class JoinViewControllerSpec: QuickSpec {
                     }
                     it("should report error to screen") {
                         expect(mockScreen.emailValid) == true
-                        expect(mockScreen.usernameValid) == false
+                        expect(mockScreen.usernameValid).to(beNil())
                         expect(mockScreen.passwordValid) == true
                     }
                 }
@@ -164,7 +164,7 @@ class JoinViewControllerSpec: QuickSpec {
                     it("should report error to screen") {
                         expect(mockScreen.emailValid) == true
                         expect(mockScreen.usernameValid) == true
-                        expect(mockScreen.passwordValid) == false
+                        expect(mockScreen.passwordValid).to(beNil())
                     }
                 }
                 context("invalid password") {
@@ -174,7 +174,7 @@ class JoinViewControllerSpec: QuickSpec {
                     it("should report error to screen") {
                         expect(mockScreen.emailValid) == true
                         expect(mockScreen.usernameValid) == true
-                        expect(mockScreen.passwordValid) == false
+                        expect(mockScreen.passwordValid).to(beNil())
                     }
                 }
             }
@@ -201,7 +201,7 @@ class JoinViewControllerSpec: QuickSpec {
             }
 
             describe("submitting") {
-                context("input is valid email") {
+                context("input is valid") {
                     let email = "email@email.com"
                     let username = "username"
                     let password = "password"
