@@ -104,11 +104,11 @@ public final class StyledButton: UIButton {
         }
         else if highlighted {
             backgroundColor = style.highlightedBackgroundColor ?? style.backgroundColor
-            layerBorder = style.selectedBorderColor ?? style.borderColor
+            layerBorder = style.highlightedBorderColor ?? style.borderColor
         }
         else if selected {
             backgroundColor = style.selectedBackgroundColor ?? style.backgroundColor
-            layerBorder = style.highlightedBorderColor ?? style.borderColor
+            layerBorder = style.selectedBorderColor ?? style.borderColor
         }
         else {
             backgroundColor = style.backgroundColor
