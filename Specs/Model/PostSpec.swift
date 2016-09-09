@@ -52,7 +52,7 @@ class PostSpec: QuickSpec {
                 expect(post.assets!.count) == 1
                 expect(post.assets![0]).to(beAKindOf(Asset.self))
                 // computed
-                expect(post.groupId) == post.id
+                expect(post.groupId) == "Post-\(post.id)"
                 expect(post.shareLink) == "https://ello.co/cfiggis/post/\(post.token)"
                 expect(post.collapsed).to(beFalse())
             }
@@ -89,7 +89,7 @@ class PostSpec: QuickSpec {
                 expect(post.assets!.count) == 1
                 expect(post.assets![0]).to(beAKindOf(Asset.self))
                 // computed
-                expect(post.groupId) == post.id
+                expect(post.groupId) == "Post-\(post.id)"
                 expect(post.shareLink) == "https://ello.co/archer/post/\(post.token)"
                 expect(post.collapsed).to(beFalse())
             }

@@ -22,7 +22,7 @@ class NotificationSpec: QuickSpec {
 
                 expect(notification.author?.id) == user.id
                 expect(notification.createdAt) == createdAtDate
-                expect(notification.groupId) == activity.id
+                expect(notification.groupId) == "Notification-\(activity.id)"
                 expect(notification.activity.kind) == Activity.Kind.RepostNotification
                 expect(notification.activity.subjectType) == Activity.SubjectType.Post
                 expect((notification.subject as? Post)?.id) == post.id
@@ -51,7 +51,7 @@ class NotificationSpec: QuickSpec {
 
                 expect(notification.author?.id) == user.id
                 expect(notification.createdAt) == createdAtDate
-                expect(notification.groupId) == activity.id
+                expect(notification.groupId) == "Notification-\(activity.id)"
                 expect(notification.activity.kind) == Activity.Kind.RepostNotification
                 expect(notification.activity.subjectType) == Activity.SubjectType.Post
                 expect((notification.subject as? Post)?.id) == post.id
@@ -78,7 +78,7 @@ class NotificationSpec: QuickSpec {
 
                 expect(notification.author?.id) == user.id
                 expect(notification.createdAt) == createdAtDate
-                expect(notification.groupId) == activity.id
+                expect(notification.groupId) == "Notification-\(activity.id)"
                 expect(notification.activity.kind) == Activity.Kind.CommentMentionNotification
                 expect(notification.activity.subjectType) == Activity.SubjectType.Comment
                 expect((notification.subject as? ElloComment)?.id) == comment.id
@@ -119,7 +119,7 @@ class NotificationSpec: QuickSpec {
 
                 expect(notification.author?.id) == user.id
                 expect(notification.createdAt) == createdAtDate
-                expect(notification.groupId) == activity.id
+                expect(notification.groupId) == "Notification-\(activity.id)"
                 expect(notification.activity.kind) == Activity.Kind.CommentMentionNotification
                 expect(notification.activity.subjectType) == Activity.SubjectType.Comment
                 expect((notification.subject as? ElloComment)?.id) == comment.id

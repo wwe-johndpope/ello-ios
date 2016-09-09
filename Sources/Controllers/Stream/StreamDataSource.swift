@@ -281,10 +281,10 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return visibleCellItems[indexPath.item].type.isFullWidth
     }
 
-    public func groupForIndexPath(indexPath: NSIndexPath) -> String {
-        if !isValidIndexPath(indexPath) { return "0" }
+    public func groupForIndexPath(indexPath: NSIndexPath) -> String? {
+        if !isValidIndexPath(indexPath) { return nil }
 
-        return (visibleCellItems[indexPath.item].jsonable as? Groupable)?.groupId ?? "0"
+        return (visibleCellItems[indexPath.item].jsonable as? Groupable)?.groupId
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -779,7 +779,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
 
     public func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        groupForItemAtIndexPath indexPath: NSIndexPath) -> String {
+        groupForItemAtIndexPath indexPath: NSIndexPath) -> String? {
             return dataSource.groupForIndexPath(indexPath)
     }
 

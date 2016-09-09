@@ -1450,7 +1450,7 @@ class StreamDataSourceSpec: QuickSpec {
                         let indexPath = NSIndexPath(forItem: index, inSection: 0)
                         let groupId = subject.groupForIndexPath(indexPath)
                         if item.jsonable is Post || item.jsonable is ElloComment {
-                            expect(groupId) == post.id
+                            expect(groupId) == post.groupId
                         }
                     }
                 }
@@ -1472,15 +1472,15 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(firstGroupId) != secondGroupId
                 }
 
-                it("returns '0' if indexPath out of bounds") {
-                    expect(subject.groupForIndexPath(indexPathOutOfBounds)) == "0"
+                it("returns nil if indexPath out of bounds") {
+                    expect(subject.groupForIndexPath(indexPathOutOfBounds)).to(beNil())
                 }
 
-                it("returns '0' if invalid section") {
-                    expect(subject.groupForIndexPath(indexPathInvalidSection)) == "0"
+                it("returns nil if invalid section") {
+                    expect(subject.groupForIndexPath(indexPathInvalidSection)).to(beNil())
                 }
 
-                it("returns '0' if StreamCellItem's jsonable is not Groupable") {
+                it("returns nil if StreamCellItem's jsonable is not Groupable") {
                     let lastIndexPath = NSIndexPath(forItem: subject.visibleCellItems.count, inSection: 0)
                     let nonGroupable: Asset = stub(["id": "123"])
 
@@ -1490,7 +1490,7 @@ class StreamDataSourceSpec: QuickSpec {
                         vc.collectionView.reloadData()
                     }
 
-                    expect(subject.groupForIndexPath(lastIndexPath)) == "0"
+                    expect(subject.groupForIndexPath(lastIndexPath)).to(beNil())
                 }
             }
 

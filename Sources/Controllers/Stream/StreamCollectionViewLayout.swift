@@ -21,7 +21,7 @@ public protocol StreamCollectionViewLayoutDelegate: UICollectionViewDelegate {
 
     optional func collectionView (collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        groupForItemAtIndexPath indexPath: NSIndexPath) -> String
+        groupForItemAtIndexPath indexPath: NSIndexPath) -> String?
 
     optional func colletionView (collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAtIndex section: NSInteger) -> UIEdgeInsets

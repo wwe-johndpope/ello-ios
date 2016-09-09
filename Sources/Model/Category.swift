@@ -12,7 +12,7 @@ public final class Category: JSONAble, Groupable {
     static let recent = Category(id: "meta3", name: InterfaceString.Discover.Recent, slug: "recent", order: 2, level: .Meta, tileImage: nil)
 
     public let id: String
-    public var groupId: String { return id }
+    public var groupId: String { return "Category-\(id)" }
     public let name: String
     public let slug: String
     public var tileURL: NSURL? { return tileImage?.url }

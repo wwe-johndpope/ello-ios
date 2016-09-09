@@ -34,9 +34,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, inCollection: MappingType.PostsType.rawValue) as? Post) ?? parentPost
     }
     // computed properties
-    public var groupId: String {
-        get { return postId }
-    }
+    public var groupId: String { return "Post-\(postId)" }
     // to show hide in the stream, and for comment replies
     public var loadedFromPostId: String
 
