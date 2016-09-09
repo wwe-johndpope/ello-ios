@@ -17,13 +17,46 @@ public class JoinScreen: CredentialsScreen {
     }
 
     weak var delegate: JoinDelegate?
+    var emailValid: Bool? = nil {
+        didSet {
+            if let emailValid = emailValid {
+                emailField.validationState = emailValid ? .OKSmall : .Error
+                styleDiscoverButton()
+            }
+            else {
+                emailField.validationState = .None
+            }
+        }
+    }
     var email: String {
         get { return emailField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) ?? "" }
         set { emailField.text = newValue }
     }
+    var usernameValid: Bool? = nil {
+        didSet {
+            if let usernameValid = usernameValid {
+                usernameField.validationState = usernameValid ? .OKSmall : .Error
+                styleDiscoverButton()
+            }
+            else {
+                usernameField.validationState = .None
+            }
+        }
+    }
     var username: String {
         get { return usernameField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) ?? "" }
         set { usernameField.text = newValue }
+    }
+    var passwordValid: Bool? = nil {
+        didSet {
+            if let passwordValid = passwordValid {
+                passwordField.validationState = passwordValid ? .OKSmall : .Error
+                styleDiscoverButton()
+            }
+            else {
+                passwordField.validationState = .None
+            }
+        }
     }
     var password: String {
         get { return passwordField.text ?? "" }
@@ -219,21 +252,24 @@ public class JoinScreen: CredentialsScreen {
 }
 
 extension JoinScreen {
-    private func styleDiscoverButton(allValid allValid: Bool) {
+    private func styleDiscoverButton() {
+        let allValid: Bool
+        if let emailValid = emailValid,
+            usernameValid = usernameValid,
+            passwordValid = passwordValid
+        {
+            allValid = emailValid && usernameValid && passwordValid
+        }
+        else {
+            allValid = false
+        }
+
         if allValid {
             discoverButton.style = .Green
         }
         else {
             discoverButton.style = .RoundedGray
         }
-    }
-
-    func applyValidation(emailValid emailValid: Bool, usernameValid: Bool, passwordValid: Bool) {
-        emailField.validationState = emailValid ? .OKSmall : .None
-        usernameField.validationState = usernameValid ? .OKSmall : .None
-        passwordField.validationState = passwordValid ? .OKSmall : .None
-        let allValid = emailValid && usernameValid && passwordValid
-        styleDiscoverButton(allValid: allValid)
     }
 }
 
@@ -371,6 +407,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showUsernameError(text: String) {
         usernameErrorLabel.text = text
+        usernameValid = false
 
         animate {
             self.usernameMargin.activate()
@@ -392,6 +429,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showEmailError(text: String) {
         emailErrorLabel.text = text
+        emailValid = false
 
         animate {
             self.emailMargin.activate()
@@ -413,6 +451,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showPasswordError(text: String) {
         passwordErrorLabel.text = text
+        passwordValid = false
 
         animate {
             self.passwordMargin.activate()

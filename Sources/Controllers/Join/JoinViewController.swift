@@ -33,10 +33,26 @@ extension JoinViewController: JoinDelegate {
     }
 
     func validate(email email: String, username: String, password: String) {
-        let emailValid = Validator.invalidSignUpEmailReason(email) == nil
-        let usernameValid = Validator.invalidSignUpUsernameReason(username) == nil
-        let passwordValid = Validator.invalidSignUpPasswordReason(password) == nil
-        screen.applyValidation(emailValid: emailValid, usernameValid: usernameValid, passwordValid: passwordValid)
+        if Validator.invalidSignUpEmailReason(email) == nil {
+            screen.emailValid = true
+        }
+        else {
+            screen.emailValid = nil
+        }
+
+        if Validator.invalidSignUpUsernameReason(username) == nil {
+            screen.usernameValid = true
+        }
+        else {
+            screen.usernameValid = nil
+        }
+
+        if Validator.invalidSignUpPasswordReason(password) == nil {
+            screen.passwordValid = true
+        }
+        else {
+            screen.passwordValid = nil
+        }
     }
 
     func submit(email email: String, username: String, password: String) {
@@ -51,44 +67,51 @@ extension JoinViewController: JoinDelegate {
             screen.hidePasswordError()
             screen.disableInputs()
 
+            var joinSuccessful = true
             let joinAborted: () -> Void = {
                 self.screen.enableInputs()
             }
-
-            self.emailAvailability(email) { successful in
-                if !successful {
+            let joinContinue = after(2) {
+                guard joinSuccessful else {
                     joinAborted()
                     return
                 }
 
-                self.usernameAvailability(username) { successful in
-                    if !successful {
-                        joinAborted()
-                        return
+                Tracker.sharedTracker.joinValid()
+
+                UserService().join(
+                    email: email,
+                    username: username,
+                    password: password,
+                    invitationCode: self.invitationCode
+                    ).onSuccess { user in
+                        let authService = CredentialsAuthService()
+                        authService.authenticate(email: email,
+                            password: password,
+                            success: {
+                                Tracker.sharedTracker.joinSuccessful()
+                                self.showOnboardingScreen(user)
+                            },
+                            failure: { _, _ in
+                                Tracker.sharedTracker.joinFailed()
+                                self.showLoginScreen(email, password)
+                            })
                     }
+                    .onFail { error in
+                        let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
+                        self.screen.showError(errorTitle)
+                        joinAborted()
+                    }
+            }
 
-                    Tracker.sharedTracker.joinValid()
+            self.emailAvailability(email) { successful in
+                joinSuccessful = joinSuccessful && successful
+                joinContinue()
+            }
 
-                    UserService().join(email: email, username: username, password: password, invitationCode: self.invitationCode)
-                        .onSuccess { user in
-                            let authService = CredentialsAuthService()
-                            authService.authenticate(email: email,
-                                password: password,
-                                success: {
-                                    Tracker.sharedTracker.joinSuccessful()
-                                    self.showOnboardingScreen(user)
-                                },
-                                failure: { _, _ in
-                                    Tracker.sharedTracker.joinFailed()
-                                    self.showLoginScreen(email, password)
-                                })
-                        }
-                        .onFail { error in
-                            let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
-                            self.screen.showError(errorTitle)
-                            joinAborted()
-                        }
-                }
+            self.usernameAvailability(username) { successful in
+                joinSuccessful = joinSuccessful && successful
+                joinContinue()
             }
         }
         else {
