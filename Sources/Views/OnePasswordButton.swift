@@ -15,8 +15,8 @@ public class OnePasswordButton: UIButton {
     }
 
     func sharedSetup() {
-        onePasswordButton.setImage(.OnePassword, imageStyle: .White, forState: .Normal)
-        onePasswordButton.contentMode = .Center
+        setImage(.OnePassword, imageStyle: .White, forState: .Normal)
+        contentMode = .Center
     }
 
 }
