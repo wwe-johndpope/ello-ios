@@ -236,32 +236,6 @@ public enum StreamKind {
         return GroupDefaults["\(cacheKey)IsGridView"].bool ?? defaultGrid
     }
 
-    public func clientSidePostInsertIndexPath(currentUserId: String?) -> NSIndexPath? {
-        switch self {
-        case .Following:
-            return NSIndexPath(forItem: 1, inSection: 0)
-        case .CurrentUserStream:
-            return NSIndexPath(forItem: 4, inSection: 0)
-        case let .UserStream(userParam):
-            if currentUserId == userParam {
-                return NSIndexPath(forItem: 4, inSection: 0)
-            }
-        default: return nil
-        }
-        return nil
-    }
-
-    public var clientSideLoveInsertIndexPath: NSIndexPath? {
-        switch self {
-        case let .SimpleStream(endpoint, _):
-            switch endpoint {
-            case .Loves: return NSIndexPath(forItem: 1, inSection: 0)
-            default: return nil
-            }
-        default: return nil
-        }
-    }
-
     public var hasGridViewToggle: Bool {
         switch self {
         case .Following, .Starred, .Discover, .CategoryPosts: return true

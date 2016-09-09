@@ -2,6 +2,7 @@
 ///  StreamDataSourceSpec.swift
 //
 
+@testable
 import Ello
 import Quick
 import Nimble
@@ -19,6 +20,15 @@ public class FakeCollectionView: UICollectionView {
 
     public override func reloadItemsAtIndexPaths(indexPaths: [NSIndexPath]) {
         // noop
+    }
+}
+
+extension StreamDataSource {
+    func testClientSidePostInsertIndexPath() -> NSIndexPath? {
+        return clientSidePostInsertIndexPath()
+    }
+    func testClientSideLoveInsertIndexPath() -> NSIndexPath? {
+        return clientSideLoveInsertIndexPath()
     }
 }
 
@@ -645,7 +655,75 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-           describe("modifyItems(_:change:collectionView:)") {
+
+            describe("clientSidePostInsertIndexPath()") {
+                let one = NSIndexPath(forItem: 1, inSection: 0)
+                let four = NSIndexPath(forItem: 4, inSection: 0)
+                let tests: [(NSIndexPath?, StreamKind)] = [
+                    (nil, StreamKind.Discover(type: .Featured)),
+                    (nil, StreamKind.CategoryPosts(slug: "art")),
+                    (one, StreamKind.Following),
+                    (nil, StreamKind.Starred),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
+                    (nil, StreamKind.Notifications(category: "")),
+                    (nil, StreamKind.PostDetail(postParam: "param")),
+                    (four, StreamKind.CurrentUserStream),
+                    (nil, StreamKind.Unknown),
+                    (nil, StreamKind.UserStream(userParam: "NA")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
+                    (four, StreamKind.UserStream(userParam: "12345")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
+                ]
+                for (indexPath, streamKind) in tests {
+                    it("is \(indexPath) for \(streamKind)") {
+                        subject.streamKind = streamKind
+                        subject.currentUser.id = "12345"
+
+                        if indexPath == nil {
+                            expect(subject.testClientSidePostInsertIndexPath()).to(beNil())
+                        }
+                        else {
+                            expect(subject.testClientSidePostInsertIndexPath()) == indexPath
+                        }
+                    }
+                }
+            }
+
+            describe("clientSideLoveInsertIndexPath()") {
+                let one = NSIndexPath(forItem: 1, inSection: 0)
+                let tests: [(NSIndexPath?, StreamKind)] = [
+                    (nil, StreamKind.Discover(type: .Featured)),
+                    (nil, StreamKind.CategoryPosts(slug: "art")),
+                    (nil, StreamKind.Following),
+                    (nil, StreamKind.Starred),
+                    (one, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
+                    (nil, StreamKind.Notifications(category: "")),
+                    (nil, StreamKind.PostDetail(postParam: "param")),
+                    (nil, StreamKind.CurrentUserStream),
+                    (nil, StreamKind.Unknown),
+                    (nil, StreamKind.UserStream(userParam: "NA")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
+                    (nil, StreamKind.UserStream(userParam: "12345")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
+                ]
+                for (indexPath, streamKind) in tests {
+                    it("is \(indexPath) for \(streamKind)") {
+                        subject.streamKind = streamKind
+
+                        if indexPath == nil {
+                            expect(subject.testClientSideLoveInsertIndexPath()).to(beNil())
+                        }
+                        else {
+                            expect(subject.testClientSideLoveInsertIndexPath()) == indexPath
+                        }
+                    }
+                }
+            }
+
+
+            describe("modifyItems(_:change:collectionView:)") {
 
                 context("with comments") {
 

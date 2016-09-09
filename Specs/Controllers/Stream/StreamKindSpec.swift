@@ -308,69 +308,6 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
-            describe("clientSidePostInsertIndexPath(currentUserId:)") {
-                let one = NSIndexPath(forItem: 1, inSection: 0)
-                let four = NSIndexPath(forItem: 4, inSection: 0)
-                let tests: [(NSIndexPath?, StreamKind)] = [
-                    (nil, StreamKind.Discover(type: .Featured)),
-                    (nil, StreamKind.CategoryPosts(slug: "art")),
-                    (one, StreamKind.Following),
-                    (nil, StreamKind.Starred),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
-                    (nil, StreamKind.Notifications(category: "")),
-                    (nil, StreamKind.PostDetail(postParam: "param")),
-                    (four, StreamKind.CurrentUserStream),
-                    (nil, StreamKind.Unknown),
-                    (nil, StreamKind.UserStream(userParam: "NA")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
-                    (four, StreamKind.UserStream(userParam: "12345")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
-                ]
-                for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
-
-                        if(indexPath == nil) {
-                            expect(streamKind.clientSidePostInsertIndexPath("12345")).to(beNil())
-                        }
-                        else {
-                            expect(streamKind.clientSidePostInsertIndexPath("12345")) == indexPath
-                        }
-                    }
-                }
-            }
-
-            describe("clientSideLoveInsertIndexPath") {
-                let one = NSIndexPath(forItem: 1, inSection: 0)
-                let tests: [(NSIndexPath?, StreamKind)] = [
-                    (nil, StreamKind.Discover(type: .Featured)),
-                    (nil, StreamKind.CategoryPosts(slug: "art")),
-                    (nil, StreamKind.Following),
-                    (nil, StreamKind.Starred),
-                    (one, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
-                    (nil, StreamKind.Notifications(category: "")),
-                    (nil, StreamKind.PostDetail(postParam: "param")),
-                    (nil, StreamKind.CurrentUserStream),
-                    (nil, StreamKind.Unknown),
-                    (nil, StreamKind.UserStream(userParam: "NA")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
-                    (nil, StreamKind.UserStream(userParam: "12345")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
-                ]
-                for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
-
-                        if(indexPath == nil) {
-                            expect(streamKind.clientSideLoveInsertIndexPath).to(beNil())
-                        }
-                        else {
-                            expect(streamKind.clientSideLoveInsertIndexPath) == indexPath
-                        }
-                    }
-                }
-            }
-
             describe("isGridView") {
 
                 beforeEach {

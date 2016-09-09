@@ -357,6 +357,47 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return cell
     }
 
+    private func clientSidePostInsertIndexPath() -> NSIndexPath? {
+        let currentUserId = currentUser?.id
+
+        switch streamKind {
+        case .Following:
+            return NSIndexPath(forItem: 1, inSection: 0)
+        case .CurrentUserStream:
+            if visibleCellItems.count == 2 && visibleCellItems[1].type == .NoPosts {
+                removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
+                return NSIndexPath(forItem: 1, inSection: 0)
+            }
+            return NSIndexPath(forItem: 4, inSection: 0)
+        case let .UserStream(userParam):
+            if currentUserId == userParam {
+                if visibleCellItems.count == 2 && visibleCellItems[1].type == .NoPosts {
+                    removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
+                    return NSIndexPath(forItem: 1, inSection: 0)
+                }
+                return NSIndexPath(forItem: 4, inSection: 0)
+            }
+        default:
+            break
+        }
+        return nil
+    }
+
+    private func clientSideLoveInsertIndexPath() -> NSIndexPath? {
+        switch streamKind {
+        case let .SimpleStream(endpoint, _):
+            switch endpoint {
+            case .Loves:
+                return NSIndexPath(forItem: 1, inSection: 0)
+            default:
+                break
+            }
+        default:
+            break
+        }
+        return nil
+    }
+
     public func modifyItems(jsonable: JSONAble, change: ContentChange, collectionView: UICollectionView) {
         // get items that match id and type -> [IndexPath]
         // based on change decide to update/remove those items
@@ -377,15 +418,13 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 }
                 reloadPaths = indexPaths
             }
-
             // else if post, add new post cells
             else if jsonable is Post {
-                indexPath = streamKind.clientSidePostInsertIndexPath(currentUser?.id)
+                indexPath = clientSidePostInsertIndexPath()
             }
-
             // else if love, add post to loves
             else if jsonable is Love {
-                indexPath = streamKind.clientSideLoveInsertIndexPath
+                indexPath = clientSideLoveInsertIndexPath()
             }
 
             if let indexPath = indexPath {
