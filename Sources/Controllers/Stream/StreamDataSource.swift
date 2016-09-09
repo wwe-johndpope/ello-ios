@@ -730,7 +730,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
             let atIndex = arrayIndex + index
             if atIndex <= streamCellItems.count {
-                streamCellItems.insert(cellItem, atIndex: arrayIndex + index)
+                streamCellItems.insert(cellItem, atIndex: atIndex)
             }
             else {
                 streamCellItems.append(cellItem)
