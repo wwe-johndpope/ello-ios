@@ -135,7 +135,11 @@ private extension ProfileGenerator {
                             sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems()) {}
                         }
                         else {
+                            let updateHeaderItems = sself.hasPosts == false
                             sself.hasPosts = true
+                            if updateHeaderItems {
+                                sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems()) {}
+                            }
                             sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems) {
                                 sself.destination?.pagingEnabled = true
                             }
