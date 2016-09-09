@@ -15,7 +15,7 @@ public struct UserService {
         email email: String,
         username: String,
         password: String,
-        invitationCode: String? = nil) -> Future<User>
+        invitationCode: String?) -> Future<User>
     {
         let promise = Promise<User>()
         ElloProvider.shared.elloRequest(ElloAPI.Join(email: email, username: username, password: password, invitationCode: invitationCode),

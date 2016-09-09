@@ -172,7 +172,7 @@ extension AppViewController {
         swapViewController(nav, completion: completion)
     }
 
-    public func showJoinScreen(animated animated: Bool, inviteCode: String? = nil) {
+    public func showJoinScreen(animated animated: Bool, invitationCode: String? = nil) {
         guard let nav = visibleViewController as? UINavigationController else {
             showStartupScreen() { self.showJoinScreen(animated: animated) }
             return
@@ -186,6 +186,7 @@ extension AppViewController {
         pushPayload = .None
         let joinController = JoinViewController()
         joinController.parentAppController = self
+        joinController.invitationCode = invitationCode
         nav.setViewControllers([startupController, joinController], animated: animated)
     }
 
@@ -422,7 +423,16 @@ extension AppViewController {
         }
 
         guard isLoggedIn() else {
-            presentLoginOrSafariAlert(path)
+            switch type {
+            case .Invite:
+                showJoinScreen(animated: false, invitationCode: data)
+            case .Join:
+                showJoinScreen(animated: false)
+            case .Login:
+                showLoginScreen(animated: false)
+            default:
+                presentLoginOrSafariAlert(path)
+            }
             return
         }
 
@@ -431,6 +441,8 @@ extension AppViewController {
         }
 
         switch type {
+        case .Invite, .Join, .Login:
+            break
         case .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
@@ -455,18 +467,6 @@ extension AppViewController {
         case .Friends,
              .Following:
             showFriendsScreen(vc)
-        case .Invite:
-            if !isLoggedIn() {
-                showJoinScreen(animated: false, inviteCode: data)
-            }
-        case .Join:
-            if !isLoggedIn() {
-                showJoinScreen(animated: false)
-            }
-        case .Login:
-            if !isLoggedIn() {
-                showLoginScreen(animated: false)
-            }
         case .Noise,
              .Starred:
             showNoiseScreen(vc)

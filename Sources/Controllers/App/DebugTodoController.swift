@@ -43,8 +43,10 @@ class DebugTodoController: UIViewController, UITableViewDataSource, UITableViewD
                 alertController.addAction(urlAction)
 
                 let okCancelAction = AlertAction(title: "", style: .OKCancel) { _ in
-                    if let urlString = alertController.actionInputs.safeValue(0) {
-                        appController.navigateToDeepLink(urlString)
+                    delay(0.5) {
+                        if let urlString = alertController.actionInputs.safeValue(0) {
+                            appController.navigateToDeepLink(urlString)
+                        }
                     }
                 }
                 alertController.addAction(okCancelAction)

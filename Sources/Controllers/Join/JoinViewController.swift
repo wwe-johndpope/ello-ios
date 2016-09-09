@@ -9,6 +9,7 @@ public class JoinViewController: BaseElloViewController, HasAppController {
     var screen: JoinScreenProtocol { return mockScreen ?? (self.view as! JoinScreenProtocol) }
 
     var parentAppController: AppViewController?
+    var invitationCode: String?
 
     override public func loadView() {
         let screen = JoinScreen()
@@ -68,7 +69,7 @@ extension JoinViewController: JoinDelegate {
 
                     Tracker.sharedTracker.joinValid()
 
-                    UserService().join(email: email, username: username, password: password)
+                    UserService().join(email: email, username: username, password: password, invitationCode: self.invitationCode)
                         .onSuccess { user in
                             let authService = CredentialsAuthService()
                             authService.authenticate(email: email,
