@@ -43,11 +43,6 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
                     expect(cell.scrollView.contentOffset) == CGPointZero
                 }
-                it("sets the index path") {
-                    cell.indexPath = NSIndexPath(forItem: 1, inSection: 1)
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
-                    expect(cell.indexPath) == NSIndexPath(forItem: 0, inSection: 0)
-                }
                 it("ownPost should be false") {
                     StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .Following, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: currentUser)
                     expect(cell.ownPost) == false

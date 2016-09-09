@@ -95,7 +95,6 @@ class StreamHeaderCellSpec: QuickSpec {
                         else {
                             subject.frame = detailFrame
                         }
-                        subject.indexPath = NSIndexPath(forItem: 0, inSection: 0)
                         subject.ownPost = false
                         subject.ownComment = false
                         subject.isGridLayout = inGrid

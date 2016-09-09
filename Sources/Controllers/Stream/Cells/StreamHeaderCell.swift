@@ -5,7 +5,6 @@
 public class StreamHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamHeaderCell"
 
-    public var indexPath = NSIndexPath(forItem: 0, inSection: 0)
     public var ownPost = false {
         didSet {
             self.updateItems()
@@ -414,7 +413,8 @@ public class StreamHeaderCell: UICollectionViewCell {
 // MARK: - IBActions
 
     func postTapped(recognizer: UITapGestureRecognizer) {
-        postbarDelegate?.viewsButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        postbarDelegate?.viewsButtonTapped(indexPath)
     }
 
     @IBAction func userTapped(sender: AvatarButton) {
@@ -434,19 +434,23 @@ public class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func flagButtonTapped(sender: StreamFooterButton) {
-        postbarDelegate?.flagCommentButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        postbarDelegate?.flagCommentButtonTapped(indexPath)
     }
 
     @IBAction func replyButtonTapped(sender: StreamFooterButton) {
-        postbarDelegate?.replyToCommentButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        postbarDelegate?.replyToCommentButtonTapped(indexPath)
     }
 
     @IBAction func deleteButtonTapped(sender: StreamFooterButton) {
-        postbarDelegate?.deleteCommentButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        postbarDelegate?.deleteCommentButtonTapped(indexPath)
     }
 
     @IBAction func editButtonTapped(sender: StreamFooterButton) {
-        postbarDelegate?.editCommentButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        postbarDelegate?.editCommentButtonTapped(indexPath)
     }
 
     @IBAction func chevronButtonTapped(sender: StreamFooterButton) {

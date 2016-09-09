@@ -7,8 +7,6 @@ let streamCellDidOpenNotification = TypedNotification<UICollectionViewCell>(name
 public class StreamFooterCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamFooterCell"
 
-    public var indexPath = NSIndexPath(forItem: 0, inSection: 0)
-
     @IBOutlet weak public var toolBar: UIToolbar!
     @IBOutlet weak public var containerView: UIView!
     @IBOutlet weak public var innerContentView: UIView!
@@ -180,7 +178,8 @@ public class StreamFooterCell: UICollectionViewCell {
 // MARK: - IBActions
 
     @IBAction func viewsButtonTapped() {
-        delegate?.viewsButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        delegate?.viewsButtonTapped(indexPath)
     }
 
     @IBAction func commentsButtonTapped() {
@@ -196,15 +195,18 @@ public class StreamFooterCell: UICollectionViewCell {
     }
 
     @IBAction func lovesButtonTapped() {
-        delegate?.lovesButtonTapped(self, indexPath: self.indexPath)
+        guard let indexPath = indexPath else { return }
+        delegate?.lovesButtonTapped(self, indexPath: indexPath)
     }
 
     @IBAction func repostButtonTapped() {
-        delegate?.repostButtonTapped(self.indexPath)
+        guard let indexPath = indexPath else { return }
+        delegate?.repostButtonTapped(indexPath)
     }
 
     @IBAction func shareButtonTapped() {
-        delegate?.shareButtonTapped(self.indexPath, sourceView: shareControl)
+        guard let indexPath = indexPath else { return }
+        delegate?.shareButtonTapped(indexPath, sourceView: shareControl)
     }
 
     @IBAction func replyButtonTapped() {

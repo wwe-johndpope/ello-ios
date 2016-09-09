@@ -19,7 +19,6 @@ public struct StreamCreateCommentCellPresenter {
             let ownPost = currentUser?.id == post.authorId
             let replyAllVisibility: InteractionVisibility = ownPost ? .Enabled : .Hidden
 
-            cell.indexPath = indexPath
             cell.avatarURL = user.avatarURL()
             cell.replyAllVisibility = replyAllVisibility
         }

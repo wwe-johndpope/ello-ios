@@ -12,3 +12,25 @@ extension UICollectionView {
         return nil
     }
 }
+
+extension UICollectionViewCell {
+    public var indexPath: NSIndexPath? {
+        var superview: UIView? = self.superview
+        while superview != nil {
+            if superview is UICollectionView { break }
+            superview = superview?.superview
+        }
+
+        guard let collectionView = superview as? UICollectionView else { return nil }
+
+        for path in collectionView.indexPathsForVisibleItems() {
+            guard let
+                cell = collectionView.cellForItemAtIndexPath(path)
+            where cell == self
+            else { continue }
+
+            return path
+        }
+        return nil
+    }
+}
