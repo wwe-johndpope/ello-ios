@@ -357,7 +357,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return cell
     }
 
-    private func clientSidePostInsertIndexPath() -> NSIndexPath? {
+    func clientSidePostInsertIndexPath() -> NSIndexPath? {
         let currentUserId = currentUser?.id
 
         switch streamKind {
@@ -383,7 +383,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    private func clientSideLoveInsertIndexPath() -> NSIndexPath? {
+    func clientSideLoveInsertIndexPath() -> NSIndexPath? {
         switch streamKind {
         case let .SimpleStream(endpoint, _):
             switch endpoint {

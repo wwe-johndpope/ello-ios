@@ -23,15 +23,6 @@ public class FakeCollectionView: UICollectionView {
     }
 }
 
-extension StreamDataSource {
-    func testClientSidePostInsertIndexPath() -> NSIndexPath? {
-        return clientSidePostInsertIndexPath()
-    }
-    func testClientSideLoveInsertIndexPath() -> NSIndexPath? {
-        return clientSideLoveInsertIndexPath()
-    }
-}
-
 class StreamDataSourceSpec: QuickSpec {
 
     override func spec() {
@@ -678,13 +669,13 @@ class StreamDataSourceSpec: QuickSpec {
                 for (indexPath, streamKind) in tests {
                     it("is \(indexPath) for \(streamKind)") {
                         subject.streamKind = streamKind
-                        subject.currentUser.id = "12345"
+                        subject.currentUser = User.stub(["id": "12345"])
 
                         if indexPath == nil {
-                            expect(subject.testClientSidePostInsertIndexPath()).to(beNil())
+                            expect(subject.clientSidePostInsertIndexPath()).to(beNil())
                         }
                         else {
-                            expect(subject.testClientSidePostInsertIndexPath()) == indexPath
+                            expect(subject.clientSidePostInsertIndexPath()) == indexPath
                         }
                     }
                 }
@@ -713,10 +704,10 @@ class StreamDataSourceSpec: QuickSpec {
                         subject.streamKind = streamKind
 
                         if indexPath == nil {
-                            expect(subject.testClientSideLoveInsertIndexPath()).to(beNil())
+                            expect(subject.clientSideLoveInsertIndexPath()).to(beNil())
                         }
                         else {
-                            expect(subject.testClientSideLoveInsertIndexPath()) == indexPath
+                            expect(subject.clientSideLoveInsertIndexPath()) == indexPath
                         }
                     }
                 }
