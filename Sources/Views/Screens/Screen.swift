@@ -26,11 +26,6 @@ public class Screen: UIView {
         bindActions()
         setText()
         arrange()
-
-        keyboardAnchor.snp_makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(self)
-            keyboardConstraint = make.top.equalTo(self.snp_bottom).constraint
-        }
     }
 
     deinit {
@@ -80,5 +75,10 @@ public class Screen: UIView {
     func style() {}
     func bindActions() {}
     func setText() {}
-    func arrange() {}
+    func arrange() {
+        keyboardAnchor.snp_makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self)
+            keyboardConstraint = make.top.equalTo(self.snp_bottom).constraint
+        }
+    }
 }

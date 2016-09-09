@@ -13,6 +13,8 @@ public class StreamableScreen: Screen {
     }
 
     override func arrange() {
+        super.arrange()
+
         addSubview(streamContainer)
         addSubview(navigationBar)
 
