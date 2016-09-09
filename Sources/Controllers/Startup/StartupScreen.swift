@@ -76,4 +76,5 @@ extension StartupScreen {
     }
 }
 
-extension StartupScreenProtocol {}
+extension StartupScreen: StartupScreenProtocol {
+}
