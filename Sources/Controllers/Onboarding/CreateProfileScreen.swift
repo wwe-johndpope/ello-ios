@@ -152,6 +152,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     }
 
     override func arrange() {
+        super.arrange()
         addSubview(scrollView)
 
         let widthAnchor = UIView()
