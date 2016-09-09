@@ -659,6 +659,7 @@
 		1DE261371B0D396600475325 /* ElloOnboardingButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */; };
 		1DE261421B0EBD8000475325 /* OnboardingUploadImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE261411B0EBD8000475325 /* OnboardingUploadImageViewController.swift */; };
 		1DE3EC4A1D81CC3400BDE16F /* ElloDev.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1DE3EC491D81CC3400BDE16F /* ElloDev.entitlements */; };
+		1DE3EC4C1D83245D00BDE16F /* OnePasswordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */; };
 		1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */; };
 		1DE87FC81BB32060007A7325 /* MentionablesSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC71BB32060007A7325 /* MentionablesSpec.swift */; };
 		1DEE2BEF1AF96F5300EB9DFA /* SearchViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */; };
@@ -1528,6 +1529,7 @@
 		1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloOnboardingButtons.swift; sourceTree = "<group>"; };
 		1DE261411B0EBD8000475325 /* OnboardingUploadImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingUploadImageViewController.swift; sourceTree = "<group>"; };
 		1DE3EC491D81CC3400BDE16F /* ElloDev.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ElloDev.entitlements; sourceTree = "<group>"; };
+		1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePasswordButton.swift; sourceTree = "<group>"; };
 		1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mentionables.swift; sourceTree = "<group>"; };
 		1DE87FC71BB32060007A7325 /* MentionablesSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionablesSpec.swift; sourceTree = "<group>"; };
 		1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewControllerSpec.swift; sourceTree = "<group>"; };
@@ -2788,6 +2790,7 @@
 				1DF404091B150DB40073460B /* NarrationView.swift */,
 				1DB22FF81BE7E3420016055E /* NewElloTabBar.swift */,
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
+				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
 				1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */,
 				1D59338F1D14854700EAF03D /* Screens */,
@@ -4646,6 +4649,7 @@
 				1D9CF9A11D4925BE004A95B7 /* OmnibarImageData.swift in Sources */,
 				1DADC57A1AF449B3000DAC88 /* ElloWebBrowserViewController.swift in Sources */,
 				1D7152CB1D6FA0D9005998FE /* JoinProtocols.swift in Sources */,
+				1DE3EC4C1D83245D00BDE16F /* OnePasswordButton.swift in Sources */,
 				122DEA201AB0A024005DF1F1 /* NSFileManagerExtensions.swift in Sources */,
 				1267C7391BA232530000D809 /* MutableBox.swift in Sources */,
 				76C0A51E1AB38C69009B96E6 /* UIButtonExtensions.swift in Sources */,

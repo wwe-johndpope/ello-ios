@@ -3,7 +3,7 @@
 //
 
 public class ClearTextField: UITextField {
-    public let onePasswordButton = UIButton()
+    public let onePasswordButton = OnePasswordButton()
     var line = UIView()
     var hasOnePassword = false {
         didSet {
@@ -36,8 +36,6 @@ public class ClearTextField: UITextField {
         addSubview(line)
 
         onePasswordButton.hidden = true
-        onePasswordButton.setImage(.OnePassword, imageStyle: .White, forState: .Normal)
-        onePasswordButton.contentMode = .Center
         addSubview(onePasswordButton)
 
         onePasswordButton.snp_makeConstraints { make in
