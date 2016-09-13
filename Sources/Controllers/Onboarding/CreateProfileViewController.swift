@@ -114,7 +114,8 @@ extension CreateProfileViewController: OnboardingStepController {
         ProfileService().updateUserImages(
             avatarImage: avatarImage, coverImage: coverImage,
             properties: properties,
-            success: { _ in
+            success: { _avatarURL, _coverImageURL, user in
+                self.parentAppController?.currentUser = user
                 self.goToNextStep(abort, proceedClosure: proceedClosure) },
             failure: { error, _ in
                 proceedClosure(success: nil)

@@ -37,7 +37,7 @@ public enum ElloTab: Int {
 
 }
 
-public class ElloTabBarController: UIViewController, HasAppController {
+public class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
     public let tabBar = ElloTabBar()
     private var systemLoggedOutObserver: NotificationObserver?
     private var streamLoadedObserver: NotificationObserver?
@@ -89,7 +89,9 @@ public class ElloTabBarController: UIViewController, HasAppController {
         }
     }
 
-    var currentUser: User?
+    public var currentUser: User? {
+        didSet { didSetCurrentUser() }
+    }
     var profileResponseConfig: ResponseConfig?
 
     var narrationView = NarrationView()
@@ -228,14 +230,10 @@ public extension ElloTabBarController {
 }
 
 public extension ElloTabBarController {
-    func setProfileData(currentUser: User) {
-        self.currentUser = currentUser
+    func didSetCurrentUser() {
         for controller in childViewControllers {
-            if let controller = controller as? BaseElloViewController {
+            if let controller = controller as? ControllerThatMightHaveTheCurrentUser {
                 controller.currentUser = currentUser
-            }
-            else if let controller = controller as? ElloNavigationController {
-                controller.setProfileData(currentUser)
             }
         }
     }

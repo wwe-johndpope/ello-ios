@@ -170,6 +170,7 @@ class DynamicSettingsViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DynamicSettingCategorySegue" {
             let controller = segue.destinationViewController as! DynamicSettingCategoryViewController
+            controller.delegate = delegate
             let selectedIndexPath = tableView.indexPathForSelectedRow
 
             switch DynamicSettingsSection(rawValue: selectedIndexPath?.section ?? 0) ?? .Unknown {

@@ -59,7 +59,12 @@ public class AppViewController: BaseElloViewController {
     }
 
     public override func didSetCurrentUser() {
+        super.didSetCurrentUser()
         ElloWebBrowserViewController.currentUser = currentUser
+
+        if let vc = visibleViewController as? ControllerThatMightHaveTheCurrentUser {
+            vc.currentUser = currentUser
+        }
     }
 
 // MARK: - Private
@@ -226,7 +231,7 @@ extension AppViewController {
 
         let vc = ElloTabBarController.instantiateFromStoryboard()
         ElloWebBrowserViewController.elloTabBarController = vc
-        vc.setProfileData(user)
+        vc.currentUser = user
 
         swapViewController(vc) {
             if let payload = self.pushPayload {

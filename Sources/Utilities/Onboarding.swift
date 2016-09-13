@@ -45,9 +45,13 @@ public class Onboarding {
         return version < _currentVersion && webVersion < _currentVersion
     }
 
+    // never save if onboarding is being presented.
     // save to API if webVersion is nil,
     // or less than currentVersion
     public func saveOnboarding(user: User) -> Bool {
+        guard !showOnboarding(user) else {
+            return false
+        }
         guard let webVersion = user.onboardingVersion else {
             return true
         }

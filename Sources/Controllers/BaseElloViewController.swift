@@ -20,8 +20,12 @@ public class BaseElloViewController: UIViewController, ControllerThatMightHaveTh
         didSet { didSetCurrentUser() }
     }
 
+    var appViewController: AppViewController? {
+        return findViewController { vc in vc is AppViewController } as? AppViewController
+    }
+
     var elloTabBarController: ElloTabBarController? {
-        return findViewController { vc in vc is ElloTabBarController } as! ElloTabBarController?
+        return findViewController { vc in vc is ElloTabBarController } as? ElloTabBarController
     }
 
     override public func viewDidLoad() {
