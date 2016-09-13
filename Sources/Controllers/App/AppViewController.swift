@@ -3,6 +3,7 @@
 //
 
 import SwiftyUserDefaults
+import Crashlytics
 
 
 struct NavigationNotifications {

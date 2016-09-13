@@ -164,6 +164,7 @@ private extension PostDetailGenerator {
                 let loversItems = sself.userAvatarCellItems(
                     users,
                     icon: .Heart,
+                    endpoint: .PostLovers(postId: sself.postParam),
                     seeMoreTitle: InterfaceString.Post.LovedByList
                 )
                 displayLoversOperation.run {
@@ -194,6 +195,7 @@ private extension PostDetailGenerator {
                 let repostersItems = sself.userAvatarCellItems(
                     users,
                     icon: .Repost,
+                    endpoint: .PostReposters(postId: sself.postParam),
                     seeMoreTitle: InterfaceString.Post.RepostedByList
                 )
                 displayRepostersOperation.run {
@@ -210,9 +212,11 @@ private extension PostDetailGenerator {
     func userAvatarCellItems(
         users: [User],
         icon: InterfaceImage,
+        endpoint: ElloAPI,
         seeMoreTitle: String) -> [StreamCellItem]
     {
         let model = UserAvatarCellModel(icon: icon, seeMoreTitle: seeMoreTitle)
+        model.endpoint = endpoint
         model.users = users
         if !hasPaddedSocial {
             hasPaddedSocial = true
