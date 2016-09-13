@@ -46,7 +46,8 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
         var items: [StreamCellItem] = [headerCellItem]
 
         if let categories = jsonables as? [Category] {
-            items += categories.map { StreamCellItem(jsonable: $0, type: .SelectableCategoryCard) }
+            let onboardingCategories = categories.filter { $0.allowInOnboarding }
+            items += onboardingCategories.map { StreamCellItem(jsonable: $0, type: .SelectableCategoryCard) }
         }
         return items
     }
