@@ -38,7 +38,7 @@ extension LoginViewController: LoginDelegate {
 
         let browser = ElloWebBrowserViewController()
         let nav = ElloWebBrowserViewController.navigationControllerWithBrowser(browser)
-        let url = "\(ElloURI.baseURL)/forgot-my-password"
+        let url = "\(ElloURI.baseURL)/forgot-password"
         Tracker.sharedTracker.webViewAppeared(url)
         browser.loadURLString(url)
         browser.tintColor = UIColor.greyA()
