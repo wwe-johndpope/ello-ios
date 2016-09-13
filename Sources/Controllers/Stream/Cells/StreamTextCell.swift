@@ -13,8 +13,8 @@ public class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureR
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     weak var webLinkDelegate: WebLinkDelegate?
-    var userDelegate: UserDelegate?
-    var streamEditingDelegate: StreamEditingDelegate?
+    weak var userDelegate: UserDelegate?
+    weak var streamEditingDelegate: StreamEditingDelegate?
     var webContentReady: WebContentReady?
 
     override public func awakeFromNib() {

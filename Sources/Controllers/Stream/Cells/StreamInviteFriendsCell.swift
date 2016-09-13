@@ -10,7 +10,7 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
     @IBOutlet weak public var nameLabel: UILabel!
     @IBOutlet weak public var inviteButton: StyledButton!
 
-    public var inviteDelegate: InviteDelegate?
+    public weak var inviteDelegate: InviteDelegate?
     public var inviteCache: InviteCache?
     var bottomBorder = CALayer()
 

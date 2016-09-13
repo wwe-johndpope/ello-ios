@@ -6,7 +6,7 @@ import Foundation
 
 private let CredentialSettingsSubmitViewHeight: CGFloat = 128
 
-public protocol CredentialSettingsDelegate {
+public protocol CredentialSettingsDelegate: class {
     func credentialSettingsDidUpdate()
 }
 
@@ -27,7 +27,7 @@ public class CredentialSettingsViewController: UITableViewController {
     @IBOutlet weak public var saveButton: ElloButton!
 
     public var currentUser: User?
-    public var delegate: CredentialSettingsDelegate?
+    weak public var delegate: CredentialSettingsDelegate?
     var validationCancel: BasicBlock?
 
     public var isUpdatable: Bool {

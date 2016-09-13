@@ -5,6 +5,7 @@
 class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ControllerThatMightHaveTheCurrentUser {
     var category: DynamicSettingCategory?
     var currentUser: User?
+    weak var delegate: DynamicSettingsDelegate?
     @IBOutlet weak var tableView: UITableView!
     weak var navBar: ElloNavigationBar!
 
