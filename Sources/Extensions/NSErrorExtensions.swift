@@ -5,9 +5,12 @@
 import UIKit
 
 extension NSError {
+    var elloError: ElloNetworkError? {
+        return userInfo[NSLocalizedFailureReasonErrorKey] as? ElloNetworkError
+    }
     var elloErrorMessage: String? {
-        if let elloNetworkError = self.userInfo[NSLocalizedFailureReasonErrorKey] as? ElloNetworkError {
-            return elloNetworkError.title
+        if let elloError = elloError {
+            return elloError.title
         }
         if let reason = self.userInfo[NSLocalizedFailureReasonErrorKey] as? String {
             return reason

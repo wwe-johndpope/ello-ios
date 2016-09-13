@@ -103,11 +103,6 @@ extension CreateProfileViewController: OnboardingStepController {
             properties["external_links"] = links
         }
 
-        let failure: (NSError) -> Void = { error in
-            let alertController = AlertViewController(error: error.elloErrorMessage ?? InterfaceString.GenericError)
-            self.parentAppController?.presentViewController(alertController, animated: true, completion: nil)
-        }
-
         let avatarImage: ImageRegionData? = didUploadAvatarImage ? onboardingData.avatarImage : nil
         let coverImage: ImageRegionData? = didUploadCoverImage ? onboardingData.coverImage : nil
 
@@ -123,7 +118,15 @@ extension CreateProfileViewController: OnboardingStepController {
                 self.goToNextStep(abort, proceedClosure: proceedClosure) },
             failure: { error, _ in
                 proceedClosure(success: nil)
-                failure(error)
+                let message: String
+                if let elloError = error.elloError, messages = elloError.messages {
+                    message = messages.joinWithSeparator("\n")
+                }
+                else {
+                    message = InterfaceString.GenericError
+                }
+                let alertController = AlertViewController(error: message)
+                self.parentAppController?.presentViewController(alertController, animated: true, completion: nil)
             })
     }
 
