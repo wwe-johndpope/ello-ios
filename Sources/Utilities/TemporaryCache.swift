@@ -11,6 +11,11 @@ public struct TemporaryCache {
     static var coverImage: TemporaryCacheEntry?
     static var avatar: TemporaryCacheEntry?
 
+    static func clear() {
+        TemporaryCache.coverImage = nil
+        TemporaryCache.avatar = nil
+    }
+
     static func save(key: CacheKey, image: UIImage) {
         let fiveMinutes: NSTimeInterval = 5 * 60
         let date = NSDate(timeIntervalSinceNow: fiveMinutes)

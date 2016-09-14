@@ -393,6 +393,7 @@ public extension AppViewController {
         GroupDefaults[CurrentStreamKey] = nil
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         NSURLCache.sharedURLCache().removeAllCachedResponses()
+        TemporaryCache.clear()
         currentUser = nil
     }
 }
