@@ -402,7 +402,7 @@ extension CreateProfileScreen: UIScrollViewDelegate {
 
         let delta = scrollView.contentOffset.y - prevOffset.y
         prevOffset = scrollView.contentOffset
-        if bioTextView.isFirstResponder() && delta == -25 {
+        if delta == -25 {
             scrollView.contentOffset.y = scrollView.contentOffset.y + 55
         }
     }
