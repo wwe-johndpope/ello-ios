@@ -465,16 +465,18 @@ public final class StreamViewController: BaseElloViewController {
             self.collectionView.reloadData()
         }
 
-        commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [unowned self] (comment, change) in
-            if !self.initialDataLoaded {
-                return
-            }
+        commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [weak self] (comment, change) in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
             switch change {
             case .Create, .Delete, .Update, .Replaced:
-                self.dataSource.modifyItems(comment, change: change, collectionView: self.collectionView)
+                sself.dataSource.modifyItems(comment, change: change, collectionView: sself.collectionView)
             default: break
             }
-            self.updateNoResultsLabel()
+            sself.updateNoResultsLabel()
         }
 
         postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
