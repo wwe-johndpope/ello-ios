@@ -116,6 +116,10 @@ public extension CGRect {
     }
 
 // MARK: growXxx
+    func grow(margins: UIEdgeInsets) -> CGRect {
+        return UIEdgeInsetsInsetRect(self, UIEdgeInsets(top: -margins.top, left: -margins.left, bottom: -margins.bottom, right: -margins.right))
+    }
+
     func grow(all all: CGFloat) -> CGRect {
         return UIEdgeInsetsInsetRect(self, UIEdgeInsets(top: -all, left: -all, bottom: -all, right: -all))
     }
