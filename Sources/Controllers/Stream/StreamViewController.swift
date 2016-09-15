@@ -269,15 +269,21 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     private var debounceCellReload = debounce(0.05)
-    public func reloadCells() {
-        debounceCellReload {
+    public func reloadCells(now now: Bool = false) {
+        if now {
+            debounceCellReload {}
             self.collectionView.reloadData()
+        }
+        else {
+            debounceCellReload {
+                self.collectionView.reloadData()
+            }
         }
     }
 
     public func removeAllCellItems() {
         dataSource.removeAllCellItems()
-        reloadCells()
+        reloadCells(now: true)
     }
 
     public func imageCellHeightUpdated(cell: StreamImageCell) {
@@ -425,7 +431,7 @@ public final class StreamViewController: BaseElloViewController {
     public func clearForInitialLoad() {
         allOlderPagesLoaded = false
         dataSource.removeAllCellItems()
-        reloadCells()
+        reloadCells(now: true)
     }
 
 // MARK: Private Functions
