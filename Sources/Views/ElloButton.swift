@@ -4,6 +4,7 @@
 
 import UIKit
 
+// black button, gray text, and sets the correct font
 public class ElloButton: UIButton {
 
     override public var enabled: Bool {
@@ -56,6 +57,7 @@ public class ElloButton: UIButton {
 
 }
 
+// light gray background, dark gray text
 public class LightElloButton: ElloButton {
 
     override func updateStyle() {
@@ -63,8 +65,7 @@ public class LightElloButton: ElloButton {
     }
 
     override func sharedSetup() {
-        titleLabel?.font = UIFont.defaultFont()
-        titleLabel?.numberOfLines = 1
+        super.sharedSetup()
         setTitleColor(.grey6(), forState: .Normal)
         setTitleColor(.blackColor(), forState: .Highlighted)
         setTitleColor(.greyC(), forState: .Disabled)
@@ -72,6 +73,7 @@ public class LightElloButton: ElloButton {
 
 }
 
+// white button, black text
 public class WhiteElloButton: ElloButton {
 
     required public init(frame: CGRect) {
@@ -104,6 +106,7 @@ public class WhiteElloButton: ElloButton {
     }
 }
 
+// white button, black text, black outline w/ square corners
 public class OutlineElloButton: WhiteElloButton {
 
     override func sharedSetup() {
@@ -124,11 +127,17 @@ public class OutlineElloButton: WhiteElloButton {
     }
 }
 
-
+// clear button, black text.  corners are either "fully" rounded (to match the
+// height) or they can be set to any radius
 public class RoundedElloButton: ElloButton {
-    var borderColor: UIColor = .blackColor() {
+    var borderColor: UIColor? = .blackColor() {
         didSet {
             updateOutline()
+        }
+    }
+    var cornerRadius: CGFloat? {
+        didSet {
+            setNeedsLayout()
         }
     }
 
@@ -148,29 +157,51 @@ public class RoundedElloButton: ElloButton {
     }
 
     func updateOutline() {
-        layer.borderColor = enabled ? borderColor.CGColor : UIColor.greyF2().CGColor
+        if let borderColor = borderColor where enabled {
+            layer.borderColor = borderColor.CGColor
+        }
+        else if borderColor != nil && !enabled {
+            layer.borderColor = UIColor.greyF2().CGColor
+        }
+        else {
+            layer.borderColor = nil
+        }
     }
 
     override public func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = min(frame.height, frame.width) / 2
+
+        if let cornerRadius = cornerRadius {
+            layer.cornerRadius = cornerRadius
+        }
+        else {
+            layer.cornerRadius = min(frame.height, frame.width) / 2
+        }
     }
 }
 
-public class GreenElloButton: ElloButton {
+public class RoundedGrayElloButton: RoundedElloButton {
+    override public func sharedSetup() {
+        super.sharedSetup()
+        borderColor = .greyA()
+        cornerRadius = 5
+        setTitleColor(.greyA(), forState: .Normal)
+        setTitleColor(.blackColor(), forState: .Highlighted)
+    }
+}
 
+// green background, white text.
+public class GreenElloButton: ElloButton {
     override func updateStyle() {
         backgroundColor = enabled ? .greenD1() : .grey6()
     }
 
     override func sharedSetup() {
-        titleLabel?.font = UIFont.defaultFont()
-        titleLabel?.numberOfLines = 1
+        super.sharedSetup()
         setTitleColor(.whiteColor(), forState: .Normal)
         setTitleColor(.greyA(), forState: .Highlighted)
         setTitleColor(.whiteColor(), forState: .Disabled)
         layer.cornerRadius = 5
         updateStyle()
     }
-
 }
