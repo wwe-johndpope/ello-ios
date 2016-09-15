@@ -293,7 +293,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard indexPath.item < visibleCellItems.count else {
-            return UICollectionViewCell()
+            return collectionView.dequeueReusableCellWithReuseIdentifier(StreamCellType.Unknown.name, forIndexPath: indexPath)
         }
 
         let streamCellItem = visibleCellItems[indexPath.item]

@@ -60,6 +60,8 @@ public enum StreamCellType: Equatable {
         case PostLovers
         case PostReposters
         case PostSocialPadding
+
+        case CellNotFound
     }
 
     static let all = [
