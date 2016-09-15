@@ -7,6 +7,7 @@ import Foundation
 public protocol PersistentLayer {
     func setObject(value: AnyObject?, forKey: String)
     func objectForKey(defaultName: String) -> AnyObject?
+    func removeObjectForKey(defaultName: String)
 }
 
 extension NSUserDefaults: PersistentLayer { }
@@ -41,5 +42,9 @@ public class ObjectCache<T: AnyObject> {
 
     public func load() {
         cache = persistentLayer.objectForKey(name) as? [T] ?? []
+    }
+
+    public func clear() {
+        persistentLayer.removeObjectForKey(name)
     }
 }

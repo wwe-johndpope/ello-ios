@@ -394,6 +394,7 @@ public extension AppViewController {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         NSURLCache.sharedURLCache().removeAllCachedResponses()
         TemporaryCache.clear()
+        InviteCache().clear()
         currentUser = nil
     }
 }

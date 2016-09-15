@@ -25,4 +25,8 @@ public struct InviteCache {
     public func has(contactID: String) -> Bool {
         return cache.getAll().contains(contactID)
     }
+
+    public func clear() {
+        cache.clear()
+    }
 }
