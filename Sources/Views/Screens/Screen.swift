@@ -8,7 +8,7 @@ import SnapKit
 /// Easy keyboard views: pin an anchor to `keyboardAnchor.top`. It'll animate automatically, too.
 public class Screen: UIView {
     let keyboardAnchor = UIView()
-    private var keyboardConstraint: Constraint!
+    private var keyboardTopConstraint: Constraint!
     private var keyboardWillShowObserver: NotificationObserver?
     private var keyboardWillHideObserver: NotificationObserver?
 
@@ -67,7 +67,7 @@ public class Screen: UIView {
     func keyboardWillChange(keyboard: Keyboard) {
         let bottomInset = keyboard.keyboardBottomInset(inView: self)
         animate(duration: keyboard.duration, options: keyboard.options, completion: { _ in self.keyboardDidAnimate() }) {
-            self.keyboardConstraint.updateOffset(-bottomInset)
+            self.keyboardTopConstraint.updateOffset(-bottomInset)
             self.keyboardIsAnimating(keyboard)
             self.layoutIfNeeded()
         }
@@ -83,7 +83,7 @@ public class Screen: UIView {
     func arrange() {
         keyboardAnchor.snp_makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
-            keyboardConstraint = make.top.equalTo(self.snp_bottom).constraint
+            keyboardTopConstraint = make.top.equalTo(self.snp_bottom).constraint
         }
     }
 }

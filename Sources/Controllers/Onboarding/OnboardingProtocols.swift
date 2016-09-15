@@ -4,15 +4,11 @@
 
 public enum OnboardingStep: Int {
     case Categories = 0
-    case CreateProfile = 1
-    case InviteFriends = 2
+    case CreateProfile
+    case InviteFriends
 
     public var nextStep: OnboardingStep? {
-        switch self {
-        case .Categories: return .CreateProfile
-        case .CreateProfile: return .InviteFriends
-        default: return nil
-        }
+        return OnboardingStep(rawValue: rawValue + 1)
     }
 }
 

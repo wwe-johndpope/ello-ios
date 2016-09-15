@@ -177,6 +177,11 @@ class CredentialSettingsViewControllerSpec: QuickSpec {
 
 class FakeCredentialSettingsDelegate: CredentialSettingsDelegate {
     var didCall = false
+    var didSetUser = false
+
+    func credentialSettingsUserChanged(user: User) {
+        didSetUser = true
+    }
 
     func credentialSettingsDidUpdate() {
         didCall = true

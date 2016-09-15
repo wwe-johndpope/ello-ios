@@ -55,7 +55,7 @@ extension AddressBookController {
 
     private static func displayAddressBookAlert(controller: UIViewController, message: String, completion: Completion) {
         let alertController = AlertViewController(
-            message: "We were unable to access your address book\n\(message)"
+            message: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate, message) as String
         )
 
         let action = AlertAction(title: InterfaceString.OK, style: .Dark) { _ in

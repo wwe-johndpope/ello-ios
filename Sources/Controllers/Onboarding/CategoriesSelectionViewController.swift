@@ -64,9 +64,9 @@ extension CategoriesSelectionViewController: OnboardingStepController {
         if let
             selection = streamViewController.collectionView.indexPathsForSelectedItems()
         where selection.count > 0 {
-            let categories = selection.flatMap({ (path: NSIndexPath) -> Category? in
+            let categories = selection.flatMap { (path: NSIndexPath) -> Category? in
                 return streamViewController.dataSource.jsonableForIndexPath(path) as? Category
-            })
+            }
 
             for category in categories {
                 Tracker.sharedTracker.categorySelected(category)

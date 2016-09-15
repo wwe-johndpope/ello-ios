@@ -61,7 +61,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
 
     private let scrollView = UIScrollView()
     private var prevOffset: CGPoint = .zero
-    private var scrollViewWidth: Constraint!
+    private var scrollViewWidthConstraint: Constraint!
     private let headerLabel = UILabel()
 
     private let coverImageView = FLAnimatedImageView()
@@ -174,7 +174,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
 
         widthAnchor.snp_makeConstraints { make in
             make.leading.trailing.equalTo(scrollView)
-            scrollViewWidth = make.width.equalTo(bounds.size.width).priorityRequired().constraint
+            scrollViewWidthConstraint = make.width.equalTo(bounds.size.width).priorityRequired().constraint
         }
 
         headerLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Horizontal)
@@ -231,7 +231,7 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     override public func layoutSubviews() {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
-        scrollViewWidth.updateOffset(bounds.size.width)
+        scrollViewWidthConstraint.updateOffset(bounds.size.width)
     }
 
     override public func resignFirstResponder() -> Bool {

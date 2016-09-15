@@ -159,7 +159,7 @@ extension CreateProfileViewController: OnboardingStepController {
 
                 Tracker.sharedTracker.contactAccessPreferenceChanged(false)
                 let message = addressBookError.rawValue
-                let alertController = AlertViewController(error: "We were unable to access your address book\n\(message)")
+                let alertController = AlertViewController(error: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate, message) as String)
                 presenter.presentViewController(alertController, animated: true, completion: .None)
             }
         }

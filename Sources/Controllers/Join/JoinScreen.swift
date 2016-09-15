@@ -68,18 +68,18 @@ public class JoinScreen: CredentialsScreen {
 
     let emailField = ClearTextField()
     let emailErrorLabel = ElloSizeableLabel()
-    var emailMargin: Constraint!
+    var emailMarginConstraint: Constraint!
 
     let usernameField = ClearTextField()
     let usernameErrorLabel = ElloSizeableLabel()
-    var usernameMargin: Constraint!
+    var usernameMarginConstraint: Constraint!
 
     let passwordField = ClearTextField()
     let passwordErrorLabel = ElloSizeableLabel()
-    var passwordMargin: Constraint!
+    var passwordMarginConstraint: Constraint!
 
     let messageLabel = ElloSizeableLabel()
-    var messageMargin: Constraint!
+    var messageMarginConstraint: Constraint!
     let termsButtonNormal = UIButton()
     let termsButtonKeyboard = UIButton()
 
@@ -110,6 +110,7 @@ public class JoinScreen: CredentialsScreen {
             NSForegroundColorAttributeName: UIColor.greyA(),
             NSFontAttributeName: UIFont.defaultFont(Size.termsFontSize),
         ])
+        // needs i18n
         let attributedTitle = NSAttributedString(string: "By clicking Continue you are agreeing to our ", attributes: attrs) + NSAttributedString(string: "Terms", attributes: linkAttrs)
         termsButtonNormal.setAttributedTitle(attributedTitle, forState: .Normal)
         termsButtonKeyboard.setAttributedTitle(attributedTitle, forState: .Normal)
@@ -171,7 +172,7 @@ public class JoinScreen: CredentialsScreen {
         scrollView.addSubview(scrollViewAnchor)
         scrollViewAnchor.snp_makeConstraints { make in
             make.leading.trailing.top.equalTo(scrollView)
-            scrollViewWidth = make.width.equalTo(frame.size.width).priorityRequired().constraint
+            scrollViewWidthConstraint = make.width.equalTo(frame.size.width).priorityRequired().constraint
         }
 
         emailField.snp_makeConstraints { make in
@@ -179,41 +180,41 @@ public class JoinScreen: CredentialsScreen {
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
         emailErrorLabel.snp_makeConstraints { make in
-            emailMargin = make.top.equalTo(emailField.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
+            emailMarginConstraint = make.top.equalTo(emailField.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
             make.top.equalTo(emailField.snp_bottom).priorityMedium()
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
-        emailMargin.deactivate()
+        emailMarginConstraint.deactivate()
 
         usernameField.snp_makeConstraints { make in
             make.top.equalTo(emailErrorLabel.snp_bottom).offset(Size.fieldsInnerMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
         usernameErrorLabel.snp_makeConstraints { make in
-            usernameMargin = make.top.equalTo(usernameField.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
+            usernameMarginConstraint = make.top.equalTo(usernameField.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
             make.top.equalTo(usernameField.snp_bottom).priorityMedium()
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
-        usernameMargin.deactivate()
+        usernameMarginConstraint.deactivate()
 
         messageLabel.snp_makeConstraints { make in
-            messageMargin = make.top.equalTo(usernameErrorLabel.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
+            messageMarginConstraint = make.top.equalTo(usernameErrorLabel.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
             make.top.equalTo(usernameErrorLabel.snp_bottom).priorityMedium()
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
-        messageMargin.deactivate()
+        messageMarginConstraint.deactivate()
 
         passwordField.snp_makeConstraints { make in
             make.top.equalTo(messageLabel.snp_bottom).offset(Size.fieldsInnerMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
         passwordErrorLabel.snp_makeConstraints { make in
-            passwordMargin = make.top.equalTo(passwordField.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
+            passwordMarginConstraint = make.top.equalTo(passwordField.snp_bottom).offset(Size.fieldsErrorMargin).priorityRequired().constraint
             make.top.equalTo(passwordField.snp_bottom).priorityMedium()
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
             make.bottom.lessThanOrEqualTo(scrollView).inset(Size.inset)
         }
-        passwordMargin.deactivate()
+        passwordMarginConstraint.deactivate()
 
         termsButtonKeyboard.snp_makeConstraints { make in
             make.leading.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
@@ -388,7 +389,7 @@ extension JoinScreen: JoinScreenProtocol {
         messageLabel.attributedText = attrd
 
         animate {
-            self.messageMargin.activate()
+            self.messageMarginConstraint.activate()
             self.messageLabel.alpha = 1.0
             self.layoutIfNeeded()
         }
@@ -396,7 +397,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func hideMessage() {
         animate {
-            self.messageMargin.deactivate()
+            self.messageMarginConstraint.deactivate()
             self.messageLabel.alpha = 0.0
             self.layoutIfNeeded()
         }
@@ -407,7 +408,7 @@ extension JoinScreen: JoinScreenProtocol {
         usernameValid = false
 
         animate {
-            self.usernameMargin.activate()
+            self.usernameMarginConstraint.activate()
             self.usernameErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
         }
@@ -415,7 +416,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func hideUsernameError() {
         animate {
-            self.usernameMargin.deactivate()
+            self.usernameMarginConstraint.deactivate()
             self.usernameErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
         }
@@ -426,7 +427,7 @@ extension JoinScreen: JoinScreenProtocol {
         emailValid = false
 
         animate {
-            self.emailMargin.activate()
+            self.emailMarginConstraint.activate()
             self.emailErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
         }
@@ -434,7 +435,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func hideEmailError() {
         animate {
-            self.emailMargin.deactivate()
+            self.emailMarginConstraint.deactivate()
             self.emailErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
         }
@@ -445,7 +446,7 @@ extension JoinScreen: JoinScreenProtocol {
         passwordValid = false
 
         animate {
-            self.passwordMargin.activate()
+            self.passwordMarginConstraint.activate()
             self.passwordErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
         }
@@ -453,7 +454,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func hidePasswordError() {
         animate {
-            self.passwordMargin.deactivate()
+            self.passwordMarginConstraint.deactivate()
             self.passwordErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
         }

@@ -455,6 +455,7 @@ extension Ello.Category: Stubbable {
             name: (values["name"] as? String) ?? "Art",
             slug: (values["slug"] as? String) ?? "art",
             order: (values["order"] as? Int) ?? 0,
+            allowInOnboarding: (values["allowInOnboarding"] as? Bool) ?? true,
             level: level,
             tileImage: tileImage
         )

@@ -49,9 +49,9 @@ public class LoginScreen: CredentialsScreen {
         didSet { passwordField.hasOnePassword = onePasswordAvailable }
     }
 
-    private let usernameField = ClearTextField()
+    let usernameField = ClearTextField()
     private let activateUsernameButton = UIButton()
-    private let passwordField = ClearTextField()
+    let passwordField = ClearTextField()
     private let activatePasswordButton = UIButton()
     private let errorLabel = ElloSizeableLabel()
 
@@ -138,7 +138,7 @@ public class LoginScreen: CredentialsScreen {
         scrollView.addSubview(scrollViewAnchor)
         scrollViewAnchor.snp_makeConstraints { make in
             make.leading.trailing.top.equalTo(scrollView)
-            scrollViewWidth = make.width.equalTo(frame.size.width).priorityRequired().constraint
+            scrollViewWidthConstraint = make.width.equalTo(frame.size.width).priorityRequired().constraint
         }
 
         usernameField.snp_makeConstraints { make in

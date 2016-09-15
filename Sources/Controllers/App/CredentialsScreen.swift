@@ -13,14 +13,14 @@ public class CredentialsScreen: EmptyScreen {
     }
 
     let scrollView = UIScrollView()
-    var scrollViewWidth: Constraint!
+    var scrollViewWidthConstraint: Constraint!
     let backButton = UIButton()
     let titleLabel = ElloSizeableLabel()
     let gradientLayer = StartupGradientLayer()
 
     override public func updateConstraints() {
         super.updateConstraints()
-        scrollViewWidth.updateOffset(frame.size.width)
+        scrollViewWidthConstraint.updateOffset(frame.size.width)
     }
 
     override public func layoutSubviews() {
