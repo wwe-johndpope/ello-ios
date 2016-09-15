@@ -3,6 +3,10 @@
 //
 
 public class ClearTextField: UITextField {
+    struct Size {
+        static let lineMargin: CGFloat = 5
+    }
+
     public let onePasswordButton = OnePasswordButton()
     public var lineColor: UIColor? = .grey6() {
         didSet {
@@ -19,13 +23,13 @@ public class ClearTextField: UITextField {
         }
     }
     private var line = UIView()
-    var hasOnePassword = false {
+    public var hasOnePassword = false {
         didSet {
             onePasswordButton.hidden = !hasOnePassword
             setNeedsLayout()
         }
     }
-    var validationState = ValidationState.None {
+    public var validationState: ValidationState = .None {
         didSet {
             rightView = UIImageView(image: validationState.imageRepresentation)
         }
@@ -50,7 +54,7 @@ public class ClearTextField: UITextField {
         addSubview(onePasswordButton)
         onePasswordButton.hidden = !hasOnePassword
         onePasswordButton.snp_makeConstraints { make in
-            make.centerY.equalTo(self).offset(-2.5)
+            make.centerY.equalTo(self).offset(-Size.lineMargin / 2)
             make.trailing.equalTo(self)
             make.size.equalTo(CGSize.minButton)
         }
@@ -66,7 +70,7 @@ public class ClearTextField: UITextField {
     override public func intrinsicContentSize() -> CGSize {
         var size = super.intrinsicContentSize()
         if size.height != UIViewNoIntrinsicMetric {
-            size.height += 5
+            size.height += Size.lineMargin
         }
         return size
     }
@@ -87,6 +91,8 @@ public class ClearTextField: UITextField {
         line.backgroundColor = lineColor
         return super.resignFirstResponder()
     }
+
+// MARK: Layout rects
 
     override public func textRectForBounds(bounds: CGRect) -> CGRect {
         return rectForBounds(bounds)
