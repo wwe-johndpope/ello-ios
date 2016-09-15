@@ -395,10 +395,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hideMessage() {
-        let completion: (Bool) -> Void = { _ in
-            self.messageLabel.text = ""
-        }
-        animate(completion: completion) {
+        animate {
             self.messageMargin.deactivate()
             self.messageLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -417,10 +414,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hideUsernameError() {
-        let completion: (Bool) -> Void = { _ in
-            self.usernameErrorLabel.text = ""
-        }
-        animate(completion: completion) {
+        animate {
             self.usernameMargin.deactivate()
             self.usernameErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -439,10 +433,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hideEmailError() {
-        let completion: (Bool) -> Void = { _ in
-            self.emailErrorLabel.text = ""
-        }
-        animate(completion: completion) {
+        animate {
             self.emailMargin.deactivate()
             self.emailErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -461,10 +452,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hidePasswordError() {
-        let completion: (Bool) -> Void = { _ in
-            self.passwordErrorLabel.text = ""
-        }
-        animate(completion: completion) {
+        animate {
             self.passwordMargin.deactivate()
             self.passwordErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
