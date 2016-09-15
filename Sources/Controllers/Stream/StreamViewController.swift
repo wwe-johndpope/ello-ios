@@ -179,7 +179,7 @@ public final class StreamViewController: BaseElloViewController {
         get { return dataSource.streamFilter }
         set {
             dataSource.streamFilter = newValue
-            collectionView.reloadData()
+            self.reloadCells()
             self.scrollToTop()
         }
     }
@@ -268,13 +268,16 @@ public final class StreamViewController: BaseElloViewController {
         updateNoResultsLabel()
     }
 
+    private var debounceCellReload = debounce(0.05)
     public func reloadCells() {
-        collectionView.reloadData()
+        debounceCellReload {
+            self.collectionView.reloadData()
+        }
     }
 
     public func removeAllCellItems() {
         dataSource.removeAllCellItems()
-        collectionView.reloadData()
+        reloadCells()
     }
 
     public func imageCellHeightUpdated(cell: StreamImageCell) {
@@ -287,13 +290,13 @@ public final class StreamViewController: BaseElloViewController {
 
     public func appendStreamCellItems(items: [StreamCellItem]) {
         dataSource.appendStreamCellItems(items)
-        collectionView.reloadData()
+        reloadCells()
     }
 
     public func appendUnsizedCellItems(items: [StreamCellItem], withWidth: CGFloat?, completion: StreamDataSource.StreamContentReady? = nil) {
         let width = withWidth ?? self.view.frame.width
         dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
-            self.collectionView.reloadData()
+            self.reloadCells()
             self.doneLoading()
             completion?(indexPaths: indexPaths)
         }
@@ -301,7 +304,7 @@ public final class StreamViewController: BaseElloViewController {
 
     public func insertUnsizedCellItems(cellItems: [StreamCellItem], startingIndexPath: NSIndexPath, completion: ElloEmptyCompletion? = nil) {
         dataSource.insertUnsizedCellItems(cellItems, withWidth: self.view.frame.width, startingIndexPath: startingIndexPath) { _ in
-            self.collectionView.reloadData()
+            self.reloadCells()
             completion?()
         }
     }
@@ -321,15 +324,8 @@ public final class StreamViewController: BaseElloViewController {
             let indexPathsToReplace = self.dataSource.indexPathsForPlaceholderType(placeholderType)
             guard indexPathsToReplace.count > 0 else { return }
 
-            let newIndexPaths = self.dataSource.replaceItems(at: indexPathsToReplace, with: streamCellItems)
-            UIView.setAnimationsEnabled(false)
-            self.collectionView.performBatchUpdates({
-                self.collectionView.deleteItemsAtIndexPaths(indexPathsToReplace)
-                self.collectionView.insertItemsAtIndexPaths(newIndexPaths)
-            }, completion: { finished in
-                UIView.setAnimationsEnabled(true)
-                completion()
-            })
+            self.dataSource.replaceItems(at: indexPathsToReplace, with: streamCellItems)
+            self.reloadCells()
         }
     }
 
@@ -429,7 +425,7 @@ public final class StreamViewController: BaseElloViewController {
     public func clearForInitialLoad() {
         allOlderPagesLoaded = false
         dataSource.removeAllCellItems()
-        collectionView.reloadData()
+        reloadCells()
     }
 
 // MARK: Private Functions
@@ -478,14 +474,14 @@ public final class StreamViewController: BaseElloViewController {
             self.collectionView.collectionViewLayout.invalidateLayout()
         }
         rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [unowned self] _ in
-            self.collectionView.reloadData()
+            self.reloadCells()
         }
         sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [unowned self] size in
             if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
                 layout.columnCount = self.streamKind.columnCountFor(width: size.width)
                 layout.invalidateLayout()
             }
-            self.collectionView.reloadData()
+            self.reloadCells()
         }
 
         commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [unowned self] (comment, change) in
@@ -1087,7 +1083,7 @@ extension StreamViewController: UICollectionViewDelegate {
 
         if tappedCell is StreamToggleCell {
             dataSource.toggleCollapsedForIndexPath(indexPath)
-            collectionView.reloadData()
+            reloadCells()
         }
         else if tappedCell is UserListItemCell {
             if let user = dataSource.userForIndexPath(indexPath) {
@@ -1248,6 +1244,6 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         dataSource.removeItemsAtIndexPaths([indexPath])
-        collectionView.reloadData()
+        reloadCells()
     }
 }
