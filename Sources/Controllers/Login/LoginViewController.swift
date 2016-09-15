@@ -20,7 +20,7 @@ public class LoginViewController: BaseElloViewController, HasAppController {
 
     private func loadCurrentUser() {
         parentAppController?.loadCurrentUser() { error in
-            self.screen.enableInputs()
+            self.screen.loadingHUD(visible: false)
             let errorTitle = error.elloErrorMessage ?? InterfaceString.Login.LoadUserError
             self.screen.showError(errorTitle)
         }
@@ -70,7 +70,23 @@ extension LoginViewController: LoginDelegate {
                     self.submit(username: self.screen.username, password: self.screen.password)
                 }
             }
-}
+    }
+
+    func validate(username username: String, password: String) {
+        if Validator.isValidEmail(username) || Validator.isValidUsername(username) {
+            screen.usernameValid = true
+        }
+        else {
+            screen.usernameValid = nil
+        }
+
+        if Validator.isValidPassword(password) {
+            screen.passwordValid = true
+        }
+        else {
+            screen.passwordValid = nil
+        }
+    }
 
     func submit(username username: String, password: String) {
         Tracker.sharedTracker.tappedLogin()
@@ -80,7 +96,7 @@ extension LoginViewController: LoginDelegate {
         if Validator.hasValidLoginCredentials(username: username, password: password) {
             Tracker.sharedTracker.loginValid()
             screen.hideError()
-            screen.disableInputs()
+            screen.loadingHUD(visible: true)
 
             CredentialsAuthService().authenticate(email: username,
                 password: password,
@@ -90,7 +106,7 @@ extension LoginViewController: LoginDelegate {
                 },
                 failure: { (error, statusCode) in
                     Tracker.sharedTracker.loginFailed()
-                    self.screen.enableInputs()
+                    self.screen.loadingHUD(visible: false)
                     let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
                     self.screen.showError(errorTitle)
                 }

@@ -19,21 +19,45 @@ public class LoginScreen: CredentialsScreen {
         get { return usernameField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) ?? "" }
         set { usernameField.text = newValue }
     }
+    var usernameValid: Bool? = nil {
+        didSet {
+            if let usernameValid = usernameValid {
+                usernameField.validationState = usernameValid ? .OKSmall : .Error
+                styleContinueButton()
+            }
+            else {
+                usernameField.validationState = .None
+            }
+        }
+    }
     var password: String {
         get { return passwordField.text ?? "" }
         set { passwordField.text = newValue }
+    }
+    var passwordValid: Bool? = nil {
+        didSet {
+            if let passwordValid = passwordValid {
+                passwordField.validationState = passwordValid ? .OKSmall : .Error
+                styleContinueButton()
+            }
+            else {
+                passwordField.validationState = .None
+            }
+        }
     }
     var onePasswordAvailable = false {
         didSet { passwordField.hasOnePassword = onePasswordAvailable }
     }
 
-    let usernameField = ClearTextField()
-    let passwordField = ClearTextField()
-    let errorLabel = ElloSizeableLabel()
+    private let usernameField = ClearTextField()
+    private let activateUsernameButton = UIButton()
+    private let passwordField = ClearTextField()
+    private let activatePasswordButton = UIButton()
+    private let errorLabel = ElloSizeableLabel()
 
-    let forgotPasswordButton = UIButton()
-    let continueButton = StyledButton(style: .RoundedGray)
-    let continueBackground = UIView()
+    private let forgotPasswordButton = UIButton()
+    private let continueButton = StyledButton(style: .RoundedGray)
+    private let continueBackground = UIView()
 
     override func setText() {
         titleLabel.text = InterfaceString.Startup.Login
@@ -48,16 +72,20 @@ public class LoginScreen: CredentialsScreen {
         continueButton.addTarget(self, action: #selector(submitAction), forControlEvents: .TouchUpInside)
         forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordAction), forControlEvents: .TouchUpInside)
         passwordField.onePasswordButton.addTarget(self, action: #selector(onePasswordAction(_:)), forControlEvents: .TouchUpInside)
+        usernameField.addTarget(self, action: #selector(textFieldDidChange(_:)), forControlEvents: .EditingChanged)
+        usernameField.delegate = self
+        activateUsernameButton.addTarget(self, action: #selector(activateUsername), forControlEvents: .TouchUpInside)
+        passwordField.addTarget(self, action: #selector(textFieldDidChange(_:)), forControlEvents: .EditingChanged)
+        passwordField.delegate = self
+        activatePasswordButton.addTarget(self, action: #selector(activatePassword), forControlEvents: .TouchUpInside)
     }
 
     override func style() {
         super.style()
 
         ElloTextFieldView.styleAsEmailField(usernameField)
-        usernameField.delegate = self
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
-        passwordField.delegate = self
         passwordField.hasOnePassword = onePasswordAvailable
 
         continueBackground.backgroundColor = .whiteColor()
@@ -68,10 +96,31 @@ public class LoginScreen: CredentialsScreen {
         forgotPasswordButton.setTitleColor(.greyA(), forState: .Normal)
     }
 
+    private func styleContinueButton() {
+        let allValid: Bool
+        if let usernameValid = usernameValid,
+            passwordValid = passwordValid
+        {
+            allValid = usernameValid && passwordValid
+        }
+        else {
+            allValid = false
+        }
+
+        if allValid {
+            continueButton.style = .Green
+        }
+        else {
+            continueButton.style = .RoundedGray
+        }
+    }
+
     override func arrange() {
         super.arrange()
 
+        scrollView.addSubview(activateUsernameButton)
         scrollView.addSubview(usernameField)
+        scrollView.addSubview(activatePasswordButton)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(forgotPasswordButton)
         scrollView.addSubview(errorLabel)
@@ -96,10 +145,20 @@ public class LoginScreen: CredentialsScreen {
             make.top.equalTo(titleLabel.snp_bottom).offset(Size.fieldsTopMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
+        activateUsernameButton.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView)
+            make.centerY.equalTo(usernameField)
+            make.height.equalTo(usernameField).offset(Size.fieldsInnerMargin)
+        }
 
         passwordField.snp_makeConstraints { make in
             make.top.equalTo(usernameField.snp_bottom).offset(Size.fieldsInnerMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
+        }
+        activatePasswordButton.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView)
+            make.centerY.equalTo(passwordField)
+            make.height.equalTo(passwordField).offset(Size.fieldsInnerMargin)
         }
 
         forgotPasswordButton.snp_makeConstraints { make in
@@ -119,7 +178,7 @@ public class LoginScreen: CredentialsScreen {
         }
 
         errorLabel.snp_makeConstraints { make in
-            make.top.equalTo(passwordField.snp_bottom).offset(Size.fieldsInnerMargin)
+            make.firstBaseline.equalTo(forgotPasswordButton)
             make.leading.trailing.equalTo(scrollView).inset(Size.inset)
             make.bottom.lessThanOrEqualTo(scrollView).inset(Size.inset)
         }
@@ -149,10 +208,22 @@ extension LoginScreen {
     public func onePasswordAction(sender: UIView) {
         delegate?.onePasswordAction(sender)
     }
+
+    public func activateUsername() {
+        usernameField.becomeFirstResponder()
+    }
+
+    public func activatePassword() {
+        passwordField.becomeFirstResponder()
+    }
 }
 
 // MARK: UITextFieldDelegate
 extension LoginScreen: UITextFieldDelegate {
+    public func textFieldDidChange(textField: UITextField) {
+        delegate?.validate(username: username, password: password)
+    }
+
     public func textFieldDidEndEditing(textField: UITextField) {
         textField.setNeedsLayout()
         textField.layoutIfNeeded()
@@ -176,20 +247,22 @@ extension LoginScreen: UITextFieldDelegate {
 
 // MARK: LoginScreenProtocol
 extension LoginScreen: LoginScreenProtocol {
-    func enableInputs() {
-        usernameField.enabled = true
-        passwordField.enabled = true
-        userInteractionEnabled = true
-    }
-
-    func disableInputs() {
-        usernameField.enabled = false
-        passwordField.enabled = false
-        userInteractionEnabled = false
+    func loadingHUD(visible visible: Bool) {
+        if visible {
+            ElloHUD.showLoadingHudInView(self)
+        }
+        else {
+            ElloHUD.hideLoadingHudInView(self)
+        }
+        usernameField.enabled = !visible
+        passwordField.enabled = !visible
+        userInteractionEnabled = !visible
     }
 
     func showError(text: String) {
         errorLabel.setLabelText(text)
+        usernameValid = false
+        passwordValid = false
 
         animate {
             self.errorLabel.alpha = 1.0
@@ -198,11 +271,7 @@ extension LoginScreen: LoginScreenProtocol {
     }
 
     func hideError() {
-        let completion: (Bool) -> Void = { _ in
-            self.errorLabel.text = ""
-        }
-
-        animate(completion: completion) {
+        animate {
             self.errorLabel.alpha = 0.0
             self.layoutIfNeeded()
         }
