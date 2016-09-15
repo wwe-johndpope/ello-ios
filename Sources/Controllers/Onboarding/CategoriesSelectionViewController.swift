@@ -68,6 +68,10 @@ extension CategoriesSelectionViewController: OnboardingStepController {
                 return streamViewController.dataSource.jsonableForIndexPath(path) as? Category
             })
 
+            for category in categories {
+                Tracker.sharedTracker.categorySelected(category)
+            }
+
             UserService().setUserCategories(categories)
                 .onSuccess { _ in
                     self.onboardingData.categories = categories

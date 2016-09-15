@@ -233,6 +233,10 @@ public extension Tracker {
         agent.track("completed categories in onboarding")
     }
 
+    func categorySelected(category: Category) {
+        agent.track("onboarding category chosen", properties: ["category": category.name])
+    }
+
     func skippedCategories() {
         agent.track("skipped categories in onboarding")
     }
