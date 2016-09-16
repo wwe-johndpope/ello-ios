@@ -21,7 +21,7 @@ public class S3UploadingService: NSObject {
     }
 
     func upload(image: UIImage, success: S3UploadSuccessCompletion, failure: ElloFailureCompletion) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        inBackground {
             if let data = UIImageJPEGRepresentation(image, 0.8) {
                 // Head back to the thread the original caller was on before heading into the service calls. I may be overthinking it.
                 nextTick {
