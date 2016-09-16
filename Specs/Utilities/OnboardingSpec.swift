@@ -46,7 +46,6 @@ class OnboardingSpec: QuickSpec {
                         }
                         let user: User = stub(props)
 
-                        expect(onboarding.version) == (localIsCurrent ? 1 : 0)
                         if let webIsCurrent = webIsCurrent {
                             expect(user.onboardingVersion ?? -1) == (webIsCurrent ? 1 : 0)
                         }
