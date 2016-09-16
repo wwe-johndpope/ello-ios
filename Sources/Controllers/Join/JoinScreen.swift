@@ -67,14 +67,17 @@ public class JoinScreen: CredentialsScreen {
     }
 
     let emailField = ClearTextField()
+    let activateEmailButton = UIButton()
     let emailErrorLabel = ElloSizeableLabel()
     var emailMarginConstraint: Constraint!
 
     let usernameField = ClearTextField()
+    let activateUsernameButton = UIButton()
     let usernameErrorLabel = ElloSizeableLabel()
     var usernameMarginConstraint: Constraint!
 
     let passwordField = ClearTextField()
+    let activatePasswordButton = UIButton()
     let passwordErrorLabel = ElloSizeableLabel()
     var passwordMarginConstraint: Constraint!
 
@@ -97,6 +100,9 @@ public class JoinScreen: CredentialsScreen {
         termsButtonNormal.addTarget(self, action: #selector(termsAction), forControlEvents: .TouchUpInside)
         termsButtonKeyboard.addTarget(self, action: #selector(termsAction), forControlEvents: .TouchUpInside)
         passwordField.onePasswordButton.addTarget(self, action: #selector(onePasswordAction(_:)), forControlEvents: .TouchUpInside)
+        activateEmailButton.addTarget(self, action: #selector(activateEmail), forControlEvents: .TouchUpInside)
+        activateUsernameButton.addTarget(self, action: #selector(activateUsername), forControlEvents: .TouchUpInside)
+        activatePasswordButton.addTarget(self, action: #selector(activatePassword), forControlEvents: .TouchUpInside)
     }
 
     override func style() {
@@ -148,14 +154,16 @@ public class JoinScreen: CredentialsScreen {
     override func arrange() {
         super.arrange()
 
+        scrollView.addSubview(activateEmailButton)
         scrollView.addSubview(emailField)
         scrollView.addSubview(emailErrorLabel)
+        scrollView.addSubview(activateUsernameButton)
         scrollView.addSubview(usernameField)
         scrollView.addSubview(usernameErrorLabel)
         scrollView.addSubview(messageLabel)
+        scrollView.addSubview(activatePasswordButton)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(passwordErrorLabel)
-
         scrollView.addSubview(termsButtonKeyboard)
 
         addSubview(termsButtonNormal)
@@ -175,6 +183,11 @@ public class JoinScreen: CredentialsScreen {
             scrollViewWidthConstraint = make.width.equalTo(frame.size.width).priorityRequired().constraint
         }
 
+        activateEmailButton.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView)
+            make.centerY.equalTo(emailField)
+            make.height.equalTo(emailField).offset(Size.fieldsInnerMargin)
+        }
         emailField.snp_makeConstraints { make in
             make.top.equalTo(titleLabel.snp_bottom).offset(Size.fieldsTopMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
@@ -186,6 +199,11 @@ public class JoinScreen: CredentialsScreen {
         }
         emailMarginConstraint.deactivate()
 
+        activateUsernameButton.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView)
+            make.centerY.equalTo(usernameField)
+            make.height.equalTo(usernameField).offset(Size.fieldsInnerMargin)
+        }
         usernameField.snp_makeConstraints { make in
             make.top.equalTo(emailErrorLabel.snp_bottom).offset(Size.fieldsInnerMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
@@ -204,6 +222,11 @@ public class JoinScreen: CredentialsScreen {
         }
         messageMarginConstraint.deactivate()
 
+        activatePasswordButton.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(scrollView)
+            make.centerY.equalTo(passwordField)
+            make.height.equalTo(passwordField).offset(Size.fieldsInnerMargin)
+        }
         passwordField.snp_makeConstraints { make in
             make.top.equalTo(messageLabel.snp_bottom).offset(Size.fieldsInnerMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
@@ -275,6 +298,18 @@ extension JoinScreen {
 }
 
 extension JoinScreen {
+    public func activateEmail() {
+      emailField.becomeFirstResponder()
+    }
+
+    public func activateUsername() {
+      usernameField.becomeFirstResponder()
+    }
+
+    public func activatePassword() {
+      passwordField.becomeFirstResponder()
+    }
+
     override public func backAction() {
         delegate?.backAction()
     }
