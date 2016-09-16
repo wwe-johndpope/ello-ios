@@ -194,9 +194,9 @@ extension StyledButton.Style {
         cornerRadius: nil
         )
     public static let RoundedGray = StyledButton.Style(
-        backgroundColor: .clearColor(), disabledBackgroundColor: .greyF2(),
-        titleColor: .greyA(), highlightedTitleColor: .blackColor(), disabledTitleColor: .greyC(),
-        borderColor: .greyA(), disabledBorderColor: .greyF2(),
+        backgroundColor: .clearColor(),
+        titleColor: .greyA(), highlightedTitleColor: .blackColor(),
+        borderColor: .greyA(),
         cornerRadius: 5
         )
     public static let InviteFriend = StyledButton.Style(
