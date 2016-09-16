@@ -332,6 +332,7 @@ public final class StreamViewController: BaseElloViewController {
 
             self.dataSource.replaceItems(at: indexPathsToReplace, with: streamCellItems)
             self.reloadCells()
+            completion()
         }
     }
 
