@@ -40,12 +40,11 @@ public class OnboardingScreen: EmptyScreen {
     override func style() {
         buttonContainer.backgroundColor = .greyE5()
         abortButton.hidden = true
-
         nextButton.hidden = true
     }
 
     override func bindActions() {
-        promptButton.addTarget(self, action: #selector(nextAction), forControlEvents: .TouchUpInside)
+        promptButton.enabled = false
         nextButton.addTarget(self, action: #selector(nextAction), forControlEvents: .TouchUpInside)
         abortButton.addTarget(self, action: #selector(abortAction), forControlEvents: .TouchUpInside)
     }
