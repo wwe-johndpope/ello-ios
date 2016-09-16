@@ -11,11 +11,12 @@ public struct TextHeaderCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? TextHeaderCell,
+        guard let
+            cell = cell as? TextHeaderCell,
             header = streamCellItem.type.data as? NSAttributedString
-        {
-            cell.header = header
-        }
+        else { return}
+
+        cell.header = header
     }
 
 }
