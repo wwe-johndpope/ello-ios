@@ -100,9 +100,6 @@ class DebugTodoController: UIViewController, UITableViewDataSource, UITableViewD
         addAction("Reset Intro") {
             GroupDefaults["IntroDisplayed"] = nil
         }
-        addAction("Reset Onboarding") {
-            Onboarding.shared().reset()
-        }
         addAction("Crash the app") {
             Crashlytics.sharedInstance().crash()
         }

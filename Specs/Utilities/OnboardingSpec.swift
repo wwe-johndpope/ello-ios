@@ -12,20 +12,15 @@ import Ello
 class OnboardingSpec: QuickSpec {
     override func spec() {
         describe("Onboarding") {
-            let currentVersion: Int? = GroupDefaults["ViewedOnboardingVersion"].int
-            afterSuite {
-                GroupDefaults["ViewedOnboardingVersion"] = currentVersion
-            }
-
-            let expectations: [(localIsCurrent: Bool, webIsCurrent: Bool?, showOnboarding: Bool, saveOnboarding: Bool)] = [
-                (localIsCurrent: true, webIsCurrent: nil, showOnboarding: false, saveOnboarding: true),
-                (localIsCurrent: true, webIsCurrent: false, showOnboarding: false, saveOnboarding: true),
-                (localIsCurrent: true, webIsCurrent: true, showOnboarding: false, saveOnboarding: false),
-                (localIsCurrent: false, webIsCurrent: nil, showOnboarding: false, saveOnboarding: true),
-                (localIsCurrent: false, webIsCurrent: false, showOnboarding: true, saveOnboarding: true),
-                (localIsCurrent: false, webIsCurrent: true, showOnboarding: false, saveOnboarding: false),
+            let expectations: [(localIsCurrent: Bool, webIsCurrent: Bool?, showOnboarding: Bool)] = [
+                (localIsCurrent: true, webIsCurrent: nil, showOnboarding: true),
+                (localIsCurrent: true, webIsCurrent: false, showOnboarding: false),
+                (localIsCurrent: true, webIsCurrent: true, showOnboarding: false),
+                (localIsCurrent: false, webIsCurrent: nil, showOnboarding: true),
+                (localIsCurrent: false, webIsCurrent: false, showOnboarding: false),
+                (localIsCurrent: false, webIsCurrent: true, showOnboarding: false),
             ]
-            for (localIsCurrent, webIsCurrent, showOnboarding, saveOnboarding) in expectations {
+            for (localIsCurrent, webIsCurrent, showOnboarding) in expectations {
                 let title1: String
                 if localIsCurrent { title1 = "localVersion is currentVersion" }
                 else { title1 = "localVersion less than currentVersion" }
@@ -36,7 +31,7 @@ class OnboardingSpec: QuickSpec {
                 case .Some(false): title2 = "webVersion less than currentVersion"
                 }
                 describe("\(title1) and \(title2)") {
-                    it("showOnboarding should be \(showOnboarding), saveOnboarding should be \(saveOnboarding)") {
+                    it("showOnboarding should be \(showOnboarding)") {
                         if localIsCurrent {
                             GroupDefaults["ViewedOnboardingVersion"] = 1
                         }
@@ -59,7 +54,6 @@ class OnboardingSpec: QuickSpec {
                             expect(user.onboardingVersion).to(beNil())
                         }
                         expect(onboarding.showOnboarding(user)) == showOnboarding
-                        expect(onboarding.saveOnboarding(user)) == saveOnboarding
                     }
                 }
             }

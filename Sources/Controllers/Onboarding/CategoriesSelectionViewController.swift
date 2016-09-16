@@ -74,6 +74,9 @@ extension CategoriesSelectionViewController: OnboardingStepController {
 
             UserService().setUserCategories(categories)
                 .onSuccess { _ in
+                    // onboarding can be considered "done", even if they abort the app
+                    Onboarding.shared().updateVersionToLatest()
+
                     self.onboardingData.categories = categories
                     proceedClosure(success: true)
                 }

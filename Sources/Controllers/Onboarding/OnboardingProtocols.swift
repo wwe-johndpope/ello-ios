@@ -6,10 +6,6 @@ public enum OnboardingStep: Int {
     case Categories = 0
     case CreateProfile
     case InviteFriends
-
-    public var nextStep: OnboardingStep? {
-        return OnboardingStep(rawValue: rawValue + 1)
-    }
 }
 
 public protocol OnboardingDelegate: class {

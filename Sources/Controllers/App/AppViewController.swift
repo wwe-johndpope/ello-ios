@@ -100,25 +100,17 @@ public class AppViewController: BaseElloViewController {
             }
         }
 
-
         ProfileService().loadCurrentUser(
             success: { user in
                 self.screen.stopAnimatingLogo()
                 self.currentUser = user
 
                 let shouldShowOnboarding = Onboarding.shared().showOnboarding(user)
-                let shouldSaveOnboarding = Onboarding.shared().saveOnboarding(user)
-
                 if shouldShowOnboarding {
                     self.showOnboardingScreen(user)
                 }
                 else {
-                    Onboarding.shared().updateVersionToLatest()
                     self.showMainScreen(user)
-                }
-
-                if shouldSaveOnboarding {
-                    ProfileService().updateUserProfile(["web_onboarding_version": Onboarding.currentVersion], success: { _ in }, failure: { _ in })
                 }
             },
             failure: { (error, _) in
@@ -223,8 +215,6 @@ extension AppViewController {
 
     public func doneOnboarding() {
         Onboarding.shared().updateVersionToLatest()
-        ProfileService().updateUserProfile(["web_onboarding_version": Onboarding.currentVersion], success: { _ in }, failure: { _ in })
-
         self.showMainScreen(currentUser!)
     }
 
