@@ -85,7 +85,7 @@ public final class Category: JSONAble, Groupable {
         let name = json["name"].stringValue
         let slug = json["slug"].stringValue
         let order = json["order"].intValue
-        let allowInOnboarding = json["allowInOnboarding"].bool ?? true
+        let allowInOnboarding = json["allow_in_onboarding"].bool ?? true
         let level: CategoryLevel = CategoryLevel(rawValue: json["level"].stringValue) ?? .Tertiary
         let tileImage: Attachment?
         if let assetJson = json["tile_image"].object as? [String: AnyObject],
