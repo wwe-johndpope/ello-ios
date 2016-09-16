@@ -29,7 +29,7 @@ public class S3UploadingService: NSObject {
                 }
             }
             else {
-                let error = NSError(domain: ElloErrorDomain, code: 500, userInfo: [NSLocalizedFailureReasonErrorKey: "Could not compress image as JPEG"])
+                let error = NSError(domain: ElloErrorDomain, code: 500, userInfo: [NSLocalizedFailureReasonErrorKey: InterfaceString.Error.JPEGCompress])
                 failure(error: error, statusCode: nil)
             }
         }

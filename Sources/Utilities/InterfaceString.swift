@@ -330,6 +330,10 @@ public struct InterfaceString {
         static let LoggedOutError = NSLocalizedString("You must be logged in", comment: "You must be logged in")
     }
 
+    public struct Error {
+        static let JPEGCompress = NSLocalizedString("Could not compress image as JPEG", comment: "Could not compress image as JPEG")
+    }
+
     static let GenericError = NSLocalizedString("Something went wrong. Thank you for your patience with Ello Beta!", comment: "Generic error message")
     static let UnknownError = NSLocalizedString("Unknown error", comment: "Unknown error message")
 
