@@ -140,7 +140,7 @@ class CGRectExtensionSpec: QuickSpec {
             it("-grow(margins)") {
                 let margins = UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
                 let newFrame = frame.grow(margins)
-                expect(newFrame).to(equal(CGRect(x: 4, y: 6, width: 12, height: 16)))
+                expect(newFrame).to(equal(CGRect(x: 3, y: 6, width: 16, height: 18)))
             }
             it("-grow(all:)") {
                 let newFrame = frame.grow(all: 1)
