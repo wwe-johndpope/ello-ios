@@ -17,4 +17,8 @@ public class FakePersistentLayer: PersistentLayer {
     public func objectForKey(defaultName: String) -> AnyObject? {
         return object ?? []
     }
+
+    public func removeObjectForKey(key: String) {
+        object = nil
+    }
 }

@@ -6,7 +6,8 @@ import Foundation
 
 private let CredentialSettingsSubmitViewHeight: CGFloat = 128
 
-public protocol CredentialSettingsDelegate {
+public protocol CredentialSettingsDelegate: class {
+    func credentialSettingsUserChanged(user: User)
     func credentialSettingsDidUpdate()
 }
 
@@ -27,7 +28,7 @@ public class CredentialSettingsViewController: UITableViewController {
     @IBOutlet weak public var saveButton: ElloButton!
 
     public var currentUser: User?
-    public var delegate: CredentialSettingsDelegate?
+    weak public var delegate: CredentialSettingsDelegate?
     var validationCancel: BasicBlock?
 
     public var isUpdatable: Bool {
@@ -200,19 +201,17 @@ public class CredentialSettingsViewController: UITableViewController {
             content["password_confirmation"] = password
         }
 
-        if let nav = self.navigationController as? ElloNavigationController {
-            ProfileService().updateUserProfile(content, success: {
-                nav.setProfileData($0)
-                self.resetViews()
-            }, failure: { error, _ in
-                self.currentPasswordField.text = ""
-                self.passwordView.textField.text = ""
+        ProfileService().updateUserProfile(content, success: { user in
+            self.delegate?.credentialSettingsUserChanged(user)
+            self.resetViews()
+        }, failure: { error, _ in
+            self.currentPasswordField.text = ""
+            self.passwordView.textField.text = ""
 
-                if let err = error.userInfo[NSLocalizedFailureReasonErrorKey] as? ElloNetworkError {
-                    self.handleError(err)
-                }
-            })
-        }
+            if let err = error.userInfo[NSLocalizedFailureReasonErrorKey] as? ElloNetworkError {
+                self.handleError(err)
+            }
+        })
     }
 
     private func resetViews() {

@@ -5,9 +5,10 @@
 import SnapKit
 
 
+/// Easy keyboard views: pin an anchor to `keyboardAnchor.top`. It'll animate automatically, too.
 public class Screen: UIView {
     let keyboardAnchor = UIView()
-    private var keyboardConstraint: Constraint!
+    private var keyboardTopConstraint: Constraint!
     private var keyboardWillShowObserver: NotificationObserver?
     private var keyboardWillHideObserver: NotificationObserver?
 
@@ -26,6 +27,14 @@ public class Screen: UIView {
         bindActions()
         setText()
         arrange()
+
+        // for controllers that use "container" views, they need to be set to the correct dimensions,
+        // otherwise there'll be constraint violations.
+        layoutIfNeeded()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     deinit {
@@ -58,18 +67,14 @@ public class Screen: UIView {
     func keyboardWillChange(keyboard: Keyboard) {
         let bottomInset = keyboard.keyboardBottomInset(inView: self)
         animate(duration: keyboard.duration, options: keyboard.options, completion: { _ in self.keyboardDidAnimate() }) {
-            self.keyboardConstraint.updateOffset(-bottomInset)
+            self.keyboardTopConstraint.updateOffset(-bottomInset)
+            self.keyboardIsAnimating(keyboard)
             self.layoutIfNeeded()
-            self.keyboardIsAnimating()
         }
     }
 
-    public func keyboardIsAnimating() {}
+    public func keyboardIsAnimating(keyboard: Keyboard) {}
     public func keyboardDidAnimate() {}
-
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     func screenInit() {}
     func style() {}
@@ -78,7 +83,7 @@ public class Screen: UIView {
     func arrange() {
         keyboardAnchor.snp_makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
-            keyboardConstraint = make.top.equalTo(self.snp_bottom).constraint
+            keyboardTopConstraint = make.top.equalTo(self.snp_bottom).constraint
         }
     }
 }

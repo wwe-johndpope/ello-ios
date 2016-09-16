@@ -2,6 +2,7 @@
 ///  StreamDataSourceSpec.swift
 //
 
+@testable
 import Ello
 import Quick
 import Nimble
@@ -645,7 +646,75 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-           describe("modifyItems(_:change:collectionView:)") {
+
+            describe("clientSidePostInsertIndexPath()") {
+                let one = NSIndexPath(forItem: 1, inSection: 0)
+                let four = NSIndexPath(forItem: 4, inSection: 0)
+                let tests: [(NSIndexPath?, StreamKind)] = [
+                    (nil, StreamKind.Discover(type: .Featured)),
+                    (nil, StreamKind.CategoryPosts(slug: "art")),
+                    (one, StreamKind.Following),
+                    (nil, StreamKind.Starred),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
+                    (nil, StreamKind.Notifications(category: "")),
+                    (nil, StreamKind.PostDetail(postParam: "param")),
+                    (four, StreamKind.CurrentUserStream),
+                    (nil, StreamKind.Unknown),
+                    (nil, StreamKind.UserStream(userParam: "NA")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
+                    (four, StreamKind.UserStream(userParam: "12345")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
+                ]
+                for (indexPath, streamKind) in tests {
+                    it("is \(indexPath) for \(streamKind)") {
+                        subject.streamKind = streamKind
+                        subject.currentUser = User.stub(["id": "12345"])
+
+                        if indexPath == nil {
+                            expect(subject.clientSidePostInsertIndexPath()).to(beNil())
+                        }
+                        else {
+                            expect(subject.clientSidePostInsertIndexPath()) == indexPath
+                        }
+                    }
+                }
+            }
+
+            describe("clientSideLoveInsertIndexPath()") {
+                let one = NSIndexPath(forItem: 1, inSection: 0)
+                let tests: [(NSIndexPath?, StreamKind)] = [
+                    (nil, StreamKind.Discover(type: .Featured)),
+                    (nil, StreamKind.CategoryPosts(slug: "art")),
+                    (nil, StreamKind.Following),
+                    (nil, StreamKind.Starred),
+                    (one, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
+                    (nil, StreamKind.Notifications(category: "")),
+                    (nil, StreamKind.PostDetail(postParam: "param")),
+                    (nil, StreamKind.CurrentUserStream),
+                    (nil, StreamKind.Unknown),
+                    (nil, StreamKind.UserStream(userParam: "NA")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
+                    (nil, StreamKind.UserStream(userParam: "12345")),
+                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
+                ]
+                for (indexPath, streamKind) in tests {
+                    it("is \(indexPath) for \(streamKind)") {
+                        subject.streamKind = streamKind
+
+                        if indexPath == nil {
+                            expect(subject.clientSideLoveInsertIndexPath()).to(beNil())
+                        }
+                        else {
+                            expect(subject.clientSideLoveInsertIndexPath()) == indexPath
+                        }
+                    }
+                }
+            }
+
+
+            describe("modifyItems(_:change:collectionView:)") {
 
                 context("with comments") {
 
@@ -1239,16 +1308,16 @@ class StreamDataSourceSpec: QuickSpec {
 
                 it("returns nil if a filter (returns false) is active") {
                     subject.streamFilter = { _ in return false }
-                    let itemExists = subject.streamCellItems.safeValue(0)
-                    expect(itemExists?.type.name) == "StreamCreateCommentCell"
+                    let itemExists = subject.streamCellItems[0]
+                    expect(itemExists.type.name) == "StreamCreateCommentCell"
                     let itemHidden = subject.visibleStreamCellItem(at: NSIndexPath(forItem: 0, inSection:0))
                     expect(itemHidden).to(beNil())
                 }
 
                 it("returns item if a filter (returns true) is active") {
                     subject.streamFilter = { _ in return true }
-                    let itemExists = subject.streamCellItems.safeValue(0)
-                    expect(itemExists?.type.name) == "StreamCreateCommentCell"
+                    let itemExists = subject.streamCellItems[0]
+                    expect(itemExists.type.name) == "StreamCreateCommentCell"
                     let itemHidden = subject.visibleStreamCellItem(at: NSIndexPath(forItem: 0, inSection:0))
                     expect(itemHidden?.type.name) == "StreamCreateCommentCell"
                 }
@@ -1372,7 +1441,7 @@ class StreamDataSourceSpec: QuickSpec {
                         let indexPath = NSIndexPath(forItem: index, inSection: 0)
                         let groupId = subject.groupForIndexPath(indexPath)
                         if item.jsonable is Post || item.jsonable is ElloComment {
-                            expect(groupId) == post.id
+                            expect(groupId) == post.groupId
                         }
                     }
                 }
@@ -1394,15 +1463,15 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(firstGroupId) != secondGroupId
                 }
 
-                it("returns '0' if indexPath out of bounds") {
-                    expect(subject.groupForIndexPath(indexPathOutOfBounds)) == "0"
+                it("returns nil if indexPath out of bounds") {
+                    expect(subject.groupForIndexPath(indexPathOutOfBounds)).to(beNil())
                 }
 
-                it("returns '0' if invalid section") {
-                    expect(subject.groupForIndexPath(indexPathInvalidSection)) == "0"
+                it("returns nil if invalid section") {
+                    expect(subject.groupForIndexPath(indexPathInvalidSection)).to(beNil())
                 }
 
-                it("returns '0' if StreamCellItem's jsonable is not Groupable") {
+                it("returns nil if StreamCellItem's jsonable is not Groupable") {
                     let lastIndexPath = NSIndexPath(forItem: subject.visibleCellItems.count, inSection: 0)
                     let nonGroupable: Asset = stub(["id": "123"])
 
@@ -1412,7 +1481,7 @@ class StreamDataSourceSpec: QuickSpec {
                         vc.collectionView.reloadData()
                     }
 
-                    expect(subject.groupForIndexPath(lastIndexPath)) == "0"
+                    expect(subject.groupForIndexPath(lastIndexPath)).to(beNil())
                 }
             }
 

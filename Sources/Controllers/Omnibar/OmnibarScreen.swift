@@ -5,7 +5,6 @@
 import MobileCoreServices
 import FLAnimatedImage
 import PINRemoteImage
-import ImagePickerSheetController
 
 
 public class OmnibarScreen: UIView, OmnibarScreenProtocol {
@@ -943,7 +942,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     public func addImageAction() {
         stopEditing()
-        let pickerSheet = UIImagePickerController.imagePickerSheetForImagePicker(openImageSheet)
+        let pickerSheet = UIImagePickerController.imagePickerSheetForImagePicker(callback: openImageSheet)
         self.delegate?.omnibarPresentController(pickerSheet)
     }
 

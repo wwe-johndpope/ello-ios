@@ -4,7 +4,7 @@
 
 public let ExternalWebNotification = TypedNotification<String>(name: "ExternalWebNotification")
 
-public class ElloNavigationController: UINavigationController {
+public class ElloNavigationController: UINavigationController, ControllerThatMightHaveTheCurrentUser {
 
     var interactionController: UIPercentDrivenInteractiveTransition?
     var postChangedNotification: NotificationObserver?
@@ -40,21 +40,19 @@ public class ElloNavigationController: UINavigationController {
         }
     }
 
-    public func setProfileData(currentUser: User) {
-        postNotification(SettingChangedNotification, value: currentUser)
-        self.currentUser = currentUser
+    func didSetCurrentUser() {
         if self.viewControllers.count == 0 {
-            if let rootViewControllerName = rootViewControllerName {
+            if let
+                rootViewControllerName = rootViewControllerName,
+                currentUser = currentUser
+            {
                 if let controller = RootViewControllers(rawValue:rootViewControllerName)?.controllerInstance(currentUser) {
                     controller.currentUser = currentUser
                     self.viewControllers = [controller]
                 }
             }
         }
-    }
-
-    func didSetCurrentUser() {
-        if self.viewControllers.count > 0 {
+        else {
             for controller in self.viewControllers {
                 if let controller = controller as? ControllerThatMightHaveTheCurrentUser {
                     controller.currentUser = currentUser

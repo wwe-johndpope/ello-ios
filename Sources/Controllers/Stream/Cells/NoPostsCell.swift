@@ -13,8 +13,8 @@ public class NoPostsCell: UICollectionViewCell {
     }
 
     func updateText() {
-        var noPostsHeaderText: String
-        var noPostsBodyText: String
+        let noPostsHeaderText: String
+        let noPostsBodyText: String
         if isCurrentUser {
             noPostsHeaderText = InterfaceString.Profile.CurrentUserNoResultsTitle
             noPostsBodyText = InterfaceString.Profile.CurrentUserNoResultsBody

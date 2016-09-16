@@ -9,6 +9,7 @@ import PINRemoteImage
 import PINCache
 import ElloUIFonts
 
+
 @UIApplicationMain
 public class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -47,7 +48,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         setupGlobalStyles()
         setupCaches()
         if !AppSetup.sharedState.isSimulator && !AppSetup.sharedState.isTesting {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            inBackground {
                 Crashlytics.startWithAPIKey(ElloKeys().crashlyticsKey())
             }
         }

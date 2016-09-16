@@ -124,7 +124,6 @@ class StreamKindSpec: QuickSpec {
             describe("showsCategory") {
                 let expectations: [(StreamKind, Bool)] = [
                     (.CurrentUserStream, false),
-                    (.MoreCategories, false),
                     (.AllCategories, false),
                     (.Discover(type: .Featured), true),
                     (.Discover(type: .Trending), false),
@@ -135,7 +134,6 @@ class StreamKindSpec: QuickSpec {
                     (.Notifications(category: nil), false),
                     (.Notifications(category: "comments"), false),
                     (.PostDetail(postParam: "postId"), false),
-                    (.SimpleStream(endpoint: .AwesomePeopleStream, title: "Awesome People"), false),
                     (.UserStream(userParam: "userId"), false),
                     (.Unknown, false),
                 ]
@@ -302,79 +300,10 @@ class StreamKindSpec: QuickSpec {
                     (true, StreamKind.UserStream(userParam: "NA")),
                     (true, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
                     (true, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "12345"), title: "")),
-                    (false, StreamKind.SimpleStream(endpoint: ElloAPI.AwesomePeopleStream, title: "")),
-                    (false, StreamKind.SimpleStream(endpoint: ElloAPI.CommunitiesStream, title: "")),
                 ]
                 for (shouldStar, streamKind) in tests {
                     it("is \(shouldStar) for \(streamKind)") {
                         expect(streamKind.showStarButton) == shouldStar
-                    }
-                }
-            }
-
-            describe("clientSidePostInsertIndexPath(currentUserId:)") {
-                let one = NSIndexPath(forItem: 1, inSection: 0)
-                let four = NSIndexPath(forItem: 4, inSection: 0)
-                let tests: [(NSIndexPath?, StreamKind)] = [
-                    (nil, StreamKind.Discover(type: .Featured)),
-                    (nil, StreamKind.CategoryPosts(slug: "art")),
-                    (one, StreamKind.Following),
-                    (nil, StreamKind.Starred),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
-                    (nil, StreamKind.Notifications(category: "")),
-                    (nil, StreamKind.PostDetail(postParam: "param")),
-                    (four, StreamKind.CurrentUserStream),
-                    (nil, StreamKind.Unknown),
-                    (nil, StreamKind.UserStream(userParam: "NA")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
-                    (four, StreamKind.UserStream(userParam: "12345")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.AwesomePeopleStream, title: "")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.CommunitiesStream, title: "")),
-                ]
-                for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
-
-                        if(indexPath == nil) {
-                            expect(streamKind.clientSidePostInsertIndexPath("12345")).to(beNil())
-                        }
-                        else {
-                            expect(streamKind.clientSidePostInsertIndexPath("12345")) == indexPath
-                        }
-                    }
-                }
-            }
-
-            describe("clientSideLoveInsertIndexPath") {
-                let one = NSIndexPath(forItem: 1, inSection: 0)
-                let tests: [(NSIndexPath?, StreamKind)] = [
-                    (nil, StreamKind.Discover(type: .Featured)),
-                    (nil, StreamKind.CategoryPosts(slug: "art")),
-                    (nil, StreamKind.Following),
-                    (nil, StreamKind.Starred),
-                    (one, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
-                    (nil, StreamKind.Notifications(category: "")),
-                    (nil, StreamKind.PostDetail(postParam: "param")),
-                    (nil, StreamKind.CurrentUserStream),
-                    (nil, StreamKind.Unknown),
-                    (nil, StreamKind.UserStream(userParam: "NA")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
-                    (nil, StreamKind.UserStream(userParam: "12345")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.AwesomePeopleStream, title: "")),
-                    (nil, StreamKind.SimpleStream(endpoint: ElloAPI.CommunitiesStream, title: "")),
-                ]
-                for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
-
-                        if(indexPath == nil) {
-                            expect(streamKind.clientSideLoveInsertIndexPath).to(beNil())
-                        }
-                        else {
-                            expect(streamKind.clientSideLoveInsertIndexPath) == indexPath
-                        }
                     }
                 }
             }

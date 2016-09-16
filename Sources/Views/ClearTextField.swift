@@ -3,15 +3,33 @@
 //
 
 public class ClearTextField: UITextField {
+    struct Size {
+        static let lineMargin: CGFloat = 5
+    }
+
     public let onePasswordButton = OnePasswordButton()
-    var line = UIView()
-    var hasOnePassword = false {
+    public var lineColor: UIColor? = .grey6() {
+        didSet {
+            if !isFirstResponder() {
+                line.backgroundColor = lineColor
+            }
+        }
+    }
+    public var selectedLineColor: UIColor? = .whiteColor() {
+        didSet {
+            if isFirstResponder() {
+                line.backgroundColor = selectedLineColor
+            }
+        }
+    }
+    private var line = UIView()
+    public var hasOnePassword = false {
         didSet {
             onePasswordButton.hidden = !hasOnePassword
             setNeedsLayout()
         }
     }
-    var validationState = ValidationState.None {
+    public var validationState: ValidationState = .None {
         didSet {
             rightView = UIImageView(image: validationState.imageRepresentation)
         }
@@ -28,21 +46,33 @@ public class ClearTextField: UITextField {
     }
 
     func sharedSetup() {
-        line.backgroundColor = .grey6()
         backgroundColor = .clearColor()
         font = .defaultFont(18)
         textColor = .whiteColor()
         rightViewMode = .Always
-        addSubview(line)
 
-        onePasswordButton.hidden = true
         addSubview(onePasswordButton)
-
+        onePasswordButton.hidden = !hasOnePassword
         onePasswordButton.snp_makeConstraints { make in
-            make.centerY.equalTo(self)
+            make.centerY.equalTo(self).offset(-Size.lineMargin / 2)
             make.trailing.equalTo(self)
             make.size.equalTo(CGSize.minButton)
         }
+
+        addSubview(line)
+        line.backgroundColor = lineColor
+        line.snp_makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self)
+            make.height.equalTo(1)
+        }
+    }
+
+    override public func intrinsicContentSize() -> CGSize {
+        var size = super.intrinsicContentSize()
+        if size.height != UIViewNoIntrinsicMetric {
+            size.height += Size.lineMargin
+        }
+        return size
     }
 
     override public func drawPlaceholderInRect(rect: CGRect) {
@@ -52,20 +82,17 @@ public class ClearTextField: UITextField {
         ])
     }
 
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        line.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 1)
-    }
-
     override public func becomeFirstResponder() -> Bool {
-        line.backgroundColor = .whiteColor()
+        line.backgroundColor = selectedLineColor
         return super.becomeFirstResponder()
     }
 
     override public func resignFirstResponder() -> Bool {
-        line.backgroundColor = .grey6()
+        line.backgroundColor = lineColor
         return super.resignFirstResponder()
     }
+
+// MARK: Layout rects
 
     override public func textRectForBounds(bounds: CGRect) -> CGRect {
         return rectForBounds(bounds)
@@ -88,13 +115,17 @@ public class ClearTextField: UITextField {
         var rect = super.rightViewRectForBounds(bounds)
         rect.origin.x -= 10
         if hasOnePassword {
-            rect.origin.x -= 44
+            rect.origin.x -= 20
         }
         return rect
     }
 
     private func rectForBounds(bounds: CGRect) -> CGRect {
-        return bounds.shrinkLeft(15).inset(topBottom: 10)
+        var rect = bounds.shrinkLeft(15)
+        if validationState.imageRepresentation != nil {
+            rect = rect.shrinkLeft(20)
+        }
+        return rect
     }
 
 }

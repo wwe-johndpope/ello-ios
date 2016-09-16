@@ -107,6 +107,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .FreedomOfSpeech,
              .FaceMaker,
              .Invitations,
+             .Invite,
              .Join,
              .Login,
              .Manifesto,

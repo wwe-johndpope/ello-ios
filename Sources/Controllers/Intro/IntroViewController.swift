@@ -69,7 +69,7 @@ public class IntroViewController: UIViewController, UIPageViewControllerDataSour
         let skipButtonRightMargin: CGFloat = 10
         skipButton.frame = CGRect(x: 0, y: 20, width: 0, height: 0)
         skipButton.setTitle("Skip", forState: UIControlState.Normal)
-        skipButton.titleLabel?.font = UIFont.defaultFont(14)
+        skipButton.titleLabel?.font = UIFont.defaultFont()
         skipButton.sizeToFit()
         // Set frame margin from right edge
         skipButton.frame.origin.x = view.frame.width - skipButtonRightMargin - skipButton.frame.width

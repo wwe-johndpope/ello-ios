@@ -20,7 +20,6 @@ public struct StreamHeaderCellPresenter {
             let post = streamCellItem.jsonable as? Post
 
             cell.close()
-            cell.indexPath = indexPath
             cell.ownPost = false
             cell.ownComment = false
             cell.isGridLayout = streamKind.isGridView

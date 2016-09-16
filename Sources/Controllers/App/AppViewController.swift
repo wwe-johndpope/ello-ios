@@ -60,7 +60,12 @@ public class AppViewController: BaseElloViewController {
     }
 
     public override func didSetCurrentUser() {
+        super.didSetCurrentUser()
         ElloWebBrowserViewController.currentUser = currentUser
+
+        if let vc = visibleViewController as? ControllerThatMightHaveTheCurrentUser {
+            vc.currentUser = currentUser
+        }
     }
 
 // MARK: - Private
@@ -95,8 +100,8 @@ public class AppViewController: BaseElloViewController {
             }
         }
 
-        let profileService = ProfileService()
-        profileService.loadCurrentUser(
+
+        ProfileService().loadCurrentUser(
             success: { user in
                 self.screen.stopAnimatingLogo()
                 self.currentUser = user
@@ -113,7 +118,7 @@ public class AppViewController: BaseElloViewController {
                 }
 
                 if shouldSaveOnboarding {
-                    profileService.updateUserProfile(["web_onboarding_version": Onboarding.currentVersion], success: { _ in }, failure: { _ in })
+                    ProfileService().updateUserProfile(["web_onboarding_version": Onboarding.currentVersion], success: { _ in }, failure: { _ in })
                 }
             },
             failure: { (error, _) in
@@ -173,7 +178,7 @@ extension AppViewController {
         swapViewController(nav, completion: completion)
     }
 
-    public func showJoinScreen(animated animated: Bool) {
+    public func showJoinScreen(animated animated: Bool, invitationCode: String? = nil) {
         guard let nav = visibleViewController as? UINavigationController else {
             showStartupScreen() { self.showJoinScreen(animated: animated) }
             return
@@ -187,6 +192,7 @@ extension AppViewController {
         pushPayload = .None
         let joinController = JoinViewController()
         joinController.parentAppController = self
+        joinController.invitationCode = invitationCode
         nav.setViewControllers([startupController, joinController], animated: animated)
     }
 
@@ -211,13 +217,14 @@ extension AppViewController {
         let vc = OnboardingViewController()
         vc.parentAppController = self
         vc.currentUser = user
-        self.presentViewController(vc, animated: true, completion: nil)
+
+        swapViewController(vc) {}
     }
 
     public func doneOnboarding() {
         Onboarding.shared().updateVersionToLatest()
+        ProfileService().updateUserProfile(["web_onboarding_version": Onboarding.currentVersion], success: { _ in }, failure: { _ in })
 
-        dismissViewControllerAnimated(true, completion: nil)
         self.showMainScreen(currentUser!)
     }
 
@@ -226,7 +233,7 @@ extension AppViewController {
 
         let vc = ElloTabBarController.instantiateFromStoryboard()
         ElloWebBrowserViewController.elloTabBarController = vc
-        vc.setProfileData(user)
+        vc.currentUser = user
 
         swapViewController(vc) {
             if let payload = self.pushPayload {
@@ -388,6 +395,8 @@ public extension AppViewController {
         GroupDefaults[CurrentStreamKey] = nil
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         NSURLCache.sharedURLCache().removeAllCachedResponses()
+        TemporaryCache.clear()
+        InviteCache().clear()
         currentUser = nil
     }
 }
@@ -423,7 +432,16 @@ extension AppViewController {
         }
 
         guard isLoggedIn() else {
-            presentLoginOrSafariAlert(path)
+            switch type {
+            case .Invite:
+                showJoinScreen(animated: false, invitationCode: data)
+            case .Join:
+                showJoinScreen(animated: false)
+            case .Login:
+                showLoginScreen(animated: false)
+            default:
+                presentLoginOrSafariAlert(path)
+            }
             return
         }
 
@@ -432,6 +450,8 @@ extension AppViewController {
         }
 
         switch type {
+        case .Invite, .Join, .Login:
+            break
         case .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
@@ -456,14 +476,6 @@ extension AppViewController {
         case .Friends,
              .Following:
             showFriendsScreen(vc)
-        case .Join:
-            if !isLoggedIn() {
-                showJoinScreen(animated: false)
-            }
-        case .Login:
-            if !isLoggedIn() {
-                showLoginScreen(animated: false)
-            }
         case .Noise,
              .Starred:
             showNoiseScreen(vc)

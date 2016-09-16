@@ -5,6 +5,7 @@
 class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ControllerThatMightHaveTheCurrentUser {
     var category: DynamicSettingCategory?
     var currentUser: User?
+    weak var delegate: DynamicSettingsDelegate?
     @IBOutlet weak var tableView: UITableView!
     weak var navBar: ElloNavigationBar!
 
@@ -71,7 +72,7 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
     typealias SettingConfig = (setting: DynamicSetting, indexPath: NSIndexPath, value: Bool, isVisible: Bool)
 
     func toggleSetting(setting: DynamicSetting, value: Bool) {
-        guard let nav = self.navigationController as? ElloNavigationController,
+        guard let
             currentUser = currentUser,
             category = self.category else { return }
         let settings = category.settings
@@ -97,7 +98,7 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
 
         ProfileService().updateUserProfile(updatedValues,
             success: { user in
-                nav.setProfileData(user)
+                self.delegate?.dynamicSettingsUserChanged(user)
 
                 let changedPaths = visibility.filter { config in
                     return self.settingChanged(config, user: user)

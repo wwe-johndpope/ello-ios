@@ -94,6 +94,9 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     @IBOutlet weak public var coverImage: UIImageView!
     @IBOutlet weak public var avatarImage: UIImageView!
     var scrollLogic: ElloScrollLogic!
+    var appViewController: AppViewController? {
+        return (parentViewController as? SettingsContainerViewController)?.appViewController
+    }
 
     weak public var nameTextFieldView: ElloTextFieldView!
     weak public var linksTextFieldView: ElloTextFieldView!
@@ -161,14 +164,17 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         }
 
         ProfileService().loadCurrentUser(success: { user in
-            if let nav = self.navigationController as? ElloNavigationController {
-                nav.setProfileData(user)
-            }
+            self.updateCurrentUser(user)
             hideHud()
         }, failure: { error in
             hideHud()
         })
         setupViews()
+    }
+
+    private func updateCurrentUser(user: User) {
+        appViewController?.currentUser = user
+        postNotification(SettingChangedNotification, value: user)
     }
 
     private func setupViews() {
@@ -225,12 +231,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         let updateNameFunction = debounce(0.5) { [unowned self] in
             let name = self.nameTextFieldView.textField.text ?? ""
             ProfileService().updateUserProfile(["name": name], success: { user in
-                if let nav = self.navigationController as? ElloNavigationController {
-                    nav.setProfileData(user)
-                    self.nameTextFieldView.setState(.OK)
-                } else {
-                    self.nameTextFieldView.setState(.Error)
-                }
+                self.updateCurrentUser(user)
+                self.nameTextFieldView.setState(.OK)
             }, failure: { _, _ in
                 self.nameTextFieldView.setState(.Error)
             })
@@ -260,12 +262,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         let updateLinksFunction = debounce(0.5) { [unowned self] in
             let links = self.linksTextFieldView.textField.text ?? ""
             ProfileService().updateUserProfile(["external_links": links], success: { user in
-                if let nav = self.navigationController as? ElloNavigationController {
-                    nav.setProfileData(user)
-                    self.linksTextFieldView.setState(.OK)
-                } else {
-                    self.linksTextFieldView.setState(.Error)
-                }
+                self.updateCurrentUser(user)
+                self.linksTextFieldView.setState(.OK)
             }, failure: { _, _ in
                 self.linksTextFieldView.setState(.Error)
             })
@@ -283,12 +281,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         bioTextViewDidChange = debounce(0.5) { [unowned self] in
             let bio = self.bioTextView.text
             ProfileService().updateUserProfile(["unsanitized_short_bio": bio], success: { user in
-                if let nav = self.navigationController as? ElloNavigationController {
-                    nav.setProfileData(user)
-                    self.bioTextStatusImage.image = ValidationState.OK.imageRepresentation
-                } else {
-                    self.bioTextStatusImage.image = ValidationState.Error.imageRepresentation
-                }
+                self.updateCurrentUser(user)
+                self.bioTextStatusImage.image = ValidationState.OK.imageRepresentation
             }, failure: { _, _ in
                 self.bioTextStatusImage.image = ValidationState.Error.imageRepresentation
             })
@@ -323,12 +317,13 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         case "DynamicSettingsSegue":
             dynamicSettingsViewController = segue.destinationViewController as? DynamicSettingsViewController
             dynamicSettingsViewController?.currentUser = currentUser
+            dynamicSettingsViewController?.delegate = self
 
         default: break
         }
     }
 
-    @IBAction func logOutTapped(sender: ElloTextButton) {
+    @IBAction func logOutTapped() {
         Tracker.sharedTracker.tappedLogout()
         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
     }
@@ -336,7 +331,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     @IBAction func coverImageTapped() {
         photoSaveCallback = { image in
             ElloHUD.showLoadingHud()
-            ProfileService().updateUserCoverImage(image, success: { url, _ in
+            ProfileService().updateUserCoverImage(ImageRegionData(image: image), success: { url, _ in
                 ElloHUD.hideLoadingHud()
                 if let user = self.currentUser {
                     let asset = Asset(url: url, image: image)
@@ -356,8 +351,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     @IBAction func avatarImageTapped() {
         photoSaveCallback = { image in
             ElloHUD.showLoadingHud()
-
-            ProfileService().updateUserAvatarImage(image, success: { url, _ in
+            ProfileService().updateUserAvatarImage(ImageRegionData(image: image), success: { url, _ in
                 ElloHUD.hideLoadingHud()
                 if let user = self.currentUser {
                     let asset = Asset(url: url, image: image)
@@ -395,7 +389,14 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 }
 
-extension SettingsViewController: CredentialSettingsDelegate {
+extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDelegate {
+    public func dynamicSettingsUserChanged(user: User) {
+        updateCurrentUser(user)
+    }
+    public func credentialSettingsUserChanged(user: User) {
+        updateCurrentUser(user)
+    }
+
     public func credentialSettingsDidUpdate() {
         tableView.beginUpdates()
         tableView.endUpdates()

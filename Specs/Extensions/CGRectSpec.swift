@@ -137,6 +137,11 @@ class CGRectExtensionSpec: QuickSpec {
         }
         describe("grow(Xyz:)") {
             let frame = CGRect(x: 5, y: 7, width: 10, height: 14)
+            it("-grow(margins)") {
+                let margins = UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
+                let newFrame = frame.grow(margins)
+                expect(newFrame).to(equal(CGRect(x: 4, y: 6, width: 12, height: 16)))
+            }
             it("-grow(all:)") {
                 let newFrame = frame.grow(all: 1)
                 expect(newFrame).to(equal(CGRect(x: 4, y: 6, width: 12, height: 16)))

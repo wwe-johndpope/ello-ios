@@ -147,8 +147,7 @@ public class RoundedElloButton: ElloButton {
         setTitleColor(.grey6(), forState: .Highlighted)
         setTitleColor(.greyC(), forState: .Disabled)
         layer.borderWidth = 1
-        backgroundColor = .clearColor()
-        updateOutline()
+        updateStyle()
     }
 
     override func updateStyle() {

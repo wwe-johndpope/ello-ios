@@ -36,14 +36,14 @@ public struct ImageRegionData {
     let contentType: String?
     let buyButtonURL: NSURL?
 
-    public init(image: UIImage, buyButtonURL: NSURL?) {
+    public init(image: UIImage, buyButtonURL: NSURL? = nil) {
         self.image = image
         self.data = nil
         self.contentType = nil
         self.buyButtonURL = buyButtonURL
     }
 
-    public init(image: UIImage, data: NSData, contentType: String, buyButtonURL: NSURL?) {
+    public init(image: UIImage, data: NSData, contentType: String, buyButtonURL: NSURL? = nil) {
         self.image = image
         self.data = data
         self.contentType = contentType
@@ -208,16 +208,6 @@ public class PostEditingService: NSObject {
                 let (imageIndex, imageRegionData) = dataEntry
                 let (image, data, contentType, buyButtonURL) = (imageRegionData.image, imageRegionData.data, imageRegionData.contentType, imageRegionData.buyButtonURL)
 
-                let filename: String
-                switch contentType ?? "" {
-                case "image/gif":
-                    filename = "\(NSUUID().UUIDString).gif"
-                case "image/png":
-                    filename = "\(NSUUID().UUIDString).png"
-                default:
-                    filename = "\(NSUUID().UUIDString).jpg"
-                }
-
                 let failureHandler: ElloFailureCompletion = { error, statusCode in
                     anyError = error
                     anyStatusCode = statusCode
@@ -226,9 +216,9 @@ public class PostEditingService: NSObject {
 
                 let uploadService = S3UploadingService()
                 if let data = data, contentType = contentType {
-                    uploadService.upload(data, filename: filename, contentType: contentType,
+                    uploadService.upload(data, contentType: contentType,
                         success: { url in
-                            let imageRegion = ImageRegion(alt: filename)
+                            let imageRegion = ImageRegion(alt: nil)
                             imageRegion.url = url
                             imageRegion.buyButtonURL = buyButtonURL
 
@@ -245,9 +235,9 @@ public class PostEditingService: NSObject {
                         failure: failureHandler)
                 }
                 else {
-                    uploadService.upload(image, filename: filename,
+                    uploadService.upload(image,
                         success: { url in
-                            let imageRegion = ImageRegion(alt: filename)
+                            let imageRegion = ImageRegion(alt: nil)
                             imageRegion.url = url
                             imageRegion.buyButtonURL = buyButtonURL
 

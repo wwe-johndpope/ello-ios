@@ -80,7 +80,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         return nil
     }
     // links post with comments
-    public var groupId: String { return id }
+    public var groupId: String { return "Post-\(id)" }
     // computed properties
     public var shareLink: String? {
         get {

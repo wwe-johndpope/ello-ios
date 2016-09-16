@@ -12,6 +12,7 @@ public enum AlertType {
     case Normal
     case Danger
     case Clear
+    case Rounded
 
     var backgroundColor: UIColor {
         switch self {
@@ -32,6 +33,13 @@ public enum AlertType {
         switch self {
         case .Clear: return .clearColor()
         default: return .whiteColor()
+        }
+    }
+
+    var rounded: Bool {
+        switch self {
+        case .Rounded: return true
+        default: return false
         }
     }
 }
@@ -121,6 +129,10 @@ public class AlertViewController: UIViewController {
         view.backgroundColor = type.backgroundColor
         tableView.backgroundColor = type.backgroundColor
         headerView.backgroundColor = type.backgroundColor
+        if type.rounded {
+            view.clipsToBounds = true
+            view.layer.cornerRadius = 5
+        }
         self.type = type
     }
 

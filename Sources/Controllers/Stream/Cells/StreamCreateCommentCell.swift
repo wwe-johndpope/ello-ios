@@ -14,7 +14,6 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         public static let ImageHeight: CGFloat = 30
     }
 
-    public var indexPath = NSIndexPath(forItem: 0, inSection: 0)
     weak var delegate: PostbarDelegate?
     let avatarView = FLAnimatedImageView()
     let createCommentBackground = CreateCommentBackgroundView()
@@ -100,6 +99,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     }
 
     func replyAllTapped() {
+        guard let indexPath = indexPath else { return }
         delegate?.replyToAllButtonTapped(indexPath)
     }
 

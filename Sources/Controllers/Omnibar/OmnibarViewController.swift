@@ -253,11 +253,11 @@ public class OmnibarViewController: BaseElloViewController {
 
         for (index, imageURL) in downloads {
             PINRemoteImageManager.sharedImageManager().downloadImageWithURL(imageURL) { result in
-                if let image = result.image {
-                    regions[index] = .Image(image)
-                }
-                else if let animatedImage = result.animatedImage {
+                if let animatedImage = result.animatedImage {
                     regions[index] = .ImageData(animatedImage.posterImage, animatedImage.data, "image/gif")
+                }
+                else if let image = result.image {
+                    regions[index] = .Image(image)
                 }
                 else {
                     regions[index] = .Error(imageURL)

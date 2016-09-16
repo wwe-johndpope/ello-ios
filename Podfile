@@ -29,6 +29,7 @@ def ello_app_pods
   pod 'WebLinking', '~> 1.0'
   pod 'SnapKit', git: 'https://github.com/SnapKit/SnapKit', commit: '307d03ec433d61fbb25c9c4a6bb32689537db4d6'
   pod 'FutureKit', '~> 2.0'
+  pod 'DeltaCalculator', '~> 1.0'
 end
 
 def common_pods

@@ -34,7 +34,7 @@ class CommentSpec: QuickSpec {
                 expect(comment.assets!.count) == 1
                 expect(comment.assets![0]).to(beAKindOf(Asset.self))
                 // computed
-                expect(comment.groupId) == comment.postId
+                expect(comment.groupId) == "Post-\(comment.postId)"
             }
         }
 

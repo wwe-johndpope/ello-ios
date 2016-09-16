@@ -16,6 +16,7 @@ public enum InterfaceImage: String {
     }
 
     case ElloLogo = "ello_logo"
+    case ElloGrayLineLogo = "ello_gray_line_logo"
 
     // Postbar Icons
     case Eye = "eye"
@@ -44,6 +45,7 @@ public enum InterfaceImage: String {
     case ValidationLoading = "circ"
     case ValidationError = "x_red"
     case ValidationOK = "check_green"
+    case SmallCheck = "small_check_green"
 
     // NavBar Icons
     case Search = "search"
@@ -115,10 +117,12 @@ public enum InterfaceImage: String {
             .BubbleTail,
             .BuyButton,
             .ElloLogo,
+            .ElloGrayLineLogo,
             .GiantHeart,
             .NarrationPointer,
             .ValidationError,
             .ValidationOK,
+            .SmallCheck,
             .VideoPlay:
             return svgNamed(self.rawValue)
         default:

@@ -12,8 +12,11 @@ protocol JoinDelegate: class {
 
 protocol JoinScreenProtocol: class {
     var email: String { get set }
+    var emailValid: Bool? { get set }
     var username: String { get set }
+    var usernameValid: Bool? { get set }
     var password: String { get set }
+    var passwordValid: Bool? { get set }
     var onePasswordAvailable: Bool { get set }
 
     func enableInputs()
@@ -31,5 +34,4 @@ protocol JoinScreenProtocol: class {
     func showError(text: String)
 
     func resignFirstResponder() -> Bool
-    func applyValidation(emailValid emailValid: Bool, usernameValid: Bool, passwordValid: Bool)
 }

@@ -53,9 +53,9 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     typealias OnHeightMismatch = (CGFloat) -> Void
     typealias WebContentReady = (webView: UIWebView) -> Void
 
-    var webLinkDelegate: WebLinkDelegate?
-    var userDelegate: UserDelegate?
-    var delegate: NotificationDelegate?
+    weak var webLinkDelegate: WebLinkDelegate?
+    weak var userDelegate: UserDelegate?
+    weak var delegate: NotificationDelegate?
     var webContentReady: WebContentReady?
     var onHeightMismatch: OnHeightMismatch?
 

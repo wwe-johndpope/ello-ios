@@ -10,19 +10,17 @@ import Nimble
 class LoginViewControllerSpec: QuickSpec {
     class MockScreen: LoginScreenProtocol {
         var username: String = ""
+        var usernameValid: Bool? = nil
         var password: String = ""
+        var passwordValid: Bool? = nil
         var onePasswordAvailable: Bool = false
 
         var inputsEnabled = true
         var error: String?
         var resignedFirstResponder = false
 
-        func enableInputs() {
-            inputsEnabled = true
-        }
-
-        func disableInputs() {
-            inputsEnabled = false
+        func loadingHUD(visible visible: Bool) {
+            inputsEnabled = !visible
         }
 
         func showError(text: String) {

@@ -30,7 +30,6 @@ public struct StreamFooterCellPresenter {
         if let cell = cell as? StreamFooterCell,
             post = streamCellItem.jsonable as? Post
         {
-            cell.indexPath = indexPath
             configureDisplayCounts(cell, post: post, streamKind: streamKind)
             configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
             configureCommentControl(cell, streamCellItem: streamCellItem, streamKind: streamKind)
