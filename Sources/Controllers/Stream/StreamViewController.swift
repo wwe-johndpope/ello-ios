@@ -179,7 +179,7 @@ public final class StreamViewController: BaseElloViewController {
         get { return dataSource.streamFilter }
         set {
             dataSource.streamFilter = newValue
-            self.reloadCells()
+            self.reloadCells(now: true)
             self.scrollToTop()
         }
     }
@@ -296,7 +296,7 @@ public final class StreamViewController: BaseElloViewController {
 
     public func appendStreamCellItems(items: [StreamCellItem]) {
         dataSource.appendStreamCellItems(items)
-        reloadCells()
+        reloadCells(now: true)
     }
 
     public func appendUnsizedCellItems(items: [StreamCellItem], withWidth: CGFloat?, completion: StreamDataSource.StreamContentReady? = nil) {
@@ -1089,7 +1089,7 @@ extension StreamViewController: UICollectionViewDelegate {
 
         if tappedCell is StreamToggleCell {
             dataSource.toggleCollapsedForIndexPath(indexPath)
-            reloadCells()
+            reloadCells(now: true)
         }
         else if tappedCell is UserListItemCell {
             if let user = dataSource.userForIndexPath(indexPath) {
@@ -1244,12 +1244,12 @@ extension StreamViewController: UIScrollViewDelegate {
     }
 
     private func removeLoadingCell() {
+        let lastIndexPath = NSIndexPath(forItem: dataSource.visibleCellItems.count - 1, inSection: 0)
         guard
-            let indexPath = self.collectionView.lastIndexPathForSection(0)
-            where dataSource.visibleCellItems[indexPath.row].type == .StreamLoading
+            dataSource.visibleCellItems[lastIndexPath.row].type == .StreamLoading
         else { return }
 
-        dataSource.removeItemsAtIndexPaths([indexPath])
-        reloadCells()
+        dataSource.removeItemsAtIndexPaths([lastIndexPath])
+        reloadCells(now: true)
     }
 }
