@@ -137,8 +137,12 @@ class UserSpec: QuickSpec {
                     expect(user.name) == "Pamilanderson"
                     expect(user.experimentalFeatures) == true
                     expect(user.relationshipPriority) == RelationshipPriority.None
-                    //TODO: test for "has_commenting_enabled", "has_reposting_enabled", "has_sharing_enabled" and
-                    // "has_loves_enabled"
+                    expect(user.hasLovesEnabled) == true
+                    expect(user.hasRepostingEnabled) == false
+                    expect(user.hasSharingEnabled) == true
+                    expect(user.notifyOfWatchesViaPush) == true
+                    expect(user.notifyOfWatchesViaEmail) == false
+                    expect(user.isHireable) == true
                     // optional
                     expect(user.avatar).to(beAKindOf(Asset.self))
                     expect(user.identifiableBy) == ""
