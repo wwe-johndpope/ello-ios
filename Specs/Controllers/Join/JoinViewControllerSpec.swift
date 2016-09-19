@@ -15,7 +15,7 @@ class JoinViewControllerSpec: QuickSpec {
         var password: String = ""
         var onePasswordAvailable: Bool = false
 
-        var inputsEnabled = true
+        var loadingHUDVisible = false
         var message: String?
         var emailError: String?
         var usernameError: String?
@@ -27,11 +27,8 @@ class JoinViewControllerSpec: QuickSpec {
         var passwordValid: Bool?
         var resignedFirstResponder = false
 
-        func enableInputs() {
-            inputsEnabled = true
-        }
-        func disableInputs() {
-            inputsEnabled = false
+        func loadinHUD(visible visible: Bool) {
+            loadingHUDVisible = visible
         }
 
         func showMessage(text: String) {
@@ -211,8 +208,8 @@ class JoinViewControllerSpec: QuickSpec {
                         mockScreen.password = password
                         subject.submit(email: email, username: username, password: password)
                     }
-                    it("should disable inputs") {
-                        expect(mockScreen.inputsEnabled) == false
+                    it("should show loadingHUD") {
+                        expect(mockScreen.loadingHUDVisible) == true
                     }
                     it("should hide errors") {
                         expect(mockScreen.message) == ""
@@ -232,8 +229,8 @@ class JoinViewControllerSpec: QuickSpec {
                         mockScreen.password = password
                         subject.submit(email: email, username: username, password: password)
                     }
-                    it("should enable inputs") {
-                        expect(mockScreen.inputsEnabled) == true
+                    it("should hide loadingHUD") {
+                        expect(mockScreen.loadingHUDVisible) == true
                     }
                     it("should show errors") {
                         expect(mockScreen.emailError).notTo(beNil())
