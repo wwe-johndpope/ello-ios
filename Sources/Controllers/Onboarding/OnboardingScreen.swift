@@ -18,6 +18,7 @@ public class OnboardingScreen: EmptyScreen {
 
     public var isLastOnboardingStep: Bool = false {
         didSet {
+            promptButton.enabled = isLastOnboardingStep
             promptButton.hidden = !isLastOnboardingStep
             nextButton.hidden = isLastOnboardingStep
             abortButton.hidden = isLastOnboardingStep
@@ -45,6 +46,7 @@ public class OnboardingScreen: EmptyScreen {
 
     override func bindActions() {
         promptButton.enabled = false
+        promptButton.addTarget(self, action: #selector(nextAction), forControlEvents: .TouchUpInside)
         nextButton.addTarget(self, action: #selector(nextAction), forControlEvents: .TouchUpInside)
         abortButton.addTarget(self, action: #selector(abortAction), forControlEvents: .TouchUpInside)
     }
