@@ -80,8 +80,8 @@ extension InviteFriendsViewController: OnboardingStepController {
         onboardingViewController?.isLastOnboardingStep = true
     }
 
-    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void) {
-        proceedClosure(success: true)
+    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: OnboardingViewController.OnboardingProceed) -> Void) {
+        proceedClosure(success: .Continue)
     }
 }
 

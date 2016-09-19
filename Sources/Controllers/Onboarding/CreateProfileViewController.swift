@@ -86,7 +86,7 @@ extension CreateProfileViewController: OnboardingStepController {
         screen.avatarImage = onboardingData.avatarImage
     }
 
-    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void) {
+    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: OnboardingViewController.OnboardingProceed) -> Void) {
         var properties: [String: AnyObject] = [:]
         if let name = onboardingData.name where didSetName {
             Tracker.sharedTracker.enteredOnboardName()
@@ -118,7 +118,7 @@ extension CreateProfileViewController: OnboardingStepController {
                 self.parentAppController?.currentUser = user
                 self.goToNextStep(abort, proceedClosure: proceedClosure) },
             failure: { error, _ in
-                proceedClosure(success: nil)
+                proceedClosure(success: .Error)
                 let message: String
                 if let elloError = error.elloError, messages = elloError.messages {
                     message = messages.joinWithSeparator("\n")
@@ -131,11 +131,11 @@ extension CreateProfileViewController: OnboardingStepController {
             })
     }
 
-    func goToNextStep(abort: Bool, proceedClosure: (success: Bool) -> Void) {
+    func goToNextStep(abort: Bool, proceedClosure: (success: OnboardingViewController.OnboardingProceed) -> Void) {
         guard let
             presenter = onboardingViewController?.parentAppController
         where !abort else {
-            proceedClosure(success: false)
+            proceedClosure(success: .Abort)
             return
         }
 
@@ -150,10 +150,10 @@ extension CreateProfileViewController: OnboardingStepController {
                 vc.onboardingViewController = self.onboardingViewController
                 self.onboardingViewController?.inviteFriendsController = vc
 
-                proceedClosure(success: true)
+                proceedClosure(success: .Continue)
             case let .Failure(addressBookError):
                 guard addressBookError != .Cancelled else {
-                    proceedClosure(success: false)
+                    proceedClosure(success: .Error)
                     return
                 }
 

@@ -10,6 +10,11 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
         case Left = -1
         case Right = 1
     }
+    public enum OnboardingProceed {
+        case Continue
+        case Abort
+        case Error
+    }
 
     var mockScreen: OnboardingScreenProtocol?
     var screen: OnboardingScreenProtocol { return mockScreen ?? (self.view as! OnboardingScreenProtocol) }
@@ -172,7 +177,7 @@ extension OnboardingViewController {
             Tracker.sharedTracker.completedContactImport()
         }
 
-        let proceedClosure: (success: Bool?) -> Void
+        let proceedClosure: (success: OnboardingProceed) -> Void
         if abort {
             proceedClosure = { _ in
                 self.doneOnboarding()
@@ -181,10 +186,10 @@ extension OnboardingViewController {
         else {
             proceedClosure = { success in
                 ElloHUD.hideLoadingHudInView(self.view)
-                if success == true {
+                if success == .Continue {
                     self.goToNextStep()
                 }
-                else if success == false {
+                else if success == .Abort {
                     self.doneOnboarding()
                 }
             }

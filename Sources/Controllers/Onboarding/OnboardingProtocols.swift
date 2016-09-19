@@ -29,6 +29,6 @@ public protocol OnboardingScreenProtocol: class {
 public protocol OnboardingStepController: class {
     var onboardingViewController: OnboardingViewController? { get set }
     var onboardingData: OnboardingData! { get set }
-    func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void)
+    func onboardingWillProceed(abort: Bool, proceedClosure: (success: OnboardingViewController.OnboardingProceed) -> Void)
     func onboardingStepBegin()
 }

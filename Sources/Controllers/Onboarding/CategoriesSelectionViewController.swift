@@ -60,7 +60,7 @@ extension CategoriesSelectionViewController: OnboardingStepController {
         onboardingViewController?.prompt = prompt
     }
 
-    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: Bool?) -> Void) {
+    public func onboardingWillProceed(abort: Bool, proceedClosure: (success: OnboardingViewController.OnboardingProceed) -> Void) {
         if let
             selection = streamViewController.collectionView.indexPathsForSelectedItems()
         where selection.count > 0 {
@@ -78,16 +78,13 @@ extension CategoriesSelectionViewController: OnboardingStepController {
                     Onboarding.shared().updateVersionToLatest()
 
                     self.onboardingData.categories = categories
-                    proceedClosure(success: true)
+                    proceedClosure(success: .Continue)
                 }
                 .onFail { _ in
                     let alertController = AlertViewController(error: InterfaceString.GenericError)
                     self.parentAppController?.presentViewController(alertController, animated: true, completion: nil)
-                    proceedClosure(success: nil)
+                    proceedClosure(success: .Error)
                 }
-        }
-        else {
-            proceedClosure(success: true)
         }
     }
 }
