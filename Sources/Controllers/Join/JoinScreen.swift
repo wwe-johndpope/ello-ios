@@ -380,18 +380,17 @@ extension JoinScreen: UITextFieldDelegate {
 }
 
 extension JoinScreen: JoinScreenProtocol {
-    func enableInputs() {
-        emailField.enabled = true
-        usernameField.enabled = true
-        passwordField.enabled = true
-        userInteractionEnabled = true
-    }
-
-    func disableInputs() {
-        emailField.enabled = false
-        usernameField.enabled = false
-        passwordField.enabled = false
-        userInteractionEnabled = false
+    func loadingHUD(visible visible: Bool) {
+        if visible {
+            ElloHUD.showLoadingHudInView(self)
+        }
+        else {
+            ElloHUD.hideLoadingHudInView(self)
+        }
+        emailField.enabled = !visible
+        usernameField.enabled = !visible
+        passwordField.enabled = !visible
+        userInteractionEnabled = !visible
     }
 
     func showUsernameSuggestions(usernames: [String]) {

@@ -65,11 +65,11 @@ extension JoinViewController: JoinDelegate {
             screen.hideEmailError()
             screen.hideUsernameError()
             screen.hidePasswordError()
-            screen.disableInputs()
+            screen.loadingHUD(visible: true)
 
             var joinSuccessful = true
             let joinAborted: () -> Void = {
-                self.screen.enableInputs()
+                self.screen.loadingHUD(visible: false)
             }
             let joinContinue = after(2) {
                 guard joinSuccessful else {

@@ -19,8 +19,7 @@ protocol JoinScreenProtocol: class {
     var passwordValid: Bool? { get set }
     var onePasswordAvailable: Bool { get set }
 
-    func enableInputs()
-    func disableInputs()
+    func loadingHUD(visible visible: Bool)
 
     func showMessage(text: String)
     func showUsernameSuggestions(usernames: [String])
