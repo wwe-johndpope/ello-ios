@@ -15,7 +15,13 @@ public class CreateProfileViewController: UIViewController, HasAppController {
     var didSetLinks = false
     var didUploadCoverImage = false
     var didUploadAvatarImage = false
-    var didSetAnything = false
+    var didSetAnything: Bool {
+        return didSetName ||
+            didSetBio ||
+            didSetLinks ||
+            didUploadCoverImage ||
+            didUploadAvatarImage
+    }
 
     override public func loadView() {
         let screen = CreateProfileScreen()
@@ -35,50 +41,43 @@ extension CreateProfileViewController: CreateProfileDelegate {
 
     func assignName(name: String?) {
         onboardingData.name = name
-        didSetAnything = didSetAnything || (name?.isEmpty == false)
-        didSetName = true
+        didSetName = (name?.isEmpty == false)
         onboardingViewController?.canGoNext = didSetAnything
     }
 
     func assignBio(bio: String?) {
         onboardingData.bio = bio
-        didSetAnything = didSetAnything || (bio?.isEmpty == false)
-        didSetBio = true
+        didSetBio = (bio?.isEmpty == false)
         onboardingViewController?.canGoNext = didSetAnything
     }
 
     func assignLinks(links: String?) {
         onboardingData.links = links
-        didSetAnything = didSetAnything || (links?.isEmpty == false)
-        didSetLinks = true
+        didSetLinks = (links?.isEmpty == false)
         onboardingViewController?.canGoNext = didSetAnything
     }
 
     func assignCoverImage(image: ImageRegionData) {
         didUploadCoverImage = true
         onboardingData.coverImage = image
-        didSetAnything = true
         onboardingViewController?.canGoNext = didSetAnything
     }
     func assignAvatar(image: ImageRegionData) {
         didUploadAvatarImage = true
         onboardingData.avatarImage = image
-        didSetAnything = true
         onboardingViewController?.canGoNext = didSetAnything
     }
 }
 
 extension CreateProfileViewController: OnboardingStepController {
     public func onboardingStepBegin() {
-        if onboardingData.name?.isEmpty == false ||
-            onboardingData.bio?.isEmpty == false ||
-            onboardingData.links?.isEmpty == false ||
-            onboardingData.coverImage != nil ||
-            onboardingData.avatarImage != nil
-        {
-            didSetAnything = true
-            onboardingViewController?.canGoNext = true
-        }
+        didSetName = (onboardingData.name?.isEmpty == false)
+        didSetBio = (onboardingData.bio?.isEmpty == false)
+        didSetLinks = (onboardingData.links?.isEmpty == false)
+        didUploadAvatarImage = (onboardingData.avatarImage != nil)
+        didUploadCoverImage = (onboardingData.coverImage != nil)
+        onboardingViewController?.canGoNext = didSetAnything
+
         screen.name = onboardingData.name
         screen.bio = onboardingData.bio
         screen.links = onboardingData.links
