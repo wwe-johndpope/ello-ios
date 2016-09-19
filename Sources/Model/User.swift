@@ -5,7 +5,10 @@
 import Crashlytics
 import SwiftyJSON
 
-let UserVersion: Int = 2
+// version 1: initial
+// version 2: added isHireable
+// version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
+let UserVersion: Int = 3
 
 @objc(User)
 public final class User: JSONAble {
@@ -30,6 +33,8 @@ public final class User: JSONAble {
     public var hasSharingEnabled: Bool
     public var hasRepostingEnabled: Bool
     public var hasLovesEnabled: Bool
+    public var notifyOfWatchesViaPush: Bool
+    public var notifyOfWatchesViaEmail: Bool
     public var isHireable: Bool
     // optional
     public var avatar: Asset? // required, but kinda optional due to it being nested in json
@@ -83,6 +88,8 @@ public final class User: JSONAble {
         hasSharingEnabled: Bool,
         hasRepostingEnabled: Bool,
         hasLovesEnabled: Bool,
+        notifyOfWatchesViaPush: Bool,
+        notifyOfWatchesViaEmail: Bool,
         isHireable: Bool)
     {
         self.id = id
@@ -98,6 +105,8 @@ public final class User: JSONAble {
         self.hasRepostingEnabled = hasRepostingEnabled
         self.hasLovesEnabled = hasLovesEnabled
         self.isHireable = isHireable
+        self.notifyOfWatchesViaPush = notifyOfWatchesViaPush
+        self.notifyOfWatchesViaEmail = notifyOfWatchesViaEmail
         super.init(version: UserVersion)
     }
 
@@ -124,9 +133,18 @@ public final class User: JSONAble {
         let version: Int = decoder.decodeKey("version")
         if version == 1 {
             self.isHireable = false
+            self.notifyOfWatchesViaPush = true
+            self.notifyOfWatchesViaEmail = true
+        }
+        else if version == 2 {
+            self.isHireable = decoder.decodeKey("isHireable")
+            self.notifyOfWatchesViaPush = true
+            self.notifyOfWatchesViaEmail = true
         }
         else {
             self.isHireable = decoder.decodeKey("isHireable")
+            self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
+            self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
         }
         // optional
         self.avatar = decoder.decodeOptionalKey("avatar")
@@ -159,6 +177,8 @@ public final class User: JSONAble {
             hasSharingEnabled: true,
             hasRepostingEnabled: true,
             hasLovesEnabled: true,
+            notifyOfWatchesViaPush: true,
+            notifyOfWatchesViaEmail: true,
             isHireable: false)
     }
 
@@ -178,6 +198,8 @@ public final class User: JSONAble {
         coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
         coder.encodeObject(hasRepostingEnabled, forKey: "hasRepostingEnabled")
         coder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
+        coder.encodeObject(notifyOfWatchesViaPush, forKey: "notifyOfWatchesViaPush")
+        coder.encodeObject(notifyOfWatchesViaEmail, forKey: "notifyOfWatchesViaEmail")
         coder.encodeObject(isHireable, forKey: "isHireable")
         // optional
         coder.encodeObject(avatar, forKey: "avatar")
@@ -226,6 +248,8 @@ public final class User: JSONAble {
             hasSharingEnabled: json["has_sharing_enabled"].boolValue,
             hasRepostingEnabled: json["has_reposting_enabled"].boolValue,
             hasLovesEnabled: json["has_loves_enabled"].boolValue,
+            notifyOfWatchesViaPush: json["notify_of_watches_via_push"].boolOr(true),
+            notifyOfWatchesViaEmail: json["notify_of_watches_via_email"].boolOr(true),
             isHireable: json["is_hireable"].boolValue
         )
 
