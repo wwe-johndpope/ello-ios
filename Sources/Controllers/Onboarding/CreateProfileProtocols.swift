@@ -17,6 +17,7 @@ protocol CreateProfileScreenProtocol: class {
     var name: String? { get set }
     var bio: String? { get set }
     var links: String? { get set }
+    var linksValid: Bool? { get set }
     var coverImage: ImageRegionData? { get set }
     var avatarImage: ImageRegionData? { get set }
 }

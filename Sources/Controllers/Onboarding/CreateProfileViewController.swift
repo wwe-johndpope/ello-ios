@@ -120,6 +120,9 @@ extension CreateProfileViewController: OnboardingStepController {
                 proceedClosure(success: .Error)
                 let message: String
                 if let elloError = error.elloError, messages = elloError.messages {
+                    if elloError.attrs?["links"] != nil {
+                        self.screen.linksValid = false
+                    }
                     message = messages.joinWithSeparator("\n")
                 }
                 else {

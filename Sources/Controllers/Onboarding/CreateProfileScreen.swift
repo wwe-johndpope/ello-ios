@@ -46,6 +46,17 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
             linksTextView.validationState = (newValue?.isEmpty == false) ? .OKSmall : .None
         }
     }
+    var linksValid: Bool? = nil {
+        didSet {
+            let newState: ValidationState
+            switch linksValid {
+            case .None: newState = .None
+            case .Some(true): newState = .OKSmall
+            case .Some(false): newState = .Error
+            }
+            linksTextView.validationState = newState
+        }
+    }
     var coverImage: ImageRegionData? {
         didSet {
             setImage(coverImage, target: .CoverImage, updateDelegate: false)
