@@ -89,12 +89,12 @@ end
 plugin 'cocoapods-keys', {
   project: 'Ello',
   keys: [
-    'ClientKey',
-    'ClientSecret',
+    'OauthKey',
+    'OauthSecret',
     'CrashlyticsKey',
     'Domain',
     'HttpProtocol',
-    'Salt',
+    'SodiumChloride',
     'SegmentKey',
   ]
 }
