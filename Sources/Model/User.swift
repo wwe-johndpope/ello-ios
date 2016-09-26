@@ -142,16 +142,22 @@ public final class User: JSONAble {
             self.isHireable = false
             self.notifyOfWatchesViaPush = true
             self.notifyOfWatchesViaEmail = true
+            self.notifyOfCommentsOnPostWatchViaPush = true
+            self.notifyOfCommentsOnPostWatchViaEmail = true
         }
         else if version == 2 {
             self.isHireable = decoder.decodeKey("isHireable")
             self.notifyOfWatchesViaPush = true
             self.notifyOfWatchesViaEmail = true
+            self.notifyOfCommentsOnPostWatchViaPush = true
+            self.notifyOfCommentsOnPostWatchViaEmail = true
         }
         else if version == 3 {
             self.isHireable = decoder.decodeKey("isHireable")
             self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
             self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
+            self.notifyOfCommentsOnPostWatchViaPush = true
+            self.notifyOfCommentsOnPostWatchViaEmail = true
         }
         else {
             self.isHireable = decoder.decodeKey("isHireable")
