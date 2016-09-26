@@ -9,7 +9,7 @@ import SwiftyJSON
 // version 2: added isHireable
 // version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
 // version 4: added notifyOfCommentsOnPostWatchViaPush, notifyOfCommentsOnPostWatchViaEmail
-let UserVersion: Int = 3
+let UserVersion: Int = 4
 
 @objc(User)
 public final class User: JSONAble {
