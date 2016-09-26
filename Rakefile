@@ -67,6 +67,7 @@ namespace :generate do
     has_key = set_key('HttpProtocol', 'PROD_HTTP_PROTOCOL') if has_key
     has_key = set_key('SodiumChloride', 'INVITE_FRIENDS_SALT') if has_key
     has_key = set_key('CrashlyticsKey', 'CRASHLYTICS_KEY') if has_key
+    has_key = set_key('SegmentKey', 'SEGMENT_KEY') if has_key
     sh "bundle exec pod install" if has_key
   end
 
