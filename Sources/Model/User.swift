@@ -8,7 +8,8 @@ import SwiftyJSON
 // version 1: initial
 // version 2: added isHireable
 // version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
-let UserVersion: Int = 3
+// version 4: added notifyOfCommentsOnPostWatchViaPush, notifyOfCommentsOnPostWatchViaEmail
+let UserVersion: Int = 4
 
 @objc(User)
 public final class User: JSONAble {
@@ -35,6 +36,8 @@ public final class User: JSONAble {
     public var hasLovesEnabled: Bool
     public var notifyOfWatchesViaPush: Bool
     public var notifyOfWatchesViaEmail: Bool
+    public var notifyOfCommentsOnPostWatchViaPush: Bool
+    public var notifyOfCommentsOnPostWatchViaEmail: Bool
     public var isHireable: Bool
     // optional
     public var avatar: Asset? // required, but kinda optional due to it being nested in json
@@ -90,6 +93,8 @@ public final class User: JSONAble {
         hasLovesEnabled: Bool,
         notifyOfWatchesViaPush: Bool,
         notifyOfWatchesViaEmail: Bool,
+        notifyOfCommentsOnPostWatchViaPush: Bool,
+        notifyOfCommentsOnPostWatchViaEmail: Bool,
         isHireable: Bool)
     {
         self.id = id
@@ -107,6 +112,8 @@ public final class User: JSONAble {
         self.isHireable = isHireable
         self.notifyOfWatchesViaPush = notifyOfWatchesViaPush
         self.notifyOfWatchesViaEmail = notifyOfWatchesViaEmail
+        self.notifyOfCommentsOnPostWatchViaPush = notifyOfCommentsOnPostWatchViaPush
+        self.notifyOfCommentsOnPostWatchViaEmail = notifyOfCommentsOnPostWatchViaEmail
         super.init(version: UserVersion)
     }
 
@@ -141,10 +148,17 @@ public final class User: JSONAble {
             self.notifyOfWatchesViaPush = true
             self.notifyOfWatchesViaEmail = true
         }
+        else if version == 3 {
+            self.isHireable = decoder.decodeKey("isHireable")
+            self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
+            self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
+        }
         else {
             self.isHireable = decoder.decodeKey("isHireable")
             self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
             self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
+            self.notifyOfCommentsOnPostWatchViaPush = decoder.decodeKey("notifyOfCommentsOnPostWatchViaPush")
+            self.notifyOfCommentsOnPostWatchViaEmail = decoder.decodeKey("notifyOfCommentsOnPostWatchViaEmail")
         }
         // optional
         self.avatar = decoder.decodeOptionalKey("avatar")
@@ -179,6 +193,8 @@ public final class User: JSONAble {
             hasLovesEnabled: true,
             notifyOfWatchesViaPush: true,
             notifyOfWatchesViaEmail: true,
+            notifyOfCommentsOnPostWatchViaPush: true,
+            notifyOfCommentsOnPostWatchViaEmail: true,
             isHireable: false)
     }
 
@@ -200,6 +216,8 @@ public final class User: JSONAble {
         coder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
         coder.encodeObject(notifyOfWatchesViaPush, forKey: "notifyOfWatchesViaPush")
         coder.encodeObject(notifyOfWatchesViaEmail, forKey: "notifyOfWatchesViaEmail")
+        coder.encodeObject(notifyOfCommentsOnPostWatchViaPush, forKey: "notifyOfCommentsOnPostWatchViaPush")
+        coder.encodeObject(notifyOfCommentsOnPostWatchViaEmail, forKey: "notifyOfCommentsOnPostWatchViaEmail")
         coder.encodeObject(isHireable, forKey: "isHireable")
         // optional
         coder.encodeObject(avatar, forKey: "avatar")
@@ -250,6 +268,8 @@ public final class User: JSONAble {
             hasLovesEnabled: json["has_loves_enabled"].boolValue,
             notifyOfWatchesViaPush: json["notify_of_watches_via_push"].boolOr(true),
             notifyOfWatchesViaEmail: json["notify_of_watches_via_email"].boolOr(true),
+            notifyOfCommentsOnPostWatchViaPush: json["notify_of_comments_on_post_watch_via_push"].boolOr(true),
+            notifyOfCommentsOnPostWatchViaEmail: json["notify_of_comments_on_post_watch_via_email"].boolOr(true),
             isHireable: json["is_hireable"].boolValue
         )
 

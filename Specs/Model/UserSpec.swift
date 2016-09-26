@@ -142,6 +142,8 @@ class UserSpec: QuickSpec {
                     expect(user.hasSharingEnabled) == true
                     expect(user.notifyOfWatchesViaPush) == true
                     expect(user.notifyOfWatchesViaEmail) == false
+                    expect(user.notifyOfCommentsOnPostWatchViaPush) == true
+                    expect(user.notifyOfCommentsOnPostWatchViaEmail) == false
                     expect(user.isHireable) == true
                     // optional
                     expect(user.avatar).to(beAKindOf(Asset.self))
