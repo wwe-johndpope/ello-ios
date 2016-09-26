@@ -294,6 +294,3 @@ DEPENDENCIES
   rake (~> 10.0.0)
   xcpretty (~> 0.2.1)
   xcpretty-travis-formatter
-
-BUNDLED WITH
-   1.11.2
