@@ -52,6 +52,10 @@ extension User: Stubbable {
             hasSharingEnabled: (values["hasSharingEnabled"] as? Bool) ?? true,
             hasRepostingEnabled: (values["hasRepostingEnabled"] as? Bool) ?? true,
             hasLovesEnabled: (values["hasLovesEnabled"] as? Bool) ?? true,
+            notifyOfWatchesViaPush: (values["notifyOfWatchesViaPush"] as? Bool) ?? false,
+            notifyOfWatchesViaEmail: (values["notifyOfWatchesViaEmail"] as? Bool) ?? false,
+            notifyOfCommentsOnPostWatchViaPush: (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? false,
+            notifyOfCommentsOnPostWatchViaEmail: (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? false,
             isHireable: (values["isHireable"] as? Bool) ?? false
         )
         user.avatar = values["avatar"] as? Asset
@@ -126,6 +130,29 @@ extension Love: Stubbable {
         )
 
         return love
+    }
+}
+
+extension Watch: Stubbable {
+    class func stub(values: [String: AnyObject]) -> Watch {
+
+        // create necessary links
+
+        let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? NSUUID().UUIDString])
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
+
+        let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? NSUUID().UUIDString])
+        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
+
+        let watch = Watch(
+            id: (values["id"] as? String) ?? NSUUID().UUIDString,
+            createdAt: (values["createdAt"] as? NSDate) ?? NSDate(),
+            updatedAt: (values["updatedAt"] as? NSDate) ?? NSDate(),
+            postId: post.id,
+            userId: user.id
+        )
+        
+        return watch
     }
 }
 

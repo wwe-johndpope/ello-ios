@@ -9,7 +9,7 @@ import Foundation
 let LoveVersion: Int = 1
 
 @objc(Love)
-public final class Love: JSONAble {
+public final class Love: JSONAble, PostActionable {
 
     // active record
     public let id: String

@@ -125,6 +125,7 @@ public struct ProfileService {
     }
 
     public func updateUserDeviceToken(token: NSData) {
+        log("push token", object: String(token.description.characters.filter { !"<> ".characters.contains($0) }))
         ElloProvider.shared.elloRequest(ElloAPI.PushSubscriptions(token: token),
             success: { _, _ in })
     }
@@ -136,9 +137,11 @@ public struct ProfileService {
 
     private func updateUserImage(image: ImageRegionData, key: String, properties: [String: AnyObject], success: ProfileUploadSuccessCompletion, failure: ElloFailureCompletion) {
         S3UploadingService().upload(imageRegionData: image, success: { url in
-            if let url = url {
+            if let url = url,
+                urlString = url.absoluteString
+            {
                 let mergedProperties: [String: AnyObject] = properties + [
-                    key: url.absoluteString,
+                    key: urlString,
                 ]
                 self.updateUserProfile(mergedProperties, success: { user in
                     success(url: url, user: user)
