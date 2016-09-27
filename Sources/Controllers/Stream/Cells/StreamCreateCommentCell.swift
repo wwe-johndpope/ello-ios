@@ -20,6 +20,11 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     let createCommentLabel = UILabel()
     let replyAllButton = UIButton()
 
+    var watching = false {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     var avatarURL: NSURL? {
         willSet(value) {
             if let avatarURL = value {

@@ -6,8 +6,9 @@ import Crashlytics
 import SwiftyJSON
 import YapDatabase
 
-
-let PostVersion = 1
+// version 1: initial
+// version 2: added "watching"
+let PostVersion = 2
 
 @objc(Post)
 public final class Post: JSONAble, Authorable, Groupable {
@@ -24,6 +25,7 @@ public final class Post: JSONAble, Authorable, Groupable {
     public let allowComments: Bool
     public var reposted: Bool
     public var loved: Bool
+    public var watching: Bool
     public let summary: [Regionable]
     // optional
     public var content: [Regionable]?
@@ -100,6 +102,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         allowComments: Bool,
         reposted: Bool,
         loved: Bool,
+        watching: Bool,
         summary: [Regionable]
         )
     {
@@ -115,6 +118,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         self.allowComments = allowComments
         self.reposted = reposted
         self.loved = loved
+        self.watching = watching
         self.summary = summary
         super.init(version: PostVersion)
 
@@ -146,6 +150,13 @@ public final class Post: JSONAble, Authorable, Groupable {
         self.summary = decoder.decodeKey("summary")
         self.reposted = decoder.decodeKey("reposted")
         self.loved = decoder.decodeKey("loved")
+        let version: Int = decoder.decodeKey("version")
+        if version == 1 {
+            self.watching = false
+        }
+        else {
+            self.watching = decoder.decodeKey("watching")
+        }
         // optional
         self.content = decoder.decodeOptionalKey("content")
         self.body = decoder.decodeOptionalKey("body")
@@ -190,6 +201,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         coder.encodeObject(repostViaPath, forKey: "repostViaPath")
         coder.encodeObject(reposted, forKey: "reposted")
         coder.encodeObject(loved, forKey: "loved")
+        coder.encodeObject(watching, forKey: "watching")
         coder.encodeObject(viewsCount, forKey: "viewsCount")
         coder.encodeObject(commentsCount, forKey: "commentsCount")
         coder.encodeObject(repostsCount, forKey: "repostsCount")
@@ -225,6 +237,7 @@ public final class Post: JSONAble, Authorable, Groupable {
             allowComments: json["allow_comments"].boolValue,
             reposted: json["reposted"].bool ?? false,
             loved: json["loved"].bool ?? false,
+            watching: json["watching"].bool ?? false,
             summary: RegionParser.regions("summary", json: json)
         )
         // optional
