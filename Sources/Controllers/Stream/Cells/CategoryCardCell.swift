@@ -13,22 +13,11 @@ public class CategoryCardCell: UICollectionViewCell {
         static let selectedImageOffset: CGFloat = 5
     }
 
-    override public var selectable: Bool {
-        didSet { self.selected = selected }
+    public var selectable: Bool = false {
+        didSet { updateSelected() }
     }
     override public var selected: Bool {
-        didSet {
-            if selectable {
-                colorFillView.alpha = selected ? 0.8 : 0.4
-                label.font = selected ? UIFont.defaultBoldFont() : UIFont.defaultFont()
-                selectedImageView.hidden = !selected
-            }
-            else {
-                colorFillView.alpha = 0
-                label.font = UIFont.defaultFont()
-                selectedImageView.hidden = true
-            }
-        }
+        didSet { updateSelected() }
     }
     var title: String {
         set { label.text = newValue }
@@ -54,6 +43,19 @@ public class CategoryCardCell: UICollectionViewCell {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func updateSelected() {
+        if selectable {
+            colorFillView.alpha = selected ? 0.8 : 0.4
+            label.font = selected ? UIFont.defaultBoldFont() : UIFont.defaultFont()
+            selectedImageView.hidden = !selected
+        }
+        else {
+            colorFillView.alpha = 0
+            label.font = UIFont.defaultFont()
+            selectedImageView.hidden = true
+        }
     }
 
     override public func prepareForReuse() {
