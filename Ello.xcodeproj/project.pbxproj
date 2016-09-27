@@ -676,11 +676,6 @@
 		1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */; };
 		1DE87FC81BB32060007A7325 /* MentionablesSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC71BB32060007A7325 /* MentionablesSpec.swift */; };
 		1DEE2BEF1AF96F5300EB9DFA /* SearchViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */; };
-		1DF039CC1D95B44900CCCB4F /* CategoriesSelectionViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF039C71D95B44900CCCB4F /* CategoriesSelectionViewControllerSpec.swift */; };
-		1DF039CD1D95B44900CCCB4F /* CreateProfileScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF039C81D95B44900CCCB4F /* CreateProfileScreenSpec.swift */; };
-		1DF039CE1D95B44900CCCB4F /* CreateProfileViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF039C91D95B44900CCCB4F /* CreateProfileViewControllerSpec.swift */; };
-		1DF039D01D95B44900CCCB4F /* OnboardingViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF039CB1D95B44900CCCB4F /* OnboardingViewControllerSpec.swift */; };
-		1DF039D21D95C95B00CCCB4F /* OnboardingScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF039D11D95C95B00CCCB4F /* OnboardingScreenSpec.swift */; };
 		1DF2335A1A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233591A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift */; };
 		1DF233611A94FB060096DA65 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233601A94FB060096DA65 /* CGRectExtensions.swift */; };
 		1DF233641A9537590096DA65 /* CGRectSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233631A9537590096DA65 /* CGRectSpec.swift */; };
@@ -705,6 +700,11 @@
 		1DF806531CDD1A42002D60AD /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF806521CDD1A42002D60AD /* Username.swift */; };
 		1DF806541CDD1AFE002D60AD /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF806521CDD1A42002D60AD /* Username.swift */; };
 		1DF942351A9FC92D00838E9C /* NotificationsFilterBarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF942331A9FC92D00838E9C /* NotificationsFilterBarSpec.swift */; };
+		1DF984021D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF983FD1D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift */; };
+		1DF984031D9B0C1E0055EFC7 /* CreateProfileScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF983FE1D9B0C1E0055EFC7 /* CreateProfileScreenSpec.swift */; };
+		1DF984041D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF983FF1D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift */; };
+		1DF984061D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF984011D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift */; };
+		1DF984081D9B13BF0055EFC7 /* OnboardingScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF984071D9B13BF0055EFC7 /* OnboardingScreenSpec.swift */; };
 		1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */; };
 		1DFC5DC31AAB56AD008DA855 /* ElloAttributedStringSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFC5DC21AAB56AD008DA855 /* ElloAttributedStringSpec.swift */; };
 		1DFC5DC71AACBFE4008DA855 /* create-post.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DFC5DC61AACBFE4008DA855 /* create-post.json */; };
@@ -1560,11 +1560,6 @@
 		1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mentionables.swift; sourceTree = "<group>"; };
 		1DE87FC71BB32060007A7325 /* MentionablesSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionablesSpec.swift; sourceTree = "<group>"; };
 		1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewControllerSpec.swift; sourceTree = "<group>"; };
-		1DF039C71D95B44900CCCB4F /* CategoriesSelectionViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesSelectionViewControllerSpec.swift; sourceTree = "<group>"; };
-		1DF039C81D95B44900CCCB4F /* CreateProfileScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileScreenSpec.swift; sourceTree = "<group>"; };
-		1DF039C91D95B44900CCCB4F /* CreateProfileViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileViewControllerSpec.swift; sourceTree = "<group>"; };
-		1DF039CB1D95B44900CCCB4F /* OnboardingViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerSpec.swift; sourceTree = "<group>"; };
-		1DF039D11D95C95B00CCCB4F /* OnboardingScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingScreenSpec.swift; sourceTree = "<group>"; };
 		1DF233591A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculator.swift; sourceTree = "<group>"; };
 		1DF2335B1A94005C0096DA65 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		1DF233601A94FB060096DA65 /* CGRectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
@@ -1591,6 +1586,11 @@
 		1DF741701BFAAC02000F5349 /* breaklink_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = breaklink_white.svg; sourceTree = "<group>"; };
 		1DF806521CDD1A42002D60AD /* Username.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		1DF942331A9FC92D00838E9C /* NotificationsFilterBarSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsFilterBarSpec.swift; sourceTree = "<group>"; };
+		1DF983FD1D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesSelectionViewControllerSpec.swift; sourceTree = "<group>"; };
+		1DF983FE1D9B0C1E0055EFC7 /* CreateProfileScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileScreenSpec.swift; sourceTree = "<group>"; };
+		1DF983FF1D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileViewControllerSpec.swift; sourceTree = "<group>"; };
+		1DF984011D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerSpec.swift; sourceTree = "<group>"; };
+		1DF984071D9B13BF0055EFC7 /* OnboardingScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingScreenSpec.swift; sourceTree = "<group>"; };
 		1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrorExtensions.swift; sourceTree = "<group>"; };
 		1DFC5DC21AAB56AD008DA855 /* ElloAttributedStringSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedStringSpec.swift; sourceTree = "<group>"; };
 		1DFC5DC61AACBFE4008DA855 /* create-post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "create-post.json"; sourceTree = "<group>"; };
@@ -3042,6 +3042,11 @@
 		1D652F5F1BC3055E00AF3B06 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				1DF984071D9B13BF0055EFC7 /* OnboardingScreenSpec.swift */,
+				1DF983FD1D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift */,
+				1DF983FE1D9B0C1E0055EFC7 /* CreateProfileScreenSpec.swift */,
+				1DF983FF1D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift */,
+				1DF984011D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -3171,18 +3176,6 @@
 				1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		1DF039C61D95B43800CCCB4F /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				1DF039C71D95B44900CCCB4F /* CategoriesSelectionViewControllerSpec.swift */,
-				1DF039C81D95B44900CCCB4F /* CreateProfileScreenSpec.swift */,
-				1DF039C91D95B44900CCCB4F /* CreateProfileViewControllerSpec.swift */,
-				1DF039D11D95C95B00CCCB4F /* OnboardingScreenSpec.swift */,
-				1DF039CB1D95B44900CCCB4F /* OnboardingViewControllerSpec.swift */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		1DF404061B150CE50073460B /* CustomSVGs */ = {
@@ -4270,6 +4263,7 @@
 				768043781AC20382004FEE09 /* FakeProfileHeaderCellSizeCalculator.swift in Sources */,
 				1D59EFA51D6659FF0029C106 /* HireViewControllerSpec.swift in Sources */,
 				EAF43D991AB0EBE60016E110 /* InviteCacheSpec.swift in Sources */,
+				1DF984061D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift in Sources */,
 				127535211B73F7B2006B9A0F /* NSDateSpecs.swift in Sources */,
 				1D9225541C3B23E000553BAE /* ExperienceUpdateSpec.swift in Sources */,
 				122943271C6BF465003FCD20 /* ShareViewControllerSpec.swift in Sources */,
@@ -4350,6 +4344,7 @@
 				122943301C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift in Sources */,
 				76FF80591A96921100617A1E /* RelationshipControllerSpec.swift in Sources */,
 				1294EBAC1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift in Sources */,
+				1DF984081D9B13BF0055EFC7 /* OnboardingScreenSpec.swift in Sources */,
 				1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */,
 				1D061B521AAA1C6D00493435 /* StringExtensionSpec.swift in Sources */,
 				1D59EFA41D6659FF0029C106 /* HireScreenSpec.swift in Sources */,
@@ -4359,7 +4354,7 @@
 				1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */,
 				127BAD601A8512AA00628696 /* ElloLinkedStoreSpec.swift in Sources */,
 				EAC6054A1ADDA64B009B9426 /* DynamicSettingCellPresenterSpec.swift in Sources */,
-				1DF039D21D95C95B00CCCB4F /* OnboardingScreenSpec.swift in Sources */,
+				1DF984031D9B0C1E0055EFC7 /* CreateProfileScreenSpec.swift in Sources */,
 				1D8AFACD1A9664480034DDAD /* NotificationSpec.swift in Sources */,
 				1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */,
 				1DB17B981AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift in Sources */,
@@ -4398,6 +4393,7 @@
 				125F288A1B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift in Sources */,
 				1D7152AD1D6E12A5005998FE /* AppScreenSpec.swift in Sources */,
 				1D4168B61B6C222D0075C8F3 /* TagSpec.swift in Sources */,
+				1DF984021D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift in Sources */,
 				76A628D71B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift in Sources */,
 				765670F01A8022B4008ED9A2 /* ElloURISpec.swift in Sources */,
 				12D14C631A4375FE00C6F8E8 /* ValidatorSpec.swift in Sources */,
@@ -4407,6 +4403,7 @@
 				12D14C701A43762400C6F8E8 /* ActivitySpec.swift in Sources */,
 				1229432E1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift in Sources */,
 				76FF805B1A96A28D00617A1E /* RelationshipServiceSpec.swift in Sources */,
+				1DF984041D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift in Sources */,
 				1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */,
 				EA0848451AB1DCDE00B80CDA /* FakePersistentLayer.swift in Sources */,
 				12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */,
