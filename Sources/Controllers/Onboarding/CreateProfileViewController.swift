@@ -104,7 +104,14 @@ extension CreateProfileViewController: OnboardingStepController {
         }
 
         let avatarImage: ImageRegionData? = didUploadAvatarImage ? onboardingData.avatarImage : nil
+        if avatarImage != nil {
+            Tracker.sharedTracker.uploadedOnboardAvatar()
+        }
+
         let coverImage: ImageRegionData? = didUploadCoverImage ? onboardingData.coverImage : nil
+        if coverImage != nil {
+            Tracker.sharedTracker.uploadedOnboardCoverImage()
+        }
 
         guard avatarImage != nil || coverImage != nil || !properties.isEmpty else {
             goToNextStep(abort, proceedClosure: proceedClosure)
