@@ -268,6 +268,14 @@ public extension Tracker {
     func enteredOnboardLinks() {
         agent.track("entered links during onboarding")
     }
+
+    func uploadedOnboardAvatar() {
+        agent.track("uploaded avatar during onboarding")
+    }
+
+    func uploadedOnboardCoverImage() {
+        agent.track("uploaded coverImage during onboarding")
+    }
 }
 
 public extension UIViewController {
