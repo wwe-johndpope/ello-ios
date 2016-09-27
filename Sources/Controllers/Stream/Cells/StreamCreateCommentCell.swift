@@ -12,6 +12,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         public static let AvatarButtonMargin: CGFloat = 6
         public static let ButtonLabelMargin: CGFloat = 30
         public static let ImageHeight: CGFloat = 30
+        public static let WatchSize: CGFloat = 30
     }
 
     weak var delegate: PostbarDelegate?
@@ -19,9 +20,11 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     let createCommentBackground = CreateCommentBackgroundView()
     let createCommentLabel = UILabel()
     let replyAllButton = UIButton()
+    let watchButton = UIButton()
 
     var watching = false {
         didSet {
+            watchButton.highlighted = watching
             setNeedsLayout()
         }
     }
@@ -47,24 +50,36 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
-        setupViews()
+        style()
+        arrange()
     }
 
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
 
-        setupViews()
+        style()
+        arrange()
     }
 
-    private func setupViews() {
-        self.contentView.backgroundColor = UIColor.whiteColor()
-        self.contentView.addSubview(replyAllButton)
-        self.contentView.addSubview(avatarView)
-        self.contentView.addSubview(createCommentBackground)
-        createCommentBackground.addSubview(createCommentLabel)
-
+    private func style() {
+        contentView.backgroundColor = UIColor.whiteColor()
         replyAllButton.setImage(.ReplyAll, imageStyle: .Normal, forState: .Normal)
         replyAllButton.setImage(.ReplyAll, imageStyle: .Selected, forState: .Highlighted)
+        watchButton.setImage(.Watch, imageStyle: .Normal, forState: .Normal)
+        watchButton.setImage(.Watch, imageStyle: .Green, forState: .Highlighted)
+        createCommentLabel.text = "Comment..."
+        createCommentLabel.font = UIFont.defaultFont()
+        createCommentLabel.textColor = UIColor.whiteColor()
+        createCommentLabel.textAlignment = .Left
+    }
+
+    private func arrange() {
+        contentView.addSubview(replyAllButton)
+        contentView.addSubview(avatarView)
+        contentView.addSubview(createCommentBackground)
+        contentView.addSubview(watchButton)
+        createCommentBackground.addSubview(createCommentLabel)
+
         replyAllButton.addTarget(self, action: #selector(replyAllTapped), forControlEvents: .TouchUpInside)
 
         avatarView.backgroundColor = UIColor.blackColor()
@@ -76,10 +91,6 @@ public class StreamCreateCommentCell: UICollectionViewCell {
 
         createCommentLabel.frame = createCommentBackground.bounds.inset(top: 0, left: Size.ButtonLabelMargin, bottom: 0, right: 0)
         createCommentLabel.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-        createCommentLabel.text = "Comment..."
-        createCommentLabel.font = UIFont.defaultFont()
-        createCommentLabel.textColor = UIColor.whiteColor()
-        createCommentLabel.textAlignment = .Left
 
         // if this doesn't fix the "stretched create comment" bug, please remove
         setNeedsLayout()
@@ -89,16 +100,28 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
         avatarView.pin_cancelImageDownload()
+        watching = false
     }
 
     override public func layoutSubviews() {
-        let imageY = (self.frame.height - Size.ImageHeight) / CGFloat(2)
-        avatarView.frame = CGRect(x: Size.Margins.left, y: imageY, width: Size.ImageHeight, height: Size.ImageHeight)
+        let imageY = (frame.height - Size.ImageHeight) / CGFloat(2)
+        avatarView.frame = CGRect(
+            x: Size.Margins.left,
+            y: imageY,
+            width: Size.ImageHeight,
+            height: Size.ImageHeight)
         avatarView.layer.cornerRadius = Size.ImageHeight / CGFloat(2)
 
+        watchButton.frame = CGRect(
+            x: frame.width - Size.WatchSize,
+            y: 0,
+            width: Size.WatchSize,
+            height: frame.height
+            )
+
         let createBackgroundLeft = avatarView.frame.maxX + Size.AvatarButtonMargin
-        let createBackgroundWidth = self.frame.width - createBackgroundLeft - Size.Margins.right
-        createCommentBackground.frame = CGRect(x: createBackgroundLeft, y: Size.Margins.top, width: createBackgroundWidth, height: self.frame.height - Size.Margins.top - Size.Margins.bottom)
+        let createBackgroundWidth = frame.width - createBackgroundLeft - Size.Margins.right - Size.WatchSize
+        createCommentBackground.frame = CGRect(x: createBackgroundLeft, y: Size.Margins.top, width: createBackgroundWidth, height: frame.height - Size.Margins.top - Size.Margins.bottom)
         // if this doesn't fix the "stretched create comment" bug, please remove
         createCommentBackground.setNeedsDisplay()
 
