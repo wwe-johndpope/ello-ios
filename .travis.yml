@@ -7,7 +7,7 @@ cache:
 - bundler
 - cocoapods
 before_install:
-- xcrun instruments -w "iPhone 7 (10.0)" ||
+- xcrun instruments -w "iPhone 7 (10.0) [5F911B30-5F23-403B-9697-1DFDC24773C8]" ||
   echo "(Pre)Launched the simulator."
 install:
 - gem install bundler
