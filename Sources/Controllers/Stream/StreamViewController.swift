@@ -11,7 +11,7 @@ import DeltaCalculator
 
 // MARK: Delegate Implementations
 public protocol InviteDelegate: class {
-    func sendInvite(person: LocalPerson, didUpdate: ElloEmptyCompletion)
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: ElloEmptyCompletion)
 }
 
 public protocol SimpleStreamDelegate: class {
@@ -664,9 +664,14 @@ public final class StreamViewController: BaseElloViewController {
 // MARK: StreamViewController: InviteDelegate
 extension StreamViewController: InviteDelegate {
 
-    public func sendInvite(person: LocalPerson, didUpdate: ElloEmptyCompletion) {
+    public func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: ElloEmptyCompletion) {
         if let email = person.emails.first {
-            Tracker.sharedTracker.friendInvited()
+            if isOnboarding {
+                Tracker.sharedTracker.onboardingFriendInvited()
+            }
+            else {
+                Tracker.sharedTracker.friendInvited()
+            }
             ElloHUD.showLoadingHudInView(view)
             InviteService().invite(email,
                 success: {

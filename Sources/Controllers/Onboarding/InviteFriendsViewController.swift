@@ -70,7 +70,11 @@ extension InviteFriendsViewController {
         let headerCellItem = StreamCellItem(type: .TextHeader(header))
         let searchItem = StreamCellItem(jsonable: searchString, type: .Search(placeholder: InterfaceString.Onboard.Search))
 
-        let items = [headerCellItem, searchItem] + AddressBookHelpers.process(contacts, currentUser: currentUser)
+        let addressBookItems: [StreamCellItem] = AddressBookHelpers.process(contacts, currentUser: currentUser).map { item in
+            item.type = .OnboardingInviteFriends
+            return item
+        }
+        let items = [headerCellItem, searchItem] + addressBookItems
         streamViewController.appendStreamCellItems(items)
     }
 }

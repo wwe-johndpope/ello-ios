@@ -13,6 +13,7 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
     public weak var inviteDelegate: InviteDelegate?
     public var inviteCache: InviteCache?
     var bottomBorder = CALayer()
+    var isOnboarding = false
 
     public var person: LocalPerson? {
         didSet {
@@ -31,6 +32,11 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
         self.layer.addSublayer(bottomBorder)
     }
 
+    override public func prepareForReuse() {
+        super.prepareForReuse()
+        isOnboarding = false
+    }
+
     override public func layoutSubviews() {
         bottomBorder.frame = CGRect(x: 0, y: self.bounds.height - 1, width: self.bounds.width, height: 1)
         super.layoutSubviews()
@@ -38,7 +44,7 @@ public class StreamInviteFriendsCell: UICollectionViewCell {
 
     @IBAction func invite() {
         if let person = person {
-            inviteDelegate?.sendInvite(person) {
+            inviteDelegate?.sendInvite(person, isOnboarding: isOnboarding) {
                 self.inviteCache?.saveInvite(person.identifier)
                 self.styleInviteButton(self.inviteCache?.has(person.identifier))
             }

@@ -17,6 +17,7 @@ public struct StreamInviteFriendsCellPresenter {
             person = streamCellItem.jsonable as? LocalPerson
         {
             cell.person = person
+            cell.isOnboarding = streamCellItem.type == .OnboardingInviteFriends
         }
     }
 }

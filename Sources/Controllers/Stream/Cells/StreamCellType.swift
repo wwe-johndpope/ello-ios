@@ -31,6 +31,7 @@ public enum StreamCellType: Equatable {
     case Header
     case Image(data: Regionable?)
     case InviteFriends
+    case OnboardingInviteFriends
     case NoPosts
     case Notification
     case Placeholder
@@ -77,6 +78,7 @@ public enum StreamCellType: Equatable {
         Header,
         Image(data: nil),
         InviteFriends,
+        OnboardingInviteFriends,
         NoPosts,
         Notification,
         ProfileHeader,
@@ -121,7 +123,7 @@ public enum StreamCellType: Equatable {
         case Embed: return StreamEmbedCell.reuseEmbedIdentifier
         case Footer: return StreamFooterCell.reuseIdentifier
         case Image: return StreamImageCell.reuseIdentifier
-        case InviteFriends: return StreamInviteFriendsCell.reuseIdentifier
+        case InviteFriends, OnboardingInviteFriends: return StreamInviteFriendsCell.reuseIdentifier
         case NoPosts: return NoPostsCell.reuseIdentifier
         case Notification: return NotificationCell.reuseIdentifier
         case Placeholder: return "Placeholder"
@@ -149,6 +151,7 @@ public enum StreamCellType: Equatable {
              CreateComment,
              Header,
              InviteFriends,
+             OnboardingInviteFriends,
              Notification,
              SeeMoreComments,
              Toggle,
@@ -171,7 +174,7 @@ public enum StreamCellType: Equatable {
         case Embed: return StreamEmbedCellPresenter.configure
         case Footer: return StreamFooterCellPresenter.configure
         case Image: return StreamImageCellPresenter.configure
-        case InviteFriends: return StreamInviteFriendsCellPresenter.configure
+        case InviteFriends, OnboardingInviteFriends: return StreamInviteFriendsCellPresenter.configure
         case NoPosts: return NoPostsCellPresenter.configure
         case Notification: return NotificationCellPresenter.configure
         case ProfileHeader: return ProfileHeaderCellPresenter.configure
@@ -200,7 +203,7 @@ public enum StreamCellType: Equatable {
         case Embed: return StreamEmbedCell.self
         case Footer: return StreamFooterCell.self
         case Image: return StreamImageCell.self
-        case InviteFriends: return StreamInviteFriendsCell.self
+        case InviteFriends, OnboardingInviteFriends: return StreamInviteFriendsCell.self
         case NoPosts: return NoPostsCell.self
         case Notification: return NotificationCell.self
         case Placeholder: return UICollectionViewCell.self
@@ -229,6 +232,7 @@ public enum StreamCellType: Equatable {
             return 40
         case CommentHeader,
              InviteFriends,
+             OnboardingInviteFriends,
              SeeMoreComments:
             return 60
         case CreateComment:
@@ -279,6 +283,7 @@ public enum StreamCellType: Equatable {
              CreateComment,
              FullWidthSpacer,
              InviteFriends,
+             OnboardingInviteFriends,
              NoPosts,
              Notification,
              ProfileHeader,

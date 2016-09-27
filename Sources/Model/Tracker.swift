@@ -490,6 +490,10 @@ public extension Tracker {
         agent.track("User invited")
     }
 
+    func onboardingFriendInvited() {
+        agent.track("Onboarding User invited")
+    }
+
     func userDeletedAccount() {
         agent.track("User deleted account")
     }
