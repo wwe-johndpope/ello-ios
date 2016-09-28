@@ -8,11 +8,11 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamCreateCommentCell"
 
     public struct Size {
-        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 15)
+        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 0)
         public static let AvatarButtonMargin: CGFloat = 6
         public static let ButtonLabelMargin: CGFloat = 30
         public static let ImageHeight: CGFloat = 30
-        public static let WatchSize: CGFloat = 30
+        public static let WatchSize: CGFloat = 60
     }
 
     weak var delegate: PostbarDelegate?
@@ -39,7 +39,6 @@ public class StreamCreateCommentCell: UICollectionViewCell {
             }
         }
     }
-
     var replyAllVisibility: InteractionVisibility = .Hidden {
         didSet {
             replyAllButton.hidden = (replyAllVisibility != .Enabled)
@@ -128,7 +127,12 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         if replyAllVisibility == .Enabled {
             let btnWidth = createCommentBackground.frame.height
             createCommentBackground.frame.size.width -= btnWidth
-            replyAllButton.frame = createCommentBackground.frame.fromRight().growRight(btnWidth)
+            replyAllButton.frame = CGRect(
+                x: createCommentBackground.frame.maxX,
+                y: 0,
+                width: btnWidth,
+                height: frame.height
+                )
         }
     }
 
