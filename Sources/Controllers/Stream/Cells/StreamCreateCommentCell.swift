@@ -30,7 +30,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
 
     var watching = false {
         didSet {
-            watchButton.highlighted = watching
+            watchButton.setImage(.Watch, imageStyle: watching ? .Green : .Normal, forState: .Normal)
             setNeedsLayout()
         }
     }
@@ -83,7 +83,6 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         replyAllButton.setImage(.ReplyAll, imageStyle: .Normal, forState: .Normal)
         replyAllButton.setImage(.ReplyAll, imageStyle: .Selected, forState: .Highlighted)
         watchButton.setImage(.Watch, imageStyle: .Normal, forState: .Normal)
-        watchButton.setImage(.Watch, imageStyle: .Green, forState: .Highlighted)
         watchButton.contentMode = .Center
         createCommentLabel.text = InterfaceString.Post.CreateComment
         createCommentLabel.font = .defaultFont()
