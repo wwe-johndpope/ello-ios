@@ -11,8 +11,6 @@ public final class PostDetailViewController: StreamableViewController {
     var deeplinkPath: String?
     var generator: PostDetailGenerator?
 
-    private var rightButtonsInitialized = false
-
     required public init(postParam: String) {
         self.postParam = postParam
         super.init(nibName: nil, bundle: nil)
@@ -114,20 +112,28 @@ public final class PostDetailViewController: StreamableViewController {
             return
         }
 
-        guard !rightButtonsInitialized else { return }
-        rightButtonsInitialized = true
+        var rightBarButtonItems: [UIBarButtonItem] = []
 
         if isOwnPost() {
-            elloNavigationItem.rightBarButtonItems = [
+            rightBarButtonItems = [
                 UIBarButtonItem(image: .XBox, target: self, action: #selector(PostDetailViewController.deletePost)),
                 UIBarButtonItem(image: .Pencil, target: self, action: #selector(PostDetailViewController.editPostAction)),
             ]
         }
         else {
-            elloNavigationItem.rightBarButtonItems = [
+            rightBarButtonItems = [
                 UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
                 UIBarButtonItem(image: .Dots, target: self, action: #selector(PostDetailViewController.flagPost)),
             ]
+        }
+
+        guard elloNavigationItem.rightBarButtonItems != nil else {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+            return
+        }
+
+        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
         }
     }
 

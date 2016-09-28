@@ -24,7 +24,6 @@ public final class ProfileViewController: StreamableViewController {
     var deeplinkPath: String?
     var generator: ProfileGenerator?
     private var isSetup = false
-    private var rightButtonsInitialized = false
 
     @IBOutlet weak var navigationBar: ElloNavigationBar!
     @IBOutlet weak var whiteSolidView: UIView!
@@ -271,8 +270,6 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     func assignRightButtons() {
-        guard !rightButtonsInitialized else { return }
-        rightButtonsInitialized = true
 
         if let currentUser = currentUser where userParam == currentUser.id || userParam == "~\(currentUser.username)" {
             elloNavigationItem.rightBarButtonItems = [
@@ -296,8 +293,17 @@ public final class ProfileViewController: StreamableViewController {
             rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:))))
         }
         rightBarButtonItems.append(UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped)))
-        elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+
+        guard elloNavigationItem.rightBarButtonItems != nil else {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+            return
+        }
+
+        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+        }
     }
+
 
     @IBAction func mentionButtonTapped() {
         guard let user = user else { return }

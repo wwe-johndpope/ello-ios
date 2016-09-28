@@ -22,4 +22,10 @@ extension UINavigationItem {
         }
     }
 
+    public func areRightButtonsTheSame(newItems: [UIBarButtonItem]) -> Bool {
+        guard let rightItems = self.rightBarButtonItems else { return false }
+        guard newItems.count == rightItems.count else { return false }
+        return newItems.map({ $0.action }) == rightItems.map({ $0.action })
+    }
+
 }
