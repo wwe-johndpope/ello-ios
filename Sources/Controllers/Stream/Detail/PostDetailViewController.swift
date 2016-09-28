@@ -11,6 +11,8 @@ public final class PostDetailViewController: StreamableViewController {
     var deeplinkPath: String?
     var generator: PostDetailGenerator?
 
+    private var rightButtonsInitialized = false
+
     required public init(postParam: String) {
         self.postParam = postParam
         super.init(nibName: nil, bundle: nil)
@@ -111,6 +113,9 @@ public final class PostDetailViewController: StreamableViewController {
             elloNavigationItem.rightBarButtonItems = []
             return
         }
+
+        guard !rightButtonsInitialized else { return }
+        rightButtonsInitialized = true
 
         if isOwnPost() {
             elloNavigationItem.rightBarButtonItems = [

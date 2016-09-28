@@ -24,6 +24,7 @@ public final class ProfileViewController: StreamableViewController {
     var deeplinkPath: String?
     var generator: ProfileGenerator?
     private var isSetup = false
+    private var rightButtonsInitialized = false
 
     @IBOutlet weak var navigationBar: ElloNavigationBar!
     @IBOutlet weak var whiteSolidView: UIView!
@@ -270,6 +271,9 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     func assignRightButtons() {
+        guard !rightButtonsInitialized else { return }
+        rightButtonsInitialized = true
+
         if let currentUser = currentUser where userParam == currentUser.id || userParam == "~\(currentUser.username)" {
             elloNavigationItem.rightBarButtonItems = [
                 UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
