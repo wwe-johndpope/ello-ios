@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol PostbarDelegate: NSObjectProtocol {
+public protocol PostbarDelegate: class {
     func viewsButtonTapped(indexPath: NSIndexPath)
     func commentsButtonTapped(cell: StreamFooterCell, imageLabelControl: ImageLabelControl)
     func deleteCommentButtonTapped(indexPath: NSIndexPath)
@@ -15,9 +15,10 @@ public protocol PostbarDelegate: NSObjectProtocol {
     func flagCommentButtonTapped(indexPath: NSIndexPath)
     func replyToCommentButtonTapped(indexPath: NSIndexPath)
     func replyToAllButtonTapped(indexPath: NSIndexPath)
+    func watchPostTapped(watching: Bool, indexPath: NSIndexPath)
 }
 
-public class PostbarController: NSObject, PostbarDelegate {
+public class PostbarController: PostbarDelegate {
 
     weak var presentingController: StreamViewController?
     public var collectionView: UICollectionView
@@ -330,6 +331,14 @@ public class PostbarController: NSObject, PostbarDelegate {
                 presentingController.createCommentTapped(post)
             })
         }
+    }
+
+    public func watchPostTapped(watching: Bool, indexPath: NSIndexPath) {
+        guard let
+            cell = collectionView.cellForItemAtIndexPath(indexPath) as? StreamCreateCommentCell
+        else { return }
+
+        cell.watching = watching
     }
 
 // MARK: - Private

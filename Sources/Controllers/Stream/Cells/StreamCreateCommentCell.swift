@@ -159,4 +159,9 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         delegate?.replyToAllButtonTapped(indexPath)
     }
 
+    func watchTapped() {
+        guard let indexPath = indexPath else { return }
+        delegate?.watchPostTapped(!watching, indexPath: indexPath)
+    }
+
 }
