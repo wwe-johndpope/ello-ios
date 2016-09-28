@@ -65,7 +65,7 @@ class UINavigationItemSpec: QuickSpec {
                     expect(subject.areRightButtonsTheSame(newItemsSame)) == true
                 }
 
-                it("returns fale when the arrays have disimilar value semantics") {
+                it("returns false when the arrays have disimilar value semantics") {
                     subject.rightBarButtonItems = rightItems
                     expect(subject.areRightButtonsTheSame(newItemsDifferent)) == false
                 }
