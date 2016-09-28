@@ -98,7 +98,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         createCommentBackground.setNeedsDisplay()
 
         if replyAllVisibility == .Enabled {
-            let btnWidth = createCommentBackground.frame.width
+            let btnWidth = createCommentBackground.frame.height
             createCommentBackground.frame.size.width -= btnWidth
             replyAllButton.frame = createCommentBackground.frame.fromRight().growRight(btnWidth)
         }
