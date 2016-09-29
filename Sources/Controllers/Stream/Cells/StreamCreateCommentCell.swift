@@ -31,7 +31,6 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     var watching = false {
         didSet {
             watchButton.setImage(.Watch, imageStyle: watching ? .Green : .Normal, forState: .Normal)
-            setNeedsLayout()
         }
     }
     var avatarURL: NSURL? {
