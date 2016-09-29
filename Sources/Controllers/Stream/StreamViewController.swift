@@ -77,7 +77,7 @@ public struct StreamNotification {
 // MARK: StreamViewController
 public final class StreamViewController: BaseElloViewController {
 
-    @IBOutlet weak public var collectionView: UICollectionView!
+    @IBOutlet weak public var collectionView: ElloCollectionView!
     @IBOutlet weak public var noResultsLabel: UILabel!
     @IBOutlet weak public var noResultsTopConstraint: NSLayoutConstraint!
     private let defaultNoResultsTopConstant: CGFloat = 113
