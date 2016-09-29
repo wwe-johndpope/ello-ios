@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import FutureKit
 
 public typealias PostSuccessCompletion = (post: Post, responseConfig: ResponseConfig) -> Void
 public typealias PostCommentsSuccessCompletion = (comments: [ElloComment], responseConfig: ResponseConfig) -> Void
@@ -163,5 +164,39 @@ public struct PostService {
                 success?()
             }, failure: failure
         )
+    }
+
+    public func toggleWatchPost(post: Post, watching: Bool) -> Future<Post> {
+        let api: ElloAPI
+        if watching {
+            api = ElloAPI.CreateWatchPost(postId: post.id)
+        }
+        else {
+            api = ElloAPI.DeleteWatchPost(postId: post.id)
+        }
+
+        let promise = Promise<Post>()
+        ElloProvider.shared.elloRequest(api,
+            success: { data, _ in
+                if let watch = data as? Watch,
+                    post = watch.post
+                where watching {
+                    promise.completeWithSuccess(post)
+                }
+                else if !watching {
+                    post.watching = false
+                    ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: "posts")
+                    promise.completeWithSuccess(post)
+                }
+                else {
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
+                }
+            },
+            failure: { error, _ in
+                promise.completeWithFail(error)
+            }
+        )
+        return promise.future
     }
 }

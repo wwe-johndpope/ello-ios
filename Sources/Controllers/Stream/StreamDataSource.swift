@@ -520,6 +520,19 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 item.jsonable = item.jsonable.merge(jsonable)
             }
             collectionView.reload(indexPaths)
+        case .Watching:
+            let (_, items) = elementsForJSONAble(jsonable, change: change)
+            var indexPaths = [NSIndexPath]()
+            for item in items {
+                if let path = indexPathForItem(item)
+                    where item.type == .CreateComment {
+                    indexPaths.append(path)
+                }
+                else {
+                    item.jsonable = item.jsonable.merge(jsonable)
+                }
+            }
+            collectionView.reload(indexPaths)
         default: break
         }
     }
@@ -642,7 +655,15 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                     items.append(item)
                 }
                 else if change == .Delete || change == .Replaced {
-                    if let itemComment = item.jsonable as? ElloComment where itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
+                    if let itemComment = item.jsonable as? ElloComment
+                    where itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
+                        indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
+                        items.append(item)
+                    }
+                }
+                else if change == .Watching {
+                    if let itemComment = item.jsonable as? ElloComment
+                    where (itemComment.loadedFromPostId == post.id || itemComment.postId == post.id) && item.type == .CreateComment {
                         indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
                         items.append(item)
                     }

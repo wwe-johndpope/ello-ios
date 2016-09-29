@@ -335,10 +335,22 @@ public class PostbarController: PostbarDelegate {
 
     public func watchPostTapped(watching: Bool, indexPath: NSIndexPath) {
         guard let
-            cell = collectionView.cellForItemAtIndexPath(indexPath) as? StreamCreateCommentCell
+            cell = collectionView.cellForItemAtIndexPath(indexPath) as? StreamCreateCommentCell,
+            comment = dataSource.commentForIndexPath(indexPath),
+            post = comment.parentPost
         else { return }
 
         cell.watching = watching
+        cell.userInteractionEnabled = false
+        PostService().toggleWatchPost(post, watching: watching)
+            .onSuccess { post in
+                cell.userInteractionEnabled = true
+                postNotification(PostChangedNotification, value: (post, .Watching))
+            }
+            .onFail { error in
+                cell.userInteractionEnabled = true
+                cell.watching = !watching
+            }
     }
 
 // MARK: - Private
