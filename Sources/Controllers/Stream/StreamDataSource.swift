@@ -401,7 +401,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    public func modifyItems(jsonable: JSONAble, change: ContentChange, collectionView: UICollectionView) {
+    public func modifyItems(jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
         // get items that match id and type -> [IndexPath]
         // based on change decide to update/remove those items
         switch change {
@@ -507,7 +507,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 for item in items {
                     item.jsonable = item.jsonable.merge(jsonable)
                 }
-                collectionView.reloadItemsAtIndexPaths(indexPaths)
+                collectionView.reload(indexPaths)
             }
         case .Loved:
             let (_, items) = elementsForJSONAble(jsonable, change: change)
@@ -519,12 +519,12 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 }
                 item.jsonable = item.jsonable.merge(jsonable)
             }
-            collectionView.reloadItemsAtIndexPaths(indexPaths)
+            collectionView.reload(indexPaths)
         default: break
         }
     }
 
-    public func modifyUserRelationshipItems(user: User, collectionView: UICollectionView) {
+    public func modifyUserRelationshipItems(user: User, collectionView: ElloCollectionView) {
         let (changedPaths, changedItems) = elementsForJSONAble(user, change: .Update)
 
         for item in changedItems {
@@ -568,7 +568,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         else {
             reloadPaths = changedPaths
         }
-        collectionView.reloadItemsAtIndexPaths(reloadPaths)
+        collectionView.reload(reloadPaths)
 
         if user.relationshipPriority.isMutedOrBlocked {
             var shouldDelete = true
@@ -597,14 +597,14 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    public func modifyUserSettingsItems(user: User, collectionView: UICollectionView) {
+    public func modifyUserSettingsItems(user: User, collectionView: ElloCollectionView) {
         let (changedPaths, changedItems) = elementsForJSONAble(user, change: .Update)
         for item in changedItems {
             if item.jsonable is User {
                 item.jsonable = user
             }
         }
-        collectionView.reloadItemsAtIndexPaths(changedPaths)
+        collectionView.reload(changedPaths)
     }
 
     public func removeItemsForJSONAble(jsonable: JSONAble, change: ContentChange) -> [NSIndexPath] {
