@@ -15,7 +15,7 @@ public protocol PostbarDelegate: class {
     func flagCommentButtonTapped(indexPath: NSIndexPath)
     func replyToCommentButtonTapped(indexPath: NSIndexPath)
     func replyToAllButtonTapped(indexPath: NSIndexPath)
-    func watchPostTapped(watching: Bool, indexPath: NSIndexPath)
+    func watchPostTapped(watching: Bool, cell: StreamCreateCommentCell, indexPath: NSIndexPath)
 }
 
 public class PostbarController: PostbarDelegate {
@@ -333,9 +333,8 @@ public class PostbarController: PostbarDelegate {
         }
     }
 
-    public func watchPostTapped(watching: Bool, indexPath: NSIndexPath) {
+    public func watchPostTapped(watching: Bool, cell: StreamCreateCommentCell, indexPath: NSIndexPath) {
         guard let
-            cell = collectionView.cellForItemAtIndexPath(indexPath) as? StreamCreateCommentCell,
             comment = dataSource.commentForIndexPath(indexPath),
             post = comment.parentPost
         else { return }

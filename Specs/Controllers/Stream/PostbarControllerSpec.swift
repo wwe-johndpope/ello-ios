@@ -93,6 +93,66 @@ class PostbarControllerSpec: QuickSpec {
                 }
             }
 
+            describe("watchPostTapped(_:cell:)") {
+                var cell: StreamCreateCommentCell!
+                var indexPath: NSIndexPath!
+
+                beforeEach {
+                    let post: Post = stub([
+                        "id": "post1",
+                        "authorId" : "user1",
+                    ])
+                    let parser = StreamCellItemParser()
+                    var postCellItems = parser.parse([post], streamKind: streamKind)
+                    let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
+                    postCellItems += [StreamCellItem(jsonable: newComment, type: .CreateComment)]
+                    indexPath = NSIndexPath(forItem: postCellItems.count - 1, inSection: 0)
+                    cell = StreamCreateCommentCell()
+                    controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
+                        controller.collectionView.reloadData()
+                    }
+                }
+
+                it("should disable the cell during submission") {
+                    ElloProvider.sharedProvider = ElloProvider.DelayedStubbingProvider()
+                    cell.userInteractionEnabled = true
+                    subject.watchPostTapped(true, cell: cell, indexPath: indexPath)
+                    expect(cell.userInteractionEnabled) == false
+                }
+                it("should set the cell.watching property") {
+                    ElloProvider.sharedProvider = ElloProvider.DelayedStubbingProvider()
+                    cell.watching = false
+                    subject.watchPostTapped(true, cell: cell, indexPath: indexPath)
+                    expect(cell.watching) == true
+                }
+                it("should enable the cell after failure") {
+                    ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
+                    cell.userInteractionEnabled = false
+                    subject.watchPostTapped(true, cell: cell, indexPath: indexPath)
+                    expect(cell.userInteractionEnabled) == true
+                }
+                it("should restore the cell.watching property after failure") {
+                    ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
+                    cell.watching = false
+                    subject.watchPostTapped(true, cell: cell, indexPath: indexPath)
+                    expect(cell.watching) == false
+                }
+                it("should enable the cell after success") {
+                    cell.userInteractionEnabled = false
+                    subject.watchPostTapped(true, cell: cell, indexPath: indexPath)
+                    expect(cell.userInteractionEnabled) == true
+                }
+                it("should post a notification after success") {
+                    var postedNotification = false
+                    let observer = NotificationObserver(notification: PostChangedNotification) { (post, contentChange) in
+                        postedNotification = true
+                    }
+                    subject.watchPostTapped(true, cell: cell, indexPath: indexPath)
+                    expect(postedNotification) == true
+                    observer.removeObserver()
+                }
+            }
+
             describe("loveButtonTapped(_:)") {
 
                 let stubCellItems: (loved: Bool) -> Void = { loved in

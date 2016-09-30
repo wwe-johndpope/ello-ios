@@ -160,7 +160,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
 
     func watchTapped() {
         guard let indexPath = indexPath else { return }
-        delegate?.watchPostTapped(!watching, indexPath: indexPath)
+        delegate?.watchPostTapped(!watching, cell: self, indexPath: indexPath)
     }
 
 }

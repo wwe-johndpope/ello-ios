@@ -386,16 +386,17 @@ extension ElloAPI: Moya.TargetType {
         case .CreateLove:
             return stubbedData("loves_creating_a_love")
         case .CreatePost,
-             .RePost,
-             .CreateWatchPost,
-             .DeleteWatchPost:
+             .RePost:
             return stubbedData("create-post")
+        case .CreateWatchPost:
+            return stubbedData("watches_creating_a_watch")
         case .Categories:
             return stubbedData("categories")
         case .DeleteComment,
              .DeleteLove,
              .DeletePost,
              .DeleteSubscriptions,
+             .DeleteWatchPost,
              .FriendNewContent,
              .Hire,
              .InviteFriends,
