@@ -270,6 +270,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     func assignRightButtons() {
+
         if let currentUser = currentUser where userParam == currentUser.id || userParam == "~\(currentUser.username)" {
             elloNavigationItem.rightBarButtonItems = [
                 UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
@@ -292,8 +293,17 @@ public final class ProfileViewController: StreamableViewController {
             rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:))))
         }
         rightBarButtonItems.append(UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped)))
-        elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+
+        guard elloNavigationItem.rightBarButtonItems != nil else {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+            return
+        }
+
+        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+        }
     }
+
 
     @IBAction func mentionButtonTapped() {
         guard let user = user else { return }
