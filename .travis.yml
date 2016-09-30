@@ -7,17 +7,16 @@ cache:
 - bundler
 - cocoapods
 before_install:
-- xcrun instruments -w "iPhone 6 (9.2) [CEBBD79A-B6C1-4A02-BD33-56BBCBDED03E]" ||
+- xcrun instruments -w "iPhone 7 (10.0) [5F911B30-5F23-403B-9697-1DFDC24773C8]" ||
   echo "(Pre)Launched the simulator."
 install:
 - gem install bundler
 - bundle install
-- bundle exec pod keys set ClientKey $ELLO_CLIENT_KEY Ello
-- bundle exec pod keys set ClientSecret $ELLO_CLIENT_SECRET Ello
+- bundle exec pod keys set OauthKey $ELLO_CLIENT_KEY Ello
+- bundle exec pod keys set OauthSecret $ELLO_CLIENT_SECRET Ello
 - bundle exec pod keys set Domain $ELLO_DOMAIN Ello
-- bundle exec pod keys set Salt $INVITE_FRIENDS_SALT Ello
+- bundle exec pod keys set SodiumChloride $INVITE_FRIENDS_SALT Ello
 - bundle exec pod keys set CrashlyticsKey $ELLO_CRASHLYTICS_KEY Ello
-- bundle exec pod keys set FirebaseKey $ELLO_FIREBASE_KEY Ello
 - bundle exec pod keys set HttpProtocol $ELLO_HTTP_PROTOCOL Ello
 - bundle exec pod keys set SegmentKey $ELLO_SEGMENT_KEY Ello
 - bundle exec pod keys set TeamId ABC123 Ello
