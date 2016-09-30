@@ -45,9 +45,9 @@ public final class Activity: JSONAble {
         case RepostNotification = "repost_notification" // someone reposted your post
 
         case WatchNotification = "watch_notification" // someone watched your post on ello
+        case WatchCommentNotification = "watch_comment_notification" // someone commented on a post you're watching
         case WatchOnRepostNotification = "watch_on_repost_notification" // someone watched your repost
         case WatchOnOriginalPostNotification = "watch_on_original_post_notification" // someone watched other's repost of your post
-        case WatchCommentNotification = "watch_comment_notification"
 
         case LoveNotification = "love_notification" // someone loved your post
         case LoveOnRepostNotification = "love_on_repost_notification" // someone loved your repost

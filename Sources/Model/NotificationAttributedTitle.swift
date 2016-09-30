@@ -179,37 +179,49 @@ public struct NotificationAttributedTitle {
                     return styleUser(author).append(styleText(" loved a repost of your post."))
                 }
             case .WatchNotification:
-                if let love = subject as? Watch,
-                    post = love.post
+                if let watch = subject as? Watch,
+                    post = watch.post
                 {
                     return styleUser(author)
-                        .append(styleText(" watched your "))
+                        .append(styleText(" is watching your "))
                         .append(stylePost("post", post))
                         .append(styleText("."))
                 }
                 else {
-                    return styleUser(author).append(styleText(" watched your post."))
+                    return styleUser(author).append(styleText(" is watching your post."))
                 }
-            case .WatchOnRepostNotification:
-                if let love = subject as? Watch,
-                    post = love.post
+            case .WatchCommentNotification:
+                if let comment = subject as? ElloComment,
+                    post = comment.parentPost
                 {
                     return styleUser(author)
-                        .append(styleText(" watched your "))
+                        .append(styleText(" commented on a "))
+                        .append(stylePost("post", post))
+                        .append(styleText(" you’re watching."))
+                }
+                else {
+                    return styleUser(author).append(styleText(" commented on a post you’re watching."))
+                }
+            case .WatchOnRepostNotification:
+                if let watch = subject as? Watch,
+                    post = watch.post
+                {
+                    return styleUser(author)
+                        .append(styleText(" is watching your "))
                         .append(stylePost("repost", post))
                         .append(styleText("."))
                 }
                 else {
-                    return styleUser(author).append(styleText(" watched your repost."))
+                    return styleUser(author).append(styleText(" is watching your repost."))
                 }
             case .WatchOnOriginalPostNotification:
-                if let love = subject as? Watch,
-                    repost = love.post,
+                if let watch = subject as? Watch,
+                    repost = watch.post,
                     repostAuthor = repost.author,
                     source = repost.repostSource
                 {
                     return styleUser(author)
-                        .append(styleText(" watched "))
+                        .append(styleText(" is watching "))
                         .append(styleUser(repostAuthor))
                         .append(styleText("’s "))
                         .append(stylePost("repost", repost))
@@ -218,7 +230,7 @@ public struct NotificationAttributedTitle {
                         .append(styleText("."))
                 }
                 else {
-                    return styleUser(author).append(styleText(" watched a repost of your post."))
+                    return styleUser(author).append(styleText(" is watching a repost of your post."))
                 }
             case .WelcomeNotification:
                 return styleText("Welcome to Ello!")
