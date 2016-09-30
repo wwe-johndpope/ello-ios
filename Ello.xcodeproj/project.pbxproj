@@ -90,6 +90,7 @@
 		121D92591A5CACEA004F0455 /* JoinViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */; };
 		121E46BD1A6B2798004AEAB7 /* StreamContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121E46BC1A6B2798004AEAB7 /* StreamContainerViewController.swift */; };
 		12224E581A72CEC300D087EC /* PostbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12224E571A72CEC300D087EC /* PostbarController.swift */; };
+		122454AE1D9F1BC700D930E0 /* ElloCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */; };
 		122943271C6BF465003FCD20 /* ShareViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291CE2D1C6A91C600EB5A55 /* ShareViewControllerSpec.swift */; };
 		122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CFB991C5976E500727D11 /* ShareViewController.swift */; };
 		122943291C6BF534003FCD20 /* ExtensionItemPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127D26531C655C87001F2E3E /* ExtensionItemPreview.swift */; };
@@ -1073,6 +1074,7 @@
 		121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewControllerSpec.swift; sourceTree = "<group>"; };
 		121E46BC1A6B2798004AEAB7 /* StreamContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamContainerViewController.swift; sourceTree = "<group>"; };
 		12224E571A72CEC300D087EC /* PostbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarController.swift; sourceTree = "<group>"; };
+		122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloCollectionView.swift; sourceTree = "<group>"; };
 		1229432D1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionItemPreviewSpec.swift; sourceTree = "<group>"; };
 		1229432F1C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSItemProviderExtensionsSpec.swift; sourceTree = "<group>"; };
 		122B18EE1A867C7D00247A05 /* StreamFooterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamFooterButton.swift; sourceTree = "<group>"; };
@@ -2817,7 +2819,7 @@
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
 				1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */,
 				12F6AE651A4339EF00493660 /* ElloButton.swift */,
-				12DB1CA81D9C84B4007E3E4C /* ElloCollectionView.swift */,
+				122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */,
 				EA587A9E1ACDC6F4002AF389 /* ElloEditableTextView.swift */,
 				12F6AE661A4339EF00493660 /* ElloHUD.swift */,
 				122D1BBD1C641188001386CE /* ElloHUDWindowExtensions.swift */,
@@ -4787,7 +4789,7 @@
 				1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */,
 				122B30F01C6A3FC500C1B9D8 /* ImageRegion.swift in Sources */,
 				EAF43D941AB0DE080016E110 /* ObjectCache.swift in Sources */,
-				12DB1CA91D9C84B4007E3E4C /* ElloCollectionView.swift in Sources */,
+				122454AE1D9F1BC700D930E0 /* ElloCollectionView.swift in Sources */,
 				76FF80551A966B6300617A1E /* RelationshipController.swift in Sources */,
 				122B190D1A86894400247A05 /* StreamCellType.swift in Sources */,
 				122B30C41C6A3FBC00C1B9D8 /* Activity.swift in Sources */,
