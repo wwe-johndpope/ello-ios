@@ -459,6 +459,12 @@ extension OmnibarViewController {
             ContentChange.updateCommentCount(comment, delta: 1)
             Tracker.sharedTracker.commentCreated(comment)
             postNotification(CommentChangedNotification, value: (comment, .Create))
+
+            if let post = comment.parentPost {
+                post.watching = true
+                ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: "posts")
+                postNotification(PostChangedNotification, value: (post, .Watching))
+            }
         }
 
         if let listener = commentSuccessListener {
