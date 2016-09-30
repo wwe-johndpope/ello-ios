@@ -250,6 +250,7 @@
 		1247276D1AB14D1B000079D7 /* text-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1247276C1AB14D1B000079D7 /* text-region.json */; };
 		124727701AB14E23000079D7 /* image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1247276F1AB14E23000079D7 /* image-region.json */; };
 		1247E5051A8C095700DDC24A /* StreamDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217008F1A7841C400EBACA5 /* StreamDataSource.swift */; };
+		1249AD871D9EC3FC009074FD /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249AD861D9EC3FC009074FD /* ProfileScreen.swift */; };
 		124A18751A914BCB00BC7E86 /* ProfileServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */; };
 		124A18771A914CC100BC7E86 /* profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 124A18761A914CC100BC7E86 /* profile.json */; };
 		124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124BBEDE1BDFEDE900CBDF69 /* AppDelegateSpec.swift */; };
@@ -1137,6 +1138,7 @@
 		1247E4EB1A8B8CFB00DDC24A /* RegionParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionParser.swift; sourceTree = "<group>"; };
 		1247E4EC1A8B8CFB00DDC24A /* TextRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRegion.swift; sourceTree = "<group>"; };
 		1247E4ED1A8B8CFB00DDC24A /* UnknownRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownRegion.swift; sourceTree = "<group>"; };
+		1249AD861D9EC3FC009074FD /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileServiceSpec.swift; sourceTree = "<group>"; };
 		124A18761A914CC100BC7E86 /* profile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
 		124BBEDE1BDFEDE900CBDF69 /* AppDelegateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateSpec.swift; sourceTree = "<group>"; };
@@ -3069,6 +3071,7 @@
 				769865C01A8D3E3F009B6292 /* ProfileHeaderCell.swift */,
 				769865BD1A8D2DCF009B6292 /* ProfileHeaderCell.xib */,
 				7618E60C1AC1C1470038AF68 /* ProfileHeaderCellSizeCalculator.swift */,
+				1249AD861D9EC3FC009074FD /* ProfileScreen.swift */,
 				1D2F65B31D19B7960099D036 /* ProfileViewButtons.swift */,
 				12F6ADFA1A43380C00493660 /* ProfileViewController.swift */,
 				1D66801F1A89B873003E93C8 /* ProfileViewController.xib */,
@@ -4521,6 +4524,7 @@
 				12BF64C21AB9E82C000B2544 /* ElloLabel.swift in Sources */,
 				EA587A9F1ACDC6F4002AF389 /* ElloEditableTextView.swift in Sources */,
 				123DEBE91D3D4087007B5F86 /* PostDetailGenerator.swift in Sources */,
+				1249AD871D9EC3FC009074FD /* ProfileScreen.swift in Sources */,
 				1229432B1C6BF564003FCD20 /* NSItemProviderExtensions.swift in Sources */,
 				F87928681ACC6D6600579BE1 /* AlertViewController.swift in Sources */,
 				12F0E3AF1A4333550012CEA2 /* AppDelegate.swift in Sources */,

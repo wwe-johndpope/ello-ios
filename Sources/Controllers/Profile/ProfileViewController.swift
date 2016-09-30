@@ -12,6 +12,14 @@ public final class ProfileViewController: StreamableViewController {
         set { self.tabBarItem = newValue }
     }
 
+    var _mockScreen: ProfileScreenProtocol?
+    public var screen: ProfileScreenProtocol {
+        set(screen) { _mockScreen = screen }
+        get { return _mockScreen ?? self.view as! ProfileScreen }
+    }
+    public var profileScreen: ProfileScreen!
+
+
     var user: User?
     var headerItems: [StreamCellItem]?
     var responseConfig: ResponseConfig?
@@ -25,31 +33,30 @@ public final class ProfileViewController: StreamableViewController {
     var generator: ProfileGenerator?
     private var isSetup = false
 
-    @IBOutlet weak var navigationBar: ElloNavigationBar!
-    @IBOutlet weak var whiteSolidView: UIView!
+//    @IBOutlet weak var navigationBar: ElloNavigationBar!
+//    @IBOutlet weak var whiteSolidView: UIView!
+//
+//    @IBOutlet weak var loaderView: InterpolatedLoadingView!
+//    @IBOutlet weak var coverImage: FLAnimatedImageView!
+//    @IBOutlet weak var relationshipControl: RelationshipControl!
+//    @IBOutlet weak var mentionButton: UIButton!
+//    @IBOutlet weak var hireButton: UIButton!
+//    @IBOutlet weak var editButton: UIButton!
+//    @IBOutlet weak var inviteButton: UIButton!
+//    @IBOutlet weak var gradientView: UIView!
+//    @IBOutlet weak var relationshipControlsView: UIView!
+//    let gradientLayer = CAGradientLayer()
+//
+//    @IBOutlet weak var coverImageHeight: NSLayoutConstraint!
+//    @IBOutlet weak var whiteSolidTop: NSLayoutConstraint!
+//    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var gradientViewTopConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var relationshipControlsViewTopConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var loaderView: InterpolatedLoadingView!
-    @IBOutlet weak var coverImage: FLAnimatedImageView!
-    @IBOutlet weak var relationshipControl: RelationshipControl!
-    @IBOutlet weak var mentionButton: UIButton!
-    @IBOutlet weak var collaborateButton: UIButton?
-    @IBOutlet weak var hireButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
-    @IBOutlet weak var inviteButton: UIButton!
-    @IBOutlet weak var gradientView: UIView!
-    @IBOutlet weak var relationshipControlsView: UIView!
-    let gradientLayer = CAGradientLayer()
-
-    @IBOutlet weak var coverImageHeight: NSLayoutConstraint!
-    @IBOutlet weak var whiteSolidTop: NSLayoutConstraint!
-    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var gradientViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var relationshipControlsViewTopConstraint: NSLayoutConstraint!
-
-    required public init(userParam: String, username: String? = nil) {
+     public init(userParam: String, username: String? = nil) {
         self.userParam = userParam
         self.initialStreamKind = .UserStream(userParam: self.userParam)
-        super.init(nibName: "ProfileViewController", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         if let username = username {
             title = "@\(username)"
@@ -72,12 +79,12 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     // this should only be initialized this way for currentUser in tab nav
-    required public init(user: User) {
+    public init(user: User) {
         // this user must have the profile property assigned (since it is currentUser)
         self.user = user
         self.userParam = user.id
         self.initialStreamKind = .CurrentUserStream
-        super.init(nibName: "ProfileViewController", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         sharedInit()
         currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [unowned self] _ in
@@ -109,12 +116,7 @@ public final class ProfileViewController: StreamableViewController {
         super.viewDidLoad()
 
         if user == nil {
-            collaborateButton?.enabled = false
-            hireButton.enabled = false
-            mentionButton.enabled = false
-            editButton.enabled = false
-            inviteButton.enabled = false
-            relationshipControl.enabled = false
+            screen.disableButtons()
         }
 
         self.generator = ProfileGenerator(
@@ -129,14 +131,17 @@ public final class ProfileViewController: StreamableViewController {
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
-        relationshipControl.relationshipDelegate = streamViewController.dataSource.relationshipDelegate
-        relationshipControl.style = .ProfileView
-
-        setupGradient()
+        screen.relationshipDelegate = streamViewController.dataSource.relationshipDelegate
 
         if let user = user {
             updateUser(user)
         }
+    }
+
+    override public func loadView() {
+        profileScreen = ProfileScreen()
+        self.view = profileScreen
+        viewContainer = profileScreen.streamContainer
     }
 
     override public func viewDidLayoutSubviews() {
@@ -145,11 +150,17 @@ public final class ProfileViewController: StreamableViewController {
         let height: CGFloat = view.frame.width / ratio
         let maxHeight = height - streamViewController.collectionView.contentOffset.y
         let constant = max(maxHeight, height)
-        coverImageHeight.constant = constant
-        whiteSolidTop.constant = max(maxHeight, 0)
+        if let ps = self.view as? ProfileScreen {
+            ps.coverImageHeight.constant = constant
+            ps.whiteSolidTop.constant = max(maxHeight, 0)
+        }
+
         coverImageHeightStart = maxHeight
 
-        gradientLayer.frame.size = gradientView.frame.size
+        if let ps = self.view as? ProfileScreen {
+            ps.gradientLayer.frame.size = ps.gradientView.frame.size
+        }
+
     }
 
     override public func didSetCurrentUser() {
@@ -159,19 +170,17 @@ public final class ProfileViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        positionNavBar(navigationBar, visible: true, withConstraint: navigationBarTopConstraint)
+
+        if let ps = self.view as? ProfileScreen {
+            positionNavBar(ps.navigationBar, visible: true, withConstraint: ps.navigationBarTopConstraint)
+            let offset = self.streamViewController.collectionView.contentOffset
+            ps.showNavBars(offset)
+        }
+
         updateInsets()
 
         if scrollToBottom {
             self.scrollToBottom(streamViewController)
-        }
-
-        animate {
-            self.updateGradientViewConstraint()
-            self.relationshipControlsViewTopConstraint.constant = self.navigationBar.frame.height
-
-            self.relationshipControlsView.frame.origin.y = self.relationshipControlsViewTopConstraint.constant
-            self.gradientView.frame.origin.y = self.gradientViewTopConstraint.constant
         }
     }
 
@@ -180,43 +189,24 @@ public final class ProfileViewController: StreamableViewController {
         hideNavBar(animated: true)
         updateInsets()
 
-        animate {
-            self.updateGradientViewConstraint()
-            if self.user?.id == self.currentUser?.id && self.user?.id != nil {
-                self.relationshipControlsViewTopConstraint.constant = -self.relationshipControlsView.frame.height
-            }
-            else {
-                self.relationshipControlsViewTopConstraint.constant = 0
-            }
+        if let ps = self.view as? ProfileScreen {
+            positionNavBar(ps.navigationBar, visible: true, withConstraint: ps.navigationBarTopConstraint)
+            let offset = self.streamViewController.collectionView.contentOffset
+            let isCurrentUser = self.user?.id == self.currentUser?.id && self.user?.id != nil
+            ps.hideNavBars(offset, isCurrentUser: isCurrentUser)
+        }
 
-            self.relationshipControlsView.frame.origin.y = self.relationshipControlsViewTopConstraint.constant
-            self.gradientView.frame.origin.y = self.gradientViewTopConstraint.constant
-        }
-    }
-
-    private func updateGradientViewConstraint() {
-        let scrollView = streamViewController.collectionView
-        let additional: CGFloat = navBarsVisible() ? navigationBar.frame.height : 0
-        let constant: CGFloat
-
-        if scrollView.contentOffset.y < 0 {
-            constant = 0
-        }
-        else if scrollView.contentOffset.y > 45 {
-            constant = -45
-        }
-        else {
-            constant = -scrollView.contentOffset.y
-        }
-        gradientViewTopConstraint.constant = constant + additional
     }
 
     private func updateInsets() {
-        updateInsets(navBar: relationshipControlsView, streamController: streamViewController)
+        guard let ps = self.screen as? ProfileScreen else { return }
+        updateInsets(navBar: ps.relationshipControlsView, streamController: streamViewController)
     }
 
     private func hideNavBar(animated animated: Bool) {
-        positionNavBar(navigationBar, visible: false, withConstraint: navigationBarTopConstraint, animated: animated)
+        if let ps = self.view as? ProfileScreen {
+            positionNavBar(screen.navBar, visible: false, withConstraint: ps.navigationBarTopConstraint, animated: animated)
+        }
     }
 
     // MARK : private
@@ -226,8 +216,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     private func reloadEntireProfile() {
-        coverImage.pin_cancelImageDownload()
-        coverImage.image = nil
+        screen.resetCoverImage()
         generator?.load(reload: true)
     }
 
@@ -244,31 +233,13 @@ public final class ProfileViewController: StreamableViewController {
 
     private func setupNavigationBar() {
         navigationController?.navigationBarHidden = true
-        navigationBar.items = [elloNavigationItem]
+        screen.navBar.items = [elloNavigationItem]
         if !isRootViewController() {
             let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
             self.elloNavigationItem.leftBarButtonItems = [item]
             self.elloNavigationItem.fixNavBarItemPadding()
         }
         assignRightButtons()
-    }
-
-    private func setupGradient() {
-        gradientLayer.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: gradientView.frame.width,
-            height: gradientView.frame.height
-        )
-        gradientLayer.locations = [0, 0.8, 1]
-        gradientLayer.colors = [
-            UIColor.whiteColor().CGColor,
-            UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor,
-            UIColor.whiteColor().colorWithAlphaComponent(0).CGColor,
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-        gradientView.layer.addSublayer(gradientLayer)
     }
 
     func assignRightButtons() {
@@ -386,31 +357,29 @@ extension ProfileViewController {
     }
 
     public func updateCachedImages() {
-        guard let cachedImage = cachedImage(.CoverImage) where coverImage != nil else {
+        guard let ps = self.view as? ProfileScreen else { return }
+
+        guard let cachedImage = cachedImage(.CoverImage) else {
             return
         }
 
         // this seemingly unecessary nil check is an attempt
         // to guard against crash #6:
         // https://www.crashlytics.com/ello/ios/apps/co.ello.ello/issues/55725749f505b5ccf00cf76d/sessions/55725654012a0001029d613137326264
-        coverImage.image = cachedImage
+        ps.coverImage.image = cachedImage
     }
 
     public func updateUser(user: User) {
-        collaborateButton?.enabled = true
-        hireButton.enabled = true
-        mentionButton.enabled = true
-        editButton.enabled = true
-        inviteButton.enabled = true
-        relationshipControl.enabled = true
+        screen.enableButtons()
+
+        guard let ps = self.view as? ProfileScreen else { return }
 
         guard user.id == self.currentUser?.id else {
-            collaborateButton?.hidden = !user.isCollaborateable
-            hireButton.hidden = !user.isHireable
-            mentionButton.hidden = user.isHireable
-            relationshipControl.hidden = false
-            editButton.hidden = true
-            inviteButton.hidden = true
+            ps.hireButton.hidden = !user.isHireable
+            ps.mentionButton.hidden = user.isHireable
+            ps.relationshipControl.hidden = false
+            ps.editButton.hidden = true
+            ps.inviteButton.hidden = true
             return
         }
 
@@ -428,16 +397,16 @@ extension ProfileViewController {
 
         elloNavigationItem.rightBarButtonItem = nil
 
-        collaborateButton?.hidden = true
-        hireButton.hidden = true
-        mentionButton.hidden = true
-        relationshipControl.hidden = true
-        editButton.hidden = false
-        inviteButton.hidden = false
+        ps.hireButton.hidden = true
+        ps.mentionButton.hidden = true
+        ps.relationshipControl.hidden = true
+        ps.editButton.hidden = false
+        ps.inviteButton.hidden = false
     }
 
     public func updateRelationshipPriority(relationshipPriority: RelationshipPriority) {
-        relationshipControl.relationshipPriority = relationshipPriority
+        guard let ps = self.view as? ProfileScreen else { return }
+        ps.relationshipControl.relationshipPriority = relationshipPriority
         self.user?.relationshipPriority = relationshipPriority
     }
 }
@@ -464,13 +433,14 @@ extension ProfileViewController: EditProfileResponder {
 extension ProfileViewController {
 
     override public func streamViewDidScroll(scrollView: UIScrollView) {
-        if let start = coverImageHeightStart {
-            coverImageHeight.constant = max(start - scrollView.contentOffset.y, start)
-            whiteSolidTop.constant = max(start - scrollView.contentOffset.y, 0)
+        if let ps = self.view as? ProfileScreen {
+            if let start = coverImageHeightStart {
+                ps.coverImageHeight.constant = max(start - scrollView.contentOffset.y, start)
+                ps.whiteSolidTop.constant = max(start - scrollView.contentOffset.y, 0)
+            }
+            let offset = streamViewController.collectionView.contentOffset
+            ps.updateGradientViewConstraint(offset, navBarsVisible: navBarsVisible())
         }
-
-        updateGradientViewConstraint()
-
         super.streamViewDidScroll(scrollView)
     }
 }
@@ -499,25 +469,28 @@ extension ProfileViewController:  StreamDestination {
         self.user = user
         updateUser(user)
 
-        relationshipControl.userId = user.id
-        relationshipControl.userAtName = user.atName
-        relationshipControl.relationshipPriority = user.relationshipPriority
+
 
         userParam = user.id
         title = user.atName
-        if let cachedImage = cachedImage(.CoverImage) {
-            coverImage.image = cachedImage
-        }
-        else if let
-            cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true),
-            coverImage = coverImage
-        {
-            coverImage.pin_setImageFromURL(cover) { result in }
-        }
 
         assignRightButtons()
         Tracker.sharedTracker.profileLoaded(user.atName ?? "(no name)")
 
+        guard let ps = self.view as? ProfileScreen else { return }
+
+        ps.relationshipControl.userId = user.id
+        ps.relationshipControl.userAtName = user.atName
+        ps.relationshipControl.relationshipPriority = user.relationshipPriority
+
+        if let cachedImage = cachedImage(.CoverImage) {
+            ps.coverImage.image = cachedImage
+        }
+        else if let
+            cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true)
+        {
+            ps.coverImage.pin_setImageFromURL(cover) { result in }
+        }
     }
 
     public func setPagingConfig(responseConfig: ResponseConfig) {
