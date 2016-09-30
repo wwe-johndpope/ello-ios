@@ -8,7 +8,12 @@ import Quick
 import Nimble
 import Moya
 
-public class FakeCollectionView: UICollectionView {
+public class FakeCollectionView: ElloCollectionView {
+
+    public override func performBatchUpdates(updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
+        updates?()
+        completion?(true)
+    }
 
     public override func insertItemsAtIndexPaths(indexPaths: [NSIndexPath]) {
         // noop
