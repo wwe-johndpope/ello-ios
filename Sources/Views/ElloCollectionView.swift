@@ -7,7 +7,7 @@ import UIKit
 
 public class ElloCollectionView: UICollectionView {
 
-    public let queue = NSOperationQueue()
+    private let queue = NSOperationQueue()
 
     public func reload(reloadPaths: [NSIndexPath]) {
         queue.maxConcurrentOperationCount = 1
