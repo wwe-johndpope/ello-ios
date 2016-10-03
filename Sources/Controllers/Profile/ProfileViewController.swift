@@ -32,7 +32,7 @@ public final class ProfileViewController: StreamableViewController {
     @IBOutlet weak var coverImage: FLAnimatedImageView!
     @IBOutlet weak var relationshipControl: RelationshipControl!
     @IBOutlet weak var mentionButton: UIButton!
-    @IBOutlet weak var collaborateButton: UIButton!
+    @IBOutlet weak var collaborateButton: UIButton?
     @IBOutlet weak var hireButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var inviteButton: UIButton!
@@ -109,7 +109,7 @@ public final class ProfileViewController: StreamableViewController {
         super.viewDidLoad()
 
         if user == nil {
-            collaborateButton.enabled = false
+            collaborateButton?.enabled = false
             hireButton.enabled = false
             mentionButton.enabled = false
             editButton.enabled = false
@@ -396,7 +396,7 @@ extension ProfileViewController {
     }
 
     public func updateUser(user: User) {
-        collaborateButton.enabled = true
+        collaborateButton?.enabled = true
         hireButton.enabled = true
         mentionButton.enabled = true
         editButton.enabled = true
@@ -404,7 +404,7 @@ extension ProfileViewController {
         relationshipControl.enabled = true
 
         guard user.id == self.currentUser?.id else {
-            collaborateButton.hidden = !user.isCollaborateable
+            collaborateButton?.hidden = !user.isCollaborateable
             hireButton.hidden = !user.isHireable
             mentionButton.hidden = user.isHireable
             relationshipControl.hidden = false
@@ -427,7 +427,7 @@ extension ProfileViewController {
 
         elloNavigationItem.rightBarButtonItem = nil
 
-        collaborateButton.hidden = true
+        collaborateButton?.hidden = true
         hireButton.hidden = true
         mentionButton.hidden = true
         relationshipControl.hidden = true
