@@ -52,11 +52,7 @@ extension User: Stubbable {
             hasSharingEnabled: (values["hasSharingEnabled"] as? Bool) ?? true,
             hasRepostingEnabled: (values["hasRepostingEnabled"] as? Bool) ?? true,
             hasLovesEnabled: (values["hasLovesEnabled"] as? Bool) ?? true,
-            notifyOfWatchesViaPush: (values["notifyOfWatchesViaPush"] as? Bool) ?? false,
-            notifyOfWatchesViaEmail: (values["notifyOfWatchesViaEmail"] as? Bool) ?? false,
-            notifyOfCommentsOnPostWatchViaPush: (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? false,
-            notifyOfCommentsOnPostWatchViaEmail: (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? false,
-            isCollaborateable: (values["is_collaborateable"] as? Bool) ?? false,
+            isCollaborateable: (values["isCollaborateable"] as? Bool) ?? false,
             isHireable: (values["isHireable"] as? Bool) ?? false
         )
         user.avatar = values["avatar"] as? Asset
@@ -169,6 +165,7 @@ extension Profile: Stubbable {
             blockedCount: (values["blockedCount"] as? Int) ?? 0,
             hasSharingEnabled: (values["hasSharingEnabled"] as? Bool) ?? true,
             hasAdNotificationsEnabled: (values["hasAdNotificationsEnabled"] as? Bool) ?? true,
+            hasAutoWatchEnabled: (values["hasAutoWatchEnabled"] as? Bool) ?? true,
             allowsAnalytics: (values["allowsAnalytics"] as? Bool) ?? true,
             notifyOfCommentsViaEmail: (values["notifyOfCommentsViaEmail"] as? Bool) ?? true,
             notifyOfLovesViaEmail: (values["notifyOfLovesViaEmail"] as? Bool) ?? true,
@@ -186,6 +183,10 @@ extension Profile: Stubbable {
             notifyOfRepostsViaPush: (values["notifyOfRepostsViaPush"] as? Bool) ?? true,
             notifyOfNewFollowersViaPush: (values["notifyOfNewFollowersViaPush"] as? Bool) ?? true,
             notifyOfInvitationAcceptancesViaPush: (values["notifyOfInvitationAcceptancesViaPush"] as? Bool) ?? true,
+            notifyOfWatchesViaPush: (values["notifyOfWatchesViaPush"] as? Bool) ?? true,
+            notifyOfWatchesViaEmail: (values["notifyOfWatchesViaEmail"] as? Bool) ?? true,
+            notifyOfCommentsOnPostWatchViaPush: (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? true,
+            notifyOfCommentsOnPostWatchViaEmail: (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? true,
             discoverable: (values["discoverable"] as? Bool) ?? true
         )
         return profile

@@ -101,6 +101,10 @@
     "notify_of_mentions_via_email": true,
     "notify_of_new_followers_via_email": true,
     "notify_of_invitation_acceptances_via_email": true,
+    "notify_of_watches_via_push": true,
+    "notify_of_watches_via_email": false,
+    "notify_of_comments_on_post_watch_via_push": true,
+    "notify_of_comments_on_post_watch_via_email": false,
     "subscribe_to_users_email_list": true
   }
 }

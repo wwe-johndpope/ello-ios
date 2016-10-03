@@ -436,6 +436,7 @@
 		1D1C88AB1AC9B71600AFC56D /* UIImageSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */; };
 		1D1D564B1CD3D56A00B3EBED /* hearts_giant.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */; };
 		1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */; };
+		1D209BF41DA300D600CFBF92 /* ProfileSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D209BF31DA300D600CFBF92 /* ProfileSpec.swift */; };
 		1D22C8201AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */; };
 		1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */; };
 		1D22C8261AAFAD760048D415 /* CreateCommentBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */; };
@@ -1332,6 +1333,7 @@
 		1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageSpecs.swift; sourceTree = "<group>"; };
 		1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hearts_giant.svg; sourceTree = "<group>"; };
 		1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedResponse.swift; sourceTree = "<group>"; };
+		1D209BF31DA300D600CFBF92 /* ProfileSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSpec.swift; sourceTree = "<group>"; };
 		1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCreateCommentCellPresenter.swift; sourceTree = "<group>"; };
 		1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCreateCommentCell.swift; sourceTree = "<group>"; };
 		1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentBackgroundView.swift; sourceTree = "<group>"; };
@@ -2427,6 +2429,7 @@
 				1D7A28D21A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift */,
 				1D8AFACC1A9664480034DDAD /* NotificationSpec.swift */,
 				12D14C6E1A43762400C6F8E8 /* PostSpec.swift */,
+				1D209BF31DA300D600CFBF92 /* ProfileSpec.swift */,
 				124727611AB14A6E000079D7 /* Regions */,
 				F8A33EDE1AB0D5B9005DE9BB /* RelationshipSpec.swift */,
 				12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */,
@@ -4328,6 +4331,7 @@
 				12D24A5A1A9F765300F53D44 /* AddFriendsViewControllerSpec.swift in Sources */,
 				76BE9C591B2B85CF007575AA /* StreamInviteFriendsCellPresenterSpec.swift in Sources */,
 				1DDF39E71D072FCD00C1A75E /* BlockUserModalScreenSpec.swift in Sources */,
+				1D209BF41DA300D600CFBF92 /* ProfileSpec.swift in Sources */,
 				1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */,
 				76B2ADDC1A7C43F700D5CAD7 /* StreamDataSourceSpec.swift in Sources */,
 				EAC605461ADD95CB009B9426 /* DynamicSettingCellSpec.swift in Sources */,
