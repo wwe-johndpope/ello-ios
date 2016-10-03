@@ -435,6 +435,7 @@
 		1D1C162C1B1D034100C4F27C /* TemporaryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */; };
 		1D1C88AB1AC9B71600AFC56D /* UIImageSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */; };
 		1D1D564B1CD3D56A00B3EBED /* hearts_giant.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */; };
+		1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */; };
 		1D22C8201AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */; };
 		1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */; };
 		1D22C8261AAFAD760048D415 /* CreateCommentBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */; };
@@ -1332,6 +1333,7 @@
 		1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemporaryCache.swift; sourceTree = "<group>"; };
 		1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageSpecs.swift; sourceTree = "<group>"; };
 		1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hearts_giant.svg; sourceTree = "<group>"; };
+		1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedResponse.swift; sourceTree = "<group>"; };
 		1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCreateCommentCellPresenter.swift; sourceTree = "<group>"; };
 		1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCreateCommentCell.swift; sourceTree = "<group>"; };
 		1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentBackgroundView.swift; sourceTree = "<group>"; };
@@ -1950,6 +1952,7 @@
 				1207C9651C73FEE000939ADB /* PostService.swift */,
 				1207C9661C73FEE000939ADB /* ProfileService.swift */,
 				1207C9671C73FEE000939ADB /* ReAuthService.swift */,
+				1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */,
 				1207C9681C73FEE000939ADB /* RelationshipService.swift */,
 				1207C9691C73FEE000939ADB /* RePostService.swift */,
 				1207C96A1C73FEE000939ADB /* ResponseConfig.swift */,
@@ -4755,6 +4758,7 @@
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,
 				12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
+				1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */,
 				7659FB7F1B29EE0F00DEB6F4 /* StreamInviteFriendsCell.swift in Sources */,
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */,
