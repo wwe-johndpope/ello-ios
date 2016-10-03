@@ -147,6 +147,8 @@ public class StreamCreateCommentCell: UICollectionViewCell {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
+        avatarView.setNeedsLayout()
+        avatarView.layoutIfNeeded()
         avatarView.layer.cornerRadius = avatarView.frame.width / CGFloat(2)
 
         // if this doesn't fix the "stretched create comment" bug, please remove

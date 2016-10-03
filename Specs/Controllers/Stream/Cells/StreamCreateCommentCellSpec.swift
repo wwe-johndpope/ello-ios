@@ -23,6 +23,10 @@ class StreamCreateCommentCellSpec: QuickSpec {
                     subject.replyAllVisibility = .Enabled
                     expectValidSnapshot(subject, device: .Custom(CGSize(width: 375, height: StreamCellType.CreateComment.oneColumnHeight)))
                 }
+                it("has a valid watching button") {
+                    subject.watching = true
+                    expectValidSnapshot(subject, device: .Custom(CGSize(width: 375, height: StreamCellType.CreateComment.oneColumnHeight)))
+                }
             }
         }
     }
