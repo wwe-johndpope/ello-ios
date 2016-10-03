@@ -6,7 +6,7 @@ import Crashlytics
 import Foundation
 import SwiftyJSON
 
-let ProfileVersion: Int = 1
+let ProfileVersion: Int = 2
 
 @objc(Profile)
 public final class Profile: JSONAble {
@@ -22,6 +22,7 @@ public final class Profile: JSONAble {
     public var blockedCount: Int
     public var hasSharingEnabled: Bool
     public var hasAdNotificationsEnabled: Bool
+    public var hasAutoWatchEnabled: Bool
     public let allowsAnalytics: Bool
     public let notifyOfCommentsViaEmail: Bool
     public let notifyOfLovesViaEmail: Bool
@@ -52,6 +53,7 @@ public final class Profile: JSONAble {
         blockedCount: Int,
         hasSharingEnabled: Bool,
         hasAdNotificationsEnabled: Bool,
+        hasAutoWatchEnabled: Bool,
         allowsAnalytics: Bool,
         notifyOfCommentsViaEmail: Bool,
         notifyOfLovesViaEmail: Bool,
@@ -80,6 +82,7 @@ public final class Profile: JSONAble {
         self.blockedCount = blockedCount
         self.hasSharingEnabled = hasSharingEnabled
         self.hasAdNotificationsEnabled = hasAdNotificationsEnabled
+        self.hasAutoWatchEnabled = hasAutoWatchEnabled
         self.allowsAnalytics = allowsAnalytics
         self.notifyOfCommentsViaEmail = notifyOfCommentsViaEmail
         self.notifyOfLovesViaEmail = notifyOfLovesViaEmail
@@ -116,6 +119,13 @@ public final class Profile: JSONAble {
         self.blockedCount = decoder.decodeKey("blockedCount")
         self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
         self.hasAdNotificationsEnabled = decoder.decodeKey("hasAdNotificationsEnabled")
+        let version: Int = decoder.decodeKey("version")
+        if version < 2 {
+            self.hasAutoWatchEnabled = true
+        }
+        else {
+            self.hasAutoWatchEnabled = decoder.decodeKey("hasAutoWatchEnabled")
+        }
         self.allowsAnalytics = decoder.decodeKey("allowsAnalytics")
         self.notifyOfCommentsViaEmail = decoder.decodeKey("notifyOfCommentsViaEmail")
         self.notifyOfLovesViaEmail = decoder.decodeKey("notifyOfLovesViaEmail")
@@ -150,6 +160,7 @@ public final class Profile: JSONAble {
         coder.encodeObject(blockedCount, forKey: "blockedCount")
         coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
         coder.encodeObject(hasAdNotificationsEnabled, forKey: "hasAdNotificationsEnabled")
+        coder.encodeObject(hasAutoWatchEnabled, forKey: "hasAutoWatchEnabled")
         coder.encodeObject(allowsAnalytics, forKey: "allowsAnalytics")
         coder.encodeObject(notifyOfCommentsViaEmail, forKey: "notifyOfCommentsViaEmail")
         coder.encodeObject(notifyOfLovesViaEmail, forKey: "notifyOfLovesViaEmail")
@@ -187,6 +198,7 @@ public final class Profile: JSONAble {
             blockedCount: json["blocked_count"].intValue,
             hasSharingEnabled: json["has_sharing_enabled"].boolValue,
             hasAdNotificationsEnabled: json["has_ad_notifications_enabled"].boolValue,
+            hasAutoWatchEnabled: json["has_auto_watch_enabled"].boolValue,
             allowsAnalytics: json["allows_analytics"].boolValue,
             notifyOfCommentsViaEmail: json["notify_of_comments_via_email"].boolValue,
             notifyOfLovesViaEmail: json["notify_of_loves_via_email"].boolValue,
