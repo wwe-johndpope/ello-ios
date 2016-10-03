@@ -32,6 +32,7 @@ public final class ProfileViewController: StreamableViewController {
     @IBOutlet weak var coverImage: FLAnimatedImageView!
     @IBOutlet weak var relationshipControl: RelationshipControl!
     @IBOutlet weak var mentionButton: UIButton!
+    @IBOutlet weak var collaborateButton: UIButton!
     @IBOutlet weak var hireButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var inviteButton: UIButton!
@@ -108,6 +109,7 @@ public final class ProfileViewController: StreamableViewController {
         super.viewDidLoad()
 
         if user == nil {
+            collaborateButton.enabled = false
             hireButton.enabled = false
             mentionButton.enabled = false
             editButton.enabled = false
@@ -311,6 +313,14 @@ public final class ProfileViewController: StreamableViewController {
         createPost(text: "\(user.atName) ", fromController: self)
     }
 
+    @IBAction func collaborateButtonTapped() {
+        guard let user = user else { return }
+
+        Tracker.sharedTracker.tappedHire(user)
+        let vc = HireViewController(user: user)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
     @IBAction func hireButtonTapped() {
         guard let user = user else { return }
 
@@ -386,6 +396,7 @@ extension ProfileViewController {
     }
 
     public func updateUser(user: User) {
+        collaborateButton.enabled = true
         hireButton.enabled = true
         mentionButton.enabled = true
         editButton.enabled = true
@@ -393,6 +404,7 @@ extension ProfileViewController {
         relationshipControl.enabled = true
 
         guard user.id == self.currentUser?.id else {
+            collaborateButton.hidden = !user.isCollaborateable
             hireButton.hidden = !user.isHireable
             mentionButton.hidden = user.isHireable
             relationshipControl.hidden = false
@@ -415,6 +427,7 @@ extension ProfileViewController {
 
         elloNavigationItem.rightBarButtonItem = nil
 
+        collaborateButton.hidden = true
         hireButton.hidden = true
         mentionButton.hidden = true
         relationshipControl.hidden = true
