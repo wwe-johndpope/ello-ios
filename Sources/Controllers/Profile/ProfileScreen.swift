@@ -121,7 +121,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
         hireButton.snp_makeConstraints { make in
             make.height.equalTo(Size.buttonHeight)
-            make.leading.equalTo(self.mentionButton.snp_trailing)
+            make.leading.equalTo(self.mentionButton.snp_leading)
             make.top.equalTo(self.mentionButton)
             make.width.equalTo(self.mentionButton)
         }
@@ -167,7 +167,6 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     override func style() {
         relationshipControl.style = .ProfileView
         relationshipControlsView.effect = UIBlurEffect(style: .Light)
-        rcInnerEffectView.effect = UIBlurEffect(style: .Light)
         setupGradient()
     }
 
@@ -213,10 +212,8 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public func showNavBars(offset: CGPoint) {
         animate {
-            self.updateGradientViewConstraint(offset, navBarsVisible: false)
-
-            self.relationshipControlsViewTopConstraint.constant = self.navigationBar.frame.height
-
+            self.updateGradientViewConstraint(offset, navBarsVisible:false)
+            self.relationshipControlsViewTopConstraint.constant = self.navBar.frame.height
             self.relationshipControlsView.frame.origin.y = self.relationshipControlsViewTopConstraint.constant
             self.gradientView.frame.origin.y = self.gradientViewTopConstraint.constant
         }
@@ -224,9 +221,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public func hideNavBars(offset: CGPoint, isCurrentUser: Bool) {
         animate {
-            self.updateGradientViewConstraint(offset, navBarsVisible:false)
-
-
+            self.updateGradientViewConstraint(offset, navBarsVisible: false)
             if isCurrentUser {
                 self.relationshipControlsViewTopConstraint.constant = -self.relationshipControlsView.frame.height
             }
@@ -238,7 +233,6 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             self.gradientView.frame.origin.y = self.gradientViewTopConstraint.constant
         }
     }
-
 }
 
 extension ProfileScreen {

@@ -33,27 +33,7 @@ public final class ProfileViewController: StreamableViewController {
     var generator: ProfileGenerator?
     private var isSetup = false
 
-//    @IBOutlet weak var navigationBar: ElloNavigationBar!
-//    @IBOutlet weak var whiteSolidView: UIView!
-//
-//    @IBOutlet weak var loaderView: InterpolatedLoadingView!
-//    @IBOutlet weak var coverImage: FLAnimatedImageView!
-//    @IBOutlet weak var relationshipControl: RelationshipControl!
-//    @IBOutlet weak var mentionButton: UIButton!
-//    @IBOutlet weak var hireButton: UIButton!
-//    @IBOutlet weak var editButton: UIButton!
-//    @IBOutlet weak var inviteButton: UIButton!
-//    @IBOutlet weak var gradientView: UIView!
-//    @IBOutlet weak var relationshipControlsView: UIView!
-//    let gradientLayer = CAGradientLayer()
-//
-//    @IBOutlet weak var coverImageHeight: NSLayoutConstraint!
-//    @IBOutlet weak var whiteSolidTop: NSLayoutConstraint!
-//    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var gradientViewTopConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var relationshipControlsViewTopConstraint: NSLayoutConstraint!
-
-     public init(userParam: String, username: String? = nil) {
+    public init(userParam: String, username: String? = nil) {
         self.userParam = userParam
         self.initialStreamKind = .UserStream(userParam: self.userParam)
         super.init(nibName: nil, bundle: nil)
@@ -170,18 +150,16 @@ public final class ProfileViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-
-        if let ps = self.view as? ProfileScreen {
-            positionNavBar(ps.navigationBar, visible: true, withConstraint: ps.navigationBarTopConstraint)
-            let offset = self.streamViewController.collectionView.contentOffset
-            ps.showNavBars(offset)
-        }
-
+        guard let ps = self.view as? ProfileScreen else { return }
+        positionNavBar(ps.navBar, visible: true, withConstraint: ps.navigationBarTopConstraint)
         updateInsets()
 
         if scrollToBottom {
             self.scrollToBottom(streamViewController)
         }
+
+        let offset = self.streamViewController.collectionView.contentOffset
+        ps.showNavBars(offset)
     }
 
     override func hideNavBars() {
@@ -189,14 +167,12 @@ public final class ProfileViewController: StreamableViewController {
         hideNavBar(animated: true)
         updateInsets()
 
-        if let ps = self.view as? ProfileScreen {
-            positionNavBar(ps.navigationBar, visible: true, withConstraint: ps.navigationBarTopConstraint)
-            let offset = self.streamViewController.collectionView.contentOffset
-            let isCurrentUser = self.user?.id == self.currentUser?.id && self.user?.id != nil
-            ps.hideNavBars(offset, isCurrentUser: isCurrentUser)
-        }
-
+        guard let ps = self.view as? ProfileScreen else { return }
+        let offset = self.streamViewController.collectionView.contentOffset
+        let currentUser = (self.user?.id == self.currentUser?.id && self.user?.id != nil)
+        ps.hideNavBars(offset, isCurrentUser: currentUser)
     }
+
 
     private func updateInsets() {
         guard let ps = self.screen as? ProfileScreen else { return }
@@ -468,8 +444,6 @@ extension ProfileViewController:  StreamDestination {
 
         self.user = user
         updateUser(user)
-
-
 
         userParam = user.id
         title = user.atName
