@@ -56,6 +56,7 @@ extension User: Stubbable {
             notifyOfWatchesViaEmail: (values["notifyOfWatchesViaEmail"] as? Bool) ?? false,
             notifyOfCommentsOnPostWatchViaPush: (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? false,
             notifyOfCommentsOnPostWatchViaEmail: (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? false,
+            isCollaborateable: (values["is_collaborateable"] as? Bool) ?? false,
             isHireable: (values["isHireable"] as? Bool) ?? false
         )
         user.avatar = values["avatar"] as? Asset
@@ -151,7 +152,7 @@ extension Watch: Stubbable {
             postId: post.id,
             userId: user.id
         )
-        
+
         return watch
     }
 }

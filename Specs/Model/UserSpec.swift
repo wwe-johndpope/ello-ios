@@ -144,6 +144,7 @@ class UserSpec: QuickSpec {
                     expect(user.notifyOfWatchesViaEmail) == false
                     expect(user.notifyOfCommentsOnPostWatchViaPush) == true
                     expect(user.notifyOfCommentsOnPostWatchViaEmail) == false
+                    expect(user.isCollaborateable) == true
                     expect(user.isHireable) == true
                     // optional
                     expect(user.avatar).to(beAKindOf(Asset.self))
