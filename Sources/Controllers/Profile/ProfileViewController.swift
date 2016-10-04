@@ -122,6 +122,7 @@ public final class ProfileViewController: StreamableViewController {
         profileScreen = ProfileScreen()
         self.view = profileScreen
         viewContainer = profileScreen.streamContainer
+        profileScreen.delegate = self
     }
 
     override public func viewDidLayoutSubviews() {
@@ -253,38 +254,6 @@ public final class ProfileViewController: StreamableViewController {
         }
     }
 
-
-    @IBAction func mentionButtonTapped() {
-        guard let user = user else { return }
-
-        createPost(text: "\(user.atName) ", fromController: self)
-    }
-
-    @IBAction func collaborateButtonTapped() {
-        guard let user = user else { return }
-
-        Tracker.sharedTracker.tappedCollaborate(user)
-        fatalError("HireViewController needs to support collaborate (and maybe be renamed)")
-        let vc = HireViewController(user: user)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-
-    @IBAction func hireButtonTapped() {
-        guard let user = user else { return }
-
-        Tracker.sharedTracker.tappedHire(user)
-        let vc = HireViewController(user: user)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-
-    @IBAction func editButtonTapped() {
-        onEditProfile()
-    }
-
-    @IBAction func inviteButtonTapped() {
-        onInviteFriends()
-    }
-
     func moreButtonTapped() {
         guard let user = user else { return }
 
@@ -323,6 +292,30 @@ public final class ProfileViewController: StreamableViewController {
 
 }
 
+extension ProfileViewController: ProfileScreenDelegate {
+    public func mentionTapped() {
+        guard let user = user else { return }
+
+        createPost(text: "\(user.atName) ", fromController: self)
+    }
+
+    public func hireTapped() {
+        guard let user = user else { return }
+
+        Tracker.sharedTracker.tappedHire(user)
+        let vc = HireViewController(user: user)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    public func editTapped() {
+        onEditProfile()
+    }
+
+    public func inviteTapped() {
+        onInviteFriends()
+    }
+}
+
 // MARK: Check for cached coverImage and avatar (only for currentUser)
 extension ProfileViewController {
     public func cachedImage(key: CacheKey) -> UIImage? {
@@ -348,14 +341,9 @@ extension ProfileViewController {
     public func updateUser(user: User) {
         screen.enableButtons()
 
-        guard let ps = self.view as? ProfileScreen else { return }
 
         guard user.id == self.currentUser?.id else {
-            ps.hireButton.hidden = !user.isHireable
-            ps.mentionButton.hidden = user.isHireable
-            ps.relationshipControl.hidden = false
-            ps.editButton.hidden = true
-            ps.inviteButton.hidden = true
+            screen.configureButtonsForNonCurrentUser(user.isHireable)
             return
         }
 
@@ -373,11 +361,7 @@ extension ProfileViewController {
 
         elloNavigationItem.rightBarButtonItem = nil
 
-        ps.hireButton.hidden = true
-        ps.mentionButton.hidden = true
-        ps.relationshipControl.hidden = true
-        ps.editButton.hidden = false
-        ps.inviteButton.hidden = false
+        screen.configureButtonsForCurrentUser()
     }
 
     public func updateRelationshipPriority(relationshipPriority: RelationshipPriority) {

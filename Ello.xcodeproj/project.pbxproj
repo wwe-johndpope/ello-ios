@@ -82,6 +82,8 @@
 		120FF6CB1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6CA1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift */; };
 		1212FDEA1A66377100AD4AF7 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = 1212FDE91A66377100AD4AF7 /* comments.json */; };
 		1212FDED1A66E5CB00AD4AF7 /* comments-for-a-post.json in Resources */ = {isa = PBXBuildFile; fileRef = 1212FDEC1A66E5CB00AD4AF7 /* comments-for-a-post.json */; };
+		12148F1B1DA31DF300D6296C /* ProfileScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12148F1A1DA31DF300D6296C /* ProfileScreenSpec.swift */; };
+		12148F1D1DA3234A00D6296C /* specs-cover.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 12148F1C1DA3234A00D6296C /* specs-cover.jpg */; };
 		1217009B1A7841C400EBACA5 /* StreamCellItemParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217008C1A7841C400EBACA5 /* StreamCellItemParser.swift */; };
 		121700B31A7841C400EBACA5 /* StreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121700981A7841C400EBACA5 /* StreamViewController.swift */; };
 		121700B61A78428D00EBACA5 /* StreamCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121700B51A78428D00EBACA5 /* StreamCollectionViewLayout.swift */; };
@@ -1064,6 +1066,8 @@
 		120FF6CA1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessorSpec.swift; sourceTree = "<group>"; };
 		1212FDE91A66377100AD4AF7 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = "<group>"; };
 		1212FDEC1A66E5CB00AD4AF7 /* comments-for-a-post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "comments-for-a-post.json"; sourceTree = "<group>"; };
+		12148F1A1DA31DF300D6296C /* ProfileScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreenSpec.swift; sourceTree = "<group>"; };
+		12148F1C1DA3234A00D6296C /* specs-cover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "specs-cover.jpg"; sourceTree = "<group>"; };
 		1217008B1A7841C400EBACA5 /* StreamCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItem.swift; sourceTree = "<group>"; };
 		1217008C1A7841C400EBACA5 /* StreamCellItemParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItemParser.swift; sourceTree = "<group>"; };
 		1217008F1A7841C400EBACA5 /* StreamDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamDataSource.swift; sourceTree = "<group>"; };
@@ -2991,6 +2995,7 @@
 		1D08320B1AAA4C360076C67D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				12148F1C1DA3234A00D6296C /* specs-cover.jpg */,
 				761A66281B0E8AD20088FF56 /* specs-1000x4000.png */,
 				761A66291B0E8AD20088FF56 /* specs-4000x1000.png */,
 				761A661F1B0E75AD0088FF56 /* specs-avatar.png */,
@@ -3259,6 +3264,7 @@
 			children = (
 				123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */,
 				768043751AC20317004FEE09 /* ProfileViewControllerSpec.swift */,
+				12148F1A1DA31DF300D6296C /* ProfileScreenSpec.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -3636,6 +3642,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12148F1D1DA3234A00D6296C /* specs-cover.jpg in Resources */,
 				761A662C1B0E8AD20088FF56 /* specs-4000x1000.png in Resources */,
 				761A662A1B0E8AD20088FF56 /* specs-1000x4000.png in Resources */,
 				761A66221B0E75AD0088FF56 /* specs-avatar.png in Resources */,
@@ -4408,6 +4415,7 @@
 				1D4168B61B6C222D0075C8F3 /* TagSpec.swift in Sources */,
 				1DF984021D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift in Sources */,
 				76A628D71B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift in Sources */,
+				12148F1B1DA31DF300D6296C /* ProfileScreenSpec.swift in Sources */,
 				765670F01A8022B4008ED9A2 /* ElloURISpec.swift in Sources */,
 				12D14C631A4375FE00C6F8E8 /* ValidatorSpec.swift in Sources */,
 				122CD3611C6E770200B37624 /* ElloManagerSpec.swift in Sources */,

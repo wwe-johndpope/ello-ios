@@ -5,10 +5,19 @@
 public protocol ProfileScreenProtocol: class {
     func disableButtons()
     func enableButtons()
+    func configureButtonsForCurrentUser()
+    func configureButtonsForNonCurrentUser(isHireable: Bool)
     func resetCoverImage()
     func updateGradientViewConstraint(contentOffset: CGPoint, navBarsVisible: Bool)
     var relationshipDelegate: RelationshipDelegate? { get set }
     var navBar: ElloNavigationBar { get }
+}
+
+public protocol ProfileScreenDelegate: class {
+    func mentionTapped()
+    func hireTapped()
+    func editTapped()
+    func inviteTapped()
 }
 
 public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
@@ -54,8 +63,11 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     public private(set) var gradientViewTopConstraint: NSLayoutConstraint!
     public private(set) var relationshipControlsViewTopConstraint: NSLayoutConstraint!
 
-    override func arrange() {
 
+    weak public var delegate: ProfileScreenDelegate?
+
+    override func arrange() {
+        super.arrange()
         addSubview(loaderView)
         addSubview(coverImage)
         addSubview(whiteSolidView)
@@ -79,7 +91,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         coverImage.snp_makeConstraints { make in
             let c = make.height.equalTo(Size.whiteTopOffset).constraint
             self.coverImageHeight = c.layoutConstraints.first!
-            make.width.equalTo(self.snp_width).multipliedBy(ProfileHeaderCellSizeCalculator.ratio)
+            make.width.equalTo(self.coverImage.snp_height).multipliedBy(ProfileHeaderCellSizeCalculator.ratio)
             make.top.equalTo(self.streamContainer.snp_top)
             make.centerX.equalTo(self)
         }
@@ -88,11 +100,6 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             let c = make.top.equalTo(self).offset(Size.whiteTopOffset).constraint
             self.whiteSolidTop = c.layoutConstraints.first!
             make.leading.trailing.bottom.equalTo(self)
-        }
-
-        streamContainer.snp_makeConstraints { make in
-            make.edges.equalTo(self)
-            streamContainer.frame = self.bounds
         }
 
         gradientView.snp_makeConstraints { make in
@@ -150,14 +157,6 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             make.bottom.equalTo(-Size.buttonMargin)
         }
 
-        navigationBar.snp_makeConstraints { make in
-            let c = make.top.equalTo(self).constraint
-            self.navigationBarTopConstraint = c.layoutConstraints.first!
-            make.leading.equalTo(self)
-            make.trailing.equalTo(self)
-            make.height.equalTo(Size.navBarHeight)
-        }
-
         layoutIfNeeded()
     }
 
@@ -171,6 +170,26 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     override func bindActions() {
+        mentionButton.addTarget(self, action: #selector(mentionTapped(_:)), forControlEvents: .TouchUpInside)
+        hireButton.addTarget(self, action: #selector(hireTapped(_:)), forControlEvents: .TouchUpInside)
+        editButton.addTarget(self, action: #selector(editTapped(_:)), forControlEvents: .TouchUpInside)
+        inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), forControlEvents: .TouchUpInside)
+    }
+
+    public func mentionTapped(button: UIButton) {
+        delegate?.mentionTapped()
+    }
+
+    public func hireTapped(button: UIButton) {
+        delegate?.hireTapped()
+    }
+
+    public func editTapped(button: UIButton) {
+        delegate?.editTapped()
+    }
+
+    public func inviteTapped(button: UIButton) {
+        delegate?.inviteTapped()
     }
 
     public func enableButtons() {
@@ -179,6 +198,22 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public func disableButtons() {
         setButtonsEnabled(false)
+    }
+
+    public func configureButtonsForNonCurrentUser(isHireable: Bool) {
+        hireButton.hidden = !isHireable
+        mentionButton.hidden = isHireable
+        relationshipControl.hidden = false
+        editButton.hidden = true
+        inviteButton.hidden = true
+    }
+
+    public func configureButtonsForCurrentUser() {
+        hireButton.hidden = true
+        mentionButton.hidden = true
+        relationshipControl.hidden = true
+        editButton.hidden = false
+        inviteButton.hidden = false
     }
 
     private func setButtonsEnabled(enabled: Bool) {
