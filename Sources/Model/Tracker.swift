@@ -208,6 +208,12 @@ public extension Tracker {
 
 // MARK: Hire Me
 public extension Tracker {
+    func tappedCollaborate(user: User) {
+        agent.track("open collaborate dialog profile", properties: ["id": user.id])
+    }
+    func collaboratedUser(user: User) {
+        agent.track("send collaborate dialog profile", properties: ["id": user.id])
+    }
     func tappedHire(user: User) {
         agent.track("open hire dialog profile", properties: ["id": user.id])
     }

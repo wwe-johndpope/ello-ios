@@ -6,7 +6,9 @@ import Crashlytics
 import Foundation
 import SwiftyJSON
 
-let ProfileVersion: Int = 1
+// version 1: initial
+// version 2: added hasAutoWatchEnabled and moved in notifyOfWatch* settings
+let ProfileVersion: Int = 2
 
 @objc(Profile)
 public final class Profile: JSONAble {
@@ -22,6 +24,7 @@ public final class Profile: JSONAble {
     public var blockedCount: Int
     public var hasSharingEnabled: Bool
     public var hasAdNotificationsEnabled: Bool
+    public var hasAutoWatchEnabled: Bool
     public let allowsAnalytics: Bool
     public let notifyOfCommentsViaEmail: Bool
     public let notifyOfLovesViaEmail: Bool
@@ -39,6 +42,10 @@ public final class Profile: JSONAble {
     public let notifyOfRepostsViaPush: Bool
     public let notifyOfNewFollowersViaPush: Bool
     public let notifyOfInvitationAcceptancesViaPush: Bool
+    public var notifyOfWatchesViaPush: Bool
+    public var notifyOfWatchesViaEmail: Bool
+    public var notifyOfCommentsOnPostWatchViaPush: Bool
+    public var notifyOfCommentsOnPostWatchViaEmail: Bool
     public let discoverable: Bool
     // optional
     public var gaUniqueId: String?
@@ -52,6 +59,7 @@ public final class Profile: JSONAble {
         blockedCount: Int,
         hasSharingEnabled: Bool,
         hasAdNotificationsEnabled: Bool,
+        hasAutoWatchEnabled: Bool,
         allowsAnalytics: Bool,
         notifyOfCommentsViaEmail: Bool,
         notifyOfLovesViaEmail: Bool,
@@ -69,6 +77,10 @@ public final class Profile: JSONAble {
         notifyOfRepostsViaPush: Bool,
         notifyOfNewFollowersViaPush: Bool,
         notifyOfInvitationAcceptancesViaPush: Bool,
+        notifyOfWatchesViaPush: Bool,
+        notifyOfWatchesViaEmail: Bool,
+        notifyOfCommentsOnPostWatchViaPush: Bool,
+        notifyOfCommentsOnPostWatchViaEmail: Bool,
         discoverable: Bool)
     {
         self.createdAt = createdAt
@@ -80,6 +92,7 @@ public final class Profile: JSONAble {
         self.blockedCount = blockedCount
         self.hasSharingEnabled = hasSharingEnabled
         self.hasAdNotificationsEnabled = hasAdNotificationsEnabled
+        self.hasAutoWatchEnabled = hasAutoWatchEnabled
         self.allowsAnalytics = allowsAnalytics
         self.notifyOfCommentsViaEmail = notifyOfCommentsViaEmail
         self.notifyOfLovesViaEmail = notifyOfLovesViaEmail
@@ -97,6 +110,10 @@ public final class Profile: JSONAble {
         self.notifyOfRepostsViaPush = notifyOfRepostsViaPush
         self.notifyOfNewFollowersViaPush = notifyOfNewFollowersViaPush
         self.notifyOfInvitationAcceptancesViaPush = notifyOfInvitationAcceptancesViaPush
+        self.notifyOfWatchesViaPush = notifyOfWatchesViaPush
+        self.notifyOfWatchesViaEmail = notifyOfWatchesViaEmail
+        self.notifyOfCommentsOnPostWatchViaPush = notifyOfCommentsOnPostWatchViaPush
+        self.notifyOfCommentsOnPostWatchViaEmail = notifyOfCommentsOnPostWatchViaEmail
         self.discoverable = discoverable
         super.init(version: ProfileVersion)
     }
@@ -116,6 +133,21 @@ public final class Profile: JSONAble {
         self.blockedCount = decoder.decodeKey("blockedCount")
         self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
         self.hasAdNotificationsEnabled = decoder.decodeKey("hasAdNotificationsEnabled")
+        let version: Int = decoder.decodeKey("version")
+        if version < 2 {
+            self.hasAutoWatchEnabled = true
+            self.notifyOfWatchesViaPush = true
+            self.notifyOfWatchesViaEmail = true
+            self.notifyOfCommentsOnPostWatchViaPush = true
+            self.notifyOfCommentsOnPostWatchViaEmail = true
+        }
+        else {
+            self.hasAutoWatchEnabled = decoder.decodeKey("hasAutoWatchEnabled")
+            self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
+            self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
+            self.notifyOfCommentsOnPostWatchViaPush = decoder.decodeKey("notifyOfCommentsOnPostWatchViaPush")
+            self.notifyOfCommentsOnPostWatchViaEmail = decoder.decodeKey("notifyOfCommentsOnPostWatchViaEmail")
+        }
         self.allowsAnalytics = decoder.decodeKey("allowsAnalytics")
         self.notifyOfCommentsViaEmail = decoder.decodeKey("notifyOfCommentsViaEmail")
         self.notifyOfLovesViaEmail = decoder.decodeKey("notifyOfLovesViaEmail")
@@ -150,6 +182,7 @@ public final class Profile: JSONAble {
         coder.encodeObject(blockedCount, forKey: "blockedCount")
         coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
         coder.encodeObject(hasAdNotificationsEnabled, forKey: "hasAdNotificationsEnabled")
+        coder.encodeObject(hasAutoWatchEnabled, forKey: "hasAutoWatchEnabled")
         coder.encodeObject(allowsAnalytics, forKey: "allowsAnalytics")
         coder.encodeObject(notifyOfCommentsViaEmail, forKey: "notifyOfCommentsViaEmail")
         coder.encodeObject(notifyOfLovesViaEmail, forKey: "notifyOfLovesViaEmail")
@@ -167,6 +200,10 @@ public final class Profile: JSONAble {
         coder.encodeObject(notifyOfRepostsViaPush, forKey: "notifyOfRepostsViaPush")
         coder.encodeObject(notifyOfNewFollowersViaPush, forKey: "notifyOfNewFollowersViaPush")
         coder.encodeObject(notifyOfInvitationAcceptancesViaPush, forKey: "notifyOfInvitationAcceptancesViaPush")
+        coder.encodeObject(notifyOfWatchesViaPush, forKey: "notifyOfWatchesViaPush")
+        coder.encodeObject(notifyOfWatchesViaEmail, forKey: "notifyOfWatchesViaEmail")
+        coder.encodeObject(notifyOfCommentsOnPostWatchViaPush, forKey: "notifyOfCommentsOnPostWatchViaPush")
+        coder.encodeObject(notifyOfCommentsOnPostWatchViaEmail, forKey: "notifyOfCommentsOnPostWatchViaEmail")
         coder.encodeObject(discoverable, forKey: "discoverable")
         super.encodeWithCoder(coder.coder)
     }
@@ -187,6 +224,7 @@ public final class Profile: JSONAble {
             blockedCount: json["blocked_count"].intValue,
             hasSharingEnabled: json["has_sharing_enabled"].boolValue,
             hasAdNotificationsEnabled: json["has_ad_notifications_enabled"].boolValue,
+            hasAutoWatchEnabled: json["has_auto_watch_enabled"].boolValue,
             allowsAnalytics: json["allows_analytics"].boolValue,
             notifyOfCommentsViaEmail: json["notify_of_comments_via_email"].boolValue,
             notifyOfLovesViaEmail: json["notify_of_loves_via_email"].boolValue,
@@ -204,6 +242,10 @@ public final class Profile: JSONAble {
             notifyOfRepostsViaPush: json["notify_of_reposts_via_push"].boolValue,
             notifyOfNewFollowersViaPush: json["notify_of_new_followers_via_push"].boolValue,
             notifyOfInvitationAcceptancesViaPush: json["notify_of_invitation_acceptances_via_push"].boolValue,
+            notifyOfWatchesViaPush: json["notify_of_watches_via_push"].boolValue,
+            notifyOfWatchesViaEmail: json["notify_of_watches_via_email"].boolValue,
+            notifyOfCommentsOnPostWatchViaPush: json["notify_of_comments_on_post_watch_via_push"].boolValue,
+            notifyOfCommentsOnPostWatchViaEmail: json["notify_of_comments_on_post_watch_via_email"].boolValue,
             discoverable: json["discoverable"].boolValue
         )
         profile.gaUniqueId = json["ga_unique_id"].string

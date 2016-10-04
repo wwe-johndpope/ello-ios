@@ -191,11 +191,8 @@
         "has_loves_enabled": true,
         "has_reposting_enabled": false,
         "has_sharing_enabled": true,
+        "is_collaborateable": true,
         "is_hireable": true,
-        "notify_of_watches_via_push": true,
-        "notify_of_watches_via_email": false,
-        "notify_of_comments_on_post_watch_via_push": true,
-        "notify_of_comments_on_post_watch_via_email": false,
         "href": "/api/v2/users/420",
         "id": "420",
         "links": {

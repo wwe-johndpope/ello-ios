@@ -9,7 +9,8 @@ import SwiftyJSON
 // version 2: added isHireable
 // version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
 // version 4: added notifyOfCommentsOnPostWatchViaPush, notifyOfCommentsOnPostWatchViaEmail
-let UserVersion: Int = 4
+// version 5: added isCollaborateable, moved notifyOf* into Profile
+let UserVersion: Int = 5
 
 @objc(User)
 public final class User: JSONAble {
@@ -34,10 +35,7 @@ public final class User: JSONAble {
     public var hasSharingEnabled: Bool
     public var hasRepostingEnabled: Bool
     public var hasLovesEnabled: Bool
-    public var notifyOfWatchesViaPush: Bool
-    public var notifyOfWatchesViaEmail: Bool
-    public var notifyOfCommentsOnPostWatchViaPush: Bool
-    public var notifyOfCommentsOnPostWatchViaEmail: Bool
+    public var isCollaborateable: Bool
     public var isHireable: Bool
     // optional
     public var avatar: Asset? // required, but kinda optional due to it being nested in json
@@ -91,10 +89,7 @@ public final class User: JSONAble {
         hasSharingEnabled: Bool,
         hasRepostingEnabled: Bool,
         hasLovesEnabled: Bool,
-        notifyOfWatchesViaPush: Bool,
-        notifyOfWatchesViaEmail: Bool,
-        notifyOfCommentsOnPostWatchViaPush: Bool,
-        notifyOfCommentsOnPostWatchViaEmail: Bool,
+        isCollaborateable: Bool,
         isHireable: Bool)
     {
         self.id = id
@@ -109,11 +104,8 @@ public final class User: JSONAble {
         self.hasSharingEnabled = hasSharingEnabled
         self.hasRepostingEnabled = hasRepostingEnabled
         self.hasLovesEnabled = hasLovesEnabled
+        self.isCollaborateable = isCollaborateable
         self.isHireable = isHireable
-        self.notifyOfWatchesViaPush = notifyOfWatchesViaPush
-        self.notifyOfWatchesViaEmail = notifyOfWatchesViaEmail
-        self.notifyOfCommentsOnPostWatchViaPush = notifyOfCommentsOnPostWatchViaPush
-        self.notifyOfCommentsOnPostWatchViaEmail = notifyOfCommentsOnPostWatchViaEmail
         super.init(version: UserVersion)
     }
 
@@ -138,34 +130,22 @@ public final class User: JSONAble {
         self.hasLovesEnabled = decoder.decodeKey("hasLovesEnabled")
         // added
         let version: Int = decoder.decodeKey("version")
-        if version == 1 {
+        if version < 2 {
             self.isHireable = false
-            self.notifyOfWatchesViaPush = true
-            self.notifyOfWatchesViaEmail = true
-            self.notifyOfCommentsOnPostWatchViaPush = true
-            self.notifyOfCommentsOnPostWatchViaEmail = true
-        }
-        else if version == 2 {
-            self.isHireable = decoder.decodeKey("isHireable")
-            self.notifyOfWatchesViaPush = true
-            self.notifyOfWatchesViaEmail = true
-            self.notifyOfCommentsOnPostWatchViaPush = true
-            self.notifyOfCommentsOnPostWatchViaEmail = true
-        }
-        else if version == 3 {
-            self.isHireable = decoder.decodeKey("isHireable")
-            self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
-            self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
-            self.notifyOfCommentsOnPostWatchViaPush = true
-            self.notifyOfCommentsOnPostWatchViaEmail = true
         }
         else {
             self.isHireable = decoder.decodeKey("isHireable")
-            self.notifyOfWatchesViaPush = decoder.decodeKey("notifyOfWatchesViaPush")
-            self.notifyOfWatchesViaEmail = decoder.decodeKey("notifyOfWatchesViaEmail")
-            self.notifyOfCommentsOnPostWatchViaPush = decoder.decodeKey("notifyOfCommentsOnPostWatchViaPush")
-            self.notifyOfCommentsOnPostWatchViaEmail = decoder.decodeKey("notifyOfCommentsOnPostWatchViaEmail")
         }
+
+        // versions 3 and 4 removed
+
+        if version < 5 {
+            self.isCollaborateable = false
+        }
+        else {
+            self.isCollaborateable = decoder.decodeKey("isCollaborateable")
+        }
+
         // optional
         self.avatar = decoder.decodeOptionalKey("avatar")
         self.identifiableBy = decoder.decodeOptionalKey("identifiableBy")
@@ -197,10 +177,7 @@ public final class User: JSONAble {
             hasSharingEnabled: true,
             hasRepostingEnabled: true,
             hasLovesEnabled: true,
-            notifyOfWatchesViaPush: true,
-            notifyOfWatchesViaEmail: true,
-            notifyOfCommentsOnPostWatchViaPush: true,
-            notifyOfCommentsOnPostWatchViaEmail: true,
+            isCollaborateable: false,
             isHireable: false)
     }
 
@@ -220,10 +197,7 @@ public final class User: JSONAble {
         coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
         coder.encodeObject(hasRepostingEnabled, forKey: "hasRepostingEnabled")
         coder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
-        coder.encodeObject(notifyOfWatchesViaPush, forKey: "notifyOfWatchesViaPush")
-        coder.encodeObject(notifyOfWatchesViaEmail, forKey: "notifyOfWatchesViaEmail")
-        coder.encodeObject(notifyOfCommentsOnPostWatchViaPush, forKey: "notifyOfCommentsOnPostWatchViaPush")
-        coder.encodeObject(notifyOfCommentsOnPostWatchViaEmail, forKey: "notifyOfCommentsOnPostWatchViaEmail")
+        coder.encodeObject(isCollaborateable, forKey: "isCollaborateable")
         coder.encodeObject(isHireable, forKey: "isHireable")
         // optional
         coder.encodeObject(avatar, forKey: "avatar")
@@ -272,10 +246,7 @@ public final class User: JSONAble {
             hasSharingEnabled: json["has_sharing_enabled"].boolValue,
             hasRepostingEnabled: json["has_reposting_enabled"].boolValue,
             hasLovesEnabled: json["has_loves_enabled"].boolValue,
-            notifyOfWatchesViaPush: json["notify_of_watches_via_push"].boolOr(true),
-            notifyOfWatchesViaEmail: json["notify_of_watches_via_email"].boolOr(true),
-            notifyOfCommentsOnPostWatchViaPush: json["notify_of_comments_on_post_watch_via_push"].boolOr(true),
-            notifyOfCommentsOnPostWatchViaEmail: json["notify_of_comments_on_post_watch_via_email"].boolOr(true),
+            isCollaborateable: json["is_collaborateable"].boolValue,
             isHireable: json["is_hireable"].boolValue
         )
 
