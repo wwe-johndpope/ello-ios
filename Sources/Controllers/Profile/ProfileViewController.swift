@@ -341,7 +341,6 @@ extension ProfileViewController {
     public func updateUser(user: User) {
         screen.enableButtons()
 
-
         guard user.id == self.currentUser?.id else {
             screen.configureButtonsForNonCurrentUser(user.isHireable)
             return
