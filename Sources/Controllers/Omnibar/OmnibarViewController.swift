@@ -450,15 +450,15 @@ extension OmnibarViewController {
     }
 
     private func emitCommentSuccess(comment: ElloComment) {
-        postNotification(CommentChangedNotification, value: (comment, .Create))
-        ContentChange.updateCommentCount(comment, delta: 1)
 
         if editComment != nil {
             Tracker.sharedTracker.commentEdited(comment)
             postNotification(CommentChangedNotification, value: (comment, .Replaced))
         }
         else {
+            ContentChange.updateCommentCount(comment, delta: 1)
             Tracker.sharedTracker.commentCreated(comment)
+            postNotification(CommentChangedNotification, value: (comment, .Create))
         }
 
         if let listener = commentSuccessListener {
@@ -467,16 +467,17 @@ extension OmnibarViewController {
     }
 
     private func emitPostSuccess(post: Post, didGoToPreviousTab: Bool) {
-        if let user = currentUser, postsCount = user.postsCount {
-            user.postsCount = postsCount + 1
-            postNotification(CurrentUserChangedNotification, value: user)
-        }
 
         if editPost != nil {
             Tracker.sharedTracker.postEdited(post)
             postNotification(PostChangedNotification, value: (post, .Replaced))
         }
         else {
+            if let user = currentUser, postsCount = user.postsCount {
+                user.postsCount = postsCount + 1
+                postNotification(CurrentUserChangedNotification, value: user)
+            }
+
             Tracker.sharedTracker.postCreated(post)
             postNotification(PostChangedNotification, value: (post, .Create))
         }
