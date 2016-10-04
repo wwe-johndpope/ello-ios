@@ -314,6 +314,15 @@ extension ProfileViewController: ProfileScreenDelegate {
     public func inviteTapped() {
         onInviteFriends()
     }
+
+    public func collaborateTapped() {
+        guard let user = user else { return }
+
+        Tracker.sharedTracker.tappedCollaborate(user)
+        fatalError("HireViewController needs to support collaborate (and maybe be renamed)")
+        let vc = HireViewController(user: user)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: Check for cached coverImage and avatar (only for currentUser)
@@ -342,7 +351,7 @@ extension ProfileViewController {
         screen.enableButtons()
 
         guard user.id == self.currentUser?.id else {
-            screen.configureButtonsForNonCurrentUser(user.isHireable)
+            screen.configureButtonsForNonCurrentUser(user.isHireable, isCollaborateable: user.isCollaborateable)
             return
         }
 

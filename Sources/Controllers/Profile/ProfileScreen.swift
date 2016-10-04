@@ -6,7 +6,7 @@ public protocol ProfileScreenProtocol: class {
     func disableButtons()
     func enableButtons()
     func configureButtonsForCurrentUser()
-    func configureButtonsForNonCurrentUser(isHireable: Bool)
+    func configureButtonsForNonCurrentUser(isHireable: Bool, isCollaborateable: Bool)
     func resetCoverImage()
     func updateGradientViewConstraint(contentOffset: CGPoint, navBarsVisible: Bool)
     var relationshipDelegate: RelationshipDelegate? { get set }
@@ -18,6 +18,7 @@ public protocol ProfileScreenDelegate: class {
     func hireTapped()
     func editTapped()
     func inviteTapped()
+    func collaborateTapped()
 }
 
 public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
@@ -56,6 +57,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     public let gradientView = UIView()
     public let gradientLayer = CAGradientLayer()
     public let relationshipControlsView = UIVisualEffectView()
+    public var collaborateButton: UIButton?
 
     // constraints
     public private(set) var whiteSolidTop: NSLayoutConstraint!
@@ -174,6 +176,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         hireButton.addTarget(self, action: #selector(hireTapped(_:)), forControlEvents: .TouchUpInside)
         editButton.addTarget(self, action: #selector(editTapped(_:)), forControlEvents: .TouchUpInside)
         inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), forControlEvents: .TouchUpInside)
+        collaborateButton?.addTarget(self, action: #selector(collaborateTapped(_:)), forControlEvents: .TouchUpInside)
     }
 
     public func mentionTapped(button: UIButton) {
@@ -192,6 +195,10 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         delegate?.inviteTapped()
     }
 
+    public func collaborateTapped(button: UIButton) {
+        delegate?.collaborateTapped()
+    }
+
     public func enableButtons() {
         setButtonsEnabled(true)
     }
@@ -200,7 +207,8 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         setButtonsEnabled(false)
     }
 
-    public func configureButtonsForNonCurrentUser(isHireable: Bool) {
+    public func configureButtonsForNonCurrentUser(isHireable: Bool, isCollaborateable: Bool) {
+        collaborateButton?.hidden = !isCollaborateable
         hireButton.hidden = !isHireable
         mentionButton.hidden = isHireable
         relationshipControl.hidden = false
@@ -209,6 +217,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     public func configureButtonsForCurrentUser() {
+        collaborateButton?.hidden = true
         hireButton.hidden = true
         mentionButton.hidden = true
         relationshipControl.hidden = true
@@ -217,6 +226,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     private func setButtonsEnabled(enabled: Bool) {
+        collaborateButton?.enabled = enabled
         hireButton.enabled = enabled
         mentionButton.enabled = enabled
         editButton.enabled = enabled
