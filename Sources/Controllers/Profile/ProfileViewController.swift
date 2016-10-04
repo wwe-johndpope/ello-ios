@@ -316,7 +316,8 @@ public final class ProfileViewController: StreamableViewController {
     @IBAction func collaborateButtonTapped() {
         guard let user = user else { return }
 
-        Tracker.sharedTracker.tappedHire(user)
+        Tracker.sharedTracker.tappedCollaborate(user)
+        fatalError("HireViewController needs to support collaborate (and maybe be renamed)")
         let vc = HireViewController(user: user)
         self.navigationController?.pushViewController(vc, animated: true)
     }
