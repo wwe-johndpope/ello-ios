@@ -51,41 +51,29 @@ class ProfileViewControllerSpec: QuickSpec {
                     expect(rightButtons?.count ?? 0) == 0
                 }
 
-                context("user is hireable") {
-
-                    beforeEach {
-                        currentUser = User.stub(["id": "42", "isHireable": true])
-                        subject = ProfileViewController(user: currentUser)
-                        subject.currentUser = currentUser
-                        showController(subject)
-                        screen = subject.view as! ProfileScreen
-                    }
-
-                    it("has hidden mentionButton") {
-                        expect(screen.mentionButton.hidden) == true
-                    }
-
-                    it("has hidden hireButton") {
-                        expect(screen.hireButton.hidden) == true
-                    }
-                }
-
-                context("user is NOT hireable") {
-
-                    beforeEach {
-                        currentUser = User.stub(["id": "42", "isHireable": false])
-                        subject = ProfileViewController(user: currentUser)
-                        subject.currentUser = currentUser
-                        showController(subject)
-                        screen = subject.view as! ProfileScreen
-                    }
-
-                    it("has hidden mentionButton") {
-                        expect(screen.mentionButton.hidden) == true
-                    }
-
-                    it("has hidden hireButton") {
-                        expect(screen.hireButton.hidden) == true
+                context("collaborateable and hireable don't affect currentUser profile") {
+                    let expectations: [(Bool, Bool)] = [
+                        (true, true),
+                        (true, false),
+                        (false, true),
+                        (false, false),
+                        ]
+                    for (isCollaborateable, isHireable) in expectations {
+                        context("user \(isCollaborateable ? "is" : "is not") collaborateable and \(isHireable ? "is" : "is not") hireable") {
+                            beforeEach {
+                                currentUser = User.stub(["id": "42", "isCollaborateable": isCollaborateable, "isHireable": isHireable])
+                                subject = ProfileViewController(user: currentUser)
+                                subject.currentUser = currentUser
+                                showController(subject)
+                                screen = subject.view as! ProfileScreen
+                            }
+                            it("has hidden mentionButton") {
+                                expect(screen.mentionButton.hidden) == true
+                            }
+                            it("has hidden hireButton") {
+                                expect(screen.hireButton.hidden) == true
+                            }
+                        }
                     }
                 }
             }
@@ -107,57 +95,52 @@ class ProfileViewControllerSpec: QuickSpec {
                     expect(subject.elloNavigationItem.rightBarButtonItems?.count) == 2
                 }
 
-                context("user is hireable") {
+                let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [
+                    (collaborateable: true, hireable: true, collaborateButton: true, hireButtonVisible: true, mentionButtonVisible: false),
+                    // (collaborateable: true, hireable: false, collaborateButton: true, hireButtonVisible: false, mentionButtonVisible: false),
+                    (collaborateable: false, hireable: true, collaborateButton: false, hireButtonVisible: true, mentionButtonVisible: false),
+                    (collaborateable: false, hireable: false, collaborateButton: false, hireButtonVisible: false, mentionButtonVisible: true),
+                    ]
+                for (collaborateable, hireable, collaborateButton, hireButtonVisible, mentionButtonVisible) in expectations {
+                    context("collaborateable \(collaborateable) and hireable \(hireable) affect profile buttons") {
+                        beforeEach {
+                            ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
+                                RecordedResponse(endpoint: .UserStream(userParam: "any"), responseClosure: { _ in
+                                    let data = stubbedData("users_user_details")
+                                    var json = try! NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String: AnyObject]
+                                    var user = json["users"] as! [String: AnyObject]
+                                    user["is_collaborateable"] = collaborateable
+                                    user["is_hireable"] = hireable
+                                    json["users"] = user
+                                    let modData = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
+                                    return .NetworkResponse(200, modData)
+                                }),
+                                ])
 
-                    beforeEach {
-                        ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
-                            RecordedResponse(endpoint: .UserStream(userParam: "hireable"), response: .NetworkResponse(200, stubbedData("user_details_hireable"))),
-                        ])
+                            currentUser = User.stub([:])
+                            subject = ProfileViewController(userParam: "any")
+                            subject.currentUser = currentUser
+                            showController(subject)
+                            screen = subject.view as! ProfileScreen
+                        }
 
-                        currentUser = User.stub(["id": "not42"])
-                        subject = ProfileViewController(userParam: "hireable")
-                        subject.currentUser = currentUser
-                        showController(subject)
-                        screen = subject.view as! ProfileScreen
-                    }
+                        it("user \(collaborateable ? "is" : "is not") collaborateable") {
+                            expect(subject.user?.isCollaborateable) == collaborateable
+                        }
+                        xit("has \(collaborateButton ? "visible" : "hidden") collaborateButton") {
+                            expect(screen.collaborateButton?.hidden) == collaborateButton
+                        }
 
-                    it("user is hireable") {
-                        expect(subject.user?.isHireable) == true
-                    }
+                        it("user \(hireable ? "is" : "is not") hireable") {
+                            expect(subject.user?.isHireable) == hireable
+                        }
+                        it("has \(hireButtonVisible ? "visible" : "hidden") hireButton") {
+                            expect(screen.hireButton.hidden) == !hireButtonVisible
+                        }
 
-                    it("has hidden mentionButton") {
-                        expect(screen.mentionButton.hidden) == true
-                    }
-
-                    it("has visible hireButton") {
-                        expect(screen.hireButton.hidden) == false
-                    }
-                }
-
-                context("user is NOT hireable") {
-
-                    beforeEach {
-                        ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
-                            RecordedResponse(endpoint: .UserStream(userParam: "not-hireable"), response: .NetworkResponse(200, stubbedData("user_details_not_hireable"))),
-                        ])
-
-                        currentUser = User.stub(["id": "not42"])
-                        subject = ProfileViewController(userParam: "not-hireable")
-                        subject.currentUser = currentUser
-                        showController(subject)
-                        screen = subject.view as! ProfileScreen
-                    }
-
-                    it("user is not hireable") {
-                        expect(subject.user?.isHireable) == false
-                    }
-
-                    it("has visible mentionButton") {
-                        expect(screen.mentionButton.hidden) == false
-                    }
-
-                    it("has hidden hireButton") {
-                        expect(screen.hireButton.hidden) == true
+                        it("has \(mentionButtonVisible ? "visible" : "hidden") mentionButton") {
+                            expect(screen.mentionButton.hidden) == !mentionButtonVisible
+                        }
                     }
                 }
             }
@@ -170,8 +153,8 @@ class ProfileViewControllerSpec: QuickSpec {
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
                         RecordedResponse(endpoint: .UserStream(userParam: "50"), response: .NetworkResponse(200,
                             stubbedData("profile__no_sharing")
-                        )),
-                    ])
+                            )),
+                        ])
 
                     currentUser = User.stub(["id": "not50"])
                     subject = ProfileViewController(userParam: "50")
@@ -306,7 +289,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
                 validateAllSnapshots { return subject }
             }
-
+            
             xcontext("snapshots - currentUser") {
                 let user: User = stub([:])
                 var subject: ProfileViewController!

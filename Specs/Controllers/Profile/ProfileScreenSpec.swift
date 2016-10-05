@@ -13,6 +13,7 @@ class ProfileScreenSpec: QuickSpec {
         func hireTapped() {}
         func editTapped() {}
         func inviteTapped() {}
+        func collaborateTapped() {}
     }
 
     override func spec() {
@@ -48,7 +49,7 @@ class ProfileScreenSpec: QuickSpec {
                     context("IS hireable") {
                         validateAllSnapshots(named: "ProfileScreen_not_current_user_IS_hireable") {
                             let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
-                            subject.configureButtonsForNonCurrentUser(true)
+                            subject.configureButtonsForNonCurrentUser(true, isCollaborateable: false)
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
                             subject.relationshipControl.relationshipPriority = user.relationshipPriority
@@ -60,7 +61,7 @@ class ProfileScreenSpec: QuickSpec {
                     context("is NOT hireable") {
                         validateAllSnapshots(named: "ProfileScreen_not_current_user_is_NOT_hireable") {
                             let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "noise"])
-                            subject.configureButtonsForNonCurrentUser(false)
+                            subject.configureButtonsForNonCurrentUser(false, isCollaborateable: false)
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
                             subject.relationshipControl.relationshipPriority = user.relationshipPriority
