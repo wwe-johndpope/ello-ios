@@ -10,7 +10,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamCreateCommentCell"
 
     public struct Size {
-        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 0)
+        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 10)
         public static let AvatarButtonMargin: CGFloat = 6
         public static let ButtonLabelMargin: CGFloat = 30
         public static let ReplyButtonSize: CGFloat = 50
@@ -22,6 +22,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     weak var delegate: PostbarDelegate?
     let avatarView = FLAnimatedImageView()
     let createCommentBackground = CreateCommentBackgroundView()
+    var watchButtonHiddenConstraint: Constraint!
     var replyButtonVisibleConstraint: Constraint!
     var replyButtonHiddenConstraint: Constraint!
     let createCommentLabel = UILabel()
@@ -44,18 +45,16 @@ public class StreamCreateCommentCell: UICollectionViewCell {
             }
         }
     }
+    var watchVisibility: InteractionVisibility = .Hidden {
+        didSet {
+            watchButton.hidden = (watchVisibility != .Enabled)
+            updateCreateButtonConstraints()
+        }
+    }
     var replyAllVisibility: InteractionVisibility = .Hidden {
         didSet {
             replyAllButton.hidden = (replyAllVisibility != .Enabled)
-            if replyAllButton.hidden {
-                replyButtonVisibleConstraint.uninstall()
-                replyButtonHiddenConstraint.install()
-            }
-            else {
-                replyButtonVisibleConstraint.install()
-                replyButtonHiddenConstraint.uninstall()
-            }
-            setNeedsLayout()
+            updateCreateButtonConstraints()
         }
     }
 
@@ -109,7 +108,7 @@ public class StreamCreateCommentCell: UICollectionViewCell {
 
         replyAllButton.snp_makeConstraints { make in
             make.leading.equalTo(createCommentBackground.snp_trailing)
-            make.trailing.equalTo(watchButton.snp_leading)
+            make.trailing.equalTo(contentView).offset(-Size.WatchMargin)
             make.centerY.equalTo(contentView)
             make.width.height.equalTo(Size.ReplyButtonSize)
         }
@@ -124,9 +123,11 @@ public class StreamCreateCommentCell: UICollectionViewCell {
             make.leading.equalTo(avatarView.snp_trailing).offset(Size.AvatarButtonMargin)
             make.centerY.equalTo(contentView)
             make.height.equalTo(contentView).offset(-Size.Margins.top - Size.Margins.bottom)
+            watchButtonHiddenConstraint = make.trailing.equalTo(contentView).offset(-Size.Margins.right).constraint
             replyButtonVisibleConstraint = make.trailing.equalTo(replyAllButton.snp_leading).constraint
-            replyButtonHiddenConstraint = make.trailing.equalTo(watchButton.snp_leading).offset(-Size.Margins.right).constraint
+            replyButtonHiddenConstraint = make.trailing.equalTo(watchButton.snp_leading).constraint
         }
+        watchButtonHiddenConstraint.uninstall()
         replyButtonVisibleConstraint.uninstall()
 
         createCommentLabel.snp_makeConstraints { make in
@@ -143,6 +144,27 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         super.prepareForReuse()
         avatarView.pin_cancelImageDownload()
         watching = false
+        watchButtonHiddenConstraint.uninstall()
+        replyButtonVisibleConstraint.uninstall()
+        replyButtonHiddenConstraint.uninstall()
+    }
+
+    private func updateCreateButtonConstraints() {
+        if replyAllButton.hidden && watchButton.hidden {
+            watchButtonHiddenConstraint.install()
+            replyButtonVisibleConstraint.uninstall()
+            replyButtonHiddenConstraint.uninstall()
+        }
+        else if replyAllButton.hidden {
+            watchButtonHiddenConstraint.uninstall()
+            replyButtonVisibleConstraint.uninstall()
+            replyButtonHiddenConstraint.install()
+        }
+        else {
+            watchButtonHiddenConstraint.uninstall()
+            replyButtonVisibleConstraint.install()
+            replyButtonHiddenConstraint.uninstall()
+        }
     }
 
     override public func layoutSubviews() {
