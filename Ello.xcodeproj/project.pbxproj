@@ -659,6 +659,8 @@
 		1DD829A21BD93D3600105CDE /* relationship_following.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8299F1BD93D3600105CDE /* relationship_following.json */; };
 		1DD829A31BD93D3600105CDE /* relationship_inactive.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DD829A01BD93D3600105CDE /* relationship_inactive.json */; };
 		1DD829A41BD93D3600105CDE /* relationship_starred.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DD829A11BD93D3600105CDE /* relationship_starred.json */; };
+		1DDA93AC1DA6F74C0007EFDE /* NilSafeEquals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */; };
+		1DDA93AE1DA6F8590007EFDE /* NilSafeEqualsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA93AD1DA6F8590007EFDE /* NilSafeEqualsSpec.swift */; };
 		1DDC85151D91D4BE00C29552 /* WatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85141D91D4BE00C29552 /* WatchSpec.swift */; };
 		1DDC851A1D91D4F300C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
 		1DDC851B1D91D52D00C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
@@ -1551,6 +1553,8 @@
 		1DD8299F1BD93D3600105CDE /* relationship_following.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship_following.json; sourceTree = "<group>"; };
 		1DD829A01BD93D3600105CDE /* relationship_inactive.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship_inactive.json; sourceTree = "<group>"; };
 		1DD829A11BD93D3600105CDE /* relationship_starred.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship_starred.json; sourceTree = "<group>"; };
+		1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NilSafeEquals.swift; sourceTree = "<group>"; };
+		1DDA93AD1DA6F8590007EFDE /* NilSafeEqualsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NilSafeEqualsSpec.swift; sourceTree = "<group>"; };
 		1DDC85141D91D4BE00C29552 /* WatchSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSpec.swift; sourceTree = "<group>"; };
 		1DDC85161D91D4D200C29552 /* Watch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watch.swift; sourceTree = "<group>"; };
 		1DDC85181D91D4E400C29552 /* watches_creating_a_watch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = watches_creating_a_watch.json; sourceTree = "<group>"; };
@@ -2384,6 +2388,7 @@
 				1DCB12471B5EAE2A0023664C /* CGSizeSpec.swift */,
 				1DADA1681A96F4C60000DDA1 /* ColorsSpec.swift */,
 				1DF233661A9655860096DA65 /* FreeMethodsTests.swift */,
+				1DDA93AD1DA6F8590007EFDE /* NilSafeEqualsSpec.swift */,
 				1DF50C9D1C61512000C62D89 /* NSAttributedStringSpec.swift */,
 				127535201B73F7B2006B9A0F /* NSDateSpecs.swift */,
 				F83648F11B0CE62E000CDBC5 /* NSURLExtensionsSpec.swift */,
@@ -2690,6 +2695,7 @@
 				12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */,
 				1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */,
 				12F6AE271A43390900493660 /* ImageExtensions.swift */,
+				1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */,
 				1289F3931AF1474B008A938C /* NSAttributedString.swift */,
 				1275351C1B73D155006B9A0F /* NSDate.swift */,
 				1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */,
@@ -4298,6 +4304,7 @@
 				1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */,
 				12D14C711A43762400C6F8E8 /* ElloNetworkErrorSpec.swift in Sources */,
 				12AF0AFB1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift in Sources */,
+				1DDA93AE1DA6F8590007EFDE /* NilSafeEqualsSpec.swift in Sources */,
 				128CAFE81AF0160100185BA7 /* PreloaderSpec.swift in Sources */,
 				EA68A0E31AADF4AB003F0425 /* MapperSpec.swift in Sources */,
 				1D5F97791A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */,
@@ -4763,6 +4770,7 @@
 				12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
 				1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */,
+				1DDA93AC1DA6F74C0007EFDE /* NilSafeEquals.swift in Sources */,
 				7659FB7F1B29EE0F00DEB6F4 /* StreamInviteFriendsCell.swift in Sources */,
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */,
