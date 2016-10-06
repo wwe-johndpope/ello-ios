@@ -97,12 +97,10 @@ public enum StreamKind {
 
     public var tappingTextOpensDetail: Bool {
         switch self {
-        case .Following, .Starred:
-            return isGridView
-        case .PostDetail, .CurrentUserStream, .UserStream:
+        case .PostDetail:
             return false
         default:
-            return true
+            return isGridView
         }
     }
 
