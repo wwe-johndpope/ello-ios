@@ -72,7 +72,7 @@ public class PostbarController: PostbarDelegate {
 
             if !cell.commentsOpened {
                 let indexPaths = self.dataSource.removeCommentsForPost(post)
-                self.collectionView.deleteItemsAtIndexPaths(indexPaths)
+                self.collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
                 item.state = .Collapsed
                 imageLabelControl.enabled = true
                 imageLabelControl.finishAnimation()
@@ -381,7 +381,7 @@ public class PostbarController: PostbarDelegate {
         self.dataSource.insertUnsizedCellItems(items,
             withWidth: self.collectionView.frame.width,
             startingIndexPath: commentsStartingIndexPath) { (indexPaths) in
-                self.collectionView.insertItemsAtIndexPaths(indexPaths)
+                self.collectionView.reloadData() // insertItemsAtIndexPaths(indexPaths)
                 cell.commentsControl.enabled = true
 
                 if indexPaths.count == 1 && jsonables.count == 0 {
@@ -397,7 +397,7 @@ public class PostbarController: PostbarDelegate {
 
             let items = [createCommentItem]
             self.dataSource.insertStreamCellItems(items, startingIndexPath: indexPath)
-            self.collectionView.insertItemsAtIndexPaths([indexPath])
+            self.collectionView.reloadData() // insertItemsAtIndexPaths([indexPath])
         }
     }
 

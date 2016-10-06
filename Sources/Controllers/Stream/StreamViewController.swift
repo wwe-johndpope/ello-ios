@@ -580,10 +580,11 @@ public final class StreamViewController: BaseElloViewController {
     private func updateCellHeight(indexPath: NSIndexPath, height: CGFloat) {
         let existingHeight = dataSource.heightForIndexPath(indexPath, numberOfColumns: columnCount)
         if height != existingHeight {
-            collectionView.performBatchUpdates({
-                self.dataSource.updateHeightForIndexPath(indexPath, height: height)
-            }, completion: nil)
-            collectionView.reloadItemsAtIndexPaths([indexPath])
+            self.dataSource.updateHeightForIndexPath(indexPath, height: height)
+            // collectionView.performBatchUpdates({
+            //     collectionView.reloadItemsAtIndexPaths([indexPath])
+            // }, completion: nil)
+            collectionView.reloadData()
         }
     }
 
