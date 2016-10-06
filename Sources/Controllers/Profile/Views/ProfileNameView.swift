@@ -21,7 +21,8 @@ extension ProfileNameView {
     }
 
     override func setText() {
-        tmpLabel.text = "Profile Name View"
+        tmpLabel.text = "Name View"
+        tmpLabel.textAlignment = .Center
     }
 
     override func arrange() {

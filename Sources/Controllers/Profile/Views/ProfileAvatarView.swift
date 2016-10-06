@@ -23,7 +23,8 @@ extension ProfileAvatarView {
     override func bindActions() {}
 
     override func setText() {
-        tmpLabel.text = "Profile Avatar View"
+        tmpLabel.text = "Avatar View"
+        tmpLabel.textAlignment = .Center
     }
 
     override func arrange() {

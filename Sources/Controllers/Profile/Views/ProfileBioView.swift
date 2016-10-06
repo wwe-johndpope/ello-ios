@@ -20,7 +20,8 @@ extension ProfileBioView {
     }
 
     override func setText() {
-        tmpLabel.text = "Profile Bio View"
+        tmpLabel.text = "Bio View"
+        tmpLabel.textAlignment = .Center
     }
 
     override func arrange() {

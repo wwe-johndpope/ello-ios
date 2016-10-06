@@ -21,7 +21,8 @@ extension ProfileViewsView {
     }
 
     override func setText() {
-        tmpLabel.text = "Profile Views View"
+        tmpLabel.text = "Views View"
+        tmpLabel.textAlignment = .Center
     }
 
     override func arrange() {

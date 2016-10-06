@@ -20,7 +20,8 @@ extension ProfileActivityView {
     }
 
     override func setText() {
-        tmpLabel.text = "Profile Activity View"
+        tmpLabel.text = "Activity View"
+        tmpLabel.textAlignment = .Center
     }
 
     override func arrange() {

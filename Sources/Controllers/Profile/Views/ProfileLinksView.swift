@@ -20,7 +20,8 @@ extension ProfileLinksView {
     }
 
     override func setText() {
-        tmpLabel.text = "Profile Links View"
+        tmpLabel.text = "Links View"
+        tmpLabel.textAlignment = .Center
     }
 
     override func arrange() {
