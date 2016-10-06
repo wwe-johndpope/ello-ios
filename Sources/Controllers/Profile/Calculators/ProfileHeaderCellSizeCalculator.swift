@@ -90,8 +90,9 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
                 )
             self.cellItems.removeAtIndex(0)
             cellItem.calculatedWebHeight = webViewHeight
-            cellItem.calculatedOneColumnCellHeight = height
-            cellItem.calculatedMultiColumnCellHeight = height
+            // VERY TEMPORARY :point_down:
+            cellItem.calculatedOneColumnCellHeight = 732
+            cellItem.calculatedMultiColumnCellHeight = 732
         }
         loadNext()
     }
