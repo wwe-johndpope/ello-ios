@@ -2,14 +2,13 @@
 ///  ProfileHeaderCellSizeCalculator.swift
 //
 
-import Foundation
+import FutureKit
 
 
 public class ProfileHeaderCellSizeCalculator: NSObject {
     static let ratio: CGFloat = 16 / 9
     let webView: UIWebView
 
-    private let label = ElloLabel()
     private var maxWidth: CGFloat = 0.0
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
@@ -33,9 +32,12 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         }
     }
 
-// MARK: Private
+}
 
-    private func processJob(job: CellJob) {
+private extension ProfileHeaderCellSizeCalculator {
+
+    func processJob(job: CellJob) {
+
         self.completion = {
             if self.cellJobs.count > 0 {
                 self.cellJobs.removeAtIndex(0)
@@ -47,21 +49,16 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         }
         self.cellItems = job.cellItems
         self.maxWidth = job.width
-        self.webView.frame = self.webView.frame.withWidth(job.width - (StreamTextCellPresenter.postMargin * 2))
         loadNext()
     }
 
-    private func loadNext() {
-        if let item = cellItems.safeValue(0) {
-            if let user = item.jsonable as? User {
-                let html = StreamTextCellHTML.postHTML(user.headerHTMLContent)
-                label.setLabelText(user.name)
+    func loadNext() {
 
-                // needs to use the same width as the post text region
-                webView.loadHTMLString(html, baseURL: NSURL(string: "/"))
+        if let item = cellItems.safeValue(0) {
+            if item.jsonable is User {
+                calculateAggregateHeights(item)
             }
             else {
-                label.attributedText = nil
                 assignCellHeight(0)
             }
         }
@@ -70,42 +67,42 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         }
     }
 
-    private func assignCellHeight(webViewHeight: CGFloat) {
-        if let cellItem = cellItems.safeValue(0) {
-            let leftLabelMargin: CGFloat = 15
-            let rightLabelMargin: CGFloat = 82
-            let nameSize: CGSize
-            if let attributedText = label.attributedText {
-                nameSize = attributedText.boundingRectWithSize(CGSize(width: maxWidth - leftLabelMargin - rightLabelMargin, height: CGFloat.max),
-                    options: .UsesLineFragmentOrigin, context: nil).size
-            }
-            else {
-                nameSize = .zero
-            }
+    func assignCellHeight(height: CGFloat) {
 
-            let height = ProfileHeaderCellSizeCalculator.calculateHeightBasedOn(
-                webViewHeight: webViewHeight,
-                nameSize: nameSize,
-                width: maxWidth
-                )
+        if let cellItem = cellItems.safeValue(0) {
             self.cellItems.removeAtIndex(0)
-            cellItem.calculatedWebHeight = webViewHeight
-            // VERY TEMPORARY :point_down:
-            cellItem.calculatedOneColumnCellHeight = 732
-            cellItem.calculatedMultiColumnCellHeight = 732
+            cellItem.calculatedWebHeight = height
+            cellItem.calculatedOneColumnCellHeight = height
+            cellItem.calculatedMultiColumnCellHeight = height
         }
         loadNext()
     }
 
-    class func calculateHeightBasedOn(webViewHeight webViewHeight: CGFloat, nameSize: CGSize, width: CGFloat) -> CGFloat {
-        var height: CGFloat = width / ratio // cover image size
+    func calculateAggregateHeights(item: StreamCellItem) {
+        var totalHeight: CGFloat = 0
 
-        height += 146 // size without webview and name label
-        height += max(webViewHeight, 0)
-        height += nameSize.height
-        return ceil(height)
+        let futures = [
+            ProfileActivitySizeCalculator().calculate(item),
+            ProfileAvatarSizeCalculator().calculate(item),
+            ProfileBioSizeCalculator().calculate(item),
+            ProfileLinksSizeCalculator().calculate(item),
+            ProfileNameSizeCalculator().calculate(item),
+            ProfileViewsSizeCalculator().calculate(item)
+        ]
+
+        let done = after(futures.count) {
+            self.assignCellHeight(totalHeight)
+        }
+
+        for future in futures {
+            future
+                .onSuccess { height in
+                    totalHeight += height
+                    done()
+                }
+                .onFailorCancel { _ in done() }
+        }
     }
-
 }
 
 extension ProfileHeaderCellSizeCalculator: UIWebViewDelegate {
