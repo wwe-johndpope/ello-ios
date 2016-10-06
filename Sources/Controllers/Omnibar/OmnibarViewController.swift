@@ -63,14 +63,13 @@ public class OmnibarViewController: BaseElloViewController {
     convenience public init(editPost post: Post) {
         self.init(nibName: nil, bundle: nil)
         editPost = post
-        PostService().loadPost(post.id,
-            needsComments: false,
-            success: { (post, _) in
+        PostService().loadPost(post.id, needsComments: false)
+            .onSuccess { post in
                 self.rawEditBody = post.body
                 if let body = post.body where self.isViewLoaded() {
                     self.prepareScreenForEditing(body, isComment: false)
                 }
-            })
+            }
     }
 
     convenience public init(parentPost post: Post, defaultText: String?) {
@@ -413,15 +412,11 @@ extension OmnibarViewController {
             didGoToPreviousTab = true
         }
 
-        ElloHUD.showLoadingHudInView(view)
-        screen.interactionEnabled = false
+        startSpinner()
         service.create(
             content: content,
             buyButtonURL: buyButtonURL,
             success: { postOrComment in
-                ElloHUD.hideLoadingHudInView(self.view)
-                self.screen.interactionEnabled = true
-
                 if self.editPost != nil || self.editComment != nil {
                     NSURLCache.sharedURLCache().removeAllCachedResponses()
                 }
@@ -450,10 +445,10 @@ extension OmnibarViewController {
     }
 
     private func emitCommentSuccess(comment: ElloComment) {
-
         if editComment != nil {
             Tracker.sharedTracker.commentEdited(comment)
             postNotification(CommentChangedNotification, value: (comment, .Replaced))
+            stopSpinner()
         }
         else {
             ContentChange.updateCommentCount(comment, delta: 1)
@@ -461,9 +456,18 @@ extension OmnibarViewController {
             postNotification(CommentChangedNotification, value: (comment, .Create))
 
             if let post = comment.parentPost {
-                post.watching = true
-                ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: "posts")
-                postNotification(PostChangedNotification, value: (post, .Watching))
+                PostService().loadPost(post.id, needsComments: false)
+                    .onSuccess { post in
+                        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: "posts")
+                        postNotification(PostChangedNotification, value: (post, .Watching))
+                        self.stopSpinner()
+                    }
+                    .onFail { _ in
+                        self.stopSpinner()
+                    }
+            }
+            else {
+                stopSpinner()
             }
         }
 
@@ -473,6 +477,7 @@ extension OmnibarViewController {
     }
 
     private func emitPostSuccess(post: Post, didGoToPreviousTab: Bool) {
+        stopSpinner()
 
         if editPost != nil {
             Tracker.sharedTracker.postEdited(post)
@@ -497,6 +502,16 @@ extension OmnibarViewController {
         if didGoToPreviousTab {
             NotificationBanner.displayAlert(InterfaceString.Omnibar.CreatedPost)
         }
+    }
+
+    func startSpinner() {
+        ElloHUD.showLoadingHudInView(view)
+        screen.interactionEnabled = false
+    }
+
+    func stopSpinner() {
+        ElloHUD.hideLoadingHudInView(self.view)
+        self.screen.interactionEnabled = true
     }
 
     func contentCreationFailed(errorMessage: String) {

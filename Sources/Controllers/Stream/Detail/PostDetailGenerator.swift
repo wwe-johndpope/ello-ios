@@ -76,10 +76,8 @@ private extension PostDetailGenerator {
         self.destination?.replacePlaceholder(.PostHeader, items: [StreamCellItem(type: .StreamLoading)]) {}
 
         // load the post with no comments
-        PostService().loadPost(
-            postParam,
-            needsComments: false,
-            success: { [weak self] (post, _) in
+        PostService().loadPost(postParam, needsComments: false)
+            .onSuccess { [weak self] post in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.post = post
@@ -87,12 +85,12 @@ private extension PostDetailGenerator {
                 let postItems = sself.parse([post])
                 sself.destination?.replacePlaceholder(.PostHeader, items: postItems) {}
                 doneOperation.run()
-            },
-            failure: { [weak self] _ in
+            }
+            .onFail { [weak self] _ in
                 guard let sself = self else { return }
                 sself.destination?.primaryJSONAbleNotFound()
                 sself.queue.cancelAllOperations()
-        })
+            }
     }
 
     func displayCommentBar(doneOperation: AsyncOperation) {

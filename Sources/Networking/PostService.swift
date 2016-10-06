@@ -19,25 +19,26 @@ public struct PostService {
 
     public func loadPost(
         postParam: String,
-        needsComments: Bool,
-        success: PostSuccessCompletion,
-        failure: ElloFailureCompletion? = nil)
+        needsComments: Bool) -> Future<Post>
     {
         let commentCount = needsComments ? 10 : 0
+        let promise = Promise<Post>()
         ElloProvider.shared.elloRequest(
             ElloAPI.PostDetail(postParam: postParam, commentCount: commentCount),
             success: { (data, responseConfig) in
                 if let post = data as? Post {
                     Preloader().preloadImages([post])
-                    success(post: post, responseConfig: responseConfig)
+                    promise.completeWithSuccess(post)
                 }
-                else if let failure = failure {
-                    ElloProvider.unCastableJSONAble(failure)
+                else {
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
                 }
             },
-            failure: { (error, statusCode) in
-                failure?(error: error, statusCode: statusCode)
+            failure: { (error, _) in
+                promise.completeWithFail(error)
             })
+        return promise.future
     }
 
     public func loadPostComments(
