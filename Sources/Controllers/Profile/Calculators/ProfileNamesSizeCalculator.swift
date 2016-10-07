@@ -1,11 +1,11 @@
 ////
-///  ProfileViewsSizeCalculator.swift
+///  ProfileNamesSizeCalculator.swift
 //
 
 import FutureKit
 
 
-public class ProfileViewsSizeCalculator: NSObject {
+public class ProfileNamesSizeCalculator: NSObject {
 
     public func calculate(item: StreamCellItem) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
@@ -14,4 +14,4 @@ public class ProfileViewsSizeCalculator: NSObject {
     }
 }
 
-private extension ProfileViewsSizeCalculator {}
+private extension ProfileNamesSizeCalculator {}

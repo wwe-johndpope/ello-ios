@@ -19,7 +19,6 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         self.webView = webView
         super.init()
         webView.delegate = self
-        label.lineBreakMode = .ByWordWrapping
     }
 
 // MARK: Public
@@ -82,12 +81,12 @@ private extension ProfileHeaderCellSizeCalculator {
         var totalHeight: CGFloat = 0
 
         let futures = [
-            ProfileActivitySizeCalculator().calculate(item),
+            ProfileStatsSizeCalculator().calculate(item),
             ProfileAvatarSizeCalculator().calculate(item),
             ProfileBioSizeCalculator().calculate(item),
             ProfileLinksSizeCalculator().calculate(item),
-            ProfileNameSizeCalculator().calculate(item),
-            ProfileViewsSizeCalculator().calculate(item)
+            ProfileNamesSizeCalculator().calculate(item),
+            ProfileTotalCountSizeCalculator().calculate(item)
         ]
 
         let done = after(futures.count) {

@@ -1,19 +1,18 @@
 ////
-///  ProfileViewsView.swift
+///  ProfileStatsView.swift
 //
 
-public class ProfileViewsView: ProfileBaseView {
+public class ProfileStatsView: ProfileBaseView {
 
     let tmpLabel = UITextField()
 
     public struct Size {}
-
 }
 
-extension ProfileViewsView {
+extension ProfileStatsView {
 
     override func style() {
-        backgroundColor = .brownColor()
+        backgroundColor = .yellowColor()
     }
 
     override func bindActions() {
@@ -21,7 +20,7 @@ extension ProfileViewsView {
     }
 
     override func setText() {
-        tmpLabel.text = "Views View"
+        tmpLabel.text = "Stats View"
         tmpLabel.textAlignment = .Center
     }
 
@@ -38,4 +37,4 @@ extension ProfileViewsView {
     }
 }
 
-extension ProfileViewsView: ProfileViewProtocol {}
+extension ProfileStatsView: ProfileViewProtocol {}

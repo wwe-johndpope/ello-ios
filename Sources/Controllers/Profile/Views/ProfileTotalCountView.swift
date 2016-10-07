@@ -1,19 +1,19 @@
 ////
-///  ProfileNameView.swift
+///  ProfileTotalCountView.swift
 //
 
-public class ProfileNameView: ProfileBaseView {
+public class ProfileTotalCountView: ProfileBaseView {
 
     let tmpLabel = UITextField()
 
-    public struct Size {
-    }
+    public struct Size {}
+
 }
 
-extension ProfileNameView {
+extension ProfileTotalCountView {
 
     override func style() {
-        backgroundColor = .magentaColor()
+        backgroundColor = .brownColor()
     }
 
     override func bindActions() {
@@ -21,7 +21,7 @@ extension ProfileNameView {
     }
 
     override func setText() {
-        tmpLabel.text = "Name View"
+        tmpLabel.text = "Total Count View"
         tmpLabel.textAlignment = .Center
     }
 
@@ -38,4 +38,4 @@ extension ProfileNameView {
     }
 }
 
-extension ProfileNameView: ProfileViewProtocol {}
+extension ProfileTotalCountView: ProfileViewProtocol {}

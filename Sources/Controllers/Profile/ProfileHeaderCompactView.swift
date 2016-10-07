@@ -25,9 +25,9 @@ public class ProfileHeaderCompactView: ProfileBaseView {
     }
 
     let avatarView = ProfileAvatarView()
-    let nameView = ProfileNameView()
-    let viewsView = ProfileViewsView()
-    let activityView = ProfileActivityView()
+    let namesView = ProfileNamesView()
+    let totalCountView = ProfileTotalCountView()
+    let statsView = ProfileStatsView()
     let bioView = ProfileBioView()
     let linksView = ProfileLinksView()
 }
@@ -46,9 +46,9 @@ extension ProfileHeaderCompactView {
         super.arrange()
 
         addSubview(avatarView)
-        addSubview(nameView)
-        addSubview(viewsView)
-        addSubview(activityView)
+        addSubview(namesView)
+        addSubview(totalCountView)
+        addSubview(statsView)
         addSubview(bioView)
         addSubview(linksView)
 
@@ -58,28 +58,28 @@ extension ProfileHeaderCompactView {
             make.height.equalTo(Size.avatarHeight)
         }
 
-        nameView.snp_makeConstraints { make in
+        namesView.snp_makeConstraints { make in
             make.width.equalTo(self.snp_width)
             make.height.equalTo(Size.nameHeight)
             make.top.equalTo(self.avatarView.snp_bottom)
         }
 
-        viewsView.snp_makeConstraints { make in
+        totalCountView.snp_makeConstraints { make in
             make.width.equalTo(self.snp_width)
             make.height.equalTo(Size.viewsHeight)
-            make.top.equalTo(self.nameView.snp_bottom)
+            make.top.equalTo(self.namesView.snp_bottom)
         }
 
-        activityView.snp_makeConstraints { make in
+        statsView.snp_makeConstraints { make in
             make.width.equalTo(self.snp_width)
             make.height.equalTo(Size.activityHeight)
-            make.top.equalTo(self.viewsView.snp_bottom)
+            make.top.equalTo(self.totalCountView.snp_bottom)
         }
 
         bioView.snp_makeConstraints { make in
             make.width.equalTo(self.snp_width)
             make.height.equalTo(Size.bioHeight)
-            make.top.equalTo(self.activityView.snp_bottom)
+            make.top.equalTo(self.statsView.snp_bottom)
         }
 
         linksView.snp_makeConstraints { make in
