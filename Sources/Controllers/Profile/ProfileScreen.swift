@@ -166,6 +166,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     override func style() {
+        whiteSolidView.backgroundColor = .whiteColor()
         relationshipControl.style = .ProfileView
         relationshipControlsView.effect = UIBlurEffect(style: .Light)
         setupGradient()
