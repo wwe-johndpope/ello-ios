@@ -328,6 +328,7 @@ public enum StreamCellType: Equatable {
             FullWidthSpacer(height: 0.0),
             Notification,
             Placeholder,
+            ProfileHeader,
             Search(placeholder: ""),
             Spacer(height: 0.0),
             StreamLoading,
