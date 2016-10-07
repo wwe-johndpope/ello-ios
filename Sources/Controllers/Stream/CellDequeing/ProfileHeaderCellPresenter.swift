@@ -14,8 +14,11 @@ public struct ProfileHeaderCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? ProfileHeaderCell {
+        guard let
+            cell = cell as? ProfileHeaderCell,
+            user = streamCellItem.jsonable as? User
+        else { return }
 
-        }
+        ProfileNamesPresenter.configure(cell.namesView, user: user, currentUser: currentUser)
     }
 }

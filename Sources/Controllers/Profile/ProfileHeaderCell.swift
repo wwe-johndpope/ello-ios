@@ -17,6 +17,13 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     let headerView = ProfileHeaderCompactView()
 
+    var avatarView: ProfileAvatarView { get { return headerView.avatarView } }
+    var namesView: ProfileNamesView { get { return headerView.namesView } }
+    var totalCountView: ProfileTotalCountView { get { return headerView.totalCountView } }
+    var statsView: ProfileStatsView { get { return headerView.statsView } }
+    var bioView: ProfileBioView { get { return headerView.bioView } }
+    var linksView: ProfileLinksView { get { return headerView.linksView } }
+
     typealias WebContentReady = (webView: UIWebView) -> Void
 
     // this little hack prevents constraints from breaking on initial load
