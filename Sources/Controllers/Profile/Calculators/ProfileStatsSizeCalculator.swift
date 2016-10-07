@@ -5,7 +5,7 @@
 import FutureKit
 
 
-public class ProfileStatsSizeCalculator: NSObject {
+public struct ProfileStatsSizeCalculator {
 
     public func calculate(item: StreamCellItem) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
