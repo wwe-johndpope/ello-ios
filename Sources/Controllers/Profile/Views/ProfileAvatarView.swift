@@ -11,32 +11,48 @@ public class ProfileAvatarView: ProfileBaseView {
         static let whiteBarHeight: CGFloat = 80
     }
 
-    let avatarImage = FLAnimatedImageView()
-    let whiteBar = UIView()
+    public var avatarImage: UIImage? {
+        get { return avatarImageView.image }
+        set { avatarImageView.image = newValue }
+    }
+
+    public var avatarURL: NSURL? {
+        get { return _avatarURL }
+        set {
+            _avatarURL = newValue
+            avatarImageView.pin_setImageFromURL(_avatarURL) { _ in
+                // we may need to notify the cell of this
+                // previously we hid the loader here
+            }
+        }
+    }
+
+    private let avatarImageView = FLAnimatedImageView()
+    private let whiteBar = UIView()
+    private var _avatarURL: NSURL?
+
 }
 
 extension ProfileAvatarView {
 
     override func style() {
         backgroundColor = .clearColor()
-        avatarImage.backgroundColor = .yellowColor()
-        avatarImage.clipsToBounds = true
+        avatarImageView.backgroundColor = .yellowColor()
+        avatarImageView.clipsToBounds = true
         whiteBar.backgroundColor = .whiteColor()
-
     }
 
     override func bindActions() {}
 
-    override func setText() {
-    }
+    override func setText() {}
 
     override func arrange() {
         super.arrange()
 
         addSubview(whiteBar)
-        addSubview(avatarImage)
+        addSubview(avatarImageView)
 
-        avatarImage.snp_makeConstraints { make in
+        avatarImageView.snp_makeConstraints { make in
             make.width.equalTo(Size.avatarWidth)
             make.height.equalTo(Size.avatarHeight)
             make.centerX.equalTo(self)
@@ -54,23 +70,13 @@ extension ProfileAvatarView {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
-        avatarImage.layer.cornerRadius = Size.avatarWidth / 2
-    }
-
-    public func setAvatar(image: UIImage?) {
-        avatarImage.image = image
-    }
-
-    public func setAvatarURL(url: NSURL) {
-        avatarImage.pin_setImageFromURL(url) { _ in
-            // we may need to notify the cell of this
-            // previously we hid the loader here
-        }
+        avatarImageView.layer.cornerRadius = Size.avatarWidth / 2
     }
 
     public func prepareForReuse() {
-        avatarImage.pin_cancelImageDownload()
-        avatarImage.image = nil
+        avatarImageView.pin_cancelImageDownload()
+        avatarImageView.image = nil
+        _avatarURL = nil
     }
 }
 

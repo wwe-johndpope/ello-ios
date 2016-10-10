@@ -17,10 +17,10 @@ public struct ProfileAvatarPresenter {
         if let cachedImage = TemporaryCache.load(.Avatar)
             where isCurrentUser
         {
-            view.setAvatar(cachedImage)
+            view.avatarImage = cachedImage
         }
         else if let url = user.avatarURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true) {
-            view.setAvatarURL(url)
+            view.avatarURL = url
         }
     }
 }
