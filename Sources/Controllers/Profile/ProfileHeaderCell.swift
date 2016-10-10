@@ -60,7 +60,4 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     func showPlaceholders() {}
 
-    func setAvatar(image: UIImage?) {}
-
-    func setAvatarURL(url: NSURL) {}
 }
