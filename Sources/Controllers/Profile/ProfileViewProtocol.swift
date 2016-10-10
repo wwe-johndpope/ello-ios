@@ -2,5 +2,4 @@
 ///  ProfileViewProtocol.swift
 //
 
-public protocol ProfileViewProtocol: class {
-}
+public protocol ProfileViewProtocol: class {}

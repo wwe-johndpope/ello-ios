@@ -85,7 +85,7 @@ private extension ProfileHeaderCellSizeCalculator {
             ProfileAvatarSizeCalculator().calculate(item),
             ProfileBioSizeCalculator().calculate(item),
             ProfileLinksSizeCalculator().calculate(item),
-            ProfileNamesSizeCalculator().calculate(item),
+            ProfileNamesSizeCalculator().calculate(item, maxWidth: maxWidth),
             ProfileTotalCountSizeCalculator().calculate(item)
         ]
 

@@ -632,6 +632,10 @@
 		1D9CF9A51D4966F7004A95B7 /* $_set_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */; };
 		1D9D170F1AE72372009841A4 /* UIViewControllerExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9D170E1AE72372009841A4 /* UIViewControllerExtensionSpec.swift */; };
 		1D9D17111AE72394009841A4 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9D17101AE72394009841A4 /* UIViewController.swift */; };
+		1DA18DF21DA83AF6000231CC /* ProfileNamesSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DF11DA83AF6000231CC /* ProfileNamesSizeCalculatorSpec.swift */; };
+		1DA18DF51DA8471F000231CC /* ProfileNamesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DF31DA8470D000231CC /* ProfileNamesPresenter.swift */; };
+		1DA18DF71DA84773000231CC /* ProfileNamesPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DF61DA84773000231CC /* ProfileNamesPresenterSpec.swift */; };
+		1DA18DFA1DA84978000231CC /* ProfileNamesViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DF91DA84978000231CC /* ProfileNamesViewSpec.swift */; };
 		1DA809C21B8F6DE9000BB590 /* OmnibarScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */; };
 		1DA8FD701B98A63600472B1E /* reorder_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */; };
 		1DA8FD711B98A63600472B1E /* reorder_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */; };
@@ -1543,6 +1547,10 @@
 		1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_set_selected.svg; sourceTree = "<group>"; };
 		1D9D170E1AE72372009841A4 /* UIViewControllerExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensionSpec.swift; sourceTree = "<group>"; };
 		1D9D17101AE72394009841A4 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		1DA18DF11DA83AF6000231CC /* ProfileNamesSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNamesSizeCalculatorSpec.swift; sourceTree = "<group>"; };
+		1DA18DF31DA8470D000231CC /* ProfileNamesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNamesPresenter.swift; sourceTree = "<group>"; };
+		1DA18DF61DA84773000231CC /* ProfileNamesPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileNamesPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/ProfileNamesPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
+		1DA18DF91DA84978000231CC /* ProfileNamesViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNamesViewSpec.swift; sourceTree = "<group>"; };
 		1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenSpec.swift; sourceTree = "<group>"; };
 		1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reorder_normal.svg; sourceTree = "<group>"; };
 		1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reorder_selected.svg; sourceTree = "<group>"; };
@@ -2022,6 +2030,7 @@
 				1266E50F1A9E2BDF00270E1C /* ContentFlaggerSpec.swift */,
 				123DEBF21D3D63FE007B5F86 /* Detail */,
 				1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */,
+				1DA18DF11DA83AF6000231CC /* ProfileNamesSizeCalculatorSpec.swift */,
 				76CCEEDC1ACC8D4B00978663 /* StreamableViewControllerSpec.swift */,
 				127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */,
 				12B093651A6D87C000BF104E /* StreamContainerViewControllerSpec.swift */,
@@ -2309,6 +2318,7 @@
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
 				128D36B81A951F7400622833 /* ProfileHeaderCellPresenter.swift */,
+				1DA18DF31DA8470D000231CC /* ProfileNamesPresenter.swift */,
 				1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */,
 				1D2F65A61D184CA30099D036 /* SeeAllCategoriesCellPresenter.swift */,
 				1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */,
@@ -2661,6 +2671,7 @@
 				1D2F65BF1D1D88DD0099D036 /* CategoryCellPresenterSpec.swift */,
 				1D2F65C01D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift */,
 				125F28891B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift */,
+				1DA18DF61DA84773000231CC /* ProfileNamesPresenterSpec.swift */,
 				1D2F65C61D1D8A230099D036 /* SeeAllCategoriesCellPresenterSpec.swift */,
 				1294EBAB1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift */,
 				12F47DD01AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift */,
@@ -3194,6 +3205,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		1DA18DF81DA8496C000231CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1DA18DF91DA84978000231CC /* ProfileNamesViewSpec.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		1DADC5781AF449A5000DAC88 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -3323,6 +3342,7 @@
 		768043741AC202D3004FEE09 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				1DA18DF81DA8496C000231CC /* Views */,
 				123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */,
 				768043751AC20317004FEE09 /* ProfileViewControllerSpec.swift */,
 				12148F1A1DA31DF300D6296C /* ProfileScreenSpec.swift */,
@@ -4414,6 +4434,7 @@
 				12F47DD11AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift in Sources */,
 				1D2F65C71D1D8A230099D036 /* SeeAllCategoriesCellPresenterSpec.swift in Sources */,
 				12CFF6941B167724007CE68F /* CoderSpec.swift in Sources */,
+				1DA18DF71DA84773000231CC /* ProfileNamesPresenterSpec.swift in Sources */,
 				1D22C8281AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift in Sources */,
 				124727651AB14AC8000079D7 /* ImageAttachmentSpec.swift in Sources */,
 				122C66441B4303400035F4CD /* AutoCompleteResultSpec.swift in Sources */,
@@ -4461,6 +4482,7 @@
 				1D5933791D10CD2F00EAF03D /* CategorySpec.swift in Sources */,
 				12CFF6971B16781B007CE68F /* LovesServiceSpec.swift in Sources */,
 				121D92591A5CACEA004F0455 /* JoinViewControllerSpec.swift in Sources */,
+				1DA18DF21DA83AF6000231CC /* ProfileNamesSizeCalculatorSpec.swift in Sources */,
 				1DBC4A9C1B6044EE00ECF576 /* Array.swift in Sources */,
 				1D652F5A1BC2D66200AF3B06 /* PostbarControllerSpec.swift in Sources */,
 				12D14C6A1A43761A00C6F8E8 /* ElloProviderSpec.swift in Sources */,
@@ -4485,6 +4507,7 @@
 				1229432E1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift in Sources */,
 				76FF805B1A96A28D00617A1E /* RelationshipServiceSpec.swift in Sources */,
 				1DF984041D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift in Sources */,
+				1DA18DFA1DA84978000231CC /* ProfileNamesViewSpec.swift in Sources */,
 				1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */,
 				EA0848451AB1DCDE00B80CDA /* FakePersistentLayer.swift in Sources */,
 				12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */,
@@ -4832,6 +4855,7 @@
 				1D7152E51D7620D2005998FE /* CreateProfileScreen.swift in Sources */,
 				123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */,
 				1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */,
+				1DA18DF51DA8471F000231CC /* ProfileNamesPresenter.swift in Sources */,
 				123375851DA6ECEC0019CFAD /* ProfileBaseView.swift in Sources */,
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
 				12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */,
