@@ -57,19 +57,17 @@ extension User: Stubbable {
         )
         user.avatar = values["avatar"] as? Asset
         user.identifiableBy = (values["identifiableBy"] as? String) ?? "stub-user-identifiable-by"
-        if let count = values["postsCount"] as? Int {
-            user.postsCount = count
+        user.postsCount = (values["postsCount"] as? Int) ?? 0
+        user.lovesCount = (values["lovesCount"] as? Int) ?? 0
+        if let count = values["followersCount"] as? Int {
+            user.followersCount = String(count)
+        }
+        else if let count = values["followersCount"] as? String {
+            user.followersCount = count
         }
         else {
-            user.postsCount = 0
+            user.followersCount = "stub-user-followers-count"
         }
-        if let count = values["lovesCount"] as? Int {
-            user.lovesCount = count
-        }
-        else {
-            user.lovesCount = 0
-        }
-        user.followersCount = (values["followersCount"] as? String) ?? "stub-user-followers-count"
         user.followingCount = (values["followingCount"] as? Int) ?? 0
         user.formattedShortBio = (values["formattedShortBio"] as? String) ?? "stub-user-formatted-short-bio"
         user.externalLinksList = (values["externalLinksList"] as? [[String:String]]) ?? [["text": "ello.co", "url": "http://ello.co"]]
