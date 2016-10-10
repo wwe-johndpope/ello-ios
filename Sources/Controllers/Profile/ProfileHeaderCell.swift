@@ -60,4 +60,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     func showPlaceholders() {}
 
+    public override func prepareForReuse() {
+        avatarView.prepareForReuse()
+    }
 }

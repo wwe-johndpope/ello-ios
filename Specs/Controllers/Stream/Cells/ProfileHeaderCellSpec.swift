@@ -21,7 +21,6 @@ class ProfileHeaderCellSpec: QuickSpec {
                     expectValidSnapshot(cell, device: .Phone6_Portrait)
                 }
                 it("has valid snapshot with an avatar") {
-                    cell.setAvatar(UIImage.imageWithColor(.blueColor(), size: CGSize(width: 200, height: 200))!)
                     expectValidSnapshot(cell, device: .Phone6_Portrait)
                 }
             }
