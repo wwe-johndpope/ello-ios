@@ -20,5 +20,6 @@ public struct ProfileHeaderCellPresenter {
         else { return }
 
         ProfileNamesPresenter.configure(cell.namesView, user: user, currentUser: currentUser)
+        ProfileAvatarPresenter.configure(cell.avatarView, user: user, currentUser: currentUser)
     }
 }

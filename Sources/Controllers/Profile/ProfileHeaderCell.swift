@@ -43,6 +43,8 @@ public class ProfileHeaderCell: UICollectionViewCell {
     }
 
     func arrange() {
+        backgroundColor = .clearColor()
+        contentView.backgroundColor = .clearColor()
         contentView.addSubview(headerView)
 
         headerView.snp_makeConstraints { make in
