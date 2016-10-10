@@ -6,7 +6,7 @@ public class ProfileHeaderCompactView: ProfileBaseView {
 
     public struct Size {
         static let avatarWidth: CGFloat = 122
-        static let avatarHeight: CGFloat = 122
+        static let avatarHeight: CGFloat = 255
 
         static let nameWidth: CGFloat = 122
         static let nameHeight: CGFloat = 122
@@ -35,7 +35,7 @@ public class ProfileHeaderCompactView: ProfileBaseView {
 extension ProfileHeaderCompactView {
 
     override func style() {
-        backgroundColor = .grayColor()
+        backgroundColor = .clearColor()
     }
 
     override func bindActions() {}

@@ -43,6 +43,8 @@ public class ProfileHeaderCell: UICollectionViewCell {
     }
 
     func arrange() {
+        backgroundColor = .clearColor()
+        contentView.backgroundColor = .clearColor()
         contentView.addSubview(headerView)
 
         headerView.snp_makeConstraints { make in
@@ -58,7 +60,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     func showPlaceholders() {}
 
-    func setAvatar(image: UIImage?) {}
-
-    func setAvatarURL(url: NSURL) {}
+    public override func prepareForReuse() {
+        avatarView.prepareForReuse()
+    }
 }
