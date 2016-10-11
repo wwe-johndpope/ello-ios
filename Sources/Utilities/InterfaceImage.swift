@@ -29,6 +29,9 @@ public enum InterfaceImage: String {
     case Reply = "reply"
     case Flag = "flag"
 
+    // Badge Check Icon
+    case BadgeCheck = "badge_check"
+
     // Notification Icons
     case Comments = "bubble"
     case Invite = "relationships"

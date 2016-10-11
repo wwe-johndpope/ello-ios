@@ -351,6 +351,8 @@
 		12A1D8291DAC036300A327D6 /* ProfileAvatarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1D8281DAC036300A327D6 /* ProfileAvatarPresenter.swift */; };
 		12A1D82B1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1D82A1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift */; };
 		12A1D82D1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1D82C1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift */; };
+		12A1D82F1DAD4D0F00A327D6 /* badge_check_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12A1D82E1DAD4D0F00A327D6 /* badge_check_normal.svg */; };
+		12A1D8311DAD511A00A327D6 /* badge_check_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12A1D8301DAD511A00A327D6 /* badge_check_selected.svg */; };
 		12A313D91C73ECAA009727DD /* unselected-pixel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 12A313D81C73ECAA009727DD /* unselected-pixel@2x.png */; };
 		12A3A46F1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */; };
 		12A3A4721AB3556F00D2AFB0 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
@@ -1261,6 +1263,8 @@
 		12A1D8281DAC036300A327D6 /* ProfileAvatarPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAvatarPresenter.swift; sourceTree = "<group>"; };
 		12A1D82A1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAvatarViewSpec.swift; sourceTree = "<group>"; };
 		12A1D82C1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileAvatarPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/ProfileAvatarPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
+		12A1D82E1DAD4D0F00A327D6 /* badge_check_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_check_normal.svg; sourceTree = "<group>"; };
+		12A1D8301DAD511A00A327D6 /* badge_check_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_check_selected.svg; sourceTree = "<group>"; };
 		12A2C93E1AEFDC90002DFD75 /* PreloaderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreloaderSpec.swift; path = specs/Utilities/PreloaderSpec.swift; sourceTree = SOURCE_ROOT; };
 		12A313D81C73ECAA009727DD /* unselected-pixel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected-pixel@2x.png"; sourceTree = "<group>"; };
 		12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ElloPullToRefreshView.swift; path = sources/Views/ElloPullToRefreshView.swift; sourceTree = SOURCE_ROOT; };
@@ -3307,6 +3311,8 @@
 				1D5A90171D39747E00C2AEFF /* $.svg */,
 				1D7152BD1D6F7350005998FE /* 1password_normal.svg */,
 				1D7152BE1D6F7350005998FE /* 1password_white.svg */,
+				12A1D82E1DAD4D0F00A327D6 /* badge_check_normal.svg */,
+				12A1D8301DAD511A00A327D6 /* badge_check_selected.svg */,
 				1D472C251C1F349E00B61E55 /* breaklink_normal.svg */,
 				1DF741701BFAAC02000F5349 /* breaklink_white.svg */,
 				1D9B74CB1BB1E62500ACD028 /* bubble_body_normal.svg */,
@@ -3768,6 +3774,7 @@
 				1D59EF961D6640C50029C106 /* mail_normal.svg in Resources */,
 				7689B4E31AD4ED3B00E4A4A3 /* comments_creating_a_comment.json in Resources */,
 				76F8DEFD1B6C0BC4009BCF61 /* trash_normal.svg in Resources */,
+				12A1D82F1DAD4D0F00A327D6 /* badge_check_normal.svg in Resources */,
 				EAD1ABCD1AB9CBB600779A48 /* amazon-credentials.json in Resources */,
 				1D9B74D21BB1E62500ACD028 /* bubble_body_selected.svg in Resources */,
 				76F8DEF01B6C0BC4009BCF61 /* replyall_normal.svg in Resources */,
@@ -3900,6 +3907,7 @@
 				1D59337E1D1455E700EAF03D /* dots_light_normal.svg in Resources */,
 				76F8DEF11B6C0BC4009BCF61 /* replyall_selected.svg in Resources */,
 				1DC309FC1B03F29300EAD920 /* communities.json in Resources */,
+				12A1D8311DAD511A00A327D6 /* badge_check_selected.svg in Resources */,
 				76F8DEBE1B6C0BC4009BCF61 /* check_normal.svg in Resources */,
 				1DD829A31BD93D3600105CDE /* relationship_inactive.json in Resources */,
 				128C5AF91C59813D00EFC226 /* (null) in Resources */,
