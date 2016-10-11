@@ -9,10 +9,10 @@ public class ProfileTotalCountView: ProfileBaseView {
     let shareButton = UIButton()
 
     public struct Size {
-        static let shareMargin: CGFloat = 10
+        static let shareMargin: CGFloat = 2
         static let shareWidth: CGFloat = 44
         static let shareHeight: CGFloat = 44
-        static let badgeMargin: CGFloat = 10
+        static let badgeMargin: CGFloat = 12
         static let badgeWidth: CGFloat = 44
         static let badgeHeight: CGFloat = 44
     }
@@ -42,7 +42,8 @@ extension ProfileTotalCountView {
     }
 
     override func bindActions() {
-
+        badgeButton.addTarget(self, action: #selector(badgeTapped), forControlEvents: .TouchUpInside)
+        shareButton.addTarget(self, action: #selector(shareTapped), forControlEvents: .TouchUpInside)
     }
 
     override func setText() {
@@ -69,7 +70,7 @@ extension ProfileTotalCountView {
 
         badgeButton.snp_makeConstraints { make in
             make.centerY.equalTo(self)
-            make.trailing.equalTo(self.shareButton.snp_leading).offset(-Size.badgeMargin)
+            make.trailing.equalTo(self.shareButton.snp_leading).offset(Size.badgeMargin)
             make.width.equalTo(Size.badgeWidth)
             make.width.equalTo(Size.badgeWidth)
         }
@@ -78,11 +79,26 @@ extension ProfileTotalCountView {
     }
 }
 
+extension ProfileTotalCountView {
+    func badgeTapped() {
+    }
+
+    func shareTapped() {
+    }
+}
+
+
 private extension ProfileTotalCountView {
 
     func totalViewText(countText: String) -> NSAttributedString {
         let attributed = NSMutableAttributedString()
-        let count = ElloAttributedString.style(countText + " ", [NSForegroundColorAttributeName: UIColor.blackColor()])
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .Center
+
+        let count = ElloAttributedString.style(countText + " ", [
+            NSForegroundColorAttributeName: UIColor.blackColor(),
+            NSParagraphStyleAttributeName : paragraphStyle
+        ])
         attributed.appendAttributedString(count)
         attributed.appendAttributedString(totalViewsText)
         return attributed
