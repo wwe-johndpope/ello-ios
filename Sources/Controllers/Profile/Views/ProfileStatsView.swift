@@ -46,9 +46,6 @@ public class ProfileStatsView: ProfileBaseView {
     private let followingButton = UIButton()
     private let followersButton = UIButton()
     private let lovesButton = UIButton()
-    private var buttons: [UIButton] {
-        return [postsButton, followingButton, followersButton, lovesButton]
-    }
 
     private var allThreeViews: [(count: UILabel, caption: UILabel, button: UIButton)] { return [
         (postsCountLabel,     postsCaptionLabel,     postsButton),
