@@ -3,6 +3,9 @@
 //
 
 public class ProfileBaseView: UIView {
+    struct Size {
+        static let grayInset: CGFloat = 15
+    }
 
     convenience init() {
         self.init(frame: .zero)

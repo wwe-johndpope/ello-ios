@@ -45,6 +45,7 @@ public class ProfileNamesView: ProfileBaseView {
 
     private let nameLabel = UILabel()
     private let usernameLabel = UILabel()
+    private let grayLine = UIView()
 }
 
 extension ProfileNamesView {
@@ -54,9 +55,18 @@ extension ProfileNamesView {
         nameLabel.textColor = .blackColor()
         usernameLabel.font = ProfileNamesView.usernameFont
         usernameLabel.textColor = .greyA()
+        grayLine.backgroundColor = .greyA()
     }
 
     override func arrange() {
+        addSubview(grayLine)
+
+        grayLine.snp_makeConstraints { make in
+            make.height.equalTo(1)
+            make.bottom.equalTo(self)
+            make.leading.trailing.equalTo(self).inset(ProfileBaseView.Size.grayInset)
+        }
+
         addSubview(nameLabel)
         addSubview(usernameLabel)
     }
