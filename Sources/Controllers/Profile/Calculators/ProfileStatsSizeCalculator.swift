@@ -9,7 +9,7 @@ public struct ProfileStatsSizeCalculator {
 
     public func calculate(item: StreamCellItem) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
-        promise.completeWithSuccess(122)
+        promise.completeWithSuccess(70)
         return promise.future
     }
 }
