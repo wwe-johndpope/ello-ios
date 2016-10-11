@@ -46,9 +46,6 @@ public class ProfileStatsView: ProfileBaseView {
     private let followingButton = UIButton()
     private let followersButton = UIButton()
     private let lovesButton = UIButton()
-    private var buttons: [UIButton] {
-        return [postsButton, followingButton, followersButton, lovesButton]
-    }
 
     private var allThreeViews: [(count: UILabel, caption: UILabel, button: UIButton)] { return [
         (postsCountLabel,     postsCaptionLabel,     postsButton),
@@ -57,6 +54,7 @@ public class ProfileStatsView: ProfileBaseView {
         (lovesCountLabel,     lovesCaptionLabel,     lovesButton),
     ]}
 
+    private let grayLine = UIView()
 }
 
 extension ProfileStatsView {
@@ -64,15 +62,17 @@ extension ProfileStatsView {
     override func style() {
         for countLabel in countLabels {
             countLabel.font = .defaultFont(18)
-            countLabel.textColor = .greyA()
+            countLabel.textColor = .blackColor()
             countLabel.textAlignment = .Center
         }
 
         for captionLabel in captionLabels {
             captionLabel.font = .defaultFont()
-            captionLabel.textColor = .blackColor()
+            captionLabel.textColor = .greyA()
             captionLabel.textAlignment = .Center
         }
+
+        grayLine.backgroundColor = .greyA()
     }
 
     override func bindActions() {
@@ -100,6 +100,14 @@ extension ProfileStatsView {
     }
 
     override func arrange() {
+        addSubview(grayLine)
+
+        grayLine.snp_makeConstraints { make in
+            make.height.equalTo(1)
+            make.bottom.equalTo(self)
+            make.leading.trailing.equalTo(self).inset(ProfileBaseView.Size.grayInset)
+        }
+
         var prevCountLabel: UIView?
         for (countLabel, captionLabel, button) in allThreeViews {
             addSubview(countLabel)
@@ -164,13 +172,13 @@ extension ProfileStatsView {
     func buttonDown(touchedButton: UIButton) {
         for (countLabel, captionLabel, button) in allThreeViews {
             guard button == touchedButton else { continue }
-            countLabel.textColor = .blackColor()
+            captionLabel.textColor = .blackColor()
         }
     }
 
     func buttonUp(touchedButton: UIButton) {
         for (countLabel, captionLabel, button) in allThreeViews {
-            countLabel.textColor = .greyA()
+            captionLabel.textColor = .greyA()
         }
     }
 }
