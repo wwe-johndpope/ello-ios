@@ -83,7 +83,7 @@ private extension ProfileHeaderCellSizeCalculator {
         let futures = [
             ProfileStatsSizeCalculator().calculate(item),
             ProfileAvatarSizeCalculator().calculate(item),
-            ProfileBioSizeCalculator().calculate(item),
+            ProfileBioSizeCalculator().calculate(item, maxWidth: maxWidth),
             ProfileLinksSizeCalculator().calculate(item),
             ProfileNamesSizeCalculator().calculate(item, maxWidth: maxWidth),
             ProfileTotalCountSizeCalculator().calculate(item)
