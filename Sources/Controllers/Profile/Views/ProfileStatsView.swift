@@ -80,6 +80,16 @@ extension ProfileStatsView {
         followingButton.addTarget(self, action: #selector(followingButtonTapped), forControlEvents: .TouchUpInside)
         followersButton.addTarget(self, action: #selector(followersButtonTapped), forControlEvents: .TouchUpInside)
         lovesButton.addTarget(self, action: #selector(lovesButtonTapped), forControlEvents: .TouchUpInside)
+
+        postsButton.addTarget(self, action: #selector(buttonDown(_:)), forControlEvents: [.TouchDown, .TouchDragEnter])
+        followingButton.addTarget(self, action: #selector(buttonDown(_:)), forControlEvents: [.TouchDown, .TouchDragEnter])
+        followersButton.addTarget(self, action: #selector(buttonDown(_:)), forControlEvents: [.TouchDown, .TouchDragEnter])
+        lovesButton.addTarget(self, action: #selector(buttonDown(_:)), forControlEvents: [.TouchDown, .TouchDragEnter])
+
+        postsButton.addTarget(self, action: #selector(buttonUp(_:)), forControlEvents: [.TouchUpInside, .TouchCancel, .TouchDragExit])
+        followingButton.addTarget(self, action: #selector(buttonUp(_:)), forControlEvents: [.TouchUpInside, .TouchCancel, .TouchDragExit])
+        followersButton.addTarget(self, action: #selector(buttonUp(_:)), forControlEvents: [.TouchUpInside, .TouchCancel, .TouchDragExit])
+        lovesButton.addTarget(self, action: #selector(buttonUp(_:)), forControlEvents: [.TouchUpInside, .TouchCancel, .TouchDragExit])
     }
 
     override func setText() {
@@ -147,6 +157,21 @@ extension ProfileStatsView {
     }
 
     func lovesButtonTapped() {
+    }
+}
+
+extension ProfileStatsView {
+    func buttonDown(touchedButton: UIButton) {
+        for (countLabel, captionLabel, button) in allThreeViews {
+            guard button == touchedButton else { continue }
+            countLabel.textColor = .blackColor()
+        }
+    }
+
+    func buttonUp(touchedButton: UIButton) {
+        for (countLabel, captionLabel, button) in allThreeViews {
+            countLabel.textColor = .greyA()
+        }
     }
 }
 
