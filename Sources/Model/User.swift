@@ -10,8 +10,8 @@ import SwiftyJSON
 // version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
 // version 4: added notifyOfCommentsOnPostWatchViaPush, notifyOfCommentsOnPostWatchViaEmail
 // version 5: added isCollaborateable, moved notifyOf* into Profile
-// version 6: added totalViewCount, categories
-let UserVersion: Int = 5
+// version 6: added totalViewCount
+let UserVersion: Int = 6
 
 @objc(User)
 public final class User: JSONAble {
