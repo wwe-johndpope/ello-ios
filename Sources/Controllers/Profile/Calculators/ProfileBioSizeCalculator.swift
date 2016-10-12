@@ -8,7 +8,6 @@ import FutureKit
 public class ProfileBioSizeCalculator: NSObject {
     let webView = UIWebView()
     let promise = Promise<CGFloat>()
-    var strongSelf: ProfileBioSizeCalculator?
 
     deinit {
         webView.delegate = nil
@@ -23,7 +22,6 @@ public class ProfileBioSizeCalculator: NSObject {
             return promise.future
         }
 
-        strongSelf = self
         webView.frame.size.width = maxWidth
         webView.delegate = self
         webView.loadHTMLString(StreamTextCellHTML.postHTML(formattedShortBio), baseURL: NSURL(string: "/"))
@@ -37,12 +35,10 @@ extension ProfileBioSizeCalculator: UIWebViewDelegate {
     public func webViewDidFinishLoad(webView: UIWebView) {
         let webViewHeight = webView.windowContentSize()?.height ?? 0
         promise.completeWithSuccess(webViewHeight + ProfileBioView.Size.margins.top + ProfileBioView.Size.margins.bottom)
-        strongSelf = nil
     }
 
     public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         promise.completeWithSuccess(0)
-        strongSelf = nil
     }
 
 }

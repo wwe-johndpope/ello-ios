@@ -21,6 +21,13 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         webView.delegate = self
     }
 
+    let statsSizeCalculator = ProfileStatsSizeCalculator()
+    let avatarSizeCalculator = ProfileAvatarSizeCalculator()
+    let bioSizeCalculator = ProfileBioSizeCalculator()
+    let linksSizeCalculator = ProfileLinksSizeCalculator()
+    let namesSizeCalculator = ProfileNamesSizeCalculator()
+    let totalCountSizeCalculator = ProfileTotalCountSizeCalculator()
+
 // MARK: Public
 
     public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
@@ -81,12 +88,12 @@ private extension ProfileHeaderCellSizeCalculator {
         var totalHeight: CGFloat = 0
 
         let futures = [
-            ProfileStatsSizeCalculator().calculate(item),
-            ProfileAvatarSizeCalculator().calculate(item),
-            ProfileBioSizeCalculator().calculate(item, maxWidth: maxWidth),
-            ProfileLinksSizeCalculator().calculate(item),
-            ProfileNamesSizeCalculator().calculate(item, maxWidth: maxWidth),
-            ProfileTotalCountSizeCalculator().calculate(item)
+            statsSizeCalculator.calculate(item),
+            avatarSizeCalculator.calculate(item),
+            bioSizeCalculator.calculate(item, maxWidth: maxWidth),
+            linksSizeCalculator.calculate(item),
+            namesSizeCalculator.calculate(item, maxWidth: maxWidth),
+            totalCountSizeCalculator.calculate(item)
         ]
 
         let done = after(futures.count) {
