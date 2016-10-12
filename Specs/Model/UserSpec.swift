@@ -10,8 +10,11 @@ import Nimble
 
 class UserSpec: QuickSpec {
     override func spec() {
+
         describe("User") {
+
             describe("coverImageURL") {
+
                 let originalPng: Attachment = stub(["url": "http://original.png"])
                 let originalGif: Attachment = stub(["url": "http://original.gif"])
                 let optimized: Attachment = stub(["url": "http://optimized.png"])
@@ -25,31 +28,37 @@ class UserSpec: QuickSpec {
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: true)).to(beNil())
                     expect(subject.coverImageURL(viewsAdultContent: false, animated: true)).to(beNil())
                 }
+
                 it("should return original if its not adult content, and is a gif") {
                     let subject: User = stub(["coverImage": assetGif, "postsAdultContent": false])
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: true)) == originalGif.url
                     expect(subject.coverImageURL(viewsAdultContent: false, animated: true)) == originalGif.url
                 }
+
                 it("should return hdpi if its not adult content, and is a gif, but animated is disabled") {
                     let subject: User = stub(["coverImage": assetGif, "postsAdultContent": false])
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: false)) == hdpi.url
                     expect(subject.coverImageURL(viewsAdultContent: false, animated: false)) == hdpi.url
                 }
+
                 it("should return hdpi if its not adult content, and is not a gif") {
                     let subject: User = stub(["coverImage": asset, "postsAdultContent": false])
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: true)) == hdpi.url
                     expect(subject.coverImageURL(viewsAdultContent: false, animated: true)) == hdpi.url
                 }
+
                 it("should return hdpi if it is adult content and a gif") {
                     let subject: User = stub(["coverImage": assetGif, "postsAdultContent": true])
                     expect(subject.coverImageURL(viewsAdultContent: false, animated: true)) == hdpi.url
                 }
+
                 it("should return original if it is adult content, but current user views adult content") {
                     let subject: User = stub(["coverImage": assetGif, "postsAdultContent": true])
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: true)) == originalGif.url
                 }
             }
             describe("avatarURL") {
+
                 let originalPng: Attachment = stub(["url": "http://original.png"])
                 let originalGif: Attachment = stub(["url": "http://original.gif"])
                 let large: Attachment = stub(["url": "http://large.png"])
@@ -63,36 +72,45 @@ class UserSpec: QuickSpec {
                     expect(subject.avatarURL(viewsAdultContent: true, animated: true)).to(beNil())
                     expect(subject.avatarURL(viewsAdultContent: false, animated: true)).to(beNil())
                 }
+
                 it("should return original if its not adult content, and is a gif") {
                     let subject: User = stub(["avatar": assetGif, "postsAdultContent": false])
                     expect(subject.avatarURL(viewsAdultContent: true, animated: true)) == originalGif.url
                     expect(subject.avatarURL(viewsAdultContent: false, animated: true)) == originalGif.url
                 }
+
                 it("should return large if its not adult content, and is a gif, but is not animated") {
                     let subject: User = stub(["avatar": assetGif, "postsAdultContent": false])
                     expect(subject.avatarURL(viewsAdultContent: true, animated: false)) == large.url
                     expect(subject.avatarURL(viewsAdultContent: false, animated: false)) == large.url
                 }
+
                 it("should return large if its not adult content, and is not a gif") {
                     let subject: User = stub(["avatar": asset, "postsAdultContent": false])
                     expect(subject.avatarURL(viewsAdultContent: true, animated: true)) == large.url
                     expect(subject.avatarURL(viewsAdultContent: false, animated: true)) == large.url
                 }
+
                 it("should return large if it is adult content and a gif") {
                     let subject: User = stub(["avatar": assetGif, "postsAdultContent": true])
                     expect(subject.avatarURL(viewsAdultContent: false, animated: true)) == large.url
                 }
+
                 it("should return original if it is adult content, but current user views adult content") {
                     let subject: User = stub(["avatar": assetGif, "postsAdultContent": true])
                     expect(subject.avatarURL(viewsAdultContent: true, animated: true)) == originalGif.url
                 }
             }
+
             describe("isOwnPost(_:)") {
+
                 let subject: User = stub(["id": "correctId"])
+
                 it("should return true if post's author is the current user") {
                     let post: Post = stub(["authorId": "correctId"])
                     expect(subject.isOwnPost(post)) == true
                 }
+
                 it("should return false if post's author is not the user") {
                     let post: Post = stub(["authorId": "WRONG ID"])
                     expect(subject.isOwnPost(post)) == false
@@ -100,24 +118,48 @@ class UserSpec: QuickSpec {
             }
 
             describe("isOwnComment(_:)") {
+
                 let subject: User = stub(["id": "correctId"])
+
                 it("should return true if comment's author is the current user") {
                     let comment: ElloComment = stub(["authorId": "correctId"])
                     expect(subject.isOwnComment(comment)) == true
                 }
+
                 it("should return false if comment's author is not the user") {
                     let comment: ElloComment = stub(["authorId": "WRONG ID"])
                     expect(subject.isOwnComment(comment)) == false
                 }
             }
 
+            describe("formattedTotalCount()") {
+
+                it("returns <1000 when totalViewsCount is less totalViewsCount 1000") {
+                    let subject: User = stub(["totalViewsCount": 950])
+                    expect(subject.formattedTotalCount()) == "<1000"
+                }
+
+                it("returns <1000 if totalViewsCount is not present") {
+                    let subject: User = stub([:])
+                    expect(subject.formattedTotalCount()) == "<1000"
+                }
+
+                it("returns proper value if totalViewsCount is greater than 999") {
+                    let subject: User = stub(["totalViewsCount": 23_450_123])
+                    expect(subject.formattedTotalCount()) == "23.45M"
+                }
+            }
+
             describe("isOwnParentPost(_:)") {
+
                 let subject: User = stub(["id": "correctId"])
+
                 it("should return true if comment parentPost's author is the current user") {
                     let post: Post = stub(["authorId": "correctId"])
                     let comment: ElloComment = stub(["loadedFromPost": post])
                     expect(subject.isOwnParentPost(comment)) == true
                 }
+
                 it("should return false if comment parentPost's author is not the user") {
                     let post: Post = stub(["authorId": "WRONG ID"])
                     let comment: ElloComment = stub(["loadedFromPost": post])
@@ -126,6 +168,7 @@ class UserSpec: QuickSpec {
             }
 
             describe("+fromJSON:") {
+
                 it("parses correctly") {
                     let data = stubbedJSONData("users_user_details", "users")
                     let user = User.fromJSON(data) as! User
@@ -148,6 +191,7 @@ class UserSpec: QuickSpec {
                     expect(user.postsCount!) == 4
                     expect(user.followersCount!) == "0"
                     expect(user.followingCount!) == 0
+                    expect(user.totalViewsCount!) == 9762
                     expect(user.formattedShortBio) == "<p>Have been spying for a while now.</p>"
     //                expect(user.externalLinks) == "http://isis.com http://ello.co"
                     expect(user.coverImage).to(beAKindOf(Asset.self))
@@ -216,6 +260,8 @@ class UserSpec: QuickSpec {
                             "externalLinks": "sample-external-links"
                         ])
 
+                        user.totalViewsCount = 5003
+
                         NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
                         let unArchivedUser = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as! User
 
@@ -233,6 +279,7 @@ class UserSpec: QuickSpec {
                         expect(unArchivedUser.hasLovesEnabled) == true
                         expect(unArchivedUser.hasSharingEnabled) == true
                         expect(unArchivedUser.hasRepostingEnabled) == true
+                        expect(unArchivedUser.totalViewsCount) == 5003
 
                         let firstPost = unArchivedUser.posts!.first!
                         expect(firstPost.id) == "sample-post-id"

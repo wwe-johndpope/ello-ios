@@ -10,6 +10,7 @@ import SwiftyJSON
 // version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
 // version 4: added notifyOfCommentsOnPostWatchViaPush, notifyOfCommentsOnPostWatchViaEmail
 // version 5: added isCollaborateable, moved notifyOf* into Profile
+// version 6: added totalViewCount, categories
 let UserVersion: Int = 5
 
 @objc(User)
@@ -49,6 +50,8 @@ public final class User: JSONAble {
     public var coverImage: Asset?
     public var backgroundPosition: String?
     public var onboardingVersion: Int?
+    public var totalViewsCount: Int?
+
     // links
     public var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     public var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
@@ -158,6 +161,8 @@ public final class User: JSONAble {
         self.coverImage = decoder.decodeOptionalKey("coverImage")
         self.backgroundPosition = decoder.decodeOptionalKey("backgroundPosition")
         self.onboardingVersion = decoder.decodeOptionalKey("onboardingVersion")
+        self.totalViewsCount = decoder.decodeOptionalKey("totalViewsCount")
+
         // profile
         self.profile = decoder.decodeOptionalKey("profile")
         super.init(coder: decoder.coder)
@@ -183,8 +188,10 @@ public final class User: JSONAble {
 
     public override func encodeWithCoder(encoder: NSCoder) {
         let coder = Coder(encoder)
+
         // active record
         coder.encodeObject(id, forKey: "id")
+
         // required
         coder.encodeObject(href, forKey: "href")
         coder.encodeObject(username, forKey: "username")
@@ -199,6 +206,7 @@ public final class User: JSONAble {
         coder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
         coder.encodeObject(isCollaborateable, forKey: "isCollaborateable")
         coder.encodeObject(isHireable, forKey: "isHireable")
+
         // optional
         coder.encodeObject(avatar, forKey: "avatar")
         coder.encodeObject(identifiableBy, forKey: "identifiableBy")
@@ -211,6 +219,8 @@ public final class User: JSONAble {
         coder.encodeObject(coverImage, forKey: "coverImage")
         coder.encodeObject(backgroundPosition, forKey: "backgroundPosition")
         coder.encodeObject(onboardingVersion, forKey: "onboardingVersion")
+        coder.encodeObject(totalViewsCount, forKey: "totalViewsCount")
+
         // profile
         coder.encodeObject(profile, forKey: "profile")
         super.encodeWithCoder(coder.coder)
@@ -275,6 +285,9 @@ public final class User: JSONAble {
         if !fromLinked {
             ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
         }
+
+        user.totalViewsCount = json["total_views_count"].int
+
         return user
     }
 }
@@ -327,6 +340,12 @@ extension User {
 
     func isOwnParentPost(comment: ElloComment) -> Bool {
         return id == comment.loadedFromPost?.authorId || id == comment.loadedFromPost?.repostAuthor?.id
+    }
+
+    func formattedTotalCount() -> String {
+        guard let count = totalViewsCount else { return "" }
+        if count < 1000 { return "<1000" }
+        return count.numberToHuman(rounding: 2, showZero: true)
     }
 }
 
