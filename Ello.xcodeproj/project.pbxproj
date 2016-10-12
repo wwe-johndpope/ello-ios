@@ -272,6 +272,7 @@
 		1249AD871D9EC3FC009074FD /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249AD861D9EC3FC009074FD /* ProfileScreen.swift */; };
 		124A18751A914BCB00BC7E86 /* ProfileServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */; };
 		124A18771A914CC100BC7E86 /* profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 124A18761A914CC100BC7E86 /* profile.json */; };
+		124B48601DAED27F0058D3F5 /* ProfileCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B485F1DAED27F0058D3F5 /* ProfileCategoriesViewController.swift */; };
 		124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124BBEDE1BDFEDE900CBDF69 /* AppDelegateSpec.swift */; };
 		124CFB9A1C5976E500727D11 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CFB991C5976E500727D11 /* ShareViewController.swift */; };
 		124CFB9D1C5976E500727D11 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 124CFB9B1C5976E500727D11 /* MainInterface.storyboard */; };
@@ -1200,6 +1201,7 @@
 		1249AD861D9EC3FC009074FD /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileServiceSpec.swift; sourceTree = "<group>"; };
 		124A18761A914CC100BC7E86 /* profile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
+		124B485F1DAED27F0058D3F5 /* ProfileCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesViewController.swift; sourceTree = "<group>"; };
 		124BBEDE1BDFEDE900CBDF69 /* AppDelegateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateSpec.swift; sourceTree = "<group>"; };
 		124CFB971C5976E500727D11 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		124CFB991C5976E500727D11 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -3191,6 +3193,7 @@
 			isa = PBXGroup;
 			children = (
 				123375791DA6EC9C0019CFAD /* Calculators */,
+				124B485F1DAED27F0058D3F5 /* ProfileCategoriesViewController.swift */,
 				123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */,
 				769865C01A8D3E3F009B6292 /* ProfileHeaderCell.swift */,
 				123375741DA6B8A80019CFAD /* ProfileHeaderCompactView.swift */,
@@ -4816,6 +4819,7 @@
 				1207C9731C73FEE000939ADB /* AutoCompleteService.swift in Sources */,
 				1D71528F1D6CA22C005998FE /* Screen.swift in Sources */,
 				76B0B18D1B41AFD2004C2D7B /* UserAvatarsCell.swift in Sources */,
+				124B48601DAED27F0058D3F5 /* ProfileCategoriesViewController.swift in Sources */,
 				1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */,
 				1207C9811C73FEE000939ADB /* InviteService.swift in Sources */,
 				1275351D1B73D155006B9A0F /* NSDate.swift in Sources */,
