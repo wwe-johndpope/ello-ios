@@ -77,6 +77,10 @@ extension ProfileTotalCountView {
 
         layoutIfNeeded()
     }
+
+    public func prepareForReuse() {
+        // nothing here yet
+    }
 }
 
 extension ProfileTotalCountView {

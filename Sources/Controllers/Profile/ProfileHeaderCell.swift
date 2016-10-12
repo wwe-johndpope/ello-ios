@@ -63,5 +63,6 @@ public class ProfileHeaderCell: UICollectionViewCell {
     public override func prepareForReuse() {
         avatarView.prepareForReuse()
         statsView.prepareForReuse()
+        totalCountView.prepareForReuse()
     }
 }
