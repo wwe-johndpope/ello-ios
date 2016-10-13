@@ -23,6 +23,26 @@ class RelationshipControlSpec: QuickSpec {
                 subject.relationshipDelegate = relationshipController
             }
 
+            describe("snapshots") {
+                let relationships: [(RelationshipControlStyle, RelationshipPriority)] = [
+                    (.Default, .Following),
+                    (.Default, .Starred),
+                    (.Default, .Mute),
+                    (.Default, .None),
+                    (.ProfileView, .Following),
+                    (.ProfileView, .Starred),
+                    (.ProfileView, .Mute),
+                    (.ProfileView, .None),
+                ]
+                for (style, relationship) in relationships {
+                    it("setting style to \(style) and relationshipPriority to \(relationship)") {
+                        subject.style = style
+                        subject.relationshipPriority = relationship
+                        expectValidSnapshot(subject, named: "style_\(style)_relationshipPriority_\(relationship)", device: .Custom(subject.intrinsicContentSize()))
+                    }
+                }
+            }
+
             describe("@relationship") {
 
                 it("sets button state properly when set to Following") {
@@ -47,16 +67,6 @@ class RelationshipControlSpec: QuickSpec {
                     expect(subject.followingButton.backgroundColor) == UIColor.redColor()
                     subject.frame.size = subject.intrinsicContentSize()
                     expect(subject).to(haveValidSnapshot())
-                }
-
-                for relationshipPriority in [RelationshipPriority.Inactive, RelationshipPriority.None, RelationshipPriority.Null, RelationshipPriority.Me] {
-                    it("sets button state properly when set to \(relationshipPriority)") {
-                        subject.relationshipPriority = relationshipPriority
-                        expect(subject.followingButton.currentTitle) == "Follow"
-                        expect(subject.followingButton.backgroundColor) == UIColor.clearColor()
-                        subject.frame.size = subject.intrinsicContentSize()
-                        expect(subject).to(haveValidSnapshot())
-                    }
                 }
             }
 

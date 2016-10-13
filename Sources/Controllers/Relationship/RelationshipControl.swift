@@ -2,9 +2,6 @@
 ///  RelationshipControl.swift
 //
 
-private let ViewHeight: CGFloat = 30
-private let MinViewWidth: CGFloat = 105
-
 
 public enum RelationshipControlStyle {
     case Default
@@ -19,7 +16,7 @@ public enum RelationshipControlStyle {
 
     var starButtonWidth: CGFloat {
         switch self {
-            case .ProfileView: return 50
+            case .ProfileView: return 20
             default: return 30
         }
     }
@@ -27,11 +24,19 @@ public enum RelationshipControlStyle {
 
 
 public class RelationshipControl: UIView {
+    struct Size {
+        static let viewHeight: CGFloat = 30
+        static let minViewWidth: CGFloat = 105
+    }
+
     let followingButton = FollowButton()
     let starButton = StarButton()
     var style: RelationshipControlStyle = .Default {
         didSet {
-            starButton.style = style
+            followingButton.relationshipStyle = style
+            starButton.relationshipStyle = style
+            setNeedsLayout()
+            invalidateIntrinsicContentSize()
         }
     }
 
@@ -73,21 +78,21 @@ public class RelationshipControl: UIView {
     }
 
     private func setup() {
-        addSubviews()
-        addTargets()
+        arrange()
+        bindActions()
         starButton.hidden = !showStarButton
         updateRelationshipPriority()
         backgroundColor = .clearColor()
     }
 
     public override func intrinsicContentSize() -> CGSize {
-        var totalSize = CGSize(width: 0, height: ViewHeight)
+        var totalSize = CGSize(width: 0, height: Size.viewHeight)
         let followingSize = followingButton.intrinsicContentSize()
-        if followingSize.width > MinViewWidth {
+        if followingSize.width > Size.minViewWidth {
             totalSize.width += followingSize.width
         }
         else {
-            totalSize.width += MinViewWidth
+            totalSize.width += Size.minViewWidth
         }
 
         if showStarButton {
@@ -175,12 +180,13 @@ public class RelationshipControl: UIView {
     }
 
     // MARK: Private
-    private func addSubviews() {
+
+    private func arrange() {
         addSubview(starButton)
         addSubview(followingButton)
     }
 
-    private func addTargets() {
+    private func bindActions() {
         followingButton.addTarget(self, action: #selector(RelationshipControl.followingButtonTapped(_:)), forControlEvents: .TouchUpInside)
         starButton.addTarget(self, action: #selector(RelationshipControl.starButtonTapped(_:)), forControlEvents: .TouchUpInside)
     }
@@ -207,9 +213,8 @@ public class RelationshipControl: UIView {
         super.layoutSubviews()
 
         let starButtonWidth: CGFloat
-
         if !relationshipPriority.isMutedOrBlocked && showStarButton {
-            starButton.frame = CGRect(x: frame.width - style.starButtonWidth, y: 0, width: style.starButtonWidth, height: ViewHeight)
+            starButton.frame = CGRect(x: frame.width - style.starButtonWidth, y: 0, width: style.starButtonWidth, height: Size.viewHeight)
             starButtonWidth = style.starButtonWidth + style.starButtonMargin
         }
         else {
@@ -238,51 +243,7 @@ public class RelationshipControl: UIView {
         }
 
         var starred: Bool {
-            switch self {
-            case .Starred: return true
-            default: return false
-            }
-        }
-
-        var normalTextColor: UIColor {
-            switch self {
-            case .None: return .blackColor()
-            default: return .whiteColor()
-            }
-        }
-
-        var highlightedTextColor: UIColor {
-            return .whiteColor()
-        }
-
-        var borderColor: UIColor {
-            switch self {
-            case .Muted, .Blocked: return .redColor()
-            default: return .blackColor()
-            }
-        }
-
-        var normalBackgroundColor: UIColor {
-            switch self {
-            case .Muted, .Blocked: return .redColor()
-            case .None: return UIColor.clearColor()
-            default: return .blackColor()
-            }
-        }
-
-        var starBackgroundColor: UIColor {
-            switch self {
-            case .Starred: return UIColor.blackColor()
-            default: return .clearColor()
-            }
-        }
-
-        var selectedBackgroundColor: UIColor {
-            switch self {
-            case .Muted, .Blocked: return UIColor.redFFCCCC()
-            case .None: return .blackColor()
-            default: return .grey4D()
-            }
+            return self == .Starred
         }
 
         var image: UIImage? {
@@ -301,98 +262,95 @@ public class RelationshipControl: UIView {
         }
     }
 
-    class FollowButton: RoundedElloButton {
+    class FollowButton: StyledButton {
+        var relationshipStyle: RelationshipControlStyle = .Default {
+            didSet { recalculateStyle() }
+        }
         private var config: Config = .None {
-            didSet {
-                setTitleColor(config.normalTextColor, forState: .Normal)
-                setTitleColor(config.highlightedTextColor, forState: .Highlighted)
-                setTitleColor(UIColor.greyC(), forState: .Disabled)
-                setTitle("", forState: .Disabled)
-                setTitle(config.title, forState: .Normal)
-                setImage(config.image, forState: .Normal)
-                setImage(config.highlightedImage, forState: .Highlighted)
-                borderColor = config.borderColor
-                backgroundColor = config.normalBackgroundColor
-            }
+            didSet { recalculateStyle() }
         }
 
+        private func recalculateStyle() {
+            let style: StyledButton.Style
+            var image: UIImage? = nil
+            var highlightedImage: UIImage? = nil
+
+            if config == .Following || config == .Starred {
+                if relationshipStyle == .ProfileView {
+                    style = .GrayPill
+                }
+                else {
+                    style = .BlackPill
+                }
+                image = InterfaceImage.CheckSmall.whiteImage
+                highlightedImage = image
+            }
+            else if config == .Muted || config == .Blocked {
+                style = .RedPill
+            }
+            else if relationshipStyle == .ProfileView && config == .None {
+                style = .GreenPill
+                image = InterfaceImage.PlusSmall.whiteImage
+                highlightedImage = image
+            }
+            else {
+                style = .BlackPillOutline
+                image = InterfaceImage.PlusSmall.selectedImage
+                highlightedImage = InterfaceImage.PlusSmall.whiteImage
+            }
+
+            setTitle(config.title, forState: .Normal)
+            setImage(image, forState: .Normal)
+            setImage(highlightedImage, forState: .Highlighted)
+            setImage(UIImage(), forState: .Disabled)
+            self.style = style
+        }
 
         override func sharedSetup() {
             super.sharedSetup()
             contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 10)
-            setImage(.PlusSmall, imageStyle: .Selected, forState: .Normal)
-
             adjustsImageWhenDisabled = false
-            setImage(UIImage(), forState: .Disabled)
-
-            config = .None
-            backgroundColor = config.normalBackgroundColor
-            borderColor = UIColor.greyE5()
-        }
-
-        override func updateOutline() {
-            super.updateOutline()
-            if enabled {
-                backgroundColor = highlighted ? config.selectedBackgroundColor : config.normalBackgroundColor
-            }
+            recalculateStyle()
         }
     }
 
-    class StarButton: RoundedElloButton {
-        var style: RelationshipControlStyle = .Default {
-            didSet {
-                updateStyle()
-            }
+    class StarButton: StyledButton {
+        var relationshipStyle: RelationshipControlStyle = .Default {
+            didSet { recalculateStyle() }
+        }
+        private var config: Config = .None {
+            didSet { recalculateStyle() }
         }
 
-        private var config: Config = .None {
-            didSet {
-                updateOutline()
-                updateStyle()
+        private func recalculateStyle() {
+            var image: UIImage? = nil
+            var highlightedImage: UIImage? = nil
+
+            if config == .Starred {
+                image = InterfaceImage.Star.whiteImage
+                highlightedImage = image
             }
+            else if relationshipStyle == .ProfileView {
+                image = InterfaceImage.Star.selectedImage
+                highlightedImage = InterfaceImage.Star.whiteImage
+            }
+            else {
+                image = InterfaceImage.Star.normalImage
+                highlightedImage = InterfaceImage.Star.whiteImage
+            }
+
+            setImage(image, forState: .Normal)
+            setImage(highlightedImage, forState: .Highlighted)
+            setImage(UIImage(), forState: .Disabled)
         }
 
         override func sharedSetup() {
             super.sharedSetup()
 
             adjustsImageWhenDisabled = false
-            setImage(UIImage(), forState: .Disabled)
-
             config = .None
-            updateStyle()
-        }
-
-        override func updateStyle() {
-            super.updateStyle()
-
-            let selected = config.starred
-            let backgroundColor: UIColor
-            switch style {
-                case .ProfileView:
-                    if selected {
-                        setImage(.Star, imageStyle: .White, forState: .Normal)
-                    }
-                    else {
-                        setImage(.Star, imageStyle: .Normal, forState: .Normal)
-                    }
-                    setImage(.Star, imageStyle: .White, forState: .Highlighted)
-                    layer.borderWidth = 1
-                    backgroundColor = config.starBackgroundColor
-                    imageEdgeInsets.top = -1
-                default:
-                    if selected {
-                        setImage(.Star, imageStyle: .Selected, forState: .Normal)
-                    }
-                    else {
-                        setImage(.Star, imageStyle: .Normal, forState: .Normal)
-                    }
-                    setImage(.Star, imageStyle: .Selected, forState: .Highlighted)
-                    layer.borderWidth = 0
-                    backgroundColor = .clearColor()
-                    imageEdgeInsets.top = 0
-            }
-
-            self.backgroundColor = enabled ? backgroundColor : .greyF2()
+            style = .ClearWhite
+            recalculateStyle()
         }
     }
 }
