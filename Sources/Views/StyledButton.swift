@@ -194,12 +194,12 @@ extension StyledButton.Style {
         titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
         borderColor: .blackColor(), highlightedBorderColor: .greyE5()
         )
-    public static let RoundedBlack = StyledButton.Style(
+    public static let BlackPill = StyledButton.Style(
         backgroundColor: .blackColor(), disabledBackgroundColor: .greyF2(),
         titleColor: .whiteColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
         cornerRadius: nil
         )
-    public static let RoundedBlackOutline = StyledButton.Style(
+    public static let BlackPillOutline = StyledButton.Style(
         titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyF2(),
         borderColor: .blackColor(), disabledBorderColor: .greyF2(),
         cornerRadius: nil
@@ -232,14 +232,19 @@ extension StyledButton.Style {
         titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
         cornerRadius: 5
         )
-    public static let RoundedGreen = StyledButton.Style(
+    public static let GreenPill = StyledButton.Style(
         backgroundColor: .greenD1(), disabledBackgroundColor: .grey6(),
         titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
         cornerRadius: nil
         )
-    public static let RoundedRed = StyledButton.Style(
+    public static let RedPill = StyledButton.Style(
         backgroundColor: .redColor(), disabledBackgroundColor: .grey6(),
         titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
+        cornerRadius: nil
+        )
+    public static let GrayPill = StyledButton.Style(
+        backgroundColor: .greyA(),
+        titleColor: .whiteColor(),
         cornerRadius: nil
         )
 
@@ -248,7 +253,7 @@ extension StyledButton.Style {
         case "LightGray": return .LightGray
         case "White": return .White
         case "SquareBlack": return .SquareBlack
-        case "RoundedBlack": return .RoundedBlack
+        case "BlackPill": return .BlackPill
         case "RoundedGray": return .RoundedGray
         case "InviteFriend": return .InviteFriend
         case "Invited": return .Invited

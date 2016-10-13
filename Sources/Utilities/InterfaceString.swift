@@ -121,6 +121,7 @@ public struct InterfaceString {
     public struct Profile {
         static let Title: String = NSLocalizedString("Profile", comment: "Profile Title")
         static let Mention: String = NSLocalizedString("@ Mention", comment: "Mention button title")
+        static let Collaborate: String = NSLocalizedString("Collab", comment: "Collaborate button title")
         static let Hire: String = NSLocalizedString("Hire", comment: "Hire button title")
         static let Invite: String = NSLocalizedString("Invite", comment: "Invite button title")
         static let EditProfile: String = NSLocalizedString("Edit Profile", comment: "Edit Profile button title")

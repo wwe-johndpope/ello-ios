@@ -25,12 +25,11 @@ class ProfileScreenSpec: QuickSpec {
                 subject = ProfileScreen()
                 delegate = MockDelegate()
                 subject.delegate = delegate
-                subject.coverImage.image = specImage(named: "specs-cover.jpg")
-                
+                subject.coverImage = specImage(named: "specs-cover.jpg")
             }
 
             context("snapshots") {
-                
+
                 context("current user") {
 
                     validateAllSnapshots(named: "ProfileScreen_is_current_user") {
@@ -46,10 +45,32 @@ class ProfileScreenSpec: QuickSpec {
 
                 context("not current user") {
 
-                    context("IS hireable") {
-                        validateAllSnapshots(named: "ProfileScreen_not_current_user_IS_hireable") {
+                    it("is hireable not collaborateable") {
+                        let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
+                        subject.configureButtonsForNonCurrentUser(isHireable: true, isCollaborateable: false)
+                        subject.relationshipControl.userId = user.id
+                        subject.relationshipControl.userAtName = user.atName
+                        subject.relationshipControl.relationshipPriority = user.relationshipPriority
+                        subject.showNavBars(CGPointZero)
+
+                        expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_is_hireable", device: .Phone6_Portrait)
+                    }
+
+                    it("is collaborateable not hireable") {
+                        let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
+                        subject.configureButtonsForNonCurrentUser(isHireable: false, isCollaborateable: true)
+                        subject.relationshipControl.userId = user.id
+                        subject.relationshipControl.userAtName = user.atName
+                        subject.relationshipControl.relationshipPriority = user.relationshipPriority
+                        subject.showNavBars(CGPointZero)
+
+                        expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_is_collaborateable", device: .Phone6_Portrait)
+                    }
+
+                    context("is hireable and collaborateable") {
+                        validateAllSnapshots(named: "ProfileScreen_not_current_user_hireable_and_collaborateable") {
                             let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
-                            subject.configureButtonsForNonCurrentUser(true, isCollaborateable: false)
+                            subject.configureButtonsForNonCurrentUser(isHireable: true, isCollaborateable: true)
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
                             subject.relationshipControl.relationshipPriority = user.relationshipPriority
@@ -58,10 +79,10 @@ class ProfileScreenSpec: QuickSpec {
                         }
                     }
 
-                    context("is NOT hireable") {
-                        validateAllSnapshots(named: "ProfileScreen_not_current_user_is_NOT_hireable") {
+                    context("is mentionable") {
+                        validateAllSnapshots(named: "ProfileScreen_not_current_user_is_mentionable") {
                             let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "noise"])
-                            subject.configureButtonsForNonCurrentUser(false, isCollaborateable: false)
+                            subject.configureButtonsForNonCurrentUser(isHireable: false, isCollaborateable: false)
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
                             subject.relationshipControl.relationshipPriority = user.relationshipPriority

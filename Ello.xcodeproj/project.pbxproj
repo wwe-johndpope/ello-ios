@@ -490,7 +490,6 @@
 		1D2F65AE1D186E7F0099D036 /* CategoryCardCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */; };
 		1D2F65B11D1870020099D036 /* DiscoverAllCategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65AF1D1870020099D036 /* DiscoverAllCategoriesScreen.swift */; };
 		1D2F65B21D1870020099D036 /* DiscoverAllCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */; };
-		1D2F65B41D19B7960099D036 /* ProfileViewButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65B31D19B7960099D036 /* ProfileViewButtons.swift */; };
 		1D2F65BB1D1AE5790099D036 /* UIEdgeInsetsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59337F1D1462E900EAF03D /* UIEdgeInsetsExtensions.swift */; };
 		1D2F65BD1D1C5BC00099D036 /* StreamHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */; };
 		1D2F65C11D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65BE1D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift */; };
@@ -1421,7 +1420,6 @@
 		1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCardCellPresenter.swift; sourceTree = "<group>"; };
 		1D2F65AF1D1870020099D036 /* DiscoverAllCategoriesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverAllCategoriesScreen.swift; path = Sources/Controllers/Discover/DiscoverAllCategoriesScreen.swift; sourceTree = SOURCE_ROOT; };
 		1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverAllCategoriesViewController.swift; path = Sources/Controllers/Discover/DiscoverAllCategoriesViewController.swift; sourceTree = SOURCE_ROOT; };
-		1D2F65B31D19B7960099D036 /* ProfileViewButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewButtons.swift; sourceTree = "<group>"; };
 		1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamHeaderCellSpec.swift; sourceTree = "<group>"; };
 		1D2F65BE1D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryCardCellPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/CategoryCardCellPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
 		1D2F65BF1D1D88DD0099D036 /* CategoryCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryCellPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/CategoryCellPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
@@ -3182,7 +3180,6 @@
 				123375741DA6B8A80019CFAD /* ProfileHeaderCompactView.swift */,
 				123375761DA6B8BB0019CFAD /* ProfileHeaderRegularView.swift */,
 				1249AD861D9EC3FC009074FD /* ProfileScreen.swift */,
-				1D2F65B31D19B7960099D036 /* ProfileViewButtons.swift */,
 				12F6ADFA1A43380C00493660 /* ProfileViewController.swift */,
 				1D66801F1A89B873003E93C8 /* ProfileViewController.xib */,
 				123375701DA69C0C0019CFAD /* ProfileViewProtocol.swift */,
@@ -4742,7 +4739,6 @@
 				122B30C91C6A3FBC00C1B9D8 /* Availability.swift in Sources */,
 				122B30F31C6A3FC500C1B9D8 /* TextRegion.swift in Sources */,
 				12DD85C61B015A76004D3EEF /* UITabBarItem.swift in Sources */,
-				1D2F65B41D19B7960099D036 /* ProfileViewButtons.swift in Sources */,
 				1207C9871C73FEE000939ADB /* NewContentService.swift in Sources */,
 				1207C97B1C73FEE000939ADB /* ElloProvider_Specs.swift in Sources */,
 				76C050AA1AA8C8CF0094E69A /* UserListItemCell.swift in Sources */,

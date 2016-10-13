@@ -2,15 +2,25 @@
 ///  ProfileScreen.swift
 //
 
-public protocol ProfileScreenProtocol: class {
+import SnapKit
+
+
+public protocol ProfileScreenProtocol: StreamableScreenProtocol {
     func disableButtons()
     func enableButtons()
+    func showNavBars(offset: CGPoint)
+    func hideNavBars(offset: CGPoint, isCurrentUser: Bool)
     func configureButtonsForCurrentUser()
-    func configureButtonsForNonCurrentUser(isHireable: Bool, isCollaborateable: Bool)
+    func configureButtonsForNonCurrentUser(isHireable isHireable: Bool, isCollaborateable: Bool)
     func resetCoverImage()
-    func updateGradientViewConstraint(contentOffset: CGPoint, navBarsVisible: Bool)
+    func updateHeaderHeightConstraints(max max: CGFloat, scrollAdjusted: CGFloat)
+    func updateRelationshipControl(user user: User)
+    func updateRelationshipPriority(relationshipPriority: RelationshipPriority)
     var relationshipDelegate: RelationshipDelegate? { get set }
     var navBar: ElloNavigationBar { get }
+    var profileButtonsContainer: UIView { get }
+    var coverImage: UIImage? { get set }
+    var coverImageURL: NSURL? { get set }
 }
 
 public protocol ProfileScreenDelegate: class {
@@ -25,14 +35,15 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public struct Size {
         static let whiteTopOffset: CGFloat = 338
-        static let rcControlsViewHeight: CGFloat = 60
-        static let gradientHeight: CGFloat = 50
+        static let profileButtonsContainerViewHeight: CGFloat = 60
         static let navBarHeight: CGFloat = 64
         static let buttonMargin: CGFloat = 15
+        static let innerButtonMargin: CGFloat = 5
         static let buttonHeight: CGFloat = 30
+        static let buttonWidth: CGFloat = 70
         static let mentionButtonWidth: CGFloat = 100
-        static let rcMaxWidth: CGFloat = 283
-        static let rcLeadingMargin: CGFloat = 10
+        static let relationshipButtonMaxWidth: CGFloat = 283
+        static let relationshipControlLeadingMargin: CGFloat = 5
         static let editButtonMargin: CGFloat = 10
     }
 
@@ -45,139 +56,155 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         get { return self.navigationBar }
     }
 
+    public var coverImage: UIImage? {
+        get { return coverImageView.image }
+        set { coverImageView.image = newValue }
+    }
+
+    public var coverImageURL: NSURL? {
+        get { return nil }
+        set { coverImageView.pin_setImageFromURL(newValue) { result in } }
+    }
+
     // views
     let whiteSolidView = UIView()
     let loaderView = InterpolatedLoadingView()
-    public let coverImage = FLAnimatedImageView()
+    public let coverImageView = FLAnimatedImageView()
     public let relationshipControl = RelationshipControl()
-    public let mentionButton = ElloMentionButton()
-    public let hireButton = ElloHireButton()
-    public let editButton = ElloEditProfileButton()
-    public let inviteButton = ElloInviteButton()
-    public let gradientView = UIView()
-    public let gradientLayer = CAGradientLayer()
-    public let relationshipControlsView = UIVisualEffectView()
-    public var collaborateButton: UIButton?
+    public let mentionButton = StyledButton(style: .BlackPill)
+    public let collaborateButton = StyledButton(style: .BlackPill)
+    public let hireButton = StyledButton(style: .BlackPill)
+    public let editButton = StyledButton(style: .BlackPill)
+    public let inviteButton = StyledButton(style: .BlackPill)
+    public let profileButtonsEffect = UIVisualEffectView()
+    public var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
 
     // constraints
-    public private(set) var whiteSolidTop: NSLayoutConstraint!
-    public private(set) var coverImageHeight: NSLayoutConstraint!
-    public private(set) var gradientViewTopConstraint: NSLayoutConstraint!
-    public private(set) var relationshipControlsViewTopConstraint: NSLayoutConstraint!
-
+    private var whiteSolidTop: Constraint!
+    private var coverImageHeight: Constraint!
+    private var profileButtonsContainerTopConstraint: Constraint!
+    private var hireLeftConstraint: Constraint!
+    private var hireRightConstraint: Constraint!
+    private var relationshipMentionConstraint: Constraint!
+    private var relationshipCollabConstraint: Constraint!
+    private var relationshipHireConstraint: Constraint!
 
     weak public var delegate: ProfileScreenDelegate?
 
     override func arrange() {
         super.arrange()
         addSubview(loaderView)
-        addSubview(coverImage)
+        addSubview(coverImageView)
         addSubview(whiteSolidView)
         addSubview(streamContainer)
-        addSubview(gradientView)
-        addSubview(relationshipControlsView)
+        addSubview(profileButtonsEffect)
         addSubview(navigationBar)
 
         // relationship controls sub views
-        relationshipControlsView.addSubview(mentionButton)
-        relationshipControlsView.addSubview(hireButton)
-        relationshipControlsView.addSubview(inviteButton)
-        relationshipControlsView.addSubview(relationshipControl)
-        relationshipControlsView.addSubview(editButton)
-
+        profileButtonsContainer.addSubview(mentionButton)
+        profileButtonsContainer.addSubview(collaborateButton)
+        profileButtonsContainer.addSubview(hireButton)
+        profileButtonsContainer.addSubview(inviteButton)
+        profileButtonsContainer.addSubview(relationshipControl)
+        profileButtonsContainer.addSubview(editButton)
 
         loaderView.snp_makeConstraints { make in
-            make.edges.equalTo(self.coverImage)
+            make.edges.equalTo(coverImageView)
         }
 
-        coverImage.snp_makeConstraints { make in
-            let c = make.height.equalTo(Size.whiteTopOffset).constraint
-            self.coverImageHeight = c.layoutConstraints.first!
-            make.width.equalTo(self.coverImage.snp_height).multipliedBy(ProfileHeaderCellSizeCalculator.ratio)
-            make.top.equalTo(self.streamContainer.snp_top)
+        coverImageView.snp_makeConstraints { make in
+            coverImageHeight = make.height.equalTo(Size.whiteTopOffset).constraint
+            make.width.equalTo(coverImageView.snp_height).multipliedBy(ProfileHeaderCellSizeCalculator.ratio)
+            make.top.equalTo(streamContainer.snp_top)
             make.centerX.equalTo(self)
         }
 
         whiteSolidView.snp_makeConstraints { make in
-            let c = make.top.equalTo(self).offset(Size.whiteTopOffset).constraint
-            self.whiteSolidTop = c.layoutConstraints.first!
+            whiteSolidTop = make.top.equalTo(self).offset(Size.whiteTopOffset).constraint
             make.leading.trailing.bottom.equalTo(self)
         }
 
-        gradientView.snp_makeConstraints { make in
-            let c = make.top.equalTo(self).constraint
-            self.gradientViewTopConstraint = c.layoutConstraints.first!
-            make.height.equalTo(Size.gradientHeight)
+        profileButtonsEffect.snp_makeConstraints { make in
+            profileButtonsContainerTopConstraint = make.top.equalTo(self).constraint
             make.centerX.equalTo(self)
             make.width.equalTo(self)
-        }
-
-        relationshipControlsView.snp_makeConstraints { make in
-            let c = make.top.equalTo(self).constraint
-            self.relationshipControlsViewTopConstraint = c.layoutConstraints.first!
-            make.centerX.equalTo(self)
-            make.width.equalTo(self)
-            make.height.equalTo(Size.rcControlsViewHeight)
+            make.height.equalTo(Size.profileButtonsContainerViewHeight)
         }
 
         mentionButton.snp_makeConstraints { make in
-            make.leading.equalTo(self.relationshipControlsView).offset(Size.buttonMargin)
-            make.width.equalTo(Size.mentionButtonWidth).priorityMedium()
-            make.width.greaterThanOrEqualTo(Size.mentionButtonWidth)
+            make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
+            make.width.equalTo(Size.mentionButtonWidth).priorityRequired()
             make.height.equalTo(Size.buttonHeight)
-            make.bottom.equalTo(self.relationshipControlsView).offset(-Size.buttonMargin)
+            make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
+        }
+
+        collaborateButton.snp_makeConstraints { make in
+            make.height.equalTo(Size.buttonHeight)
+            make.leading.equalTo(mentionButton.snp_leading).constraint
+            make.top.equalTo(mentionButton)
+            make.width.equalTo(Size.buttonWidth).priorityRequired()
         }
 
         hireButton.snp_makeConstraints { make in
             make.height.equalTo(Size.buttonHeight)
-            make.leading.equalTo(self.mentionButton.snp_leading)
-            make.top.equalTo(self.mentionButton)
-            make.width.equalTo(self.mentionButton)
+            hireLeftConstraint = make.leading.equalTo(mentionButton.snp_leading).constraint
+            hireRightConstraint = make.leading.equalTo(collaborateButton.snp_trailing).offset(Size.innerButtonMargin).constraint
+            make.top.equalTo(mentionButton)
+            make.width.equalTo(Size.buttonWidth).priorityRequired()
         }
+        hireLeftConstraint.uninstall()
+        hireRightConstraint.uninstall()
 
         inviteButton.snp_makeConstraints { make in
-            make.leading.equalTo(self.relationshipControlsView).offset(Size.buttonMargin)
+            make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
             make.width.equalTo(Size.mentionButtonWidth).priorityMedium()
             make.width.greaterThanOrEqualTo(Size.mentionButtonWidth)
             make.height.equalTo(Size.buttonHeight)
-            make.bottom.equalTo(self.relationshipControlsView).offset(-Size.buttonMargin)
+            make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
         }
 
         relationshipControl.snp_makeConstraints { make in
             make.height.equalTo(Size.buttonHeight)
-            make.width.lessThanOrEqualTo(Size.rcMaxWidth)
-            make.leading.equalTo(self.mentionButton.snp_trailing).offset(Size.rcLeadingMargin)
-            make.bottom.equalTo(self.relationshipControlsView).offset(-Size.buttonMargin)
-            make.trailing.equalTo(self.relationshipControlsView).offset(-Size.buttonMargin)
+            make.width.lessThanOrEqualTo(Size.relationshipButtonMaxWidth).priorityRequired()
+            relationshipMentionConstraint = make.leading.equalTo(mentionButton.snp_trailing).offset(Size.relationshipControlLeadingMargin).priorityMedium().constraint
+            relationshipCollabConstraint = make.leading.equalTo(collaborateButton.snp_trailing).offset(Size.relationshipControlLeadingMargin).priorityMedium().constraint
+            relationshipHireConstraint = make.leading.equalTo(hireButton.snp_trailing).offset(Size.relationshipControlLeadingMargin).priorityMedium().constraint
+            make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
+            make.trailing.equalTo(profileButtonsContainer).offset(-Size.buttonMargin).priorityRequired()
         }
+        relationshipMentionConstraint.uninstall()
+        relationshipCollabConstraint.uninstall()
+        relationshipHireConstraint.uninstall()
 
         editButton.snp_makeConstraints { make in
             make.height.equalTo(Size.buttonHeight)
-            make.width.lessThanOrEqualTo(Size.rcMaxWidth)
-            make.leading.equalTo(self.inviteButton.snp_trailing).offset(Size.editButtonMargin)
-            make.trailing.equalTo(self.relationshipControlsView).offset(-Size.editButtonMargin)
+            make.width.lessThanOrEqualTo(Size.relationshipButtonMaxWidth)
+            make.leading.equalTo(inviteButton.snp_trailing).offset(Size.editButtonMargin)
+            make.trailing.equalTo(profileButtonsContainer).offset(-Size.editButtonMargin)
             make.bottom.equalTo(-Size.buttonMargin)
         }
-
-        layoutIfNeeded()
     }
 
     override func setText() {
+        collaborateButton.setTitle(InterfaceString.Profile.Collaborate, forState: .Normal)
+        hireButton.setTitle(InterfaceString.Profile.Hire, forState: .Normal)
+        inviteButton.setTitle(InterfaceString.Profile.Invite, forState: .Normal)
+        editButton.setTitle(InterfaceString.Profile.EditProfile, forState: .Normal)
+        mentionButton.setTitle(InterfaceString.Profile.Mention, forState: .Normal)
     }
 
     override func style() {
         whiteSolidView.backgroundColor = .whiteColor()
         relationshipControl.style = .ProfileView
-        relationshipControlsView.effect = UIBlurEffect(style: .Light)
-        setupGradient()
+        profileButtonsEffect.effect = UIBlurEffect(style: .Light)
     }
 
     override func bindActions() {
         mentionButton.addTarget(self, action: #selector(mentionTapped(_:)), forControlEvents: .TouchUpInside)
+        collaborateButton.addTarget(self, action: #selector(collaborateTapped(_:)), forControlEvents: .TouchUpInside)
         hireButton.addTarget(self, action: #selector(hireTapped(_:)), forControlEvents: .TouchUpInside)
         editButton.addTarget(self, action: #selector(editTapped(_:)), forControlEvents: .TouchUpInside)
         inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), forControlEvents: .TouchUpInside)
-        collaborateButton?.addTarget(self, action: #selector(collaborateTapped(_:)), forControlEvents: .TouchUpInside)
     }
 
     public func mentionTapped(button: UIButton) {
@@ -208,17 +235,46 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         setButtonsEnabled(false)
     }
 
-    public func configureButtonsForNonCurrentUser(isHireable: Bool, isCollaborateable: Bool) {
-        collaborateButton?.hidden = !isCollaborateable
+    public func configureButtonsForNonCurrentUser(isHireable isHireable: Bool, isCollaborateable: Bool) {
+        if isHireable && isCollaborateable {
+            hireLeftConstraint.uninstall()
+            hireRightConstraint.install()
+        }
+        else if isHireable {
+            hireLeftConstraint.install()
+            hireRightConstraint.uninstall()
+        }
+        else if isCollaborateable {
+            hireLeftConstraint.install()
+            hireRightConstraint.uninstall()
+        }
+
+        if isHireable {
+            relationshipCollabConstraint.uninstall()
+            relationshipHireConstraint.install()
+            relationshipMentionConstraint.uninstall()
+        }
+        else if isCollaborateable {
+            relationshipCollabConstraint.install()
+            relationshipHireConstraint.uninstall()
+            relationshipMentionConstraint.uninstall()
+        }
+        else {
+            relationshipHireConstraint.uninstall()
+            relationshipCollabConstraint.uninstall()
+            relationshipMentionConstraint.install()
+        }
+
+        collaborateButton.hidden = !isCollaborateable
         hireButton.hidden = !isHireable
-        mentionButton.hidden = isHireable
+        mentionButton.hidden = isHireable || isCollaborateable
         relationshipControl.hidden = false
         editButton.hidden = true
         inviteButton.hidden = true
     }
 
     public func configureButtonsForCurrentUser() {
-        collaborateButton?.hidden = true
+        collaborateButton.hidden = true
         hireButton.hidden = true
         mentionButton.hidden = true
         relationshipControl.hidden = true
@@ -227,7 +283,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     private func setButtonsEnabled(enabled: Bool) {
-        collaborateButton?.enabled = enabled
+        collaborateButton.enabled = enabled
         hireButton.enabled = enabled
         mentionButton.enabled = enabled
         editButton.enabled = enabled
@@ -235,69 +291,46 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         relationshipControl.enabled = enabled
     }
 
-    public func updateGradientViewConstraint(contentOffset: CGPoint, navBarsVisible: Bool) {
-        let additional: CGFloat = navBarsVisible ? navigationBar.frame.height : 0
-        let constant: CGFloat
+    public func updateRelationshipControl(user user: User) {
+        relationshipControl.userId = user.id
+        relationshipControl.userAtName = user.atName
+        relationshipControl.relationshipPriority = user.relationshipPriority
+    }
 
-        if contentOffset.y < 0 {
-            constant = 0
-        }
-        else if contentOffset.y > 45 {
-            constant = -45
-        }
-        else {
-            constant = -contentOffset.y
-        }
-        gradientViewTopConstraint.constant = constant + additional
+    public func updateRelationshipPriority(relationshipPriority: RelationshipPriority) {
+        relationshipControl.relationshipPriority = relationshipPriority
+    }
+
+    public func updateHeaderHeightConstraints(max maxHeaderHeight: CGFloat, scrollAdjusted scrollAdjustedHeight: CGFloat) {
+        coverImageHeight.updateOffset(maxHeaderHeight)
+        whiteSolidTop.updateOffset(max(scrollAdjustedHeight, 0))
     }
 
     public func resetCoverImage() {
-        coverImage.pin_cancelImageDownload()
-        coverImage.image = nil
+        coverImageView.pin_cancelImageDownload()
+        coverImageView.image = nil
     }
 
     public func showNavBars(offset: CGPoint) {
         animate {
-            self.updateGradientViewConstraint(offset, navBarsVisible:false)
-            self.relationshipControlsViewTopConstraint.constant = self.navBar.frame.height
-            self.relationshipControlsView.frame.origin.y = self.relationshipControlsViewTopConstraint.constant
-            self.gradientView.frame.origin.y = self.gradientViewTopConstraint.constant
+            let height = self.navBar.frame.height
+            self.profileButtonsContainerTopConstraint.updateOffset(height)
+            self.profileButtonsEffect.frame.origin.y = height
         }
     }
 
     public func hideNavBars(offset: CGPoint, isCurrentUser: Bool) {
         animate {
-            self.updateGradientViewConstraint(offset, navBarsVisible: false)
+            let height: CGFloat
             if isCurrentUser {
-                self.relationshipControlsViewTopConstraint.constant = -self.relationshipControlsView.frame.height
+                height = -self.profileButtonsEffect.frame.height
             }
             else {
-                self.relationshipControlsViewTopConstraint.constant = 0
+                height = 0
             }
 
-            self.relationshipControlsView.frame.origin.y = self.relationshipControlsViewTopConstraint.constant
-            self.gradientView.frame.origin.y = self.gradientViewTopConstraint.constant
+            self.profileButtonsContainerTopConstraint.updateOffset(height)
+            self.profileButtonsEffect.frame.origin.y = height
         }
-    }
-}
-
-extension ProfileScreen {
-
-    private func setupGradient() {
-        gradientLayer.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: gradientView.frame.width,
-            height: gradientView.frame.height
-        )
-        gradientLayer.locations = [0, 0.8, 1]
-        gradientLayer.colors = [
-            UIColor.whiteColor().CGColor,
-            UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor,
-            UIColor.whiteColor().colorWithAlphaComponent(0).CGColor,
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-        gradientView.layer.addSublayer(gradientLayer)
     }
 }
