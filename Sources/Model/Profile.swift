@@ -50,6 +50,7 @@ public final class Profile: JSONAble {
     // optional
     public var gaUniqueId: String?
 
+
     public init(createdAt: NSDate,
         shortBio: String,
         email: String,
@@ -248,7 +249,7 @@ public final class Profile: JSONAble {
             notifyOfCommentsOnPostWatchViaEmail: json["notify_of_comments_on_post_watch_via_email"].boolValue,
             discoverable: json["discoverable"].boolValue
         )
-        profile.gaUniqueId = json["ga_unique_id"].string
+        profile.gaUniqueId = json["ga_unique_id"].string        
         return profile
     }
 }

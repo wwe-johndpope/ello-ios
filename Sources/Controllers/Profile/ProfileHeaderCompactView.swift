@@ -5,14 +5,12 @@
 public class ProfileHeaderCompactView: ProfileBaseView {
 
     public struct Size {
-        static let avatarWidth: CGFloat = 122
         static let avatarHeight: CGFloat = 255
 
         static let nameWidth: CGFloat = 122
         static let nameHeight: CGFloat = 122
 
-        static let viewsWidth: CGFloat = 122
-        static let viewsHeight: CGFloat = 122
+        static let totalCountHeight: CGFloat = 60
 
         static let activityWidth: CGFloat = 122
         static let activityHeight: CGFloat = 122
@@ -66,7 +64,7 @@ extension ProfileHeaderCompactView {
 
         totalCountView.snp_makeConstraints { make in
             make.width.equalTo(self.snp_width)
-            make.height.equalTo(Size.viewsHeight)
+            make.height.equalTo(Size.totalCountHeight)
             make.top.equalTo(self.namesView.snp_bottom)
         }
 
