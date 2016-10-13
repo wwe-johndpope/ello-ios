@@ -8,6 +8,7 @@ import Nimble
 
 
 class ProfileScreenSpec: QuickSpec {
+
     class MockDelegate: ProfileScreenDelegate {
         func mentionTapped() {}
         func hireTapped() {}
