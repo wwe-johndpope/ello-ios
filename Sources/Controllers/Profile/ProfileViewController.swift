@@ -288,7 +288,7 @@ extension ProfileViewController: ProfileScreenDelegate {
         guard let user = user else { return }
 
         Tracker.sharedTracker.tappedHire(user)
-        let vc = HireViewController(user: user)
+        let vc = HireViewController(user: user, type: .Hire)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -304,8 +304,7 @@ extension ProfileViewController: ProfileScreenDelegate {
         guard let user = user else { return }
 
         Tracker.sharedTracker.tappedCollaborate(user)
-        fatalError("HireViewController needs to support collaborate (and maybe be renamed)")
-        let vc = HireViewController(user: user)
+        let vc = HireViewController(user: user, type: .Collaborate)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

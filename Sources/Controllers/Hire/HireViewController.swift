@@ -2,18 +2,33 @@
 ///  HireViewController.swift
 //
 
+import FutureKit
+
+
 public class HireViewController: BaseElloViewController {
-    var user: User
+    public enum UserContactType {
+        case Hire
+        case Collaborate
+    }
+
+    let user: User
+    let contactType: UserContactType
     var mockScreen: HireScreenProtocol?
     var screen: HireScreenProtocol { return mockScreen ?? (self.view as! HireScreenProtocol) }
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
 
-    required public init(user: User) {
+    required public init(user: User, type: UserContactType) {
         self.user = user
+        self.contactType = type
         super.init(nibName: nil, bundle: nil)
 
-        title = "Email \(user.atName)"
+        switch contactType {
+        case .Hire:
+            title = "Hire \(user.atName)"
+        case .Collaborate:
+            title = "Collaborate with \(user.atName)"
+        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -81,7 +96,15 @@ extension HireViewController: HireDelegate {
             hireSuccess()
         }
 
-        HireService().hire(user: user, body: body)
+        let endpoint: Future<Void>
+        switch contactType {
+        case .Hire:
+            endpoint = HireService().hire(user: user, body: body)
+        case .Collaborate:
+            endpoint = HireService().collaborate(user: user, body: body)
+        }
+
+        endpoint
             .onSuccess { _ in
                 Tracker.sharedTracker.hiredUser(self.user)
                 hireSuccess()
