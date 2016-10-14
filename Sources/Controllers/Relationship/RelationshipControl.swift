@@ -327,16 +327,21 @@ public class RelationshipControl: UIView {
             var highlightedImage: UIImage? = nil
 
             if config == .Starred {
-                image = InterfaceImage.Star.whiteImage
+                if relationshipStyle == .ProfileView {
+                    image = InterfaceImage.WhiteStar.selectedImage
+                }
+                else {
+                    image = InterfaceImage.BlackStar.selectedImage
+                }
                 highlightedImage = image
             }
             else if relationshipStyle == .ProfileView {
-                image = InterfaceImage.Star.selectedImage
-                highlightedImage = InterfaceImage.Star.whiteImage
+                image = InterfaceImage.WhiteStar.normalImage
+                highlightedImage = InterfaceImage.WhiteStar.selectedImage
             }
             else {
-                image = InterfaceImage.Star.normalImage
-                highlightedImage = InterfaceImage.Star.whiteImage
+                image = InterfaceImage.BlackStar.normalImage
+                highlightedImage = InterfaceImage.BlackStar.selectedImage
             }
 
             setImage(image, forState: .Normal)
