@@ -6,19 +6,19 @@ import FutureKit
 
 
 public class HireViewController: BaseElloViewController {
-    public enum UserContactType {
+    public enum UserEmailType {
         case Hire
         case Collaborate
     }
 
     let user: User
-    let contactType: UserContactType
+    let contactType: UserEmailType
     var mockScreen: HireScreenProtocol?
     var screen: HireScreenProtocol { return mockScreen ?? (self.view as! HireScreenProtocol) }
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
 
-    required public init(user: User, type: UserContactType) {
+    required public init(user: User, type: UserEmailType) {
         self.user = user
         self.contactType = type
         super.init(nibName: nil, bundle: nil)
