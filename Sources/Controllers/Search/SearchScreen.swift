@@ -150,17 +150,17 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     private func setupToggleButtons() {
         searchControlsContainer.frame.size.height += 43
-        self.postsToggleButton = OutlineElloButton(frame: CGRect(x: 0, y: buttonY, width: btnWidth, height: 33))
-        postsToggleButton?.setTitle(InterfaceString.Search.Posts, forState: .Normal)
-        postsToggleButton?.addTarget(self, action: #selector(SearchScreen.onPostsTapped), forControlEvents: .TouchUpInside)
+        let postsToggleButton = OutlineElloButton(frame: CGRect(x: 0, y: buttonY, width: btnWidth, height: 33))
+        postsToggleButton.setTitle(InterfaceString.Search.Posts, forState: .Normal)
+        postsToggleButton.addTarget(self, action: #selector(SearchScreen.onPostsTapped), forControlEvents: .TouchUpInside)
+        searchControlsContainer.addSubview(postsToggleButton)
+        self.postsToggleButton = postsToggleButton
 
-        postsToggleButton?.addToView(searchControlsContainer)
-
-        self.peopleToggleButton = OutlineElloButton(frame: CGRect(x: postsToggleButton?.frame.maxX ?? 0, y: buttonY, width: btnWidth, height: 33))
-        peopleToggleButton?.setTitle(InterfaceString.Search.People, forState: .Normal)
-        peopleToggleButton?.addTarget(self, action: #selector(SearchScreen.onPeopleTapped), forControlEvents: .TouchUpInside)
-
-        peopleToggleButton?.addToView(searchControlsContainer)
+        let peopleToggleButton = OutlineElloButton(frame: CGRect(x: postsToggleButton.frame.maxX ?? 0, y: buttonY, width: btnWidth, height: 33))
+        peopleToggleButton.setTitle(InterfaceString.Search.People, forState: .Normal)
+        peopleToggleButton.addTarget(self, action: #selector(SearchScreen.onPeopleTapped), forControlEvents: .TouchUpInside)
+        searchControlsContainer.addSubview(peopleToggleButton)
+        self.peopleToggleButton = peopleToggleButton
 
         onPostsTapped()
     }
