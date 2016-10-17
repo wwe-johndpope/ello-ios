@@ -9,7 +9,7 @@ public struct ProfileAvatarSizeCalculator {
 
     public func calculate(item: StreamCellItem) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
-        promise.completeWithSuccess(255)
+        promise.completeWithSuccess(ProfileAvatarView.Size.height)
         return promise.future
     }
 }

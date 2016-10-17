@@ -9,6 +9,7 @@ public class ProfileTotalCountView: ProfileBaseView {
     private let greyLine = UIView()
 
     public struct Size {
+        static let height: CGFloat = 60
         static let shareMargin: CGFloat = 2
         static let shareWidth: CGFloat = 44
         static let shareHeight: CGFloat = 44

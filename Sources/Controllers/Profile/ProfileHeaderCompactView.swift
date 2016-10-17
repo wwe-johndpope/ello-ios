@@ -6,11 +6,6 @@ import SnapKit
 
 
 public class ProfileHeaderCompactView: ProfileBaseView {
-    public struct Size {
-        static let avatarHeight: CGFloat = 255
-        static let totalCountHeight: CGFloat = 60
-    }
-
     let avatarView = ProfileAvatarView()
     let namesView = ProfileNamesView()
     let totalCountView = ProfileTotalCountView()
@@ -56,7 +51,7 @@ extension ProfileHeaderCompactView {
 
         avatarView.snp_makeConstraints { make in
             make.top.width.centerX.equalTo(self)
-            make.height.equalTo(Size.avatarHeight)
+            make.height.equalTo(ProfileAvatarView.Size.height)
         }
 
         namesView.snp_makeConstraints { make in
@@ -68,7 +63,7 @@ extension ProfileHeaderCompactView {
         totalCountView.snp_makeConstraints { make in
             make.top.equalTo(self.namesView.snp_bottom)
             make.width.centerX.equalTo(self)
-            make.height.equalTo(Size.totalCountHeight)
+            make.height.equalTo(ProfileTotalCountView.Size.height)
         }
 
         statsView.snp_makeConstraints { make in
