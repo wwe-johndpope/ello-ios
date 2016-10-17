@@ -59,9 +59,9 @@ public class OnboardingViewController: BaseElloViewController, HasAppController 
             if let links = currentUser.externalLinksList {
                 onboardingData.links = links.reduce("") { (memo: String, link) in
                     if (memo ?? "").characters.count == 0 {
-                        return link["url"] ?? ""
+                        return link.url.absoluteString ?? ""
                     }
-                    else if let url = link["url"] {
+                    else if let url = link.url.absoluteString {
                         return "\(memo), \(url)"
                     }
                     else {

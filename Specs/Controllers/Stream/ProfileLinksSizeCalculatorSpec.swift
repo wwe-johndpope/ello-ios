@@ -14,7 +14,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub([:])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 320)
+                calc.calculate(StreamCellItem(jsonable: user, type: .Header))
                     .onSuccess { h in height = h }
                     .onFail { _ in }
                 expect(height).toEventually(beGreaterThan(40))
