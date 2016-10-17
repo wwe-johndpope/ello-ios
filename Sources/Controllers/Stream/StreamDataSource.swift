@@ -249,8 +249,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public func updateHeightForIndexPath(indexPath: NSIndexPath, height: CGFloat) {
         if indexPath.item < visibleCellItems.count {
-            visibleCellItems[indexPath.item].calculatedOneColumnCellHeight = height
-            visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight = height
+            visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn = height
+            visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn = height
         }
     }
 
@@ -259,7 +259,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
         // always try to return a calculated value before the default
         if numberOfColumns == 1 {
-            if let height = visibleCellItems[indexPath.item].calculatedOneColumnCellHeight {
+            if let height = visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn {
                 return height
             }
             else {
@@ -267,7 +267,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
         }
         else {
-            if let height = visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight {
+            if let height = visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn {
                 return height
             }
             else {

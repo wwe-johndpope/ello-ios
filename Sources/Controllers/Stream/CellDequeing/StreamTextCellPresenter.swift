@@ -16,10 +16,10 @@ public struct StreamTextCellPresenter {
     {
         if let cell = cell as? StreamTextCell {
             cell.onWebContentReady { webView in
-                if let actualHeight = webView.windowContentSize()?.height where actualHeight != streamCellItem.calculatedWebHeight {
-                    streamCellItem.calculatedWebHeight = actualHeight
-                    streamCellItem.calculatedOneColumnCellHeight = actualHeight
-                    streamCellItem.calculatedMultiColumnCellHeight = actualHeight
+                if let actualHeight = webView.windowContentSize()?.height where actualHeight != streamCellItem.calculatedCellHeights.webContent {
+                    streamCellItem.calculatedCellHeights.webContent = actualHeight
+                    streamCellItem.calculatedCellHeights.oneColumn = actualHeight
+                    streamCellItem.calculatedCellHeights.multiColumn = actualHeight
                     postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
                 }
             }

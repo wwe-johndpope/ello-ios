@@ -70,9 +70,9 @@ private extension ProfileHeaderCellSizeCalculator {
 
         if let cellItem = cellItems.safeValue(0) {
             self.cellItems.removeAtIndex(0)
-            cellItem.calculatedWebHeight = height
-            cellItem.calculatedOneColumnCellHeight = height
-            cellItem.calculatedMultiColumnCellHeight = height
+            cellItem.calculatedCellHeights.webContent = height
+            cellItem.calculatedCellHeights.oneColumn = height
+            cellItem.calculatedCellHeights.multiColumn = height
         }
         loadNext()
     }

@@ -114,7 +114,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
                 it("sizes the items") {
                     for item in cellItems {
-                        expect(item.calculatedOneColumnCellHeight!) == AppSetup.Size.calculatorHeight
+                        expect(item.calculatedCellHeights.oneColumn!) == AppSetup.Size.calculatorHeight
                     }
                 }
             }
@@ -133,7 +133,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
                 it("does not size the items") {
                     for item in cellItems {
-                        expect(item.calculatedOneColumnCellHeight).to(beNil())
+                        expect(item.calculatedCellHeights.oneColumn).to(beNil())
                     }
                 }
             }
@@ -1146,8 +1146,8 @@ class StreamDataSourceSpec: QuickSpec {
                     subject.updateHeightForIndexPath(indexPath, height: 256)
 
                     let cellItem = subject.visibleStreamCellItem(at: indexPath)
-                    expect(cellItem!.calculatedOneColumnCellHeight!) == 256
-                    expect(cellItem!.calculatedMultiColumnCellHeight!) == 256
+                    expect(cellItem!.calculatedCellHeights.oneColumn!) == 256
+                    expect(cellItem!.calculatedCellHeights.multiColumn!) == 256
                 }
 
                 it("handles non-existent index paths") {

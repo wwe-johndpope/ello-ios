@@ -650,6 +650,7 @@
 		1DA18DFE1DAC3B64000231CC /* ProfileStatsViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DFD1DAC3B64000231CC /* ProfileStatsViewSpec.swift */; };
 		1DA18E001DAC3B73000231CC /* ProfileStatsPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DFF1DAC3B73000231CC /* ProfileStatsPresenterSpec.swift */; };
 		1DA18E021DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E011DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift */; };
+		1DA18E121DB187DF000231CC /* CalculatedCellHeights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E111DB187DF000231CC /* CalculatedCellHeights.swift */; };
 		1DA809C21B8F6DE9000BB590 /* OmnibarScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */; };
 		1DA8FD701B98A63600472B1E /* reorder_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */; };
 		1DA8FD711B98A63600472B1E /* reorder_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */; };
@@ -1578,6 +1579,7 @@
 		1DA18DFD1DAC3B64000231CC /* ProfileStatsViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStatsViewSpec.swift; sourceTree = "<group>"; };
 		1DA18DFF1DAC3B73000231CC /* ProfileStatsPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileStatsPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/ProfileStatsPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
 		1DA18E011DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStatsSizeCalculatorSpec.swift; sourceTree = "<group>"; };
+		1DA18E111DB187DF000231CC /* CalculatedCellHeights.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatedCellHeights.swift; sourceTree = "<group>"; };
 		1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenSpec.swift; sourceTree = "<group>"; };
 		1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reorder_normal.svg; sourceTree = "<group>"; };
 		1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reorder_selected.svg; sourceTree = "<group>"; };
@@ -2408,6 +2410,7 @@
 				7666C95D1B10055C009AC019 /* AddFriendsViewController.swift */,
 				1D1BCA531BACBAAE009075E8 /* Calculators */,
 				128D36A81A95192300622833 /* CellDequeing */,
+				1DA18E111DB187DF000231CC /* CalculatedCellHeights.swift */,
 				122B18CC1A867BCE00247A05 /* Cells */,
 				1266E50C1A9E2B9E00270E1C /* ContentFlagger.swift */,
 				1D1AF61E1A83ED6600E06C93 /* Detail */,
@@ -2419,10 +2422,10 @@
 				121700B51A78428D00EBACA5 /* StreamCollectionViewLayout.swift */,
 				121E46BC1A6B2798004AEAB7 /* StreamContainerViewController.swift */,
 				1217008F1A7841C400EBACA5 /* StreamDataSource.swift */,
+				1245ED371D1C772400929DD4 /* StreamGenerator.swift */,
 				121700B81A7891B300EBACA5 /* StreamImageViewer.swift */,
 				128D36A51A95174C00622833 /* StreamKind.swift */,
 				121700981A7841C400EBACA5 /* StreamViewController.swift */,
-				1245ED371D1C772400929DD4 /* StreamGenerator.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -4973,6 +4976,7 @@
 				1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */,
 				12F6AE6A1A4339EF00493660 /* ElloButton.swift in Sources */,
 				1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */,
+				1DA18E121DB187DF000231CC /* CalculatedCellHeights.swift in Sources */,
 				1D5933751D10BC8100EAF03D /* CategoryLevel.swift in Sources */,
 				125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */,
 				122B30C71C6A3FBC00C1B9D8 /* AmazonCredentials.swift in Sources */,
