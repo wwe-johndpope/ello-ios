@@ -62,7 +62,7 @@ extension ProfileHeaderCompactView {
         namesView.snp_makeConstraints { make in
             make.top.equalTo(self.avatarView.snp_bottom)
             make.width.centerX.equalTo(self)
-            namesHeightConstraint = make.height.equalTo(101).constraint
+            namesHeightConstraint = make.height.equalTo(0).constraint
         }
 
         totalCountView.snp_makeConstraints { make in
@@ -80,15 +80,13 @@ extension ProfileHeaderCompactView {
         bioView.snp_makeConstraints { make in
             make.top.equalTo(self.statsView.snp_bottom)
             make.width.centerX.equalTo(self)
-            bioHeightConstraint = make.height.equalTo(102).constraint
+            bioHeightConstraint = make.height.equalTo(0).constraint
         }
-        bioHeightConstraint.updateOffset(103)
 
         linksView.snp_makeConstraints { make in
             make.top.equalTo(self.bioView.snp_bottom)
             make.width.centerX.equalTo(self)
-            linksHeightConstraint = make.height.equalTo(103).constraint
+            linksHeightConstraint = make.height.equalTo(0).constraint
         }
-        linksHeightConstraint.updateOffset(104)
     }
 }
