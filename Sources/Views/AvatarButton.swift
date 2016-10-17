@@ -6,13 +6,6 @@ public class AvatarButton: UIButton {
     // for specs; ensure the correct URL is assigned
     public var imageURL: NSURL?
 
-    var starIcon = UIImageView()
-    var starIconHidden: Bool {
-        get { return true }
-        set { }
-    }
-    let starSize = CGSize(width: 15, height: 15)
-
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -24,25 +17,16 @@ public class AvatarButton: UIButton {
     }
 
     private func setup() {
-        let star = InterfaceImage.Star.selectedImage
-        starIcon.image = star
-        starIcon.frame.size = starSize
-        starIcon.hidden = true
-        addSubview(starIcon)
         clipsToBounds = false
     }
 
     func setUser(user: User?) {
         setUserAvatarURL(user?.avatarURL())
-
-        starIcon.hidden = starIconHidden || (user?.relationshipPriority != .Starred)
     }
 
     func setUserAvatarURL(url: NSURL?) {
         self.imageURL = url
         self.setDefaultImage()
-
-        starIcon.hidden = starIconHidden
 
         if let url = url {
             self.pin_setImageFromURL(url) { result in
@@ -74,10 +58,6 @@ public class AvatarButton: UIButton {
         if let imageView = self.imageView {
             imageView.layer.cornerRadius = imageView.bounds.size.height / CGFloat(2)
         }
-
-        let scale = frame.width / 60
-        starIcon.frame.size = CGSize(width: scale * starSize.width, height: scale * starSize.height)
-        starIcon.center = CGPoint(x: frame.width, y: 0)
     }
 
 }

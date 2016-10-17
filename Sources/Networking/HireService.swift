@@ -22,4 +22,17 @@ public class HireService {
         return promise.future
     }
 
+    public func collaborate(user user: User, body: String) -> Future<Void> {
+        let promise = Promise<Void>()
+        ElloProvider.shared.elloRequest(.Collaborate(userId: user.id, body: body),
+            success: { _ in
+                promise.completeWithSuccess(Void())
+            },
+            failure: { error, _ in
+                promise.completeWithFail(error)
+            }
+        )
+        return promise.future
+    }
+
 }

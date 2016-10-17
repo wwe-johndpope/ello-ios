@@ -115,12 +115,13 @@ public struct InterfaceString {
         static let DeleteAccountExplanation: String = NSLocalizedString("By deleting your account you remove your personal information from Ello. Your account cannot be restored.", comment: "By deleting your account you remove your personal information from Ello. Your account cannot be restored.")
         static let DeleteAccountConfirm: String = NSLocalizedString("Delete Account?", comment: "delete account question")
         static let AccountIsBeingDeleted: String = NSLocalizedString("Your account is in the process of being deleted.", comment: "Your account is in the process of being deleted.")
-        static let RedirectedCountdownTemplate: String = NSLocalizedString("You will be redirected in %d...", comment: "You will be redirected in ...")
+        static let RedirectedCountdownTemplate: String = NSLocalizedString("You will be redirected in %lu...", comment: "You will be redirected in ...")
     }
 
     public struct Profile {
         static let Title: String = NSLocalizedString("Profile", comment: "Profile Title")
         static let Mention: String = NSLocalizedString("@ Mention", comment: "Mention button title")
+        static let Collaborate: String = NSLocalizedString("Collab", comment: "Collaborate button title")
         static let Hire: String = NSLocalizedString("Hire", comment: "Hire button title")
         static let Invite: String = NSLocalizedString("Invite", comment: "Invite button title")
         static let EditProfile: String = NSLocalizedString("Edit Profile", comment: "Edit Profile button title")
@@ -171,6 +172,8 @@ public struct InterfaceString {
 
     public struct Hire {
         static let Send: String = NSLocalizedString("Send", comment: "Send Button title")
+        static let HireTitleTemplate = NSLocalizedString("Hire %@", comment: "Hire (username) title")
+        static let CollaborateTitleTemplate = NSLocalizedString("Collaborate with %@", comment: "Collaborate (username) title")
     }
 
     public struct Loves {
@@ -303,7 +306,7 @@ public struct InterfaceString {
         static let CreateProfile: String = NSLocalizedString("Create Your Profile", comment: "create your profile button")
         static let InvitePeople: String = NSLocalizedString("Invite Cool People", comment: "invite cool people button")
         static let ImDone: String = NSLocalizedString("I’m done", comment: "I'm done button")
-        static let PickTemplate: String = NSLocalizedString("Pick %d", comment: "Pick ... prompt")
+        static let PickTemplate: String = NSLocalizedString("Pick %lu", comment: "Pick ... prompt")
 
         static let UploadCoverButton: String = NSLocalizedString("Upload Header", comment: "Upload Header button")
         static let UploadCoverImagePrompt: String = NSLocalizedString("2560 x 1440\nAnimated Gifs work, too", comment: "Cover Image size and animated Gifs work, too")

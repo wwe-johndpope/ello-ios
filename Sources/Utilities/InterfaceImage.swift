@@ -72,7 +72,8 @@ public enum InterfaceImage: String {
     case BubbleTail = "bubble_tail"
 
     // Relationship
-    case Star = "star"
+    case WhiteStar = "white_star"
+    case BlackStar = "black_star"
 
     // Hire me mail button
     case Mail = "mail"
@@ -152,7 +153,6 @@ public enum InterfaceImage: String {
              .Pencil,
              .PlusSmall,
              .Repost,
-             .Star,
              .X:
             return svgNamed("\(self.rawValue)_white")
         default:

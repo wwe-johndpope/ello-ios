@@ -15,10 +15,8 @@ public final class ProfileViewController: StreamableViewController {
     var _mockScreen: ProfileScreenProtocol?
     public var screen: ProfileScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! ProfileScreen }
+        get { return _mockScreen ?? self.view as! ProfileScreenProtocol }
     }
-    public var profileScreen: ProfileScreen!
-
 
     var user: User?
     var headerItems: [StreamCellItem]?
@@ -119,29 +117,21 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        profileScreen = ProfileScreen()
-        self.view = profileScreen
-        viewContainer = profileScreen.streamContainer
-        profileScreen.delegate = self
+        let screen = ProfileScreen()
+        self.view = screen
+        viewContainer = screen.streamContainer
+        screen.delegate = self
     }
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let ratio: CGFloat = ProfileHeaderCellSizeCalculator.ratio
-        let height: CGFloat = view.frame.width / ratio
-        let maxHeight = height - streamViewController.collectionView.contentOffset.y
-        let constant = max(maxHeight, height)
-        if let ps = self.view as? ProfileScreen {
-            ps.coverImageHeight.constant = constant
-            ps.whiteSolidTop.constant = max(maxHeight, 0)
-        }
+        let headerHeight: CGFloat = view.frame.width / ratio
+        let scrollAdjustedHeight = headerHeight - streamViewController.collectionView.contentOffset.y
+        let maxHeaderHeight = max(scrollAdjustedHeight, headerHeight)
+        screen.updateHeaderHeightConstraints(max: maxHeaderHeight, scrollAdjusted: scrollAdjustedHeight)
 
-        coverImageHeightStart = maxHeight
-
-        if let ps = self.view as? ProfileScreen {
-            ps.gradientLayer.frame.size = ps.gradientView.frame.size
-        }
-
+        coverImageHeightStart = scrollAdjustedHeight
     }
 
     override public func didSetCurrentUser() {
@@ -151,8 +141,7 @@ public final class ProfileViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        guard let ps = self.view as? ProfileScreen else { return }
-        positionNavBar(ps.navBar, visible: true, withConstraint: ps.navigationBarTopConstraint)
+        positionNavBar(screen.navBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
 
         if scrollToBottom {
@@ -160,7 +149,7 @@ public final class ProfileViewController: StreamableViewController {
         }
 
         let offset = self.streamViewController.collectionView.contentOffset
-        ps.showNavBars(offset)
+        screen.showNavBars(offset)
     }
 
     override func hideNavBars() {
@@ -168,22 +157,18 @@ public final class ProfileViewController: StreamableViewController {
         hideNavBar(animated: true)
         updateInsets()
 
-        guard let ps = self.view as? ProfileScreen else { return }
         let offset = self.streamViewController.collectionView.contentOffset
         let currentUser = (self.user?.id == self.currentUser?.id && self.user?.id != nil)
-        ps.hideNavBars(offset, isCurrentUser: currentUser)
+        screen.hideNavBars(offset, isCurrentUser: currentUser)
     }
 
 
     private func updateInsets() {
-        guard let ps = self.screen as? ProfileScreen else { return }
-        updateInsets(navBar: ps.relationshipControlsView, streamController: streamViewController)
+        updateInsets(navBar: screen.profileButtonsContainer, streamController: streamViewController)
     }
 
     private func hideNavBar(animated animated: Bool) {
-        if let ps = self.view as? ProfileScreen {
-            positionNavBar(screen.navBar, visible: false, withConstraint: ps.navigationBarTopConstraint, animated: animated)
-        }
+        positionNavBar(screen.navBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: animated)
     }
 
     // MARK : private
@@ -303,7 +288,7 @@ extension ProfileViewController: ProfileScreenDelegate {
         guard let user = user else { return }
 
         Tracker.sharedTracker.tappedHire(user)
-        let vc = HireViewController(user: user)
+        let vc = HireViewController(user: user, type: .Hire)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -319,8 +304,7 @@ extension ProfileViewController: ProfileScreenDelegate {
         guard let user = user else { return }
 
         Tracker.sharedTracker.tappedCollaborate(user)
-        fatalError("HireViewController needs to support collaborate (and maybe be renamed)")
-        let vc = HireViewController(user: user)
+        let vc = HireViewController(user: user, type: .Collaborate)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -335,23 +319,18 @@ extension ProfileViewController {
     }
 
     public func updateCachedImages() {
-        guard let ps = self.view as? ProfileScreen else { return }
-
         guard let cachedImage = cachedImage(.CoverImage) else {
             return
         }
 
-        // this seemingly unecessary nil check is an attempt
-        // to guard against crash #6:
-        // https://www.crashlytics.com/ello/ios/apps/co.ello.ello/issues/55725749f505b5ccf00cf76d/sessions/55725654012a0001029d613137326264
-        ps.coverImage.image = cachedImage
+        screen.coverImage = cachedImage
     }
 
     public func updateUser(user: User) {
         screen.enableButtons()
 
         guard user.id == self.currentUser?.id else {
-            screen.configureButtonsForNonCurrentUser(user.isHireable, isCollaborateable: user.isCollaborateable)
+            screen.configureButtonsForNonCurrentUser(isHireable: user.isHireable, isCollaborateable: user.isCollaborateable)
             return
         }
 
@@ -373,8 +352,7 @@ extension ProfileViewController {
     }
 
     public func updateRelationshipPriority(relationshipPriority: RelationshipPriority) {
-        guard let ps = self.view as? ProfileScreen else { return }
-        ps.relationshipControl.relationshipPriority = relationshipPriority
+        screen.updateRelationshipPriority(relationshipPriority)
         self.user?.relationshipPriority = relationshipPriority
     }
 }
@@ -401,14 +379,10 @@ extension ProfileViewController: EditProfileResponder {
 extension ProfileViewController {
 
     override public func streamViewDidScroll(scrollView: UIScrollView) {
-        if let ps = self.view as? ProfileScreen {
-            if let start = coverImageHeightStart {
-                ps.coverImageHeight.constant = max(start - scrollView.contentOffset.y, start)
-                ps.whiteSolidTop.constant = max(start - scrollView.contentOffset.y, 0)
-            }
-            let offset = streamViewController.collectionView.contentOffset
-            ps.updateGradientViewConstraint(offset, navBarsVisible: navBarsVisible())
+        if let start = coverImageHeightStart {
+            screen.updateHeaderHeightConstraints(max: max(start - scrollView.contentOffset.y, start), scrollAdjusted: start - scrollView.contentOffset.y)
         }
+        let offset = streamViewController.collectionView.contentOffset
         super.streamViewDidScroll(scrollView)
     }
 }
@@ -443,19 +417,14 @@ extension ProfileViewController:  StreamDestination {
         assignRightButtons()
         Tracker.sharedTracker.profileLoaded(user.atName ?? "(no name)")
 
-        guard let ps = self.view as? ProfileScreen else { return }
-
-        ps.relationshipControl.userId = user.id
-        ps.relationshipControl.userAtName = user.atName
-        ps.relationshipControl.relationshipPriority = user.relationshipPriority
+        screen.updateRelationshipControl(user: user)
 
         if let cachedImage = cachedImage(.CoverImage) {
-            ps.coverImage.image = cachedImage
+            screen.coverImage = cachedImage
         }
-        else if let
-            cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true)
+        else if let coverImageURL = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true)
         {
-            ps.coverImage.pin_setImageFromURL(cover) { result in }
+            screen.coverImageURL = coverImageURL
         }
     }
 
