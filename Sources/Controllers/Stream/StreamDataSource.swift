@@ -441,7 +441,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
         case .Delete:
-            collectionView.deleteItemsAtIndexPaths(removeItemsForJSONAble(jsonable, change: change))
+            let indexPaths = removeItemsForJSONAble(jsonable, change: change)
+            collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
         case .Replaced:
             let (oldIndexPaths, _) = elementsForJSONAble(jsonable, change: change)
             if let post = jsonable as? Post, firstIndexPath = oldIndexPaths.first {
@@ -459,10 +460,11 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                         let indexPath = NSIndexPath(forItem: wrongIndexPath.item + newIndexPaths.count, inSection: wrongIndexPath.section)
                         self.removeItemsAtIndexPaths([indexPath])
                     }
-                    collectionView.performBatchUpdates({
-                        collectionView.insertItemsAtIndexPaths(newIndexPaths)
-                        collectionView.deleteItemsAtIndexPaths(oldIndexPaths)
-                    }, completion: nil)
+                    // collectionView.performBatchUpdates({
+                    //     collectionView.insertItemsAtIndexPaths(newIndexPaths)
+                    //     collectionView.deleteItemsAtIndexPaths(oldIndexPaths)
+                    // }, completion: nil)
+                    collectionView.reloadData()
                 }
             }
             else if let comment = jsonable as? ElloComment, firstIndexPath = oldIndexPaths.first  {
@@ -480,10 +482,11 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                         let indexPath = NSIndexPath(forItem: wrongIndexPath.item + newIndexPaths.count, inSection: wrongIndexPath.section)
                         self.removeItemsAtIndexPaths([indexPath])
                     }
-                    collectionView.performBatchUpdates({
-                        collectionView.insertItemsAtIndexPaths(newIndexPaths)
-                        collectionView.deleteItemsAtIndexPaths(oldIndexPaths)
-                    }, completion: nil)
+                    // collectionView.performBatchUpdates({
+                    //     collectionView.insertItemsAtIndexPaths(newIndexPaths)
+                    //     collectionView.deleteItemsAtIndexPaths(oldIndexPaths)
+                    // }, completion: nil)
+                    collectionView.reloadData()
                 }
             }
         case .Update:
@@ -494,7 +497,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 case .Loves:
                     if let post = jsonable as? Post where !post.loved {
                         // the post was unloved
-                        collectionView.deleteItemsAtIndexPaths(removeItemsForJSONAble(jsonable, change: .Delete))
+                        let indexPaths = removeItemsForJSONAble(jsonable, change: .Delete)
+                        collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
                         shouldReload = false
                     }
                 default: break
@@ -507,7 +511,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 for item in items {
                     item.jsonable = item.jsonable.merge(jsonable)
                 }
-                collectionView.reload(indexPaths)
+                collectionView.reloadData() // reload(indexPaths)
             }
         case .Loved:
             let (_, items) = elementsForJSONAble(jsonable, change: change)
@@ -519,7 +523,20 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 }
                 item.jsonable = item.jsonable.merge(jsonable)
             }
-            collectionView.reload(indexPaths)
+            collectionView.reloadData() // reload(indexPaths)
+        case .Watching:
+            let (_, items) = elementsForJSONAble(jsonable, change: change)
+            var indexPaths = [NSIndexPath]()
+            for item in items {
+                if let path = indexPathForItem(item)
+                    where item.type == .CreateComment {
+                    indexPaths.append(path)
+                }
+                else {
+                    item.jsonable = item.jsonable.merge(jsonable)
+                }
+            }
+            collectionView.reloadData() // reload(indexPaths)
         default: break
         }
     }
@@ -568,7 +585,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         else {
             reloadPaths = changedPaths
         }
-        collectionView.reload(reloadPaths)
+        collectionView.reloadData() // reload(reloadPaths)
 
         if user.relationshipPriority.isMutedOrBlocked {
             var shouldDelete = true
@@ -604,7 +621,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 item.jsonable = user
             }
         }
-        collectionView.reload(changedPaths)
+        collectionView.reloadData() // reload(changedPaths)
     }
 
     public func removeItemsForJSONAble(jsonable: JSONAble, change: ContentChange) -> [NSIndexPath] {
@@ -642,7 +659,15 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                     items.append(item)
                 }
                 else if change == .Delete || change == .Replaced {
-                    if let itemComment = item.jsonable as? ElloComment where itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
+                    if let itemComment = item.jsonable as? ElloComment
+                    where itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
+                        indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
+                        items.append(item)
+                    }
+                }
+                else if change == .Watching {
+                    if let itemComment = item.jsonable as? ElloComment
+                    where (itemComment.loadedFromPostId == post.id || itemComment.postId == post.id) && item.type == .CreateComment {
                         indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
                         items.append(item)
                     }

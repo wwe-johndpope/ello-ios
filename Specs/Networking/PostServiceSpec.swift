@@ -21,13 +21,13 @@ class PostServiceSpec: QuickSpec {
                     it("succeeds") {
                         var successPost: Post?
                         var failedCalled = false
-                        subject.loadPost("fake-post-param", needsComments: true,
-                            success: { (post, responseConfig) in
+                        subject.loadPost("fake-post-param", needsComments: true)
+                            .onSuccess { post in
                                 successPost = post
-                            }, failure: { (_, _) in
+                            }
+                            .onFail { _ in
                                 failedCalled = true
                             }
-                        )
 
                         expect(successPost).notTo(beNil())
                         expect(failedCalled).to(beFalse())
@@ -47,13 +47,13 @@ class PostServiceSpec: QuickSpec {
                     it("fails") {
                         var successPost: Post?
                         var failedCalled = false
-                        subject.loadPost("fake-post-param", needsComments: true,
-                            success: { (post, responseConfig) in
+                        subject.loadPost("fake-post-param", needsComments: true)
+                            .onSuccess { post in
                                 successPost = post
-                            }, failure: { (_, _) in
+                            }
+                            .onFail { _ in
                                 failedCalled = true
                             }
-                        )
 
                         expect(successPost).to(beNil())
                         expect(failedCalled).to(beTrue())

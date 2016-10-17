@@ -202,7 +202,6 @@ class OmnibarViewControllerSpec: QuickSpec {
                         subject.omnibarSubmitted(regions, buyButtonURL: nil)
 
                         expect(screen.interactionEnabled) == false
-                        ElloProvider.sharedProvider = ElloProvider.StubbingProvider()
                     }
 
                     it("enables interaction after submitting the post") {
@@ -218,6 +217,28 @@ class OmnibarViewControllerSpec: QuickSpec {
 
                         expect(screen.interactionEnabled) == true
                     }
+                }
+            }
+            context("submitting a comment") {
+                var post: Post!
+                beforeEach {
+                    // need to pull the parent post id out of the create-comment sample json
+                    let commentData = ElloAPI.CreateComment(parentPostId: "-", body: [:]).sampleData
+                    let commentJSON = try! NSJSONSerialization.JSONObjectWithData(commentData, options: []) as! [String: AnyObject]
+                    let postId = (commentJSON["comments"] as! [String: AnyObject])["post_id"] as! String
+                    post = Post.stub(["id": postId, "watching": false])
+
+                    subject = OmnibarViewController(parentPost: post)
+                    subject.currentUser = User.stub([:])
+                    showController(subject)
+                    let text = NSAttributedString(string: "test")
+                    let regions = [OmnibarRegion.AttributedText(text)]
+                    subject.omnibarSubmitted(regions, buyButtonURL: nil)
+                }
+
+                it("sets the watching property of the parent post to true after submitting the post") {
+                    let parentPost = ElloLinkedStore.sharedInstance.getObject(post.id, inCollection: "posts") as! Post
+                    expect(parentPost.watching) == true
                 }
             }
 

@@ -17,6 +17,7 @@ public enum ContentChange {
     case Read
     case Update
     case Loved
+    case Watching
     case Replaced
     case Delete
 
