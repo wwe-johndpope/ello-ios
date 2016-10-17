@@ -169,14 +169,14 @@ extension ProfileStatsView {
 
 extension ProfileStatsView {
     func buttonDown(touchedButton: UIButton) {
-        for (countLabel, captionLabel, button) in allThreeViews {
+        for (_, captionLabel, button) in allThreeViews {
             guard button == touchedButton else { continue }
             captionLabel.textColor = .blackColor()
         }
     }
 
     func buttonUp(touchedButton: UIButton) {
-        for (countLabel, captionLabel, button) in allThreeViews {
+        for (_, captionLabel, button) in allThreeViews {
             captionLabel.textColor = .greyA()
         }
     }
