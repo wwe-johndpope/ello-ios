@@ -43,6 +43,8 @@ public class ProfileCategoriesScreen: Screen {
 
     override func bindActions() {
         textView.textViewDelegate = self
+        let gesture = UITapGestureRecognizer(target:self, action: #selector(dismiss))
+        background.addGestureRecognizer(gesture)
     }
 
     override func setText() {
@@ -87,6 +89,10 @@ public class ProfileCategoriesScreen: Screen {
             make.leading.trailing.equalTo(self).inset(Size.textInset)
             make.centerX.centerY.equalTo(self)
         }
+    }
+
+    func dismiss() {
+        delegate?.dismiss()
     }
 }
 

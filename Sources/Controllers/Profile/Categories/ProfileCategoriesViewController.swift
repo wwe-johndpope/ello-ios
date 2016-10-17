@@ -24,18 +24,12 @@ public final class ProfileCategoriesViewController: BaseElloViewController {
         let screen = ProfileCategoriesScreen(categories: categories)
         screen.delegate = self
         self.view = screen
-        let gesture = UITapGestureRecognizer(target:self, action: #selector(dismiss))
-        screen.background.addGestureRecognizer(gesture)
     }
-
-    func dismiss() {
-        dismissViewControllerAnimated(true, completion: .None)
-    }
-
 }
 
 // MARK: UIViewControllerTransitioningDelegate
 extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate {
+
     public func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController?, sourceViewController source: UIViewController) -> UIPresentationController? {
         guard presented == self
             else { return .None }
@@ -47,11 +41,13 @@ extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate
 extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
 
     public func categoryTapped(category: Category) {
-
         let categoryVC = SimpleStreamViewController(endpoint: category.endpoint, title: category.name)
         categoryVC.currentUser = currentUser
 
         navigationController?.pushViewController(categoryVC, animated: true)
     }
 
+    public func dismiss() {
+        dismissViewControllerAnimated(true, completion: .None)
+    }
 }
