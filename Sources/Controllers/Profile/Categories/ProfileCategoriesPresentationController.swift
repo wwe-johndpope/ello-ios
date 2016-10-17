@@ -22,9 +22,9 @@ public class ProfileCategoriesPresentationController: UIPresentationController {
 public extension ProfileCategoriesPresentationController {
     override public func presentationTransitionWillBegin() {
         guard let containerView = containerView else { return }
-            background.alpha = 0
-            background.frame = containerView.bounds
-            containerView.addSubview(background)
+        background.alpha = 0
+        background.frame = containerView.bounds
+        containerView.addSubview(background)
 
         let transitionCoordinator = presentingViewController.transitionCoordinator()
         transitionCoordinator?.animateAlongsideTransition({ _ in
