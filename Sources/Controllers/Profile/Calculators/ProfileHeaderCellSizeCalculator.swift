@@ -7,19 +7,12 @@ import FutureKit
 
 public class ProfileHeaderCellSizeCalculator: NSObject {
     static let ratio: CGFloat = 16 / 9
-    let webView: UIWebView
 
     private var maxWidth: CGFloat = 0.0
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
     private var cellItems: [StreamCellItem] = []
     private var completion: ElloEmptyCompletion = {}
-
-    required public init(webView: UIWebView) {
-        self.webView = webView
-        super.init()
-        webView.delegate = self
-    }
 
     let statsSizeCalculator = ProfileStatsSizeCalculator()
     let avatarSizeCalculator = ProfileAvatarSizeCalculator()
@@ -118,13 +111,4 @@ private extension ProfileHeaderCellSizeCalculator {
                 .onFailorCancel { _ in done() }
         }
     }
-}
-
-extension ProfileHeaderCellSizeCalculator: UIWebViewDelegate {
-
-    public func webViewDidFinishLoad(webView: UIWebView) {
-        let webViewHeight = webView.windowContentSize()?.height ?? 0
-        assignCellHeight(webViewHeight)
-    }
-
 }

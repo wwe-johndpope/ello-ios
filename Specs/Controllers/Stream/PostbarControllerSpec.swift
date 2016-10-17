@@ -42,7 +42,7 @@ class PostbarControllerSpec: QuickSpec {
         beforeEach {
             let textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
             let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
-            let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator(webView: UIWebView())
+            let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
             let imageSizeCalculator = StreamImageCellSizeCalculator()
 
             let dataSource = StreamDataSource(streamKind: streamKind,
