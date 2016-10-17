@@ -134,7 +134,7 @@ public struct InterfaceString {
         static let NoResultsTitle: String = NSLocalizedString("This person hasn't posted yet.", comment: "")
         static let NoResultsBody: String = NSLocalizedString("Follow or mention them to help them get started!", comment: "")
         static let FeaturedIn: String = NSLocalizedString("Featured in", comment: "Featurd in")
-		static let TotalViews: String = NSLocalizedString("Total Views", comment: "")
+        static let TotalViews: String = NSLocalizedString("Total Views", comment: "")
     }
 
     public struct Post {
