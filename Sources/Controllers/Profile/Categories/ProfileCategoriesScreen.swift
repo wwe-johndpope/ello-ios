@@ -13,7 +13,7 @@ public class ProfileCategoriesScreen: UIView {
 
     weak var delegate: ProfileCategoriesDelegate?
 
-    let background = UIView()
+    public let background = UIView()
     let textView = ElloTextView()
     var categories = [Category]()
 
@@ -125,7 +125,7 @@ private extension ProfileCategoriesScreen {
 
     func attrs(addlAttrs: [String : AnyObject] = [:]) -> [String : AnyObject] {
         let attrs: [String: AnyObject] = [
-            NSFontAttributeName: UIFont.defaultFont(14),
+            NSFontAttributeName: UIFont.defaultFont(18),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
         ]
         return attrs + addlAttrs

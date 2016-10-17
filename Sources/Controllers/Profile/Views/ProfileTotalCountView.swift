@@ -84,10 +84,20 @@ extension ProfileTotalCountView {
 }
 
 extension ProfileTotalCountView {
+
+
     func badgeTapped() {
+        guard let cell: UICollectionViewCell = self.findParentView() else { return }
+
+        let responder = targetForAction(#selector(ProfileHeaderResponder.onCategoryBadgeTapped(_:)), withSender: self) as? ProfileHeaderResponder
+        responder?.onCategoryBadgeTapped(cell)
     }
 
     func shareTapped() {
+        guard let cell: UICollectionViewCell = self.findParentView() else { return }
+
+        let responder = targetForAction(#selector(ProfileHeaderResponder.onShareTapped(_:)), withSender: self) as? ProfileHeaderResponder
+        responder?.onShareTapped(cell)
     }
 }
 

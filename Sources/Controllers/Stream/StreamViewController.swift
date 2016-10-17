@@ -48,6 +48,7 @@ public protocol UserDelegate: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
     func userTappedText(cell: UICollectionViewCell)
+    func userTappedFeaturedCategories(cell: UICollectionViewCell)
     func userTappedUser(user: User)
 }
 
@@ -917,6 +918,29 @@ extension StreamViewController: CategoryDelegate {
     }
 }
 
+// MARK: ProfileHeaderResponder
+extension StreamViewController: ProfileHeaderResponder {
+    public func onCategoryBadgeTapped(cell: UICollectionViewCell) {
+
+        // temp categories, will replac when User is
+        let categories = [
+            Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
+            Category(id: "0123", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
+        ]
+
+        let vc = ProfileCategoriesViewController(categories: categories)
+        let navVC = ElloNavigationController(rootViewController: vc)
+        navVC.modalTransitionStyle = .CrossDissolve
+        navVC.modalPresentationStyle = .Custom
+        navVC.transitioningDelegate = vc
+        presentViewController(navVC, animated: true, completion: nil)
+    }
+
+    public func onShareTapped(cell: UICollectionViewCell) {
+        print("onShareTapped StreamViewController")
+    }
+}
+
 // MARK: StreamViewController: UserDelegate
 extension StreamViewController: UserDelegate {
 
@@ -952,6 +976,15 @@ extension StreamViewController: UserDelegate {
 
     public func userTappedUser(user: User) {
         userTapped(user)
+    }
+
+    public func userTappedFeaturedCategories(cell: UICollectionViewCell) {
+        guard let
+            indexPath = collectionView.indexPathForCell(cell),
+            user = dataSource.userForIndexPath(indexPath)
+            else { return }
+
+        print("\(user.atName) userTappedFeaturedCategories()")
     }
 
 }

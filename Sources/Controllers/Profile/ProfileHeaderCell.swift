@@ -12,7 +12,14 @@ public protocol PostsTappedResponder {
     func onPostsTapped()
 }
 
+@objc
+public protocol ProfileHeaderResponder {
+    func onCategoryBadgeTapped(cell: UICollectionViewCell)
+    func onShareTapped(cell: UICollectionViewCell)
+}
+
 public class ProfileHeaderCell: UICollectionViewCell {
+
     static let reuseIdentifier = "ProfileHeaderCell"
 
     let headerView = ProfileHeaderCompactView()
@@ -54,6 +61,8 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     weak var webLinkDelegate: WebLinkDelegate?
     weak var simpleStreamDelegate: SimpleStreamDelegate?
+    weak var userDelegate: UserDelegate?
+
     var user: User?
     var currentUser: User?
     var webContentReady: WebContentReady?

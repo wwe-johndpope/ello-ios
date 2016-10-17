@@ -11,7 +11,7 @@ class ProfileCategoriesScreenSpec: QuickSpec {
 
     override func spec() {
 
-        fdescribe("ProfileCategoriesScreen") {
+        describe("ProfileCategoriesScreen") {
 
             context("snapshots") {
 
