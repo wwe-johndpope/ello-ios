@@ -47,15 +47,11 @@ extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate
 extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
 
     public func categoryTapped(category: Category) {
-        print("Tapped \(category.endpoint)")
 
         let categoryVC = SimpleStreamViewController(endpoint: category.endpoint, title: category.name)
         categoryVC.currentUser = currentUser
 
-//        presentViewController(categoryVC, animated: true, completion: nil)
         navigationController?.pushViewController(categoryVC, animated: true)
-//
-//        pushDeepLinkViewController(followersVC)
     }
 
 }
