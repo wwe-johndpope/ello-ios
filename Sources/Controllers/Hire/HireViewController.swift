@@ -25,9 +25,9 @@ public class HireViewController: BaseElloViewController {
 
         switch contactType {
         case .Hire:
-            title = "Hire \(user.atName)"
+            title = NSString.localizedStringWithFormat(InterfaceString.Hire.HireTitleTemplate, user.atName) as String
         case .Collaborate:
-            title = "Collaborate with \(user.atName)"
+            title = NSString.localizedStringWithFormat(InterfaceString.Hire.CollaborateTitleTemplate, user.atName) as String
         }
     }
 

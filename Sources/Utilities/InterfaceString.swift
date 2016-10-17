@@ -172,6 +172,8 @@ public struct InterfaceString {
 
     public struct Hire {
         static let Send: String = NSLocalizedString("Send", comment: "Send Button title")
+        static let HireTitleTemplate = NSLocalizedString("Hire %@", comment: "Hire (username) title")
+        static let CollaborateTitleTemplate = NSLocalizedString("Collaborate with %@", comment: "Collaborate (username) title")
     }
 
     public struct Loves {
