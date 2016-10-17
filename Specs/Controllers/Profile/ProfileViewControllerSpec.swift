@@ -128,7 +128,7 @@ class ProfileViewControllerSpec: QuickSpec {
                             expect(subject.user?.isCollaborateable) == collaborateable
                         }
                         it("has \(collaborateButton ? "visible" : "hidden") collaborateButton") {
-                            expect(screen.collaborateButton.hidden) == collaborateButton
+                            expect(screen.collaborateButton.hidden) == !collaborateButton
                         }
 
                         it("user \(hireable ? "is" : "is not") hireable") {
