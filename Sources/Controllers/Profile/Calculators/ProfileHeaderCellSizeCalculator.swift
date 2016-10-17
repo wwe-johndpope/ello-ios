@@ -80,22 +80,31 @@ private extension ProfileHeaderCellSizeCalculator {
     func calculateAggregateHeights(item: StreamCellItem) {
         var totalHeight: CGFloat = 0
 
-        let futures = [
-            ProfileStatsSizeCalculator().calculate(item),
-            ProfileAvatarSizeCalculator().calculate(item),
-            ProfileBioSizeCalculator().calculate(item),
-            ProfileLinksSizeCalculator().calculate(item),
-            ProfileNamesSizeCalculator().calculate(item, maxWidth: maxWidth),
-            ProfileTotalCountSizeCalculator().calculate(item)
+        let futures: [(CalculatedCellHeights.Prop?, Future<CGFloat>)] = [
+            (nil, ProfileStatsSizeCalculator().calculate(item)),
+            (nil, ProfileAvatarSizeCalculator().calculate(item)),
+            (.ProfileNames, ProfileNamesSizeCalculator().calculate(item, maxWidth: maxWidth)),
+            (.ProfileBio, ProfileBioSizeCalculator().calculate(item)),
+            (.ProfileLinks, ProfileLinksSizeCalculator().calculate(item)),
+            (nil, ProfileTotalCountSizeCalculator().calculate(item))
         ]
 
         let done = after(futures.count) {
             self.assignCellHeight(totalHeight)
         }
 
-        for future in futures {
+        for (calcType, future) in futures {
             future
                 .onSuccess { height in
+                    switch calcType {
+                    case .Some(.ProfileBio):
+                        item.calculatedCellHeights.profileBio = height
+                    case .Some(.ProfileLinks):
+                        item.calculatedCellHeights.profileLinks = height
+                    case .Some(.ProfileNames):
+                        item.calculatedCellHeights.profileNames = height
+                    default: break
+                    }
                     totalHeight += height
                     done()
                 }
