@@ -90,9 +90,9 @@ private extension ProfileHeaderCellSizeCalculator {
         let futures: [(CalculatedCellHeights.Prop?, Future<CGFloat>)] = [
             (nil, statsSizeCalculator.calculate(item)),
             (nil, avatarSizeCalculator.calculate(item)),
-            (.ProfileNames, bioSizeCalculator.calculate(item, maxWidth: maxWidth)),
-            (.ProfileBio, linksSizeCalculator.calculate(item)),
-            (.ProfileLinks, namesSizeCalculator.calculate(item)),
+            (.ProfileNames, namesSizeCalculator.calculate(item), maxWidth: maxWidth),
+            (.ProfileBio, bioSizeCalculator.calculate(item, maxWidth: maxWidth)),
+            (.ProfileLinks, linksSizeCalculator.calculate(item)),
             (nil, totalCountSizeCalculator.calculate(item))
         ]
 
