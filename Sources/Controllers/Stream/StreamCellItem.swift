@@ -26,9 +26,7 @@ public final class StreamCellItem: NSObject, NSCopying {
     public var jsonable: JSONAble
     public var type: StreamCellType
     public var placeholderType: StreamCellType.PlaceholderType?
-    public var calculatedWebHeight: CGFloat?
-    public var calculatedOneColumnCellHeight: CGFloat?
-    public var calculatedMultiColumnCellHeight: CGFloat?
+    public var calculatedCellHeights = CalculatedCellHeights()
     public var state: StreamCellState = .None
 
     public convenience init(type: StreamCellType) {
@@ -54,9 +52,9 @@ public final class StreamCellItem: NSObject, NSCopying {
             jsonable: self.jsonable,
             type: self.type
             )
-        copy.calculatedWebHeight = self.calculatedWebHeight
-        copy.calculatedOneColumnCellHeight = self.calculatedOneColumnCellHeight
-        copy.calculatedMultiColumnCellHeight = self.calculatedMultiColumnCellHeight
+        copy.calculatedCellHeights.webContent = self.calculatedCellHeights.webContent
+        copy.calculatedCellHeights.oneColumn = self.calculatedCellHeights.oneColumn
+        copy.calculatedCellHeights.multiColumn = self.calculatedCellHeights.multiColumn
         return copy
     }
 

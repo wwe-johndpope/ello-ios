@@ -77,9 +77,9 @@ private extension ProfileHeaderCellSizeCalculator {
 
         if let cellItem = cellItems.safeValue(0) {
             self.cellItems.removeAtIndex(0)
-            cellItem.calculatedWebHeight = height
-            cellItem.calculatedOneColumnCellHeight = height
-            cellItem.calculatedMultiColumnCellHeight = height
+            cellItem.calculatedCellHeights.webContent = height
+            cellItem.calculatedCellHeights.oneColumn = height
+            cellItem.calculatedCellHeights.multiColumn = height
         }
         loadNext()
     }
@@ -87,22 +87,31 @@ private extension ProfileHeaderCellSizeCalculator {
     func calculateAggregateHeights(item: StreamCellItem) {
         var totalHeight: CGFloat = 0
 
-        let futures = [
-            statsSizeCalculator.calculate(item),
-            avatarSizeCalculator.calculate(item),
-            bioSizeCalculator.calculate(item, maxWidth: maxWidth),
-            linksSizeCalculator.calculate(item),
-            namesSizeCalculator.calculate(item, maxWidth: maxWidth),
-            totalCountSizeCalculator.calculate(item)
+        let futures: [(CalculatedCellHeights.Prop?, Future<CGFloat>)] = [
+            (nil, statsSizeCalculator.calculate(item)),
+            (nil, avatarSizeCalculator.calculate(item)),
+            (.ProfileNames, bioSizeCalculator.calculate(item, maxWidth: maxWidth)),
+            (.ProfileBio, linksSizeCalculator.calculate(item)),
+            (.ProfileLinks, namesSizeCalculator.calculate(item)),
+            (nil, totalCountSizeCalculator.calculate(item))
         ]
 
         let done = after(futures.count) {
             self.assignCellHeight(totalHeight)
         }
 
-        for future in futures {
+        for (calcType, future) in futures {
             future
                 .onSuccess { height in
+                    switch calcType {
+                    case .Some(.ProfileBio):
+                        item.calculatedCellHeights.profileBio = height
+                    case .Some(.ProfileLinks):
+                        item.calculatedCellHeights.profileLinks = height
+                    case .Some(.ProfileNames):
+                        item.calculatedCellHeights.profileNames = height
+                    default: break
+                    }
                     totalHeight += height
                     done()
                 }

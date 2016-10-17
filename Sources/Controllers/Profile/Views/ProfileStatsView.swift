@@ -4,6 +4,7 @@
 
 public class ProfileStatsView: ProfileBaseView {
     public struct Size {
+        static let height: CGFloat = 70
         static let verticalMargin: CGFloat = 1
         static let countVerticalOffset: CGFloat = 20
         static let captionVerticalOffset: CGFloat = 5
@@ -143,8 +144,6 @@ extension ProfileStatsView {
                 make.trailing.equalTo(self)
             }
         }
-
-        layoutIfNeeded()
     }
 
     func prepareForReuse() {

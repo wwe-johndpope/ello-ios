@@ -18,14 +18,14 @@ public struct NotificationCellPresenter {
 
         cell.onWebContentReady { webView in
             if let actualHeight = webView.windowContentSize()?.height
-            where actualHeight != streamCellItem.calculatedWebHeight {
+            where actualHeight != streamCellItem.calculatedCellHeights.webContent {
                 StreamNotificationCellSizeCalculator.assignTotalHeight(actualHeight, cellItem: streamCellItem, cellWidth: cell.frame.width)
                 postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
             }
         }
         cell.onHeightMismatch = { height in
-            streamCellItem.calculatedOneColumnCellHeight = height
-            streamCellItem.calculatedMultiColumnCellHeight = height
+            streamCellItem.calculatedCellHeights.oneColumn = height
+            streamCellItem.calculatedCellHeights.multiColumn = height
             postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
         }
 

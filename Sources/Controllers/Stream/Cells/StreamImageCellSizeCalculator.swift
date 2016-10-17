@@ -74,8 +74,8 @@ public class StreamImageCellSizeCalculator: NSObject {
             }
 
             if let imageRegion = item.type.data as? ImageRegion {
-                item.calculatedOneColumnCellHeight = StreamImageCell.Size.bottomMargin + oneColumnImageHeight(imageRegion)
-                item.calculatedMultiColumnCellHeight = StreamImageCell.Size.bottomMargin + multiColumnImageHeight(imageRegion)
+                item.calculatedCellHeights.oneColumn = StreamImageCell.Size.bottomMargin + oneColumnImageHeight(imageRegion)
+                item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + multiColumnImageHeight(imageRegion)
             }
             else if let embedRegion = item.type.data as? EmbedRegion {
                 var ratio: CGFloat
@@ -85,8 +85,8 @@ public class StreamImageCellSizeCalculator: NSObject {
                 else {
                     ratio = 16.0/9.0
                 }
-                item.calculatedOneColumnCellHeight = StreamImageCell.Size.bottomMargin + maxWidth / ratio
-                item.calculatedMultiColumnCellHeight = StreamImageCell.Size.bottomMargin + calculateColumnWidth(screenWidth: maxWidth, columnCount: columnCount) / ratio
+                item.calculatedCellHeights.oneColumn = StreamImageCell.Size.bottomMargin + maxWidth / ratio
+                item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + calculateColumnWidth(screenWidth: maxWidth, columnCount: columnCount) / ratio
             }
             loadNext()
         }

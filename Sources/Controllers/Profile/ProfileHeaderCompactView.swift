@@ -2,24 +2,13 @@
 ///  ProfileHeaderCompactView.swift
 //
 
-public class ProfileHeaderCompactView: ProfileBaseView {
+import SnapKit
 
+
+public class ProfileHeaderCompactView: ProfileBaseView {
     public struct Size {
         static let avatarHeight: CGFloat = 255
-
-        static let nameWidth: CGFloat = 122
-        static let nameHeight: CGFloat = 122
-
         static let totalCountHeight: CGFloat = 60
-
-        static let activityWidth: CGFloat = 122
-        static let activityHeight: CGFloat = 122
-
-        static let bioWidth: CGFloat = 122
-        static let bioHeight: CGFloat = 122
-
-        static let linksWidth: CGFloat = 122
-        static let linksHeight: CGFloat = 122
     }
 
     let avatarView = ProfileAvatarView()
@@ -28,6 +17,21 @@ public class ProfileHeaderCompactView: ProfileBaseView {
     let statsView = ProfileStatsView()
     let bioView = ProfileBioView()
     let linksView = ProfileLinksView()
+
+    var calculatedCellHeights: CalculatedCellHeights? {
+        didSet {
+            guard let calculatedCellHeights = calculatedCellHeights else { return }
+
+            if let namesHeight = calculatedCellHeights.profileNames { namesHeightConstraint.updateOffset(namesHeight) }
+            if let bioHeight = calculatedCellHeights.profileBio { bioHeightConstraint.updateOffset(bioHeight) }
+            if let linksHeight = calculatedCellHeights.profileLinks { linksHeightConstraint.updateOffset(linksHeight) }
+            setNeedsLayout()
+        }
+    }
+
+    var namesHeightConstraint: Constraint!
+    var bioHeightConstraint: Constraint!
+    var linksHeightConstraint: Constraint!
 }
 
 extension ProfileHeaderCompactView {
@@ -51,41 +55,38 @@ extension ProfileHeaderCompactView {
         addSubview(linksView)
 
         avatarView.snp_makeConstraints { make in
-            make.top.equalTo(self.snp_top)
-            make.width.equalTo(self.snp_width)
+            make.top.width.centerX.equalTo(self)
             make.height.equalTo(Size.avatarHeight)
         }
 
         namesView.snp_makeConstraints { make in
-            make.width.equalTo(self.snp_width)
-            make.height.equalTo(Size.nameHeight)
             make.top.equalTo(self.avatarView.snp_bottom)
+            make.width.centerX.equalTo(self)
+            namesHeightConstraint = make.height.equalTo(0).constraint
         }
 
         totalCountView.snp_makeConstraints { make in
-            make.width.equalTo(self.snp_width)
-            make.height.equalTo(Size.totalCountHeight)
             make.top.equalTo(self.namesView.snp_bottom)
+            make.width.centerX.equalTo(self)
+            make.height.equalTo(Size.totalCountHeight)
         }
 
         statsView.snp_makeConstraints { make in
-            make.width.equalTo(self.snp_width)
-            make.height.equalTo(Size.activityHeight)
             make.top.equalTo(self.totalCountView.snp_bottom)
+            make.width.centerX.equalTo(self)
+            make.height.equalTo(ProfileStatsView.Size.height)
         }
 
         bioView.snp_makeConstraints { make in
-            make.width.equalTo(self.snp_width)
-            make.height.equalTo(Size.bioHeight)
             make.top.equalTo(self.statsView.snp_bottom)
+            make.width.centerX.equalTo(self)
+            bioHeightConstraint = make.height.equalTo(0).constraint
         }
 
         linksView.snp_makeConstraints { make in
-            make.width.equalTo(self.snp_width)
-            make.height.equalTo(Size.linksHeight)
             make.top.equalTo(self.bioView.snp_bottom)
+            make.width.centerX.equalTo(self)
+            linksHeightConstraint = make.height.equalTo(0).constraint
         }
-
-        layoutIfNeeded()
     }
 }
