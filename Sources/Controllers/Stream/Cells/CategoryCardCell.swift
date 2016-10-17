@@ -52,7 +52,7 @@ public class CategoryCardCell: UICollectionViewCell {
             selectedImageView.hidden = !selected
         }
         else {
-            colorFillView.alpha = 0
+            colorFillView.alpha = 0.4
             label.font = UIFont.defaultFont()
             selectedImageView.hidden = true
         }
