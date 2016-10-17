@@ -2,7 +2,6 @@
 ///  ProfileCategoriesProtocols.swift
 //
 
-@objc
 protocol ProfileCategoriesDelegate: class {
     func categoryTapped(category: Category)
     func dismiss()

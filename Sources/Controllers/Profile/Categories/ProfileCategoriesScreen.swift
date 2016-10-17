@@ -43,7 +43,7 @@ public class ProfileCategoriesScreen: Screen {
 
     override func bindActions() {
         textView.textViewDelegate = self
-        let gesture = UITapGestureRecognizer(target:self, action: #selector(dismiss))
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismiss))
         background.addGestureRecognizer(gesture)
     }
 
