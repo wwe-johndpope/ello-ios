@@ -650,6 +650,10 @@
 		1DA18DFE1DAC3B64000231CC /* ProfileStatsViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DFD1DAC3B64000231CC /* ProfileStatsViewSpec.swift */; };
 		1DA18E001DAC3B73000231CC /* ProfileStatsPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18DFF1DAC3B73000231CC /* ProfileStatsPresenterSpec.swift */; };
 		1DA18E021DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E011DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift */; };
+		1DA18E041DAD911E000231CC /* ProfileBioPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E031DAD911E000231CC /* ProfileBioPresenter.swift */; };
+		1DA18E061DAD912A000231CC /* ProfileBioPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E051DAD912A000231CC /* ProfileBioPresenterSpec.swift */; };
+		1DA18E081DAD9139000231CC /* ProfileBioSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E071DAD9139000231CC /* ProfileBioSizeCalculatorSpec.swift */; };
+		1DA18E0A1DAD969F000231CC /* ProfileBioViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E091DAD969F000231CC /* ProfileBioViewSpec.swift */; };
 		1DA809C21B8F6DE9000BB590 /* OmnibarScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */; };
 		1DA8FD701B98A63600472B1E /* reorder_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */; };
 		1DA8FD711B98A63600472B1E /* reorder_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */; };
@@ -1578,6 +1582,10 @@
 		1DA18DFD1DAC3B64000231CC /* ProfileStatsViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStatsViewSpec.swift; sourceTree = "<group>"; };
 		1DA18DFF1DAC3B73000231CC /* ProfileStatsPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileStatsPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/ProfileStatsPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
 		1DA18E011DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStatsSizeCalculatorSpec.swift; sourceTree = "<group>"; };
+		1DA18E031DAD911E000231CC /* ProfileBioPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBioPresenter.swift; sourceTree = "<group>"; };
+		1DA18E051DAD912A000231CC /* ProfileBioPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileBioPresenterSpec.swift; path = Specs/Controllers/Stream/CellDequeing/ProfileBioPresenterSpec.swift; sourceTree = SOURCE_ROOT; };
+		1DA18E071DAD9139000231CC /* ProfileBioSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBioSizeCalculatorSpec.swift; sourceTree = "<group>"; };
+		1DA18E091DAD969F000231CC /* ProfileBioViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBioViewSpec.swift; sourceTree = "<group>"; };
 		1DA809C11B8F6DE9000BB590 /* OmnibarScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenSpec.swift; sourceTree = "<group>"; };
 		1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reorder_normal.svg; sourceTree = "<group>"; };
 		1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reorder_selected.svg; sourceTree = "<group>"; };
@@ -2057,6 +2065,7 @@
 				1266E50F1A9E2BDF00270E1C /* ContentFlaggerSpec.swift */,
 				123DEBF21D3D63FE007B5F86 /* Detail */,
 				1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */,
+				1DA18E071DAD9139000231CC /* ProfileBioSizeCalculatorSpec.swift */,
 				1DA18DF11DA83AF6000231CC /* ProfileNamesSizeCalculatorSpec.swift */,
 				1DA18E011DAC3B8D000231CC /* ProfileStatsSizeCalculatorSpec.swift */,
 				76CCEEDC1ACC8D4B00978663 /* StreamableViewControllerSpec.swift */,
@@ -2347,6 +2356,7 @@
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
 				12A1D8281DAC036300A327D6 /* ProfileAvatarPresenter.swift */,
+				1DA18E031DAD911E000231CC /* ProfileBioPresenter.swift */,
 				128D36B81A951F7400622833 /* ProfileHeaderCellPresenter.swift */,
 				1DA18DF31DA8470D000231CC /* ProfileNamesPresenter.swift */,
 				1DA18DFB1DAC3B4E000231CC /* ProfileStatsPresenter.swift */,
@@ -2703,6 +2713,7 @@
 				1D2F65BF1D1D88DD0099D036 /* CategoryCellPresenterSpec.swift */,
 				1D2F65C01D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift */,
 				12A1D82C1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift */,
+				1DA18E051DAD912A000231CC /* ProfileBioPresenterSpec.swift */,
 				125F28891B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift */,
 				1DA18DF61DA84773000231CC /* ProfileNamesPresenterSpec.swift */,
 				1DA18DFF1DAC3B73000231CC /* ProfileStatsPresenterSpec.swift */,
@@ -3244,6 +3255,7 @@
 			isa = PBXGroup;
 			children = (
 				12A1D82A1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift */,
+				1DA18E091DAD969F000231CC /* ProfileBioViewSpec.swift */,
 				1DA18DF91DA84978000231CC /* ProfileNamesViewSpec.swift */,
 				1DA18DFD1DAC3B64000231CC /* ProfileStatsViewSpec.swift */,
 				12A1D8321DAD747500A327D6 /* ProfileTotalCountViewSpec.swift */,
@@ -4445,6 +4457,7 @@
 				76B2ADDD1A7C43F700D5CAD7 /* StreamViewControllerSpec.swift in Sources */,
 				1D26E1681C52E26D0034448D /* NotificationCellSpec.swift in Sources */,
 				127BAD5C1A83F01700628696 /* StreamCellItemParserSpec.swift in Sources */,
+				1DA18E061DAD912A000231CC /* ProfileBioPresenterSpec.swift in Sources */,
 				124727631AB14AA0000079D7 /* AssetSpec.swift in Sources */,
 				1D44F80C1B629606007E2DE4 /* StreamCellItemParserExt.swift in Sources */,
 				120FF6C61C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift in Sources */,
@@ -4523,6 +4536,7 @@
 				12B093661A6D87C000BF104E /* StreamContainerViewControllerSpec.swift in Sources */,
 				1DA18DFE1DAC3B64000231CC /* ProfileStatsViewSpec.swift in Sources */,
 				12D14C721A43762400C6F8E8 /* PostSpec.swift in Sources */,
+				1DA18E0A1DAD969F000231CC /* ProfileBioViewSpec.swift in Sources */,
 				122C663C1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift in Sources */,
 				12D14C691A43761A00C6F8E8 /* ElloAPISpec.swift in Sources */,
 				125739161B432EB100EF7792 /* AutoCompleteServiceSpec.swift in Sources */,
@@ -4584,6 +4598,7 @@
 				1D7750F71ABB68D900D92191 /* ToNSDataSpec.swift in Sources */,
 				1D061B4D1AAA191500493435 /* KeyboardSpec.swift in Sources */,
 				1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */,
+				1DA18E081DAD9139000231CC /* ProfileBioSizeCalculatorSpec.swift in Sources */,
 				12BCEA3E1B6C0D4500AD85A9 /* NewContentServiceSpec.swift in Sources */,
 				12687A181BBF295E0055D0BA /* RateSpec.swift in Sources */,
 				76F90E5D1A97992D00F5B42F /* RelationshipControlSpec.swift in Sources */,
@@ -4820,6 +4835,7 @@
 				1247E5051A8C095700DDC24A /* StreamDataSource.swift in Sources */,
 				1D5933711D10ADC300EAF03D /* CategoryListCellPresenter.swift in Sources */,
 				F8BDA7551AA8F3C800A662B4 /* DrawerViewController.swift in Sources */,
+				1DA18E041DAD911E000231CC /* ProfileBioPresenter.swift in Sources */,
 				1207C9841C73FEE000939ADB /* MappingType.swift in Sources */,
 				122C662D1B42403D0035F4CD /* AutoCompleteViewController.swift in Sources */,
 				122B18FF1A867C7D00247A05 /* StreamHeaderCell.swift in Sources */,

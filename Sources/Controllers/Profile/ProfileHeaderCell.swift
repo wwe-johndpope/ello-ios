@@ -64,5 +64,6 @@ public class ProfileHeaderCell: UICollectionViewCell {
         avatarView.prepareForReuse()
         statsView.prepareForReuse()
         totalCountView.prepareForReuse()
+        bioView.prepareForReuse()
     }
 }
