@@ -4,8 +4,9 @@
 
 public class ProfileTotalCountView: ProfileBaseView {
 
-    let totalLabel = UILabel()
-    let badgeButton = UIButton()
+    private let totalLabel = UILabel()
+    private let badgeButton = UIButton()
+    private let greyLine = UIView()
 
     public struct Size {
         static let shareMargin: CGFloat = 2
@@ -36,6 +37,7 @@ extension ProfileTotalCountView {
         backgroundColor = .whiteColor()
         totalLabel.textAlignment = .Center
         badgeButton.setImages(.BadgeCheck)
+        greyLine.backgroundColor = .greyA()
     }
 
     override func bindActions() {
@@ -49,6 +51,7 @@ extension ProfileTotalCountView {
     override func arrange() {
         addSubview(totalLabel)
         addSubview(badgeButton)
+        addSubview(greyLine)
 
         totalLabel.snp_makeConstraints { make in
             make.centerX.equalTo(self)
@@ -58,8 +61,15 @@ extension ProfileTotalCountView {
 
         badgeButton.snp_makeConstraints { make in
             make.centerY.equalTo(self)
+            make.trailing.equalTo(self).inset(Size.badgeMargin)
             make.width.equalTo(Size.badgeWidth)
             make.width.equalTo(Size.badgeWidth)
+        }
+
+        greyLine.snp_makeConstraints { make in
+            make.height.equalTo(1)
+            make.bottom.equalTo(self)
+            make.leading.trailing.equalTo(self).inset(ProfileBaseView.Size.grayInset)
         }
 
         layoutIfNeeded()
