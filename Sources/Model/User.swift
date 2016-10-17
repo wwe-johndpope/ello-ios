@@ -10,7 +10,7 @@ import SwiftyJSON
 // version 3: added notifyOfWatchesViaPush, notifyOfWatchesViaEmail
 // version 4: added notifyOfCommentsOnPostWatchViaPush, notifyOfCommentsOnPostWatchViaEmail
 // version 5: added isCollaborateable, moved notifyOf* into Profile
-// version 6: added totalViewCount
+// version 6: added categories, totalViewCount
 let UserVersion: Int = 6
 
 @objc(User)
@@ -54,7 +54,9 @@ public final class User: JSONAble {
 
     // links
     public var posts: [Post]? { return getLinkArray("posts") as? [Post] }
+    public var categories: [Category]? { return getLinkArray("categories") as? [Category] }
     public var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
+
     // computed
     public var atName: String { return "@\(username)"}
     public var isCurrentUser: Bool { return self.profile != nil }
@@ -281,6 +283,7 @@ public final class User: JSONAble {
         if (json["created_at"].stringValue).characters.count > 0 {
             user.profile = Profile.fromJSON(data) as? Profile
         }
+
         // store self in collection
         if !fromLinked {
             ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)

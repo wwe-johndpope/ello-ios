@@ -252,6 +252,7 @@
 		123466161C65468100E61110 /* ello_logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 769051001AFD2A720011B09A /* ello_logo.svg */; };
 		12384EBB1C56B3C200608BD8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */; };
 		12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */; };
+		123B7C331DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123B7C321DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift */; };
 		123DEBE91D3D4087007B5F86 /* PostDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */; };
 		123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */; };
 		123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */; };
@@ -272,6 +273,10 @@
 		1249AD871D9EC3FC009074FD /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249AD861D9EC3FC009074FD /* ProfileScreen.swift */; };
 		124A18751A914BCB00BC7E86 /* ProfileServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */; };
 		124A18771A914CC100BC7E86 /* profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 124A18761A914CC100BC7E86 /* profile.json */; };
+		124B48631DAEE3AC0058D3F5 /* ProfileCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B48621DAEE3AC0058D3F5 /* ProfileCategoriesViewController.swift */; };
+		124B48651DAEE3C60058D3F5 /* ProfileCategoriesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B48641DAEE3C60058D3F5 /* ProfileCategoriesProtocols.swift */; };
+		124B48671DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B48661DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift */; };
+		124B48691DB001310058D3F5 /* ProfileCategoriesScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B48681DB001310058D3F5 /* ProfileCategoriesScreenSpec.swift */; };
 		124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124BBEDE1BDFEDE900CBDF69 /* AppDelegateSpec.swift */; };
 		124CFB9A1C5976E500727D11 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CFB991C5976E500727D11 /* ShareViewController.swift */; };
 		124CFB9D1C5976E500727D11 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 124CFB9B1C5976E500727D11 /* MainInterface.storyboard */; };
@@ -1175,6 +1180,7 @@
 		123466141C650B3000E61110 /* NSItemProviderExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSItemProviderExtensions.swift; sourceTree = "<group>"; };
 		12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = sources/Extensions/UIViewExtensions.swift; sourceTree = SOURCE_ROOT; };
 		12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensionsSpec.swift; path = specs/Extensions/UIViewExtensionsSpec.swift; sourceTree = SOURCE_ROOT; };
+		123B7C321DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesPresentationController.swift; sourceTree = "<group>"; };
 		123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGenerator.swift; sourceTree = "<group>"; };
 		123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGenerator.swift; sourceTree = "<group>"; };
 		123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGeneratorSpec.swift; sourceTree = "<group>"; };
@@ -1200,6 +1206,10 @@
 		1249AD861D9EC3FC009074FD /* ProfileScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileServiceSpec.swift; sourceTree = "<group>"; };
 		124A18761A914CC100BC7E86 /* profile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = profile.json; sourceTree = "<group>"; };
+		124B48621DAEE3AC0058D3F5 /* ProfileCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesViewController.swift; sourceTree = "<group>"; };
+		124B48641DAEE3C60058D3F5 /* ProfileCategoriesProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesProtocols.swift; sourceTree = "<group>"; };
+		124B48661DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesScreen.swift; sourceTree = "<group>"; };
+		124B48681DB001310058D3F5 /* ProfileCategoriesScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesScreenSpec.swift; sourceTree = "<group>"; };
 		124BBEDE1BDFEDE900CBDF69 /* AppDelegateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateSpec.swift; sourceTree = "<group>"; };
 		124CFB971C5976E500727D11 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		124CFB991C5976E500727D11 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -2276,6 +2286,17 @@
 			path = Regions;
 			sourceTree = "<group>";
 		};
+		124B48611DAEE3580058D3F5 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				123B7C321DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift */,
+				124B48641DAEE3C60058D3F5 /* ProfileCategoriesProtocols.swift */,
+				124B48661DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift */,
+				124B48621DAEE3AC0058D3F5 /* ProfileCategoriesViewController.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		124CFB981C5976E500727D11 /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -3190,6 +3211,7 @@
 		1D66801E1A89B862003E93C8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				124B48611DAEE3580058D3F5 /* Categories */,
 				123375791DA6EC9C0019CFAD /* Calculators */,
 				123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */,
 				769865C01A8D3E3F009B6292 /* ProfileHeaderCell.swift */,
@@ -3397,10 +3419,11 @@
 		768043741AC202D3004FEE09 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				1DA18DF81DA8496C000231CC /* Views */,
+				124B48681DB001310058D3F5 /* ProfileCategoriesScreenSpec.swift */,
 				123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */,
-				768043751AC20317004FEE09 /* ProfileViewControllerSpec.swift */,
 				12148F1A1DA31DF300D6296C /* ProfileScreenSpec.swift */,
+				768043751AC20317004FEE09 /* ProfileViewControllerSpec.swift */,
+				1DA18DF81DA8496C000231CC /* Views */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -4434,6 +4457,7 @@
 				768043761AC20317004FEE09 /* ProfileViewControllerSpec.swift in Sources */,
 				123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */,
 				76BE9C571B2B77D7007575AA /* UserListItemCellPresenterSpec.swift in Sources */,
+				124B48691DB001310058D3F5 /* ProfileCategoriesScreenSpec.swift in Sources */,
 				1D59337B1D136E0500EAF03D /* CategoryListCellSpec.swift in Sources */,
 				12706B9B1D3EC1D80028C9BE /* AsyncOperationSpec.swift in Sources */,
 				762385C91B0143A500138780 /* NumberExtensionsSpec.swift in Sources */,
@@ -4810,12 +4834,14 @@
 				123375751DA6B8A80019CFAD /* ProfileHeaderCompactView.swift in Sources */,
 				1299D6A71ACEBE1000D47B35 /* UICollectionViewExtensions.swift in Sources */,
 				1D7152DA1D74C7FD005998FE /* OnboardingScreen.swift in Sources */,
+				124B48651DAEE3C60058D3F5 /* ProfileCategoriesProtocols.swift in Sources */,
 				1207C9911C73FEE000939ADB /* UserService.swift in Sources */,
 				76DADA021ABCDB77006C8A6C /* StreamLoadingCellPresenter.swift in Sources */,
 				122B30CA1C6A3FBC00C1B9D8 /* Coder.swift in Sources */,
 				1207C9731C73FEE000939ADB /* AutoCompleteService.swift in Sources */,
 				1D71528F1D6CA22C005998FE /* Screen.swift in Sources */,
 				76B0B18D1B41AFD2004C2D7B /* UserAvatarsCell.swift in Sources */,
+				124B48631DAEE3AC0058D3F5 /* ProfileCategoriesViewController.swift in Sources */,
 				1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */,
 				1207C9811C73FEE000939ADB /* InviteService.swift in Sources */,
 				1275351D1B73D155006B9A0F /* NSDate.swift in Sources */,
@@ -4939,6 +4965,7 @@
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
 				1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */,
 				7659FB7F1B29EE0F00DEB6F4 /* StreamInviteFriendsCell.swift in Sources */,
+				123B7C331DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift in Sources */,
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */,
 				1207C9831C73FEE000939ADB /* Mapper.swift in Sources */,
@@ -4954,6 +4981,7 @@
 				126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */,
 				1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */,
 				12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */,
+				124B48671DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift in Sources */,
 				86E4F2E91B14F249008EBC5B /* WelcomePageController.swift in Sources */,
 				122B30F11C6A3FC500C1B9D8 /* Regionable.swift in Sources */,
 				1D7152C51D6F81D2005998FE /* CredentialsScreen.swift in Sources */,

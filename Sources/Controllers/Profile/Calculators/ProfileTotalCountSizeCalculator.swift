@@ -9,7 +9,7 @@ public struct ProfileTotalCountSizeCalculator {
 
     public func calculate(item: StreamCellItem) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
-        promise.completeWithSuccess(60)
+        promise.completeWithSuccess(ProfileTotalCountView.Size.height)
         return promise.future
     }
 }

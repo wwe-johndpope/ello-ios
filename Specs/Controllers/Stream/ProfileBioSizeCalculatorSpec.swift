@@ -10,7 +10,7 @@ import Nimble
 class ProfileBioSizeCalculatorSpec: QuickSpec {
     override func spec() {
         describe("ProfileBioSizeCalculator") {
-            it("should return sensible size for a bio") {
+            xit("should return sensible size for a bio") {
                 let user: User = stub([
                     "formattedShortBio": "<p>bio</p>",
                 ])
