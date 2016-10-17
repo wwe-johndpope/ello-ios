@@ -5,7 +5,7 @@
 import SnapKit
 
 
-public class ProfileCategoriesScreen: UIView {
+public class ProfileCategoriesScreen: Screen {
 
     struct Size {
         static let textInset: CGFloat = 15
@@ -15,30 +15,24 @@ public class ProfileCategoriesScreen: UIView {
 
     public let background = UIView()
     let textView = ElloTextView()
-    var categories = [Category]()
+    var categories: [Category]
 
     public init(categories: [Category]) {
-        super.init(frame: .zero)
         self.categories = categories
-
-        style()
-        bindActions()
-        setText()
-        arrange()
-
-        // for controllers that use "container" views, they need to be set to the correct dimensions,
-        // otherwise there'll be constraint violations.
-        layoutIfNeeded()
+        super.init(frame: .zero)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-public extension ProfileCategoriesScreen {
+    public required init(frame: CGRect) {
+        self.categories = []
+        super.init(frame: frame)
+    }
 
-    func style() {
+    override func style() {
+        backgroundColor = .clearColor()
         background.backgroundColor = .modalBackground()
         textView.backgroundColor = .clearColor()
         textView.editable = false
@@ -47,11 +41,11 @@ public extension ProfileCategoriesScreen {
         textView.textColor = .whiteColor()
     }
 
-    func bindActions() {
+    override func bindActions() {
         textView.textViewDelegate = self
     }
 
-    func setText() {
+    override func setText() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .Center
 
@@ -72,15 +66,15 @@ public extension ProfileCategoriesScreen {
                 prefix = NSAttributedString(string: " ", attributes: attrs())
             }
             featuredIn = featuredIn.append(prefix)
-            featuredIn = featuredIn.append(styleCatgory(category))
+            featuredIn = featuredIn.append(styleCategory(category))
         }
 
         textView.attributedText = featuredIn
         textView.sizeToFit()
-        layoutIfNeeded()
     }
 
-    func arrange() {
+    override func arrange() {
+        super.arrange()
 
         addSubview(background)
         addSubview(textView)
@@ -93,8 +87,6 @@ public extension ProfileCategoriesScreen {
             make.leading.trailing.equalTo(self).inset(Size.textInset)
             make.centerX.centerY.equalTo(self)
         }
-
-        layoutIfNeeded()
     }
 }
 
@@ -109,13 +101,13 @@ extension ProfileCategoriesScreen: ElloTextViewDelegate {
     }
 
     func textViewTappedDefault() {
-        // no-opp
+        // no-op
     }
 }
 
 private extension ProfileCategoriesScreen {
 
-    func styleCatgory(category: Category) -> NSAttributedString {
+    func styleCategory(category: Category) -> NSAttributedString {
         return NSAttributedString(string: category.name, attributes: attrs([
             ElloAttributedText.Link: "category",
             ElloAttributedText.Object: category,
@@ -130,5 +122,4 @@ private extension ProfileCategoriesScreen {
         ]
         return attrs + addlAttrs
     }
-
 }
