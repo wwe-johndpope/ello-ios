@@ -143,8 +143,6 @@ extension ProfileStatsView {
                 make.trailing.equalTo(self)
             }
         }
-
-        layoutIfNeeded()
     }
 
     func prepareForReuse() {

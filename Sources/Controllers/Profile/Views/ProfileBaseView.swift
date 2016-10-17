@@ -9,7 +9,6 @@ public class ProfileBaseView: UIView {
 
     convenience init() {
         self.init(frame: .zero)
-        privateInit()
     }
 
     override init(frame: CGRect) {
