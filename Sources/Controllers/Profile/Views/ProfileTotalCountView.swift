@@ -6,7 +6,6 @@ public class ProfileTotalCountView: ProfileBaseView {
 
     let totalLabel = UILabel()
     let badgeButton = UIButton()
-    let shareButton = UIButton()
 
     public struct Size {
         static let shareMargin: CGFloat = 2
@@ -36,14 +35,11 @@ extension ProfileTotalCountView {
     override func style() {
         backgroundColor = .whiteColor()
         totalLabel.textAlignment = .Center
-
         badgeButton.setImages(.BadgeCheck)
-        shareButton.setImages(.Share)
     }
 
     override func bindActions() {
         badgeButton.addTarget(self, action: #selector(badgeTapped), forControlEvents: .TouchUpInside)
-        shareButton.addTarget(self, action: #selector(shareTapped), forControlEvents: .TouchUpInside)
     }
 
     override func setText() {
@@ -53,7 +49,6 @@ extension ProfileTotalCountView {
     override func arrange() {
         addSubview(totalLabel)
         addSubview(badgeButton)
-        addSubview(shareButton)
 
         totalLabel.snp_makeConstraints { make in
             make.centerX.equalTo(self)
@@ -61,16 +56,8 @@ extension ProfileTotalCountView {
             make.width.equalTo(self)
         }
 
-        shareButton.snp_makeConstraints { make in
-            make.trailing.equalTo(self.snp_trailing).offset(-Size.shareMargin)
-            make.centerY.equalTo(self)
-            make.width.equalTo(Size.shareWidth)
-            make.height.equalTo(Size.shareHeight)
-        }
-
         badgeButton.snp_makeConstraints { make in
             make.centerY.equalTo(self)
-            make.trailing.equalTo(self.shareButton.snp_leading).offset(Size.badgeMargin)
             make.width.equalTo(Size.badgeWidth)
             make.width.equalTo(Size.badgeWidth)
         }
@@ -85,19 +72,11 @@ extension ProfileTotalCountView {
 
 extension ProfileTotalCountView {
 
-
     func badgeTapped() {
         guard let cell: UICollectionViewCell = self.findParentView() else { return }
 
         let responder = targetForAction(#selector(ProfileHeaderResponder.onCategoryBadgeTapped(_:)), withSender: self) as? ProfileHeaderResponder
         responder?.onCategoryBadgeTapped(cell)
-    }
-
-    func shareTapped() {
-        guard let cell: UICollectionViewCell = self.findParentView() else { return }
-
-        let responder = targetForAction(#selector(ProfileHeaderResponder.onShareTapped(_:)), withSender: self) as? ProfileHeaderResponder
-        responder?.onShareTapped(cell)
     }
 }
 

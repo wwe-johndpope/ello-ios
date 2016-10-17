@@ -15,7 +15,6 @@ public protocol PostsTappedResponder {
 @objc
 public protocol ProfileHeaderResponder {
     func onCategoryBadgeTapped(cell: UICollectionViewCell)
-    func onShareTapped(cell: UICollectionViewCell)
 }
 
 public class ProfileHeaderCell: UICollectionViewCell {
