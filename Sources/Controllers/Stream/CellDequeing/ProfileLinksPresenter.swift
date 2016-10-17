@@ -12,5 +12,8 @@ public struct ProfileLinksPresenter {
         user: User,
         currentUser: User?)
     {
+        guard let links = user.externalLinksList else { return }
+
+        view.externalLinks = links
     }
 }

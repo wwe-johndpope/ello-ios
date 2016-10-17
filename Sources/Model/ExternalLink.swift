@@ -46,3 +46,9 @@ public extension ExternalLink {
         return retVal
     }
 }
+
+extension ExternalLink: Equatable {}
+
+public func == (lhs: ExternalLink, rhs: ExternalLink) -> Bool {
+    return lhs.url == rhs.url && lhs.text == rhs.text && lhs.iconURL == rhs.iconURL
+}
