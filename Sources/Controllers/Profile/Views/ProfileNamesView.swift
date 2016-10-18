@@ -92,6 +92,10 @@ extension ProfileNamesView {
                 )
         }
     }
+
+    public func prepareForReuse() {
+        // nothing here yet
+    }
 }
 
 extension ProfileNamesView: ProfileViewProtocol {}
