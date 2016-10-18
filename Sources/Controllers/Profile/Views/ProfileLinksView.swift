@@ -73,76 +73,83 @@ extension ProfileLinksView {
         var prevLink: UIButton?
         var prevIcon: UIButton?
         var prevRow: UIButton?
-        var links: [(ExternalLink, UIButton)] = []
-        var icons: [(ExternalLink, UIButton)] = []
+        var iconsCount = 0
         for externalLink in externalLinks {
-            let button = UIButton()
-            if let iconURL = externalLink.iconURL {
-                iconsBox.addSubview(button)
-                iconButtons.append(button)
-
-                button.layer.cornerRadius = Size.iconSize.width / 2
-                button.backgroundColor = .greyE5()
-                button.snp_makeConstraints { make in
-                    make.size.equalTo(Size.iconSize)
-
-                    switch icons.count % 3 {
-                    case 0:
-                        make.trailing.equalTo(iconsBox)
-                    default:
-                        make.trailing.equalTo(prevIcon!.snp_leading).offset(-Size.iconMargins)
-                    }
-
-                    if let prevRow = prevRow {
-                        make.top.equalTo(prevRow.snp_bottom).offset(Size.iconMargins)
-                    }
-                    else {
-                        make.top.equalTo(iconsBox)
-                    }
-                }
-
-                button.pin_setImageFromURL(iconURL)
-                icons.append((externalLink, button))
-                prevIcon = button
-                if icons.count % 3 == 0 {
-                    prevRow = button
+            if externalLink.iconURL != nil {
+                prevIcon = addIconButton(externalLink, iconsCount: iconsCount, prevIcon: prevIcon, prevRow: prevRow)
+                iconsCount += 1
+                if iconsCount % 3 == 0 {
+                    prevRow = prevIcon
                 }
             }
             else {
-                linksBox.addSubview(button)
-                linkButtons.append(button)
-
-                button.snp_makeConstraints { make in
-                    make.leading.trailing.equalTo(linksBox)
-
-                    if let prevLink = prevLink {
-                        make.top.equalTo(prevLink.snp_bottom).offset(Size.verticalLinkMargin)
-                    }
-                    else {
-                        make.top.equalTo(linksBox)
-                    }
-                }
-
-                let attrs: [String: AnyObject] = [
-                    NSFontAttributeName: UIFont.defaultFont(),
-                    NSForegroundColorAttributeName: UIColor.grey6(),
-                    NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                ]
-                let highlightedAttrs: [String: AnyObject] = [
-                    NSFontAttributeName: UIFont.defaultFont(),
-                    NSForegroundColorAttributeName: UIColor.blackColor(),
-                    NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                ]
-                button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: attrs), forState: .Normal)
-                button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: highlightedAttrs), forState: .Highlighted)
-                button.contentHorizontalAlignment = .Left
-                links.append((externalLink, button))
-                prevLink = button
+                prevLink = addLinkButton(externalLink, prevLink: prevLink)
             }
         }
 
-        let width: CGFloat = max(0, Size.iconSize.width * CGFloat(min(3, icons.count)) + Size.iconMargins * CGFloat(min(2, icons.count - 1)))
+        let width: CGFloat = max(0, Size.iconSize.width * CGFloat(min(3, iconsCount)) + Size.iconMargins * CGFloat(min(2, iconsCount - 1)))
         iconsWidthConstraint.updateOffset(width)
+    }
+
+    private func addIconButton(externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?) -> UIButton {
+        let button = UIButton()
+        iconsBox.addSubview(button)
+        iconButtons.append(button)
+
+        button.layer.cornerRadius = Size.iconSize.width / 2
+        button.backgroundColor = .greyE5()
+        button.snp_makeConstraints { make in
+            make.size.equalTo(Size.iconSize)
+
+            switch iconsCount % 3 {
+            case 0:
+                make.trailing.equalTo(iconsBox)
+            default:
+                make.trailing.equalTo(prevIcon!.snp_leading).offset(-Size.iconMargins)
+            }
+
+            if let prevRow = prevRow {
+                make.top.equalTo(prevRow.snp_bottom).offset(Size.iconMargins)
+            }
+            else {
+                make.top.equalTo(iconsBox)
+            }
+        }
+
+        button.pin_setImageFromURL(externalLink.iconURL!)
+        return button
+    }
+
+    private func addLinkButton(externalLink: ExternalLink, prevLink: UIButton?) -> UIButton {
+        let button = UIButton()
+        linksBox.addSubview(button)
+        linkButtons.append(button)
+
+        button.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(linksBox)
+
+            if let prevLink = prevLink {
+                make.top.equalTo(prevLink.snp_bottom).offset(Size.verticalLinkMargin)
+            }
+            else {
+                make.top.equalTo(linksBox)
+            }
+        }
+
+        let attrs: [String: AnyObject] = [
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: UIColor.grey6(),
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+        ]
+        let highlightedAttrs: [String: AnyObject] = [
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: UIColor.blackColor(),
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+        ]
+        button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: attrs), forState: .Normal)
+        button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: highlightedAttrs), forState: .Highlighted)
+        button.contentHorizontalAlignment = .Left
+        return button
     }
 }
 
