@@ -22,7 +22,8 @@ public class ProfileBioView: ProfileBaseView {
 extension ProfileBioView {
 
     override func style() {
-        grayLine.backgroundColor = .grey6()
+        bioView.scrollView.scrollEnabled = false
+        grayLine.backgroundColor = .greyA()
     }
 
     override func bindActions() {
@@ -36,7 +37,8 @@ extension ProfileBioView {
         addSubview(grayLine)
 
         bioView.snp_makeConstraints { make in
-            make.edges.equalTo(self).inset(Size.margins)
+            make.top.leading.trailing.equalTo(self).inset(Size.margins)
+            make.bottom.equalTo(self)
         }
 
         grayLine.snp_makeConstraints { make in
@@ -44,8 +46,6 @@ extension ProfileBioView {
             make.bottom.equalTo(self)
             make.leading.trailing.equalTo(self).inset(ProfileBaseView.Size.grayInset)
         }
-
-        layoutIfNeeded()
     }
 
     func prepareForReuse() {

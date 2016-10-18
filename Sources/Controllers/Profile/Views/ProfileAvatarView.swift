@@ -64,8 +64,6 @@ extension ProfileAvatarView {
             make.height.equalTo(Size.whiteBarHeight)
             make.bottom.equalTo(self.snp_bottom)
         }
-
-        layoutIfNeeded()
     }
 
     override public func layoutSubviews() {

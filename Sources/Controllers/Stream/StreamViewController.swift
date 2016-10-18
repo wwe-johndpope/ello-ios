@@ -643,7 +643,7 @@ public final class StreamViewController: BaseElloViewController {
             streamKind: streamKind,
             textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
             notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
-            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(webView: UIWebView()),
+            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
             imageSizeCalculator: StreamImageCellSizeCalculator()
         )
 

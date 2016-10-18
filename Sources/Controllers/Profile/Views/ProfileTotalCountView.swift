@@ -72,8 +72,6 @@ extension ProfileTotalCountView {
             make.bottom.equalTo(self)
             make.leading.trailing.equalTo(self).inset(ProfileBaseView.Size.grayInset)
         }
-
-        layoutIfNeeded()
     }
 
     public func prepareForReuse() {

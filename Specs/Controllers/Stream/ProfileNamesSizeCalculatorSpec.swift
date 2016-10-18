@@ -20,7 +20,7 @@ class ProfileNamesSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 320)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 58
+                expect(height) == 53
             }
             it("should return sensible size for two lines of text") {
                 let user: User = stub([
@@ -32,7 +32,7 @@ class ProfileNamesSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 320)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 77
+                expect(height) == 72
             }
         }
     }

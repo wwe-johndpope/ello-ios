@@ -77,5 +77,6 @@ public class ProfileHeaderCell: UICollectionViewCell {
         totalCountView.prepareForReuse()
         namesView.prepareForReuse()
         bioView.prepareForReuse()
+        linksView.prepareForReuse()
     }
 }

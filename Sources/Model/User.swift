@@ -46,7 +46,7 @@ public final class User: JSONAble {
     public var followersCount: String? // string due to this returning "∞" for the ello user
     public var followingCount: Int?
     public var formattedShortBio: String?
-    public var externalLinksList: [[String: String]]?
+    public var externalLinksList: [ExternalLink]?
     public var coverImage: Asset?
     public var backgroundPosition: String?
     public var onboardingVersion: Int?
@@ -60,19 +60,6 @@ public final class User: JSONAble {
     // computed
     public var atName: String { return "@\(username)"}
     public var isCurrentUser: Bool { return self.profile != nil }
-    public var headerHTMLContent: String {
-        var htmlContent = formattedShortBio ?? ""
-        if let links = externalLinksList {
-            htmlContent += "<p class='user-links'>"
-            for link in links {
-                if let url = link["url"], text = link["text"] {
-                    htmlContent += "<a href='\(url)'>\(text)</a> "
-                }
-            }
-            htmlContent += "</p>"
-        }
-        return htmlContent
-    }
     // profile
     public var profile: Profile?
 
@@ -159,7 +146,9 @@ public final class User: JSONAble {
         self.followersCount = decoder.decodeOptionalKey("followersCount")
         self.followingCount = decoder.decodeOptionalKey("followingCount")
         self.formattedShortBio = decoder.decodeOptionalKey("formattedShortBio")
-        self.externalLinksList = decoder.decodeOptionalKey("externalLinksList")
+        if let externalLinksList: [[String: String]] = decoder.decodeOptionalKey("externalLinksList") {
+            self.externalLinksList = externalLinksList.flatMap { ExternalLink.fromDict($0) }
+        }
         self.coverImage = decoder.decodeOptionalKey("coverImage")
         self.backgroundPosition = decoder.decodeOptionalKey("backgroundPosition")
         self.onboardingVersion = decoder.decodeOptionalKey("onboardingVersion")
@@ -217,7 +206,7 @@ public final class User: JSONAble {
         coder.encodeObject(followingCount, forKey: "followingCount")
         coder.encodeObject(followersCount, forKey: "followersCount")
         coder.encodeObject(formattedShortBio, forKey: "formattedShortBio")
-        coder.encodeObject(externalLinksList, forKey: "externalLinksList")
+        coder.encodeObject(externalLinksList?.map { $0.toDict() }, forKey: "externalLinksList")
         coder.encodeObject(coverImage, forKey: "coverImage")
         coder.encodeObject(backgroundPosition, forKey: "backgroundPosition")
         coder.encodeObject(onboardingVersion, forKey: "onboardingVersion")
@@ -271,7 +260,10 @@ public final class User: JSONAble {
         user.followingCount = json["following_count"].int
         user.formattedShortBio = json["formatted_short_bio"].stringValue
         // grab links
-        user.externalLinksList = json["external_links_list"].arrayValue.map { ["text": $0["text"].stringValue, "url": $0["url"].stringValue] }
+        if let links = json["external_links_list"].array {
+            let externalLinks = links.flatMap({ $0.dictionaryObject as? [String: String] })
+            user.externalLinksList = externalLinks.flatMap { ExternalLink.fromDict($0) }
+        }
         user.coverImage = Asset.parseAsset("user_cover_image_\(user.id)", node: data["cover_image"] as? [String: AnyObject])
         user.backgroundPosition = json["background_positiion"].stringValue
         if let webOnboardingVersion = json["web_onboarding_version"].string {

@@ -71,7 +71,15 @@ extension User: Stubbable {
         }
         user.followingCount = (values["followingCount"] as? Int) ?? 0
         user.formattedShortBio = (values["formattedShortBio"] as? String) ?? "stub-user-formatted-short-bio"
-        user.externalLinksList = (values["externalLinksList"] as? [[String:String]]) ?? [["text": "ello.co", "url": "http://ello.co"]]
+        if let linkValues = (values["externalLinksList"] as? [[String:String]]) {
+            user.externalLinksList = linkValues.flatMap { ExternalLink.fromDict($0) }
+        }
+        else if let externalLinks = (values["externalLinksList"] as? [ExternalLink]) {
+            user.externalLinksList = externalLinks
+        }
+        else {
+            user.externalLinksList = [ExternalLink(url: NSURL(string: "http://ello.co")!, text: "ello.co")]
+        }
         user.coverImage = values["coverImage"] as? Asset
         user.backgroundPosition = (values["backgroundPosition"] as? String) ?? "stub-user-background-position"
         user.onboardingVersion = (values["onboardingVersion"] as? Int)
