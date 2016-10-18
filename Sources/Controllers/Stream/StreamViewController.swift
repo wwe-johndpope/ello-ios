@@ -918,24 +918,6 @@ extension StreamViewController: CategoryDelegate {
     }
 }
 
-// MARK: ProfileHeaderResponder
-extension StreamViewController: ProfileHeaderResponder {
-    public func onCategoryBadgeTapped(cell: UICollectionViewCell) {
-
-        // temp categories, will replace when User has categories
-        let categories = [
-            Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
-            Category(id: "0123", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
-        ]
-
-        let vc = ProfileCategoriesViewController(categories: categories)
-        let navVC = ElloNavigationController(rootViewController: vc)
-        navVC.modalTransitionStyle = .CrossDissolve
-        navVC.modalPresentationStyle = .Custom
-        navVC.transitioningDelegate = vc
-        presentViewController(navVC, animated: true, completion: nil)
-    }
-}
 
 // MARK: StreamViewController: UserDelegate
 extension StreamViewController: UserDelegate {
