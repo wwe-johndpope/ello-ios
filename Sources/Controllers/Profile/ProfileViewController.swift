@@ -366,8 +366,77 @@ extension ProfileViewController: PostsTappedResponder {
     }
 }
 
+// MARK: ProfileHeaderResponder
+extension ProfileViewController: ProfileHeaderResponder {
+
+    public func onCategoryBadgeTapped(cell: UICollectionViewCell) {
+
+        // temp categories, will replace when User has categories
+        let categories = [
+            Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
+            Category(id: "0123", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
+        ]
+
+        let vc = ProfileCategoriesViewController(categories: categories)
+        let navVC = ElloNavigationController(rootViewController: vc)
+        navVC.modalTransitionStyle = .CrossDissolve
+        navVC.modalPresentationStyle = .Custom
+        navVC.transitioningDelegate = vc
+        presentViewController(navVC, animated: true, completion: nil)
+    }
+
+    public func onLovesTapped(cell: UICollectionViewCell) {
+        guard let user = self.user else { return }
+
+        let noResultsTitle: String
+        let noResultsBody: String
+        if user.id == currentUser?.id {
+            noResultsTitle = InterfaceString.Loves.CurrentUserNoResultsTitle
+            noResultsBody = InterfaceString.Loves.CurrentUserNoResultsBody
+        }
+        else {
+            noResultsTitle = InterfaceString.Loves.NoResultsTitle
+            noResultsBody = InterfaceString.Loves.NoResultsBody
+        }
+        streamViewController.showSimpleStream(.Loves(userId: user.id), title: InterfaceString.Loves.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+    }
+
+    public func onFollowersTapped(cell: UICollectionViewCell) {
+        guard let user = self.user else { return }
+
+        let noResultsTitle: String
+        let noResultsBody: String
+        if user.id == currentUser?.id {
+            noResultsTitle = InterfaceString.Followers.CurrentUserNoResultsTitle
+            noResultsBody = InterfaceString.Followers.CurrentUserNoResultsBody
+        }
+        else {
+            noResultsTitle = InterfaceString.Followers.NoResultsTitle
+            noResultsBody = InterfaceString.Followers.NoResultsBody
+        }
+        streamViewController.showSimpleStream(.UserStreamFollowers(userId: user.id), title: InterfaceString.Followers.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+    }
+
+    public func onFollowingTapped(cell: UICollectionViewCell) {
+        guard let user = user else { return }
+
+        let noResultsTitle: String
+        let noResultsBody: String
+        if user.id == currentUser?.id {
+            noResultsTitle = InterfaceString.Following.CurrentUserNoResultsTitle
+            noResultsBody = InterfaceString.Following.CurrentUserNoResultsBody
+        }
+        else {
+            noResultsTitle = InterfaceString.Following.NoResultsTitle
+            noResultsBody = InterfaceString.Following.NoResultsBody
+        }
+        streamViewController.showSimpleStream(.UserStreamFollowing(userId: user.id), title: InterfaceString.Following.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+    }}
+
+
 // MARK: ProfileViewController: EditProfileResponder
 extension ProfileViewController: EditProfileResponder {
+
     public func onEditProfile() {
         guard let settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController() as? SettingsContainerViewController else { return }
         settings.currentUser = currentUser

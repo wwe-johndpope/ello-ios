@@ -154,16 +154,31 @@ extension ProfileStatsView {
 }
 
 extension ProfileStatsView {
+
     func postsButtonTapped() {
+        let responder = targetForAction(#selector(PostsTappedResponder.onPostsTapped), withSender: self) as? PostsTappedResponder
+        responder?.onPostsTapped()
     }
 
     func followingButtonTapped() {
+        guard let cell: UICollectionViewCell = self.findParentView() else { return }
+
+        let responder = targetForAction(#selector(ProfileHeaderResponder.onFollowingTapped(_:)), withSender: self) as? ProfileHeaderResponder
+        responder?.onFollowingTapped(cell)
     }
 
     func followersButtonTapped() {
+        guard let cell: UICollectionViewCell = self.findParentView() else { return }
+
+        let responder = targetForAction(#selector(ProfileHeaderResponder.onFollowersTapped(_:)), withSender: self) as? ProfileHeaderResponder
+        responder?.onFollowersTapped(cell)
     }
 
     func lovesButtonTapped() {
+        guard let cell: UICollectionViewCell = self.findParentView() else { return }
+
+        let responder = targetForAction(#selector(ProfileHeaderResponder.onLovesTapped(_:)), withSender: self) as? ProfileHeaderResponder
+        responder?.onLovesTapped(cell)
     }
 }
 

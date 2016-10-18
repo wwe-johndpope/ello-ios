@@ -15,6 +15,9 @@ public protocol PostsTappedResponder {
 @objc
 public protocol ProfileHeaderResponder {
     func onCategoryBadgeTapped(cell: UICollectionViewCell)
+    func onLovesTapped(cell: UICollectionViewCell)
+    func onFollowersTapped(cell: UICollectionViewCell)
+    func onFollowingTapped(cell: UICollectionViewCell)
 }
 
 public class ProfileHeaderCell: UICollectionViewCell {
@@ -72,6 +75,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
         avatarView.prepareForReuse()
         statsView.prepareForReuse()
         totalCountView.prepareForReuse()
+        namesView.prepareForReuse()
         bioView.prepareForReuse()
     }
 }
