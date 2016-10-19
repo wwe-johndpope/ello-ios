@@ -17,6 +17,7 @@ public class ProfileBioSizeCalculator: NSObject {
         guard let
             user = item.jsonable as? User,
             formattedShortBio = user.formattedShortBio
+        where !formattedShortBio.isEmpty
         else {
             promise.completeWithSuccess(0)
             return promise.future

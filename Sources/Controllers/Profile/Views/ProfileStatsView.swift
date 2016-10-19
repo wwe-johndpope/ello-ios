@@ -56,6 +56,10 @@ public class ProfileStatsView: ProfileBaseView {
     ]}
 
     private let grayLine = UIView()
+    var grayLineVisible: Bool {
+        get { return !grayLine.hidden }
+        set { grayLine.hidden = !newValue }
+    }
 }
 
 extension ProfileStatsView {
@@ -152,6 +156,7 @@ extension ProfileStatsView {
         for countLabel in countLabels {
             countLabel.text = ""
         }
+        grayLine.hidden = false
     }
 }
 
