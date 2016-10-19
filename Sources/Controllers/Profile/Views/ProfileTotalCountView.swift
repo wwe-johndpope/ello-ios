@@ -5,7 +5,7 @@
 public class ProfileTotalCountView: ProfileBaseView {
 
     private let totalLabel = UILabel()
-    private let badgeButton = UIButton()
+    public let badgeButton = UIButton()
     private let greyLine = UIView()
 
     public struct Size {
