@@ -370,12 +370,10 @@ extension ProfileViewController: PostsTappedResponder {
 extension ProfileViewController: ProfileHeaderResponder {
 
     public func onCategoryBadgeTapped(cell: UICollectionViewCell) {
-
-        // temp categories, will replace when User has categories
-        let categories = [
-            Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
-            Category(id: "0123", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
-        ]
+        guard let
+            categories = user?.categories
+        where user?.categories?.count > 0
+        else { return }
 
         let vc = ProfileCategoriesViewController(categories: categories)
         let navVC = ElloNavigationController(rootViewController: vc)

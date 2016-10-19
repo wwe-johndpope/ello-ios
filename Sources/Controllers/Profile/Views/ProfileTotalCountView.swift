@@ -28,6 +28,11 @@ public class ProfileTotalCountView: ProfileBaseView {
         }
     }
 
+    public var badgeVisible: Bool {
+        set { badgeButton.hidden = !newValue }
+        get { return !badgeButton.hidden }
+    }
+
     private var _count = ""
     private let totalViewsText = ElloAttributedString.style(InterfaceString.Profile.TotalViews, [NSForegroundColorAttributeName: UIColor.greyA()])
 }

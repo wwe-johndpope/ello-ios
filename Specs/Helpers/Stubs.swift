@@ -96,6 +96,14 @@ extension User: Stubbable {
             user.addLinkObject("most_recent_post", key: mostRecentPost.id, collection: MappingType.PostsType.rawValue)
             ElloLinkedStore.sharedInstance.setObject(mostRecentPost, forKey: mostRecentPost.id, inCollection: MappingType.PostsType.rawValue)
         }
+
+        if let categories = values["categories"] as? [Ello.Category] {
+            for category in categories {
+                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, inCollection: MappingType.CategoriesType.rawValue)
+            }
+            user.addLinkArray("categories", array: categories.map { $0.id })
+        }
+        
         user.profile = values["profile"] as? Profile
         ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
         return user
