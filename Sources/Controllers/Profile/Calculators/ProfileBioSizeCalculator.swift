@@ -28,13 +28,21 @@ public class ProfileBioSizeCalculator: NSObject {
         return promise.future
     }
 
+    static func calculateHeight(webViewHeight webViewHeight: CGFloat) -> CGFloat {
+        guard webViewHeight > 0 else {
+            return 0
+        }
+        return webViewHeight + ProfileBioView.Size.margins.top + ProfileBioView.Size.margins.bottom
+    }
+
 }
 
 extension ProfileBioSizeCalculator: UIWebViewDelegate {
 
     public func webViewDidFinishLoad(webView: UIWebView) {
         let webViewHeight = webView.windowContentSize()?.height ?? 0
-        promise.completeWithSuccess(webViewHeight + ProfileBioView.Size.margins.top + ProfileBioView.Size.margins.bottom)
+        let totalHeight = ProfileBioSizeCalculator.calculateHeight(webViewHeight: webViewHeight)
+        promise.completeWithSuccess(totalHeight)
     }
 
     public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {

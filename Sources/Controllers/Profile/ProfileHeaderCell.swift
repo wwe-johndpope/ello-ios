@@ -25,6 +25,11 @@ public class ProfileHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "ProfileHeaderCell"
 
     let headerView = ProfileHeaderCompactView()
+    var calculatedCellHeights: CalculatedCellHeights? {
+        didSet {
+            headerView.calculatedCellHeights = calculatedCellHeights
+        }
+    }
 
     var avatarView: ProfileAvatarView { get { return headerView.avatarView } }
     var namesView: ProfileNamesView { get { return headerView.namesView } }
@@ -33,7 +38,15 @@ public class ProfileHeaderCell: UICollectionViewCell {
     var bioView: ProfileBioView { get { return headerView.bioView } }
     var linksView: ProfileLinksView { get { return headerView.linksView } }
 
-    typealias WebContentReady = (webView: UIWebView) -> Void
+    weak var webLinkDelegate: WebLinkDelegate?
+    weak var simpleStreamDelegate: SimpleStreamDelegate?
+    weak var userDelegate: UserDelegate?
+
+    var user: User?
+    var currentUser: User?
+
+    typealias OnHeightMismatch = (CGFloat) -> Void
+    var onHeightMismatch: OnHeightMismatch?
 
     // this little hack prevents constraints from breaking on initial load
     override public var bounds: CGRect {
@@ -44,6 +57,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        bindActions()
         arrange()
     }
 
@@ -51,7 +65,19 @@ public class ProfileHeaderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func arrange() {
+    private func bindActions() {
+        bioView.onHeightMismatch = { bioHeight in
+            guard var calculatedCellHeights = self.calculatedCellHeights else { return }
+            calculatedCellHeights.profileBio = bioHeight
+            self.calculatedCellHeights = calculatedCellHeights
+
+            if let totalHeight = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(calculatedCellHeights) {
+                self.onHeightMismatch?(totalHeight)
+            }
+        }
+    }
+
+    private func arrange() {
         backgroundColor = .clearColor()
         contentView.backgroundColor = .clearColor()
         contentView.addSubview(headerView)
@@ -61,17 +87,11 @@ public class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
-    weak var webLinkDelegate: WebLinkDelegate?
-    weak var simpleStreamDelegate: SimpleStreamDelegate?
-    weak var userDelegate: UserDelegate?
-
-    var user: User?
-    var currentUser: User?
-    var webContentReady: WebContentReady?
-
     func showPlaceholders() {}
 
     public override func prepareForReuse() {
+        onHeightMismatch = nil
+
         avatarView.prepareForReuse()
         statsView.prepareForReuse()
         totalCountView.prepareForReuse()
