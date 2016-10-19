@@ -13,6 +13,6 @@ public struct ProfileTotalCountPresenter {
         currentUser: User?)
     {
         view.count = user.formattedTotalCount()
-        view.badgeButton.hidden = !(user.categories?.count > 0)
+        view.badgeVisible = user.categories?.count > 0
     }
 }

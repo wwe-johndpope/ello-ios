@@ -34,7 +34,7 @@ class ProfileTotalCountPresenterSpec: QuickSpec {
                 let view = ProfileTotalCountView()
                 ProfileTotalCountPresenter.configure(view, user: user, currentUser: nil)
 
-                expect(view.badgeButton.hidden) == false
+                expect(view.badgeVisible) == true
             }
 
             it("hides cateogry badge if user is not featured in any catgegories") {
@@ -42,7 +42,7 @@ class ProfileTotalCountPresenterSpec: QuickSpec {
                 let view = ProfileTotalCountView()
                 ProfileTotalCountPresenter.configure(view, user: user, currentUser: nil)
 
-                expect(view.badgeButton.hidden) == true
+                expect(view.badgeVisible) == false
             }
         }
     }
