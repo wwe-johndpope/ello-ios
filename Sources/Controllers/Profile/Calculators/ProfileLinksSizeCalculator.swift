@@ -12,6 +12,7 @@ public struct ProfileLinksSizeCalculator {
         guard let
             user = item.jsonable as? User,
             externalLinks = user.externalLinksList
+        where externalLinks.count > 0
         else {
             promise.completeWithSuccess(0)
             return promise.future
