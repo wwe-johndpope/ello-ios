@@ -61,6 +61,8 @@ public class ProfileStatsView: ProfileBaseView {
 extension ProfileStatsView {
 
     override func style() {
+        backgroundColor = .whiteColor()
+
         for countLabel in countLabels {
             countLabel.font = .defaultFont(18)
             countLabel.textColor = .blackColor()

@@ -31,6 +31,19 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         }
     }
 
+    static func calculateHeightFromCellHeights(calculatedCellHeights: CalculatedCellHeights) -> CGFloat? {
+        guard let
+            profileAvatar = calculatedCellHeights.profileAvatar,
+            profileNames = calculatedCellHeights.profileNames,
+            profileTotalCount = calculatedCellHeights.profileTotalCount,
+            profileStats = calculatedCellHeights.profileStats,
+            profileBio = calculatedCellHeights.profileBio,
+            profileLinks = calculatedCellHeights.profileLinks
+            else { return nil }
+
+        return profileAvatar + profileNames + profileTotalCount + profileStats + profileBio + profileLinks
+    }
+
 }
 
 private extension ProfileHeaderCellSizeCalculator {
@@ -78,34 +91,24 @@ private extension ProfileHeaderCellSizeCalculator {
     }
 
     func calculateAggregateHeights(item: StreamCellItem) {
-        var totalHeight: CGFloat = 0
-
-        let futures: [(CalculatedCellHeights.Prop?, Future<CGFloat>)] = [
-            (nil, statsSizeCalculator.calculate(item)),
-            (nil, avatarSizeCalculator.calculate(item)),
+        let futures: [(CalculatedCellHeights.Prop, Future<CGFloat>)] = [
+            (.ProfileAvatar, avatarSizeCalculator.calculate(item)),
             (.ProfileNames, namesSizeCalculator.calculate(item, maxWidth: maxWidth)),
+            (.ProfileTotalCount, totalCountSizeCalculator.calculate(item)),
+            (.ProfileStats, statsSizeCalculator.calculate(item)),
             (.ProfileBio, bioSizeCalculator.calculate(item, maxWidth: maxWidth)),
             (.ProfileLinks, linksSizeCalculator.calculate(item)),
-            (nil, totalCountSizeCalculator.calculate(item))
         ]
 
         let done = after(futures.count) {
+            let totalHeight = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(item.calculatedCellHeights)!
             self.assignCellHeight(totalHeight)
         }
 
         for (calcType, future) in futures {
             future
                 .onSuccess { height in
-                    switch calcType {
-                    case .Some(.ProfileBio):
-                        item.calculatedCellHeights.profileBio = height
-                    case .Some(.ProfileLinks):
-                        item.calculatedCellHeights.profileLinks = height
-                    case .Some(.ProfileNames):
-                        item.calculatedCellHeights.profileNames = height
-                    default: break
-                    }
-                    totalHeight += height
+                    item.calculatedCellHeights.assign(calcType, height: height)
                     done()
                 }
                 .onFailorCancel { _ in done() }

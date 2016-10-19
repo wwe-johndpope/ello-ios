@@ -19,7 +19,10 @@ public struct ProfileHeaderCellPresenter {
             user = streamCellItem.jsonable as? User
         else { return }
 
-        cell.headerView.calculatedCellHeights = streamCellItem.calculatedCellHeights
+        cell.onHeightMismatch = { height in
+            postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
+        }
+        cell.calculatedCellHeights = streamCellItem.calculatedCellHeights
 
         ProfileNamesPresenter.configure(cell.namesView, user: user, currentUser: currentUser)
         ProfileAvatarPresenter.configure(cell.avatarView, user: user, currentUser: currentUser)

@@ -32,6 +32,7 @@ public class ProfileLinksView: ProfileBaseView {
 extension ProfileLinksView {
 
     override func style() {
+        backgroundColor = .whiteColor()
     }
 
     override func bindActions() {

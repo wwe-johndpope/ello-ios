@@ -51,6 +51,7 @@ public class ProfileNamesView: ProfileBaseView {
 extension ProfileNamesView {
 
     override func style() {
+        backgroundColor = .whiteColor()
         nameLabel.font = ProfileNamesView.nameFont
         nameLabel.textColor = .blackColor()
         usernameLabel.font = ProfileNamesView.usernameFont

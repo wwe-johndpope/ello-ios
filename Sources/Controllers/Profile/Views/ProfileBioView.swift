@@ -7,7 +7,7 @@ import WebKit
 
 public class ProfileBioView: ProfileBaseView {
     public struct Size {
-        static let margins = UIEdgeInsets(tops: 20, sides: 15)
+        static let margins = UIEdgeInsets(top: 20, left: 15, bottom: 10, right: 15)
     }
 
     public var bio: String = "" {
@@ -17,12 +17,18 @@ public class ProfileBioView: ProfileBaseView {
     }
     private let bioView = UIWebView()
     private let grayLine = UIView()
+
+    typealias OnHeightMismatch = (CGFloat) -> Void
+    var onHeightMismatch: OnHeightMismatch?
 }
 
 extension ProfileBioView {
 
     override func style() {
+        backgroundColor = .whiteColor()
         bioView.scrollView.scrollEnabled = false
+        bioView.scrollView.scrollsToTop = false
+        bioView.delegate = self
         grayLine.backgroundColor = .greyA()
     }
 
@@ -51,6 +57,18 @@ extension ProfileBioView {
     func prepareForReuse() {
         bioView.loadHTMLString("", baseURL: NSURL(string: "/"))
     }
+}
+
+extension ProfileBioView: UIWebViewDelegate {
+
+    public func webViewDidFinishLoad(webView: UIWebView) {
+        let webViewHeight = webView.windowContentSize()?.height ?? 0
+        let totalHeight = ProfileBioSizeCalculator.calculateHeight(webViewHeight: webViewHeight)
+        if totalHeight != frame.size.height {
+            onHeightMismatch?(totalHeight)
+        }
+    }
+
 }
 
 extension ProfileBioView: ProfileViewProtocol {}
