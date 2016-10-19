@@ -59,7 +59,7 @@ extension ProfileBioView {
     }
 
     func prepareForReuse() {
-        bioView.loadHTMLString("", baseURL: NSURL(string: "/"))
+        self.bio = ""
         grayLine.hidden = false
     }
 }
@@ -68,7 +68,13 @@ extension ProfileBioView: UIWebViewDelegate {
 
     public func webViewDidFinishLoad(webView: UIWebView) {
         let webViewHeight = webView.windowContentSize()?.height ?? 0
-        let totalHeight = ProfileBioSizeCalculator.calculateHeight(webViewHeight: webViewHeight)
+        let totalHeight: CGFloat
+        if bio == "" {
+            totalHeight = 0
+        }
+        else {
+            totalHeight = ProfileBioSizeCalculator.calculateHeight(webViewHeight: webViewHeight)
+        }
         if totalHeight != frame.size.height {
             onHeightMismatch?(totalHeight)
         }
