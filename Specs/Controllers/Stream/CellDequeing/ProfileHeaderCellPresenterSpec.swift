@@ -18,27 +18,29 @@ class ProfileHeaderCellPresenterSpec: QuickSpec {
                 }
             }
 
-            context("no posts") {
-                it("disables the posts button") {
-                    let user: User = stub(["postsCount" : 0])
+            context("no bio or links") {
+                it("hides the stats gray line") {
+                    let user: User = stub([:])
                     let cell: ProfileHeaderCell = ProfileHeaderCell()
                     let item: StreamCellItem = StreamCellItem(jsonable: user, type: .ProfileHeader)
+                    item.calculatedCellHeights.profileBio = 0
+                    item.calculatedCellHeights.profileLinks = 0
 
                     ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .CurrentUserStream, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
-
-                    // expect(cell.postsButton.enabled) == false
+                    expect(cell.statsView.grayLineVisible) == false
                 }
             }
 
-            context("has posts") {
-                it("enables the posts button") {
-                    let user: User = stub(["postsCount" : 1])
+            context("no links") {
+                it("hides the bio gray line") {
+                    let user: User = stub([:])
                     let cell: ProfileHeaderCell = ProfileHeaderCell()
                     let item: StreamCellItem = StreamCellItem(jsonable: user, type: .ProfileHeader)
+                    item.calculatedCellHeights.profileBio = 10
+                    item.calculatedCellHeights.profileLinks = 0
 
                     ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .CurrentUserStream, indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
-
-                    // expect(cell.postsButton.enabled) == true
+                    expect(cell.bioView.grayLineVisible) == false
                 }
             }
         }

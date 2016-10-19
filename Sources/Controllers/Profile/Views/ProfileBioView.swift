@@ -17,6 +17,10 @@ public class ProfileBioView: ProfileBaseView {
     }
     private let bioView = UIWebView()
     private let grayLine = UIView()
+    var grayLineVisible: Bool {
+        get { return !grayLine.hidden }
+        set { grayLine.hidden = !newValue }
+    }
 
     typealias OnHeightMismatch = (CGFloat) -> Void
     var onHeightMismatch: OnHeightMismatch?
@@ -56,6 +60,7 @@ extension ProfileBioView {
 
     func prepareForReuse() {
         bioView.loadHTMLString("", baseURL: NSURL(string: "/"))
+        grayLine.hidden = false
     }
 }
 
