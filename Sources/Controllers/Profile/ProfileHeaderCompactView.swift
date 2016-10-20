@@ -20,6 +20,13 @@ public class ProfileHeaderCompactView: ProfileBaseView {
             if let namesHeight = calculatedCellHeights.profileNames { namesHeightConstraint.updateOffset(namesHeight) }
             if let bioHeight = calculatedCellHeights.profileBio { bioHeightConstraint.updateOffset(bioHeight) }
             if let linksHeight = calculatedCellHeights.profileLinks { linksHeightConstraint.updateOffset(linksHeight) }
+
+            let bioOrLinksHaveContent = calculatedCellHeights.profileBio > 0 || calculatedCellHeights.profileLinks > 0
+            statsView.grayLineVisible = bioOrLinksHaveContent
+
+            let linksHasContent = calculatedCellHeights.profileLinks > 0
+            bioView.grayLineVisible = linksHasContent
+
             setNeedsLayout()
         }
     }

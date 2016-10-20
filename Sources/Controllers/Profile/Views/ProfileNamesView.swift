@@ -6,7 +6,7 @@ public class ProfileNamesView: ProfileBaseView {
     public struct Size {
         static let horizNameMargin: CGFloat = 10
         static let vertNameMargin: CGFloat = 5
-        static let outerMargins = UIEdgeInsets(top: 20, left: 15, bottom: 15, right: 15)
+        static let outerMargins = UIEdgeInsets(top: 19, left: 15, bottom: 20, right: 15)
     }
     static let nameFont = UIFont.defaultFont(18)
     static let usernameFont = UIFont.defaultFont()

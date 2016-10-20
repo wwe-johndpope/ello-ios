@@ -27,6 +27,9 @@ public class ProfileLinksView: ProfileBaseView {
     private var iconButtons: [UIButton] = []
 
     private var iconsWidthConstraint: Constraint!
+
+    typealias OnLinksHeightMismatch = (CGFloat) -> Void
+    var onHeightMismatch: OnLinksHeightMismatch?
 }
 
 extension ProfileLinksView {
@@ -90,6 +93,17 @@ extension ProfileLinksView {
 
         let width: CGFloat = max(0, Size.iconSize.width * CGFloat(min(3, iconsCount)) + Size.iconMargins * CGFloat(min(2, iconsCount - 1)))
         iconsWidthConstraint.updateOffset(width)
+
+        let totalHeight: CGFloat
+        if externalLinks.count == 0 {
+            totalHeight = 0
+        }
+        else {
+            totalHeight = ProfileLinksSizeCalculator.calculateHeight(externalLinks)
+        }
+        if totalHeight != frame.size.height {
+            onHeightMismatch?(totalHeight)
+        }
     }
 
     private func addIconButton(externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?) -> UIButton {

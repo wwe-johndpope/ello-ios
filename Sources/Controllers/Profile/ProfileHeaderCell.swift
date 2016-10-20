@@ -45,7 +45,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
     var user: User?
     var currentUser: User?
 
-    typealias OnHeightMismatch = (CGFloat) -> Void
+    typealias OnHeightMismatch = (CalculatedCellHeights) -> Void
     var onHeightMismatch: OnHeightMismatch?
 
     // this little hack prevents constraints from breaking on initial load
@@ -69,11 +69,17 @@ public class ProfileHeaderCell: UICollectionViewCell {
         bioView.onHeightMismatch = { bioHeight in
             guard var calculatedCellHeights = self.calculatedCellHeights else { return }
             calculatedCellHeights.profileBio = bioHeight
+            calculatedCellHeights.oneColumn = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(calculatedCellHeights)
             self.calculatedCellHeights = calculatedCellHeights
+            self.onHeightMismatch?(calculatedCellHeights)
+        }
 
-            if let totalHeight = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(calculatedCellHeights) {
-                self.onHeightMismatch?(totalHeight)
-            }
+        linksView.onHeightMismatch = { linkHeight in
+            guard var calculatedCellHeights = self.calculatedCellHeights else { return }
+            calculatedCellHeights.profileLinks = linkHeight
+            calculatedCellHeights.oneColumn = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(calculatedCellHeights)
+            self.calculatedCellHeights = calculatedCellHeights
+            self.onHeightMismatch?(calculatedCellHeights)
         }
     }
 
@@ -86,8 +92,6 @@ public class ProfileHeaderCell: UICollectionViewCell {
             make.edges.equalTo(self.contentView)
         }
     }
-
-    func showPlaceholders() {}
 
     public override func prepareForReuse() {
         onHeightMismatch = nil
