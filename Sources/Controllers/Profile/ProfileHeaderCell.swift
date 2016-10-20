@@ -38,7 +38,14 @@ public class ProfileHeaderCell: UICollectionViewCell {
     var bioView: ProfileBioView { get { return headerView.bioView } }
     var linksView: ProfileLinksView { get { return headerView.linksView } }
 
-    weak var webLinkDelegate: WebLinkDelegate?
+    weak var webLinkDelegate: WebLinkDelegate? {
+        set {
+            bioView.webLinkDelegate = newValue
+            linksView.webLinkDelegate = newValue
+        }
+        get { return bioView.webLinkDelegate }
+    }
+
     weak var simpleStreamDelegate: SimpleStreamDelegate?
     weak var userDelegate: UserDelegate?
 
