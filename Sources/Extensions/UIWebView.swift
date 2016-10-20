@@ -8,7 +8,7 @@ public extension UIWebView {
         if let jsWidth = self.stringByEvaluatingJavaScriptFromString("(document.getElementById('post-container') || document.getElementByTagName('div')[0] || document.body).offsetWidth")
             where !jsWidth.isEmpty
         {
-            if let jsHeight = self.stringByEvaluatingJavaScriptFromString("window.contentHeight()")
+            if let jsHeight = self.stringByEvaluatingJavaScriptFromString("(document.getElementById('post-container') || document.getElementByTagName('div')[0] || document.body).offsetHeight + 15")
                 where !jsHeight.isEmpty
             {
                 let width = CGFloat((jsWidth as NSString).doubleValue)

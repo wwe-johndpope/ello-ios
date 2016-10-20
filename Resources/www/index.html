@@ -307,11 +307,6 @@
     </div>
     <script>
       var postContainer = document.getElementById('post-container');
-      var contentHeight = function() {
-        /* adding an extra 15 accounts for hangers in links at bottom of a post and the old padding */
-        return postContainer.offsetHeight + 15;
-      };
-
       postContainer.onclick = function(event) {
           if ( event.target.getAttribute("data-capture") === "hashtagClick" && event.target.getAttribute("data-href") !== null ) {
               document.location = event.target.getAttribute("data-href");
