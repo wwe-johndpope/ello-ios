@@ -31,7 +31,7 @@ class ProfileScreenSpec: QuickSpec {
 
             context("snapshots") {
 
-                fcontext("ghost - loading") {
+                context("ghost - loading") {
                     validateAllSnapshots(named: "ProfileScreen_ghost") {
                         subject.coverImage = nil
                         subject.showNavBars()
