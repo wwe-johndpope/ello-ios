@@ -25,7 +25,6 @@ public struct StreamTextCellPresenter {
             }
 
             var isRepost = false
-            cell.webView.loadHTMLString("", baseURL: NSURL(string: "/"))
             if let textRegion = streamCellItem.type.data as? TextRegion {
                 isRepost = textRegion.isRepost
                 let content = textRegion.content
