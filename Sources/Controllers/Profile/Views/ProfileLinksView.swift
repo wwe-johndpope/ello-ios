@@ -21,10 +21,13 @@ public class ProfileLinksView: ProfileBaseView {
         }
     }
 
+    weak var webLinkDelegate: WebLinkDelegate?
+
     private var linksBox = UIView()
     private var iconsBox = UIView()
     private var linkButtons: [UIButton] = []
     private var iconButtons: [UIButton] = []
+    private var buttonLinks: [UIButton: ExternalLink] = [:]
 
     private var iconsWidthConstraint: Constraint!
 
@@ -63,6 +66,7 @@ extension ProfileLinksView {
 extension ProfileLinksView {
     func prepareForReuse() {
         externalLinks = []
+        webLinkDelegate = nil
     }
 }
 
@@ -108,6 +112,9 @@ extension ProfileLinksView {
 
     private func addIconButton(externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?) -> UIButton {
         let button = UIButton()
+        button.addTarget(self, action: #selector(buttonTapped(_:)), forControlEvents: .TouchUpInside)
+        buttonLinks[button] = externalLink
+
         iconsBox.addSubview(button)
         iconButtons.append(button)
 
@@ -135,8 +142,20 @@ extension ProfileLinksView {
         return button
     }
 
+    func buttonTapped(button: UIButton) {
+        guard let
+            externalLink = buttonLinks[button]
+        else { return }
+
+        let request = NSURLRequest(URL: externalLink.url)
+        ElloWebViewHelper.handleRequest(request, webLinkDelegate: webLinkDelegate)
+    }
+
     private func addLinkButton(externalLink: ExternalLink, prevLink: UIButton?) -> UIButton {
         let button = UIButton()
+        button.addTarget(self, action: #selector(buttonTapped(_:)), forControlEvents: .TouchUpInside)
+        buttonLinks[button] = externalLink
+
         linksBox.addSubview(button)
         linkButtons.append(button)
 
