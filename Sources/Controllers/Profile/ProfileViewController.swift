@@ -148,8 +148,7 @@ public final class ProfileViewController: StreamableViewController {
             self.scrollToBottom(streamViewController)
         }
 
-        let offset = self.streamViewController.collectionView.contentOffset
-        screen.showNavBars(offset)
+        screen.showNavBars()
     }
 
     override func hideNavBars() {
@@ -449,7 +448,6 @@ extension ProfileViewController {
         if let start = coverImageHeightStart {
             screen.updateHeaderHeightConstraints(max: max(start - scrollView.contentOffset.y, start), scrollAdjusted: start - scrollView.contentOffset.y)
         }
-        let offset = streamViewController.collectionView.contentOffset
         super.streamViewDidScroll(scrollView)
     }
 }

@@ -288,7 +288,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleCellItems.count ?? 0
+        return visibleCellItems.count
     }
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

@@ -31,6 +31,14 @@ class ProfileScreenSpec: QuickSpec {
 
             context("snapshots") {
 
+                context("ghost - loading") {
+                    validateAllSnapshots(named: "ProfileScreen_ghost") {
+                        subject.coverImage = nil
+                        subject.showNavBars()
+                        return subject
+                    }
+                }
+
                 context("current user") {
 
                     validateAllSnapshots(named: "ProfileScreen_is_current_user") {
@@ -39,7 +47,7 @@ class ProfileScreenSpec: QuickSpec {
                         subject.relationshipControl.userId = user.id
                         subject.relationshipControl.userAtName = user.atName
                         subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                        subject.showNavBars(CGPointZero)
+                        subject.showNavBars()
                         return subject
                     }
                 }
@@ -52,7 +60,7 @@ class ProfileScreenSpec: QuickSpec {
                         subject.relationshipControl.userId = user.id
                         subject.relationshipControl.userAtName = user.atName
                         subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                        subject.showNavBars(CGPointZero)
+                        subject.showNavBars()
 
                         expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_is_hireable", device: .Phone6_Portrait)
                     }
@@ -63,7 +71,7 @@ class ProfileScreenSpec: QuickSpec {
                         subject.relationshipControl.userId = user.id
                         subject.relationshipControl.userAtName = user.atName
                         subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                        subject.showNavBars(CGPointZero)
+                        subject.showNavBars()
 
                         expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_is_collaborateable", device: .Phone6_Portrait)
                     }
@@ -75,7 +83,7 @@ class ProfileScreenSpec: QuickSpec {
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
                             subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                            subject.showNavBars(CGPointZero)
+                            subject.showNavBars()
                             return subject
                         }
                     }
@@ -87,7 +95,7 @@ class ProfileScreenSpec: QuickSpec {
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
                             subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                            subject.showNavBars(CGPointZero)
+                            subject.showNavBars()
                             return subject
                         }
                     }

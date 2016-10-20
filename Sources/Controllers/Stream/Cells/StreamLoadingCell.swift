@@ -30,12 +30,12 @@ public class StreamLoadingCell: UICollectionViewCell {
     }
 
     private func sharedInit() {
-        self.addSubview(elloLogo)
+        backgroundColor = .whiteColor()
+        addSubview(elloLogo)
     }
 
     override public func layoutSubviews() {
         super.layoutSubviews()
-        self.backgroundColor = UIColor.whiteColor()
         elloLogo.center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
     }
 }

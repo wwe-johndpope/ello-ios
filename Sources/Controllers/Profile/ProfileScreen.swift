@@ -5,32 +5,6 @@
 import SnapKit
 
 
-public protocol ProfileScreenProtocol: StreamableScreenProtocol {
-    func disableButtons()
-    func enableButtons()
-    func showNavBars(offset: CGPoint)
-    func hideNavBars(offset: CGPoint, isCurrentUser: Bool)
-    func configureButtonsForCurrentUser()
-    func configureButtonsForNonCurrentUser(isHireable isHireable: Bool, isCollaborateable: Bool)
-    func resetCoverImage()
-    func updateHeaderHeightConstraints(max max: CGFloat, scrollAdjusted: CGFloat)
-    func updateRelationshipControl(user user: User)
-    func updateRelationshipPriority(relationshipPriority: RelationshipPriority)
-    var relationshipDelegate: RelationshipDelegate? { get set }
-    var navBar: ElloNavigationBar { get }
-    var profileButtonsContainer: UIView { get }
-    var coverImage: UIImage? { get set }
-    var coverImageURL: NSURL? { get set }
-}
-
-public protocol ProfileScreenDelegate: class {
-    func mentionTapped()
-    func hireTapped()
-    func editTapped()
-    func inviteTapped()
-    func collaborateTapped()
-}
-
 public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public struct Size {
@@ -76,6 +50,8 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     public let hireButton = StyledButton(style: .BlackPill)
     public let editButton = StyledButton(style: .BlackPill)
     public let inviteButton = StyledButton(style: .BlackPill)
+    public let ghostLeftButton = StyledButton(style: .BlackPill)
+    public let ghostRightButton = StyledButton(style: .BlackPill)
     public let profileButtonsEffect = UIVisualEffectView()
     public var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
 
@@ -107,6 +83,8 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         profileButtonsContainer.addSubview(inviteButton)
         profileButtonsContainer.addSubview(relationshipControl)
         profileButtonsContainer.addSubview(editButton)
+        profileButtonsContainer.addSubview(ghostLeftButton)
+        profileButtonsContainer.addSubview(ghostRightButton)
 
         loaderView.snp_makeConstraints { make in
             make.edges.equalTo(coverImageView)
@@ -183,6 +161,21 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             make.trailing.equalTo(profileButtonsContainer).offset(-Size.editButtonMargin)
             make.bottom.equalTo(-Size.buttonMargin)
         }
+
+        ghostLeftButton.snp_makeConstraints { make in
+            make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
+            make.width.equalTo(Size.mentionButtonWidth).priorityRequired()
+            make.height.equalTo(Size.buttonHeight)
+            make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
+        }
+
+        ghostRightButton.snp_makeConstraints { make in
+            make.height.equalTo(Size.buttonHeight)
+            make.width.lessThanOrEqualTo(Size.relationshipButtonMaxWidth)
+            make.leading.equalTo(ghostLeftButton.snp_trailing).offset(Size.editButtonMargin)
+            make.trailing.equalTo(profileButtonsContainer).offset(-Size.editButtonMargin)
+            make.bottom.equalTo(-Size.buttonMargin)
+        }
     }
 
     override func setText() {
@@ -197,6 +190,17 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         whiteSolidView.backgroundColor = .whiteColor()
         relationshipControl.style = .ProfileView
         profileButtonsEffect.effect = UIBlurEffect(style: .Light)
+
+        collaborateButton.hidden = true
+        hireButton.hidden = true
+        mentionButton.hidden = true
+        relationshipControl.hidden = true
+        editButton.hidden = true
+        inviteButton.hidden = true
+        ghostLeftButton.hidden = false
+        ghostRightButton.hidden = false
+        ghostLeftButton.enabled = false
+        ghostRightButton.enabled = false
     }
 
     override func bindActions() {
@@ -271,6 +275,8 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         relationshipControl.hidden = false
         editButton.hidden = true
         inviteButton.hidden = true
+        ghostLeftButton.hidden = true
+        ghostRightButton.hidden = true
     }
 
     public func configureButtonsForCurrentUser() {
@@ -280,6 +286,8 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         relationshipControl.hidden = true
         editButton.hidden = false
         inviteButton.hidden = false
+        ghostLeftButton.hidden = true
+        ghostRightButton.hidden = true
     }
 
     private func setButtonsEnabled(enabled: Bool) {
@@ -311,7 +319,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         coverImageView.image = nil
     }
 
-    public func showNavBars(offset: CGPoint) {
+    public func showNavBars() {
         animate {
             let height = self.navBar.frame.height
             self.profileButtonsContainerTopConstraint.updateOffset(height)
