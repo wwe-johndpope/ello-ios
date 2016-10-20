@@ -46,7 +46,12 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
             }
         }
         self.cellItems = job.cellItems
-        self.maxWidth = job.width
+        if job.columnCount == 1 {
+            self.maxWidth = job.width
+        }
+        else {
+            self.maxWidth = floor(job.width / CGFloat(job.columnCount) - StreamKind.Following.columnSpacing * CGFloat(job.columnCount - 1))
+        }
         loadNext()
     }
 
