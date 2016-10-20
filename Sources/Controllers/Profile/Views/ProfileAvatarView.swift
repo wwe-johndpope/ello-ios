@@ -8,7 +8,7 @@ public class ProfileAvatarView: ProfileBaseView {
         static let height: CGFloat = 271
         static let avatarWidth: CGFloat = 180
         static let avatarHeight: CGFloat = 180
-        static let whiteBarHeight: CGFloat = 70
+        static let whiteBarHeight: CGFloat = 60
     }
 
     public var avatarImage: UIImage? {
