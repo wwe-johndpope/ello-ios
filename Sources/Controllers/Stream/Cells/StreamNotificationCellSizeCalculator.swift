@@ -70,7 +70,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
             }
         }
         else {
-            nextTick(completion)
+            completion()
         }
     }
 

@@ -68,8 +68,11 @@ public final class ProfileGenerator: StreamGenerator {
 private extension ProfileGenerator {
 
     func setPlaceHolders() {
+        let header = StreamCellItem(type: .ProfileHeaderGhost, placeholderType: .ProfileHeader)
+        header.calculatedCellHeights.oneColumn = ProfileHeaderGhostCell.Size.height
+        header.calculatedCellHeights.multiColumn = ProfileHeaderGhostCell.Size.height
         destination?.setPlaceholders([
-            StreamCellItem(type: .Placeholder, placeholderType: .ProfileHeader),
+            header,
             StreamCellItem(type: .Placeholder, placeholderType: .ProfilePosts)
         ])
     }
@@ -84,8 +87,6 @@ private extension ProfileGenerator {
 
     func loadUser(doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.finished || reload else { return }
-
-        self.destination?.replacePlaceholder(.ProfileHeader, items: [StreamCellItem(type: .ProfileHeader)]) {}
 
         // load the user with no posts
         StreamService().loadUser(
