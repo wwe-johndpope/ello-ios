@@ -11,6 +11,7 @@ public class ProfileHeaderGhostCell: UICollectionViewCell {
         static let whiteTopMargin: CGFloat = 212
         static let avatarTopMargin: CGFloat = 90
         static let avatarSize: CGFloat = 180
+        static let ghostNameHeight: CGFloat = 20
         static let ghostHeight: CGFloat = 10
         static let nameTopMargin: CGFloat = 20
         static let nameWidth: CGFloat = 135
@@ -117,7 +118,7 @@ public class ProfileHeaderGhostCell: UICollectionViewCell {
             make.centerX.equalTo(self)
             make.top.equalTo(avatar.snp_bottom).offset(Size.nameTopMargin)
             make.width.equalTo(Size.nameWidth)
-            make.height.equalTo(Size.ghostHeight)
+            make.height.equalTo(Size.ghostNameHeight)
         }
         nameGrayLine.snp_makeConstraints { make in
             make.leading.trailing.equalTo(self).inset(Size.sideMargin)
