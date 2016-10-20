@@ -25,15 +25,6 @@ public struct ProfileHeaderCellPresenter {
         }
         cell.calculatedCellHeights = streamCellItem.calculatedCellHeights
 
-
-        if streamCellItem.calculatedCellHeights.profileBio == 0 && streamCellItem.calculatedCellHeights.profileLinks == 0 {
-            cell.statsView.grayLineVisible = false
-        }
-
-        if streamCellItem.calculatedCellHeights.profileLinks == 0 {
-            cell.bioView.grayLineVisible = false
-        }
-
         ProfileNamesPresenter.configure(cell.namesView, user: user, currentUser: currentUser)
         ProfileAvatarPresenter.configure(cell.avatarView, user: user, currentUser: currentUser)
         ProfileStatsPresenter.configure(cell.statsView, user: user, currentUser: currentUser)
