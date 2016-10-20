@@ -18,15 +18,18 @@ public struct ProfileLinksSizeCalculator {
             return promise.future
         }
 
+        promise.completeWithSuccess(ProfileLinksSizeCalculator.calculateHeight(externalLinks))
+        return promise.future
+    }
+
+    public static func calculateHeight(externalLinks: [ExternalLink]) -> CGFloat {
         let iconsCount = externalLinks.filter({ $0.iconURL != nil }).count
         let iconsRows = max(0, Int((iconsCount + 2) / 3))
         let iconsHeight = CGFloat(iconsRows) * ProfileLinksView.Size.iconSize.height + CGFloat(max(0, iconsRows - 1)) * ProfileLinksView.Size.iconMargins
 
         let linksCount = externalLinks.count - iconsCount
         let linksHeight = CGFloat(linksCount) * ProfileLinksView.Size.linkHeight + CGFloat(max(0, linksCount - 1)) * ProfileLinksView.Size.verticalLinkMargin
-        promise.completeWithSuccess(ProfileLinksView.Size.margins.top + ProfileLinksView.Size.margins.bottom + max(iconsHeight, linksHeight))
-
-        return promise.future
+        return ProfileLinksView.Size.margins.top + ProfileLinksView.Size.margins.bottom + max(iconsHeight, linksHeight)
     }
 }
 

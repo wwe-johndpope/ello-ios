@@ -19,15 +19,18 @@ public struct ProfileHeaderCellPresenter {
             user = streamCellItem.jsonable as? User
         else { return }
 
-        cell.onHeightMismatch = { height in
+        cell.onHeightMismatch = { calculatedCellHeights in
+            streamCellItem.calculatedCellHeights = calculatedCellHeights
             postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
         }
         cell.calculatedCellHeights = streamCellItem.calculatedCellHeights
 
+
         if streamCellItem.calculatedCellHeights.profileBio == 0 && streamCellItem.calculatedCellHeights.profileLinks == 0 {
             cell.statsView.grayLineVisible = false
         }
-        else if streamCellItem.calculatedCellHeights.profileLinks == 0 {
+
+        if streamCellItem.calculatedCellHeights.profileLinks == 0 {
             cell.bioView.grayLineVisible = false
         }
 

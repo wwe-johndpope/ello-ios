@@ -22,8 +22,8 @@ public class ProfileBioView: ProfileBaseView {
         set { grayLine.hidden = !newValue }
     }
 
-    typealias OnHeightMismatch = (CGFloat) -> Void
-    var onHeightMismatch: OnHeightMismatch?
+    typealias OnBioHeightMismatch = (CGFloat) -> Void
+    var onHeightMismatch: OnBioHeightMismatch?
 }
 
 extension ProfileBioView {
