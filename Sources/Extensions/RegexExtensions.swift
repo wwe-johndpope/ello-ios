@@ -63,9 +63,9 @@ class Regex {
 
 }
 
-infix operator =~ {}
-infix operator !~ {}
-infix operator ~ {}
+infix operator =~ { precedence 130 }
+infix operator !~ { precedence 130 }
+infix operator ~ { precedence 150 }
 
 func =~ (input: String, pattern: String) -> Bool {
     if let regex = Regex(pattern) {

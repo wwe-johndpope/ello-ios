@@ -11,6 +11,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "CreateComment(parentPostId: \(parentPostId))"
         case let .CreateLove(postId):
             return "CreateLove(postId: \(postId))"
+        case let .CreateWatchPost(postId):
+            return "CreateWatchPost(postId: \(postId))"
         case let .DeleteComment(postId, commentId):
             return "DeleteComment(postId: \(postId), commentId: \(commentId))"
         case let .DeleteLove(postId):
@@ -19,6 +21,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "DeletePost(postId: \(postId))"
         case let .DeleteSubscriptions(tokenData):
             return "DeleteSubscriptions(tokenData: \(tokenData))"
+        case let .DeleteWatchPost(postId):
+            return "DeleteWatchPost(postId: \(postId))"
         case let .Discover(type):
             return "Discover(type: \(type))"
         case let .CategoryPosts(slug):
@@ -95,6 +99,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "CreateLove"
         case .CreatePost:
             return "CreatePost"
+        case .CreateWatchPost:
+            return "CreateWatchPost"
         case .CurrentUserBlockedList:
             return "CurrentUserBlockedList"
         case .CurrentUserMutedList:
@@ -111,6 +117,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "DeleteLove"
         case .DeletePost:
             return "DeletePost"
+        case .DeleteWatchPost:
+            return "DeleteWatchPost"
         case .DeleteSubscriptions:
             return "DeleteSubscriptions"
         case .Discover:

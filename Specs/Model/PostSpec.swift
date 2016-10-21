@@ -228,7 +228,7 @@ class PostSpec: QuickSpec {
                     let unArchivedPost = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as! Post
 
                     expect(unArchivedPost).toNot(beNil())
-                    expect(unArchivedPost.version) == 1
+                    expect(unArchivedPost.version) == 2
                     // active record
                     expect(unArchivedPost.id) == "768"
                     expect(unArchivedPost.createdAt) == expectedCreatedAt

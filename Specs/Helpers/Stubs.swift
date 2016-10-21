@@ -227,6 +227,7 @@ extension Post: Stubbable {
             allowComments: (values["allowComments"] as? Bool) ?? false,
             reposted: (values["reposted"] as? Bool) ?? false,
             loved: (values["loved"] as? Bool) ?? false,
+            watching: (values["watching"] as? Bool) ?? false,
             summary: (values["summary"] as? [Regionable]) ?? [stubbedTextRegion]
         )
 

@@ -17,10 +17,12 @@ public enum ElloAPI {
     case CreateComment(parentPostId: String, body: [String: AnyObject])
     case CreateLove(postId: String)
     case CreatePost(body: [String: AnyObject])
+    case CreateWatchPost(postId: String)
     case DeleteComment(postId: String, commentId: String)
     case DeleteLove(postId: String)
     case DeletePost(postId: String)
     case DeleteSubscriptions(token: NSData)
+    case DeleteWatchPost(postId: String)
     case CategoryPosts(slug: String)
     case Discover(type: DiscoverType)
     case EmojiAutoComplete(terms: String)
@@ -129,6 +131,9 @@ public enum ElloAPI {
              .UpdatePost,
              .UserStreamPosts:
             return .PostsType
+        case .CreateWatchPost,
+             .DeleteWatchPost:
+            return .WatchesType
         case .EmojiAutoComplete,
              .UserNameAutoComplete:
             return .AutoCompleteResultType
@@ -215,7 +220,8 @@ extension ElloAPI: Moya.TargetType {
              .ReAuth,
              .Relationship,
              .RelationshipBatch,
-             .RePost:
+             .RePost,
+             .CreateWatchPost:
             return .POST
         case .UserCategories:
             return .PUT
@@ -223,7 +229,8 @@ extension ElloAPI: Moya.TargetType {
              .DeleteLove,
              .DeletePost,
              .DeleteSubscriptions,
-             .ProfileDelete:
+             .ProfileDelete,
+             .DeleteWatchPost:
             return .DELETE
         case .FriendNewContent,
              .NoiseNewContent,
@@ -261,6 +268,8 @@ extension ElloAPI: Moya.TargetType {
         case .CreatePost,
              .RePost:
             return "/api/\(ElloAPI.apiVersion)/posts"
+        case let .CreateWatchPost(postId):
+            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watches"
         case let .DeleteComment(postId, commentId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
         case let .DeleteLove(postId):
@@ -269,6 +278,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .DeleteSubscriptions(tokenData):
             return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+        case let .DeleteWatchPost(postId):
+            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watch"
         case let .CategoryPosts(slug):
             return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .Discover(type):
@@ -382,12 +393,15 @@ extension ElloAPI: Moya.TargetType {
         case .CreatePost,
              .RePost:
             return stubbedData("create-post")
+        case .CreateWatchPost:
+            return stubbedData("watches_creating_a_watch")
         case .Categories:
             return stubbedData("categories")
         case .DeleteComment,
              .DeleteLove,
              .DeletePost,
              .DeleteSubscriptions,
+             .DeleteWatchPost,
              .FriendNewContent,
              .Hire,
              .Collaborate,
@@ -525,7 +539,6 @@ extension ElloAPI: Moya.TargetType {
     }
 
     public var parameters: [String: AnyObject]? {
-
         switch self {
         case .AnonymousCredentials:
             return [

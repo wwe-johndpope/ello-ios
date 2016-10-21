@@ -3,23 +3,37 @@
 //
 
 import FLAnimatedImage
+import SnapKit
+
 
 public class StreamCreateCommentCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamCreateCommentCell"
 
     public struct Size {
-        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 15)
+        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 10)
         public static let AvatarButtonMargin: CGFloat = 6
         public static let ButtonLabelMargin: CGFloat = 30
-        public static let ImageHeight: CGFloat = 30
+        public static let ReplyButtonSize: CGFloat = 50
+        public static let AvatarSize: CGFloat = 30
+        public static let WatchSize: CGFloat = 60
+        public static let WatchMargin: CGFloat = 5
     }
 
     weak var delegate: PostbarDelegate?
     let avatarView = FLAnimatedImageView()
     let createCommentBackground = CreateCommentBackgroundView()
+    var watchButtonHiddenConstraint: Constraint!
+    var replyButtonVisibleConstraint: Constraint!
+    var replyButtonHiddenConstraint: Constraint!
     let createCommentLabel = UILabel()
     let replyAllButton = UIButton()
+    let watchButton = UIButton()
 
+    var watching = false {
+        didSet {
+            watchButton.setImage(.Watch, imageStyle: watching ? .Green : .Normal, forState: .Normal)
+        }
+    }
     var avatarURL: NSURL? {
         willSet(value) {
             if let avatarURL = value {
@@ -31,50 +45,95 @@ public class StreamCreateCommentCell: UICollectionViewCell {
             }
         }
     }
-
+    var watchVisibility: InteractionVisibility = .Hidden {
+        didSet {
+            watchButton.hidden = (watchVisibility != .Enabled)
+            updateCreateButtonConstraints()
+        }
+    }
     var replyAllVisibility: InteractionVisibility = .Hidden {
         didSet {
             replyAllButton.hidden = (replyAllVisibility != .Enabled)
-            setNeedsLayout()
+            updateCreateButtonConstraints()
         }
     }
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
-        setupViews()
+        style()
+        bindActions()
+        arrange()
     }
 
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
 
-        setupViews()
+        style()
+        bindActions()
+        arrange()
     }
 
-    private func setupViews() {
-        self.contentView.backgroundColor = UIColor.whiteColor()
-        self.contentView.addSubview(replyAllButton)
-        self.contentView.addSubview(avatarView)
-        self.contentView.addSubview(createCommentBackground)
-        createCommentBackground.addSubview(createCommentLabel)
-
+    private func style() {
+        contentView.backgroundColor = .whiteColor()
+        avatarView.backgroundColor = .blackColor()
+        avatarView.clipsToBounds = true
         replyAllButton.setImage(.ReplyAll, imageStyle: .Normal, forState: .Normal)
         replyAllButton.setImage(.ReplyAll, imageStyle: .Selected, forState: .Highlighted)
-        replyAllButton.addTarget(self, action: #selector(replyAllTapped), forControlEvents: .TouchUpInside)
-
-        avatarView.backgroundColor = UIColor.blackColor()
-        avatarView.clipsToBounds = true
-
-        // the size of this frame is not important, it's just used to "seed" the
-        // autoresizingMask calculations
-        createCommentBackground.frame = CGRect(x: 0, y: 0, width: 100, height: StreamCellType.CreateComment.oneColumnHeight)
-
-        createCommentLabel.frame = createCommentBackground.bounds.inset(top: 0, left: Size.ButtonLabelMargin, bottom: 0, right: 0)
-        createCommentLabel.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-        createCommentLabel.text = "Comment..."
-        createCommentLabel.font = UIFont.defaultFont()
-        createCommentLabel.textColor = UIColor.whiteColor()
+        watchButton.setImage(.Watch, imageStyle: .Normal, forState: .Normal)
+        watchButton.contentMode = .Center
+        createCommentLabel.text = InterfaceString.Post.CreateComment
+        createCommentLabel.font = .defaultFont()
+        createCommentLabel.textColor = .whiteColor()
         createCommentLabel.textAlignment = .Left
+    }
+
+    private func bindActions() {
+        replyAllButton.addTarget(self, action: #selector(replyAllTapped), forControlEvents: .TouchUpInside)
+        watchButton.addTarget(self, action: #selector(watchTapped), forControlEvents: .TouchUpInside)
+    }
+
+    private func arrange() {
+        contentView.addSubview(replyAllButton)
+        contentView.addSubview(avatarView)
+        contentView.addSubview(createCommentBackground)
+        contentView.addSubview(watchButton)
+        createCommentBackground.addSubview(createCommentLabel)
+
+        avatarView.snp_makeConstraints { make in
+            make.leading.equalTo(contentView).offset(Size.Margins.left)
+            make.centerY.equalTo(contentView)
+            make.width.height.equalTo(Size.AvatarSize)
+        }
+
+        replyAllButton.snp_makeConstraints { make in
+            make.leading.equalTo(createCommentBackground.snp_trailing)
+            make.trailing.equalTo(contentView).offset(-Size.WatchMargin)
+            make.centerY.equalTo(contentView)
+            make.width.height.equalTo(Size.ReplyButtonSize)
+        }
+
+        watchButton.snp_makeConstraints { make in
+            make.top.bottom.equalTo(contentView)
+            make.trailing.equalTo(contentView).offset(-Size.WatchMargin)
+            make.width.equalTo(Size.WatchSize)
+        }
+
+        createCommentBackground.snp_makeConstraints { make in
+            make.leading.equalTo(avatarView.snp_trailing).offset(Size.AvatarButtonMargin)
+            make.centerY.equalTo(contentView)
+            make.height.equalTo(contentView).offset(-Size.Margins.top - Size.Margins.bottom)
+            watchButtonHiddenConstraint = make.trailing.equalTo(contentView).offset(-Size.Margins.right).constraint
+            replyButtonVisibleConstraint = make.trailing.equalTo(replyAllButton.snp_leading).constraint
+            replyButtonHiddenConstraint = make.trailing.equalTo(watchButton.snp_leading).constraint
+        }
+        watchButtonHiddenConstraint.uninstall()
+        replyButtonVisibleConstraint.uninstall()
+
+        createCommentLabel.snp_makeConstraints { make in
+            make.top.bottom.trailing.equalTo(createCommentBackground)
+            make.leading.equalTo(createCommentBackground).offset(Size.ButtonLabelMargin)
+        }
 
         // if this doesn't fix the "stretched create comment" bug, please remove
         setNeedsLayout()
@@ -84,29 +143,48 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
         avatarView.pin_cancelImageDownload()
+        watching = false
+        watchButtonHiddenConstraint.uninstall()
+        replyButtonVisibleConstraint.uninstall()
+        replyButtonHiddenConstraint.uninstall()
+    }
+
+    private func updateCreateButtonConstraints() {
+        if replyAllButton.hidden && watchButton.hidden {
+            watchButtonHiddenConstraint.install()
+            replyButtonVisibleConstraint.uninstall()
+            replyButtonHiddenConstraint.uninstall()
+        }
+        else if replyAllButton.hidden {
+            watchButtonHiddenConstraint.uninstall()
+            replyButtonVisibleConstraint.uninstall()
+            replyButtonHiddenConstraint.install()
+        }
+        else {
+            watchButtonHiddenConstraint.uninstall()
+            replyButtonVisibleConstraint.install()
+            replyButtonHiddenConstraint.uninstall()
+        }
     }
 
     override public func layoutSubviews() {
-        let imageY = (self.frame.height - Size.ImageHeight) / CGFloat(2)
-        avatarView.frame = CGRect(x: Size.Margins.left, y: imageY, width: Size.ImageHeight, height: Size.ImageHeight)
-        avatarView.layer.cornerRadius = Size.ImageHeight / CGFloat(2)
+        super.layoutSubviews()
+        avatarView.setNeedsLayout()
+        avatarView.layoutIfNeeded()
+        avatarView.layer.cornerRadius = avatarView.frame.width / CGFloat(2)
 
-        let createBackgroundLeft = avatarView.frame.maxX + Size.AvatarButtonMargin
-        let createBackgroundWidth = self.frame.width - createBackgroundLeft - Size.Margins.right
-        createCommentBackground.frame = CGRect(x: createBackgroundLeft, y: Size.Margins.top, width: createBackgroundWidth, height: self.frame.height - Size.Margins.top - Size.Margins.bottom)
         // if this doesn't fix the "stretched create comment" bug, please remove
         createCommentBackground.setNeedsDisplay()
-
-        if replyAllVisibility == .Enabled {
-            let btnWidth = createCommentBackground.frame.height
-            createCommentBackground.frame.size.width -= btnWidth
-            replyAllButton.frame = createCommentBackground.frame.fromRight().growRight(btnWidth)
-        }
     }
 
     func replyAllTapped() {
         guard let indexPath = indexPath else { return }
         delegate?.replyToAllButtonTapped(indexPath)
+    }
+
+    func watchTapped() {
+        guard let indexPath = indexPath else { return }
+        delegate?.watchPostTapped(!watching, cell: self, indexPath: indexPath)
     }
 
 }

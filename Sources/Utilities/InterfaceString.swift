@@ -143,6 +143,7 @@ public struct InterfaceString {
         static let RepostedByList: String = NSLocalizedString("Reposted by", comment: "Reposted by list title")
 
         static let Edit: String = NSLocalizedString("Edit", comment: "Edit Post Button Title")
+        static let CreateComment: String = NSLocalizedString("Comment...", comment: "Create Comment Button Prompt")
         static let Delete: String = NSLocalizedString("Delete", comment: "Delete Post Button Title")
         static let DeletePostConfirm: String = NSLocalizedString("Delete Post?", comment: "Delete Post confirmation")
         static let DeleteCommentConfirm: String = NSLocalizedString("Delete Comment?", comment: "Delete Comment confirmation")

@@ -175,8 +175,8 @@ public class PostEditingService: NSObject {
     func replaceLocalImageRegions(content: [Regionable], regions: [Regionable]) -> [Regionable] {
         var replacedContent = content
         for (index, regionable) in content.enumerate() {
-            if let _ = regionable as? ImageRegion,
-                replaceRegion = regions.safeValue(index) as? ImageRegion
+            if let replaceRegion = regions.safeValue(index) as? ImageRegion
+            where regionable is ImageRegion
             {
                 replacedContent[index] = replaceRegion
             }

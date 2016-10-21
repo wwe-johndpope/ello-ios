@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol PostbarDelegate: NSObjectProtocol {
+public protocol PostbarDelegate: class {
     func viewsButtonTapped(indexPath: NSIndexPath)
     func commentsButtonTapped(cell: StreamFooterCell, imageLabelControl: ImageLabelControl)
     func deleteCommentButtonTapped(indexPath: NSIndexPath)
@@ -15,9 +15,10 @@ public protocol PostbarDelegate: NSObjectProtocol {
     func flagCommentButtonTapped(indexPath: NSIndexPath)
     func replyToCommentButtonTapped(indexPath: NSIndexPath)
     func replyToAllButtonTapped(indexPath: NSIndexPath)
+    func watchPostTapped(watching: Bool, cell: StreamCreateCommentCell, indexPath: NSIndexPath)
 }
 
-public class PostbarController: NSObject, PostbarDelegate {
+public class PostbarController: PostbarDelegate {
 
     weak var presentingController: StreamViewController?
     public var collectionView: UICollectionView
@@ -71,7 +72,7 @@ public class PostbarController: NSObject, PostbarDelegate {
 
             if !cell.commentsOpened {
                 let indexPaths = self.dataSource.removeCommentsForPost(post)
-                self.collectionView.deleteItemsAtIndexPaths(indexPaths)
+                self.collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
                 item.state = .Collapsed
                 imageLabelControl.enabled = true
                 imageLabelControl.finishAnimation()
@@ -332,6 +333,25 @@ public class PostbarController: NSObject, PostbarDelegate {
         }
     }
 
+    public func watchPostTapped(watching: Bool, cell: StreamCreateCommentCell, indexPath: NSIndexPath) {
+        guard let
+            comment = dataSource.commentForIndexPath(indexPath),
+            post = comment.parentPost
+        else { return }
+
+        cell.watching = watching
+        cell.userInteractionEnabled = false
+        PostService().toggleWatchPost(post, watching: watching)
+            .onSuccess { post in
+                cell.userInteractionEnabled = true
+                postNotification(PostChangedNotification, value: (post, .Watching))
+            }
+            .onFail { error in
+                cell.userInteractionEnabled = true
+                cell.watching = !watching
+            }
+    }
+
 // MARK: - Private
 
     private func postForIndexPath(indexPath: NSIndexPath) -> Post? {
@@ -361,7 +381,7 @@ public class PostbarController: NSObject, PostbarDelegate {
         self.dataSource.insertUnsizedCellItems(items,
             withWidth: self.collectionView.frame.width,
             startingIndexPath: commentsStartingIndexPath) { (indexPaths) in
-                self.collectionView.insertItemsAtIndexPaths(indexPaths)
+                self.collectionView.reloadData() // insertItemsAtIndexPaths(indexPaths)
                 cell.commentsControl.enabled = true
 
                 if indexPaths.count == 1 && jsonables.count == 0 {
@@ -377,7 +397,7 @@ public class PostbarController: NSObject, PostbarDelegate {
 
             let items = [createCommentItem]
             self.dataSource.insertStreamCellItems(items, startingIndexPath: indexPath)
-            self.collectionView.insertItemsAtIndexPaths([indexPath])
+            self.collectionView.reloadData() // insertItemsAtIndexPaths([indexPath])
         }
     }
 

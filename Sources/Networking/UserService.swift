@@ -19,7 +19,7 @@ public struct UserService {
     {
         let promise = Promise<User>()
         ElloProvider.shared.elloRequest(ElloAPI.Join(email: email, username: username, password: password, invitationCode: invitationCode),
-            success: { (data, responseConfig) in
+            success: { data, _ in
                 if let user = data as? User {
                     promise.completeWithSuccess(user)
                 }

@@ -13,6 +13,7 @@ public enum InterfaceImage: String {
         case Selected
         case Disabled
         case Red
+        case Green
     }
 
     case ElloLogo = "ello_logo"
@@ -35,6 +36,7 @@ public enum InterfaceImage: String {
     // Notification Icons
     case Comments = "bubble"
     case Invite = "relationships"
+    case Watch = "watch"
 
     // TabBar Icons
     case Sparkles = "sparkles"
@@ -108,6 +110,7 @@ public enum InterfaceImage: String {
         case .Selected: return selectedImage
         case .Disabled: return disabledImage
         case .Red:      return redImage
+        case .Green:    return greenImage
         }
     }
 
@@ -171,6 +174,14 @@ public enum InterfaceImage: String {
         switch self {
         case .X:
             return svgNamed("\(self.rawValue)_red")
+        default:
+            return nil
+        }
+    }
+    var greenImage: UIImage? {
+        switch self {
+        case .Watch:
+            return svgNamed("\(self.rawValue)_green")
         default:
             return nil
         }
