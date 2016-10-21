@@ -10,21 +10,22 @@ public class StreamCreateCommentCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamCreateCommentCell"
 
     public struct Size {
-        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 10)
-        public static let AvatarButtonMargin: CGFloat = 6
+        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 15)
+        public static let AvatarRightMargin: CGFloat = 10
         public static let ButtonLabelMargin: CGFloat = 30
         public static let ReplyButtonSize: CGFloat = 50
         public static let AvatarSize: CGFloat = 30
-        public static let WatchSize: CGFloat = 60
-        public static let WatchMargin: CGFloat = 5
+        public static let WatchSize: CGFloat = 40
+        public static let WatchMargin: CGFloat = 14
+        public static let ReplyAllRightMargin: CGFloat = 5
     }
 
     weak var delegate: PostbarDelegate?
     let avatarView = FLAnimatedImageView()
     let createCommentBackground = CreateCommentBackgroundView()
     var watchButtonHiddenConstraint: Constraint!
-    var replyButtonVisibleConstraint: Constraint!
-    var replyButtonHiddenConstraint: Constraint!
+    var replyAllButtonVisibleConstraint: Constraint!
+    var replyAllButtonHiddenConstraint: Constraint!
     let createCommentLabel = UILabel()
     let replyAllButton = UIButton()
     let watchButton = UIButton()
@@ -108,27 +109,28 @@ public class StreamCreateCommentCell: UICollectionViewCell {
 
         replyAllButton.snp_makeConstraints { make in
             make.leading.equalTo(createCommentBackground.snp_trailing)
-            make.trailing.equalTo(contentView).offset(-Size.WatchMargin)
+            make.trailing.equalTo(contentView).inset(Size.ReplyAllRightMargin)
             make.centerY.equalTo(contentView)
             make.width.height.equalTo(Size.ReplyButtonSize)
         }
 
         watchButton.snp_makeConstraints { make in
             make.top.bottom.equalTo(contentView)
-            make.trailing.equalTo(contentView).offset(-Size.WatchMargin)
+            make.trailing.equalTo(contentView).inset(Size.WatchMargin)
             make.width.equalTo(Size.WatchSize)
         }
 
         createCommentBackground.snp_makeConstraints { make in
-            make.leading.equalTo(avatarView.snp_trailing).offset(Size.AvatarButtonMargin)
+            make.leading.equalTo(avatarView.snp_trailing).offset(Size.AvatarRightMargin)
             make.centerY.equalTo(contentView)
             make.height.equalTo(contentView).offset(-Size.Margins.top - Size.Margins.bottom)
-            watchButtonHiddenConstraint = make.trailing.equalTo(contentView).offset(-Size.Margins.right).constraint
-            replyButtonVisibleConstraint = make.trailing.equalTo(replyAllButton.snp_leading).constraint
-            replyButtonHiddenConstraint = make.trailing.equalTo(watchButton.snp_leading).constraint
+            watchButtonHiddenConstraint = make.trailing.equalTo(contentView).inset(Size.Margins.right).constraint
+            replyAllButtonVisibleConstraint = make.trailing.equalTo(replyAllButton.snp_leading).constraint
+            replyAllButtonHiddenConstraint = make.trailing.equalTo(watchButton.snp_leading).offset(-Size.WatchMargin).constraint
         }
         watchButtonHiddenConstraint.uninstall()
-        replyButtonVisibleConstraint.uninstall()
+        replyAllButtonVisibleConstraint.uninstall()
+        replyAllButtonHiddenConstraint.uninstall()
 
         createCommentLabel.snp_makeConstraints { make in
             make.top.bottom.trailing.equalTo(createCommentBackground)
@@ -145,26 +147,27 @@ public class StreamCreateCommentCell: UICollectionViewCell {
         avatarView.pin_cancelImageDownload()
         watching = false
         watchButtonHiddenConstraint.uninstall()
-        replyButtonVisibleConstraint.uninstall()
-        replyButtonHiddenConstraint.uninstall()
+        replyAllButtonVisibleConstraint.uninstall()
+        replyAllButtonHiddenConstraint.uninstall()
     }
 
     private func updateCreateButtonConstraints() {
         if replyAllButton.hidden && watchButton.hidden {
             watchButtonHiddenConstraint.install()
-            replyButtonVisibleConstraint.uninstall()
-            replyButtonHiddenConstraint.uninstall()
+            replyAllButtonVisibleConstraint.uninstall()
+            replyAllButtonHiddenConstraint.uninstall()
         }
         else if replyAllButton.hidden {
             watchButtonHiddenConstraint.uninstall()
-            replyButtonVisibleConstraint.uninstall()
-            replyButtonHiddenConstraint.install()
+            replyAllButtonVisibleConstraint.uninstall()
+            replyAllButtonHiddenConstraint.install()
         }
         else {
             watchButtonHiddenConstraint.uninstall()
-            replyButtonVisibleConstraint.install()
-            replyButtonHiddenConstraint.uninstall()
+            replyAllButtonVisibleConstraint.install()
+            replyAllButtonHiddenConstraint.uninstall()
         }
+        setNeedsLayout()
     }
 
     override public func layoutSubviews() {
