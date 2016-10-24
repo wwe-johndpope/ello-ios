@@ -417,6 +417,7 @@
 		12DEB2501C5BFB3100D4CDCE /* CryptoStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */; };
 		12DEB2511C5BFB6F00D4CDCE /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2B1A43390900493660 /* StringExtensions.swift */; };
 		12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */; };
+		12E3A2751DBE811900D42599 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
 		12F0E3A81A4333150012CEA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3A61A4333150012CEA2 /* LaunchScreen.xib */; };
 		12F0E3A91A4333150012CEA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3A71A4333150012CEA2 /* Main.storyboard */; };
 		12F0E3AB1A4333260012CEA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3AA1A4333260012CEA2 /* Images.xcassets */; };
@@ -1372,6 +1373,7 @@
 		12DEB24D1C5BFA9200D4CDCE /* libcommonCrypto.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcommonCrypto.tbd; path = usr/lib/system/libcommonCrypto.tbd; sourceTree = SDKROOT; };
 		12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CryptoStringExtensions.swift; path = sources/Extensions/CryptoStringExtensions.swift; sourceTree = SOURCE_ROOT; };
 		12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameSpec.swift; sourceTree = "<group>"; };
+		12E3A2741DBE811900D42599 /* Promotional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotional.swift; sourceTree = "<group>"; };
 		12E83D9E1ADF12120074ECF6 /* ExperienceUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceUpdate.swift; path = sources/model/ExperienceUpdate.swift; sourceTree = SOURCE_ROOT; };
 		12F0E3A31A4332FB0012CEA2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12F0E3A61A4333150012CEA2 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -2966,6 +2968,7 @@
 				76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */,
 				1DF806521CDD1A42002D60AD /* Username.swift */,
 				1DDC85161D91D4D200C29552 /* Watch.swift */,
+				12E3A2741DBE811900D42599 /* Promotional.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4973,6 +4976,7 @@
 				12431FF81DBAACF3006808D4 /* CategoryGenerator.swift in Sources */,
 				1207C97F1C73FEE000939ADB /* ElloURI.swift in Sources */,
 				86D8D8FE1B1798B200CC8D6C /* RelationshipControl.swift in Sources */,
+				12E3A2751DBE811900D42599 /* Promotional.swift in Sources */,
 				1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */,
 				1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */,
 				1D5169C91D106A27002D133B /* DiscoverScreen.swift in Sources */,
