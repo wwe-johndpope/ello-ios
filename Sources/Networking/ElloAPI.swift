@@ -13,6 +13,7 @@ public enum ElloAPI {
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
     case Categories
+    case Category(categoryName: String)
     case CommentDetail(postId: String, commentId: String)
     case CreateComment(parentPostId: String, body: [String: AnyObject])
     case CreateLove(postId: String)
@@ -86,7 +87,8 @@ public enum ElloAPI {
 
     public var mappingType: MappingType {
         switch self {
-        case .Categories:
+        case .Categories,
+             .Category:
             return .CategoriesType
         case .AmazonCredentials:
             return .AmazonCredentialsType
@@ -261,6 +263,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
         case .Categories:
             return "/api/\(ElloAPI.apiVersion)/categories"
+        case let .Category(categoryName):
+            return "/api/\(ElloAPI.apiVersion)/categories/\(categoryName)"
         case let .CreateComment(parentPostId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(parentPostId)/comments"
         case let .CreateLove(postId):
@@ -396,6 +400,8 @@ extension ElloAPI: Moya.TargetType {
         case .CreateWatchPost:
             return stubbedData("watches_creating_a_watch")
         case .Categories:
+            return stubbedData("categories")
+        case .Category:
             return stubbedData("categories")
         case .DeleteComment,
              .DeleteLove,

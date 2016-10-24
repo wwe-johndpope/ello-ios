@@ -646,7 +646,9 @@ public final class StreamViewController: BaseElloViewController {
             textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
             notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
             profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
-            imageSizeCalculator: StreamImageCellSizeCalculator()
+            imageSizeCalculator: StreamImageCellSizeCalculator(),
+            categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
+
         )
 
         dataSource.streamCollapsedFilter = { item in

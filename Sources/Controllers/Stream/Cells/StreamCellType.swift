@@ -23,6 +23,7 @@ public enum StreamCellType: Equatable {
     case SelectableCategoryCard
     case SeeAllCategories
     case CategoryList
+    case CategoryHeader
     case ColumnToggle
     case CommentHeader
     case CreateComment
@@ -51,6 +52,8 @@ public enum StreamCellType: Equatable {
 
     public enum PlaceholderType {
         case CategoryList
+        case CategoryHeader
+        case CategoryPosts
         case PeopleToFollow
 
         case ProfileHeader
@@ -69,6 +72,7 @@ public enum StreamCellType: Equatable {
     static let all = [
         Category, SeeAllCategories,
         CategoryCard,
+        CategoryHeader,
         SelectableCategoryCard,
         CategoryList,
         ColumnToggle,
@@ -117,6 +121,7 @@ public enum StreamCellType: Equatable {
         switch self {
         case Category, SeeAllCategories: return CategoryCell.reuseIdentifier
         case CategoryCard: return CategoryCardCell.reuseIdentifier
+        case CategoryHeader: return CategoryHeaderCell.reuseIdentifier
         case SelectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case CategoryList: return CategoryListCell.reuseIdentifier
         case ColumnToggle: return ColumnToggleCell.reuseIdentifier
@@ -168,6 +173,7 @@ public enum StreamCellType: Equatable {
         switch self {
         case Category: return CategoryCellPresenter.configure
         case CategoryCard: return CategoryCardCellPresenter.configure
+        case CategoryHeader: return CategoryHeaderCellPresenter.configure
         case SelectableCategoryCard: return CategoryCardCellPresenter.configure
         case SeeAllCategories: return SeeAllCategoriesCellPresenter.configure
         case CategoryList: return CategoryListCellPresenter.configure
@@ -197,6 +203,7 @@ public enum StreamCellType: Equatable {
     public var classType: UICollectionViewCell.Type {
         switch self {
         case Category, SeeAllCategories: return CategoryCell.self
+        case CategoryHeader: return CategoryHeaderCell.self
         case CategoryCard: return CategoryCardCell.self
         case SelectableCategoryCard: return CategoryCardCell.self
         case CategoryList: return CategoryListCell.self
@@ -228,6 +235,8 @@ public enum StreamCellType: Equatable {
         switch self {
         case Category, SeeAllCategories:
             return 56
+        case CategoryHeader:
+            return 150
         case CategoryCard, SelectableCategoryCard:
             return 110
         case CategoryList:
@@ -281,6 +290,7 @@ public enum StreamCellType: Equatable {
     public var isFullWidth: Bool {
         switch self {
         case Category,
+             CategoryHeader,
              SeeAllCategories,
              CategoryList,
              ColumnToggle,
@@ -325,6 +335,7 @@ public enum StreamCellType: Equatable {
     static func registerAll(collectionView: UICollectionView) {
         let noNibTypes = [
             Category,
+            CategoryHeader,
             SeeAllCategories,
             CategoryCard,
             SelectableCategoryCard,

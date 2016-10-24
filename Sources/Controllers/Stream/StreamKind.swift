@@ -17,6 +17,7 @@ public enum StreamKind {
     case SimpleStream(endpoint: ElloAPI, title: String)
     case Unknown
     case UserStream(userParam: String)
+    case Category(categoryName: String)
 
     public var name: String {
         switch self {
@@ -27,6 +28,7 @@ public enum StreamKind {
         case .Following: return InterfaceString.FollowingStream.Title
         case .Starred: return InterfaceString.StarredStream.Title
         case .Notifications: return InterfaceString.Notifications.Title
+        case .Category: return ""
         case .PostDetail: return ""
         case let .SimpleStream(_, title): return title
         case .Unknown: return ""
@@ -38,6 +40,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return "Profile"
         case .AllCategories: return "AllCategories"
+        case .Category: return "Category"
         case .Discover, .CategoryPosts: return "CategoryPosts"
         case .Following: return "Following"
         case .Starred: return "Starred"
@@ -108,6 +111,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
         case .AllCategories: return .Categories
+        case let .Category(categoryName): return .Category(categoryName: categoryName)
         case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
         case let .Discover(type): return .Discover(type: type)
         case .Following: return .FriendStream
