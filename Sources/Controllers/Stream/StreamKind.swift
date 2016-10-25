@@ -239,7 +239,7 @@ public enum StreamKind {
         case .Following, .Starred, .Discover, .CategoryPosts: return true
         case let .SimpleStream(endpoint, _):
             switch endpoint {
-            case .SearchForPosts, .Loves:
+            case .SearchForPosts, .Loves, .CategoryPosts:
                 return true
             default:
                 return false
