@@ -75,5 +75,34 @@ class ElloWebViewHelperSpec: QuickSpec {
 
             }
         }
+
+        describe("bypassInAppBrowser(_:)") {
+
+            it("returns true for appstore links") {
+                let urls = [
+                    "https://appstore.com/blah",
+                    "http://appstore.com/blah",
+                    "https://itunes.apple.com/blah",
+                    "http://itunes.apple.com/blah"
+                ]
+
+                for url in urls {
+                    expect(ElloWebViewHelper.bypassInAppBrowser(NSURL(string: url)!)) == true
+                }
+            }
+
+            it("returns false for all other links") {
+                let urls = [
+                    "https://google.com",
+                    "http://ello.co/bob",
+                    "https://mailto:bob@example.com",
+                    "http://appstore-not-real.com"
+                ]
+
+                for url in urls {
+                    expect(ElloWebViewHelper.bypassInAppBrowser(NSURL(string: url)!)) == false
+                }
+            }
+        }
     }
 }
