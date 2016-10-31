@@ -119,8 +119,6 @@ extension ProfileLinksView {
         if totalHeight != frame.size.height {
             onHeightMismatch?(totalHeight)
         }
-
-        print(iconsBox.frame)
     }
 
     private func addIconButton(externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?, perRow: Int, hasTextLinks: Bool) -> UIButton {
