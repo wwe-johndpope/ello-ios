@@ -17,7 +17,7 @@ class ProfileStatsSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header))
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 70
+                expect(height) == 60
             }
         }
     }

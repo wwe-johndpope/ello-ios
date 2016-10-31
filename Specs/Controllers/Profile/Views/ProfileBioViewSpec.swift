@@ -18,7 +18,7 @@ class ProfileBioViewSpec: QuickSpec {
                 subject.bio = "<p>bio</p>"
                 waitUntil { done in
                     delay(0.1) {
-                        expectValidSnapshot(subject, named: "ProfileBioView", device: .Custom(subject.frame.size), record: true)
+                        expectValidSnapshot(subject, named: "ProfileBioView", device: .Custom(subject.frame.size))
                         done()
                     }
                 }

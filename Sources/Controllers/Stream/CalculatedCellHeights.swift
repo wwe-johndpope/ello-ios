@@ -2,6 +2,9 @@
 ///  CalculatedCellHeights.swift
 //
 
+
+public typealias OnCalculatedCellHeightsMismatch = (CalculatedCellHeights) -> Void
+
 public struct CalculatedCellHeights {
     public enum Prop {
         case OneColumn

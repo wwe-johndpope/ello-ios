@@ -24,8 +24,7 @@ public class ProfileBioView: ProfileBaseView {
 
     weak var webLinkDelegate: WebLinkDelegate?
 
-    typealias OnBioHeightMismatch = (CGFloat) -> Void
-    var onHeightMismatch: OnBioHeightMismatch?
+    var onHeightMismatch: OnHeightMismatch?
 }
 
 extension ProfileBioView {

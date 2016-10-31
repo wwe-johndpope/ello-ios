@@ -5,39 +5,7 @@
 import SnapKit
 
 
-public class ProfileHeaderCompactView: ProfileBaseView {
-    let avatarView = ProfileAvatarView()
-    let namesView = ProfileNamesView()
-    let totalCountView = ProfileTotalCountView()
-    let statsView = ProfileStatsView()
-    let bioView = ProfileBioView()
-    let linksView = ProfileLinksView()
-
-    var calculatedCellHeights: CalculatedCellHeights? {
-        didSet {
-            guard let calculatedCellHeights = calculatedCellHeights else { return }
-
-            if let namesHeight = calculatedCellHeights.profileNames { namesHeightConstraint.updateOffset(namesHeight) }
-            if let bioHeight = calculatedCellHeights.profileBio { bioHeightConstraint.updateOffset(bioHeight) }
-            if let linksHeight = calculatedCellHeights.profileLinks { linksHeightConstraint.updateOffset(linksHeight) }
-
-            let bioOrLinksHaveContent = calculatedCellHeights.profileBio > 0 || calculatedCellHeights.profileLinks > 0
-            statsView.grayLineVisible = bioOrLinksHaveContent
-
-            let linksHasContent = calculatedCellHeights.profileLinks > 0
-            bioView.grayLineVisible = linksHasContent
-
-            setNeedsLayout()
-        }
-    }
-
-    var namesHeightConstraint: Constraint!
-    var bioHeightConstraint: Constraint!
-    var linksHeightConstraint: Constraint!
-}
-
-extension ProfileHeaderCompactView {
-
+public class ProfileHeaderCompactView: ProfileHeaderLayoutView {
     override func style() {
         backgroundColor = .clearColor()
     }
@@ -58,7 +26,7 @@ extension ProfileHeaderCompactView {
 
         avatarView.snp_makeConstraints { make in
             make.top.width.centerX.equalTo(self)
-            make.height.equalTo(ProfileAvatarView.Size.height)
+            avatarHeightConstraint = make.height.equalTo(0).constraint
         }
 
         namesView.snp_makeConstraints { make in

@@ -228,6 +228,13 @@ class OmnibarViewControllerSpec: QuickSpec {
                     let postId = (commentJSON["comments"] as! [String: AnyObject])["post_id"] as! String
                     post = Post.stub(["id": postId, "watching": false])
 
+                    ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
+                        RecordedResponse(endpoint: .PostDetail(postParam: postId, commentCount: 0), response: .NetworkResponse(200,
+                            // the id of this stubbed post must match the postId above ("52" last time I checked)
+                            stubbedData("post_detail__watching"))
+                        ),
+                    ])
+
                     subject = OmnibarViewController(parentPost: post)
                     subject.currentUser = User.stub([:])
                     showController(subject)

@@ -31,8 +31,7 @@ public class ProfileLinksView: ProfileBaseView {
     private var iconButtons: [UIButton] = []
     private var buttonLinks: [UIButton: ExternalLink] = [:]
 
-    typealias OnLinksHeightMismatch = (CGFloat) -> Void
-    var onHeightMismatch: OnLinksHeightMismatch?
+    var onHeightMismatch: OnHeightMismatch?
 }
 
 extension ProfileLinksView {

@@ -52,8 +52,7 @@ public class ProfileHeaderCell: UICollectionViewCell {
     var user: User?
     var currentUser: User?
 
-    typealias OnHeightMismatch = (CalculatedCellHeights) -> Void
-    var onHeightMismatch: OnHeightMismatch?
+    var onHeightMismatch: OnCalculatedCellHeightsMismatch?
 
     // this little hack prevents constraints from breaking on initial load
     override public var bounds: CGRect {
@@ -73,6 +72,14 @@ public class ProfileHeaderCell: UICollectionViewCell {
     }
 
     private func bindActions() {
+        avatarView.onHeightMismatch = { avatarHeight in
+            guard var calculatedCellHeights = self.calculatedCellHeights else { return }
+            calculatedCellHeights.profileAvatar = avatarHeight
+            calculatedCellHeights.oneColumn = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(calculatedCellHeights)
+            self.calculatedCellHeights = calculatedCellHeights
+            self.onHeightMismatch?(calculatedCellHeights)
+        }
+
         bioView.onHeightMismatch = { bioHeight in
             guard var calculatedCellHeights = self.calculatedCellHeights else { return }
             calculatedCellHeights.profileBio = bioHeight

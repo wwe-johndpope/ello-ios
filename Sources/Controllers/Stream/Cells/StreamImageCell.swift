@@ -45,7 +45,6 @@ public class StreamImageCell: StreamRegionableCell {
     weak var streamImageCellDelegate: StreamImageCellDelegate?
     weak var streamEditingDelegate: StreamEditingDelegate?
     public var isGif = false
-    public typealias OnHeightMismatch = (CGFloat) -> Void
     public var onHeightMismatch: OnHeightMismatch?
     public var tallEnoughForFailToShow = true
     public var presentedImageUrl: NSURL?

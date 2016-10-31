@@ -42,7 +42,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 375)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 56
+                expect(height) == 53
             }
 
             it("should return sensible size for many links and icons") {
@@ -57,7 +57,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 375)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 85
+                expect(height) == 82
             }
 
             it("should return sensible size for lots of links and icons") {
@@ -76,7 +76,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 375)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 201
+                expect(height) == 198
             }
 
             it("should return sensible size for links and many icons") {
@@ -91,7 +91,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 375)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 56
+                expect(height) == 53
             }
 
             it("should return sensible size for links and lots of icons") {
@@ -110,7 +110,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 375)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 84
+                expect(height) == 81
             }
 
             it("should return sensible size for icons") {
@@ -123,7 +123,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 calc.calculate(StreamCellItem(jsonable: user, type: .Header), maxWidth: 375)
                     .onSuccess { h in height = h }
                     .onFail { _ in }
-                expect(height) == 52
+                expect(height) == 49
             }
         }
     }

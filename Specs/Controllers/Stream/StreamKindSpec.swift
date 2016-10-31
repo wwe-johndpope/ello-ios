@@ -144,31 +144,26 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
-            describe("tappingTextOpensDetail") {
-                var followingIsGrid = false
-                var starredIsGrid = false
-                beforeEach {
-                    followingIsGrid = StreamKind.Following.isGridView
-                    starredIsGrid = StreamKind.Starred.isGridView
-                    StreamKind.Following.setIsGridView(false)
-                    StreamKind.Starred.setIsGridView(true)
-                }
-                afterEach {
-                    StreamKind.Following.setIsGridView(followingIsGrid)
-                    StreamKind.Starred.setIsGridView(starredIsGrid)
-                }
-
-                it("is correct for all cases") {
-                    expect(StreamKind.Discover(type: .Featured).tappingTextOpensDetail) == true
-                    expect(StreamKind.CategoryPosts(slug: "art").tappingTextOpensDetail) == true
-                    expect(StreamKind.Following.tappingTextOpensDetail) == false
-                    expect(StreamKind.Starred.tappingTextOpensDetail) == true
-                    expect(StreamKind.Notifications(category: "").tappingTextOpensDetail) == true
-                    expect(StreamKind.PostDetail(postParam: "param").tappingTextOpensDetail) == false
-                    expect(StreamKind.CurrentUserStream.tappingTextOpensDetail) == false
-                    expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").tappingTextOpensDetail) == true
-                    expect(StreamKind.Unknown.tappingTextOpensDetail) == true
-                    expect(StreamKind.UserStream(userParam: "NA").tappingTextOpensDetail) == false
+            describe("tappingTextOpensDetail in grid view") {
+                let expectations: [(StreamKind, Bool)] = [
+                    (.Discover(type: .Featured), true),
+                    (.CategoryPosts(slug: "art"), true),
+                    (.Following, true),
+                    (.Starred, true),
+                    (.Notifications(category: ""), true),
+                    (.PostDetail(postParam: "param"), false),
+                    (.CurrentUserStream, true),
+                    (.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat"), true),
+                    (.Unknown, true),
+                    (.UserStream(userParam: "NA"), true),
+                ]
+                for (streamKind, expected) in expectations {
+                    it("is \(expected) for \(streamKind) in grid view") {
+                        let wasInGrid = streamKind.isGridView
+                        streamKind.setIsGridView(true)
+                        expect(streamKind.tappingTextOpensDetail) == expected
+                        streamKind.setIsGridView(wasInGrid)
+                    }
                 }
             }
 
