@@ -9,7 +9,7 @@ public class ProfileTotalCountView: ProfileBaseView {
     private let greyLine = UIView()
 
     public struct Size {
-        static let height: CGFloat = 60
+        static let height: CGFloat = 0
         static let shareMargin: CGFloat = 2
         static let shareWidth: CGFloat = 44
         static let shareHeight: CGFloat = 44
@@ -40,6 +40,7 @@ public class ProfileTotalCountView: ProfileBaseView {
 extension ProfileTotalCountView {
 
     override func style() {
+        clipsToBounds = true
         backgroundColor = .whiteColor()
         totalLabel.textAlignment = .Center
         badgeButton.setImages(.BadgeCheck)
