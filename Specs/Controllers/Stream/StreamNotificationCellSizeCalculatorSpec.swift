@@ -16,8 +16,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
         }
 
         override func stringByEvaluatingJavaScriptFromString(js: String) -> String? {
-            if js.contains("post-container") { return "\(frame.size.width)" }
-            if js.contains("window.contentHeight") { return "\(mockHeight)" }
+            if js.contains("offsetWidth") { return "\(frame.size.width)" }
+            if js.contains("offsetHeight") { return "\(mockHeight)" }
             return super.stringByEvaluatingJavaScriptFromString(js)
         }
     }

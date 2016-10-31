@@ -16,7 +16,7 @@ class DrawerViewDataSourceSpec: QuickSpec {
 
                 it("returns 7") {
                     let dataSource = DrawerViewDataSource()
-                    expect(dataSource.tableView(UITableView(frame: CGRectZero), numberOfRowsInSection: 0)) == 7
+                    expect(dataSource.tableView(UITableView(frame: CGRectZero), numberOfRowsInSection: 0)) == 5
                 }
             }
 

@@ -289,7 +289,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
                 validateAllSnapshots { return subject }
             }
-            
+
             xcontext("snapshots - currentUser") {
                 let user: User = stub([:])
                 var subject: ProfileViewController!
