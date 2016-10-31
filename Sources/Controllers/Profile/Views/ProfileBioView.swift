@@ -7,7 +7,7 @@ import WebKit
 
 public class ProfileBioView: ProfileBaseView {
     public struct Size {
-        static let margins = UIEdgeInsets(top: 20, left: 15, bottom: 10, right: 15)
+        static let margins = UIEdgeInsets(top: 15, left: 15, bottom: 10, right: 15)
     }
 
     public var bio: String = "" {
@@ -35,7 +35,7 @@ extension ProfileBioView {
         bioView.scrollView.scrollEnabled = false
         bioView.scrollView.scrollsToTop = false
         bioView.delegate = self
-        grayLine.backgroundColor = .greyA()
+        grayLine.backgroundColor = .greyE5()
     }
 
     override func bindActions() {

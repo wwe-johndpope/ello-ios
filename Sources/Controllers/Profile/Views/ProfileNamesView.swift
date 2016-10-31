@@ -56,7 +56,7 @@ extension ProfileNamesView {
         nameLabel.textColor = .blackColor()
         usernameLabel.font = ProfileNamesView.usernameFont
         usernameLabel.textColor = .greyA()
-        grayLine.backgroundColor = .greyA()
+        grayLine.backgroundColor = .greyE5()
     }
 
     override func arrange() {

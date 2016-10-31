@@ -9,7 +9,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public struct Size {
         static let whiteTopOffset: CGFloat = 338
-        static let profileButtonsContainerViewHeight: CGFloat = 60
+        static let profileButtonsContainerViewHeight: CGFloat = 64
         static let navBarHeight: CGFloat = 64
         static let buttonMargin: CGFloat = 15
         static let innerButtonMargin: CGFloat = 5

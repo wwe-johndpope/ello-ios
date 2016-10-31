@@ -7,7 +7,8 @@ import SnapKit
 
 public class ProfileLinksView: ProfileBaseView {
     public struct Size {
-        static let margins = UIEdgeInsets(all: 15)
+        static let margins = UIEdgeInsets(top: 12, left: 15, bottom: 15, right: 15)
+        static let iconInsets = UIEdgeInsets(all: 15)
         static let iconSize = CGSize(width: 22, height: 22)
         static let iconMargins: CGFloat = 10
         static let verticalLinkMargin: CGFloat = 3
@@ -57,7 +58,7 @@ extension ProfileLinksView {
         }
 
         iconsBox.snp_makeConstraints { make in
-            make.trailing.top.bottom.equalTo(self).inset(Size.margins)
+            make.trailing.top.bottom.equalTo(self).inset(Size.iconInsets)
             make.width.equalTo(Size.iconSize.width)
         }
     }

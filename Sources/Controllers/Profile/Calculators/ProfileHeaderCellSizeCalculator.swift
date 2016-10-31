@@ -6,7 +6,7 @@ import FutureKit
 
 
 public class ProfileHeaderCellSizeCalculator: NSObject {
-    static let ratio: CGFloat = 16 / 9
+    static let ratio: CGFloat = 320 / 211
 
     private var maxWidth: CGFloat = 0.0
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
