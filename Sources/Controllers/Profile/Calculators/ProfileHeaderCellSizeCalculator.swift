@@ -92,7 +92,7 @@ private extension ProfileHeaderCellSizeCalculator {
 
     func calculateAggregateHeights(item: StreamCellItem) {
         let futures: [(CalculatedCellHeights.Prop, Future<CGFloat>)] = [
-            (.ProfileAvatar, avatarSizeCalculator.calculate(item)),
+            (.ProfileAvatar, avatarSizeCalculator.calculate(item, maxWidth: maxWidth)),
             (.ProfileNames, namesSizeCalculator.calculate(item, maxWidth: maxWidth)),
             (.ProfileTotalCount, totalCountSizeCalculator.calculate(item)),
             (.ProfileStats, statsSizeCalculator.calculate(item)),

@@ -7,9 +7,10 @@ import FutureKit
 
 public struct ProfileAvatarSizeCalculator {
 
-    public func calculate(item: StreamCellItem) -> Future<CGFloat> {
+    public func calculate(item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
-        promise.completeWithSuccess(ProfileAvatarView.Size.height)
+        let headerHeight: CGFloat = maxWidth / ProfileHeaderCellSizeCalculator.ratio + ProfileAvatarView.Size.whiteBarHeight
+        promise.completeWithSuccess(headerHeight)
         return promise.future
     }
 }

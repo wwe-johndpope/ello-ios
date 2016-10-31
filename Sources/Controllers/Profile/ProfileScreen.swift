@@ -190,6 +190,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         whiteSolidView.backgroundColor = .whiteColor()
         relationshipControl.style = .ProfileView
         profileButtonsEffect.effect = UIBlurEffect(style: .Light)
+        coverImageView.contentMode = .ScaleAspectFill
 
         collaborateButton.hidden = true
         hireButton.hidden = true
