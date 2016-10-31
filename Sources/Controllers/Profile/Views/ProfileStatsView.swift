@@ -4,10 +4,12 @@
 
 public class ProfileStatsView: ProfileBaseView {
     public struct Size {
-        static let height: CGFloat = 70
+        static let height: CGFloat = 60
+        static let horizontalMargin: CGFloat = 47
+        static let horizontalInset: CGFloat = -3
         static let verticalMargin: CGFloat = 1
-        static let countVerticalOffset: CGFloat = 20
-        static let captionVerticalOffset: CGFloat = 5
+        static let countVerticalOffset: CGFloat = 15
+        static let captionVerticalOffset: CGFloat = 3
     }
 
     public var postsCount: String {
@@ -68,18 +70,18 @@ extension ProfileStatsView {
         backgroundColor = .whiteColor()
 
         for countLabel in countLabels {
-            countLabel.font = .defaultFont(18)
+            countLabel.font = .defaultFont(16)
             countLabel.textColor = .blackColor()
             countLabel.textAlignment = .Center
         }
 
         for captionLabel in captionLabels {
-            captionLabel.font = .defaultFont()
+            captionLabel.font = .defaultFont(10)
             captionLabel.textColor = .greyA()
             captionLabel.textAlignment = .Center
         }
 
-        grayLine.backgroundColor = .greyA()
+        grayLine.backgroundColor = .greyE5()
     }
 
     override func bindActions() {
@@ -116,19 +118,18 @@ extension ProfileStatsView {
         }
 
         var prevCountLabel: UIView?
-        for (countLabel, captionLabel, button) in allThreeViews {
+        let spaceBetween: CGFloat = (UIScreen.mainScreen().bounds.width - (Size.horizontalMargin * 2)) / CGFloat(allThreeViews.count - 1)
+        for (index, (count: countLabel, caption: captionLabel, button: button)) in allThreeViews.enumerate() {
             addSubview(countLabel)
             addSubview(captionLabel)
             addSubview(button)
 
             countLabel.snp_makeConstraints { make in
+                let x = (spaceBetween * CGFloat(index)) + Size.horizontalMargin
                 if let prevCountLabel = prevCountLabel {
                     make.width.equalTo(prevCountLabel)
-                    make.leading.equalTo(prevCountLabel.snp_trailing)
                 }
-                else {
-                    make.leading.equalTo(self)
-                }
+                make.centerX.equalTo(self.snp_leading).offset(x)
                 make.top.equalTo(self).offset(Size.countVerticalOffset)
             }
 
@@ -143,12 +144,6 @@ extension ProfileStatsView {
             }
 
             prevCountLabel = countLabel
-        }
-
-        if let prevCountLabel = prevCountLabel {
-            prevCountLabel.snp_makeConstraints { make in
-                make.trailing.equalTo(self)
-            }
         }
     }
 
@@ -198,7 +193,7 @@ extension ProfileStatsView {
     }
 
     func buttonUp(touchedButton: UIButton) {
-        for (_, captionLabel, button) in allThreeViews {
+        for (_, captionLabel, _) in allThreeViews {
             captionLabel.textColor = .greyA()
         }
     }

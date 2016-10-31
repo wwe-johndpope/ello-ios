@@ -26,4 +26,13 @@ public struct ElloWebViewHelper {
         }
         return true
     }
+
+    public static func bypassInAppBrowser(url: NSURL?) -> Bool {
+        guard let urlString = url?.absoluteString else { return false }
+
+        if urlString =~ "(https?:\\/\\/appstore.com)" { return true }
+        if urlString =~ "(https?:\\/\\/itunes.apple.com)" { return true }
+
+        return false
+    }
 }

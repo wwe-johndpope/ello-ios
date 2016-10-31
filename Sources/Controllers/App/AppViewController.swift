@@ -247,11 +247,17 @@ extension AppViewController {
 
     func showExternalWebView(url: String) {
         Tracker.sharedTracker.webViewAppeared(url)
-        let externalWebController = ElloWebBrowserViewController.navigationControllerWithWebBrowser()
-        presentViewController(externalWebController, animated: true, completion: nil)
-        if let externalWebView = externalWebController.rootWebBrowser() {
-            externalWebView.tintColor = UIColor.greyA()
-            externalWebView.loadURLString(url)
+        if let externalURL = NSURL(string: url) where ElloWebViewHelper.bypassInAppBrowser(externalURL) {
+            UIApplication.sharedApplication().openURL(externalURL)
+        }
+        else {
+            let externalWebController = ElloWebBrowserViewController.navigationControllerWithWebBrowser()
+            presentViewController(externalWebController, animated: true, completion: nil)
+
+            if let externalWebView = externalWebController.rootWebBrowser() {
+                externalWebView.tintColor = UIColor.greyA()
+                externalWebView.loadURLString(url)
+            }
         }
     }
 

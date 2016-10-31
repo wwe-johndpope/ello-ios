@@ -7,7 +7,8 @@ import SnapKit
 
 public class ProfileLinksView: ProfileBaseView {
     public struct Size {
-        static let margins = UIEdgeInsets(all: 15)
+        static let margins = UIEdgeInsets(top: 12, left: 15, bottom: 15, right: 15)
+        static let iconInsets = UIEdgeInsets(all: 15)
         static let iconSize = CGSize(width: 22, height: 22)
         static let iconMargins: CGFloat = 10
         static let verticalLinkMargin: CGFloat = 3
@@ -17,6 +18,7 @@ public class ProfileLinksView: ProfileBaseView {
 
     public var externalLinks: [ExternalLink] = [] {
         didSet {
+            setNeedsUpdateConstraints()
             rearrangeLinks()
         }
     }
@@ -29,8 +31,6 @@ public class ProfileLinksView: ProfileBaseView {
     private var iconButtons: [UIButton] = []
     private var buttonLinks: [UIButton: ExternalLink] = [:]
 
-    private var iconsWidthConstraint: Constraint!
-
     typealias OnLinksHeightMismatch = (CGFloat) -> Void
     var onHeightMismatch: OnLinksHeightMismatch?
 }
@@ -39,6 +39,7 @@ extension ProfileLinksView {
 
     override func style() {
         backgroundColor = .whiteColor()
+        iconsBox.backgroundColor = .whiteColor()
     }
 
     override func bindActions() {
@@ -57,8 +58,8 @@ extension ProfileLinksView {
         }
 
         iconsBox.snp_makeConstraints { make in
-            make.trailing.top.bottom.equalTo(self).inset(Size.margins)
-            iconsWidthConstraint = make.width.equalTo(Size.iconSize.width).constraint
+            make.trailing.top.bottom.equalTo(self).inset(Size.iconInsets)
+            make.width.equalTo(Size.iconSize.width)
         }
     }
 }
@@ -71,7 +72,10 @@ extension ProfileLinksView {
 }
 
 extension ProfileLinksView {
+
     func rearrangeLinks() {
+        guard bounds.width > 0 else { return }
+
         for view in linkButtons + iconButtons {
             view.removeFromSuperview()
         }
@@ -82,35 +86,42 @@ extension ProfileLinksView {
         var prevIcon: UIButton?
         var prevRow: UIButton?
         var iconsCount = 0
-        for externalLink in externalLinks {
-            if externalLink.iconURL != nil {
-                prevIcon = addIconButton(externalLink, iconsCount: iconsCount, prevIcon: prevIcon, prevRow: prevRow)
-                iconsCount += 1
-                if iconsCount % 3 == 0 {
-                    prevRow = prevIcon
-                }
-            }
-            else {
-                prevLink = addLinkButton(externalLink, prevLink: prevLink)
-            }
+
+        let textLinks = externalLinks.filter{$0.iconURL == nil && $0.text != ""}
+        let iconLinks = externalLinks.filter{$0.iconURL != nil}
+
+        let (perRow, iconsBoxWidth) = ProfileLinksSizeCalculator.calculateIconsBoxWidth(externalLinks, maxWidth: bounds.width)
+
+        iconsBox.snp_updateConstraints { make in
+            make.width.equalTo(iconsBoxWidth)
         }
 
-        let width: CGFloat = max(0, Size.iconSize.width * CGFloat(min(3, iconsCount)) + Size.iconMargins * CGFloat(min(2, iconsCount - 1)))
-        iconsWidthConstraint.updateOffset(width)
+        for textLink in textLinks {
+            prevLink = addLinkButton(textLink, prevLink: prevLink)
+        }
+
+        for iconLink in iconLinks {
+            prevIcon = addIconButton(iconLink, iconsCount: iconsCount, prevIcon: prevIcon, prevRow: prevRow, perRow: perRow, hasTextLinks: textLinks.count > 0)
+            iconsCount += 1
+            if iconsCount % perRow == 0 {
+                prevRow = prevIcon
+            }
+        }
 
         let totalHeight: CGFloat
         if externalLinks.count == 0 {
             totalHeight = 0
         }
         else {
-            totalHeight = ProfileLinksSizeCalculator.calculateHeight(externalLinks)
+            totalHeight = ProfileLinksSizeCalculator.calculateHeight(externalLinks, maxWidth: bounds.width)
         }
+
         if totalHeight != frame.size.height {
             onHeightMismatch?(totalHeight)
         }
     }
 
-    private func addIconButton(externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?) -> UIButton {
+    private func addIconButton(externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?, perRow: Int, hasTextLinks: Bool) -> UIButton {
         let button = UIButton()
         button.addTarget(self, action: #selector(buttonTapped(_:)), forControlEvents: .TouchUpInside)
         buttonLinks[button] = externalLink
@@ -123,11 +134,15 @@ extension ProfileLinksView {
         button.snp_makeConstraints { make in
             make.size.equalTo(Size.iconSize)
 
-            switch iconsCount % 3 {
+            let direction = hasTextLinks ? make.trailing : make.leading
+
+            switch iconsCount % perRow {
             case 0:
-                make.trailing.equalTo(iconsBox)
+                direction.equalTo(iconsBox)
             default:
-                make.trailing.equalTo(prevIcon!.snp_leading).offset(-Size.iconMargins)
+                let prevDirection = hasTextLinks ? prevIcon!.snp_leading : prevIcon!.snp_trailing
+                let offset = hasTextLinks ? -Size.iconMargins : Size.iconMargins
+                direction.equalTo(prevDirection).offset(offset)
             }
 
             if let prevRow = prevRow {
@@ -140,15 +155,6 @@ extension ProfileLinksView {
 
         button.pin_setImageFromURL(externalLink.iconURL!)
         return button
-    }
-
-    func buttonTapped(button: UIButton) {
-        guard let
-            externalLink = buttonLinks[button]
-        else { return }
-
-        let request = NSURLRequest(URL: externalLink.url)
-        ElloWebViewHelper.handleRequest(request, webLinkDelegate: webLinkDelegate)
     }
 
     private func addLinkButton(externalLink: ExternalLink, prevLink: UIButton?) -> UIButton {
@@ -184,6 +190,15 @@ extension ProfileLinksView {
         button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: highlightedAttrs), forState: .Highlighted)
         button.contentHorizontalAlignment = .Left
         return button
+    }
+
+    func buttonTapped(button: UIButton) {
+        guard let
+            externalLink = buttonLinks[button]
+            else { return }
+
+        let request = NSURLRequest(URL: externalLink.url)
+        ElloWebViewHelper.handleRequest(request, webLinkDelegate: webLinkDelegate)
     }
 }
 

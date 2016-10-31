@@ -43,7 +43,7 @@ extension ProfileTotalCountView {
         backgroundColor = .whiteColor()
         totalLabel.textAlignment = .Center
         badgeButton.setImages(.BadgeCheck)
-        greyLine.backgroundColor = .greyA()
+        greyLine.backgroundColor = .greyE5()
     }
 
     override func bindActions() {
