@@ -5,7 +5,6 @@
 public class ProfileAvatarView: ProfileBaseView {
 
     public struct Size {
-        static let height: CGFloat = 271
         static let avatarSize: CGFloat = 180
         static let whiteBarHeight: CGFloat = 60
     }
@@ -30,6 +29,7 @@ public class ProfileAvatarView: ProfileBaseView {
     private let whiteBar = UIView()
     private var _avatarURL: NSURL?
 
+    var onHeightMismatch: OnHeightMismatch?
 }
 
 extension ProfileAvatarView {
@@ -67,6 +67,11 @@ extension ProfileAvatarView {
     override public func layoutSubviews() {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = Size.avatarSize / 2
+
+        let desiredHeight = ProfileAvatarSizeCalculator.calculateHeight(maxWidth: frame.width)
+        if desiredHeight != frame.height {
+            onHeightMismatch?(desiredHeight)
+        }
     }
 
     public func prepareForReuse() {

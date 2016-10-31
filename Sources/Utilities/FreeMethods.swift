@@ -56,10 +56,11 @@ public func animate(options: AnimationOptions, animated: Bool = true, animations
 
 // MARK: Async, Timed, and Throttled closures
 
-public typealias BasicBlock = (() -> Void)
-public typealias ThrottledBlock = ((BasicBlock) -> Void)
+public typealias BasicBlock = () -> Void
+public typealias ThrottledBlock = (BasicBlock) -> Void
 public typealias CancellableBlock = Bool -> Void
-public typealias TakesIndexBlock = ((Int) -> Void)
+public typealias TakesIndexBlock = (Int) -> Void
+public typealias OnHeightMismatch = (CGFloat) -> Void
 
 
 public class Proc {
