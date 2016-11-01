@@ -2,9 +2,13 @@
 ///  StreamableScreen.swift
 //
 
-public class StreamableScreen: Screen {
-    let navigationBar = ElloNavigationBar()
-    var navigationBarTopConstraint: NSLayoutConstraint!
+public protocol StreamableScreenProtocol {
+    var navigationBarTopConstraint: NSLayoutConstraint! { get }
+}
+
+public class StreamableScreen: Screen, StreamableScreenProtocol {
+    public let navigationBar = ElloNavigationBar()
+    public var navigationBarTopConstraint: NSLayoutConstraint!
     let streamContainer = UIView()
 
     convenience init(navigationItem: UINavigationItem) {

@@ -70,7 +70,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
             }
         }
         else {
-            nextTick(completion)
+            completion()
         }
     }
 
@@ -113,10 +113,10 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
 
         height += 2 * NotificationCell.Size.SideMargins
         if let webContentHeight = webContentHeight {
-            cellItem.calculatedWebHeight = webContentHeight
+            cellItem.calculatedCellHeights.webContent = webContentHeight
         }
-        cellItem.calculatedOneColumnCellHeight = height
-        cellItem.calculatedMultiColumnCellHeight = height
+        cellItem.calculatedCellHeights.oneColumn = height
+        cellItem.calculatedCellHeights.multiColumn = height
     }
 
     private func stripImageSrc(html: String) -> String {

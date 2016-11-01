@@ -57,22 +57,29 @@ extension User: Stubbable {
         )
         user.avatar = values["avatar"] as? Asset
         user.identifiableBy = (values["identifiableBy"] as? String) ?? "stub-user-identifiable-by"
-        if let count = values["postsCount"] as? Int {
-            user.postsCount = count
+        user.postsCount = (values["postsCount"] as? Int) ?? 0
+        user.lovesCount = (values["lovesCount"] as? Int) ?? 0
+        user.totalViewsCount = (values["totalViewsCount"] as? Int) ?? 0
+        if let count = values["followersCount"] as? Int {
+            user.followersCount = String(count)
+        }
+        else if let count = values["followersCount"] as? String {
+            user.followersCount = count
         }
         else {
-            user.postsCount = 0
+            user.followersCount = "stub-user-followers-count"
         }
-        if let count = values["lovesCount"] as? Int {
-            user.lovesCount = count
-        }
-        else {
-            user.lovesCount = 0
-        }
-        user.followersCount = (values["followersCount"] as? String) ?? "stub-user-followers-count"
         user.followingCount = (values["followingCount"] as? Int) ?? 0
         user.formattedShortBio = (values["formattedShortBio"] as? String) ?? "stub-user-formatted-short-bio"
-        user.externalLinksList = (values["externalLinksList"] as? [[String:String]]) ?? [["text": "ello.co", "url": "http://ello.co"]]
+        if let linkValues = (values["externalLinksList"] as? [[String:String]]) {
+            user.externalLinksList = linkValues.flatMap { ExternalLink.fromDict($0) }
+        }
+        else if let externalLinks = (values["externalLinksList"] as? [ExternalLink]) {
+            user.externalLinksList = externalLinks
+        }
+        else {
+            user.externalLinksList = [ExternalLink(url: NSURL(string: "http://ello.co")!, text: "ello.co")]
+        }
         user.coverImage = values["coverImage"] as? Asset
         user.backgroundPosition = (values["backgroundPosition"] as? String) ?? "stub-user-background-position"
         user.onboardingVersion = (values["onboardingVersion"] as? Int)
@@ -89,6 +96,14 @@ extension User: Stubbable {
             user.addLinkObject("most_recent_post", key: mostRecentPost.id, collection: MappingType.PostsType.rawValue)
             ElloLinkedStore.sharedInstance.setObject(mostRecentPost, forKey: mostRecentPost.id, inCollection: MappingType.PostsType.rawValue)
         }
+
+        if let categories = values["categories"] as? [Ello.Category] {
+            for category in categories {
+                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, inCollection: MappingType.CategoriesType.rawValue)
+            }
+            user.addLinkArray("categories", array: categories.map { $0.id })
+        }
+        
         user.profile = values["profile"] as? Profile
         ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
         return user

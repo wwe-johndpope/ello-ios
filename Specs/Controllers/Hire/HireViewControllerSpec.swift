@@ -40,7 +40,7 @@ class HireViewControllerSpec: QuickSpec {
         beforeEach {
             mockScreen = MockScreen()
             let user: User = stub([:])
-            subject = HireViewController(user: user)
+            subject = HireViewController(user: user, type: .Hire)
             subject.mockScreen = mockScreen
             navigationController = FakeNavigationController(rootViewController: subject)
         }

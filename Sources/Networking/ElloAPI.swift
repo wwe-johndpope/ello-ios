@@ -33,6 +33,7 @@ public enum ElloAPI {
     case FriendStream
     case FriendNewContent(createdAt: NSDate)
     case Hire(userId: String, body: String)
+    case Collaborate(userId: String, body: String)
     case InfiniteScroll(queryItems: [AnyObject], elloApi: () -> ElloAPI)
     case InviteFriends(contact: String)
     case Join(email: String, username: String, password: String, invitationCode: String?)
@@ -142,6 +143,7 @@ public enum ElloAPI {
              .FlagPost,
              .FlagUser,
              .Hire,
+             .Collaborate,
              .InviteFriends,
              .ProfileDelete,
              .PushSubscriptions,
@@ -211,6 +213,7 @@ extension ElloAPI: Moya.TargetType {
              .FlagPost,
              .FlagUser,
              .Hire,
+             .Collaborate,
              .InviteFriends,
              .Join,
              .PushSubscriptions,
@@ -303,6 +306,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/streams/friend"
         case let .Hire(userId, _):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/hire_me"
+        case let .Collaborate(userId, _):
+            return "/api/\(ElloAPI.apiVersion)/users/\(userId)/collaborate"
         case let .InfiniteScroll(_, elloApi):
             let api = elloApi()
             if let pagingPath = api.pagingPath {
@@ -399,6 +404,7 @@ extension ElloAPI: Moya.TargetType {
              .DeleteWatchPost,
              .FriendNewContent,
              .Hire,
+             .Collaborate,
              .InviteFriends,
              .NoiseNewContent,
              .NotificationsNewContent,
@@ -584,6 +590,10 @@ extension ElloAPI: Moya.TargetType {
                 "per_page": 10
             ]
         case let .Hire(_, body):
+            return [
+                "body": body
+            ]
+        case let .Collaborate(_, body):
             return [
                 "body": body
             ]

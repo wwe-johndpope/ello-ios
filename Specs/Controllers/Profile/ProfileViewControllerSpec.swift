@@ -19,41 +19,6 @@ class ProfileViewControllerSpec: QuickSpec {
         describe("ProfileViewController") {
             let currentUser: User = stub([:])
 
-            describe("initialization from storyboard") {
-                var subject: ProfileViewController!
-                beforeEach {
-                    subject = ProfileViewController(userParam: "42")
-                    subject.currentUser = currentUser
-                }
-
-                it("can be instantiated") {
-                    expect(subject).notTo(beNil())
-                }
-
-                describe("IBOutlets") {
-                    beforeEach {
-                        showController(subject)
-                    }
-
-                    it("has navigationBar") {
-                        expect(subject.navigationBar).toNot(beNil())
-                    }
-                    it("has whiteSolidView") {
-                        expect(subject.whiteSolidView).toNot(beNil())
-                    }
-                    it("has navigationBarTopConstraint") {
-                        expect(subject.navigationBarTopConstraint).toNot(beNil())
-                    }
-                    it("has coverImage") {
-                        expect(subject.coverImage).toNot(beNil())
-                    }
-                    it("has coverImageHeight") {
-                        expect(subject.coverImageHeight).toNot(beNil())
-                    }
-                }
-
-            }
-
             describe("contentInset") {
                 var subject: ProfileViewController!
                 beforeEach {
@@ -71,12 +36,14 @@ class ProfileViewControllerSpec: QuickSpec {
             context("when displaying the currentUser") {
                 var currentUser: User!
                 var subject: ProfileViewController!
+                var screen: ProfileScreen!
 
                 beforeEach {
                     currentUser = User.stub(["id": "42"])
                     subject = ProfileViewController(user: currentUser)
                     subject.currentUser = currentUser
                     showController(subject)
+                    screen = subject.view as! ProfileScreen
                 }
 
                 it("does not have a 'more following options' Button") {
@@ -90,7 +57,7 @@ class ProfileViewControllerSpec: QuickSpec {
                         (true, false),
                         (false, true),
                         (false, false),
-                    ]
+                        ]
                     for (isCollaborateable, isHireable) in expectations {
                         context("user \(isCollaborateable ? "is" : "is not") collaborateable and \(isHireable ? "is" : "is not") hireable") {
                             beforeEach {
@@ -98,12 +65,13 @@ class ProfileViewControllerSpec: QuickSpec {
                                 subject = ProfileViewController(user: currentUser)
                                 subject.currentUser = currentUser
                                 showController(subject)
+                                screen = subject.view as! ProfileScreen
                             }
                             it("has hidden mentionButton") {
-                                expect(subject.mentionButton.hidden) == true
+                                expect(screen.mentionButton.hidden) == true
                             }
                             it("has hidden hireButton") {
-                                expect(subject.hireButton.hidden) == true
+                                expect(screen.hireButton.hidden) == true
                             }
                         }
                     }
@@ -113,12 +81,14 @@ class ProfileViewControllerSpec: QuickSpec {
             context("when NOT displaying the currentUser") {
                 var currentUser: User!
                 var subject: ProfileViewController!
+                var screen: ProfileScreen!
 
                 beforeEach {
                     currentUser = User.stub(["id": "not42"])
                     subject = ProfileViewController(userParam: "42")
                     subject.currentUser = currentUser
                     showController(subject)
+                    screen = subject.view as! ProfileScreen
                 }
 
                 it("has 'share' and 'more following options' buttons") {
@@ -127,10 +97,10 @@ class ProfileViewControllerSpec: QuickSpec {
 
                 let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [
                     (collaborateable: true, hireable: true, collaborateButton: true, hireButtonVisible: true, mentionButtonVisible: false),
-                    // (collaborateable: true, hireable: false, collaborateButton: true, hireButtonVisible: false, mentionButtonVisible: false),
+                    (collaborateable: true, hireable: false, collaborateButton: true, hireButtonVisible: false, mentionButtonVisible: false),
                     (collaborateable: false, hireable: true, collaborateButton: false, hireButtonVisible: true, mentionButtonVisible: false),
                     (collaborateable: false, hireable: false, collaborateButton: false, hireButtonVisible: false, mentionButtonVisible: true),
-                ]
+                    ]
                 for (collaborateable, hireable, collaborateButton, hireButtonVisible, mentionButtonVisible) in expectations {
                     context("collaborateable \(collaborateable) and hireable \(hireable) affect profile buttons") {
                         beforeEach {
@@ -145,30 +115,31 @@ class ProfileViewControllerSpec: QuickSpec {
                                     let modData = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
                                     return .NetworkResponse(200, modData)
                                 }),
-                            ])
+                                ])
 
                             currentUser = User.stub([:])
                             subject = ProfileViewController(userParam: "any")
                             subject.currentUser = currentUser
                             showController(subject)
+                            screen = subject.view as! ProfileScreen
                         }
 
                         it("user \(collaborateable ? "is" : "is not") collaborateable") {
                             expect(subject.user?.isCollaborateable) == collaborateable
                         }
-                        xit("has \(collaborateButton ? "visible" : "hidden") collaborateButton") {
-                            expect(subject.collaborateButton?.hidden) == collaborateButton
+                        it("has \(collaborateButton ? "visible" : "hidden") collaborateButton") {
+                            expect(screen.collaborateButton.hidden) == !collaborateButton
                         }
 
                         it("user \(hireable ? "is" : "is not") hireable") {
                             expect(subject.user?.isHireable) == hireable
                         }
                         it("has \(hireButtonVisible ? "visible" : "hidden") hireButton") {
-                            expect(subject.hireButton.hidden) == !hireButtonVisible
+                            expect(screen.hireButton.hidden) == !hireButtonVisible
                         }
 
                         it("has \(mentionButtonVisible ? "visible" : "hidden") mentionButton") {
-                            expect(subject.mentionButton.hidden) == !mentionButtonVisible
+                            expect(screen.mentionButton.hidden) == !mentionButtonVisible
                         }
                     }
                 }
@@ -182,8 +153,8 @@ class ProfileViewControllerSpec: QuickSpec {
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
                         RecordedResponse(endpoint: .UserStream(userParam: "50"), response: .NetworkResponse(200,
                             stubbedData("profile__no_sharing")
-                        )),
-                    ])
+                            )),
+                        ])
 
                     currentUser = User.stub(["id": "not50"])
                     subject = ProfileViewController(userParam: "50")

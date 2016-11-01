@@ -249,8 +249,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public func updateHeightForIndexPath(indexPath: NSIndexPath, height: CGFloat) {
         if indexPath.item < visibleCellItems.count {
-            visibleCellItems[indexPath.item].calculatedOneColumnCellHeight = height
-            visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight = height
+            visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn = height
+            visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn = height
         }
     }
 
@@ -259,7 +259,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
         // always try to return a calculated value before the default
         if numberOfColumns == 1 {
-            if let height = visibleCellItems[indexPath.item].calculatedOneColumnCellHeight {
+            if let height = visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn {
                 return height
             }
             else {
@@ -267,7 +267,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
         }
         else {
-            if let height = visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight {
+            if let height = visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn {
                 return height
             }
             else {
@@ -288,7 +288,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleCellItems.count ?? 0
+        return visibleCellItems.count
     }
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -328,8 +328,9 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             (cell as! NotificationCell).userDelegate = userDelegate
             (cell as! NotificationCell).delegate = notificationDelegate
         case .ProfileHeader:
-            (cell as! ProfileHeaderCell).simpleStreamDelegate = simpleStreamDelegate
+//            (cell as! ProfileHeaderCell).simpleStreamDelegate = simpleStreamDelegate
             (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
+//            (cell as! ProfileHeaderCell).userDelegate = userDelegate
         case .Search:
             (cell as! SearchStreamCell).delegate = searchStreamDelegate
         case .Text:

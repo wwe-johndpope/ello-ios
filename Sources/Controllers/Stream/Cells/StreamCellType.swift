@@ -36,6 +36,7 @@ public enum StreamCellType: Equatable {
     case Notification
     case Placeholder
     case ProfileHeader
+    case ProfileHeaderGhost
     case Search(placeholder: String)
     case SeeMoreComments
     case Spacer(height: CGFloat)
@@ -82,6 +83,7 @@ public enum StreamCellType: Equatable {
         NoPosts,
         Notification,
         ProfileHeader,
+        ProfileHeaderGhost,
         Search(placeholder: ""),
         SeeMoreComments,
         Spacer(height: 0.0),
@@ -128,6 +130,7 @@ public enum StreamCellType: Equatable {
         case Notification: return NotificationCell.reuseIdentifier
         case Placeholder: return "Placeholder"
         case ProfileHeader: return ProfileHeaderCell.reuseIdentifier
+        case ProfileHeaderGhost: return ProfileHeaderGhostCell.reuseIdentifier
         case Search: return SearchStreamCell.reuseIdentifier
         case SeeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
         case Spacer: return "StreamSpacerCell"
@@ -208,6 +211,7 @@ public enum StreamCellType: Equatable {
         case Notification: return NotificationCell.self
         case Placeholder: return UICollectionViewCell.self
         case ProfileHeader: return ProfileHeaderCell.self
+        case ProfileHeaderGhost: return ProfileHeaderGhostCell.self
         case Search: return SearchStreamCell.self
         case SeeMoreComments: return StreamSeeMoreCommentsCell.self
         case StreamLoading: return StreamLoadingCell.self
@@ -287,6 +291,7 @@ public enum StreamCellType: Equatable {
              NoPosts,
              Notification,
              ProfileHeader,
+             ProfileHeaderGhost,
              Search,
              SeeMoreComments,
              StreamLoading,
@@ -328,6 +333,8 @@ public enum StreamCellType: Equatable {
             FullWidthSpacer(height: 0.0),
             Notification,
             Placeholder,
+            ProfileHeader,
+            ProfileHeaderGhost,
             Search(placeholder: ""),
             Spacer(height: 0.0),
             StreamLoading,

@@ -14,6 +14,7 @@ enum ElloAttributedObject {
     case AttributedPost(post: Post)
     case AttributedComment(comment: ElloComment)
     case AttributedUser(user: User)
+    case AttributedCategory(category: Category)
     case AttributedFollowers(user: User)
     case AttributedFollowing(user: User)
     case AttributedUserId(userId: String)
@@ -27,6 +28,8 @@ enum ElloAttributedObject {
             if let comment = object as? ElloComment { return ElloAttributedObject.AttributedComment(comment: comment) }
         case "user":
             if let user = object as? User { return ElloAttributedObject.AttributedUser(user: user) }
+        case "category":
+            if let category = object as? Category { return ElloAttributedObject.AttributedCategory(category: category) }
         case "followers":
             if let user = object as? User { return ElloAttributedObject.AttributedFollowers(user: user) }
         case "following":

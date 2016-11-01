@@ -46,7 +46,12 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
             }
         }
         self.cellItems = job.cellItems
-        self.maxWidth = job.width
+        if job.columnCount == 1 {
+            self.maxWidth = job.width
+        }
+        else {
+            self.maxWidth = floor(job.width / CGFloat(job.columnCount) - StreamKind.Following.columnSpacing * CGFloat(job.columnCount - 1))
+        }
         loadNext()
     }
 
@@ -87,9 +92,9 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     private func assignCellHeight(height: CGFloat) {
         if let cellItem = self.cellItems.safeValue(0) {
             self.cellItems.removeAtIndex(0)
-            cellItem.calculatedWebHeight = height
-            cellItem.calculatedOneColumnCellHeight = height
-            cellItem.calculatedMultiColumnCellHeight = height
+            cellItem.calculatedCellHeights.webContent = height
+            cellItem.calculatedCellHeights.oneColumn = height
+            cellItem.calculatedCellHeights.multiColumn = height
         }
         loadNext()
     }

@@ -83,9 +83,9 @@ public struct StreamImageCellPresenter {
         }
 
         cell.onHeightMismatch = { actualHeight in
-            streamCellItem.calculatedWebHeight = actualHeight
-            streamCellItem.calculatedOneColumnCellHeight = actualHeight
-            streamCellItem.calculatedMultiColumnCellHeight = actualHeight
+            streamCellItem.calculatedCellHeights.webContent = actualHeight
+            streamCellItem.calculatedCellHeights.oneColumn = actualHeight
+            streamCellItem.calculatedCellHeights.multiColumn = actualHeight
             postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
         }
 

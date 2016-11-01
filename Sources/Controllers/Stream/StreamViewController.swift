@@ -48,6 +48,7 @@ public protocol UserDelegate: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
     func userTappedText(cell: UICollectionViewCell)
+    func userTappedFeaturedCategories(cell: UICollectionViewCell)
     func userTappedUser(user: User)
 }
 
@@ -644,7 +645,7 @@ public final class StreamViewController: BaseElloViewController {
             streamKind: streamKind,
             textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
             notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
-            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(webView: UIWebView()),
+            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
             imageSizeCalculator: StreamImageCellSizeCalculator()
         )
 
@@ -919,6 +920,7 @@ extension StreamViewController: CategoryDelegate {
     }
 }
 
+
 // MARK: StreamViewController: UserDelegate
 extension StreamViewController: UserDelegate {
 
@@ -954,6 +956,15 @@ extension StreamViewController: UserDelegate {
 
     public func userTappedUser(user: User) {
         userTapped(user)
+    }
+
+    public func userTappedFeaturedCategories(cell: UICollectionViewCell) {
+        guard let
+            indexPath = collectionView.indexPathForCell(cell),
+            user = dataSource.userForIndexPath(indexPath)
+            else { return }
+
+        print("\(user.atName) userTappedFeaturedCategories()")
     }
 
 }

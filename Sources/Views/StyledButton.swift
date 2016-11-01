@@ -2,7 +2,7 @@
 ///  StyledButton.swift
 //
 
-public final class StyledButton: UIButton {
+public class StyledButton: UIButton {
     public struct Style {
         let disabledBackgroundColor: UIColor?
         let highlightedBackgroundColor: UIColor?
@@ -121,6 +121,7 @@ public final class StyledButton: UIButton {
             layer.borderWidth = 1
         }
         else {
+            layer.borderColor = nil
             layer.borderWidth = 0
         }
 
@@ -155,7 +156,7 @@ public final class StyledButton: UIButton {
         }
     }
 
-    private func sharedSetup() {
+    func sharedSetup() {
         titleLabel?.numberOfLines = 1
         updateStyle()
     }
@@ -174,6 +175,12 @@ extension StyledButton.Style {
         backgroundColor: .blackColor(), disabledBackgroundColor: .grey231F20(),
         titleColor: .whiteColor(), disabledTitleColor: .greyA()
         )
+    public static let ClearWhite = StyledButton.Style(
+        titleColor: .whiteColor(), disabledTitleColor: .greyA()
+        )
+    public static let ClearBlack = StyledButton.Style(
+        titleColor: .blackColor(), disabledTitleColor: .greyC()
+        )
     public static let LightGray = StyledButton.Style(
         backgroundColor: .greyE5(), disabledBackgroundColor: .greyF1(),
         titleColor: .grey6(), highlightedTitleColor: .blackColor(), disabledTitleColor: .greyC()
@@ -187,9 +194,14 @@ extension StyledButton.Style {
         titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
         borderColor: .blackColor(), highlightedBorderColor: .greyE5()
         )
-    public static let RoundedBlack = StyledButton.Style(
+    public static let BlackPill = StyledButton.Style(
         backgroundColor: .blackColor(), disabledBackgroundColor: .greyF2(),
         titleColor: .whiteColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
+        cornerRadius: nil
+        )
+    public static let BlackPillOutline = StyledButton.Style(
+        titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyF2(),
+        borderColor: .blackColor(), disabledBorderColor: .greyF2(),
         cornerRadius: nil
         )
     public static let RoundedGray = StyledButton.Style(
@@ -220,13 +232,28 @@ extension StyledButton.Style {
         titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
         cornerRadius: 5
         )
+    public static let GreenPill = StyledButton.Style(
+        backgroundColor: .greenD1(), disabledBackgroundColor: .grey6(),
+        titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
+        cornerRadius: nil
+        )
+    public static let RedPill = StyledButton.Style(
+        backgroundColor: .redColor(), disabledBackgroundColor: .grey6(),
+        titleColor: .whiteColor(), highlightedTitleColor: .greyA(), disabledTitleColor: .whiteColor(),
+        cornerRadius: nil
+        )
+    public static let GrayPill = StyledButton.Style(
+        backgroundColor: .greyA(),
+        titleColor: .whiteColor(),
+        cornerRadius: nil
+        )
 
     public static func byName(name: String) -> StyledButton.Style {
         switch name {
         case "LightGray": return .LightGray
         case "White": return .White
         case "SquareBlack": return .SquareBlack
-        case "RoundedBlack": return .RoundedBlack
+        case "BlackPill": return .BlackPill
         case "RoundedGray": return .RoundedGray
         case "InviteFriend": return .InviteFriend
         case "Invited": return .Invited

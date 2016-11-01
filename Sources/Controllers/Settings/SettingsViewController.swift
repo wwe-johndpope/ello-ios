@@ -252,7 +252,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         if let user = currentUser, links = user.externalLinksList {
             var urls = [String]()
             for link in links {
-                if let url = link["url"] {
+                if let url = link.url.absoluteString {
                     urls.append(url)
                 }
             }
