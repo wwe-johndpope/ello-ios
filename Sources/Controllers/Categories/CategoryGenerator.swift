@@ -57,7 +57,7 @@ public final class CategoryGenerator: StreamGenerator {
 
     public func toggleGrid() {
         guard let posts = posts else { return }
-        destination?.replacePlaceholder(.ProfilePosts, items: parse(posts)) {}
+        destination?.replacePlaceholder(.CategoryPosts, items: parse(posts)) {}
     }
 
 }
@@ -110,8 +110,8 @@ private extension CategoryGenerator {
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-        self.destination?.replacePlaceholder(.ProfilePosts, items: [StreamCellItem(type: .StreamLoading)]) {}
-    
+        self.destination?.replacePlaceholder(.CategoryPosts, items: [StreamCellItem(type: .StreamLoading)]) {}
+
         StreamService().loadStream(
             category.endpoint,
             streamKind: streamKind,

@@ -73,11 +73,9 @@ private extension CategoryViewController {
     }
 
     private func assignRightButtons() {
-
         let rightBarButtonItems: [UIBarButtonItem] = [
             UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped))
-            ]
-
+        ]
 
         guard elloNavigationItem.rightBarButtonItems != nil else {
             elloNavigationItem.rightBarButtonItems = rightBarButtonItems
