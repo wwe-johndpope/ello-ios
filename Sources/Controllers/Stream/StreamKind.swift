@@ -107,6 +107,13 @@ public enum StreamKind {
         }
     }
 
+    public var isProfileStream: Bool {
+        switch self {
+        case .CurrentUserStream, .UserStream: return true
+        default: return false
+        }
+    }
+
     public var endpoint: ElloAPI {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream

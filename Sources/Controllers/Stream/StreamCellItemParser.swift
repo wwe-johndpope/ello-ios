@@ -37,7 +37,12 @@ public struct StreamCellItemParser {
     private func postCellItems(posts: [Post], streamKind: StreamKind) -> [StreamCellItem] {
         var cellItems: [StreamCellItem] = []
         for post in posts {
-            cellItems.append(StreamCellItem(jsonable: post, type: .Header))
+            if !streamKind.isProfileStream || post.isRepost {
+                cellItems.append(StreamCellItem(jsonable: post, type: .Header))
+            }
+            else {
+                cellItems.append(StreamCellItem(jsonable: post, type: .Spacer(height: 30)))
+            }
             cellItems += postToggleItems(post)
             if post.isRepost {
                 // add repost content
@@ -59,7 +64,7 @@ public struct StreamCellItemParser {
                 }
             }
             cellItems += footerStreamCellItems(post)
-            cellItems += [StreamCellItem(jsonable: post, type: .Spacer(height: 10.0))]
+            cellItems += [StreamCellItem(jsonable: post, type: .Spacer(height: 10))]
         }
         // set initial state on the items, but don't toggle the footer's state, it is used by comment open/closed
         for item in cellItems {
