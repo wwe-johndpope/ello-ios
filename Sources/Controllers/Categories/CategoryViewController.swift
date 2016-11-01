@@ -23,15 +23,23 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     override public func loadView() {
+        self.title = category.name
+        elloNavigationItem.title = title
+        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+        elloNavigationItem.leftBarButtonItems = [item]
+        elloNavigationItem.fixNavBarItemPadding()
+
         let screen = CategoryScreen(category: category)
-        screen.delegate = self
+        screen.navigationItem = elloNavigationItem
         self.view = screen
+        viewContainer = screen.streamContainer
+        screen.delegate = self
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        streamViewController.streamKind = .Category(categoryName: category.slug)
+        streamViewController.streamKind = .CategoryPosts(slug: category.slug)
         view.backgroundColor = .whiteColor()
         self.generator = CategoryGenerator(
             category: category,
@@ -39,28 +47,43 @@ public final class CategoryViewController: StreamableViewController {
             streamKind: self.streamViewController.streamKind,
             destination: self
         )
+        scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory() }
         streamViewController.reloadClosure = { [unowned self] in self.reloadEntireCategory() }
+        streamViewController.toggleClosure = { [unowned self] isGridView in self.toggleGrid(isGridView) }
 
         streamViewController.loadInitialPage()
     }
 
-    override func viewForStream() -> UIView {
-        return view
+    private func updateInsets() {
+        updateInsets(navBar: screen.navigationBar, streamController: streamViewController)
+    }
+
+    override func showNavBars(scrollToBottom: Bool) {
+        super.showNavBars(scrollToBottom)
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
+        updateInsets()
+
+        if scrollToBottom {
+            self.scrollToBottom(streamViewController)
+        }
+    }
+
+    override func hideNavBars() {
+        super.hideNavBars()
+        positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: true)
+        updateInsets()
+    }
+
+    func toggleGrid(isGridView: Bool) {
+        generator?.toggleGrid()
     }
 }
 
 private extension CategoryViewController {
 
     func setupNavigationBar() {
-        navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height))
-        navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
-        view.addSubview(navigationBar)
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [item]
-        elloNavigationItem.fixNavBarItemPadding()
-        navigationBar.items = [elloNavigationItem]
         assignRightButtons()
     }
 
@@ -96,7 +119,7 @@ extension CategoryViewController: StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 

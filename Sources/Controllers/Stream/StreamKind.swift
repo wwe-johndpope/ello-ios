@@ -17,7 +17,7 @@ public enum StreamKind {
     case SimpleStream(endpoint: ElloAPI, title: String)
     case Unknown
     case UserStream(userParam: String)
-    case Category(categoryName: String)
+    case Category(slug: String)
 
     public var name: String {
         switch self {
@@ -111,7 +111,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
         case .AllCategories: return .Categories
-        case let .Category(categoryName): return .Category(categoryName: categoryName)
+        case let .Category(slug): return .Category(slug: slug)
         case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
         case let .Discover(type): return .Discover(type: type)
         case .Following: return .FriendStream
@@ -240,7 +240,7 @@ public enum StreamKind {
 
     public var hasGridViewToggle: Bool {
         switch self {
-        case .Following, .Starred, .Discover, .CategoryPosts: return true
+        case .Following, .Starred, .Discover, .CategoryPosts, .Category: return true
         case let .SimpleStream(endpoint, _):
             switch endpoint {
             case .SearchForPosts, .Loves, .CategoryPosts:

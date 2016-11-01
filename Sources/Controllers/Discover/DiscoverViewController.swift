@@ -51,8 +51,8 @@ public class DiscoverViewController: StreamableViewController {
 
         let hasBackButton = category != nil
         if hasBackButton {
-            let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
-            elloNavigationItem.leftBarButtonItems = [leftItem]
+            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+            elloNavigationItem.leftBarButtonItems = [item]
             elloNavigationItem.fixNavBarItemPadding()
         }
 
@@ -75,14 +75,14 @@ public class DiscoverViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        let screen = DiscoverScreen(navigationItem: elloNavigationItem)
+        let screen = DiscoverScreen()
+        screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBarHidden = true
 
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)

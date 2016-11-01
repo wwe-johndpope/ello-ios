@@ -247,7 +247,12 @@ public class StreamContainerViewController: StreamableViewController {
     }
 
     @IBAction func streamSegmentTapped(sender: UISegmentedControl) {
-        showSegmentIndex(sender.selectedSegmentIndex)
+        let category = Category(id: "1", name: "Art", slug: "art", order: 1, allowInOnboarding: true, level: .Primary, tileImage: nil)
+        let vc = CategoryViewController(category: category)
+        vc.currentUser = currentUser
+
+        navigationController?.pushViewController(vc, animated: true)
+        //showSegmentIndex(sender.selectedSegmentIndex)
     }
 }
 

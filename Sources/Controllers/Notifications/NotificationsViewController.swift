@@ -54,7 +54,6 @@ public class NotificationsViewController: StreamableViewController, Notification
 
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBarHidden = true
 
         if hasNewContent && fromTabBar {
             reload()

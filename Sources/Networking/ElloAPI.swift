@@ -13,7 +13,8 @@ public enum ElloAPI {
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
     case Categories
-    case Category(categoryName: String)
+    case Category(slug: String)
+    case CategoryPosts(slug: String)
     case CommentDetail(postId: String, commentId: String)
     case CreateComment(parentPostId: String, body: [String: AnyObject])
     case CreateLove(postId: String)
@@ -24,7 +25,6 @@ public enum ElloAPI {
     case DeletePost(postId: String)
     case DeleteSubscriptions(token: NSData)
     case DeleteWatchPost(postId: String)
-    case CategoryPosts(slug: String)
     case Discover(type: DiscoverType)
     case EmojiAutoComplete(terms: String)
     case FindFriends(contacts: [String: [String]])
@@ -76,10 +76,24 @@ public enum ElloAPI {
     var pagingPath: String? {
         switch self {
         case .PostDetail:
-            return "comments"
+            return "\(path)/comments"
         case .CurrentUserStream,
              .UserStream:
-            return "posts"
+            return "\(path)/posts"
+        case .Category:
+            return "\(path)/posts/recent"
+        default:
+            return nil
+        }
+    }
+
+    var pagingMappingType: MappingType? {
+        switch self {
+        case .PostDetail:
+            return .CommentsType
+        case .CurrentUserStream,
+             .UserStream:
+            return .PostsType
         default:
             return nil
         }
@@ -158,9 +172,8 @@ public enum ElloAPI {
             return .ActivitiesType
         case let .InfiniteScroll(_, elloApi):
             let api = elloApi()
-            if let pagingPath = api.pagingPath,
-                mappingType = MappingType(rawValue: pagingPath) {
-                return mappingType
+            if let pagingMappingType = api.pagingMappingType {
+                return pagingMappingType
             }
             return api.mappingType
         case .ProfileToggles:
@@ -263,8 +276,10 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
         case .Categories:
             return "/api/\(ElloAPI.apiVersion)/categories"
-        case let .Category(categoryName):
-            return "/api/\(ElloAPI.apiVersion)/categories/\(categoryName)"
+        case let .Category(slug):
+            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)"
+        case let .CategoryPosts(slug):
+            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .CreateComment(parentPostId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(parentPostId)/comments"
         case let .CreateLove(postId):
@@ -284,8 +299,6 @@ extension ElloAPI: Moya.TargetType {
             return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .DeleteWatchPost(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watch"
-        case let .CategoryPosts(slug):
-            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .Discover(type):
             switch type {
             case .Trending:
@@ -315,7 +328,7 @@ extension ElloAPI: Moya.TargetType {
         case let .InfiniteScroll(_, elloApi):
             let api = elloApi()
             if let pagingPath = api.pagingPath {
-                return "\(api.path)/\(pagingPath)"
+                return pagingPath
             }
             return api.path
         case .InviteFriends:

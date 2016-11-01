@@ -8,13 +8,6 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     required public init() {
         super.init(nibName: nil, bundle: nil)
 
-        title = InterfaceString.Discover.AllCategories
-        elloNavigationItem.title = title
-
-        let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [leftItem]
-        elloNavigationItem.fixNavBarItemPadding()
-
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategories() }
         streamViewController.streamKind = .AllCategories
     }
@@ -24,7 +17,14 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        let screen = DiscoverAllCategoriesScreen(navigationItem: elloNavigationItem)
+        title = InterfaceString.Discover.AllCategories
+        elloNavigationItem.title = title
+        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+        elloNavigationItem.leftBarButtonItems = [item]
+        elloNavigationItem.fixNavBarItemPadding()
+
+        let screen = DiscoverAllCategoriesScreen()
+        screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
     }
@@ -41,7 +41,6 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBarHidden = true
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()

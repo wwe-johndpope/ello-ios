@@ -19,16 +19,16 @@ public final class CategoryGenerator: StreamGenerator {
     func headerItems() -> [StreamCellItem] {
         guard let category = category else { return [] }
 
-        let items = [
+        var items = [
             StreamCellItem(jsonable: category, type: .CategoryHeader),
         ]
-//        if hasPosts != false {
-//            items += [
-//                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3)),
-//                StreamCellItem(jsonable: user, type: .ColumnToggle),
-//                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5))
-//            ]
-//        }
+        if hasPosts != false {
+            items += [
+                StreamCellItem(type: .FullWidthSpacer(height: 3)),
+                StreamCellItem(type: .ColumnToggle),
+                StreamCellItem(type: .FullWidthSpacer(height: 5))
+            ]
+        }
         return items
     }
 
@@ -65,10 +65,7 @@ public final class CategoryGenerator: StreamGenerator {
 private extension CategoryGenerator {
 
     func setPlaceHolders() {
-//        let header = StreamCellItem(type: .ProfileHeaderGhost, placeholderType: .ProfileHeader)
-//        header.calculatedCellHeights.oneColumn = ProfileHeaderGhostCell.Size.height
-//        header.calculatedCellHeights.multiColumn = ProfileHeaderGhostCell.Size.height
-        destination?.setPlaceholders([
+            destination?.setPlaceholders([
             StreamCellItem(type: .Placeholder, placeholderType: .CategoryHeader),
             StreamCellItem(type: .Placeholder, placeholderType: .CategoryPosts)
         ])
@@ -93,8 +90,7 @@ private extension CategoryGenerator {
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.category = category
                 sself.destination?.setPrimaryJSONAble(category)
-                let items = sself.parse([category])
-                sself.destination?.replacePlaceholder(.CategoryHeader, items: items) {}
+                sself.destination?.replacePlaceholder(.CategoryHeader, items: sself.headerItems()) {}
                 doneOperation.run()
             }
             .onFail { [weak self] _ in
@@ -119,15 +115,26 @@ private extension CategoryGenerator {
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
 
+                sself.destination?.setPagingConfig(responseConfig)
+                sself.posts = jsonables as? [Post]
                 let items = sself.parse(jsonables)
                 displayPostsOperation.run {
                     inForeground {
-                        sself.destination?.replacePlaceholder(.CategoryPosts, items: items) {
-                            sself.destination?.pagingEnabled = true
+                        if items.count == 0 {
+                            sself.hasPosts = false
+                            let noItems = [StreamCellItem(type: .NoPosts)]
+                            sself.destination?.replacePlaceholder(.CategoryPosts, items: noItems) {
+                                sself.destination?.pagingEnabled = false
+                            }
+                            sself.destination?.replacePlaceholder(.CategoryHeader, items: sself.headerItems()) {}
+                        }
+                        else {
+                            sself.destination?.replacePlaceholder(.CategoryPosts, items: items) {
+                                sself.destination?.pagingEnabled = true
+                            }
                         }
                     }
                 }
-
             }, failure: { [weak self] _ in
                 guard let sself = self else { return }
                 sself.destination?.primaryJSONAbleNotFound()

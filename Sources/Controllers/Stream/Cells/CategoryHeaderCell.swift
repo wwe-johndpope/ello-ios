@@ -39,6 +39,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
+        style()
         arrange()
     }
 
@@ -95,6 +96,7 @@ private extension CategoryHeaderCell {
     }
 
     func style() {
+        imageView.contentMode = .ScaleAspectFill
         failBackgroundView.backgroundColor = .whiteColor()
     }
 

@@ -99,7 +99,7 @@ public final class PostDetailViewController: StreamableViewController {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
         view.addSubview(navigationBar)
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
+        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
         elloNavigationItem.leftBarButtonItems = [item]
         elloNavigationItem.fixNavBarItemPadding()
         navigationBar.items = [elloNavigationItem]
@@ -225,7 +225,7 @@ extension PostDetailViewController: StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 

@@ -20,10 +20,10 @@ public class CategoryService {
         })
     }
 
-    public func loadCategory(categoryName: String) -> Future<Category> {
+    public func loadCategory(categorySlug: String) -> Future<Category> {
         let promise = Promise<Category>()
         ElloProvider.shared.elloRequest(
-            ElloAPI.Category(categoryName: categoryName),
+            ElloAPI.Category(slug: categorySlug),
             success: { (data, responseConfig) in
                 if let category = data as? Category {
                     Preloader().preloadImages([category])

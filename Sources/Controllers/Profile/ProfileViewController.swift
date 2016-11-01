@@ -117,10 +117,17 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     override public func loadView() {
+        if !isRootViewController() {
+            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+            self.elloNavigationItem.leftBarButtonItems = [item]
+            self.elloNavigationItem.fixNavBarItemPadding()
+        }
+
         let screen = ProfileScreen()
+        screen.delegate = self
+        screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
-        screen.delegate = self
     }
 
     override public func viewDidLayoutSubviews() {
@@ -141,7 +148,7 @@ public final class ProfileViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        positionNavBar(screen.navBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
 
         if scrollToBottom {
@@ -153,7 +160,7 @@ public final class ProfileViewController: StreamableViewController {
 
     override func hideNavBars() {
         super.hideNavBars()
-        hideNavBar(animated: true)
+        positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: true)
         updateInsets()
 
         let offset = self.streamViewController.collectionView.contentOffset
@@ -161,13 +168,8 @@ public final class ProfileViewController: StreamableViewController {
         screen.hideNavBars(offset, isCurrentUser: currentUser)
     }
 
-
     private func updateInsets() {
         updateInsets(navBar: screen.profileButtonsContainer, streamController: streamViewController)
-    }
-
-    private func hideNavBar(animated animated: Bool) {
-        positionNavBar(screen.navBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: animated)
     }
 
     // MARK : private
@@ -193,13 +195,6 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     private func setupNavigationBar() {
-        navigationController?.navigationBarHidden = true
-        screen.navBar.items = [elloNavigationItem]
-        if !isRootViewController() {
-            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
-            self.elloNavigationItem.leftBarButtonItems = [item]
-            self.elloNavigationItem.fixNavBarItemPadding()
-        }
         assignRightButtons()
     }
 
@@ -460,7 +455,7 @@ extension ProfileViewController:  StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 

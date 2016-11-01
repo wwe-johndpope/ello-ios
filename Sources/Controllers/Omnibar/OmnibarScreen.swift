@@ -234,6 +234,7 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         avatarButton.addTarget(self, action: #selector(profileImageTapped), forControlEvents: .TouchUpInside)
     }
 
+    // TODO: use elloNavigationItem, move into OmnibarViewController.loadView
     private func setupNavigationBar() {
         let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backAction))
         navigationItem.leftBarButtonItem = backItem

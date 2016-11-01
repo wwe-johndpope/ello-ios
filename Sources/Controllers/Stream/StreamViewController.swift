@@ -321,11 +321,10 @@ public final class StreamViewController: BaseElloViewController {
 
     public func replacePlaceholder(
         placeholderType: StreamCellType.PlaceholderType,
-        @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem],
+        with streamCellItems: [StreamCellItem],
         completion: ElloEmptyCompletion = {}
         )
     {
-        let streamCellItems = streamCellItemsGenerator()
         for item in streamCellItems {
             item.placeholderType = placeholderType
         }

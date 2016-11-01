@@ -2,7 +2,7 @@
 ///  CategoryScreen.swift
 //
 
-public class CategoryScreen: StreamableScreen {
+public class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
     struct Size {
         static let textInset: CGFloat = 15
@@ -14,7 +14,7 @@ public class CategoryScreen: StreamableScreen {
 
     public init(category: Category) {
         self.category = category
-        super.init(frame: .zero)
+        super.init(frame: UIScreen.mainScreen().bounds)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -37,5 +37,6 @@ public class CategoryScreen: StreamableScreen {
 
     override func arrange() {
         super.arrange()
+        addSubview(navigationBar)
     }
 }

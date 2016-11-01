@@ -107,6 +107,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         searchField.becomeFirstResponder()
     }
 
+    // TODO: this should be moved into SearchViewController.loadView (and use elloNavigationItem)
     private func setupNavigationBarItems() {
         navigationItem = UINavigationItem(title: navBarTitle)
 

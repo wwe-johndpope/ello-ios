@@ -26,10 +26,6 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         set { self.relationshipControl.relationshipDelegate = newValue }
     }
 
-    public var navBar: ElloNavigationBar {
-        get { return self.navigationBar }
-    }
-
     public var coverImage: UIImage? {
         get { return coverImageView.image }
         set { coverImageView.image = newValue }
@@ -322,7 +318,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public func showNavBars() {
         animate {
-            let height = self.navBar.frame.height
+            let height = self.navigationBar.frame.height
             self.profileButtonsContainerTopConstraint.updateOffset(height)
             self.profileButtonsEffect.frame.origin.y = height
         }

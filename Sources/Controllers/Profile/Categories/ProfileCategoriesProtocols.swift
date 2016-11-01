@@ -8,5 +8,4 @@ protocol ProfileCategoriesDelegate: class {
 }
 
 protocol ProfileCategoriesProtocol: class {
-    var background: UIView { get }
 }
