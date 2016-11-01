@@ -39,7 +39,7 @@ public final class CategoryViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        streamViewController.streamKind = .CategoryPosts(slug: category.slug)
+        streamViewController.streamKind = .Category(slug: category.slug)
         view.backgroundColor = .whiteColor()
         self.generator = CategoryGenerator(
             category: category,

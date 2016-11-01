@@ -92,7 +92,8 @@ public enum ElloAPI {
         case .PostDetail:
             return .CommentsType
         case .CurrentUserStream,
-             .UserStream:
+             .UserStream,
+             .Category:
             return .PostsType
         default:
             return nil
