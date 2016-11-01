@@ -86,8 +86,13 @@ cat aasa.json | openssl smime \
 ```
 
 ### Pinning certificates
-
 We use pinned certificates to avoid man-in-the-middle SSL attacks.  We use a rolling "primary + backup" pair of certificates, so if the primary expires or needs to be pulled, the backup is easy to swap in.  Every now and then the primary / backup need to be rotated.
+
+### Cutting a new release
+Merge all new changes into master, checkout a new branch `release/x.x.x`. Change version number in `Ello` and `Share Extension` targets. Create the archive using the `Ello` scheme (not `ElloDev`). Using `Ello` will update the build numbers in both plists. Commit version and build number changes. Upload archive to TestFlight. After QA changes are often required. Continue making changes, merging them into master. Then rebase the release branch onto master and repeate until a release candidate is submitted to Apple for review. Once the release is approved and live in the store you `git tag x.x.x` and merge the release branch into master. 
+
+Sometimes you may need to increase the build number without making any changes to the code. iTunesConnect requires unique build numbers which in our case, are based off the number of commits. Any easy way to do that is `git commit --allow-empty -m "bumping build number"`.  
+
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/ello/ello-ios.
 
