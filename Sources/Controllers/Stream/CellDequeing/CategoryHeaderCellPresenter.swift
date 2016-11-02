@@ -16,9 +16,10 @@ public struct CategoryHeaderCellPresenter {
             category = streamCellItem.jsonable as? Category
         else { return }
 
-
-        if let titleImageURL = category.tileImage?.url {
-            cell.setImageURL(titleImageURL)
+        if let promotional = category.promotionals?.randomItem() {
+            if let url = promotional.image?.large?.url {
+                cell.setImageURL(url)
+            }
         }
     }
 }

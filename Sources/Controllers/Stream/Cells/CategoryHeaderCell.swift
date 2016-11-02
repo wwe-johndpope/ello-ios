@@ -61,7 +61,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
         circle.pulse()
         failImage.hidden = true
         failImage.alpha = 0
-        imageView.backgroundColor = UIColor.whiteColor()
+        imageView.backgroundColor = .whiteColor()
         loadImage(url)
     }
 
