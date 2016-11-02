@@ -90,7 +90,7 @@ extension User: Stubbable {
                 postIds.append(post.id)
                 ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
             }
-            user.addLinkArray("posts", array: postIds)
+            user.addLinkArray("posts", array: postIds, type: .PostsType)
         }
         if let mostRecentPost = values["mostRecentPost"] as? Post {
             user.addLinkObject("most_recent_post", key: mostRecentPost.id, type: .PostsType)
@@ -101,7 +101,7 @@ extension User: Stubbable {
             for category in categories {
                 ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, type: .CategoriesType)
             }
-            user.addLinkArray("categories", array: categories.map { $0.id })
+            user.addLinkArray("categories", array: categories.map { $0.id }, type: .CategoriesType)
         }
         
         user.profile = values["profile"] as? Profile
@@ -240,7 +240,7 @@ extension Post: Stubbable {
             for category in categories {
                 ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, type: .CategoriesType)
             }
-            post.addLinkArray("categories", array: categories.map { $0.id })
+            post.addLinkArray("categories", array: categories.map { $0.id }, type: .CategoriesType)
         }
 
         // optional
@@ -262,7 +262,7 @@ extension Post: Stubbable {
                 assetIds.append(asset.id)
                 ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
             }
-            post.addLinkArray("assets", array: assetIds)
+            post.addLinkArray("assets", array: assetIds, type: .AssetsType)
         }
         if let comments = values["comments"] as? [ElloComment] {
             var commentIds = [String]()
@@ -270,7 +270,7 @@ extension Post: Stubbable {
                 commentIds.append(comment.id)
                 ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
             }
-            post.addLinkArray("comments", array: commentIds)
+            post.addLinkArray("comments", array: commentIds, type: .CommentsType)
         }
         ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
         return post
@@ -315,7 +315,7 @@ extension ElloComment: Stubbable {
                 assetIds.append(asset.id)
                 ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
             }
-            comment.addLinkArray("assets", array: assetIds)
+            comment.addLinkArray("assets", array: assetIds, type: .AssetsType)
         }
         ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
         return comment

@@ -93,7 +93,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
 
 // MARK: JSONAble
 
-    override class public func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override class public func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.CommentFromJSON.rawValue)
         // create comment
@@ -107,22 +107,20 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
             // send data to segment to try to get more data about this
             Tracker.sharedTracker.createdAtCrash("Comment", json: json.rawString())
         }
+
         let comment = ElloComment(
             id: json["id"].stringValue,
             createdAt: createdAt,
             authorId: json["author_id"].stringValue,
             postId: json["post_id"].stringValue,
             content: RegionParser.regions("content", json: json)
-            )
+        )
         // optional
         comment.body = RegionParser.regions("body", json: json)
         comment.summary = RegionParser.regions("summary", json: json)
         // links
         comment.links = data["links"] as? [String: AnyObject]
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
-        }
+
         return comment
     }
 
@@ -136,4 +134,8 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         )
         return comment
     }
+}
+
+extension ElloComment: JSONSaveable {
+    var uniqId: String? { return id }
 }

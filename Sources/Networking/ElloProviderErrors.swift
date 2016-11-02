@@ -19,7 +19,7 @@ extension ElloProvider {
 
             if mappedJSON != nil {
                 if let node = mappedJSON?[MappingType.ErrorsType.rawValue] as? [String:AnyObject] {
-                    elloNetworkError = Mapper.mapToObject(node, fromJSON: MappingType.ErrorType.fromJSON) as? ElloNetworkError
+                    elloNetworkError = Mapper.mapToObject(node, type: MappingType.ErrorType) as? ElloNetworkError
                 }
             }
         }

@@ -36,7 +36,7 @@ public final class Availability: JSONAble {
 }
 
 extension Availability {
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.AvailabilityFromJSON.rawValue)
         let username = json["username"].boolValue

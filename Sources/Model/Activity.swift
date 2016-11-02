@@ -109,7 +109,7 @@ public final class Activity: JSONAble {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.ActivityFromJSON.rawValue)
         // active record
@@ -124,6 +124,7 @@ public final class Activity: JSONAble {
             // send data to segment to try to get more data about this
             Tracker.sharedTracker.createdAtCrash("Activity", json: json.rawString())
         }
+
         // create activity
         let activity = Activity(
             id: id,
@@ -133,10 +134,11 @@ public final class Activity: JSONAble {
         )
         // links
         activity.links = data["links"] as? [String: AnyObject]
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(activity, forKey: activity.id, type: .ActivitiesType)
-        }
+
         return activity
     }
+}
+
+extension Activity: JSONSaveable {
+    var uniqId: String? { return id }
 }

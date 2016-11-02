@@ -333,10 +333,10 @@ extension ElloProvider {
 
             let mappedObjects: AnyObject?
             if let node = node as? [[String: AnyObject]] {
-                mappedObjects = Mapper.mapToObjectArray(node, fromJSON: elloAPI.mappingType.fromJSON)
+                mappedObjects = Mapper.mapToObjectArray(node, type: elloAPI.mappingType)
             }
             else if let node = node as? [String: AnyObject] {
-                mappedObjects = Mapper.mapToObject(node, fromJSON: elloAPI.mappingType.fromJSON)
+                mappedObjects = Mapper.mapToObject(node, type: elloAPI.mappingType)
             }
             else {
                 mappedObjects = nil

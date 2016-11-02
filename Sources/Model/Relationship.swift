@@ -59,7 +59,7 @@ public final class Relationship: JSONAble {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.RelationshipFromJSON.rawValue)
         var createdAt: NSDate
@@ -80,4 +80,8 @@ public final class Relationship: JSONAble {
         )
         return relationship
     }
+}
+
+extension Relationship: JSONSaveable {
+    var uniqId: String? { return id }
 }

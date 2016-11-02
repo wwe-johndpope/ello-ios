@@ -99,7 +99,16 @@ public final class Category: JSONAble, Groupable {
         super.encodeWithCoder(coder)
     }
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public func merge(other: JSONAble) -> JSONAble {
+        if let other = other as? Category {
+            if other.promotionals == nil, let promotionals = promotionals {
+                other.addLinkArray("promotionals", array: promotionals.map { $0.id }, type: .PromotionalsType)
+            }
+        }
+        return other
+    }
+
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let name = json["name"].stringValue
@@ -136,4 +145,8 @@ public final class Category: JSONAble, Groupable {
 
         return category
     }
+}
+
+extension Category: JSONSaveable {
+    var uniqId: String? { return id }
 }

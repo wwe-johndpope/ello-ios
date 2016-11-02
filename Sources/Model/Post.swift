@@ -211,7 +211,7 @@ public final class Post: JSONAble, Authorable, Groupable {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.PostFromJSON.rawValue)
         let repostContent = RegionParser.regions("repost_content", json: json)
@@ -254,10 +254,10 @@ public final class Post: JSONAble, Authorable, Groupable {
         post.lovesCount = json["loves_count"].int
         // links
         post.links = data["links"] as? [String: AnyObject]
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
-        }
         return post
     }
+}
+
+extension Post: JSONSaveable {
+    var uniqId: String? { return id }
 }

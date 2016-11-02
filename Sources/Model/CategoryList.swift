@@ -31,7 +31,7 @@ public class CategoryList: JSONAble {
         super.encodeWithCoder(coder)
     }
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let categories: [Category]
         if let jsonCategories = json["categories"].array {

@@ -14,6 +14,7 @@ let ProfileVersion: Int = 2
 public final class Profile: JSONAble {
 
     // active record
+    public let id: String
     public let createdAt: NSDate
     // required
     public let shortBio: String
@@ -50,8 +51,9 @@ public final class Profile: JSONAble {
     // optional
     public var gaUniqueId: String?
 
-
-    public init(createdAt: NSDate,
+    public init(
+        id: String,
+        createdAt: NSDate,
         shortBio: String,
         email: String,
         confirmedAt: NSDate,
@@ -84,6 +86,7 @@ public final class Profile: JSONAble {
         notifyOfCommentsOnPostWatchViaEmail: Bool,
         discoverable: Bool)
     {
+        self.id = id
         self.createdAt = createdAt
         self.shortBio = shortBio
         self.email = email
@@ -124,6 +127,7 @@ public final class Profile: JSONAble {
     public required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
+        self.id = decoder.decodeOptionalKey("id") ?? ""
         self.createdAt = decoder.decodeKey("createdAt")
         // required
         self.shortBio = decoder.decodeKey("shortBio")
@@ -173,6 +177,7 @@ public final class Profile: JSONAble {
     public override func encodeWithCoder(encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
+        coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
         // required
         coder.encodeObject(shortBio, forKey: "shortBio")
@@ -211,11 +216,12 @@ public final class Profile: JSONAble {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.ProfileFromJSON.rawValue)
         // create profile
         let profile = Profile(
+            id: json["id"].stringValue ?? "",
             createdAt: (json["created_at"].stringValue.toNSDate() ?? NSDate()),
             shortBio: json["short_bio"].stringValue,
             email: json["email"].stringValue,
@@ -252,4 +258,8 @@ public final class Profile: JSONAble {
         profile.gaUniqueId = json["ga_unique_id"].string        
         return profile
     }
+}
+
+extension Profile: JSONSaveable {
+    var uniqId: String? { return id }
 }

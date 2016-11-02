@@ -33,7 +33,7 @@ public class AmazonCredentials: JSONAble {
         super.init(coder: aDecoder)
     }
 
-    override public class func fromJSON(data: [String : AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String : AnyObject]) -> JSONAble {
         Crashlytics.sharedInstance().setObjectValue(data.description, forKey: CrashlyticsKey.AmazonCredentialsFromJSON.rawValue)
         return AmazonCredentials(
             accessKey: data["access_key"] as! String,
@@ -43,4 +43,8 @@ public class AmazonCredentials: JSONAble {
             signature: data["signature"] as! String
         )
     }
+}
+
+extension AmazonCredentials: JSONSaveable {
+    var uniqId: String? { return accessKey }
 }

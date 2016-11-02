@@ -151,7 +151,7 @@ public final class Asset: JSONAble {
 
 // MARK: JSONAble
 
-    override class public func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override class public func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.AssetFromJSON.rawValue)
         return parseAsset(json["id"].stringValue, node: data["attachment"] as? [String: AnyObject])
@@ -193,4 +193,8 @@ public final class Asset: JSONAble {
         }
         return asset
     }
+}
+
+extension Asset: JSONSaveable {
+    var uniqId: String? { return id }
 }

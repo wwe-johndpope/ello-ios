@@ -42,7 +42,7 @@ public final class Promotional: JSONAble {
         super.encodeWithCoder(coder)
     }
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let userId = json["user_id"].stringValue
@@ -61,4 +61,8 @@ public final class Promotional: JSONAble {
 
         return promotional
     }
+}
+
+extension Promotional: JSONSaveable {
+    var uniqId: String? { return id }
 }

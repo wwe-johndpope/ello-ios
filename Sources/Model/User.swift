@@ -230,7 +230,7 @@ public final class User: JSONAble {
         return other
     }
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.UserFromJSON.rawValue)
         // create user
@@ -274,11 +274,6 @@ public final class User: JSONAble {
         // profile
         if (json["created_at"].stringValue).characters.count > 0 {
             user.profile = Profile.fromJSON(data) as? Profile
-        }
-
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
         }
 
         user.totalViewsCount = json["total_views_count"].int
@@ -358,4 +353,8 @@ extension User {
         }
         return avatar?.largeOrBest?.url
     }
+}
+
+extension User: JSONSaveable {
+    var uniqId: String? { return id }
 }

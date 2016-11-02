@@ -56,6 +56,19 @@ public struct ElloLinkedStore {
         }
         return object
     }
+
+    public func saveObject(jsonable: JSONAble, id: String, type: MappingType) {
+        self.writeConnection.readWriteWithBlock { transaction in
+            if let existing = transaction.objectForKey(id, inCollection: type.rawValue) as? JSONAble {
+                let merged = existing.merge(jsonable)
+                transaction.replaceObject(merged, forKey: id, inCollection: type.rawValue)
+            }
+            else {
+                transaction.setObject(jsonable, forKey: id, inCollection: type.rawValue)
+            }
+        }
+    }
+
 }
 
 // MARK: Private
@@ -112,16 +125,13 @@ private extension ElloLinkedStore {
 
     func parseLinkedSync(linked: [String: [[String: AnyObject]]]) {
         for (type, typeObjects): (String, [[String: AnyObject]]) in linked {
-            if let mappingType = MappingType(rawValue: type) {
-                for object: [String: AnyObject] in typeObjects {
-                    if let id = object["id"] as? String {
-                        let jsonable = mappingType.fromJSON(data: object, fromLinked: true)
+            guard let mappingType = MappingType(rawValue: type) else { continue }
 
-                        self.writeConnection.readWriteWithBlock { transaction in
-                            transaction.setObject(jsonable, forKey: id, inCollection: type)
-                        }
-                    }
-                }
+            for object: [String: AnyObject] in typeObjects {
+                guard let id = object["id"] as? String else { continue }
+
+                let jsonable = mappingType.fromJSON(data: object)
+                self.saveObject(jsonable, id: id, type: mappingType)
             }
         }
     }

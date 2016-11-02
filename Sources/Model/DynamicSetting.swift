@@ -39,7 +39,7 @@ public final class DynamicSetAnother: JSONAble {
         super.encodeWithCoder(coder)
     }
 
-    public override class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    public override class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let when: Bool? = json["when"].bool
         let key: String = json["key"].stringValue
@@ -109,7 +109,7 @@ public final class DynamicSetting: JSONAble {
 }
 
 extension DynamicSetting {
-    public override class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> DynamicSetting {
+    public override class func fromJSON(data: [String: AnyObject]) -> DynamicSetting {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.DynamicSettingFromJSON.rawValue)
         let label = json["label"].stringValue

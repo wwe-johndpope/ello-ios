@@ -24,11 +24,25 @@ public struct Mapper {
         return (json, error)
     }
 
-    public static func mapToObjectArray(dicts: [[String:AnyObject]], fromJSON: FromJSONClosure) -> [JSONAble] {
-        return dicts.map { fromJSON(data: $0, fromLinked: false) }
+    public static func mapToObjectArray(dicts: [[String:AnyObject]], type: MappingType) -> [JSONAble] {
+        let fromJSON = type.fromJSON
+        return dicts.map { data in
+            let jsonable = fromJSON(data: data)
+            if let id = (jsonable as? JSONSaveable)?.uniqId {
+                ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: type)
+            }
+            return jsonable
+        }
     }
 
-    public static func mapToObject(object: AnyObject?, fromJSON: FromJSONClosure) -> JSONAble? {
-        return (object as? [String:AnyObject]).flatMap { fromJSON(data: $0, fromLinked: false) }
+    public static func mapToObject(object: AnyObject?, type: MappingType) -> JSONAble? {
+        let fromJSON = type.fromJSON
+        return (object as? [String:AnyObject]).flatMap { data in
+            let jsonable = fromJSON(data: data)
+            if let id = (jsonable as? JSONSaveable)?.uniqId {
+                ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: type)
+            }
+            return jsonable
+        }
     }
 }
