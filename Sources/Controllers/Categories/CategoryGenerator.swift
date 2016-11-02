@@ -19,16 +19,13 @@ public final class CategoryGenerator: StreamGenerator {
     func headerItems() -> [StreamCellItem] {
         guard let category = category else { return [] }
 
-        var items = [
-            StreamCellItem(jsonable: category, type: .CategoryHeader),
-        ]
+        var items: [StreamCellItem] = []
         if hasPosts != false {
             items += [
-                StreamCellItem(type: .FullWidthSpacer(height: 3)),
                 StreamCellItem(type: .ColumnToggle),
-                StreamCellItem(type: .FullWidthSpacer(height: 5))
             ]
         }
+        items += [StreamCellItem(jsonable: category, type: .CategoryHeader)]
         return items
     }
 
