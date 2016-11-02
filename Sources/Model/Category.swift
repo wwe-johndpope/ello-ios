@@ -4,7 +4,9 @@
 
 import SwiftyJSON
 
-public let CategoryVersion = 2
+public let CategoryVersion = 3
+
+// Version 3: isSponsored, body, header, ctaCaption, ctaHref, promotionals
 
 public final class Category: JSONAble, Groupable {
     static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "recommended", order: 0, allowInOnboarding: false, level: .Meta, tileImage: nil)
@@ -16,6 +18,11 @@ public final class Category: JSONAble, Groupable {
     public let name: String
     public let slug: String
     public var tileURL: NSURL? { return tileImage?.url }
+    public var isSponsored: Bool?
+    public var body: String?
+    public var header: String?
+    public var ctaCaption: String?
+    public var ctaHref: String?
     public let tileImage: Attachment?
     public let order: Int
     public let allowInOnboarding: Bool
@@ -26,6 +33,9 @@ public final class Category: JSONAble, Groupable {
         default: return .CategoryPosts(slug: slug)
         }
     }
+
+    // links
+    public var promotionals: [Promotional]? { return getLinkArray("promotionals") as? [Promotional] }
 
     var visibleOnSeeMore: Bool {
         return level == .Primary || level == .Secondary
@@ -64,6 +74,11 @@ public final class Category: JSONAble, Groupable {
         }
         level = CategoryLevel(rawValue: decoder.decodeKey("level"))!
         tileImage = decoder.decodeOptionalKey("tileImage")
+        isSponsored = decoder.decodeOptionalKey("isSponsored")
+        body = decoder.decodeOptionalKey("body")
+        header = decoder.decodeOptionalKey("header")
+        ctaCaption = decoder.decodeOptionalKey("ctaCaption")
+        ctaHref = decoder.decodeOptionalKey("ctaHref")
         super.init(coder: coder)
     }
 
@@ -76,6 +91,11 @@ public final class Category: JSONAble, Groupable {
         encoder.encodeObject(allowInOnboarding, forKey: "allowInOnboarding")
         encoder.encodeObject(level.rawValue, forKey: "level")
         encoder.encodeObject(tileImage, forKey: "tileImage")
+        encoder.encodeObject(isSponsored, forKey: "isSponsored")
+        encoder.encodeObject(body, forKey: "body")
+        encoder.encodeObject(header, forKey: "header")
+        encoder.encodeObject(ctaCaption, forKey: "ctaCaption")
+        encoder.encodeObject(ctaHref, forKey: "ctaHref")
         super.encodeWithCoder(coder)
     }
 
@@ -96,7 +116,24 @@ public final class Category: JSONAble, Groupable {
         else {
             tileImage = nil
         }
-        return Category(id: id, name: name, slug: slug, order: order, allowInOnboarding: allowInOnboarding, level: level, tileImage: tileImage)
-    }
 
+        // optional
+        let isSponsored =  json["is_sponsored"].bool
+        let body =  json["description"].string
+        let header =  json["header"].string
+        let ctaCaption =  json["cta_caption"].string
+        let ctaHref =  json["cta_href"].string
+
+        let category = Category(id: id, name: name, slug: slug, order: order, allowInOnboarding: allowInOnboarding, level: level, tileImage: tileImage)
+
+        // links
+        category.links = data["links"] as? [String: AnyObject]
+        category.isSponsored = isSponsored
+        category.body = body
+        category.header = header
+        category.ctaCaption = ctaCaption
+        category.ctaHref = ctaHref
+
+        return category
+    }
 }

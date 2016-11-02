@@ -409,6 +409,7 @@
 		12D24A5A1A9F765300F53D44 /* AddFriendsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D24A591A9F765300F53D44 /* AddFriendsViewControllerSpec.swift */; };
 		12D43A461AC864CC0039F54F /* StreamToggleCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D43A451AC864CC0039F54F /* StreamToggleCellPresenter.swift */; };
 		12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D43A481AC865540039F54F /* StreamToggleCell.swift */; };
+		12D86E7E1DCA50DD00465787 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
 		12DB1CA71D9C6B9E007E3E4C /* UINavigationItemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DB1CA61D9C6B9E007E3E4C /* UINavigationItemSpec.swift */; };
 		12DD85C61B015A76004D3EEF /* UITabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD85C51B015A76004D3EEF /* UITabBarItem.swift */; };
 		12DEB2491C5BED4000D4CDCE /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
@@ -2957,6 +2958,7 @@
 				1D7A28D01A979BC40050E8A2 /* NotificationAttributedTitle.swift */,
 				12F6AE381A43392D00493660 /* Post.swift */,
 				760F66181AD843990071F633 /* Profile.swift */,
+				12E3A2741DBE811900D42599 /* Promotional.swift */,
 				1DDC851C1D91F5D800C29552 /* Protocols */,
 				F83648ED1B0CDDC0000CDBC5 /* PushPayload.swift */,
 				1247E4E71A8B8CB700DDC24A /* Regions */,
@@ -2968,7 +2970,6 @@
 				76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */,
 				1DF806521CDD1A42002D60AD /* Username.swift */,
 				1DDC85161D91D4D200C29552 /* Watch.swift */,
-				12E3A2741DBE811900D42599 /* Promotional.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4376,6 +4377,7 @@
 			files = (
 				122B30E41C6A3FC400C1B9D8 /* Asset.swift in Sources */,
 				122D1BBF1C6411D6001386CE /* ElloHUD.swift in Sources */,
+				12D86E7E1DCA50DD00465787 /* Promotional.swift in Sources */,
 				126F2C011C5C1D7400D22BAB /* NSDate.swift in Sources */,
 				1207C9A11C752F1300939ADB /* ElloURI.swift in Sources */,
 				122B30B61C6A3FBB00C1B9D8 /* DynamicSetting.swift in Sources */,
