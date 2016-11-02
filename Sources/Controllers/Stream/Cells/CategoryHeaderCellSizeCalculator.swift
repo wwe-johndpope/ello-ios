@@ -6,10 +6,11 @@ import FutureKit
 
 
 public class CategoryHeaderCellSizeCalculator: NSObject {
+    static let ratio: CGFloat = 320 / 192
+
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
     private var screenWidth: CGFloat = 0.0
-    private var maxWidth: CGFloat = 0.0
     private var columnCount: Int = 1
     private var cellItems: [StreamCellItem] = []
     private var completion: ElloEmptyCompletion = {}
@@ -43,24 +44,15 @@ public class CategoryHeaderCellSizeCalculator: NSObject {
     }
 
     private func loadNext() {
-        self.maxWidth = screenWidth
         guard !self.cellItems.isEmpty else {
             completion()
             return
         }
 
         let item = cellItems.removeAtIndex(0)
-
-        item.calculatedCellHeights.oneColumn = 150
-        item.calculatedCellHeights.multiColumn = 150
+        let height = screenWidth / CategoryHeaderCellSizeCalculator.ratio
+        item.calculatedCellHeights.oneColumn = height
+        item.calculatedCellHeights.multiColumn = height
         loadNext()
-    }
-
-    private func oneColumnImageHeight(imageRegion: ImageRegion) -> CGFloat {
-        var imageWidth = maxWidth
-        if let assetWidth = imageRegion.asset?.oneColumnAttachment?.width {
-            imageWidth = min(maxWidth, CGFloat(assetWidth))
-        }
-        return ceil(imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion))
     }
 }
