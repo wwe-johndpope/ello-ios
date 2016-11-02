@@ -10,16 +10,24 @@ public class CategoryHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryHeaderCell"
 
     public struct Size {
+        static let defaultMargin: CGFloat = 15
+        static let avatarMargin: CGFloat = 10
+        static let avatarSize: CGFloat = 30
         static let circleBottomInset: CGFloat = 10
         static let failImageWidth: CGFloat = 140
         static let failImageHeight: CGFloat = 160
     }
 
     let imageView = FLAnimatedImageView()
+    let titleLabel = UILabel()
+    let descriptionLabel = UILabel()
+    let learnMoreButton = UIButton()
+    let postedByButton = UIButton()
+    let postedByAvatar = AvatarButton()
+
     let circle = PulsingCircle()
     let failImage = UIImageView()
     let failBackgroundView = UIView()
-    var serverProvidedAspectRatio: CGFloat?
     var failWidthConstraint: Constraint!
     var failHeightConstraint: Constraint!
 
@@ -69,11 +77,35 @@ public class CategoryHeaderCell: UICollectionViewCell {
 
 private extension CategoryHeaderCell {
 
+    func style() {
+        titleLabel.text = "TEMP"
+        titleLabel.textColor = .whiteColor()
+        titleLabel.font = .defaultFont(20)
+        descriptionLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur molestie faucibus. Phasellus iaculis pellentesque felis eu fringilla. Ut in sollicitudin nisi. Praesent in mauris tortor. Nam interdum, magna eu pellentesque scelerisque, dui ipsum adipiscing ante, vel ullamcorper nisl sapien id arcu. Nullam egestas diam eu felis mollis sit amet cursus enim vehicula. Quisque eu tellus id erat pellentesque consequat. Maecenas fermentum faucibus magna, eget dictum nisi congue sed. Quisque a justo a nisi eleifend facilisis sit amet at augue. Sed a sapien vitae augue hendrerit porta vel eu ligula. Proin enim urna, faucibus in vestibulum tincidunt, commodo sit amet orci. Vestibulum ac sem urna, quis mattis urna. Nam eget ullamcorper ligula. Nam volutpat, arcu vel auctor dignissim, tortor nisi sodales enim, et vestibulum nulla dui id ligula. Nam ullamcorper, augue ut interdum vulputate, eros mauris lobortis sapien, ac sodales dui eros ac elit."
+        descriptionLabel.textColor = .whiteColor()
+        descriptionLabel.font = .defaultFont()
+        descriptionLabel.numberOfLines = 0
+        learnMoreButton.setTitle("Learn more CTA", forState: .Normal)
+        learnMoreButton.titleLabel?.font = .defaultFont()
+        postedByButton.setTitle("Posted by @colinta", forState: .Normal)
+        postedByButton.titleLabel?.font = .defaultFont()
+
+        imageView.clipsToBounds = true
+        imageView.contentMode = .ScaleAspectFill
+        failBackgroundView.backgroundColor = .whiteColor()
+    }
+
     func arrange() {
         contentView.addSubview(circle)
         contentView.addSubview(failBackgroundView)
-        contentView.addSubview(imageView)
         contentView.addSubview(failImage)
+
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(learnMoreButton)
+        contentView.addSubview(postedByButton)
+        contentView.addSubview(postedByAvatar)
 
         circle.snp_makeConstraints { make in
             make.edges.equalTo(contentView)
@@ -83,21 +115,40 @@ private extension CategoryHeaderCell {
             make.edges.equalTo(contentView)
         }
 
-        imageView.snp_makeConstraints { make in
-            make.edges.equalTo(contentView)
-        }
-
         failImage.snp_makeConstraints { make in
             make.center.equalTo(contentView)
             failWidthConstraint = make.leading.equalTo(Size.failImageWidth).constraint
             failHeightConstraint = make.leading.equalTo(Size.failImageHeight).constraint
         }
 
-    }
+        imageView.snp_makeConstraints { make in
+            make.edges.equalTo(contentView)
+        }
 
-    func style() {
-        imageView.contentMode = .ScaleAspectFill
-        failBackgroundView.backgroundColor = .whiteColor()
+        titleLabel.snp_makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.top.equalTo(self).offset(Size.defaultMargin)
+        }
+
+        descriptionLabel.snp_makeConstraints { make in
+            make.top.equalTo(titleLabel.snp_bottom).offset(Size.defaultMargin)
+            make.leading.trailing.equalTo(self).inset(Size.defaultMargin)
+        }
+
+        learnMoreButton.snp_makeConstraints { make in
+            make.leading.bottom.equalTo(self).inset(Size.defaultMargin)
+        }
+
+        postedByButton.snp_makeConstraints { make in
+            make.trailing.equalTo(postedByAvatar.snp_leading).offset(-Size.avatarMargin)
+            make.bottom.equalTo(self).inset(Size.defaultMargin)
+        }
+
+        postedByAvatar.snp_makeConstraints { make in
+            make.width.height.equalTo(Size.avatarSize)
+            make.leading.bottom.equalTo(self).inset(Size.avatarMargin)
+        }
+
     }
 
     func loadImage(url: NSURL) {
@@ -113,10 +164,6 @@ private extension CategoryHeaderCell {
             if success {
                 let imageSize = isAnimated ? result.animatedImage.size : result.image.size
                 self.imageSize = imageSize
-
-                if self.serverProvidedAspectRatio == nil {
-//                    postNotification(StreamNotification.AnimateCellHeightNotification, value: self)
-                }
 
                 if result.resultType != .MemoryCache {
                     self.imageView.alpha = 0
