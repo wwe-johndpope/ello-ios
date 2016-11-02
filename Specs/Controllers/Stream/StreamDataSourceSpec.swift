@@ -47,6 +47,7 @@ class StreamDataSourceSpec: QuickSpec {
                 let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
                 let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
                 let imageSizeCalculator = StreamImageCellSizeCalculator()
+                let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
 
                 StreamKind.Following.setIsGridView(true)
                 StreamKind.Starred.setIsGridView(false)
@@ -56,7 +57,8 @@ class StreamDataSourceSpec: QuickSpec {
                     textSizeCalculator: textSizeCalculator,
                     notificationSizeCalculator: notificationSizeCalculator,
                     profileHeaderSizeCalculator: profileHeaderSizeCalculator,
-                    imageSizeCalculator: imageSizeCalculator
+                    imageSizeCalculator: imageSizeCalculator,
+                    categoryHeaderSizeCalculator: categoryHeaderSizeCalculator
                 )
                 vc.dataSource = subject
                 vc.collectionView.dataSource = vc.dataSource

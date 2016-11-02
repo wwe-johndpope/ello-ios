@@ -93,20 +93,20 @@ class PostDetailDestination: StreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         switch type {
         case .PostHeader:
-            headerItems = items()
+            headerItems = items
         case .PostLovers:
-            postLoverItems = items()
+            postLoverItems = items
         case .PostReposters:
-            postReposterItems = items()
+            postReposterItems = items
         case .PostComments:
-            postCommentItems = items()
+            postCommentItems = items
         case .PostSocialPadding:
-            postSocialPaddingItems = items()
+            postSocialPaddingItems = items
         case .PostCommentBar:
-            postCommentBarItems = items()
+            postCommentBarItems = items
         default:
             otherPlaceHolderLoaded = true
         }

@@ -77,12 +77,12 @@ class ProfileDestination: StreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         switch type {
         case .ProfileHeader:
-            headerItems = items()
+            headerItems = items
         case .ProfilePosts:
-            postItems = items()
+            postItems = items
         default:
             otherPlaceHolderLoaded = true
         }

@@ -43,7 +43,7 @@ class ElloAPISpec: QuickSpec {
                         (.FindFriends(contacts: [:]), "/api/v2/profile/find_friends"),
                         (.FriendStream, "/api/v2/streams/friend"),
                         (.InviteFriends(contact: "someContact"), "/api/v2/invitations"),
-                        (.InfiniteScroll(queryItems: []) { return ElloAPI.FriendStream }, "/api/v2/streams/friend"),
+                        (ElloAPI.InfiniteScroll(queryItems: []) { return ElloAPI.FriendStream }, "/api/v2/streams/friend"),
                         (.NoiseStream, "/api/v2/streams/noise"),
                         (.NotificationsStream(category: nil), "/api/v2/notifications"),
                         (.PostDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
