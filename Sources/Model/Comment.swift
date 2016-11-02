@@ -25,13 +25,13 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         return getLinkArray("assets") as? [Asset]
     }
     public var author: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.authorId, inCollection: MappingType.UsersType.rawValue) as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.authorId, type: .UsersType) as? User
     }
     public var parentPost: Post? {
-        return ElloLinkedStore.sharedInstance.getObject(self.postId, inCollection: MappingType.PostsType.rawValue) as? Post
+        return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .PostsType) as? Post
     }
     public var loadedFromPost: Post? {
-        return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, inCollection: MappingType.PostsType.rawValue) as? Post) ?? parentPost
+        return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, type: .PostsType) as? Post) ?? parentPost
     }
     // computed properties
     public var groupId: String { return "Post-\(postId)" }
@@ -121,7 +121,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         comment.links = data["links"] as? [String: AnyObject]
         // store self in collection
         if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, inCollection: MappingType.CommentsType.rawValue)
+            ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
         }
         return comment
     }

@@ -26,7 +26,7 @@ public class RelationshipService: NSObject {
 
         if let subject = optimisticRelationship.subject {
             subject.relationshipPriority = relationshipPriority
-            ElloLinkedStore.sharedInstance.setObject(subject, forKey: subject.id, inCollection: MappingType.UsersType.rawValue)
+            ElloLinkedStore.sharedInstance.setObject(subject, forKey: subject.id, type: .UsersType)
             success(data: optimisticRelationship, responseConfig: ResponseConfig(isFinalValue: false))
         }
 

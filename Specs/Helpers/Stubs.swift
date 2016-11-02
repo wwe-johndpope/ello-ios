@@ -88,24 +88,24 @@ extension User: Stubbable {
             var postIds = [String]()
             for post in posts {
                 postIds.append(post.id)
-                ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
             }
             user.addLinkArray("posts", array: postIds)
         }
         if let mostRecentPost = values["mostRecentPost"] as? Post {
-            user.addLinkObject("most_recent_post", key: mostRecentPost.id, collection: MappingType.PostsType.rawValue)
-            ElloLinkedStore.sharedInstance.setObject(mostRecentPost, forKey: mostRecentPost.id, inCollection: MappingType.PostsType.rawValue)
+            user.addLinkObject("most_recent_post", key: mostRecentPost.id, type: .PostsType)
+            ElloLinkedStore.sharedInstance.setObject(mostRecentPost, forKey: mostRecentPost.id, type: .PostsType)
         }
 
         if let categories = values["categories"] as? [Ello.Category] {
             for category in categories {
-                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, inCollection: MappingType.CategoriesType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, type: .CategoriesType)
             }
             user.addLinkArray("categories", array: categories.map { $0.id })
         }
         
         user.profile = values["profile"] as? Profile
-        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
         return user
     }
 }
@@ -127,10 +127,10 @@ extension Love: Stubbable {
         // create necessary links
 
         let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
 
         let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
 
         let love = Love(
             id: (values["id"] as? String) ?? NSUUID().UUIDString,
@@ -151,10 +151,10 @@ extension Watch: Stubbable {
         // create necessary links
 
         let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
 
         let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
 
         let watch = Watch(
             id: (values["id"] as? String) ?? NSUUID().UUIDString,
@@ -214,7 +214,7 @@ extension Post: Stubbable {
         // create necessary links
 
         let author: User = (values["author"] as? User) ?? User.stub(["id": values["authorId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(author, forKey: author.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(author, forKey: author.id, type: .UsersType)
 
         let post = Post(
             id: (values["id"] as? String) ?? NSUUID().UUIDString,
@@ -232,13 +232,13 @@ extension Post: Stubbable {
         )
 
         if let repostAuthor = values["repostAuthor"] as? User {
-            ElloLinkedStore.sharedInstance.setObject(repostAuthor, forKey: repostAuthor.id, inCollection: MappingType.UsersType.rawValue)
-            post.addLinkObject("repost_author", key: repostAuthor.id, collection: MappingType.UsersType.rawValue)
+            ElloLinkedStore.sharedInstance.setObject(repostAuthor, forKey: repostAuthor.id, type: .UsersType)
+            post.addLinkObject("repost_author", key: repostAuthor.id, type: .UsersType)
         }
 
         if let categories = values["categories"] as? [Ello.Category] {
             for category in categories {
-                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, inCollection: MappingType.CategoriesType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, type: .CategoriesType)
             }
             post.addLinkArray("categories", array: categories.map { $0.id })
         }
@@ -260,7 +260,7 @@ extension Post: Stubbable {
             var assetIds = [String]()
             for asset in assets {
                 assetIds.append(asset.id)
-                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
             }
             post.addLinkArray("assets", array: assetIds)
         }
@@ -268,11 +268,11 @@ extension Post: Stubbable {
             var commentIds = [String]()
             for comment in comments {
                 commentIds.append(comment.id)
-                ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, inCollection: MappingType.CommentsType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
             }
             post.addLinkArray("comments", array: commentIds)
         }
-        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
         return post
     }
 
@@ -291,11 +291,11 @@ extension ElloComment: Stubbable {
 
         // create necessary links
         let author: User = (values["author"] as? User) ?? User.stub(["id": values["authorId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(author, forKey: author.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(author, forKey: author.id, type: .UsersType)
         let parentPost: Post = (values["parentPost"] as? Post) ?? Post.stub(["id": values["parentPostId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(parentPost, forKey: parentPost.id, inCollection: MappingType.PostsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(parentPost, forKey: parentPost.id, type: .PostsType)
         let loadedFromPost: Post = (values["loadedFromPost"] as? Post) ?? parentPost
-        ElloLinkedStore.sharedInstance.setObject(loadedFromPost, forKey: loadedFromPost.id, inCollection: MappingType.PostsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(loadedFromPost, forKey: loadedFromPost.id, type: .PostsType)
 
         let comment = ElloComment(
             id: (values["id"] as? String) ?? NSUUID().UUIDString,
@@ -313,11 +313,11 @@ extension ElloComment: Stubbable {
             var assetIds = [String]()
             for asset in assets {
                 assetIds.append(asset.id)
-                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
             }
             comment.addLinkArray("assets", array: assetIds)
         }
-        ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, inCollection: MappingType.CommentsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
         return comment
     }
 }
@@ -336,8 +336,8 @@ extension ImageRegion: Stubbable {
         imageRegion.url = urlFromValue(values["url"])
         imageRegion.buyButtonURL = urlFromValue(values["buyButtonURL"])
         if let asset = values["asset"] as? Asset {
-            imageRegion.addLinkObject("assets", key: asset.id, collection: MappingType.AssetsType.rawValue)
-            ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
+            imageRegion.addLinkObject("assets", key: asset.id, type: .AssetsType)
+            ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
         }
         return imageRegion
     }
@@ -387,18 +387,18 @@ extension Activity: Stubbable {
         )
 
         if let user = values["subject"] as? User {
-            activity.addLinkObject("subject", key: user.id, collection: MappingType.UsersType.rawValue)
-            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
+            activity.addLinkObject("subject", key: user.id, type: .UsersType)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
         }
         else if let post = values["subject"] as? Post {
-            activity.addLinkObject("subject", key: post.id, collection: MappingType.PostsType.rawValue)
-            ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
+            activity.addLinkObject("subject", key: post.id, type: .PostsType)
+            ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
         }
         else if let comment = values["subject"] as? ElloComment {
-            activity.addLinkObject("subject", key: comment.id, collection: MappingType.CommentsType.rawValue)
-            ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, inCollection: MappingType.CommentsType.rawValue)
+            activity.addLinkObject("subject", key: comment.id, type: .CommentsType)
+            ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, type: .CommentsType)
         }
-        ElloLinkedStore.sharedInstance.setObject(activity, forKey: activity.id, inCollection: MappingType.ActivitiesType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(activity, forKey: activity.id, type: .ActivitiesType)
         return activity
     }
 }
@@ -417,7 +417,7 @@ extension Asset: Stubbable {
         asset.large = (values["large"] as? Attachment) ?? defaultAttachment
         asset.regular = (values["regular"] as? Attachment) ?? defaultAttachment
         asset.small = (values["small"] as? Attachment) ?? defaultAttachment
-        ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
         return asset
     }
 }
@@ -444,9 +444,9 @@ extension Relationship: Stubbable {
     class func stub(values: [String: AnyObject]) -> Relationship {
         // create necessary links
         let owner: User = (values["owner"] as? User) ?? User.stub(["relationshipPriority": "self", "id": values["ownerId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(owner, forKey: owner.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(owner, forKey: owner.id, type: .UsersType)
         let subject: User = (values["subject"] as? User) ?? User.stub(["relationshipPriority": "friend", "id": values["subjectId"] ?? NSUUID().UUIDString])
-        ElloLinkedStore.sharedInstance.setObject(owner, forKey: owner.id, inCollection: MappingType.UsersType.rawValue)
+        ElloLinkedStore.sharedInstance.setObject(owner, forKey: owner.id, type: .UsersType)
 
         return Relationship(
             id: (values["id"] as? String) ?? NSUUID().UUIDString,

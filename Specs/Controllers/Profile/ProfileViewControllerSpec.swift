@@ -12,7 +12,7 @@ class ProfileViewControllerSpec: QuickSpec {
     override func spec() {
         beforeEach {
             ElloLinkedStore.sharedInstance.writeConnection.readWriteWithBlock { transaction in
-                transaction.removeObjectForKey("42", inCollection: "users")
+                transaction.removeObjectForKey("42", inCollection: MappingType.UsersType.rawValue)
             }
         }
 

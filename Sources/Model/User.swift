@@ -278,7 +278,7 @@ public final class User: JSONAble {
 
         // store self in collection
         if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, inCollection: MappingType.UsersType.rawValue)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
         }
 
         user.totalViewsCount = json["total_views_count"].int

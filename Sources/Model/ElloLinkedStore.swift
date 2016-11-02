@@ -41,17 +41,17 @@ public struct ElloLinkedStore {
     }
 
     // primarialy used for testing for now.. could be used for setting a model after it's fromJSON
-    public func setObject(object: JSONAble, forKey key: String, inCollection collection: String ) {
+    public func setObject(object: JSONAble, forKey key: String, type: MappingType) {
         writeConnection.readWriteWithBlock { transaction in
-            transaction.setObject(object, forKey: key, inCollection: collection)
+            transaction.setObject(object, forKey: key, inCollection: type.rawValue)
         }
     }
 
-    public func getObject(key: String, inCollection collection: String) -> JSONAble? {
+    public func getObject(key: String, type: MappingType) -> JSONAble? {
         var object: JSONAble?
         readConnection.readWithBlock { transaction in
-            if transaction.hasObjectForKey(key, inCollection: collection) {
-                object = transaction.objectForKey(key, inCollection: collection) as? JSONAble
+            if transaction.hasObjectForKey(key, inCollection: type.rawValue) {
+                object = transaction.objectForKey(key, inCollection: type.rawValue) as? JSONAble
             }
         }
         return object

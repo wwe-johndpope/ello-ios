@@ -135,7 +135,7 @@ public final class Activity: JSONAble {
         activity.links = data["links"] as? [String: AnyObject]
         // store self in collection
         if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(activity, forKey: activity.id, inCollection: MappingType.ActivitiesType.rawValue)
+            ElloLinkedStore.sharedInstance.setObject(activity, forKey: activity.id, type: .ActivitiesType)
         }
         return activity
     }

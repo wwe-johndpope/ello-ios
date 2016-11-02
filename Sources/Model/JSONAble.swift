@@ -74,15 +74,15 @@ extension JSONAble {
         return arr
     }
 
-    public func addLinkObject(identifier: String, key: String, collection: String) {
+    public func addLinkObject(identifier: String, key: String, type: MappingType) {
         if links == nil { links = [String: AnyObject]() }
-        links![identifier] = ["id": key, "type": collection]
+        links![identifier] = ["id": key, "type": type.rawValue]
 
     }
 
-    public func addLinkObject(model: JSONAble, identifier: String, key: String, collection: String) {
-        addLinkObject(identifier, key: key, collection: collection)
-        ElloLinkedStore.sharedInstance.setObject(model, forKey: key, inCollection: collection)
+    public func addLinkObject(model: JSONAble, identifier: String, key: String, type: MappingType) {
+        addLinkObject(identifier, key: key, type: type)
+        ElloLinkedStore.sharedInstance.setObject(model, forKey: key, type: type)
     }
 
     public func clearLinkObject(identifier: String) {
