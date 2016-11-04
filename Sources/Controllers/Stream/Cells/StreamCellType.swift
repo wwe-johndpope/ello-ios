@@ -23,7 +23,7 @@ public enum StreamCellType: Equatable {
     case SelectableCategoryCard
     case SeeAllCategories
     case CategoryList
-    case CategoryHeader
+    case CategoryPromotionalHeader
     case ColumnToggle
     case CommentHeader
     case CreateComment
@@ -35,6 +35,7 @@ public enum StreamCellType: Equatable {
     case OnboardingInviteFriends
     case NoPosts
     case Notification
+    case PagePromotionalHeader
     case Placeholder
     case ProfileHeader
     case ProfileHeaderGhost
@@ -72,7 +73,7 @@ public enum StreamCellType: Equatable {
     static let all = [
         Category, SeeAllCategories,
         CategoryCard,
-        CategoryHeader,
+        CategoryPromotionalHeader,
         SelectableCategoryCard,
         CategoryList,
         ColumnToggle,
@@ -86,6 +87,7 @@ public enum StreamCellType: Equatable {
         OnboardingInviteFriends,
         NoPosts,
         Notification,
+        PagePromotionalHeader,
         ProfileHeader,
         ProfileHeaderGhost,
         Search(placeholder: ""),
@@ -121,7 +123,7 @@ public enum StreamCellType: Equatable {
         switch self {
         case Category, SeeAllCategories: return CategoryCell.reuseIdentifier
         case CategoryCard: return CategoryCardCell.reuseIdentifier
-        case CategoryHeader: return CategoryHeaderCell.reuseIdentifier
+        case CategoryPromotionalHeader, PagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
         case SelectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case CategoryList: return CategoryListCell.reuseIdentifier
         case ColumnToggle: return ColumnToggleCell.reuseIdentifier
@@ -173,7 +175,7 @@ public enum StreamCellType: Equatable {
         switch self {
         case Category: return CategoryCellPresenter.configure
         case CategoryCard: return CategoryCardCellPresenter.configure
-        case CategoryHeader: return CategoryHeaderCellPresenter.configure
+        case CategoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
         case SelectableCategoryCard: return CategoryCardCellPresenter.configure
         case SeeAllCategories: return SeeAllCategoriesCellPresenter.configure
         case CategoryList: return CategoryListCellPresenter.configure
@@ -186,6 +188,7 @@ public enum StreamCellType: Equatable {
         case InviteFriends, OnboardingInviteFriends: return StreamInviteFriendsCellPresenter.configure
         case NoPosts: return NoPostsCellPresenter.configure
         case Notification: return NotificationCellPresenter.configure
+        case PagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
         case ProfileHeader: return ProfileHeaderCellPresenter.configure
         case Search: return SearchStreamCellPresenter.configure
         case Spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .whiteColor() }
@@ -203,7 +206,7 @@ public enum StreamCellType: Equatable {
     public var classType: UICollectionViewCell.Type {
         switch self {
         case Category, SeeAllCategories: return CategoryCell.self
-        case CategoryHeader: return CategoryHeaderCell.self
+        case CategoryPromotionalHeader, PagePromotionalHeader: return CategoryHeaderCell.self
         case CategoryCard: return CategoryCardCell.self
         case SelectableCategoryCard: return CategoryCardCell.self
         case CategoryList: return CategoryListCell.self
@@ -235,7 +238,7 @@ public enum StreamCellType: Equatable {
         switch self {
         case Category, SeeAllCategories:
             return 56
-        case CategoryHeader:
+        case CategoryPromotionalHeader, PagePromotionalHeader:
             return 150
         case CategoryCard, SelectableCategoryCard:
             return 110
@@ -290,7 +293,7 @@ public enum StreamCellType: Equatable {
     public var isFullWidth: Bool {
         switch self {
         case Category,
-             CategoryHeader,
+             CategoryPromotionalHeader,
              SeeAllCategories,
              CategoryList,
              ColumnToggle,
@@ -300,6 +303,7 @@ public enum StreamCellType: Equatable {
              OnboardingInviteFriends,
              NoPosts,
              Notification,
+             PagePromotionalHeader,
              ProfileHeader,
              ProfileHeaderGhost,
              Search,
@@ -335,7 +339,7 @@ public enum StreamCellType: Equatable {
     static func registerAll(collectionView: UICollectionView) {
         let noNibTypes = [
             Category,
-            CategoryHeader,
+            CategoryPromotionalHeader,
             SeeAllCategories,
             CategoryCard,
             SelectableCategoryCard,
@@ -343,6 +347,7 @@ public enum StreamCellType: Equatable {
             CreateComment,
             FullWidthSpacer(height: 0.0),
             Notification,
+            PagePromotionalHeader,
             Placeholder,
             ProfileHeader,
             ProfileHeaderGhost,
