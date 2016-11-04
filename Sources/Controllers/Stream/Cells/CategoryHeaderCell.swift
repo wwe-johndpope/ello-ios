@@ -32,7 +32,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
 
     public struct Size {
         static let defaultMargin: CGFloat = 15
-        static let topMargin: CGFloat = 11
+        static let topMargin: CGFloat = 25
         static let bodyMargin: CGFloat = 24
         static let stackedMargin: CGFloat = 6
         static let lineTopMargin: CGFloat = 4
@@ -322,6 +322,7 @@ private extension CategoryHeaderCell {
 }
 
 extension CategoryHeaderCell.Config {
+
     var attributedTitle: NSAttributedString {
         switch style {
         case .Category: return NSAttributedString(title, color: .whiteColor(), font: .defaultFont(16), alignment: .Center)

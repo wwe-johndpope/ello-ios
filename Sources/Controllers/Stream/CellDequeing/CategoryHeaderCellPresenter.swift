@@ -17,15 +17,15 @@ public struct CategoryHeaderCellPresenter {
         else { return }
 
         var config = CategoryHeaderCell.Config(style: .Category)
-        config.title = "Design" //category.name
-        config.body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum mauris vitae facilisis tincidunt. Ut a felis vel lorem tempor suscipit. In fringilla dictum lectus, et placerat sem ultricies id. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum mauris vitae facilisis tincidunt. Ut a felis vel lorem tempor suscipit. In fringilla dictum lectus, et placerat sem ultricies id." //category.body
+        config.title = category.name
+        config.body = category.body
 
         let promotional = category.randomPromotional
         config.imageURL = promotional?.image?.xhdpi?.url
         config.user = promotional?.user
         config.isSponsored = category.isSponsored
-        config.callToAction = "normal CTA" // category.ctaCaption
-        config.callToActionURL = NSURL(string: "http://www.boo.com") // category.ctaURL
+        config.callToAction = category.ctaCaption
+        config.callToActionURL = category.ctaURL
         cell.config = config
     }
 }
