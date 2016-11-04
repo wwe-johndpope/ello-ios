@@ -66,20 +66,32 @@ extension JSONAble {
     }
 
     public func getLinkArray(identifier: String) -> [JSONAble] {
-        guard let
+        if let
             object = self.links?[identifier] as? [String: AnyObject],
             ids = object["ids"] as? [String],
             typeStr = object["type"] as? String
-        else { return [] }
-
-        var arr = [JSONAble]()
-        ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
-            arr = ids.flatMap { (id: String) -> JSONAble? in
-                return transaction.objectForKey(id, inCollection: typeStr) as? JSONAble
+        {
+            var arr = [JSONAble]()
+            ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
+                arr = ids.flatMap { (id: String) -> JSONAble? in
+                    return transaction.objectForKey(id, inCollection: typeStr) as? JSONAble
+                }
             }
+            
+            return arr
         }
+        else if let ids = self.links?[identifier] as? [String]
+        {
+            var arr = [JSONAble]()
+            ElloLinkedStore.sharedInstance.readConnection.readWithBlock { transaction in
+                arr = ids.flatMap { (id: String) -> JSONAble? in
+                    return transaction.objectForKey(id, inCollection: identifier) as? JSONAble
+                }
+            }
 
-        return arr
+            return arr
+        }
+        return []
     }
 
     public func addLinkObject(identifier: String, key: String, type: MappingType) {

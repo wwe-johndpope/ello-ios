@@ -106,7 +106,7 @@ public class StreamHeaderCell: UICollectionViewCell {
     }
 
     func setDetails(user user: User?, repostedBy: User?, category: Category?) {
-        avatarButton.setUser(user)
+        avatarButton.setUserAvatarURL(user?.avatarURL())
         let username = user?.atName ?? ""
         usernameButton.setTitle(username, forState: UIControlState.Normal)
         usernameButton.sizeToFit()

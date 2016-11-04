@@ -25,7 +25,9 @@ public final class CategoryGenerator: StreamGenerator {
                 StreamCellItem(type: .ColumnToggle),
             ]
         }
-        items += [StreamCellItem(jsonable: category, type: .CategoryHeader)]
+        if category.hasPromotionalData {
+            items += [StreamCellItem(jsonable: category, type: .CategoryHeader)]
+        }
         return items
     }
 

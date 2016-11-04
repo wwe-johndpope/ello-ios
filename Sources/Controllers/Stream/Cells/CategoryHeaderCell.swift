@@ -9,21 +9,56 @@ import PINRemoteImage
 public class CategoryHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryHeaderCell"
 
+    public enum Style {
+        case Category
+        case Page
+    }
+
+    public struct Config {
+        var style: Style
+        var title: String
+        var body: String?
+        var imageURL: NSURL?
+        var user: User?
+        var isSponsored: Bool?
+        var callToAction: String?
+        var callToActionURL: NSURL?
+
+        public init(style: Style) {
+            self.style = style
+            self.title = ""
+        }
+    }
+
     public struct Size {
         static let defaultMargin: CGFloat = 15
+        static let topMargin: CGFloat = 11
+        static let bodyMargin: CGFloat = 24
+        static let stackedMargin: CGFloat = 6
+        static let lineTopMargin: CGFloat = 4
+        static let lineHeight: CGFloat = 2
+        static let lineInset: CGFloat = 0
         static let avatarMargin: CGFloat = 10
         static let avatarSize: CGFloat = 30
+        static let minBodyHeight: CGFloat = 30
         static let circleBottomInset: CGFloat = 10
         static let failImageWidth: CGFloat = 140
         static let failImageHeight: CGFloat = 160
     }
 
     let imageView = FLAnimatedImageView()
+    let imageOverlay = UIView()
     let titleLabel = UILabel()
-    let descriptionLabel = UILabel()
-    let learnMoreButton = UIButton()
+    let titleUnderlineView = UIView()
+    let bodyLabel = UILabel()
+    let callToActionButton = UIButton()
     let postedByButton = UIButton()
     let postedByAvatar = AvatarButton()
+
+    var titleCenteredConstraint: Constraint!
+    var titleLeftConstraint: Constraint!
+    var postedByButtonAlignedConstraint: Constraint!
+    var postedByButtonStackedConstraint: Constraint!
 
     let circle = PulsingCircle()
     let failImage = UIImageView()
@@ -37,6 +72,8 @@ public class CategoryHeaderCell: UICollectionViewCell {
         return imageSize.width / imageSize.height
     }
 
+    private var callToActionURL: NSURL?
+
     var calculatedHeight: CGFloat? {
         guard let aspectRatio = aspectRatio else {
             return nil
@@ -44,10 +81,34 @@ public class CategoryHeaderCell: UICollectionViewCell {
         return frame.width / aspectRatio
     }
 
+    public var config: Config = Config(style: .Category) {
+        didSet {
+            titleLabel.attributedText = config.attributedTitle
+            bodyLabel.attributedText = config.attributedBody
+            setImageURL(config.imageURL)
+            postedByAvatar.setUserAvatarURL(config.user?.avatarURL())
+            postedByButton.setAttributedTitle(config.attributedPostedBy, forState: .Normal)
+            callToActionURL = config.callToActionURL
+            callToActionButton.setAttributedTitle(config.attributedCallToAction, forState: .Normal)
+
+            if config.style == .Category {
+                titleUnderlineView.hidden = false
+                titleCenteredConstraint.updatePriorityHigh()
+                titleLeftConstraint.updatePriorityLow()
+            }
+            else {
+                titleUnderlineView.hidden = true
+                titleCenteredConstraint.updatePriorityLow()
+                titleLeftConstraint.updatePriorityHigh()
+            }
+        }
+    }
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
+        bindActions()
         arrange()
     }
 
@@ -55,7 +116,29 @@ public class CategoryHeaderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func setImageURL(url: NSURL) {
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if callToActionButton.frame.intersects(postedByButton.frame) {
+            // frames need to stack vertically
+            postedByButtonAlignedConstraint.updatePriorityLow()
+            postedByButtonStackedConstraint.updatePriorityHigh()
+            setNeedsLayout()
+        }
+        else if callToActionButton.frame.maxX < postedByButton.frame.minX && callToActionButton.frame.maxY < postedByButton.frame.minY {
+            // frames should be restored to horizontal arrangement
+            postedByButtonAlignedConstraint.updatePriorityHigh()
+            postedByButtonStackedConstraint.updatePriorityLow()
+            setNeedsLayout()
+        }
+    }
+
+    public func setImageURL(url: NSURL?) {
+        guard let url = url else {
+            imageView.image = nil
+            return
+        }
+
         imageView.image = nil
         imageView.alpha = 0
         circle.pulse()
@@ -73,26 +156,40 @@ public class CategoryHeaderCell: UICollectionViewCell {
         failImage.alpha = 0
         imageView.backgroundColor = .whiteColor()
     }
+
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        let config = Config(style: .Category)
+        self.config = config
+    }
+
+    public func postedByTapped() {
+        print("posted by tapped")
+    }
+
+    public func callToActionTapped() {
+        print("call to action tapped \(callToActionURL?.absoluteString)")
+    }
 }
 
 private extension CategoryHeaderCell {
 
     func style() {
-        titleLabel.text = "TEMP"
-        titleLabel.textColor = .whiteColor()
-        titleLabel.font = .defaultFont(20)
-        descriptionLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur molestie faucibus. Phasellus iaculis pellentesque felis eu fringilla. Ut in sollicitudin nisi. Praesent in mauris tortor. Nam interdum, magna eu pellentesque scelerisque, dui ipsum adipiscing ante, vel ullamcorper nisl sapien id arcu. Nullam egestas diam eu felis mollis sit amet cursus enim vehicula. Quisque eu tellus id erat pellentesque consequat. Maecenas fermentum faucibus magna, eget dictum nisi congue sed. Quisque a justo a nisi eleifend facilisis sit amet at augue. Sed a sapien vitae augue hendrerit porta vel eu ligula. Proin enim urna, faucibus in vestibulum tincidunt, commodo sit amet orci. Vestibulum ac sem urna, quis mattis urna. Nam eget ullamcorper ligula. Nam volutpat, arcu vel auctor dignissim, tortor nisi sodales enim, et vestibulum nulla dui id ligula. Nam ullamcorper, augue ut interdum vulputate, eros mauris lobortis sapien, ac sodales dui eros ac elit."
-        descriptionLabel.textColor = .whiteColor()
-        descriptionLabel.font = .defaultFont()
-        descriptionLabel.numberOfLines = 0
-        learnMoreButton.setTitle("Learn more CTA", forState: .Normal)
-        learnMoreButton.titleLabel?.font = .defaultFont()
-        postedByButton.setTitle("Posted by @colinta", forState: .Normal)
-        postedByButton.titleLabel?.font = .defaultFont()
-
+        titleLabel.numberOfLines = 0
+        titleUnderlineView.backgroundColor = .whiteColor()
+        bodyLabel.numberOfLines = 0
         imageView.clipsToBounds = true
         imageView.contentMode = .ScaleAspectFill
+        imageOverlay.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
+        callToActionButton.titleLabel?.numberOfLines = 0
         failBackgroundView.backgroundColor = .whiteColor()
+    }
+
+    func bindActions() {
+        callToActionButton.addTarget(self, action: #selector(callToActionTapped), forControlEvents: .TouchUpInside)
+        postedByButton.addTarget(self, action: #selector(postedByTapped), forControlEvents: .TouchUpInside)
+        postedByAvatar.addTarget(self, action: #selector(postedByTapped), forControlEvents: .TouchUpInside)
     }
 
     func arrange() {
@@ -101,9 +198,11 @@ private extension CategoryHeaderCell {
         contentView.addSubview(failImage)
 
         contentView.addSubview(imageView)
+        contentView.addSubview(imageOverlay)
         contentView.addSubview(titleLabel)
-        contentView.addSubview(descriptionLabel)
-        contentView.addSubview(learnMoreButton)
+        contentView.addSubview(titleUnderlineView)
+        contentView.addSubview(bodyLabel)
+        contentView.addSubview(callToActionButton)
         contentView.addSubview(postedByButton)
         contentView.addSubview(postedByAvatar)
 
@@ -125,28 +224,45 @@ private extension CategoryHeaderCell {
             make.edges.equalTo(contentView)
         }
 
+        imageOverlay.snp_makeConstraints { make in
+            make.edges.equalTo(contentView)
+        }
+
         titleLabel.snp_makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.top.equalTo(self).offset(Size.defaultMargin)
+            titleCenteredConstraint = make.centerX.equalTo(contentView).priorityHigh().constraint
+            titleLeftConstraint = make.leading.equalTo(contentView).inset(Size.defaultMargin).priorityLow().constraint
+            make.leading.greaterThanOrEqualTo(contentView).inset(Size.defaultMargin)
+            make.trailing.lessThanOrEqualTo(contentView).inset(Size.defaultMargin)
+            make.top.equalTo(contentView).offset(Size.topMargin)
         }
 
-        descriptionLabel.snp_makeConstraints { make in
-            make.top.equalTo(titleLabel.snp_bottom).offset(Size.defaultMargin)
-            make.leading.trailing.equalTo(self).inset(Size.defaultMargin)
+        titleUnderlineView.snp_makeConstraints { make in
+            make.leading.trailing.equalTo(titleLabel).inset(Size.lineInset)
+            make.top.equalTo(titleLabel.snp_bottom).offset(Size.lineTopMargin)
+            make.height.equalTo(Size.lineHeight)
         }
 
-        learnMoreButton.snp_makeConstraints { make in
-            make.leading.bottom.equalTo(self).inset(Size.defaultMargin)
+        bodyLabel.snp_makeConstraints { make in
+            make.top.equalTo(titleLabel.snp_bottom).offset(Size.bodyMargin)
+            make.leading.trailing.equalTo(contentView).inset(Size.defaultMargin)
+        }
+
+        callToActionButton.snp_makeConstraints { make in
+            make.leading.equalTo(contentView).inset(Size.defaultMargin)
+            make.trailing.lessThanOrEqualTo(contentView).inset(Size.defaultMargin)
         }
 
         postedByButton.snp_makeConstraints { make in
             make.trailing.equalTo(postedByAvatar.snp_leading).offset(-Size.avatarMargin)
-            make.bottom.equalTo(self).inset(Size.defaultMargin)
+            make.centerY.equalTo(postedByAvatar).offset(3)
+            postedByButtonAlignedConstraint = make.top.equalTo(callToActionButton).priorityHigh().constraint
+            postedByButtonStackedConstraint = make.top.equalTo(callToActionButton.snp_bottom).offset(Size.stackedMargin).priorityLow().constraint
         }
 
         postedByAvatar.snp_makeConstraints { make in
             make.width.height.equalTo(Size.avatarSize)
-            make.leading.bottom.equalTo(self).inset(Size.avatarMargin)
+            make.trailing.equalTo(contentView).inset(Size.avatarMargin)
+            make.bottom.equalTo(contentView).inset(Size.avatarMargin)
         }
 
     }
@@ -203,5 +319,36 @@ private extension CategoryHeaderCell {
             self.failBackgroundView.alpha = 1.0
         }
     }
+}
 
+extension CategoryHeaderCell.Config {
+    var attributedTitle: NSAttributedString {
+        switch style {
+        case .Category: return NSAttributedString(title, color: .whiteColor(), font: .defaultFont(16), alignment: .Center)
+        case .Page: return NSAttributedString(title, color: .whiteColor(), font: .defaultFont(18))
+        }
+    }
+
+    var attributedBody: NSAttributedString? {
+        guard let body = body else { return nil }
+
+        switch style {
+        case .Category: return NSAttributedString(body, color: .whiteColor())
+        case .Page: return NSAttributedString(body, color: .whiteColor(), font: .defaultFont(16))
+        }
+    }
+
+    var attributedPostedBy: NSAttributedString? {
+        guard let user = user, isSponsored = isSponsored else { return nil }
+
+        let prefix = isSponsored ? InterfaceString.Category.SponsoredBy : InterfaceString.Category.PostedBy
+        let title = NSAttributedString(prefix, color: .whiteColor()) + NSAttributedString(user.atName, color: .whiteColor(), underlineStyle: .StyleSingle)
+        return title
+    }
+
+    var attributedCallToAction: NSAttributedString? {
+        guard let callToAction = callToAction else { return nil }
+
+        return NSAttributedString(callToAction, color: .whiteColor(), underlineStyle: .StyleSingle)
+   }
 }

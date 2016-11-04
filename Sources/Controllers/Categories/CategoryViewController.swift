@@ -11,10 +11,12 @@ public final class CategoryViewController: StreamableViewController {
 
     var navigationBar: ElloNavigationBar!
     var category: Category
+    var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
 
     public init(category: Category) {
         self.category = category
+        categoryPromotional = category.randomPromotional
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -92,6 +94,8 @@ private extension CategoryViewController {
     }
 
     func reloadEntireCategory() {
+        categoryPromotional = nil
+        category.randomPromotional = nil
         generator?.load(reload: true)
     }
 
@@ -132,6 +136,12 @@ extension CategoryViewController: StreamDestination {
         guard let category = jsonable as? Category else { return }
 
         self.category = category
+        if let categoryPromotional = self.categoryPromotional {
+            category.randomPromotional = categoryPromotional
+        }
+        else {
+            categoryPromotional = category.randomPromotional
+        }
 
         self.title = category.name
     }

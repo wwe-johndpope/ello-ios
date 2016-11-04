@@ -13,6 +13,9 @@ public final class Promotional: JSONAble {
     let categoryId: String
     var image: Asset?
 
+    // links
+    public var user: User? { return getLinkObject("user") as? User }
+
     public init(
         id: String,
         userId: String,
@@ -48,16 +51,13 @@ public final class Promotional: JSONAble {
         let userId = json["user_id"].stringValue
         let categoryId = json["category_id"].stringValue
 
-        let image: Asset?
-        if let imageJson = json["image"].object as? [String: AnyObject] {
-            image = Asset.fromJSON(imageJson) as? Asset
-        }
-        else {
-            image = nil
-        }
+        let image = Asset.parseAsset(id, node: data["image"] as? [String: AnyObject])
 
         let promotional = Promotional(id: id, userId: userId, categoryId: categoryId)
         promotional.image = image
+
+        // links
+        promotional.links = data["links"] as? [String: AnyObject]
 
         return promotional
     }

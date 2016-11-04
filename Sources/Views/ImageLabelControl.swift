@@ -133,7 +133,7 @@ public class ImageLabelControl: UIControl {
             icon.view.frame.width :
             icon.view.frame.width + textWidth + innerPadding
 
-        var width: CGFloat =  contentWidth + outerPadding * 2
+        var width: CGFloat = contentWidth + outerPadding * 2
 
         // force a minimum width of 44 pts
         width = max(width, minWidth)

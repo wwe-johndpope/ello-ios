@@ -182,7 +182,6 @@
 		122B30F71C6A41CF00C1B9D8 /* RegionKindStreamCellTypeAddition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B30F61C6A41CF00C1B9D8 /* RegionKindStreamCellTypeAddition.swift */; };
 		122B30F81C6A41E900C1B9D8 /* RegionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B921C612FB9001386CE /* RegionKind.swift */; };
 		122B30F91C6A427F00C1B9D8 /* ElloTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767399801AA679CB00C4222C /* ElloTextView.swift */; };
-		122B30FA1C6A429E00C1B9D8 /* AttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */; };
 		122C662D1B42403D0035F4CD /* AutoCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */; };
 		122C662F1B42411E0035F4CD /* AutoCompleteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122C662E1B42411E0035F4CD /* AutoCompleteViewController.xib */; };
 		122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */; };
@@ -332,7 +331,7 @@
 		127BAD601A8512AA00628696 /* ElloLinkedStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BAD5F1A8512AA00628696 /* ElloLinkedStoreSpec.swift */; };
 		127D26541C655C87001F2E3E /* ExtensionItemPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127D26531C655C87001F2E3E /* ExtensionItemPreview.swift */; };
 		1289F3921AF1468B008A938C /* ImageLabelControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3911AF1468B008A938C /* ImageLabelControl.swift */; };
-		1289F3941AF1474B008A938C /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3931AF1474B008A938C /* NSAttributedString.swift */; };
+		1289F3941AF1474B008A938C /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */; };
 		1289F3961AF17901008A938C /* ImageLabelAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3951AF17901008A938C /* ImageLabelAnimatable.swift */; };
 		1289F3981AF17937008A938C /* BasicIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3971AF17937008A938C /* BasicIcon.swift */; };
 		128C5AF31C59801900EFC226 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -419,6 +418,7 @@
 		12DEB2511C5BFB6F00D4CDCE /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2B1A43390900493660 /* StringExtensions.swift */; };
 		12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */; };
 		12E3A2751DBE811900D42599 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
+		12E810C21DCB91C4007094C1 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */; };
 		12F0E3A81A4333150012CEA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3A61A4333150012CEA2 /* LaunchScreen.xib */; };
 		12F0E3A91A4333150012CEA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3A71A4333150012CEA2 /* Main.storyboard */; };
 		12F0E3AB1A4333260012CEA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3AA1A4333260012CEA2 /* Images.xcassets */; };
@@ -561,7 +561,6 @@
 		1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */; };
 		1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */; };
-		1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */; };
 		1D5F97791A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */; };
 		1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF51D3EA39500B4079C /* $_add_selected.svg */; };
 		1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF71D3EA41700B4079C /* $_add_normal.svg */; };
@@ -1288,7 +1287,7 @@
 		127BAD5F1A8512AA00628696 /* ElloLinkedStoreSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloLinkedStoreSpec.swift; sourceTree = "<group>"; };
 		127D26531C655C87001F2E3E /* ExtensionItemPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionItemPreview.swift; sourceTree = "<group>"; };
 		1289F3911AF1468B008A938C /* ImageLabelControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageLabelControl.swift; path = sources/Views/ImageLabelControl.swift; sourceTree = SOURCE_ROOT; };
-		1289F3931AF1474B008A938C /* NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSAttributedString.swift; path = sources/Extensions/NSAttributedString.swift; sourceTree = SOURCE_ROOT; };
+		1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSAttributedStringExtensions.swift; path = sources/Extensions/NSAttributedStringExtensions.swift; sourceTree = SOURCE_ROOT; };
 		1289F3951AF17901008A938C /* ImageLabelAnimatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageLabelAnimatable.swift; path = sources/Views/ImageLabelAnimatable.swift; sourceTree = SOURCE_ROOT; };
 		1289F3971AF17937008A938C /* BasicIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicIcon.swift; path = sources/Views/BasicIcon.swift; sourceTree = SOURCE_ROOT; };
 		128D36A51A95174C00622833 /* StreamKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamKind.swift; sourceTree = "<group>"; };
@@ -1596,7 +1595,6 @@
 		1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyButton.swift; sourceTree = "<group>"; };
 		1D8AFACC1A9664480034DDAD /* NotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSpec.swift; sourceTree = "<group>"; };
 		1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
-		1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringExtensions.swift; sourceTree = "<group>"; };
 		1D9201BB1B6AD7CD007528BF /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		1D9225531C3B23E000553BAE /* ExperienceUpdateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceUpdateSpec.swift; sourceTree = "<group>"; };
 		1D98563A1C6D7D3300C1BF78 /* DrawerAnimators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimators.swift; sourceTree = "<group>"; };
@@ -2891,7 +2889,6 @@
 			isa = PBXGroup;
 			children = (
 				F8A3B6441AC457CA00806224 /* Array.swift */,
-				1D8AFAD11A9694040034DDAD /* AttributedStringExtensions.swift */,
 				1DF233601A94FB060096DA65 /* CGRectExtensions.swift */,
 				1DCB12491B5EB0E60023664C /* CGSizeExtensions.swift */,
 				1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */,
@@ -2899,7 +2896,7 @@
 				1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */,
 				12F6AE271A43390900493660 /* ImageExtensions.swift */,
 				1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */,
-				1289F3931AF1474B008A938C /* NSAttributedString.swift */,
+				1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */,
 				1275351C1B73D155006B9A0F /* NSDate.swift */,
 				1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */,
 				122DEA1F1AB0A024005DF1F1 /* NSFileManagerExtensions.swift */,
@@ -4382,7 +4379,6 @@
 				1207C9A11C752F1300939ADB /* ElloURI.swift in Sources */,
 				122B30B61C6A3FBB00C1B9D8 /* DynamicSetting.swift in Sources */,
 				1D2F65AA1D185B120099D036 /* DiscoverType.swift in Sources */,
-				122B30FA1C6A429E00C1B9D8 /* AttributedStringExtensions.swift in Sources */,
 				122D1BA61C6134D5001386CE /* UIViewNibLoading.swift in Sources */,
 				1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */,
 				122B30B31C6A3FBB00C1B9D8 /* Availability.swift in Sources */,
@@ -4480,6 +4476,7 @@
 				122B30BD1C6A3FBB00C1B9D8 /* LocalPerson.swift in Sources */,
 				1DDC85251D91F5FA00C29552 /* Groupable.swift in Sources */,
 				122D1BBA1C640398001386CE /* CGSizeExtensions.swift in Sources */,
+				12E810C21DCB91C4007094C1 /* NSAttributedStringExtensions.swift in Sources */,
 				122B30B71C6A3FBB00C1B9D8 /* DynamicSettingCategory.swift in Sources */,
 				1207C9A91C752FD800939ADB /* ElloS3.swift in Sources */,
 				122D1BC01C6411E0001386CE /* ElloLogoView.swift in Sources */,
@@ -4810,7 +4807,7 @@
 				F87928681ACC6D6600579BE1 /* AlertViewController.swift in Sources */,
 				1233758B1DA6ED150019CFAD /* ProfileStatsSizeCalculator.swift in Sources */,
 				12F0E3AF1A4333550012CEA2 /* AppDelegate.swift in Sources */,
-				1289F3941AF1474B008A938C /* NSAttributedString.swift in Sources */,
+				1289F3941AF1474B008A938C /* NSAttributedStringExtensions.swift in Sources */,
 				127B8C711BC319A700E17D0A /* ColumnToggleCell.swift in Sources */,
 				122B30DF1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */,
 				1207C97D1C73FEE000939ADB /* ElloProviderErrors.swift in Sources */,
@@ -5118,7 +5115,6 @@
 				1207C96E1C73FEE000939ADB /* AnonymousAuthService.swift in Sources */,
 				1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */,
 				12F6AE6A1A4339EF00493660 /* ElloButton.swift in Sources */,
-				1D5F97751A9696E700AEEB5F /* AttributedStringExtensions.swift in Sources */,
 				1DA18E121DB187DF000231CC /* CalculatedCellHeights.swift in Sources */,
 				1D5933751D10BC8100EAF03D /* CategoryLevel.swift in Sources */,
 				125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */,

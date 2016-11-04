@@ -209,7 +209,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     }
 
     private func setUser(user: User?) {
-        avatarButton.setUser(user)
+        avatarButton.setUserAvatarURL(user?.avatarURL())
 
         if let user = user {
             relationshipControl.userId = user.id

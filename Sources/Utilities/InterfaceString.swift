@@ -102,6 +102,11 @@ public struct InterfaceString {
         }()
     }
 
+    public struct Category {
+        static let SponsoredBy: String = NSLocalizedString("Sponsored by ", comment: "Sponsored by ")
+        static let PostedBy: String = NSLocalizedString("Posted by ", comment: "Posted by ")
+    }
+
     public struct Settings {
         static let EditProfile: String = NSLocalizedString("Edit Profile", comment: "Edit Profile Title")
         static let Name: String = NSLocalizedString("Name", comment: "name setting")
