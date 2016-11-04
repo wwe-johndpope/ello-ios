@@ -31,7 +31,7 @@ public final class CategoryViewController: StreamableViewController {
         elloNavigationItem.leftBarButtonItems = [item]
         elloNavigationItem.fixNavBarItemPadding()
 
-        let screen = CategoryScreen(category: category)
+        let screen = CategoryScreen()
         screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
