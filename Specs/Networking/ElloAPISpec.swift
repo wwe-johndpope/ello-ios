@@ -146,9 +146,9 @@ class ElloAPISpec: QuickSpec {
                         (.CurrentUserStream, "/api/v2/profile/posts"),
                         (.UserStream(userParam: "999"), "/api/v2/users/999/posts"),
                     ]
-                    for (api, path) in expectations {
-                        it("\(api).path is valid") {
-                            expect(api.path) == path
+                    for (api, pagingPath) in expectations {
+                        it("\(api).pagingPath is valid") {
+                            expect(api.pagingPath) == pagingPath
                         }
                     }
                 }

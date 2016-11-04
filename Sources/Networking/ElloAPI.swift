@@ -73,7 +73,7 @@ public enum ElloAPI {
 
     public static let apiVersion = "v2"
 
-    var pagingPath: String? {
+    public var pagingPath: String? {
         switch self {
         case .PostDetail:
             return "\(path)/comments"

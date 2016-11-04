@@ -246,6 +246,7 @@ public class StreamContainerViewController: StreamableViewController {
         self.presentViewController(drawer, animated: true, completion: nil)
     }
 
+    //MARK: warning - make sure to revert this to non debug behavior 
     @IBAction func streamSegmentTapped(sender: UISegmentedControl) {
         let category = Category(id: "1", name: "Art", slug: "art", order: 1, allowInOnboarding: true, level: .Primary, tileImage: nil)
         let vc = CategoryViewController(category: category)

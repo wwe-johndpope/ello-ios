@@ -171,6 +171,7 @@ extension Watch: Stubbable {
 extension Profile: Stubbable {
     class func stub(values: [String: AnyObject]) -> Profile {
         let profile = Profile(
+            id: (values["id"] as? String) ?? "123",
             createdAt: (values["createdAt"] as? NSDate) ?? NSDate(),
             shortBio: (values["shortBio"] as? String) ?? "shortBio",
             email: (values["email"] as? String) ?? "email@example.com",

@@ -34,7 +34,7 @@ class CategorySpec: QuickSpec {
                         "order": 0,
                         "level": "primary"
                     ]
-                    let category = Category.fromJSON(data, fromLinked: false) as? Ello.Category
+                    let category = Category.fromJSON(data) as? Ello.Category
                     expect(category?.id) == "1"
                     expect(category?.name) == "Featured"
                     expect(category?.slug) == "featured"
