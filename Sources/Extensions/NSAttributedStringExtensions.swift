@@ -43,6 +43,12 @@ extension NSAttributedString {
         self.init(attributedString: header)
     }
 
+    func heightForWidth(width: CGFloat) -> CGFloat {
+        return ceil(boundingRectWithSize(CGSize(width: width, height: CGFloat.max),
+            options: [.UsesLineFragmentOrigin, .UsesFontLeading],
+            context: nil).size.height)
+    }
+
     func widthForHeight(height: CGFloat) -> CGFloat {
         return ceil(boundingRectWithSize(CGSize(width: CGFloat.max, height: height),
             options: [.UsesLineFragmentOrigin, .UsesFontLeading],
