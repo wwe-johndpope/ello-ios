@@ -21,6 +21,7 @@ public enum MappingType: String {
     case NoContentType = "204"
     case PostsType = "posts"
     case PromotionalsType = "promotionals"
+    case PagePromotionalsType = "page_promotionals"
     case RelationshipsType = "relationships"
     case UsersType = "users"
     case UsernamesType = "usernames"
@@ -52,6 +53,8 @@ public enum MappingType: String {
             return Love.fromJSON
         case PostsType:
             return Post.fromJSON
+        case PagePromotionalsType:
+            return PagePromotional.fromJSON
         case PromotionalsType:
             return Promotional.fromJSON
         case RelationshipsType:

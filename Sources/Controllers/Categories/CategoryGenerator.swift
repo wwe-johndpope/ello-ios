@@ -8,7 +8,11 @@ public final class CategoryGenerator: StreamGenerator {
     public var streamKind: StreamKind
     weak public var destination: StreamDestination?
 
-    private var category: Category?
+    private var category: Category
+    private var categoryIsMeta: Bool {
+        return category.level == .Meta
+    }
+    private var pagePromotional: PagePromotional?
     private var posts: [Post]?
     private var hasPosts: Bool?
     private var localToken: String!
@@ -17,21 +21,26 @@ public final class CategoryGenerator: StreamGenerator {
     private let queue = NSOperationQueue()
 
     func headerItems() -> [StreamCellItem] {
-        guard let category = category else { return [] }
-
         var items: [StreamCellItem] = []
         if hasPosts != false {
             items += [
                 StreamCellItem(type: .ColumnToggle),
             ]
         }
-        if category.hasPromotionalData {
-            items += [StreamCellItem(jsonable: category, type: .CategoryHeader)]
+
+        if categoryIsMeta {
+            if let pagePromotional = pagePromotional {
+                items += [StreamCellItem(jsonable: pagePromotional, type: .PagePromotionalHeader)]
+            }
         }
+        else if category.hasPromotionalData {
+            items += [StreamCellItem(jsonable: category, type: .CategoryPromotionalHeader)]
+        }
+
         return items
     }
 
-    public init(category: Category?,
+    public init(category: Category,
                 currentUser: User?,
                 streamKind: StreamKind,
                 destination: StreamDestination?
@@ -44,13 +53,20 @@ public final class CategoryGenerator: StreamGenerator {
     }
 
     public func load(reload reload: Bool = false) {
+        if reload {
+            pagePromotional = nil
+        }
+
         let doneOperation = AsyncOperation()
         queue.addOperation(doneOperation)
 
         localToken = loadingToken.resetInitialPageLoadingToken()
         setPlaceHolders()
-        setInitialCategory(doneOperation)
+        setInitialJSONAble(doneOperation)
         loadCategory(doneOperation, reload: reload)
+        if categoryIsMeta {
+            loadPagePromotional(doneOperation)
+        }
         loadCategoryPosts(doneOperation)
     }
 
@@ -64,25 +80,31 @@ public final class CategoryGenerator: StreamGenerator {
 private extension CategoryGenerator {
 
     func setPlaceHolders() {
-            destination?.setPlaceholders([
+        destination?.setPlaceholders([
             StreamCellItem(type: .Placeholder, placeholderType: .CategoryHeader),
             StreamCellItem(type: .Placeholder, placeholderType: .CategoryPosts)
         ])
     }
 
-    func setInitialCategory(doneOperation: AsyncOperation) {
-        guard let category = category else { return }
+    func setInitialJSONAble(doneOperation: AsyncOperation) {
+        let jsonable: JSONAble?
+        if categoryIsMeta {
+            jsonable = pagePromotional
+        }
+        else {
+            jsonable = category
+        }
 
-        destination?.setPrimaryJSONAble(category)
-        destination?.replacePlaceholder(.CategoryHeader, items: headerItems()) {}
-        doneOperation.run()
+        if let jsonable = jsonable {
+            destination?.setPrimaryJSONAble(jsonable)
+            destination?.replacePlaceholder(.CategoryHeader, items: headerItems()) {}
+            doneOperation.run()
+        }
     }
 
     func loadCategory(doneOperation: AsyncOperation, reload: Bool = false) {
-//        guard !doneOperation.finished || reload else { return }
-        guard let category = category else { return }
+        guard !categoryIsMeta else { return }
 
-        // load the category
         CategoryService().loadCategory(category.slug)
             .onSuccess { [weak self] category in
                 guard let sself = self else { return }
@@ -94,13 +116,39 @@ private extension CategoryGenerator {
             }
             .onFail { [weak self] _ in
                 guard let sself = self else { return }
+                if !sself.categoryIsMeta {
+                    sself.destination?.primaryJSONAbleNotFound()
+                    sself.queue.cancelAllOperations()
+                }
+        }
+    }
+
+    func loadPagePromotional(doneOperation: AsyncOperation) {
+        guard categoryIsMeta else { return }
+
+        PagePromotionalService().loadPagePromotionals()
+            .onSuccess { [weak self] promotionals in
+                guard let sself = self else { return }
+                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+
+                if let pagePromotional = promotionals.randomItem() {
+                    sself.pagePromotional = pagePromotional
+                    sself.destination?.setPrimaryJSONAble(pagePromotional)
+                }
+                else {
+                    sself.destination?.setPrimaryJSONAble(sself.category)
+                }
+                sself.destination?.replacePlaceholder(.CategoryHeader, items: sself.headerItems()) {}
+                doneOperation.run()
+            }
+            .onFail { [weak self] _ in
+                guard let sself = self else { return }
                 sself.destination?.primaryJSONAbleNotFound()
                 sself.queue.cancelAllOperations()
         }
     }
 
     func loadCategoryPosts(doneOperation: AsyncOperation) {
-        guard let category = category else { return }
         let displayPostsOperation = AsyncOperation()
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)

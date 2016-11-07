@@ -161,6 +161,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "NotificationsNewContent"
         case .NotificationsStream:
             return "NotificationsStream"
+        case .PagePromotionals:
+            return "PagePromotionals"
         case .PostComments:
             return "PostComments"
         case .PostDetail:

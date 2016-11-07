@@ -803,7 +803,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
 
         let categoryHeaderItems = cellItems.filter {
-            return $0.type == StreamCellType.CategoryHeader
+            return $0.type == StreamCellType.CategoryPromotionalHeader || $0.type == StreamCellType.PagePromotionalHeader
         }
         let afterAll = after(5, block: completion)
 

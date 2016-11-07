@@ -82,6 +82,13 @@ public struct Preloader {
                 preloadUrl(url)
             }
 
+            // promotionals
+            else if let promotional = jsonable as? PagePromotional,
+                url = promotional.tileURL
+            {
+                preloadUrl(url)
+            }
+
             // TODO: account for discovery when the api includes assets in the discovery
             // responses
         }

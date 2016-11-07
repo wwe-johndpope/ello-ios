@@ -43,6 +43,7 @@ public enum ElloAPI {
     case NoiseNewContent(createdAt: NSDate)
     case NotificationsNewContent(createdAt: NSDate)
     case NotificationsStream(category: String?)
+    case PagePromotionals
     case PostComments(postId: String)
     case PostDetail(postParam: String, commentCount: Int)
     case PostLovers(postId: String)
@@ -109,6 +110,8 @@ public enum ElloAPI {
             return .AmazonCredentialsType
         case .Availability:
             return .AvailabilityType
+        case .PagePromotionals:
+            return .PagePromotionalsType
         case .PostReplyAll:
             return .UsernamesType
         case .CurrentUserBlockedList,
@@ -344,6 +347,8 @@ extension ElloAPI: Moya.TargetType {
         case .NotificationsNewContent,
              .NotificationsStream:
             return "/api/\(ElloAPI.apiVersion)/notifications"
+        case .PagePromotionals:
+            return "/api/\(ElloAPI.apiVersion)/page_promotionals"
         case let .PostComments(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
         case let .PostDetail(postParam, _):
@@ -454,6 +459,8 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("activity_streams_noise_stream")
         case .NotificationsStream:
             return stubbedData("activity_streams_notifications")
+        case .PagePromotionals:
+            return stubbedData("page_promotionals")
         case .PostComments:
             return stubbedData("posts_loading_more_post_comments")
         case .PostDetail,

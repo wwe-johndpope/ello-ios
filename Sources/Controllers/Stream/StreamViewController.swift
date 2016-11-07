@@ -895,7 +895,7 @@ extension StreamViewController {
 // MARK: StreamViewController: Open category
 extension StreamViewController {
     public func categoryTapped(category: Category) {
-        let vc = DiscoverViewController(category: category)
+        let vc = CategoryViewController(category: category)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }

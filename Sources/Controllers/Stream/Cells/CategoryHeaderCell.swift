@@ -340,9 +340,9 @@ extension CategoryHeaderCell.Config {
     }
 
     var attributedPostedBy: NSAttributedString? {
-        guard let user = user, isSponsored = isSponsored else { return nil }
+        guard let user = user else { return nil }
 
-        let prefix = isSponsored ? InterfaceString.Category.SponsoredBy : InterfaceString.Category.PostedBy
+        let prefix = isSponsored == true ? InterfaceString.Category.SponsoredBy : InterfaceString.Category.PostedBy
         let title = NSAttributedString(prefix, color: .whiteColor()) + NSAttributedString(user.atName, color: .whiteColor(), underlineStyle: .StyleSingle)
         return title
     }

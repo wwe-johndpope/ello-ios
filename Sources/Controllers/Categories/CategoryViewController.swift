@@ -11,12 +11,15 @@ public final class CategoryViewController: StreamableViewController {
 
     var navigationBar: ElloNavigationBar!
     var category: Category
+    var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
 
     public init(category: Category) {
         self.category = category
-        categoryPromotional = category.randomPromotional
+        if category.level != .Meta {
+            categoryPromotional = category.randomPromotional
+        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -31,7 +34,7 @@ public final class CategoryViewController: StreamableViewController {
         elloNavigationItem.leftBarButtonItems = [item]
         elloNavigationItem.fixNavBarItemPadding()
 
-        let screen = CategoryScreen(category: category)
+        let screen = CategoryScreen()
         screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
@@ -94,6 +97,7 @@ private extension CategoryViewController {
     }
 
     func reloadEntireCategory() {
+        pagePromotional = nil
         categoryPromotional = nil
         category.randomPromotional = nil
         generator?.load(reload: true)
@@ -133,17 +137,21 @@ extension CategoryViewController: StreamDestination {
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
-        guard let category = jsonable as? Category else { return }
+        if let category = jsonable as? Category {
+            self.category = category
 
-        self.category = category
-        if let categoryPromotional = self.categoryPromotional {
-            category.randomPromotional = categoryPromotional
-        }
-        else {
-            categoryPromotional = category.randomPromotional
-        }
+            if let categoryPromotional = self.categoryPromotional {
+                category.randomPromotional = categoryPromotional
+            }
+            else {
+                categoryPromotional = category.randomPromotional
+            }
 
-        self.title = category.name
+            self.title = category.name
+        }
+        else if let pagePromotional = jsonable as? PagePromotional {
+            self.pagePromotional = pagePromotional
+        }
     }
 
     public func primaryJSONAbleNotFound() {
