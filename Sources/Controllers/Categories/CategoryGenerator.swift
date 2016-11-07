@@ -9,9 +9,6 @@ public final class CategoryGenerator: StreamGenerator {
     weak public var destination: StreamDestination?
 
     private var category: Category
-    private var categoryIsMeta: Bool {
-        return category.level == .Meta
-    }
     private var pagePromotional: PagePromotional?
     private var posts: [Post]?
     private var hasPosts: Bool?
@@ -28,7 +25,7 @@ public final class CategoryGenerator: StreamGenerator {
             ]
         }
 
-        if categoryIsMeta {
+        if category.isMeta {
             if let pagePromotional = pagePromotional {
                 items += [StreamCellItem(jsonable: pagePromotional, type: .PagePromotionalHeader)]
             }
@@ -64,7 +61,7 @@ public final class CategoryGenerator: StreamGenerator {
         setPlaceHolders()
         setInitialJSONAble(doneOperation)
         loadCategory(doneOperation, reload: reload)
-        if categoryIsMeta {
+        if category.isMeta {
             loadPagePromotional(doneOperation)
         }
         loadCategoryPosts(doneOperation)
@@ -88,7 +85,7 @@ private extension CategoryGenerator {
 
     func setInitialJSONAble(doneOperation: AsyncOperation) {
         let jsonable: JSONAble?
-        if categoryIsMeta {
+        if category.isMeta {
             jsonable = pagePromotional
         }
         else {
@@ -103,7 +100,7 @@ private extension CategoryGenerator {
     }
 
     func loadCategory(doneOperation: AsyncOperation, reload: Bool = false) {
-        guard !categoryIsMeta else { return }
+        guard !category.isMeta else { return }
 
         CategoryService().loadCategory(category.slug)
             .onSuccess { [weak self] category in
@@ -116,7 +113,7 @@ private extension CategoryGenerator {
             }
             .onFail { [weak self] _ in
                 guard let sself = self else { return }
-                if !sself.categoryIsMeta {
+                if !sself.category.isMeta {
                     sself.destination?.primaryJSONAbleNotFound()
                     sself.queue.cancelAllOperations()
                 }
@@ -124,7 +121,7 @@ private extension CategoryGenerator {
     }
 
     func loadPagePromotional(doneOperation: AsyncOperation) {
-        guard categoryIsMeta else { return }
+        guard category.isMeta else { return }
 
         PagePromotionalService().loadPagePromotionals()
             .onSuccess { [weak self] promotionals in

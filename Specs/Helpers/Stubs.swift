@@ -103,7 +103,7 @@ extension User: Stubbable {
             }
             user.addLinkArray("categories", array: categories.map { $0.id }, type: .CategoriesType)
         }
-        
+
         user.profile = values["profile"] as? Profile
         ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
         return user
@@ -171,7 +171,7 @@ extension Watch: Stubbable {
 extension Profile: Stubbable {
     class func stub(values: [String: AnyObject]) -> Profile {
         let profile = Profile(
-            id: (values["id"] as? String) ?? "123",
+            id: (values["id"] as? String) ?? NSUUID().UUIDString,
             createdAt: (values["createdAt"] as? NSDate) ?? NSDate(),
             shortBio: (values["shortBio"] as? String) ?? "shortBio",
             email: (values["email"] as? String) ?? "email@example.com",

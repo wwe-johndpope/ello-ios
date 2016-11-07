@@ -817,7 +817,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
         self.notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
         self.profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
-        self.categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
+        self.categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll)
     }
 
     private func filterTextCells(cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {

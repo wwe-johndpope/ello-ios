@@ -27,6 +27,7 @@ public final class Category: JSONAble, Groupable {
     public let order: Int
     public let allowInOnboarding: Bool
     public let level: CategoryLevel
+    public var isMeta: Bool { return level == .Meta }
     public var endpoint: ElloAPI {
         switch level {
         case .Meta: return .Discover(type: DiscoverType(rawValue: slug)!)

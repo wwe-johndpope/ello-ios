@@ -8,17 +8,16 @@ import FutureKit
 public class CategoryHeaderCellSizeCalculator: NSObject {
     static let ratio: CGFloat = 320 / 192
 
-    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
     private var screenWidth: CGFloat = 0.0
-    private var columnCount: Int = 1
     private var cellItems: [StreamCellItem] = []
     private var completion: ElloEmptyCompletion = {}
 
     // MARK: Public
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
-        let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: ElloEmptyCompletion) {
+        let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
             processJob(job)
@@ -39,7 +38,6 @@ public class CategoryHeaderCellSizeCalculator: NSObject {
         }
         self.cellItems = job.cellItems
         self.screenWidth = job.width
-        self.columnCount = job.columnCount
         loadNext()
     }
 
@@ -50,7 +48,44 @@ public class CategoryHeaderCellSizeCalculator: NSObject {
         }
 
         let item = cellItems.removeAtIndex(0)
-        let height = screenWidth / CategoryHeaderCellSizeCalculator.ratio
+        let minHeight = ceil(screenWidth / CategoryHeaderCellSizeCalculator.ratio)
+        var calcHeight: CGFloat = 0
+        if let category = item.jsonable as? Category {
+            let config = CategoryHeaderCell.Config(category: category)
+            let textWidth = screenWidth - 2 * CategoryHeaderCell.Size.defaultMargin
+            let boundingSize = CGSize(width: textWidth, height: CGFloat.max)
+
+            let attributedTitle = config.attributedTitle
+            calcHeight += CategoryHeaderCell.Size.topMargin
+            calcHeight += attributedTitle.heightForWidth(textWidth)
+
+            if let attributedBody = config.attributedBody {
+                calcHeight += CategoryHeaderCell.Size.bodyMargin
+                calcHeight += attributedBody.heightForWidth(textWidth)
+            }
+
+            var ctaSize: CGSize = .zero
+            var postedBySize: CGSize = .zero
+            if let attributedCallToAction = config.attributedCallToAction {
+                ctaSize = attributedCallToAction.boundingRectWithSize(boundingSize, options: [], context: nil).size.integral
+            }
+
+            if let attributedPostedBy = config.attributedPostedBy {
+                postedBySize = attributedPostedBy.boundingRectWithSize(boundingSize, options: [], context: nil).size.integral
+            }
+
+            calcHeight += CategoryHeaderCell.Size.bodyMargin
+            if ctaSize.width + postedBySize.width > textWidth {
+                calcHeight += ctaSize.height + CategoryHeaderCell.Size.stackedMargin + postedBySize.height
+            }
+            else {
+                calcHeight += max(ctaSize.height, postedBySize.height)
+            }
+
+            calcHeight += CategoryHeaderCell.Size.defaultMargin
+        }
+
+        let height = max(minHeight, calcHeight)
         item.calculatedCellHeights.oneColumn = height
         item.calculatedCellHeights.multiColumn = height
         loadNext()

@@ -353,3 +353,30 @@ extension CategoryHeaderCell.Config {
         return NSAttributedString(callToAction, color: .whiteColor(), underlineStyle: .StyleSingle)
    }
 }
+
+extension CategoryHeaderCell.Config {
+    init(category: Category) {
+        self.init(style: .Category)
+        title = category.name
+        body = category.body
+        isSponsored = category.isSponsored
+        callToAction = category.ctaCaption
+        callToActionURL = category.ctaURL
+
+        if let promotional = category.randomPromotional {
+            imageURL = promotional.image?.xhdpi?.url
+            user = promotional.user
+        }
+    }
+
+    init(pagePromotional: PagePromotional) {
+        self.init(style: .Page)
+
+        title = pagePromotional.header
+        body = pagePromotional.subheader
+        imageURL = pagePromotional.tileURL
+        user = pagePromotional.user
+        callToAction = pagePromotional.ctaCaption
+        callToActionURL = pagePromotional.ctaURL
+    }
+}
