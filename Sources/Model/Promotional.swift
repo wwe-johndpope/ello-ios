@@ -8,10 +8,10 @@ public let PromotionalVersion = 1
 
 public final class Promotional: JSONAble {
 
-    let id: String
-    let userId: String
-    let categoryId: String
-    var image: Asset?
+    public let id: String
+    public let userId: String
+    public let categoryId: String
+    public var image: Asset?
 
     // links
     public var user: User? { return getLinkObject("user") as? User }

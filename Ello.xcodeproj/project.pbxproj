@@ -348,6 +348,10 @@
 		128D36B91A951F7400622833 /* ProfileHeaderCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128D36B81A951F7400622833 /* ProfileHeaderCellPresenter.swift */; };
 		128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */; };
 		128FDF351DCD21A800DBADD0 /* CategoryViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FDF341DCD21A800DBADD0 /* CategoryViewControllerSpec.swift */; };
+		128FDF371DD0E4A300DBADD0 /* CategoryScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FDF361DD0E4A300DBADD0 /* CategoryScreenSpec.swift */; };
+		128FDF391DD0F5E300DBADD0 /* CategoryHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FDF381DD0F5E300DBADD0 /* CategoryHeaderCellSpec.swift */; };
+		128FDF3C1DD13EAC00DBADD0 /* specs-category-image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 128FDF3A1DD13EAC00DBADD0 /* specs-category-image.jpg */; };
+		128FDF3D1DD13EAC00DBADD0 /* specs-category-tile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 128FDF3B1DD13EAC00DBADD0 /* specs-category-tile.jpg */; };
 		12916A421B7AA88D005B9CCF /* StreamKindSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12916A411B7AA88D005B9CCF /* StreamKindSpec.swift */; };
 		1292C0BF1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292C0BE1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift */; };
 		12931BD31BFE8E30009B26F9 /* checkmini_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BCB1BFE8E30009B26F9 /* checkmini_normal.svg */; };
@@ -1305,6 +1309,10 @@
 		128D36B81A951F7400622833 /* ProfileHeaderCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCellPresenter.swift; sourceTree = "<group>"; };
 		128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloPostToolBarOption.swift; sourceTree = "<group>"; };
 		128FDF341DCD21A800DBADD0 /* CategoryViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewControllerSpec.swift; sourceTree = "<group>"; };
+		128FDF361DD0E4A300DBADD0 /* CategoryScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryScreenSpec.swift; sourceTree = "<group>"; };
+		128FDF381DD0F5E300DBADD0 /* CategoryHeaderCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderCellSpec.swift; sourceTree = "<group>"; };
+		128FDF3A1DD13EAC00DBADD0 /* specs-category-image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "specs-category-image.jpg"; sourceTree = "<group>"; };
+		128FDF3B1DD13EAC00DBADD0 /* specs-category-tile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "specs-category-tile.jpg"; sourceTree = "<group>"; };
 		12916A411B7AA88D005B9CCF /* StreamKindSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamKindSpec.swift; path = specs/controllers/Stream/StreamKindSpec.swift; sourceTree = SOURCE_ROOT; };
 		1291CE2D1C6A91C600EB5A55 /* ShareViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewControllerSpec.swift; sourceTree = "<group>"; };
 		1292C0BE1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStreamNotificationCellSizeCalculator.swift; sourceTree = "<group>"; };
@@ -2512,6 +2520,7 @@
 		12A18EEE1DCD13D300FC900B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				128FDF361DD0E4A300DBADD0 /* CategoryScreenSpec.swift */,
 				128FDF341DCD21A800DBADD0 /* CategoryViewControllerSpec.swift */,
 			);
 			path = Categories;
@@ -2801,6 +2810,7 @@
 		12F47DCE1AD7134200A73B5F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				128FDF381DD0F5E300DBADD0 /* CategoryHeaderCellSpec.swift */,
 				1D59337A1D136E0500EAF03D /* CategoryListCellSpec.swift */,
 				1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */,
 				1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */,
@@ -3225,10 +3235,12 @@
 		1D08320B1AAA4C360076C67D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				12148F1C1DA3234A00D6296C /* specs-cover.jpg */,
 				761A66281B0E8AD20088FF56 /* specs-1000x4000.png */,
 				761A66291B0E8AD20088FF56 /* specs-4000x1000.png */,
 				761A661F1B0E75AD0088FF56 /* specs-avatar.png */,
+				128FDF3A1DD13EAC00DBADD0 /* specs-category-image.jpg */,
+				128FDF3B1DD13EAC00DBADD0 /* specs-category-tile.jpg */,
+				12148F1C1DA3234A00D6296C /* specs-cover.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3898,10 +3910,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				128FDF3D1DD13EAC00DBADD0 /* specs-category-tile.jpg in Resources */,
 				12148F1D1DA3234A00D6296C /* specs-cover.jpg in Resources */,
 				761A662C1B0E8AD20088FF56 /* specs-4000x1000.png in Resources */,
 				761A662A1B0E8AD20088FF56 /* specs-1000x4000.png in Resources */,
 				761A66221B0E75AD0088FF56 /* specs-avatar.png in Resources */,
+				128FDF3C1DD13EAC00DBADD0 /* specs-category-image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4601,6 +4615,7 @@
 				F870D8F51ACB0BB000E25AA2 /* ResponseConfigSpec.swift in Sources */,
 				1247276B1AB14B04000079D7 /* UnknownRegionSpec.swift in Sources */,
 				1D59EF871D62187C0029C106 /* StreamImageCellSpec.swift in Sources */,
+				128FDF391DD0F5E300DBADD0 /* CategoryHeaderCellSpec.swift in Sources */,
 				76BE9C551B2B773B007575AA /* StreamInviteFriendsCellSpec.swift in Sources */,
 				124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */,
 				1266E5151A9E3CA700270E1C /* ContentFlaggingServiceSpec.swift in Sources */,
@@ -4643,6 +4658,7 @@
 				1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */,
 				1D061B521AAA1C6D00493435 /* StringExtensionSpec.swift in Sources */,
 				1D59EFA41D6659FF0029C106 /* HireScreenSpec.swift in Sources */,
+				128FDF371DD0E4A300DBADD0 /* CategoryScreenSpec.swift in Sources */,
 				122C663E1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift in Sources */,
 				1D8835A41CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift in Sources */,
 				1D7152A71D6E0E2F005998FE /* StartupScreenSpec.swift in Sources */,

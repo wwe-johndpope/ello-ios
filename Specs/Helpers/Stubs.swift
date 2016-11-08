@@ -477,6 +477,29 @@ extension StreamCellItem: Stubbable {
     }
 }
 
+extension Promotional: Stubbable {
+    class func stub(values: [String: AnyObject]) -> Promotional {
+
+        let promotional = Promotional(
+            id: (values["id"] as? String) ?? "123",
+            userId: (values["id"] as? String) ?? "456",
+            categoryId: (values["id"] as? String) ?? "1"
+        )
+
+        if let image = values["asset"] as? Asset {
+            promotional.addLinkObject("image", key: image.id, type: .AssetsType)
+            ElloLinkedStore.sharedInstance.setObject(image, forKey: image.id, type: .AssetsType)
+        }
+
+        if let user = values["user"] as? User {
+            promotional.addLinkObject("user", key: user.id, type: .UsersType)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
+        }
+
+        return promotional
+    }
+}
+
 extension Ello.Category: Stubbable {
     class func stub(values: [String: AnyObject]) -> Ello.Category {
         let level: CategoryLevel
@@ -496,7 +519,8 @@ extension Ello.Category: Stubbable {
         else {
             tileImage = nil
         }
-        return Category(
+
+        let category = Category(
             id: (values["id"] as? String) ?? "666",
             name: (values["name"] as? String) ?? "Art",
             slug: (values["slug"] as? String) ?? "art",
@@ -505,5 +529,36 @@ extension Ello.Category: Stubbable {
             level: level,
             tileImage: tileImage
         )
+
+        if let promotionals = values["promotionals"] as? [Promotional] {
+            var promotionalIds = [String]()
+            for promotional in promotionals {
+                promotionalIds.append(promotional.id)
+                ElloLinkedStore.sharedInstance.setObject(promotional, forKey: promotional.id, type: .PromotionalsType)
+            }
+            category.addLinkArray("promotionals", array: promotionalIds, type: .PromotionalsType)
+        }
+
+        if let body = values["body"] as? String {
+            category.body = body
+        }
+
+        if let header = values["header"] as? String {
+            category.header = header
+        }
+
+        if let isSponsored = values["isSponsored"] as? Bool {
+            category.isSponsored = isSponsored
+        }
+
+        if let ctaCaption = values["ctaCaption"] as? String {
+            category.ctaCaption = ctaCaption
+        }
+
+        if let ctaURL = values["ctaURL"] as? NSURL {
+            category.ctaURL = ctaURL
+        }
+
+        return category
     }
 }
