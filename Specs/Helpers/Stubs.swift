@@ -482,11 +482,11 @@ extension Promotional: Stubbable {
 
         let promotional = Promotional(
             id: (values["id"] as? String) ?? "123",
-            userId: (values["id"] as? String) ?? "456",
-            categoryId: (values["id"] as? String) ?? "1"
+            userId: (values["userId"] as? String) ?? "456",
+            categoryId: (values["categoryId"] as? String) ?? "1"
         )
 
-        if let image = values["asset"] as? Asset {
+        if let image = values["image"] as? Asset {
             promotional.addLinkObject("image", key: image.id, type: .AssetsType)
             ElloLinkedStore.sharedInstance.setObject(image, forKey: image.id, type: .AssetsType)
         }
@@ -497,6 +497,35 @@ extension Promotional: Stubbable {
         }
 
         return promotional
+    }
+}
+
+
+extension PagePromotional: Stubbable {
+    class func stub(values: [String: AnyObject]) -> PagePromotional {
+
+        let pagePromotional = PagePromotional(
+            id: (values["id"] as? String) ?? "999",
+            header: (values["header"] as? String) ?? "Default Header",
+            subheader: (values["subheader"] as? String) ?? "Default Subheader",
+            ctaCaption: (values["ctaCaption"] as? String) ?? "Default CTA Caption",
+            ctaURL: urlFromValue(values["ctaURL"]),
+            image: values["image"] as? Asset
+        )
+
+
+        if let image = pagePromotional.image {
+            pagePromotional.addLinkObject("image", key: image.id, type: .AssetsType)
+            ElloLinkedStore.sharedInstance.setObject(image, forKey: image.id, type: .AssetsType)
+        }
+
+        if let user = values["user"] as? User {
+            pagePromotional.addLinkObject("user", key: user.id, type: .UsersType)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
+        }
+
+
+        return pagePromotional
     }
 }
 

@@ -10,14 +10,14 @@ import Nimble
 class CategoryScreenSpec: QuickSpec {
 
     override func spec() {
-        describe("CategoryScreen") {
+        // we have nothing unique in this screen yet,
+        xdescribe("CategoryScreen") {
             var subject: CategoryScreen!
             beforeEach {
                 subject = CategoryScreen()
             }
 
-            describe("snapshots") {
-                validateAllSnapshots { return subject }
+            xdescribe("snapshots") {
             }
         }
     }

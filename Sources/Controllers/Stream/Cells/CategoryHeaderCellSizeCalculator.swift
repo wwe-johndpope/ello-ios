@@ -24,6 +24,52 @@ public class CategoryHeaderCellSizeCalculator: NSObject {
         }
     }
 
+    public static func calculateCategoryHeight(category: Category, screenWidth: CGFloat) -> CGFloat {
+        let config = CategoryHeaderCell.Config(category: category)
+        return CategoryHeaderCellSizeCalculator.calculateHeight(config, screenWidth: screenWidth)
+    }
+
+    public static func calculatePagePromotionalHeight(pagePromotional: PagePromotional, screenWidth: CGFloat) -> CGFloat {
+        let config = CategoryHeaderCell.Config(pagePromotional: pagePromotional)
+        return CategoryHeaderCellSizeCalculator.calculateHeight(config, screenWidth: screenWidth)
+    }
+
+    public static func calculateHeight(config: CategoryHeaderCell.Config, screenWidth: CGFloat) -> CGFloat {
+        var calcHeight: CGFloat = 0
+        let textWidth = screenWidth - 2 * CategoryHeaderCell.Size.defaultMargin
+        let boundingSize = CGSize(width: textWidth, height: CGFloat.max)
+
+        let attributedTitle = config.attributedTitle
+        calcHeight += CategoryHeaderCell.Size.topMargin
+        calcHeight += attributedTitle.heightForWidth(textWidth)
+
+        if let attributedBody = config.attributedBody {
+            calcHeight += CategoryHeaderCell.Size.bodyMargin
+            calcHeight += attributedBody.heightForWidth(textWidth)
+        }
+
+        var ctaSize: CGSize = .zero
+        var postedBySize: CGSize = .zero
+        if let attributedCallToAction = config.attributedCallToAction {
+            ctaSize = attributedCallToAction.boundingRectWithSize(boundingSize, options: [], context: nil).size.integral
+        }
+
+        if let attributedPostedBy = config.attributedPostedBy {
+            postedBySize = attributedPostedBy.boundingRectWithSize(boundingSize, options: [], context: nil).size.integral
+        }
+
+        calcHeight += CategoryHeaderCell.Size.bodyMargin
+        if ctaSize.width + postedBySize.width > textWidth {
+            calcHeight += ctaSize.height + CategoryHeaderCell.Size.stackedMargin + postedBySize.height
+        }
+        else {
+            calcHeight += max(ctaSize.height, postedBySize.height)
+        }
+
+        calcHeight += CategoryHeaderCell.Size.defaultMargin
+        return calcHeight
+    }
+
     // MARK: Private
 
     private func processJob(job: CellJob) {
@@ -51,38 +97,10 @@ public class CategoryHeaderCellSizeCalculator: NSObject {
         let minHeight = ceil(screenWidth / CategoryHeaderCellSizeCalculator.ratio)
         var calcHeight: CGFloat = 0
         if let category = item.jsonable as? Category {
-            let config = CategoryHeaderCell.Config(category: category)
-            let textWidth = screenWidth - 2 * CategoryHeaderCell.Size.defaultMargin
-            let boundingSize = CGSize(width: textWidth, height: CGFloat.max)
-
-            let attributedTitle = config.attributedTitle
-            calcHeight += CategoryHeaderCell.Size.topMargin
-            calcHeight += attributedTitle.heightForWidth(textWidth)
-
-            if let attributedBody = config.attributedBody {
-                calcHeight += CategoryHeaderCell.Size.bodyMargin
-                calcHeight += attributedBody.heightForWidth(textWidth)
-            }
-
-            var ctaSize: CGSize = .zero
-            var postedBySize: CGSize = .zero
-            if let attributedCallToAction = config.attributedCallToAction {
-                ctaSize = attributedCallToAction.boundingRectWithSize(boundingSize, options: [], context: nil).size.integral
-            }
-
-            if let attributedPostedBy = config.attributedPostedBy {
-                postedBySize = attributedPostedBy.boundingRectWithSize(boundingSize, options: [], context: nil).size.integral
-            }
-
-            calcHeight += CategoryHeaderCell.Size.bodyMargin
-            if ctaSize.width + postedBySize.width > textWidth {
-                calcHeight += ctaSize.height + CategoryHeaderCell.Size.stackedMargin + postedBySize.height
-            }
-            else {
-                calcHeight += max(ctaSize.height, postedBySize.height)
-            }
-
-            calcHeight += CategoryHeaderCell.Size.defaultMargin
+            calcHeight += CategoryHeaderCellSizeCalculator.calculateCategoryHeight(category, screenWidth: screenWidth)
+        }
+        else if let pagePromotional = item.jsonable as? PagePromotional {
+            calcHeight += CategoryHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, screenWidth: screenWidth)
         }
 
         let height = max(minHeight, calcHeight)

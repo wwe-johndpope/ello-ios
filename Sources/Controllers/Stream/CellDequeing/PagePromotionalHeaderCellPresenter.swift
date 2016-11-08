@@ -16,7 +16,7 @@ public struct PagePromotionalHeaderCellPresenter {
             pagePromotional = streamCellItem.jsonable as? PagePromotional
         else { return }
 
-        var config = CategoryHeaderCell.Config(pagePromotional: pagePromotional)
+        let config = CategoryHeaderCell.Config(pagePromotional: pagePromotional)
         cell.config = config
     }
 }
