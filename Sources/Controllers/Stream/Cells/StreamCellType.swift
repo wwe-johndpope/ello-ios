@@ -245,7 +245,7 @@ public enum StreamCellType: Equatable {
         case CategoryList:
             return 66
         case ColumnToggle:
-            return 40
+            return ColumnToggleCell.Size.height
         case CommentHeader,
              InviteFriends,
              OnboardingInviteFriends,

@@ -9,15 +9,20 @@ public typealias CategoriesCompletion = (categories: [Category]) -> Void
 
 public class CategoryService {
 
-    public func loadCategories(success: CategoriesCompletion, failure: ElloFailureCompletion = { _ in }) {
+    public func loadCategories() -> Future<[Category]> {
+        let promise = Promise<[Category]>()
         ElloProvider.shared.elloRequest(.Categories, success: { (data, responseConfig) in
             if let categories = data as? [Category] {
                 Preloader().preloadImages(categories)
-                success(categories: categories)
+                promise.completeWithSuccess(categories)
             }
-        }, failure: { (error, statusCode) in
-            failure(error: error, statusCode: statusCode)
+            else {
+                promise.completeWithFail(NSError.uncastableJSONAble())
+            }
+        }, failure: { (error, _) in
+            promise.completeWithFail(error)
         })
+        return promise.future
     }
 
     public func loadCategory(categorySlug: String) -> Future<Category> {

@@ -58,16 +58,17 @@ public class DiscoverViewController: StreamableViewController {
 
         addSearchButton()
 
-        CategoryService().loadCategories({ [weak self] categories in
-            guard let sself = self else { return }
+        CategoryService().loadCategories()
+            .onSuccess { [weak self] categories in
+                guard let sself = self else { return }
 
-            let categoriesPlusFeatured = [Category.featured] + categories
-            let categoryList = CategoryList(categories: categoriesPlusFeatured)
-            sself.categoryList = categoryList
-            sself.streamViewController.replacePlaceholder(.CategoryList, with: [
-                StreamCellItem(jsonable: categoryList, type: .CategoryList),
-            ])
-        })
+                let categoriesPlusFeatured = [Category.featured] + categories
+                let categoryList = CategoryList(categories: categoriesPlusFeatured)
+                sself.categoryList = categoryList
+                sself.streamViewController.replacePlaceholder(.CategoryList, with: [
+                    StreamCellItem(jsonable: categoryList, type: .CategoryList),
+                ])
+            }.ignoreFailures()
     }
 
     required public init?(coder aDecoder: NSCoder) {

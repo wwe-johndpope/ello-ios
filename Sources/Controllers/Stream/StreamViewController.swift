@@ -1112,6 +1112,7 @@ extension StreamViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tappedCell = collectionView.cellForItemAtIndexPath(indexPath)
 
+        var keepSelected = false
         if tappedCell is StreamToggleCell {
             dataSource.toggleCollapsedForIndexPath(indexPath)
             reloadCells(now: true)
@@ -1152,6 +1153,7 @@ extension StreamViewController: UICollectionViewDelegate {
             category = dataSource.jsonableForIndexPath(indexPath) as? Category
         {
             if item.type == .SelectableCategoryCard {
+                keepSelected = true
                 let paths = collectionView.indexPathsForSelectedItems()
                 let selection = paths?.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
                 selectedCategoryDelegate?.categoriesSelectionChanged(selection ?? [Category]())
@@ -1163,6 +1165,10 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
         where cellItemType == .SeeAllCategories {
             seeAllCategoriesTapped()
+        }
+
+        if !keepSelected {
+            collectionView.deselectItemAtIndexPath(indexPath, animated: false)
         }
     }
 
