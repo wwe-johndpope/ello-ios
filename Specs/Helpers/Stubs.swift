@@ -477,6 +477,58 @@ extension StreamCellItem: Stubbable {
     }
 }
 
+extension Promotional: Stubbable {
+    class func stub(values: [String: AnyObject]) -> Promotional {
+
+        let promotional = Promotional(
+            id: (values["id"] as? String) ?? "123",
+            userId: (values["userId"] as? String) ?? "456",
+            categoryId: (values["categoryId"] as? String) ?? "1"
+        )
+
+        if let image = values["image"] as? Asset {
+            promotional.addLinkObject("image", key: image.id, type: .AssetsType)
+            ElloLinkedStore.sharedInstance.setObject(image, forKey: image.id, type: .AssetsType)
+        }
+
+        if let user = values["user"] as? User {
+            promotional.addLinkObject("user", key: user.id, type: .UsersType)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
+        }
+
+        return promotional
+    }
+}
+
+
+extension PagePromotional: Stubbable {
+    class func stub(values: [String: AnyObject]) -> PagePromotional {
+
+        let pagePromotional = PagePromotional(
+            id: (values["id"] as? String) ?? "999",
+            header: (values["header"] as? String) ?? "Default Header",
+            subheader: (values["subheader"] as? String) ?? "Default Subheader",
+            ctaCaption: (values["ctaCaption"] as? String) ?? "Default CTA Caption",
+            ctaURL: urlFromValue(values["ctaURL"]),
+            image: values["image"] as? Asset
+        )
+
+
+        if let image = pagePromotional.image {
+            pagePromotional.addLinkObject("image", key: image.id, type: .AssetsType)
+            ElloLinkedStore.sharedInstance.setObject(image, forKey: image.id, type: .AssetsType)
+        }
+
+        if let user = values["user"] as? User {
+            pagePromotional.addLinkObject("user", key: user.id, type: .UsersType)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)
+        }
+
+
+        return pagePromotional
+    }
+}
+
 extension Ello.Category: Stubbable {
     class func stub(values: [String: AnyObject]) -> Ello.Category {
         let level: CategoryLevel
@@ -496,7 +548,8 @@ extension Ello.Category: Stubbable {
         else {
             tileImage = nil
         }
-        return Category(
+
+        let category = Category(
             id: (values["id"] as? String) ?? "666",
             name: (values["name"] as? String) ?? "Art",
             slug: (values["slug"] as? String) ?? "art",
@@ -505,5 +558,22 @@ extension Ello.Category: Stubbable {
             level: level,
             tileImage: tileImage
         )
+
+        if let promotionals = values["promotionals"] as? [Promotional] {
+            var promotionalIds = [String]()
+            for promotional in promotionals {
+                promotionalIds.append(promotional.id)
+                ElloLinkedStore.sharedInstance.setObject(promotional, forKey: promotional.id, type: .PromotionalsType)
+            }
+            category.addLinkArray("promotionals", array: promotionalIds, type: .PromotionalsType)
+        }
+
+        category.body = values["body"] as? String
+        category.header = values["header"] as? String
+        category.isSponsored = values["isSponsored"] as? Bool
+        category.ctaCaption = values["ctaCaption"] as? String
+        category.ctaURL = urlFromValue(values["ctaURL"])
+
+        return category
     }
 }
