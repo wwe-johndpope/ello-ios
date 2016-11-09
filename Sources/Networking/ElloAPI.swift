@@ -441,7 +441,7 @@ extension ElloAPI: Moya.TargetType {
              .UserCategories:
             return stubbedData("empty")
         case .CategoryPosts:
-            return stubbedData("posts")
+            return stubbedData("users_posts")
         case .Discover:
             return stubbedData("posts_searching_for_posts")
         case .EmojiAutoComplete:

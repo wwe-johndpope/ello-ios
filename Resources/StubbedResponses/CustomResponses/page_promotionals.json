@@ -1,0 +1,329 @@
+{
+    "linked": {
+        "users": [{
+                  "id": "27",
+                  "href": "/api/v2/users/27",
+                  "username": "dcdoran",
+                  "name": "Casey Doran",
+                  "location": null,
+                  "posts_adult_content": false,
+                  "views_adult_content": true,
+                  "has_commenting_enabled": true,
+                  "has_sharing_enabled": true,
+                  "has_reposting_enabled": true,
+                  "has_loves_enabled": true,
+                  "has_auto_watch_enabled": true,
+                  "experimental_features": true,
+                  "relationship_priority": null,
+                  "bad_for_seo": false,
+                  "is_hireable": false,
+                  "is_collaborateable": false,
+                  "posts_count": 219,
+                  "followers_count": 126,
+                  "following_count": 43,
+                  "loves_count": 20,
+                  "formatted_short_bio": "<p>bio bio bio bio</p>",
+                  "external_links_list": [{
+                                          "url": "http://twitter.com/dcdoran",
+                                          "text": "twitter.com/dcdoran",
+                                          "type": "twitter",
+                                          "icon": "https://social-icons.ello.co/twitter.png"
+                                          }, {
+                                          "url": "http://cargocollective.com/alexaallen",
+                                          "text": "cargocollective.com/alexaallen",
+                                          "type": "cargo",
+                                          "icon": "https://social-icons.ello.co/cargo.png"
+                                          }, {
+                                          "url": "http://aimeesy.persona.co",
+                                          "text": "aimeesy.persona.co",
+                                          "type": "persona",
+                                          "icon": "https://social-icons.ello.co/persona.png"
+                                          }, {
+                                          "url": "http://ello.threadless.com",
+                                          "text": "ello.threadless.com",
+                                          "type": "threadless",
+                                          "icon": "https://social-icons.ello.co/threadless.png"
+                                          }, {
+                                          "url": "http://society6.com/freakland",
+                                          "text": "society6.com/freakland",
+                                          "type": "society6",
+                                          "icon": "https://social-icons.ello.co/society6.png"
+                                          }, {
+                                          "url": "http://snapchat.com/add/mrcippy",
+                                          "text": "snapchat.com/add/mrcippy",
+                                          "type": "snapchat",
+                                          "icon": "https://social-icons.ello.co/snapchat.png"
+                                          }, {
+                                          "url": "http://ello.co/dcdoran",
+                                          "text": "ello.co/dcdoran",
+                                          "type": "ello",
+                                          "icon": "https://social-icons.ello.co/ello.png"
+                                          }, {
+                                          "url": "http://affranchi.myshopify.com/",
+                                          "text": "affranchi.myshopify.com/",
+                                          "type": "shopify",
+                                          "icon": "https://social-icons.ello.co/shopify.png"
+                                          }, {
+                                          "url": "http://vine.co/twitter",
+                                          "text": "vine.co/twitter",
+                                          "type": "vine",
+                                          "icon": "https://social-icons.ello.co/vine.png"
+                                          }, {
+                                          "url": "http://appstore.com/ello/ello",
+                                          "text": "appstore.com/ello/ello",
+                                          "type": "apple",
+                                          "icon": "https://social-icons.ello.co/apple.png"
+                                          }, {
+                                          "url": "http://itunes.apple.com/app/apple-store/id953614327?mt=8",
+                                          "text": "itunes.apple.com/app/apple-store/id953614327?mt=8",
+                                          "type": "apple",
+                                          "icon": "https://social-icons.ello.co/apple.png"
+                                          }, {
+                                          "url": "http://play.google.com/store/apps/details?id=co.ello.ElloApp",
+                                          "text": "play.google.com/store/apps/details?id=co.ello.ElloApp",
+                                          "type": "play",
+                                          "icon": "https://social-icons.ello.co/play.png"
+                                          }, {
+                                          "url": "http://vsco.co/smokingfish",
+                                          "text": "vsco.co/smokingfish",
+                                          "type": "vsco",
+                                          "icon": "https://social-icons.ello.co/vsco.png"
+                                          }, {
+                                          "url": "http://twitter.com/dcdoran",
+                                          "text": "twitter.com/dcdoran",
+                                          "type": "twitter",
+                                          "icon": "https://social-icons.ello.co/twitter.png"
+                                          }, {
+                                          "url": "http://facebook.com/test",
+                                          "text": "facebook.com/test",
+                                          "type": "facebook",
+                                          "icon": "https://social-icons.ello.co/facebook.png"
+                                          }, {
+                                          "url": "http://plus.google.com/102510605991491703521",
+                                          "text": "plus.google.com/102510605991491703521",
+                                          "type": "googleplus",
+                                          "icon": "https://social-icons.ello.co/googleplus.png"
+                                          }, {
+                                          "url": "http://www.pinterest.com/alexaallenis/",
+                                          "text": "www.pinterest.com/alexaallenis/",
+                                          "type": "pinterest",
+                                          "icon": "https://social-icons.ello.co/pinterest.png"
+                                          }, {
+                                          "url": "http://www.linkedin.com/in/ashleyjhopkins",
+                                          "text": "www.linkedin.com/in/ashleyjhopkins",
+                                          "type": "linkedin",
+                                          "icon": "https://social-icons.ello.co/linkedin.png"
+                                          }, {
+                                          "url": "http://soundcloud.com/dcdoran",
+                                          "text": "soundcloud.com/dcdoran",
+                                          "type": "soundcloud",
+                                          "icon": "https://social-icons.ello.co/soundcloud.png"
+                                          }, {
+                                          "url": "http://www.mixcloud.com/isaidicanshout/",
+                                          "text": "www.mixcloud.com/isaidicanshout/",
+                                          "type": "mixcloud",
+                                          "icon": "https://social-icons.ello.co/mixcloud.png"
+                                          }, {
+                                          "url": "http://www.youtube.com/user/dcdoran",
+                                          "text": "www.youtube.com/user/dcdoran",
+                                          "type": "youtube",
+                                          "icon": "https://social-icons.ello.co/youtube.png"
+                                          }, {
+                                          "url": "http://vimeo.com/helloello",
+                                          "text": "vimeo.com/helloello",
+                                          "type": "vimeo",
+                                          "icon": "https://social-icons.ello.co/vimeo.png"
+                                          }, {
+                                          "url": "http://www.dailymotion.com/haios",
+                                          "text": "www.dailymotion.com/haios",
+                                          "type": "dailymotion",
+                                          "icon": "https://social-icons.ello.co/dailymotion.png"
+                                          }, {
+                                          "url": "http://www.flickr.com/photos/chrisheuer",
+                                          "text": "www.flickr.com/photos/chrisheuer",
+                                          "type": "flickr",
+                                          "icon": "https://social-icons.ello.co/flickr.png"
+                                          }, {
+                                          "url": "http://500px.com/maxrivefotograaf",
+                                          "text": "500px.com/maxrivefotograaf",
+                                          "type": "500px",
+                                          "icon": "https://social-icons.ello.co/500px.png"
+                                          }, {
+                                          "url": "http://www.instagram.com/alexaallenis/",
+                                          "text": "www.instagram.com/alexaallenis/",
+                                          "type": "instagram",
+                                          "icon": "https://social-icons.ello.co/instagram.png"
+                                          }, {
+                                          "url": "http://ellosphere.tumblr.com/",
+                                          "text": "ellosphere.tumblr.com/",
+                                          "type": "tumblr",
+                                          "icon": "https://social-icons.ello.co/tumblr.png"
+                                          }, {
+                                          "url": "http://dribbble.com/creativemints",
+                                          "text": "dribbble.com/creativemints",
+                                          "type": "dribbble",
+                                          "icon": "https://social-icons.ello.co/dribbble.png"
+                                          }, {
+                                          "url": "http://www.behance.net/gallery/43804081/The-Graveyard",
+                                          "text": "www.behance.net/gallery/43804081/The-Graveyard",
+                                          "type": "behance",
+                                          "icon": "https://social-icons.ello.co/behance.png"
+                                          }, {
+                                          "url": "http://lienskullova.deviantart.com/",
+                                          "text": "lienskullova.deviantart.com/",
+                                          "type": "deviantart",
+                                          "icon": "https://social-icons.ello.co/deviantart.png"
+                                          }, {
+                                          "url": "https://github.com/ello/webapp",
+                                          "text": "github.com/ello/webapp",
+                                          "type": "github",
+                                          "icon": "https://social-icons.ello.co/github.png"
+                                          }, {
+                                          "url": "http://www.goodreads.com/user/show/22728070-mary",
+                                          "text": "www.goodreads.com/user/show/22728070-mary",
+                                          "type": "goodreads",
+                                          "icon": "https://social-icons.ello.co/goodreads.png"
+                                          }, {
+                                          "url": "http://www.patreon.com/blunderbussmag",
+                                          "text": "www.patreon.com/blunderbussmag",
+                                          "type": "patreon",
+                                          "icon": "https://social-icons.ello.co/patreon.png"
+                                          }, {
+                                          "url": "http://www.modelmayhem.com/3978580",
+                                          "text": "www.modelmayhem.com/3978580",
+                                          "type": "modelmayhem",
+                                          "icon": "https://social-icons.ello.co/modelmayhem.png"
+                                          }, {
+                                          "url": "http://coeurdepirate.bandcamp.com/",
+                                          "text": "coeurdepirate.bandcamp.com/",
+                                          "type": "bandcamp",
+                                          "icon": "https://social-icons.ello.co/bandcamp.png"
+                                          }, {
+                                          "url": "http://www.etsy.com/shop/GoldenTerrariums",
+                                          "text": "www.etsy.com/shop/GoldenTerrariums",
+                                          "type": "etsy",
+                                          "icon": "https://social-icons.ello.co/etsy.png"
+                                          }, {
+                                          "url": "http://medium.com/@dcdoran",
+                                          "text": "medium.com/@dcdoran",
+                                          "type": "medium",
+                                          "icon": "https://social-icons.ello.co/medium.png"
+                                          }],
+                  "background_position": "50% 50%",
+                  "avatar": {
+                  "original": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-28543c9f-06bc-444e-98db-909aa8890017.jpeg"
+                  },
+                  "large": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-large-e2cfacc2.png",
+                  "metadata": {
+                  "size": 127069,
+                  "type": "image/png",
+                  "width": 360,
+                  "height": 360
+                  }
+                  },
+                  "regular": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-regular-e2cfacc2.png",
+                  "metadata": {
+                  "size": 18516,
+                  "type": "image/png",
+                  "width": 120,
+                  "height": 120
+                  }
+                  },
+                  "small": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-small-e2cfacc2.png",
+                  "metadata": {
+                  "size": 5996,
+                  "type": "image/png",
+                  "width": 60,
+                  "height": 60
+                  }
+                  }
+                  },
+                  "cover_image": {
+                  "original": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-2e54b943-4d2d-4329-ae65-b3c3ca53fb31.jpeg"
+                  },
+                  "optimized": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-optimized-809906f0.jpg",
+                  "metadata": {
+                  "size": 1584915,
+                  "type": "image/jpeg",
+                  "width": 1920,
+                  "height": 1440
+                  }
+                  },
+                  "xhdpi": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-xhdpi-809906f0.jpg",
+                  "metadata": {
+                  "size": 577955,
+                  "type": "image/jpeg",
+                  "width": 1116,
+                  "height": 837
+                  }
+                  },
+                  "hdpi": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-hdpi-809906f0.jpg",
+                  "metadata": {
+                  "size": 144840,
+                  "type": "image/jpeg",
+                  "width": 552,
+                  "height": 414
+                  }
+                  },
+                  "mdpi": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-mdpi-809906f0.jpg",
+                  "metadata": {
+                  "size": 41863,
+                  "type": "image/jpeg",
+                  "width": 276,
+                  "height": 207
+                  }
+                  },
+                  "ldpi": {
+                  "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-ldpi-809906f0.jpg",
+                  "metadata": {
+                  "size": 12005,
+                  "type": "image/jpeg",
+                  "width": 132,
+                  "height": 99
+                  }
+                  }
+                  }
+                  }]
+    },
+    "page_promotionals": [{
+                          "id": "43",
+                          "header": "Oh Hey.",
+                          "subheader": "Hey",
+                          "cta_href": "http://hi.com",
+                          "cta_caption": "Hi",
+                          "is_logged_in": true,
+                          "image": {
+                          "original": {
+                          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/43/ello-xhdpi-e0c8b6e6.jpg"
+                          },
+                          "optimized": {
+                          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/43/ello-optimized-69d9bfc6.jpg",
+                          "metadata": null
+                          },
+                          "xhdpi": {
+                          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/43/ello-xhdpi-69d9bfc6.jpg",
+                          "metadata": null
+                          },
+                          "hdpi": {
+                          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/43/ello-hdpi-69d9bfc6.jpg",
+                          "metadata": null
+                          }
+                          },
+                          "links": {
+                          "user": {
+                          "type": "users",
+                          "href": "/api/v2/users/27",
+                          "id": "27"
+                          }
+                          }
+                          }]
+}
