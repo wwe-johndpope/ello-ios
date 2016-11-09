@@ -181,7 +181,6 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         updateInsets()
 
         if !userDidScroll && streamViewController.dataSource.visibleCellItems.count > 0 {
-            // streamViewController.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: [.Bottom], animated: true)
             var offset: CGFloat = CategoryCardListView.Size.height
             if navBarsVisible() {
                 offset += ElloNavigationBar.Size.height
