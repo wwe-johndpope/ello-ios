@@ -568,25 +568,11 @@ extension Ello.Category: Stubbable {
             category.addLinkArray("promotionals", array: promotionalIds, type: .PromotionalsType)
         }
 
-        if let body = values["body"] as? String {
-            category.body = body
-        }
-
-        if let header = values["header"] as? String {
-            category.header = header
-        }
-
-        if let isSponsored = values["isSponsored"] as? Bool {
-            category.isSponsored = isSponsored
-        }
-
-        if let ctaCaption = values["ctaCaption"] as? String {
-            category.ctaCaption = ctaCaption
-        }
-
-        if let ctaURL = values["ctaURL"] as? NSURL {
-            category.ctaURL = ctaURL
-        }
+        category.body = values["body"] as? String
+        category.header = values["header"] as? String
+        category.isSponsored = values["isSponsored"] as? Bool
+        category.ctaCaption = values["ctaCaption"] as? String
+        category.ctaURL = urlFromValue(values["ctaURL"])
 
         return category
     }
