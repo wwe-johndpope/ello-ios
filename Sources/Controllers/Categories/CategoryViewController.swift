@@ -14,6 +14,7 @@ public final class CategoryViewController: StreamableViewController {
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
+    var userDidScroll: Bool = false
 
     public init(category: Category) {
         self.category = category
@@ -36,6 +37,7 @@ public final class CategoryViewController: StreamableViewController {
 
         let screen = CategoryScreen()
         screen.navigationItem = elloNavigationItem
+
         self.view = screen
         viewContainer = screen.streamContainer
         screen.delegate = self
@@ -62,12 +64,13 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     private func updateInsets() {
-        updateInsets(navBar: screen.navigationBar, streamController: streamViewController)
+        updateInsets(navBar: screen.topInsetView, streamController: streamViewController, navBarsVisible: screen.navBarsVisible)
     }
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
+        screen.animateCategoriesList(navBarVisible: true)
         updateInsets()
 
         if scrollToBottom {
@@ -78,11 +81,17 @@ public final class CategoryViewController: StreamableViewController {
     override func hideNavBars() {
         super.hideNavBars()
         positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: true)
+        screen.animateCategoriesList(navBarVisible: false)
         updateInsets()
     }
 
     func toggleGrid(isGridView: Bool) {
         generator?.toggleGrid()
+    }
+
+    override public func streamViewWillBeginDragging(scrollView: UIScrollView) {
+        super.streamViewWillBeginDragging(scrollView)
+        userDidScroll = true
     }
 }
 
@@ -120,7 +129,7 @@ private extension CategoryViewController {
 }
 
 // MARK: CategoryViewController: StreamDestination
-extension CategoryViewController: StreamDestination {
+extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 
     public var pagingEnabled: Bool {
         get { return streamViewController.pagingEnabled }
@@ -154,6 +163,34 @@ extension CategoryViewController: StreamDestination {
         }
     }
 
+    public func setCategories(categories: [Category]) {
+        let metaCategories = [
+            Category.featured,
+            Category.trending,
+            Category.recent,
+        ]
+        let allCategories = metaCategories + categories
+        let selectedCategoryIndex = allCategories.indexOf { $0.id == category.id }
+        let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
+            return CategoryCardListView.CategoryInfo(title: category.name, imageURL: category.tileURL, endpoint: .Category(slug: category.slug), selected: false)
+        }
+        screen.setCategoriesInfo(info, animated: true)
+        if let selectedCategoryIndex = selectedCategoryIndex {
+            screen.scrollToCategoryIndex(selectedCategoryIndex)
+        }
+        updateInsets()
+
+        if !userDidScroll && streamViewController.dataSource.visibleCellItems.count > 0 {
+            // streamViewController.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: [.Bottom], animated: true)
+            var offset: CGFloat = CategoryCardListView.Size.height
+            if navBarsVisible() {
+                offset += ElloNavigationBar.Size.height
+            }
+            offset -= ColumnToggleCell.Size.height
+            streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
+        }
+    }
+
     public func primaryJSONAbleNotFound() {
         self.streamViewController.doneLoading()
     }
@@ -161,7 +198,6 @@ extension CategoryViewController: StreamDestination {
     public func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
     }
-
 }
 
 extension CategoryViewController: CategoryScreenDelegate {

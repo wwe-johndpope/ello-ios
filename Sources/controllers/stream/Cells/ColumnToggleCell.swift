@@ -3,8 +3,10 @@
 //
 
 public class ColumnToggleCell: UICollectionViewCell {
-
     static let reuseIdentifier = "ColumnToggleCell"
+    public struct Size {
+        static let height: CGFloat = 40
+    }
 
     public var isGridView: Bool = false {
         didSet {

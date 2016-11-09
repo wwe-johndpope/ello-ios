@@ -2,7 +2,7 @@
 ///  StreamableScreen.swift
 //
 
-public protocol StreamableScreenProtocol {
+public protocol StreamableScreenProtocol: class {
     var navigationBarTopConstraint: NSLayoutConstraint! { get }
     var navigationBar: ElloNavigationBar { get }
     var navigationItem: UINavigationItem? { get set }

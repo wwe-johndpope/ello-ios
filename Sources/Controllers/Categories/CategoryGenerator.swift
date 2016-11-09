@@ -2,11 +2,19 @@
 ///  CategoryGenerator.swift
 //
 
+public protocol CategoryStreamDestination: StreamDestination {
+    func setCategories(categories: [Category])
+}
+
 public final class CategoryGenerator: StreamGenerator {
 
     public var currentUser: User?
     public var streamKind: StreamKind
-    weak public var destination: StreamDestination?
+    weak private var categoryStreamDestination: CategoryStreamDestination?
+    weak public var destination: StreamDestination? {
+        get { return categoryStreamDestination }
+        set { categoryStreamDestination = newValue as? CategoryStreamDestination }
+    }
 
     private var category: Category
     private var pagePromotional: PagePromotional?
@@ -60,6 +68,7 @@ public final class CategoryGenerator: StreamGenerator {
         localToken = loadingToken.resetInitialPageLoadingToken()
         setPlaceHolders()
         setInitialJSONAble(doneOperation)
+        loadCategories()
         loadCategory(doneOperation, reload: reload)
         if category.isMeta {
             loadPagePromotional(doneOperation)
@@ -143,6 +152,15 @@ private extension CategoryGenerator {
                 sself.destination?.primaryJSONAbleNotFound()
                 sself.queue.cancelAllOperations()
         }
+    }
+
+    func loadCategories() {
+        CategoryService().loadCategories()
+            .onSuccess { [weak self] categories in
+                guard let sself = self else { return }
+
+                sself.categoryStreamDestination?.setCategories(categories)
+            }.ignoreFailures()
     }
 
     func loadCategoryPosts(doneOperation: AsyncOperation) {

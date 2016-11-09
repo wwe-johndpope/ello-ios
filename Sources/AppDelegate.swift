@@ -96,7 +96,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         manager.cache.diskCache.byteLimit = twoHundredFiftyMegaBytes
         manager.cache.diskCache.ageLimit = twoWeeks
 
-        CategoryService().loadCategories({ _ in })
+        CategoryService().loadCategories()
     }
 
     public func applicationDidEnterBackground(application: UIApplication) {
