@@ -11,6 +11,7 @@ public final class CategoryViewController: StreamableViewController {
 
     var navigationBar: ElloNavigationBar!
     var category: Category
+    var allCategories: [Category] = []
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
@@ -169,13 +170,16 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             Category.trending,
             Category.recent,
         ]
-        let allCategories = metaCategories + categories
-        let selectedCategoryIndex = allCategories.indexOf { $0.id == category.id }
+        allCategories = metaCategories + categories
+
+        let shouldAnimate = !(screen.navBarsVisible ?? false)
         let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
-            return CategoryCardListView.CategoryInfo(title: category.name, imageURL: category.tileURL, endpoint: .Category(slug: category.slug), selected: false)
+            return CategoryCardListView.CategoryInfo(title: category.name, imageURL: category.tileURL)
         }
-        screen.setCategoriesInfo(info, animated: true)
-        if let selectedCategoryIndex = selectedCategoryIndex {
+        screen.setCategoriesInfo(info, animated: shouldAnimate)
+
+        let selectedCategoryIndex = allCategories.indexOf { $0.id == category.id }
+        if let selectedCategoryIndex = selectedCategoryIndex where shouldAnimate {
             screen.scrollToCategoryIndex(selectedCategoryIndex)
         }
         updateInsets()
@@ -187,6 +191,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             }
             offset -= ColumnToggleCell.Size.height
             streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
+            userDidScroll = true  // don't do this animation again, e.g. if the user chooses a new category
         }
     }
 
@@ -200,5 +205,24 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 }
 
 extension CategoryViewController: CategoryScreenDelegate {
+    public func categorySelected(index: Int) {
+        guard
+            let category = allCategories.safeValue(index)
+        where category.id != self.category.id
+        else { return }
 
+        let streamKind: StreamKind
+        switch category.level {
+        case .Meta:
+            streamKind = .Discover(type: DiscoverType(rawValue: category.slug)!)
+        default:
+            streamKind = .Category(slug: category.slug)
+        }
+
+        category.randomPromotional = nil
+        streamViewController.streamKind = streamKind
+        generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)
+        self.category = category
+        reloadEntireCategory()
+    }
 }

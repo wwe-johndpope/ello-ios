@@ -57,6 +57,12 @@ public final class CategoryGenerator: StreamGenerator {
         self.destination = destination
     }
 
+    public func reset(streamKind streamKind: StreamKind, category: Category, pagePromotional: PagePromotional?) {
+        self.streamKind = streamKind
+        self.category = category
+        self.pagePromotional = nil
+    }
+
     public func load(reload reload: Bool = false) {
         if reload {
             pagePromotional = nil

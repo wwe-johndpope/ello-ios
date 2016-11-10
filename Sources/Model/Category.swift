@@ -28,14 +28,15 @@ public final class Category: JSONAble, Groupable {
     public let allowInOnboarding: Bool
     public let level: CategoryLevel
     public var isMeta: Bool { return level == .Meta }
+    public var hasPromotionalData: Bool {
+        return body != nil
+    }
+
     public var endpoint: ElloAPI {
         switch level {
         case .Meta: return .Discover(type: DiscoverType(rawValue: slug)!)
         default: return .CategoryPosts(slug: slug)
         }
-    }
-    public var hasPromotionalData: Bool {
-        return body != nil
     }
 
     // links

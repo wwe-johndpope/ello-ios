@@ -2,8 +2,12 @@
 ///  CategoryCardListView.swift
 //
 
+public protocol CategoryCardListDelegate: class {
+    func categoryCardSelected(index: Int)
+}
+
 public class CategoryCardListView: UIView {
-    weak var discoverCategoryPickerDelegate: DiscoverCategoryPickerDelegate?
+    weak var delegate: CategoryCardListDelegate?
 
     struct Size {
         static let height: CGFloat = 70
@@ -14,14 +18,12 @@ public class CategoryCardListView: UIView {
     public struct CategoryInfo {
         let title: String
         let imageURL: NSURL?
-        let endpoint: ElloAPI
-        let selected: Bool
     }
 
     public var categoriesInfo: [CategoryInfo] = [] {
         didSet {
             let changed: Bool = (categoriesInfo.count != oldValue.count) || oldValue.enumerate().any { (index, info) in
-                return info.title != categoriesInfo[index].title || info.selected != categoriesInfo[index].selected || info.endpoint.path != categoriesInfo[index].endpoint.path
+                return info.title != categoriesInfo[index].title
             }
             if changed {
                 updateCategoryViews()
@@ -29,7 +31,7 @@ public class CategoryCardListView: UIView {
         }
     }
 
-    private var buttonEndpointLookup: [UIButton: ElloAPI] = [:]
+    private var buttonIndexLookup: [UIButton: Int] = [:]
     private var categoryViews: [UIView] = []
     private var scrollView = UIScrollView()
 
@@ -64,13 +66,8 @@ public class CategoryCardListView: UIView {
 
     @objc
     func categoryButtonTapped(button: UIButton) {
-        guard let endpoint = buttonEndpointLookup[button] else { return }
-        discoverCategoryPickerDelegate?.discoverCategoryTapped(endpoint)
-    }
-
-    @objc
-    func allButtonTapped() {
-        discoverCategoryPickerDelegate?.discoverAllCategoriesTapped()
+        guard let index = buttonIndexLookup[button] else { return }
+        delegate?.categoryCardSelected(index)
     }
 
     public func scrollToIndex(index: Int, animated: Bool) {
@@ -85,7 +82,8 @@ public class CategoryCardListView: UIView {
             view.removeFromSuperview()
         }
 
-        buttonEndpointLookup = [:]
+        buttonIndexLookup = [:]
+        var index = 0
         categoryViews = categoriesInfo.map { info in
             let view = UIView()
             view.backgroundColor = .blackColor()
@@ -111,7 +109,8 @@ public class CategoryCardListView: UIView {
             view.addSubview(button)
             button.snp_makeConstraints { $0.edges.equalTo(view).inset(5) }
 
-            buttonEndpointLookup[button] = info.endpoint
+            buttonIndexLookup[button] = index
+            index += 1
             return view
         }
 

@@ -26,6 +26,11 @@ public class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         return nil
     }
 
+    override func bindActions() {
+        super.bindActions()
+        categoryCardList.delegate = self
+    }
+
     override func arrange() {
         super.arrange()
         addSubview(categoryCardList)
@@ -65,5 +70,11 @@ public class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
     public func scrollToCategoryIndex(index: Int) {
         self.categoryCardList.scrollToIndex(index, animated: false)
+    }
+}
+
+extension CategoryScreen: CategoryCardListDelegate {
+    public func categoryCardSelected(index: Int) {
+        delegate?.categorySelected(index)
     }
 }
