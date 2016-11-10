@@ -104,11 +104,12 @@ public class CategoryCardListView: UIView {
             overlay.snp_makeConstraints { $0.edges.equalTo(view) }
 
             let button = UIButton()
+            button.titleLabel?.numberOfLines = 0
             button.addTarget(self, action: #selector(categoryButtonTapped(_:)), forControlEvents: .TouchUpInside)
-            let attributedString = NSAttributedString(info.title, color: .whiteColor())
+            let attributedString = NSAttributedString(info.title, color: .whiteColor(), alignment: .Center)
             button.setAttributedTitle(attributedString, forState: UIControlState.Normal)
             view.addSubview(button)
-            button.snp_makeConstraints { $0.edges.equalTo(view) }
+            button.snp_makeConstraints { $0.edges.equalTo(view).inset(5) }
 
             buttonEndpointLookup[button] = info.endpoint
             return view
