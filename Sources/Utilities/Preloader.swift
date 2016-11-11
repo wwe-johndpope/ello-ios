@@ -12,7 +12,7 @@ public struct Preloader {
     public init(){}
 
     public func preloadImages(jsonables: [JSONAble]) {
-
+        
         for jsonable in jsonables {
 
             // activities avatar

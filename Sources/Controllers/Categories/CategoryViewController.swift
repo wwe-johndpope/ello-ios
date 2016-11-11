@@ -10,18 +10,16 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     var navigationBar: ElloNavigationBar!
-    var category: Category
+    var category: Category?
+    var slug: String
     var allCategories: [Category] = []
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
 
-    public init(category: Category) {
-        self.category = category
-        if category.level != .Meta {
-            categoryPromotional = category.randomPromotional
-        }
+    public init(slug: String) {
+        self.slug = slug
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -30,7 +28,7 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        self.title = category.name
+        self.title = category?.name
         elloNavigationItem.title = title
         let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
         elloNavigationItem.leftBarButtonItems = [item]
@@ -47,14 +45,15 @@ public final class CategoryViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        streamViewController.streamKind = .Category(slug: category.slug)
+        streamViewController.streamKind = .Category(slug: slug)
         view.backgroundColor = .whiteColor()
         self.generator = CategoryGenerator(
-            category: category,
+            slug: slug,
             currentUser: currentUser,
             streamKind: self.streamViewController.streamKind,
             destination: self
         )
+
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory() }
@@ -109,7 +108,7 @@ private extension CategoryViewController {
     func reloadEntireCategory() {
         pagePromotional = nil
         categoryPromotional = nil
-        category.randomPromotional = nil
+        category?.randomPromotional = nil
         generator?.load(reload: true)
     }
 
@@ -178,7 +177,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         }
         screen.setCategoriesInfo(info, animated: shouldAnimate)
 
-        let selectedCategoryIndex = allCategories.indexOf { $0.id == category.id }
+        let selectedCategoryIndex = allCategories.indexOf { $0.id == category?.id }
         if let selectedCategoryIndex = selectedCategoryIndex where shouldAnimate {
             screen.scrollToCategoryIndex(selectedCategoryIndex)
         }
@@ -208,7 +207,7 @@ extension CategoryViewController: CategoryScreenDelegate {
     public func categorySelected(index: Int) {
         guard
             let category = allCategories.safeValue(index)
-        where category.id != self.category.id
+        where category.id != self.category?.id
         else { return }
 
         let streamKind: StreamKind
@@ -218,7 +217,6 @@ extension CategoryViewController: CategoryScreenDelegate {
         default:
             streamKind = .Category(slug: category.slug)
         }
-
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)

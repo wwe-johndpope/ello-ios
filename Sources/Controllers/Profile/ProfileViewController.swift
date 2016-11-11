@@ -369,6 +369,7 @@ extension ProfileViewController: ProfileHeaderResponder {
         else { return }
 
         let vc = ProfileCategoriesViewController(categories: categories)
+        vc.currentUser = currentUser
         let navVC = ElloNavigationController(rootViewController: vc)
         navVC.modalTransitionStyle = .CrossDissolve
         navVC.modalPresentationStyle = .Custom

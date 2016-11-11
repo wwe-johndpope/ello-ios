@@ -4,11 +4,7 @@
 
 import Foundation
 
-//public enum SegueIdentifier : String {
-//}
-
 public enum StoryboardIdentifier: String {
-    case Discover = "DiscoverViewController"
     case Notifications = "NotificationsViewController"
     case StreamContainer = "StreamContainerViewController"
     case StreamDetail = "PostDetailViewController"

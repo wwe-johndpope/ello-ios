@@ -25,7 +25,7 @@ public class ElloNavigationController: UINavigationController, ControllerThatMig
         case Notifications = "NotificationsViewController"
         case Profile = "ProfileViewController"
         case Omnibar = "OmnibarViewController"
-        case Discover = "DiscoverViewController"
+        case Discover = "DiscoverAllCategoriesViewController"
 
         func controllerInstance(user: User) -> BaseElloViewController {
             switch self {
@@ -35,7 +35,7 @@ public class ElloNavigationController: UINavigationController, ControllerThatMig
                 let vc = OmnibarViewController()
                 vc.canGoBack = false
                 return vc
-            case Discover: return DiscoverViewController()
+            case Discover: return DiscoverAllCategoriesViewController()
             }
         }
     }

@@ -300,6 +300,7 @@ public extension Tracker {
         screenAppeared(name, properties: props)
     }
 
+    // TODO: decide if this should be change to to the new CategorViewController
     func discoverCategory(category: String) {
         agent.track("DiscoverViewController category filter", properties: ["category": category])
     }
