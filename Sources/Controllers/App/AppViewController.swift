@@ -551,10 +551,10 @@ extension AppViewController {
         vc.selectedTab = .Discover
     }
 
-    private func showCategoryScreen(category: String) {
-//        let vc = CategoryViewController(category: category)
-//        vc.currentUser = currentUser
-//        pushDeepLinkViewController(vc)
+    private func showCategoryScreen(slug: String) {
+        let vc = CategoryViewController(slug: slug)
+        vc.currentUser = currentUser
+        pushDeepLinkViewController(vc)
     }
 
     private func showFriendsScreen(vc: ElloTabBarController) {

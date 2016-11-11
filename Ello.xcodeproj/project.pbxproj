@@ -433,7 +433,6 @@
 		12F0E3B71A4333EC0012CEA2 /* AppSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F0E3B61A4333EC0012CEA2 /* AppSetup.swift */; };
 		12F47DD11AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F47DD01AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift */; };
 		12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6ADF61A43380C00493660 /* BaseElloViewController.swift */; };
-		12F6ADFC1A43380C00493660 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6ADF71A43380C00493660 /* DiscoverViewController.swift */; };
 		12F6ADFD1A43380C00493660 /* ElloTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6ADF81A43380C00493660 /* ElloTabBarController.swift */; };
 		12F6ADFF1A43380C00493660 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6ADFA1A43380C00493660 /* ProfileViewController.swift */; };
 		12F6AE1E1A43386300493660 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE1D1A43386300493660 /* AppViewController.swift */; };
@@ -532,7 +531,6 @@
 		1D472C241C1F2E0400B61E55 /* embetter_video_play.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */; };
 		1D472C261C1F349E00B61E55 /* breaklink_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D472C251C1F349E00B61E55 /* breaklink_normal.svg */; };
 		1D472C281C1F42BA00B61E55 /* InterfaceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */; };
-		1D5169C91D106A27002D133B /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5169C81D106A27002D133B /* DiscoverScreen.swift */; };
 		1D59336C1D10ADA600EAF03D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336A1D10ADA600EAF03D /* Category.swift */; };
 		1D59336D1D10ADA600EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D59336F1D10ADB800EAF03D /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */; };
@@ -629,7 +627,6 @@
 		1D783A2A1B838FDD00BD6BF4 /* OmnibarImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D783A281B838FDD00BD6BF4 /* OmnibarImageCell.swift */; };
 		1D783A2B1B838FDD00BD6BF4 /* OmnibarTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D783A291B838FDD00BD6BF4 /* OmnibarTextCell.swift */; };
 		1D7A28D31A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A28D21A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift */; };
-		1D7A28D41A97AA0F0050E8A2 /* DiscoverViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C781A43763B00C6F8E8 /* DiscoverViewControllerSpec.swift */; };
 		1D7A28D81A97BE490050E8A2 /* ElloWebViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */; };
 		1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */; };
 		1D807D9A1B050DE2009B0F71 /* awesome_people.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D807D991B050DE2009B0F71 /* awesome_people.json */; };
@@ -1376,7 +1373,6 @@
 		12D14C6E1A43762400C6F8E8 /* PostSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostSpec.swift; sourceTree = "<group>"; };
 		12D14C6F1A43762400C6F8E8 /* UserSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSpec.swift; sourceTree = "<group>"; };
 		12D14C741A43762A00C6F8E8 /* ElloSpecHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloSpecHelper.swift; sourceTree = "<group>"; };
-		12D14C781A43763B00C6F8E8 /* DiscoverViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewControllerSpec.swift; sourceTree = "<group>"; };
 		12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ElloTabBarControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12D14C7A1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerSpec.swift; sourceTree = "<group>"; };
 		12D14C8F1A43769800C6F8E8 /* LoginViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewControllerSpec.swift; sourceTree = "<group>"; };
@@ -1400,7 +1396,6 @@
 		12F0E3B61A4333EC0012CEA2 /* AppSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetup.swift; sourceTree = "<group>"; };
 		12F47DD01AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamFooterCellPresenterSpec.swift; sourceTree = "<group>"; };
 		12F6ADF61A43380C00493660 /* BaseElloViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseElloViewController.swift; sourceTree = "<group>"; };
-		12F6ADF71A43380C00493660 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		12F6ADF81A43380C00493660 /* ElloTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTabBarController.swift; sourceTree = "<group>"; };
 		12F6ADFA1A43380C00493660 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		12F6AE1D1A43386300493660 /* AppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
@@ -1503,7 +1498,6 @@
 		1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = embetter_video_play.svg; sourceTree = "<group>"; };
 		1D472C251C1F349E00B61E55 /* breaklink_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = breaklink_normal.svg; sourceTree = "<group>"; };
 		1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceSpec.swift; sourceTree = "<group>"; };
-		1D5169C81D106A27002D133B /* DiscoverScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverScreen.swift; path = Sources/Controllers/Discover/DiscoverScreen.swift; sourceTree = SOURCE_ROOT; };
 		1D59336A1D10ADA600EAF03D /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		1D59336B1D10ADA600EAF03D /* CategoryList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryList.swift; sourceTree = "<group>"; };
 		1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryListCell.swift; sourceTree = "<group>"; };
@@ -2496,8 +2490,6 @@
 			children = (
 				1D2F65AF1D1870020099D036 /* DiscoverAllCategoriesScreen.swift */,
 				1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */,
-				1D5169C81D106A27002D133B /* DiscoverScreen.swift */,
-				12F6ADF71A43380C00493660 /* DiscoverViewController.swift */,
 			);
 			name = Discover;
 			path = ../../sources/controllers/Discover;
@@ -2506,7 +2498,6 @@
 		129C1E231AB7CF900013C1D7 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				12D14C781A43763B00C6F8E8 /* DiscoverViewControllerSpec.swift */,
 			);
 			name = Discover;
 			path = ../../specs/controllers/Discover;
@@ -4638,7 +4629,6 @@
 				1D2F65C11D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift in Sources */,
 				EA7BA1E01AC05AFC00A42D1E /* SettingsViewControllerSpec.swift in Sources */,
 				EAF43D971AB0DEF70016E110 /* ObjectCacheSpec.swift in Sources */,
-				1D7A28D41A97AA0F0050E8A2 /* DiscoverViewControllerSpec.swift in Sources */,
 				12F47DD11AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift in Sources */,
 				12CFF6941B167724007CE68F /* CoderSpec.swift in Sources */,
 				1DA18DF71DA84773000231CC /* ProfileNamesPresenterSpec.swift in Sources */,
@@ -4948,7 +4938,6 @@
 				1D1C162C1B1D034100C4F27C /* TemporaryCache.swift in Sources */,
 				1D7152AE1D6E12AB005998FE /* AppProtocols.swift in Sources */,
 				EA0977C91AE6C42000F898CA /* UIImagePickerController.swift in Sources */,
-				12F6ADFC1A43380C00493660 /* DiscoverViewController.swift in Sources */,
 				F847BC241B0E1FE8006E5F3E /* NotificationBanner.swift in Sources */,
 				1289F3981AF17937008A938C /* BasicIcon.swift in Sources */,
 				122D1BBE1C641188001386CE /* ElloHUDWindowExtensions.swift in Sources */,
@@ -5019,7 +5008,6 @@
 				12E3A2751DBE811900D42599 /* Promotional.swift in Sources */,
 				1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */,
 				1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */,
-				1D5169C91D106A27002D133B /* DiscoverScreen.swift in Sources */,
 				763458E01AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift in Sources */,
 				122B30D41C6A3FBC00C1B9D8 /* Love.swift in Sources */,
 				12D43A461AC864CC0039F54F /* StreamToggleCellPresenter.swift in Sources */,

@@ -20,6 +20,7 @@ public final class CategoryGenerator: StreamGenerator {
     }
 
     private var category: Category?
+    private var categories: [Category]?
     private var slug: String
     private var pagePromotional: PagePromotional?
     private var posts: [Post]?
@@ -37,7 +38,7 @@ public final class CategoryGenerator: StreamGenerator {
             ]
         }
 
-        if let category = self.category where category.isMeta {
+        if isMeta() {
             if let pagePromotional = pagePromotional {
                 items += [StreamCellItem(jsonable: pagePromotional, type: .PagePromotionalHeader)]
             }
@@ -47,19 +48,6 @@ public final class CategoryGenerator: StreamGenerator {
         }
 
         return items
-    }
-
-    public init(category: Category,
-                currentUser: User?,
-                streamKind: StreamKind,
-                destination: StreamDestination?
-        ) {
-        self.category = category
-        self.slug = category.slug
-        self.currentUser = currentUser
-        self.streamKind = streamKind
-        self.localToken = loadingToken.resetInitialPageLoadingToken()
-        self.destination = destination
     }
 
     public init(slug: String,
@@ -77,6 +65,7 @@ public final class CategoryGenerator: StreamGenerator {
     public func reset(streamKind streamKind: StreamKind, category: Category, pagePromotional: PagePromotional?) {
         self.streamKind = streamKind
         self.category = category
+        self.slug = category.slug
         self.pagePromotional = nil
     }
 
@@ -93,7 +82,7 @@ public final class CategoryGenerator: StreamGenerator {
         setInitialJSONAble(doneOperation)
         loadCategories()
         loadCategory(doneOperation, reload: reload)
-        if let category = category where category.isMeta {
+        if isMeta() {
             loadPagePromotional(doneOperation)
         }
         loadCategoryPosts(doneOperation)
@@ -133,11 +122,18 @@ private extension CategoryGenerator {
         }
     }
 
+    func isMeta() -> Bool {
+        let discoverType = DiscoverType.fromURL(slug)
+        if discoverType != nil { return true }
+        if let category = category where category.isMeta {
+            return true
+        }
+        return false
+    }
+
     func loadCategory(doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.finished || reload else { return }
-        if let category = category where category.isMeta {
-            return
-        }
+        guard !isMeta() else { return }
 
         CategoryService().loadCategory(slug)
             .onSuccess { [weak self] category in
@@ -163,20 +159,16 @@ private extension CategoryGenerator {
     }
 
     func loadPagePromotional(doneOperation: AsyncOperation) {
-        guard let category = category else { return }
-        guard category.isMeta else { return }
+        guard isMeta() else { return }
 
         PagePromotionalService().loadPagePromotionals()
             .onSuccess { [weak self] promotionals in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
 
-                if let pagePromotional = promotionals.randomItem() {
+                if let pagePromotional = promotionals?.randomItem() {
                     sself.pagePromotional = pagePromotional
                     sself.destination?.setPrimaryJSONAble(pagePromotional)
-                }
-                else {
-                    sself.destination?.setPrimaryJSONAble(category)
                 }
                 sself.destination?.replacePlaceholder(.CategoryHeader, items: sself.headerItems()) {}
                 doneOperation.run()
@@ -192,7 +184,7 @@ private extension CategoryGenerator {
         CategoryService().loadCategories()
             .onSuccess { [weak self] categories in
                 guard let sself = self else { return }
-
+                sself.categories = categories
                 sself.categoryStreamDestination?.setCategories(categories)
             }.ignoreFailures()
     }
@@ -202,9 +194,19 @@ private extension CategoryGenerator {
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-//        guard let category = category else { return }
         self.destination?.replacePlaceholder(.CategoryPosts, items: [StreamCellItem(type: .StreamLoading)]) {}
-        let endpoint: ElloAPI = .CategoryPosts(slug: slug)
+
+        var apiEndpoint: ElloAPI?
+        if isMeta() {
+            guard let discoverType = DiscoverType.fromURL(slug) else { return }
+            apiEndpoint = .Discover(type: discoverType)
+        }
+        else {
+            apiEndpoint = .CategoryPosts(slug: slug)
+        }
+
+        guard let endpoint = apiEndpoint else { return }
+
         StreamService().loadStream(
             endpoint,
             streamKind: streamKind,
@@ -238,6 +240,8 @@ private extension CategoryGenerator {
                 sself.queue.cancelAllOperations()
             }, noContent: { [weak self] in
                 guard let sself = self else { return }
+                let noContentItem = StreamCellItem(type: .Text(data: TextRegion(content: "Nothing to see here")))
+                sself.destination?.replacePlaceholder(.CategoryPosts, items: [noContentItem]) {}
                 sself.destination?.primaryJSONAbleNotFound()
                 sself.queue.cancelAllOperations()
         })

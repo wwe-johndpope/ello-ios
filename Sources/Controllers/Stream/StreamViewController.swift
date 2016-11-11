@@ -870,6 +870,7 @@ extension StreamViewController: StreamImageCellDelegate {
 
 // MARK: StreamViewController: Commenting
 extension StreamViewController {
+
     public func createCommentTapped(post: Post) {
         createPostDelegate?.createComment(post, text: nil, fromController: self)
     }
@@ -877,8 +878,9 @@ extension StreamViewController {
 
 // MARK: StreamViewController: Open category
 extension StreamViewController {
+
     public func categoryTapped(category: Category) {
-        let vc = CategoryViewController(category: category)
+        let vc = CategoryViewController(slug: category.slug)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -940,7 +942,7 @@ extension StreamViewController: UserDelegate {
         guard let
             indexPath = collectionView.indexPathForCell(cell),
             user = dataSource.userForIndexPath(indexPath)
-            else { return }
+        else { return }
 
         print("\(user.atName) userTappedFeaturedCategories()")
     }
@@ -993,13 +995,13 @@ extension StreamViewController: WebLinkDelegate {
             selectTab(.Discover)
         case .Category:
             selectTab(.Discover)
-
-            if let nav = elloTabBarController?.selectedViewController as? UINavigationController,
-                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
-            {
-                nav.popToRootViewControllerAnimated(false)
-                discoverViewController.showCategory(data)
-            }
+            // TODO: wire category and discover up to the new category view controller
+//            if let nav = elloTabBarController?.selectedViewController as? UINavigationController,
+//                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
+//            {
+//                nav.popToRootViewControllerAnimated(false)
+//                discoverViewController.showCategory(data)
+//            }
         case .Email: break // this is handled in ElloWebViewHelper
         case .BetaPublicProfiles,
              .Enter,

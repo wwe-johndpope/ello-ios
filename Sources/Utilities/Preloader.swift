@@ -11,8 +11,9 @@ public struct Preloader {
 
     public init(){}
 
-    public func preloadImages(jsonables: [JSONAble]) {
-
+    public func preloadImages(jsonables: [JSONAble]?) {
+        guard let jsonables = jsonables else { return }
+        
         for jsonable in jsonables {
 
             // activities avatar

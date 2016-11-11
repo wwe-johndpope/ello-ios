@@ -18,23 +18,8 @@ public final class CategoryViewController: StreamableViewController {
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
 
-    // used by most in app user interactions
-    public init(category: Category) {
-        self.category = category
-        self.slug = category.slug
-        if category.level != .Meta {
-            categoryPromotional = category.randomPromotional
-        }
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    // used when deep linking to a category
     public init(slug: String) {
         self.slug = slug
-//        self.category = category
-//        if category.level != .Meta {
-//            categoryPromotional = category.randomPromotional
-//        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -62,22 +47,12 @@ public final class CategoryViewController: StreamableViewController {
         setupNavigationBar()
         streamViewController.streamKind = .Category(slug: slug)
         view.backgroundColor = .whiteColor()
-        if let category = category {
-            self.generator = CategoryGenerator(
-                category: category,
-                currentUser: currentUser,
-                streamKind: self.streamViewController.streamKind,
-                destination: self
-            )
-        }
-        else {
-            self.generator = CategoryGenerator(
-                slug: slug,
-                currentUser: currentUser,
-                streamKind: self.streamViewController.streamKind,
-                destination: self
-            )
-        }
+        self.generator = CategoryGenerator(
+            slug: slug,
+            currentUser: currentUser,
+            streamKind: self.streamViewController.streamKind,
+            destination: self
+        )
 
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
@@ -242,7 +217,6 @@ extension CategoryViewController: CategoryScreenDelegate {
         default:
             streamKind = .Category(slug: category.slug)
         }
-
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)
