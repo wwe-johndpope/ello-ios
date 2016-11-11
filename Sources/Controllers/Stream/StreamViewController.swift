@@ -62,7 +62,6 @@ public protocol ColumnToggleDelegate: class {
 
 public protocol DiscoverCategoryPickerDelegate: class {
     func discoverCategoryTapped(endpoint: ElloAPI)
-    func discoverAllCategoriesTapped()
 }
 
 public protocol SearchStreamDelegate: class {
@@ -747,12 +746,6 @@ extension StreamViewController: DiscoverCategoryPickerDelegate {
         loadInitialPage()
     }
 
-    public func discoverAllCategoriesTapped() {
-        let vc = DiscoverAllCategoriesViewController()
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
 }
 
 // MARK: StreamViewController: SimpleStreamDelegate
@@ -896,12 +889,6 @@ extension StreamViewController {
 extension StreamViewController {
     public func categoryTapped(category: Category) {
         let vc = CategoryViewController(category: category)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    public func seeAllCategoriesTapped() {
-        let vc = DiscoverAllCategoriesViewController()
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -1161,10 +1148,6 @@ extension StreamViewController: UICollectionViewDelegate {
             else {
                 categoryTapped(category)
             }
-        }
-        else if let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
-        where cellItemType == .SeeAllCategories {
-            seeAllCategoriesTapped()
         }
 
         if !keepSelected {
