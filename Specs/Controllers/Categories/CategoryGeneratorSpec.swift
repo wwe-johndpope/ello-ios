@@ -47,6 +47,11 @@ class CategoryGeneratorSpec: QuickSpec {
                         expect(destination.pagePromotional).toNot(beNil())
                     }
 
+                    it("sets the categories") {
+                        subject.load()
+                        expect(destination.categories.count) > 0
+                    }
+
                     it("sets the config response") {
                         subject.load()
                         expect(destination.responseConfig).toNot(beNil())
@@ -93,13 +98,14 @@ class CategoryGeneratorSpec: QuickSpec {
     }
 }
 
-class CategoryDestination: StreamDestination {
+class CategoryDestination: CategoryStreamDestination {
 
     var placeholderItems: [StreamCellItem] = []
     var headerItems: [StreamCellItem] = []
     var postItems: [StreamCellItem] = []
     var otherPlaceHolderLoaded = false
     var category: Ello.Category?
+    var categories: [Ello.Category] = []
     var pagePromotional: PagePromotional?
     var responseConfig: ResponseConfig?
     var pagingEnabled: Bool = false
@@ -110,6 +116,7 @@ class CategoryDestination: StreamDestination {
         postItems = []
         otherPlaceHolderLoaded = false
         category = nil
+        categories = []
         pagePromotional = nil
         responseConfig = nil
     }
@@ -137,6 +144,10 @@ class CategoryDestination: StreamDestination {
         if let pagePromotional = jsonable as? PagePromotional {
             self.pagePromotional = pagePromotional
         }
+    }
+
+    func setCategories(categories: [Ello.Category]) {
+        self.categories = categories
     }
 
     func primaryJSONAbleNotFound() {
