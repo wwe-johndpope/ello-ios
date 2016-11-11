@@ -16,7 +16,7 @@ class CategoryScreenSpec: QuickSpec {
     }
 
     override func spec() {
-        fdescribe("CategoryScreen") {
+        describe("CategoryScreen") {
             var subject: CategoryScreen!
             var delegate: MockCategoryScreenDelegate!
             beforeEach {

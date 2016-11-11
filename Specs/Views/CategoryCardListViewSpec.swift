@@ -33,7 +33,7 @@ class CategoryCardListViewSpec: QuickSpec {
             subject.delegate = delegate
         }
 
-        fdescribe("CategoryCardListView") {
+        describe("CategoryCardListView") {
             it("should have a valid snapshot") {
                 expectValidSnapshot(subject, named: "CategoryCardListView", device: .Custom(subject.frame.size))
             }
