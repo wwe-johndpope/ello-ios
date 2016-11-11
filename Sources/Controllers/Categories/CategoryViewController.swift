@@ -202,7 +202,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         }
         screen.setCategoriesInfo(info, animated: shouldAnimate)
 
-        let selectedCategoryIndex = allCategories.indexOf { $0.id == category.id }
+        let selectedCategoryIndex = allCategories.indexOf { $0.id == category?.id }
         if let selectedCategoryIndex = selectedCategoryIndex where shouldAnimate {
             screen.scrollToCategoryIndex(selectedCategoryIndex)
         }
@@ -232,7 +232,7 @@ extension CategoryViewController: CategoryScreenDelegate {
     public func categorySelected(index: Int) {
         guard
             let category = allCategories.safeValue(index)
-        where category.id != self.category.id
+        where category.id != self.category?.id
         else { return }
 
         let streamKind: StreamKind
