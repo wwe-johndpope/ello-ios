@@ -29,6 +29,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
         public init(style: Style) {
             self.style = style
             self.title = ""
+            self.tracking = ""
         }
     }
 
