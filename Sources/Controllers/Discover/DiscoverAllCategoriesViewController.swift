@@ -3,6 +3,12 @@
 //
 
 public class DiscoverAllCategoriesViewController: StreamableViewController {
+
+    override public var tabBarItem: UITabBarItem? {
+        get { return UITabBarItem.item(.Sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
+        set { self.tabBarItem = newValue }
+    }
+
     var screen: DiscoverAllCategoriesScreen { return self.view as! DiscoverAllCategoriesScreen }
 
     required public init() {
@@ -17,16 +23,15 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        title = InterfaceString.Discover.AllCategories
+        title = InterfaceString.Discover.Title
         elloNavigationItem.title = title
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [item]
-        elloNavigationItem.fixNavBarItemPadding()
 
         let screen = DiscoverAllCategoriesScreen()
         screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
+
+        addSearchButton()
     }
 
     func loadCategories() {

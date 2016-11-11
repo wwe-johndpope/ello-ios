@@ -245,7 +245,7 @@ public class StreamContainerViewController: StreamableViewController {
 
         self.presentViewController(drawer, animated: true, completion: nil)
     }
- 
+
     @IBAction func streamSegmentTapped(sender: UISegmentedControl) {
         showSegmentIndex(sender.selectedSegmentIndex)
     }

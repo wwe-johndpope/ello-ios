@@ -41,7 +41,8 @@ extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate
 extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
 
     public func categoryTapped(category: Category) {
-        let vc = CategoryViewController(category: category)
+//        let vc = CategoryViewController(category: category)
+        let vc = CategoryViewController(slug: category.slug)
         vc.currentUser = currentUser
 
         navigationController?.pushViewController(vc, animated: true)

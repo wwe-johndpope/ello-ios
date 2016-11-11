@@ -452,19 +452,20 @@ extension AppViewController {
              .ExploreRecent,
              .ExploreTrending:
             showDiscoverScreen(vc)
-        case .Discover,
-             .DiscoverRandom,
+        case .Discover:
+            showDiscoverScreen(vc)
+        case .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
              .DiscoverTrending,
              .Category:
-            showDiscoverScreen(vc)
-            if let nav = vc.selectedViewController as? UINavigationController,
-                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
-            {
-                nav.popToRootViewControllerAnimated(false)
-                discoverViewController.showCategory(data)
-            }
+            showCategoryScreen(data)
+//            if let nav = vc.selectedViewController as? UINavigationController,
+//                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
+//            {
+//                nav.popToRootViewControllerAnimated(false)
+//                discoverViewController.showCategory(data)
+//            }
         case .Invitations:
             showInvitationScreen(vc)
         case .Enter, .Exit, .Root, .Explore:
@@ -548,6 +549,12 @@ extension AppViewController {
 
     private func showDiscoverScreen(vc: ElloTabBarController) {
         vc.selectedTab = .Discover
+    }
+
+    private func showCategoryScreen(category: String) {
+//        let vc = CategoryViewController(category: category)
+//        vc.currentUser = currentUser
+//        pushDeepLinkViewController(vc)
     }
 
     private func showFriendsScreen(vc: ElloTabBarController) {

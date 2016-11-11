@@ -10,18 +10,31 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     var navigationBar: ElloNavigationBar!
-    var category: Category
+    var category: Category?
+    var slug: String
     var allCategories: [Category] = []
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
 
+    // used by most in app user interactions
     public init(category: Category) {
         self.category = category
+        self.slug = category.slug
         if category.level != .Meta {
             categoryPromotional = category.randomPromotional
         }
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    // used when deep linking to a category
+    public init(slug: String) {
+        self.slug = slug
+//        self.category = category
+//        if category.level != .Meta {
+//            categoryPromotional = category.randomPromotional
+//        }
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -30,7 +43,7 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        self.title = category.name
+        self.title = category?.name
         elloNavigationItem.title = title
         let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
         elloNavigationItem.leftBarButtonItems = [item]
@@ -47,14 +60,25 @@ public final class CategoryViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        streamViewController.streamKind = .Category(slug: category.slug)
+        streamViewController.streamKind = .Category(slug: slug)
         view.backgroundColor = .whiteColor()
-        self.generator = CategoryGenerator(
-            category: category,
-            currentUser: currentUser,
-            streamKind: self.streamViewController.streamKind,
-            destination: self
-        )
+        if let category = category {
+            self.generator = CategoryGenerator(
+                category: category,
+                currentUser: currentUser,
+                streamKind: self.streamViewController.streamKind,
+                destination: self
+            )
+        }
+        else {
+            self.generator = CategoryGenerator(
+                slug: slug,
+                currentUser: currentUser,
+                streamKind: self.streamViewController.streamKind,
+                destination: self
+            )
+        }
+
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory() }
@@ -109,7 +133,7 @@ private extension CategoryViewController {
     func reloadEntireCategory() {
         pagePromotional = nil
         categoryPromotional = nil
-        category.randomPromotional = nil
+        category?.randomPromotional = nil
         generator?.load(reload: true)
     }
 
