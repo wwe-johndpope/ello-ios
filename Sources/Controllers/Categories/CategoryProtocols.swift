@@ -11,4 +11,5 @@ public protocol CategoryScreenProtocol: StreamableScreenProtocol {
 }
 
 public protocol CategoryScreenDelegate: class {
+    func categorySelected(index: Int)
 }
