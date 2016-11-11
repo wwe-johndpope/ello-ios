@@ -6,18 +6,18 @@ import SnapKit
 
 public class CategoryListCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryListCell"
-    weak var discoverCategoryPickerDelegate: DiscoverCategoryPickerDelegate?
+    weak var delegate: CategoryListCellDelegate?
 
     struct Size {
         static let height: CGFloat = 45
         static let spacing: CGFloat = 1
     }
 
-    public typealias CategoryInfo = (title: String, endpoint: ElloAPI)
+    public typealias CategoryInfo = (title: String, slug: String)
     public var categoriesInfo: [CategoryInfo] = [] {
         didSet {
             let changed: Bool = (categoriesInfo.count != oldValue.count) || oldValue.enumerate().any { (index, info) in
-                return info.title != categoriesInfo[index].title || info.endpoint.path != categoriesInfo[index].endpoint.path
+                return info.title != categoriesInfo[index].title || info.slug != categoriesInfo[index].slug
             }
             if changed {
                 updateCategoryViews()
@@ -25,7 +25,7 @@ public class CategoryListCell: UICollectionViewCell {
         }
     }
 
-    private var buttonEndpointLookup: [UIButton: ElloAPI] = [:]
+    private var buttonCategoryLookup: [UIButton: String] = [:]
     private var categoryButtons: [UIButton] = []
 
     private class func buttonTitle(category: String) -> NSAttributedString {
@@ -65,19 +65,19 @@ public class CategoryListCell: UICollectionViewCell {
 
     @objc
     func categoryButtonTapped(button: UIButton) {
-        guard let endpoint = buttonEndpointLookup[button] else { return }
-        discoverCategoryPickerDelegate?.discoverCategoryTapped(endpoint)
+        guard let slug = buttonCategoryLookup[button] else { return }
+        delegate?.categoryListCellTapped(slug: slug)
     }
 
     private func updateCategoryViews() {
         for view in categoryButtons {
             view.removeFromSuperview()
         }
-        buttonEndpointLookup = [:]
+        buttonCategoryLookup = [:]
 
-        categoryButtons = categoriesInfo.map { (category, endpoint) in
+        categoryButtons = categoriesInfo.map { (category, slug) in
             let button = UIButton()
-            buttonEndpointLookup[button] = endpoint
+            buttonCategoryLookup[button] = slug
             button.backgroundColor = .greyF2()
             button.addTarget(self, action: #selector(categoryButtonTapped(_:)), forControlEvents: .TouchUpInside)
             let attributedString = CategoryListCell.buttonTitle(category)

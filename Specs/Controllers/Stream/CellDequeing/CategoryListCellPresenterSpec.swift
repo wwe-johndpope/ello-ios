@@ -20,10 +20,13 @@ class CategoryListCellPresenterSpec: QuickSpec {
                 expect(cell.categoriesInfo.count) == categoryList.categories.count
 
                 expect(cell.categoriesInfo[0].title) == categoryList.categories[0].name
-                expect(cell.categoriesInfo[0].endpoint.path) == ElloAPI.Discover(type: .Featured).path
+                expect(cell.categoriesInfo[0].slug) == categoryList.categories[0].slug
 
                 expect(cell.categoriesInfo[1].title) == categoryList.categories[1].name
-                expect(cell.categoriesInfo[1].endpoint.path) == ElloAPI.CategoryPosts(slug: "art").path
+                expect(cell.categoriesInfo[1].slug) == categoryList.categories[1].slug
+
+                expect(cell.categoriesInfo[2].title) == categoryList.categories[2].name
+                expect(cell.categoriesInfo[2].slug) == categoryList.categories[2].slug
             }
         }
     }

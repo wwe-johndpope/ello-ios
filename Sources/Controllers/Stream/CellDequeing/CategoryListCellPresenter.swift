@@ -14,7 +14,7 @@ public struct CategoryListCellPresenter {
         if let cell = cell as? CategoryListCell,
             categoryList = streamCellItem.jsonable as? CategoryList
         {
-            cell.categoriesInfo = categoryList.categories.map { (title: $0.name, endpoint: $0.endpoint) }
+            cell.categoriesInfo = categoryList.categories.map { (title: $0.name, slug: $0.slug) }
         }
     }
 
