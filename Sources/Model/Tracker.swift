@@ -305,6 +305,14 @@ public extension Tracker {
         agent.track("DiscoverViewController category filter", properties: ["category": category])
     }
 
+    func categoryHeaderPostedBy(categoryTitle: String) {
+        agent.track("promoByline clicked", properties: ["category": categoryTitle])
+    }
+
+    func categoryHeaderCallToAction(categoryTitle: String) {
+        agent.track("promoCTA clicked", properties: ["category": categoryTitle])
+    }
+
     func screenAppeared(name: String, properties: [String: AnyObject]? = nil) {
         agent.screen(name, properties: properties)
     }
