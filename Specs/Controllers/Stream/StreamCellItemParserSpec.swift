@@ -12,13 +12,12 @@ class StreamCellItemParserSpec: QuickSpec {
     override func spec() {
         describe("StreamCellItemParser") {
 
-            var subject = StreamCellItemParser()
+            var subject: StreamCellItemParser!
+            beforeEach {
+                subject = StreamCellItemParser()
+            }
 
             describe("-streamCellItems:") {
-
-                beforeEach {
-                    subject = StreamCellItemParser()
-                }
 
                 it("returns an empty array if an empty array of Posts is passed in") {
                     let posts = [Post]()
@@ -32,13 +31,25 @@ class StreamCellItemParserSpec: QuickSpec {
 
                 it("returns an array with the proper count of stream cell items when parsing friends.json's posts") {
                     var cellItems = [StreamCellItem]()
-                    StreamService().loadStream(ElloAPI.FriendStream, streamKind: nil,
+                    StreamService().loadStream(.FriendStream, streamKind: nil,
                         success: { (jsonables, responseConfig) in
                             cellItems = subject.parse(jsonables, streamKind: .Following)
                         },
                         failure: nil
                     )
                     expect(cellItems.count) == 8
+                }
+
+                it("doesn't include user's own post headers on a profile stream") {
+                    var cellItems = [StreamCellItem]()
+                    StreamService().loadStream(.FriendStream, streamKind: nil,
+                        success: { (jsonables, responseConfig) in
+                            cellItems = subject.parse(jsonables, streamKind: .UserStream(userParam: "42"))
+                        },
+                        failure: nil
+                    )
+                    let header = cellItems.find { $0.type == .Header }
+                    expect(header).to(beNil())
                 }
 
                 it("returns an empty array if an empty array of Activities is passed in") {
@@ -48,7 +59,7 @@ class StreamCellItemParserSpec: QuickSpec {
 
                 it("returns an array with the proper count of stream cell items when parsing friends.json's activities") {
                     var loadedNotifications = [StreamCellItem]()
-                    StreamService().loadStream(ElloAPI.NotificationsStream(category: nil), streamKind: nil,
+                    StreamService().loadStream(.NotificationsStream(category: nil), streamKind: nil,
                         success: { (jsonables, responseConfig) in
                             loadedNotifications = subject.parse(jsonables, streamKind: .Notifications(category: nil))
                         },

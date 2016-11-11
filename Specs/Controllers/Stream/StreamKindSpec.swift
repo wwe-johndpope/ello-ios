@@ -167,6 +167,26 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
+            describe("isProfileStream") {
+                let expectations: [(StreamKind, Bool)] = [
+                    (.Discover(type: .Featured), false),
+                    (.CategoryPosts(slug: "art"), false),
+                    (.Following, false),
+                    (.Starred, false),
+                    (.Notifications(category: ""), false),
+                    (.PostDetail(postParam: "param"), false),
+                    (.CurrentUserStream, true),
+                    (.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat"), false),
+                    (.Unknown, false),
+                    (.UserStream(userParam: "NA"), true),
+                ]
+                for (streamKind, expected) in expectations {
+                    it("is \(expected) for \(streamKind)") {
+                        expect(streamKind.isProfileStream) == expected
+                    }
+                }
+            }
+
             describe("endpoint") {
 
                 it("is correct for all cases") {
