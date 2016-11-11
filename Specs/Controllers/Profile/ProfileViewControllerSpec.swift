@@ -10,12 +10,6 @@ import Nimble
 
 class ProfileViewControllerSpec: QuickSpec {
     override func spec() {
-        beforeEach {
-            ElloLinkedStore.sharedInstance.writeConnection.readWriteWithBlock { transaction in
-                transaction.removeObjectForKey("42", inCollection: MappingType.UsersType.rawValue)
-            }
-        }
-
         describe("ProfileViewController") {
             let currentUser: User = stub([:])
 
