@@ -730,10 +730,9 @@ extension StreamViewController: ColumnToggleDelegate {
 extension StreamViewController: CategoryListCellDelegate {
 
     public func categoryListCellTapped(slug slug: String) {
-        print("category tapped: \(slug)")
-        // let vc = CategoryViewController(category: slug)
-        // vc.currentUser = currentUser
-        // navigationController?.pushViewController(vc, animated: true)
+        let vc = CategoryViewController(slug: slug)
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }

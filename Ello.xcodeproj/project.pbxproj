@@ -3044,10 +3044,10 @@
 		12F6AE641A4339D100493660 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1DA18E571DD12FE8000231CC /* CategoryCardListView.swift */,
 				762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */,
 				1289F3971AF17937008A938C /* BasicIcon.swift */,
 				1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */,
+				1DA18E571DD12FE8000231CC /* CategoryCardListView.swift */,
 				1D7152AF1D6E4782005998FE /* ClearTextField.swift */,
 				1DB8C6A01D789015007E1447 /* ClearTextView.swift */,
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
