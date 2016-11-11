@@ -11,8 +11,7 @@ public struct Preloader {
 
     public init(){}
 
-    public func preloadImages(jsonables: [JSONAble]?) {
-        guard let jsonables = jsonables else { return }
+    public func preloadImages(jsonables: [JSONAble]) {
         
         for jsonable in jsonables {
 
