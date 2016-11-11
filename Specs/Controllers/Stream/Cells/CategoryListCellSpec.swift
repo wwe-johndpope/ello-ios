@@ -9,13 +9,13 @@ import Nimble_Snapshots
 
 
 class CategoryListCellSpec: QuickSpec {
-    class Delegate: DiscoverCategoryPickerDelegate {
+    class Delegate: CategoryListCellDelegate {
         var categoryTapped = false
-        var endpointPath: String?
+        var slug: String?
 
-        func discoverCategoryTapped(endpoint: ElloAPI) {
+        func categoryListCellTapped(slug slug: String) {
             categoryTapped = true
-            endpointPath = endpoint.path
+            self.slug = slug
         }
     }
 
@@ -28,31 +28,31 @@ class CategoryListCellSpec: QuickSpec {
                 delegate = Delegate()
                 let frame = CGRect(origin: .zero, size: CGSize(width: 320, height: CategoryListCell.Size.height))
                 subject = CategoryListCell(frame: frame)
-                subject.discoverCategoryPickerDelegate = delegate
+                subject.delegate = delegate
                 showView(subject)
             }
 
             describe("actions") {
                 it("sends action when tapping on a category") {
                     subject.categoriesInfo = [
-                        (title: "Featured", endpoint: .CategoryPosts(slug: "featured")),
-                        (title: "Trending", endpoint: .CategoryPosts(slug: "trending")),
-                        (title: "Recent", endpoint: .CategoryPosts(slug: "recent")),
+                        (title: "Featured", slug: "featured"),
+                        (title: "Trending", slug: "trending"),
+                        (title: "Recent", slug: "recent"),
                     ]
                     let categoryButton: UIButton? = subviewThatMatches(subject) { view in
                         (view as? UIButton)?.currentAttributedTitle?.string == "Featured"
                     }
                     categoryButton?.sendActionsForControlEvents(.TouchUpInside)
                     expect(delegate.categoryTapped) == true
-                    expect(delegate.endpointPath) == ElloAPI.CategoryPosts(slug: "featured").path
+                    expect(delegate.slug) == "featured"
                 }
             }
 
             it("displays categories") {
                 subject.categoriesInfo = [
-                    (title: "Featured", endpoint: .CategoryPosts(slug: "featured")),
-                    (title: "Trending", endpoint: .CategoryPosts(slug: "trending")),
-                    (title: "Recent", endpoint: .CategoryPosts(slug: "recent")),
+                    (title: "Featured", slug: "featured"),
+                    (title: "Trending", slug: "trending"),
+                    (title: "Recent", slug: "recent"),
                 ]
                 subject.layoutIfNeeded()
                 expect(subject).to(haveValidSnapshot())

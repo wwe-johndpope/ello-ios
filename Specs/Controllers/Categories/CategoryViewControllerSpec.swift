@@ -16,7 +16,7 @@ class CategoryViewControllerSpec: QuickSpec {
 
             beforeEach {
                 let category: Ello.Category = Ello.Category.stub([:])
-                subject = CategoryViewController(category: category)
+                subject = CategoryViewController(slug: category.slug)
                 subject.currentUser = currentUser
                 showController(subject)
             }

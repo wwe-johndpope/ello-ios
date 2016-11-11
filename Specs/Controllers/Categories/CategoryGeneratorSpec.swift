@@ -21,7 +21,7 @@ class CategoryGeneratorSpec: QuickSpec {
             context("page promotional") {
                 let category = Ello.Category.stub(["level" : "meta", "slug" : "recommended"])
                 let subject = CategoryGenerator(
-                    category: category,
+                    slug: category.slug,
                     currentUser: currentUser,
                     streamKind: streamKind,
                     destination: destination
@@ -62,7 +62,7 @@ class CategoryGeneratorSpec: QuickSpec {
             context("category") {
                 let category = Ello.Category.stub(["level" : "primary"])
                 let subject = CategoryGenerator(
-                    category: category,
+                    slug: category.slug,
                     currentUser: currentUser,
                     streamKind: streamKind,
                     destination: destination
