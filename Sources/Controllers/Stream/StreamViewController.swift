@@ -60,9 +60,8 @@ public protocol ColumnToggleDelegate: class {
     func columnToggleTapped(isGridView: Bool)
 }
 
-public protocol DiscoverCategoryPickerDelegate: class {
-    func discoverCategoryTapped(endpoint: ElloAPI)
-    func discoverAllCategoriesTapped()
+public protocol CategoryListCellDelegate: class {
+    func categoryListCellTapped(slug slug: String)
 }
 
 public protocol SearchStreamDelegate: class {
@@ -607,7 +606,7 @@ public final class StreamViewController: BaseElloViewController {
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.columnToggleDelegate = self
-        dataSource.discoverCategoryPickerDelegate = self
+        dataSource.categoryListCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
@@ -727,30 +726,14 @@ extension StreamViewController: ColumnToggleDelegate {
     }
 }
 
-// MARK: StreamViewController: DiscoverCategoryPickerDelegate
-extension StreamViewController: DiscoverCategoryPickerDelegate {
+// MARK: StreamViewController: CategoryListCellDelegate
+extension StreamViewController: CategoryListCellDelegate {
 
-    public func discoverCategoryTapped(endpoint: ElloAPI) {
-        hideNoResults()
-        switch endpoint {
-        case let .CategoryPosts(slug):
-            Tracker.sharedTracker.discoverCategory(slug)
-            streamKind = .CategoryPosts(slug: slug)
-        case let .Discover(type):
-            Tracker.sharedTracker.discoverCategory(type.rawValue)
-            streamKind = .Discover(type: type)
-        default:
-            fatalError("invalid endpoint \(endpoint)")
-        }
-        removeAllCellItems()
-        ElloHUD.showLoadingHudInView(view)
-        loadInitialPage()
-    }
-
-    public func discoverAllCategoriesTapped() {
-        let vc = DiscoverAllCategoriesViewController()
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
+    public func categoryListCellTapped(slug slug: String) {
+        print("category tapped: \(slug)")
+        // let vc = CategoryViewController(category: slug)
+        // vc.currentUser = currentUser
+        // navigationController?.pushViewController(vc, animated: true)
     }
 
 }
@@ -896,12 +879,6 @@ extension StreamViewController {
 extension StreamViewController {
     public func categoryTapped(category: Category) {
         let vc = CategoryViewController(category: category)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    public func seeAllCategoriesTapped() {
-        let vc = DiscoverAllCategoriesViewController()
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -1161,10 +1138,6 @@ extension StreamViewController: UICollectionViewDelegate {
             else {
                 categoryTapped(category)
             }
-        }
-        else if let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
-        where cellItemType == .SeeAllCategories {
-            seeAllCategoriesTapped()
         }
 
         if !keepSelected {
