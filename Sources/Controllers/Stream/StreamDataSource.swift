@@ -118,9 +118,22 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 return repostAuthor
             }
 
+            if case .PagePromotionalHeader = item.type,
+                let user = (item.jsonable as? PagePromotional)?.user
+            {
+                return user
+            }
+
+            if case .CategoryPromotionalHeader = item.type,
+                let user = (item.jsonable as? Category)?.randomPromotional?.user
+            {
+                return user
+            }
+
             if let authorable = item.jsonable as? Authorable {
                 return authorable.author
             }
+
             return item.jsonable as? User
         }
         return nil
@@ -306,6 +319,10 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         switch streamCellItem.type {
         case .ColumnToggle:
             (cell as! ColumnToggleCell).columnToggleDelegate = columnToggleDelegate
+        case .CategoryPromotionalHeader,
+             .PagePromotionalHeader:
+            (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
+            (cell as! CategoryHeaderCell).userDelegate = userDelegate
         case .CategoryList:
             (cell as! CategoryListCell).delegate = categoryListCellDelegate
         case .Footer:

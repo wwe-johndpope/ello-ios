@@ -204,6 +204,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 }
 
 extension CategoryViewController: CategoryScreenDelegate {
+
     public func categorySelected(index: Int) {
         guard
             let category = allCategories.safeValue(index)

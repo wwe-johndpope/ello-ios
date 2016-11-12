@@ -6,6 +6,7 @@ import SnapKit
 import FLAnimatedImage
 import PINRemoteImage
 
+
 public class CategoryHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryHeaderCell"
 
@@ -45,6 +46,9 @@ public class CategoryHeaderCell: UICollectionViewCell {
         static let failImageWidth: CGFloat = 140
         static let failImageHeight: CGFloat = 160
     }
+
+    public weak var webLinkDelegate: WebLinkDelegate?
+    public weak var userDelegate: UserDelegate?
 
     let imageView = FLAnimatedImageView()
     let imageOverlay = UIView()
@@ -162,14 +166,18 @@ public class CategoryHeaderCell: UICollectionViewCell {
         super.prepareForReuse()
         let config = Config(style: .Category)
         self.config = config
+        webLinkDelegate = nil
+        userDelegate = nil
     }
 
     public func postedByTapped() {
-        print("posted by tapped")
+        userDelegate?.userTappedAuthor(self)
     }
 
     public func callToActionTapped() {
-        print("call to action tapped \(callToActionURL?.absoluteString)")
+        guard let url = callToActionURL else { return }
+        let request = NSURLRequest(URL: url)
+        ElloWebViewHelper.handleRequest(request, webLinkDelegate: webLinkDelegate)
     }
 }
 
@@ -310,7 +318,6 @@ private extension CategoryHeaderCell {
         failBackgroundView.hidden = false
         circle.stopPulse()
         imageSize = nil
-//        nextTick { postNotification(StreamNotification.AnimateCellHeightNotification, value: self) }
         UIView.animateWithDuration(0.15) {
             self.failImage.alpha = 1.0
             self.imageView.backgroundColor = UIColor.greyF1()
@@ -355,6 +362,7 @@ extension CategoryHeaderCell.Config {
 }
 
 extension CategoryHeaderCell.Config {
+
     init(category: Category) {
         self.init(style: .Category)
         title = category.name
