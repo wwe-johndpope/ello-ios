@@ -60,7 +60,7 @@ class CategoryGeneratorSpec: QuickSpec {
             }
 
             context("category") {
-                let category = Ello.Category.stub(["level" : "primary"])
+                let category = Ello.Category.stub(["level" : "primary", "slug" : "art"])
                 let subject = CategoryGenerator(
                     slug: category.slug,
                     currentUser: currentUser,

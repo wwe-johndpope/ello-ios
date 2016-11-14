@@ -951,6 +951,7 @@ extension StreamViewController: UserDelegate {
 extension StreamViewController: WebLinkDelegate {
 
     public func webLinkTapped(type: ElloURI, data: String) {
+        print(type)
         switch type {
         case .Confirm,
              .FaceMaker,
@@ -982,7 +983,8 @@ extension StreamViewController: WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             postNotification(ExternalWebNotification, value: data)
-        case .Discover,
+        case .Category,
+             .Discover,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
@@ -990,16 +992,7 @@ extension StreamViewController: WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            selectTab(.Discover)
-        case .Category:
-            selectTab(.Discover)
-            // TODO: wire category and discover up to the new category view controller
-//            if let nav = elloTabBarController?.selectedViewController as? UINavigationController,
-//                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
-//            {
-//                nav.popToRootViewControllerAnimated(false)
-//                discoverViewController.showCategory(data)
-//            }
+            showCategory(data)
         case .Email: break // this is handled in ElloWebViewHelper
         case .BetaPublicProfiles,
              .Enter,
@@ -1019,6 +1012,13 @@ extension StreamViewController: WebLinkDelegate {
         case .Search: showSearch(data)
         case .Settings: showSettings()
         }
+    }
+
+    private func showCategory(slug: String) {
+        if alreadyOnCategory(slug) { return }
+        let vc = CategoryViewController(slug: slug)
+        vc.currentUser = ElloWebBrowserViewController.currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func showProfile(username: String) {

@@ -129,7 +129,8 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             break // this is handled in ElloWebViewHelper/KINWebBrowserViewController
-        case .Discover,
+        case .Category,
+             .Discover,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
@@ -137,9 +138,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            self.selectTab(.Discover)
-        case .Category:
-            self.selectTab(.Discover)
+            self.showCategory(data)
         case .BetaPublicProfiles,
              .Enter,
              .Exit,
@@ -162,6 +161,13 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         case .Search: showSearch(data)
         case .Settings: self.showSettings()
         }
+    }
+
+    private func showCategory(slug: String) {
+        if alreadyOnCategory(slug) { return }
+        let vc = CategoryViewController(slug: slug)
+        vc.currentUser = ElloWebBrowserViewController.currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func showProfile(username: String) {
@@ -198,6 +204,13 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         navigationController?.dismissViewControllerAnimated(true) {
             ElloWebBrowserViewController.elloTabBarController?.selectedTab = tab
         }
+    }
+
+    func alreadyOnCategory(slug: String) -> Bool {
+        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
+            return slug == categoryVC.slug
+        }
+        return false
     }
 
     func alreadyOnUserProfile(userParam: String) -> Bool {

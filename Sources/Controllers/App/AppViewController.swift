@@ -460,12 +460,6 @@ extension AppViewController {
              .DiscoverTrending,
              .Category:
             showCategoryScreen(data)
-//            if let nav = vc.selectedViewController as? UINavigationController,
-//                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
-//            {
-//                nav.popToRootViewControllerAnimated(false)
-//                discoverViewController.showCategory(data)
-//            }
         case .Invitations:
             showInvitationScreen(vc)
         case .Enter, .Exit, .Root, .Explore:
