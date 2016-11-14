@@ -18,9 +18,10 @@ public final class CategoryViewController: StreamableViewController {
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
 
-    public init(slug: String) {
+    public init(slug: String, name: String? = nil) {
         self.slug = slug
         super.init(nibName: nil, bundle: nil)
+        self.title = name
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -28,7 +29,7 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        self.title = category?.name ?? slug.uppercaseFirst
+        self.title = category?.name ?? DiscoverType.fromURL(slug)?.name
         elloNavigationItem.title = title
         let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
         elloNavigationItem.leftBarButtonItems = [item]
