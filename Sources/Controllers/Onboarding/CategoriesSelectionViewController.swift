@@ -66,7 +66,7 @@ extension CategoriesSelectionViewController: OnboardingStepController {
         if selectedCategories.count > 0 {
             let categories = self.selectedCategories
             for category in categories {
-                Tracker.sharedTracker.categorySelected(category)
+                Tracker.sharedTracker.onboardingCategorySelected(category)
             }
 
             UserService().setUserCategories(categories)

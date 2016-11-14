@@ -239,7 +239,7 @@ public extension Tracker {
         agent.track("completed categories in onboarding")
     }
 
-    func categorySelected(category: Category) {
+    func onboardingCategorySelected(category: Category) {
         agent.track("onboarding category chosen", properties: ["category": category.name])
     }
 
@@ -300,11 +300,6 @@ public extension Tracker {
         screenAppeared(name, properties: props)
     }
 
-    // TODO: decide if this should be change to to the new CategorViewController
-    func discoverCategory(category: String) {
-        agent.track("DiscoverViewController category filter", properties: ["category": category])
-    }
-
     func screenAppeared(name: String, properties: [String: AnyObject]? = nil) {
         agent.screen(name, properties: properties)
     }
@@ -323,6 +318,18 @@ public extension Tracker {
 
     func postLoaded(id: String) {
         agent.track("Post Loaded", properties: ["id": id])
+    }
+
+    func categoryOpened(categorySlug: String) {
+        agent.track("category opened", properties: ["category": categorySlug])
+    }
+
+    func categoryHeaderPostedBy(categoryTitle: String) {
+        agent.track("promoByline clicked", properties: ["category": categoryTitle])
+    }
+
+    func categoryHeaderCallToAction(categoryTitle: String) {
+        agent.track("promoCTA clicked", properties: ["category": categoryTitle])
     }
 
     func viewedImage(asset: Asset, post: Post) {

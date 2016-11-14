@@ -730,9 +730,7 @@ extension StreamViewController: ColumnToggleDelegate {
 extension StreamViewController: CategoryListCellDelegate {
 
     public func categoryListCellTapped(slug slug: String) {
-        let vc = CategoryViewController(slug: slug)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
+        showCategoryController(slug: slug)
     }
 
 }
@@ -878,8 +876,9 @@ extension StreamViewController {
 // MARK: StreamViewController: Open category
 extension StreamViewController {
 
-    public func categoryTapped(category: Category) {
-        let vc = CategoryViewController(slug: category.slug)
+    public func showCategoryController(slug slug: String) {
+        Tracker.sharedTracker.categoryOpened(slug)
+        let vc = CategoryViewController(slug: slug)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -895,7 +894,7 @@ extension StreamViewController: CategoryDelegate {
             category = post.category
         else { return }
 
-        categoryTapped(category)
+        showCategoryController(slug: category.slug)
     }
 }
 
@@ -1137,7 +1136,7 @@ extension StreamViewController: UICollectionViewDelegate {
                 selectedCategoryDelegate?.categoriesSelectionChanged(selection ?? [Category]())
             }
             else {
-                categoryTapped(category)
+                showCategoryController(slug: category.slug)
             }
         }
 

@@ -18,6 +18,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
     public struct Config {
         var style: Style
         var title: String
+        var tracking: String
         var body: String?
         var imageURL: NSURL?
         var user: User?
@@ -28,6 +29,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
         public init(style: Style) {
             self.style = style
             self.title = ""
+            self.tracking = ""
         }
     }
 
@@ -171,11 +173,13 @@ public class CategoryHeaderCell: UICollectionViewCell {
     }
 
     public func postedByTapped() {
+        Tracker.sharedTracker.categoryHeaderPostedBy(config.tracking)
         userDelegate?.userTappedAuthor(self)
     }
 
     public func callToActionTapped() {
         guard let url = callToActionURL else { return }
+        Tracker.sharedTracker.categoryHeaderCallToAction(config.tracking)
         let request = NSURLRequest(URL: url)
         ElloWebViewHelper.handleRequest(request, webLinkDelegate: webLinkDelegate)
     }
@@ -367,6 +371,7 @@ extension CategoryHeaderCell.Config {
         self.init(style: .Category)
         title = category.name
         body = category.body
+        tracking = category.slug
         isSponsored = category.isSponsored
         callToAction = category.ctaCaption
         callToActionURL = category.ctaURL
@@ -382,6 +387,7 @@ extension CategoryHeaderCell.Config {
 
         title = pagePromotional.header
         body = pagePromotional.subheader
+        tracking = "general"
         imageURL = pagePromotional.tileURL
         user = pagePromotional.user
         callToAction = pagePromotional.ctaCaption
