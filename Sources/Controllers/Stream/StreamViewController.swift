@@ -951,7 +951,6 @@ extension StreamViewController: UserDelegate {
 extension StreamViewController: WebLinkDelegate {
 
     public func webLinkTapped(type: ElloURI, data: String) {
-        print(type)
         switch type {
         case .Confirm,
              .FaceMaker,
