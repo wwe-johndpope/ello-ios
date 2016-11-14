@@ -129,8 +129,9 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             break // this is handled in ElloWebViewHelper/KINWebBrowserViewController
+        case .Discover:
+            self.selectTab(.Discover)
         case .Category,
-             .Discover,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,

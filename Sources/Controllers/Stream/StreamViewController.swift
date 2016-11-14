@@ -983,8 +983,9 @@ extension StreamViewController: WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             postNotification(ExternalWebNotification, value: data)
+        case .Discover:
+            self.selectTab(.Discover)
         case .Category,
-             .Discover,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
