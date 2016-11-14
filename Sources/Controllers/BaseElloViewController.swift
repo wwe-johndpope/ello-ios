@@ -56,7 +56,7 @@ public class BaseElloViewController: UIViewController, ControllerThatMightHaveTh
         return false
     }
 
-    func alreadyOnCategory(slug: String) -> Bool {
+    func alreadyOnCurrentCategory(slug: String) -> Bool {
         if let categoryVC = navigationController?.topViewController as? CategoryViewController {
             return slug == categoryVC.slug
         }

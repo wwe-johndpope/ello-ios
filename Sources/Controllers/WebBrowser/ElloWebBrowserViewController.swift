@@ -164,10 +164,15 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
     }
 
     private func showCategory(slug: String) {
-        if alreadyOnCategory(slug) { return }
-        let vc = CategoryViewController(slug: slug)
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
+        if alreadyOnCurrentCategory(slug) { return }
+        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
+            categoryVC.selectCategoryForSlug(slug)
+        }
+        else {
+            let vc = CategoryViewController(slug: slug)
+            vc.currentUser = ElloWebBrowserViewController.currentUser
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     private func showProfile(username: String) {
@@ -206,7 +211,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         }
     }
 
-    func alreadyOnCategory(slug: String) -> Bool {
+    func alreadyOnCurrentCategory(slug: String) -> Bool {
         if let categoryVC = navigationController?.topViewController as? CategoryViewController {
             return slug == categoryVC.slug
         }

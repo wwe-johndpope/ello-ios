@@ -75,7 +75,7 @@ class CategoryGeneratorSpec: QuickSpec {
                         expect(destination.placeholderItems.count) == 2
                     }
 
-                    it("replaces only CatgoryHeader and CategoryPosts") {
+                    it("replaces only CategoryHeader and CategoryPosts") {
                         subject.load()
                         expect(destination.headerItems.count) > 0
                         expect(destination.postItems.count) > 0
