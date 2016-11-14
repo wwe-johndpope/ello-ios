@@ -211,7 +211,7 @@ extension CategoryViewController: CategoryScreenDelegate {
     }
 
     private func categoryForSlug(slug: String) -> Category? {
-        return allCategories.filter { $0.slug == slug }.first
+        return allCategories.find { $0.slug == slug }
     }
 
     public func categorySelected(index: Int) {
