@@ -877,8 +877,8 @@ extension StreamViewController {
 extension StreamViewController {
 
     public func showCategoryController(slug slug: String) {
-        let vc = CategoryViewController(slug: slug)
         Tracker.sharedTracker.categoryOpened(slug)
+        let vc = CategoryViewController(slug: slug)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }

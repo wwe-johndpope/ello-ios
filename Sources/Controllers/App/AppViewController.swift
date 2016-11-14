@@ -552,6 +552,7 @@ extension AppViewController {
     }
 
     private func showCategoryScreen(slug: String) {
+        Tracker.sharedTracker.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug)
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)

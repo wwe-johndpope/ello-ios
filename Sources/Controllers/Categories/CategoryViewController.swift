@@ -211,6 +211,8 @@ extension CategoryViewController: CategoryScreenDelegate {
         where category.id != self.category?.id
         else { return }
 
+        Tracker.sharedTracker.categoryOpened(category.slug)
+
         let streamKind: StreamKind
         switch category.level {
         case .Meta:

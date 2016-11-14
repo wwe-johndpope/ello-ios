@@ -300,18 +300,6 @@ public extension Tracker {
         screenAppeared(name, properties: props)
     }
 
-    func categoryOpened(categorySlug: String) {
-        agent.track("category opened", properties: ["category": categorySlug])
-    }
-
-    func categoryHeaderPostedBy(categoryTitle: String) {
-        agent.track("promoByline clicked", properties: ["category": categoryTitle])
-    }
-
-    func categoryHeaderCallToAction(categoryTitle: String) {
-        agent.track("promoCTA clicked", properties: ["category": categoryTitle])
-    }
-
     func screenAppeared(name: String, properties: [String: AnyObject]? = nil) {
         agent.screen(name, properties: properties)
     }
@@ -330,6 +318,18 @@ public extension Tracker {
 
     func postLoaded(id: String) {
         agent.track("Post Loaded", properties: ["id": id])
+    }
+
+    func categoryOpened(categorySlug: String) {
+        agent.track("category opened", properties: ["category": categorySlug])
+    }
+
+    func categoryHeaderPostedBy(categoryTitle: String) {
+        agent.track("promoByline clicked", properties: ["category": categoryTitle])
+    }
+
+    func categoryHeaderCallToAction(categoryTitle: String) {
+        agent.track("promoCTA clicked", properties: ["category": categoryTitle])
     }
 
     func viewedImage(asset: Asset, post: Post) {
