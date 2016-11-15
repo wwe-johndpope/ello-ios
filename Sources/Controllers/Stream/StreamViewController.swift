@@ -61,7 +61,7 @@ public protocol ColumnToggleDelegate: class {
 }
 
 public protocol CategoryListCellDelegate: class {
-    func categoryListCellTapped(slug slug: String)
+    func categoryListCellTapped(slug slug: String, name: String)
 }
 
 public protocol SearchStreamDelegate: class {
@@ -729,8 +729,8 @@ extension StreamViewController: ColumnToggleDelegate {
 // MARK: StreamViewController: CategoryListCellDelegate
 extension StreamViewController: CategoryListCellDelegate {
 
-    public func categoryListCellTapped(slug slug: String) {
-        showCategoryController(slug: slug)
+    public func categoryListCellTapped(slug slug: String, name: String) {
+        showCategoryViewController(slug: slug, name: name)
     }
 
 }
@@ -876,9 +876,13 @@ extension StreamViewController {
 // MARK: StreamViewController: Open category
 extension StreamViewController {
 
-    public func showCategoryController(slug slug: String) {
+    public func categoryTapped(category: Category) {
+        showCategoryViewController(slug: category.slug, name: category.name)
+    }
+
+    public func showCategoryViewController(slug slug: String, name: String) {
         Tracker.sharedTracker.categoryOpened(slug)
-        let vc = CategoryViewController(slug: slug)
+        let vc = CategoryViewController(slug: slug, name: name)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -894,7 +898,7 @@ extension StreamViewController: CategoryDelegate {
             category = post.category
         else { return }
 
-        showCategoryController(slug: category.slug)
+        categoryTapped(category)
     }
 }
 
@@ -982,7 +986,9 @@ extension StreamViewController: WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             postNotification(ExternalWebNotification, value: data)
-        case .Discover,
+        case .Discover:
+            self.showDiscover()
+        case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
@@ -990,16 +996,7 @@ extension StreamViewController: WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            selectTab(.Discover)
-        case .Category:
-            selectTab(.Discover)
-            // TODO: wire category and discover up to the new category view controller
-//            if let nav = elloTabBarController?.selectedViewController as? UINavigationController,
-//                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
-//            {
-//                nav.popToRootViewControllerAnimated(false)
-//                discoverViewController.showCategory(data)
-//            }
+            showCategory(data)
         case .Email: break // this is handled in ElloWebViewHelper
         case .BetaPublicProfiles,
              .Enter,
@@ -1018,6 +1015,26 @@ extension StreamViewController: WebLinkDelegate {
             showProfile(data)
         case .Search: showSearch(data)
         case .Settings: showSettings()
+        }
+    }
+
+    private func showDiscover() {
+        if navigationController?.topViewController is DiscoverAllCategoriesViewController { return }
+
+        let vc = DiscoverAllCategoriesViewController()
+        vc.currentUser = ElloWebBrowserViewController.currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func showCategory(slug: String) {
+        if alreadyOnCurrentCategory(slug) { return }
+        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
+            categoryVC.selectCategoryForSlug(slug)
+        }
+        else {
+            let vc = CategoryViewController(slug: slug)
+            vc.currentUser = ElloWebBrowserViewController.currentUser
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 
@@ -1136,7 +1153,7 @@ extension StreamViewController: UICollectionViewDelegate {
                 selectedCategoryDelegate?.categoriesSelectionChanged(selection ?? [Category]())
             }
             else {
-                showCategoryController(slug: category.slug)
+                showCategoryViewController(slug: category.slug, name: category.name)
             }
         }
 

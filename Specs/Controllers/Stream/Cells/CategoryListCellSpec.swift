@@ -12,10 +12,12 @@ class CategoryListCellSpec: QuickSpec {
     class Delegate: CategoryListCellDelegate {
         var categoryTapped = false
         var slug: String?
+        var name: String?
 
-        func categoryListCellTapped(slug slug: String) {
+        func categoryListCellTapped(slug slug: String, name: String) {
             categoryTapped = true
             self.slug = slug
+            self.name = name
         }
     }
 

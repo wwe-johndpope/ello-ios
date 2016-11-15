@@ -56,6 +56,13 @@ public class BaseElloViewController: UIViewController, ControllerThatMightHaveTh
         return false
     }
 
+    func alreadyOnCurrentCategory(slug: String) -> Bool {
+        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
+            return slug == categoryVC.slug
+        }
+        return false
+    }
+
     func alreadyOnUserProfile(userParam: String) -> Bool {
         if let profileVC = self.navigationController?.topViewController as? ProfileViewController {
             return userParam == profileVC.userParam

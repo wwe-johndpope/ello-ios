@@ -1,0 +1,876 @@
+{
+	"categories": {
+		"id": "1",
+		"name": "Art",
+		"slug": "art",
+		"links": {
+			"recent": {
+				"related": "/api/v2/categories/art/posts/recent"
+			},
+			"promotionals": ["4", "17", "18", "19", "20", "66", "68"]
+		},
+		"level": "primary",
+		"order": null,
+		"allow_in_onboarding": true,
+		"description": "This is Art. This is Art on Drugs. That is all.",
+		"is_sponsored": true,
+		"header": "Art",
+		"cta_caption": "Click Here",
+		"cta_href": "http://vote.com",
+		"tile_image": {
+			"original": {
+				"url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default.png"
+			},
+			"large": {
+				"url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default-large.png",
+				"metadata": null
+			},
+			"regular": {
+				"url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default-regular.png",
+				"metadata": null
+			},
+			"small": {
+				"url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default-small.png",
+				"metadata": null
+			}
+		}
+	},
+	"linked": {
+		"promotionals": [{
+			"id": "4",
+			"user_id": "4",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-xhdpi-a7909b5d.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-optimized-15620058.jpg",
+					"metadata": {
+						"size": 233996,
+						"type": "image/jpeg",
+						"width": 650,
+						"height": 899
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-xhdpi-15620058.jpg",
+					"metadata": {
+						"size": 299715,
+						"type": "image/jpeg",
+						"width": 605,
+						"height": 837
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-hdpi-15620058.jpg",
+					"metadata": {
+						"size": 88472,
+						"type": "image/jpeg",
+						"width": 299,
+						"height": 414
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/4",
+					"id": "4"
+				}
+			}
+		}, {
+			"id": "17",
+			"user_id": "543",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/frogs-1347637_960_720.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/ello-optimized-a8f58779.jpg",
+					"metadata": {
+						"size": 310513,
+						"type": "image/jpeg",
+						"width": 914,
+						"height": 720
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/ello-xhdpi-a8f58779.jpg",
+					"metadata": {
+						"size": 311860,
+						"type": "image/jpeg",
+						"width": 914,
+						"height": 720
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/ello-hdpi-a8f58779.jpg",
+					"metadata": {
+						"size": 138443,
+						"type": "image/jpeg",
+						"width": 526,
+						"height": 414
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/543",
+					"id": "543"
+				}
+			}
+		}, {
+			"id": "18",
+			"user_id": "663",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/frogs-eat_81348f18f515b8fd_1hr1oD9DR3WClPbpRyN94A.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/ello-optimized-3595a983.jpg",
+					"metadata": {
+						"size": 69259,
+						"type": "image/jpeg",
+						"width": 700,
+						"height": 394
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/ello-xhdpi-3595a983.jpg",
+					"metadata": {
+						"size": 70341,
+						"type": "image/jpeg",
+						"width": 700,
+						"height": 394
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/ello-hdpi-3595a983.jpg",
+					"metadata": {
+						"size": 70341,
+						"type": "image/jpeg",
+						"width": 700,
+						"height": 394
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/663",
+					"id": "663"
+				}
+			}
+		}, {
+			"id": "19",
+			"user_id": "9",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/Art.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/ello-optimized-978d7d6b.jpg",
+					"metadata": {
+						"size": 667330,
+						"type": "image/jpeg",
+						"width": 1440,
+						"height": 600
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/ello-xhdpi-978d7d6b.jpg",
+					"metadata": {
+						"size": 624460,
+						"type": "image/jpeg",
+						"width": 1440,
+						"height": 600
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/ello-hdpi-978d7d6b.jpg",
+					"metadata": {
+						"size": 243422,
+						"type": "image/jpeg",
+						"width": 750,
+						"height": 313
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/9",
+					"id": "9"
+				}
+			}
+		}, {
+			"id": "20",
+			"user_id": "9",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/Art-portrait-collage_2.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/ello-optimized-3b82b840.jpg",
+					"metadata": {
+						"size": 387465,
+						"type": "image/jpeg",
+						"width": 800,
+						"height": 800
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/ello-xhdpi-3b82b840.jpg",
+					"metadata": {
+						"size": 357257,
+						"type": "image/jpeg",
+						"width": 800,
+						"height": 800
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/ello-hdpi-3b82b840.jpg",
+					"metadata": {
+						"size": 145282,
+						"type": "image/jpeg",
+						"width": 414,
+						"height": 414
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/9",
+					"id": "9"
+				}
+			}
+		}, {
+			"id": "66",
+			"user_id": "543",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/fart-e1363889285693.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/ello-optimized-7169143f.jpg",
+					"metadata": {
+						"size": 241367,
+						"type": "image/jpeg",
+						"width": 1399,
+						"height": 1399
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/ello-xhdpi-7169143f.jpg",
+					"metadata": {
+						"size": 133709,
+						"type": "image/jpeg",
+						"width": 837,
+						"height": 837
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/ello-hdpi-7169143f.jpg",
+					"metadata": {
+						"size": 60280,
+						"type": "image/jpeg",
+						"width": 414,
+						"height": 414
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/543",
+					"id": "543"
+				}
+			}
+		}, {
+			"id": "68",
+			"user_id": "27",
+			"category_id": "1",
+			"image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/860932.png"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/ello-optimized-17760cb3.jpg",
+					"metadata": {
+						"size": 55878,
+						"type": "image/jpeg",
+						"width": 600,
+						"height": 407
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/ello-xhdpi-17760cb3.jpg",
+					"metadata": {
+						"size": 92097,
+						"type": "image/jpeg",
+						"width": 600,
+						"height": 407
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/ello-hdpi-17760cb3.jpg",
+					"metadata": {
+						"size": 92097,
+						"type": "image/jpeg",
+						"width": 600,
+						"height": 407
+					}
+				}
+			},
+			"links": {
+				"user": {
+					"type": "users",
+					"href": "/api/v2/users/27",
+					"id": "27"
+				}
+			}
+		}],
+		"users": [{
+			"id": "4",
+			"href": "/api/v2/users/4",
+			"username": "mk",
+			"name": "Matthew Kitt",
+			"location": null,
+			"posts_adult_content": false,
+			"views_adult_content": true,
+			"has_commenting_enabled": true,
+			"has_sharing_enabled": true,
+			"has_reposting_enabled": true,
+			"has_loves_enabled": true,
+			"has_auto_watch_enabled": true,
+			"experimental_features": true,
+			"relationship_priority": "friend",
+			"bad_for_seo": true,
+			"is_hireable": true,
+			"is_collaborateable": false,
+			"posts_count": 26,
+			"followers_count": 89,
+			"following_count": 18,
+			"loves_count": 0,
+			"formatted_short_bio": "<p>Lorem ipsum <a href='http://ello.co/' rel='nofollow' target='_blank'>http://ello.co/</a> dolor sit amet, consectetur adipiscing elit. Praesent et blandit nunc. Pellentesque non ex in nulla laoreet euismod nec a felis. In at est eget sem consectetur venenatis.</p>\n\n<p>Lorem ipsum <a href='http://ello.co/' rel='nofollow' target='_blank'>http://ello.co/</a> dolor sit amet, consectetur adipiscing elit. Praesent et blandit nunc. Pellentesque no ex in nulla laoreet euismod nec a felis. In at est eget sem consectetur venenatis.</p>\n\n<p>This is the last line</p>",
+			"external_links_list": [{
+				"url": "http://ello.co",
+				"text": "ello.co"
+			}],
+			"background_position": "50% 50%",
+			"avatar": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-72fdc63c-d9d8-4f94-bfb2-9d4b939a5102.jpeg"
+				},
+				"large": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-large-30ef5f89.png",
+					"metadata": {
+						"size": 274183,
+						"type": "image/png",
+						"width": 360,
+						"height": 360
+					}
+				},
+				"regular": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-regular-30ef5f89.png",
+					"metadata": {
+						"size": 36019,
+						"type": "image/png",
+						"width": 120,
+						"height": 120
+					}
+				},
+				"small": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-small-30ef5f89.png",
+					"metadata": {
+						"size": 10188,
+						"type": "image/png",
+						"width": 60,
+						"height": 60
+					}
+				}
+			},
+			"cover_image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-38988006-1130-449c-a459-b937a5afc463.jpeg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-optimized-e0ba7623.jpg",
+					"metadata": {
+						"size": 175198,
+						"type": "image/jpeg",
+						"width": 500,
+						"height": 749
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-xhdpi-e0ba7623.jpg",
+					"metadata": {
+						"size": 175491,
+						"type": "image/jpeg",
+						"width": 500,
+						"height": 749
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-hdpi-e0ba7623.jpg",
+					"metadata": {
+						"size": 64491,
+						"type": "image/jpeg",
+						"width": 276,
+						"height": 414
+					}
+				},
+				"mdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-mdpi-e0ba7623.jpg",
+					"metadata": {
+						"size": 17479,
+						"type": "image/jpeg",
+						"width": 138,
+						"height": 207
+					}
+				},
+				"ldpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-ldpi-e0ba7623.jpg",
+					"metadata": {
+						"size": 4707,
+						"type": "image/jpeg",
+						"width": 66,
+						"height": 99
+					}
+				}
+			}
+		}, {
+			"id": "543",
+			"href": "/api/v2/users/543",
+			"username": "sdough",
+			"name": null,
+			"location": null,
+			"posts_adult_content": false,
+			"views_adult_content": false,
+			"has_commenting_enabled": true,
+			"has_sharing_enabled": true,
+			"has_reposting_enabled": true,
+			"has_loves_enabled": true,
+			"has_auto_watch_enabled": true,
+			"experimental_features": true,
+			"relationship_priority": null,
+			"bad_for_seo": true,
+			"is_hireable": false,
+			"is_collaborateable": false,
+			"posts_count": 1,
+			"followers_count": 9,
+			"following_count": 1,
+			"loves_count": 0,
+			"formatted_short_bio": "",
+			"external_links_list": [],
+			"background_position": null,
+			"avatar": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/sdough.png"
+				},
+				"large": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/ello-large-8f0d6e80.png",
+					"metadata": {
+						"size": 47095,
+						"type": "image/png",
+						"width": 360,
+						"height": 360
+					}
+				},
+				"regular": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/ello-regular-8f0d6e80.png",
+					"metadata": {
+						"size": 9687,
+						"type": "image/png",
+						"width": 120,
+						"height": 120
+					}
+				},
+				"small": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/ello-small-8f0d6e80.png",
+					"metadata": {
+						"size": 3625,
+						"type": "image/png",
+						"width": 60,
+						"height": 60
+					}
+				}
+			},
+			"cover_image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default.jpg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-optimized.jpg",
+					"metadata": null
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-xhdpi.jpg",
+					"metadata": null
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-hdpi.jpg",
+					"metadata": null
+				},
+				"mdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-mdpi.jpg",
+					"metadata": null
+				},
+				"ldpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-ldpi.jpg",
+					"metadata": null
+				}
+			}
+		}, {
+			"id": "663",
+			"href": "/api/v2/users/663",
+			"username": "justin",
+			"name": "",
+			"location": null,
+			"posts_adult_content": false,
+			"views_adult_content": true,
+			"has_commenting_enabled": true,
+			"has_sharing_enabled": true,
+			"has_reposting_enabled": true,
+			"has_loves_enabled": true,
+			"has_auto_watch_enabled": true,
+			"experimental_features": true,
+			"relationship_priority": "friend",
+			"bad_for_seo": false,
+			"is_hireable": false,
+			"is_collaborateable": false,
+			"posts_count": 8,
+			"followers_count": 5,
+			"following_count": 1,
+			"loves_count": 0,
+			"formatted_short_bio": "",
+			"external_links_list": [{
+				"url": "https://play.google.com/store/apps/details?id=asdf",
+				"text": "play.google.com/store/apps/details?id=asdf",
+				"type": "play",
+				"icon": "https://social-icons.ello.co/play.png"
+			}],
+			"background_position": null,
+			"avatar": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-b7ebf461-54be-4e36-9765-eba47debbdc6.jpeg"
+				},
+				"large": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-large-38ddee22.png",
+					"metadata": {
+						"size": 222681,
+						"type": "image/png",
+						"width": 360,
+						"height": 360
+					}
+				},
+				"regular": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-regular-38ddee22.png",
+					"metadata": {
+						"size": 28230,
+						"type": "image/png",
+						"width": 120,
+						"height": 120
+					}
+				},
+				"small": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-small-38ddee22.png",
+					"metadata": {
+						"size": 7608,
+						"type": "image/png",
+						"width": 60,
+						"height": 60
+					}
+				}
+			},
+			"cover_image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-ec69965c-58d4-4662-a31f-161bd45b8234.jpeg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-optimized-6355d92b.jpg",
+					"metadata": {
+						"size": 1546525,
+						"type": "image/jpeg",
+						"width": 1435,
+						"height": 1440
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-xhdpi-6355d92b.jpg",
+					"metadata": {
+						"size": 572953,
+						"type": "image/jpeg",
+						"width": 834,
+						"height": 837
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-hdpi-6355d92b.jpg",
+					"metadata": {
+						"size": 161242,
+						"type": "image/jpeg",
+						"width": 413,
+						"height": 414
+					}
+				},
+				"mdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-mdpi-6355d92b.jpg",
+					"metadata": {
+						"size": 44129,
+						"type": "image/jpeg",
+						"width": 206,
+						"height": 207
+					}
+				},
+				"ldpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-ldpi-6355d92b.jpg",
+					"metadata": {
+						"size": 11606,
+						"type": "image/jpeg",
+						"width": 99,
+						"height": 99
+					}
+				}
+			}
+		}, {
+			"id": "9",
+			"href": "/api/v2/users/9",
+			"username": "666",
+			"name": "staging",
+			"location": "Denver, CO, United States",
+			"posts_adult_content": false,
+			"views_adult_content": true,
+			"has_commenting_enabled": true,
+			"has_sharing_enabled": false,
+			"has_reposting_enabled": false,
+			"has_loves_enabled": true,
+			"has_auto_watch_enabled": true,
+			"experimental_features": true,
+			"relationship_priority": "friend",
+			"bad_for_seo": false,
+			"is_hireable": true,
+			"is_collaborateable": true,
+			"posts_count": 102,
+			"followers_count": 98,
+			"following_count": 55,
+			"loves_count": 2,
+			"formatted_short_bio": "<p>what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? <img class='emoji' title=':metal:' alt=':metal:' src='https://ello-stage2.herokuapp.com/images/emoji/metal.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':skull:' alt=':skull:' src='https://ello-stage2.herokuapp.com/images/emoji/unicode/1f480.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':metal:' alt=':metal:' src='https://ello-stage2.herokuapp.com/images/emoji/metal.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':skull:' alt=':skull:' src='https://ello-stage2.herokuapp.com/images/emoji/unicode/1f480.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':metal:' alt=':metal:' src='https://ello-stage2.herokuapp.com/images/emoji/metal.png' height='20' width='20' align='absmiddle'/> :</p>",
+			"external_links_list": [{
+				"url": "http://github.com/rynbyjn",
+				"text": "github.com/rynbyjn",
+				"type": "github",
+				"icon": "https://social-icons.ello.co/github.png"
+			}, {
+				"url": "http://soundcloud.com/18-squeeler",
+				"text": "soundcloud.com/18-squeeler",
+				"type": "soundcloud",
+				"icon": "https://social-icons.ello.co/soundcloud.png"
+			}],
+			"background_position": "50% 50%",
+			"avatar": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-dfc11f00-0eea-4660-b089-8d554a0f4d0a.jpeg"
+				},
+				"large": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-large-da2278c1.png",
+					"metadata": {
+						"size": 238273,
+						"type": "image/png",
+						"width": 360,
+						"height": 360
+					}
+				},
+				"regular": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-regular-da2278c1.png",
+					"metadata": {
+						"size": 29608,
+						"type": "image/png",
+						"width": 120,
+						"height": 120
+					}
+				},
+				"small": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-small-da2278c1.png",
+					"metadata": {
+						"size": 8467,
+						"type": "image/png",
+						"width": 60,
+						"height": 60
+					}
+				}
+			},
+			"cover_image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-c831a0ee-d39a-40af-b643-ebab71c98158.jpeg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-optimized-e74d1b6d.jpg",
+					"metadata": {
+						"size": 114467,
+						"type": "image/jpeg",
+						"width": 680,
+						"height": 453
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-xhdpi-e74d1b6d.jpg",
+					"metadata": {
+						"size": 111009,
+						"type": "image/jpeg",
+						"width": 680,
+						"height": 453
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-hdpi-e74d1b6d.jpg",
+					"metadata": {
+						"size": 105798,
+						"type": "image/jpeg",
+						"width": 621,
+						"height": 414
+					}
+				},
+				"mdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-mdpi-e74d1b6d.jpg",
+					"metadata": {
+						"size": 32152,
+						"type": "image/jpeg",
+						"width": 311,
+						"height": 207
+					}
+				},
+				"ldpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-ldpi-e74d1b6d.jpg",
+					"metadata": {
+						"size": 9776,
+						"type": "image/jpeg",
+						"width": 149,
+						"height": 99
+					}
+				}
+			}
+		}, {
+			"id": "27",
+			"href": "/api/v2/users/27",
+			"username": "dcdoran",
+			"name": "Casey Doran",
+			"location": null,
+			"posts_adult_content": false,
+			"views_adult_content": true,
+			"has_commenting_enabled": true,
+			"has_sharing_enabled": true,
+			"has_reposting_enabled": true,
+			"has_loves_enabled": true,
+			"has_auto_watch_enabled": true,
+			"experimental_features": true,
+			"relationship_priority": null,
+			"bad_for_seo": false,
+			"is_hireable": false,
+			"is_collaborateable": false,
+			"posts_count": 219,
+			"followers_count": 126,
+			"following_count": 43,
+			"loves_count": 20,
+			"formatted_short_bio": "<p>bio bio bio bio</p>",
+			"external_links_list": [{
+				"url": "http://twitter.com/dcdoran",
+				"text": "twitter.com/dcdoran",
+				"type": "twitter",
+				"icon": "https://social-icons.ello.co/twitter.png"
+			}],
+			"background_position": "50% 50%",
+			"avatar": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-28543c9f-06bc-444e-98db-909aa8890017.jpeg"
+				},
+				"large": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-large-e2cfacc2.png",
+					"metadata": {
+						"size": 127069,
+						"type": "image/png",
+						"width": 360,
+						"height": 360
+					}
+				},
+				"regular": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-regular-e2cfacc2.png",
+					"metadata": {
+						"size": 18516,
+						"type": "image/png",
+						"width": 120,
+						"height": 120
+					}
+				},
+				"small": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-small-e2cfacc2.png",
+					"metadata": {
+						"size": 5996,
+						"type": "image/png",
+						"width": 60,
+						"height": 60
+					}
+				}
+			},
+			"cover_image": {
+				"original": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-2e54b943-4d2d-4329-ae65-b3c3ca53fb31.jpeg"
+				},
+				"optimized": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-optimized-809906f0.jpg",
+					"metadata": {
+						"size": 1584915,
+						"type": "image/jpeg",
+						"width": 1920,
+						"height": 1440
+					}
+				},
+				"xhdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-xhdpi-809906f0.jpg",
+					"metadata": {
+						"size": 577955,
+						"type": "image/jpeg",
+						"width": 1116,
+						"height": 837
+					}
+				},
+				"hdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-hdpi-809906f0.jpg",
+					"metadata": {
+						"size": 144840,
+						"type": "image/jpeg",
+						"width": 552,
+						"height": 414
+					}
+				},
+				"mdpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-mdpi-809906f0.jpg",
+					"metadata": {
+						"size": 41863,
+						"type": "image/jpeg",
+						"width": 276,
+						"height": 207
+					}
+				},
+				"ldpi": {
+					"url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-ldpi-809906f0.jpg",
+					"metadata": {
+						"size": 12005,
+						"type": "image/jpeg",
+						"width": 132,
+						"height": 99
+					}
+				}
+			}
+		}]
+	}
+}

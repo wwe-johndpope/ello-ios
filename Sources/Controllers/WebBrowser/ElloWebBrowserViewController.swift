@@ -129,7 +129,9 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             break // this is handled in ElloWebViewHelper/KINWebBrowserViewController
-        case .Discover,
+        case .Discover:
+            self.showDiscover()
+        case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
@@ -137,9 +139,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            self.selectTab(.Discover)
-        case .Category:
-            self.selectTab(.Discover)
+            self.showCategory(data)
         case .BetaPublicProfiles,
              .Enter,
              .Exit,
@@ -161,6 +161,26 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
             self.showProfile(data)
         case .Search: showSearch(data)
         case .Settings: self.showSettings()
+        }
+    }
+
+    private func showDiscover() {
+        if navigationController?.topViewController is DiscoverAllCategoriesViewController { return }
+
+        let vc = DiscoverAllCategoriesViewController()
+        vc.currentUser = ElloWebBrowserViewController.currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func showCategory(slug: String) {
+        if alreadyOnCurrentCategory(slug) { return }
+        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
+            categoryVC.selectCategoryForSlug(slug)
+        }
+        else {
+            let vc = CategoryViewController(slug: slug)
+            vc.currentUser = ElloWebBrowserViewController.currentUser
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 
@@ -198,6 +218,13 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         navigationController?.dismissViewControllerAnimated(true) {
             ElloWebBrowserViewController.elloTabBarController?.selectedTab = tab
         }
+    }
+
+    func alreadyOnCurrentCategory(slug: String) -> Bool {
+        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
+            return slug == categoryVC.slug
+        }
+        return false
     }
 
     func alreadyOnUserProfile(userParam: String) -> Bool {

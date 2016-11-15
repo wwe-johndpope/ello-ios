@@ -421,7 +421,7 @@ extension ElloAPI: Moya.TargetType {
         case .Categories:
             return stubbedData("categories")
         case .Category:
-            return stubbedData("categories")
+            return stubbedData("category")
         case .DeleteComment,
              .DeleteLove,
              .DeletePost,

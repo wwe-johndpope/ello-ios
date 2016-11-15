@@ -23,6 +23,13 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
+
+        if !isRootViewController() {
+            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+            self.elloNavigationItem.leftBarButtonItems = [item]
+            self.elloNavigationItem.fixNavBarItemPadding()
+        }
+
         title = InterfaceString.Discover.Title
         elloNavigationItem.title = title
 

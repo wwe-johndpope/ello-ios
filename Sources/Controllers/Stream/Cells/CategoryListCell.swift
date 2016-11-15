@@ -25,11 +25,11 @@ public class CategoryListCell: UICollectionViewCell {
         }
     }
 
-    private var buttonCategoryLookup: [UIButton: String] = [:]
+    private var buttonCategoryLookup: [UIButton: CategoryInfo] = [:]
     private var categoryButtons: [UIButton] = []
 
     private class func buttonTitle(category: String) -> NSAttributedString {
-        var attrs: [String: AnyObject] = [
+        let attrs: [String: AnyObject] = [
             NSFontAttributeName: UIFont.defaultFont(),
             NSForegroundColorAttributeName: UIColor.blackColor()
         ]
@@ -65,8 +65,8 @@ public class CategoryListCell: UICollectionViewCell {
 
     @objc
     func categoryButtonTapped(button: UIButton) {
-        guard let slug = buttonCategoryLookup[button] else { return }
-        delegate?.categoryListCellTapped(slug: slug)
+        guard let categoryInfo = buttonCategoryLookup[button] else { return }
+        delegate?.categoryListCellTapped(slug: categoryInfo.slug, name: categoryInfo.title)
     }
 
     private func updateCategoryViews() {
@@ -75,12 +75,12 @@ public class CategoryListCell: UICollectionViewCell {
         }
         buttonCategoryLookup = [:]
 
-        categoryButtons = categoriesInfo.map { (category, slug) in
+        categoryButtons = categoriesInfo.map { categoryInfo in
             let button = UIButton()
-            buttonCategoryLookup[button] = slug
+            buttonCategoryLookup[button] = categoryInfo
             button.backgroundColor = .greyF2()
             button.addTarget(self, action: #selector(categoryButtonTapped(_:)), forControlEvents: .TouchUpInside)
-            let attributedString = CategoryListCell.buttonTitle(category)
+            let attributedString = CategoryListCell.buttonTitle(categoryInfo.title)
             button.setAttributedTitle(attributedString, forState: UIControlState.Normal)
 
             return button
