@@ -185,9 +185,9 @@ extension StreamableViewController: UserTappedDelegate {
     }
 
     public func userParamTapped(param: String, username: String?) {
-        guard !alreadyOnUserProfile(param) else {
-            return
-        }
+        guard !DeepLinking.alreadyOnUserProfile(navVC: navigationController, userParam: param)
+            else { return }
+
 
         let vc = ProfileViewController(userParam: param, username: username)
         vc.currentUser = currentUser

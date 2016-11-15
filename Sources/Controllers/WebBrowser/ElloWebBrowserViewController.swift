@@ -130,7 +130,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .WTF:
             break // this is handled in ElloWebViewHelper/KINWebBrowserViewController
         case .Discover:
-            self.showDiscover()
+            DeepLinking.showDiscover(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
         case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
@@ -139,7 +139,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            self.showCategory(data)
+            DeepLinking.showCategory(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
         case .BetaPublicProfiles,
              .Enter,
              .Exit,
@@ -155,65 +155,12 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         case .Post,
              .PushNotificationPost,
              .PushNotificationComment:
-            self.showPostDetail(data)
+            DeepLinking.showPostDetail(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser,token: data)
         case .Profile,
              .PushNotificationUser:
-            self.showProfile(data)
-        case .Search: showSearch(data)
-        case .Settings: self.showSettings()
-        }
-    }
-
-    private func showDiscover() {
-        if navigationController?.topViewController is DiscoverAllCategoriesViewController { return }
-
-        let vc = DiscoverAllCategoriesViewController()
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showCategory(slug: String) {
-        guard !DeepLinking.alreadyOnCurrentCategory(navVC: navigationController, slug: slug) else { return }
-
-        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
-            categoryVC.selectCategoryForSlug(slug)
-        }
-        else {
-            let vc = CategoryViewController(slug: slug)
-            vc.currentUser = ElloWebBrowserViewController.currentUser
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-
-    private func showProfile(username: String) {
-        let param = "~\(username)"
-        guard !DeepLinking.alreadyOnUserProfile(navVC: navigationController, userParam: param) else { return }
-
-        let vc = ProfileViewController(userParam: param, username: username)
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showPostDetail(token: String) {
-        let param = "~\(token)"
-        guard !DeepLinking.alreadyOnPostDetail(navVC: navigationController, postParam: param) else { return }
-
-        let vc = PostDetailViewController(postParam: param)
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showSearch(terms: String) {
-        let vc = SearchViewController()
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        vc.searchForPosts(terms)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showSettings() {
-        if let settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController() as? SettingsContainerViewController {
-            settings.currentUser = ElloWebBrowserViewController.currentUser
-            navigationController?.pushViewController(settings, animated: true)
+            DeepLinking.showProfile(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, username: data)
+        case .Search: DeepLinking.showSearch(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, terms: data)
+        case .Settings: DeepLinking.showSettings(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
         }
     }
 
