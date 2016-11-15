@@ -61,7 +61,7 @@ public protocol ColumnToggleDelegate: class {
 }
 
 public protocol CategoryListCellDelegate: class {
-    func categoryListCellTapped(slug slug: String)
+    func categoryListCellTapped(slug slug: String, name: String)
 }
 
 public protocol SearchStreamDelegate: class {
@@ -729,8 +729,8 @@ extension StreamViewController: ColumnToggleDelegate {
 // MARK: StreamViewController: CategoryListCellDelegate
 extension StreamViewController: CategoryListCellDelegate {
 
-    public func categoryListCellTapped(slug slug: String) {
-        showCategoryController(slug: slug)
+    public func categoryListCellTapped(slug slug: String, name: String) {
+        showCategoryViewController(slug: slug, name: name)
     }
 
 }
@@ -877,8 +877,12 @@ extension StreamViewController {
 extension StreamViewController {
 
     public func categoryTapped(category: Category) {
-		Tracker.sharedTracker.categoryOpened(slug)
-        let vc = CategoryViewController(slug: category.slug, name: category.name)
+        showCategoryViewController(slug: category.slug, name: category.name)
+    }
+
+    public func showCategoryViewController(slug slug: String, name: String) {
+        Tracker.sharedTracker.categoryOpened(slug)
+        let vc = CategoryViewController(slug: slug, name: name)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -894,7 +898,7 @@ extension StreamViewController: CategoryDelegate {
             category = post.category
         else { return }
 
-        showCategoryController(slug: category.slug)
+        categoryTapped(category)
     }
 }
 
@@ -983,7 +987,7 @@ extension StreamViewController: WebLinkDelegate {
              .WTF:
             postNotification(ExternalWebNotification, value: data)
         case .Discover:
-            self.selectTab(.Discover)
+            self.showDiscover()
         case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
@@ -1012,6 +1016,14 @@ extension StreamViewController: WebLinkDelegate {
         case .Search: showSearch(data)
         case .Settings: showSettings()
         }
+    }
+
+    private func showDiscover() {
+        if navigationController?.topViewController is DiscoverAllCategoriesViewController { return }
+
+        let vc = DiscoverAllCategoriesViewController()
+        vc.currentUser = ElloWebBrowserViewController.currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func showCategory(slug: String) {
@@ -1141,7 +1153,7 @@ extension StreamViewController: UICollectionViewDelegate {
                 selectedCategoryDelegate?.categoriesSelectionChanged(selection ?? [Category]())
             }
             else {
-                showCategoryController(slug: category.slug)
+                showCategoryViewController(slug: category.slug, name: category.name)
             }
         }
 

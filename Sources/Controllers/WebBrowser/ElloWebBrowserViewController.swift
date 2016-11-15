@@ -130,7 +130,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .WTF:
             break // this is handled in ElloWebViewHelper/KINWebBrowserViewController
         case .Discover:
-            self.selectTab(.Discover)
+            self.showDiscover()
         case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
@@ -162,6 +162,14 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         case .Search: showSearch(data)
         case .Settings: self.showSettings()
         }
+    }
+
+    private func showDiscover() {
+        if navigationController?.topViewController is DiscoverAllCategoriesViewController { return }
+
+        let vc = DiscoverAllCategoriesViewController()
+        vc.currentUser = ElloWebBrowserViewController.currentUser
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func showCategory(slug: String) {
