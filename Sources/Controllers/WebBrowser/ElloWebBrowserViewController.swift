@@ -173,7 +173,8 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
     }
 
     private func showCategory(slug: String) {
-        if alreadyOnCurrentCategory(slug) { return }
+        guard !DeepLinking.alreadyOnCurrentCategory(navVC: navigationController, slug: slug) else { return }
+
         if let categoryVC = navigationController?.topViewController as? CategoryViewController {
             categoryVC.selectCategoryForSlug(slug)
         }
@@ -186,7 +187,8 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
 
     private func showProfile(username: String) {
         let param = "~\(username)"
-        if alreadyOnUserProfile(param) { return }
+        guard !DeepLinking.alreadyOnUserProfile(navVC: navigationController, userParam: param) else { return }
+
         let vc = ProfileViewController(userParam: param, username: username)
         vc.currentUser = ElloWebBrowserViewController.currentUser
         navigationController?.pushViewController(vc, animated: true)
@@ -194,7 +196,8 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
 
     private func showPostDetail(token: String) {
         let param = "~\(token)"
-        if alreadyOnPostDetail(param) { return }
+        guard !DeepLinking.alreadyOnPostDetail(navVC: navigationController, postParam: param) else { return }
+
         let vc = PostDetailViewController(postParam: param)
         vc.currentUser = ElloWebBrowserViewController.currentUser
         navigationController?.pushViewController(vc, animated: true)
@@ -220,24 +223,4 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         }
     }
 
-    func alreadyOnCurrentCategory(slug: String) -> Bool {
-        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
-            return slug == categoryVC.slug
-        }
-        return false
-    }
-
-    func alreadyOnUserProfile(userParam: String) -> Bool {
-        if let profileVC = navigationController?.topViewController as? ProfileViewController {
-            return userParam == profileVC.userParam
-        }
-        return false
-    }
-
-    func alreadyOnPostDetail(postParam: String) -> Bool {
-        if let postDetailVC = navigationController?.topViewController as? PostDetailViewController {
-            return postParam == postDetailVC.postParam
-        }
-        return false
-    }
 }
