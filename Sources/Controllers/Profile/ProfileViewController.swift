@@ -198,7 +198,7 @@ public final class ProfileViewController: StreamableViewController {
             var leftBarButtonItems: [UIBarButtonItem] = []
             leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
             leftBarButtonItems.append(backItem)
-            if !isCurrentUser && user?.hasSharingEnabled == true {
+            if !isCurrentUser {
                 leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
                 leftBarButtonItems.append(moreActionsItem)
             }
@@ -219,7 +219,9 @@ public final class ProfileViewController: StreamableViewController {
         }
 
         var rightBarButtonItems: [UIBarButtonItem] = []
-        rightBarButtonItems.append(shareItem)
+        if user.hasSharingEnabled {
+            rightBarButtonItems.append(shareItem)
+        }
         rightBarButtonItems.append(gridListItem)
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
