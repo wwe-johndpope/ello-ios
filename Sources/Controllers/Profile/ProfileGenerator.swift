@@ -25,8 +25,6 @@ public final class ProfileGenerator: StreamGenerator {
         ]
         if hasPosts != false {
             items += [
-                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3)),
-                StreamCellItem(jsonable: user, type: .ColumnToggle),
                 StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5))
             ]
         }

@@ -325,9 +325,6 @@
 		1275351D1B73D155006B9A0F /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* NSDate.swift */; };
 		1275351F1B73D1D1006B9A0F /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */; };
 		127535211B73F7B2006B9A0F /* NSDateSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127535201B73F7B2006B9A0F /* NSDateSpecs.swift */; };
-		127B8C711BC319A700E17D0A /* ColumnToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */; };
-		127B8C731BC319D100E17D0A /* ColumnToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 127B8C721BC319D100E17D0A /* ColumnToggleCell.xib */; };
-		127B8C751BC320AD00E17D0A /* ColumnToggleCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127B8C741BC320AD00E17D0A /* ColumnToggleCellPresenter.swift */; };
 		127BAD5C1A83F01700628696 /* StreamCellItemParserSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */; };
 		127BAD5E1A850D6400628696 /* StreamTextCellHTMLSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BAD5D1A850D6400628696 /* StreamTextCellHTMLSpec.swift */; };
 		127BAD601A8512AA00628696 /* ElloLinkedStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BAD5F1A8512AA00628696 /* ElloLinkedStoreSpec.swift */; };
@@ -358,10 +355,6 @@
 		1292C0BF1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292C0BE1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift */; };
 		12931BD31BFE8E30009B26F9 /* checkmini_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BCB1BFE8E30009B26F9 /* checkmini_normal.svg */; };
 		12931BD41BFE8E30009B26F9 /* checkmini_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BCC1BFE8E30009B26F9 /* checkmini_selected.svg */; };
-		12931BD51BFE8E30009B26F9 /* grid_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BCD1BFE8E30009B26F9 /* grid_normal.svg */; };
-		12931BD61BFE8E30009B26F9 /* grid_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BCE1BFE8E30009B26F9 /* grid_selected.svg */; };
-		12931BD71BFE8E30009B26F9 /* list_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BCF1BFE8E30009B26F9 /* list_normal.svg */; };
-		12931BD81BFE8E30009B26F9 /* list_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BD01BFE8E30009B26F9 /* list_selected.svg */; };
 		12931BD91BFE8E30009B26F9 /* xpmmini_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BD11BFE8E30009B26F9 /* xpmmini_normal.svg */; };
 		12931BDA1BFE8E30009B26F9 /* xpmmini_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12931BD21BFE8E30009B26F9 /* xpmmini_selected.svg */; };
 		1294EBAC1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294EBAB1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift */; };
@@ -500,6 +493,8 @@
 		1D22C82B1AB100340048D415 /* create-comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D22C82A1AB100340048D415 /* create-comment.json */; };
 		1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */; };
 		1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */; };
+		1D242D631DDBCD87000A424C /* grid_view_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D242D611DDBCD87000A424C /* grid_view_normal.svg */; };
+		1D242D641DDBCD87000A424C /* list_view_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D242D621DDBCD87000A424C /* list_view_normal.svg */; };
 		1D24AA511B7E8CD5004BAAFA /* DebugTodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D24AA501B7E8CD5004BAAFA /* DebugTodoController.swift */; };
 		1D26E1681C52E26D0034448D /* NotificationCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */; };
 		1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */; };
@@ -1290,9 +1285,6 @@
 		1275351C1B73D155006B9A0F /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDate.swift; path = sources/Extensions/NSDate.swift; sourceTree = SOURCE_ROOT; };
 		1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSStringExtensions.swift; path = sources/Extensions/NSStringExtensions.swift; sourceTree = SOURCE_ROOT; };
 		127535201B73F7B2006B9A0F /* NSDateSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDateSpecs.swift; path = specs/Extensions/NSDateSpecs.swift; sourceTree = SOURCE_ROOT; };
-		127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColumnToggleCell.swift; path = sources/controllers/stream/Cells/ColumnToggleCell.swift; sourceTree = SOURCE_ROOT; };
-		127B8C721BC319D100E17D0A /* ColumnToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColumnToggleCell.xib; sourceTree = "<group>"; };
-		127B8C741BC320AD00E17D0A /* ColumnToggleCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColumnToggleCellPresenter.swift; path = sources/controllers/stream/CellDequeing/ColumnToggleCellPresenter.swift; sourceTree = SOURCE_ROOT; };
 		127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItemParserSpec.swift; sourceTree = "<group>"; };
 		127BAD5D1A850D6400628696 /* StreamTextCellHTMLSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCellHTMLSpec.swift; sourceTree = "<group>"; };
 		127BAD5F1A8512AA00628696 /* ElloLinkedStoreSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloLinkedStoreSpec.swift; sourceTree = "<group>"; };
@@ -1319,10 +1311,6 @@
 		1292C0BE1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStreamNotificationCellSizeCalculator.swift; sourceTree = "<group>"; };
 		12931BCB1BFE8E30009B26F9 /* checkmini_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = checkmini_normal.svg; sourceTree = "<group>"; };
 		12931BCC1BFE8E30009B26F9 /* checkmini_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = checkmini_selected.svg; sourceTree = "<group>"; };
-		12931BCD1BFE8E30009B26F9 /* grid_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grid_normal.svg; sourceTree = "<group>"; };
-		12931BCE1BFE8E30009B26F9 /* grid_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grid_selected.svg; sourceTree = "<group>"; };
-		12931BCF1BFE8E30009B26F9 /* list_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_normal.svg; sourceTree = "<group>"; };
-		12931BD01BFE8E30009B26F9 /* list_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_selected.svg; sourceTree = "<group>"; };
 		12931BD11BFE8E30009B26F9 /* xpmmini_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xpmmini_normal.svg; sourceTree = "<group>"; };
 		12931BD21BFE8E30009B26F9 /* xpmmini_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xpmmini_selected.svg; sourceTree = "<group>"; };
 		1294EBAB1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamEmbedCellPresenterSpec.swift; sourceTree = "<group>"; };
@@ -1472,6 +1460,8 @@
 		1D22C82A1AB100340048D415 /* create-comment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "create-comment.json"; sourceTree = "<group>"; };
 		1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloKeychainSpec.swift; sourceTree = "<group>"; };
+		1D242D611DDBCD87000A424C /* grid_view_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grid_view_normal.svg; sourceTree = "<group>"; };
+		1D242D621DDBCD87000A424C /* list_view_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_view_normal.svg; sourceTree = "<group>"; };
 		1D24AA501B7E8CD5004BAAFA /* DebugTodoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugTodoController.swift; sourceTree = "<group>"; };
 		1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCellSpec.swift; sourceTree = "<group>"; };
 		1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalConfig.swift; sourceTree = "<group>"; };
@@ -2166,8 +2156,6 @@
 				12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */,
 				12431FFD1DBBAA4C006808D4 /* CategoryHeaderCellSizeCalculator.swift */,
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
-				127B8C701BC319A700E17D0A /* ColumnToggleCell.swift */,
-				127B8C721BC319D100E17D0A /* ColumnToggleCell.xib */,
 				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */,
 				1D7152951D6CBE0E005998FE /* NoPostsCell.swift */,
@@ -2451,7 +2439,6 @@
 				1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */,
 				12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */,
 				1D5933701D10ADC300EAF03D /* CategoryListCellPresenter.swift */,
-				127B8C741BC320AD00E17D0A /* ColumnToggleCellPresenter.swift */,
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
 				1DA18E531DCCFB8A000231CC /* PagePromotionalHeaderCellPresenter.swift */,
@@ -3466,6 +3453,8 @@
 				1D7152BE1D6F7350005998FE /* 1password_white.svg */,
 				12A1D82E1DAD4D0F00A327D6 /* badge_check_normal.svg */,
 				12A1D8301DAD511A00A327D6 /* badge_check_selected.svg */,
+				1DF322451BD821FE008203F3 /* black_star_normal.svg */,
+				1DF322461BD821FE008203F3 /* black_star_selected.svg */,
 				1D472C251C1F349E00B61E55 /* breaklink_normal.svg */,
 				1DF741701BFAAC02000F5349 /* breaklink_white.svg */,
 				1D9B74CB1BB1E62500ACD028 /* bubble_body_normal.svg */,
@@ -3478,10 +3467,12 @@
 				769051001AFD2A720011B09A /* ello_logo.svg */,
 				1D472C211C1F2E0400B61E55 /* embetter_audio_play.svg */,
 				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
+				1D242D611DDBCD87000A424C /* grid_view_normal.svg */,
 				1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */,
 				1DF7416C1BFA65F0000F5349 /* link_normal.svg */,
 				1DF7416D1BFA65F0000F5349 /* link_selected.svg */,
 				1DF7416A1BFA650E000F5349 /* link_white.svg */,
+				1D242D621DDBCD87000A424C /* list_view_normal.svg */,
 				1D59EF931D6640C50029C106 /* mail_normal.svg */,
 				1D59EF941D6640C50029C106 /* mail_selected.svg */,
 				1D59EF951D6640C50029C106 /* mail_white.svg */,
@@ -3491,12 +3482,10 @@
 				1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */,
 				1D405D9B1C47166D0059DAFD /* repost_disabled.svg */,
 				1D7152DE1D74E79D005998FE /* small_check_green.svg */,
-				1DA18E0B1DB13C57000231CC /* white_star_normal.svg */,
-				1DA18E0C1DB13C57000231CC /* white_star_selected.svg */,
-				1DF322451BD821FE008203F3 /* black_star_normal.svg */,
-				1DF322461BD821FE008203F3 /* black_star_selected.svg */,
 				1D209BEB1D9C249400CFBF92 /* watch_green.svg */,
 				1D209BEC1D9C249400CFBF92 /* watch_normal.svg */,
+				1DA18E0B1DB13C57000231CC /* white_star_normal.svg */,
+				1DA18E0C1DB13C57000231CC /* white_star_selected.svg */,
 			);
 			path = CustomSVGs;
 			sourceTree = "<group>";
@@ -3578,13 +3567,9 @@
 				76F8DE741B6C0BC4009BCF61 /* eye_selected.svg */,
 				76F8DE751B6C0BC4009BCF61 /* flag_normal.svg */,
 				76F8DE761B6C0BC4009BCF61 /* flag_selected.svg */,
-				12931BCD1BFE8E30009B26F9 /* grid_normal.svg */,
-				12931BCE1BFE8E30009B26F9 /* grid_selected.svg */,
 				76F8DE791B6C0BC4009BCF61 /* hearts_normal.svg */,
 				76F8DE7A1B6C0BC4009BCF61 /* hearts_selected.svg */,
 				76F8DE7B1B6C0BC4009BCF61 /* hearts_white.svg */,
-				12931BCF1BFE8E30009B26F9 /* list_normal.svg */,
-				12931BD01BFE8E30009B26F9 /* list_selected.svg */,
 				76F8DE801B6C0BC4009BCF61 /* omni_normal.svg */,
 				76F8DE811B6C0BC4009BCF61 /* omni_selected.svg */,
 				76F8DE821B6C0BC4009BCF61 /* pencil_normal.svg */,
@@ -3962,6 +3947,7 @@
 				76F8DEBA1B6C0BC4009BCF61 /* burger_selected.svg in Resources */,
 				1DD829A41BD93D3600105CDE /* relationship_starred.json in Resources */,
 				76F8DECB1B6C0BC4009BCF61 /* dots_selected.svg in Resources */,
+				1D242D631DDBCD87000A424C /* grid_view_normal.svg in Resources */,
 				7689B4F31AD4ED3B00E4A4A3 /* posts_listing_users_who_have_commented_on_a_post.json in Resources */,
 				76F8DEB51B6C0BC4009BCF61 /* browse_selected.svg in Resources */,
 				76F8DEB01B6C0BC4009BCF61 /* arrow_selected.svg in Resources */,
@@ -3977,7 +3963,6 @@
 				76F8DEF51B6C0BC4009BCF61 /* search_normal.svg in Resources */,
 				1D7152C21D6F7782005998FE /* 1password_white.svg in Resources */,
 				1DC10FA61C3DEB7600846ED6 /* availability.json in Resources */,
-				12931BD61BFE8E30009B26F9 /* grid_selected.svg in Resources */,
 				7689B4EE1AD4ED3B00E4A4A3 /* posts_creating_a_post.json in Resources */,
 				12F0E3A91A4333150012CEA2 /* Main.storyboard in Resources */,
 				12FCEFDF1BD7F68500B8A7B5 /* Ello.entitlements in Resources */,
@@ -4095,6 +4080,7 @@
 				12F6AE9D1A433F2700493660 /* 500.json in Resources */,
 				1DE3EC4A1D81CC3400BDE16F /* ElloDev.entitlements in Resources */,
 				1DFC5DC71AACBFE4008DA855 /* create-post.json in Resources */,
+				1D242D641DDBCD87000A424C /* list_view_normal.svg in Resources */,
 				76F8DED31B6C0BC4009BCF61 /* flag_selected.svg in Resources */,
 				1D7152C11D6F777E005998FE /* 1password_normal.svg in Resources */,
 				76F8DECC1B6C0BC4009BCF61 /* ello_normal.svg in Resources */,
@@ -4167,16 +4153,13 @@
 				1241EDB41DD3D07900426A17 /* page_promotionals.json in Resources */,
 				1D6C97F81CE179E600E7B929 /* usernames.json in Resources */,
 				7689B5041AD4ED3B00E4A4A3 /* relationships_following_a_user_as_friend.json in Resources */,
-				12931BD71BFE8E30009B26F9 /* list_normal.svg in Resources */,
 				1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */,
 				76F8DEF81B6C0BC4009BCF61 /* share_selected.svg in Resources */,
-				12931BD51BFE8E30009B26F9 /* grid_normal.svg in Resources */,
 				7689B4E71AD4ED3B00E4A4A3 /* comments_updating_a_comment.json in Resources */,
 				76F8DEED1B6C0BC4009BCF61 /* relationships_white.svg in Resources */,
 				F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */,
 				12CFF68A1B16760C007CE68F /* loves_listing_loves_for_a_user.json in Resources */,
 				1212FDED1A66E5CB00AD4AF7 /* comments-for-a-post.json in Resources */,
-				12931BD81BFE8E30009B26F9 /* list_selected.svg in Resources */,
 				7689B5061AD4ED3B00E4A4A3 /* users_checking_usernameemail_availability.json in Resources */,
 				76F8DEFF1B6C0BC4009BCF61 /* trash_white.svg in Resources */,
 				1247276D1AB14D1B000079D7 /* text-region.json in Resources */,
@@ -4185,7 +4168,6 @@
 				1247275F1AB146C5000079D7 /* asset.json in Resources */,
 				12931BD31BFE8E30009B26F9 /* checkmini_normal.svg in Resources */,
 				1DF322471BD821FE008203F3 /* black_star_normal.svg in Resources */,
-				127B8C731BC319D100E17D0A /* ColumnToggleCell.xib in Resources */,
 				7689B4F71AD4ED3B00E4A4A3 /* posts_updating_a_post.json in Resources */,
 				7689B4D71AD4ED3B00E4A4A3 /* access_tokens_user_access_token_(password).json in Resources */,
 				7689B5031AD4ED3B00E4A4A3 /* relationships_blocking_an_abusive_user.json in Resources */,
@@ -4850,7 +4832,6 @@
 				1233758B1DA6ED150019CFAD /* ProfileStatsSizeCalculator.swift in Sources */,
 				12F0E3AF1A4333550012CEA2 /* AppDelegate.swift in Sources */,
 				1289F3941AF1474B008A938C /* NSAttributedStringExtensions.swift in Sources */,
-				127B8C711BC319A700E17D0A /* ColumnToggleCell.swift in Sources */,
 				122B30DF1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */,
 				1207C97D1C73FEE000939ADB /* ElloProviderErrors.swift in Sources */,
 				122B30CC1C6A3FBC00C1B9D8 /* DynamicSetting.swift in Sources */,
@@ -5049,7 +5030,6 @@
 				1D24AA511B7E8CD5004BAAFA /* DebugTodoController.swift in Sources */,
 				1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
-				127B8C751BC320AD00E17D0A /* ColumnToggleCellPresenter.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,

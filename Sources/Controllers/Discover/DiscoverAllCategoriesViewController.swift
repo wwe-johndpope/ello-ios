@@ -23,22 +23,20 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
+        title = InterfaceString.Discover.Title
 
         if !isRootViewController() {
-            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+            let item = UIBarButtonItem.backChevron(withController: self)
             self.elloNavigationItem.leftBarButtonItems = [item]
             self.elloNavigationItem.fixNavBarItemPadding()
         }
 
-        title = InterfaceString.Discover.Title
-        elloNavigationItem.title = title
+        elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
 
         let screen = DiscoverAllCategoriesScreen()
         screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
-
-        addSearchButton()
     }
 
     func loadCategories() {

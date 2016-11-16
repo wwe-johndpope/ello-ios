@@ -66,14 +66,13 @@ public class StreamContainerViewController: StreamableViewController {
         addNotificationObservers()
         setupStreamsSegmentedControl()
         setupChildViewControllers()
-        elloNavigationItem.titleView = streamsSegmentedControl
-        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.Burger.normalImage, style: .Done, target: self, action: #selector(StreamContainerViewController.hamburgerButtonTapped))
-        addSearchButton()
-        navigationBar.items = [elloNavigationItem]
+        updateInsets()
 
         let index = currentStreamIndex
         let stream = streamValues[index]
         let initialController = childStreamControllers[index]
+        setupNavigationBar(controller: initialController)
+
         scrollLogic.prevOffset = initialController.collectionView.contentOffset
         initialController.collectionView.scrollsToTop = true
         streamsSegmentedControl.selectedSegmentIndex = index
@@ -155,6 +154,18 @@ public class StreamContainerViewController: StreamableViewController {
         scrollView.scrollRectToVisible(rect, animated: false)
     }
 
+    private func setupNavigationBar(controller controller: StreamViewController) {
+        elloNavigationItem.titleView = streamsSegmentedControl
+        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.Burger.normalImage, style: .Done, target: self, action: #selector(StreamContainerViewController.hamburgerButtonTapped))
+        let searchItem = UIBarButtonItem.searchItem(controller: self)
+        let gridListItem = UIBarButtonItem.gridListItem(delegate: controller, isGridView: controller.streamKind.isGridView)
+        elloNavigationItem.rightBarButtonItems = [
+            searchItem,
+            gridListItem,
+        ]
+        navigationBar.items = [elloNavigationItem]
+    }
+
     private func setupChildViewControllers() {
         scrollView.scrollEnabled = false
         scrollView.scrollsToTop = false
@@ -215,7 +226,8 @@ public class StreamContainerViewController: StreamableViewController {
             controller.collectionView.scrollsToTop = false
         }
 
-        childStreamControllers[index].collectionView.scrollsToTop = true
+        let currentController = childStreamControllers[index]
+        currentController.collectionView.scrollsToTop = true
 
         let width = view.bounds.size.width
         let height = view.bounds.size.height
@@ -227,9 +239,11 @@ public class StreamContainerViewController: StreamableViewController {
         let stream = streamValues[currentStreamIndex]
         Tracker.sharedTracker.streamAppeared(stream.name)
 
+        setupNavigationBar(controller: currentController)
+
         if !streamLoaded[index] {
             streamLoaded[index] = true
-            childStreamControllers[index].loadInitialPage()
+            currentController.loadInitialPage()
         }
     }
 

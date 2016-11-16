@@ -56,8 +56,9 @@ public protocol WebLinkDelegate: class {
     func webLinkTapped(type: ElloURI, data: String)
 }
 
-public protocol ColumnToggleDelegate: class {
-    func columnToggleTapped(isGridView: Bool)
+@objc
+public protocol GridListToggleDelegate: class {
+    func gridListToggled(sender: UIButton)
 }
 
 public protocol CategoryListCellDelegate: class {
@@ -261,7 +262,7 @@ public final class StreamViewController: BaseElloViewController {
 // MARK: Public Functions
 
     public func scrollToTop() {
-        collectionView.contentOffset = CGPoint(x: 0, y: 0)
+        collectionView.contentOffset = CGPoint(x: 0, y: contentInset.top)
     }
 
     public func doneLoading() {
@@ -366,12 +367,7 @@ public final class StreamViewController: BaseElloViewController {
                     self.currentJSONables = []
                     var items = self.generateStreamCellItems([])
                     items.append(StreamCellItem(type: .Text(data: TextRegion(content: "Nothing to see here"))))
-                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
-                        if self.streamKind.gridViewPreferenceSet {
-                            self.collectionView.layoutIfNeeded()
-                            self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
-                        }
-                    })
+                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { _ in })
                 })
         }
     }
@@ -385,10 +381,6 @@ public final class StreamViewController: BaseElloViewController {
         let items = self.generateStreamCellItems(jsonables)
         self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
             self.pagingEnabled = true
-            if self.streamKind.gridViewPreferenceSet {
-                self.collectionView.layoutIfNeeded()
-                self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
-            }
         })
     }
 
@@ -401,14 +393,7 @@ public final class StreamViewController: BaseElloViewController {
             return items
         }
 
-        var items: [StreamCellItem] = []
-        if self.streamKind.hasGridViewToggle {
-            let toggleCellItem = StreamCellItem(type: .ColumnToggle)
-            items += [toggleCellItem]
-        }
-
-        items += defaultGenerator()
-        return items
+        return defaultGenerator()
     }
 
     private func updateNoResultsLabel() {
@@ -605,7 +590,6 @@ public final class StreamViewController: BaseElloViewController {
         dataSource.categoryDelegate = self
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
-        dataSource.columnToggleDelegate = self
         dataSource.categoryListCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
@@ -689,14 +673,12 @@ extension StreamViewController: InviteDelegate {
     }
 }
 
-// MARK: StreamViewController: ColumnToggleDelegate
-extension StreamViewController: ColumnToggleDelegate {
-    public func columnToggleTapped(isGridView: Bool) {
-        guard self.streamKind.isGridView != isGridView else {
-            return
-        }
-
-        self.streamKind.setIsGridView(isGridView)
+// MARK: StreamViewController: GridListToggleDelegate
+extension StreamViewController: GridListToggleDelegate {
+    public func gridListToggled(sender: UIButton) {
+        let isGridView = !streamKind.isGridView
+        sender.setImage(isGridView ? .ListView : .GridView, imageStyle: .Normal, forState: .Normal)
+        streamKind.setIsGridView(isGridView)
         if let toggleClosure = toggleClosure {
             // setting 'scrollToPaginateGuard' to false will prevent pagination from triggering when this profile has no posts
             // triggering pagination at this time will, inexplicably, cause the cells to disappear

@@ -388,8 +388,6 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
-
-
             describe("hasGridViewToggle") {
 
                 it("is correct for all cases") {
@@ -441,25 +439,6 @@ class StreamKindSpec: QuickSpec {
                 it("is correct for grid mode") {
                     StreamKind.Following.setIsGridView(true)
                     expect(StreamKind.Following.contentForPost(post)?.count) == 1
-                }
-            }
-
-            describe("gridPreferenceSetOffset") {
-
-                it("is correct for all cases") {
-                    let normalOffset = CGPoint(x: 0, y: -20)
-                    expect(StreamKind.Discover(type: .Featured).gridPreferenceSetOffset) == CGPoint(x: 0, y: -80)
-                    expect(StreamKind.CategoryPosts(slug: "art").gridPreferenceSetOffset) == CGPoint(x: 0, y: -80)
-                    expect(StreamKind.Following.gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.Starred.gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.Notifications(category: "").gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.PostDetail(postParam: "param").gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.CurrentUserStream.gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat").gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.SimpleStream(endpoint: ElloAPI.SearchForUsers(terms: "meat"), title: "meat").gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "123"), title: "123").gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.Unknown.gridPreferenceSetOffset) == normalOffset
-                    expect(StreamKind.UserStream(userParam: "NA").gridPreferenceSetOffset) == normalOffset
                 }
             }
 

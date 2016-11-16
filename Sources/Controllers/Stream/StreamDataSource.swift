@@ -49,7 +49,6 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak public var simpleStreamDelegate: SimpleStreamDelegate?
     weak public var searchStreamDelegate: SearchStreamDelegate?
     weak public var inviteDelegate: InviteDelegate?
-    weak public var columnToggleDelegate: ColumnToggleDelegate?
     weak public var categoryListCellDelegate: CategoryListCellDelegate?
     public let inviteCache = InviteCache()
 
@@ -317,8 +316,6 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(streamCellItem.type.name, forIndexPath: indexPath)
 
         switch streamCellItem.type {
-        case .ColumnToggle:
-            (cell as! ColumnToggleCell).columnToggleDelegate = columnToggleDelegate
         case .CategoryPromotionalHeader,
              .PagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
@@ -387,17 +384,14 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
                 return NSIndexPath(forItem: 1, inSection: 0)
             }
-            else if visibleCellItems.count > 2 && visibleCellItems[2].type != .ColumnToggle {
-                return NSIndexPath(forItem: 1, inSection: 0)
-            }
-            return NSIndexPath(forItem: 4, inSection: 0)
+            return NSIndexPath(forItem: 2, inSection: 0)
         case let .UserStream(userParam):
             if currentUserId == userParam {
                 if visibleCellItems.count == 2 && visibleCellItems[1].type == .NoPosts {
                     removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
                     return NSIndexPath(forItem: 1, inSection: 0)
                 }
-                return NSIndexPath(forItem: 4, inSection: 0)
+                return NSIndexPath(forItem: 2, inSection: 0)
             }
         default:
             break

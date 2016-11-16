@@ -25,10 +25,14 @@ public class SimpleStreamViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .whiteColor()
+        let streamKind = StreamKind.SimpleStream(endpoint: endpoint, title: title ?? "")
+
         setupNavigationBar()
+        setupNavigationItems(streamKind: streamKind)
+
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         scrollLogic.navBarHeight = 44
-        streamViewController.streamKind = StreamKind.SimpleStream(endpoint: endpoint, title: title ?? "")
+        streamViewController.streamKind = streamKind
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }
@@ -70,11 +74,20 @@ public class SimpleStreamViewController: StreamableViewController {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
         view.addSubview(navigationBar)
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [item]
+    }
+
+    private func setupNavigationItems(streamKind streamKind: StreamKind) {
+        let backItem = UIBarButtonItem.backChevron(withController: self)
+        elloNavigationItem.leftBarButtonItems = [backItem]
         elloNavigationItem.fixNavBarItemPadding()
         navigationBar.items = [elloNavigationItem]
-        addSearchButton()
+
+        var rightBarButtonItems: [UIBarButtonItem] = []
+        rightBarButtonItems.append(UIBarButtonItem.searchItem(controller: self))
+        if streamKind.hasGridViewToggle {
+            rightBarButtonItems.append(UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView))
+        }
+        elloNavigationItem.rightBarButtonItems = rightBarButtonItems
     }
 
 }

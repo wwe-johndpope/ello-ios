@@ -23,7 +23,7 @@ class CategoryViewControllerSpec: QuickSpec {
 
             it("has a search button in the nav bar") {
                 let rightButtons = subject.elloNavigationItem.rightBarButtonItems
-                expect(rightButtons!.count) == 1
+                expect(rightButtons!.count) == 2
             }
         }
     }

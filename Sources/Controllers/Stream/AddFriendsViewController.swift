@@ -31,9 +31,6 @@ public class AddFriendsViewController: StreamableViewController {
             fieldPlaceholderText: InterfaceString.Friends.SearchPrompt)
         self.view = searchScreen
         searchScreen.delegate = self
-        searchScreen.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
-        ]
     }
 
     override public func viewWillAppear(animated: Bool) {

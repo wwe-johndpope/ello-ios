@@ -15,10 +15,8 @@ extension UINavigationItem {
         }
 
         if let leftBarButtonItems = self.leftBarButtonItems {
-            let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-            leftNegativeSpacer.width = -17
-
-            self.leftBarButtonItems = [leftNegativeSpacer] + leftBarButtonItems
+            let negativeSpacer = UIBarButtonItem.spacer(width: -17)
+            self.leftBarButtonItems = [negativeSpacer] + leftBarButtonItems
         }
     }
 

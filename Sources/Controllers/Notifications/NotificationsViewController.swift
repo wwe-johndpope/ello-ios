@@ -43,8 +43,8 @@ public class NotificationsViewController: StreamableViewController, Notification
         super.viewDidLoad()
 
         screen.delegate = self
-        self.title = InterfaceString.Notifications.Title
-        addSearchButton()
+        title = InterfaceString.Notifications.Title
+        elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
 
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         scrollLogic.navBarHeight = 44

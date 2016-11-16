@@ -11,6 +11,8 @@ import Nimble
 class SearchMockScreen: NSObject, SearchScreenProtocol {
     var delegate: SearchScreenDelegate?
     var hasBackButton: Bool = true
+    var hasGridViewToggle: Bool = false
+    var gridListItem: UIBarButtonItem?
 
     func viewForStream() -> UIView {
         return UIView()
