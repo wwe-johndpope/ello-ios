@@ -187,7 +187,6 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         }
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton?.selected ?? false)
-        setupNavigationItems()
     }
 
     public func onPeopleTapped() {
@@ -199,7 +198,6 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         }
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton?.selected ?? false)
-        setupNavigationItems()
     }
 
     private func setupStreamView() {
