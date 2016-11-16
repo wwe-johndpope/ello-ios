@@ -9,7 +9,7 @@ public final class CategoryViewController: StreamableViewController {
         return mockScreen ?? self.view as! CategoryScreenProtocol
     }
 
-    var navigationBar: ElloNavigationBar!
+    var gridListItem: UIBarButtonItem?
     var category: Category?
     var slug: String
     var allCategories: [Category] = []
@@ -30,10 +30,6 @@ public final class CategoryViewController: StreamableViewController {
 
     override public func loadView() {
         self.title = category?.name ?? DiscoverType.fromURL(slug)?.name
-        elloNavigationItem.title = title
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [item]
-        elloNavigationItem.fixNavBarItemPadding()
 
         let screen = CategoryScreen()
         screen.navigationItem = elloNavigationItem
@@ -46,12 +42,14 @@ public final class CategoryViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        streamViewController.streamKind = .Category(slug: slug)
-        view.backgroundColor = .whiteColor()
+        let streamKind: StreamKind = .Category(slug: slug)
+        streamViewController.streamKind = streamKind
+        gridListItem?.setImage(isGridView: streamKind.isGridView)
+
         self.generator = CategoryGenerator(
             slug: slug,
             currentUser: currentUser,
-            streamKind: self.streamViewController.streamKind,
+            streamKind: streamKind,
             destination: self
         )
 
@@ -66,6 +64,14 @@ public final class CategoryViewController: StreamableViewController {
 
     private func updateInsets() {
         updateInsets(navBar: screen.topInsetView, streamController: streamViewController, navBarsVisible: screen.navBarsVisible)
+
+        if !userDidScroll && streamViewController.dataSource.visibleCellItems.count > 0 {
+            var offset: CGFloat = CategoryCardListView.Size.height
+            if navBarsVisible() {
+                offset += ElloNavigationBar.Size.height
+            }
+            streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
+        }
     }
 
     override func showNavBars(scrollToBottom: Bool) {
@@ -99,7 +105,17 @@ public final class CategoryViewController: StreamableViewController {
 private extension CategoryViewController {
 
     func setupNavigationBar() {
-        assignRightButtons()
+        let backItem = UIBarButtonItem.backChevron(withController: self)
+        elloNavigationItem.leftBarButtonItems = [backItem]
+        elloNavigationItem.fixNavBarItemPadding()
+
+        let searchItem = UIBarButtonItem.searchItem(controller: self)
+        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
+        self.gridListItem = gridListItem
+        let rightBarButtonItems = [searchItem, gridListItem]
+        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
+            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+        }
     }
 
     func loadCategory() {
@@ -111,21 +127,6 @@ private extension CategoryViewController {
         categoryPromotional = nil
         category?.randomPromotional = nil
         generator?.load(reload: true)
-    }
-
-    private func assignRightButtons() {
-        let rightBarButtonItems: [UIBarButtonItem] = [
-            UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped))
-        ]
-
-        guard elloNavigationItem.rightBarButtonItems != nil else {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            return
-        }
-
-        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-        }
     }
 }
 
@@ -139,6 +140,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 
     public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
+        updateInsets()
     }
 
     public func setPlaceholders(items: [StreamCellItem]) {
@@ -162,6 +164,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         else if let pagePromotional = jsonable as? PagePromotional {
             self.pagePromotional = pagePromotional
         }
+        updateInsets()
     }
 
     public func setCategories(categories: [Category]) {
@@ -183,16 +186,6 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             screen.scrollToCategoryIndex(selectedCategoryIndex)
         }
         updateInsets()
-
-        if !userDidScroll && streamViewController.dataSource.visibleCellItems.count > 0 {
-            var offset: CGFloat = CategoryCardListView.Size.height
-            if navBarsVisible() {
-                offset += ElloNavigationBar.Size.height
-            }
-            offset -= ColumnToggleCell.Size.height
-            streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
-            userDidScroll = true  // don't do this animation again, e.g. if the user chooses a new category
-        }
     }
 
     public func primaryJSONAbleNotFound() {
@@ -226,6 +219,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
     public func selectCatgory(category: Category) {
 		Tracker.sharedTracker.categoryOpened(category.slug)
+
         let streamKind: StreamKind
         switch category.level {
         case .Meta:
@@ -235,6 +229,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         }
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
+        gridListItem?.setImage(isGridView: streamKind.isGridView)
         generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)
         self.category = category
         self.slug = category.slug

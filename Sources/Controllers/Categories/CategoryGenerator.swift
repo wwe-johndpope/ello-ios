@@ -32,11 +32,6 @@ public final class CategoryGenerator: StreamGenerator {
 
     func headerItems() -> [StreamCellItem] {
         var items: [StreamCellItem] = []
-        if hasPosts != false {
-            items += [
-                StreamCellItem(type: .ColumnToggle),
-            ]
-        }
 
         if isMeta() {
             if let pagePromotional = pagePromotional {

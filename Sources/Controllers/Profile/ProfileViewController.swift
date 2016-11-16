@@ -116,12 +116,6 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        if !isRootViewController() {
-            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
-            self.elloNavigationItem.leftBarButtonItems = [item]
-            self.elloNavigationItem.fixNavBarItemPadding()
-        }
-
         let screen = ProfileScreen()
         screen.delegate = self
         screen.navigationItem = elloNavigationItem
@@ -194,38 +188,39 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     private func setupNavigationBar() {
-        assignRightButtons()
-    }
+        let backItem = UIBarButtonItem.backChevron(withController: self)
+        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
+        let shareItem = UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
+        let moreActionsItem = UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
+        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(currentUser)"
 
-    func assignRightButtons() {
+        if !isRootViewController() {
+            var leftBarButtonItems: [UIBarButtonItem] = []
+            leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
+            leftBarButtonItems.append(backItem)
+            if !isCurrentUser && user?.hasSharingEnabled == true {
+                leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
+                leftBarButtonItems.append(moreActionsItem)
+            }
+            elloNavigationItem.leftBarButtonItems = leftBarButtonItems
+        }
 
-        if let currentUser = currentUser where userParam == currentUser.id || userParam == "~\(currentUser.username)" {
-            elloNavigationItem.rightBarButtonItems = [
-                UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
-            ]
+        guard !isCurrentUser else {
+            elloNavigationItem.rightBarButtonItems = [shareItem, gridListItem]
             return
         }
 
-        guard let user = user else {
-            elloNavigationItem.rightBarButtonItems = []
-            return
-        }
-
-        if let currentUser = currentUser where user.id == currentUser.id {
+        guard
+            let user = user,
+            let currentUser = currentUser
+        where user.id != currentUser.id else {
             elloNavigationItem.rightBarButtonItems = []
             return
         }
 
         var rightBarButtonItems: [UIBarButtonItem] = []
-        if user.hasSharingEnabled {
-            rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:))))
-        }
-        rightBarButtonItems.append(UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped)))
-
-        guard elloNavigationItem.rightBarButtonItems != nil else {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            return
-        }
+        rightBarButtonItems.append(shareItem)
+        rightBarButtonItems.append(gridListItem)
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
             elloNavigationItem.rightBarButtonItems = rightBarButtonItems
@@ -338,8 +333,6 @@ extension ProfileViewController {
         if cachedImage(.CoverImage) == nil {
             self.currentUser?.coverImage = user.coverImage
         }
-
-        elloNavigationItem.rightBarButtonItem = nil
 
         screen.configureButtonsForCurrentUser()
     }
@@ -462,7 +455,7 @@ extension ProfileViewController:  StreamDestination {
     public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
-        assignRightButtons()
+        setupNavigationBar()
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
@@ -474,7 +467,7 @@ extension ProfileViewController:  StreamDestination {
         userParam = user.id
         title = user.atName
 
-        assignRightButtons()
+        setupNavigationBar()
         Tracker.sharedTracker.profileLoaded(user.atName ?? "(no name)")
 
         screen.updateRelationshipControl(user: user)

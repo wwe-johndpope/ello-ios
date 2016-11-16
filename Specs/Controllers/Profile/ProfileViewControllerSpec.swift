@@ -40,9 +40,13 @@ class ProfileViewControllerSpec: QuickSpec {
                     screen = subject.view as! ProfileScreen
                 }
 
-                it("does not have a 'more following options' Button") {
+                it("has grid/list and share buttons") {
                     let rightButtons = subject.elloNavigationItem.rightBarButtonItems
-                    expect(rightButtons?.count ?? 0) == 0
+                    expect(rightButtons?.count ?? 0) == 2
+                }
+
+                it("has back left nav button") {
+                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 1
                 }
 
                 context("collaborateable and hireable don't affect currentUser profile") {
@@ -85,8 +89,12 @@ class ProfileViewControllerSpec: QuickSpec {
                     screen = subject.view as! ProfileScreen
                 }
 
-                it("has 'share' and 'more following options' buttons") {
+                it("has grid/list and share right nav buttons") {
                     expect(subject.elloNavigationItem.rightBarButtonItems?.count) == 2
+                }
+
+                it("has back and more left nav buttons") {
+                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 2
                 }
 
                 let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [

@@ -14,6 +14,8 @@ public protocol SearchScreenDelegate: class {
 public protocol SearchScreenProtocol: class {
     var delegate: SearchScreenDelegate? { get set }
     var hasBackButton: Bool { get set }
+    var hasGridViewToggle: Bool { get set }
+    var gridListItem: UIBarButtonItem? { get set }
     func viewForStream() -> UIView
     func updateInsets(bottom bottom: CGFloat)
 }
@@ -21,7 +23,6 @@ public protocol SearchScreenProtocol: class {
 public class SearchScreen: UIView, SearchScreenProtocol {
     private var debounced: ThrottledBlock
     public private(set) var navigationBar: ElloNavigationBar!
-    public private(set) var navigationItem: UINavigationItem!
     public private(set) var searchField: UITextField!
     private var searchControlsContainer: UIView!
     private var postsToggleButton: OutlineElloButton?
@@ -37,6 +38,13 @@ public class SearchScreen: UIView, SearchScreenProtocol {
             setupNavigationBarItems()
         }
     }
+    public var gridListItem: UIBarButtonItem?
+    public var hasGridViewToggle: Bool = true {
+        didSet {
+            setupNavigationBarItems()
+        }
+    }
+    public let navigationItem = UINavigationItem()
 
     private var btnWidth: CGFloat {
         get {
@@ -100,7 +108,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         gesture.addTarget(self, action: #selector(SearchScreen.activateSearchField))
         navigationBar.addGestureRecognizer(gesture)
 
-        self.setupNavigationBarItems()
+        setupNavigationBarItems()
     }
 
     func activateSearchField() {
@@ -109,16 +117,20 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     // TODO: this should be moved into SearchViewController.loadView (and use elloNavigationItem)
     private func setupNavigationBarItems() {
-        navigationItem = UINavigationItem(title: navBarTitle)
+        navigationItem.title = navBarTitle
 
         if hasBackButton {
-            let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(SearchScreen.backTapped))
-            navigationItem.leftBarButtonItems = [leftItem]
+            let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(SearchScreen.backTapped))
+            navigationItem.leftBarButtonItems = [backItem]
             navigationItem.fixNavBarItemPadding()
         }
         else {
-            let leftItem = UIBarButtonItem.closeButton(target: self, action: #selector(SearchScreen.backTapped))
-            navigationItem.leftBarButtonItems = [leftItem]
+            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(SearchScreen.backTapped))
+            navigationItem.leftBarButtonItems = [closeItem]
+        }
+
+        if let gridListItem = gridListItem where hasGridViewToggle {
+            navigationItem.rightBarButtonItems = [gridListItem]
         }
 
         navigationBar.items = [navigationItem]
@@ -175,6 +187,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         }
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton?.selected ?? false)
+        setupNavigationBarItems()
     }
 
     public func onPeopleTapped() {
@@ -186,6 +199,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         }
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton?.selected ?? false)
+        setupNavigationBarItems()
     }
 
     private func setupStreamView() {

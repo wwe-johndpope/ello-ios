@@ -36,9 +36,7 @@ public class HireViewController: BaseElloViewController {
     }
 
     override public func loadView() {
-        elloNavigationItem.title = title
-
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+        let item = UIBarButtonItem.backChevron(withController: self)
         elloNavigationItem.leftBarButtonItems = [item]
         elloNavigationItem.fixNavBarItemPadding()
 

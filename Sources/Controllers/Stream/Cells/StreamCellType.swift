@@ -22,7 +22,6 @@ public enum StreamCellType: Equatable {
     case SelectableCategoryCard
     case CategoryList
     case CategoryPromotionalHeader
-    case ColumnToggle
     case CommentHeader
     case CreateComment
     case Embed(data: Regionable?)
@@ -73,7 +72,6 @@ public enum StreamCellType: Equatable {
         CategoryPromotionalHeader,
         SelectableCategoryCard,
         CategoryList,
-        ColumnToggle,
         CommentHeader,
         CreateComment,
         Embed(data: nil),
@@ -122,7 +120,6 @@ public enum StreamCellType: Equatable {
         case CategoryPromotionalHeader, PagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
         case SelectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case CategoryList: return CategoryListCell.reuseIdentifier
-        case ColumnToggle: return ColumnToggleCell.reuseIdentifier
         case CommentHeader, Header: return StreamHeaderCell.reuseIdentifier
         case CreateComment: return StreamCreateCommentCell.reuseIdentifier
         case Embed: return StreamEmbedCell.reuseEmbedIdentifier
@@ -171,7 +168,6 @@ public enum StreamCellType: Equatable {
         case CategoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
         case SelectableCategoryCard: return CategoryCardCellPresenter.configure
         case CategoryList: return CategoryListCellPresenter.configure
-        case ColumnToggle: return ColumnToggleCellPresenter.configure
         case CommentHeader, Header: return StreamHeaderCellPresenter.configure
         case CreateComment: return StreamCreateCommentCellPresenter.configure
         case Embed: return StreamEmbedCellPresenter.configure
@@ -201,7 +197,6 @@ public enum StreamCellType: Equatable {
         case CategoryCard: return CategoryCardCell.self
         case SelectableCategoryCard: return CategoryCardCell.self
         case CategoryList: return CategoryListCell.self
-        case ColumnToggle: return ColumnToggleCell.self
         case CommentHeader, Header: return StreamHeaderCell.self
         case CreateComment: return StreamCreateCommentCell.self
         case Embed: return StreamEmbedCell.self
@@ -233,8 +228,6 @@ public enum StreamCellType: Equatable {
             return 110
         case CategoryList:
             return CategoryListCell.Size.height
-        case ColumnToggle:
-            return ColumnToggleCell.Size.height
         case CommentHeader,
              InviteFriends,
              OnboardingInviteFriends,
@@ -283,7 +276,6 @@ public enum StreamCellType: Equatable {
         switch self {
         case CategoryPromotionalHeader,
              CategoryList,
-             ColumnToggle,
              CreateComment,
              FullWidthSpacer,
              InviteFriends,

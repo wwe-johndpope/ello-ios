@@ -41,12 +41,12 @@ public class BaseElloViewController: UIViewController, ControllerThatMightHaveTh
     func didSetCurrentUser() {}
 
     @IBAction
-    func backTapped(sender: UIButton) {
-        if let controllers = self.navigationController?.childViewControllers
-            where controllers.count > 1
-        {
-            self.navigationController?.popViewControllerAnimated(true)
-        }
+    func backTapped() {
+        guard
+            let navigationController = navigationController
+        where navigationController.childViewControllers.count > 1 else { return }
+
+        navigationController.popViewControllerAnimated(true)
     }
 
     public func isRootViewController() -> Bool {
@@ -80,13 +80,6 @@ public class BaseElloViewController: UIViewController, ControllerThatMightHaveTh
 
 // MARK: Search
 public extension BaseElloViewController {
-    func addSearchButton() {
-        elloNavigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: InterfaceImage.Search.normalImage, style: .Done,
-            target: self, action: #selector(searchButtonTapped)
-        )
-    }
-
     func searchButtonTapped() {
         let search = SearchViewController()
         search.currentUser = currentUser

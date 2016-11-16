@@ -8,7 +8,7 @@ public class SearchViewController: StreamableViewController {
     var _mockScreen: SearchScreenProtocol?
     public var screen: SearchScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! SearchScreen }
+        get { return _mockScreen ?? self.view as! SearchScreenProtocol }
     }
 
     override public func loadView() {
@@ -20,6 +20,8 @@ public class SearchViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         streamViewController.pullToRefreshEnabled = false
+        screen.gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
+        screen.hasGridViewToggle = streamViewController.streamKind.hasGridViewToggle
         updateInsets()
     }
 
@@ -76,6 +78,7 @@ extension SearchViewController: SearchScreenDelegate {
         streamViewController.removeAllCellItems()
         streamViewController.loadingToken.cancelInitialPage()
         streamViewController.noResultsMessages = (title: "", body: "")
+        screen.hasGridViewToggle = false
     }
 
     public func searchFieldChanged(text: String, isPostSearch: Bool) {
@@ -104,7 +107,9 @@ extension SearchViewController: SearchScreenDelegate {
         searchText = text
         let endpoint = isPostSearch ? ElloAPI.SearchForPosts(terms: text) : ElloAPI.SearchForUsers(terms: text)
         streamViewController.noResultsMessages = (title: InterfaceString.Search.NoMatches, body: InterfaceString.Search.TryAgain)
-        streamViewController.streamKind = .SimpleStream(endpoint: endpoint, title: "")
+        let streamKind = StreamKind.SimpleStream(endpoint: endpoint, title: "")
+        screen.hasGridViewToggle = streamKind.hasGridViewToggle
+        streamViewController.streamKind = streamKind
         streamViewController.removeAllCellItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()

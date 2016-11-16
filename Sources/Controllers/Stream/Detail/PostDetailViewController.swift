@@ -98,7 +98,7 @@ public final class PostDetailViewController: StreamableViewController {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
         view.addSubview(navigationBar)
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
+        let item = UIBarButtonItem.backChevron(withController: self)
         elloNavigationItem.leftBarButtonItems = [item]
         elloNavigationItem.fixNavBarItemPadding()
         navigationBar.items = [elloNavigationItem]
@@ -124,11 +124,6 @@ public final class PostDetailViewController: StreamableViewController {
                 UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
                 UIBarButtonItem(image: .Dots, target: self, action: #selector(PostDetailViewController.flagPost)),
             ]
-        }
-
-        guard elloNavigationItem.rightBarButtonItems != nil else {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            return
         }
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {

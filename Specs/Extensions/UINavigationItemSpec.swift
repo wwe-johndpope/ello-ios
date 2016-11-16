@@ -16,7 +16,10 @@ public class NavItemResponder: NSObject {
 class UINavigationItemSpec: QuickSpec {
     override func spec() {
         describe("UINavigationItem") {
-            let subject = UINavigationItem()
+            var subject: UINavigationItem!
+            beforeEach {
+                subject = UINavigationItem()
+            }
 
             describe("areRightButtonsTheSame(_:)") {
                 let target = NavItemResponder()
@@ -67,6 +70,11 @@ class UINavigationItemSpec: QuickSpec {
 
                 it("returns false when the arrays have disimilar value semantics") {
                     subject.rightBarButtonItems = rightItems
+                    expect(subject.areRightButtonsTheSame(newItemsDifferent)) == false
+                }
+
+                it("returns false rightBarButtonItems is nil") {
+                    subject.rightBarButtonItems = nil
                     expect(subject.areRightButtonsTheSame(newItemsDifferent)) == false
                 }
 

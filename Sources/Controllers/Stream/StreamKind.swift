@@ -207,28 +207,12 @@ public enum StreamKind {
         return []
     }
 
-    public var gridPreferenceSetOffset: CGPoint {
-        switch self {
-        case .Discover, .CategoryPosts: return CGPoint(x: 0, y: -80)
-        default: return CGPoint(x: 0, y: -20)
-        }
-    }
-
     public var avatarHeight: CGFloat {
         return self.isGridView ? 30 : 40
     }
 
     public func contentForPost(post: Post) -> [Regionable]? {
         return self.isGridView ? post.summary : post.content
-    }
-
-    public var gridViewPreferenceSet: Bool {
-        switch self {
-        case .Notifications: return false
-        default:
-            let prefSet = GroupDefaults["\(self.cacheKey)GridViewPreferenceSet"].bool
-            return prefSet != nil
-        }
     }
 
     public func setIsGridView(isGridView: Bool) {
