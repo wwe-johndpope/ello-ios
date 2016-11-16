@@ -104,7 +104,7 @@ public final class ProfileViewController: StreamableViewController {
             destination: self
         )
         view.clipsToBounds = true
-        setupNavigationBar()
+        setupNavigationItems()
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
@@ -187,7 +187,7 @@ public final class ProfileViewController: StreamableViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
 
-    private func setupNavigationBar() {
+    private func setupNavigationItems() {
         let backItem = UIBarButtonItem.backChevron(withController: self)
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
         let shareItem = UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
@@ -455,7 +455,7 @@ extension ProfileViewController:  StreamDestination {
     public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
-        setupNavigationBar()
+        setupNavigationItems()
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
@@ -467,7 +467,7 @@ extension ProfileViewController:  StreamDestination {
         userParam = user.id
         title = user.atName
 
-        setupNavigationBar()
+        setupNavigationItems()
         Tracker.sharedTracker.profileLoaded(user.atName ?? "(no name)")
 
         screen.updateRelationshipControl(user: user)

@@ -26,7 +26,10 @@ public class SimpleStreamViewController: StreamableViewController {
         super.viewDidLoad()
         view.backgroundColor = .whiteColor()
         let streamKind = StreamKind.SimpleStream(endpoint: endpoint, title: title ?? "")
-        setupNavigationBar(streamKind: streamKind)
+
+        setupNavigationBar()
+        setupNavigationItems(streamKind: streamKind)
+
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         scrollLogic.navBarHeight = 44
         streamViewController.streamKind = streamKind
@@ -67,10 +70,13 @@ public class SimpleStreamViewController: StreamableViewController {
         updateInsets(navBar: navigationBar, streamController: streamViewController)
     }
 
-    private func setupNavigationBar(streamKind streamKind: StreamKind) {
+    private func setupNavigationBar() {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
         view.addSubview(navigationBar)
+    }
+
+    private func setupNavigationItems(streamKind streamKind: StreamKind) {
         let backItem = UIBarButtonItem.backChevron(withController: self)
         elloNavigationItem.leftBarButtonItems = [backItem]
         elloNavigationItem.fixNavBarItemPadding()

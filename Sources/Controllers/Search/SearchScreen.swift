@@ -35,13 +35,13 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     private var isSearchView: Bool
     public var hasBackButton: Bool = true {
         didSet {
-            setupNavigationBarItems()
+            setupNavigationItems()
         }
     }
     public var gridListItem: UIBarButtonItem?
     public var hasGridViewToggle: Bool = true {
         didSet {
-            setupNavigationBarItems()
+            setupNavigationItems()
         }
     }
     public let navigationItem = UINavigationItem()
@@ -108,7 +108,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         gesture.addTarget(self, action: #selector(SearchScreen.activateSearchField))
         navigationBar.addGestureRecognizer(gesture)
 
-        setupNavigationBarItems()
+        setupNavigationItems()
     }
 
     func activateSearchField() {
@@ -116,7 +116,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     }
 
     // TODO: this should be moved into SearchViewController.loadView (and use elloNavigationItem)
-    private func setupNavigationBarItems() {
+    private func setupNavigationItems() {
         navigationItem.title = navBarTitle
 
         if hasBackButton {
@@ -187,7 +187,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         }
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton?.selected ?? false)
-        setupNavigationBarItems()
+        setupNavigationItems()
     }
 
     public func onPeopleTapped() {
@@ -199,7 +199,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         }
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton?.selected ?? false)
-        setupNavigationBarItems()
+        setupNavigationItems()
     }
 
     private func setupStreamView() {

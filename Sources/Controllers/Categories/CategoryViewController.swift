@@ -41,7 +41,7 @@ public final class CategoryViewController: StreamableViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
+        setupNavigationItems()
         let streamKind: StreamKind = .Category(slug: slug)
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
@@ -104,7 +104,7 @@ public final class CategoryViewController: StreamableViewController {
 
 private extension CategoryViewController {
 
-    func setupNavigationBar() {
+    func setupNavigationItems() {
         let backItem = UIBarButtonItem.backChevron(withController: self)
         elloNavigationItem.leftBarButtonItems = [backItem]
         elloNavigationItem.fixNavBarItemPadding()
