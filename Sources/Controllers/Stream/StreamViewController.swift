@@ -987,7 +987,7 @@ extension StreamViewController: WebLinkDelegate {
              .WTF:
             postNotification(ExternalWebNotification, value: data)
         case .Discover:
-            self.showDiscover()
+            DeepLinking.showDiscover(navVC: navigationController, currentUser: currentUser)
         case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
@@ -996,7 +996,7 @@ extension StreamViewController: WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            showCategory(data)
+            DeepLinking.showCategory(navVC: navigationController, currentUser: currentUser, slug: data)
         case .Email: break // this is handled in ElloWebViewHelper
         case .BetaPublicProfiles,
              .Enter,
@@ -1009,71 +1009,13 @@ extension StreamViewController: WebLinkDelegate {
         case .Post,
              .PushNotificationComment,
              .PushNotificationPost:
-            showPostDetail(data)
+            DeepLinking.showPostDetail(navVC: navigationController, currentUser: currentUser, token: data)
         case .Profile,
              .PushNotificationUser:
-            showProfile(data)
-        case .Search: showSearch(data)
-        case .Settings: showSettings()
+            DeepLinking.showProfile(navVC: navigationController, currentUser: currentUser, username: data)
+        case .Search: DeepLinking.showSearch(navVC: navigationController, currentUser: currentUser, terms: data)
+        case .Settings: DeepLinking.showSettings(navVC: navigationController, currentUser: currentUser)
         }
-    }
-
-    private func showDiscover() {
-        if navigationController?.topViewController is DiscoverAllCategoriesViewController { return }
-
-        let vc = DiscoverAllCategoriesViewController()
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showCategory(slug: String) {
-        if alreadyOnCurrentCategory(slug) { return }
-        if let categoryVC = navigationController?.topViewController as? CategoryViewController {
-            categoryVC.selectCategoryForSlug(slug)
-        }
-        else {
-            let vc = CategoryViewController(slug: slug)
-            vc.currentUser = ElloWebBrowserViewController.currentUser
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-
-    private func showProfile(username: String) {
-        let param = "~\(username)"
-        if alreadyOnUserProfile(param) { return }
-        let vc = ProfileViewController(userParam: param, username: username)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showPostDetail(token: String) {
-        let param = "~\(token)"
-        if alreadyOnPostDetail(param) { return }
-        let vc = PostDetailViewController(postParam: param)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showSearch(terms: String) {
-        if let searchVC = navigationController?.visibleViewController as? SearchViewController {
-            searchVC.searchForPosts(terms)
-        }
-        else {
-            let vc = SearchViewController()
-            vc.currentUser = currentUser
-            vc.searchForPosts(terms)
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-
-    private func showSettings() {
-        guard let
-            settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController()
-                as? SettingsContainerViewController
-        else { return }
-
-        settings.currentUser = currentUser
-        navigationController?.pushViewController(settings, animated: true)
     }
 
     private func selectTab(tab: ElloTab) {

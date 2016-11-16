@@ -451,25 +451,24 @@ extension AppViewController {
         case .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            showDiscoverScreen()
+            showDiscoverScreen(vc)
         case .Discover:
-            showDiscoverScreen()
+            showDiscoverScreen(vc)
         case .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
              .DiscoverTrending,
              .Category:
-            showCategoryScreen(data)
+            showCategoryScreen(vc, slug: data)
         case .Invitations:
             showInvitationScreen(vc)
         case .Enter, .Exit, .Root, .Explore:
             break
         case .Friends,
-             .Following:
-            showFriendsScreen(vc)
-        case .Noise,
+             .Following,
+             .Noise,
              .Starred:
-            showNoiseScreen(vc)
+            showStreamContainerScreen(vc: vc, type: type)
         case .Notifications:
             showNotificationsScreen(vc, category: data)
         case .Onboarding:
@@ -541,49 +540,58 @@ extension AppViewController {
         responder?.onInviteFriends()
     }
 
-    private func showDiscoverScreen() {
+    private func showDiscoverScreen(vc: ElloTabBarController) {
+        guard let
+            navVC = vc.selectedViewController as? ElloNavigationController
+        where !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
+        else { return }
+
         let vc = DiscoverAllCategoriesViewController()
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)
     }
 
-    private func showCategoryScreen(slug: String) {
+    private func showCategoryScreen(vc: ElloTabBarController, slug: String) {
+        guard let
+            navVC = vc.selectedViewController as? ElloNavigationController
+        where !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
+        else { return }
+
         Tracker.sharedTracker.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug)
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)
     }
 
-    private func showFriendsScreen(vc: ElloTabBarController) {
-        vc.selectedTab = .Stream
-        if let navVC = vc.selectedViewController as? ElloNavigationController,
-            streamVC = navVC.topViewController as? StreamContainerViewController
-        {
-            streamVC.currentUser = currentUser
-            streamVC.showFriends()
-        }
-    }
 
-    private func showNoiseScreen(vc: ElloTabBarController) {
+    private func showStreamContainerScreen(vc vc: ElloTabBarController, type: ElloURI) {
         vc.selectedTab = .Stream
-        if let navVC = vc.selectedViewController as? ElloNavigationController,
-            streamVC = navVC.topViewController as? StreamContainerViewController
-        {
-            streamVC.currentUser = currentUser
-            streamVC.showNoise()
+
+        guard let
+            navVC = vc.selectedViewController as? ElloNavigationController,
+            streamVC = navVC.visibleViewController as? StreamContainerViewController
+        else { return }
+
+        streamVC.currentUser = currentUser
+
+        switch type {
+        case .Noise, .Starred: streamVC.showNoise()
+        case .Friends, .Following: streamVC.showFriends()
+        default: break
         }
     }
 
     private func showNotificationsScreen(vc: ElloTabBarController, category: String) {
         vc.selectedTab = .Notifications
-        if let navVC = vc.selectedViewController as? ElloNavigationController,
-            notificationsVC = navVC.topViewController as? NotificationsViewController
-        {
-            let notificationFilterType = NotificationFilterType.fromCategory(category)
-            notificationsVC.categoryFilterType = notificationFilterType
-            notificationsVC.activatedCategory(notificationFilterType)
-            notificationsVC.currentUser = currentUser
-        }
+        guard let
+            navVC = vc.selectedViewController as? ElloNavigationController,
+            notificationsVC = navVC.visibleViewController as? NotificationsViewController
+        else { return }
+
+        let notificationFilterType = NotificationFilterType.fromCategory(category)
+        notificationsVC.categoryFilterType = notificationFilterType
+        notificationsVC.activatedCategory(notificationFilterType)
+        notificationsVC.currentUser = currentUser
     }
 
     private func showProfileScreen(userParam: String, path: String, isSlug: Bool = true) {
@@ -655,6 +663,7 @@ extension AppViewController {
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)
     }
+
     private func showSearchScreen(terms: String) {
         let search = SearchViewController()
         search.currentUser = currentUser
@@ -677,11 +686,36 @@ extension AppViewController {
             navController = tabController.selectedViewController as? UINavigationController
         else { return }
 
-        navController.pushViewController(vc, animated: true)
+        if let topNavVC = topViewController(self)?.navigationController {
+            topNavVC.pushViewController(vc, animated: true)
+        }
+        else {
+            navController.pushViewController(vc, animated: true)
+        }
     }
 
     private func selectTab(tab: ElloTab) {
         ElloWebBrowserViewController.elloTabBarController?.selectedTab = tab
+    }
+
+
+}
+
+extension AppViewController {
+
+    func topViewController(base: UIViewController?) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(selected)
+            }
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(presented)
+        }
+        return base
     }
 }
 
