@@ -427,6 +427,7 @@
 		12E3A2751DBE811900D42599 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
 		12E810C21DCB91C4007094C1 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */; };
 		12EC00001DDB7EA4007F22C5 /* DeepLinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ECFFFF1DDB7EA4007F22C5 /* DeepLinking.swift */; };
+		12EC00021DDBD027007F22C5 /* DeepLinkingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EC00011DDBD027007F22C5 /* DeepLinkingSpec.swift */; };
 		12ECFFFE1DDA146A007F22C5 /* category.json in Resources */ = {isa = PBXBuildFile; fileRef = 12ECFFFD1DDA146A007F22C5 /* category.json */; };
 		12F0E3A81A4333150012CEA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3A61A4333150012CEA2 /* LaunchScreen.xib */; };
 		12F0E3A91A4333150012CEA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12F0E3A71A4333150012CEA2 /* Main.storyboard */; };
@@ -1389,6 +1390,7 @@
 		12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameSpec.swift; sourceTree = "<group>"; };
 		12E3A2741DBE811900D42599 /* Promotional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotional.swift; sourceTree = "<group>"; };
 		12E83D9E1ADF12120074ECF6 /* ExperienceUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceUpdate.swift; path = sources/model/ExperienceUpdate.swift; sourceTree = SOURCE_ROOT; };
+		12EC00011DDBD027007F22C5 /* DeepLinkingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingSpec.swift; sourceTree = "<group>"; };
 		12ECFFFD1DDA146A007F22C5 /* category.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = category.json; sourceTree = "<group>"; };
 		12ECFFFF1DDB7EA4007F22C5 /* DeepLinking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
 		12F0E3A31A4332FB0012CEA2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2699,6 +2701,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */,
+				12EC00011DDBD027007F22C5 /* DeepLinkingSpec.swift */,
 				1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */,
 				1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */,
 				76224E441B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift */,
@@ -3018,6 +3021,7 @@
 				1264A7D61B7145E700733179 /* Application.swift */,
 				1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */,
 				765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */,
+				12ECFFFF1DDB7EA4007F22C5 /* DeepLinking.swift */,
 				1DC29BB61D3824D30041B1DC /* Defaults.swift */,
 				1DDF3C4F1A9D2592000D0945 /* ElloScrollLogic.swift */,
 				1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */,
@@ -3041,7 +3045,6 @@
 				1D7750F81ABB68DF00D92191 /* ToNSData.swift */,
 				127128251A77373300695F15 /* TypedNotifications.swift */,
 				12F6AE611A4339C600493660 /* Validator.swift */,
-				12ECFFFF1DDB7EA4007F22C5 /* DeepLinking.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -4686,6 +4689,7 @@
 				12D14C721A43762400C6F8E8 /* PostSpec.swift in Sources */,
 				1DA18E0A1DAD969F000231CC /* ProfileBioViewSpec.swift in Sources */,
 				122C663C1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift in Sources */,
+				12EC00021DDBD027007F22C5 /* DeepLinkingSpec.swift in Sources */,
 				12D14C691A43761A00C6F8E8 /* ElloAPISpec.swift in Sources */,
 				125739161B432EB100EF7792 /* AutoCompleteServiceSpec.swift in Sources */,
 				12CD86DA1B67E61D00687B36 /* SearchScreenSpec.swift in Sources */,
