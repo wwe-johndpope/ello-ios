@@ -518,6 +518,7 @@
 		1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */; };
 		1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284D1AE74D7A00446591 /* SearchViewController.swift */; };
 		1D3328501AE751D200446591 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284F1AE751D200446591 /* SearchScreen.swift */; };
+		1D3D16341DDD241D0052EAF9 /* DiscoverAllCategoriesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3D16331DDD241D0052EAF9 /* DiscoverAllCategoriesViewControllerSpec.swift */; };
 		1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */; };
 		1D3DED7A1AE170A100F1D514 /* QuickExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DED791AE170A100F1D514 /* QuickExtensions.swift */; };
 		1D3DED7C1AE1C07800F1D514 /* ElloTextFieldViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DED7B1AE1C07800F1D514 /* ElloTextFieldViewSpec.swift */; };
@@ -1482,6 +1483,7 @@
 		1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OnboardingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D33284D1AE74D7A00446591 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1D33284F1AE751D200446591 /* SearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
+		1D3D16331DDD241D0052EAF9 /* DiscoverAllCategoriesViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscoverAllCategoriesViewControllerSpec.swift; path = Specs/Controllers/Discover/DiscoverAllCategoriesViewControllerSpec.swift; sourceTree = SOURCE_ROOT; };
 		1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		1D3DED791AE170A100F1D514 /* QuickExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickExtensions.swift; sourceTree = "<group>"; };
 		1D3DED7B1AE1C07800F1D514 /* ElloTextFieldViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTextFieldViewSpec.swift; sourceTree = "<group>"; };
@@ -2483,15 +2485,16 @@
 				1D2F65B01D1870020099D036 /* DiscoverAllCategoriesViewController.swift */,
 			);
 			name = Discover;
-			path = ../../sources/controllers/Discover;
+			path = ../../Sources/Controllers/Discover;
 			sourceTree = "<group>";
 		};
 		129C1E231AB7CF900013C1D7 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				1D3D16331DDD241D0052EAF9 /* DiscoverAllCategoriesViewControllerSpec.swift */,
 			);
 			name = Discover;
-			path = ../../specs/controllers/Discover;
+			path = ../../Specs/Controllers/Discover;
 			sourceTree = "<group>";
 		};
 		12A18EEE1DCD13D300FC900B /* Categories */ = {
@@ -4602,6 +4605,7 @@
 				F8D1606A1AB75C2900575B25 /* DrawerViewDataSourceSpec.swift in Sources */,
 				12D14C681A43761A00C6F8E8 /* AuthTokenSpec.swift in Sources */,
 				1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */,
+				1D3D16341DDD241D0052EAF9 /* DiscoverAllCategoriesViewControllerSpec.swift in Sources */,
 				1D7750F41ABB391500D92191 /* TmpSpec.swift in Sources */,
 				127BAD5E1A850D6400628696 /* StreamTextCellHTMLSpec.swift in Sources */,
 				12D24A5A1A9F765300F53D44 /* AddFriendsViewControllerSpec.swift in Sources */,
