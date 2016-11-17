@@ -168,12 +168,17 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     }
 
     public func setCategories(categories: [Category]) {
-        let metaCategories = [
-            Category.featured,
-            Category.trending,
-            Category.recent,
-        ]
-        allCategories = metaCategories + categories
+        let allCategories: [Category]
+        if categories.any({ $0.isMeta }) {
+            allCategories = categories
+        }
+        else {
+            allCategories = [
+                Category.featured,
+                Category.trending,
+                Category.recent,
+            ] + categories
+        }
 
         let shouldAnimate = !(screen.navBarsVisible ?? false)
         let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in

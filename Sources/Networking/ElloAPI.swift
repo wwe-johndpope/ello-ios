@@ -591,6 +591,10 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .CreatePost(body):
             return body
+        case .Categories:
+            return [
+                "meta": true,
+            ]
         case .CategoryPosts:
             return [
                 "per_page": 10,

@@ -7,6 +7,7 @@ public enum CategoryLevel: String, Equatable {
     case Primary = "primary"
     case Secondary = "secondary"
     case Tertiary = "tertiary"
+    case Unknown = ""
 
     var order: Int {
         switch self {
@@ -14,6 +15,7 @@ public enum CategoryLevel: String, Equatable {
         case Primary: return 1
         case Secondary: return 2
         case Tertiary: return 3
+        case Unknown: return 1_048_576
         }
     }
 }
