@@ -28,6 +28,7 @@ public final class Category: JSONAble, Groupable {
     public let allowInOnboarding: Bool
     public let level: CategoryLevel
     public var isMeta: Bool { return level == .Meta }
+    public var usesPagePromo: Bool { return isMeta }
     public var hasPromotionalData: Bool {
         return body != nil
     }

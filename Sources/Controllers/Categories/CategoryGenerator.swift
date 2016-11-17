@@ -33,7 +33,7 @@ public final class CategoryGenerator: StreamGenerator {
     func headerItems() -> [StreamCellItem] {
         var items: [StreamCellItem] = []
 
-        if isMeta() {
+        if usesPagePromo() {
             if let pagePromotional = pagePromotional {
                 items += [StreamCellItem(jsonable: pagePromotional, type: .PagePromotionalHeader)]
             }
@@ -77,7 +77,7 @@ public final class CategoryGenerator: StreamGenerator {
         setInitialJSONAble(doneOperation)
         loadCategories()
         loadCategory(doneOperation, reload: reload)
-        if isMeta() {
+        if usesPagePromo() {
             loadPagePromotional(doneOperation)
         }
         loadCategoryPosts(doneOperation)
@@ -103,7 +103,7 @@ private extension CategoryGenerator {
         guard let category = category else { return }
 
         let jsonable: JSONAble?
-        if category.isMeta {
+        if usesPagePromo() {
             jsonable = pagePromotional
         }
         else {
@@ -117,18 +117,23 @@ private extension CategoryGenerator {
         }
     }
 
-    func isMeta() -> Bool {
+    func usesPagePromo() -> Bool {
         let discoverType = DiscoverType.fromURL(slug)
-        if discoverType != nil { return true }
-        if let category = category where category.isMeta {
+        // discover types are featured/trending/recent, they always use a page promo
+        guard discoverType == nil else {
             return true
         }
-        return false
+
+        guard let category = category else {
+            return false
+        }
+
+        return category.usesPagePromo
     }
 
     func loadCategory(doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.finished || reload else { return }
-        guard !isMeta() else { return }
+        guard !usesPagePromo() else { return }
 
         CategoryService().loadCategory(slug)
             .onSuccess { [weak self] category in
@@ -141,20 +146,13 @@ private extension CategoryGenerator {
             }
             .onFail { [weak self] _ in
                 guard let sself = self else { return }
-                guard let category = sself.category else {
-                    sself.destination?.primaryJSONAbleNotFound()
-                    sself.queue.cancelAllOperations()
-                    return
-                }
-                if !category.isMeta {
-                    sself.destination?.primaryJSONAbleNotFound()
-                    sself.queue.cancelAllOperations()
-                }
-        }
+                sself.destination?.primaryJSONAbleNotFound()
+                sself.queue.cancelAllOperations()
+            }
     }
 
     func loadPagePromotional(doneOperation: AsyncOperation) {
-        guard isMeta() else { return }
+        guard usesPagePromo() else { return }
 
         PagePromotionalService().loadPagePromotionals()
             .onSuccess { [weak self] promotionals in
@@ -192,7 +190,7 @@ private extension CategoryGenerator {
         self.destination?.replacePlaceholder(.CategoryPosts, items: [StreamCellItem(type: .StreamLoading)]) {}
 
         var apiEndpoint: ElloAPI?
-        if isMeta() {
+        if usesPagePromo() {
             guard let discoverType = DiscoverType.fromURL(slug) else { return }
             apiEndpoint = .Discover(type: discoverType)
         }
