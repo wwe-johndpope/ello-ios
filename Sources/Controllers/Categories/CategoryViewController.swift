@@ -168,7 +168,6 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     }
 
     public func setCategories(categories: [Category]) {
-        let allCategories: [Category]
         if categories.any({ $0.isMeta }) {
             allCategories = categories
         }
@@ -225,13 +224,18 @@ extension CategoryViewController: CategoryScreenDelegate {
     public func selectCatgory(category: Category) {
 		Tracker.sharedTracker.categoryOpened(category.slug)
 
-        let streamKind: StreamKind
+        var kind: StreamKind?
         switch category.level {
         case .Meta:
-            streamKind = .Discover(type: DiscoverType(rawValue: category.slug)!)
+            if let type = DiscoverType.fromURL(category.slug) {
+                kind = .Discover(type: type)
+            }
         default:
-            streamKind = .Category(slug: category.slug)
+            kind = .Category(slug: category.slug)
         }
+
+        guard let streamKind = kind else { return }
+
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
