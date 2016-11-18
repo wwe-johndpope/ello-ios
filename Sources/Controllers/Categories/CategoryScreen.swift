@@ -19,11 +19,8 @@ public class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    public var navBarsVisible: Bool? {
-        if !categoryCardList.hidden {
-            return true
-        }
-        return nil
+    public var categoryCardsVisible: Bool {
+        return !categoryCardList.hidden
     }
 
     override func bindActions() {

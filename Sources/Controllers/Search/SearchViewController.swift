@@ -26,10 +26,8 @@ public class SearchViewController: StreamableViewController {
     }
 
     public func searchForPosts(terms: String) {
-        if let ss = self.view as? SearchScreen {
-            ss.searchField.text = terms
-            ss.searchForText()
-        }
+        screen.searchField.text = terms
+        screen.searchForText()
     }
 
     override func viewForStream() -> UIView {
@@ -38,10 +36,8 @@ public class SearchViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        if let ss = self.view as? SearchScreen {
-            positionNavBar(ss.navigationBar, visible: true)
-            ss.showNavBars()
-        }
+        positionNavBar(screen.navigationBar, visible: true)
+        screen.showNavBars()
         updateInsets()
 
         if scrollToBottom {
@@ -51,17 +47,13 @@ public class SearchViewController: StreamableViewController {
 
     override func hideNavBars() {
         super.hideNavBars()
-        if let ss = self.view as? SearchScreen {
-            positionNavBar(ss.navigationBar, visible: false)
-            ss.hideNavBars()
-        }
+        positionNavBar(screen.navigationBar, visible: false)
+        screen.hideNavBars()
         updateInsets()
     }
 
     private func updateInsets() {
-        if let ss = self.view as? SearchScreen {
-            updateInsets(navBar: ss.navigationBar, streamController: streamViewController, navBarsVisible: false)
-        }
+        updateInsets(navBar: screen.searchControlsContainer, streamController: streamViewController)
     }
 
 }
