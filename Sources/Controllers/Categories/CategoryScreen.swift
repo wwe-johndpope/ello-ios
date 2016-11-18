@@ -41,16 +41,19 @@ public class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    public func setCategoriesInfo(newValue: [CategoryCardListView.CategoryInfo], animated: Bool) {
+    public func setCategoriesInfo(newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: ElloEmptyCompletion) {
         categoryCardList.hidden = newValue.isEmpty
         categoryCardList.categoriesInfo = newValue
 
         if !categoryCardList.hidden && animated {
             let originalY = categoryCardList.frame.origin.y
             categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
-            animate {
+            animate(completion: { _ in completion() }) {
                 self.categoryCardList.frame.origin.y = originalY
             }
+        }
+        else {
+            completion()
         }
     }
 

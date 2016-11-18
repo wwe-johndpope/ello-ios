@@ -29,7 +29,7 @@ class CategoryScreenSpec: QuickSpec {
                     imageURL: nil
                     )
                 subject = CategoryScreen()
-                subject.setCategoriesInfo([infoA, infoB, infoA, infoB], animated: false)
+                subject.setCategoriesInfo([infoA, infoB, infoA, infoB], animated: false, completion: {})
                 delegate = MockCategoryScreenDelegate()
                 subject.delegate = delegate
             }
