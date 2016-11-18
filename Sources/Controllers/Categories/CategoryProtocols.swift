@@ -8,6 +8,7 @@ public protocol CategoryScreenProtocol: StreamableScreenProtocol {
     func setCategoriesInfo(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool)
     func animateCategoriesList(navBarVisible navBarVisible: Bool)
     func scrollToCategoryIndex(index: Int)
+    func selectCategoryIndex(index: Int)
 }
 
 public protocol CategoryScreenDelegate: class {

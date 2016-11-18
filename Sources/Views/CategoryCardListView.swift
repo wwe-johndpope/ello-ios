@@ -9,15 +9,15 @@ public protocol CategoryCardListDelegate: class {
 public class CategoryCardListView: UIView {
     weak var delegate: CategoryCardListDelegate?
 
+    public struct CategoryInfo {
+        let title: String
+        let imageURL: NSURL?
+    }
+
     struct Size {
         static let height: CGFloat = 70
         static let cardSize: CGSize = CGSize(width: 100, height: 68)
         static let spacing: CGFloat = 1
-    }
-
-    public struct CategoryInfo {
-        let title: String
-        let imageURL: NSURL?
     }
 
     public var categoriesInfo: [CategoryInfo] = [] {
@@ -32,7 +32,7 @@ public class CategoryCardListView: UIView {
     }
 
     private var buttonIndexLookup: [UIButton: Int] = [:]
-    private var categoryViews: [UIView] = []
+    private var categoryViews: [CategoryCardView] = []
     private var scrollView = UIScrollView()
 
     override public init(frame: CGRect) {
@@ -77,43 +77,38 @@ public class CategoryCardListView: UIView {
         scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: animated)
     }
 
+    public func selectCategoryIndex(index: Int) {
+        guard let view = categoryViews.safeValue(index) else { return }
+        for card in categoryViews {
+            card.selected = false
+        }
+
+        view.selected = true
+    }
+
     private func updateCategoryViews() {
         for view in categoryViews {
             view.removeFromSuperview()
         }
 
         buttonIndexLookup = [:]
-        var index = 0
-        categoryViews = categoriesInfo.map { info in
-            let view = UIView()
-            view.backgroundColor = .blackColor()
 
-            if let url = info.imageURL {
-                let image = UIImageView()
-                image.pin_setImageFromURL(url)
-                view.addSubview(image)
-                image.snp_makeConstraints { $0.edges.equalTo(view) }
-            }
-
-            let overlay = UIView()
-            overlay.backgroundColor = .blackColor()
-            overlay.alpha = 0.6
-            view.addSubview(overlay)
-            overlay.snp_makeConstraints { $0.edges.equalTo(view) }
-
-            let button = UIButton()
-            button.titleLabel?.numberOfLines = 0
-            button.addTarget(self, action: #selector(categoryButtonTapped(_:)), forControlEvents: .TouchUpInside)
-            let attributedString = NSAttributedString(info.title, color: .whiteColor(), alignment: .Center)
-            button.setAttributedTitle(attributedString, forState: UIControlState.Normal)
-            view.addSubview(button)
-            button.snp_makeConstraints { $0.edges.equalTo(view).inset(5) }
-
-            buttonIndexLookup[button] = index
-            index += 1
-            return view
+        categoryViews = categoriesInfo.enumerate().map { (index, info) in
+            return categoryView(index: index, info: info)
         }
+        arrangeCategoryViews()
 
+        layoutIfNeeded()
+    }
+
+    private func categoryView(index index: Int, info: CategoryInfo) -> CategoryCardView {
+        let card = CategoryCardView(frame: .zero, info: info)
+        card.button.addTarget(self, action: #selector(categoryButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        buttonIndexLookup[card.button] = index
+        return card
+    }
+
+    private func arrangeCategoryViews() {
         var prevView: UIView? = nil
         for view in categoryViews {
             scrollView.addSubview(view)
@@ -138,8 +133,5 @@ public class CategoryCardListView: UIView {
                 make.trailing.equalTo(scrollView.snp_trailing)
             }
         }
-
-        layoutIfNeeded()
     }
-
 }
