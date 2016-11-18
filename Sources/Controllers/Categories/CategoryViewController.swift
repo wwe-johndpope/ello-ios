@@ -179,7 +179,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             ] + categories
         }
 
-        let shouldAnimate = !(screen.navBarsVisible ?? false)
+        let shouldAnimate = !screen.categoryCardsVisible
         let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
             return CategoryCardListView.CategoryInfo(title: category.name, imageURL: category.tileURL)
         }

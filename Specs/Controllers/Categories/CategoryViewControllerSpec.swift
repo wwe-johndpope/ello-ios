@@ -11,7 +11,7 @@ import Nimble
 class CategoryViewControllerSpec: QuickSpec {
     class MockCategoryScreen: CategoryScreenProtocol {
         let topInsetView = UIView()
-        var navBarsVisible: Bool?
+        var categoryCardsVisible: Bool = true
         var navigationBarTopConstraint: NSLayoutConstraint!
         let navigationBar = ElloNavigationBar()
         var navigationItem: UINavigationItem?
