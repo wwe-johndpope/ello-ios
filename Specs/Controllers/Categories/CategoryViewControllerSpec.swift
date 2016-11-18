@@ -17,6 +17,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var navigationItem: UINavigationItem?
         var categoryTitles: [String] = []
         var scrollTo: Int?
+        var select: Int?
 
         func setCategoriesInfo(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool) {
             categoryTitles = categoriesInfo.map { $0.title }
@@ -24,6 +25,10 @@ class CategoryViewControllerSpec: QuickSpec {
         func animateCategoriesList(navBarVisible navBarVisible: Bool) {}
         func scrollToCategoryIndex(index: Int) {
             scrollTo = index
+        }
+
+        func selectCategoryIndex(index: Int) {
+            select = index
         }
     }
 
@@ -54,13 +59,6 @@ class CategoryViewControllerSpec: QuickSpec {
                         Category.stub(["name": "Art"])
                         ])
                     expect(screen.categoryTitles) == ["Featured", "Art"]
-                }
-
-                it("uses internal categories") {
-                    subject.setCategories([
-                        Category.stub(["name": "Art"])
-                        ])
-                    expect(screen.categoryTitles) == ["Featured", "Trending", "Recent", "Art"]
                 }
             }
         }

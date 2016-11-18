@@ -42,7 +42,13 @@ public final class CategoryViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItems()
-        let streamKind: StreamKind = .Category(slug: slug)
+        let streamKind: StreamKind
+        if let type = DiscoverType.fromURL(slug) {
+            streamKind = .Discover(type: type)
+        }
+        else {
+            streamKind = .Category(slug: slug)
+        }
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
 
@@ -168,16 +174,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     }
 
     public func setCategories(categories: [Category]) {
-        if categories.any({ $0.isMeta }) {
-            allCategories = categories
-        }
-        else {
-            allCategories = [
-                Category.featured,
-                Category.trending,
-                Category.recent,
-            ] + categories
-        }
+        allCategories = categories
 
         let shouldAnimate = !(screen.navBarsVisible ?? false)
         let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
@@ -185,9 +182,10 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         }
         screen.setCategoriesInfo(info, animated: shouldAnimate)
 
-        let selectedCategoryIndex = allCategories.indexOf { $0.id == category?.id }
+        let selectedCategoryIndex = allCategories.indexOf { $0.slug == slug }
         if let selectedCategoryIndex = selectedCategoryIndex where shouldAnimate {
             screen.scrollToCategoryIndex(selectedCategoryIndex)
+            screen.selectCategoryIndex(selectedCategoryIndex)
         }
         updateInsets()
     }
@@ -217,7 +215,7 @@ extension CategoryViewController: CategoryScreenDelegate {
             let category = allCategories.safeValue(index)
         where category.id != self.category?.id
         else { return }
-
+        screen.selectCategoryIndex(index)
         selectCatgory(category)
     }
 
