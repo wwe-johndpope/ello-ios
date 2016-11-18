@@ -19,7 +19,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var scrollTo: Int?
         var select: Int?
 
-        func setCategoriesInfo(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool) {
+        func setCategoriesInfo(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: ElloEmptyCompletion) {
             categoryTitles = categoriesInfo.map { $0.title }
         }
         func animateCategoriesList(navBarVisible navBarVisible: Bool) {}

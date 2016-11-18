@@ -71,7 +71,7 @@ public final class CategoryViewController: StreamableViewController {
     private func updateInsets() {
         updateInsets(navBar: screen.topInsetView, streamController: streamViewController)
 
-        if !userDidScroll && streamViewController.dataSource.visibleCellItems.count > 0 {
+        if !userDidScroll && screen.categoryCardsVisible {
             var offset: CGFloat = CategoryCardListView.Size.height
             if tabBarVisible() {
                 offset += ElloNavigationBar.Size.height
@@ -180,7 +180,12 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
             return CategoryCardListView.CategoryInfo(title: category.name, imageURL: category.tileURL)
         }
-        screen.setCategoriesInfo(info, animated: shouldAnimate)
+
+        let pullToRefreshView = streamViewController.pullToRefreshView
+        pullToRefreshView?.hidden = true
+        screen.setCategoriesInfo(info, animated: shouldAnimate) {
+            pullToRefreshView?.hidden = false
+        }
 
         let selectedCategoryIndex = allCategories.indexOf { $0.slug == slug }
         if let selectedCategoryIndex = selectedCategoryIndex where shouldAnimate {
