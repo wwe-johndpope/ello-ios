@@ -42,7 +42,13 @@ public final class CategoryViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItems()
-        let streamKind: StreamKind = .Category(slug: slug)
+        let streamKind: StreamKind
+        if let type = DiscoverType.fromURL(slug) {
+            streamKind = .Discover(type: type)
+        }
+        else {
+            streamKind = .Category(slug: slug)
+        }
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
 
