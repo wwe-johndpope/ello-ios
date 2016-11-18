@@ -63,11 +63,11 @@ public final class CategoryViewController: StreamableViewController {
     }
 
     private func updateInsets() {
-        updateInsets(navBar: screen.topInsetView, streamController: streamViewController, navBarsVisible: screen.navBarsVisible)
+        updateInsets(navBar: screen.topInsetView, streamController: streamViewController)
 
         if !userDidScroll && streamViewController.dataSource.visibleCellItems.count > 0 {
             var offset: CGFloat = CategoryCardListView.Size.height
-            if navBarsVisible() {
+            if tabBarVisible() {
                 offset += ElloNavigationBar.Size.height
             }
             streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)

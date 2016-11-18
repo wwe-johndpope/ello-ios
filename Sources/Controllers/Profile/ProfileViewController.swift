@@ -162,7 +162,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     private func updateInsets() {
-        updateInsets(navBar: screen.profileButtonsContainer, streamController: streamViewController)
+        updateInsets(navBar: screen.topInsetView, streamController: streamViewController)
     }
 
     // MARK : private

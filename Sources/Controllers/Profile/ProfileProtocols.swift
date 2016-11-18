@@ -16,7 +16,7 @@ public protocol ProfileScreenProtocol: StreamableScreenProtocol {
     func updateRelationshipControl(user user: User)
     func updateRelationshipPriority(relationshipPriority: RelationshipPriority)
     var relationshipDelegate: RelationshipDelegate? { get set }
-    var profileButtonsContainer: UIView { get }
+    var topInsetView: UIView { get }
     var coverImage: UIImage? { get set }
     var coverImageURL: NSURL? { get set }
 }

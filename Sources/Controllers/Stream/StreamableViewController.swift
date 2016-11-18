@@ -55,7 +55,7 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         showing = true
-        willPresentStreamable(navBarsVisible())
+        willPresentStreamable(tabBarVisible())
     }
 
     public override func viewWillDisappear(animated: Bool) {
@@ -65,7 +65,7 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        willPresentStreamable(navBarsVisible())
+        willPresentStreamable(tabBarVisible())
     }
 
     override public func viewDidLoad() {
@@ -91,19 +91,18 @@ public class StreamableViewController: BaseElloViewController, PostTappedDelegat
         scrollLogic.isShowing = navBarsVisible
     }
 
-    func navBarsVisible() -> Bool {
-        return !(elloTabBarController?.tabBarHidden ?? UIApplication.sharedApplication().statusBarHidden)
+    func tabBarVisible() -> Bool {
+        let hidden = elloTabBarController?.tabBarHidden ?? true
+        return !hidden
     }
 
-    func updateInsets(navBar navBar: UIView?, streamController controller: StreamViewController, navBarsVisible visible: Bool? = nil) {
-        let topInset: CGFloat
+    func updateInsets(navBar navBar: UIView?, streamController controller: StreamViewController, tabBarVisible visible: Bool? = nil) {
+        let topInset = max(0, navBar?.frame.maxY ?? 0)
         let bottomInset: CGFloat
-        if visible ?? navBarsVisible() {
-            topInset = navBar?.frame.maxY ?? 0
+        if visible ?? tabBarVisible() {
             bottomInset = ElloTabBar.Size.height
         }
         else {
-            topInset = 0
             bottomInset = 0
         }
 

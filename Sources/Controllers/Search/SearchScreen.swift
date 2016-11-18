@@ -16,15 +16,25 @@ public protocol SearchScreenProtocol: class {
     var hasBackButton: Bool { get set }
     var hasGridViewToggle: Bool { get set }
     var gridListItem: UIBarButtonItem? { get set }
+    var searchField: UITextField { get }
+    var navigationBar: ElloNavigationBar { get }
+    var searchControlsContainer: UIView { get }
+    func showNavBars()
+    func hideNavBars()
+    func searchForText()
     func viewForStream() -> UIView
     func updateInsets(bottom bottom: CGFloat)
 }
 
 public class SearchScreen: UIView, SearchScreenProtocol {
+    struct Size {
+        static let containerMargin: CGFloat = 15
+    }
+
     private var debounced: ThrottledBlock
-    public private(set) var navigationBar: ElloNavigationBar!
-    public private(set) var searchField: UITextField!
-    private var searchControlsContainer: UIView!
+    public let navigationBar = ElloNavigationBar()
+    public let searchField = UITextField()
+    public let searchControlsContainer = UIView()
     private var postsToggleButton: OutlineElloButton?
     private var peopleToggleButton: OutlineElloButton?
     private var streamViewContainer: UIView!
@@ -48,7 +58,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     private var btnWidth: CGFloat {
         get {
-            return searchControlsContainer.bounds.size.width / 2
+            return (searchControlsContainer.bounds.size.width - 2 * Size.containerMargin) / 2
         }
     }
     private var buttonY: CGFloat {
@@ -68,12 +78,11 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         self.isSearchView = isSearchView
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
+        setupStreamView()
+        setupSearchContainer()
         setupNavigationBar()
-        searchControlsContainer = UIView(frame: self.frame.inset(sides: 15).atY(64).withHeight(50))
-        searchControlsContainer.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
         setupSearchField()
         if self.isSearchView { setupToggleButtons() }
-        setupStreamView()
         setupFindFriendsButton()
         findFriendsContainer.hidden = !self.isSearchView
     }
@@ -84,14 +93,14 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     public func showNavBars() {
         animate(animated: true) {
-            self.searchControlsContainer.frame = self.bounds.inset(sides: 15).atY(64).withHeight(self.searchControlsContainer.frame.size.height)
+            self.searchControlsContainer.frame.origin.y = 64
             self.streamViewContainer.frame = self.getStreamViewFrame()
         }
     }
 
     public func hideNavBars() {
         animate(animated: true) {
-            self.searchControlsContainer.frame = self.bounds.inset(sides: 15).atY(0).withHeight(self.searchControlsContainer.frame.size.height)
+            self.searchControlsContainer.frame.origin.y = 0
             self.streamViewContainer.frame = self.getStreamViewFrame()
         }
     }
@@ -100,7 +109,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
 
     private func setupNavigationBar() {
         let frame = CGRect(x: 0, y: 0, width: self.frame.width, height: ElloNavigationBar.Size.height)
-        navigationBar = ElloNavigationBar(frame: frame)
+        navigationBar.frame = frame
         navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
         self.addSubview(navigationBar)
 
@@ -109,6 +118,13 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         navigationBar.addGestureRecognizer(gesture)
 
         setupNavigationItems()
+    }
+
+    private func setupSearchContainer() {
+        searchControlsContainer.backgroundColor = .whiteColor()
+        searchControlsContainer.frame = frame.atY(64).withHeight(50).withWidth(frame.size.width)
+        searchControlsContainer.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
+        addSubview(searchControlsContainer)
     }
 
     func activateSearchField() {
@@ -132,12 +148,15 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         if let gridListItem = gridListItem where hasGridViewToggle {
             navigationItem.rightBarButtonItems = [gridListItem]
         }
+        else {
+            navigationItem.rightBarButtonItems = []
+        }
 
         navigationBar.items = [navigationItem]
     }
 
     private func setupSearchField() {
-        searchField = UITextField(frame: CGRect(x: 0, y: 0, width: searchControlsContainer.frame.size.width, height: searchControlsContainer.frame.size.height - 10))
+        searchField.frame = CGRect(x: Size.containerMargin, y: 0, width: searchControlsContainer.frame.size.width - 2 * Size.containerMargin, height: searchControlsContainer.frame.size.height - 10)
         searchField.clearButtonMode = .WhileEditing
         searchField.font = UIFont.defaultBoldFont(18)
         searchField.textColor = UIColor.blackColor()
@@ -158,18 +177,17 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         let lineView = UIView(frame: lineFrame)
         lineView.backgroundColor = UIColor.greyA()
         searchControlsContainer.addSubview(lineView)
-        addSubview(searchControlsContainer)
     }
 
     private func setupToggleButtons() {
         searchControlsContainer.frame.size.height += 43
-        let postsToggleButton = OutlineElloButton(frame: CGRect(x: 0, y: buttonY, width: btnWidth, height: 33))
+        let postsToggleButton = OutlineElloButton(frame: CGRect(x: Size.containerMargin, y: buttonY, width: btnWidth, height: 33))
         postsToggleButton.setTitle(InterfaceString.Search.Posts, forState: .Normal)
         postsToggleButton.addTarget(self, action: #selector(SearchScreen.onPostsTapped), forControlEvents: .TouchUpInside)
         searchControlsContainer.addSubview(postsToggleButton)
         self.postsToggleButton = postsToggleButton
 
-        let peopleToggleButton = OutlineElloButton(frame: CGRect(x: postsToggleButton.frame.maxX ?? 0, y: buttonY, width: btnWidth, height: 33))
+        let peopleToggleButton = OutlineElloButton(frame: CGRect(x: postsToggleButton.frame.maxX, y: buttonY, width: btnWidth, height: 33))
         peopleToggleButton.setTitle(InterfaceString.Search.People, forState: .Normal)
         peopleToggleButton.addTarget(self, action: #selector(SearchScreen.onPeopleTapped), forControlEvents: .TouchUpInside)
         searchControlsContainer.addSubview(peopleToggleButton)
@@ -208,8 +226,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     }
 
     private func getStreamViewFrame() -> CGRect {
-        let height = frame.height - (searchControlsContainer.frame.maxY)
-        return bounds.atY(searchControlsContainer.frame.maxY).withHeight(height)
+        return bounds
     }
 
     private func setupFindFriendsButton() {
@@ -263,7 +280,7 @@ public class SearchScreen: UIView, SearchScreenProtocol {
     override public func layoutSubviews() {
         super.layoutSubviews()
         findFriendsContainer.frame.origin.y = frame.size.height - findFriendsContainer.frame.height - bottomInset - ElloTabBar.Size.height
-        postsToggleButton?.frame = CGRect(x: 0, y: buttonY, width: btnWidth, height: 33)
+        postsToggleButton?.frame = CGRect(x: Size.containerMargin, y: buttonY, width: btnWidth, height: 33)
         peopleToggleButton?.frame = CGRect(x: (postsToggleButton?.frame.maxX ?? 0), y: buttonY, width: btnWidth, height: 33)
     }
 
