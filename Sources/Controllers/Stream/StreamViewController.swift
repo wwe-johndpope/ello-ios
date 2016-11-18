@@ -735,14 +735,17 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
         return pullToRefreshEnabled
     }
 
-    public func pullToRefreshViewDidStartLoading(view: SSPullToRefreshView!) {
-        if pullToRefreshEnabled {
-            self.loadInitialPage(reload: true)
-        }
-        else {
-            pullToRefreshView?.finishLoading()
+    public func pullToRefreshView(view: SSPullToRefreshView, didTransitionToState toState: SSPullToRefreshViewState, fromState: SSPullToRefreshViewState, animated: Bool) {
+        if toState == .Loading {
+            if pullToRefreshEnabled {
+                self.loadInitialPage(reload: true)
+            }
+            else {
+                pullToRefreshView?.finishLoading()
+            }
         }
     }
+
 }
 
 // MARK: StreamViewController: StreamCollectionViewLayoutDelegate
