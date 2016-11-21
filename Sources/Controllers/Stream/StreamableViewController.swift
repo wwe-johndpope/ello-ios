@@ -292,7 +292,7 @@ extension StreamableViewController: StreamViewDelegate {
 extension StreamableViewController: InviteResponder {
     public func onInviteFriends() {
         Tracker.sharedTracker.inviteFriendsTapped()
-        AddressBookController.promptForAddressBookAccess(fromController: self) { result in
+        AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
             switch result {
             case let .Success(addressBook):
                 Tracker.sharedTracker.contactAccessPreferenceChanged(true)
@@ -318,7 +318,7 @@ extension StreamableViewController: InviteResponder {
 
                 self.presentViewController(alertController, animated: true, completion: .None)
             }
-        }
+        })
     }
 
 }
