@@ -461,21 +461,26 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     private func addNotificationObservers() {
-        updatedStreamImageCellHeightNotification = NotificationObserver(notification: StreamNotification.AnimateCellHeightNotification) { [unowned self] streamImageCell in
-            self.imageCellHeightUpdated(streamImageCell)
+        updatedStreamImageCellHeightNotification = NotificationObserver(notification: StreamNotification.AnimateCellHeightNotification) { [weak self] streamImageCell in
+            guard let sself = self else { return }
+            sself.imageCellHeightUpdated(streamImageCell)
         }
-        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [unowned self] streamTextCell in
-            self.collectionView.collectionViewLayout.invalidateLayout()
+        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamTextCell in
+            guard let sself = self else { return }
+            sself.collectionView.collectionViewLayout.invalidateLayout()
         }
-        rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [unowned self] _ in
-            self.reloadCells()
+        rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [weak self] _ in
+            guard let sself = self else { return }
+            sself.reloadCells()
         }
-        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [unowned self] size in
-            if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
-                layout.columnCount = self.streamKind.columnCountFor(width: size.width)
+        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [weak self] size in
+            guard let sself = self else { return }
+
+            if let layout = sself.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
+                layout.columnCount = sself.streamKind.columnCountFor(width: size.width)
                 layout.invalidateLayout()
             }
-            self.reloadCells()
+            sself.reloadCells()
         }
 
         commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [weak self] (comment, change) in
@@ -492,16 +497,18 @@ public final class StreamViewController: BaseElloViewController {
             sself.updateNoResultsLabel()
         }
 
-        postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
-            if !self.initialDataLoaded {
-                return
-            }
+        postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [weak self] (post, change) in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
             switch change {
             case .Delete:
-                switch self.streamKind {
+                switch sself.streamKind {
                 case .PostDetail: break
                 default:
-                    self.dataSource.modifyItems(post, change: change, collectionView: self.collectionView)
+                    sself.dataSource.modifyItems(post, change: change, collectionView: sself.collectionView)
                 }
                 // reload page
             case .Create,
@@ -509,42 +516,50 @@ public final class StreamViewController: BaseElloViewController {
                 .Replaced,
                 .Loved,
                 .Watching:
-                self.dataSource.modifyItems(post, change: change, collectionView: self.collectionView)
+                sself.dataSource.modifyItems(post, change: change, collectionView: sself.collectionView)
             case .Read: break
             }
-            self.updateNoResultsLabel()
+            sself.updateNoResultsLabel()
         }
 
-        loveChangedNotification  = NotificationObserver(notification: LoveChangedNotification) { [unowned self] (love, change) in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyItems(love, change: change, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        loveChangedNotification  = NotificationObserver(notification: LoveChangedNotification) { [weak self] (love, change) in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyItems(love, change: change, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
 
-        relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [unowned self] user in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyUserRelationshipItems(user, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [weak self] user in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyUserRelationshipItems(user, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
 
-        settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { [unowned self] user in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyUserSettingsItems(user, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { [weak self] user in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyUserSettingsItems(user, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
 
-        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [unowned self] user in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyItems(user, change: .Update, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] user in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyItems(user, change: .Update, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
     }
 
