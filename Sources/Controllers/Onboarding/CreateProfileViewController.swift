@@ -150,7 +150,8 @@ extension CreateProfileViewController: OnboardingStepController {
         }
 
         Tracker.sharedTracker.inviteFriendsTapped()
-        AddressBookController.promptForAddressBookAccess(fromController: self) { result in
+        AddressBookController.promptForAddressBookAccess(fromController: self,
+            completion: {result in
             switch result {
             case let .Success(addressBook):
                 Tracker.sharedTracker.contactAccessPreferenceChanged(true)
@@ -172,6 +173,10 @@ extension CreateProfileViewController: OnboardingStepController {
                 let alertController = AlertViewController(error: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate, message) as String)
                 presenter.presentViewController(alertController, animated: true, completion: .None)
             }
-        }
+        },
+            cancelCompletion: {
+                guard let onboardingView = self.onboardingViewController?.view else { return }
+                ElloHUD.hideLoadingHudInView(onboardingView)
+        })
     }
 }
