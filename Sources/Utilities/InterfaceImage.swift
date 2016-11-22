@@ -55,10 +55,8 @@ public enum InterfaceImage: String {
     // NavBar Icons
     case Search = "search"
     case Burger = "burger"
-
-    // Grid/List Icons
-    case Grid = "grid"
-    case List = "list"
+    case GridView = "grid_view"
+    case ListView = "list_view"
 
     // Omnibar
     case Reorder = "reorder"

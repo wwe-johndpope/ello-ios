@@ -56,13 +56,13 @@ public protocol WebLinkDelegate: class {
     func webLinkTapped(type: ElloURI, data: String)
 }
 
-public protocol ColumnToggleDelegate: class {
-    func columnToggleTapped(isGridView: Bool)
+@objc
+public protocol GridListToggleDelegate: class {
+    func gridListToggled(sender: UIButton)
 }
 
-public protocol DiscoverCategoryPickerDelegate: class {
-    func discoverCategoryTapped(endpoint: ElloAPI)
-    func discoverAllCategoriesTapped()
+public protocol CategoryListCellDelegate: class {
+    func categoryListCellTapped(slug slug: String, name: String)
 }
 
 public protocol SearchStreamDelegate: class {
@@ -262,7 +262,7 @@ public final class StreamViewController: BaseElloViewController {
 // MARK: Public Functions
 
     public func scrollToTop() {
-        collectionView.contentOffset = CGPoint(x: 0, y: 0)
+        collectionView.contentOffset = CGPoint(x: 0, y: contentInset.top)
     }
 
     public func doneLoading() {
@@ -321,11 +321,10 @@ public final class StreamViewController: BaseElloViewController {
 
     public func replacePlaceholder(
         placeholderType: StreamCellType.PlaceholderType,
-        @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem],
+        with streamCellItems: [StreamCellItem],
         completion: ElloEmptyCompletion = {}
         )
     {
-        let streamCellItems = streamCellItemsGenerator()
         for item in streamCellItems {
             item.placeholderType = placeholderType
         }
@@ -368,12 +367,7 @@ public final class StreamViewController: BaseElloViewController {
                     self.currentJSONables = []
                     var items = self.generateStreamCellItems([])
                     items.append(StreamCellItem(type: .Text(data: TextRegion(content: "Nothing to see here"))))
-                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
-                        if self.streamKind.gridViewPreferenceSet {
-                            self.collectionView.layoutIfNeeded()
-                            self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
-                        }
-                    })
+                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { _ in })
                 })
         }
     }
@@ -387,10 +381,6 @@ public final class StreamViewController: BaseElloViewController {
         let items = self.generateStreamCellItems(jsonables)
         self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
             self.pagingEnabled = true
-            if self.streamKind.gridViewPreferenceSet {
-                self.collectionView.layoutIfNeeded()
-                self.collectionView.setContentOffset(self.streamKind.gridPreferenceSetOffset, animated: false)
-            }
         })
     }
 
@@ -403,14 +393,7 @@ public final class StreamViewController: BaseElloViewController {
             return items
         }
 
-        var items: [StreamCellItem] = []
-        if self.streamKind.hasGridViewToggle {
-            let toggleCellItem = StreamCellItem(type: .ColumnToggle)
-            items += [toggleCellItem]
-        }
-
-        items += defaultGenerator()
-        return items
+        return defaultGenerator()
     }
 
     private func updateNoResultsLabel() {
@@ -478,21 +461,26 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     private func addNotificationObservers() {
-        updatedStreamImageCellHeightNotification = NotificationObserver(notification: StreamNotification.AnimateCellHeightNotification) { [unowned self] streamImageCell in
-            self.imageCellHeightUpdated(streamImageCell)
+        updatedStreamImageCellHeightNotification = NotificationObserver(notification: StreamNotification.AnimateCellHeightNotification) { [weak self] streamImageCell in
+            guard let sself = self else { return }
+            sself.imageCellHeightUpdated(streamImageCell)
         }
-        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [unowned self] streamTextCell in
-            self.collectionView.collectionViewLayout.invalidateLayout()
+        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamTextCell in
+            guard let sself = self else { return }
+            sself.collectionView.collectionViewLayout.invalidateLayout()
         }
-        rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [unowned self] _ in
-            self.reloadCells()
+        rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [weak self] _ in
+            guard let sself = self else { return }
+            sself.reloadCells()
         }
-        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [unowned self] size in
-            if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
-                layout.columnCount = self.streamKind.columnCountFor(width: size.width)
+        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [weak self] size in
+            guard let sself = self else { return }
+
+            if let layout = sself.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
+                layout.columnCount = sself.streamKind.columnCountFor(width: size.width)
                 layout.invalidateLayout()
             }
-            self.reloadCells()
+            sself.reloadCells()
         }
 
         commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [weak self] (comment, change) in
@@ -509,16 +497,18 @@ public final class StreamViewController: BaseElloViewController {
             sself.updateNoResultsLabel()
         }
 
-        postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
-            if !self.initialDataLoaded {
-                return
-            }
+        postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [weak self] (post, change) in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
             switch change {
             case .Delete:
-                switch self.streamKind {
+                switch sself.streamKind {
                 case .PostDetail: break
                 default:
-                    self.dataSource.modifyItems(post, change: change, collectionView: self.collectionView)
+                    sself.dataSource.modifyItems(post, change: change, collectionView: sself.collectionView)
                 }
                 // reload page
             case .Create,
@@ -526,42 +516,50 @@ public final class StreamViewController: BaseElloViewController {
                 .Replaced,
                 .Loved,
                 .Watching:
-                self.dataSource.modifyItems(post, change: change, collectionView: self.collectionView)
+                sself.dataSource.modifyItems(post, change: change, collectionView: sself.collectionView)
             case .Read: break
             }
-            self.updateNoResultsLabel()
+            sself.updateNoResultsLabel()
         }
 
-        loveChangedNotification  = NotificationObserver(notification: LoveChangedNotification) { [unowned self] (love, change) in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyItems(love, change: change, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        loveChangedNotification  = NotificationObserver(notification: LoveChangedNotification) { [weak self] (love, change) in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyItems(love, change: change, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
 
-        relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [unowned self] user in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyUserRelationshipItems(user, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [weak self] user in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyUserRelationshipItems(user, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
 
-        settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { [unowned self] user in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyUserSettingsItems(user, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { [weak self] user in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyUserSettingsItems(user, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
 
-        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [unowned self] user in
-            if !self.initialDataLoaded {
-                return
-            }
-            self.dataSource.modifyItems(user, change: .Update, collectionView: self.collectionView)
-            self.updateNoResultsLabel()
+        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] user in
+            guard let
+                sself = self
+            where sself.initialDataLoaded && sself.isViewLoaded()
+            else { return }
+
+            sself.dataSource.modifyItems(user, change: .Update, collectionView: sself.collectionView)
+            sself.updateNoResultsLabel()
         }
     }
 
@@ -607,8 +605,7 @@ public final class StreamViewController: BaseElloViewController {
         dataSource.categoryDelegate = self
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
-        dataSource.columnToggleDelegate = self
-        dataSource.discoverCategoryPickerDelegate = self
+        dataSource.categoryListCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
@@ -646,7 +643,9 @@ public final class StreamViewController: BaseElloViewController {
             textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
             notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
             profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
-            imageSizeCalculator: StreamImageCellSizeCalculator()
+            imageSizeCalculator: StreamImageCellSizeCalculator(),
+            categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
+
         )
 
         dataSource.streamCollapsedFilter = { item in
@@ -689,14 +688,12 @@ extension StreamViewController: InviteDelegate {
     }
 }
 
-// MARK: StreamViewController: ColumnToggleDelegate
-extension StreamViewController: ColumnToggleDelegate {
-    public func columnToggleTapped(isGridView: Bool) {
-        guard self.streamKind.isGridView != isGridView else {
-            return
-        }
-
-        self.streamKind.setIsGridView(isGridView)
+// MARK: StreamViewController: GridListToggleDelegate
+extension StreamViewController: GridListToggleDelegate {
+    public func gridListToggled(sender: UIButton) {
+        let isGridView = !streamKind.isGridView
+        sender.setImage(isGridView ? .ListView : .GridView, imageStyle: .Normal, forState: .Normal)
+        streamKind.setIsGridView(isGridView)
         if let toggleClosure = toggleClosure {
             // setting 'scrollToPaginateGuard' to false will prevent pagination from triggering when this profile has no posts
             // triggering pagination at this time will, inexplicably, cause the cells to disappear
@@ -726,30 +723,11 @@ extension StreamViewController: ColumnToggleDelegate {
     }
 }
 
-// MARK: StreamViewController: DiscoverCategoryPickerDelegate
-extension StreamViewController: DiscoverCategoryPickerDelegate {
+// MARK: StreamViewController: CategoryListCellDelegate
+extension StreamViewController: CategoryListCellDelegate {
 
-    public func discoverCategoryTapped(endpoint: ElloAPI) {
-        hideNoResults()
-        switch endpoint {
-        case let .CategoryPosts(slug):
-            Tracker.sharedTracker.discoverCategory(slug)
-            streamKind = .CategoryPosts(slug: slug)
-        case let .Discover(type):
-            Tracker.sharedTracker.discoverCategory(type.rawValue)
-            streamKind = .Discover(type: type)
-        default:
-            fatalError("invalid endpoint \(endpoint)")
-        }
-        removeAllCellItems()
-        ElloHUD.showLoadingHudInView(view)
-        loadInitialPage()
-    }
-
-    public func discoverAllCategoriesTapped() {
-        let vc = DiscoverAllCategoriesViewController()
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
+    public func categoryListCellTapped(slug slug: String, name: String) {
+        showCategoryViewController(slug: slug, name: name)
     }
 
 }
@@ -772,14 +750,17 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
         return pullToRefreshEnabled
     }
 
-    public func pullToRefreshViewDidStartLoading(view: SSPullToRefreshView!) {
-        if pullToRefreshEnabled {
-            self.loadInitialPage(reload: true)
-        }
-        else {
-            pullToRefreshView?.finishLoading()
+    public func pullToRefreshView(view: SSPullToRefreshView, didTransitionToState toState: SSPullToRefreshViewState, fromState: SSPullToRefreshViewState, animated: Bool) {
+        if toState == .Loading {
+            if pullToRefreshEnabled {
+                self.loadInitialPage(reload: true)
+            }
+            else {
+                pullToRefreshView?.finishLoading()
+            }
         }
     }
+
 }
 
 // MARK: StreamViewController: StreamCollectionViewLayoutDelegate
@@ -886,6 +867,7 @@ extension StreamViewController: StreamImageCellDelegate {
 
 // MARK: StreamViewController: Commenting
 extension StreamViewController {
+
     public func createCommentTapped(post: Post) {
         createPostDelegate?.createComment(post, text: nil, fromController: self)
     }
@@ -893,14 +875,14 @@ extension StreamViewController {
 
 // MARK: StreamViewController: Open category
 extension StreamViewController {
+
     public func categoryTapped(category: Category) {
-        let vc = DiscoverViewController(category: category)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
+        showCategoryViewController(slug: category.slug, name: category.name)
     }
 
-    public func seeAllCategoriesTapped() {
-        let vc = DiscoverAllCategoriesViewController()
+    public func showCategoryViewController(slug slug: String, name: String) {
+        Tracker.sharedTracker.categoryOpened(slug)
+        let vc = CategoryViewController(slug: slug, name: name)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -962,7 +944,7 @@ extension StreamViewController: UserDelegate {
         guard let
             indexPath = collectionView.indexPathForCell(cell),
             user = dataSource.userForIndexPath(indexPath)
-            else { return }
+        else { return }
 
         print("\(user.atName) userTappedFeaturedCategories()")
     }
@@ -1004,7 +986,9 @@ extension StreamViewController: WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             postNotification(ExternalWebNotification, value: data)
-        case .Discover,
+        case .Discover:
+            DeepLinking.showDiscover(navVC: navigationController, currentUser: currentUser)
+        case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
@@ -1012,16 +996,7 @@ extension StreamViewController: WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            selectTab(.Discover)
-        case .Category:
-            selectTab(.Discover)
-
-            if let nav = elloTabBarController?.selectedViewController as? UINavigationController,
-                discoverViewController = nav.childViewControllers[0] as? DiscoverViewController
-            {
-                nav.popToRootViewControllerAnimated(false)
-                discoverViewController.showCategory(data)
-            }
+            DeepLinking.showCategory(navVC: navigationController, currentUser: currentUser, slug: data)
         case .Email: break // this is handled in ElloWebViewHelper
         case .BetaPublicProfiles,
              .Enter,
@@ -1034,51 +1009,13 @@ extension StreamViewController: WebLinkDelegate {
         case .Post,
              .PushNotificationComment,
              .PushNotificationPost:
-            showPostDetail(data)
+            DeepLinking.showPostDetail(navVC: navigationController, currentUser: currentUser, token: data)
         case .Profile,
              .PushNotificationUser:
-            showProfile(data)
-        case .Search: showSearch(data)
-        case .Settings: showSettings()
+            DeepLinking.showProfile(navVC: navigationController, currentUser: currentUser, username: data)
+        case .Search: DeepLinking.showSearch(navVC: navigationController, currentUser: currentUser, terms: data)
+        case .Settings: DeepLinking.showSettings(navVC: navigationController, currentUser: currentUser)
         }
-    }
-
-    private func showProfile(username: String) {
-        let param = "~\(username)"
-        if alreadyOnUserProfile(param) { return }
-        let vc = ProfileViewController(userParam: param, username: username)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showPostDetail(token: String) {
-        let param = "~\(token)"
-        if alreadyOnPostDetail(param) { return }
-        let vc = PostDetailViewController(postParam: param)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showSearch(terms: String) {
-        if let searchVC = navigationController?.visibleViewController as? SearchViewController {
-            searchVC.searchForPosts(terms)
-        }
-        else {
-            let vc = SearchViewController()
-            vc.currentUser = currentUser
-            vc.searchForPosts(terms)
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-
-    private func showSettings() {
-        guard let
-            settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController()
-                as? SettingsContainerViewController
-        else { return }
-
-        settings.currentUser = currentUser
-        navigationController?.pushViewController(settings, animated: true)
     }
 
     private func selectTab(tab: ElloTab) {
@@ -1111,6 +1048,7 @@ extension StreamViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tappedCell = collectionView.cellForItemAtIndexPath(indexPath)
 
+        var keepSelected = false
         if tappedCell is StreamToggleCell {
             dataSource.toggleCollapsedForIndexPath(indexPath)
             reloadCells(now: true)
@@ -1151,17 +1089,18 @@ extension StreamViewController: UICollectionViewDelegate {
             category = dataSource.jsonableForIndexPath(indexPath) as? Category
         {
             if item.type == .SelectableCategoryCard {
+                keepSelected = true
                 let paths = collectionView.indexPathsForSelectedItems()
                 let selection = paths?.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
                 selectedCategoryDelegate?.categoriesSelectionChanged(selection ?? [Category]())
             }
             else {
-                categoryTapped(category)
+                showCategoryViewController(slug: category.slug, name: category.name)
             }
         }
-        else if let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
-        where cellItemType == .SeeAllCategories {
-            seeAllCategoriesTapped()
+
+        if !keepSelected {
+            collectionView.deselectItemAtIndexPath(indexPath, animated: false)
         }
     }
 

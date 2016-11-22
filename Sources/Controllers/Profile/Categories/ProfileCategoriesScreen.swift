@@ -5,7 +5,7 @@
 import SnapKit
 
 
-public class ProfileCategoriesScreen: Screen {
+public class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
 
     struct Size {
         static let textInset: CGFloat = 15

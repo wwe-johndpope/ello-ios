@@ -113,7 +113,7 @@ private extension PostDetailGenerator {
     }
 
     func displaySocialPadding() {
-        let padding = [StreamCellItem(jsonable: JSONAble.fromJSON([:], fromLinked: false), type: .Spacer(height: 8.0))]
+        let padding = [StreamCellItem(type: .Spacer(height: 8.0))]
         destination?.replacePlaceholder(.PostSocialPadding, items: padding) {}
     }
 
@@ -222,7 +222,7 @@ private extension PostDetailGenerator {
         }
 
         return [
-            StreamCellItem(jsonable: JSONAble.fromJSON([:], fromLinked: false), type: .Spacer(height: 4.0)),
+            StreamCellItem(type: .Spacer(height: 4.0)),
             StreamCellItem(jsonable: model, type: .UserAvatars)
         ]
     }

@@ -15,8 +15,7 @@ public final class PostDetailViewController: StreamableViewController {
         self.postParam = postParam
         super.init(nibName: nil, bundle: nil)
         if self.post == nil {
-            if let post = ElloLinkedStore.sharedInstance.getObject(self.postParam,
-                inCollection: MappingType.PostsType.rawValue) as? Post {
+            if let post = ElloLinkedStore.sharedInstance.getObject(self.postParam, type: .PostsType) as? Post {
                 self.post = post
             }
         }
@@ -99,14 +98,16 @@ public final class PostDetailViewController: StreamableViewController {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.FlexibleBottomMargin, .FlexibleWidth]
         view.addSubview(navigationBar)
-        let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [item]
-        elloNavigationItem.fixNavBarItemPadding()
-        navigationBar.items = [elloNavigationItem]
-        assignRightButtons()
+
+        setupNavigationItems()
     }
 
-    private func assignRightButtons() {
+    private func setupNavigationItems() {
+        let backItem = UIBarButtonItem.backChevron(withController: self)
+        elloNavigationItem.leftBarButtonItems = [backItem]
+        elloNavigationItem.fixNavBarItemPadding()
+        navigationBar.items = [elloNavigationItem]
+
         guard post != nil else {
             elloNavigationItem.rightBarButtonItems = []
             return
@@ -125,11 +126,6 @@ public final class PostDetailViewController: StreamableViewController {
                 UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
                 UIBarButtonItem(image: .Dots, target: self, action: #selector(PostDetailViewController.flagPost)),
             ]
-        }
-
-        guard elloNavigationItem.rightBarButtonItems != nil else {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            return
         }
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
@@ -225,7 +221,7 @@ extension PostDetailViewController: StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 
@@ -263,7 +259,7 @@ extension PostDetailViewController: StreamDestination {
 
         self.title = post.author?.atName ?? InterfaceString.Post.DefaultTitle
 
-        assignRightButtons()
+        setupNavigationItems()
 
         if isOwnPost() {
             showNavBars(false)

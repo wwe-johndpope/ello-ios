@@ -44,7 +44,7 @@ public final class Post: JSONAble, Authorable, Groupable {
         return getLinkArray("assets") as? [Asset]
     }
     public var author: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.authorId, inCollection: MappingType.UsersType.rawValue) as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.authorId, type: .UsersType) as? User
     }
     public var categories: [Category] {
         guard let categories = getLinkArray("categories") as? [Category] else {
@@ -63,7 +63,7 @@ public final class Post: JSONAble, Authorable, Groupable {
     }
     // nested resources
     public var comments: [ElloComment]? {
-        if let nestedComments = getLinkArray(MappingType.CommentsType.rawValue) as? [ElloComment] {
+        if let nestedComments = getLinkArray("comments") as? [ElloComment] {
             for comment in nestedComments {
                 comment.loadedFromPostId = self.id
             }
@@ -211,7 +211,7 @@ public final class Post: JSONAble, Authorable, Groupable {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.PostFromJSON.rawValue)
         let repostContent = RegionParser.regions("repost_content", json: json)
@@ -254,10 +254,10 @@ public final class Post: JSONAble, Authorable, Groupable {
         post.lovesCount = json["loves_count"].int
         // links
         post.links = data["links"] as? [String: AnyObject]
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: MappingType.PostsType.rawValue)
-        }
         return post
     }
+}
+
+extension Post: JSONSaveable {
+    var uniqId: String? { return id }
 }

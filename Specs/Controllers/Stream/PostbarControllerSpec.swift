@@ -44,12 +44,14 @@ class PostbarControllerSpec: QuickSpec {
             let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
             let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
             let imageSizeCalculator = StreamImageCellSizeCalculator()
+            let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
 
             let dataSource = StreamDataSource(streamKind: streamKind,
                 textSizeCalculator: textSizeCalculator,
                 notificationSizeCalculator: notificationSizeCalculator,
                 profileHeaderSizeCalculator: profileHeaderSizeCalculator,
-                imageSizeCalculator: imageSizeCalculator
+                imageSizeCalculator: imageSizeCalculator,
+                categoryHeaderSizeCalculator: categoryHeaderSizeCalculator
             )
 
             controller = StreamViewController.instantiateFromStoryboard()

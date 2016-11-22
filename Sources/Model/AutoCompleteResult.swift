@@ -42,7 +42,7 @@ public final class AutoCompleteResult: JSONAble {
 
     // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.AutoCompleteResultFromJSON.rawValue)
         let result = AutoCompleteResult(name: json["name"].string)

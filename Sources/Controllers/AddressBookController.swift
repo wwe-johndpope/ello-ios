@@ -9,12 +9,12 @@ import Result
 typealias Completion = Result<AddressBook, AddressBookError> -> Void
 
 public struct AddressBookController {
-    static func promptForAddressBookAccess(fromController controller: UIViewController, completion: Completion) {
+    static func promptForAddressBookAccess(fromController controller: UIViewController, completion: Completion, cancelCompletion: ElloEmptyCompletion? = nil) {
         switch AddressBookController.authenticationStatus() {
         case .Authorized:
             proceedWithImport(completion)
         case .NotDetermined:
-            promptForAddressBookAccess(controller, completion: completion)
+            promptForAddressBookAccess(controller, completion: completion, cancelCompletion: cancelCompletion)
         case .Denied:
             displayAddressBookAlert(controller, message: InterfaceString.Friends.AccessDenied, completion: completion)
         case .Restricted:
@@ -25,7 +25,7 @@ public struct AddressBookController {
 
 extension AddressBookController {
 
-    private static func promptForAddressBookAccess(controller: UIViewController, completion: Completion) {
+    private static func promptForAddressBookAccess(controller: UIViewController, completion: Completion, cancelCompletion: ElloEmptyCompletion? = nil) {
         let alertController = AlertViewController(message: InterfaceString.Friends.ImportPermissionPrompt, type: .Rounded)
 
         let importMessage = InterfaceString.Friends.ImportAllow
@@ -38,6 +38,7 @@ extension AddressBookController {
         let cancelMessage = InterfaceString.Friends.ImportNotNow
         let cancelAction = AlertAction(title: cancelMessage, style: .RoundedGrayFill) { _ in
             Tracker.sharedTracker.importContactsDenied()
+            cancelCompletion?()
         }
         alertController.addAction(cancelAction)
 

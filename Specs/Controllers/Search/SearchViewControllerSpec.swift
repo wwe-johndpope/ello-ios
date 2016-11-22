@@ -8,26 +8,6 @@ import Nimble
 
 
 
-class SearchMockScreen: NSObject, SearchScreenProtocol {
-    var delegate: SearchScreenDelegate?
-    var hasBackButton: Bool = true
-
-    func viewForStream() -> UIView {
-        return UIView()
-    }
-
-    func updateInsets(bottom bottom: CGFloat) {
-    }
-
-}
-
-//public class TestTracker: Tracker {
-//    public var searchCalledWith: String = ""
-//    override public func searchFor(term: String) {
-//        searchCalledWith = term
-//    }
-//}
-
 class SearchViewControllerSpec: QuickSpec {
     override func spec() {
 

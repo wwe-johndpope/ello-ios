@@ -13,6 +13,8 @@ public enum ElloAPI {
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
     case Categories
+    case Category(slug: String)
+    case CategoryPosts(slug: String)
     case CommentDetail(postId: String, commentId: String)
     case CreateComment(parentPostId: String, body: [String: AnyObject])
     case CreateLove(postId: String)
@@ -23,7 +25,6 @@ public enum ElloAPI {
     case DeletePost(postId: String)
     case DeleteSubscriptions(token: NSData)
     case DeleteWatchPost(postId: String)
-    case CategoryPosts(slug: String)
     case Discover(type: DiscoverType)
     case EmojiAutoComplete(terms: String)
     case FindFriends(contacts: [String: [String]])
@@ -42,6 +43,7 @@ public enum ElloAPI {
     case NoiseNewContent(createdAt: NSDate)
     case NotificationsNewContent(createdAt: NSDate)
     case NotificationsStream(category: String?)
+    case PagePromotionals
     case PostComments(postId: String)
     case PostDetail(postParam: String, commentCount: Int)
     case PostLovers(postId: String)
@@ -72,13 +74,28 @@ public enum ElloAPI {
 
     public static let apiVersion = "v2"
 
-    var pagingPath: String? {
+    public var pagingPath: String? {
         switch self {
         case .PostDetail:
-            return "comments"
+            return "\(path)/comments"
         case .CurrentUserStream,
              .UserStream:
-            return "posts"
+            return "\(path)/posts"
+        case .Category:
+            return "\(path)/posts/recent"
+        default:
+            return nil
+        }
+    }
+
+    var pagingMappingType: MappingType? {
+        switch self {
+        case .PostDetail:
+            return .CommentsType
+        case .CurrentUserStream,
+             .UserStream,
+             .Category:
+            return .PostsType
         default:
             return nil
         }
@@ -86,12 +103,15 @@ public enum ElloAPI {
 
     public var mappingType: MappingType {
         switch self {
-        case .Categories:
+        case .Categories,
+             .Category:
             return .CategoriesType
         case .AmazonCredentials:
             return .AmazonCredentialsType
         case .Availability:
             return .AvailabilityType
+        case .PagePromotionals:
+            return .PagePromotionalsType
         case .PostReplyAll:
             return .UsernamesType
         case .CurrentUserBlockedList,
@@ -156,9 +176,8 @@ public enum ElloAPI {
             return .ActivitiesType
         case let .InfiniteScroll(_, elloApi):
             let api = elloApi()
-            if let pagingPath = api.pagingPath,
-                mappingType = MappingType(rawValue: pagingPath) {
-                return mappingType
+            if let pagingMappingType = api.pagingMappingType {
+                return pagingMappingType
             }
             return api.mappingType
         case .ProfileToggles:
@@ -261,6 +280,10 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
         case .Categories:
             return "/api/\(ElloAPI.apiVersion)/categories"
+        case let .Category(slug):
+            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)"
+        case let .CategoryPosts(slug):
+            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .CreateComment(parentPostId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(parentPostId)/comments"
         case let .CreateLove(postId):
@@ -280,8 +303,6 @@ extension ElloAPI: Moya.TargetType {
             return "\(ElloAPI.CurrentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .DeleteWatchPost(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watch"
-        case let .CategoryPosts(slug):
-            return "/api/\(ElloAPI.apiVersion)/categories/\(slug)/posts/recent"
         case let .Discover(type):
             switch type {
             case .Trending:
@@ -311,7 +332,7 @@ extension ElloAPI: Moya.TargetType {
         case let .InfiniteScroll(_, elloApi):
             let api = elloApi()
             if let pagingPath = api.pagingPath {
-                return "\(api.path)/\(pagingPath)"
+                return pagingPath
             }
             return api.path
         case .InviteFriends:
@@ -326,6 +347,8 @@ extension ElloAPI: Moya.TargetType {
         case .NotificationsNewContent,
              .NotificationsStream:
             return "/api/\(ElloAPI.apiVersion)/notifications"
+        case .PagePromotionals:
+            return "/api/\(ElloAPI.apiVersion)/page_promotionals"
         case let .PostComments(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
         case let .PostDetail(postParam, _):
@@ -397,6 +420,8 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("watches_creating_a_watch")
         case .Categories:
             return stubbedData("categories")
+        case .Category:
+            return stubbedData("category")
         case .DeleteComment,
              .DeleteLove,
              .DeletePost,
@@ -416,7 +441,7 @@ extension ElloAPI: Moya.TargetType {
              .UserCategories:
             return stubbedData("empty")
         case .CategoryPosts:
-            return stubbedData("posts")
+            return stubbedData("users_posts")
         case .Discover:
             return stubbedData("posts_searching_for_posts")
         case .EmojiAutoComplete:
@@ -434,6 +459,8 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("activity_streams_noise_stream")
         case .NotificationsStream:
             return stubbedData("activity_streams_notifications")
+        case .PagePromotionals:
+            return stubbedData("page_promotionals")
         case .PostComments:
             return stubbedData("posts_loading_more_post_comments")
         case .PostDetail,
@@ -564,6 +591,10 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .CreatePost(body):
             return body
+        case .Categories:
+            return [
+                "meta": true,
+            ]
         case .CategoryPosts:
             return [
                 "per_page": 10,

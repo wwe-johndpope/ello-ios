@@ -190,3 +190,7 @@ public final class Notification: JSONAble, Authorable, Groupable {
         textRegion = TextRegion(content: textContent.joinWithSeparator("<br/>"))
     }
 }
+
+extension Notification: JSONSaveable {
+    var uniqId: String? { return activity.id }
+}

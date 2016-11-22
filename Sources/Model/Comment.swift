@@ -25,13 +25,13 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         return getLinkArray("assets") as? [Asset]
     }
     public var author: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.authorId, inCollection: MappingType.UsersType.rawValue) as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.authorId, type: .UsersType) as? User
     }
     public var parentPost: Post? {
-        return ElloLinkedStore.sharedInstance.getObject(self.postId, inCollection: MappingType.PostsType.rawValue) as? Post
+        return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .PostsType) as? Post
     }
     public var loadedFromPost: Post? {
-        return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, inCollection: MappingType.PostsType.rawValue) as? Post) ?? parentPost
+        return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, type: .PostsType) as? Post) ?? parentPost
     }
     // computed properties
     public var groupId: String { return "Post-\(postId)" }
@@ -93,7 +93,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
 
 // MARK: JSONAble
 
-    override class public func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override class public func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.CommentFromJSON.rawValue)
         // create comment
@@ -107,22 +107,20 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
             // send data to segment to try to get more data about this
             Tracker.sharedTracker.createdAtCrash("Comment", json: json.rawString())
         }
+
         let comment = ElloComment(
             id: json["id"].stringValue,
             createdAt: createdAt,
             authorId: json["author_id"].stringValue,
             postId: json["post_id"].stringValue,
             content: RegionParser.regions("content", json: json)
-            )
+        )
         // optional
         comment.body = RegionParser.regions("body", json: json)
         comment.summary = RegionParser.regions("summary", json: json)
         // links
         comment.links = data["links"] as? [String: AnyObject]
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(comment, forKey: comment.id, inCollection: MappingType.CommentsType.rawValue)
-        }
+
         return comment
     }
 
@@ -136,4 +134,8 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         )
         return comment
     }
+}
+
+extension ElloComment: JSONSaveable {
+    var uniqId: String? { return id }
 }

@@ -25,8 +25,6 @@ public final class ProfileGenerator: StreamGenerator {
         ]
         if hasPosts != false {
             items += [
-                StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3)),
-                StreamCellItem(jsonable: user, type: .ColumnToggle),
                 StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5))
             ]
         }
@@ -59,8 +57,13 @@ public final class ProfileGenerator: StreamGenerator {
     }
 
     public func toggleGrid() {
-        guard let posts = posts else { return }
-        destination?.replacePlaceholder(.ProfilePosts, items: parse(posts)) {}
+        if let posts = posts where hasPosts == true {
+            destination?.replacePlaceholder(.ProfilePosts, items: parse(posts)) {}
+        }
+        else if let user = user where hasPosts == false {
+            let noItems = [StreamCellItem(jsonable: user, type: .NoPosts)]
+            destination?.replacePlaceholder(.ProfilePosts, items: noItems) {}
+        }
     }
 
 }

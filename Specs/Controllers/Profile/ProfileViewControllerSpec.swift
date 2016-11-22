@@ -10,12 +10,6 @@ import Nimble
 
 class ProfileViewControllerSpec: QuickSpec {
     override func spec() {
-        beforeEach {
-            ElloLinkedStore.sharedInstance.writeConnection.readWriteWithBlock { transaction in
-                transaction.removeObjectForKey("42", inCollection: "users")
-            }
-        }
-
         describe("ProfileViewController") {
             let currentUser: User = stub([:])
 
@@ -28,8 +22,8 @@ class ProfileViewControllerSpec: QuickSpec {
                     showController(subject)
                 }
 
-                it("does not update the top inset") {
-                    expect(subject.streamViewController.contentInset.top) == 0
+                it("does updates the top inset") {
+                    expect(subject.streamViewController.contentInset.top) == 64
                 }
             }
 
@@ -46,9 +40,13 @@ class ProfileViewControllerSpec: QuickSpec {
                     screen = subject.view as! ProfileScreen
                 }
 
-                it("does not have a 'more following options' Button") {
+                it("has grid/list and share buttons") {
                     let rightButtons = subject.elloNavigationItem.rightBarButtonItems
-                    expect(rightButtons?.count ?? 0) == 0
+                    expect(rightButtons?.count ?? 0) == 2
+                }
+
+                it("has back left nav button") {
+                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 2
                 }
 
                 context("collaborateable and hireable don't affect currentUser profile") {
@@ -91,8 +89,12 @@ class ProfileViewControllerSpec: QuickSpec {
                     screen = subject.view as! ProfileScreen
                 }
 
-                it("has 'share' and 'more following options' buttons") {
+                it("has grid/list and share right nav buttons") {
                     expect(subject.elloNavigationItem.rightBarButtonItems?.count) == 2
+                }
+
+                it("has back and more left nav buttons") {
+                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 4
                 }
 
                 let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [
@@ -162,8 +164,12 @@ class ProfileViewControllerSpec: QuickSpec {
                     showController(subject)
                 }
 
-                it("only has a 'more following options' button") {
+                it("has grid/list right nav buttons") {
                     expect(subject.elloNavigationItem.rightBarButtonItems?.count) == 1
+                }
+
+                it("has back and more left nav buttons") {
+                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 4
                 }
             }
 

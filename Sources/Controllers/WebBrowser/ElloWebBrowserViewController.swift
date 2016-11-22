@@ -129,7 +129,9 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .WhoMadeThis,
              .WTF:
             break // this is handled in ElloWebViewHelper/KINWebBrowserViewController
-        case .Discover,
+        case .Discover:
+            DeepLinking.showDiscover(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
+        case .Category,
              .DiscoverRandom,
              .DiscoverRecent,
              .DiscoverRelated,
@@ -137,9 +139,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .ExploreRecommended,
              .ExploreRecent,
              .ExploreTrending:
-            self.selectTab(.Discover)
-        case .Category:
-            self.selectTab(.Discover)
+            DeepLinking.showCategory(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
         case .BetaPublicProfiles,
              .Enter,
              .Exit,
@@ -155,42 +155,12 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         case .Post,
              .PushNotificationPost,
              .PushNotificationComment:
-            self.showPostDetail(data)
+            DeepLinking.showPostDetail(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser,token: data)
         case .Profile,
              .PushNotificationUser:
-            self.showProfile(data)
-        case .Search: showSearch(data)
-        case .Settings: self.showSettings()
-        }
-    }
-
-    private func showProfile(username: String) {
-        let param = "~\(username)"
-        if alreadyOnUserProfile(param) { return }
-        let vc = ProfileViewController(userParam: param, username: username)
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showPostDetail(token: String) {
-        let param = "~\(token)"
-        if alreadyOnPostDetail(param) { return }
-        let vc = PostDetailViewController(postParam: param)
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showSearch(terms: String) {
-        let vc = SearchViewController()
-        vc.currentUser = ElloWebBrowserViewController.currentUser
-        vc.searchForPosts(terms)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-
-    private func showSettings() {
-        if let settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController() as? SettingsContainerViewController {
-            settings.currentUser = ElloWebBrowserViewController.currentUser
-            navigationController?.pushViewController(settings, animated: true)
+            DeepLinking.showProfile(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, username: data)
+        case .Search: DeepLinking.showSearch(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, terms: data)
+        case .Settings: DeepLinking.showSettings(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
         }
     }
 
@@ -200,17 +170,4 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
         }
     }
 
-    func alreadyOnUserProfile(userParam: String) -> Bool {
-        if let profileVC = navigationController?.topViewController as? ProfileViewController {
-            return userParam == profileVC.userParam
-        }
-        return false
-    }
-
-    func alreadyOnPostDetail(postParam: String) -> Bool {
-        if let postDetailVC = navigationController?.topViewController as? PostDetailViewController {
-            return postParam == postDetailVC.postParam
-        }
-        return false
-    }
 }

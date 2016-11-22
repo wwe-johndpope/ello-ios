@@ -28,7 +28,7 @@ public final class Username: JSONAble {
         super.encodeWithCoder(coder)
     }
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         return Username(username: json["username"].stringValue)
     }

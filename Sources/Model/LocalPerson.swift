@@ -40,7 +40,11 @@ public final class LocalPerson: JSONAble {
     }
 
     // this shouldn't ever get called
-    public override class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    public override class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         return LocalPerson(name: "Unknown", emails: ["unknown@example.com"], id: 1)
     }
+}
+
+extension LocalPerson: JSONSaveable {
+    var uniqId: String? { return "\(id)" }
 }

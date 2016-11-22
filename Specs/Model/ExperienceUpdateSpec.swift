@@ -17,11 +17,11 @@ class ExperienceUpdateSpec: QuickSpec {
                     "parentPost": post1,
                     "loadedFromPost": post2
                     ])
-                ElloLinkedStore.sharedInstance.setObject(post1, forKey: post1.id, inCollection: MappingType.PostsType.rawValue)
+                ElloLinkedStore.sharedInstance.setObject(post1, forKey: post1.id, type: .PostsType)
                 ContentChange.updateCommentCount(comment, delta: 1)
                 expect(post1.commentsCount) == 2
                 expect(post2.commentsCount) == 2
-                let storedPost = ElloLinkedStore.sharedInstance.getObject(post1.id, inCollection: MappingType.PostsType.rawValue) as! Post
+                let storedPost = ElloLinkedStore.sharedInstance.getObject(post1.id, type: .PostsType) as! Post
                 expect(storedPost.commentsCount) == 2
             }
         }

@@ -34,6 +34,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     public let textSizeCalculator: StreamTextCellSizeCalculator
     public let notificationSizeCalculator: StreamNotificationCellSizeCalculator
     public let profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator
+    public let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     public let imageSizeCalculator: StreamImageCellSizeCalculator
 
     weak public var postbarDelegate: PostbarDelegate?
@@ -48,8 +49,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak public var simpleStreamDelegate: SimpleStreamDelegate?
     weak public var searchStreamDelegate: SearchStreamDelegate?
     weak public var inviteDelegate: InviteDelegate?
-    weak public var columnToggleDelegate: ColumnToggleDelegate?
-    weak public var discoverCategoryPickerDelegate: DiscoverCategoryPickerDelegate?
+    weak public var categoryListCellDelegate: CategoryListCellDelegate?
     public let inviteCache = InviteCache()
 
     public init(
@@ -57,13 +57,15 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         textSizeCalculator: StreamTextCellSizeCalculator,
         notificationSizeCalculator: StreamNotificationCellSizeCalculator,
         profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator,
-        imageSizeCalculator: StreamImageCellSizeCalculator)
+        imageSizeCalculator: StreamImageCellSizeCalculator,
+        categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator)
     {
         self.streamKind = streamKind
         self.textSizeCalculator = textSizeCalculator
         self.notificationSizeCalculator = notificationSizeCalculator
         self.profileHeaderSizeCalculator = profileHeaderSizeCalculator
         self.imageSizeCalculator = imageSizeCalculator
+        self.categoryHeaderSizeCalculator = categoryHeaderSizeCalculator
         super.init()
     }
 
@@ -115,9 +117,22 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 return repostAuthor
             }
 
+            if case .PagePromotionalHeader = item.type,
+                let user = (item.jsonable as? PagePromotional)?.user
+            {
+                return user
+            }
+
+            if case .CategoryPromotionalHeader = item.type,
+                let user = (item.jsonable as? Category)?.randomPromotional?.user
+            {
+                return user
+            }
+
             if let authorable = item.jsonable as? Authorable {
                 return authorable.author
             }
+
             return item.jsonable as? User
         }
         return nil
@@ -301,10 +316,12 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(streamCellItem.type.name, forIndexPath: indexPath)
 
         switch streamCellItem.type {
-        case .ColumnToggle:
-            (cell as! ColumnToggleCell).columnToggleDelegate = columnToggleDelegate
+        case .CategoryPromotionalHeader,
+             .PagePromotionalHeader:
+            (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
+            (cell as! CategoryHeaderCell).userDelegate = userDelegate
         case .CategoryList:
-            (cell as! CategoryListCell).discoverCategoryPickerDelegate = discoverCategoryPickerDelegate
+            (cell as! CategoryListCell).delegate = categoryListCellDelegate
         case .Footer:
             (cell as! StreamFooterCell).delegate = postbarDelegate
             (cell as! StreamFooterCell).streamEditingDelegate = editingDelegate
@@ -328,9 +345,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             (cell as! NotificationCell).userDelegate = userDelegate
             (cell as! NotificationCell).delegate = notificationDelegate
         case .ProfileHeader:
-//            (cell as! ProfileHeaderCell).simpleStreamDelegate = simpleStreamDelegate
             (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
-//            (cell as! ProfileHeaderCell).userDelegate = userDelegate
         case .Search:
             (cell as! SearchStreamCell).delegate = searchStreamDelegate
         case .Text:
@@ -369,17 +384,14 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
                 return NSIndexPath(forItem: 1, inSection: 0)
             }
-            else if visibleCellItems.count > 2 && visibleCellItems[2].type != .ColumnToggle {
-                return NSIndexPath(forItem: 1, inSection: 0)
-            }
-            return NSIndexPath(forItem: 4, inSection: 0)
+            return NSIndexPath(forItem: 2, inSection: 0)
         case let .UserStream(userParam):
             if currentUserId == userParam {
                 if visibleCellItems.count == 2 && visibleCellItems[1].type == .NoPosts {
                     removeItemsAtIndexPaths([NSIndexPath(forItem: 1, inSection: 0)])
                     return NSIndexPath(forItem: 1, inSection: 0)
                 }
-                return NSIndexPath(forItem: 4, inSection: 0)
+                return NSIndexPath(forItem: 2, inSection: 0)
             }
         default:
             break
@@ -800,7 +812,11 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let profileHeaderItems = cellItems.filter {
             return $0.type == StreamCellType.ProfileHeader
         }
-        let afterAll = after(4, block: completion)
+
+        let categoryHeaderItems = cellItems.filter {
+            return $0.type == StreamCellType.CategoryPromotionalHeader || $0.type == StreamCellType.PagePromotionalHeader
+        }
+        let afterAll = after(5, block: completion)
 
         self.imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: self.streamKind.columnCount, completion: afterAll)
 
@@ -812,6 +828,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
         self.notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
         self.profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
+        self.categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll)
     }
 
     private func filterTextCells(cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {

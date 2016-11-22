@@ -123,6 +123,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "DeleteSubscriptions"
         case .Discover:
             return "Discover"
+        case .Category:
+            return "Category"
         case .CategoryPosts:
             return "CategoryPosts"
         case .EmojiAutoComplete:
@@ -159,6 +161,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "NotificationsNewContent"
         case .NotificationsStream:
             return "NotificationsStream"
+        case .PagePromotionals:
+            return "PagePromotionals"
         case .PostComments:
             return "PostComments"
         case .PostDetail:

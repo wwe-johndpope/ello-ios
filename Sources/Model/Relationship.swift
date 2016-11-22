@@ -19,10 +19,10 @@ public final class Relationship: JSONAble {
     public let subjectId: String
     // computed
     public var owner: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.ownerId, inCollection: MappingType.UsersType.rawValue) as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.ownerId, type: .UsersType) as? User
     }
     public var subject: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.subjectId, inCollection: MappingType.UsersType.rawValue) as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.subjectId, type: .UsersType) as? User
     }
 
     public init(id: String, createdAt: NSDate, ownerId: String, subjectId: String) {
@@ -59,7 +59,7 @@ public final class Relationship: JSONAble {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.RelationshipFromJSON.rawValue)
         var createdAt: NSDate
@@ -80,4 +80,8 @@ public final class Relationship: JSONAble {
         )
         return relationship
     }
+}
+
+extension Relationship: JSONSaveable {
+    var uniqId: String? { return id }
 }

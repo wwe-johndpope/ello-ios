@@ -43,8 +43,8 @@ public class NotificationsViewController: StreamableViewController, Notification
         super.viewDidLoad()
 
         screen.delegate = self
-        self.title = InterfaceString.Notifications.Title
-        addSearchButton()
+        title = InterfaceString.Notifications.Title
+        elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
 
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         scrollLogic.navBarHeight = 44
@@ -54,7 +54,6 @@ public class NotificationsViewController: StreamableViewController, Notification
 
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBarHidden = true
 
         if hasNewContent && fromTabBar {
             reload()

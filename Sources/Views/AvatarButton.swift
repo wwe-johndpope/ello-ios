@@ -20,10 +20,6 @@ public class AvatarButton: UIButton {
         clipsToBounds = false
     }
 
-    func setUser(user: User?) {
-        setUserAvatarURL(user?.avatarURL())
-    }
-
     func setUserAvatarURL(url: NSURL?) {
         self.imageURL = url
         self.setDefaultImage()

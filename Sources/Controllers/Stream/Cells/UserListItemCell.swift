@@ -20,7 +20,7 @@ public class UserListItemCell: UICollectionViewCell {
     }
 
     func setUser(user: User?) {
-        avatarButton.setUser(user)
+        avatarButton.setUserAvatarURL(user?.avatarURL())
 
         relationshipControl.userId = user?.id ?? ""
         relationshipControl.userAtName = user?.atName ?? ""

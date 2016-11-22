@@ -48,7 +48,7 @@ public class UserAvatarsCell: UICollectionViewCell {
         for user in usersToDisplay {
             let ab = AvatarButton()
             ab.frame = CGRect(x: startX, y: 0.0, width: 30.0, height: 30.0)
-            ab.setUser(user)
+            ab.setUserAvatarURL(user.avatarURL())
             ab.addTarget(self, action: #selector(UserAvatarsCell.avatarTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             avatarsView.addSubview(ab)
             avatarButtons.append(ab)

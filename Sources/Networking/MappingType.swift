@@ -20,6 +20,8 @@ public enum MappingType: String {
     case LovesType = "loves"
     case NoContentType = "204"
     case PostsType = "posts"
+    case PromotionalsType = "promotionals"
+    case PagePromotionalsType = "page_promotionals"
     case RelationshipsType = "relationships"
     case UsersType = "users"
     case UsernamesType = "usernames"
@@ -51,6 +53,10 @@ public enum MappingType: String {
             return Love.fromJSON
         case PostsType:
             return Post.fromJSON
+        case PagePromotionalsType:
+            return PagePromotional.fromJSON
+        case PromotionalsType:
+            return Promotional.fromJSON
         case RelationshipsType:
             return Relationship.fromJSON
         case UsersType:
@@ -81,7 +87,7 @@ public class UnknownJSONAble: JSONAble {
         self.init(version: UnknownJSONAbleVersion)
     }
 
-    override class public func fromJSON(data: [String : AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override class public func fromJSON(data: [String : AnyObject]) -> JSONAble {
         return UnknownJSONAble()
     }
 }

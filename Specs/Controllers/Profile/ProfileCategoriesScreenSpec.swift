@@ -17,7 +17,7 @@ class ProfileCategoriesScreenSpec: QuickSpec {
 
                 it("renders correctly with 1 category") {
                     let categories = [
-                        Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil)
+                        Category.stub(["name": "Photography", "order": 1])
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
@@ -27,8 +27,8 @@ class ProfileCategoriesScreenSpec: QuickSpec {
 
                 it("renders correctly with more2 categories") {
                     let categories = [
-                        Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "0123", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
+                        Category.stub(["name": "Photography", "order": 1]),
+                        Category.stub(["name": "Art", "order": 2])
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
@@ -38,9 +38,9 @@ class ProfileCategoriesScreenSpec: QuickSpec {
 
                 it("renders correctly with 3 categories") {
                     let categories = [
-                        Category(id: "123", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "0123", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "0123s", name: "Painting", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
+                        Category.stub(["name": "Photography", "order": 1]),
+                        Category.stub(["name": "Art", "order": 2]),
+                        Category.stub(["name": "Painting", "order": 2])
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
@@ -50,14 +50,14 @@ class ProfileCategoriesScreenSpec: QuickSpec {
 
                 it("renders correctly with more than 3 categories") {
                     let categories = [
-                        Category(id: "1", name: "Photography", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "2", name: "Art", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "3", name: "Painting", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "4", name: "GIFs", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "5", name: "Fashion", slug: "", order: 1, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "6", name: "Climbing", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "7", name: "Drawing", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil),
-                        Category(id: "8", name: "Sculpture", slug: "", order: 2, allowInOnboarding: false, level: .Primary, tileImage: nil)
+                        Category.stub(["name": "Photography", "order": 1]),
+                        Category.stub(["name": "Art", "order": 2]),
+                        Category.stub(["name": "Painting", "order": 2]),
+                        Category.stub(["name": "GIFs", "order": 2]),
+                        Category.stub(["name": "Fashion", "order": 1]),
+                        Category.stub(["name": "Climbing", "order": 2]),
+                        Category.stub(["name": "Drawing", "order": 2]),
+                        Category.stub(["name": "Sculpture", "order": 2])
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)

@@ -63,14 +63,6 @@ def spec_pods
   pod 'OHHTTPStubs', '~> 4.3'
 end
 
-post_install do |installer_representation|
-    installer_representation.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['WARNING_CFLAGS'] = '$(inherited) -Wno-error=private-header' if target.name == 'FBSnapshotTestCase'
-        end
-    end
-end
-
 target 'Ello' do
   common_pods
   ello_app_pods
@@ -103,6 +95,7 @@ plugin 'cocoapods-keys', {
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
+      config.build_settings['WARNING_CFLAGS'] = '$(inherited) -Wno-error=private-header' if target.name == 'FBSnapshotTestCase'
       # cocoapods 1.1.0-rc2 *should* handle this but isn't for some reason
       config.build_settings['SWIFT_VERSION'] = '2.3'
       # cocoapods does not propogate the platform from above

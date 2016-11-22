@@ -11,8 +11,8 @@ class CategoryListSpec: QuickSpec {
     override func spec() {
         describe("CategoryList") {
             it("sorts categories") {
-                let c1 = Category(id: "1", name: "Featured", slug: "featured", order: 0, allowInOnboarding: true, level: .Primary, tileImage: nil)
-                let c2 = Category(id: "2", name: "Art", slug: "art", order: 1, allowInOnboarding: true, level: .Primary, tileImage: nil)
+                let c1 = Category.stub(["name": "Featured", "order": 0])
+                let c2 = Category.stub(["name": "Art", "order": 1])
 
                 let categoryList = CategoryList(categories: [c2, c1])
                 expect(categoryList.categories) == [c1, c2]

@@ -235,8 +235,8 @@ public class PostEditingService: NSObject {
                             if let url = url {
                                 let asset = Asset(url: url, gifData: data, posterImage: image)
 
-                                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
-                                imageRegion.addLinkObject("assets", key: asset.id, collection: MappingType.AssetsType.rawValue)
+                                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
+                                imageRegion.addLinkObject("assets", key: asset.id, type: .AssetsType)
                             }
 
                             uploaded.append((imageIndex, imageRegion))
@@ -253,8 +253,8 @@ public class PostEditingService: NSObject {
 
                             if let url = url {
                                 let asset = Asset(url: url, image: image)
-                                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, inCollection: MappingType.AssetsType.rawValue)
-                                imageRegion.addLinkObject("assets", key: asset.id, collection: MappingType.AssetsType.rawValue)
+                                ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .AssetsType)
+                                imageRegion.addLinkObject("assets", key: asset.id, type: .AssetsType)
                             }
 
                             uploaded.append((imageIndex, imageRegion))

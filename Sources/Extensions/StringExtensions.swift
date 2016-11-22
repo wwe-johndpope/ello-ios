@@ -395,4 +395,16 @@ public extension String {
         capSplits.replaceRange(0..<1, with: [splits.first ?? ""])
         return capSplits.joinWithSeparator("")
     }
+
+    var first: String {
+        return String(characters.prefix(1))
+    }
+
+    var last: String {
+        return String(characters.suffix(1))
+    }
+
+    var uppercaseFirst: String {
+        return first.uppercaseString + String(characters.dropFirst())
+    }
 }

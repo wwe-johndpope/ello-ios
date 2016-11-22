@@ -186,7 +186,7 @@ public struct PostService {
                 }
                 else if !watching {
                     post.watching = false
-                    ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, inCollection: "posts")
+                    ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .PostsType)
                     promise.completeWithSuccess(post)
                 }
                 else {

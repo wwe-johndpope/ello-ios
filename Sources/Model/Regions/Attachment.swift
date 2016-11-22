@@ -57,7 +57,7 @@ public final class Attachment: JSONAble {
 
 // MARK: JSONAble
 
-    override class public func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override class public func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.AttachmentFromJSON.rawValue)
         var url = json["url"].stringValue
@@ -73,4 +73,8 @@ public final class Attachment: JSONAble {
         attachment.type = json["metadata"]["type"].string
         return attachment
     }
+}
+
+extension Attachment: JSONSaveable {
+    var uniqId: String? { return url.absoluteString }
 }

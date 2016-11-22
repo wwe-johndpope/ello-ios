@@ -41,21 +41,34 @@ public struct ElloLinkedStore {
     }
 
     // primarialy used for testing for now.. could be used for setting a model after it's fromJSON
-    public func setObject(object: JSONAble, forKey key: String, inCollection collection: String ) {
+    public func setObject(object: JSONAble, forKey key: String, type: MappingType) {
         writeConnection.readWriteWithBlock { transaction in
-            transaction.setObject(object, forKey: key, inCollection: collection)
+            transaction.setObject(object, forKey: key, inCollection: type.rawValue)
         }
     }
 
-    public func getObject(key: String, inCollection collection: String) -> JSONAble? {
+    public func getObject(key: String, type: MappingType) -> JSONAble? {
         var object: JSONAble?
         readConnection.readWithBlock { transaction in
-            if transaction.hasObjectForKey(key, inCollection: collection) {
-                object = transaction.objectForKey(key, inCollection: collection) as? JSONAble
+            if transaction.hasObjectForKey(key, inCollection: type.rawValue) {
+                object = transaction.objectForKey(key, inCollection: type.rawValue) as? JSONAble
             }
         }
         return object
     }
+
+    public func saveObject(jsonable: JSONAble, id: String, type: MappingType) {
+        self.writeConnection.readWriteWithBlock { transaction in
+            if let existing = transaction.objectForKey(id, inCollection: type.rawValue) as? JSONAble {
+                let merged = existing.merge(jsonable)
+                transaction.replaceObject(merged, forKey: id, inCollection: type.rawValue)
+            }
+            else {
+                transaction.setObject(jsonable, forKey: id, inCollection: type.rawValue)
+            }
+        }
+    }
+
 }
 
 // MARK: Private
@@ -112,16 +125,13 @@ private extension ElloLinkedStore {
 
     func parseLinkedSync(linked: [String: [[String: AnyObject]]]) {
         for (type, typeObjects): (String, [[String: AnyObject]]) in linked {
-            if let mappingType = MappingType(rawValue: type) {
-                for object: [String: AnyObject] in typeObjects {
-                    if let id = object["id"] as? String {
-                        let jsonable = mappingType.fromJSON(data: object, fromLinked: true)
+            guard let mappingType = MappingType(rawValue: type) else { continue }
 
-                        self.writeConnection.readWriteWithBlock { transaction in
-                            transaction.setObject(jsonable, forKey: id, inCollection: type)
-                        }
-                    }
-                }
+            for object: [String: AnyObject] in typeObjects {
+                guard let id = object["id"] as? String else { continue }
+
+                let jsonable = mappingType.fromJSON(data: object)
+                self.saveObject(jsonable, id: id, type: mappingType)
             }
         }
     }

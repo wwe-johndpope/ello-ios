@@ -2,8 +2,10 @@
 ///  StreamableScreen.swift
 //
 
-public protocol StreamableScreenProtocol {
+public protocol StreamableScreenProtocol: class {
     var navigationBarTopConstraint: NSLayoutConstraint! { get }
+    var navigationBar: ElloNavigationBar { get }
+    var navigationItem: UINavigationItem? { get set }
 }
 
 public class StreamableScreen: Screen, StreamableScreenProtocol {
@@ -11,9 +13,15 @@ public class StreamableScreen: Screen, StreamableScreenProtocol {
     public var navigationBarTopConstraint: NSLayoutConstraint!
     let streamContainer = UIView()
 
-    convenience init(navigationItem: UINavigationItem) {
+    public var navigationItem: UINavigationItem? {
+        get { return navigationBar.items?.first }
+        set {
+            navigationBar.items = newValue.flatMap { [$0] }
+        }
+    }
+
+    convenience init() {
         self.init(frame: UIScreen.mainScreen().bounds)
-        navigationBar.items = [navigationItem]
     }
 
     override func arrange() {

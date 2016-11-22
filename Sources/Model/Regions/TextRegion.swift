@@ -39,7 +39,7 @@ public final class TextRegion: JSONAble, Regionable {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.TextRegionFromJSON.rawValue)
         let content = json["data"].stringValue

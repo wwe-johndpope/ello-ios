@@ -13,14 +13,14 @@ class HireScreenSpec: QuickSpec {
             describe("snapshots, keyboard hidden") {
                 var subject: HireScreen!
                 beforeEach {
-                    subject = HireScreen(navigationItem: UINavigationItem())
+                    subject = HireScreen()
                 }
                 validateAllSnapshots { return subject }
             }
             describe("snapshots, keyboard shown") {
                 var subject: HireScreen!
                 beforeEach {
-                    subject = HireScreen(navigationItem: UINavigationItem())
+                    subject = HireScreen()
                     Keyboard.shared.active = true
                     Keyboard.shared.bottomInset = 216
                     subject.toggleKeyboard(visible: true)
@@ -48,7 +48,7 @@ class HireScreenSpec: QuickSpec {
                 var subject: HireScreen!
                 var submitButton: UIButton?
                 beforeEach {
-                    subject = HireScreen(navigationItem: UINavigationItem())
+                    subject = HireScreen()
                     submitButton = subviewThatMatches(subject) { $0 is UIButton }
                     let textView: UITextView! = subviewThatMatches(subject) { $0 is UITextView }
                     textView.text = ""
@@ -62,7 +62,7 @@ class HireScreenSpec: QuickSpec {
                 var subject: HireScreen!
                 var submitButton: UIButton?
                 beforeEach {
-                    subject = HireScreen(navigationItem: UINavigationItem())
+                    subject = HireScreen()
                     submitButton = subviewThatMatches(subject) { $0 is UIButton }
                     let textView: UITextView! = subviewThatMatches(subject) { $0 is UITextView }
                     textView.text = "hey there!"

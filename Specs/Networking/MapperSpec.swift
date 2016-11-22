@@ -50,26 +50,26 @@ class MapperSpec: QuickSpec {
 
         }
 
-        describe("+mapToObjectArray:fromJSON:") {
+        describe("+mapToObjectArray:type:") {
 
             context("valid input") {
 
                 it("returns an array of mapped domain objects") {
                     let friendData = stubbedJSONDataArray("friends", "activities")
-                    let activities = Mapper.mapToObjectArray(friendData, fromJSON: Activity.fromJSON)
+                    let activities = Mapper.mapToObjectArray(friendData, type: .ActivitiesType)
 
                     expect(activities.first).to(beAKindOf(Activity.self))
                 }
             }
         }
 
-        describe("+mapToObject:fromJSON:") {
+        describe("+mapToObject:type:") {
 
             context("valid input") {
 
                 it("returns a mapped domain objects") {
                     let userData = stubbedJSONData("user", "users")
-                    let user = Mapper.mapToObject(userData, fromJSON: User.fromJSON)
+                    let user = Mapper.mapToObject(userData, type: .UsersType)
 
                     expect(user).toNot(beNil())
                     expect(user).to(beAKindOf(User.self))
@@ -81,7 +81,7 @@ class MapperSpec: QuickSpec {
                 it("returns nil") {
                     let invalidAnyObject: AnyObject = NSString(string: "invalid") as AnyObject
 
-                    expect(Mapper.mapToObject(invalidAnyObject, fromJSON: User.fromJSON)).to(beNil())
+                    expect(Mapper.mapToObject(invalidAnyObject, type: .UsersType)).to(beNil())
                 }
             }
         }

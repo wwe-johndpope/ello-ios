@@ -17,6 +17,7 @@ public enum StreamKind {
     case SimpleStream(endpoint: ElloAPI, title: String)
     case Unknown
     case UserStream(userParam: String)
+    case Category(slug: String)
 
     public var name: String {
         switch self {
@@ -27,6 +28,7 @@ public enum StreamKind {
         case .Following: return InterfaceString.FollowingStream.Title
         case .Starred: return InterfaceString.StarredStream.Title
         case .Notifications: return InterfaceString.Notifications.Title
+        case .Category: return ""
         case .PostDetail: return ""
         case let .SimpleStream(_, title): return title
         case .Unknown: return ""
@@ -38,6 +40,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return "Profile"
         case .AllCategories: return "AllCategories"
+        case .Category: return "Category"
         case .Discover, .CategoryPosts: return "CategoryPosts"
         case .Following: return "Following"
         case .Starred: return "Starred"
@@ -104,10 +107,18 @@ public enum StreamKind {
         }
     }
 
+    public var isProfileStream: Bool {
+        switch self {
+        case .CurrentUserStream, .UserStream: return true
+        default: return false
+        }
+    }
+
     public var endpoint: ElloAPI {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
         case .AllCategories: return .Categories
+        case let .Category(slug): return .Category(slug: slug)
         case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
         case let .Discover(type): return .Discover(type: type)
         case .Following: return .FriendStream
@@ -149,7 +160,7 @@ public enum StreamKind {
             }
         case .CategoryPosts:
             return jsonables
-        case .Discover:
+        case .Discover, .Category:
             if let users = jsonables as? [User] {
                 return users.reduce([]) { accum, user in
                     if let post = user.mostRecentPost {
@@ -196,28 +207,12 @@ public enum StreamKind {
         return []
     }
 
-    public var gridPreferenceSetOffset: CGPoint {
-        switch self {
-        case .Discover, .CategoryPosts: return CGPoint(x: 0, y: -80)
-        default: return CGPoint(x: 0, y: -20)
-        }
-    }
-
     public var avatarHeight: CGFloat {
         return self.isGridView ? 30 : 40
     }
 
     public func contentForPost(post: Post) -> [Regionable]? {
         return self.isGridView ? post.summary : post.content
-    }
-
-    public var gridViewPreferenceSet: Bool {
-        switch self {
-        case .Notifications: return false
-        default:
-            let prefSet = GroupDefaults["\(self.cacheKey)GridViewPreferenceSet"].bool
-            return prefSet != nil
-        }
     }
 
     public func setIsGridView(isGridView: Bool) {
@@ -236,7 +231,7 @@ public enum StreamKind {
 
     public var hasGridViewToggle: Bool {
         switch self {
-        case .Following, .Starred, .Discover, .CategoryPosts: return true
+        case .Following, .Starred, .Discover, .CategoryPosts, .Category: return true
         case let .SimpleStream(endpoint, _):
             switch endpoint {
             case .SearchForPosts, .Loves, .CategoryPosts:

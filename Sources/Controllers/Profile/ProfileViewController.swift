@@ -41,8 +41,7 @@ public final class ProfileViewController: StreamableViewController {
         }
 
         if self.user == nil {
-            if let user = ElloLinkedStore.sharedInstance.getObject(self.userParam,
-               inCollection: MappingType.UsersType.rawValue) as? User {
+            if let user = ElloLinkedStore.sharedInstance.getObject(self.userParam, type: .UsersType) as? User {
                 self.user = user
             }
         }
@@ -105,7 +104,7 @@ public final class ProfileViewController: StreamableViewController {
             destination: self
         )
         view.clipsToBounds = true
-        setupNavigationBar()
+        setupNavigationItems()
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
@@ -118,9 +117,10 @@ public final class ProfileViewController: StreamableViewController {
 
     override public func loadView() {
         let screen = ProfileScreen()
+        screen.delegate = self
+        screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
-        screen.delegate = self
     }
 
     override public func viewDidLayoutSubviews() {
@@ -141,7 +141,7 @@ public final class ProfileViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        positionNavBar(screen.navBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
 
         if scrollToBottom {
@@ -153,7 +153,7 @@ public final class ProfileViewController: StreamableViewController {
 
     override func hideNavBars() {
         super.hideNavBars()
-        hideNavBar(animated: true)
+        positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: true)
         updateInsets()
 
         let offset = self.streamViewController.collectionView.contentOffset
@@ -161,13 +161,8 @@ public final class ProfileViewController: StreamableViewController {
         screen.hideNavBars(offset, isCurrentUser: currentUser)
     }
 
-
     private func updateInsets() {
-        updateInsets(navBar: screen.profileButtonsContainer, streamController: streamViewController)
-    }
-
-    private func hideNavBar(animated animated: Bool) {
-        positionNavBar(screen.navBar, visible: false, withConstraint: screen.navigationBarTopConstraint, animated: animated)
+        updateInsets(navBar: screen.topInsetView, streamController: streamViewController)
     }
 
     // MARK : private
@@ -192,46 +187,42 @@ public final class ProfileViewController: StreamableViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
 
-    private func setupNavigationBar() {
-        navigationController?.navigationBarHidden = true
-        screen.navBar.items = [elloNavigationItem]
+    private func setupNavigationItems() {
+        let backItem = UIBarButtonItem.backChevron(withController: self)
+        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
+        let shareItem = UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
+        let moreActionsItem = UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
+        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(currentUser)"
+
         if !isRootViewController() {
-            let item = UIBarButtonItem.backChevronWithTarget(self, action: #selector(StreamableViewController.backTapped(_:)))
-            self.elloNavigationItem.leftBarButtonItems = [item]
-            self.elloNavigationItem.fixNavBarItemPadding()
+            var leftBarButtonItems: [UIBarButtonItem] = []
+            leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
+            leftBarButtonItems.append(backItem)
+            if !isCurrentUser {
+                leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
+                leftBarButtonItems.append(moreActionsItem)
+            }
+            elloNavigationItem.leftBarButtonItems = leftBarButtonItems
         }
-        assignRightButtons()
-    }
 
-    func assignRightButtons() {
-
-        if let currentUser = currentUser where userParam == currentUser.id || userParam == "~\(currentUser.username)" {
-            elloNavigationItem.rightBarButtonItems = [
-                UIBarButtonItem(image: .Search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
-            ]
+        guard !isCurrentUser else {
+            elloNavigationItem.rightBarButtonItems = [shareItem, gridListItem]
             return
         }
 
-        guard let user = user else {
-            elloNavigationItem.rightBarButtonItems = []
-            return
-        }
-
-        if let currentUser = currentUser where user.id == currentUser.id {
+        guard
+            let user = user,
+            let currentUser = currentUser
+        where user.id != currentUser.id else {
             elloNavigationItem.rightBarButtonItems = []
             return
         }
 
         var rightBarButtonItems: [UIBarButtonItem] = []
         if user.hasSharingEnabled {
-            rightBarButtonItems.append(UIBarButtonItem(image: .Share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:))))
+            rightBarButtonItems.append(shareItem)
         }
-        rightBarButtonItems.append(UIBarButtonItem(image: .Dots, target: self, action: #selector(ProfileViewController.moreButtonTapped)))
-
-        guard elloNavigationItem.rightBarButtonItems != nil else {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            return
-        }
+        rightBarButtonItems.append(gridListItem)
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
             elloNavigationItem.rightBarButtonItems = rightBarButtonItems
@@ -345,8 +336,6 @@ extension ProfileViewController {
             self.currentUser?.coverImage = user.coverImage
         }
 
-        elloNavigationItem.rightBarButtonItem = nil
-
         screen.configureButtonsForCurrentUser()
     }
 
@@ -375,6 +364,7 @@ extension ProfileViewController: ProfileHeaderResponder {
         else { return }
 
         let vc = ProfileCategoriesViewController(categories: categories)
+        vc.currentUser = currentUser
         let navVC = ElloNavigationController(rootViewController: vc)
         navVC.modalTransitionStyle = .CrossDissolve
         navVC.modalPresentationStyle = .Custom
@@ -460,14 +450,14 @@ extension ProfileViewController:  StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem], completion: ElloEmptyCompletion) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 
     public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
-        assignRightButtons()
+        setupNavigationItems()
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
@@ -479,7 +469,7 @@ extension ProfileViewController:  StreamDestination {
         userParam = user.id
         title = user.atName
 
-        assignRightButtons()
+        setupNavigationItems()
         Tracker.sharedTracker.profileLoaded(user.atName ?? "(no name)")
 
         screen.updateRelationshipControl(user: user)

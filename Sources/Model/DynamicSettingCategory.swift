@@ -34,7 +34,7 @@ public final class DynamicSettingCategory: JSONAble {
 }
 
 extension DynamicSettingCategory {
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> DynamicSettingCategory {
+    override public class func fromJSON(data: [String: AnyObject]) -> DynamicSettingCategory {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.DynamicSettingCategoryFromJSON.rawValue)
         let label = json["label"].stringValue

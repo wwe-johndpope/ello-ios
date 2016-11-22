@@ -47,6 +47,7 @@ class StreamDataSourceSpec: QuickSpec {
                 let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
                 let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
                 let imageSizeCalculator = StreamImageCellSizeCalculator()
+                let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
 
                 StreamKind.Following.setIsGridView(true)
                 StreamKind.Starred.setIsGridView(false)
@@ -56,7 +57,8 @@ class StreamDataSourceSpec: QuickSpec {
                     textSizeCalculator: textSizeCalculator,
                     notificationSizeCalculator: notificationSizeCalculator,
                     profileHeaderSizeCalculator: profileHeaderSizeCalculator,
-                    imageSizeCalculator: imageSizeCalculator
+                    imageSizeCalculator: imageSizeCalculator,
+                    categoryHeaderSizeCalculator: categoryHeaderSizeCalculator
                 )
                 vc.dataSource = subject
                 vc.collectionView.dataSource = vc.dataSource
@@ -333,8 +335,6 @@ class StreamDataSourceSpec: QuickSpec {
 
                     let profileHeaderItems = [
                         StreamCellItem(jsonable: user, type: .ProfileHeader, placeholderType: .ProfileHeader),
-                        StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3), placeholderType: .ProfileHeader),
-                        StreamCellItem(jsonable: user, type: .ColumnToggle, placeholderType: .ProfileHeader),
                         StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5), placeholderType: .ProfileHeader),
                     ]
 
@@ -353,15 +353,13 @@ class StreamDataSourceSpec: QuickSpec {
 
                     expect(headerIndexPaths[0].item) == 0
                     expect(headerIndexPaths[1].item) == 1
-                    expect(headerIndexPaths[2].item) == 2
-                    expect(headerIndexPaths[3].item) == 3
                 }
 
                 it("returns the correct indexPaths for profile posts") {
                     let postIndexPaths = subject.indexPathsForPlaceholderType(.ProfilePosts)
 
-                    expect(postIndexPaths[0].item) == 4
-                    expect(postIndexPaths[1].item) == 5
+                    expect(postIndexPaths[0].item) == 2
+                    expect(postIndexPaths[1].item) == 3
                 }
             }
 
@@ -654,7 +652,7 @@ class StreamDataSourceSpec: QuickSpec {
 
             describe("clientSidePostInsertIndexPath()") {
                 let one = NSIndexPath(forItem: 1, inSection: 0)
-                let four = NSIndexPath(forItem: 4, inSection: 0)
+                let two = NSIndexPath(forItem: 2, inSection: 0)
                 let tests: [(NSIndexPath?, StreamKind)] = [
                     (nil, StreamKind.Discover(type: .Featured)),
                     (nil, StreamKind.CategoryPosts(slug: "art")),
@@ -663,12 +661,12 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
                     (nil, StreamKind.Notifications(category: "")),
                     (nil, StreamKind.PostDetail(postParam: "param")),
-                    (four, StreamKind.CurrentUserStream),
+                    (two, StreamKind.CurrentUserStream),
                     (nil, StreamKind.Unknown),
                     (nil, StreamKind.UserStream(userParam: "NA")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.SearchForPosts(terms: "meat"), title: "meat")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStreamFollowers(userId: "54321"), title: "")),
-                    (four, StreamKind.UserStream(userParam: "12345")),
+                    (two, StreamKind.UserStream(userParam: "12345")),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.UserStream(userParam: "54321"), title: "")),
                 ]
                 for (indexPath, streamKind) in tests {

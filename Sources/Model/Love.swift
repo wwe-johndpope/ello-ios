@@ -21,11 +21,11 @@ public final class Love: JSONAble, PostActionable {
     public let userId: String
 
     public var post: Post? {
-        return ElloLinkedStore.sharedInstance.getObject(self.postId, inCollection: MappingType.PostsType.rawValue) as? Post
+        return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .PostsType) as? Post
     }
 
     public var user: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.userId, inCollection: MappingType.UsersType.rawValue) as? User
+        return ElloLinkedStore.sharedInstance.getObject(self.userId, type: .UsersType) as? User
     }
 
 // MARK: Initialization
@@ -78,7 +78,7 @@ public final class Love: JSONAble, PostActionable {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(data: [String: AnyObject], fromLinked: Bool = false) -> JSONAble {
+    override public class func fromJSON(data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.LoveFromJSON.rawValue)
         var createdAt: NSDate
@@ -112,11 +112,10 @@ public final class Love: JSONAble, PostActionable {
             userId: json["user_id"].stringValue
         )
 
-        // store self in collection
-        if !fromLinked {
-            ElloLinkedStore.sharedInstance.setObject(love, forKey: love.id, inCollection: MappingType.LovesType.rawValue)
-        }
-
         return love
     }
+}
+
+extension Love: JSONSaveable {
+    var uniqId: String? { return id }
 }

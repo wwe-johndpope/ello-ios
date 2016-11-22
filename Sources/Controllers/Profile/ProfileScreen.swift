@@ -26,10 +26,6 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         set { self.relationshipControl.relationshipDelegate = newValue }
     }
 
-    public var navBar: ElloNavigationBar {
-        get { return self.navigationBar }
-    }
-
     public var coverImage: UIImage? {
         get { return coverImageView.image }
         set { coverImageView.image = newValue }
@@ -43,17 +39,18 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     // views
     let whiteSolidView = UIView()
     let loaderView = InterpolatedLoadingView()
+    public var topInsetView: UIView { return profileButtonsEffect }
     public let coverImageView = FLAnimatedImageView()
     public let relationshipControl = RelationshipControl()
     public let mentionButton = StyledButton(style: .BlackPill)
     public let collaborateButton = StyledButton(style: .BlackPill)
     public let hireButton = StyledButton(style: .BlackPill)
-    public let editButton = StyledButton(style: .BlackPill)
-    public let inviteButton = StyledButton(style: .BlackPill)
-    public let ghostLeftButton = StyledButton(style: .BlackPill)
-    public let ghostRightButton = StyledButton(style: .BlackPill)
-    public let profileButtonsEffect = UIVisualEffectView()
-    public var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
+    private let editButton = StyledButton(style: .BlackPill)
+    private let inviteButton = StyledButton(style: .BlackPill)
+    private let ghostLeftButton = StyledButton(style: .BlackPill)
+    private let ghostRightButton = StyledButton(style: .BlackPill)
+    private let profileButtonsEffect = UIVisualEffectView()
+    private var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
 
     // constraints
     private var whiteSolidTop: Constraint!
@@ -322,7 +319,7 @@ public class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     public func showNavBars() {
         animate {
-            let height = self.navBar.frame.height
+            let height = self.navigationBar.frame.height
             self.profileButtonsContainerTopConstraint.updateOffset(height)
             self.profileButtonsEffect.frame.origin.y = height
         }

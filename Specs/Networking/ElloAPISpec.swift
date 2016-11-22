@@ -27,93 +27,43 @@ class ElloAPISpec: QuickSpec {
             describe("paths") {
 
                 context("are valid") {
-                    it("AmazonCredentials is valid") {
-                        expect(ElloAPI.AmazonCredentials.path) ==  "/api/v2/assets/credentials"
-                    }
-                    it("Auth is valid") {
-                        expect(ElloAPI.Auth(email: "", password: "").path) == "/api/oauth/token"
-                    }
-                    it("Availability is valid") {
-                        expect(ElloAPI.Availability(content: [:]).path) == "/api/v2/availability"
-                    }
-                    it("CreatePost is valid") {
-                        expect(ElloAPI.CreatePost(body: [:]).path) == "/api/v2/posts"
-                    }
-                    it("Discover(type: .Featured) is valid") {
-                        expect(ElloAPI.Discover(type: .Featured).path) == "/api/v2/categories/posts/recent"
-                    }
-                    it("Discover(type: .Trending) is valid") {
-                        expect(ElloAPI.Discover(type: .Trending).path) == "/api/v2/discover/users/trending"
-                    }
-                    it("Discover(type: .Recent) is valid") {
-                        expect(ElloAPI.Discover(type: .Recent).path) == "/api/v2/discover/posts/recent"
-                    }
-                    it("CategoryPosts(slug: \"art\") is valid") {
-                        expect(ElloAPI.CategoryPosts(slug: "art").path) == "/api/v2/categories/art/posts/recent"
-                    }
-                    it("FlagComment is valid") {
-                        expect(ElloAPI.FlagComment(postId: "555", commentId: "666", kind: "some-string").path) == "/api/v2/posts/555/comments/666/flag/some-string"
-                    }
-                    it("FlagPost is valid") {
-                        expect(ElloAPI.FlagPost(postId: "456", kind: "another-kind").path) == "/api/v2/posts/456/flag/another-kind"
-                    }
-                    it("FindFriends is valid") {
-                        expect(ElloAPI.FindFriends(contacts: [:]).path) == "/api/v2/profile/find_friends"
-                    }
-                    it("FriendStream is valid") {
-                        expect(ElloAPI.FriendStream.path) == "/api/v2/streams/friend"
-                    }
-                    it("InfiniteScroll is valid") {
-                        let infiniteScrollEndpoint = ElloAPI.InfiniteScroll(queryItems: []) { return ElloAPI.FriendStream }
-                        expect(infiniteScrollEndpoint.path) == "/api/v2/streams/friend"
-                    }
-                    it("InviteFriends is valid") {
-                        expect(ElloAPI.InviteFriends(contact: "someContact").path) == "/api/v2/invitations"
-                    }
-                    it("NoiseStream is valid") {
-                        expect(ElloAPI.NoiseStream.path) == "/api/v2/streams/noise"
-                    }
-                    it("NotificationsStream is valid") {
-                        expect(ElloAPI.NotificationsStream(category: nil).path) == "/api/v2/notifications"
-                    }
-                    it("PostDetail is valid") {
-                        expect(ElloAPI.PostDetail(postParam: "some-param", commentCount: 10).path) == "/api/v2/posts/some-param"
-                    }
-                    it("PostComments is valid") {
-                        expect(ElloAPI.PostComments(postId: "fake-id").path) == "/api/v2/posts/fake-id/comments"
-                    }
-                    it("Profile is valid") {
-                        expect(ElloAPI.CurrentUserStream.path) == "/api/v2/profile"
-                    }
-                    it("ProfileUpdate is valid") {
-                        expect(ElloAPI.ProfileUpdate(body: [:]).path) == "/api/v2/profile"
-                    }
-                    it("ProfileDelete is valid") {
-                        expect(ElloAPI.ProfileDelete.path) == "/api/v2/profile"
-                    }
-                    it("ReAuth is valid") {
-                        expect(ElloAPI.ReAuth(token: "").path) == "/api/oauth/token"
-                    }
-                    it("Relationship is valid") {
-                        expect(ElloAPI.Relationship(userId: "1234", relationship: "friend").path) == "/api/v2/users/1234/add/friend"
-                    }
-                    it("UserCategories is valid") {
-                        expect(ElloAPI.UserCategories(categoryIds: ["1"]).path) == "/api/v2/profile/followed_categories"
-                    }
-                    it("UserStream is valid") {
-                        expect(ElloAPI.UserStream(userParam: "999").path) == "/api/v2/users/999"
-                    }
-                    it("UserStreamFollowers is valid") {
-                        expect(ElloAPI.UserStreamFollowers(userId: "321").path) == "/api/v2/users/321/followers"
-                    }
-                    it("UserStreamFollowing is valid") {
-                        expect(ElloAPI.UserStreamFollowing(userId: "123").path) == "/api/v2/users/123/following"
-                    }
-                    it("DeletePost is valid") {
-                        expect(ElloAPI.DeletePost(postId: "666").path) == "/api/v2/posts/666"
-                    }
-                    it("DeleteComment is valid") {
-                        expect(ElloAPI.DeleteComment(postId: "666", commentId: "777").path) == "/api/v2/posts/666/comments/777"
+                    let expectations: [(ElloAPI, String)] = [
+                        (.AmazonCredentials, "/api/v2/assets/credentials"),
+                        (.Auth(email: "", password: ""), "/api/oauth/token"),
+                        (.Availability(content: [:]), "/api/v2/availability"),
+                        (.Categories, "/api/v2/categories"),
+                        (.Category(slug: "art"), "/api/v2/categories/art"),
+                        (.CategoryPosts(slug: "art"), "/api/v2/categories/art/posts/recent"),
+                        (.CreatePost(body: [:]), "/api/v2/posts"),
+                        (.Discover(type: .Featured), "/api/v2/categories/posts/recent"),
+                        (.Discover(type: .Trending), "/api/v2/discover/users/trending"),
+                        (.Discover(type: .Recent), "/api/v2/discover/posts/recent"),
+                        (.FlagComment(postId: "555", commentId: "666", kind: "some-string"), "/api/v2/posts/555/comments/666/flag/some-string"),
+                        (.FlagPost(postId: "456", kind: "another-kind"), "/api/v2/posts/456/flag/another-kind"),
+                        (.FindFriends(contacts: [:]), "/api/v2/profile/find_friends"),
+                        (.FriendStream, "/api/v2/streams/friend"),
+                        (.InviteFriends(contact: "someContact"), "/api/v2/invitations"),
+                        (ElloAPI.InfiniteScroll(queryItems: []) { return ElloAPI.FriendStream }, "/api/v2/streams/friend"),
+                        (.NoiseStream, "/api/v2/streams/noise"),
+                        (.NotificationsStream(category: nil), "/api/v2/notifications"),
+                        (.PostDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
+                        (.PostComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),
+                        (.CurrentUserStream, "/api/v2/profile"),
+                        (.ProfileUpdate(body: [:]), "/api/v2/profile"),
+                        (.ProfileDelete, "/api/v2/profile"),
+                        (.ReAuth(token: ""), "/api/oauth/token"),
+                        (.Relationship(userId: "1234", relationship: "friend"), "/api/v2/users/1234/add/friend"),
+                        (.UserCategories(categoryIds: ["1"]), "/api/v2/profile/followed_categories"),
+                        (.UserStream(userParam: "999"), "/api/v2/users/999"),
+                        (.UserStreamFollowers(userId: "321"), "/api/v2/users/321/followers"),
+                        (.UserStreamFollowing(userId: "123"), "/api/v2/users/123/following"),
+                        (.DeletePost(postId: "666"), "/api/v2/posts/666"),
+                        (.DeleteComment(postId: "666", commentId: "777"), "/api/v2/posts/666/comments/777"),
+                    ]
+                    for (api, path) in expectations {
+                        it("\(api).path is valid") {
+                            expect(api.path) == path
+                        }
                     }
                 }
             }
@@ -183,6 +133,23 @@ class ElloAPISpec: QuickSpec {
                 for (endpoint, mappingType) in expectations {
                     it("\(endpoint.description) has the correct mappingType \(mappingType)") {
                         expect(endpoint.mappingType) == mappingType
+                    }
+                }
+            }
+
+            describe("pagingPaths") {
+
+                context("are valid") {
+                    let expectations: [(ElloAPI, String)] = [
+                        (.Category(slug: "art"), "/api/v2/categories/art/posts/recent"),
+                        (.PostDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param/comments"),
+                        (.CurrentUserStream, "/api/v2/profile/posts"),
+                        (.UserStream(userParam: "999"), "/api/v2/users/999/posts"),
+                    ]
+                    for (api, pagingPath) in expectations {
+                        it("\(api).pagingPath is valid") {
+                            expect(api.pagingPath) == pagingPath
+                        }
                     }
                 }
             }

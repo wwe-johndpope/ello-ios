@@ -23,7 +23,7 @@ class AvatarButtonSpec: QuickSpec {
                 it("should assign the asset url via User") {
                     let asset = Asset(url: url)
                     user.avatar = asset
-                    subject.setUser(user)
+                    subject.setUserAvatarURL(user.avatarURL())
                     expect(subject.imageURL) == url
                 }
 
@@ -37,7 +37,7 @@ class AvatarButtonSpec: QuickSpec {
                     let attachment = Attachment(url: url)
                     asset.large = attachment
                     user.avatar = asset
-                    subject.setUser(user)
+                    subject.setUserAvatarURL(user.avatarURL())
                     expect(subject.imageURL) == url
                 }
 
@@ -46,7 +46,7 @@ class AvatarButtonSpec: QuickSpec {
                     let attachment = Attachment(url: url)
                     asset.optimized = attachment
                     user.avatar = asset
-                    subject.setUser(user)
+                    subject.setUserAvatarURL(user.avatarURL())
                     expect(subject.imageURL) == url
                 }
 

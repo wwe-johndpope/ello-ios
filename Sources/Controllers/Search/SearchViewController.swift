@@ -8,7 +8,7 @@ public class SearchViewController: StreamableViewController {
     var _mockScreen: SearchScreenProtocol?
     public var screen: SearchScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! SearchScreen }
+        get { return _mockScreen ?? self.view as! SearchScreenProtocol }
     }
 
     override public func loadView() {
@@ -20,14 +20,14 @@ public class SearchViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         streamViewController.pullToRefreshEnabled = false
+        screen.gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
+        screen.hasGridViewToggle = streamViewController.streamKind.hasGridViewToggle
         updateInsets()
     }
 
     public func searchForPosts(terms: String) {
-        if let ss = self.view as? SearchScreen {
-            ss.searchField.text = terms
-            ss.searchForText()
-        }
+        screen.searchField.text = terms
+        screen.searchForText()
     }
 
     override func viewForStream() -> UIView {
@@ -36,10 +36,8 @@ public class SearchViewController: StreamableViewController {
 
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
-        if let ss = self.view as? SearchScreen {
-            positionNavBar(ss.navigationBar, visible: true)
-            ss.showNavBars()
-        }
+        positionNavBar(screen.navigationBar, visible: true)
+        screen.showNavBars()
         updateInsets()
 
         if scrollToBottom {
@@ -49,17 +47,13 @@ public class SearchViewController: StreamableViewController {
 
     override func hideNavBars() {
         super.hideNavBars()
-        if let ss = self.view as? SearchScreen {
-            positionNavBar(ss.navigationBar, visible: false)
-            ss.hideNavBars()
-        }
+        positionNavBar(screen.navigationBar, visible: false)
+        screen.hideNavBars()
         updateInsets()
     }
 
     private func updateInsets() {
-        if let ss = self.view as? SearchScreen {
-            updateInsets(navBar: ss.navigationBar, streamController: streamViewController, navBarsVisible: false)
-        }
+        updateInsets(navBar: screen.searchControlsContainer, streamController: streamViewController)
     }
 
 }
@@ -76,6 +70,7 @@ extension SearchViewController: SearchScreenDelegate {
         streamViewController.removeAllCellItems()
         streamViewController.loadingToken.cancelInitialPage()
         streamViewController.noResultsMessages = (title: "", body: "")
+        screen.hasGridViewToggle = false
     }
 
     public func searchFieldChanged(text: String, isPostSearch: Bool) {
@@ -104,7 +99,9 @@ extension SearchViewController: SearchScreenDelegate {
         searchText = text
         let endpoint = isPostSearch ? ElloAPI.SearchForPosts(terms: text) : ElloAPI.SearchForUsers(terms: text)
         streamViewController.noResultsMessages = (title: InterfaceString.Search.NoMatches, body: InterfaceString.Search.TryAgain)
-        streamViewController.streamKind = .SimpleStream(endpoint: endpoint, title: "")
+        let streamKind = StreamKind.SimpleStream(endpoint: endpoint, title: "")
+        screen.hasGridViewToggle = streamKind.hasGridViewToggle
+        streamViewController.streamKind = streamKind
         streamViewController.removeAllCellItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()

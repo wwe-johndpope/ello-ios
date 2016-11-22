@@ -3,17 +3,16 @@
 //
 
 public class DiscoverAllCategoriesViewController: StreamableViewController {
+
+    override public var tabBarItem: UITabBarItem? {
+        get { return UITabBarItem.item(.Sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
+        set { self.tabBarItem = newValue }
+    }
+
     var screen: DiscoverAllCategoriesScreen { return self.view as! DiscoverAllCategoriesScreen }
 
     required public init() {
         super.init(nibName: nil, bundle: nil)
-
-        title = InterfaceString.Discover.AllCategories
-        elloNavigationItem.title = title
-
-        let leftItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped(_:)))
-        elloNavigationItem.leftBarButtonItems = [leftItem]
-        elloNavigationItem.fixNavBarItemPadding()
 
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategories() }
         streamViewController.streamKind = .AllCategories
@@ -24,24 +23,34 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override public func loadView() {
-        let screen = DiscoverAllCategoriesScreen(navigationItem: elloNavigationItem)
+        title = InterfaceString.Discover.Title
+
+        if !isRootViewController() {
+            let item = UIBarButtonItem.backChevron(withController: self)
+            self.elloNavigationItem.leftBarButtonItems = [item]
+            self.elloNavigationItem.fixNavBarItemPadding()
+        }
+
+        elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
+
+        let screen = DiscoverAllCategoriesScreen()
+        screen.navigationItem = elloNavigationItem
         self.view = screen
         viewContainer = screen.streamContainer
     }
 
     func loadCategories() {
-        CategoryService().loadCategories({ [weak self] categories in
+        CategoryService().loadCategories().onSuccess { [weak self] categories in
             guard let sself = self else { return }
 
             let sortedCategories = CategoryList(categories: categories).categories
 
             sself.streamViewController.showInitialJSONAbles(sortedCategories)
-        })
+        }.ignoreFailures()
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBarHidden = true
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
@@ -71,11 +80,23 @@ public class DiscoverAllCategoriesViewController: StreamableViewController {
 
 // MARK: StreamViewDelegate
 extension DiscoverAllCategoriesViewController {
+
     override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
-        var items: [StreamCellItem] = CategoryList.metaCategories().map { StreamCellItem(jsonable: $0, type: .Category) }
-        if let categories = jsonables as? [Category] {
-            items += categories.map { StreamCellItem(jsonable: $0, type: .CategoryCard) }
+        guard let categories = jsonables as? [Category] else { return [] }
+
+        let metaCategories = categories.filter { $0.isMeta }
+        let cardCategories = categories.filter { !$0.isMeta }
+
+        let metaCategoryList: CategoryList
+        if metaCategories.count > 0 {
+            metaCategoryList = CategoryList(categories: metaCategories)
         }
+        else {
+            metaCategoryList = CategoryList.metaCategories()
+        }
+
+        var items: [StreamCellItem] = [StreamCellItem(jsonable: metaCategoryList, type: .CategoryList)]
+        items += cardCategories.map { StreamCellItem(jsonable: $0, type: .CategoryCard) }
         return items
     }
 }

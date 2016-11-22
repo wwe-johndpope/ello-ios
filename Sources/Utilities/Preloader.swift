@@ -12,7 +12,7 @@ public struct Preloader {
     public init(){}
 
     public func preloadImages(jsonables: [JSONAble]) {
-
+        
         for jsonable in jsonables {
 
             // activities avatar
@@ -78,6 +78,13 @@ public struct Preloader {
             // categories
             else if let category = jsonable as? Category,
                 url = category.tileURL
+            {
+                preloadUrl(url)
+            }
+
+            // promotionals
+            else if let promotional = jsonable as? PagePromotional,
+                url = promotional.tileURL
             {
                 preloadUrl(url)
             }

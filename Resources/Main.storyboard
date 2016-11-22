@@ -210,7 +210,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="rootViewControllerName" value="DiscoverViewController"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="rootViewControllerName" value="DiscoverAllCategoriesViewController"/>
                     </userDefinedRuntimeAttributes>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogf-9W-7zG" userLabel="First Responder" sceneMemberID="firstResponder"/>
