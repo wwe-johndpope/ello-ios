@@ -30,6 +30,7 @@ public enum StreamCellType: Equatable {
     case Image(data: Regionable?)
     case InviteFriends
     case OnboardingInviteFriends
+    case EmptyStream
     case NoPosts
     case Notification
     case PagePromotionalHeader
@@ -75,6 +76,7 @@ public enum StreamCellType: Equatable {
         CommentHeader,
         CreateComment,
         Embed(data: nil),
+        EmptyStream,
         Footer,
         Header,
         Image(data: nil),
@@ -123,6 +125,7 @@ public enum StreamCellType: Equatable {
         case CommentHeader, Header: return StreamHeaderCell.reuseIdentifier
         case CreateComment: return StreamCreateCommentCell.reuseIdentifier
         case Embed: return StreamEmbedCell.reuseEmbedIdentifier
+        case EmptyStream: return EmptyStreamCell.reuseEmbedIdentifier
         case Footer: return StreamFooterCell.reuseIdentifier
         case Image: return StreamImageCell.reuseIdentifier
         case InviteFriends, OnboardingInviteFriends: return StreamInviteFriendsCell.reuseIdentifier
@@ -170,6 +173,7 @@ public enum StreamCellType: Equatable {
         case CategoryList: return CategoryListCellPresenter.configure
         case CommentHeader, Header: return StreamHeaderCellPresenter.configure
         case CreateComment: return StreamCreateCommentCellPresenter.configure
+        case EmptyStream: return Emp
         case Embed: return StreamEmbedCellPresenter.configure
         case Footer: return StreamFooterCellPresenter.configure
         case Image: return StreamImageCellPresenter.configure

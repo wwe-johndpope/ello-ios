@@ -377,6 +377,8 @@
 		12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093671A6E146C00BF104E /* UIBarButtonItem.swift */; };
 		12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */; };
 		12B291381DDF5E9F0056C52E /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B291371DDF5E9F0056C52E /* CategoryCardView.swift */; };
+		12B2913A1DE4ED090056C52E /* EmptyStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B291391DE4ED090056C52E /* EmptyStreamCell.swift */; };
+		12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */; };
 		12B531011A93B75700E01D72 /* ElloLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B531001A93B75700E01D72 /* ElloLogoView.swift */; };
 		12BCEA3E1B6C0D4500AD85A9 /* NewContentServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BCEA3D1B6C0D4500AD85A9 /* NewContentServiceSpec.swift */; };
 		12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BF3CC01B66D68000CF4AE0 /* DateFormattingSpec.swift */; };
@@ -1333,6 +1335,8 @@
 		12B093671A6E146C00BF104E /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationController.swift; sourceTree = "<group>"; };
 		12B291371DDF5E9F0056C52E /* CategoryCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCardView.swift; sourceTree = "<group>"; };
+		12B291391DE4ED090056C52E /* EmptyStreamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCell.swift; sourceTree = "<group>"; };
+		12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCellPresenter.swift; sourceTree = "<group>"; };
 		12B531001A93B75700E01D72 /* ElloLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloLogoView.swift; sourceTree = "<group>"; };
 		12BA14411AB20F7500D5018B /* amazon-credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "amazon-credentials.json"; path = "Resources/StubbedResponses/amazon-credentials.json"; sourceTree = SOURCE_ROOT; };
 		12BCEA3D1B6C0D4500AD85A9 /* NewContentServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewContentServiceSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2193,6 +2197,7 @@
 				76B0B1901B41B1D0004C2D7B /* UserAvatarsCell.xib */,
 				76C050A91AA8C8CF0094E69A /* UserListItemCell.swift */,
 				76C050AC1AA8C9570094E69A /* UserListItemCell.xib */,
+				12B291391DE4ED090056C52E /* EmptyStreamCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2464,6 +2469,7 @@
 				1D7152D41D74A23D005998FE /* TextHeaderCellPresenter.swift */,
 				76B0B18E1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift */,
 				76C050A61AA8C8780094E69A /* UserListItemCellPresenter.swift */,
+				12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */,
 			);
 			path = CellDequeing;
 			sourceTree = "<group>";
@@ -4860,6 +4866,7 @@
 				1207C9701C73FEE000939ADB /* AsyncOperation.swift in Sources */,
 				12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */,
 				1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */,
+				12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */,
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
 				1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */,
 				1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */,
@@ -5004,6 +5011,7 @@
 				12E3A2751DBE811900D42599 /* Promotional.swift in Sources */,
 				1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */,
 				1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */,
+				12B2913A1DE4ED090056C52E /* EmptyStreamCell.swift in Sources */,
 				763458E01AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift in Sources */,
 				122B30D41C6A3FBC00C1B9D8 /* Love.swift in Sources */,
 				12D43A461AC864CC0039F54F /* StreamToggleCellPresenter.swift in Sources */,
