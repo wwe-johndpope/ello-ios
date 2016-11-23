@@ -651,12 +651,12 @@ class StreamDataSourceSpec: QuickSpec {
 
 
             describe("clientSidePostInsertIndexPath()") {
-                let one = NSIndexPath(forItem: 1, inSection: 0)
+                let zero = NSIndexPath(forItem: 0, inSection: 0)
                 let two = NSIndexPath(forItem: 2, inSection: 0)
                 let tests: [(NSIndexPath?, StreamKind)] = [
                     (nil, StreamKind.Discover(type: .Featured)),
                     (nil, StreamKind.CategoryPosts(slug: "art")),
-                    (one, StreamKind.Following),
+                    (zero, StreamKind.Following),
                     (nil, StreamKind.Starred),
                     (nil, StreamKind.SimpleStream(endpoint: ElloAPI.Loves(userId: "12345"), title: "NA")),
                     (nil, StreamKind.Notifications(category: "")),
