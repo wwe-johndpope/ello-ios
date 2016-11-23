@@ -2164,6 +2164,7 @@
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
 				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */,
+				12B291391DE4ED090056C52E /* EmptyStreamCell.swift */,
 				1D7152951D6CBE0E005998FE /* NoPostsCell.swift */,
 				1D7152971D6CBE24005998FE /* NoPostsCell.xib */,
 				1DB8C6AC1D7A26B1007E1447 /* SearchStreamCell.swift */,
@@ -2197,7 +2198,6 @@
 				76B0B1901B41B1D0004C2D7B /* UserAvatarsCell.xib */,
 				76C050A91AA8C8CF0094E69A /* UserListItemCell.swift */,
 				76C050AC1AA8C9570094E69A /* UserListItemCell.xib */,
-				12B291391DE4ED090056C52E /* EmptyStreamCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2446,6 +2446,7 @@
 				1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */,
 				12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */,
 				1D5933701D10ADC300EAF03D /* CategoryListCellPresenter.swift */,
+				12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */,
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
 				1DA18E531DCCFB8A000231CC /* PagePromotionalHeaderCellPresenter.swift */,
@@ -2469,7 +2470,6 @@
 				1D7152D41D74A23D005998FE /* TextHeaderCellPresenter.swift */,
 				76B0B18E1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift */,
 				76C050A61AA8C8780094E69A /* UserListItemCellPresenter.swift */,
-				12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */,
 			);
 			path = CellDequeing;
 			sourceTree = "<group>";

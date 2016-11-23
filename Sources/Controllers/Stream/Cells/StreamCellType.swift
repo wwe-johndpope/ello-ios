@@ -173,7 +173,7 @@ public enum StreamCellType: Equatable {
         case CategoryList: return CategoryListCellPresenter.configure
         case CommentHeader, Header: return StreamHeaderCellPresenter.configure
         case CreateComment: return StreamCreateCommentCellPresenter.configure
-        case EmptyStream: return Emp
+        case EmptyStream: return EmptyStreamCellPresenter.configure
         case Embed: return StreamEmbedCellPresenter.configure
         case Footer: return StreamFooterCellPresenter.configure
         case Image: return StreamImageCellPresenter.configure
@@ -204,6 +204,7 @@ public enum StreamCellType: Equatable {
         case CommentHeader, Header: return StreamHeaderCell.self
         case CreateComment: return StreamCreateCommentCell.self
         case Embed: return StreamEmbedCell.self
+        case EmptyStream: return EmptyStreamCell.self
         case Footer: return StreamFooterCell.self
         case Image: return StreamImageCell.self
         case InviteFriends, OnboardingInviteFriends: return StreamInviteFriendsCell.self
@@ -238,6 +239,8 @@ public enum StreamCellType: Equatable {
              SeeMoreComments:
             return 60
         case CreateComment:
+            return 75
+        case EmptyStream:
             return 75
         case Footer:
             return 44
@@ -283,6 +286,7 @@ public enum StreamCellType: Equatable {
              CreateComment,
              FullWidthSpacer,
              InviteFriends,
+             EmptyStream,
              OnboardingInviteFriends,
              NoPosts,
              Notification,
@@ -326,6 +330,7 @@ public enum StreamCellType: Equatable {
             SelectableCategoryCard,
             CategoryList,
             CreateComment,
+            EmptyStream,
             FullWidthSpacer(height: 0.0),
             Notification,
             PagePromotionalHeader,

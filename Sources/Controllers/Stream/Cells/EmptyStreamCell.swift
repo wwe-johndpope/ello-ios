@@ -15,7 +15,12 @@ public class EmptyStreamCell: UICollectionViewCell {
         static let labelBottomPadding: CGFloat = 10
     }
 
-    let titleLabel = UILabel()
+    public var title: String {
+        set { label.text = newValue }
+        get { return label.text ?? "" }
+    }
+
+    let label = UILabel()
     let logo = ElloLogoView()
 
     override public init(frame: CGRect) {
@@ -44,9 +49,8 @@ public class EmptyStreamCell: UICollectionViewCell {
 
         logo.snp_makeConstraints { make in
             make.top.equalTo(label).offset(Size.labelBottomPadding)
-            make.width.height.equalTo(logoWidth)
+            make.width.height.equalTo(Size.logoWidth)
             make.centerX.equalTo(contentView)
         }
     }
 }
-
