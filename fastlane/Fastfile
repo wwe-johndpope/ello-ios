@@ -1,11 +1,3 @@
-# handy commands to run if you're having issues with certs & profiles
-# cert -o "./certs"
-
-# To grab the dev provisioning profile use:
-# sigh -a "co.ello.ElloDev" --adhoc -o "./fastlane/profiles"
-
-# To grab the prod provisioning profile use:
-# sigh -a "co.ello.Ello" -o "./fastlane/profiles"
 require './generate_release_notes'
 
 fastlane_version "1.110.0"
@@ -28,7 +20,8 @@ before_all do
   )
 end
 
-desc 'Download certificates and provisioning profiles'
+desc "Download certificates and provisioning profiles"
+desc "handy to run if you're having issues with certs & profiles."
 lane :setup do
   sh "cert -o ./certs"
   sh "sigh -a co.ello.ElloDev --adhoc -o ./fastlane/profiles"
