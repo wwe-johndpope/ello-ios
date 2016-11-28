@@ -34,10 +34,8 @@ lane :setup do
   sh "sigh -a co.ello.Ello -o ./fastlane/profiles"
 end
 
-desc 'Makes sure that Fastlane is setup and working by compiling the source'
+desc 'Makes sure that Fastlane is setup and working by posting a message to Slack'
 lane :dry_run do
-  compile
-
   post_to_slack(message: "Successful Fastlane dry run :fallen_leaf:")
 end
 

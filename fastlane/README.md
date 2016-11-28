@@ -5,26 +5,31 @@ fastlane documentation
 sudo gem install fastlane
 ```
 # Available Actions
-### compile
+### setup
 ```
-fastlane compile
+fastlane setup
 ```
-
+Download certificates and provisioning profiles
+### dry_run
+```
+fastlane dry_run
+```
+Makes sure that Fastlane is setup and working by posting a message to Slack
 ### beta
 ```
 fastlane beta
 ```
-
+Submit a build to testflight
 ### store
 ```
 fastlane store
 ```
-
+Submit a build to the app store
 ### refresh_dsyms
 ```
 fastlane refresh_dsyms
 ```
-
+Downloads dSyms from Apple, and uploads them to Crashlytics
 
 ----
 
