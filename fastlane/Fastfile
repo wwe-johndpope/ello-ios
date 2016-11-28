@@ -162,10 +162,3 @@ private_lane :post_to_slack do |options|
     )
   end
 end
-
-error do |lane, exception|
-  slack(
-    message: exception.message,
-    success: false
-  )
-end
