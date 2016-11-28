@@ -5,30 +5,29 @@ fastlane documentation
 sudo gem install fastlane
 ```
 # Available Actions
-## iOS
-### ios testflight
+### compile
 ```
-fastlane ios testflight
-```
-
-### ios appstore
-```
-fastlane ios appstore
+fastlane compile
 ```
 
-### ios donut_devs
+### beta
 ```
-fastlane ios donut_devs
+fastlane beta
 ```
 
-### ios donut_testers
+### store
 ```
-fastlane ios donut_testers
+fastlane store
+```
+
+### refresh_dsyms
+```
+fastlane refresh_dsyms
 ```
 
 
 ----
 
-This README.md is auto-generated and will be re-generated every time to run [fastlane](https://fastlane.tools).
+This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
 More information about fastlane can be found on [https://fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [GitHub](https://github.com/fastlane/fastlane/tree/master/fastlane).

@@ -1,25 +1,3 @@
-# Customise this file, documentation can be found here:
-# https://github.com/KrauseFx/fastlane/tree/master/docs
-# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
-# can also be listed using the `fastlane actions` command
-
-# Change the syntax highlighting to Ruby
-# All lines starting with a # are ignored when running `fastlane`
-
-# By default, fastlane will send which actions are used
-# No personal data is shared, more information on https://github.com/fastlane/enhancer
-# Uncomment the following line to opt out
-# opt_out_usage
-
-# If you want to automatically update fastlane if a new version is available:
-# update_fastlane
-
-# This is the minimum version number required.
-# Update this, if you use features of a newer version
-fastlane_version "1.63.0"
-
-default_platform :ios
-
 # handy commands to run if you're having issues with certs & profiles
 # cert -o "./certs"
 
@@ -29,214 +7,158 @@ default_platform :ios
 # To grab the prod provisioning profile use:
 # sigh -a "co.ello.Ello" -o "./fastlane/profiles"
 
-platform :ios do
-  before_all do
-    ENV["FL_BUILD_NUMBER_BUILD_NUMBER"] = `/bin/bash -c "git rev-list master | wc -l | tr -d ' '"`.strip
+fastlane_version "1.110.0"
+generated_fastfile_id "9dadcd46-3eaf-4291-8129-b3f6f4f4e1ff"
 
-    required_env = {
-      "FL_VERSION_NUMBER_VERSION_NUMBER" => "current build number",
-      "PROD_APP_ID" =>                      "co.ello.Ello",
-      "SHARE_EXTENSION_PROD_APP_ID" =>      "co.ello.Ello.ShareExtension",
-      "DONUT_APP_ID" =>                     "co.ello.ElloStage",
-      "RAINBOW_APP_ID" =>                   "co.ello.ElloDev",
-      "CERTS_OUTPUT_PATH" =>                "./certs",
-      "PROFILE_PATH" =>                     "./fastlane/profiles",
-      "BUILD_OUTPUT_DIRECTORY" =>           "./Build",
-      "BUILD_OUTPUT_NAME" =>                "Ello.ipa",
-      "IPA_PATH" =>                         "./Build/Ello.ipa",
-      "GYM_OUTPUT_DIRECTORY" =>             "./Build",
-      "GYM_OUTPUT_NAME" =>                  "Ello.ipa",
-      "GYM_SCHEME" =>                       "Ello",
-      "XCODE_PROJECT" =>                    "Ello.xcodeproj",
-      "SLACK_URL" =>                        "YOUR_SLACK_URL_HERE",
-      "CRASHLYTICS_API_TOKEN" =>            "YOUR_CRASHLYTICS_API_TOKEN_HERE",
-      "CRASHLYTICS_BUILD_SECRET" =>         "YOUR_CRASHLYTICS_BUILD_SECRET_HERE",
-    }
-    required_env_error = false
+default_platform :ios
+
+before_all do
+  extract_from_env(
+    defaults: {
+      "CERTS_OUTPUT_PATH" =>           "./certs",
+      "PROFILE_PATH" =>                "./fastlane/profiles",
+      "BUILD_OUTPUT_DIRECTORY" =>      "./Build",
+      "BUILD_OUTPUT_NAME" =>           "Ello.ipa",
+      "IPA_PATH" =>                    "./Build/Ello.ipa",
+      "GYM_OUTPUT_DIRECTORY" =>        "./Build",
+      "GYM_OUTPUT_NAME" =>             "Ello.ipa",
+      "XCODE_PROJECT" =>               "Ello.xcodeproj",
+    },
+  )
+end
+
+desc 'Download certificates and provisioning profiles'
+lane :setup do
+  sh "cert -o ./certs"
+  sh "sigh -a co.ello.ElloDev --adhoc -o ./fastlane/profiles"
+  sh "sigh -a co.ello.Ello -o ./fastlane/profiles"
+end
+
+desc 'Makes sure that Fastlane is setup and working by compiling the source'
+lane :dry_run do
+  compile
+
+  post_to_slack(message: "Successful Fastlane dry run :fallen_leaf:")
+end
+
+desc 'Submit a build to testflight'
+lane :beta do
+  increment_build_and_version
+  compile
+
+  testflight
+
+  post_to_slack(scheme: ":ello:", destination: ":airplane:")
+end
+
+desc 'Submit a build to the app store'
+lane :store do
+  increment_build_and_version
+  compile
+
+  deliver(
+    submit_for_review: false,
+    automatic_release: false,
+    force: true
+  )
+
+  if ENV['CRASHLYTICS_API_TOKEN']
+    refresh_dsyms
+  end
+
+  post_to_slack(scheme: ":ello:", destination: ":apple:")
+end
+
+desc 'Downloads dSyms from Apple, and uploads them to Crashlytics'
+lane :refresh_dsyms do
+  extract_from_env(
+    required: {
+      "CRASHLYTICS_API_TOKEN" =>    "Your Crashlytics Api Token",
+      "CRASHLYTICS_BUILD_SECRET" => "Your Crashlytics Build Secret",
+    },
+  )
+
+  download_dsyms
+  upload_symbols_to_crashlytics(
+    api_token: ENV['CRASHLYTICS_API_TOKEN'],
+    build_secret: ENV['CRASHLYTICS_BUILD_SECRET'],
+  )
+  clean_build_artifacts
+end
+
+######################### PRIVATE LANES #########################
+
+private_lane :compile do
+  gym(
+    scheme: "Ello",
+    configuration: "Release",
+    sdk: "iphoneos",
+    clean: true
+  )
+end
+
+private_lane :extract_from_env do |options|
+  required_env_error = false
+
+  if required_env = options[:required]
     required_env.each do |key, value|
       if !ENV[key] || ENV[key] == ""
         UI.error "ENV[#{key.inspect}] should be set to #{value.inspect}"
         required_env_error = true
       end
     end
+  end
 
-    if required_env_error
-      abort
+  if defaults_env = options[:defaults]
+    defaults_env.each do |key, value|
+      if !ENV[key] || ENV[key] == ""
+        UI.message "ENV[#{key.inspect}] default value is #{value.inspect}"
+        ENV[key] = value
+      end
+    end
+  end
+
+  if required_env_error
+    abort
+  end
+end
+
+private_lane :increment_build_and_version do
+  build_number = `/bin/bash -c "git rev-list master | wc -l | tr -d ' '"`.strip
+  extract_from_env(
+    required: {
+      "VERSION_NUMBER" => "current version number"
+    },
+  )
+
+  increment_version_number version_number: ENV["VERSION_NUMBER"]
+  increment_build_number   build_number: build_number
+end
+
+private_lane :post_to_slack do |options|
+  if !ENV['SLACK_URL']
+    UI.error "SLACK_URL is missing, slack integration is disabled"
+  else
+    if options[:message]
+      message = options[:message]
+    else
+      scheme      = options[:scheme]
+      version     = get_version_number(xcodeproj: ENV["XCODE_PROJECT"])
+      build       = get_build_number(xcodeproj: ENV["XCODE_PROJECT"])
+      destination = options[:destination]
+
+      message = "<!here|here>: New :iphone: #{scheme} *#{version}* (#{build}) has been submitted to *#{destination}* :rocket:"
     end
 
-    increment_version_number
-    increment_build_number
-  end
-
-  ######################### PUBLIC LANES ##########################
-  lane :testflight do
-    sh "bundle install"
-
-    # setup the production configuration
-    sh "bundle exec rake generate:staging_keys"
-
-    cert(
-      output_path: ENV["CERTS_OUTPUT_PATH"]
-    )
-
-    udid = sigh(
-      app_identifier: ENV["PROD_APP_ID"],
-      output_path: ENV["PROFILE_PATH"],
-      development: false
-    )
-    # use the UDID of the newly created provisioning profile
-    ENV["PROFILE_UDID"] = udid
-
-    share_udid = sigh(
-      app_identifier: ENV["SHARE_EXTENSION_PROD_APP_ID"],
-      output_path: ENV["PROFILE_PATH"],
-      development: false
-    )
-
-    # use the UDID of the newly created provisioning profile
-    # for the share extension
-    ENV["SHARE_PROFILE_UDID"] = share_udid
-
-    gym(
-      configuration: "Release",
-      sdk: "iphoneos",
-      use_legacy_build_api: true,
-      clean: true
-    )
-
-    pilot(
-      skip_submission: false,
-      ipa: ENV["IPA_PATH"]
-    )
-
-    sh "bundle exec rake upload:appstore_dsym"
-
-    post_to_slack(scheme: ":ello:", destination: ":airplane:")
-  end
-
-  lane :appstore do
-
-    sh "bundle install"
-
-    # setup the production configuration
-    sh "bundle exec rake generate:prod_keys"
-
-    cert(
-      output_path: ENV["CERTS_OUTPUT_PATH"]
-    )
-
-    udid = sigh(
-      app_identifier: ENV["PROD_APP_ID"],
-      output_path: ENV["PROFILE_PATH"],
-      development: false
-    )
-    # use the UDID of the newly created provisioning profile
-    ENV["PROFILE_UDID"] = udid
-
-    gym(
-      configuration: "Release",
-      sdk: "iphoneos",
-      clean: true
-    )
-
-    deliver(
-      submit_for_review: false,
-      skip_screenshots: true,
-      skip_metadata: true,
-      automatic_release: false,
-      app_identifier: ENV["PROD_APP_ID"],
-      ipa: ENV["IPA_PATH"],
-      force: true
-    )
-
-    sh "bundle exec rake upload:appstore_dsym"
-
-    post_to_slack(scheme: ":ello:", destination: ":apple:")
-  end
-
-  lane :donut_devs do
-    donut(
-      groups: 'ios-devs',
-      release_notes_task: "bundle exec rake generate:release_notes_devs"
-    )
-  end
-
-  lane :donut_testers do
-    donut(
-      groups: 'ios-devs,testers',
-      release_notes_task: "bundle exec rake generate:release_notes"
-    )
-  end
-
-  ######################### PRIVATE LANES #########################
-
-  desc "Submit a Donut Build to Crashlytics"
-  desc "This will also make sure the profile is up to date"
-  private_lane :donut do |options|
-    groups = options[:groups]
-    release_notes_task = options[:release_notes_task]
-
-    sh "bundle install"
-
-    # setup the production configuration
-    sh "bundle exec rake generate:staging_keys"
-
-    cert(
-      output_path: ENV["CERTS_OUTPUT_PATH"]
-    )
-
-    udid = sigh(
-      app_identifier: ENV["DONUT_APP_ID"],
-      adhoc: true,
-      output_path: ENV["PROFILE_PATH"],
-      development: true
-    )
-
-    # use the UDID of the newly created provisioning profile
-    ENV["PROFILE_UDID"] = udid
-
-    gym(
-      configuration: "CrashlyticsStaging",
-      sdk: "iphoneos"
-    )
-
-    crashlytics(
-      crashlytics_path: './Pods/Crashlytics/Crashlytics.framework',
-      api_token: ENV["CRASHLYTICS_API_TOKEN"],
-      build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
-      ipa_path: ENV["IPA_PATH"],
-      groups: groups,
-      notifications: "YES",
-      notes_path: "./bin/crashlytics-staging-release-notes.md"
-    )
-
-    sh "bundle exec rake upload:donut_dsym"
-
-    post_to_slack(scheme: ":doughnut:", destination: "Crashlytics")
-
-  end
-
-  private_lane :post_to_slack do |options|
-    scheme      = options[:scheme]
-    version     = get_version_number(xcodeproj: ENV["XCODE_PROJECT"])
-    build       = get_build_number(xcodeproj: ENV["XCODE_PROJECT"])
-    destination = options[:destination]
-
     slack(
-      message: "<!here|here>: New :iphone: #{scheme} *#{version}* (#{build}) has been submitted to *#{destination}*  :rocket:",
-    )
-
-  end
-
-  error do |lane, exception|
-    slack(
-      message: exception.message,
-      success: false
+      message: message,
     )
   end
 end
 
-
-
-# More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
-# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+error do |lane, exception|
+  slack(
+    message: exception.message,
+    success: false
+  )
+end
