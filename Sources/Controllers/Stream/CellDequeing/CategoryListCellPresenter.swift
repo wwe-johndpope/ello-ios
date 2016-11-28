@@ -11,11 +11,12 @@ public struct CategoryListCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? CategoryListCell,
+        guard let
+            cell = cell as? CategoryListCell,
             categoryList = streamCellItem.jsonable as? CategoryList
-        {
-            cell.categoriesInfo = categoryList.categories.map { (title: $0.name, slug: $0.slug) }
-        }
+        else { return }
+
+        cell.categoriesInfo = categoryList.categories.map { (title: $0.name, slug: $0.slug) }
     }
 
 }
