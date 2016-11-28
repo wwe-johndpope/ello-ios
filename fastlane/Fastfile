@@ -52,10 +52,7 @@ lane :beta do
 
   testflight
   release_notes
-
-  if ENV['CRASHLYTICS_API_TOKEN']
-    refresh_dsyms
-  end
+  refresh_dsyms
 
   post_to_slack(scheme: ":ello:", destination: ":airplane:")
 end
@@ -70,12 +67,8 @@ lane :store do
     automatic_release: false,
     force: true
   )
-
   release_notes
-
-  if ENV['CRASHLYTICS_API_TOKEN']
-    refresh_dsyms
-  end
+  refresh_dsyms
 
   post_to_slack(scheme: ":ello:", destination: ":apple:")
 end
