@@ -1,3 +1,144 @@
+### Ello Build 1.17.0(5422) November 28, 2016
+
+    RELEASE NOTES
+
+------
+
+#### #230 - Inserts new posts correctly
+Removing the grid/list toggle changed our new post insertIndexPath in Following.
+
+------
+
+#### #209 - Category & Promotional Headers
+Categories now display a promotional header image, title, description, caption and user whose image is shown. Non category discover pages display page promotions above the content.
+
+Additionally, regular category screens display a horizontally scrolling tile navigation with all categories in it.
+
+------
+
+#### #228 - Fix non-dismissing spinner in onboarding
+Declining access contacts during onboarding was leaving a spinner up that blocked user interactions with the screen.
+
+------
+
+#### #227 - Fixes zero state when toggling on profile screen
+
+------
+
+#### #226 - Fixes AmazonCredentials (and, therefore, uploading)
+And found the "weird animating navigation bar items" animation bug.
+
+------
+
+#### #225 - Hide pull-to-refresh while the category cards animate in
+Fixes the "double spinner" issue.
+
+------
+
+#### #224 - Refactor the 'updateInsets' helper to always set 'topInset' according to the 'nav bar' (which is often a button container)
+update Search, Profile, and Category with new logic.
+
+------
+
+#### #223 - Fixes meta category paging & category selection
+Meta categories page correctly when visited from Discover landing screen
+[fixes #134596259](https://www.pivotaltracker.com/story/show/134596259)
+
+Categories have a selected state in the horizontal category nav
+[fixes #134596301](https://www.pivotaltracker.com/story/show/134596301)
+
+Additionally, viewing a meta category from Discover scrolls to the correct navigation tile.
+
+------
+
+#### #222 - Fixes inability to tap on categories in list nav
+* Tapping on categories in the list nav was failing due to a local variable shadowing the class instance variable with the same name. 
+
+* Selecting "Featured" failed on a force unrwap when creating a `DiscoverType`.
+
+------
+
+#### #221 - Adds support for 'meta' categories, but doesn't require them.
+This PR looks for 'meta' categories, but if none come back from the server, it falls back to the 'internal' meta category objects.
+
+------
+
+#### #220 - Removes Profile View Controller Nib
+
+------
+
+#### #219 - Moves the grid/list toggle into the nav bar
+And some pretty good refactors, too (*I hope!*).
+
+------
+
+#### #218 - Category Header Tweaks
+Primarily, this streamlines the handling of deeplinks as well as enabling deep linking onto the top of a new navigation controller stack (in ProfileCategories).
+
+------
+
+#### #216 - Support new category deep linking
+Deep linking to the new Category screens is setup. We may need to change this behavior pending feedback from Product but it at least functional.
+
+The large number of lines is deceiving. Most of them come from `category.json`. Specs should pass this go around.
+
+------
+
+#### #217 - Adds Tracking events to category/category headers
+Since "category opened" can also occur when tapping a `CategoryCardListView` button, there's a custom tracking event for that (`"category opened", {category: category.slug}`).
+
+------
+
+#### #215 - Wire up category header buttons
+Call to Action and posted/sponsored by buttons link correctly.
+
+------
+
+#### #214 - Make See All root of Discover
+This pr primarily replaces a post based discover landing screen with the category tile view. Additionally, it enables slug based loading of categories and "meta" categories. There is a still a bit of work to do to handle deep linking to a category in `AppViewController.swift` and `StreamViewController.swift`.
+
+------
+
+#### #213 - Adds the Featured/Trending/Recent cell
+Removed `.Category` and `.SeeAllCategories` cell types, and updated `CategoryList` to display the "meta" categories.
+
+Right now it's just a "print(category-slug)" placeholder action, this needs to be wired to @steam's work on having `CategoryViewController` accept a category slug.
+
+------
+
+#### #211 - Updates the CategoryGeneratorSpec to use CategoryStreamDestination
+And test for categories in the testing mock option.
+
+------
+
+#### #212 - Removes post headers from user streams
+Except for reposts.
+
+------
+
+#### #210 - Fixes to CategoryCardListView, and specs
+And wires up the "tap category card to view category posts" feature.
+
+------
+
+#### #208 - Category Header Specs
+
+------
+
+#### #207 - Adds categories card list view to CategoryViewController
+In order to get the "fetch all categories" request into the `CategoryViewController`, I added a protocol `CategoryStreamDestination` which extends `StreamDestination`.  It's a private var on `CategoryGenerator`, and the `destination` returns that object, cast as a `StreamDestination`.  The swift compiler isn't quite smart enough to see that `CategoryStreamDestination` *satisfies* the `StreamDestination` type requirement, so this little handshake is required there.  Not a big fan, I wish we could just use `var destination: CategoryStreamDestination?`, but oh well.
+
+Once the categories are loaded, we check for "did the user scroll?", and if not it adjusts the content inset so that the grid/list toggle is hidden.  The toggle doesn't start out hidden, but that enhancement probably wouldn't be terribly hard to add (in the "primary jsonable loaded" code?).
+
+No specs yet, need @steam's work on specs to add specs to this feature.
+
+------
+
+#### #206 - Implements CategoryHeaderCellSizeCalculator w/ specs
+Also some misc spec compile fixes, and refactored the `categoryIsMeta` code (moved it into `Category`).
+    
+------------
+
 ### Ello Build 1.3.0(3671) December 16, 2015
 
     RELEASE NOTES
