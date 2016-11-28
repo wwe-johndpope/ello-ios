@@ -10,11 +10,18 @@ sudo gem install fastlane
 fastlane setup
 ```
 Download certificates and provisioning profiles
+
+handy to run if you're having issues with certs & profiles.
 ### dry_run
 ```
 fastlane dry_run
 ```
 Makes sure that Fastlane is setup and working by posting a message to Slack
+### release_notes
+```
+fastlane release_notes
+```
+Generates release notes
 ### beta
 ```
 fastlane beta
