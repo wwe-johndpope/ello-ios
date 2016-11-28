@@ -30,7 +30,7 @@ public enum StreamCellType: Equatable {
     case Image(data: Regionable?)
     case InviteFriends
     case OnboardingInviteFriends
-    case EmptyStream
+    case EmptyStream(height: CGFloat)
     case NoPosts
     case Notification
     case PagePromotionalHeader
@@ -76,7 +76,7 @@ public enum StreamCellType: Equatable {
         CommentHeader,
         CreateComment,
         Embed(data: nil),
-        EmptyStream,
+        EmptyStream(height: 135),
         Footer,
         Header,
         Image(data: nil),
@@ -240,8 +240,8 @@ public enum StreamCellType: Equatable {
             return 60
         case CreateComment:
             return 75
-        case EmptyStream:
-            return 75
+        case let EmptyStream(height):
+            return height
         case Footer:
             return 44
         case Header:
@@ -330,7 +330,7 @@ public enum StreamCellType: Equatable {
             SelectableCategoryCard,
             CategoryList,
             CreateComment,
-            EmptyStream,
+            EmptyStream(height: 135),
             FullWidthSpacer(height: 0.0),
             Notification,
             PagePromotionalHeader,

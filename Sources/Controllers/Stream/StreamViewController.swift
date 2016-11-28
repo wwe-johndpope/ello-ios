@@ -366,7 +366,7 @@ public final class StreamViewController: BaseElloViewController {
                     self.clearForInitialLoad()
                     self.currentJSONables = []
                     var items = self.generateStreamCellItems([])
-                    items.append(StreamCellItem(type: .Text(data: TextRegion(content: "Nothing to see here"))))
+                    items.append(StreamCellItem(type: .EmptyStream(height: 135)))
                     self.appendUnsizedCellItems(items, withWidth: nil, completion: { _ in })
                 })
         }

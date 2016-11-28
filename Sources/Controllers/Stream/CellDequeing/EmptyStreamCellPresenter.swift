@@ -2,8 +2,6 @@
 ///  EmptyStreamCellPresenter.swift
 //
 
-import Foundation
-
 public struct EmptyStreamCellPresenter {
 
     public static func configure(
@@ -18,4 +16,3 @@ public struct EmptyStreamCellPresenter {
         cell.title = InterfaceString.EmptyStreamText
     }
 }
-
