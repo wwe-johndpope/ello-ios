@@ -5,7 +5,7 @@ require 'yaml'
 
 class GenerateReleaseNotes
 
-  def initialize(repo_name, previous_sha_file, access_token, audience)
+  def initialize(repo_name, previous_sha_file, access_token)
     return puts 'You must supply a valid github API token' unless access_token && access_token.length > 0
 
     @repo_name = repo_name
@@ -14,7 +14,6 @@ class GenerateReleaseNotes
     @pull_request_notes = ['RELEASE NOTES']
     # Grab out previous sha
     @previous_sha_yaml = YAML::load_file(@previous_sha_file)
-    @audience = audience
     @release_version = `/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "Support/Info.plist"`.strip()
     @number_of_commits = `git rev-list master | wc -l | tr -d ' '`.strip()
   end
@@ -55,22 +54,18 @@ class GenerateReleaseNotes
     `mkdir Build`
     File.open('Build/crashlytics-release-notes.md', 'w') { |f| f.write release_notes.gsub(/(#+ )/, "") }
 
-    if @audience && @audience.split(',').include?("testers")
-      # prepend new contents into release-notes
-      old = File.open('release-notes.md', 'a')
-      new = File.open('release-notes.new.md', 'w')
-      File.open(new, 'w') { |f|
-        f.puts release_notes
-        f.puts File.read(old)
-      }
-      File.rename(new, old)
+    # prepend new contents into release-notes
+    old = File.open('release-notes.md', 'a')
+    new = File.open('release-notes.new.md', 'w')
+    File.open(new, 'w') { |f|
+      f.puts release_notes
+      f.puts File.read(old)
+    }
+    File.rename(new, old)
 
-      # update the latest commit from here
-      @previous_sha_yaml["previous-sha"] = @newest_sha
-      File.open(@previous_sha_file, 'w') {|f| f.write @previous_sha_yaml.to_yaml }
-    else
-      puts release_notes.gsub(/(#+ )/, "")
-    end
+    # update the latest commit from here
+    @previous_sha_yaml["previous-sha"] = @newest_sha
+    File.open(@previous_sha_file, 'w') {|f| f.write @previous_sha_yaml.to_yaml }
   end
 
 end

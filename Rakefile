@@ -1,7 +1,6 @@
 require 'dotenv'
 require 'dotenv/tasks'
 require 'json'
-require './bin/generate_release_notes'
 
 Dotenv.load
 
@@ -10,28 +9,6 @@ namespace :generate do
   desc 'Generates strings file'
   task :strings do
     sh "find Sources -name '*.swift' | xargs genstrings -o ."
-  end
-
-  desc 'Generates release notes for devs'
-  task :release_notes_devs do
-    generate_release_notes('ios-devs')
-  end
-
-  desc 'Generates release notes for all testers'
-  task :release_notes do
-    generate_release_notes('ios-devs,testers')
-  end
-
-  def generate_release_notes(list, env = 'PROD')
-    ["GITHUB_API_TOKEN", "#{env}_CLIENT_KEY", "#{env}_CLIENT_SECRET", "#{env}_DOMAIN", "#{env}_HTTP_PROTOCOL", 'INVITE_FRIENDS_SALT', 'SEGMENT_KEY'].each do |env_var|
-      unless ENV[env_var]
-        puts "You must set a '#{env_var}' in your .env file to distribute. You can see examples/defaults in the .env.example file."
-        return
-      end
-    end
-
-    generator = GenerateReleaseNotes.new('ello/ello-ios', 'bin/previous-sha.yml', ENV['GITHUB_API_TOKEN'], list)
-    generator.create_release_notes
   end
 
   desc 'Sets cocoapods-keys for the app pointed at a local development server.'

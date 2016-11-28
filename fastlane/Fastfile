@@ -6,6 +6,7 @@
 
 # To grab the prod provisioning profile use:
 # sigh -a "co.ello.Ello" -o "./fastlane/profiles"
+require './generate_release_notes'
 
 fastlane_version "1.110.0"
 generated_fastfile_id "9dadcd46-3eaf-4291-8129-b3f6f4f4e1ff"
@@ -39,12 +40,25 @@ lane :dry_run do
   post_to_slack(message: "Successful Fastlane dry run :fallen_leaf:")
 end
 
+desc 'Generates release notes'
+lane :release_notes do
+  extract_from_env(
+    required: {"GITHUB_API_TOKEN" => "Github access token"}
+  )
+
+  Dir.chdir '..' do
+    generator = GenerateReleaseNotes.new('ello/ello-ios', 'bin/previous-sha.yml', ENV['GITHUB_API_TOKEN'])
+    generator.create_release_notes
+  end
+end
+
 desc 'Submit a build to testflight'
 lane :beta do
   increment_build_and_version
   compile
 
   testflight
+  release_notes
 
   post_to_slack(scheme: ":ello:", destination: ":airplane:")
 end
@@ -59,6 +73,8 @@ lane :store do
     automatic_release: false,
     force: true
   )
+
+  release_notes
 
   if ENV['CRASHLYTICS_API_TOKEN']
     refresh_dsyms
