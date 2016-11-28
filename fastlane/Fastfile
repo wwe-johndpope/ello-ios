@@ -53,6 +53,10 @@ lane :beta do
   testflight
   release_notes
 
+  if ENV['CRASHLYTICS_API_TOKEN']
+    refresh_dsyms
+  end
+
   post_to_slack(scheme: ":ello:", destination: ":airplane:")
 end
 
