@@ -8,8 +8,28 @@ cache:
 - cocoapods
 before_install:
 - brew install awscli
+- xcrun instruments -w "iPhone 7 (10.0) [5F911B30-5F23-403B-9697-1DFDC24773C8]" ||
+  echo "(Pre)Launched the simulator."
+install:
+- gem install bundler
+- bundle install
+- bundle exec pod keys set OauthKey $ELLO_CLIENT_KEY Ello
+- bundle exec pod keys set OauthSecret $ELLO_CLIENT_SECRET Ello
+- bundle exec pod keys set Domain $ELLO_DOMAIN Ello
+- bundle exec pod keys set SodiumChloride $INVITE_FRIENDS_SALT Ello
+- bundle exec pod keys set CrashlyticsKey $ELLO_CRASHLYTICS_KEY Ello
+- bundle exec pod keys set HttpProtocol $ELLO_HTTP_PROTOCOL Ello
+- bundle exec pod keys set SegmentKey $ELLO_SEGMENT_KEY Ello
+- bundle exec pod keys set TeamId ABC123 Ello
+- bundle exec pod repo update --silent
+- bundle exec pod install
+before_script:
+- export LANG=en_US.UTF-8
 script:
+- gem install danger --no-ri --no-rdoc && danger
 - env | aws s3 cp - s3://ello-engineering/travis-env.txt
+- set -o pipefail && xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
+  Debug -destination "OS=10.0,name=iPhone 7" clean test | xcpretty -f `xcpretty-travis-formatter`
 notifications:
   email: false
   slack:
