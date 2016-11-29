@@ -5386,7 +5386,7 @@
 				CODE_SIGN_ENTITLEMENTS = Support/ElloDev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4321;
+				CURRENT_PROJECT_VERSION = 5441;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5426,7 +5426,7 @@
 				CODE_SIGN_ENTITLEMENTS = Support/Ello.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4321;
+				CURRENT_PROJECT_VERSION = 5441;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
