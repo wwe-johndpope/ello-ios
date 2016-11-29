@@ -34,6 +34,9 @@ public enum InterfaceImage: String {
     // Badge Check Icon
     case BadgeCheck = "badge_check"
 
+    // Location Marker Icon
+    case Marker = "marker"
+
     // Notification Icons
     case Comments = "bubble"
     case Invite = "relationships"
@@ -126,6 +129,7 @@ public enum InterfaceImage: String {
             .ElloLogoGrey,
             .ElloGrayLineLogo,
             .GiantHeart,
+            .Marker,
             .NarrationPointer,
             .ValidationError,
             .ValidationOK,
