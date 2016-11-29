@@ -52,7 +52,6 @@ lane :beta do
 
   testflight
   release_notes
-  refresh_dsyms
 
   post_to_slack(scheme: ":ello:", destination: ":airplane:")
 end
@@ -63,11 +62,17 @@ lane :store do
   compile
 
   deliver(
+    skip_screenshots: true,
+    skip_metadata: true,
     submit_for_review: false,
     automatic_release: false,
     force: true
   )
   release_notes
+
+  puts "add to refresh_dsyms lane:"
+  puts "download_dsyms(version: \"#{version_number}\", build_number: \"#{build_number}\")"
+  download_dsyms(version: version_number, build_number: build_number)
   refresh_dsyms
 
   post_to_slack(scheme: ":ello:", destination: ":apple:")
@@ -82,6 +87,7 @@ lane :refresh_dsyms do
     },
   )
 
+  download_dsyms(version: "1.18.0", build_number: "5441")
   download_dsyms(version: "1.17.0", build_number: "5299")
   download_dsyms(version: "1.16.0", build_number: "5156")
   upload_symbols_to_crashlytics
@@ -125,15 +131,22 @@ private_lane :extract_from_env do |options|
   end
 end
 
+def build_number
+  `/bin/bash -c "git rev-list HEAD | wc -l | tr -d ' '"`.strip
+end
+
+def version_number
+  ENV["VERSION_NUMBER"]
+end
+
 private_lane :increment_build_and_version do
-  build_number = `/bin/bash -c "git rev-list master | wc -l | tr -d ' '"`.strip
   extract_from_env(
     required: {
       "VERSION_NUMBER" => "current version number"
     },
   )
 
-  increment_version_number version_number: ENV["VERSION_NUMBER"]
+  increment_version_number version_number: version_number
   increment_build_number   build_number: build_number
 end
 
