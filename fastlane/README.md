@@ -5,30 +5,41 @@ fastlane documentation
 sudo gem install fastlane
 ```
 # Available Actions
-## iOS
-### ios testflight
+### setup
 ```
-fastlane ios testflight
+fastlane setup
 ```
+Download certificates and provisioning profiles
 
-### ios appstore
+handy to run if you're having issues with certs & profiles.
+### dry_run
 ```
-fastlane ios appstore
+fastlane dry_run
 ```
-
-### ios donut_devs
+Makes sure that Fastlane is setup and working by posting a message to Slack
+### release_notes
 ```
-fastlane ios donut_devs
+fastlane release_notes
 ```
-
-### ios donut_testers
+Generates release notes
+### beta
 ```
-fastlane ios donut_testers
+fastlane beta
 ```
-
+Submit a build to testflight
+### store
+```
+fastlane store
+```
+Submit a build to the app store
+### refresh_dsyms
+```
+fastlane refresh_dsyms
+```
+Downloads dSyms from Apple, and uploads them to Crashlytics
 
 ----
 
-This README.md is auto-generated and will be re-generated every time to run [fastlane](https://fastlane.tools).
+This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
 More information about fastlane can be found on [https://fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [GitHub](https://github.com/fastlane/fastlane/tree/master/fastlane).

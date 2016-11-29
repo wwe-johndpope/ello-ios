@@ -36,3 +36,5 @@ tmp/
 
 /fastlane/report.xml
 /fastlane/test_output/
+/certs/
+/fastlane/profiles/
