@@ -189,7 +189,6 @@ class UserSpec: QuickSpec {
                     expect(user.avatar).to(beAKindOf(Asset.self))
                     expect(user.identifiableBy) == ""
                     expect(user.postsCount!) == 4
-                    expect(user.location) == "Denver"
                     expect(user.followersCount!) == "0"
                     expect(user.followingCount!) == 0
                     expect(user.totalViewsCount!) == 9762
@@ -262,7 +261,6 @@ class UserSpec: QuickSpec {
                         ])
 
                         user.totalViewsCount = 5003
-                        user.location = "Boulder"
 
                         NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
                         let unArchivedUser = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as! User
@@ -282,7 +280,6 @@ class UserSpec: QuickSpec {
                         expect(unArchivedUser.hasSharingEnabled) == true
                         expect(unArchivedUser.hasRepostingEnabled) == true
                         expect(unArchivedUser.totalViewsCount) == 5003
-                        expect(unArchivedUser.location) == "Boulder"
 
                         let firstPost = unArchivedUser.posts!.first!
                         expect(firstPost.id) == "sample-post-id"
