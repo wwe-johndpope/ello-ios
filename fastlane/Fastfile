@@ -82,11 +82,9 @@ lane :refresh_dsyms do
     },
   )
 
-  download_dsyms
-  upload_symbols_to_crashlytics(
-    api_token: ENV['CRASHLYTICS_API_TOKEN'],
-    build_secret: ENV['CRASHLYTICS_BUILD_SECRET'],
-  )
+  download_dsyms(version: "1.17.0", build_number: "5299")
+  download_dsyms(version: "1.16.0", build_number: "5156")
+  upload_symbols_to_crashlytics
   clean_build_artifacts
 end
 
