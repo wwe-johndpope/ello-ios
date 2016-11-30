@@ -48,10 +48,12 @@ public class CategoryCardView: UIView {
 
     private func arrange() {
         if let url = info.imageURL {
-            let image = UIImageView()
-            image.pin_setImageFromURL(url)
-            addSubview(image)
-            image.snp_makeConstraints { $0.edges.equalTo(self) }
+            let imageView = UIImageView()
+            imageView.clipsToBounds = true
+            imageView.contentMode = .ScaleAspectFill
+            imageView.pin_setImageFromURL(url)
+            addSubview(imageView)
+            imageView.snp_makeConstraints { $0.edges.equalTo(self) }
         }
 
         addSubview(overlay)
