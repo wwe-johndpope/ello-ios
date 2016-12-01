@@ -24,11 +24,11 @@ class CreateProfileScreenSpec: QuickSpec {
         }
         func assignBio(bio: String?) -> ValidationState {
             didAssignBio = true
-            return (name?.isEmpty == false) ? .OK : .None
+            return (bio?.isEmpty == false) ? .OK : .None
         }
         func assignLinks(links: String?) -> ValidationState {
             didAssignLinks = true
-            return (name?.isEmpty == false) ? .OK : .None
+            return (links?.isEmpty == false) ? .OK : .None
         }
         func assignCoverImage(image: ImageRegionData) {
             didAssignCoverImage = true
