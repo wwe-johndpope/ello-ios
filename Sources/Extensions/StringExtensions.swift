@@ -386,6 +386,14 @@ public extension String {
         return false
     }
 
+    func split(char char: Character) -> [String] {
+        return characters.split { $0 == char }.map { String($0) }
+    }
+
+    func trimmed() -> String {
+        return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    }
+
     var camelCase: String {
         let splits = self.characters.split { $0 == "_" }.map { String($0) }
         var capSplits: [String] = splits.map { s in

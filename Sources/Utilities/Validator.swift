@@ -4,6 +4,31 @@
 
 public struct Validator {
 
+    public static func hasValidLinks(links: String) -> Bool {
+        let splitLinks = links.split(char: ",").map { $0.trimmed() }
+        return splitLinks.count > 0 && splitLinks.all {
+            return Validator.isValidLink($0)
+        }
+    }
+
+    public static func isValidLink(link: String) -> Bool {
+        guard let url = NSURL(string: link) else {
+            return false
+        }
+
+        if url.scheme?.lowercaseString == "http" || url.scheme?.lowercaseString == "https" {
+            return isValidHost(url.host)
+        }
+        else {
+            return isValidLink("http://\(link)")
+        }
+    }
+
+    private static func isValidHost(host: String?) -> Bool {
+        guard let host = host else { return false }
+        return host.contains(".") && !host.beginsWith(".") && !host.endsWith(".")
+    }
+
     public static func hasValidSignUpCredentials(email email: String, username: String, password: String) -> Bool {
         return isValidEmail(email) && isValidUsername(username) && isValidPassword(password)
     }
