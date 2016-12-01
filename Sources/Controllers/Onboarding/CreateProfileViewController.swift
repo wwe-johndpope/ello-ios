@@ -96,7 +96,14 @@ extension CreateProfileViewController: OnboardingStepController {
     public func onboardingStepBegin() {
         didSetName = (onboardingData.name?.isEmpty == false)
         didSetBio = (onboardingData.bio?.isEmpty == false)
-        didSetLinks = (onboardingData.links?.isEmpty == false)
+        if let links = onboardingData.links {
+            didSetLinks = !links.isEmpty
+            linksAreValid = Validator.hasValidLinks(links)
+        }
+        else {
+            didSetLinks = false
+            linksAreValid = false
+        }
         didUploadAvatarImage = (onboardingData.avatarImage != nil)
         didUploadCoverImage = (onboardingData.coverImage != nil)
         onboardingViewController?.hasAbortButton = true
