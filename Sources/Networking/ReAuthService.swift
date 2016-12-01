@@ -9,7 +9,6 @@ public class ReAuthService {
     public func reAuthenticateToken(success success: AuthSuccessCompletion, failure: ElloFailureCompletion, noNetwork: ElloEmptyCompletion) {
         let endpoint: ElloAPI
         let token = AuthToken()
-        let prevToken = token.token
         let refreshToken = token.refreshToken
         if let refreshToken = refreshToken where token.isPasswordBased {
             endpoint = .ReAuth(token: refreshToken)
