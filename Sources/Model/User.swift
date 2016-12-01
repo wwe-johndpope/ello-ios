@@ -221,8 +221,10 @@ public final class User: JSONAble {
 
     public override func merge(other: JSONAble) -> JSONAble {
         if let otherUser = other as? User {
-            if (otherUser.formattedShortBio ?? "").characters.count == 0 {
+            if otherUser.formattedShortBio == nil {
                 otherUser.formattedShortBio = formattedShortBio
+            }
+            if otherUser.externalLinksList == nil {
                 otherUser.externalLinksList = externalLinksList
             }
             return otherUser
@@ -258,7 +260,7 @@ public final class User: JSONAble {
         user.lovesCount = json["loves_count"].int
         user.followersCount = json["followers_count"].stringValue
         user.followingCount = json["following_count"].int
-        user.formattedShortBio = json["formatted_short_bio"].stringValue
+        user.formattedShortBio = json["formatted_short_bio"].string
         // grab links
         if let links = json["external_links_list"].array {
             let externalLinks = links.flatMap({ $0.dictionaryObject as? [String: String] })
