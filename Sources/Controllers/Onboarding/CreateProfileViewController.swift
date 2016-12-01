@@ -13,14 +13,16 @@ public class CreateProfileViewController: UIViewController, HasAppController {
     var didSetName = false
     var didSetBio = false
     var didSetLinks = false
+    var linksAreValid = false
+    var debouncedLinksValidator = debounce(0.5)
     var didUploadCoverImage = false
     var didUploadAvatarImage = false
-    var didSetAnything: Bool {
-        return didSetName ||
+    var profileIsValid: Bool {
+        return (didSetName ||
             didSetBio ||
             didSetLinks ||
             didUploadCoverImage ||
-            didUploadAvatarImage
+            didUploadAvatarImage) && (!didSetLinks || linksAreValid)
     }
 
     override public func loadView() {
@@ -39,33 +41,54 @@ extension CreateProfileViewController: CreateProfileDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
 
-    func assignName(name: String?) {
+    func assignName(name: String?) -> ValidationState {
         onboardingData.name = name
         didSetName = (name?.isEmpty == false)
-        onboardingViewController?.canGoNext = didSetAnything
+        onboardingViewController?.canGoNext = profileIsValid
+        return didSetName ? .OKSmall : .None
     }
 
-    func assignBio(bio: String?) {
+    func assignBio(bio: String?) -> ValidationState {
         onboardingData.bio = bio
         didSetBio = (bio?.isEmpty == false)
-        onboardingViewController?.canGoNext = didSetAnything
+        onboardingViewController?.canGoNext = profileIsValid
+        return didSetBio ? .OKSmall : .None
     }
 
-    func assignLinks(links: String?) {
-        onboardingData.links = links
-        didSetLinks = (links?.isEmpty == false)
-        onboardingViewController?.canGoNext = didSetAnything
+    func assignLinks(links: String?) -> ValidationState {
+        if let links = links where Validator.hasValidLinks(links) {
+            onboardingData.links = links
+            didSetLinks = true
+            linksAreValid = true
+        }
+        else {
+            onboardingData.links = nil
+            if links == nil || links == "" {
+                didSetLinks = false
+            }
+            else {
+                didSetLinks = true
+            }
+            linksAreValid = false
+        }
+        onboardingViewController?.canGoNext = profileIsValid
+
+        debouncedLinksValidator { [weak self] in
+            guard let sself = self else { return }
+            sself.screen.linksValid = sself.didSetLinks ? (sself.linksAreValid ? true : false) : nil
+        }
+        return linksAreValid ? .OKSmall : .None
     }
 
     func assignCoverImage(image: ImageRegionData) {
         didUploadCoverImage = true
         onboardingData.coverImage = image
-        onboardingViewController?.canGoNext = didSetAnything
+        onboardingViewController?.canGoNext = profileIsValid
     }
     func assignAvatar(image: ImageRegionData) {
         didUploadAvatarImage = true
         onboardingData.avatarImage = image
-        onboardingViewController?.canGoNext = didSetAnything
+        onboardingViewController?.canGoNext = profileIsValid
     }
 }
 
@@ -77,7 +100,7 @@ extension CreateProfileViewController: OnboardingStepController {
         didUploadAvatarImage = (onboardingData.avatarImage != nil)
         didUploadCoverImage = (onboardingData.coverImage != nil)
         onboardingViewController?.hasAbortButton = true
-        onboardingViewController?.canGoNext = didSetAnything
+        onboardingViewController?.canGoNext = profileIsValid
 
         screen.name = onboardingData.name
         screen.bio = onboardingData.bio

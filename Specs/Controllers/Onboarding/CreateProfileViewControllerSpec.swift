@@ -58,7 +58,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                     }
                     it("sets 'didSet' vars if everything is set") {
                         onboardingData.name = "my name"
-                        onboardingData.links = "my links"
+                        onboardingData.links = "http://my.links"
                         onboardingData.bio = "my bio"
                         let image = ImageRegionData(image: UIImage.imageWithColor(.blueColor())!)
                         onboardingData.coverImage = image
@@ -76,7 +76,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                     beforeEach {
                         image = ImageRegionData(image: UIImage.imageWithColor(.blueColor())!)
                         onboardingData.name = "my name"
-                        onboardingData.links = "my links"
+                        onboardingData.links = "http://my.links"
                         onboardingData.bio = "my bio"
                         onboardingData.coverImage = image
                         onboardingData.avatarImage = image
@@ -87,7 +87,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                         expect(mockScreen.name) == "my name"
                     }
                     it("sets links") {
-                        expect(mockScreen.links) == "my links"
+                        expect(mockScreen.links) == "http://my.links"
                     }
                     it("sets bio") {
                         expect(mockScreen.bio) == "my bio"
@@ -117,7 +117,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                     }
                     it("if everything is set, 'canGoNext' is true") {
                         onboardingData.name = "my name"
-                        onboardingData.links = "my links"
+                        onboardingData.links = "http://my.links"
                         onboardingData.bio = "my bio"
                         let image = ImageRegionData(image: UIImage.imageWithColor(.blueColor())!)
                         onboardingData.coverImage = image
@@ -139,8 +139,8 @@ class CreateProfileViewControllerSpec: QuickSpec {
                     expect(onboardingViewController.canGoNext) == true
                 }
                 it("forwards links") {
-                    subject.assignLinks("my links")
-                    expect(onboardingData.links) == "my links"
+                    subject.assignLinks("http://my.links")
+                    expect(onboardingData.links) == "http://my.links"
                     expect(subject.didSetLinks) == true
                     expect(subject.didSetBio) == false
                     expect(onboardingViewController.canGoNext) == true
@@ -189,11 +189,11 @@ class CreateProfileViewControllerSpec: QuickSpec {
                 }
                 it("changed name,links,bio") {
                     subject.assignName("my name")
-                    subject.assignLinks("my links")
+                    subject.assignLinks("http://my.links")
                     subject.assignBio("my bio")
                     subject.onboardingWillProceed(false, proceedClosure: { _ in })
                     expect(props["name"] as? String) == "my name"
-                    expect(props["external_links"] as? String) == "my links"
+                    expect(props["external_links"] as? String) == "http://my.links"
                     expect(props["unsanitized_short_bio"] as? String) == "my bio"
                 }
                 // ElloS3 doesn't support/use the shared provider paradigm

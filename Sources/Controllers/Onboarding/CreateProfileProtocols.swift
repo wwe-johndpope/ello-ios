@@ -6,9 +6,9 @@ protocol CreateProfileDelegate: class {
     func presentController(controller: UIViewController)
     func dismissController()
 
-    func assignName(name: String?)
-    func assignBio(bio: String?)
-    func assignLinks(links: String?)
+    func assignName(name: String?) -> ValidationState
+    func assignBio(bio: String?) -> ValidationState
+    func assignLinks(links: String?) -> ValidationState
     func assignCoverImage(image: ImageRegionData)
     func assignAvatar(image: ImageRegionData)
 }

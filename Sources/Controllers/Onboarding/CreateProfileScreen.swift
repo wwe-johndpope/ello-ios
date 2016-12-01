@@ -380,8 +380,7 @@ extension CreateProfileScreen: UITextViewDelegate {
             if replacementText == "\n" {
                 text = originalText
             }
-            delegate?.assignName(text)
-            nameTextView.validationState = text.isEmpty ? .None : .OKSmall
+            nameTextView.validationState = delegate?.assignName(text) ?? .None
 
             if replacementText == "\n" {
                 nameTextView.resignFirstResponder()
@@ -389,11 +388,9 @@ extension CreateProfileScreen: UITextViewDelegate {
                 return false
             }
         case bioTextView:
-            delegate?.assignBio(text)
-            bioTextView.validationState = text.isEmpty ? .None : .OKSmall
+            bioTextView.validationState = delegate?.assignBio(text) ?? .None
         case linksTextView:
-            delegate?.assignLinks(text)
-            linksTextView.validationState = text.isEmpty ? .None : .OKSmall
+            linksTextView.validationState = delegate?.assignLinks(text) ?? .None
         default: break
         }
 

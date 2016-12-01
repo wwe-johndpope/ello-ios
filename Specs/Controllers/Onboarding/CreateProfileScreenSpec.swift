@@ -18,14 +18,17 @@ class CreateProfileScreenSpec: QuickSpec {
         func presentController(controller: UIViewController) {}
         func dismissController() {}
 
-        func assignName(name: String?) {
+        func assignName(name: String?) -> ValidationState {
             didAssignName = true
+            return (name?.isEmpty == false) ? .OK : .None
         }
-        func assignBio(bio: String?) {
+        func assignBio(bio: String?) -> ValidationState {
             didAssignBio = true
+            return (name?.isEmpty == false) ? .OK : .None
         }
-        func assignLinks(links: String?) {
+        func assignLinks(links: String?) -> ValidationState {
             didAssignLinks = true
+            return (name?.isEmpty == false) ? .OK : .None
         }
         func assignCoverImage(image: ImageRegionData) {
             didAssignCoverImage = true
