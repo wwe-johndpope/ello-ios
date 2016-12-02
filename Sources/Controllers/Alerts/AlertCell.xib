@@ -37,16 +37,19 @@
                                     <action selector="didUpdateInput" destination="bcg-QX-D1W" eventType="editingChanged" id="ueK-NS-OMy"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puD-t2-fUB" userLabel="okButton" customClass="ElloButton" customModule="Ello" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puD-t2-fUB" userLabel="okButton" customClass="StyledButton" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="155" height="49"/>
                                 <state key="normal" title="OK"/>
                                 <connections>
                                     <action selector="didTapOkButton" destination="bcg-QX-D1W" eventType="touchUpInside" id="6oh-3u-gKT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="see-O7-Ve3" userLabel="cancelButton" customClass="LightElloButton" customModule="Ello" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="see-O7-Ve3" userLabel="cancelButton" customClass="StyledButton" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="165" y="0.0" width="155" height="49"/>
                                 <state key="normal" title="Cancel"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="LightGray"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapCancelButton" destination="bcg-QX-D1W" eventType="touchUpInside" id="SZP-Ou-Nao"/>
                                 </connections>

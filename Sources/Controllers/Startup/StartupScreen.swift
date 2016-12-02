@@ -18,8 +18,8 @@ public class StartupScreen: EmptyScreen {
     weak var delegate: StartupDelegate?
 
     let logoImage = FLAnimatedImageView()
-    let signUpButton = GreenElloButton()
-    let loginButton = RoundedGrayElloButton()
+    let signUpButton = StyledButton(style: .Green)
+    let loginButton = StyledButton(style: .RoundedGray)
 
     override func setText() {
         if let resource = NSBundle.mainBundle().pathForResource("ello-crazy-logo", ofType: "gif") {

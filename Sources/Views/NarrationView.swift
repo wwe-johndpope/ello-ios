@@ -8,8 +8,8 @@ public class NarrationView: UIView {
         static let height = CGFloat(112)
         static let pointer = CGSize(width: 12, height: 6)
     }
-    private let closeButton: ElloButton = {
-        let closeButton = ElloButton()
+    private let closeButton: StyledButton = {
+        let closeButton = StyledButton()
         closeButton.setTitle("\u{2573}", forState: .Normal)
         closeButton.sizeToFit()
         closeButton.userInteractionEnabled = false

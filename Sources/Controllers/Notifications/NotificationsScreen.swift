@@ -80,32 +80,32 @@ public class NotificationsScreen: UIView {
             .withHeight(self.frame.height)
     }
 
-    func allButtonTapped(sender: NotificationFilterButton) {
+    func allButtonTapped(sender: UIButton) {
         filterBar.selectButton(sender)
         delegate?.activatedCategory(NotificationFilterType.All.rawValue)
     }
 
-    func commentsButtonTapped(sender: NotificationFilterButton) {
+    func commentsButtonTapped(sender: UIButton) {
         filterBar.selectButton(sender)
         delegate?.activatedCategory(NotificationFilterType.Comments.rawValue)
     }
 
-    func mentionButtonTapped(sender: NotificationFilterButton) {
+    func mentionButtonTapped(sender: UIButton) {
         filterBar.selectButton(sender)
         delegate?.activatedCategory(NotificationFilterType.Mention.rawValue)
     }
 
-    func heartButtonTapped(sender: NotificationFilterButton) {
+    func heartButtonTapped(sender: UIButton) {
         filterBar.selectButton(sender)
         delegate?.activatedCategory(NotificationFilterType.Heart.rawValue)
     }
 
-    func repostButtonTapped(sender: NotificationFilterButton) {
+    func repostButtonTapped(sender: UIButton) {
         filterBar.selectButton(sender)
         delegate?.activatedCategory(NotificationFilterType.Repost.rawValue)
     }
 
-    func inviteButtonTapped(sender: NotificationFilterButton) {
+    func inviteButtonTapped(sender: UIButton) {
         filterBar.selectButton(sender)
         delegate?.activatedCategory(NotificationFilterType.Relationship.rawValue)
     }

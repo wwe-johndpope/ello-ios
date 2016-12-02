@@ -188,15 +188,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwA-sj-Jg4" userLabel="Button container">
                                 <rect key="frame" x="0.0" y="588" width="375" height="79"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsN-Mj-FcD" userLabel="Get started Button" customClass="GreenElloButton" customModule="Ello" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsN-Mj-FcD" userLabel="Get started Button" customClass="StyledButton" customModule="Ello" customModuleProvider="target">
                                         <rect key="frame" x="15" y="15" width="345" height="49"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="384" id="LOK-KA-ErG"/>
                                             <constraint firstAttribute="height" constant="49" id="vYa-KY-AeO"/>
                                         </constraints>
                                         <state key="normal" title="Get started">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Green"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="didTouchGetStarted:" destination="wI7-5z-elW" eventType="touchUpInside" id="lNe-Ya-Ugl"/>
                                         </connections>

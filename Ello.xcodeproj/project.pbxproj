@@ -219,7 +219,6 @@
 		122D1B9F1C613134001386CE /* ElloTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE691A4339EF00493660 /* ElloTextField.swift */; };
 		122D1BA11C613161001386CE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE431A43397400493660 /* Colors.swift */; };
 		122D1BA21C613181001386CE /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D061B4E1AAA192200493435 /* Keyboard.swift */; };
-		122D1BA31C61345E001386CE /* ElloButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE651A4339EF00493660 /* ElloButton.swift */; };
 		122D1BA41C61347B001386CE /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */; };
 		122D1BA51C6134A5001386CE /* AlertCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */; };
 		122D1BA61C6134D5001386CE /* UIViewNibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */; };
@@ -452,7 +451,6 @@
 		12F6AE411A43395600493660 /* StoryboardIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE401A43395600493660 /* StoryboardIdentifiers.swift */; };
 		12F6AE451A43397400493660 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE431A43397400493660 /* Colors.swift */; };
 		12F6AE631A4339C600493660 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE611A4339C600493660 /* Validator.swift */; };
-		12F6AE6A1A4339EF00493660 /* ElloButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE651A4339EF00493660 /* ElloButton.swift */; };
 		12F6AE6B1A4339EF00493660 /* ElloHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE661A4339EF00493660 /* ElloHUD.swift */; };
 		12F6AE6C1A4339EF00493660 /* ElloTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE671A4339EF00493660 /* ElloTabBar.swift */; };
 		12F6AE6D1A4339EF00493660 /* ElloUnderlinedTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE681A4339EF00493660 /* ElloUnderlinedTextButton.swift */; };
@@ -587,6 +585,7 @@
 		1D6A02431C73CC9B0054603B /* AssetsToRegions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */; };
 		1D6A02451C73CD390054603B /* AssetsToRegionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */; };
 		1D6C97F81CE179E600E7B929 /* usernames.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D6C97F71CE179E600E7B929 /* usernames.json */; };
+		1D70DE561DF2350A008AF216 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A21D78C85C007E1447 /* StyledButton.swift */; };
 		1D70E7271D5A526C008758D7 /* ProfileHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */; };
 		1D71528F1D6CA22C005998FE /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71528E1D6CA22C005998FE /* Screen.swift */; };
 		1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152911D6CA248005998FE /* StartupScreen.swift */; };
@@ -644,7 +643,6 @@
 		1D807D9A1B050DE2009B0F71 /* awesome_people.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D807D991B050DE2009B0F71 /* awesome_people.json */; };
 		1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */; };
 		1D8835A41CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8835A31CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift */; };
-		1D8835A61CDA85BA00E1C387 /* ReplyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */; };
 		1D8AFACD1A9664480034DDAD /* NotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACC1A9664480034DDAD /* NotificationSpec.swift */; };
 		1D8AFAD01A9691F90034DDAD /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
 		1D9201BC1B6AD7CD007528BF /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9201BB1B6AD7CD007528BF /* Tag.swift */; };
@@ -761,7 +759,6 @@
 		1DDF86FB1D80785B0058204A /* ello_gray_line_logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */; };
 		1DE176FC1B82626E00272145 /* OmnibarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE176FB1B82626E00272145 /* OmnibarScreen.swift */; };
 		1DE261351B0D38A400475325 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE261341B0D38A400475325 /* UIImageViewExtensions.swift */; };
-		1DE261371B0D396600475325 /* ElloOnboardingButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */; };
 		1DE3EC4A1D81CC3400BDE16F /* ElloDev.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1DE3EC491D81CC3400BDE16F /* ElloDev.entitlements */; };
 		1DE3EC4C1D83245D00BDE16F /* OnePasswordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */; };
 		1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */; };
@@ -800,7 +797,6 @@
 		1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */; };
 		1DFC5DC31AAB56AD008DA855 /* ElloAttributedStringSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFC5DC21AAB56AD008DA855 /* ElloAttributedStringSpec.swift */; };
 		1DFC5DC71AACBFE4008DA855 /* create-post.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DFC5DC61AACBFE4008DA855 /* create-post.json */; };
-		1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFF43451A8C171400D43CFF /* NotificationFilterButton.swift */; };
 		1DFF43521A8D520E00D43CFF /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFF43511A8D520E00D43CFF /* NotificationCell.swift */; };
 		55C6FB5CD7E207A6B84E527B /* Pods_Specs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91944BE577C550B17C0B263D /* Pods_Specs.framework */; };
 		761A66221B0E75AD0088FF56 /* specs-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 761A661F1B0E75AD0088FF56 /* specs-avatar.png */; };
@@ -1431,7 +1427,6 @@
 		12F6AE401A43395600493660 /* StoryboardIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiers.swift; sourceTree = "<group>"; };
 		12F6AE431A43397400493660 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		12F6AE611A4339C600493660 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
-		12F6AE651A4339EF00493660 /* ElloButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloButton.swift; sourceTree = "<group>"; };
 		12F6AE661A4339EF00493660 /* ElloHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloHUD.swift; sourceTree = "<group>"; };
 		12F6AE671A4339EF00493660 /* ElloTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTabBar.swift; sourceTree = "<group>"; };
 		12F6AE681A4339EF00493660 /* ElloUnderlinedTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloUnderlinedTextButton.swift; sourceTree = "<group>"; };
@@ -1621,7 +1616,6 @@
 		1D807D991B050DE2009B0F71 /* awesome_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awesome_people.json; sourceTree = "<group>"; };
 		1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReauthenticationSpec.swift; sourceTree = "<group>"; };
 		1D8835A31CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSettingsViewControllerSpec.swift; sourceTree = "<group>"; };
-		1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyButton.swift; sourceTree = "<group>"; };
 		1D8AFACC1A9664480034DDAD /* NotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSpec.swift; sourceTree = "<group>"; };
 		1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		1D9201BB1B6AD7CD007528BF /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -1730,7 +1724,6 @@
 		1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_gray_line_logo.svg; sourceTree = "<group>"; };
 		1DE176FB1B82626E00272145 /* OmnibarScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreen.swift; sourceTree = "<group>"; };
 		1DE261341B0D38A400475325 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
-		1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloOnboardingButtons.swift; sourceTree = "<group>"; };
 		1DE3EC491D81CC3400BDE16F /* ElloDev.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ElloDev.entitlements; sourceTree = "<group>"; };
 		1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePasswordButton.swift; sourceTree = "<group>"; };
 		1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mentionables.swift; sourceTree = "<group>"; };
@@ -1771,7 +1764,6 @@
 		1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrorExtensions.swift; sourceTree = "<group>"; };
 		1DFC5DC21AAB56AD008DA855 /* ElloAttributedStringSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedStringSpec.swift; sourceTree = "<group>"; };
 		1DFC5DC61AACBFE4008DA855 /* create-post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "create-post.json"; sourceTree = "<group>"; };
-		1DFF43451A8C171400D43CFF /* NotificationFilterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationFilterButton.swift; sourceTree = "<group>"; };
 		1DFF43511A8D520E00D43CFF /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ello.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E8EF6ED0A7F6EFFAFA8F5C2 /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2343,7 +2335,6 @@
 			children = (
 				1DADA1651A96DC130000DDA1 /* NotificationsScreen.swift */,
 				1DFF43511A8D520E00D43CFF /* NotificationCell.swift */,
-				1DFF43451A8C171400D43CFF /* NotificationFilterButton.swift */,
 				1D66803C1A8AA7B1003E93C8 /* NotificationsFilterBar.swift */,
 				124357691A8927BF008B24FB /* NotificationsViewController.swift */,
 			);
@@ -3084,7 +3075,6 @@
 				1DB8C6A01D789015007E1447 /* ClearTextView.swift */,
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
 				1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */,
-				12F6AE651A4339EF00493660 /* ElloButton.swift */,
 				122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */,
 				EA587A9E1ACDC6F4002AF389 /* ElloEditableTextView.swift */,
 				12F6AE661A4339EF00493660 /* ElloHUD.swift */,
@@ -3092,7 +3082,6 @@
 				12BF64C11AB9E82C000B2544 /* ElloLabel.swift */,
 				12B531001A93B75700E01D72 /* ElloLogoView.swift */,
 				1DDF3C481A9D0D05000D0945 /* ElloNavigationBar.swift */,
-				1DE261361B0D396600475325 /* ElloOnboardingButtons.swift */,
 				12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */,
 				1D69BBCE1C3EF5AA00FCBDE0 /* ElloSegmentedControl.swift */,
 				12F6AE671A4339EF00493660 /* ElloTabBar.swift */,
@@ -3110,7 +3099,6 @@
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
 				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
-				1D8835A51CDA85BA00E1C387 /* ReplyButton.swift */,
 				1D59338F1D14854700EAF03D /* Screens */,
 				1DB8C6AA1D7A2349007E1447 /* SearchTextField.swift */,
 				1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */,
@@ -4531,7 +4519,6 @@
 				122B30B41C6A3FBB00C1B9D8 /* Coder.swift in Sources */,
 				122D1BA41C61347B001386CE /* ColorExtensions.swift in Sources */,
 				1DA18E501DCCED9D000231CC /* PagePromotional.swift in Sources */,
-				122D1BA31C61345E001386CE /* ElloButton.swift in Sources */,
 				127D26541C655C87001F2E3E /* ExtensionItemPreview.swift in Sources */,
 				1207C9A61C752F6400939ADB /* ElloProviderErrors.swift in Sources */,
 				1207C9941C74CD4A00939ADB /* PostEditingService.swift in Sources */,
@@ -4544,6 +4531,7 @@
 				122D1BC01C6411E0001386CE /* ElloLogoView.swift in Sources */,
 				122B30AF1C6A3FBB00C1B9D8 /* AddressBook.swift in Sources */,
 				1207C99B1C750F5F00939ADB /* MappingType.swift in Sources */,
+				1D70DE561DF2350A008AF216 /* StyledButton.swift in Sources */,
 				122B30B81C6A3FBB00C1B9D8 /* ElloKeychain.swift in Sources */,
 				1207C9A41C752F3C00939ADB /* ReAuthService.swift in Sources */,
 				1DDC851B1D91D52D00C29552 /* Watch.swift in Sources */,
@@ -4892,7 +4880,6 @@
 				F8006EE51AB9FE670008BB42 /* Animators.swift in Sources */,
 				12F6AE411A43395600493660 /* StoryboardIdentifiers.swift in Sources */,
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
-				1DE261371B0D396600475325 /* ElloOnboardingButtons.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
 				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
@@ -4916,7 +4903,6 @@
 				1DADA1661A96DC130000DDA1 /* NotificationsScreen.swift in Sources */,
 				1D66803D1A8AA7B1003E93C8 /* NotificationsFilterBar.swift in Sources */,
 				122B18FD1A867C7D00247A05 /* StreamFooterCell.swift in Sources */,
-				1D8835A61CDA85BA00E1C387 /* ReplyButton.swift in Sources */,
 				76DAD9F91ABCBB9B006C8A6C /* StreamLoadingCell.swift in Sources */,
 				1DB8C6A71D7A132E007E1447 /* InviteFriendsViewController.swift in Sources */,
 				1D69BBCF1C3EF5AA00FCBDE0 /* ElloSegmentedControl.swift in Sources */,
@@ -5138,7 +5124,6 @@
 				7659FB7F1B29EE0F00DEB6F4 /* StreamInviteFriendsCell.swift in Sources */,
 				123B7C331DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift in Sources */,
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
-				1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */,
 				1207C9831C73FEE000939ADB /* Mapper.swift in Sources */,
 				1DB8C6A91D7A1BAA007E1447 /* AddressBookHelpers.swift in Sources */,
 				123DEBEF1D3D4B71007B5F86 /* LoadingToken.swift in Sources */,
@@ -5191,7 +5176,6 @@
 				1207C98B1C73FEE000939ADB /* ReAuthService.swift in Sources */,
 				1207C96E1C73FEE000939ADB /* AnonymousAuthService.swift in Sources */,
 				1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */,
-				12F6AE6A1A4339EF00493660 /* ElloButton.swift in Sources */,
 				1DA18E121DB187DF000231CC /* CalculatedCellHeights.swift in Sources */,
 				1D5933751D10BC8100EAF03D /* CategoryLevel.swift in Sources */,
 				125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */,

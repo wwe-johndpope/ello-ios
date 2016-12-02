@@ -60,7 +60,7 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     var avatarButton: AvatarButton!
     var buyButtonImage: UIImageView!
-    var replyButton: ReplyButton!
+    var replyButton: StyledButton!
     var relationshipControl: RelationshipControl!
     var titleTextView: ElloTextView!
     var createdAtLabel: UILabel!
@@ -170,8 +170,13 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         buyButtonImage.backgroundColor = .greenD1()
         buyButtonImage.layer.cornerRadius = Size.BuyButtonSize / 2
 
-        replyButton = ReplyButton()
+        replyButton = StyledButton(style: .BlackPillOutline)
         replyButton.hidden = true
+        replyButton.setTitle(InterfaceString.Notifications.Reply, forState: .Normal)
+        replyButton.setImage(InterfaceImage.Reply.selectedImage, forState: .Normal)
+        replyButton.contentEdgeInsets.left = 10
+        replyButton.contentEdgeInsets.right = 10
+        replyButton.imageEdgeInsets.right = 5
         replyButton.addTarget(self, action: #selector(replyTapped), forControlEvents: .TouchUpInside)
 
         relationshipControl = RelationshipControl()

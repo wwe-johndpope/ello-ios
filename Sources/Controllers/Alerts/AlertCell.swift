@@ -18,8 +18,8 @@ public class AlertCell: UITableViewCell {
     @IBOutlet weak var label: ElloLabel!
     @IBOutlet weak var input: ElloTextField!
     @IBOutlet weak var background: UIView!
-    @IBOutlet weak var okButton: ElloButton!
-    @IBOutlet weak var cancelButton: ElloButton!
+    @IBOutlet weak var okButton: StyledButton!
+    @IBOutlet weak var cancelButton: StyledButton!
     let inputBorder = UIView()
 
     var onInputChanged: ((String) -> Void)?

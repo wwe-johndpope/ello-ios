@@ -25,7 +25,7 @@ public class CredentialSettingsViewController: UITableViewController {
     weak public var passwordView: ElloTextFieldView!
     @IBOutlet weak public var currentPasswordField: ElloTextField!
     weak public var errorLabel: ElloLabel!
-    @IBOutlet weak public var saveButton: ElloButton!
+    @IBOutlet weak public var saveButton: StyledButton!
 
     public var currentUser: User?
     weak public var delegate: CredentialSettingsDelegate?

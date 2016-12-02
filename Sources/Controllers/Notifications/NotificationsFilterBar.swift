@@ -6,12 +6,12 @@ public class NotificationsFilterBar: UIView {
 
     struct Size {
         static let height: CGFloat = 64
+        static let buttonPadding: CGFloat = 1
     }
 
     var buttons: [UIButton] {
         return self.subviews.filter { $0 as? UIButton != nil } as! [UIButton]
     }
-    var buttonPadding: CGFloat = 1
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,11 +33,11 @@ public class NotificationsFilterBar: UIView {
         if buttons.count > 0 {
             var x: CGFloat = 0
             let y: CGFloat = 20
-            let w: CGFloat = (self.frame.size.width - buttonPadding * CGFloat(buttons.count - 1)) / CGFloat(buttons.count)
+            let w: CGFloat = (self.frame.size.width - Size.buttonPadding * CGFloat(buttons.count - 1)) / CGFloat(buttons.count)
             for button in buttons {
                 let frame = CGRect(x: x, y: y, width: w, height: self.frame.size.height - y)
                 button.frame = frame
-                x += w + buttonPadding
+                x += w + Size.buttonPadding
             }
         }
     }
