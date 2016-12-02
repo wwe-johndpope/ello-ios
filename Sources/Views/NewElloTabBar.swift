@@ -88,8 +88,8 @@ class NewElloTabBar: UIView {
             switch item.display {
             case let .Title(title):
                 let titleView = self.contentView as! ElloSizeableLabel
-                let color = selected ? UIColor.blackColor() : UIColor.greyA()
-                titleView.setLabelText(title, color: color)
+                titleView.textColor = selected ? .blackColor() : .greyA()
+                titleView.text = title
                 titleView.clipsToBounds = false
             case let .Image(interfaceImage):
                 let imageView = self.contentView as! UIImageView

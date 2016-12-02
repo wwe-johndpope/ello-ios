@@ -26,8 +26,8 @@ public class UserListItemCell: UICollectionViewCell {
         relationshipControl.userAtName = user?.atName ?? ""
         relationshipControl.relationshipPriority = user?.relationshipPriority ?? RelationshipPriority.None
 
-        usernameLabel.text = user?.atName ?? ""
-        nameLabel.text = user?.name ?? ""
+        usernameLabel.text = user?.atName
+        nameLabel.text = user?.name
     }
 
     private func style() {

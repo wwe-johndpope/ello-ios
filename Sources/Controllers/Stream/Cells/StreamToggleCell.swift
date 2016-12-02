@@ -5,8 +5,10 @@
 public class StreamToggleCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamToggleCell"
 
-    let closedMessage = InterfaceString.NSFW.Show
-    let openedMessage = InterfaceString.NSFW.Hide
+    weak var label: ElloLabel!
 
-    weak var label: ElloToggleLabel!
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        label.textColor = .greyA()
+    }
 }

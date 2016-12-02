@@ -9,19 +9,19 @@ public class OmnibarErrorCell: UITableViewCell {
         static let height = CGFloat(75)
     }
 
-    public let elloLabel: ElloErrorLabel
+    private let elloLabel = ElloLabel()
 
     public var url: NSURL? {
         get { return nil }
         set {
             if let url = newValue {
-                elloLabel.setLabelText("There was a problem loading the image\n\(url)")
+                elloLabel.text = "There was a problem loading the image\n\(url)"
             }
         }
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        elloLabel = ElloErrorLabel()
+        elloLabel.textColor = .redColor()
         elloLabel.numberOfLines = 2
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 

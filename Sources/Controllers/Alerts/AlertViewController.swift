@@ -92,10 +92,10 @@ public class AlertViewController: UIViewController {
     private let textAlignment: NSTextAlignment
     public var type: AlertType = .Normal {
         didSet {
-            let backgroundColor = type.backgroundColor
-            view.backgroundColor = backgroundColor
-            tableView.backgroundColor = backgroundColor
-            headerView.backgroundColor = backgroundColor
+            view.backgroundColor = type.backgroundColor
+            tableView.backgroundColor = type.backgroundColor
+            headerView.label.textColor = type.headerTextColor
+            headerView.backgroundColor = type.backgroundColor
             tableView.reloadData()
         }
     }
@@ -103,7 +103,7 @@ public class AlertViewController: UIViewController {
     public var message: String {
         get { return headerView.label.text ?? "" }
         set(text) {
-            headerView.label.setLabelText(text, color: UIColor.blackColor())
+            headerView.label.text = text
             tableView.reloadData()
         }
     }
@@ -125,10 +125,11 @@ public class AlertViewController: UIViewController {
         super.init(nibName: "AlertViewController", bundle: NSBundle(forClass: AlertViewController.self))
         modalPresentationStyle = .Custom
         transitioningDelegate = self
-        headerView.label.setLabelText(message ?? "", color: type.headerTextColor)
+        headerView.label.text = message
 
         view.backgroundColor = type.backgroundColor
         tableView.backgroundColor = type.backgroundColor
+        headerView.label.textColor = type.headerTextColor
         headerView.backgroundColor = type.backgroundColor
         if type.rounded {
             view.clipsToBounds = true

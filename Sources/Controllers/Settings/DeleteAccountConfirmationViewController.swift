@@ -29,6 +29,10 @@ public class DeleteAccountConfirmationViewController: BaseElloViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.cancelLabel.textAlignment = .Center
+        self.cancelLabel.textColor = .whiteColor()
+
         updateInterface()
     }
 
@@ -58,7 +62,7 @@ public class DeleteAccountConfirmationViewController: BaseElloViewController {
     private func tick() {
         let text = NSString(format: InterfaceString.Settings.RedirectedCountdownTemplate, counter) as String
         nextTick {
-            self.cancelLabel.setLabelText(text, color: .whiteColor(), alignment: .Center)
+            self.cancelLabel.text = text
             self.counter -= 1
             if self.counter <= 0 {
                 self.deleteAccount()

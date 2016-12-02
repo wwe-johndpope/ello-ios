@@ -24,7 +24,7 @@ public class CredentialSettingsViewController: UITableViewController {
     weak public var emailView: ElloTextFieldView!
     weak public var passwordView: ElloTextFieldView!
     @IBOutlet weak public var currentPasswordField: ElloTextField!
-    weak public var errorLabel: ElloErrorLabel!
+    weak public var errorLabel: ElloLabel!
     @IBOutlet weak public var saveButton: ElloButton!
 
     public var currentUser: User?
@@ -66,6 +66,7 @@ public class CredentialSettingsViewController: UITableViewController {
 
         currentPasswordField.addTarget(self, action: #selector(CredentialSettingsViewController.currentPasswordChanged), forControlEvents: .EditingChanged)
 
+        errorLabel.textColor = .redColor()
         tableView.scrollsToTop = false
     }
 
@@ -217,7 +218,7 @@ public class CredentialSettingsViewController: UITableViewController {
     private func resetViews() {
         currentPasswordField.text = ""
         passwordView.textField.text = ""
-        errorLabel.setLabelText("")
+        errorLabel.text = ""
         usernameView.clearState()
         emailView.clearState()
         passwordView.clearState()
@@ -238,7 +239,7 @@ public class CredentialSettingsViewController: UITableViewController {
             usernameView.setErrorMessage(message.first ?? "")
         }
 
-        errorLabel.setLabelText(error.messages?.first ?? "")
+        errorLabel.text = error.messages?.first
         errorLabel.sizeToFit()
 
         updateView()

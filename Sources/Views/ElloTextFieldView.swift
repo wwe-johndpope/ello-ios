@@ -7,9 +7,9 @@ import Foundation
 private let ElloTextFieldViewHeight: CGFloat = 89.0
 
 public class ElloTextFieldView: UIView {
-    public weak var label: ElloToggleLabel!
+    public weak var label: ElloLabel!
     @IBOutlet public weak var textField: ElloTextField!
-    public weak var errorLabel: ElloErrorLabel!
+    public weak var errorLabel: ElloLabel!
     public weak var messageLabel: ElloLabel!
 
     @IBOutlet private var errorLabelHeight: NSLayoutConstraint!
@@ -60,20 +60,23 @@ public class ElloTextFieldView: UIView {
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        let view: UIView = loadFromNib()
-        view.frame = bounds
-        view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-        addSubview(view)
-        textField.addTarget(self, action: #selector(valueChanged), forControlEvents: .EditingChanged)
+        sharedInit()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        sharedInit()
+    }
+
+    private func sharedInit() {
         let view: UIView = loadFromNib()
         view.frame = bounds
         view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         addSubview(view)
+
         textField.addTarget(self, action: #selector(valueChanged), forControlEvents: .EditingChanged)
+        errorLabel.textColor = .redColor()
+        label.textColor = .greyA()
     }
 
     override public func updateConstraints() {
@@ -93,13 +96,13 @@ public class ElloTextFieldView: UIView {
     }
 
     func setErrorMessage(message: String) {
-        errorLabel.setLabelText(message)
+        errorLabel.text = message
         setNeedsUpdateConstraints()
         self.invalidateIntrinsicContentSize()
     }
 
     func setMessage(message: String) {
-        messageLabel.setLabelText(message)
+        messageLabel.text = message
         messageLabel.textColor = UIColor.blackColor()
         setNeedsUpdateConstraints()
         self.invalidateIntrinsicContentSize()
@@ -151,7 +154,7 @@ public extension ElloTextFieldView {
     }
 
     class func styleAsUsername(usernameView: ElloTextFieldView) {
-        usernameView.label.setLabelText(InterfaceString.Join.Username)
+        usernameView.label.text = InterfaceString.Join.Username
         styleAsUsernameField(usernameView.textField)
     }
     class func styleAsUsernameField(textField: UITextField) {
@@ -161,7 +164,7 @@ public extension ElloTextFieldView {
     }
 
     class func styleAsEmail(emailView: ElloTextFieldView) {
-        emailView.label.setLabelText(InterfaceString.Join.Email)
+        emailView.label.text = InterfaceString.Join.Email
         styleAsEmailField(emailView.textField)
     }
     class func styleAsEmailField(textField: UITextField) {
@@ -171,7 +174,7 @@ public extension ElloTextFieldView {
     }
 
     class func styleAsPassword(passwordView: ElloTextFieldView) {
-        passwordView.label.setLabelText(InterfaceString.Join.Password)
+        passwordView.label.text = InterfaceString.Join.Password
         styleAsPasswordField(passwordView.textField)
     }
     class func styleAsPasswordField(textField: UITextField) {

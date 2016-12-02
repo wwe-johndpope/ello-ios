@@ -255,7 +255,8 @@ public class SearchScreen: UIView, SearchScreenProtocol {
             height: containerFrame.height - margins.bottom - button.frame.height
         )
         label.numberOfLines = 2
-        label.setLabelText(InterfaceString.Search.FindFriendsPrompt)
+        label.textColor = .whiteColor()
+        label.text = InterfaceString.Search.FindFriendsPrompt
         label.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
 
         self.addSubview(findFriendsContainer)

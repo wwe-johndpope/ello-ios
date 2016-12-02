@@ -112,7 +112,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
     weak public var nameTextFieldView: ElloTextFieldView!
     @IBOutlet weak public var bioTextView: ElloEditableTextView!
-    weak public var bioTextCountLabel: ElloErrorLabel!
+    weak public var bioTextCountLabel: ElloLabel!
     @IBOutlet weak public var bioTextStatusImage: UIImageView!
     private var bioTextViewDidChange: (() -> Void)?
 
@@ -243,6 +243,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
     private func setupViews() {
         tableView.addSubview(autoCompleteVC.view)
+        bioTextCountLabel.textColor = .redColor()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
         containerController?.showNavBars()
         setupProfileDescription()
@@ -284,7 +285,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 
     private func setupNameTextField() {
-        nameTextFieldView.label.setLabelText(InterfaceString.Settings.Name)
+        nameTextFieldView.label.text = InterfaceString.Settings.Name
+        nameTextFieldView.textField.text = currentUser?.name
 
         let updateNameFunction = debounce(0.5) { [weak self] in
             guard let sself = self else { return }
@@ -320,7 +322,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 
     private func setupLinksTextField() {
-        linksTextFieldView.label.setLabelText(InterfaceString.Settings.Links)
+        linksTextFieldView.label.text = InterfaceString.Settings.Links
         linksTextFieldView.textField.spellCheckingType = .No
         linksTextFieldView.textField.autocapitalizationType = .None
         linksTextFieldView.textField.autocorrectionType = .No
@@ -345,7 +347,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 
     private func setupLocationTextField() {
-        locationTextFieldView.label.setLabelText(InterfaceString.Settings.Location)
+        locationTextFieldView.label.text = InterfaceString.Settings.Location
         locationTextFieldView.textField.keyboardAppearance = .Dark
 
         let updateLocationFunction = debounce(0.5) { [weak self] in
@@ -521,7 +523,7 @@ public extension SettingsViewController {
 extension SettingsViewController: UITextViewDelegate {
     public func textViewDidChange(textView: UITextView) {
         let characterCount = textView.text.lengthOfBytesUsingEncoding(NSASCIIStringEncoding)
-        bioTextCountLabel.setLabelText("\(characterCount)")
+        bioTextCountLabel.text = "\(characterCount)"
         bioTextCountLabel.hidden = characterCount <= 192
         bioTextStatusImage.image = ValidationState.Loading.imageRepresentation
         bioTextViewDidChange?()

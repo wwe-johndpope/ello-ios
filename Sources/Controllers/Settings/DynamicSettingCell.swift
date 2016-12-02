@@ -8,8 +8,8 @@ public protocol DynamicSettingCellDelegate: class {
 }
 
 public class DynamicSettingCell: UITableViewCell {
-    @IBOutlet public weak var titleLabel: UILabel!
-    public weak var descriptionLabel: ElloToggleLabel!
+    @IBOutlet public weak var titleLabel: ElloLabel!
+    public weak var descriptionLabel: ElloLabel!
     @IBOutlet public weak var toggleButton: ElloToggleButton!
     @IBOutlet public weak var deleteButton: ElloToggleButton!
 
@@ -18,9 +18,7 @@ public class DynamicSettingCell: UITableViewCell {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.font = .defaultFont()
         titleLabel.textColor = .blackColor()
-        descriptionLabel.font = .defaultFont()
         descriptionLabel.textColor = .greyA()
     }
 

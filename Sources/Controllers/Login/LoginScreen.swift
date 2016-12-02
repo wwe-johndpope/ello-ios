@@ -260,7 +260,7 @@ extension LoginScreen: LoginScreenProtocol {
     }
 
     func showError(text: String) {
-        errorLabel.setLabelText(text)
+        errorLabel.text = text
         usernameValid = false
         passwordValid = false
 

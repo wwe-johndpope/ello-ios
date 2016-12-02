@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="591" height="73"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IE-7E-uyG" customClass="ElloToggleLabel" customModule="Ello" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IE-7E-uyG" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
                         <rect key="frame" x="15" y="26" width="561" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="c7J-KF-70M"/>

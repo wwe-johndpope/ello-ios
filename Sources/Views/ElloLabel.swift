@@ -7,19 +7,13 @@ import UIKit
 import ElloUIFonts
 
 public class ElloLabel: UILabel {
-    override public var text: String? {
-        didSet {
-            if let text = text {
-                setLabelText(text, color: textColor, alignment: textAlignment)
-            }
-        }
-    }
+    override public var text: String? { didSet { updateLabelText() } }
+    override public var textColor: UIColor? { didSet { updateLabelText() } }
+    override public var textAlignment: NSTextAlignment { didSet { updateLabelText() } }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if let text = text {
-            setLabelText(text, color: textColor)
-        }
+        updateLabelText()
     }
 
     public init() {
@@ -49,11 +43,12 @@ extension ElloLabel {
 }
 
 public extension ElloLabel {
-    func setLabelText(title: String, color: UIColor = UIColor.whiteColor(), alignment: NSTextAlignment = .Left) {
-        textColor = color
-        textAlignment = alignment
-        let attrs = attributes(color, alignment: alignment)
-        attributedText = NSAttributedString(string: title, attributes: attrs)
+
+    private func updateLabelText() {
+        guard let text = text, textColor = textColor else { return }
+
+        let attrs = attributes(textColor, alignment: textAlignment)
+        attributedText = NSAttributedString(string: text, attributes: attrs)
     }
 
     func height() -> CGFloat {
@@ -66,18 +61,6 @@ public extension ElloLabel {
             context: nil).size.height).map(ceil) ?? 0
     }
 
-}
-
-public class ElloToggleLabel: ElloLabel {
-    public override func setLabelText(title: String, color: UIColor = UIColor.greyA(), alignment: NSTextAlignment = .Left) {
-        super.setLabelText(title, color: color, alignment: alignment)
-    }
-}
-
-public class ElloErrorLabel: ElloLabel {
-    public override func setLabelText(title: String, color: UIColor = UIColor.redColor(), alignment: NSTextAlignment = .Left) {
-        super.setLabelText(title, color: color, alignment: alignment)
-    }
 }
 
 public class ElloSizeableLabel: ElloLabel {
