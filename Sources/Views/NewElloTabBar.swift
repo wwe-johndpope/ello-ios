@@ -56,8 +56,7 @@ class NewElloTabBar: UIView {
 
             switch item.display {
             case .Title:
-                let label = ElloSizeableLabel()
-                label.font = UIFont.defaultFont()
+                let label = StyledLabel(style: .Black)
                 self.contentView = label
                 let underlineView = UIView()
                 underlineView.backgroundColor = UIColor.blackColor()
@@ -87,8 +86,8 @@ class NewElloTabBar: UIView {
         private func updateContentView() {
             switch item.display {
             case let .Title(title):
-                let titleView = self.contentView as! ElloSizeableLabel
-                titleView.textColor = selected ? .blackColor() : .greyA()
+                let titleView = self.contentView as! StyledLabel
+                titleView.style = selected ? .Black : .Gray
                 titleView.text = title
                 titleView.clipsToBounds = false
             case let .Image(interfaceImage):

@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="591" height="73"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IE-7E-uyG" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IE-7E-uyG" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                         <rect key="frame" x="15" y="26" width="561" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="c7J-KF-70M"/>
@@ -22,6 +22,9 @@
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Gray"/>
+                        </userDefinedRuntimeAttributes>
                     </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

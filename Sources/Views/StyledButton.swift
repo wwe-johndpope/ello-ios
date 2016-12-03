@@ -190,8 +190,8 @@ extension StyledButton.Style {
         titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC()
         )
     public static let SquareBlack = StyledButton.Style(
-        backgroundColor: .whiteColor(), disabledBackgroundColor: .greyA(),
-        titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
+        backgroundColor: .whiteColor(), selectedBackgroundColor: .blackColor(), disabledBackgroundColor: .greyA(),
+        titleColor: .blackColor(), selectedTitleColor: .whiteColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
         borderColor: .blackColor(), highlightedBorderColor: .greyE5()
         )
     public static let BlackPill = StyledButton.Style(

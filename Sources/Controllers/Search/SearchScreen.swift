@@ -247,14 +247,13 @@ public class SearchScreen: UIView, SearchScreenProtocol {
         button.addTarget(self, action: #selector(findFriendsTapped), forControlEvents: .TouchUpInside)
         button.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
-        let label = ElloLabel()
+        let label = StyledLabel(style: .White)
         label.frame = CGRect(
             x: margins.left, y: 0,
             width: button.frame.width,
             height: containerFrame.height - margins.bottom - button.frame.height
         )
         label.numberOfLines = 2
-        label.textColor = .whiteColor()
         label.text = InterfaceString.Search.FindFriendsPrompt
         label.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
 

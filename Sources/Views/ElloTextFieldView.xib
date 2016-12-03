@@ -36,7 +36,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zsc-gQ-joB" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zsc-gQ-joB" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                     <rect key="frame" x="15" y="8" width="78" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="IAy-1I-bSI"/>
@@ -44,8 +44,11 @@
                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="16"/>
                     <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="LightGray"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ur0-FP-dRP" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ur0-FP-dRP" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                     <rect key="frame" x="15" y="89" width="570" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="height" id="FzD-bP-v11"/>
@@ -53,14 +56,20 @@
                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="16"/>
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Error"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nuK-Pl-R29" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nuK-Pl-R29" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                     <rect key="frame" x="15" y="109" width="570" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="height" id="Ov1-0M-tKs"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="16"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Black"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

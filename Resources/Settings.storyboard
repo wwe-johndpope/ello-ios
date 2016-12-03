@@ -203,13 +203,16 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your name, username, bio and links appear on your public profile. Your email address remains private." lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YC-45-ipS" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your name, username, bio and links appear on your public profile. Your email address remains private." lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YC-45-ipS" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="48" width="570" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="64" id="syi-y4-nTM"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Gray"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -271,11 +274,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-mg-wdp" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
-                                                    <rect key="frame" x="15" y="8" width="22.5" height="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-mg-wdp" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="8" width="23" height="14"/>
                                                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                                                     <color key="textColor" red="0.60271793603897095" green="0.602699875831604" blue="0.60271012783050537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="LightGray"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GS-hA-vSR" customClass="ElloEditableTextView" customModule="Ello" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="30" width="570" height="162"/>
@@ -283,11 +289,14 @@
                                                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ws-k3-vsf" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ws-k3-vsf" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                                     <rect key="frame" x="46" y="8" width="539" height="14"/>
                                                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Error"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BRk-56-eVr">
                                                     <rect key="frame" x="557" y="38" width="20" height="20"/>
@@ -516,11 +525,14 @@
                                                         <action selector="saveButtonTapped" destination="a55-rf-841" eventType="touchUpInside" id="JPR-ce-01x"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCs-KV-8Pu" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCs-KV-8Pu" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="104" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Error"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>

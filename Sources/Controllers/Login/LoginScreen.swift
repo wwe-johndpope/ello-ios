@@ -53,7 +53,7 @@ public class LoginScreen: CredentialsScreen {
     private let activateUsernameButton = UIButton()
     let passwordField = ClearTextField()
     private let activatePasswordButton = UIButton()
-    private let errorLabel = ElloSizeableLabel()
+    private let errorLabel = StyledLabel(style: .SmallWhite)
 
     private let forgotPasswordButton = UIButton()
     private let continueButton = StyledButton(style: .RoundedGray)
@@ -89,8 +89,6 @@ public class LoginScreen: CredentialsScreen {
         passwordField.hasOnePassword = onePasswordAvailable
 
         continueBackground.backgroundColor = .whiteColor()
-        errorLabel.font = UIFont.defaultFont(12)
-        errorLabel.textColor = .whiteColor()
 
         forgotPasswordButton.titleLabel?.font = UIFont.defaultFont(Size.forgotPasswordFontSize)
         forgotPasswordButton.setTitleColor(.greyA(), forState: .Normal)

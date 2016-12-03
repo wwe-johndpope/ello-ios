@@ -68,20 +68,20 @@ public class JoinScreen: CredentialsScreen {
 
     let emailField = ClearTextField()
     let activateEmailButton = UIButton()
-    let emailErrorLabel = ElloSizeableLabel()
+    let emailErrorLabel = StyledLabel(style: .SmallWhite)
     var emailMarginConstraint: Constraint!
 
     let usernameField = ClearTextField()
     let activateUsernameButton = UIButton()
-    let usernameErrorLabel = ElloSizeableLabel()
+    let usernameErrorLabel = StyledLabel(style: .SmallWhite)
     var usernameMarginConstraint: Constraint!
 
     let passwordField = ClearTextField()
     let activatePasswordButton = UIButton()
-    let passwordErrorLabel = ElloSizeableLabel()
+    let passwordErrorLabel = StyledLabel(style: .SmallWhite)
     var passwordMarginConstraint: Constraint!
 
-    let messageLabel = ElloSizeableLabel()
+    let messageLabel = StyledLabel(style: .SmallWhite)
     var messageMarginConstraint: Constraint!
     let termsButtonNormal = UIButton()
     let termsButtonKeyboard = UIButton()
@@ -124,25 +124,17 @@ public class JoinScreen: CredentialsScreen {
         ElloTextFieldView.styleAsEmailField(emailField)
         emailField.placeholder = InterfaceString.Join.EmailPlaceholder
         emailField.delegate = self
-        emailErrorLabel.font = UIFont.defaultFont(12)
-        emailErrorLabel.textColor = .whiteColor()
 
         ElloTextFieldView.styleAsUsernameField(usernameField)
         usernameField.placeholder = InterfaceString.Join.UsernamePlaceholder
         usernameField.delegate = self
-        usernameErrorLabel.font = UIFont.defaultFont(12)
-        usernameErrorLabel.textColor = .whiteColor()
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
         passwordField.placeholder = InterfaceString.Join.PasswordPlaceholder
         passwordField.delegate = self
         passwordField.returnKeyType = .Join
         passwordField.hasOnePassword = onePasswordAvailable
-        passwordErrorLabel.font = UIFont.defaultFont(12)
-        passwordErrorLabel.textColor = .whiteColor()
 
-        messageLabel.font = UIFont.defaultFont(12)
-        messageLabel.textColor = .whiteColor()
         messageLabel.numberOfLines = 0
 
         termsButtonNormal.hidden = Keyboard.shared.active

@@ -34,7 +34,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* By deleting your account you remove your personal information from Ello. Your account cannot be restored." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wH2-8e-Rof" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* By deleting your account you remove your personal information from Ello. Your account cannot be restored." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wH2-8e-Rof" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                     <rect key="frame" x="165" y="345" width="270" height="42"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="270" id="ckj-YJ-Aki"/>
@@ -42,6 +42,9 @@
                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="White"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mA3-1f-O6d">
                     <rect key="frame" x="200" y="275" width="200" height="50"/>
@@ -105,11 +108,14 @@
                                 <action selector="dismiss" destination="-1" eventType="touchUpInside" id="Idq-9a-9fe"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOj-hz-3sS" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOj-hz-3sS" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="8" width="300" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="White"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

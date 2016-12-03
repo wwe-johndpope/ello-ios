@@ -109,6 +109,7 @@ public struct InterfaceString {
 
     public struct Settings {
         static let EditProfile: String = NSLocalizedString("Edit Profile", comment: "Edit Profile Title")
+        static let ProfileDescription: String = NSLocalizedString("Your name, username, bio and links appear on your public profile. Your email address remains private.", comment: "Profile Privacy Description")
         static let Name: String = NSLocalizedString("Name", comment: "name setting")
         static let Links: String = NSLocalizedString("Links", comment: "links setting")
         static let Location: String = NSLocalizedString("Location", comment: "location setting")

@@ -15,7 +15,7 @@ public class CredentialsScreen: EmptyScreen {
     let scrollView = UIScrollView()
     var scrollViewWidthConstraint: Constraint!
     let backButton = UIButton()
-    let titleLabel = ElloSizeableLabel()
+    let titleLabel = StyledLabel(style: .LargeWhite)
     let gradientLayer = StartupGradientLayer()
 
     override public func updateConstraints() {
@@ -39,8 +39,6 @@ public class CredentialsScreen: EmptyScreen {
         super.style()
         backButton.setImages(.AngleBracket, degree: 180, white: true)
         backButton.contentMode = .Center
-        titleLabel.font = UIFont.defaultBoldFont(18)
-        titleLabel.textColor = .whiteColor()
     }
 
     override func arrange() {

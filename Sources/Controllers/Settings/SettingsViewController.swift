@@ -91,7 +91,7 @@ public class SettingsContainerViewController: BaseElloViewController {
 public class SettingsViewController: UITableViewController, ControllerThatMightHaveTheCurrentUser {
 
     @IBOutlet weak public var avatarImageView: UIView!
-    weak public var profileDescription: ElloLabel!
+    weak public var profileDescription: StyledLabel!
     @IBOutlet weak public var coverImage: UIImageView!
     @IBOutlet weak public var avatarImage: UIImageView!
     var scrollLogic: ElloScrollLogic!
@@ -112,7 +112,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
     weak public var nameTextFieldView: ElloTextFieldView!
     @IBOutlet weak public var bioTextView: ElloEditableTextView!
-    weak public var bioTextCountLabel: ElloLabel!
+    weak public var bioTextCountLabel: StyledLabel!
     @IBOutlet weak public var bioTextStatusImage: UIImageView!
     private var bioTextViewDidChange: (() -> Void)?
 
@@ -243,25 +243,10 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
     private func setupViews() {
         tableView.addSubview(autoCompleteVC.view)
-        bioTextCountLabel.textColor = .redColor()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
         containerController?.showNavBars()
-        setupProfileDescription()
         setupDefaultValues()
         setupUserValues()
-    }
-
-    private func setupProfileDescription() {
-        if let profileDescriptionAttributedText = profileDescription.attributedText {
-            let text = NSMutableAttributedString(attributedString: profileDescriptionAttributedText)
-
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 6
-
-            text.addAttribute(NSForegroundColorAttributeName, value: UIColor.greyA(), range: NSRange(location: 0, length: text.length))
-            text.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: text.length))
-            profileDescription.attributedText = text
-        }
     }
 
     private func setupNavigationBar() {
@@ -282,6 +267,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         setupBioTextField()
         setupLinksTextField()
         setupLocationTextField()
+
+        profileDescription.text = InterfaceString.Settings.ProfileDescription
     }
 
     private func setupNameTextField() {

@@ -15,7 +15,7 @@ public protocol AlertCellDelegate: class {
 public class AlertCell: UITableViewCell {
     weak var delegate: AlertCellDelegate?
 
-    @IBOutlet weak var label: ElloLabel!
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var input: ElloTextField!
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var okButton: StyledButton!
@@ -26,6 +26,10 @@ public class AlertCell: UITableViewCell {
 
     override public func awakeFromNib() {
         super.awakeFromNib()
+
+        label.font = .defaultFont()
+        label.textColor = .blackColor()
+        label.textAlignment = .Left
 
         input.backgroundColor = UIColor.whiteColor()
         input.font = UIFont.defaultFont()
@@ -46,6 +50,8 @@ public class AlertCell: UITableViewCell {
         super.prepareForReuse()
 
         label.text = ""
+        label.textColor = .blackColor()
+        label.textAlignment = .Left
         input.text = ""
         input.resignFirstResponder()
     }

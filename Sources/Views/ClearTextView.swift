@@ -25,16 +25,6 @@ public class ClearTextView: UITextView {
         get { return placeholderLabel.text }
         set { placeholderLabel.text = newValue }
     }
-    public var placeholderColor: UIColor? {
-        didSet {
-            if let placeholderColor = placeholderColor {
-                placeholderLabel.textColor = placeholderColor
-            }
-            else {
-                placeholderLabel.textColor = (textColor ?? UIColor.blackColor()).colorWithAlphaComponent(0.6)
-            }
-        }
-    }
     override public var text: String? {
         didSet {
             textDidChange()
@@ -47,7 +37,7 @@ public class ClearTextView: UITextView {
         didSet { updateTextStyle() }
     }
     private var line = UIView()
-    private let placeholderLabel = ElloSizeableLabel()
+    private let placeholderLabel = StyledLabel(style: .LargePlaceholder)
     private let rightView = UIImageView()
     var validationState = ValidationState.None {
         didSet {
@@ -75,8 +65,6 @@ public class ClearTextView: UITextView {
         updateTextStyle()
 
         addSubview(placeholderLabel)
-        placeholderLabel.font = .defaultFont(18)
-        placeholderLabel.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
         placeholderLabel.snp_makeConstraints { make in
             make.top.equalTo(self).offset(Size.placeholderOffset)
             make.leading.trailing.equalTo(self)

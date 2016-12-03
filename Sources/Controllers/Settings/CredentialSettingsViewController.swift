@@ -24,7 +24,7 @@ public class CredentialSettingsViewController: UITableViewController {
     weak public var emailView: ElloTextFieldView!
     weak public var passwordView: ElloTextFieldView!
     @IBOutlet weak public var currentPasswordField: ElloTextField!
-    weak public var errorLabel: ElloLabel!
+    weak public var errorLabel: StyledLabel!
     @IBOutlet weak public var saveButton: StyledButton!
 
     public var currentUser: User?
@@ -66,7 +66,6 @@ public class CredentialSettingsViewController: UITableViewController {
 
         currentPasswordField.addTarget(self, action: #selector(CredentialSettingsViewController.currentPasswordChanged), forControlEvents: .EditingChanged)
 
-        errorLabel.textColor = .redColor()
         tableView.scrollsToTop = false
     }
 

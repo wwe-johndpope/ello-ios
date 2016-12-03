@@ -5,5 +5,5 @@
 import UIKit
 
 public class AlertHeaderView: UIView {
-    public weak var label: ElloLabel!
+    public weak var label: StyledLabel!
 }

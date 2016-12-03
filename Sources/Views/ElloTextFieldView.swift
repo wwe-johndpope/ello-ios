@@ -7,10 +7,10 @@ import Foundation
 private let ElloTextFieldViewHeight: CGFloat = 89.0
 
 public class ElloTextFieldView: UIView {
-    public weak var label: ElloLabel!
+    public weak var label: StyledLabel!
     @IBOutlet public weak var textField: ElloTextField!
-    public weak var errorLabel: ElloLabel!
-    public weak var messageLabel: ElloLabel!
+    public weak var errorLabel: StyledLabel!
+    public weak var messageLabel: StyledLabel!
 
     @IBOutlet private var errorLabelHeight: NSLayoutConstraint!
     @IBOutlet private var messageLabelHeight: NSLayoutConstraint!
@@ -75,8 +75,6 @@ public class ElloTextFieldView: UIView {
         addSubview(view)
 
         textField.addTarget(self, action: #selector(valueChanged), forControlEvents: .EditingChanged)
-        errorLabel.textColor = .redColor()
-        label.textColor = .greyA()
     }
 
     override public func updateConstraints() {

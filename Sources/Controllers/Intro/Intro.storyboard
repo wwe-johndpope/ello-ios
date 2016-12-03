@@ -30,7 +30,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Creators Network." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQ9-jb-lJX" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Creators Network." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQ9-jb-lJX" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="16" y="84" width="164" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="213" id="CA7-us-vsQ"/>
@@ -38,6 +38,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Large"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="CA7-us-vsQ"/>
@@ -73,10 +76,6 @@
                             <constraint firstItem="RhS-it-T4p" firstAttribute="top" secondItem="Pnu-vv-UTj" secondAttribute="bottom" constant="92" id="xVn-dp-kK2"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="elloLogoImage" destination="atb-xi-cpq" id="Rcf-aa-zdm"/>
-                        <outlet property="welcomeLabel" destination="lQ9-jb-lJX" id="hfO-gp-aWJ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDw-oX-jpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -97,11 +96,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro-friends" translatesAutoresizingMaskIntoConstraints="NO" id="L62-1i-7LL">
                                 <rect key="frame" x="0.0" y="167" width="375" height="500"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A community of creators." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3o-Xl-aAK">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A community of creators." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3o-Xl-aAK" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="15" y="84" width="345" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Large"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -115,9 +117,6 @@
                             <constraint firstItem="L62-1i-7LL" firstAttribute="leading" secondItem="vNB-Za-Zzu" secondAttribute="leading" id="wcn-kV-JXY"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="friendsLabel" destination="I3o-Xl-aAK" id="dm6-cP-t42"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bJR-Nz-f32" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -135,11 +134,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share your work and ideas." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fv6-u2-wOp" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share your work and ideas." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fv6-u2-wOp" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="15" y="84" width="344" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Large"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro-inspired" translatesAutoresizingMaskIntoConstraints="NO" id="Dad-qi-Tnp">
                                 <rect key="frame" x="0.0" y="167" width="375" height="500"/>
@@ -156,9 +158,6 @@
                             <constraint firstItem="fv6-u2-wOp" firstAttribute="leading" secondItem="qfd-w6-ibt" secondAttribute="leading" constant="15" id="xAm-pd-Tkp" userLabel="Be Inspired - Left"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="inspiredLabel" destination="fv6-u2-wOp" id="xnP-mP-7Zy"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5J-B4-NdK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -179,11 +178,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro-love" translatesAutoresizingMaskIntoConstraints="NO" id="SRt-MA-l0Q">
                                 <rect key="frame" x="0.0" y="167" width="375" height="500"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The promise of the internet." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcW-uY-4JN" customClass="ElloLabel" customModule="Ello" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The promise of the internet." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcW-uY-4JN" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="15" y="84" width="345" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="Large"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwA-sj-Jg4" userLabel="Button container">
                                 <rect key="frame" x="0.0" y="588" width="375" height="79"/>
@@ -240,9 +242,6 @@
                             <constraint firstItem="lcW-uY-4JN" firstAttribute="top" secondItem="JnB-il-3m7" secondAttribute="top" constant="84" id="n1R-MC-Jyi"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="lovesLabel" destination="lcW-uY-4JN" id="tST-Ra-OrH"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g69-Lp-1Li" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
