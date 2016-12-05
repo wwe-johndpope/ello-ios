@@ -21,6 +21,7 @@ public class StyledButton: UIButton {
 
         let fontSize: CGFloat?
         let cornerRadius: CGFloat?
+        let underline: Bool
 
         var font: UIFont {
             guard let size = fontSize else {
@@ -46,7 +47,8 @@ public class StyledButton: UIButton {
             disabledBorderColor: UIColor? = nil,
 
             fontSize: CGFloat? = nil,
-            cornerRadius: CGFloat? = 0
+            cornerRadius: CGFloat? = 0,
+            underline: Bool = false
         ) {
             self.disabledBackgroundColor = disabledBackgroundColor
             self.highlightedBackgroundColor = highlightedBackgroundColor
@@ -65,6 +67,7 @@ public class StyledButton: UIButton {
 
             self.fontSize = fontSize
             self.cornerRadius = cornerRadius
+            self.underline = underline
         }
     }
 
@@ -126,10 +129,22 @@ public class StyledButton: UIButton {
         }
 
         titleLabel?.font = style.font
-        setTitleColor(style.disabledTitleColor, forState: .Disabled)
-        setTitleColor(style.highlightedTitleColor, forState: .Highlighted)
-        setTitleColor(style.selectedTitleColor, forState: .Selected)
-        setTitleColor(style.titleColor, forState: .Normal)
+
+        let states: [(UIControlState, UIColor?)] = [
+            (.Disabled, style.disabledTitleColor),
+            (.Highlighted, style.highlightedTitleColor),
+            (.Selected, style.selectedTitleColor),
+            (.Normal, style.titleColor),
+        ]
+        for (state, stateColor) in states {
+            guard
+                let color = stateColor ?? style.titleColor,
+                let title = titleForState(.Normal)
+            else { continue }
+
+            let attrdTitle = NSAttributedString(title, color: color, underlineStyle: style.underline ? .StyleSingle : .StyleNone, font: style.font)
+            setAttributedTitle(attrdTitle, forState: state)
+        }
     }
 
     required override public init(frame: CGRect) {
@@ -160,6 +175,16 @@ public class StyledButton: UIButton {
         titleLabel?.numberOfLines = 1
         updateStyle()
     }
+}
+
+extension StyledButton {
+
+    public override func setTitle(title: String?, forState state: UIControlState) {
+        super.setTitle(title, forState: state)
+        if state == .Normal {
+            updateStyle()
+        }
+    }
 
     public override func titleRectForContentRect(contentRect: CGRect) -> CGRect {
         var titleRect = super.titleRectForContentRect(contentRect)
@@ -188,6 +213,11 @@ extension StyledButton.Style {
     public static let White = StyledButton.Style(
         backgroundColor: .whiteColor(), disabledBackgroundColor: .greyA(),
         titleColor: .blackColor(), highlightedTitleColor: .grey6(), disabledTitleColor: .greyC()
+        )
+    public static let WhiteUnderlined = StyledButton.Style(
+        backgroundColor: .clearColor(),
+        titleColor: .whiteColor(),
+        underline: true
         )
     public static let SquareBlack = StyledButton.Style(
         backgroundColor: .whiteColor(), selectedBackgroundColor: .blackColor(), disabledBackgroundColor: .greyA(),
@@ -252,6 +282,7 @@ extension StyledButton.Style {
         switch name {
         case "LightGray": return .LightGray
         case "White": return .White
+        case "WhiteUnderlined": return .WhiteUnderlined
         case "SquareBlack": return .SquareBlack
         case "BlackPill": return .BlackPill
         case "RoundedGray": return .RoundedGray
