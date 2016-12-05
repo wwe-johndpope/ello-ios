@@ -135,6 +135,65 @@ class StringExtensionSpec: QuickSpec {
                 }
             }
         }
+        describe("split") {
+            it("splits a string") {
+                let str = "a,b,cc,ddd"
+                expect(str.split(char: ",")) == ["a", "b", "cc", "ddd"]
+            }
+            it("ignores a string with no splits") {
+                let str = "abccddd"
+                expect(str.split(char: ",")) == ["abccddd"]
+            }
+        }
+        describe("trimmed") {
+            it("trims leading whitespace") {
+                let strs = [
+                    "  string",
+                    "\t\tstring",
+                    " \t\nstring",
+                ]
+                for str in strs {
+                    expect(str.trimmed()) == "string"
+                }
+            }
+            it("trims trailing whitespace") {
+                let strs = [
+                    "string  ",
+                    "string\t\t",
+                    "string\n\t ",
+                ]
+                for str in strs {
+                    expect(str.trimmed()) == "string"
+                }
+            }
+            it("trims leading and trailing whitespace") {
+                let strs = [
+                    "  string  ",
+                    "\t\tstring\t\t",
+                    "\n \tstring\t\n ",
+                ]
+                for str in strs {
+                    expect(str.trimmed()) == "string"
+                }
+            }
+            it("ignores embedded whitespace") {
+                let strs = [
+                    "str  ing",
+                    "  str  ing",
+                    "\t\tstr  ing",
+                    "\n\nstr  ing",
+                    "str  ing  ",
+                    "str  ing\t\t",
+                    "str  ing\n\n",
+                    "  str  ing  ",
+                    "\t\tstr  ing\t\t",
+                    "\n\nstr  ing\n\n",
+                ]
+                for str in strs {
+                    expect(str.trimmed()) == "str  ing"
+                }
+            }
+        }
         describe("camelCase") {
             it("converts a string from snake case to camel case") {
                 let snake = "hhhhh_sssss"
