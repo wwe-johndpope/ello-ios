@@ -7,11 +7,25 @@ import FLAnimatedImage
 import CoreGraphics
 
 public class ElloLogoView: UIImageView {
+
+    public enum Config {
+        case Normal
+        case Grey
+
+        var image: UIImage {
+            switch self {
+            case .Normal: return InterfaceImage.ElloLogo.normalImage
+            case .Grey: return InterfaceImage.ElloLogoGrey.normalImage
+            }
+        }
+    }
+
     struct Size {
         static let Natural = CGSize(width: 60, height: 60)
     }
 
     private var wasAnimating = false
+    private var config: ElloLogoView.Config = .Normal
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -21,9 +35,15 @@ public class ElloLogoView: UIImageView {
         self.init(frame: .zero)
     }
 
+    convenience public init(config: ElloLogoView.Config) {
+        self.init(frame: .zero)
+        self.config = config
+        self.image = self.config.image
+    }
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        self.image = InterfaceImage.ElloLogo.normalImage
+        self.image = self.config.image
         self.contentMode = .ScaleAspectFit
     }
 
