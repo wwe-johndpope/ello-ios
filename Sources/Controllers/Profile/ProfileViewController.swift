@@ -74,6 +74,14 @@ public final class ProfileViewController: StreamableViewController {
         streamViewController.initialLoadClosure = { [unowned self] in self.loadProfile() }
         streamViewController.reloadClosure = { [unowned self] in self.reloadEntireProfile() }
         streamViewController.toggleClosure = { [unowned self] isGridView in self.toggleGrid(isGridView) }
+
+        generator = ProfileGenerator(
+            currentUser: currentUser,
+            userParam: userParam,
+            user: user,
+            streamKind: initialStreamKind,
+            destination: self
+        )
     }
 
     deinit {
@@ -95,14 +103,6 @@ public final class ProfileViewController: StreamableViewController {
         if user == nil {
             screen.disableButtons()
         }
-
-        self.generator = ProfileGenerator(
-            currentUser: self.currentUser,
-            userParam: userParam,
-            user: self.user,
-            streamKind: self.streamViewController.streamKind,
-            destination: self
-        )
         view.clipsToBounds = true
         setupNavigationItems()
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset

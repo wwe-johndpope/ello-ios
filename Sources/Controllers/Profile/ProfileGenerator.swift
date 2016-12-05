@@ -31,11 +31,12 @@ public final class ProfileGenerator: StreamGenerator {
         return items
     }
 
-    public init(currentUser: User?,
-         userParam: String,
-         user: User?,
-         streamKind: StreamKind,
-         destination: StreamDestination?
+    public init(
+        currentUser: User?,
+        userParam: String,
+        user: User?,
+        streamKind: StreamKind,
+        destination: StreamDestination?
         ) {
         self.currentUser = currentUser
         self.user = user
