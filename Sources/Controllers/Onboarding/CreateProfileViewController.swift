@@ -75,7 +75,7 @@ extension CreateProfileViewController: CreateProfileDelegate {
 
         debouncedLinksValidator { [weak self] in
             guard let sself = self else { return }
-            sself.screen.linksValid = sself.didSetLinks ? (sself.linksAreValid ? true : false) : nil
+            sself.screen.linksValid = sself.didSetLinks ? sself.linksAreValid : nil
         }
         return linksAreValid ? .OKSmall : .None
     }
