@@ -22,6 +22,7 @@ public class ProfileHeaderCompactView: ProfileHeaderLayoutView {
         addSubview(totalCountView)
         addSubview(statsView)
         addSubview(bioView)
+        addSubview(locationView)
         addSubview(linksView)
 
         avatarView.snp_makeConstraints { make in
@@ -38,7 +39,7 @@ public class ProfileHeaderCompactView: ProfileHeaderLayoutView {
         totalCountView.snp_makeConstraints { make in
             make.top.equalTo(self.namesView.snp_bottom)
             make.width.centerX.equalTo(self)
-            make.height.equalTo(ProfileTotalCountView.Size.height)
+            totalCountHeightConstraint = make.height.equalTo(0).constraint
         }
 
         statsView.snp_makeConstraints { make in
@@ -53,8 +54,14 @@ public class ProfileHeaderCompactView: ProfileHeaderLayoutView {
             bioHeightConstraint = make.height.equalTo(0).constraint
         }
 
-        linksView.snp_makeConstraints { make in
+        locationView.snp_makeConstraints { make in
             make.top.equalTo(self.bioView.snp_bottom)
+            make.width.centerX.equalTo(self)
+            locationHeightConstraint = make.height.equalTo(0).constraint
+        }
+
+        linksView.snp_makeConstraints { make in
+            make.top.equalTo(self.locationView.snp_bottom)
             make.width.centerX.equalTo(self)
             linksHeightConstraint = make.height.equalTo(0).constraint
         }

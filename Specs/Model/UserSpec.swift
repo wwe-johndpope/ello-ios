@@ -136,17 +136,17 @@ class UserSpec: QuickSpec {
 
                 it("returns <1000 when totalViewsCount is less totalViewsCount 1000") {
                     let subject: User = stub(["totalViewsCount": 950])
-                    expect(subject.formattedTotalCount()) == "<1000"
+                    expect(subject.formattedTotalCount!) == "<1K"
                 }
 
-                it("returns <1000 if totalViewsCount is not present") {
+                it("returns nil if totalViewsCount is missing") {
                     let subject: User = stub([:])
-                    expect(subject.formattedTotalCount()) == "<1000"
+                    expect(subject.formattedTotalCount).to(beNil())
                 }
 
                 it("returns proper value if totalViewsCount is greater than 999") {
                     let subject: User = stub(["totalViewsCount": 23_450_123])
-                    expect(subject.formattedTotalCount()) == "23.45M"
+                    expect(subject.formattedTotalCount!) == "23.45M"
                 }
             }
 
@@ -192,6 +192,7 @@ class UserSpec: QuickSpec {
                     expect(user.followersCount!) == "0"
                     expect(user.followingCount!) == 0
                     expect(user.totalViewsCount!) == 9762
+                    expect(user.location) == "Denver"
                     expect(user.formattedShortBio) == "<p>Have been spying for a while now.</p>"
     //                expect(user.externalLinks) == "http://isis.com http://ello.co"
                     expect(user.coverImage).to(beAKindOf(Asset.self))
@@ -261,6 +262,7 @@ class UserSpec: QuickSpec {
                         ])
 
                         user.totalViewsCount = 5003
+                        user.location = "Boulder"
 
                         NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
                         let unArchivedUser = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as! User
@@ -280,6 +282,7 @@ class UserSpec: QuickSpec {
                         expect(unArchivedUser.hasSharingEnabled) == true
                         expect(unArchivedUser.hasRepostingEnabled) == true
                         expect(unArchivedUser.totalViewsCount) == 5003
+                        expect(unArchivedUser.location) == "Boulder"
 
                         let firstPost = unArchivedUser.posts!.first!
                         expect(firstPost.id) == "sample-post-id"

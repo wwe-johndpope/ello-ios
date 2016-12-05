@@ -86,7 +86,7 @@ extension ProfileLinksView {
         var prevRow: UIButton?
         var iconsCount = 0
 
-        let textLinks = externalLinks.filter{$0.iconURL == nil && $0.text != ""}
+        let textLinks = externalLinks.filter{$0.iconURL == nil && !$0.text.isEmpty}
         let iconLinks = externalLinks.filter{$0.iconURL != nil}
 
         let (perRow, iconsBoxWidth) = ProfileLinksSizeCalculator.calculateIconsBoxWidth(externalLinks, maxWidth: bounds.width)
@@ -177,7 +177,7 @@ extension ProfileLinksView {
 
         let attrs: [String: AnyObject] = [
             NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.grey6(),
+            NSForegroundColorAttributeName: UIColor.greyA(),
             NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
         ]
         let highlightedAttrs: [String: AnyObject] = [

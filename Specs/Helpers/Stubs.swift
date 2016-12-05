@@ -59,7 +59,7 @@ extension User: Stubbable {
         user.identifiableBy = (values["identifiableBy"] as? String) ?? "stub-user-identifiable-by"
         user.postsCount = (values["postsCount"] as? Int) ?? 0
         user.lovesCount = (values["lovesCount"] as? Int) ?? 0
-        user.totalViewsCount = (values["totalViewsCount"] as? Int) ?? 0
+        user.totalViewsCount = (values["totalViewsCount"] as? Int)
         if let count = values["followersCount"] as? Int {
             user.followersCount = String(count)
         }
@@ -103,6 +103,8 @@ extension User: Stubbable {
             }
             user.addLinkArray("categories", array: categories.map { $0.id }, type: .CategoriesType)
         }
+
+        user.location = values["location"] as? String
 
         user.profile = values["profile"] as? Profile
         ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .UsersType)

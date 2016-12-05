@@ -19,15 +19,15 @@ class ProfileTotalCountPresenterSpec: QuickSpec {
                 expect(view.count) == "2.4M"
             }
 
-            it("renders <1000 when no totalViewCount is present") {
+            it("renders nothing when no totalViewCount is present") {
                 let user = User.stub([:])
                 let view = ProfileTotalCountView()
                 ProfileTotalCountPresenter.configure(view, user: user, currentUser: nil)
 
-                expect(view.count) == "<1000"
+                expect(view.count).to(beNil())
             }
 
-            it("shows cateogry badge if user is featured in one or more catgegories") {
+            it("shows category badge if user is featured in one or more catgegories") {
                 let category: Ello.Category = Ello.Category.stub(["id" : "1", "name" : "art"])
                 let categories = [ category ]
                 let user = User.stub(["categories" : categories])
@@ -37,7 +37,7 @@ class ProfileTotalCountPresenterSpec: QuickSpec {
                 expect(view.badgeVisible) == true
             }
 
-            it("hides cateogry badge if user is not featured in any catgegories") {
+            it("hides category badge if user is not featured in any catgegories") {
                 let user = User.stub([:])
                 let view = ProfileTotalCountView()
                 ProfileTotalCountPresenter.configure(view, user: user, currentUser: nil)
