@@ -3,10 +3,6 @@
 //
 
 
-private var srcRegex: NSRegularExpression? = try? NSRegularExpression(
-                pattern: "src=[\"']([^\"']*)[\"']",
-                options: .CaseInsensitive)
-
 public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     private static let textViewForSizing = ElloTextView(frame: CGRectZero, textContainer: nil)
     let webView: UIWebView
@@ -58,7 +54,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
                 textRegion = notification.textRegion
             {
                 let content = textRegion.content
-                let strippedContent = self.stripImageSrc(content)
+                let strippedContent = content.stripHtmlImgSrc()
                 let html = StreamTextCellHTML.postHTML(strippedContent)
                 var f = self.webView.frame
                 f.size.width = NotificationCell.Size.messageHtmlWidth(forCellWidth: originalWidth, hasImage: notification.hasImage)
@@ -117,21 +113,6 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
         cellItem.calculatedCellHeights.oneColumn = height
         cellItem.calculatedCellHeights.multiColumn = height
-    }
-
-    private func stripImageSrc(html: String) -> String {
-        // finds image tags, replaces them with data:image/png (inlines image data)
-        let range = NSRange(location: 0, length: html.characters.count)
-
-//MARK: warning - is '.ReportCompletion' what we want?
-        if let srcRegex = srcRegex {
-            return srcRegex.stringByReplacingMatchesInString(html,
-                options: .ReportCompletion,
-                range: range,
-                withTemplate: "src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg==")
-        }
-
-        return ""
     }
 
 }

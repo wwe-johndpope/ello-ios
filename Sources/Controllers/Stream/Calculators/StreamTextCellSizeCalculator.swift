@@ -12,10 +12,6 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     private var maxWidth: CGFloat
     private var completion: ElloEmptyCompletion = {}
 
-    public static let srcRegex: NSRegularExpression  = try! NSRegularExpression(
-        pattern: "src=[\"']([^\"']*)[\"']",
-        options: NSRegularExpressionOptions.CaseInsensitive)
-
     public init(webView: UIWebView) {
         self.webView = webView
         self.maxWidth = 0
@@ -69,7 +65,7 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
 
             if let textElement = textElement {
                 let content = textElement.content
-                let strippedContent = StreamTextCellSizeCalculator.stripImageSrc(content)
+                let strippedContent = content.stripHtmlImgSrc()
                 let html = StreamTextCellHTML.postHTML(strippedContent)
                 // needs to use the same width as the post text region
                 self.webView.loadHTMLString(html, baseURL: NSURL(string: "/"))
@@ -99,16 +95,4 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
         loadNext()
     }
 
-
-    public static func stripImageSrc(html: String) -> String {
-        // finds image tags, replaces them with data:image/png (inlines image data)
-        let range = NSRange(location: 0, length: html.characters.count)
-
-        let strippedHtml: String = srcRegex.stringByReplacingMatchesInString(html,
-            options: NSMatchingOptions(),
-            range:range,
-            withTemplate: "src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg==")
-
-        return strippedHtml
-    }
 }

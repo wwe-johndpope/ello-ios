@@ -5,7 +5,7 @@
 import FutureKit
 
 
-public class CategoryHeaderCellSizeCalculator: NSObject {
+public class CategoryHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 192
 
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)

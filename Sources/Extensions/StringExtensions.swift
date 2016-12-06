@@ -12,6 +12,11 @@ private var entityLookup: [String : String]!
 private var entitiesEncodedPredicate: dispatch_once_t = 0
 private var entitiesDecodedPredicate: dispatch_once_t = 0
 
+private var srcRegex: NSRegularExpression? = try? NSRegularExpression(
+                pattern: "src=[\"']([^\"']*)[\"']",
+                options: .CaseInsensitive)
+
+
 public extension String {
 
     func rangeFromNSRange(nsRange: NSRange) -> Range<String.Index>? {
@@ -22,6 +27,19 @@ public extension String {
             return from ..< to
         }
         return nil
+    }
+
+    // finds image tags, replaces them with data:image/png (inlines image data)
+    func stripHtmlImgSrc() -> String {
+        guard let srcRegex = srcRegex else {
+            return self
+        }
+
+        let range = NSRange(location: 0, length: characters.count)
+        return srcRegex.stringByReplacingMatchesInString(self,
+            options: .ReportCompletion,
+            range: range,
+            withTemplate: "src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg==\"")
     }
 
     func urlEncoded() -> String {

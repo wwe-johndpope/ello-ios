@@ -113,7 +113,6 @@
 		122B19011A867C7D00247A05 /* StreamImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B18F11A867C7D00247A05 /* StreamImageCell.swift */; };
 		122B19031A867C7D00247A05 /* StreamTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B18F21A867C7D00247A05 /* StreamTextCell.swift */; };
 		122B19051A867C7D00247A05 /* StreamTextCellHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B18F31A867C7D00247A05 /* StreamTextCellHTML.swift */; };
-		122B19071A867C7D00247A05 /* StreamTextCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B18F41A867C7D00247A05 /* StreamTextCellSizeCalculator.swift */; };
 		122B190A1A867D1800247A05 /* StreamHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B19091A867D1800247A05 /* StreamHeaderCell.xib */; };
 		122B190D1A86894400247A05 /* StreamCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B190C1A86894400247A05 /* StreamCellType.swift */; };
 		122B19101A8692C700247A05 /* StreamImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B190F1A8692C700247A05 /* StreamImageCell.xib */; };
@@ -272,7 +271,6 @@
 		12431FF81DBAACF3006808D4 /* CategoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FF71DBAACF3006808D4 /* CategoryGenerator.swift */; };
 		12431FFA1DBAAF27006808D4 /* CategoryHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */; };
 		12431FFC1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */; };
-		12431FFE1DBBAA4C006808D4 /* CategoryHeaderCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FFD1DBBAA4C006808D4 /* CategoryHeaderCellSizeCalculator.swift */; };
 		1243576A1A8927BF008B24FB /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124357691A8927BF008B24FB /* NotificationsViewController.swift */; };
 		12450FD51AC86F630084BDBA /* StreamToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12450FD41AC86F630084BDBA /* StreamToggleCell.xib */; };
 		1245ED381D1C772400929DD4 /* StreamGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1245ED371D1C772400929DD4 /* StreamGenerator.swift */; };
@@ -586,6 +584,11 @@
 		1D70DE561DF2350A008AF216 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A21D78C85C007E1447 /* StyledButton.swift */; };
 		1D70DE581DF23862008AF216 /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE571DF23862008AF216 /* StyledLabel.swift */; };
 		1D70DE591DF23C36008AF216 /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE571DF23862008AF216 /* StyledLabel.swift */; };
+		1D70DE661DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE621DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift */; };
+		1D70DE671DF730C1008AF216 /* StreamImageCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE631DF730C1008AF216 /* StreamImageCellSizeCalculator.swift */; };
+		1D70DE681DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE641DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift */; };
+		1D70DE691DF730C1008AF216 /* StreamTextCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE651DF730C1008AF216 /* StreamTextCellSizeCalculator.swift */; };
+		1D70DE6C1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE6B1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift */; };
 		1D70E7271D5A526C008758D7 /* ProfileHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */; };
 		1D71528F1D6CA22C005998FE /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71528E1D6CA22C005998FE /* Screen.swift */; };
 		1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152911D6CA248005998FE /* StartupScreen.swift */; };
@@ -764,7 +767,6 @@
 		1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */; };
 		1DE87FC81BB32060007A7325 /* MentionablesSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87FC71BB32060007A7325 /* MentionablesSpec.swift */; };
 		1DEE2BEF1AF96F5300EB9DFA /* SearchViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */; };
-		1DF2335A1A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233591A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift */; };
 		1DF233611A94FB060096DA65 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233601A94FB060096DA65 /* CGRectExtensions.swift */; };
 		1DF233641A9537590096DA65 /* CGRectSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233631A9537590096DA65 /* CGRectSpec.swift */; };
 		1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF322411BD6F16C008203F3 /* DebugViewsController.swift */; };
@@ -806,8 +808,6 @@
 		762385C91B0143A500138780 /* NumberExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762385C81B0143A500138780 /* NumberExtensionsSpec.swift */; };
 		762ABBA51A8ACB7700B19E34 /* JSONAbleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762ABBA41A8ACB7700B19E34 /* JSONAbleSpec.swift */; };
 		762EE9EB1A840E4A00A3B805 /* AvatarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */; };
-		763458E01AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763458DF1AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift */; };
-		763458E21AEED87700BA91A5 /* StreamImageCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763458E11AEED87700BA91A5 /* StreamImageCellSizeCalculatorSpec.swift */; };
 		76351FDE1A9406EF006DB61B /* relationship.json in Resources */ = {isa = PBXBuildFile; fileRef = 76351FDD1A9406EF006DB61B /* relationship.json */; };
 		765319F51B62AA61009B0D7E /* CrashlyticsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */; };
 		765670F01A8022B4008ED9A2 /* ElloURISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765670EF1A8022B4008ED9A2 /* ElloURISpec.swift */; };
@@ -1174,7 +1174,6 @@
 		122B18F11A867C7D00247A05 /* StreamImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCell.swift; sourceTree = "<group>"; };
 		122B18F21A867C7D00247A05 /* StreamTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCell.swift; sourceTree = "<group>"; };
 		122B18F31A867C7D00247A05 /* StreamTextCellHTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCellHTML.swift; sourceTree = "<group>"; };
-		122B18F41A867C7D00247A05 /* StreamTextCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCellSizeCalculator.swift; sourceTree = "<group>"; };
 		122B19091A867D1800247A05 /* StreamHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamHeaderCell.xib; sourceTree = "<group>"; };
 		122B190C1A86894400247A05 /* StreamCellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellType.swift; sourceTree = "<group>"; };
 		122B190F1A8692C700247A05 /* StreamImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamImageCell.xib; sourceTree = "<group>"; };
@@ -1239,7 +1238,6 @@
 		12431FF71DBAACF3006808D4 /* CategoryGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryGenerator.swift; sourceTree = "<group>"; };
 		12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderCell.swift; sourceTree = "<group>"; };
 		12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderCellPresenter.swift; sourceTree = "<group>"; };
-		12431FFD1DBBAA4C006808D4 /* CategoryHeaderCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderCellSizeCalculator.swift; sourceTree = "<group>"; };
 		124357691A8927BF008B24FB /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		12450FD41AC86F630084BDBA /* StreamToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamToggleCell.xib; path = Sources/Controllers/stream/Cells/StreamToggleCell.xib; sourceTree = SOURCE_ROOT; };
 		1245ED371D1C772400929DD4 /* StreamGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamGenerator.swift; sourceTree = "<group>"; };
@@ -1558,6 +1556,11 @@
 		1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsToRegionsSpec.swift; sourceTree = "<group>"; };
 		1D6C97F71CE179E600E7B929 /* usernames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usernames.json; sourceTree = "<group>"; };
 		1D70DE571DF23862008AF216 /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
+		1D70DE621DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderCellSizeCalculator.swift; sourceTree = "<group>"; };
+		1D70DE631DF730C1008AF216 /* StreamImageCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCellSizeCalculator.swift; sourceTree = "<group>"; };
+		1D70DE641DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculator.swift; sourceTree = "<group>"; };
+		1D70DE651DF730C1008AF216 /* StreamTextCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCellSizeCalculator.swift; sourceTree = "<group>"; };
+		1D70DE6B1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCellSpec.swift; sourceTree = "<group>"; };
 		1D71528E1D6CA22C005998FE /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		1D7152911D6CA248005998FE /* StartupScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupScreen.swift; sourceTree = "<group>"; };
@@ -1729,7 +1732,6 @@
 		1DE87FC51BB2FFB8007A7325 /* Mentionables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mentionables.swift; sourceTree = "<group>"; };
 		1DE87FC71BB32060007A7325 /* MentionablesSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionablesSpec.swift; sourceTree = "<group>"; };
 		1DEE2BEE1AF96F5300EB9DFA /* SearchViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewControllerSpec.swift; sourceTree = "<group>"; };
-		1DF233591A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculator.swift; sourceTree = "<group>"; };
 		1DF2335B1A94005C0096DA65 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		1DF233601A94FB060096DA65 /* CGRectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		1DF233631A9537590096DA65 /* CGRectSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectSpec.swift; sourceTree = "<group>"; };
@@ -1776,8 +1778,6 @@
 		762385C81B0143A500138780 /* NumberExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensionsSpec.swift; sourceTree = "<group>"; };
 		762ABBA41A8ACB7700B19E34 /* JSONAbleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONAbleSpec.swift; sourceTree = "<group>"; };
 		762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarButton.swift; sourceTree = "<group>"; };
-		763458DF1AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCellSizeCalculator.swift; sourceTree = "<group>"; };
-		763458E11AEED87700BA91A5 /* StreamImageCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		76351FDD1A9406EF006DB61B /* relationship.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship.json; sourceTree = "<group>"; };
 		765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashlyticsKey.swift; sourceTree = "<group>"; };
 		765670EF1A8022B4008ED9A2 /* ElloURISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloURISpec.swift; sourceTree = "<group>"; };
@@ -2143,6 +2143,7 @@
 			isa = PBXGroup;
 			children = (
 				12D24A591A9F765300F53D44 /* AddFriendsViewControllerSpec.swift */,
+				1D70DE6A1DF73869008AF216 /* Calculators */,
 				1DA18E551DD0E2C2000231CC /* CategoryHeaderCellSizeCalculatorSpec.swift */,
 				12F47DCF1AD7137000A73B5F /* CellDequeing */,
 				12F47DCE1AD7134200A73B5F /* Cells */,
@@ -2173,7 +2174,6 @@
 			children = (
 				1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */,
 				12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */,
-				12431FFD1DBBAA4C006808D4 /* CategoryHeaderCellSizeCalculator.swift */,
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
 				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */,
@@ -2192,18 +2192,15 @@
 				122B19091A867D1800247A05 /* StreamHeaderCell.xib */,
 				122B18F11A867C7D00247A05 /* StreamImageCell.swift */,
 				122B190F1A8692C700247A05 /* StreamImageCell.xib */,
-				763458DF1AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift */,
 				7659FB7E1B29EE0F00DEB6F4 /* StreamInviteFriendsCell.swift */,
 				7659FB801B29EEDD00DEB6F4 /* StreamInviteFriendsCell.xib */,
 				76DAD9F81ABCBB9B006C8A6C /* StreamLoadingCell.swift */,
-				1DF233591A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift */,
 				76A9664B1AE996C500FB1A52 /* StreamRegionableCell.swift */,
 				76EB15A81B0295AA001BBB2A /* StreamSeeMoreCommentsCell.swift */,
 				76EB15AA1B0295BD001BBB2A /* StreamSeeMoreCommentsCell.xib */,
 				122B18F21A867C7D00247A05 /* StreamTextCell.swift */,
 				122B19121A8695BF00247A05 /* StreamTextCell.xib */,
 				122B18F31A867C7D00247A05 /* StreamTextCellHTML.swift */,
-				122B18F41A867C7D00247A05 /* StreamTextCellSizeCalculator.swift */,
 				12D43A481AC865540039F54F /* StreamToggleCell.swift */,
 				12450FD41AC86F630084BDBA /* StreamToggleCell.xib */,
 				1D7152D21D74A189005998FE /* TextHeaderCell.swift */,
@@ -2824,7 +2821,6 @@
 				1220347A1DEC92C80059E633 /* StreamCellTypeSpec.swift */,
 				1DF9840B1D9B31690055EFC7 /* StreamCreateCommentCellSpec.swift */,
 				1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */,
-				763458E11AEED87700BA91A5 /* StreamImageCellSizeCalculatorSpec.swift */,
 				1D59EF861D62187C0029C106 /* StreamImageCellSpec.swift */,
 				76BE9C541B2B773B007575AA /* StreamInviteFriendsCellSpec.swift */,
 				76A628D61B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift */,
@@ -3263,8 +3259,12 @@
 		1D1BCA531BACBAAE009075E8 /* Calculators */ = {
 			isa = PBXGroup;
 			children = (
+				1D70DE621DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift */,
+				1D70DE631DF730C1008AF216 /* StreamImageCellSizeCalculator.swift */,
+				1D70DE641DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift */,
+				1D70DE651DF730C1008AF216 /* StreamTextCellSizeCalculator.swift */,
 			);
-			name = Calculators;
+			path = Calculators;
 			sourceTree = "<group>";
 		};
 		1D33284C1AE74D6100446591 /* Search */ = {
@@ -3351,6 +3351,14 @@
 			name = Views;
 			path = Specs/Views;
 			sourceTree = SOURCE_ROOT;
+		};
+		1D70DE6A1DF73869008AF216 /* Calculators */ = {
+			isa = PBXGroup;
+			children = (
+				1D70DE6B1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift */,
+			);
+			path = Calculators;
+			sourceTree = "<group>";
 		};
 		1D7152901D6CA236005998FE /* Startup */ = {
 			isa = PBXGroup;
@@ -4663,6 +4671,7 @@
 				12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */,
 				12CF810E1AEFDFA5008FFC6F /* FakeImageManager.swift in Sources */,
 				12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */,
+				1D70DE6C1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift in Sources */,
 				122943301C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift in Sources */,
 				76FF80591A96921100617A1E /* RelationshipControllerSpec.swift in Sources */,
 				1294EBAC1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift in Sources */,
@@ -4762,7 +4771,6 @@
 				1DF233641A9537590096DA65 /* CGRectSpec.swift in Sources */,
 				EA68A0F01AAE1691003F0425 /* LocalPersonSpec.swift in Sources */,
 				1DF50C9E1C61512000C62D89 /* NSAttributedStringSpec.swift in Sources */,
-				763458E21AEED87700BA91A5 /* StreamImageCellSizeCalculatorSpec.swift in Sources */,
 				1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */,
 				120FF6CB1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift in Sources */,
 				EA9624E71ACB11E900E94306 /* AvailabilityServiceSpec.swift in Sources */,
@@ -4821,6 +4829,7 @@
 				1217009B1A7841C400EBACA5 /* StreamCellItemParser.swift in Sources */,
 				12431FFC1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift in Sources */,
 				12224E581A72CEC300D087EC /* PostbarController.swift in Sources */,
+				1D70DE681DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift in Sources */,
 				1D59EF901D64BB490029C106 /* HireProtocols.swift in Sources */,
 				123375931DA6F13C0019CFAD /* ProfileNamesSizeCalculator.swift in Sources */,
 				120FF6C81C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */,
@@ -4884,6 +4893,7 @@
 				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
 				122B30D91C6A3FBC00C1B9D8 /* PushPayload.swift in Sources */,
 				1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */,
+				1D70DE661DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift in Sources */,
 				121700B61A78428D00EBACA5 /* StreamCollectionViewLayout.swift in Sources */,
 				1D22C8201AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift in Sources */,
 				1DA18DFC1DAC3B4E000231CC /* ProfileStatsPresenter.swift in Sources */,
@@ -4923,6 +4933,7 @@
 				12F6AE331A43390900493660 /* UIStoryboardExtensions.swift in Sources */,
 				12F717581A800D7C00A12A00 /* PulsingCircle.swift in Sources */,
 				123375951DA6F1610019CFAD /* ProfileTotalCountSizeCalculator.swift in Sources */,
+				1D70DE671DF730C1008AF216 /* StreamImageCellSizeCalculator.swift in Sources */,
 				1207C9881C73FEE000939ADB /* PostEditingService.swift in Sources */,
 				12F6ADFF1A43380C00493660 /* ProfileViewController.swift in Sources */,
 				1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */,
@@ -5038,7 +5049,6 @@
 				1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */,
 				1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */,
 				12B2913A1DE4ED090056C52E /* EmptyStreamCell.swift in Sources */,
-				763458E01AEED3E000BA91A5 /* StreamImageCellSizeCalculator.swift in Sources */,
 				122B30D41C6A3FBC00C1B9D8 /* Love.swift in Sources */,
 				12D43A461AC864CC0039F54F /* StreamToggleCellPresenter.swift in Sources */,
 				12A1D8291DAC036300A327D6 /* ProfileAvatarPresenter.swift in Sources */,
@@ -5047,12 +5057,10 @@
 				122B30C61C6A3FBC00C1B9D8 /* AddressBookError.swift in Sources */,
 				12F6AE6B1A4339EF00493660 /* ElloHUD.swift in Sources */,
 				1DF50C9B1C614E0F00C62D89 /* OmnibarScreenAutocomplete.swift in Sources */,
-				12431FFE1DBBAA4C006808D4 /* CategoryHeaderCellSizeCalculator.swift in Sources */,
 				124E344C1B54229300E5A475 /* AutoComplete.swift in Sources */,
 				1D9856421C723EAA00C1BF78 /* DrawerPopControl.swift in Sources */,
 				EAB484241AC1BCD200CE6A81 /* CredentialSettingsViewController.swift in Sources */,
 				1D7152CA1D6FA0D4005998FE /* JoinScreen.swift in Sources */,
-				122B19071A867C7D00247A05 /* StreamTextCellSizeCalculator.swift in Sources */,
 				1DE87FC61BB2FFB8007A7325 /* Mentionables.swift in Sources */,
 				122B19031A867C7D00247A05 /* StreamTextCell.swift in Sources */,
 				1D2F65B11D1870020099D036 /* DiscoverAllCategoriesScreen.swift in Sources */,
@@ -5100,6 +5108,7 @@
 				1207C98A1C73FEE000939ADB /* ProfileService.swift in Sources */,
 				1D59336D1D10ADA600EAF03D /* CategoryList.swift in Sources */,
 				122B30D11C6A3FBC00C1B9D8 /* ExperienceUpdate.swift in Sources */,
+				1D70DE691DF730C1008AF216 /* StreamTextCellSizeCalculator.swift in Sources */,
 				12F0E3B71A4333EC0012CEA2 /* AppSetup.swift in Sources */,
 				122B30D21C6A3FBC00C1B9D8 /* JSONAble.swift in Sources */,
 				1D8AFAD01A9691F90034DDAD /* DictionaryExtensions.swift in Sources */,
@@ -5152,7 +5161,6 @@
 				1289F3921AF1468B008A938C /* ImageLabelControl.swift in Sources */,
 				1DA18E521DCCF70E000231CC /* PagePromotionalService.swift in Sources */,
 				1D7152D51D74A23D005998FE /* TextHeaderCellPresenter.swift in Sources */,
-				1DF2335A1A93FF860096DA65 /* StreamNotificationCellSizeCalculator.swift in Sources */,
 				122B19011A867C7D00247A05 /* StreamImageCell.swift in Sources */,
 				1264A7D71B7145E700733179 /* Application.swift in Sources */,
 				1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */,

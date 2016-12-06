@@ -4,7 +4,7 @@
 
 import Foundation
 
-public class StreamImageCellSizeCalculator: NSObject {
+public class StreamImageCellSizeCalculator {
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
     private var screenWidth: CGFloat = 0.0
