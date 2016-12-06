@@ -6,7 +6,7 @@ import Moya
 import Foundation
 import UIKit
 
-public class S3UploadingService: NSObject {
+public class S3UploadingService {
     typealias S3UploadSuccessCompletion = (url: NSURL?) -> Void
 
     var uploader: ElloS3?

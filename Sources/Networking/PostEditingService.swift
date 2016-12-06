@@ -63,7 +63,7 @@ public func == (lhs: ImageRegionData, rhs: ImageRegionData) -> Bool {
 }
 
 
-public class PostEditingService: NSObject {
+public class PostEditingService {
     // this can return either a Post or Comment
     typealias CreatePostSuccessCompletion = (post: AnyObject) -> Void
     typealias UploadImagesSuccessCompletion = ([(Int, ImageRegion)]) -> Void

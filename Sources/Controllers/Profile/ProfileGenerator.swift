@@ -123,8 +123,8 @@ private extension ProfileGenerator {
             userParam,
             success: { [weak self] (posts, responseConfig) in
                 guard let sself = self else { return }
-
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+
                 sself.destination?.setPagingConfig(responseConfig)
                 sself.posts = posts
                 let userPostItems = sself.parse(posts)

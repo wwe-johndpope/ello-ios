@@ -12,7 +12,8 @@ public struct StreamLoadedNotifications {
     static let streamLoaded = TypedNotification<StreamKind>(name: "StreamLoadedNotification")
 }
 
-public class StreamService: NSObject {
+public class StreamService {
+    public init() {}
 
     public func loadStream(
         endpoint: ElloAPI,

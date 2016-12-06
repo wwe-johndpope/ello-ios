@@ -64,12 +64,18 @@ public class ProfileHeaderCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        style()
         bindActions()
         arrange()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func style() {
+        backgroundColor = .clearColor()
+        contentView.backgroundColor = .clearColor()
     }
 
     private func bindActions() {
@@ -105,8 +111,6 @@ public class ProfileHeaderCell: UICollectionViewCell {
     }
 
     private func arrange() {
-        backgroundColor = .clearColor()
-        contentView.backgroundColor = .clearColor()
         contentView.addSubview(headerView)
 
         headerView.snp_makeConstraints { make in
