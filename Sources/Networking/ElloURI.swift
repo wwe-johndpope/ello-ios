@@ -18,6 +18,7 @@ public enum ElloURI: String {
     case Following = "following"
     case Noise = "noise"
     case Notifications = "notifications(?:\\/?|\\/([^\\/]+)/?)$"
+    case PushNotificationAnnouncement = "notifications/all"
     case PushNotificationComment = "notifications/posts/([^\\/]+)\\/comments/([^\\/]+)$"
     case PushNotificationPost = "notifications/posts/([^\\/]+)\\/?$"
     case PushNotificationUser = "notifications/users/([^\\/]+)\\/?$"
@@ -160,7 +161,8 @@ public enum ElloURI: String {
             return "\(ElloURI.fuzzyDomain)\\/\(rawValue)"
         case .Post:
             return "\(ElloURI.userPathRegex)\(rawValue)"
-        case .PushNotificationComment,
+        case .PushNotificationAnnouncement,
+             .PushNotificationComment,
              .PushNotificationPost,
              .PushNotificationUser:
             return "\(rawValue)"
@@ -213,6 +215,8 @@ public enum ElloURI: String {
             let last = regex?.matchingGroups(url).safeValue(3) ?? url
             let lastArr = last.characters.split { $0 == "?" }.map { String($0) }
             return lastArr.first ?? last
+        case .PushNotificationAnnouncement:
+            return "all"
         case .PushNotificationPost:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .Profile:
@@ -266,6 +270,7 @@ public enum ElloURI: String {
         Manifesto,
         NativeRedirect,
         Noise,
+        PushNotificationAnnouncement,
         PushNotificationComment,
         PushNotificationPost,
         PushNotificationUser,
