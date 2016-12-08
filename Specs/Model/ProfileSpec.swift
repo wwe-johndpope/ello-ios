@@ -22,6 +22,7 @@ class ProfileSpec: QuickSpec {
                     expect(profile.hasSharingEnabled) == true
                     expect(profile.hasAdNotificationsEnabled) == false
                     expect(profile.allowsAnalytics) == true
+                    expect(profile.notifyOfAnnouncementsViaPush) == false
                     expect(profile.notifyOfCommentsViaEmail) == true
                     expect(profile.notifyOfMentionsViaEmail) == true
                     expect(profile.notifyOfNewFollowersViaEmail) == true

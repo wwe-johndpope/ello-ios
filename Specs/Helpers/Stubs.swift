@@ -195,6 +195,7 @@ extension Profile: Stubbable {
             subscribeToDailyEllo: (values["subscribeToDailyEllo"] as? Bool) ?? true,
             subscribeToWeeklyEllo: (values["subscribeToWeeklyEllo"] as? Bool) ?? true,
             subscribeToOnboardingDrip: (values["subscribeToOnboardingDrip"] as? Bool) ?? true,
+            notifyOfAnnouncementsViaPush: (values["notifyOfAnnouncementsViaPush"] as? Bool) ?? true,
             notifyOfCommentsViaPush: (values["notifyOfCommentsViaPush"] as? Bool) ?? true,
             notifyOfLovesViaPush : (values["notifyOfLovesViaPush"] as? Bool) ?? true,
             notifyOfMentionsViaPush: (values["notifyOfMentionsViaPush"] as? Bool) ?? true,

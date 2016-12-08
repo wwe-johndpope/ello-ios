@@ -180,7 +180,6 @@ class ElloURISpec: QuickSpec {
                     }
                 }
 
-"notifications/all"
                 describe("app loadable routes") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
                         "with Search urls": (input: "search", outputURI: .Search, outputData: ""),

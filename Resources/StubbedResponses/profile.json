@@ -97,6 +97,7 @@
     "allows_analytics": true,
     "posts_adult_content": true,
     "views_adult_content": true,
+    "notify_of_annnouncements_via_push": false,
     "notify_of_comments_via_email": true,
     "notify_of_mentions_via_email": true,
     "notify_of_new_followers_via_email": true,
