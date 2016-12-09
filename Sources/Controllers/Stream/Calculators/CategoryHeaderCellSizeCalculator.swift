@@ -10,7 +10,7 @@ public class CategoryHeaderCellSizeCalculator {
 
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
-    private var screenWidth: CGFloat = 0.0
+    private var cellWidth: CGFloat = 0.0
     private var cellItems: [StreamCellItem] = []
     private var completion: ElloEmptyCompletion = {}
 
@@ -24,19 +24,19 @@ public class CategoryHeaderCellSizeCalculator {
         }
     }
 
-    public static func calculateCategoryHeight(category: Category, screenWidth: CGFloat) -> CGFloat {
+    public static func calculateCategoryHeight(category: Category, cellWidth: CGFloat) -> CGFloat {
         let config = CategoryHeaderCell.Config(category: category)
-        return CategoryHeaderCellSizeCalculator.calculateHeight(config, screenWidth: screenWidth)
+        return CategoryHeaderCellSizeCalculator.calculateHeight(config, cellWidth: cellWidth)
     }
 
-    public static func calculatePagePromotionalHeight(pagePromotional: PagePromotional, screenWidth: CGFloat) -> CGFloat {
+    public static func calculatePagePromotionalHeight(pagePromotional: PagePromotional, cellWidth: CGFloat) -> CGFloat {
         let config = CategoryHeaderCell.Config(pagePromotional: pagePromotional)
-        return CategoryHeaderCellSizeCalculator.calculateHeight(config, screenWidth: screenWidth)
+        return CategoryHeaderCellSizeCalculator.calculateHeight(config, cellWidth: cellWidth)
     }
 
-    public static func calculateHeight(config: CategoryHeaderCell.Config, screenWidth: CGFloat) -> CGFloat {
+    public static func calculateHeight(config: CategoryHeaderCell.Config, cellWidth: CGFloat) -> CGFloat {
         var calcHeight: CGFloat = 0
-        let textWidth = screenWidth - 2 * CategoryHeaderCell.Size.defaultMargin
+        let textWidth = cellWidth - 2 * CategoryHeaderCell.Size.defaultMargin
         let boundingSize = CGSize(width: textWidth, height: CGFloat.max)
 
         let attributedTitle = config.attributedTitle
@@ -83,7 +83,7 @@ public class CategoryHeaderCellSizeCalculator {
             }
         }
         self.cellItems = job.cellItems
-        self.screenWidth = job.width
+        self.cellWidth = job.width
         loadNext()
     }
 
@@ -94,13 +94,13 @@ public class CategoryHeaderCellSizeCalculator {
         }
 
         let item = cellItems.removeAtIndex(0)
-        let minHeight = ceil(screenWidth / CategoryHeaderCellSizeCalculator.ratio)
+        let minHeight = ceil(cellWidth / CategoryHeaderCellSizeCalculator.ratio)
         var calcHeight: CGFloat = 0
         if let category = item.jsonable as? Category {
-            calcHeight += CategoryHeaderCellSizeCalculator.calculateCategoryHeight(category, screenWidth: screenWidth)
+            calcHeight += CategoryHeaderCellSizeCalculator.calculateCategoryHeight(category, cellWidth: cellWidth)
         }
         else if let pagePromotional = item.jsonable as? PagePromotional {
-            calcHeight += CategoryHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, screenWidth: screenWidth)
+            calcHeight += CategoryHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, cellWidth: cellWidth)
         }
 
         let height = max(minHeight, calcHeight)
