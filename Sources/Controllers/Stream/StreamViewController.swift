@@ -326,6 +326,11 @@ public final class StreamViewController: BaseElloViewController {
         completion: ElloEmptyCompletion = {}
         )
     {
+        guard streamCellItems.count > 0 else {
+            replacePlaceholder(placeholderType, with: [StreamCellItem(type: .Placeholder, placeholderType: placeholderType)], completion: completion)
+            return
+        }
+
         for item in streamCellItems {
             item.placeholderType = placeholderType
         }
