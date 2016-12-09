@@ -141,6 +141,7 @@ public class CategoryHeaderCell: UICollectionViewCell {
 
     public func setImageURL(url: NSURL?) {
         guard let url = url else {
+            imageView.pin_cancelImageDownload()
             imageView.image = nil
             return
         }
