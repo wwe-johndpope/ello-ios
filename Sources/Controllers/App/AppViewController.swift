@@ -96,6 +96,7 @@ public class AppViewController: BaseElloViewController {
         else {
             screen.animateLogo()
             failureCompletion = { _ in
+                self.showStartupScreen()
                 self.screen.stopAnimatingLogo()
             }
         }
@@ -114,13 +115,8 @@ public class AppViewController: BaseElloViewController {
                 }
             },
             failure: { (error, _) in
-                self.failedToLoadCurrentUser(failureCompletion, error: error)
+                failureCompletion(error: error)
             })
-    }
-
-    func failedToLoadCurrentUser(failure: ElloErrorCompletion?, error: NSError) {
-        showStartupScreen()
-        failure?(error: error)
     }
 
     private func setupNotificationObservers() {
