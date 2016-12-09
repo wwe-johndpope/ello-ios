@@ -114,7 +114,7 @@ class StreamViewControllerSpec: QuickSpec {
                 controller = StreamViewController.instantiateFromStoryboard()
                 controller.streamKind = StreamKind.Following
                 showController(controller)
-                controller.streamService.loadStream(controller.streamKind.endpoint, streamKind: nil,
+                controller.streamService.loadStream(endpoint: controller.streamKind.endpoint, streamKind: nil,
                     success: { (jsonables, responseConfig) in
                         controller.appendUnsizedCellItems(StreamCellItemParser().parse(jsonables, streamKind: controller.streamKind), withWidth: nil)
                         controller.responseConfig = responseConfig

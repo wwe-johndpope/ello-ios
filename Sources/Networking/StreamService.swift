@@ -16,7 +16,16 @@ public class StreamService {
     public init() {}
 
     public func loadStream(
-        endpoint: ElloAPI,
+        streamKind streamKind: StreamKind,
+        success: StreamSuccessCompletion,
+        failure: ElloFailureCompletion? = nil,
+        noContent: ElloEmptyCompletion? = nil)
+    {
+        return loadStream(endpoint: streamKind.endpoint, streamKind: streamKind, success: success, failure: failure, noContent: noContent)
+    }
+
+    public func loadStream(
+        endpoint endpoint: ElloAPI,
         streamKind: StreamKind?,
         success: StreamSuccessCompletion,
         failure: ElloFailureCompletion? = nil,

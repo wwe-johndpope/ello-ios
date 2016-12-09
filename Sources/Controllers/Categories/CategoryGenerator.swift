@@ -201,7 +201,7 @@ private extension CategoryGenerator {
         guard let endpoint = apiEndpoint else { return }
 
         StreamService().loadStream(
-            endpoint,
+            endpoint: endpoint,
             streamKind: streamKind,
             success: { [weak self] (jsonables, responseConfig) in
                 guard let sself = self else { return }

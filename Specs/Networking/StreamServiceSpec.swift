@@ -21,7 +21,7 @@ class StreamServiceSpec: QuickSpec {
                         var loadedPosts:[Post]?
                         var config: ResponseConfig?
 
-                        streamService.loadStream(ElloAPI.FriendStream, streamKind: nil, success: { (jsonables, responseConfig) in
+                        streamService.loadStream(endpoint: ElloAPI.FriendStream, streamKind: nil, success: { (jsonables, responseConfig) in
                             loadedPosts = (StreamKind.Following.filter(jsonables, viewsAdultContent: true) as! [Post])
                             config = responseConfig
                         }, failure: nil)
@@ -58,7 +58,7 @@ class StreamServiceSpec: QuickSpec {
                     xit("handles assets") {
                         var loadedPosts:[Post]?
 
-                        streamService.loadStream(ElloAPI.FriendStream, streamKind: nil,
+                        streamService.loadStream(endpoint: ElloAPI.FriendStream, streamKind: nil,
                             success: { (jsonables, responseConfig) in
                                 loadedPosts = (StreamKind.Following.filter(jsonables, viewsAdultContent: true) as! [Post])
                             },
@@ -134,7 +134,7 @@ class StreamServiceSpec: QuickSpec {
                         var loadedStatusCode:Int?
                         var loadedError:NSError?
 
-                        streamService.loadStream(ElloAPI.FriendStream, streamKind: nil, success: { (jsonables, responseConfig) in
+                        streamService.loadStream(endpoint: ElloAPI.FriendStream, streamKind: nil, success: { (jsonables, responseConfig) in
                             loadedJsonables = jsonables
                         }, failure: { (error, statusCode) in
                             loadedError = error

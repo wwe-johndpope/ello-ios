@@ -31,7 +31,7 @@ class StreamCellItemParserSpec: QuickSpec {
 
                 it("returns an array with the proper count of stream cell items when parsing friends.json's posts") {
                     var cellItems = [StreamCellItem]()
-                    StreamService().loadStream(.FriendStream, streamKind: nil,
+                    StreamService().loadStream(endpoint: .FriendStream, streamKind: nil,
                         success: { (jsonables, responseConfig) in
                             cellItems = subject.parse(jsonables, streamKind: .Following)
                         },
@@ -42,7 +42,7 @@ class StreamCellItemParserSpec: QuickSpec {
 
                 it("doesn't include user's own post headers on a profile stream") {
                     var cellItems = [StreamCellItem]()
-                    StreamService().loadStream(.FriendStream, streamKind: nil,
+                    StreamService().loadStream(endpoint: .FriendStream, streamKind: nil,
                         success: { (jsonables, responseConfig) in
                             cellItems = subject.parse(jsonables, streamKind: .UserStream(userParam: "42"))
                         },
@@ -59,7 +59,7 @@ class StreamCellItemParserSpec: QuickSpec {
 
                 it("returns an array with the proper count of stream cell items when parsing friends.json's activities") {
                     var loadedNotifications = [StreamCellItem]()
-                    StreamService().loadStream(.NotificationsStream(category: nil), streamKind: nil,
+                    StreamService().loadStream(endpoint: .NotificationsStream(category: nil), streamKind: nil,
                         success: { (jsonables, responseConfig) in
                             loadedNotifications = subject.parse(jsonables, streamKind: .Notifications(category: nil))
                         },
