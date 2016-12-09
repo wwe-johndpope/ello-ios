@@ -6,24 +6,23 @@
 public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     private static let textViewForSizing = ElloTextView(frame: CGRectZero, textContainer: nil)
     let webView: UIWebView
-    var originalWidth: CGFloat
+    var originalWidth: CGFloat = 0
 
-    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
     private var cellItems: [StreamCellItem] = []
     private var completion: ElloEmptyCompletion = {}
 
     public init(webView: UIWebView) {
         self.webView = webView
-        originalWidth = self.webView.frame.size.width
         super.init()
         self.webView.delegate = self
     }
 
 // MARK: Public
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
-        let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: ElloEmptyCompletion) {
+        let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
             processJob(job)
@@ -49,8 +48,8 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     }
 
     private func loadNext() {
-        if let activity = self.cellItems.safeValue(0) {
-            if let notification = activity.jsonable as? Notification,
+        if let item = self.cellItems.safeValue(0) {
+            if let notification = item.jsonable as? Notification,
                 textRegion = notification.textRegion
             {
                 let content = textRegion.content
