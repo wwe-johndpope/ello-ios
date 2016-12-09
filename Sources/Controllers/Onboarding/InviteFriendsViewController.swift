@@ -33,7 +33,6 @@ public class InviteFriendsViewController: StreamableViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        streamViewController.contentInset = UIEdgeInsetsZero
         streamViewController.searchStreamDelegate = self
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         streamViewController.loadInitialPage()

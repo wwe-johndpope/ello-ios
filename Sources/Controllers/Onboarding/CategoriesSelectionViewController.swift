@@ -28,7 +28,6 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        streamViewController.contentInset = UIEdgeInsetsZero
         streamViewController.selectedCategoryDelegate = self
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)

@@ -196,11 +196,12 @@ public final class StreamViewController: BaseElloViewController {
         }, completion: nil)
     }
 
-    public var contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
-        didSet {
-            self.collectionView.contentInset = contentInset
-            self.collectionView.scrollIndicatorInsets = contentInset
-            self.pullToRefreshView?.defaultContentInset = contentInset
+    public var contentInset: UIEdgeInsets {
+        get { return collectionView.contentInset }
+        set {
+            collectionView.elloContentInset = newValue
+            collectionView.scrollIndicatorInsets = newValue
+            pullToRefreshView?.defaultContentInset = newValue
         }
     }
     public var columnCount: Int {
