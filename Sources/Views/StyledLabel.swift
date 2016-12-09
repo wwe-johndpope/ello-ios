@@ -24,7 +24,6 @@ public class StyledLabel: UILabel {
     public struct Style {
         let backgroundColor: UIColor
         let textColor: UIColor
-        let borderColor: UIColor?
         let fontFamily: FontFamily
 
         var font: UIFont {
@@ -34,13 +33,11 @@ public class StyledLabel: UILabel {
         public init(
             textColor: UIColor,
             backgroundColor: UIColor = .clearColor(),
-            borderColor: UIColor? = nil,
 
             fontFamily: FontFamily = .Normal
         ) {
             self.textColor = textColor
             self.backgroundColor = backgroundColor
-            self.borderColor = borderColor
 
             self.fontFamily = fontFamily
         }
@@ -63,30 +60,11 @@ public class StyledLabel: UILabel {
     private func updateStyle() {
         backgroundColor = style.backgroundColor
 
-        if let layerBorder = style.borderColor {
-            layer.borderColor = layerBorder.CGColor
-            layer.borderWidth = 1
-        }
-        else {
-            layer.borderColor = nil
-            layer.borderWidth = 0
-        }
-
         font = style.font
         textColor = style.textColor
 
         if let text = text {
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 6
-            paragraphStyle.alignment = textAlignment
-
-            let attrs: [String: AnyObject] = [
-                NSFontAttributeName: style.font,
-                NSForegroundColorAttributeName: style.textColor,
-                NSParagraphStyleAttributeName: paragraphStyle
-            ]
-
-            attributedText = NSAttributedString(string: text, attributes: attrs)
+            attributedText = NSAttributedString(label: text, style: style)
         }
     }
 

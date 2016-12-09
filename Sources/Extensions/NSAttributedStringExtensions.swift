@@ -25,6 +25,29 @@ extension NSAttributedString {
         self.init(string: string, attributes: attrs)
     }
 
+    public convenience init(label string: String, style: StyledLabel.Style) {
+        self.init(string, color: style.textColor, font: style.font)
+    }
+
+    public convenience init(button string: String, style: StyledButton.Style, state: UIControlState = .Normal) {
+        let stateColor: UIColor?
+        if state == .Disabled {
+            stateColor = style.disabledTitleColor
+        }
+        else if state == .Highlighted {
+            stateColor = style.highlightedTitleColor
+        }
+        else if state == .Selected {
+            stateColor = style.selectedTitleColor
+        }
+        else {
+            stateColor = style.titleColor
+        }
+
+        let color = stateColor ?? style.titleColor ?? .blackColor()
+        self.init(string, color: color, underlineStyle: style.underline ? .StyleSingle : .StyleNone, font: style.font)
+    }
+
     public convenience init(primaryHeader: String, secondaryHeader: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6

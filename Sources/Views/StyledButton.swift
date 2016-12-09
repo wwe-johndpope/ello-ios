@@ -87,6 +87,10 @@ public class StyledButton: UIButton {
     override public var selected: Bool {
         didSet { updateStyle() }
     }
+    public var title: String? {
+        get { return currentTitle }
+        set { setTitle(newValue, forState: .Normal) }
+    }
 
     override public func layoutSubviews() {
         super.layoutSubviews()
@@ -130,20 +134,12 @@ public class StyledButton: UIButton {
 
         titleLabel?.font = style.font
 
-        let states: [(UIControlState, UIColor?)] = [
-            (.Disabled, style.disabledTitleColor),
-            (.Highlighted, style.highlightedTitleColor),
-            (.Selected, style.selectedTitleColor),
-            (.Normal, style.titleColor),
-        ]
-        for (state, stateColor) in states {
-            guard
-                let color = stateColor ?? style.titleColor,
-                let title = titleForState(.Normal)
-            else { continue }
-
-            let attrdTitle = NSAttributedString(title, color: color, underlineStyle: style.underline ? .StyleSingle : .StyleNone, font: style.font)
-            setAttributedTitle(attrdTitle, forState: state)
+        if let title = titleForState(.Normal) {
+            let states: [UIControlState] = [.Disabled, .Highlighted, .Selected, .Normal]
+            for state in states {
+                let attrdTitle = NSAttributedString(button: title, style: style, state: state)
+                setAttributedTitle(attrdTitle, forState: state)
+            }
         }
     }
 
@@ -183,6 +179,9 @@ extension StyledButton {
         super.setTitle(title, forState: state)
         if state == .Normal {
             updateStyle()
+        }
+        else {
+            fatalError("StyledButton doesn't support titles that aren't .normal")
         }
     }
 
