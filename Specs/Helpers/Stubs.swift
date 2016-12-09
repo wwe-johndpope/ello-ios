@@ -56,7 +56,7 @@ extension User: Stubbable {
             isHireable: (values["isHireable"] as? Bool) ?? false
         )
         user.avatar = values["avatar"] as? Asset
-        user.identifiableBy = (values["identifiableBy"] as? String) ?? "stub-user-identifiable-by"
+        user.identifiableBy = (values["identifiableBy"] as? String)
         user.postsCount = (values["postsCount"] as? Int) ?? 0
         user.lovesCount = (values["lovesCount"] as? Int) ?? 0
         user.totalViewsCount = (values["totalViewsCount"] as? Int)
@@ -70,7 +70,7 @@ extension User: Stubbable {
             user.followersCount = "stub-user-followers-count"
         }
         user.followingCount = (values["followingCount"] as? Int) ?? 0
-        user.formattedShortBio = (values["formattedShortBio"] as? String) ?? "stub-user-formatted-short-bio"
+        user.formattedShortBio = (values["formattedShortBio"] as? String)
         if let linkValues = (values["externalLinksList"] as? [[String:String]]) {
             user.externalLinksList = linkValues.flatMap { ExternalLink.fromDict($0) }
         }
@@ -81,7 +81,7 @@ extension User: Stubbable {
             user.externalLinksList = [ExternalLink(url: NSURL(string: "http://ello.co")!, text: "ello.co")]
         }
         user.coverImage = values["coverImage"] as? Asset
-        user.backgroundPosition = (values["backgroundPosition"] as? String) ?? "stub-user-background-position"
+        user.backgroundPosition = (values["backgroundPosition"] as? String)
         user.onboardingVersion = (values["onboardingVersion"] as? Int)
         // links / nested resources
         if let posts = values["posts"] as? [Post] {
