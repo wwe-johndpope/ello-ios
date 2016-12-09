@@ -83,7 +83,6 @@ private extension ProfileHeaderCellSizeCalculator {
     }
 
     func assignCellHeight(height: CGFloat) {
-
         if let cellItem = cellItems.safeValue(0) {
             self.cellItems.removeAtIndex(0)
             cellItem.calculatedCellHeights.webContent = height
