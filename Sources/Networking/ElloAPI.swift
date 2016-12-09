@@ -32,7 +32,7 @@ public enum ElloAPI {
     case FlagPost(postId: String, kind: String)
     case FlagUser(userId: String, kind: String)
     case FriendStream
-    case FriendNewContent(createdAt: NSDate)
+    case FriendNewContent(createdAt: NSDate?)
     case Hire(userId: String, body: String)
     case Collaborate(userId: String, body: String)
     case InfiniteScroll(queryItems: [AnyObject], elloApi: () -> ElloAPI)
@@ -41,8 +41,8 @@ public enum ElloAPI {
     case Loves(userId: String)
     case LocationAutoComplete(search: String)
     case NoiseStream
-    case NoiseNewContent(createdAt: NSDate)
-    case NotificationsNewContent(createdAt: NSDate)
+    case NoiseNewContent(createdAt: NSDate?)
+    case NotificationsNewContent(createdAt: NSDate?)
     case NotificationsStream(category: String?)
     case PagePromotionals
     case PostComments(postId: String)
@@ -553,20 +553,22 @@ extension ElloAPI: Moya.TargetType {
             assigned += sharingHeaders
         }
 
+        let createdAtHeader: String?
         switch self {
         case let .FriendNewContent(createdAt):
-            assigned += [
-                "If-Modified-Since": createdAt.toHTTPDateString()
-            ]
+            createdAtHeader = createdAt?.toHTTPDateString()
         case let .NoiseNewContent(createdAt):
-            assigned += [
-                "If-Modified-Since": createdAt.toHTTPDateString()
-            ]
+            createdAtHeader = createdAt?.toHTTPDateString()
         case let .NotificationsNewContent(createdAt):
+            createdAtHeader = createdAt?.toHTTPDateString()
+        default:
+            createdAtHeader = nil
+        }
+
+        if let createdAtHeader = createdAtHeader {
             assigned += [
-                "If-Modified-Since": createdAt.toHTTPDateString()
+                "If-Modified-Since": createdAtHeader
             ]
-        default: break
         }
         return assigned
     }

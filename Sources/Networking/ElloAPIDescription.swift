@@ -35,6 +35,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "FlagPost(postId: \(postId), kind: \(kind))"
         case let .FlagUser(userId, kind):
             return "FlagUser(userId: \(userId), kind: \(kind))"
+        case let .FriendNewContent(createdAt):
+            return "FriendNewContent(createdAt: \(createdAt))"
         case let .Hire(userId, body):
             return "Hire(userId: \(userId), body: \(body.characters.count))"
         case let .Collaborate(userId, body):
@@ -45,6 +47,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "Loves(userId: \(userId))"
         case let .LocationAutoComplete(search):
             return "LocationAutoComplete(search: \(search))"
+        case let .NoiseNewContent(createdAt):
+            return "NoiseNewContent(createdAt: \(createdAt))"
+        case let .NotificationsNewContent(createdAt):
+            return "NotificationsNewContent(createdAt: \(createdAt))"
         case let .PostComments(postId):
             return "PostComments(postId: \(postId))"
         case let .PostDetail(postParam, commentCount):

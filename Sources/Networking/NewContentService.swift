@@ -13,9 +13,7 @@ public struct NewContentNotifications {
 }
 
 public class NewContentService {
-
     var timer: NSTimer?
-
     public init(){}
 }
 
@@ -45,7 +43,8 @@ public extension NewContentService {
     public func updateCreatedAt(jsonables: [JSONAble], streamKind: StreamKind) {
         let old = NSDate(timeIntervalSince1970: 0)
         let new = newestDate(jsonables)
-        let storedDate = GroupDefaults[streamKind.lastViewedCreatedAtKey].date ?? old
+        let storedKey = streamKind.lastViewedCreatedAtKey
+        let storedDate = GroupDefaults[storedKey].date ?? old
         let mostRecent = new > storedDate ? new : storedDate
         GroupDefaults[streamKind.lastViewedCreatedAtKey] = mostRecent
     }
@@ -72,10 +71,11 @@ private extension NewContentService {
     }
 
     func checkForNewNotifications(done: BasicBlock = {}) {
-        let storedNotificationsDate = GroupDefaults[StreamKind.Notifications(category: nil).lastViewedCreatedAtKey].date ?? NSDate(timeIntervalSince1970: 0)
+        let storedKey = StreamKind.Notifications(category: nil).lastViewedCreatedAtKey
+        let storedDate = GroupDefaults[storedKey].date
 
         ElloProvider.shared.elloRequest(
-            ElloAPI.NotificationsNewContent(createdAt: storedNotificationsDate),
+            ElloAPI.NotificationsNewContent(createdAt: storedDate),
             success: { (_, responseConfig) in
                 if let statusCode = responseConfig.statusCode where statusCode == 204 {
                     postNotification(NewContentNotifications.newNotifications, value: nil)
@@ -87,10 +87,11 @@ private extension NewContentService {
     }
 
     func checkForNewStreamContent(done: BasicBlock = {}) {
-        let storedFriendsDate = GroupDefaults[StreamKind.Following.lastViewedCreatedAtKey].date ?? NSDate(timeIntervalSince1970: 0)
+        let storedKey = StreamKind.Following.lastViewedCreatedAtKey
+        let storedDate = GroupDefaults[storedKey].date
 
         ElloProvider.shared.elloRequest(
-            ElloAPI.FriendNewContent(createdAt: storedFriendsDate),
+            ElloAPI.FriendNewContent(createdAt: storedDate),
             success: { (_, responseConfig) in
                 if let lastModified = responseConfig.lastModified {
                     GroupDefaults[StreamKind.Following.lastViewedCreatedAtKey] = lastModified.toNSDate(HTTPDateFormatter)
