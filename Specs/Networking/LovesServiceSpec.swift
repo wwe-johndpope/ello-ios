@@ -41,10 +41,6 @@ class LovesServiceSpec: QuickSpec {
                         ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
                     }
 
-                    afterEach {
-                        ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
-                    }
-
                     it("fails") {
                         var successCalled = false
                         var failedCalled = false
@@ -86,10 +82,6 @@ class LovesServiceSpec: QuickSpec {
 
                     beforeEach {
                         ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
-                    }
-
-                    afterEach {
-                        ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
                     }
 
                     it("fails") {

@@ -7,12 +7,12 @@ import Quick
 import Nimble
 
 class ProfileGeneratorSpec: QuickSpec {
-    class MockProfileDestination: StreamDestination {
 
+    class MockProfileDestination: StreamDestination {
         var placeholderItems: [StreamCellItem] = []
         var headerItems: [StreamCellItem] = []
         var postItems: [StreamCellItem] = []
-        var otherPlaceHolderLoaded = false
+        var otherPlaceholderLoaded = false
         var user: User?
         var responseConfig: ResponseConfig?
         var pagingEnabled: Bool = false
@@ -28,7 +28,7 @@ class ProfileGeneratorSpec: QuickSpec {
             case .ProfilePosts:
                 postItems = items
             default:
-                otherPlaceHolderLoaded = true
+                otherPlaceholderLoaded = true
             }
         }
 
@@ -39,7 +39,7 @@ class ProfileGeneratorSpec: QuickSpec {
 
         func primaryJSONAbleNotFound() {
         }
-        
+
         func setPagingConfig(responseConfig: ResponseConfig) {
             self.responseConfig = responseConfig
         }
@@ -76,7 +76,7 @@ class ProfileGeneratorSpec: QuickSpec {
                     subject.load()
                     expect(destination.headerItems.count) > 0
                     expect(destination.postItems.count) > 0
-                    expect(destination.otherPlaceHolderLoaded) == false
+                    expect(destination.otherPlaceholderLoaded) == false
                 }
 
                 it("sets the primary jsonable") {
