@@ -160,7 +160,7 @@ public final class StreamViewController: BaseElloViewController {
     var sizeChangedNotification: NotificationObserver?
     var commentChangedNotification: NotificationObserver?
     var postChangedNotification: NotificationObserver?
-    var loveChangedNotification: NotificationObserver?
+    var jsonableChangedNotification: NotificationObserver?
     var relationshipChangedNotification: NotificationObserver?
     var settingChangedNotification: NotificationObserver?
     var currentUserChangedNotification: NotificationObserver?
@@ -527,13 +527,13 @@ public final class StreamViewController: BaseElloViewController {
             sself.updateNoResultsLabel()
         }
 
-        loveChangedNotification  = NotificationObserver(notification: LoveChangedNotification) { [weak self] (love, change) in
+        jsonableChangedNotification = NotificationObserver(notification: JSONAbleChangedNotification) { [weak self] (jsonable, change) in
             guard let
                 sself = self
             where sself.initialDataLoaded && sself.isViewLoaded()
             else { return }
 
-            sself.dataSource.modifyItems(love, change: change, collectionView: sself.collectionView)
+            sself.dataSource.modifyItems(jsonable, change: change, collectionView: sself.collectionView)
             sself.updateNoResultsLabel()
         }
 
@@ -576,7 +576,7 @@ public final class StreamViewController: BaseElloViewController {
         commentChangedNotification?.removeObserver()
         postChangedNotification?.removeObserver()
         relationshipChangedNotification?.removeObserver()
-        loveChangedNotification?.removeObserver()
+        jsonableChangedNotification?.removeObserver()
         settingChangedNotification?.removeObserver()
         currentUserChangedNotification?.removeObserver()
     }
