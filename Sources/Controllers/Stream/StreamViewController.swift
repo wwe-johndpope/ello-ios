@@ -1096,17 +1096,21 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let post = dataSource.postForIndexPath(indexPath) {
             postTappedDelegate?.postTapped(post)
         }
-        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            notification = item.jsonable as? Notification,
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             postId = notification.postId
         {
             postTappedDelegate?.postTapped(postId: postId)
         }
-        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            notification = item.jsonable as? Notification,
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             user = notification.subject as? User
         {
             userTapped(user)
+        }
+        else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
+            callToAction = announcement.ctaURL
+        {
+            let request = NSURLRequest(URL: callToAction)
+            ElloWebViewHelper.handleRequest(request, webLinkDelegate: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath),
             post = comment.loadedFromPost

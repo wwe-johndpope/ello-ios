@@ -102,10 +102,6 @@ private extension NewContentService {
                  done()
              },
              failure: { _ in done() })
-//        delay(1) {
-//            postNotification(NewContentNotifications.newAnnouncements, value: nil)
-//            done()
-//        }
     }
 
     func checkForNewStreamContent(done: BasicBlock = {}) {

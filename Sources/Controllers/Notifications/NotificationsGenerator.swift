@@ -27,7 +27,7 @@ public final class NotificationsGenerator: StreamGenerator {
         self.localToken = loadingToken.resetInitialPageLoadingToken()
     }
 
-    public func load(reload reload: Bool) {
+    public func load(reload reload: Bool = false) {
         localToken = loadingToken.resetInitialPageLoadingToken()
 
         if reload {
@@ -76,22 +76,6 @@ public final class NotificationsGenerator: StreamGenerator {
             .onFail { [weak self] _ in
                 self?.compareAndUpdateAnnouncements([])
             }
-
-        // delay(1) {
-        //     let announcement = Announcement(
-        //         id: "1",
-        //         header: "Announcing Not For Print, Ello’s new publication",
-        //         body: "Submissions for Issue 01 — Censorship will be open from 11/7 – 11/23",
-        //         ctaURL: NSURL(string: "http://test"),
-        //         ctaCaption: "Learn More",
-        //         createdAt: NSDate())
-        //     let asset = Asset(url: NSURL(string: "http://media.colinta.com/minime.png")!)
-        //     asset.large = asset.optimized
-        //     announcement.image = asset
-        //     self.compareAndUpdateAnnouncements([
-        //         announcement
-        //         ])
-        // }
     }
 
     private func compareAndUpdateAnnouncements(_ newAnnouncements: [Announcement]) {
