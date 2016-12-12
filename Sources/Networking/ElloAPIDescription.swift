@@ -45,8 +45,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "InfiniteScroll(elloApi: \(elloApi()))"
         case let .Loves(userId):
             return "Loves(userId: \(userId))"
-        case let .LocationAutoComplete(search):
-            return "LocationAutoComplete(search: \(search))"
+        case let .LocationAutoComplete(terms):
+            return "LocationAutoComplete(terms: \(terms))"
         case let .NoiseNewContent(createdAt):
             return "NoiseNewContent(createdAt: \(createdAt))"
         case let .NotificationsNewContent(createdAt):

@@ -92,12 +92,12 @@ public struct AutoCompleteService {
     }
 
     public func loadLocationResults(
-        search: String,
+        terms: String,
         success: AutoCompleteServiceSuccessCompletion,
         failure: ElloFailureCompletion)
     {
         ElloProvider.shared.elloRequest(
-            .LocationAutoComplete(search: search),
+            .LocationAutoComplete(terms: terms),
             success: { (data, responseConfig) in
                 if let results = data as? [AutoCompleteResult] {
                     success(results: results, responseConfig: responseConfig)

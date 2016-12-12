@@ -39,7 +39,7 @@ public enum ElloAPI {
     case InviteFriends(contact: String)
     case Join(email: String, username: String, password: String, invitationCode: String?)
     case Loves(userId: String)
-    case LocationAutoComplete(search: String)
+    case LocationAutoComplete(terms: String)
     case NoiseStream
     case NoiseNewContent(createdAt: NSDate?)
     case NotificationsNewContent(createdAt: NSDate?)
@@ -666,9 +666,9 @@ extension ElloAPI: Moya.TargetType {
                 params["invitation_code"] = invitationCode
             }
             return params
-        case let .LocationAutoComplete(search):
+        case let .LocationAutoComplete(terms):
             return [
-                "location": search
+                "location": terms
             ]
         case .NoiseStream:
             return [
