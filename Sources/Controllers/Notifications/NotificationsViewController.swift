@@ -226,6 +226,12 @@ extension NotificationsViewController: StreamDestination {
     public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
+
+        for item in items {
+            if let announcement = item.jsonable as? Announcement {
+                Tracker.sharedTracker.announcementViewed(announcement)
+            }
+        }
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
@@ -244,6 +250,7 @@ extension NotificationsViewController: StreamDestination {
 // MARK: NotificationsViewController:
 extension NotificationsViewController: AnnouncementDelegate {
     public func markAnnouncementAsRead(_ announcement: Announcement) {
+        Tracker.sharedTracker.announcementDismissed(announcement)
         generator?.markAnnouncementAsRead(announcement)
         postNotification(JSONAbleChangedNotification, value: (announcement, .Delete))
     }

@@ -1109,6 +1109,7 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
             callToAction = announcement.ctaURL
         {
+            Tracker.sharedTracker.announcementOpened(announcement)
             let request = NSURLRequest(URL: callToAction)
             ElloWebViewHelper.handleRequest(request, webLinkDelegate: self)
         }
