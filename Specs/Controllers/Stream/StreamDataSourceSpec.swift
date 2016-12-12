@@ -45,6 +45,7 @@ class StreamDataSourceSpec: QuickSpec {
             beforeEach {
                 let textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
                 let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
+                let announcementSizeCalculator = FakeAnnouncementCellSizeCalculator()
                 let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
                 let imageSizeCalculator = StreamImageCellSizeCalculator()
                 let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
@@ -56,6 +57,7 @@ class StreamDataSourceSpec: QuickSpec {
                 subject = StreamDataSource(streamKind: .Following,
                     textSizeCalculator: textSizeCalculator,
                     notificationSizeCalculator: notificationSizeCalculator,
+                    announcementSizeCalculator: announcementSizeCalculator,
                     profileHeaderSizeCalculator: profileHeaderSizeCalculator,
                     imageSizeCalculator: imageSizeCalculator,
                     categoryHeaderSizeCalculator: categoryHeaderSizeCalculator

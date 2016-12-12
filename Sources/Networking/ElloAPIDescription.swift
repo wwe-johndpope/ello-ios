@@ -5,6 +5,8 @@
 extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
+        case let .AnnouncementsNewContent(createdAt):
+            return "AnnouncementsNewContent(createdAt: \(createdAt))"
         case let .CommentDetail(postId, commentId):
             return "CommentDetail(postId: \(postId), commentId: \(commentId))"
         case let .CreateComment(parentPostId, _):
@@ -87,6 +89,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     }
     public var description: String {
         switch self {
+        case .Announcements:
+            return "Announcements"
+        case .AnnouncementsNewContent:
+            return "AnnouncementsNewContent"
         case .AmazonCredentials:
             return "AmazonCredentials"
         case .AnonymousCredentials:
@@ -163,6 +169,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "Loves"
         case .LocationAutoComplete:
             return "LocationAutoComplete"
+        case .MarkAnnouncementAsRead:
+            return "MarkAnnouncementAsRead"
         case .NoiseNewContent:
             return "NoiseNewContent"
         case .NoiseStream:

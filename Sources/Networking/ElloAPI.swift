@@ -9,6 +9,9 @@ public typealias MoyaResult = Result<Moya.Response, Moya.Error>
 
 public enum ElloAPI {
     case AmazonCredentials
+    case Announcements
+    case AnnouncementsNewContent(createdAt: NSDate?)
+    case MarkAnnouncementAsRead
     case AnonymousCredentials
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
@@ -108,6 +111,8 @@ public enum ElloAPI {
              .Auth,
              .ReAuth:
             return .NoContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
+        case .Announcements:
+            return .AnnouncementsType
         case .AmazonCredentials:
             return .AmazonCredentialsType
         case .Availability:
@@ -163,7 +168,8 @@ public enum ElloAPI {
              .UserNameAutoComplete,
              .LocationAutoComplete:
             return .AutoCompleteResultType
-        case .Collaborate,
+        case .AnnouncementsNewContent,
+             .Collaborate,
              .DeleteComment,
              .DeleteLove,
              .DeletePost,
@@ -174,6 +180,7 @@ public enum ElloAPI {
              .FriendNewContent,
              .Hire,
              .InviteFriends,
+             .MarkAnnouncementAsRead,
              .NoiseNewContent,
              .NotificationsNewContent,
              .ProfileDelete,
@@ -262,9 +269,11 @@ extension ElloAPI: Moya.TargetType {
             return .DELETE
         case .FriendNewContent,
              .NoiseNewContent,
+             .AnnouncementsNewContent,
              .NotificationsNewContent:
             return .HEAD
-        case .ProfileUpdate,
+        case .MarkAnnouncementAsRead,
+             .ProfileUpdate,
              .UpdateComment,
              .UpdatePost:
             return .PATCH
@@ -279,6 +288,11 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .AmazonCredentials:
             return "/api/\(ElloAPI.apiVersion)/assets/credentials"
+        case .Announcements,
+             .AnnouncementsNewContent:
+            return "/api/\(ElloAPI.apiVersion)/most_recent_announcements"
+        case .MarkAnnouncementAsRead:
+            return "\(ElloAPI.Announcements.path)/mark_last_read_announcement"
         case .AnonymousCredentials,
              .Auth,
              .ReAuth:
@@ -412,6 +426,8 @@ extension ElloAPI: Moya.TargetType {
 
     public var sampleData: NSData {
         switch self {
+        case .Announcements:
+            return stubbedData("announcements")
         case .AmazonCredentials:
             return stubbedData("amazon-credentials")
         case .AnonymousCredentials,
@@ -433,7 +449,9 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("categories")
         case .Category:
             return stubbedData("category")
-        case .DeleteComment,
+        case .AnnouncementsNewContent,
+             .MarkAnnouncementAsRead,
+             .DeleteComment,
              .DeleteLove,
              .DeletePost,
              .DeleteSubscriptions,
@@ -562,6 +580,8 @@ extension ElloAPI: Moya.TargetType {
 
         let createdAtHeader: String?
         switch self {
+        case let .AnnouncementsNewContent(createdAt):
+            createdAtHeader = createdAt?.toHTTPDateString()
         case let .FriendNewContent(createdAt):
             createdAtHeader = createdAt?.toHTTPDateString()
         case let .NoiseNewContent(createdAt):

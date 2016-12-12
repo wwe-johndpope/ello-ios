@@ -5,12 +5,13 @@
 import FLAnimatedImage
 import TimeAgoInWords
 
-@objc
-public protocol NotificationDelegate {
+
+public protocol NotificationDelegate: class {
     func userTapped(user: User)
     func commentTapped(comment: ElloComment)
     func postTapped(post: Post)
 }
+
 
 public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
@@ -58,16 +59,16 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     var webContentReady: WebContentReady?
     var onHeightMismatch: OnHeightMismatch?
 
-    var avatarButton: AvatarButton!
-    var buyButtonImage: UIImageView!
-    var replyButton: StyledButton!
-    var relationshipControl: RelationshipControl!
-    var titleTextView: ElloTextView!
-    var createdAtLabel: UILabel!
-    var messageWebView: UIWebView!
-    var notificationImageView: FLAnimatedImageView!
+    let avatarButton = AvatarButton()
+    let buyButtonImage = UIImageView()
+    let replyButton = StyledButton(style: .BlackPillOutline)
+    let relationshipControl = RelationshipControl()
+    let titleTextView = ElloTextView()
+    let createdAtLabel = UILabel()
+    let messageWebView = UIWebView()
+    let notificationImageView = FLAnimatedImageView()
+    let separator = UIView()
     var aspectRatio: CGFloat = 4/3
-    var separator = UIView()
 
     var canReplyToComment: Bool {
         set {
@@ -158,40 +159,33 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        avatarButton = AvatarButton()
         avatarButton.addTarget(self, action: #selector(avatarTapped), forControlEvents: .TouchUpInside)
-        titleTextView = ElloTextView(frame: .zero, textContainer: nil)
         titleTextView.textViewDelegate = self
 
-        buyButtonImage = UIImageView()
         buyButtonImage.hidden = true
         buyButtonImage.image = InterfaceImage.BuyButton.normalImage
         buyButtonImage.frame.size = CGSize(width: Size.BuyButtonSize, height: Size.BuyButtonSize)
         buyButtonImage.backgroundColor = .greenD1()
         buyButtonImage.layer.cornerRadius = Size.BuyButtonSize / 2
 
-        replyButton = StyledButton(style: .BlackPillOutline)
         replyButton.hidden = true
         replyButton.setTitle(InterfaceString.Notifications.Reply, forState: .Normal)
         replyButton.setImage(InterfaceImage.Reply.selectedImage, forState: .Normal)
         replyButton.contentEdgeInsets.left = 10
         replyButton.contentEdgeInsets.right = 10
         replyButton.imageEdgeInsets.right = 5
+
         replyButton.addTarget(self, action: #selector(replyTapped), forControlEvents: .TouchUpInside)
 
-        relationshipControl = RelationshipControl()
         relationshipControl.hidden = true
         relationshipControl.showStarButton = false
 
-        notificationImageView = FLAnimatedImageView()
         notificationImageView.contentMode = .ScaleAspectFit
-        messageWebView = UIWebView()
         messageWebView.opaque = false
         messageWebView.backgroundColor = .clearColor()
         messageWebView.scrollView.scrollEnabled = false
         messageWebView.delegate = self
 
-        createdAtLabel = UILabel()
         createdAtLabel.textColor = UIColor.greyA()
         createdAtLabel.font = UIFont.defaultFont(12)
         createdAtLabel.text = ""

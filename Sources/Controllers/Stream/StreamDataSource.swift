@@ -33,6 +33,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public let textSizeCalculator: StreamTextCellSizeCalculator
     public let notificationSizeCalculator: StreamNotificationCellSizeCalculator
+    public let announcementSizeCalculator: AnnouncementCellSizeCalculator
     public let profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator
     public let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     public let imageSizeCalculator: StreamImageCellSizeCalculator
@@ -50,12 +51,14 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak public var searchStreamDelegate: SearchStreamDelegate?
     weak public var inviteDelegate: InviteDelegate?
     weak public var categoryListCellDelegate: CategoryListCellDelegate?
+    weak public var announcementCellDelegate: AnnouncementCellDelegate?
     public let inviteCache = InviteCache()
 
     public init(
         streamKind: StreamKind,
         textSizeCalculator: StreamTextCellSizeCalculator,
         notificationSizeCalculator: StreamNotificationCellSizeCalculator,
+        announcementSizeCalculator: AnnouncementCellSizeCalculator,
         profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator,
         imageSizeCalculator: StreamImageCellSizeCalculator,
         categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator)
@@ -63,6 +66,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         self.streamKind = streamKind
         self.textSizeCalculator = textSizeCalculator
         self.notificationSizeCalculator = notificationSizeCalculator
+        self.announcementSizeCalculator = announcementSizeCalculator
         self.profileHeaderSizeCalculator = profileHeaderSizeCalculator
         self.imageSizeCalculator = imageSizeCalculator
         self.categoryHeaderSizeCalculator = categoryHeaderSizeCalculator
@@ -316,6 +320,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(streamCellItem.type.name, forIndexPath: indexPath)
 
         switch streamCellItem.type {
+        case .Announcement:
+            (cell as! AnnouncementCell).delegate = announcementCellDelegate
         case .CategoryPromotionalHeader,
              .PagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
@@ -742,7 +748,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem]) -> [NSIndexPath] {
-        guard indexPaths.count > 0 else { return []}
+        guard indexPaths.count > 0 else { return [] }
         removeItemsAtIndexPaths(indexPaths)
         return insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
     }
@@ -813,6 +819,9 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let notificationElements = cellItems.filter {
             return $0.type == .Notification
         }
+        let announcementElements = cellItems.filter {
+            return $0.type == .Announcement
+        }
         let profileHeaderItems = cellItems.filter {
             return $0.type == .ProfileHeader
         }
@@ -830,6 +839,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - repostLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
         imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
         notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, completion: afterAll())
+        announcementSizeCalculator.processCells(announcementElements, withWidth: withWidth, completion: afterAll())
         profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
         categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
         done()
