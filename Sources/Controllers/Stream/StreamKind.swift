@@ -102,6 +102,8 @@ public enum StreamKind {
         switch self {
         case .PostDetail:
             return false
+        case .Notifications:
+            return true
         default:
             return isGridView
         }
