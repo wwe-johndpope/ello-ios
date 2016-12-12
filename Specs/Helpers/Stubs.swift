@@ -408,6 +408,13 @@ extension Activity: Stubbable {
 
 extension Asset: Stubbable {
     class func stub(values: [String: AnyObject]) -> Asset {
+        if let url = values["url"] as? String {
+            return Asset(url: NSURL(string: url)!)
+        }
+        else if let url = values["url"] as? NSURL {
+            return Asset(url: url)
+        }
+
         let asset = Asset(id: (values["id"] as? String) ?? NSUUID().UUIDString)
         let defaultAttachment = values["attachment"] as? Attachment
         asset.optimized = (values["optimized"] as? Attachment) ?? defaultAttachment
