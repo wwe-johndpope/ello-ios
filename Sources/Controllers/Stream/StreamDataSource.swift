@@ -807,28 +807,28 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let textCells = filterTextCells(cellItems)
         let imageCells = filterImageCells(cellItems)
         let notificationElements = cellItems.filter {
-            return $0.type == StreamCellType.Notification
+            return $0.type == .Notification
         }
         let profileHeaderItems = cellItems.filter {
-            return $0.type == StreamCellType.ProfileHeader
+            return $0.type == .ProfileHeader
         }
 
         let categoryHeaderItems = cellItems.filter {
-            return $0.type == StreamCellType.CategoryPromotionalHeader || $0.type == StreamCellType.PagePromotionalHeader
+            return $0.type == .CategoryPromotionalHeader || $0.type == .PagePromotionalHeader
         }
-        let afterAll = after(5, block: completion)
 
-        self.imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: self.streamKind.columnCount, completion: afterAll)
-
+        let (afterAll, done) = afterN(completion)
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCellPresenter.postMargin * 2)
-        self.textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount) {
-            // extra -30.0 acounts for the left indent on a repost with the black line
-            self.textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - (textLeftRightConstraintWidth * 2), columnCount: self.streamKind.columnCount, completion: afterAll)
-        }
-        self.notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
-        self.profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
-        self.categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll)
+        textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        // extra -30.0 acounts for the left indent on a repost with the black line
+        let repostLeftRightConstraintWidth = textLeftRightConstraintWidth + StreamTextCellPresenter.repostMargin
+        textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - repostLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, completion: afterAll())
+        profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
+        done()
     }
 
     private func filterTextCells(cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {

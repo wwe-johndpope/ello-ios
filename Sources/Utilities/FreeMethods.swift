@@ -108,6 +108,37 @@ private func times_(times: Int, @noescape block: TakesIndexBlock) {
     }
 }
 
+// this is similar to after(x), but instead of passing in an int, two closures
+// are returned.  The first (often called 'afterAll') should be *called*
+// everywhere a callback is expected.  The second (often called 'done') should
+// be called once, after all the callbacks have been registered. e.g.
+//
+// func networkCalls(completion: BasicBlock) {
+//     let (afterAll, done) = afterN() { completion() }
+//     backgroundProcess1(completion: afterAll())
+//     backgroundProcess2(completion: afterAll())
+//     done()  // this doesn't execute the callback, just says "i'm done registering callbacks"
+// }
+//
+// without this 'done' trick, there is a bug where if the first process is synchronous, the 'count'
+// is incremented (by calling 'afterAll') and then immediately decremented.
+public func afterN(_ block: BasicBlock) -> (() -> BasicBlock, BasicBlock) {
+    var count = 0
+    var called = false
+    let decrementCount: BasicBlock = {
+        count -= 1
+        if count == 0 && !called {
+            block()
+            called = true
+        }
+    }
+    let incrementCount: () -> BasicBlock = {
+        count += 1
+        return decrementCount
+    }
+    return (incrementCount, incrementCount())
+}
+
 public func after(times: Int, block: BasicBlock) -> BasicBlock {
     if times == 0 {
         block()

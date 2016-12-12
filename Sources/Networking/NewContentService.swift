@@ -35,9 +35,10 @@ public extension NewContentService {
     @objc
     public func checkForNewContent() {
         stopPolling()
-        let restart = after(2, block: restartPolling)
-        checkForNewNotifications(restart)
-        checkForNewStreamContent(restart)
+        let (restart, done) = afterN(restartPolling)
+        checkForNewNotifications(restart())
+        checkForNewStreamContent(restart())
+        done()
     }
 
     public func updateCreatedAt(jsonables: [JSONAble], streamKind: StreamKind) {

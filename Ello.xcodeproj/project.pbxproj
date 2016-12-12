@@ -729,6 +729,7 @@
 		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
 		1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */; };
+		1DBFD9F71DFB6DA30058843D /* FreeMethodsSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233661A9655860096DA65 /* FreeMethodsSpecs.swift */; };
 		1DC10FA51C3DEB7600846ED6 /* availability__error.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC10FA31C3DEB7600846ED6 /* availability__error.json */; };
 		1DC10FA61C3DEB7600846ED6 /* availability.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC10FA41C3DEB7600846ED6 /* availability.json */; };
 		1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
@@ -1735,7 +1736,7 @@
 		1DF2335B1A94005C0096DA65 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		1DF233601A94FB060096DA65 /* CGRectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		1DF233631A9537590096DA65 /* CGRectSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectSpec.swift; sourceTree = "<group>"; };
-		1DF233661A9655860096DA65 /* FreeMethodsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeMethodsTests.swift; sourceTree = "<group>"; };
+		1DF233661A9655860096DA65 /* FreeMethodsSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeMethodsSpecs.swift; sourceTree = "<group>"; };
 		1DF322411BD6F16C008203F3 /* DebugViewsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewsController.swift; sourceTree = "<group>"; };
 		1DF322451BD821FE008203F3 /* black_star_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = black_star_normal.svg; sourceTree = "<group>"; };
 		1DF322461BD821FE008203F3 /* black_star_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = black_star_selected.svg; sourceTree = "<group>"; };
@@ -2612,7 +2613,6 @@
 				1DF233631A9537590096DA65 /* CGRectSpec.swift */,
 				1DCB12471B5EAE2A0023664C /* CGSizeSpec.swift */,
 				1DADA1681A96F4C60000DDA1 /* ColorsSpec.swift */,
-				1DF233661A9655860096DA65 /* FreeMethodsTests.swift */,
 				1DDA93AD1DA6F8590007EFDE /* NilSafeEqualsSpec.swift */,
 				1DF50C9D1C61512000C62D89 /* NSAttributedStringSpec.swift */,
 				127535201B73F7B2006B9A0F /* NSDateSpecs.swift */,
@@ -2713,6 +2713,7 @@
 				1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */,
 				1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */,
 				76224E441B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift */,
+				1DF233661A9655860096DA65 /* FreeMethodsSpecs.swift */,
 				1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */,
 				1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */,
 				EAF43D981AB0EBE60016E110 /* InviteCacheSpec.swift */,
@@ -4741,6 +4742,7 @@
 				1DF984021D9B0C1E0055EFC7 /* CategoriesSelectionViewControllerSpec.swift in Sources */,
 				76A628D71B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift in Sources */,
 				12148F1B1DA31DF300D6296C /* ProfileScreenSpec.swift in Sources */,
+				1DBFD9F71DFB6DA30058843D /* FreeMethodsSpecs.swift in Sources */,
 				765670F01A8022B4008ED9A2 /* ElloURISpec.swift in Sources */,
 				12D14C631A4375FE00C6F8E8 /* ValidatorSpec.swift in Sources */,
 				122CD3611C6E770200B37624 /* ElloManagerSpec.swift in Sources */,
