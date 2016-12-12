@@ -29,7 +29,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "CategoryPosts(slug: \(slug))"
         case let .EmojiAutoComplete(terms):
             return "EmojiAutoComplete(terms: \(terms))"
-        case .FlagComment(_, _, _):
+        case .FlagComment:
             return "FlagComment"
         case let .FlagPost(postId, kind):
             return "FlagPost(postId: \(postId), kind: \(kind))"

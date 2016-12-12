@@ -104,13 +104,17 @@ public enum ElloAPI {
 
     public var mappingType: MappingType {
         switch self {
-        case .Categories,
-             .Category:
-            return .CategoriesType
+        case .AnonymousCredentials,
+             .Auth,
+             .ReAuth:
+            return .NoContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
         case .AmazonCredentials:
             return .AmazonCredentialsType
         case .Availability:
             return .AvailabilityType
+        case .Categories,
+             .Category:
+            return .CategoriesType
         case .PagePromotionals:
             return .PagePromotionalsType
         case .PostReplyAll:
@@ -159,14 +163,19 @@ public enum ElloAPI {
              .UserNameAutoComplete,
              .LocationAutoComplete:
             return .AutoCompleteResultType
-        case .DeleteLove,
+        case .Collaborate,
+             .DeleteComment,
+             .DeleteLove,
+             .DeletePost,
              .DeleteSubscriptions,
              .FlagComment,
              .FlagPost,
              .FlagUser,
+             .FriendNewContent,
              .Hire,
-             .Collaborate,
              .InviteFriends,
+             .NoiseNewContent,
+             .NotificationsNewContent,
              .ProfileDelete,
              .PushSubscriptions,
              .RelationshipBatch,
@@ -186,8 +195,6 @@ public enum ElloAPI {
             return .DynamicSettingsType
         case .Relationship:
             return .RelationshipsType
-        default:
-            return .ErrorType
         }
     }
 }
