@@ -196,5 +196,7 @@ public final class Asset: JSONAble {
 }
 
 extension Asset: JSONSaveable {
-    var uniqId: String? { return id }
+    var uniqueId: String? { if let id = tableId { return "Asset-\(id)" } ; return nil }
+    var tableId: String? { return id }
+
 }

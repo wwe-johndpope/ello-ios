@@ -259,5 +259,7 @@ public final class Post: JSONAble, Authorable, Groupable {
 }
 
 extension Post: JSONSaveable {
-    var uniqId: String? { return id }
+    var uniqueId: String? { if let id = tableId { return "Post-\(id)" } ; return nil }
+    var tableId: String? { return id }
+
 }

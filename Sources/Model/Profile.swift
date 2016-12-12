@@ -261,5 +261,7 @@ public final class Profile: JSONAble {
 }
 
 extension Profile: JSONSaveable {
-    var uniqId: String? { return id }
+    var uniqueId: String? { if let id = tableId { return "Profile-\(id)" } ; return nil }
+    var tableId: String? { return id }
+
 }

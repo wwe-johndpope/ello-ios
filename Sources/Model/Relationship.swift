@@ -83,5 +83,7 @@ public final class Relationship: JSONAble {
 }
 
 extension Relationship: JSONSaveable {
-    var uniqId: String? { return id }
+    var uniqueId: String? { if let id = tableId { return "Relationship-\(id)" } ; return nil }
+    var tableId: String? { return id }
+
 }

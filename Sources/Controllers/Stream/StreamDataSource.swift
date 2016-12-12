@@ -657,15 +657,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     private func elementsForJSONAble(jsonable: JSONAble, change: ContentChange) -> ([NSIndexPath], [StreamCellItem]) {
         var indexPaths = [NSIndexPath]()
         var items = [StreamCellItem]()
-        if let comment = jsonable as? ElloComment {
-            for (index, item) in visibleCellItems.enumerate() {
-                if let itemComment = item.jsonable as? ElloComment where comment.id == itemComment.id {
-                    indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
-                    items.append(item)
-                }
-            }
-        }
-        else if let post = jsonable as? Post {
+        if let post = jsonable as? Post {
             for (index, item) in visibleCellItems.enumerate() {
                 if let itemPost = item.jsonable as? Post where post.id == itemPost.id {
                     indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
@@ -720,6 +712,18 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                         indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
                         items.append(item)
                     }
+                }
+            }
+        }
+        else if let jsonable = jsonable as? JSONSaveable,
+            identifier = jsonable.uniqueId
+        {
+            for (index, item) in visibleCellItems.enumerate() {
+                if let itemJsonable = item.jsonable as? JSONSaveable, let itemIdentifier = itemJsonable.uniqueId
+                    where identifier == itemIdentifier
+                {
+                    indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
+                    items.append(item)
                 }
             }
         }
