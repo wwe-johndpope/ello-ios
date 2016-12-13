@@ -53,8 +53,18 @@ public class ElloTextField: UITextField {
         return rect
     }
 
+    override public func leftViewRectForBounds(bounds: CGRect) -> CGRect {
+        var rect = super.leftViewRectForBounds(bounds)
+        rect.origin.x += 11
+        return rect
+    }
+
     private func rectForBounds(bounds: CGRect) -> CGRect {
-        return bounds.shrinkLeft(15).inset(topBottom: 10, sides: 15)
+        var rect = bounds.shrinkLeft(15).inset(topBottom: 10, sides: 15)
+        if let leftView = leftView {
+            rect = rect.shrinkRight(leftView.frame.size.width + 6)
+        }
+        return rect
     }
 
     override public func becomeFirstResponder() -> Bool {

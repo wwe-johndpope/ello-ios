@@ -27,6 +27,15 @@ public class SettingsContainerViewController: BaseElloViewController {
         return !(elloTabBarController?.tabBarHidden ?? true)
     }
 
+    func updateNavBars() {
+        if tabBarVisible() {
+            showNavBars()
+        }
+        else {
+            hideNavBars()
+        }
+    }
+
     func showNavBars() {
         navigationBarTopConstraint.constant = 0
         animate {
@@ -58,12 +67,7 @@ public class SettingsContainerViewController: BaseElloViewController {
             let settings = segue.destinationViewController as! SettingsViewController
             settings.currentUser = currentUser
             settingsViewController = settings
-            if tabBarVisible() {
-                showNavBars()
-            }
-            else {
-                hideNavBars()
-            }
+            updateNavBars()
             navigationBar.items = [settings.navigationItem]
             settings.scrollLogic.isShowing = tabBarVisible()
         }
@@ -78,12 +82,7 @@ public class SettingsContainerViewController: BaseElloViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         let hidden = elloTabBarController?.tabBarHidden ?? UIApplication.sharedApplication().statusBarHidden
         UIApplication.sharedApplication().setStatusBarHidden(hidden, withAnimation: .Slide)
-        if tabBarVisible() {
-            showNavBars()
-        }
-        else {
-            hideNavBars()
-        }
+        updateNavBars()
     }
 }
 
@@ -101,7 +100,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     var autoCompleteVC = AutoCompleteViewController()
     var locationTextViewSelected = false {
         didSet {
-            updateAutoCompleteFrame()
+            updateAutoCompleteFrame(animated: true)
         }
     }
     var locationAutoCompleteResultCount = 0 {
@@ -118,6 +117,9 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
     @IBOutlet weak public var linksTextFieldView: ElloTextFieldView!
     @IBOutlet weak public var locationTextFieldView: ElloTextFieldView!
+
+    var keyboardWillShowObserver: NotificationObserver?
+    var keyboardWillHideObserver: NotificationObserver?
 
     public var currentUser: User? {
         didSet {
@@ -143,6 +145,9 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
         locationTextViewSelected = false
         autoCompleteVC.delegate = self
+        autoCompleteVC.view.alpha = 0
+
+        tableView.estimatedRowHeight = 100
     }
 
     var elloTabBarController: ElloTabBarController? {
@@ -192,15 +197,25 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         setupViews()
     }
 
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: SettingsRow.Location.rawValue, inSection: 0)) {
-            autoCompleteVC.view.frame.origin.y = cell.frame.maxY
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let superview = view.superview {
+            superview.addSubview(autoCompleteVC.view)
+            updateAutoCompleteFrame()
         }
-        else {
-            autoCompleteVC.view.frame.size.height = 0
-        }
-        updateAutoCompleteFrame()
+
+        keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)
+        keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: self.keyboardWillHide)
+    }
+
+    public override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        autoCompleteVC.view.removeFromSuperview()
+
+        keyboardWillShowObserver?.removeObserver()
+        keyboardWillShowObserver = nil
+        keyboardWillHideObserver?.removeObserver()
+        keyboardWillHideObserver = nil
     }
 
     private func updateCurrentUser(user: User) {
@@ -347,16 +362,21 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     private func setupLocationTextField() {
         locationTextFieldView.label.setLabelText(InterfaceString.Settings.Location)
         locationTextFieldView.textField.keyboardAppearance = .Dark
+        locationTextFieldView.textField.autocorrectionType = .No
+        locationTextFieldView.textField.leftView = UIImageView(image: InterfaceImage.Marker.normalImage)
+        locationTextFieldView.textField.leftViewMode = .Always
 
         let updateLocationFunction = debounce(0.5) { [weak self] in
             guard let sself = self else { return }
             let location = sself.locationTextFieldView.textField.text ?? ""
-            ProfileService().updateUserProfile(["location": location], success: { user in
-                sself.updateCurrentUser(user)
-                sself.locationTextFieldView.setState(.OK)
-            }, failure: { _, _ in
-                sself.locationTextFieldView.setState(.Error)
-            })
+            if location != sself.currentUser?.location {
+                ProfileService().updateUserProfile(["location": location], success: { user in
+                    sself.updateCurrentUser(user)
+                    sself.locationTextFieldView.setState(.OK)
+                }, failure: { _, _ in
+                    sself.locationTextFieldView.setState(.Error)
+                })
+            }
 
             sself.autoCompleteVC.load(AutoCompleteMatch(type: .Location, range: Range(location.startIndex ..< location.endIndex), text: location)) { count in
                 guard location == sself.locationTextFieldView.textField.text else { return }
@@ -365,13 +385,15 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
             }
         }
 
-        locationTextFieldView.textFieldDidChange = { text in
-            self.locationTextFieldView.setState(.Loading)
+        locationTextFieldView.textFieldDidChange = { [weak self] text in
+            guard let sself = self else { return }
+            sself.locationTextFieldView.setState(.Loading)
             updateLocationFunction()
         }
 
-        locationTextFieldView.firstResponderDidChange = { isFirstResponder in
-            self.locationTextViewSelected = isFirstResponder
+        locationTextFieldView.firstResponderDidChange = { [weak self] isFirstResponder in
+            guard let sself = self else { return }
+            sself.locationTextViewSelected = isFirstResponder
             updateLocationFunction()
         }
     }
@@ -477,6 +499,16 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 }
 
+extension SettingsViewController {
+    public func keyboardWillShow(keyboard: Keyboard) {
+        updateAutoCompleteFrame(animated: true)
+    }
+
+    public func keyboardWillHide(keyboard: Keyboard) {
+        updateAutoCompleteFrame(animated: true)
+    }
+}
+
 extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDelegate {
     public func dynamicSettingsUserChanged(user: User) {
         updateCurrentUser(user)
@@ -548,13 +580,24 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController: AutoCompleteDelegate {
-    public func updateAutoCompleteFrame() {
-        autoCompleteVC.view.alpha = (locationTextViewSelected && locationAutoCompleteResultCount > 0) ? 1 : 0
-        let rowHeight: CGFloat = AutoCompleteCell.cellHeight()
+    public func updateAutoCompleteFrame(animated animated: Bool = false) {
+        guard isViewLoaded() else { return }
+
+        let rowHeight: CGFloat = AutoCompleteCell.Size.height
         let maxHeight: CGFloat = 3.5 * rowHeight
         let height: CGFloat = min(maxHeight, CGFloat(locationAutoCompleteResultCount) * rowHeight)
-        autoCompleteVC.view.frame = autoCompleteVC.view.frame.withHeight(height)
-        autoCompleteVC.tableView.frame = autoCompleteVC.view.bounds
+        let inset = Keyboard.shared.keyboardBottomInset(inView: view) + height
+        let y = view.frame.height - inset
+        if Keyboard.shared.active {
+            tableView.contentInset.bottom = inset
+        }
+        else {
+            containerController?.updateNavBars()
+        }
+        animateWithKeyboard(animated: animated) {
+            self.autoCompleteVC.view.alpha = (self.locationTextViewSelected && self.locationAutoCompleteResultCount > 0) ? 1 : 0
+            self.autoCompleteVC.view.frame = CGRect(x: 0, y: y, width: self.view.frame.width, height: height)
+        }
     }
 
     public func autoComplete(controller: AutoCompleteViewController, itemSelected item: AutoCompleteItem) {

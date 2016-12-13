@@ -20,12 +20,18 @@ public class AvatarButton: UIButton {
         clipsToBounds = false
     }
 
+    func setUserAvatar(image: UIImage) {
+        imageURL = nil
+        pin_cancelImageDownload()
+        setImage(image, forState: .Normal)
+    }
+
     func setUserAvatarURL(url: NSURL?) {
-        self.imageURL = url
-        self.setDefaultImage()
+        imageURL = url
+        setDefaultImage()
 
         if let url = url {
-            self.pin_setImageFromURL(url) { result in
+            pin_setImageFromURL(url) { result in
                 if result.image != nil {
                     if result.resultType != .MemoryCache {
                         self.alpha = 0
