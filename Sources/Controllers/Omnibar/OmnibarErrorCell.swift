@@ -15,7 +15,7 @@ public class OmnibarErrorCell: UITableViewCell {
         get { return nil }
         set {
             if let url = newValue {
-                label.text = "There was a problem loading the image\n\(url)"
+                label.text = NSString.localizedStringWithFormat(InterfaceString.Omnibar.LoadingImageErrorTemplate, url) as String
             }
         }
     }
