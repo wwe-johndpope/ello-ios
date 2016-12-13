@@ -233,7 +233,7 @@ private extension CategoryGenerator {
                 sself.queue.cancelAllOperations()
             }, noContent: { [weak self] in
                 guard let sself = self else { return }
-                let noContentItem = StreamCellItem(type: .EmptyStream(height: 135))
+                let noContentItem = StreamCellItem(type: .EmptyStream(height: 282))
                 sself.destination?.replacePlaceholder(.CategoryPosts, items: [noContentItem]) {}
                 sself.destination?.primaryJSONAbleNotFound()
                 sself.queue.cancelAllOperations()
