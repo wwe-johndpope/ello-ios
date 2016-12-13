@@ -13,6 +13,8 @@ public protocol AlertCellDelegate: class {
 }
 
 public class AlertCell: UITableViewCell {
+    static let reuseIdentifier = "AlertCell"
+
     weak var delegate: AlertCellDelegate?
 
     @IBOutlet weak var label: ElloLabel!
@@ -70,9 +72,4 @@ extension AlertCell {
     class func nib() -> UINib {
         return UINib(nibName: "AlertCell", bundle: .None)
     }
-
-    class func reuseIdentifier() -> String {
-        return "AlertCell"
-    }
-
 }

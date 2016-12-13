@@ -45,7 +45,7 @@ extension DrawerViewDataSource: UITableViewDataSource {
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(DrawerCell.reuseIdentifier(), forIndexPath: indexPath) as! DrawerCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(DrawerCell.reuseIdentifier, forIndexPath: indexPath) as! DrawerCell
         if let item = items.safeValue(indexPath.row) {
             DrawerCellPresenter.configure(cell, item: item)
         }

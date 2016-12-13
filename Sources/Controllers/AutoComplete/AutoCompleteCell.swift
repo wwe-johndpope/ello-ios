@@ -3,9 +3,15 @@
 //
 
 public class AutoCompleteCell: UITableViewCell {
+    static let reuseIdentifier = "AutoCompleteCell"
+
     @IBOutlet weak public var name: UILabel!
     weak public var avatar: AvatarButton!
     @IBOutlet weak public var line: UIView!
+
+    public struct Size {
+        static let height: CGFloat = 49
+    }
 }
 
 public extension AutoCompleteCell {
@@ -13,11 +19,8 @@ public extension AutoCompleteCell {
         return UINib(nibName: "AutoCompleteCell", bundle: .None)
     }
 
-    class func reuseIdentifier() -> String {
-        return "AutoCompleteCell"
-    }
-
-    class func cellHeight() -> CGFloat {
-        return 49
+    override public func prepareForReuse() {
+        super.prepareForReuse()
+        avatar.setDefaultImage()
     }
 }

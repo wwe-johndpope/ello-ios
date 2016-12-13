@@ -3,7 +3,7 @@
 //
 
 public class OmnibarImageDownloadCell: UITableViewCell {
-    class func reuseIdentifier() -> String { return "OmnibarImageDownloadCell" }
+    static let reuseIdentifier = "OmnibarImageDownloadCell"
 
     struct Size {
         static let height = CGFloat(100)

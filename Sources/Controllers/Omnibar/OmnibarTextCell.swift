@@ -3,7 +3,7 @@
 //
 
 public class OmnibarTextCell: UITableViewCell {
-    class func reuseIdentifier() -> String { return "OmnibarTextCell" }
+    static let reuseIdentifier = "OmnibarTextCell"
     struct Size {
         static let textMargins = UIEdgeInsets(top: 11, left: 15, bottom: 11, right: 15)
         static let minHeight = CGFloat(44)
