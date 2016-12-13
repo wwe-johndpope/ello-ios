@@ -96,6 +96,12 @@ public class ProfileHeaderCell: UICollectionViewCell {
             calculatedCellHeights.profileLinks = linkHeight
             self.recalculateHeight(calculatedCellHeights)
         }
+
+        locationView.onHeightMismatch = { linkHeight in
+            guard var calculatedCellHeights = self.calculatedCellHeights else { return }
+            calculatedCellHeights.profileLocation = linkHeight
+            self.recalculateHeight(calculatedCellHeights)
+        }
     }
 
     private func arrange() {

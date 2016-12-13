@@ -6,23 +6,37 @@ public class ProfileLocationView: ProfileBaseView {
     public struct Size {
         static let height: CGFloat = 48
         static let markerHeight: CGFloat = 14
-        static let leadingMargin: CGFloat = 10
-        static let markerLocationMargin: CGFloat = 5
+        static let leadingMargin: CGFloat = 12
+        static let markerLocationMargin: CGFloat = 6
     }
 
     public var location: String {
         get { return locationLabel.text ?? "" }
-        set { locationLabel.text = newValue }
+        set {
+            locationLabel.text = newValue
+            let totalHeight: CGFloat
+            if newValue.isEmpty {
+                totalHeight = 0
+            }
+            else {
+                totalHeight = Size.height
+            }
+            if totalHeight != frame.size.height {
+                onHeightMismatch?(totalHeight)
+            }
+        }
     }
 
     private let locationLabel = UILabel()
     private let markerImageView = UIImageView(image: InterfaceImage.Marker.normalImage)
 
     private let grayLine = UIView()
-    var grayLineVisible: Bool {
+    public var grayLineVisible: Bool {
         get { return !grayLine.hidden }
         set { grayLine.hidden = !newValue }
     }
+
+    public var onHeightMismatch: OnHeightMismatch?
 }
 
 extension ProfileLocationView {
