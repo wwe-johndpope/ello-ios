@@ -6,8 +6,8 @@ public class ProfileLocationView: ProfileBaseView {
     public struct Size {
         static let height: CGFloat = 48
         static let markerHeight: CGFloat = 14
-        static let leadingMargin: CGFloat = 10
-        static let markerLocationMargin: CGFloat = 5
+        static let leadingMargin: CGFloat = 12
+        static let markerLocationMargin: CGFloat = 6
     }
 
     public var location: String {
