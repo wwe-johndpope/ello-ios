@@ -1,6 +1,6 @@
 require './generate_release_notes'
 
-fastlane_version "1.110.0"
+fastlane_version "1.111.0"
 generated_fastfile_id "9dadcd46-3eaf-4291-8129-b3f6f4f4e1ff"
 
 default_platform :ios
@@ -47,6 +47,7 @@ end
 
 desc 'Submit a build to testflight'
 lane :beta do
+  switch_to_prod
   increment_build_and_version
   compile
 
@@ -95,6 +96,10 @@ lane :refresh_dsyms do
 end
 
 ######################### PRIVATE LANES #########################
+
+private_lane :switch_to_prod do
+  `bundle exec rake generate:prod_keys`
+end
 
 private_lane :compile do
   gym(
