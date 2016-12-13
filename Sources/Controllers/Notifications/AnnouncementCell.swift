@@ -69,6 +69,7 @@ class AnnouncementCell: UICollectionViewCell {
         titleLabel.numberOfLines = 0
         bodyLabel.numberOfLines = 0
         callToActionButton.contentHorizontalAlignment = .Left
+        callToActionButton.userInteractionEnabled = false
     }
 
     func bindActions() {
