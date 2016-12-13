@@ -43,6 +43,10 @@ public func animate(duration duration: NSTimeInterval = DefaultAnimationDuration
     animate(options, animated: shouldAnimate, animations: animations)
 }
 
+public func animateWithKeyboard(animated animated: Bool? = nil, completion: ((Bool) -> Void)? = nil, animations: () -> Void) {
+    animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, completion: completion, animations: animations)
+}
+
 public func animate(options: AnimationOptions, animated: Bool = true, animations: () -> Void) {
     if animated {
         UIView.animateWithDuration(options.duration, delay: options.delay, options: options.options, animations: animations, completion: options.completion)

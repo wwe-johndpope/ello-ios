@@ -595,14 +595,14 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     public func keyboardWillShow() {
         self.setNeedsLayout()
-        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
+        animateWithKeyboard {
             self.layoutIfNeeded()
         }
     }
 
     public func keyboardWillHide() {
         self.setNeedsLayout()
-        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
+        animateWithKeyboard {
             self.layoutIfNeeded()
         }
     }
