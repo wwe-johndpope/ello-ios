@@ -194,19 +194,6 @@ public class StreamContainerViewController: StreamableViewController {
             vc.didMoveToParentViewController(self)
             ElloHUD.showLoadingHudInView(vc.view)
 
-            switch kind {
-            case .Following:
-                let noResultsTitle = InterfaceString.FollowingStream.NoResultsTitle
-                let noResultsBody = InterfaceString.FollowingStream.NoResultsBody
-                friendsViewController = vc
-                vc.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
-            case .Starred:
-                let noResultsTitle = InterfaceString.StarredStream.NoResultsTitle
-                let noResultsBody = InterfaceString.StarredStream.NoResultsBody
-                vc.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
-            default:
-                break
-            }
         }
     }
 
