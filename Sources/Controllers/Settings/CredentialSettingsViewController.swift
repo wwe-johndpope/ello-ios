@@ -27,7 +27,13 @@ public class CredentialSettingsViewController: UITableViewController {
     weak public var errorLabel: ElloErrorLabel!
     @IBOutlet weak public var saveButton: ElloButton!
 
-    public var currentUser: User?
+    public var currentUser: User? {
+        didSet {
+            if isViewLoaded() {
+                setupViews()
+            }
+        }
+    }
     weak public var delegate: CredentialSettingsDelegate?
     var validationCancel: BasicBlock?
 
