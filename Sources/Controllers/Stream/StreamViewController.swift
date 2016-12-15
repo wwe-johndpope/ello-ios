@@ -712,8 +712,21 @@ extension StreamViewController: GridListToggleDelegate {
     }
 
     private func toggleGrid(isGridView: Bool) {
+        var emptyStreamCellItem: StreamCellItem?
+        if let first = dataSource.visibleCellItems.first {
+            switch first.type {
+            case .EmptyStream: emptyStreamCellItem = first
+            default: break
+            }
+        }
+
         self.removeAllCellItems()
-        let items = generateStreamCellItems(self.currentJSONables)
+        var items = generateStreamCellItems(self.currentJSONables)
+
+        if let item = emptyStreamCellItem where items.count == 0 {
+            items = [item]
+        }
+
         self.appendUnsizedCellItems(items, withWidth: nil) { indexPaths in
             animate {
                 self.collectionView.alpha = 1
