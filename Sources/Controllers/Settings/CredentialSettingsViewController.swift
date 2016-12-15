@@ -29,7 +29,9 @@ public class CredentialSettingsViewController: UITableViewController {
 
     public var currentUser: User? {
         didSet {
-            setupViews()
+            if isViewLoaded() {
+                setupViews()
+            }
         }
     }
     weak public var delegate: CredentialSettingsDelegate?
