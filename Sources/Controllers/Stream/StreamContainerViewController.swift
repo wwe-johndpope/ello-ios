@@ -193,7 +193,6 @@ public class StreamContainerViewController: StreamableViewController {
             self.addChildViewController(vc)
             vc.didMoveToParentViewController(self)
             ElloHUD.showLoadingHudInView(vc.view)
-
         }
     }
 
