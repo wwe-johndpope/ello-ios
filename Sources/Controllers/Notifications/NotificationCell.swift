@@ -256,11 +256,10 @@ public class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
         if messageVisible {
             createdAtY += messageHeight + Size.MessageMargin
-            let remainingHeight = outerFrame.height - Size.InnerMargin - titleTextView.frame.height
             messageWebView.frame = titleTextView.frame.fromBottom()
                 .withWidth(titleWidth)
                 .shiftDown(Size.InnerMargin)
-                .withHeight(remainingHeight)
+                .withHeight(messageHeight)
         }
 
         createdAtLabel.frame = CGRect(
