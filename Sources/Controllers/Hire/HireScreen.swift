@@ -121,7 +121,7 @@ public class HireScreen: StreamableScreen {
 
         let bottomInset = Keyboard.shared.keyboardBottomInset(inView: self)
         keyboardBottomConstraint.updateOffset(-bottomInset)
-        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
+        animateWithKeyboard {
             self.keyboardSubmitButton.frame.origin.y = self.frame.size.height - bottomInset - Size.keyboardButtonHeight
         }
     }

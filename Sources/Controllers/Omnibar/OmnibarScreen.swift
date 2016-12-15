@@ -290,11 +290,11 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.dataSource = self
         regionsTableView.delegate = self
         regionsTableView.separatorStyle = .None
-        regionsTableView.registerClass(OmnibarTextCell.self, forCellReuseIdentifier: OmnibarTextCell.reuseIdentifier())
-        regionsTableView.registerClass(OmnibarImageCell.self, forCellReuseIdentifier: OmnibarImageCell.reuseIdentifier())
-        regionsTableView.registerClass(OmnibarImageDownloadCell.self, forCellReuseIdentifier: OmnibarImageDownloadCell.reuseIdentifier())
+        regionsTableView.registerClass(OmnibarTextCell.self, forCellReuseIdentifier: OmnibarTextCell.reuseIdentifier)
+        regionsTableView.registerClass(OmnibarImageCell.self, forCellReuseIdentifier: OmnibarImageCell.reuseIdentifier)
+        regionsTableView.registerClass(OmnibarImageDownloadCell.self, forCellReuseIdentifier: OmnibarImageDownloadCell.reuseIdentifier)
         regionsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: OmnibarRegion.OmnibarSpacerCell)
-        regionsTableView.registerClass(OmnibarErrorCell.self, forCellReuseIdentifier: OmnibarErrorCell.reuseIdentifier())
+        regionsTableView.registerClass(OmnibarErrorCell.self, forCellReuseIdentifier: OmnibarErrorCell.reuseIdentifier)
 
         textEditingControl.addTarget(self, action: #selector(startEditingLast), forControlEvents: .TouchUpInside)
         regionsTableView.addSubview(textEditingControl)
@@ -595,14 +595,14 @@ public class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     public func keyboardWillShow() {
         self.setNeedsLayout()
-        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
+        animateWithKeyboard {
             self.layoutIfNeeded()
         }
     }
 
     public func keyboardWillHide() {
         self.setNeedsLayout()
-        animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options) {
+        animateWithKeyboard {
             self.layoutIfNeeded()
         }
     }

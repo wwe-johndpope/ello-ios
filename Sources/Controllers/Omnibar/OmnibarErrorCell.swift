@@ -3,7 +3,7 @@
 //
 
 public class OmnibarErrorCell: UITableViewCell {
-    class func reuseIdentifier() -> String { return "OmnibarErrorCell" }
+    static let reuseIdentifier = "OmnibarErrorCell"
     struct Size {
         static let margin = CGFloat(10)
         static let height = CGFloat(75)

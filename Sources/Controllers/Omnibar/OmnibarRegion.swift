@@ -70,11 +70,11 @@ public extension OmnibarRegion {
 
     var reuseIdentifier: String {
         switch self {
-        case .ImageData, .Image: return OmnibarImageCell.reuseIdentifier()
-        case .ImageURL: return OmnibarImageDownloadCell.reuseIdentifier()
-        case .AttributedText: return OmnibarTextCell.reuseIdentifier()
+        case .ImageData, .Image: return OmnibarImageCell.reuseIdentifier
+        case .ImageURL: return OmnibarImageDownloadCell.reuseIdentifier
+        case .AttributedText: return OmnibarTextCell.reuseIdentifier
         case .Spacer: return OmnibarRegion.OmnibarSpacerCell
-        case .Error: return OmnibarErrorCell.reuseIdentifier()
+        case .Error: return OmnibarErrorCell.reuseIdentifier
         }
     }
 

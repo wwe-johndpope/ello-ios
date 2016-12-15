@@ -3,6 +3,7 @@
 //
 
 public class DrawerCell: UITableViewCell {
+    static let reuseIdentifier = "DrawerCell"
     @IBOutlet weak public var label: UILabel!
     @IBOutlet weak public var line: UIView!
 
@@ -19,9 +20,5 @@ public class DrawerCell: UITableViewCell {
 public extension DrawerCell {
     class func nib() -> UINib {
         return UINib(nibName: "DrawerCell", bundle: .None)
-    }
-
-    class func reuseIdentifier() -> String {
-        return "DrawerCell"
     }
 }

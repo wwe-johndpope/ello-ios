@@ -99,6 +99,6 @@ private extension DrawerViewController {
     }
 
     func registerCells() {
-        tableView.registerNib(DrawerCell.nib(), forCellReuseIdentifier: DrawerCell.reuseIdentifier())
+        tableView.registerNib(DrawerCell.nib(), forCellReuseIdentifier: DrawerCell.reuseIdentifier)
     }
 }

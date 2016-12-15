@@ -3,7 +3,7 @@
 //
 
 public class OmnibarImageCell: UITableViewCell {
-    class func reuseIdentifier() -> String { return "OmnibarImageCell" }
+    static let reuseIdentifier = "OmnibarImageCell"
 
     struct Size {
         static let bottomMargin = CGFloat(15)

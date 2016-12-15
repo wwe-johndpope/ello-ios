@@ -86,7 +86,7 @@ extension AutoCompleteViewController: UITableViewDelegate {
 // MARK: Private
 private extension AutoCompleteViewController {
     func registerCells() {
-        tableView.registerNib(AutoCompleteCell.nib(), forCellReuseIdentifier: AutoCompleteCell.reuseIdentifier())
+        tableView.registerNib(AutoCompleteCell.nib(), forCellReuseIdentifier: AutoCompleteCell.reuseIdentifier)
     }
 
     func style() {

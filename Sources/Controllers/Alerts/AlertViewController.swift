@@ -151,7 +151,7 @@ public class AlertViewController: UIViewController {
 public extension AlertViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerNib(AlertCell.nib(), forCellReuseIdentifier: AlertCell.reuseIdentifier())
+        tableView.registerNib(AlertCell.nib(), forCellReuseIdentifier: AlertCell.reuseIdentifier)
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -278,7 +278,7 @@ extension AlertViewController: UITableViewDataSource {
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(AlertCell.reuseIdentifier(), forIndexPath: indexPath) as! AlertCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(AlertCell.reuseIdentifier, forIndexPath: indexPath) as! AlertCell
 
         if let action = actions.safeValue(indexPath.row), input = inputs.safeValue(indexPath.row) {
             action.configure(cell: cell, type: type, action: action, textAlignment: textAlignment)
