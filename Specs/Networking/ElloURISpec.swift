@@ -165,7 +165,6 @@ class ElloURISpec: QuickSpec {
                         "with User urls": (input: "notifications/users/696", outputURI: .PushNotificationUser, outputData: "696"),
                         "with Post urls": (input: "notifications/posts/2345", outputURI: .PushNotificationPost, outputData: "2345"),
                         "with Post Comment urls": (input: "notifications/posts/2345/comments/666", outputURI: .PushNotificationComment, outputData: "2345"),
-                        "announcment": (input: "notifications/all", outputURI: .PushNotificationAnnouncement, outputData: "all"),
                     ]
 
                     for (description, test) in tests {

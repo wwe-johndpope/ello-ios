@@ -469,7 +469,7 @@ extension AppViewController {
              .Noise,
              .Starred:
             showStreamContainerScreen(vc: vc, type: type)
-        case .Notifications, .PushNotificationAnnouncement:
+        case .Notifications:
             showNotificationsScreen(vc, category: data)
         case .Onboarding:
             if let user = currentUser {

@@ -1005,7 +1005,7 @@ extension StreamViewController: WebLinkDelegate {
              .Explore:
             break // do nothing since we should already be in app
         case .Friends, .Following, .Noise, .Starred: selectTab(.Stream)
-        case .Notifications, .PushNotificationAnnouncement: selectTab(.Notifications)
+        case .Notifications: selectTab(.Notifications)
         case .Post,
              .PushNotificationComment,
              .PushNotificationPost:

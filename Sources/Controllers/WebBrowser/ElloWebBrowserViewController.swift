@@ -151,7 +151,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .Noise,
              .Starred:
             self.selectTab(.Stream)
-        case .Notifications, .PushNotificationAnnouncement: self.selectTab(.Notifications)
+        case .Notifications: self.selectTab(.Notifications)
         case .Post,
              .PushNotificationPost,
              .PushNotificationComment:
