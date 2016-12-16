@@ -1,19 +1,19 @@
 ////
-///  ProfileGeneratorSpec.swift
+///  NotificationsGeneratorSpec.swift
 //
 
-import Ello
+@testable import Ello
 import Quick
 import Nimble
 
-class ProfileGeneratorSpec: QuickSpec {
 
-    class MockProfileDestination: StreamDestination {
+class NotificationsGeneratorSpec: QuickSpec {
+
+    class MockNotificationsDestination: StreamDestination {
         var placeholderItems: [StreamCellItem] = []
-        var headerItems: [StreamCellItem] = []
-        var postItems: [StreamCellItem] = []
+        var announcementItems: [StreamCellItem] = []
+        var notificationItems: [StreamCellItem] = []
         var otherPlaceholderLoaded = false
-        var user: User?
         var responseConfig: ResponseConfig?
         var pagingEnabled: Bool = false
 
@@ -23,18 +23,16 @@ class ProfileGeneratorSpec: QuickSpec {
 
         func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
             switch type {
-            case .ProfileHeader:
-                headerItems = items
-            case .ProfilePosts:
-                postItems = items
+            case .Announcements:
+                announcementItems = items
+            case .Notifications:
+                notificationItems = items
             default:
                 otherPlaceholderLoaded = true
             }
         }
 
         func setPrimaryJSONAble(jsonable: JSONAble) {
-            guard let user = jsonable as? User else { return }
-            self.user = user
         }
 
         func primaryJSONAbleNotFound() {
@@ -46,20 +44,18 @@ class ProfileGeneratorSpec: QuickSpec {
     }
 
     override func spec() {
-        describe("ProfileGenerator") {
-            var destination: MockProfileDestination!
+        describe("NotificationsGenerator") {
+            var destination: MockNotificationsDestination!
             var currentUser: User!
             var streamKind: StreamKind!
-            var subject: ProfileGenerator!
+            var subject: NotificationsGenerator!
 
             beforeEach {
-                destination = MockProfileDestination()
+                destination = MockNotificationsDestination()
                 currentUser = User.stub(["id": "42"])
-                streamKind = .CurrentUserStream
-                subject = ProfileGenerator(
+                streamKind = .Notifications(category: nil)
+                subject = NotificationsGenerator(
                     currentUser: currentUser,
-                    userParam: "42",
-                    user: currentUser,
                     streamKind: streamKind,
                     destination: destination
                 )
@@ -72,21 +68,26 @@ class ProfileGeneratorSpec: QuickSpec {
                     expect(destination.placeholderItems.count) == 2
                 }
 
-                it("replaces only ProfileHeader and ProfilePosts") {
+                it("replaces only Announcements and Notifications") {
                     subject.load()
-                    expect(destination.headerItems.count) > 0
-                    expect(destination.postItems.count) > 0
+                    expect(destination.announcementItems.count) > 0
+                    expect(destination.notificationItems.count) > 0
                     expect(destination.otherPlaceholderLoaded) == false
-                }
-
-                it("sets the primary jsonable") {
-                    subject.load()
-                    expect(destination.user).toNot(beNil())
                 }
 
                 it("sets the config response") {
                     subject.load()
                     expect(destination.responseConfig).toNot(beNil())
+                }
+            }
+
+            describe("reloadAnnouncements()") {
+                it("does not trigger when identical announcements are found") {
+                    ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
+                    subject.load()
+                    let prevItems = destination.announcementItems
+                    subject.reloadAnnouncements()
+                    expect(destination.announcementItems) == prevItems
                 }
             }
         }

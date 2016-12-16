@@ -587,3 +587,29 @@ extension Ello.Category: Stubbable {
         return category
     }
 }
+
+extension Announcement: Stubbable {
+    class func stub(values: [String: AnyObject]) -> Announcement {
+
+        let announcement = Announcement(
+            id: (values["id"] as? String) ?? "666",
+            header: (values["header"] as? String) ?? "Announcing Not For Print, Ello’s new publication",
+            body: (values["body"] as? String) ?? "Submissions for Issue 01 — Censorship will be open from 11/7 – 11/23",
+            ctaURL: urlFromValue(values["ctaURL"]),
+            ctaCaption: (values["ctaCaption"] as? String) ?? "Learn More",
+            createdAt: (values["createdAt"] as? NSDate) ?? NSDate()
+        )
+
+        if let asset = values["image"] as? Asset {
+            announcement.image = asset
+        }
+        else if let asset = values["image"] as? [String: AnyObject] {
+            announcement.image = Asset.stub(asset)
+        }
+        else {
+            announcement.image = Asset(url: NSURL(string: "http://media.colinta.com/minime.png")!)
+        }
+
+        return announcement
+    }
+}

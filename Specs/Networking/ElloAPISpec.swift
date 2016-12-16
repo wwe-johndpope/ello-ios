@@ -29,6 +29,8 @@ class ElloAPISpec: QuickSpec {
                 context("are valid") {
                     let expectations: [(ElloAPI, String)] = [
                         (.AmazonCredentials, "/api/v2/assets/credentials"),
+                        (.Announcements, "/api/v2/most_recent_announcements"),
+                        (.AnnouncementsNewContent(createdAt: nil), "/api/v2/most_recent_announcements"),
                         (.AnonymousCredentials, "/api/oauth/token"),
                         (.Auth(email: "", password: ""), "/api/oauth/token"),
                         (.Availability(content: [:]), "/api/v2/availability"),
@@ -69,6 +71,7 @@ class ElloAPISpec: QuickSpec {
                         (.NoiseNewContent(createdAt: nil), "/api/v2/streams/noise"),
                         (.NoiseStream, "/api/v2/streams/noise"),
                         (.NotificationsNewContent(createdAt: nil), "/api/v2/notifications"),
+                        (.MarkAnnouncementAsRead, "/api/v2/most_recent_announcements/mark_last_read_announcement"),
                         (.NotificationsStream(category: nil), "/api/v2/notifications"),
                         (.PagePromotionals, "/api/v2/page_promotionals"),
                         (.PostComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),

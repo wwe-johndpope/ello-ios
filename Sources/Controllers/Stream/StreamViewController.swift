@@ -69,6 +69,14 @@ public protocol SearchStreamDelegate: class {
     func searchFieldChanged(text: String)
 }
 
+public protocol AnnouncementCellDelegate: class {
+    func markAnnouncementAsRead(cell cell: UICollectionViewCell)
+}
+
+public protocol AnnouncementDelegate: class {
+    func markAnnouncementAsRead(_ announcement: Announcement)
+}
+
 // MARK: StreamNotification
 public struct StreamNotification {
     static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
@@ -170,6 +178,7 @@ public final class StreamViewController: BaseElloViewController {
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
     weak var selectedCategoryDelegate: SelectedCategoryDelegate?
+    weak var announcementDelegate: AnnouncementDelegate?
     var searchStreamDelegate: SearchStreamDelegate? {
         get { return dataSource.searchStreamDelegate }
         set { dataSource.searchStreamDelegate = newValue }
@@ -611,6 +620,7 @@ public final class StreamViewController: BaseElloViewController {
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.categoryListCellDelegate = self
+        dataSource.announcementCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
@@ -647,6 +657,7 @@ public final class StreamViewController: BaseElloViewController {
             streamKind: streamKind,
             textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
             notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
+            announcementSizeCalculator: AnnouncementCellSizeCalculator(),
             profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
             imageSizeCalculator: StreamImageCellSizeCalculator(),
             categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
@@ -1028,6 +1039,18 @@ extension StreamViewController: WebLinkDelegate {
     }
 }
 
+// MARK: StreamViewController: AnnouncementCellDelegate
+extension StreamViewController: AnnouncementCellDelegate {
+    public func markAnnouncementAsRead(cell cell: UICollectionViewCell) {
+        guard let
+            indexPath = collectionView.indexPathForCell(cell),
+            announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement
+        else { return }
+
+        announcementDelegate?.markAnnouncementAsRead(announcement)
+    }
+}
+
 // MARK: StreamViewController: UICollectionViewDelegate
 extension StreamViewController: UICollectionViewDelegate {
 
@@ -1073,17 +1096,22 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let post = dataSource.postForIndexPath(indexPath) {
             postTappedDelegate?.postTapped(post)
         }
-        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            notification = item.jsonable as? Notification,
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             postId = notification.postId
         {
             postTappedDelegate?.postTapped(postId: postId)
         }
-        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            notification = item.jsonable as? Notification,
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             user = notification.subject as? User
         {
             userTapped(user)
+        }
+        else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
+            callToAction = announcement.ctaURL
+        {
+            Tracker.sharedTracker.announcementOpened(announcement)
+            let request = NSURLRequest(URL: callToAction)
+            ElloWebViewHelper.handleRequest(request, webLinkDelegate: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath),
             post = comment.loadedFromPost

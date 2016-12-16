@@ -6,6 +6,7 @@ import Foundation
 import SwiftyUserDefaults
 
 public struct NewContentNotifications {
+    public static let newAnnouncements = TypedNotification<Void?>(name: "NewAnnouncementsNotification")
     public static let newNotifications = TypedNotification<Void?>(name: "NewNotificationsNotification")
     public static let newStreamContent = TypedNotification<Void?>(name: "NewStreamContentNotification")
     public static let reloadStreamContent = TypedNotification<Void?>(name: "ReloadStreamContentNotification")
@@ -85,6 +86,22 @@ private extension NewContentService {
                 done()
             },
             failure: { _ in done() })
+    }
+
+    func checkForNewAnnouncements(done: BasicBlock = {}) {
+        let storedKey = StreamKind.Announcements.lastViewedCreatedAtKey
+        let storedDate = GroupDefaults[storedKey].date
+
+         ElloProvider.shared.elloRequest(
+             ElloAPI.AnnouncementsNewContent(createdAt: storedDate),
+             success: { (_, responseConfig) in
+                 if let statusCode = responseConfig.statusCode {// where statusCode == 204
+                     postNotification(NewContentNotifications.newAnnouncements, value: nil)
+                 }
+
+                 done()
+             },
+             failure: { _ in done() })
     }
 
     func checkForNewStreamContent(done: BasicBlock = {}) {
