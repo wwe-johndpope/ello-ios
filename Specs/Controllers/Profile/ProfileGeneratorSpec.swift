@@ -7,24 +7,63 @@ import Quick
 import Nimble
 
 class ProfileGeneratorSpec: QuickSpec {
+
+    class MockProfileDestination: StreamDestination {
+        var placeholderItems: [StreamCellItem] = []
+        var headerItems: [StreamCellItem] = []
+        var postItems: [StreamCellItem] = []
+        var otherPlaceholderLoaded = false
+        var user: User?
+        var responseConfig: ResponseConfig?
+        var pagingEnabled: Bool = false
+
+        func setPlaceholders(items: [StreamCellItem]) {
+            placeholderItems = items
+        }
+
+        func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
+            switch type {
+            case .ProfileHeader:
+                headerItems = items
+            case .ProfilePosts:
+                postItems = items
+            default:
+                otherPlaceholderLoaded = true
+            }
+        }
+
+        func setPrimaryJSONAble(jsonable: JSONAble) {
+            guard let user = jsonable as? User else { return }
+            self.user = user
+        }
+
+        func primaryJSONAbleNotFound() {
+        }
+
+        func setPagingConfig(responseConfig: ResponseConfig) {
+            self.responseConfig = responseConfig
+        }
+    }
+
     override func spec() {
         describe("ProfileGenerator") {
-            let destination = ProfileDestination()
+            var destination: MockProfileDestination!
+            var currentUser: User!
+            var streamKind: StreamKind!
+            var subject: ProfileGenerator!
 
             beforeEach {
-                destination.reset()
+                destination = MockProfileDestination()
+                currentUser = User.stub(["id": "42"])
+                streamKind = .CurrentUserStream
+                subject = ProfileGenerator(
+                    currentUser: currentUser,
+                    userParam: "42",
+                    user: currentUser,
+                    streamKind: streamKind,
+                    destination: destination
+                )
             }
-
-            let currentUser: User = stub(["id": "42"])
-            let streamKind: StreamKind = .CurrentUserStream
-
-            let subject = ProfileGenerator(
-                currentUser: currentUser,
-                userParam: "42",
-                user: currentUser,
-                streamKind: streamKind,
-                destination: destination
-            )
 
             describe("load()") {
 
@@ -37,7 +76,7 @@ class ProfileGeneratorSpec: QuickSpec {
                     subject.load()
                     expect(destination.headerItems.count) > 0
                     expect(destination.postItems.count) > 0
-                    expect(destination.otherPlaceHolderLoaded) == false
+                    expect(destination.otherPlaceholderLoaded) == false
                 }
 
                 it("sets the primary jsonable") {
@@ -51,52 +90,5 @@ class ProfileGeneratorSpec: QuickSpec {
                 }
             }
         }
-    }
-}
-
-class ProfileDestination: StreamDestination {
-
-    var placeholderItems: [StreamCellItem] = []
-    var headerItems: [StreamCellItem] = []
-    var postItems: [StreamCellItem] = []
-    var otherPlaceHolderLoaded = false
-    var user: User?
-    var responseConfig: ResponseConfig?
-    var pagingEnabled: Bool = false
-
-    func reset() {
-        placeholderItems = []
-        headerItems = []
-        postItems = []
-        otherPlaceHolderLoaded = false
-        user = nil
-        responseConfig = nil
-    }
-
-    func setPlaceholders(items: [StreamCellItem]) {
-        placeholderItems = items
-    }
-
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
-        switch type {
-        case .ProfileHeader:
-            headerItems = items
-        case .ProfilePosts:
-            postItems = items
-        default:
-            otherPlaceHolderLoaded = true
-        }
-    }
-
-    func setPrimaryJSONAble(jsonable: JSONAble) {
-        guard let user = jsonable as? User else { return }
-        self.user = user
-    }
-
-    func primaryJSONAbleNotFound() {
-    }
-
-    func setPagingConfig(responseConfig: ResponseConfig) {
-        self.responseConfig = responseConfig
     }
 }

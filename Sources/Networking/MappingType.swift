@@ -7,6 +7,7 @@ import Foundation
 public enum MappingType: String {
     // these keys define the place in the JSON response where the ElloProvider
     // should look for the response data.
+    case AnnouncementsType = "announcements"
     case ActivitiesType = "activities"
     case AmazonCredentialsType = "credentials"
     case AssetsType = "assets"
@@ -29,6 +30,8 @@ public enum MappingType: String {
 
     var fromJSON: FromJSONClosure {
         switch self {
+        case AnnouncementsType:
+            return Announcement.fromJSON
         case ActivitiesType:
             return Activity.fromJSON
         case AmazonCredentialsType:

@@ -90,7 +90,7 @@ public class SettingsContainerViewController: BaseElloViewController {
 public class SettingsViewController: UITableViewController, ControllerThatMightHaveTheCurrentUser {
 
     @IBOutlet weak public var avatarImageView: UIView!
-    weak public var profileDescription: ElloLabel!
+    weak public var profileDescription: StyledLabel!
     @IBOutlet weak public var coverImage: UIImageView!
     @IBOutlet weak public var avatarImage: UIImageView!
     var scrollLogic: ElloScrollLogic!
@@ -111,7 +111,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
 
     weak public var nameTextFieldView: ElloTextFieldView!
     @IBOutlet weak public var bioTextView: ElloEditableTextView!
-    weak public var bioTextCountLabel: ElloErrorLabel!
+    weak public var bioTextCountLabel: StyledLabel!
     @IBOutlet weak public var bioTextStatusImage: UIImageView!
     private var bioTextViewDidChange: (() -> Void)?
 
@@ -260,22 +260,8 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         tableView.addSubview(autoCompleteVC.view)
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
         containerController?.showNavBars()
-        setupProfileDescription()
         setupDefaultValues()
         setupUserValues()
-    }
-
-    private func setupProfileDescription() {
-        if let profileDescriptionAttributedText = profileDescription.attributedText {
-            let text = NSMutableAttributedString(attributedString: profileDescriptionAttributedText)
-
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 6
-
-            text.addAttribute(NSForegroundColorAttributeName, value: UIColor.greyA(), range: NSRange(location: 0, length: text.length))
-            text.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: text.length))
-            profileDescription.attributedText = text
-        }
     }
 
     private func setupNavigationBar() {
@@ -296,10 +282,13 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
         setupBioTextField()
         setupLinksTextField()
         setupLocationTextField()
+
+        profileDescription.text = InterfaceString.Settings.ProfileDescription
     }
 
     private func setupNameTextField() {
-        nameTextFieldView.label.setLabelText(InterfaceString.Settings.Name)
+        nameTextFieldView.label.text = InterfaceString.Settings.Name
+        nameTextFieldView.textField.text = currentUser?.name
 
         let updateNameFunction = debounce(0.5) { [weak self] in
             guard let sself = self else { return }
@@ -335,7 +324,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 
     private func setupLinksTextField() {
-        linksTextFieldView.label.setLabelText(InterfaceString.Settings.Links)
+        linksTextFieldView.label.text = InterfaceString.Settings.Links
         linksTextFieldView.textField.spellCheckingType = .No
         linksTextFieldView.textField.autocapitalizationType = .None
         linksTextFieldView.textField.autocorrectionType = .No
@@ -360,7 +349,7 @@ public class SettingsViewController: UITableViewController, ControllerThatMightH
     }
 
     private func setupLocationTextField() {
-        locationTextFieldView.label.setLabelText(InterfaceString.Settings.Location)
+        locationTextFieldView.label.text = InterfaceString.Settings.Location
         locationTextFieldView.textField.keyboardAppearance = .Dark
         locationTextFieldView.textField.autocorrectionType = .No
         locationTextFieldView.textField.leftView = UIImageView(image: InterfaceImage.Marker.normalImage)
@@ -553,7 +542,7 @@ public extension SettingsViewController {
 extension SettingsViewController: UITextViewDelegate {
     public func textViewDidChange(textView: UITextView) {
         let characterCount = textView.text.lengthOfBytesUsingEncoding(NSASCIIStringEncoding)
-        bioTextCountLabel.setLabelText("\(characterCount)")
+        bioTextCountLabel.text = "\(characterCount)"
         bioTextCountLabel.hidden = characterCount <= 192
         bioTextStatusImage.image = ValidationState.Loading.imageRepresentation
         bioTextViewDidChange?()

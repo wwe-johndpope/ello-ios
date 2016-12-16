@@ -8,21 +8,13 @@ public protocol DynamicSettingCellDelegate: class {
 }
 
 public class DynamicSettingCell: UITableViewCell {
-    @IBOutlet public weak var titleLabel: UILabel!
-    public weak var descriptionLabel: ElloToggleLabel!
+    @IBOutlet public weak var titleLabel: StyledLabel!
+    public weak var descriptionLabel: StyledLabel!
     @IBOutlet public weak var toggleButton: ElloToggleButton!
     @IBOutlet public weak var deleteButton: ElloToggleButton!
 
     public weak var delegate: DynamicSettingCellDelegate?
     public var setting: DynamicSetting?
-
-    public override func awakeFromNib() {
-        super.awakeFromNib()
-        titleLabel.font = .defaultFont()
-        titleLabel.textColor = .blackColor()
-        descriptionLabel.font = .defaultFont()
-        descriptionLabel.textColor = .greyA()
-    }
 
     @IBAction public func toggleButtonTapped() {
         if let setting = setting {

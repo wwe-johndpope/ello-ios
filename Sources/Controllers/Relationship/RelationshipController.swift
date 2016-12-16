@@ -21,7 +21,7 @@ public protocol RelationshipDelegate: class {
     func updateRelationship(currentUserId: String, userId: String, prev prevRelationshipPriority: RelationshipPriority, relationshipPriority: RelationshipPriority, complete: RelationshipChangeCompletion)
 }
 
-public class RelationshipController: NSObject {
+public class RelationshipController {
     public var currentUser: User?
     public weak var delegate: RelationshipControllerDelegate?
     public weak var presentingController: UIViewController?

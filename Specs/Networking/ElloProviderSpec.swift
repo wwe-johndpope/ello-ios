@@ -53,10 +53,6 @@ class ElloProviderSpec: QuickSpec {
                         ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
                     }
 
-                    afterEach {
-                        ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
-                    }
-
                     context("401") {
 
                         it("posts a notification with a status of 401") {

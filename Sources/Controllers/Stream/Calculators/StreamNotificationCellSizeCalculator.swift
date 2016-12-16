@@ -3,31 +3,26 @@
 //
 
 
-private var srcRegex: NSRegularExpression? = try? NSRegularExpression(
-                pattern: "src=[\"']([^\"']*)[\"']",
-                options: .CaseInsensitive)
-
 public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     private static let textViewForSizing = ElloTextView(frame: CGRectZero, textContainer: nil)
     let webView: UIWebView
-    var originalWidth: CGFloat
+    var originalWidth: CGFloat = 0
 
-    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
     private var cellItems: [StreamCellItem] = []
     private var completion: ElloEmptyCompletion = {}
 
     public init(webView: UIWebView) {
         self.webView = webView
-        originalWidth = self.webView.frame.size.width
         super.init()
         self.webView.delegate = self
     }
 
 // MARK: Public
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
-        let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: ElloEmptyCompletion) {
+        let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
             processJob(job)
@@ -53,12 +48,12 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     }
 
     private func loadNext() {
-        if let activity = self.cellItems.safeValue(0) {
-            if let notification = activity.jsonable as? Notification,
+        if let item = self.cellItems.safeValue(0) {
+            if let notification = item.jsonable as? Notification,
                 textRegion = notification.textRegion
             {
                 let content = textRegion.content
-                let strippedContent = self.stripImageSrc(content)
+                let strippedContent = content.stripHtmlImgSrc()
                 let html = StreamTextCellHTML.postHTML(strippedContent)
                 var f = self.webView.frame
                 f.size.width = NotificationCell.Size.messageHtmlWidth(forCellWidth: originalWidth, hasImage: notification.hasImage)
@@ -117,21 +112,6 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
         cellItem.calculatedCellHeights.oneColumn = height
         cellItem.calculatedCellHeights.multiColumn = height
-    }
-
-    private func stripImageSrc(html: String) -> String {
-        // finds image tags, replaces them with data:image/png (inlines image data)
-        let range = NSRange(location: 0, length: html.characters.count)
-
-//MARK: warning - is '.ReportCompletion' what we want?
-        if let srcRegex = srcRegex {
-            return srcRegex.stringByReplacingMatchesInString(html,
-                options: .ReportCompletion,
-                range: range,
-                withTemplate: "src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg==")
-        }
-
-        return ""
     }
 
 }

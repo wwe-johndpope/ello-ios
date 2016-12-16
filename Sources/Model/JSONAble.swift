@@ -10,7 +10,8 @@ public typealias FromJSONClosure = (data: [String: AnyObject]) -> JSONAble
 let JSONAbleVersion = 1
 
 protocol JSONSaveable {
-    var uniqId: String? { get }
+    var uniqueId: String? { get }
+    var tableId: String? { get }
 }
 
 @objc(JSONAble)

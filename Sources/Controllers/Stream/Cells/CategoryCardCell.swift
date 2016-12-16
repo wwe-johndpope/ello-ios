@@ -29,7 +29,7 @@ public class CategoryCardCell: UICollectionViewCell {
         }
     }
 
-    private let label = ElloSizeableLabel()
+    private let label = StyledLabel()
     private let colorFillView = UIView()
     private let imageView = UIImageView()
     private let selectedImageView = UIImageView()
@@ -48,12 +48,12 @@ public class CategoryCardCell: UICollectionViewCell {
     private func updateSelected() {
         if selectable {
             colorFillView.alpha = selected ? 0.8 : 0.4
-            label.font = selected ? UIFont.defaultBoldFont() : UIFont.defaultFont()
+            label.style = selected ? .BoldWhite : .White
             selectedImageView.hidden = !selected
         }
         else {
             colorFillView.alpha = 0.4
-            label.font = UIFont.defaultFont()
+            label.style = .White
             selectedImageView.hidden = true
         }
     }
@@ -66,8 +66,6 @@ public class CategoryCardCell: UICollectionViewCell {
     }
 
     private func style() {
-        label.font = UIFont.defaultFont()
-        label.textColor = .whiteColor()
         imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
         colorFillView.backgroundColor = .blackColor()

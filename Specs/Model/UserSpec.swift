@@ -321,7 +321,7 @@ class UserSpec: QuickSpec {
             }
             it("preserves the formattedShortBio") {
                 let userA: User = stub(["formattedShortBio": "userA"])
-                let userB: User = stub(["formattedShortBio": ""])
+                let userB: User = stub([:])
                 let merged = userA.merge(userB) as! User
                 expect(merged.formattedShortBio) == "userA"
             }

@@ -4,7 +4,7 @@
 
 import MBProgressHUD
 
-class ElloHUD: NSObject {
+class ElloHUD {
 
     class func showLoadingHudInView(view: UIView) -> MBProgressHUD? {
         var existingHub: MBProgressHUD?

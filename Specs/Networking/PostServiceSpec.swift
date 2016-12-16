@@ -40,10 +40,6 @@ class PostServiceSpec: QuickSpec {
                         ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
                     }
 
-                    afterEach {
-                        ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
-                    }
-
                     it("fails") {
                         var successPost: Post?
                         var failedCalled = false
@@ -86,10 +82,6 @@ class PostServiceSpec: QuickSpec {
 
                     beforeEach {
                         ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
-                    }
-
-                    afterEach {
-                        ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
                     }
 
                     it("fails") {
@@ -135,10 +127,6 @@ class PostServiceSpec: QuickSpec {
 
                     beforeEach {
                         ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
-                    }
-
-                    afterEach {
-                        ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
                     }
 
                     it("fails") {

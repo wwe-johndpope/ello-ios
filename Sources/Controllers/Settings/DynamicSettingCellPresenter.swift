@@ -25,7 +25,7 @@ public struct DynamicSettingCellPresenter {
 
     public static func configure(cell: DynamicSettingCell, setting: DynamicSetting, currentUser: User) {
         cell.titleLabel.text = setting.label
-        cell.descriptionLabel.setLabelText(setting.info ?? "")
+        cell.descriptionLabel.text = setting.info
 
         if setting.key == DynamicSetting.accountDeletionSetting.key {
             cell.toggleButton.hidden = true

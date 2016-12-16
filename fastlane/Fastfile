@@ -71,9 +71,6 @@ lane :store do
   )
   release_notes
 
-  puts "add to refresh_dsyms lane:"
-  puts "download_dsyms(version: \"#{version_number}\", build_number: \"#{build_number}\")"
-  download_dsyms(version: version_number, build_number: build_number)
   refresh_dsyms
 
   post_to_slack(scheme: ":ello:", destination: ":apple:")
@@ -88,9 +85,7 @@ lane :refresh_dsyms do
     },
   )
 
-  download_dsyms(version: "1.18.0", build_number: "5441")
-  download_dsyms(version: "1.17.0", build_number: "5299")
-  download_dsyms(version: "1.16.0", build_number: "5156")
+  download_dsyms(version: version_number, build_number: build_number)
   upload_symbols_to_crashlytics
   clean_build_artifacts
 end

@@ -46,5 +46,7 @@ public final class LocalPerson: JSONAble {
 }
 
 extension LocalPerson: JSONSaveable {
-    var uniqId: String? { return "\(id)" }
+    var uniqueId: String? { if let id = tableId { return "LocalPerson-\(id)" } ; return nil }
+    var tableId: String? { return "\(id)" }
+
 }

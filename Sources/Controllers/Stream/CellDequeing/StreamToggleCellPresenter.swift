@@ -13,11 +13,18 @@ public struct StreamToggleCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? StreamToggleCell {
-            if let post = streamCellItem.jsonable as? Post {
-                let message = streamCellItem.state == .Collapsed ? cell.closedMessage : cell.openedMessage
-                cell.label.setLabelText(post.contentWarning + " " + message)
-            }
+        guard let
+            cell = cell as? StreamToggleCell,
+            post = streamCellItem.jsonable as? Post
+        else { return }
+
+        let message: String
+        if streamCellItem.state == .Collapsed {
+            message = InterfaceString.NSFW.Show
         }
+        else {
+            message = InterfaceString.NSFW.Hide
+        }
+        cell.label.text = "\(post.contentWarning) \(message)"
     }
 }

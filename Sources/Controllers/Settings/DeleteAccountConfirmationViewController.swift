@@ -10,10 +10,10 @@ private enum DeleteAccountState {
 
 public class DeleteAccountConfirmationViewController: BaseElloViewController {
     @IBOutlet public weak var titleLabel: UILabel!
-    public weak var infoLabel: ElloLabel!
+    public weak var infoLabel: StyledLabel!
     @IBOutlet public weak var buttonView: UIView!
     @IBOutlet public weak var cancelView: UIView!
-    public weak var cancelLabel: ElloLabel!
+    public weak var cancelLabel: StyledLabel!
 
     private var state: DeleteAccountState = .AskNicely
     private var timer: NSTimer?
@@ -29,6 +29,11 @@ public class DeleteAccountConfirmationViewController: BaseElloViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        infoLabel.text = "* \(InterfaceString.Settings.DeleteAccountExplanation)"
+        cancelLabel.textAlignment = .Center
+        cancelLabel.textColor = .whiteColor()
+
         updateInterface()
     }
 
@@ -58,7 +63,7 @@ public class DeleteAccountConfirmationViewController: BaseElloViewController {
     private func tick() {
         let text = NSString(format: InterfaceString.Settings.RedirectedCountdownTemplate, counter) as String
         nextTick {
-            self.cancelLabel.setLabelText(text, color: .whiteColor(), alignment: .Center)
+            self.cancelLabel.text = text
             self.counter -= 1
             if self.counter <= 0 {
                 self.deleteAccount()

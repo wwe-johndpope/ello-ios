@@ -33,6 +33,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public let textSizeCalculator: StreamTextCellSizeCalculator
     public let notificationSizeCalculator: StreamNotificationCellSizeCalculator
+    public let announcementSizeCalculator: AnnouncementCellSizeCalculator
     public let profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator
     public let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     public let imageSizeCalculator: StreamImageCellSizeCalculator
@@ -50,12 +51,14 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak public var searchStreamDelegate: SearchStreamDelegate?
     weak public var inviteDelegate: InviteDelegate?
     weak public var categoryListCellDelegate: CategoryListCellDelegate?
+    weak public var announcementCellDelegate: AnnouncementCellDelegate?
     public let inviteCache = InviteCache()
 
     public init(
         streamKind: StreamKind,
         textSizeCalculator: StreamTextCellSizeCalculator,
         notificationSizeCalculator: StreamNotificationCellSizeCalculator,
+        announcementSizeCalculator: AnnouncementCellSizeCalculator,
         profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator,
         imageSizeCalculator: StreamImageCellSizeCalculator,
         categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator)
@@ -63,6 +66,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         self.streamKind = streamKind
         self.textSizeCalculator = textSizeCalculator
         self.notificationSizeCalculator = notificationSizeCalculator
+        self.announcementSizeCalculator = announcementSizeCalculator
         self.profileHeaderSizeCalculator = profileHeaderSizeCalculator
         self.imageSizeCalculator = imageSizeCalculator
         self.categoryHeaderSizeCalculator = categoryHeaderSizeCalculator
@@ -316,6 +320,8 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(streamCellItem.type.name, forIndexPath: indexPath)
 
         switch streamCellItem.type {
+        case .Announcement:
+            (cell as! AnnouncementCell).delegate = announcementCellDelegate
         case .CategoryPromotionalHeader,
              .PagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
@@ -657,15 +663,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     private func elementsForJSONAble(jsonable: JSONAble, change: ContentChange) -> ([NSIndexPath], [StreamCellItem]) {
         var indexPaths = [NSIndexPath]()
         var items = [StreamCellItem]()
-        if let comment = jsonable as? ElloComment {
-            for (index, item) in visibleCellItems.enumerate() {
-                if let itemComment = item.jsonable as? ElloComment where comment.id == itemComment.id {
-                    indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
-                    items.append(item)
-                }
-            }
-        }
-        else if let post = jsonable as? Post {
+        if let post = jsonable as? Post {
             for (index, item) in visibleCellItems.enumerate() {
                 if let itemPost = item.jsonable as? Post where post.id == itemPost.id {
                     indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
@@ -723,6 +721,18 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 }
             }
         }
+        else if let jsonable = jsonable as? JSONSaveable,
+            identifier = jsonable.uniqueId
+        {
+            for (index, item) in visibleCellItems.enumerate() {
+                if let itemJsonable = item.jsonable as? JSONSaveable, let itemIdentifier = itemJsonable.uniqueId
+                    where identifier == itemIdentifier
+                {
+                    indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
+                    items.append(item)
+                }
+            }
+        }
         return (indexPaths, items)
     }
 
@@ -738,7 +748,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem]) -> [NSIndexPath] {
-        guard indexPaths.count > 0 else { return []}
+        guard indexPaths.count > 0 else { return [] }
         removeItemsAtIndexPaths(indexPaths)
         return insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
     }
@@ -807,28 +817,32 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         let textCells = filterTextCells(cellItems)
         let imageCells = filterImageCells(cellItems)
         let notificationElements = cellItems.filter {
-            return $0.type == StreamCellType.Notification
+            return $0.type == .Notification
+        }
+        let announcementElements = cellItems.filter {
+            return $0.type == .Announcement
         }
         let profileHeaderItems = cellItems.filter {
-            return $0.type == StreamCellType.ProfileHeader
+            return $0.type == .ProfileHeader
         }
 
         let categoryHeaderItems = cellItems.filter {
-            return $0.type == StreamCellType.CategoryPromotionalHeader || $0.type == StreamCellType.PagePromotionalHeader
+            return $0.type == .CategoryPromotionalHeader || $0.type == .PagePromotionalHeader
         }
-        let afterAll = after(5, block: completion)
 
-        self.imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: self.streamKind.columnCount, completion: afterAll)
-
+        let (afterAll, done) = afterN(completion)
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCellPresenter.postMargin * 2)
-        self.textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount) {
-            // extra -30.0 acounts for the left indent on a repost with the black line
-            self.textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - (textLeftRightConstraintWidth * 2), columnCount: self.streamKind.columnCount, completion: afterAll)
-        }
-        self.notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
-        self.profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
-        self.categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll)
+        textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        // extra -30.0 acounts for the left indent on a repost with the black line
+        let repostLeftRightConstraintWidth = textLeftRightConstraintWidth + StreamTextCellPresenter.repostMargin
+        textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - repostLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, completion: afterAll())
+        announcementSizeCalculator.processCells(announcementElements, withWidth: withWidth, completion: afterAll())
+        profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
+        done()
     }
 
     private func filterTextCells(cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {

@@ -31,11 +31,12 @@ public final class ProfileGenerator: StreamGenerator {
         return items
     }
 
-    public init(currentUser: User?,
-         userParam: String,
-         user: User?,
-         streamKind: StreamKind,
-         destination: StreamDestination?
+    public init(
+        currentUser: User?,
+        userParam: String,
+        user: User?,
+        streamKind: StreamKind,
+        destination: StreamDestination?
         ) {
         self.currentUser = currentUser
         self.user = user
@@ -122,8 +123,8 @@ private extension ProfileGenerator {
             userParam,
             success: { [weak self] (posts, responseConfig) in
                 guard let sself = self else { return }
-
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+
                 sself.destination?.setPagingConfig(responseConfig)
                 sself.posts = posts
                 let userPostItems = sself.parse(posts)

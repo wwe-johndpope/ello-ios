@@ -578,3 +578,20 @@ public extension Tracker {
         agent.track("Search for \(type)")
     }
 }
+
+// MARK: Announcements
+public extension Tracker {
+
+    func announcementViewed(_ announcement: Announcement) {
+        agent.track("Announcement Viewed", properties: ["announcement": announcement.id])
+    }
+
+    func announcementOpened(_ announcement: Announcement) {
+        agent.track("Announcement Clicked", properties: ["announcement": announcement.id])
+    }
+
+    func announcementDismissed(_ announcement: Announcement) {
+        agent.track("Announcement Closed", properties: ["announcement": announcement.id])
+    }
+
+}

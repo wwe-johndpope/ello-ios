@@ -8,6 +8,7 @@ import SwiftyUserDefaults
 public enum StreamKind {
     case CurrentUserStream
     case AllCategories
+    case Announcements
     case Discover(type: DiscoverType)
     case CategoryPosts(slug: String)
     case Following
@@ -23,6 +24,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return InterfaceString.Profile.Title
         case .AllCategories: return InterfaceString.Discover.AllCategories
+        case .Announcements: return ""
         case .CategoryPosts: return InterfaceString.Discover.Categories
         case .Discover: return InterfaceString.Discover.Title
         case .Following: return InterfaceString.FollowingStream.Title
@@ -40,6 +42,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return "Profile"
         case .AllCategories: return "AllCategories"
+        case .Announcements: return "Announcements"
         case .Category: return "Category"
         case .Discover, .CategoryPosts: return "CategoryPosts"
         case .Following: return "Following"
@@ -120,6 +123,7 @@ public enum StreamKind {
         switch self {
         case .CurrentUserStream: return .CurrentUserStream
         case .AllCategories: return .Categories
+        case .Announcements: return .Announcements
         case let .Category(slug): return .Category(slug: slug)
         case let .CategoryPosts(slug): return .CategoryPosts(slug: slug)
         case let .Discover(type): return .Discover(type: type)
@@ -160,7 +164,7 @@ public enum StreamKind {
             default:
                 return jsonables
             }
-        case .CategoryPosts:
+        case .CategoryPosts, .Announcements:
             return jsonables
         case .Discover, .Category:
             if let users = jsonables as? [User] {
@@ -197,13 +201,14 @@ public enum StreamKind {
                     return accum
                 }
             }
-            else if let comments = jsonables as? [ElloComment] {
-                return comments
+            else if let jsonables = jsonables as? [ElloComment] {
+                return jsonables
             }
-            else if let posts = jsonables as? [Post] {
-                return posts
-            } else if let users = jsonables as? [User] {
-                return users
+            else if let jsonables = jsonables as? [Post] {
+                return jsonables
+            }
+            else if let jsonables = jsonables as? [User] {
+                return jsonables
             }
         }
         return []

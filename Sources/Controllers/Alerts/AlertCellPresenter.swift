@@ -18,28 +18,36 @@ struct AlertCellPresenter {
     static func configureForWhiteAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, color: .blackColor(), alignment: textAlignment)
+        cell.label.text = action.title
+        cell.label.textColor = .blackColor()
+        cell.label.textAlignment = textAlignment
         cell.background.backgroundColor = .whiteColor()
     }
 
     static func configureForLightAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, color: .grey6(), alignment: textAlignment)
+        cell.label.text = action.title
+        cell.label.textColor = .grey6()
+        cell.label.textAlignment = textAlignment
         cell.background.backgroundColor = .greyE5()
     }
 
     static func configureForDarkAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, alignment: textAlignment)
+        cell.label.text = action.title
+        cell.label.textColor = .whiteColor()
+        cell.label.textAlignment = textAlignment
         cell.background.backgroundColor = .blackColor()
     }
 
     static func configureForGreenAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, alignment: textAlignment)
+        cell.label.text = action.title
+        cell.label.textColor = .whiteColor()
+        cell.label.textAlignment = textAlignment
         cell.background.backgroundColor = .greenD1()
         cell.background.layer.cornerRadius = 5
     }
@@ -47,7 +55,9 @@ struct AlertCellPresenter {
     static func configureForRoundedGrayFillAction(cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
         configureCell(cell, type: type)
 
-        cell.label.setLabelText(action.title, color: .grey6(), alignment: textAlignment)
+        cell.label.text = action.title
+        cell.label.textColor = .grey6()
+        cell.label.textAlignment = textAlignment
         cell.background.backgroundColor = .greyE5()
         cell.background.layer.cornerRadius = 5
     }

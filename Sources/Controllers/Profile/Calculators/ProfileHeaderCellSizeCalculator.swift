@@ -5,7 +5,7 @@
 import FutureKit
 
 
-public class ProfileHeaderCellSizeCalculator: NSObject {
+public class ProfileHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 211
 
     private var maxWidth: CGFloat = 0.0
@@ -23,6 +23,7 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
     let totalCountSizeCalculator = ProfileTotalCountSizeCalculator()
 
 // MARK: Public
+    public init() {}
 
     public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
@@ -82,7 +83,6 @@ private extension ProfileHeaderCellSizeCalculator {
     }
 
     func assignCellHeight(height: CGFloat) {
-
         if let cellItem = cellItems.safeValue(0) {
             self.cellItems.removeAtIndex(0)
             cellItem.calculatedCellHeights.webContent = height

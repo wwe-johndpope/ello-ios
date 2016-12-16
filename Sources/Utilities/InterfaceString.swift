@@ -109,6 +109,7 @@ public struct InterfaceString {
 
     public struct Settings {
         static let EditProfile: String = NSLocalizedString("Edit Profile", comment: "Edit Profile Title")
+        static let ProfileDescription: String = NSLocalizedString("Your name, username, bio and links appear on your public profile. Your email address remains private.", comment: "Profile Privacy Description")
         static let Name: String = NSLocalizedString("Name", comment: "name setting")
         static let Links: String = NSLocalizedString("Links", comment: "links setting")
         static let Location: String = NSLocalizedString("Location", comment: "location setting")
@@ -173,6 +174,7 @@ public struct InterfaceString {
         static let CreateCommentTitle: String = NSLocalizedString("Leave a comment", comment: "Leave a comment")
         static let CreateCommentButton: String = NSLocalizedString("Comment", comment: "Comment")
         static let TooLongError: String = NSLocalizedString("Your text is too long.\n\nThe character limit is 5,000.", comment: "Post too long (maximum characters is 5000) error message")
+        static let LoadingImageErrorTemplate: String = NSLocalizedString("There was a problem loading the image\n%@", comment: "There was a problem loading the image (url)")
         static let CreatedPost: String = NSLocalizedString("Post successfully created!", comment: "Post successfully created!")
         static let SellYourWorkTitle: String = NSLocalizedString("Sell your work", comment: "Sell your work title")
         static let ProductLinkPlaceholder: String = NSLocalizedString("Product detail URL", comment: "Product detail URL prompt")

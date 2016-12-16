@@ -76,5 +76,7 @@ public final class Attachment: JSONAble {
 }
 
 extension Attachment: JSONSaveable {
-    var uniqId: String? { return url.absoluteString }
+    var uniqueId: String? { if let id = tableId { return "Attachment-\(id)" } ; return nil }
+    var tableId: String? { return url.absoluteString }
+
 }

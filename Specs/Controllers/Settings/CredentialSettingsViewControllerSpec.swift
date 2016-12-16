@@ -156,7 +156,7 @@ class CredentialSettingsViewControllerSpec: QuickSpec {
                     context("errorLabel is not empty") {
                         it("returns 89 * 3 + 128 + errorLabel height + 8") {
                             subject.passwordView.textField.text = "anything"
-                            subject.errorLabel.setLabelText("something")
+                            subject.errorLabel.text = "something"
                             subject.errorLabel.sizeToFit()
                             expect(subject.isUpdatable).to(beTrue())
                             expect(subject.height) == 89 * 3 + 128 + subject.errorLabel.frame.height + 8

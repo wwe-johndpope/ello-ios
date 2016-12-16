@@ -16,11 +16,11 @@ public class BlockUserModalScreen: UIView {
     private let innerWidthView = UIView()
     private let closeButton = UIButton()
     private let titleLabel = UILabel()
-    private let muteButton = WhiteElloButton()
+    private let muteButton = StyledButton(style: .White)
     private let muteLabel = UILabel()
-    private let blockButton = WhiteElloButton()
+    private let blockButton = StyledButton(style: .White)
     private let blockLabel = UILabel()
-    private let flagButton = WhiteElloButton()
+    private let flagButton = StyledButton(style: .White)
     private let flagLabel = UILabel()
     private var scrollHeight: Constraint?
     private var scrollWidth: Constraint?

@@ -111,7 +111,6 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         nameTextView.scrollEnabled = false
         nameTextView.lineColor = .greyE5()
         nameTextView.selectedLineColor = .blackColor()
-        nameTextView.placeholderColor = .greyC()
         nameTextView.keyboardAppearance = .Dark
 
         nameTextView.autocapitalizationType = .Words
@@ -122,14 +121,12 @@ public class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         bioTextView.scrollEnabled = false
         bioTextView.lineColor = .greyE5()
         bioTextView.selectedLineColor = .blackColor()
-        bioTextView.placeholderColor = .greyC()
         bioTextView.keyboardAppearance = .Dark
 
         linksTextView.textColor = .blackColor()
         linksTextView.scrollEnabled = false
         linksTextView.lineColor = .greyE5()
         linksTextView.selectedLineColor = .blackColor()
-        linksTextView.placeholderColor = .greyC()
 
         linksTextView.autocapitalizationType = .None
         linksTextView.autocorrectionType = .No

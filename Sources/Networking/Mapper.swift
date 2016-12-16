@@ -28,7 +28,7 @@ public struct Mapper {
         let fromJSON = type.fromJSON
         return dicts.map { data in
             let jsonable = fromJSON(data: data)
-            if let id = (jsonable as? JSONSaveable)?.uniqId {
+            if let id = (jsonable as? JSONSaveable)?.tableId {
                 ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: type)
             }
             return jsonable
@@ -39,7 +39,7 @@ public struct Mapper {
         let fromJSON = type.fromJSON
         return (object as? [String:AnyObject]).flatMap { data in
             let jsonable = fromJSON(data: data)
-            if let id = (jsonable as? JSONSaveable)?.uniqId {
+            if let id = (jsonable as? JSONSaveable)?.tableId {
                 ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: type)
             }
             return jsonable

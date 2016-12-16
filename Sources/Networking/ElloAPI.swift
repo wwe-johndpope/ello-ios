@@ -9,6 +9,9 @@ public typealias MoyaResult = Result<Moya.Response, Moya.Error>
 
 public enum ElloAPI {
     case AmazonCredentials
+    case Announcements
+    case AnnouncementsNewContent(createdAt: NSDate?)
+    case MarkAnnouncementAsRead
     case AnonymousCredentials
     case Auth(email: String, password: String)
     case Availability(content: [String: String])
@@ -32,17 +35,17 @@ public enum ElloAPI {
     case FlagPost(postId: String, kind: String)
     case FlagUser(userId: String, kind: String)
     case FriendStream
-    case FriendNewContent(createdAt: NSDate)
+    case FriendNewContent(createdAt: NSDate?)
     case Hire(userId: String, body: String)
     case Collaborate(userId: String, body: String)
     case InfiniteScroll(queryItems: [AnyObject], elloApi: () -> ElloAPI)
     case InviteFriends(contact: String)
     case Join(email: String, username: String, password: String, invitationCode: String?)
     case Loves(userId: String)
-    case LocationAutoComplete(search: String)
+    case LocationAutoComplete(terms: String)
     case NoiseStream
-    case NoiseNewContent(createdAt: NSDate)
-    case NotificationsNewContent(createdAt: NSDate)
+    case NoiseNewContent(createdAt: NSDate?)
+    case NotificationsNewContent(createdAt: NSDate?)
     case NotificationsStream(category: String?)
     case PagePromotionals
     case PostComments(postId: String)
@@ -104,13 +107,19 @@ public enum ElloAPI {
 
     public var mappingType: MappingType {
         switch self {
-        case .Categories,
-             .Category:
-            return .CategoriesType
+        case .AnonymousCredentials,
+             .Auth,
+             .ReAuth:
+            return .NoContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
+        case .Announcements:
+            return .AnnouncementsType
         case .AmazonCredentials:
             return .AmazonCredentialsType
         case .Availability:
             return .AvailabilityType
+        case .Categories,
+             .Category:
+            return .CategoriesType
         case .PagePromotionals:
             return .PagePromotionalsType
         case .PostReplyAll:
@@ -159,14 +168,21 @@ public enum ElloAPI {
              .UserNameAutoComplete,
              .LocationAutoComplete:
             return .AutoCompleteResultType
-        case .DeleteLove,
+        case .AnnouncementsNewContent,
+             .Collaborate,
+             .DeleteComment,
+             .DeleteLove,
+             .DeletePost,
              .DeleteSubscriptions,
              .FlagComment,
              .FlagPost,
              .FlagUser,
+             .FriendNewContent,
              .Hire,
-             .Collaborate,
              .InviteFriends,
+             .MarkAnnouncementAsRead,
+             .NoiseNewContent,
+             .NotificationsNewContent,
              .ProfileDelete,
              .PushSubscriptions,
              .RelationshipBatch,
@@ -186,8 +202,6 @@ public enum ElloAPI {
             return .DynamicSettingsType
         case .Relationship:
             return .RelationshipsType
-        default:
-            return .ErrorType
         }
     }
 }
@@ -255,9 +269,11 @@ extension ElloAPI: Moya.TargetType {
             return .DELETE
         case .FriendNewContent,
              .NoiseNewContent,
+             .AnnouncementsNewContent,
              .NotificationsNewContent:
             return .HEAD
-        case .ProfileUpdate,
+        case .MarkAnnouncementAsRead,
+             .ProfileUpdate,
              .UpdateComment,
              .UpdatePost:
             return .PATCH
@@ -272,6 +288,11 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .AmazonCredentials:
             return "/api/\(ElloAPI.apiVersion)/assets/credentials"
+        case .Announcements,
+             .AnnouncementsNewContent:
+            return "/api/\(ElloAPI.apiVersion)/most_recent_announcements"
+        case .MarkAnnouncementAsRead:
+            return "\(ElloAPI.Announcements.path)/mark_last_read_announcement"
         case .AnonymousCredentials,
              .Auth,
              .ReAuth:
@@ -405,6 +426,8 @@ extension ElloAPI: Moya.TargetType {
 
     public var sampleData: NSData {
         switch self {
+        case .Announcements:
+            return stubbedData("announcements")
         case .AmazonCredentials:
             return stubbedData("amazon-credentials")
         case .AnonymousCredentials,
@@ -426,7 +449,9 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("categories")
         case .Category:
             return stubbedData("category")
-        case .DeleteComment,
+        case .AnnouncementsNewContent,
+             .MarkAnnouncementAsRead,
+             .DeleteComment,
              .DeleteLove,
              .DeletePost,
              .DeleteSubscriptions,
@@ -553,20 +578,24 @@ extension ElloAPI: Moya.TargetType {
             assigned += sharingHeaders
         }
 
+        let createdAtHeader: String?
         switch self {
+        case let .AnnouncementsNewContent(createdAt):
+            createdAtHeader = createdAt?.toHTTPDateString()
         case let .FriendNewContent(createdAt):
-            assigned += [
-                "If-Modified-Since": createdAt.toHTTPDateString()
-            ]
+            createdAtHeader = createdAt?.toHTTPDateString()
         case let .NoiseNewContent(createdAt):
-            assigned += [
-                "If-Modified-Since": createdAt.toHTTPDateString()
-            ]
+            createdAtHeader = createdAt?.toHTTPDateString()
         case let .NotificationsNewContent(createdAt):
+            createdAtHeader = createdAt?.toHTTPDateString()
+        default:
+            createdAtHeader = nil
+        }
+
+        if let createdAtHeader = createdAtHeader {
             assigned += [
-                "If-Modified-Since": createdAt.toHTTPDateString()
+                "If-Modified-Since": createdAtHeader
             ]
-        default: break
         }
         return assigned
     }
@@ -657,9 +686,9 @@ extension ElloAPI: Moya.TargetType {
                 params["invitation_code"] = invitationCode
             }
             return params
-        case let .LocationAutoComplete(search):
+        case let .LocationAutoComplete(terms):
             return [
-                "location": search
+                "location": terms
             ]
         case .NoiseStream:
             return [

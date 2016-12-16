@@ -69,6 +69,14 @@ public protocol SearchStreamDelegate: class {
     func searchFieldChanged(text: String)
 }
 
+public protocol AnnouncementCellDelegate: class {
+    func markAnnouncementAsRead(cell cell: UICollectionViewCell)
+}
+
+public protocol AnnouncementDelegate: class {
+    func markAnnouncementAsRead(_ announcement: Announcement)
+}
+
 // MARK: StreamNotification
 public struct StreamNotification {
     static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
@@ -160,7 +168,7 @@ public final class StreamViewController: BaseElloViewController {
     var sizeChangedNotification: NotificationObserver?
     var commentChangedNotification: NotificationObserver?
     var postChangedNotification: NotificationObserver?
-    var loveChangedNotification: NotificationObserver?
+    var jsonableChangedNotification: NotificationObserver?
     var relationshipChangedNotification: NotificationObserver?
     var settingChangedNotification: NotificationObserver?
     var currentUserChangedNotification: NotificationObserver?
@@ -170,6 +178,7 @@ public final class StreamViewController: BaseElloViewController {
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
     weak var selectedCategoryDelegate: SelectedCategoryDelegate?
+    weak var announcementDelegate: AnnouncementDelegate?
     var searchStreamDelegate: SearchStreamDelegate? {
         get { return dataSource.searchStreamDelegate }
         set { dataSource.searchStreamDelegate = newValue }
@@ -196,11 +205,12 @@ public final class StreamViewController: BaseElloViewController {
         }, completion: nil)
     }
 
-    public var contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
-        didSet {
-            self.collectionView.contentInset = contentInset
-            self.collectionView.scrollIndicatorInsets = contentInset
-            self.pullToRefreshView?.defaultContentInset = contentInset
+    public var contentInset: UIEdgeInsets {
+        get { return collectionView.contentInset }
+        set {
+            collectionView.elloContentInset = newValue
+            collectionView.scrollIndicatorInsets = newValue
+            pullToRefreshView?.defaultContentInset = newValue
         }
     }
     public var columnCount: Int {
@@ -325,6 +335,11 @@ public final class StreamViewController: BaseElloViewController {
         completion: ElloEmptyCompletion = {}
         )
     {
+        guard streamCellItems.count > 0 else {
+            replacePlaceholder(placeholderType, with: [StreamCellItem(type: .Placeholder, placeholderType: placeholderType)], completion: completion)
+            return
+        }
+
         for item in streamCellItems {
             item.placeholderType = placeholderType
         }
@@ -352,7 +367,6 @@ public final class StreamViewController: BaseElloViewController {
             let localToken = loadingToken.resetInitialPageLoadingToken()
 
             streamService.loadStream(
-                streamKind.endpoint,
                 streamKind: streamKind,
                 success: { (jsonables, responseConfig) in
                     guard self.loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
@@ -522,13 +536,13 @@ public final class StreamViewController: BaseElloViewController {
             sself.updateNoResultsLabel()
         }
 
-        loveChangedNotification  = NotificationObserver(notification: LoveChangedNotification) { [weak self] (love, change) in
+        jsonableChangedNotification = NotificationObserver(notification: JSONAbleChangedNotification) { [weak self] (jsonable, change) in
             guard let
                 sself = self
             where sself.initialDataLoaded && sself.isViewLoaded()
             else { return }
 
-            sself.dataSource.modifyItems(love, change: change, collectionView: sself.collectionView)
+            sself.dataSource.modifyItems(jsonable, change: change, collectionView: sself.collectionView)
             sself.updateNoResultsLabel()
         }
 
@@ -571,7 +585,7 @@ public final class StreamViewController: BaseElloViewController {
         commentChangedNotification?.removeObserver()
         postChangedNotification?.removeObserver()
         relationshipChangedNotification?.removeObserver()
-        loveChangedNotification?.removeObserver()
+        jsonableChangedNotification?.removeObserver()
         settingChangedNotification?.removeObserver()
         currentUserChangedNotification?.removeObserver()
     }
@@ -606,6 +620,7 @@ public final class StreamViewController: BaseElloViewController {
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.categoryListCellDelegate = self
+        dataSource.announcementCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
@@ -642,6 +657,7 @@ public final class StreamViewController: BaseElloViewController {
             streamKind: streamKind,
             textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
             notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
+            announcementSizeCalculator: AnnouncementCellSizeCalculator(),
             profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
             imageSizeCalculator: StreamImageCellSizeCalculator(),
             categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
@@ -769,7 +785,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     public func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            let width = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: columnCount)
+            let width = calculateColumnWidth(frameWidth: UIWindow.windowWidth(), columnCount: columnCount)
             let height = dataSource.heightForIndexPath(indexPath, numberOfColumns: 1)
             return CGSize(width: width, height: height)
     }
@@ -1023,6 +1039,18 @@ extension StreamViewController: WebLinkDelegate {
     }
 }
 
+// MARK: StreamViewController: AnnouncementCellDelegate
+extension StreamViewController: AnnouncementCellDelegate {
+    public func markAnnouncementAsRead(cell cell: UICollectionViewCell) {
+        guard let
+            indexPath = collectionView.indexPathForCell(cell),
+            announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement
+        else { return }
+
+        announcementDelegate?.markAnnouncementAsRead(announcement)
+    }
+}
+
 // MARK: StreamViewController: UICollectionViewDelegate
 extension StreamViewController: UICollectionViewDelegate {
 
@@ -1068,17 +1096,22 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let post = dataSource.postForIndexPath(indexPath) {
             postTappedDelegate?.postTapped(post)
         }
-        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            notification = item.jsonable as? Notification,
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             postId = notification.postId
         {
             postTappedDelegate?.postTapped(postId: postId)
         }
-        else if let item = dataSource.visibleStreamCellItem(at: indexPath),
-            notification = item.jsonable as? Notification,
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             user = notification.subject as? User
         {
             userTapped(user)
+        }
+        else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
+            callToAction = announcement.ctaURL
+        {
+            Tracker.sharedTracker.announcementOpened(announcement)
+            let request = NSURLRequest(URL: callToAction)
+            ElloWebViewHelper.handleRequest(request, webLinkDelegate: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath),
             post = comment.loadedFromPost
@@ -1168,7 +1201,8 @@ extension StreamViewController: UIScrollViewDelegate {
         scrollToPaginateGuard = false
 
         let scrollAPI = ElloAPI.InfiniteScroll(queryItems: nextQueryItems) { return self.streamKind.endpoint }
-        streamService.loadStream(scrollAPI,
+        streamService.loadStream(
+            endpoint: scrollAPI,
             streamKind: streamKind,
             success: {
                 (jsonables, responseConfig) in

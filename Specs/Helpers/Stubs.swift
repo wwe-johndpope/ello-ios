@@ -56,7 +56,7 @@ extension User: Stubbable {
             isHireable: (values["isHireable"] as? Bool) ?? false
         )
         user.avatar = values["avatar"] as? Asset
-        user.identifiableBy = (values["identifiableBy"] as? String) ?? "stub-user-identifiable-by"
+        user.identifiableBy = (values["identifiableBy"] as? String)
         user.postsCount = (values["postsCount"] as? Int) ?? 0
         user.lovesCount = (values["lovesCount"] as? Int) ?? 0
         user.totalViewsCount = (values["totalViewsCount"] as? Int)
@@ -70,7 +70,7 @@ extension User: Stubbable {
             user.followersCount = "stub-user-followers-count"
         }
         user.followingCount = (values["followingCount"] as? Int) ?? 0
-        user.formattedShortBio = (values["formattedShortBio"] as? String) ?? "stub-user-formatted-short-bio"
+        user.formattedShortBio = (values["formattedShortBio"] as? String)
         if let linkValues = (values["externalLinksList"] as? [[String:String]]) {
             user.externalLinksList = linkValues.flatMap { ExternalLink.fromDict($0) }
         }
@@ -81,7 +81,7 @@ extension User: Stubbable {
             user.externalLinksList = [ExternalLink(url: NSURL(string: "http://ello.co")!, text: "ello.co")]
         }
         user.coverImage = values["coverImage"] as? Asset
-        user.backgroundPosition = (values["backgroundPosition"] as? String) ?? "stub-user-background-position"
+        user.backgroundPosition = (values["backgroundPosition"] as? String)
         user.onboardingVersion = (values["onboardingVersion"] as? Int)
         // links / nested resources
         if let posts = values["posts"] as? [Post] {
@@ -409,6 +409,13 @@ extension Activity: Stubbable {
 
 extension Asset: Stubbable {
     class func stub(values: [String: AnyObject]) -> Asset {
+        if let url = values["url"] as? String {
+            return Asset(url: NSURL(string: url)!)
+        }
+        else if let url = values["url"] as? NSURL {
+            return Asset(url: url)
+        }
+
         let asset = Asset(id: (values["id"] as? String) ?? NSUUID().UUIDString)
         let defaultAttachment = values["attachment"] as? Attachment
         asset.optimized = (values["optimized"] as? Attachment) ?? defaultAttachment
@@ -579,5 +586,31 @@ extension Ello.Category: Stubbable {
         category.ctaURL = urlFromValue(values["ctaURL"])
 
         return category
+    }
+}
+
+extension Announcement: Stubbable {
+    class func stub(values: [String: AnyObject]) -> Announcement {
+
+        let announcement = Announcement(
+            id: (values["id"] as? String) ?? "666",
+            header: (values["header"] as? String) ?? "Announcing Not For Print, Ello’s new publication",
+            body: (values["body"] as? String) ?? "Submissions for Issue 01 — Censorship will be open from 11/7 – 11/23",
+            ctaURL: urlFromValue(values["ctaURL"]),
+            ctaCaption: (values["ctaCaption"] as? String) ?? "Learn More",
+            createdAt: (values["createdAt"] as? NSDate) ?? NSDate()
+        )
+
+        if let asset = values["image"] as? Asset {
+            announcement.image = asset
+        }
+        else if let asset = values["image"] as? [String: AnyObject] {
+            announcement.image = Asset.stub(asset)
+        }
+        else {
+            announcement.image = Asset(url: NSURL(string: "http://media.colinta.com/minime.png")!)
+        }
+
+        return announcement
     }
 }

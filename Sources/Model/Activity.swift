@@ -140,5 +140,7 @@ public final class Activity: JSONAble {
 }
 
 extension Activity: JSONSaveable {
-    var uniqId: String? { return id }
+    var uniqueId: String? { if let id = tableId { return "Activity-\(id)" } ; return nil }
+    var tableId: String? { return id }
+
 }

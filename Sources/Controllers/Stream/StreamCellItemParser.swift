@@ -20,6 +20,9 @@ public struct StreamCellItemParser {
         if let notifications = filteredItems as? [Notification] {
             return notificationCellItems(notifications)
         }
+        if let announcements = filteredItems as? [Announcement] {
+            return announcementCellItems(announcements)
+        }
         if let users = filteredItems as? [User] {
             return userCellItems(users)
         }
@@ -31,6 +34,12 @@ public struct StreamCellItemParser {
     private func notificationCellItems(notifications: [Notification]) -> [StreamCellItem] {
         return notifications.map { notification in
             return StreamCellItem(jsonable: notification, type: .Notification)
+        }
+    }
+
+    private func announcementCellItems(announcements: [Announcement]) -> [StreamCellItem] {
+        return announcements.map { announcement in
+            return StreamCellItem(jsonable: announcement, type: .Announcement)
         }
     }
 

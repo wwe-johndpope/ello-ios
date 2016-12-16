@@ -117,13 +117,13 @@ class CategoryHeaderCellSpec: QuickSpec {
                         ])
 
                         if type == .CategoryPromotionalHeader {
-                            let height = CategoryHeaderCellSizeCalculator.calculateCategoryHeight(category, screenWidth: style.width)
+                            let height = CategoryHeaderCellSizeCalculator.calculateCategoryHeight(category, cellWidth: style.width)
                             subject = CategoryHeaderCell(frame: style.frame(height))
                             let item = StreamCellItem(jsonable: category, type: .CategoryPromotionalHeader)
                             CategoryHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .Category(slug: "Art"), indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)
                         }
                         else {
-                            let height = CategoryHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, screenWidth: style.width)
+                            let height = CategoryHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, cellWidth: style.width)
                             subject = CategoryHeaderCell(frame: style.frame(height))
                             let item = StreamCellItem(jsonable: pagePromotional, type: .PagePromotionalHeader)
                             PagePromotionalHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .Category(slug: "Design"), indexPath: NSIndexPath(forItem: 0, inSection: 0), currentUser: nil)

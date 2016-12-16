@@ -34,6 +34,7 @@ public enum StreamCellType: Equatable {
     case NoPosts
     case Notification
     case PagePromotionalHeader
+    case Announcement
     case Placeholder
     case ProfileHeader
     case ProfileHeaderGhost
@@ -54,6 +55,9 @@ public enum StreamCellType: Equatable {
         case CategoryHeader
         case CategoryPosts
         case PeopleToFollow
+
+        case Announcements
+        case Notifications
 
         case ProfileHeader
         case ProfilePosts
@@ -85,6 +89,7 @@ public enum StreamCellType: Equatable {
         NoPosts,
         Notification,
         PagePromotionalHeader,
+        Announcement,
         ProfileHeader,
         ProfileHeaderGhost,
         Search(placeholder: ""),
@@ -132,6 +137,7 @@ public enum StreamCellType: Equatable {
         case NoPosts: return NoPostsCell.reuseIdentifier
         case Notification: return NotificationCell.reuseIdentifier
         case Placeholder: return "Placeholder"
+        case Announcement: return AnnouncementCell.reuseIdentifier
         case ProfileHeader: return ProfileHeaderCell.reuseIdentifier
         case ProfileHeaderGhost: return ProfileHeaderGhostCell.reuseIdentifier
         case Search: return SearchStreamCell.reuseIdentifier
@@ -157,6 +163,7 @@ public enum StreamCellType: Equatable {
              InviteFriends,
              OnboardingInviteFriends,
              Notification,
+             Announcement,
              SeeMoreComments,
              Toggle,
              UserListItem:
@@ -181,6 +188,7 @@ public enum StreamCellType: Equatable {
         case NoPosts: return NoPostsCellPresenter.configure
         case Notification: return NotificationCellPresenter.configure
         case PagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
+        case Announcement: return AnnouncementCellPresenter.configure
         case ProfileHeader: return ProfileHeaderCellPresenter.configure
         case Search: return SearchStreamCellPresenter.configure
         case Spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .whiteColor() }
@@ -211,6 +219,7 @@ public enum StreamCellType: Equatable {
         case NoPosts: return NoPostsCell.self
         case Notification: return NotificationCell.self
         case Placeholder: return UICollectionViewCell.self
+        case Announcement: return AnnouncementCell.self
         case ProfileHeader: return ProfileHeaderCell.self
         case ProfileHeaderGhost: return ProfileHeaderGhostCell.self
         case Search: return SearchStreamCell.self
@@ -250,6 +259,8 @@ public enum StreamCellType: Equatable {
             return 215
         case Notification:
             return 117
+        case Announcement:
+            return 200
         case let Spacer(height):
             return height
         case let FullWidthSpacer(height):
@@ -291,6 +302,7 @@ public enum StreamCellType: Equatable {
              NoPosts,
              Notification,
              PagePromotionalHeader,
+             Announcement,
              ProfileHeader,
              ProfileHeaderGhost,
              Search,
@@ -334,6 +346,7 @@ public enum StreamCellType: Equatable {
             FullWidthSpacer(height: 0.0),
             Notification,
             PagePromotionalHeader,
+            Announcement,
             Placeholder,
             ProfileHeader,
             ProfileHeaderGhost,

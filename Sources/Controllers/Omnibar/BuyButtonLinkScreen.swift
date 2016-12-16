@@ -23,8 +23,8 @@ public class BuyButtonLinkScreen: UIView {
     let backgroundButton = UIButton()
     let titleLabel = UILabel()
     let productLinkField = ElloTextField()
-    let submitButton = GreenElloButton()
-    let removeButton = GreenElloButton()
+    let submitButton = StyledButton(style: .Green)
+    let removeButton = StyledButton(style: .Green)
     let cancelLabel = UILabel()
 
     var submitButtonTrailingRight: Constraint!

@@ -70,7 +70,8 @@ class DynamicSettingsViewController: UITableViewController {
         tableView.scrollsToTop = false
         tableView.rowHeight = DynamicSettingsCellHeight
 
-        StreamService().loadStream(.ProfileToggles,
+        StreamService().loadStream(
+            endpoint: .ProfileToggles,
             streamKind: nil,
             success: { (data, responseConfig) in
                 if let categories = data as? [DynamicSettingCategory] {

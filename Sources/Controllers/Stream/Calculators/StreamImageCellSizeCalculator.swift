@@ -4,10 +4,10 @@
 
 import Foundation
 
-public class StreamImageCellSizeCalculator: NSObject {
+public class StreamImageCellSizeCalculator {
     private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     private var cellJobs: [CellJob] = []
-    private var screenWidth: CGFloat = 0.0
+    private var cellWidth: CGFloat = 0.0
     private var maxWidth: CGFloat = 0.0
     private var columnCount: Int = 1
     private var cellItems: [StreamCellItem] = []
@@ -57,13 +57,13 @@ public class StreamImageCellSizeCalculator: NSObject {
             }
         }
         self.cellItems = job.cellItems
-        self.screenWidth = job.width
+        self.cellWidth = job.width
         self.columnCount = job.columnCount
         loadNext()
     }
 
     private func loadNext() {
-        self.maxWidth = screenWidth
+        self.maxWidth = cellWidth
         if !self.cellItems.isEmpty {
             let item = cellItems.removeAtIndex(0)
             if (item.type.data as? Regionable)?.isRepost == true {
@@ -86,7 +86,7 @@ public class StreamImageCellSizeCalculator: NSObject {
                     ratio = 16.0/9.0
                 }
                 item.calculatedCellHeights.oneColumn = StreamImageCell.Size.bottomMargin + maxWidth / ratio
-                item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + calculateColumnWidth(screenWidth: maxWidth, columnCount: columnCount) / ratio
+                item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + calculateColumnWidth(frameWidth: maxWidth, columnCount: columnCount) / ratio
             }
             loadNext()
         }
@@ -104,7 +104,7 @@ public class StreamImageCellSizeCalculator: NSObject {
     }
 
     private func multiColumnImageHeight(imageBlock: ImageRegion) -> CGFloat {
-        var imageWidth = calculateColumnWidth(screenWidth: maxWidth, columnCount: columnCount)
+        var imageWidth = calculateColumnWidth(frameWidth: maxWidth, columnCount: columnCount)
         if let assetWidth = imageBlock.asset?.gridLayoutAttachment?.width {
             imageWidth = min(imageWidth, CGFloat(assetWidth))
         }

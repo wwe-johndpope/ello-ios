@@ -177,5 +177,6 @@ public final class Category: JSONAble, Groupable {
 }
 
 extension Category: JSONSaveable {
-    var uniqId: String? { return id }
+    var uniqueId: String? { if let id = tableId { return "Category-\(id)" } ; return nil }
+    var tableId: String? { return id }
 }

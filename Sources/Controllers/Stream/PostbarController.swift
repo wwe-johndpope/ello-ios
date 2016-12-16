@@ -200,7 +200,7 @@ public class PostbarController: PostbarDelegate {
         LovesService().lovePost(
             postId: post.id,
             success: { (love, responseConfig) in
-                postNotification(LoveChangedNotification, value: (love, .Create))
+                postNotification(JSONAbleChangedNotification, value: (love, .Create))
                 cell?.lovesControl.userInteractionEnabled = true
             },
             failure: { error, statusCode in
