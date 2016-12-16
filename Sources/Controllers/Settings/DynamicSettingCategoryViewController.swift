@@ -65,6 +65,10 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
 
         return UITableViewAutomaticDimension
     }
+
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 90
+    }
 }
 
 extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {

@@ -91,6 +91,11 @@
         {
             "items": [
                 {
+                    "info": "Receive a push notification when there is a system wide announcement.",
+                    "key": "notify_of_announcements_via_push",
+                    "label": "Announcements"
+                },
+                {
                     "info": "Receive a push notification when other people comment on your posts.",
                     "key": "notify_of_comments_via_push",
                     "label": "Comments"

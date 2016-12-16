@@ -8,7 +8,8 @@ import SwiftyJSON
 
 // version 1: initial
 // version 2: added hasAutoWatchEnabled and moved in notifyOfWatch* settings
-let ProfileVersion: Int = 2
+// version 3: added notifyOfAnnouncementsViaPush
+let ProfileVersion: Int = 3
 
 @objc(Profile)
 public final class Profile: JSONAble {
@@ -37,6 +38,7 @@ public final class Profile: JSONAble {
     public let subscribeToDailyEllo: Bool
     public let subscribeToWeeklyEllo: Bool
     public let subscribeToOnboardingDrip: Bool
+    public let notifyOfAnnouncementsViaPush: Bool
     public let notifyOfCommentsViaPush: Bool
     public let notifyOfLovesViaPush: Bool
     public let notifyOfMentionsViaPush: Bool
@@ -74,6 +76,7 @@ public final class Profile: JSONAble {
         subscribeToDailyEllo: Bool,
         subscribeToWeeklyEllo: Bool,
         subscribeToOnboardingDrip: Bool,
+        notifyOfAnnouncementsViaPush: Bool,
         notifyOfCommentsViaPush: Bool,
         notifyOfLovesViaPush: Bool,
         notifyOfMentionsViaPush: Bool,
@@ -108,6 +111,7 @@ public final class Profile: JSONAble {
         self.subscribeToDailyEllo = subscribeToDailyEllo
         self.subscribeToWeeklyEllo = subscribeToWeeklyEllo
         self.subscribeToOnboardingDrip = subscribeToOnboardingDrip
+        self.notifyOfAnnouncementsViaPush = notifyOfAnnouncementsViaPush
         self.notifyOfCommentsViaPush = notifyOfCommentsViaPush
         self.notifyOfLovesViaPush = notifyOfLovesViaPush
         self.notifyOfMentionsViaPush = notifyOfMentionsViaPush
@@ -139,6 +143,14 @@ public final class Profile: JSONAble {
         self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
         self.hasAdNotificationsEnabled = decoder.decodeKey("hasAdNotificationsEnabled")
         let version: Int = decoder.decodeKey("version")
+
+        if version < 3 {
+            self.notifyOfAnnouncementsViaPush = true
+        }
+        else {
+            self.notifyOfAnnouncementsViaPush = decoder.decodeKey("notifyOfAnnouncementsViaPush")
+        }
+
         if version < 2 {
             self.hasAutoWatchEnabled = true
             self.notifyOfWatchesViaPush = true
@@ -200,6 +212,7 @@ public final class Profile: JSONAble {
         coder.encodeObject(subscribeToDailyEllo, forKey: "subscribeToDailyEllo")
         coder.encodeObject(subscribeToWeeklyEllo, forKey: "subscribeToWeeklyEllo")
         coder.encodeObject(subscribeToOnboardingDrip, forKey: "subscribeToOnboardingDrip")
+        coder.encodeObject(notifyOfAnnouncementsViaPush, forKey: "notifyOfAnnouncementsViaPush")
         coder.encodeObject(notifyOfCommentsViaPush, forKey: "notifyOfCommentsViaPush")
         coder.encodeObject(notifyOfLovesViaPush, forKey: "notifyOfLovesViaPush")
         coder.encodeObject(notifyOfMentionsViaPush, forKey: "notifyOfMentionsViaPush")
@@ -243,6 +256,7 @@ public final class Profile: JSONAble {
             subscribeToDailyEllo: json["subscribe_to_daily_ello"].boolValue,
             subscribeToWeeklyEllo: json["subscribe_to_weekly_ello"].boolValue,
             subscribeToOnboardingDrip: json["subscribe_to_onboarding_drip"].boolValue,
+            notifyOfAnnouncementsViaPush: json["notify_of_announcements_via_push"].boolValue,
             notifyOfCommentsViaPush: json["notify_of_comments_via_push"].boolValue,
             notifyOfLovesViaPush : json["notify_of_loves_via_push"].boolValue,
             notifyOfMentionsViaPush: json["notify_of_mentions_via_push"].boolValue,
