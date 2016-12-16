@@ -6,7 +6,6 @@ public final class NotificationsGenerator: StreamGenerator {
     public var currentUser: User?
     public var streamKind: StreamKind
 
-    private var pinnedNotifications: [AnyObject]?
     private var notifications: [Activity] = []
     private var announcements: [Announcement] = []
     private var hasNotifications: Bool?

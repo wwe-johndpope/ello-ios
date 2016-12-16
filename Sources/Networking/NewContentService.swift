@@ -95,7 +95,7 @@ private extension NewContentService {
          ElloProvider.shared.elloRequest(
              ElloAPI.AnnouncementsNewContent(createdAt: storedDate),
              success: { (_, responseConfig) in
-                 if let statusCode = responseConfig.statusCode {// where statusCode == 204
+                 if let statusCode = responseConfig.statusCode where statusCode == 204 {
                      postNotification(NewContentNotifications.newAnnouncements, value: nil)
                  }
 
