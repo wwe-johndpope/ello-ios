@@ -12,7 +12,7 @@ public final class NotificationsGenerator: StreamGenerator {
 
     weak public var destination: StreamDestination?
 
-    fileprivate var localToken: String!
+    fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
 
     public init(

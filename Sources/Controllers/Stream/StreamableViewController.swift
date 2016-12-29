@@ -187,16 +187,15 @@ extension StreamableViewController: UserTappedDelegate {
         guard !DeepLinking.alreadyOnUserProfile(navVC: navigationController, userParam: param)
             else { return }
 
-
         let vc = ProfileViewController(userParam: param, username: username)
         vc.currentUser = currentUser
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
     fileprivate func alreadyOnUserProfile(_ user: User) -> Bool {
-        if let profileVC = self.navigationController?.topViewController as? ProfileViewController,
-            let param = profileVC.userParam
+        if let profileVC = self.navigationController?.topViewController as? ProfileViewController
         {
+            let param = profileVC.userParam
             if param.hasPrefix("~") {
                 let usernamePart = param.substring(from: param.index(after: param.startIndex))
                 return user.username == usernamePart

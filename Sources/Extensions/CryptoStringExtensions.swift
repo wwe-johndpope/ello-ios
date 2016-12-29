@@ -9,8 +9,8 @@ import Keys
 public extension String {
 
     var saltedSHA1String: String? {
-        let sodiumChloride = ElloKeys().sodiumChloride()
-        return (sodiumChloride! + self).SHA1String
+        let sodiumChloride: String = ElloKeys().sodiumChloride()
+        return (sodiumChloride + self).SHA1String
     }
 
     var SHA1String: String? {

@@ -40,8 +40,8 @@ open class SearchScreen: UIView, SearchScreenProtocol {
     fileprivate var streamViewContainer = UIView()
     open fileprivate(set) var findFriendsContainer: UIView!
     fileprivate var bottomInset: CGFloat
-    fileprivate var navBarTitle: String!
-    fileprivate var fieldPlaceholderText: String!
+    fileprivate var navBarTitle: String = ""
+    fileprivate var fieldPlaceholderText: String = ""
     fileprivate var isSearchView: Bool
     open var hasBackButton: Bool = true {
         didSet {

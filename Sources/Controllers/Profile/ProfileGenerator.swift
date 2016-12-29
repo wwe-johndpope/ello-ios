@@ -12,7 +12,7 @@ public final class ProfileGenerator: StreamGenerator {
     fileprivate let userParam: String
     fileprivate var posts: [Post]?
     fileprivate var hasPosts: Bool?
-    fileprivate var localToken: String!
+    fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
 
     fileprivate let queue = OperationQueue()

@@ -3,11 +3,11 @@
 //
 public final class PostDetailViewController: StreamableViewController {
     var post: Post?
-    var postParam: String!
+    var postParam: String
     var scrollToComment: ElloComment?
 
     var navigationBar: ElloNavigationBar!
-    var localToken: String!
+    var localToken: String = ""
     var deeplinkPath: String?
     var generator: PostDetailGenerator?
 

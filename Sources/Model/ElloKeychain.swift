@@ -28,7 +28,7 @@ public struct ElloKeychain: KeychainType {
     public var keychain: Keychain
 
     public init() {
-        let appIdentifierPrefix = ElloKeys().teamId()
+        let appIdentifierPrefix: String = ElloKeys().teamId()
         keychain = Keychain(service: "co.ello.Ello", accessGroup: "\(appIdentifierPrefix).co.ello.Ello")
     }
 

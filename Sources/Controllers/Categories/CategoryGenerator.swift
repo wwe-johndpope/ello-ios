@@ -25,7 +25,7 @@ public final class CategoryGenerator: StreamGenerator {
     fileprivate var pagePromotional: PagePromotional?
     fileprivate var posts: [Post]?
     fileprivate var hasPosts: Bool?
-    fileprivate var localToken: String!
+    fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
 
     fileprivate let queue = OperationQueue()

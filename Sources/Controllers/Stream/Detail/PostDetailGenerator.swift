@@ -10,7 +10,7 @@ public final class PostDetailGenerator: StreamGenerator {
 
     fileprivate var post: Post?
     fileprivate let postParam: String
-    fileprivate var localToken: String!
+    fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
     fileprivate var hasPaddedSocial = false
     fileprivate let queue = OperationQueue()
