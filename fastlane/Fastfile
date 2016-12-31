@@ -77,7 +77,13 @@ lane :store do
 end
 
 desc 'Downloads dSyms from Apple, and uploads them to Crashlytics'
-lane :refresh_dsyms do
+desc '  Options:'
+desc '      version:x.y.z (defaults to ENV[VERSION_NUMBER])'
+desc '      build:1234 (defaults to latest build number)'
+lane :refresh_dsyms do |opts|
+  version_number = opts[:version] || self.version_number
+  build_number = opts[:build] || self.build_number
+
   extract_from_env(
     required: {
       "CRASHLYTICS_API_TOKEN" =>    "Your Crashlytics Api Token",
