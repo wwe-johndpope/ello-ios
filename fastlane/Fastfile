@@ -81,8 +81,9 @@ desc '  Options:'
 desc '      version:x.y.z (defaults to ENV[VERSION_NUMBER])'
 desc '      build:1234 (defaults to latest build number)'
 lane :refresh_dsyms do |opts|
-  version_number = opts[:version] || self.version_number
-  build_number = opts[:build] || self.build_number
+  download_version = opts[:version] || version_number
+  download_build = opts[:build] || build_number
+  UI.message("Uploading version #{download_version} (#{download_build})")
 
   extract_from_env(
     required: {
@@ -91,7 +92,7 @@ lane :refresh_dsyms do |opts|
     },
   )
 
-  download_dsyms(version: version_number, build_number: build_number)
+  download_dsyms(version: download_version, build_number: download_build)
   upload_symbols_to_crashlytics
   clean_build_artifacts
 end
