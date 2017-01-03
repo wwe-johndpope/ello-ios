@@ -39,7 +39,7 @@ public extension String {
     }
 
     func urlEncoded() -> String {
-        return addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) ?? self
+        return addingPercentEncoding(withAllowedCharacters: CharacterSet.letters) ?? self
     }
 
     func urlDecoded() -> String {
