@@ -13,7 +13,16 @@ enum ElloTab: Int {
 
     static let DefaultTab = ElloTab.stream
 
-    var narrationDefaultKey: String { return "ElloTabBarControllerDidShowNarration\(self)" }
+    var narrationDefaultKey: String {
+        let defaultPrefix = "ElloTabBarControllerDidShowNarration"
+        switch self {
+        case .discover:      return "\(defaultPrefix)Discover"
+        case .notifications: return "\(defaultPrefix)Notifications"
+        case .stream:        return "\(defaultPrefix)Stream"
+        case .profile:       return "\(defaultPrefix)Profile"
+        case .omnibar:       return "\(defaultPrefix)Omnibar"
+        }
+    }
 
     var narrationTitle: String {
         switch self {
