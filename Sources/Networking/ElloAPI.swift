@@ -807,7 +807,7 @@ public func url(_ route: Moya.TargetType) -> String {
 }
 
 private func tokenStringFromData(_ data: Data) -> String {
-    return String(data.description.characters.filter { !"<> ".characters.contains($0) })
+    return String((data as NSData).description.characters.filter { !"<> ".characters.contains($0) })
 }
 
 public extension ElloAPI {
