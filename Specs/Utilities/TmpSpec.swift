@@ -48,7 +48,7 @@ class TmpSpec: QuickSpec {
         describe("Tmp.fileURL") {
             it("should be a URL") {
                 let fileURL = Tmp.fileURL("filename")
-                expect(fileURL).to(beAKindOf(URL.self))
+                expect(fileURL).notTo(beNil())
             }
         }
 

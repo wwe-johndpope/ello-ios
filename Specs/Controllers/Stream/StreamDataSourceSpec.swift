@@ -293,7 +293,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns an indexPath") {
-                    expect(subject.indexPathForItem(postItem)).to(beAKindOf(IndexPath.self))
+                    expect(subject.indexPathForItem(postItem)).notTo(beNil())
                 }
 
                 it("returns nil when cell doesn't exist") {

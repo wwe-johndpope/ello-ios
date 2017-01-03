@@ -34,7 +34,7 @@ class RelationshipSpec: QuickSpec {
                 it("parses correctly") {
                     let parsedRelationship = stubbedJSONData("relationships_following_a_user_as_friend", "relationships")
                     let relationship = Relationship.fromJSON(parsedRelationship) as! Relationship
-                    expect(relationship.createdAt).to(beAKindOf(Date.self))
+                    expect(relationship.createdAt).notTo(beNil())
                     expect(relationship.owner!.relationshipPriority.rawValue) == "self"
                     expect(relationship.subject!.relationshipPriority.rawValue) == "friend"
                 }
@@ -44,7 +44,7 @@ class RelationshipSpec: QuickSpec {
                 it("parses correctly") {
                     let parsedRelationship = stubbedJSONData("relationships_blocking_an_abusive_user", "relationships")
                     let relationship = Relationship.fromJSON(parsedRelationship) as! Relationship
-                    expect(relationship.createdAt).to(beAKindOf(Date.self))
+                    expect(relationship.createdAt).notTo(beNil())
                     expect(relationship.owner!.relationshipPriority.rawValue) == "self"
                     expect(relationship.subject!.relationshipPriority.rawValue) == "block"
                 }
@@ -54,7 +54,7 @@ class RelationshipSpec: QuickSpec {
                 it("parses correctly") {
                     let parsedRelationship = stubbedJSONData("relationships_making_a_relationship_inactive", "relationships")
                     let relationship = Relationship.fromJSON(parsedRelationship) as! Relationship
-                    expect(relationship.createdAt).to(beAKindOf(Date.self))
+                    expect(relationship.createdAt).notTo(beNil())
                     expect(relationship.owner!.relationshipPriority.rawValue) == "self"
                     expect(relationship.subject!.relationshipPriority.rawValue) == "inactive"
                 }

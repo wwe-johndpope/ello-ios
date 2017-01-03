@@ -28,7 +28,7 @@ class ToDataSpec: QuickSpec {
         describe("String") {
             it("should return NSData") {
                 if let data = string.toData() {
-                    expect(data).to(beAKindOf(Data.self))
+                    expect(data).notTo(beNil())
                     let expectedData = string.data(using: String.Encoding.utf8)
                     expect(data).to(equal(expectedData))
                 }
@@ -41,7 +41,7 @@ class ToDataSpec: QuickSpec {
         describe("UIImage") {
             it("should return NSData") {
                 if let data = image.toData() {
-                    expect(data).to(beAKindOf(Data.self))
+                    expect(data).notTo(beNil())
                     let expectedData = UIImagePNGRepresentation(image)
                     expect(data).to(equal(expectedData))
                 }
