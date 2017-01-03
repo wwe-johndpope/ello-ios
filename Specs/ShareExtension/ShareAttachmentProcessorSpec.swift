@@ -40,9 +40,10 @@ class ShareAttachmentProcessorSpec: QuickSpec {
 
             describe("preview(_:callback)") {
 
-                var fileURL: URL?
-                if let url = URL(string: NSTemporaryDirectory()) {
-                    fileURL = url.appendingPathComponent("ShareAttachmentProcessorSpec") as URL?
+                var fileURL: URL!
+                beforeEach {
+                    let tempURL = try! FileManager.default.url(for: .sharedPublicDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    fileURL = tempURL.appendingPathComponent("ShareAttachmentProcessorSpec") as! URL
                 }
 
                 afterEach {
@@ -54,9 +55,7 @@ class ShareAttachmentProcessorSpec: QuickSpec {
                     let extensionItem = NSExtensionItem()
                     let image = UIImage(named: "specs-avatar", in: Bundle(for: type(of: self)), compatibleWith: nil)!
                     let imageAsData = UIImagePNGRepresentation(image)
-                    if let fileURL = fileURL {
-                        try! imageAsData?.write(to: fileURL, options: [.atomic])
-                    }
+                    try? imageAsData?.write(to: fileURL, options: [.atomic])
 
                     extensionItem.attachments = [
                         FakeItemProvider(item: URL(string: "https://ello.co") as NSSecureCoding?, typeIdentifier: String(kUTTypeURL)),
