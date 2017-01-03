@@ -59,7 +59,6 @@ public final class CategoryViewController: StreamableViewController {
             destination: self
         )
 
-        scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory() }
         streamViewController.reloadClosure = { [unowned self] in self.reloadEntireCategory() }

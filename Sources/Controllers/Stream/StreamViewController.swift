@@ -208,7 +208,7 @@ public final class StreamViewController: BaseElloViewController {
     public var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
         set {
-            collectionView.elloContentInset = newValue
+            collectionView.contentInset = newValue
             collectionView.scrollIndicatorInsets = newValue
             pullToRefreshView?.defaultContentInset = newValue
         }

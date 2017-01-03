@@ -29,7 +29,6 @@ open class CategoriesSelectionViewController: StreamableViewController, HasAppCo
         super.viewDidLoad()
 
         streamViewController.selectedCategoryDelegate = self
-        scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }

@@ -129,7 +129,6 @@ public final class ProfileViewController: StreamableViewController {
         }
         view.clipsToBounds = true
         setupNavigationItems()
-        scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
         screen.relationshipDelegate = streamViewController.dataSource.relationshipDelegate

@@ -2,11 +2,10 @@
 ///  ElloScrollLogic.swift
 //
 
-open class ElloScrollLogic: NSObject, UIScrollViewDelegate {
-    // for running specs
-    open var isRunningSpecs = false
+class ElloScrollLogic: NSObject, UIScrollViewDelegate {
+    var isRunningSpecs = false
 
-    open var prevOffset: CGPoint?
+    var prevOffset: CGPoint?
     var shouldIgnoreScroll: Bool = false
     var navBarHeight: CGFloat = 44
     var tabBarHeight: CGFloat = 49
@@ -25,7 +24,7 @@ open class ElloScrollLogic: NSObject, UIScrollViewDelegate {
     fileprivate var onShow: ((Bool) -> Void)!
     fileprivate var onHide: (() -> Void)!
 
-    public init(onShow: @escaping (Bool) -> Void, onHide: @escaping () -> Void) {
+    init(onShow: @escaping (Bool) -> Void, onHide: @escaping () -> Void) {
         self.onShow = onShow
         self.onHide = onHide
     }
@@ -77,7 +76,7 @@ open class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         }
     }
 
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !scrollView.isDragging && !isRunningSpecs {
             return
         }
@@ -110,11 +109,11 @@ open class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         prevOffset = nextOffset
     }
 
-    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         shouldIgnoreScroll = false
     }
 
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
         if self.isAtTop(scrollView) {
             show(false)
         }

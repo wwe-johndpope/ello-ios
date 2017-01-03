@@ -34,7 +34,6 @@ open class InviteFriendsViewController: StreamableViewController {
         super.viewDidLoad()
 
         streamViewController.searchStreamDelegate = self
-        scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         streamViewController.loadInitialPage()
     }
 

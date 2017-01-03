@@ -51,7 +51,6 @@ open class DiscoverAllCategoriesViewController: StreamableViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }

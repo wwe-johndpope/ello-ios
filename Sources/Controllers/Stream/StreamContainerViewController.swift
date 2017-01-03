@@ -73,7 +73,6 @@ open class StreamContainerViewController: StreamableViewController {
         let initialController = childStreamControllers[index]
         setupNavigationBar(controller: initialController)
 
-        scrollLogic.prevOffset = initialController.collectionView.contentOffset
         initialController.collectionView.scrollsToTop = true
         streamsSegmentedControl.selectedSegmentIndex = index
         initialController.loadInitialPage()
