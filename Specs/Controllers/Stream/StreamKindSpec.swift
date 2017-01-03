@@ -197,7 +197,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.starred.endpoint.path) == "/api/\(ElloAPI.apiVersion)/streams/noise"
                     expect(StreamKind.notifications(category: "").endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"
                     expect(StreamKind.postDetail(postParam: "param").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts/param"
-                    expect(StreamKind.postDetail(postParam: "param").endpoint.parameters!["comment_count"] as? Bool) == true
+                    expect(StreamKind.postDetail(postParam: "param").endpoint.parameters!["comment_count"] as? Int) == 10
                     expect(StreamKind.currentUserStream.endpoint.path) == "/api/\(ElloAPI.apiVersion)/profile"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/users"
