@@ -1059,9 +1059,7 @@ class StreamDataSourceSpec: QuickSpec {
                     let userCellItems = StreamCellItemParser().parse([user1, user2], streamKind: streamKind)
                     let cellItems = userCellItems
                     subject.streamKind = streamKind
-                    subject.appendUnsizedCellItems(cellItems, withWidth: webWidth) { cellCount in
-                        vc.collectionView.reloadData()
-                    }
+                    subject.appendStreamCellItems(cellItems)
                 }
 
                 context("modifies a user when it is the currentUser") {
