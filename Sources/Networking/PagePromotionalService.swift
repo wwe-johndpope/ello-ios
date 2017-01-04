@@ -6,9 +6,9 @@ import PINRemoteImage
 import FutureKit
 
 
-open class PagePromotionalService {
+class PagePromotionalService {
 
-    open func loadPagePromotionals() -> Future<[PagePromotional]?> {
+    func loadPagePromotionals() -> Future<[PagePromotional]?> {
         let promise = Promise<[PagePromotional]?>()
         ElloProvider.shared.elloRequest(.pagePromotionals,
             success: { (data, responseConfig) in

@@ -5,7 +5,7 @@
 import SnapKit
 
 
-open class HireScreen: StreamableScreen {
+class HireScreen: StreamableScreen {
     struct Size {
         static let keyboardButtonHeight: CGFloat = 44
         static let textViewTopMargin: CGFloat = 40
@@ -116,7 +116,7 @@ open class HireScreen: StreamableScreen {
         keyboardSubmitButton.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
     }
 
-    open func toggleKeyboard(visible: Bool) {
+    func toggleKeyboard(visible: Bool) {
         self.layoutIfNeeded()
 
         let bottomInset = Keyboard.shared.keyboardBottomInset(inView: self)
@@ -126,20 +126,20 @@ open class HireScreen: StreamableScreen {
         }
     }
 
-    open func submitAction() {
+    func submitAction() {
         guard let text = textView.text else { return }
 
         _ = textView.resignFirstResponder()
         self.delegate?.submit(body: text)
     }
 
-    open func showSuccess() {
+    func showSuccess() {
         animate {
             self.successView.alpha = 1
         }
     }
 
-    open func hideSuccess() {
+    func hideSuccess() {
         animate {
             self.successView.alpha = 0
         }
@@ -148,7 +148,7 @@ open class HireScreen: StreamableScreen {
 }
 
 extension HireScreen: UITextViewDelegate {
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         let hasText = textView.text?.isEmpty != true
         placeholder.isHidden = hasText
         keyboardSubmitButton.isEnabled = hasText

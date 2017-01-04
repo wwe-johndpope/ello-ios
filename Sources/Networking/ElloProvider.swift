@@ -32,16 +32,16 @@ fileprivate func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-public typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
-public typealias ElloSuccessCompletion = (AnyObject, ResponseConfig) -> Void
-public typealias ElloFailure = (error: NSError, Int?)
-public typealias ElloFailureCompletion = (NSError, Int?) -> Void
-public typealias ElloErrorCompletion = (NSError) -> Void
-public typealias ElloEmptyCompletion = () -> Void
+typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
+typealias ElloSuccessCompletion = (AnyObject, ResponseConfig) -> Void
+typealias ElloFailure = (error: NSError, Int?)
+typealias ElloFailureCompletion = (NSError, Int?) -> Void
+typealias ElloErrorCompletion = (NSError) -> Void
+typealias ElloEmptyCompletion = () -> Void
 
-open class ElloProvider {
-    open static var shared: ElloProvider = ElloProvider()
-    open var authState: AuthState = .initial {
+class ElloProvider {
+    static var shared: ElloProvider = ElloProvider()
+    var authState: AuthState = .initial {
         willSet {
             if newValue != authState && !authState.canTransitionTo(newValue) && !AppSetup.sharedState.isTesting {
                 print("invalid transition from \(authState) to \(newValue)")
@@ -49,7 +49,7 @@ open class ElloProvider {
         }
     }
 
-    open static func endpointClosure(_ target: ElloAPI) -> Endpoint<ElloAPI> {
+    static func endpointClosure(_ target: ElloAPI) -> Endpoint<ElloAPI> {
         let sampleResponseClosure = { return EndpointSampleResponse.networkResponse(200, target.sampleData) }
 
         let method = target.method
@@ -58,11 +58,11 @@ open class ElloProvider {
         return endpoint.adding(newHTTPHeaderFields: target.headers())
     }
 
-    open static func DefaultProvider() -> MoyaProvider<ElloAPI> {
+    static func DefaultProvider() -> MoyaProvider<ElloAPI> {
         return MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, manager: ElloManager.manager)
     }
 
-    open static func ShareExtensionProvider() -> MoyaProvider<ElloAPI> {
+    static func ShareExtensionProvider() -> MoyaProvider<ElloAPI> {
         return MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, manager: ElloManager.shareExtensionManager)
     }
 
@@ -70,8 +70,8 @@ open class ElloProvider {
         static var instance = ElloProvider.DefaultProvider()
     }
 
-    open static var oneTimeProvider: MoyaProvider<ElloAPI>?
-    open static var sharedProvider: MoyaProvider<ElloAPI> {
+    static var oneTimeProvider: MoyaProvider<ElloAPI>?
+    static var sharedProvider: MoyaProvider<ElloAPI> {
         get {
             if let provider = oneTimeProvider {
                 oneTimeProvider = nil
@@ -87,15 +87,15 @@ open class ElloProvider {
 
     // MARK: - Public
 
-    open func elloRequest(_ target: ElloAPI, success: @escaping ElloSuccessCompletion) {
+    func elloRequest(_ target: ElloAPI, success: @escaping ElloSuccessCompletion) {
         elloRequest((target: target, success: success, failure: { _ in }))
     }
 
-    open func elloRequest(_ target: ElloAPI, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func elloRequest(_ target: ElloAPI, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         elloRequest((target: target, success: success, failure: failure))
     }
 
-    open func elloRequest(_ request: ElloRequestClosure) {
+    func elloRequest(_ request: ElloRequestClosure) {
         let target = request.target
         let success = request.success
         let failure = request.failure
@@ -130,13 +130,13 @@ open class ElloProvider {
 
     var waitList: [ElloRequestClosure] = []
 
-    open func logout() {
+    func logout() {
         if authState.canTransitionTo(.noToken) {
             self.advanceAuthState(.noToken)
         }
     }
 
-    open func authenticated(isPasswordBased: Bool) {
+    func authenticated(isPasswordBased: Bool) {
         if isPasswordBased {
             self.advanceAuthState(.authenticated)
         }

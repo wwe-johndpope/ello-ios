@@ -4,7 +4,7 @@
 
 extension UIView {
 
-    public func findParentView<T>(_ test: ((T) -> Bool)? = nil) -> T? where T: UIView {
+    func findParentView<T>(_ test: ((T) -> Bool)? = nil) -> T? where T: UIView {
         var view: UIView? = superview
         while view != nil {
             if let view = view as? T, test?(view) ?? true {

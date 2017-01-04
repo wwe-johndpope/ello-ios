@@ -5,8 +5,8 @@
 import FutureKit
 
 
-open class HireViewController: BaseElloViewController {
-    public enum UserEmailType {
+class HireViewController: BaseElloViewController {
+    enum UserEmailType {
         case hire
         case collaborate
     }
@@ -18,7 +18,7 @@ open class HireViewController: BaseElloViewController {
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
 
-    required public init(user: User, type: UserEmailType) {
+    required init(user: User, type: UserEmailType) {
         self.user = user
         self.contactType = type
         super.init(nibName: nil, bundle: nil)
@@ -31,11 +31,11 @@ open class HireViewController: BaseElloViewController {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func loadView() {
+    override func loadView() {
         let item = UIBarButtonItem.backChevron(withController: self)
         elloNavigationItem.leftBarButtonItems = [item]
         elloNavigationItem.fixNavBarItemPadding()
@@ -47,7 +47,7 @@ open class HireViewController: BaseElloViewController {
         self.view = screen
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
@@ -60,7 +60,7 @@ open class HireViewController: BaseElloViewController {
         screen.toggleKeyboard(visible: Keyboard.shared.active)
     }
 
-    override open func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         keyboardWillShowObserver?.removeObserver()
@@ -69,11 +69,11 @@ open class HireViewController: BaseElloViewController {
         keyboardWillHideObserver = nil
     }
 
-    open func keyboardWillShow(_ keyboard: Keyboard) {
+    func keyboardWillShow(_ keyboard: Keyboard) {
         screen.toggleKeyboard(visible: true)
     }
 
-    open func keyboardWillHide(_ keyboard: Keyboard) {
+    func keyboardWillHide(_ keyboard: Keyboard) {
         screen.toggleKeyboard(visible: false)
     }
 

@@ -5,7 +5,7 @@
 import SnapKit
 
 
-open class AppScreen: EmptyScreen {
+class AppScreen: EmptyScreen {
     fileprivate var logoImage = ElloLogoView()
 
     override func arrange() {

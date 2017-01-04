@@ -1,4 +1,8 @@
-import Ello
+////
+///  ResponseConfigSpec.swift
+//
+
+@testable import Ello
 import Quick
 import Nimble
 

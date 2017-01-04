@@ -2,12 +2,12 @@
 ///  CategoryCardView.swift
 //
 
-open class CategoryCardView: UIView {
+class CategoryCardView: UIView {
 
     let info: CategoryCardListView.CategoryInfo
 
     let overlay = UIView()
-    open let button = UIButton()
+    let button = UIButton()
 
     fileprivate static let selectedAlpha: CGFloat = 0.8
     fileprivate static let normalAlpha: CGFloat = 0.6
@@ -23,7 +23,7 @@ open class CategoryCardView: UIView {
         get { return _selected }
     }
 
-    public init(frame: CGRect, info: CategoryCardListView.CategoryInfo) {
+    init(frame: CGRect, info: CategoryCardListView.CategoryInfo) {
         self.info = info
 
         super.init(frame: frame)
@@ -31,7 +31,7 @@ open class CategoryCardView: UIView {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

@@ -6,7 +6,7 @@ import KeychainAccess
 import Keys
 
 
-public protocol KeychainType {
+protocol KeychainType {
     var pushToken: Data? { get set }
     var authToken: String? { get set }
     var refreshAuthToken: String? { get set }
@@ -24,45 +24,45 @@ private let AuthTokenAuthenticated = "ElloAuthTokenAuthenticated"
 private let AuthUsername = "ElloAuthUsername"
 private let AuthPassword = "ElloAuthPassword"
 
-public struct ElloKeychain: KeychainType {
-    public var keychain: Keychain
+struct ElloKeychain: KeychainType {
+    var keychain: Keychain
 
-    public init() {
+    init() {
         let appIdentifierPrefix: String = ElloKeys().teamId()
         keychain = Keychain(service: "co.ello.Ello", accessGroup: "\(appIdentifierPrefix).co.ello.Ello")
     }
 
-    public var pushToken: Data? {
+    var pushToken: Data? {
         get { return keychain[data: PushToken] }
         set { keychain[data: PushToken] = newValue }
     }
 
-    public var authToken: String? {
+    var authToken: String? {
         get { return keychain[AuthTokenKey] }
         set { keychain[AuthTokenKey] = newValue }
     }
 
-    public var refreshAuthToken: String? {
+    var refreshAuthToken: String? {
         get { return keychain[AuthTokenRefresh] }
         set { keychain[AuthTokenRefresh] = newValue }
     }
 
-    public var authTokenType: String? {
+    var authTokenType: String? {
         get { return keychain[AuthTokenType] }
         set { keychain[AuthTokenType] = newValue }
     }
 
-    public var username: String? {
+    var username: String? {
         get { return keychain[AuthUsername] }
         set { keychain[AuthUsername] = newValue }
     }
 
-    public var password: String? {
+    var password: String? {
         get { return keychain[AuthPassword] }
         set { keychain[AuthPassword] = newValue }
     }
 
-    public var isPasswordBased: Bool? {
+    var isPasswordBased: Bool? {
         get {
             if let tryData = try? keychain.getData(AuthTokenAuthenticated),
                 let data = tryData,
@@ -92,7 +92,7 @@ public struct ElloKeychain: KeychainType {
 
 extension Keychain {
 
-    public func updateIfNeeded(_ value: String, key: String) throws {
+    func updateIfNeeded(_ value: String, key: String) throws {
         if self[key] != value {
             try self.set(value, key: key)
         }

@@ -5,11 +5,11 @@
 import FutureKit
 
 
-open class NotificationService {
+class NotificationService {
 
-    public init() {}
+    init() {}
 
-    open func loadAnnouncements() -> Future<Announcement> {
+    func loadAnnouncements() -> Future<Announcement> {
         let promise = Promise<Announcement>()
         ElloProvider.shared.elloRequest(
             .announcements,
@@ -29,7 +29,7 @@ open class NotificationService {
         return promise.future
     }
 
-    open func markAnnouncementAsRead(_ announcement: Announcement) -> Future<Announcement> {
+    func markAnnouncementAsRead(_ announcement: Announcement) -> Future<Announcement> {
         let promise = Promise<Announcement>()
         ElloProvider.shared.elloRequest(.markAnnouncementAsRead,
             success: { _ in

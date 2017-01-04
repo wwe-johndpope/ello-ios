@@ -5,7 +5,7 @@
 import SnapKit
 
 
-open class StartupScreen: EmptyScreen {
+class StartupScreen: EmptyScreen {
     struct Size {
         static let topLogoOffset: CGFloat = 100
         static let bottomLogoOffset: CGFloat = 90

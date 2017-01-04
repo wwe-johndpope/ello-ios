@@ -4,9 +4,9 @@
 
 import Moya
 
-open class ReAuthService {
+class ReAuthService {
 
-    open func reAuthenticateToken(success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
+    func reAuthenticateToken(success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
         let endpoint: ElloAPI
         let token = AuthToken()
         let refreshToken = token.refreshToken
@@ -37,7 +37,7 @@ open class ReAuthService {
         }
     }
 
-    open func reAuthenticateUserCreds(success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
+    func reAuthenticateUserCreds(success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
         var token = AuthToken()
         if let email = token.username, let password = token.password {
             let endpoint: ElloAPI = .auth(email: email, password: password)

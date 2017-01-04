@@ -2,7 +2,7 @@
 ///  TextHeaderCell.swift
 //
 
-open class TextHeaderCell: UICollectionViewCell {
+class TextHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "TextHeaderCell"
     struct Size {
         static let insets: CGFloat = 10
@@ -15,7 +15,7 @@ open class TextHeaderCell: UICollectionViewCell {
         set { headerLabel.attributedText = newValue }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
 
@@ -23,7 +23,7 @@ open class TextHeaderCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -40,7 +40,7 @@ open class TextHeaderCell: UICollectionViewCell {
         }
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         header = nil
     }

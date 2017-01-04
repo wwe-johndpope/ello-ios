@@ -2,8 +2,7 @@
 ///  StreamCellItemParserExt.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 
 
 extension StreamCellItemParser {

@@ -7,19 +7,19 @@ import SwiftyJSON
 let AnnouncementVersion = 1
 
 @objc
-public final class Announcement: JSONAble, Groupable {
-    public let id: String
-    public let header: String
-    public let body: String
-    public let ctaURL: URL?
-    public let ctaCaption: String
-    public let createdAt: Date
-    public var image: Asset?
-    public var imageURL: URL? { return image?.hdpi?.url as URL? }
+final class Announcement: JSONAble, Groupable {
+    let id: String
+    let header: String
+    let body: String
+    let ctaURL: URL?
+    let ctaCaption: String
+    let createdAt: Date
+    var image: Asset?
+    var imageURL: URL? { return image?.hdpi?.url as URL? }
 
-    public var groupId: String { return "Announcement-\(id)" }
+    var groupId: String { return "Announcement-\(id)" }
 
-    public init(
+    init(
         id: String,
         header: String,
         body: String,
@@ -35,7 +35,7 @@ public final class Announcement: JSONAble, Groupable {
         super.init(version: AnnouncementVersion)
     }
 
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         let decoder = Coder(coder)
         id = decoder.decodeKey("id")
         header = decoder.decodeKey("header")
@@ -47,7 +47,7 @@ public final class Announcement: JSONAble, Groupable {
         super.init(coder: coder)
     }
 
-    public override func encode(with coder: NSCoder) {
+    override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(id, forKey: "id")
         encoder.encodeObject(header, forKey: "header")
@@ -59,7 +59,7 @@ public final class Announcement: JSONAble, Groupable {
         super.encode(with: coder)
     }
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let header = json["header"].stringValue

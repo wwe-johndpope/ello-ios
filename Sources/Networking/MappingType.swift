@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum MappingType: String {
+enum MappingType: String {
     // these keys define the place in the JSON response where the ElloProvider
     // should look for the response data.
     case announcementsType = "announcements"
@@ -85,12 +85,12 @@ public enum MappingType: String {
 let UnknownJSONAbleVersion = 1
 
 @objc(UnknownJSONAble)
-open class UnknownJSONAble: JSONAble {
-    public convenience init() {
+class UnknownJSONAble: JSONAble {
+    convenience init() {
         self.init(version: UnknownJSONAbleVersion)
     }
 
-    override class open func fromJSON(_ data: [String : AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String : AnyObject]) -> JSONAble {
         return UnknownJSONAble()
     }
 }

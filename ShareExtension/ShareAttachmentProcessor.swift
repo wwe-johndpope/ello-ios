@@ -29,19 +29,19 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-public typealias ExtensionItemProcessor = (ExtensionItemPreview?) -> Void
-public typealias ShareAttachmentFilter = (ExtensionItemPreview) -> Bool
+typealias ExtensionItemProcessor = (ExtensionItemPreview?) -> Void
+typealias ShareAttachmentFilter = (ExtensionItemPreview) -> Bool
 
-open class ShareAttachmentProcessor {
+class ShareAttachmentProcessor {
 
-    public init(){}
+    init(){}
 
-    static open func preview(_ extensionItem: NSExtensionItem, callback: @escaping ([ExtensionItemPreview]) -> Void) {
+    static func preview(_ extensionItem: NSExtensionItem, callback: @escaping ([ExtensionItemPreview]) -> Void) {
         let previews: [ExtensionItemPreview] = []
         processAttachments(0, attachments: extensionItem.attachments as? [NSItemProvider] , previews: previews, callback: callback)
     }
 
-    static open func hasContent(_ contentText: String?, extensionItem: NSExtensionItem?) -> Bool {
+    static func hasContent(_ contentText: String?, extensionItem: NSExtensionItem?) -> Bool {
         let cleanedText = contentText?.trimmingCharacters(in: CharacterSet.whitespaces)
         if cleanedText?.characters.count > 0 {
             return true

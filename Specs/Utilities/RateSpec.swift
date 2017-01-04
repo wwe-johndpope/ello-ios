@@ -2,9 +2,9 @@
 ///  RateSpec.swift
 //
 
+@testable import Ello
 import Quick
 import Nimble
-import Ello
 import iRate
 
 class RateSpec: QuickSpec {

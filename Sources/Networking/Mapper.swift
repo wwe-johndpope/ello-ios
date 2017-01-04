@@ -4,9 +4,9 @@
 
 import Foundation
 
-public struct Mapper {
+struct Mapper {
 
-    public static func mapJSON(_ data: Data) -> (AnyObject?, NSError?) {
+    static func mapJSON(_ data: Data) -> (AnyObject?, NSError?) {
         var error: NSError?
         var json: AnyObject?
         do {
@@ -24,7 +24,7 @@ public struct Mapper {
         return (json, error)
     }
 
-    public static func mapToObjectArray(_ dicts: [[String:AnyObject]], type: MappingType) -> [JSONAble] {
+    static func mapToObjectArray(_ dicts: [[String:AnyObject]], type: MappingType) -> [JSONAble] {
         let fromJSON = type.fromJSON
         return dicts.map { data in
             let jsonable = fromJSON(data)
@@ -35,7 +35,7 @@ public struct Mapper {
         }
     }
 
-    public static func mapToObject(_ object: AnyObject?, type: MappingType) -> JSONAble? {
+    static func mapToObject(_ object: AnyObject?, type: MappingType) -> JSONAble? {
         let fromJSON = type.fromJSON
         return (object as? [String:AnyObject]).flatMap { data in
             let jsonable = fromJSON(data)

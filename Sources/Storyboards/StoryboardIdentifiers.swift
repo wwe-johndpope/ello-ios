@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum StoryboardIdentifier: String {
+enum StoryboardIdentifier: String {
     case notifications = "NotificationsViewController"
     case streamContainer = "StreamContainerViewController"
     case streamDetail = "PostDetailViewController"

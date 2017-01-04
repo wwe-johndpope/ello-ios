@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public extension Keyboard {
+extension Keyboard {
 
     // App extensions do not have access to
     // UIApplication.sharedApplication, override

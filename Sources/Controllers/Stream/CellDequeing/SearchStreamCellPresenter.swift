@@ -2,7 +2,7 @@
 ///  SearchStreamCellPresenter.swift
 //
 
-public struct SearchStreamCellPresenter {
+struct SearchStreamCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

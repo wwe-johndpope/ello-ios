@@ -2,10 +2,10 @@
 ///  ProfileCategoriesViewController.swift
 //
 
-public final class ProfileCategoriesViewController: BaseElloViewController {
+final class ProfileCategoriesViewController: BaseElloViewController {
 
     var categories = [Category]()
-    public init(categories: [Category]) {
+    init(categories: [Category]) {
         super.init(nibName: nil, bundle: nil)
         self.categories = categories
         modalTransitionStyle = .crossDissolve
@@ -13,14 +13,14 @@ public final class ProfileCategoriesViewController: BaseElloViewController {
         transitioningDelegate = self
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     var mockScreen: ProfileCategoriesProtocol?
     var screen: ProfileCategoriesProtocol { return mockScreen ?? (self.view as! ProfileCategoriesProtocol) }
 
-    override public func loadView() {
+    override func loadView() {
         let screen = ProfileCategoriesScreen(categories: categories)
         screen.delegate = self
         self.view = screen
@@ -30,7 +30,7 @@ public final class ProfileCategoriesViewController: BaseElloViewController {
 // MARK: UIViewControllerTransitioningDelegate
 extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate {
 
-    public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         guard presented == self
             else { return .none }
 
@@ -40,7 +40,7 @@ extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate
 
 extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
 
-    public func categoryTapped(_ category: Category) {
+    func categoryTapped(_ category: Category) {
 		Tracker.sharedTracker.categoryOpened(category.slug)
         let vc = CategoryViewController(slug: category.slug, name: category.name)
         vc.currentUser = currentUser
@@ -48,7 +48,7 @@ extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    public func dismiss() {
+    func dismiss() {
         self.dismiss(animated: true, completion: .none)
     }
 }

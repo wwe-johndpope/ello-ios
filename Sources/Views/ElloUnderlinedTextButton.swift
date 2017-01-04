@@ -2,14 +2,14 @@
 ///  ElloUnderlinedTextButton.swift
 //
 
-open class ElloUnderlinedTextButton: UIButton {
+class ElloUnderlinedTextButton: UIButton {
 
-    required override public init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         sharedSetup()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         sharedSetup()
     }

@@ -8,24 +8,24 @@ import SwiftyJSON
 let DynamicSettingCategoryVersion = 1
 
 @objc(DynamicSettingCategory)
-public final class DynamicSettingCategory: JSONAble {
-    public let label: String
-    public var settings: [DynamicSetting]
+final class DynamicSettingCategory: JSONAble {
+    let label: String
+    var settings: [DynamicSetting]
 
-    public init(label: String, settings: [DynamicSetting]) {
+    init(label: String, settings: [DynamicSetting]) {
         self.label = label
         self.settings = settings
         super.init(version: DynamicSettingCategoryVersion)
     }
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         self.label = decoder.decodeKey("label")
         self.settings = decoder.decodeKey("settings")
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         coder.encodeObject(label, forKey: "label")
         coder.encodeObject(settings, forKey: "settings")
@@ -34,7 +34,7 @@ public final class DynamicSettingCategory: JSONAble {
 }
 
 extension DynamicSettingCategory {
-    override public class func fromJSON(_ data: [String: AnyObject]) -> DynamicSettingCategory {
+    override class func fromJSON(_ data: [String: AnyObject]) -> DynamicSettingCategory {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.dynamicSettingCategoryFromJSON.rawValue)
         let label = json["label"].stringValue

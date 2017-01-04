@@ -5,14 +5,14 @@
 import Contacts
 import Result
 
-public protocol AddressBookProtocol {
+protocol AddressBookProtocol {
     var localPeople: [LocalPerson] { get }
 }
 
-public struct AddressBook: AddressBookProtocol {
-    public let localPeople: [LocalPerson]
+struct AddressBook: AddressBookProtocol {
+    let localPeople: [LocalPerson]
 
-    public init(store: CNContactStore) {
+    init(store: CNContactStore) {
         localPeople = getAllPeopleWithEmailAddresses(store)
     }
 }

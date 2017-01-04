@@ -2,11 +2,11 @@
 ///  StreamEmbedCell.swift
 //
 
-open class StreamEmbedCell: StreamImageCell {
+class StreamEmbedCell: StreamImageCell {
     static let reuseEmbedIdentifier = "StreamEmbedCell"
 
     @IBOutlet weak var playIcon: UIImageView!
-    open var embedUrl: URL?
+    var embedUrl: URL?
 
     @IBAction override func imageTapped() {
         if let url = embedUrl {
@@ -14,7 +14,7 @@ open class StreamEmbedCell: StreamImageCell {
         }
     }
 
-    open func setPlayImageIcon(_ icon: InterfaceImage) {
+    func setPlayImageIcon(_ icon: InterfaceImage) {
         playIcon.image = icon.normalImage
     }
 }

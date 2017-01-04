@@ -2,7 +2,7 @@
 ///  AnnouncementCellSizeCalculator.swift
 //
 
-open class AnnouncementCellSizeCalculator {
+class AnnouncementCellSizeCalculator {
     var originalWidth: CGFloat = 0
 
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
@@ -10,11 +10,11 @@ open class AnnouncementCellSizeCalculator {
     fileprivate var cellItems: [StreamCellItem] = []
     fileprivate var completion: ElloEmptyCompletion = {}
 
-    public init() {}
+    init() {}
 
 // MARK: Public
 
-    open static func calculateAnnouncementHeight(_ announcement: Announcement, cellWidth: CGFloat) -> CGFloat {
+    static func calculateAnnouncementHeight(_ announcement: Announcement, cellWidth: CGFloat) -> CGFloat {
         let attributedTitle = NSAttributedString(label: announcement.header, style: .BoldWhite)
         let attributedBody = NSAttributedString(label: announcement.body, style: .White)
         let attributedCTA = NSAttributedString(button: announcement.ctaCaption, style: .WhiteUnderlined)
@@ -31,7 +31,7 @@ open class AnnouncementCellSizeCalculator {
         return calcHeight
     }
 
-    open func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {

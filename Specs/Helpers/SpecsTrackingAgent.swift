@@ -2,8 +2,7 @@
 ///  SpecsTrackingAgent.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 
 class SpecsTrackingAgent: AnalyticsAgent {
 

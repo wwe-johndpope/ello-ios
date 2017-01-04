@@ -2,7 +2,7 @@
 ///  ProfileHeaderGhostCell.swift
 //
 
-open class ProfileHeaderGhostCell: UICollectionViewCell {
+class ProfileHeaderGhostCell: UICollectionViewCell {
     static let reuseIdentifier = "ProfileHeaderGhostCell"
 
     struct Size {
@@ -56,7 +56,7 @@ open class ProfileHeaderGhostCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

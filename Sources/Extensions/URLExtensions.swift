@@ -2,7 +2,7 @@
 ///  URLExtensions.swift
 //
 
-public extension URL {
+extension URL {
     static func isValidShorthand(_ url: String) -> Bool {
         return URL.shorthand(url) != nil
     }

@@ -4,7 +4,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     class func loadFromNib<T: UIView>() -> T {
         let nib = UINib(nibName: T.readableClassName(), bundle: Bundle(for: T.self))
         let vs = nib.instantiate(withOwner: .none, options: .none)

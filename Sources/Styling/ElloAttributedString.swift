@@ -2,7 +2,7 @@
 ///  ElloAttributedString.swift
 //
 
-public struct ElloAttributedString {
+struct ElloAttributedString {
     fileprivate struct HtmlTagTuple {
         let tag: String
         let attributes: String?
@@ -13,7 +13,7 @@ public struct ElloAttributedString {
         }
     }
 
-    public static func attrs(_ allAddlAttrs: [String: AnyObject]...) -> [String: AnyObject] {
+    static func attrs(_ allAddlAttrs: [String: AnyObject]...) -> [String: AnyObject] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
 
@@ -28,13 +28,13 @@ public struct ElloAttributedString {
         return attrs
     }
 
-    public static func linkAttrs() -> [String: AnyObject] {
+    static func linkAttrs() -> [String: AnyObject] {
         return attrs([
             NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
         ])
     }
 
-    public static func split(_ text: NSAttributedString, split: String = "\n") -> [NSAttributedString] {
+    static func split(_ text: NSAttributedString, split: String = "\n") -> [NSAttributedString] {
         var strings = [NSAttributedString]()
         var current = NSMutableAttributedString()
         var hasLetters = false
@@ -71,18 +71,18 @@ public struct ElloAttributedString {
         return strings
     }
 
-    public static func style(_ text: String, _ addlAttrs: [String: AnyObject] = [:]) -> NSAttributedString {
+    static func style(_ text: String, _ addlAttrs: [String: AnyObject] = [:]) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: attrs(addlAttrs))
     }
 
-    public static func parse(_ input: String) -> NSAttributedString? {
+    static func parse(_ input: String) -> NSAttributedString? {
         if let tag = Tag(input: input) {
             return tag.makeEditable(attrs())
         }
         return nil
     }
 
-    public static func render(_ input: NSAttributedString) -> String {
+    static func render(_ input: NSAttributedString) -> String {
         var output = ""
         input.enumerateAttributes(in: NSRange(location: 0, length: input.length), options: .longestEffectiveRangeNotRequired) { (attrs, range, stopPtr) in
             // (tagName, attributes?)

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum RegionKind: String {
+enum RegionKind: String {
     case text = "text"
     case image = "image"
     case embed = "embed"

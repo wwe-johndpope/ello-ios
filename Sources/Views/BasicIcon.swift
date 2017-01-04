@@ -4,7 +4,7 @@
 
 import Foundation
 
-open class BasicIcon: UIView {
+class BasicIcon: UIView {
 
     fileprivate var _enabled = false
     fileprivate var _selected = false
@@ -16,7 +16,7 @@ open class BasicIcon: UIView {
 
     // MARK: Initializers
 
-    public init(normalIconView: UIView, selectedIconView: UIView, disabledIconView: UIView? = nil) {
+    init(normalIconView: UIView, selectedIconView: UIView, disabledIconView: UIView? = nil) {
         self.normalIconView = normalIconView
         self.selectedIconView = selectedIconView
         self.disabledIconView = disabledIconView
@@ -38,7 +38,7 @@ open class BasicIcon: UIView {
         }
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -58,7 +58,7 @@ open class BasicIcon: UIView {
 
 extension BasicIcon: ImageLabelAnimatable {
 
-    public var enabled: Bool {
+    var enabled: Bool {
         get { return _enabled }
         set {
             _enabled = newValue
@@ -66,7 +66,7 @@ extension BasicIcon: ImageLabelAnimatable {
         }
     }
 
-    public var selected: Bool {
+    var selected: Bool {
         get { return _selected }
         set {
             _selected = newValue
@@ -74,7 +74,7 @@ extension BasicIcon: ImageLabelAnimatable {
         }
     }
 
-    public var highlighted: Bool {
+    var highlighted: Bool {
         get { return _highlighted }
         set {
             _highlighted = newValue
@@ -83,5 +83,5 @@ extension BasicIcon: ImageLabelAnimatable {
         }
     }
 
-    public var view: UIView { return self }
+    var view: UIView { return self }
 }

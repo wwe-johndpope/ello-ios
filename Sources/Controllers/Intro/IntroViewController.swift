@@ -5,13 +5,13 @@
 
 import Foundation
 
-open class IntroViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class IntroViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
     var pageViewController: UIPageViewController?
     var viewControllers: [IntroPageController] = []
     var pageControl: UIPageControl = UIPageControl()
 
-    override open func viewDidLoad()
+    override func viewDidLoad()
     {
         super.viewDidLoad()
 
@@ -102,7 +102,7 @@ open class IntroViewController: UIViewController, UIPageViewControllerDataSource
         self.dismiss(animated: false, completion:nil)
     }
 
-    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
         var index = (viewController as! IntroPageController).pageIndex!
 
@@ -115,7 +115,7 @@ open class IntroViewController: UIViewController, UIPageViewControllerDataSource
         return viewControllerAtIndex(index)
     }
 
-    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
         var index = (viewController as! IntroPageController).pageIndex!
 
@@ -129,7 +129,7 @@ open class IntroViewController: UIViewController, UIPageViewControllerDataSource
     }
 
     /// Source of truth for if you're on a new page
-    open func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
 
         guard
             finished && completed,

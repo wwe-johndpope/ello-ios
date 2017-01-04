@@ -2,7 +2,7 @@
 ///  PagePromotionalHeaderCellPresenter.swift
 //
 
-public struct PagePromotionalHeaderCellPresenter {
+struct PagePromotionalHeaderCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

@@ -6,55 +6,55 @@ import WebKit
 import DeltaCalculator
 
 
-open class StreamDataSource: NSObject, UICollectionViewDataSource {
+class StreamDataSource: NSObject, UICollectionViewDataSource {
 
-    public typealias StreamContentReady = (_ indexPaths: [IndexPath]) -> Void
-    public typealias StreamFilter = ((StreamCellItem) -> Bool)?
+    typealias StreamContentReady = (_ indexPaths: [IndexPath]) -> Void
+    typealias StreamFilter = ((StreamCellItem) -> Bool)?
 
-    open var streamKind: StreamKind
-    open var currentUser: User?
+    var streamKind: StreamKind
+    var currentUser: User?
 
     // these are the items assigned from the parent controller
-    open var streamCellItems: [StreamCellItem] = []
+    var streamCellItems: [StreamCellItem] = []
 
     // these are either the same as streamCellItems (no filter) or if a filter
     // is applied this stores the filtered items
-    open fileprivate(set) var visibleCellItems: [StreamCellItem] = []
+    fileprivate(set) var visibleCellItems: [StreamCellItem] = []
 
     // if a filter is added or removed, we update the items
-    open var streamFilter: StreamFilter {
+    var streamFilter: StreamFilter {
         didSet { updateFilteredItems() }
     }
 
     // if a filter is added or removed, we update the items
-    open var streamCollapsedFilter: StreamFilter {
+    var streamCollapsedFilter: StreamFilter {
         didSet { updateFilteredItems() }
     }
 
-    open let textSizeCalculator: StreamTextCellSizeCalculator
-    open let notificationSizeCalculator: StreamNotificationCellSizeCalculator
-    open let announcementSizeCalculator: AnnouncementCellSizeCalculator
-    open let profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator
-    open let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
-    open let imageSizeCalculator: StreamImageCellSizeCalculator
+    let textSizeCalculator: StreamTextCellSizeCalculator
+    let notificationSizeCalculator: StreamNotificationCellSizeCalculator
+    let announcementSizeCalculator: AnnouncementCellSizeCalculator
+    let profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator
+    let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
+    let imageSizeCalculator: StreamImageCellSizeCalculator
 
-    weak open var postbarDelegate: PostbarDelegate?
-    weak open var createPostDelegate: CreatePostDelegate?
-    weak open var notificationDelegate: NotificationDelegate?
-    weak open var webLinkDelegate: WebLinkDelegate?
-    weak open var imageDelegate: StreamImageCellDelegate?
-    weak open var editingDelegate: StreamEditingDelegate?
-    weak open var categoryDelegate: CategoryDelegate?
-    weak open var userDelegate: UserDelegate?
-    weak open var relationshipDelegate: RelationshipDelegate?
-    weak open var simpleStreamDelegate: SimpleStreamDelegate?
-    weak open var searchStreamDelegate: SearchStreamDelegate?
-    weak open var inviteDelegate: InviteDelegate?
-    weak open var categoryListCellDelegate: CategoryListCellDelegate?
-    weak open var announcementCellDelegate: AnnouncementCellDelegate?
-    open var inviteCache = InviteCache()
+    weak var postbarDelegate: PostbarDelegate?
+    weak var createPostDelegate: CreatePostDelegate?
+    weak var notificationDelegate: NotificationDelegate?
+    weak var webLinkDelegate: WebLinkDelegate?
+    weak var imageDelegate: StreamImageCellDelegate?
+    weak var editingDelegate: StreamEditingDelegate?
+    weak var categoryDelegate: CategoryDelegate?
+    weak var userDelegate: UserDelegate?
+    weak var relationshipDelegate: RelationshipDelegate?
+    weak var simpleStreamDelegate: SimpleStreamDelegate?
+    weak var searchStreamDelegate: SearchStreamDelegate?
+    weak var inviteDelegate: InviteDelegate?
+    weak var categoryListCellDelegate: CategoryListCellDelegate?
+    weak var announcementCellDelegate: AnnouncementCellDelegate?
+    var inviteCache = InviteCache()
 
-    public init(
+    init(
         streamKind: StreamKind,
         textSizeCalculator: StreamTextCellSizeCalculator,
         notificationSizeCalculator: StreamNotificationCellSizeCalculator,
@@ -75,12 +75,12 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     // MARK: - Public
 
-    open func removeAllCellItems() {
+    func removeAllCellItems() {
         streamCellItems = []
         updateFilteredItems()
     }
 
-    open func updateFilter(_ filter: StreamFilter) -> Delta {
+    func updateFilter(_ filter: StreamFilter) -> Delta {
         let prevItems = visibleCellItems
         streamFilter = filter
 
@@ -88,14 +88,14 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return calculator.deltaFromOldArray(prevItems, toNewArray: visibleCellItems)
     }
 
-    open func indexPathForItem(_ item: StreamCellItem) -> IndexPath? {
+    func indexPathForItem(_ item: StreamCellItem) -> IndexPath? {
         if let index = self.visibleCellItems.index(where: {$0 == item}) {
             return IndexPath(item: index, section: 0)
         }
         return nil
     }
 
-    open func indexPathsForPlaceholderType(_ placeholderType: StreamCellType.PlaceholderType) -> [IndexPath] {
+    func indexPathsForPlaceholderType(_ placeholderType: StreamCellType.PlaceholderType) -> [IndexPath] {
 
         guard let index = self.visibleCellItems.index(where: {$0.placeholderType == placeholderType}) else { return [] }
 
@@ -113,7 +113,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPaths
     }
 
-    open func userForIndexPath(_ indexPath: IndexPath) -> User? {
+    func userForIndexPath(_ indexPath: IndexPath) -> User? {
         if let item = visibleStreamCellItem(at: indexPath) {
             if case .header = item.type,
                 let repostAuthor = (item.jsonable as? Post)?.repostAuthor
@@ -142,7 +142,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    open func reposterForIndexPath(_ indexPath: IndexPath) -> User? {
+    func reposterForIndexPath(_ indexPath: IndexPath) -> User? {
         if let item = visibleStreamCellItem(at: indexPath) {
             if let authorable = item.jsonable as? Authorable {
                 return authorable.author
@@ -152,7 +152,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    open func postForIndexPath(_ indexPath: IndexPath) -> Post? {
+    func postForIndexPath(_ indexPath: IndexPath) -> Post? {
         let item = visibleStreamCellItem(at: indexPath)
 
         if let notification = item?.jsonable as? Notification {
@@ -164,27 +164,27 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return item?.jsonable as? Post
     }
 
-    open func imageAssetForIndexPath(_ indexPath: IndexPath) -> Asset? {
+    func imageAssetForIndexPath(_ indexPath: IndexPath) -> Asset? {
         let item = visibleStreamCellItem(at: indexPath)
         let region = item?.type.data as? ImageRegion
         return region?.asset
     }
 
-    open func commentForIndexPath(_ indexPath: IndexPath) -> ElloComment? {
+    func commentForIndexPath(_ indexPath: IndexPath) -> ElloComment? {
         return jsonableForIndexPath(indexPath) as? ElloComment
     }
 
-    open func jsonableForIndexPath(_ indexPath: IndexPath) -> JSONAble? {
+    func jsonableForIndexPath(_ indexPath: IndexPath) -> JSONAble? {
         let item = visibleStreamCellItem(at: indexPath)
         return item?.jsonable
     }
 
-    open func visibleStreamCellItem(at indexPath: IndexPath) -> StreamCellItem? {
+    func visibleStreamCellItem(at indexPath: IndexPath) -> StreamCellItem? {
         if !isValidIndexPath(indexPath) { return nil }
         return visibleCellItems.safeValue(indexPath.item)
     }
 
-    open func cellItemsForPost(_ post: Post) -> [StreamCellItem] {
+    func cellItemsForPost(_ post: Post) -> [StreamCellItem] {
         var tmp = [StreamCellItem]()
         temporarilyUnfilter {
             tmp = self.visibleCellItems.reduce([]) { arr, item in
@@ -198,7 +198,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     // this includes the `createComment` cell, `spacer` cell, and `seeMoreComments` cell since they contain a comment item
-    open func commentIndexPathsForPost(_ post: Post) -> [IndexPath] {
+    func commentIndexPathsForPost(_ post: Post) -> [IndexPath] {
         var indexPaths = [IndexPath]()
         for (index, value) in visibleCellItems.enumerated() {
             if let comment = value.jsonable as? ElloComment, comment.loadedFromPostId == post.id {
@@ -208,7 +208,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPaths
     }
 
-    open func footerIndexPathForPost(_ searchPost: Post) -> IndexPath? {
+    func footerIndexPathForPost(_ searchPost: Post) -> IndexPath? {
         for (index, value) in visibleCellItems.enumerated() {
             if value.type == .footer,
                let post = value.jsonable as? Post {
@@ -220,7 +220,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    open func createCommentIndexPathForPost(_ post: Post) -> IndexPath? {
+    func createCommentIndexPathForPost(_ post: Post) -> IndexPath? {
         let paths = commentIndexPathsForPost(post)
         if paths.count > 0 {
             let path = paths[0]
@@ -233,7 +233,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    open func removeCommentsFor(post: Post) -> [IndexPath] {
+    func removeCommentsFor(post: Post) -> [IndexPath] {
         let indexPaths = self.commentIndexPathsForPost(post)
         temporarilyUnfilter() {
             // these paths might be different depending on the filter
@@ -250,7 +250,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPaths
     }
 
-    open func removeItemsAtIndexPaths(_ indexPaths: [IndexPath]) {
+    func removeItemsAtIndexPaths(_ indexPaths: [IndexPath]) {
         var items: [StreamCellItem] = []
         for indexPath in indexPaths {
             if let itemToRemove = self.visibleCellItems.safeValue(indexPath.item) {
@@ -266,14 +266,14 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    open func updateHeightForIndexPath(_ indexPath: IndexPath, height: CGFloat) {
+    func updateHeightForIndexPath(_ indexPath: IndexPath, height: CGFloat) {
         if indexPath.item < visibleCellItems.count {
             visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn = height
             visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn = height
         }
     }
 
-    open func heightForIndexPath(_ indexPath: IndexPath, numberOfColumns: NSInteger) -> CGFloat {
+    func heightForIndexPath(_ indexPath: IndexPath, numberOfColumns: NSInteger) -> CGFloat {
         if !isValidIndexPath(indexPath) { return 0 }
 
         // always try to return a calculated value before the default
@@ -295,22 +295,22 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    open func isFullWidthAtIndexPath(_ indexPath: IndexPath) -> Bool {
+    func isFullWidthAtIndexPath(_ indexPath: IndexPath) -> Bool {
         if !isValidIndexPath(indexPath) { return true }
         return visibleCellItems[indexPath.item].type.isFullWidth
     }
 
-    open func groupForIndexPath(_ indexPath: IndexPath) -> String? {
+    func groupForIndexPath(_ indexPath: IndexPath) -> String? {
         if !isValidIndexPath(indexPath) { return nil }
 
         return (visibleCellItems[indexPath.item].jsonable as? Groupable)?.groupId
     }
 
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return visibleCellItems.count
     }
 
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard indexPath.item < visibleCellItems.count else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: StreamCellType.unknown.name, for: indexPath)
         }
@@ -420,7 +420,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    open func modifyItems(_ jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
+    func modifyItems(_ jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
         // get items that match id and type -> [IndexPath]
         // based on change decide to update/remove those items
         switch change {
@@ -557,7 +557,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    open func modifyUserRelationshipItems(_ user: User, collectionView: ElloCollectionView) {
+    func modifyUserRelationshipItems(_ user: User, collectionView: ElloCollectionView) {
         let (_, changedItems) = elementsFor(jsonable: user, change: .update)
 
         for item in changedItems {
@@ -612,7 +612,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    open func modifyUserSettingsItems(_ user: User, collectionView: ElloCollectionView) {
+    func modifyUserSettingsItems(_ user: User, collectionView: ElloCollectionView) {
         let (changedPaths, changedItems) = elementsFor(jsonable: user, change: .update)
         for item in changedItems {
             if item.jsonable is User {
@@ -622,7 +622,7 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         collectionView.reloadData()
     }
 
-    open func removeItemsFor(jsonable: JSONAble, change: ContentChange) -> [IndexPath] {
+    func removeItemsFor(jsonable: JSONAble, change: ContentChange) -> [IndexPath] {
         let indexPaths = self.elementsFor(jsonable: jsonable, change: change).0
         temporarilyUnfilter() {
             // these paths might be different depending on the filter
@@ -713,24 +713,24 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     // MARK: Adding items
-    open func appendStreamCellItems(_ items: [StreamCellItem]) {
+    func appendStreamCellItems(_ items: [StreamCellItem]) {
         self.streamCellItems += items
         self.updateFilteredItems()
     }
 
-    open func appendUnsizedCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping StreamContentReady) {
+    func appendUnsizedCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping StreamContentReady) {
         let startingIndexPath = IndexPath(item: self.streamCellItems.count, section: 0)
         insertUnsizedCellItems(cellItems, withWidth: withWidth, startingIndexPath: startingIndexPath, completion: completion)
     }
 
-    open func replaceItems(at indexPaths: [IndexPath], with streamCellItems: [StreamCellItem]) -> [IndexPath] {
+    func replaceItems(at indexPaths: [IndexPath], with streamCellItems: [StreamCellItem]) -> [IndexPath] {
         guard indexPaths.count > 0 else { return [] }
         removeItemsAtIndexPaths(indexPaths)
         return insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
     }
 
     @discardableResult
-    open func insertStreamCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath) -> [IndexPath] {
+    func insertStreamCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath) -> [IndexPath] {
         // startingIndex represents the filtered index,
         // arrayIndex is the streamCellItems index
         let startingIndex = startingIndexPath.item
@@ -763,14 +763,14 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPaths
     }
 
-    open func insertUnsizedCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, startingIndexPath: IndexPath, completion: @escaping StreamContentReady) {
+    func insertUnsizedCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, startingIndexPath: IndexPath, completion: @escaping StreamContentReady) {
         self.calculateCellItems(cellItems, withWidth: withWidth) {
             let indexPaths = self.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
             completion(indexPaths)
         }
     }
 
-    open func toggleCollapsedForIndexPath(_ indexPath: IndexPath) {
+    func toggleCollapsedForIndexPath(_ indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath),
             let cellItem = self.visibleStreamCellItem(at: indexPath)
         {
@@ -786,11 +786,11 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    open func isValidIndexPath(_ indexPath: IndexPath) -> Bool {
+    func isValidIndexPath(_ indexPath: IndexPath) -> Bool {
         return indexPath.item >= 0 &&  indexPath.item < visibleCellItems.count && indexPath.section == 0
     }
 
-    open func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping ElloEmptyCompletion) {
         let textCells = filterTextCells(cellItems)
         let imageCells = filterImageCells(cellItems)
         let notificationElements = cellItems.filter {
@@ -894,8 +894,8 @@ open class StreamDataSource: NSObject, UICollectionViewDataSource {
 }
 
 // MARK: For Testing
-public extension StreamDataSource {
-    public func testingElementsFor(jsonable: JSONAble, change: ContentChange) -> ([IndexPath], [StreamCellItem]) {
+extension StreamDataSource {
+    func testingElementsFor(jsonable: JSONAble, change: ContentChange) -> ([IndexPath], [StreamCellItem]) {
         return elementsFor(jsonable: jsonable, change: change)
     }
 }

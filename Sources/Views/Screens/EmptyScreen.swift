@@ -2,7 +2,7 @@
 ///  EmptyScreen.swift
 //
 
-open class EmptyScreen: Screen {
+class EmptyScreen: Screen {
     var blackBar = BlackBar()
 
     override func arrange() {

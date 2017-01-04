@@ -29,9 +29,9 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 
-public struct ProfileTotalCountPresenter {
+struct ProfileTotalCountPresenter {
 
-    public static func configure(
+    static func configure(
         _ view: ProfileTotalCountView,
         user: User,
         currentUser: User?)

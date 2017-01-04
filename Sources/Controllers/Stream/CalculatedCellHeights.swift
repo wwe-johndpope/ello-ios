@@ -3,10 +3,10 @@
 //
 
 
-public typealias OnCalculatedCellHeightsMismatch = (CalculatedCellHeights) -> Void
+typealias OnCalculatedCellHeightsMismatch = (CalculatedCellHeights) -> Void
 
-public struct CalculatedCellHeights {
-    public enum Prop {
+struct CalculatedCellHeights {
+    enum Prop {
         case oneColumn
         case multiColumn
         case webContent
@@ -39,14 +39,14 @@ public struct CalculatedCellHeights {
         }
     }
 
-    public var oneColumn: CGFloat?
-    public var multiColumn: CGFloat?
-    public var webContent: CGFloat?
-    public var profileAvatar: CGFloat?
-    public var profileNames: CGFloat?
-    public var profileTotalCount: CGFloat?
-    public var profileStats: CGFloat?
-    public var profileBio: CGFloat?
-    public var profileLocation: CGFloat?
-    public var profileLinks: CGFloat?
+    var oneColumn: CGFloat?
+    var multiColumn: CGFloat?
+    var webContent: CGFloat?
+    var profileAvatar: CGFloat?
+    var profileNames: CGFloat?
+    var profileTotalCount: CGFloat?
+    var profileStats: CGFloat?
+    var profileBio: CGFloat?
+    var profileLocation: CGFloat?
+    var profileLinks: CGFloat?
 }

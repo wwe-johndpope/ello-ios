@@ -4,44 +4,44 @@
 
 let streamCellDidOpenNotification = TypedNotification<UICollectionViewCell>(name: "StreamCellDidOpenNotification")
 
-open class StreamFooterCell: UICollectionViewCell {
+class StreamFooterCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamFooterCell"
 
-    @IBOutlet weak open var toolBar: UIToolbar!
-    @IBOutlet weak open var containerView: UIView!
-    @IBOutlet weak open var innerContentView: UIView!
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var innerContentView: UIView!
 
-    open var commentsOpened = false
-    open weak var delegate: PostbarDelegate?
-    open weak var streamEditingDelegate: StreamEditingDelegate?
+    var commentsOpened = false
+    weak var delegate: PostbarDelegate?
+    weak var streamEditingDelegate: StreamEditingDelegate?
 
-    open let viewsItem = ElloPostToolBarOption.views.barButtonItem()
-    open var viewsControl: ImageLabelControl {
+    let viewsItem = ElloPostToolBarOption.views.barButtonItem()
+    var viewsControl: ImageLabelControl {
         return self.viewsItem.customView as! ImageLabelControl
     }
 
-    open let lovesItem = ElloPostToolBarOption.loves.barButtonItem()
-    open var lovesControl: ImageLabelControl {
+    let lovesItem = ElloPostToolBarOption.loves.barButtonItem()
+    var lovesControl: ImageLabelControl {
         return self.lovesItem.customView as! ImageLabelControl
     }
 
-    open let commentsItem = ElloPostToolBarOption.comments.barButtonItem()
-    open var commentsControl: ImageLabelControl {
+    let commentsItem = ElloPostToolBarOption.comments.barButtonItem()
+    var commentsControl: ImageLabelControl {
         return self.commentsItem.customView as! ImageLabelControl
     }
 
-    open let repostItem = ElloPostToolBarOption.repost.barButtonItem()
-    open var repostControl: ImageLabelControl {
+    let repostItem = ElloPostToolBarOption.repost.barButtonItem()
+    var repostControl: ImageLabelControl {
         return self.repostItem.customView as! ImageLabelControl
     }
 
-    open let shareItem = ElloPostToolBarOption.share.barButtonItem()
-    open var shareControl: ImageLabelControl {
+    let shareItem = ElloPostToolBarOption.share.barButtonItem()
+    var shareControl: ImageLabelControl {
         return self.shareItem.customView as! ImageLabelControl
     }
 
-    open let replyItem = ElloPostToolBarOption.reply.barButtonItem()
-    open var replyControl: ImageLabelControl {
+    let replyItem = ElloPostToolBarOption.reply.barButtonItem()
+    var replyControl: ImageLabelControl {
         return self.replyItem.customView as! ImageLabelControl
     }
 
@@ -51,7 +51,7 @@ open class StreamFooterCell: UICollectionViewCell {
         button.isSelected = visibility.isSelected
     }
 
-    open func updateToolbarItems(
+    func updateToolbarItems(
         streamKind: StreamKind,
         repostVisibility: InteractionVisibility,
         commentVisibility: InteractionVisibility,
@@ -107,11 +107,11 @@ open class StreamFooterCell: UICollectionViewCell {
         self.toolBar.items = Array(toolbarItems.flatMap { [self.flexibleItem(), $0] }.dropFirst())
     }
 
-    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
     }
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         toolBar.isTranslucent = false
         toolBar.barTintColor = UIColor.white
@@ -125,22 +125,22 @@ open class StreamFooterCell: UICollectionViewCell {
         addButtonHandlers()
     }
 
-    open var views: String? {
+    var views: String? {
         get { return viewsControl.title }
         set { viewsControl.title = newValue }
     }
 
-    open var comments: String? {
+    var comments: String? {
         get { return commentsControl.title }
         set { commentsControl.title = newValue }
     }
 
-    open var loves: String? {
+    var loves: String? {
         get { return lovesControl.title }
         set { lovesControl.title = newValue }
     }
 
-    open var reposts: String? {
+    var reposts: String? {
         get { return repostControl.title }
         set { repostControl.title = newValue }
     }
@@ -166,7 +166,7 @@ open class StreamFooterCell: UICollectionViewCell {
         viewsControl.addTarget(self, action: #selector(StreamFooterCell.viewsButtonTapped), for: .touchUpInside)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         let newBounds = CGRect(x: 0, y: 0, width: bounds.width, height: 44)
         contentView.frame = newBounds

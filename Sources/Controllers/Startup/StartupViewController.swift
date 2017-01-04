@@ -2,12 +2,12 @@
 ///  StartupViewController.swift
 //
 
-open class StartupViewController: UIViewController {
+class StartupViewController: UIViewController {
     var mockScreen: StartupScreenProtocol?
     var screen: StartupScreenProtocol { return mockScreen ?? (self.view as! StartupScreenProtocol) }
     var parentAppController: AppViewController?
 
-    override open func loadView() {
+    override func loadView() {
         let screen = StartupScreen()
         screen.delegate = self
         self.view = screen

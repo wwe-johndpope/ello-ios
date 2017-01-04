@@ -2,33 +2,33 @@
 ///  ElloToggleButton.swift
 //
 
-open class ElloToggleButton: UIButton {
+class ElloToggleButton: UIButton {
     fileprivate let attributes = [NSFontAttributeName: UIFont.defaultFont()]
 
-    open var text: String? {
+    var text: String? {
         didSet {
             toggleButton()
         }
     }
-    open var value: Bool = false {
+    var value: Bool = false {
         didSet {
             toggleButton()
         }
     }
-    override open var isEnabled: Bool {
+    override var isEnabled: Bool {
         didSet {
             toggleButton()
         }
     }
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         layer.borderWidth = 1
 
         toggleButton()
     }
 
-    open func setText(_ text: String, color: UIColor) {
+    func setText(_ text: String, color: UIColor) {
         let string = NSMutableAttributedString(string: text, attributes: attributes)
         string.addAttribute(NSForegroundColorAttributeName, value: color, range: NSRange(location: 0, length: string.length))
         setAttributedTitle(string, for: .normal)

@@ -2,7 +2,7 @@
 ///  RePostService.swift
 //
 
-open class RePostService {
+class RePostService {
     typealias RePostSuccessCompletion = (Post) -> Void
 
     func repost(post: Post, success: @escaping RePostSuccessCompletion, failure: @escaping ElloFailureCompletion) {

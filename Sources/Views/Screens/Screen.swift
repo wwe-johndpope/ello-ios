@@ -6,7 +6,7 @@ import SnapKit
 
 
 /// Easy keyboard views: pin an anchor to `keyboardAnchor.top`. It'll animate automatically, too.
-open class Screen: UIView {
+class Screen: UIView {
     let keyboardAnchor = UIView()
     fileprivate var keyboardTopConstraint: Constraint!
     fileprivate var keyboardWillShowObserver: NotificationObserver?
@@ -16,7 +16,7 @@ open class Screen: UIView {
         self.init(frame: UIScreen.main.bounds)
     }
 
-    public required override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubview(keyboardAnchor)
@@ -33,7 +33,7 @@ open class Screen: UIView {
         layoutIfNeeded()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -41,7 +41,7 @@ open class Screen: UIView {
         teardownKeyboardObservers()
     }
 
-    override open func willMove(toWindow newWindow: UIWindow?) {
+    override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
 
         if newWindow != nil && window == nil {
@@ -73,8 +73,8 @@ open class Screen: UIView {
         }
     }
 
-    open func keyboardIsAnimating(_ keyboard: Keyboard) {}
-    open func keyboardDidAnimate() {}
+    func keyboardIsAnimating(_ keyboard: Keyboard) {}
+    func keyboardDidAnimate() {}
 
     func screenInit() {}
     func style() {}

@@ -2,14 +2,14 @@
 ///  CreateProfileViewController.swift
 //
 
-open class CreateProfileViewController: UIViewController, HasAppController {
+class CreateProfileViewController: UIViewController, HasAppController {
     var mockScreen: CreateProfileScreenProtocol?
     var screen: CreateProfileScreenProtocol { return mockScreen ?? (self.view as! CreateProfileScreenProtocol) }
     var parentAppController: AppViewController?
     var currentUser: User?
 
-    open var onboardingViewController: OnboardingViewController?
-    open var onboardingData: OnboardingData!
+    var onboardingViewController: OnboardingViewController?
+    var onboardingData: OnboardingData!
     var didSetName = false
     var didSetBio = false
     var didSetLinks = false
@@ -25,7 +25,7 @@ open class CreateProfileViewController: UIViewController, HasAppController {
             didUploadAvatarImage) && (!didSetLinks || linksAreValid)
     }
 
-    override open func loadView() {
+    override func loadView() {
         let screen = CreateProfileScreen()
         screen.delegate = self
         self.view = screen
@@ -93,7 +93,7 @@ extension CreateProfileViewController: CreateProfileDelegate {
 }
 
 extension CreateProfileViewController: OnboardingStepController {
-    public func onboardingStepBegin() {
+    func onboardingStepBegin() {
         didSetName = (onboardingData.name?.isEmpty == false)
         didSetBio = (onboardingData.bio?.isEmpty == false)
         if let links = onboardingData.links {
@@ -116,7 +116,7 @@ extension CreateProfileViewController: OnboardingStepController {
         screen.avatarImage = onboardingData.avatarImage
     }
 
-    public func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
+    func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
         var properties: [String: AnyObject] = [:]
         if let name = onboardingData.name, didSetName {
             Tracker.sharedTracker.enteredOnboardName()

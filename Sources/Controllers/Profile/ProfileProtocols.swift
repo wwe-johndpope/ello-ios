@@ -2,9 +2,9 @@
 ///  ProfileProtocols.swift
 //
 
-public protocol ProfileViewProtocol: class {}
+protocol ProfileViewProtocol: class {}
 
-public protocol ProfileScreenProtocol: StreamableScreenProtocol {
+protocol ProfileScreenProtocol: StreamableScreenProtocol {
     func disableButtons()
     func enableButtons()
     func showNavBars()
@@ -21,7 +21,7 @@ public protocol ProfileScreenProtocol: StreamableScreenProtocol {
     var coverImageURL: URL? { get set }
 }
 
-public protocol ProfileScreenDelegate: class {
+protocol ProfileScreenDelegate: class {
     func mentionTapped()
     func hireTapped()
     func editTapped()

@@ -2,7 +2,7 @@
 ///  UIWebView.swift
 //
 
-public extension UIWebView {
+extension UIWebView {
 
     func windowContentSize() -> CGSize? {
         if let jsWidth = self.stringByEvaluatingJavaScript(from: "(document.getElementById('post-container') || document.getElementByTagName('div')[0] || document.body).offsetWidth"), !jsWidth.isEmpty

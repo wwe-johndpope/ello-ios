@@ -5,7 +5,7 @@
 import UIKit
 
 
-public enum ValidationState {
+enum ValidationState {
     case loading
     case error
     case ok

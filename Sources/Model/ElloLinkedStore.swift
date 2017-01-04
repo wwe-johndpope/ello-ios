@@ -8,26 +8,26 @@ import YapDatabase
 private let _ElloLinkedStore = ElloLinkedStore()
 
 
-public struct ElloLinkedStore {
+struct ElloLinkedStore {
 
-    public static var sharedInstance: ElloLinkedStore { return _ElloLinkedStore }
-    public static var databaseName = "ello.sqlite"
+    static var sharedInstance: ElloLinkedStore { return _ElloLinkedStore }
+    static var databaseName = "ello.sqlite"
 
-    public var readConnection: YapDatabaseConnection {
+    var readConnection: YapDatabaseConnection {
         let connection = database.newConnection()
         connection.objectCacheLimit = 500
         return connection
     }
-    public var writeConnection: YapDatabaseConnection
+    var writeConnection: YapDatabaseConnection
     fileprivate var database: YapDatabase
 
-    public init() {
+    init() {
         ElloLinkedStore.deleteNonSharedDB()
         database = YapDatabase(path: ElloLinkedStore.databasePath())
         writeConnection = database.newConnection()
     }
 
-    public func parseLinked(_ linked: [String:[[String: AnyObject]]], completion: @escaping ElloEmptyCompletion) {
+    func parseLinked(_ linked: [String:[[String: AnyObject]]], completion: @escaping ElloEmptyCompletion) {
         if AppSetup.sharedState.isTesting {
             parseLinkedSync(linked)
             completion()
@@ -41,13 +41,13 @@ public struct ElloLinkedStore {
     }
 
     // primarialy used for testing for now.. could be used for setting a model after it's fromJSON
-    public func setObject(_ object: JSONAble, forKey key: String, type: MappingType) {
+    func setObject(_ object: JSONAble, forKey key: String, type: MappingType) {
         writeConnection.readWrite { transaction in
             transaction.setObject(object, forKey: key, inCollection: type.rawValue)
         }
     }
 
-    public func getObject(_ key: String, type: MappingType) -> JSONAble? {
+    func getObject(_ key: String, type: MappingType) -> JSONAble? {
         var object: JSONAble?
         readConnection.read { transaction in
             if transaction.hasObject(forKey: key, inCollection: type.rawValue) {
@@ -57,7 +57,7 @@ public struct ElloLinkedStore {
         return object
     }
 
-    public func saveObject(_ jsonable: JSONAble, id: String, type: MappingType) {
+    func saveObject(_ jsonable: JSONAble, id: String, type: MappingType) {
         self.writeConnection.readWrite { transaction in
             if let existing = transaction.object(forKey: id, inCollection: type.rawValue) as? JSONAble {
                 let merged = existing.merge(jsonable)

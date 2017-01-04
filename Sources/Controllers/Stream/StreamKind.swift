@@ -5,7 +5,7 @@
 import Foundation
 import SwiftyUserDefaults
 
-public enum StreamKind {
+enum StreamKind {
     case currentUserStream
     case allCategories
     case announcements
@@ -20,7 +20,7 @@ public enum StreamKind {
     case userStream(userParam: String)
     case category(slug: String)
 
-    public var name: String {
+    var name: String {
         switch self {
         case .currentUserStream: return InterfaceString.Profile.Title
         case .allCategories: return InterfaceString.Discover.AllCategories
@@ -38,7 +38,7 @@ public enum StreamKind {
         }
     }
 
-    public var cacheKey: String {
+    var cacheKey: String {
         switch self {
         case .currentUserStream: return "Profile"
         case .allCategories: return "AllCategories"
@@ -62,22 +62,22 @@ public enum StreamKind {
         }
     }
 
-    public var lastViewedCreatedAtKey: String {
+    var lastViewedCreatedAtKey: String {
         return self.cacheKey + "_createdAt"
     }
 
-    public var columnSpacing: CGFloat {
+    var columnSpacing: CGFloat {
         switch self {
         case .allCategories: return 2
         default: return 12
         }
     }
 
-    public var columnCount: Int {
+    var columnCount: Int {
         return columnCountFor(width: Window.width)
     }
 
-    public func columnCountFor(width: CGFloat) -> Int {
+    func columnCountFor(width: CGFloat) -> Int {
         let gridColumns: Int
         if Window.isWide(width) {
             gridColumns = 3
@@ -94,14 +94,14 @@ public enum StreamKind {
         }
     }
 
-    public var showsCategory: Bool {
+    var showsCategory: Bool {
         if case let .discover(type) = self, type == .featured {
             return true
         }
         return false
     }
 
-    public var tappingTextOpensDetail: Bool {
+    var tappingTextOpensDetail: Bool {
         switch self {
         case .postDetail:
             return false
@@ -112,14 +112,14 @@ public enum StreamKind {
         }
     }
 
-    public var isProfileStream: Bool {
+    var isProfileStream: Bool {
         switch self {
         case .currentUserStream, .userStream: return true
         default: return false
         }
     }
 
-    public var endpoint: ElloAPI {
+    var endpoint: ElloAPI {
         switch self {
         case .currentUserStream: return .currentUserStream
         case .allCategories: return .categories
@@ -137,7 +137,7 @@ public enum StreamKind {
         }
     }
 
-    public var relationship: RelationshipPriority {
+    var relationship: RelationshipPriority {
         switch self {
         case .following: return .following
         case .starred: return .starred
@@ -145,7 +145,7 @@ public enum StreamKind {
         }
     }
 
-    public func filter(_ jsonables: [JSONAble], viewsAdultContent: Bool) -> [JSONAble] {
+    func filter(_ jsonables: [JSONAble], viewsAdultContent: Bool) -> [JSONAble] {
         switch self {
         case let .simpleStream(endpoint, _):
             switch endpoint {
@@ -214,20 +214,20 @@ public enum StreamKind {
         return []
     }
 
-    public var avatarHeight: CGFloat {
+    var avatarHeight: CGFloat {
         return self.isGridView ? 30 : 40
     }
 
-    public func contentForPost(_ post: Post) -> [Regionable]? {
+    func contentForPost(_ post: Post) -> [Regionable]? {
         return self.isGridView ? post.summary : post.content
     }
 
-    public func setIsGridView(_ isGridView: Bool) {
+    func setIsGridView(_ isGridView: Bool) {
         GroupDefaults["\(cacheKey)GridViewPreferenceSet"] = true
         GroupDefaults["\(cacheKey)IsGridView"] = isGridView
     }
 
-    public var isGridView: Bool {
+    var isGridView: Bool {
         var defaultGrid: Bool
         switch self {
         case .allCategories: defaultGrid = true
@@ -236,7 +236,7 @@ public enum StreamKind {
         return GroupDefaults["\(cacheKey)IsGridView"].bool ?? defaultGrid
     }
 
-    public var hasGridViewToggle: Bool {
+    var hasGridViewToggle: Bool {
         switch self {
         case .following, .starred, .discover, .categoryPosts, .category: return true
         case let .simpleStream(endpoint, _):
@@ -250,7 +250,7 @@ public enum StreamKind {
         }
     }
 
-    public var showStarButton: Bool {
+    var showStarButton: Bool {
         switch self {
         case .notifications:
             return false
@@ -260,14 +260,14 @@ public enum StreamKind {
         return true
     }
 
-    public var isDetail: Bool {
+    var isDetail: Bool {
         switch self {
         case .postDetail: return true
         default: return false
         }
     }
 
-    public var supportsLargeImages: Bool {
+    var supportsLargeImages: Bool {
         switch self {
         case .postDetail: return true
         default: return false

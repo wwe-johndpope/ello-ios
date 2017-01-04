@@ -2,7 +2,7 @@
 ///  OmnibarProtocols.swift
 //
 
-public protocol OmnibarScreenDelegate: class {
+protocol OmnibarScreenDelegate: class {
     func omnibarCancel()
     func omnibarPushController(_ controller: UIViewController)
     func omnibarPresentController(_ controller: UIViewController)
@@ -10,7 +10,7 @@ public protocol OmnibarScreenDelegate: class {
     func omnibarSubmitted(_ regions: [OmnibarRegion], buyButtonURL: URL?)
 }
 
-public protocol OmnibarScreenProtocol: class {
+protocol OmnibarScreenProtocol: class {
     var delegate: OmnibarScreenDelegate? { get set }
     var isComment: Bool { get set }
     var buyButtonURL: URL? { get set }

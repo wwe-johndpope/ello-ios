@@ -2,8 +2,8 @@
 ///  DynamicSettingCellPresenter.swift
 //
 
-public struct DynamicSettingCellPresenter {
-    public static func isVisible(setting: DynamicSetting, currentUser: User) -> Bool {
+struct DynamicSettingCellPresenter {
+    static func isVisible(setting: DynamicSetting, currentUser: User) -> Bool {
         if setting.key == DynamicSetting.accountDeletionSetting.key {
             return true
         }
@@ -23,7 +23,7 @@ public struct DynamicSettingCellPresenter {
         }
     }
 
-    public static func configure(_ cell: DynamicSettingCell, setting: DynamicSetting, currentUser: User) {
+    static func configure(_ cell: DynamicSettingCell, setting: DynamicSetting, currentUser: User) {
         cell.titleLabel.text = setting.label
         cell.descriptionLabel.text = setting.info
 

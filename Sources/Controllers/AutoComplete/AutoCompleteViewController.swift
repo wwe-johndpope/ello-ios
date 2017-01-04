@@ -3,28 +3,28 @@
 //
 
 
-public protocol AutoCompleteDelegate: NSObjectProtocol {
+protocol AutoCompleteDelegate: NSObjectProtocol {
     func autoComplete(_ controller: AutoCompleteViewController, itemSelected item: AutoCompleteItem)
 }
 
-open class AutoCompleteViewController: UIViewController {
-    @IBOutlet weak open var tableView: UITableView!
-    open let dataSource = AutoCompleteDataSource()
-    open let service = AutoCompleteService()
-    open weak var delegate: AutoCompleteDelegate?
+class AutoCompleteViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    let dataSource = AutoCompleteDataSource()
+    let service = AutoCompleteService()
+    weak var delegate: AutoCompleteDelegate?
 
-    required public init() {
+    required init() {
         super.init(nibName: "AutoCompleteViewController", bundle: .none)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: View Lifecycle
 extension AutoCompleteViewController {
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = dataSource
@@ -35,7 +35,7 @@ extension AutoCompleteViewController {
 
 
 // MARK: Public
-public extension AutoCompleteViewController {
+extension AutoCompleteViewController {
 
     func load(_ match: AutoCompleteMatch, loaded: @escaping (_ count: Int) -> Void) {
         switch match.type {
@@ -75,7 +75,7 @@ public extension AutoCompleteViewController {
 
 // MARK: UITableViewDelegate
 extension AutoCompleteViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let item = dataSource.itemForIndexPath(indexPath) {
             delegate?.autoComplete(self, itemSelected: item)
         }

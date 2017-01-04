@@ -47,11 +47,11 @@ class AppViewController: BaseElloViewController {
         }
     }
 
-    override open var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return statusBarShouldHide
     }
 
-    override open var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return statusBarAnimation
     }
 

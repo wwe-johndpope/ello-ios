@@ -6,18 +6,18 @@ import Foundation
 
 private let ElloTextFieldViewHeight: CGFloat = 89.0
 
-open class ElloTextFieldView: UIView {
-    open weak var label: StyledLabel!
-    @IBOutlet open weak var textField: ElloTextField!
-    open weak var errorLabel: StyledLabel!
-    open weak var messageLabel: StyledLabel!
+class ElloTextFieldView: UIView {
+    weak var label: StyledLabel!
+    @IBOutlet weak var textField: ElloTextField!
+    weak var errorLabel: StyledLabel!
+    weak var messageLabel: StyledLabel!
 
     @IBOutlet fileprivate var errorLabelHeight: NSLayoutConstraint!
     @IBOutlet fileprivate var messageLabelHeight: NSLayoutConstraint!
     @IBOutlet fileprivate weak var errorLabelSeparationSpacing: NSLayoutConstraint!
 
-    open var textFieldDidChange: ((String) -> Void)?
-    open var firstResponderDidChange: ((Bool) -> Void)? {
+    var textFieldDidChange: ((String) -> Void)?
+    var firstResponderDidChange: ((Bool) -> Void)? {
         get { return textField.firstResponderDidChange }
         set { textField.firstResponderDidChange = newValue }
     }
@@ -39,8 +39,8 @@ open class ElloTextFieldView: UIView {
         return height
     }
 
-    open var hasError: Bool { return !(errorLabel.text?.isEmpty ?? true) }
-    open var hasMessage: Bool { return !(messageLabel.text?.isEmpty ?? true) }
+    var hasError: Bool { return !(errorLabel.text?.isEmpty ?? true) }
+    var hasMessage: Bool { return !(messageLabel.text?.isEmpty ?? true) }
     var errorHeight: CGFloat {
         if hasError {
             return errorLabel.sizeThatFits(CGSize(width: errorLabel.frame.width, height: 0)).height
@@ -58,12 +58,12 @@ open class ElloTextFieldView: UIView {
         }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         sharedInit()
     }
@@ -77,7 +77,7 @@ open class ElloTextFieldView: UIView {
         textField.addTarget(self, action: #selector(valueChanged), for: .editingChanged)
     }
 
-    override open func updateConstraints() {
+    override func updateConstraints() {
         updateErrorConstraints()
         super.updateConstraints()
     }
@@ -106,7 +106,7 @@ open class ElloTextFieldView: UIView {
         self.invalidateIntrinsicContentSize()
     }
 
-    override open func layoutIfNeeded() {
+    override func layoutIfNeeded() {
         super.layoutIfNeeded()
         self.label.layoutIfNeeded()
         self.textField.layoutIfNeeded()
@@ -114,7 +114,7 @@ open class ElloTextFieldView: UIView {
         self.errorLabel.layoutIfNeeded()
     }
 
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
 
@@ -130,18 +130,18 @@ open class ElloTextFieldView: UIView {
         setMessage("")
     }
 
-    override open func becomeFirstResponder() -> Bool {
+    override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
 
-    override open func resignFirstResponder() -> Bool {
+    override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
     }
 
 }
 
 
-public extension ElloTextFieldView {
+extension ElloTextFieldView {
     fileprivate class func styleCommonField(_ textField: UITextField) {
         textField.text = ""
         textField.autocapitalizationType = .none

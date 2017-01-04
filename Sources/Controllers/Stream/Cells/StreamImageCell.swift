@@ -6,17 +6,17 @@ import FLAnimatedImage
 import PINRemoteImage
 import Alamofire
 
-open class StreamImageCell: StreamRegionableCell {
+class StreamImageCell: StreamRegionableCell {
     static let reuseIdentifier = "StreamImageCell"
 
     // this little hack prevents constraints from breaking on initial load
-    override open var bounds: CGRect {
+    override var bounds: CGRect {
         didSet {
           contentView.frame = bounds
         }
     }
 
-    public struct Size {
+    struct Size {
         static let bottomMargin: CGFloat = 10
         static let singleColumnFailWidth: CGFloat = 140
         static let singleColumnFailHeight: CGFloat = 160
@@ -26,29 +26,29 @@ open class StreamImageCell: StreamRegionableCell {
         static let singleColumnBuyButtonWidth: CGFloat = 40
     }
 
-    @IBOutlet open weak var imageView: FLAnimatedImageView!
-    @IBOutlet open weak var imageButton: UIView!
-    @IBOutlet open weak var buyButton: UIButton?
-    @IBOutlet open weak var buyButtonGreen: UIView?
-    @IBOutlet open weak var buyButtonWidthConstraint: NSLayoutConstraint!
-    @IBOutlet open weak var circle: PulsingCircle!
-    @IBOutlet open weak var failImage: UIImageView!
-    @IBOutlet open weak var failBackgroundView: UIView!
-    @IBOutlet open weak var leadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageView: FLAnimatedImageView!
+    @IBOutlet weak var imageButton: UIView!
+    @IBOutlet weak var buyButton: UIButton?
+    @IBOutlet weak var buyButtonGreen: UIView?
+    @IBOutlet weak var buyButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var circle: PulsingCircle!
+    @IBOutlet weak var failImage: UIImageView!
+    @IBOutlet weak var failBackgroundView: UIView!
+    @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failWidthConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failHeightConstraint: NSLayoutConstraint!
 
     // not used in StreamEmbedCell
-    @IBOutlet open weak var largeImagePlayButton: UIImageView?
-    @IBOutlet open weak var imageRightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var largeImagePlayButton: UIImageView?
+    @IBOutlet weak var imageRightConstraint: NSLayoutConstraint!
 
     weak var streamImageCellDelegate: StreamImageCellDelegate?
     weak var streamEditingDelegate: StreamEditingDelegate?
-    open var isGif = false
-    open var onHeightMismatch: OnHeightMismatch?
-    open var tallEnoughForFailToShow = true
-    open var presentedImageUrl: URL?
-    open var buyButtonURL: URL? {
+    var isGif = false
+    var onHeightMismatch: OnHeightMismatch?
+    var tallEnoughForFailToShow = true
+    var presentedImageUrl: URL?
+    var buyButtonURL: URL? {
         didSet {
             let hidden = (buyButtonURL == nil)
             buyButton?.isHidden = hidden
@@ -56,14 +56,14 @@ open class StreamImageCell: StreamRegionableCell {
         }
     }
     var serverProvidedAspectRatio: CGFloat?
-    open var isLargeImage: Bool {
+    var isLargeImage: Bool {
         get { return !(largeImagePlayButton?.isHidden ?? true) }
         set {
             largeImagePlayButton?.image = InterfaceImage.videoPlay.normalImage
             largeImagePlayButton?.isHidden = !newValue
         }
     }
-    open var isGridView: Bool = false {
+    var isGridView: Bool = false {
         didSet {
             if isGridView {
                 buyButtonWidthConstraint.constant = Size.multiColumnBuyButtonWidth
@@ -78,12 +78,12 @@ open class StreamImageCell: StreamRegionableCell {
         }
     }
 
-    public enum StreamImageMargin {
+    enum StreamImageMargin {
         case post
         case comment
         case repost
     }
-    open var margin: CGFloat {
+    var margin: CGFloat {
         switch marginType {
         case .post:
             return 0
@@ -93,7 +93,7 @@ open class StreamImageCell: StreamRegionableCell {
             return StreamTextCellPresenter.repostMargin
         }
     }
-    open var marginType: StreamImageMargin = .post {
+    var marginType: StreamImageMargin = .post {
         didSet {
             leadingConstraint.constant = margin
             if marginType == .repost {
@@ -118,7 +118,7 @@ open class StreamImageCell: StreamRegionableCell {
         return frame.width / aspectRatio
     }
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         if let playButton = largeImagePlayButton {
             playButton.image = InterfaceImage.videoPlay.normalImage
@@ -151,7 +151,7 @@ open class StreamImageCell: StreamRegionableCell {
         imageButton.addGestureRecognizer(longPressGesture)
     }
 
-    open func setImageURL(_ url: URL) {
+    func setImageURL(_ url: URL) {
         imageView.image = nil
         imageView.alpha = 0
         circle.pulse()
@@ -161,7 +161,7 @@ open class StreamImageCell: StreamRegionableCell {
         loadImage(url)
     }
 
-    open func setImage(_ image: UIImage) {
+    func setImage(_ image: UIImage) {
         imageView.pin_cancelImageDownload()
         imageView.image = image
         imageView.alpha = 1
@@ -170,7 +170,7 @@ open class StreamImageCell: StreamRegionableCell {
         imageView.backgroundColor = UIColor.white
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         if let aspectRatio = aspectRatio, let imageSize = imageSize {
@@ -248,7 +248,7 @@ open class StreamImageCell: StreamRegionableCell {
         })
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
 
         marginType = .post

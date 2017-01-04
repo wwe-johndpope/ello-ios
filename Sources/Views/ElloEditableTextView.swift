@@ -2,13 +2,13 @@
 ///  ElloEditableTextView.swift
 //
 
-open class ElloEditableTextView: UITextView {
-    required override public init(frame: CGRect, textContainer: NSTextContainer?) {
+class ElloEditableTextView: UITextView {
+    required override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         sharedSetup()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         sharedSetup()
     }

@@ -4,9 +4,9 @@
 
 import Foundation
 
-public struct StreamEmbedCellPresenter {
+struct StreamEmbedCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

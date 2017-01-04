@@ -29,7 +29,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
         }
     }
 
-    public func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         func done() {
             self.delegate?.omnibarDismissController()
         }
@@ -52,7 +52,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
         }
     }
 
-    public func imagePickerControllerDidCancel(_ controller: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ controller: UIImagePickerController) {
         delegate?.omnibarDismissController()
     }
 

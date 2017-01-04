@@ -2,7 +2,7 @@
 ///  NarrationView.swift
 //
 
-open class NarrationView: UIView {
+class NarrationView: UIView {
     struct Size {
         static let margins = CGFloat(15)
         static let height = CGFloat(112)
@@ -38,23 +38,23 @@ open class NarrationView: UIView {
         return pointer
     }()
 
-    open var pointerX: CGFloat {
+    var pointerX: CGFloat {
         get { return pointer.frame.midX }
         set { pointer.frame.origin.x = newValue - pointer.frame.size.width / 2 }
     }
 
-    open var title: String = "" {
+    var title: String = "" {
         didSet {
             updateTitleAndText()
         }
     }
-    open var text: String = "" {
+    var text: String = "" {
         didSet {
             updateTitleAndText()
         }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(bg)
         addSubview(pointer)
@@ -62,7 +62,7 @@ open class NarrationView: UIView {
         addSubview(closeButton)
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -84,7 +84,7 @@ open class NarrationView: UIView {
         label.attributedText = NSMutableAttributedString(string: title + "\n", attributes: titleAttributes) + NSMutableAttributedString(string: text, attributes: textAttributes)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         pointer.frame.size = Size.pointer

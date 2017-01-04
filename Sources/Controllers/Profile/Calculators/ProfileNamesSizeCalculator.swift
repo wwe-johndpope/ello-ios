@@ -5,10 +5,10 @@
 import FutureKit
 
 
-public struct ProfileNamesSizeCalculator {
+struct ProfileNamesSizeCalculator {
     let promise = Promise<CGFloat>()
 
-    public func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
+    func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
         guard let
             user = item.jsonable as? User
         else {

@@ -6,8 +6,8 @@ import UIKit
 import SVGKit
 
 
-public enum InterfaceImage: String {
-    public enum Style {
+enum InterfaceImage: String {
+    enum Style {
         case normal
         case white
         case selected

@@ -7,9 +7,9 @@
 //
 import ElloUIFonts
 
-open class ImageLabelControl: UIControl {
+class ImageLabelControl: UIControl {
 
-    open var title: String? {
+    var title: String? {
         get { return self.attributedNormalTitle?.string }
         set {
             if let value = newValue, label.text != value {
@@ -22,7 +22,7 @@ open class ImageLabelControl: UIControl {
         }
     }
 
-    override open var isSelected: Bool {
+    override var isSelected: Bool {
         didSet {
             icon.selected = isSelected
             updateTextColor()
@@ -30,14 +30,14 @@ open class ImageLabelControl: UIControl {
         }
     }
 
-    override open var isHighlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
             icon.highlighted = isHighlighted
             updateTextColor()
         }
     }
 
-    override open var isEnabled: Bool {
+    override var isEnabled: Bool {
         didSet {
             icon.enabled = isEnabled
         }
@@ -58,7 +58,7 @@ open class ImageLabelControl: UIControl {
 
     // MARK: Initializers
 
-    public init(icon: ImageLabelAnimatable, title: String) {
+    init(icon: ImageLabelAnimatable, title: String) {
         self.icon = icon
         super.init(frame: .zero)
         addSubviews()
@@ -66,17 +66,17 @@ open class ImageLabelControl: UIControl {
         self.title = title
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: Public
 
-    open func animate() {
+    func animate() {
         self.icon.animate?()
     }
 
-    open func finishAnimation() {
+    func finishAnimation() {
         self.icon.finishAnimation?()
     }
 

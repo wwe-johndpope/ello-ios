@@ -6,8 +6,8 @@ import Foundation
 import SnapKit
 
 
-open class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelegate {
-    weak open var relationshipDelegate: RelationshipDelegate?
+class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelegate {
+    weak var relationshipDelegate: RelationshipDelegate?
 
     let config: BlockUserModalConfig
     var relationshipPriority: RelationshipPriority { return config.relationshipPriority }
@@ -17,7 +17,7 @@ open class BlockUserModalViewController: BaseElloViewController, BlockUserModalD
 
     var screen: BlockUserModalScreen { return self.view as! BlockUserModalScreen }
 
-    required public init(config: BlockUserModalConfig) {
+    required init(config: BlockUserModalConfig) {
         self.config = config
         super.init(nibName: nil, bundle: nil)
 
@@ -25,23 +25,23 @@ open class BlockUserModalViewController: BaseElloViewController, BlockUserModalD
         modalTransitionStyle = .crossDissolve
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func loadView() {
+    override func loadView() {
         let screen = BlockUserModalScreen(config: config)
         self.view = screen
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let superView = self.view.superview {
             self.view.center = superView.center
         }
     }
 
-    open func updateRelationship(_ newRelationship: RelationshipPriority) {
+    func updateRelationship(_ newRelationship: RelationshipPriority) {
         guard let currentUserId = currentUser?.id else {
             closeModal()
             return
@@ -72,7 +72,7 @@ open class BlockUserModalViewController: BaseElloViewController, BlockUserModalD
         }
     }
 
-    open func flagTapped() {
+    func flagTapped() {
         if let presentingViewController = presentingViewController {
             let flagger = ContentFlagger(
                 presentingController: presentingViewController,
@@ -86,11 +86,11 @@ open class BlockUserModalViewController: BaseElloViewController, BlockUserModalD
         }
     }
 
-    open func closeModal() {
+    func closeModal() {
         closeModalAndThen {}
     }
 
-    open func closeModalAndThen(_ completion: @escaping BasicBlock) {
+    func closeModalAndThen(_ completion: @escaping BasicBlock) {
         Tracker.sharedTracker.userBlockCanceled(userId)
         self.dismiss(animated: true, completion: completion)
     }

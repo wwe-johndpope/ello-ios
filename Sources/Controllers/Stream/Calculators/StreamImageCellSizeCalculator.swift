@@ -4,7 +4,7 @@
 
 import Foundation
 
-open class StreamImageCellSizeCalculator {
+class StreamImageCellSizeCalculator {
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellWidth: CGFloat = 0.0
@@ -15,7 +15,7 @@ open class StreamImageCellSizeCalculator {
 
 // MARK: Static
 
-    open static func aspectRatioForImageRegion(_ imageRegion: ImageRegion) -> CGFloat {
+    static func aspectRatioForImageRegion(_ imageRegion: ImageRegion) -> CGFloat {
         if let asset = imageRegion.asset {
             var attachment: Attachment?
             if let tryAttachment = asset.hdpi {
@@ -36,7 +36,7 @@ open class StreamImageCellSizeCalculator {
 
 // MARK: Public
 
-    open func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {

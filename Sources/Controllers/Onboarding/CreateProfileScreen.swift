@@ -7,8 +7,8 @@ import SnapKit
 import ImagePickerSheetController
 
 
-open class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
-    public enum ImageTarget {
+class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
+    enum ImageTarget {
         case coverImage
         case avatar
     }
@@ -236,13 +236,13 @@ open class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         }
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         scrollViewWidthConstraint.update(offset: bounds.size.width)
     }
 
-    override open func resignFirstResponder() -> Bool {
+    override func resignFirstResponder() -> Bool {
         _ = nameTextView.resignFirstResponder()
         _ = bioTextView.resignFirstResponder()
         _ = linksTextView.resignFirstResponder()
@@ -278,7 +278,7 @@ extension CreateProfileScreen {
 }
 
 extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    public func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         guard let
             uploading = uploading,
             let image = info[UIImagePickerControllerOriginalImage] as? UIImage
@@ -304,7 +304,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         }
     }
 
-    public func imagePickerControllerDidCancel(_ controller: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ controller: UIImagePickerController) {
         delegate?.dismissController()
     }
 
@@ -363,7 +363,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
 }
 
 extension CreateProfileScreen: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldChangeTextIn nsrange: NSRange, replacementText: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn nsrange: NSRange, replacementText: String) -> Bool {
         var text = textView.text ?? ""
         let originalText = text
         if let range = text.rangeFromNSRange(nsrange) {
@@ -392,18 +392,18 @@ extension CreateProfileScreen: UITextViewDelegate {
         return true
     }
 
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         (textView as? ClearTextView)?.textDidChange()
     }
 
-    public func textViewDidChangeSelection(_ textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: UITextView) {
         let range = textView.selectedRange
         textView.scrollRangeToVisible(range)
     }
 }
 
 extension CreateProfileScreen: UIScrollViewDelegate {
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == self.scrollView else { return }
 
         let delta = scrollView.contentOffset.y - prevOffset.y

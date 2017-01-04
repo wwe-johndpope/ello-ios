@@ -4,15 +4,15 @@
 
 import UIKit
 
-public typealias AlertHandler = ((AlertAction) -> Void)?
-public typealias AlertCellConfigClosure = (
+typealias AlertHandler = ((AlertAction) -> Void)?
+typealias AlertCellConfigClosure = (
     _ cell: AlertCell,
     _ type: AlertType,
     _ action: AlertAction,
     _ textAlignment: NSTextAlignment
 ) -> Void
 
-public enum ActionStyle {
+enum ActionStyle {
     case white
     case light
     case dark
@@ -22,12 +22,12 @@ public enum ActionStyle {
     case urlInput
 }
 
-public struct AlertAction {
-    public let title: String
-    public let style: ActionStyle
-    public let handler: AlertHandler
+struct AlertAction {
+    let title: String
+    let style: ActionStyle
+    let handler: AlertHandler
 
-    public var isInput: Bool {
+    var isInput: Bool {
         switch style {
         case .urlInput, .okCancel:
             return true
@@ -36,13 +36,13 @@ public struct AlertAction {
         }
     }
 
-    public init(title: String, style: ActionStyle, handler: AlertHandler = nil) {
+    init(title: String, style: ActionStyle, handler: AlertHandler = nil) {
         self.title = title
         self.style = style
         self.handler = handler
     }
 
-    public var configure: AlertCellConfigClosure {
+    var configure: AlertCellConfigClosure {
         switch style {
         case .white:
             return AlertCellPresenter.configureForWhiteAction

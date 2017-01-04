@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum NotificationFilterType: String {
+enum NotificationFilterType: String {
     case all = "NotificationFilterTypeAll"
     case comments = "NotificationFilterTypeComments"
     case mention = "NotificationFilterTypeMention"
@@ -45,24 +45,24 @@ public enum NotificationFilterType: String {
 let NotificationVersion = 1
 
 @objc(Notification)
-public final class Notification: JSONAble, Authorable, Groupable {
+final class Notification: JSONAble, Authorable, Groupable {
 
     // required
-    public let activity: Activity
+    let activity: Activity
     // optional
-    public var author: User?
+    var author: User?
     // if postId is present, this notification is opened using "PostDetailViewController"
-    public var postId: String?
+    var postId: String?
     // computed
-    public var createdAt: Date { return activity.createdAt as Date }
-    public var groupId: String { return "Notification-\(activity.id)" }
-    public var subject: JSONAble? { willSet { attributedTitleStore = nil } }
+    var createdAt: Date { return activity.createdAt as Date }
+    var groupId: String { return "Notification-\(activity.id)" }
+    var subject: JSONAble? { willSet { attributedTitleStore = nil } }
 
     // notification specific
-    public var textRegion: TextRegion?
-    public var imageRegion: ImageRegion?
+    var textRegion: TextRegion?
+    var imageRegion: ImageRegion?
     fileprivate var attributedTitleStore: NSAttributedString? = nil
-    public var attributedTitle: NSAttributedString {
+    var attributedTitle: NSAttributedString {
         if let attributedTitle = attributedTitleStore {
             return attributedTitle
         }
@@ -70,10 +70,10 @@ public final class Notification: JSONAble, Authorable, Groupable {
         return attributedTitleStore!
     }
 
-    public var hasImage: Bool {
+    var hasImage: Bool {
         return self.imageRegion != nil
     }
-    public var canReplyToComment: Bool {
+    var canReplyToComment: Bool {
         switch activity.kind {
         case .postMentionNotification,
             .commentNotification,
@@ -85,17 +85,17 @@ public final class Notification: JSONAble, Authorable, Groupable {
             return false
         }
     }
-    public var canBackFollow: Bool {
+    var canBackFollow: Bool {
         return false // activity.kind == .newFollowerPost
     }
 
-    public var isValidKind: Bool {
+    var isValidKind: Bool {
         return activity.kind != .unknown
     }
 
 // MARK: Initialization
 
-    public init(activity: Activity) {
+    init(activity: Activity) {
         self.activity = activity
 
         if let post = activity.subject as? Post {
@@ -139,14 +139,14 @@ public final class Notification: JSONAble, Authorable, Groupable {
 
 // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         self.activity = decoder.decodeKey("activity")
         self.author = decoder.decodeOptionalKey("author")
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         coder.encodeObject(activity, forKey: "activity")
         coder.encodeObject(author, forKey: "author")

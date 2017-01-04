@@ -4,11 +4,11 @@
 
 import Moya
 
-public typealias AuthSuccessCompletion = () -> Void
+typealias AuthSuccessCompletion = () -> Void
 
-open class CredentialsAuthService {
+class CredentialsAuthService {
 
-    open func authenticate(email: String, password: String, success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func authenticate(email: String, password: String, success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         let endpoint: ElloAPI = .auth(email: email, password: password)
         ElloProvider.sharedProvider.request(endpoint) { (result) in
             switch result {

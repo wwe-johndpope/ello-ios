@@ -6,14 +6,14 @@ import SwiftyUserDefaults
 
 let CurrentStreamKey = "Ello.StreamContainerViewController.CurrentStream"
 
-open class StreamContainerViewController: StreamableViewController {
+class StreamContainerViewController: StreamableViewController {
     fileprivate var loggedPromptEventForThisSession = false
     fileprivate var reloadStreamContentObserver: NotificationObserver?
     fileprivate var friendsViewController: StreamViewController?
     fileprivate var appBackgroundObserver: NotificationObserver?
     fileprivate var appForegroundObserver: NotificationObserver?
 
-    open let streamValues: [StreamKind] = [.following, .starred]
+    let streamValues: [StreamKind] = [.following, .starred]
     fileprivate lazy var streamLoaded: [Bool] = self.defaultSreamLoadedValues() // needs to hold same number of 'false's as streamValues
 
     // moved into a separate function to save compile time
@@ -21,7 +21,7 @@ open class StreamContainerViewController: StreamableViewController {
         return [false, false]
     }
 
-    open var currentStreamIndex: Int {
+    var currentStreamIndex: Int {
         get {
             return GroupDefaults[CurrentStreamKey].int ?? 0
         }
@@ -34,17 +34,17 @@ open class StreamContainerViewController: StreamableViewController {
         case streamDetailTapped = "StreamDetailTappedNotification"
     }
 
-    override open var tabBarItem: UITabBarItem? {
+    override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.circBig) }
         set { self.tabBarItem = newValue }
     }
 
-    @IBOutlet weak open var scrollView: UIScrollView!
-    weak open var navigationBar: ElloNavigationBar!
-    @IBOutlet weak open var navigationBarTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
+    weak var navigationBar: ElloNavigationBar!
+    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
 
-    open var streamsSegmentedControl: UISegmentedControl!
-    open var streamControllerViews: [UIView] = []
+    var streamsSegmentedControl: UISegmentedControl!
+    var streamControllerViews: [UIView] = []
 
     fileprivate var childStreamControllers: [StreamViewController] {
         return self.childViewControllers.filter { $0 is StreamViewController } as! [StreamViewController]
@@ -55,13 +55,13 @@ open class StreamContainerViewController: StreamableViewController {
         removeNotificationObservers()
     }
 
-    override open func backGestureAction() {
+    override func backGestureAction() {
         hamburgerButtonTapped()
     }
 
     override func setupStreamController() { /* intentially left blank */ }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         addNotificationObservers()
         setupStreamsSegmentedControl()
@@ -81,7 +81,7 @@ open class StreamContainerViewController: StreamableViewController {
         Tracker.sharedTracker.streamAppeared(stream.name)
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         // Rotating the phone after opening a web page results in the
@@ -90,7 +90,7 @@ open class StreamContainerViewController: StreamableViewController {
         streamsSegmentedControl.frame.size.height = 19
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         addTemporaryNotificationObservers()
@@ -100,7 +100,7 @@ open class StreamContainerViewController: StreamableViewController {
         }
     }
 
-    override open func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeNotificationObservers()
     }
@@ -111,7 +111,7 @@ open class StreamContainerViewController: StreamableViewController {
         }
     }
 
-    override open func showNavBars(_ scrollToBottom: Bool) {
+    override func showNavBars(_ scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         positionNavBar(navigationBar, visible: true, withConstraint: navigationBarTopConstraint)
         updateInsets()
@@ -123,19 +123,19 @@ open class StreamContainerViewController: StreamableViewController {
         }
     }
 
-    override open func hideNavBars() {
+    override func hideNavBars() {
         super.hideNavBars()
         positionNavBar(navigationBar, visible: false, withConstraint: navigationBarTopConstraint)
         updateInsets()
     }
 
-    open class func instantiateFromStoryboard() -> StreamContainerViewController {
+    class func instantiateFromStoryboard() -> StreamContainerViewController {
         let navController = UIStoryboard.storyboardWithId(.streamContainer) as! UINavigationController
         let streamsController = navController.topViewController
         return streamsController as! StreamContainerViewController
     }
 
-    override open func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         let width: CGFloat = view.bounds.size.width
@@ -264,7 +264,7 @@ open class StreamContainerViewController: StreamableViewController {
     }
 }
 
-public extension StreamContainerViewController {
+extension StreamContainerViewController {
 
     func showFriends() {
         showSegmentIndex(0)

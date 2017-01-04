@@ -5,7 +5,7 @@
 import SnapKit
 
 
-open class CredentialsScreen: EmptyScreen {
+class CredentialsScreen: EmptyScreen {
     struct Size {
         static let backTopInset: CGFloat = 10
         static let titleTop: CGFloat = 110
@@ -18,12 +18,12 @@ open class CredentialsScreen: EmptyScreen {
     let titleLabel = StyledLabel(style: .LargeWhite)
     let gradientLayer = StartupGradientLayer()
 
-    override open func updateConstraints() {
+    override func updateConstraints() {
         super.updateConstraints()
         scrollViewWidthConstraint.update(offset: frame.size.width)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         let maxDimension = max(layer.frame.size.width, layer.frame.size.height)
         let size = CGSize(width: maxDimension, height: maxDimension)
@@ -63,6 +63,6 @@ open class CredentialsScreen: EmptyScreen {
         }
     }
 
-    open func backAction() {
+    func backAction() {
     }
 }

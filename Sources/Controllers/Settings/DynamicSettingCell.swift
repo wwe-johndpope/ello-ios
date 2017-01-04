@@ -2,28 +2,28 @@
 ///  DynamicSettingCell.swift
 //
 
-public protocol DynamicSettingCellDelegate: class {
+protocol DynamicSettingCellDelegate: class {
     func toggleSetting(_ setting: DynamicSetting, value: Bool)
     func deleteAccount()
 }
 
-open class DynamicSettingCell: UITableViewCell {
-    @IBOutlet open weak var titleLabel: StyledLabel!
-    open weak var descriptionLabel: StyledLabel!
-    @IBOutlet open weak var toggleButton: ElloToggleButton!
-    @IBOutlet open weak var deleteButton: ElloToggleButton!
+class DynamicSettingCell: UITableViewCell {
+    @IBOutlet weak var titleLabel: StyledLabel!
+    weak var descriptionLabel: StyledLabel!
+    @IBOutlet weak var toggleButton: ElloToggleButton!
+    @IBOutlet weak var deleteButton: ElloToggleButton!
 
-    open weak var delegate: DynamicSettingCellDelegate?
-    open var setting: DynamicSetting?
+    weak var delegate: DynamicSettingCellDelegate?
+    var setting: DynamicSetting?
 
-    @IBAction open func toggleButtonTapped() {
+    @IBAction func toggleButtonTapped() {
         if let setting = setting {
             delegate?.toggleSetting(setting, value: !toggleButton.value)
             toggleButton.value = !toggleButton.value
         }
     }
 
-    @IBAction open func deleteButtonTapped() {
+    @IBAction func deleteButtonTapped() {
         delegate?.deleteAccount()
     }
 }

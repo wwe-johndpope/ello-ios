@@ -3,11 +3,11 @@
 //
 
 typealias TemporaryCacheEntry = (image: UIImage, expiration: Date)
-public enum CacheKey {
+enum CacheKey {
     case coverImage
     case avatar
 }
-public struct TemporaryCache {
+struct TemporaryCache {
     static var coverImage: TemporaryCacheEntry?
     static var avatar: TemporaryCacheEntry?
 

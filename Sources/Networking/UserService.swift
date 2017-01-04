@@ -7,11 +7,11 @@ import SwiftyJSON
 import FutureKit
 
 
-public struct UserService {
+struct UserService {
 
-    public init(){}
+    init(){}
 
-    public func join(
+    func join(
         email: String,
         username: String,
         password: String,
@@ -35,7 +35,7 @@ public struct UserService {
         return promise.future
     }
 
-    public func setUser(categories: [Category]) -> Future<Void> {
+    func setUser(categories: [Category]) -> Future<Void> {
         let promise = Promise<Void>()
         let categoryIds = categories.map { $0.id }
         ElloProvider.shared.elloRequest(ElloAPI.userCategories(categoryIds: categoryIds),

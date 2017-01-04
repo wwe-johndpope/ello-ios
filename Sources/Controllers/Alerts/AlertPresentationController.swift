@@ -4,7 +4,7 @@
 
 import UIKit
 
-open class AlertPresentationController: UIPresentationController {
+class AlertPresentationController: UIPresentationController {
 
     let background: UIView = {
         let background = UIView(frame: .zero)
@@ -12,7 +12,7 @@ open class AlertPresentationController: UIPresentationController {
         return background
     }()
 
-    public init(presentedViewController: UIViewController, presentingViewController: UIViewController?, backgroundColor: UIColor) {
+    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, backgroundColor: UIColor) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         self.background.backgroundColor = backgroundColor
     }
@@ -20,7 +20,7 @@ open class AlertPresentationController: UIPresentationController {
 
 // MARK: View Lifecycle
 extension AlertPresentationController {
-    override open func containerViewDidLayoutSubviews() {
+    override func containerViewDidLayoutSubviews() {
         super.containerViewDidLayoutSubviews()
         let alertViewController = presentedViewController as! AlertViewController
         alertViewController.resize()
@@ -32,7 +32,7 @@ extension AlertPresentationController {
 
 // MARK: Presentation
 extension AlertPresentationController {
-    override open func presentationTransitionWillBegin() {
+    override func presentationTransitionWillBegin() {
         if let containerView = containerView {
             background.alpha = 0
             background.frame = containerView.bounds
@@ -48,14 +48,14 @@ extension AlertPresentationController {
         }
     }
 
-    override open func dismissalTransitionWillBegin() {
+    override func dismissalTransitionWillBegin() {
         let transitionCoordinator = presentingViewController.transitionCoordinator
         transitionCoordinator?.animate(alongsideTransition: { _ in
             self.background.alpha = 0
         }, completion: .none)
     }
 
-    override open func dismissalTransitionDidEnd(_ completed: Bool) {
+    override func dismissalTransitionDidEnd(_ completed: Bool) {
         if completed {
             background.removeFromSuperview()
         }

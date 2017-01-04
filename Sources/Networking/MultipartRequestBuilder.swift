@@ -4,13 +4,13 @@
 
 import Foundation
 
-open class MultipartRequestBuilder {
-    open let boundaryConstant: String
+class MultipartRequestBuilder {
+    let boundaryConstant: String
     fileprivate var body: Data
     fileprivate var requestIsBuilt: Bool = false
     fileprivate var request: URLRequest
 
-    public init(url: URL, capacity: Int = 0) {
+    init(url: URL, capacity: Int = 0) {
         let cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
         boundaryConstant = "Boundary-7MA4YWxkTLLu0UIW" // This should be randomly-generated.
 
@@ -22,7 +22,7 @@ open class MultipartRequestBuilder {
         body = Data(capacity: capacity)
     }
 
-    open func addParam(_ name: String, value: String) {
+    func addParam(_ name: String, value: String) {
         if requestIsBuilt {
             fatalError("Cannot add parameters after request has been built")
         }
@@ -47,7 +47,7 @@ open class MultipartRequestBuilder {
         body.append("\r\n".data(using: String.Encoding.utf8)!)
     }
 
-    open func buildRequest() -> URLRequest {
+    func buildRequest() -> URLRequest {
         requestIsBuilt = true
         body.append("--\(boundaryConstant)--\r\n".data(using: String.Encoding.utf8)!)
         request.httpBody = body as Data

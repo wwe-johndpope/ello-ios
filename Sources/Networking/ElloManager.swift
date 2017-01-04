@@ -7,8 +7,8 @@ import Alamofire
 import ElloCerts
 
 
-public struct ElloManager {
-    public static var serverTrustPolicies: [String: ServerTrustPolicy] {
+struct ElloManager {
+    static var serverTrustPolicies: [String: ServerTrustPolicy] {
         let policyDict: [String: ServerTrustPolicy]
         if AppSetup.sharedState.isSimulator {
             // make Charles plays nice in the sim by not setting a policy
@@ -20,7 +20,7 @@ public struct ElloManager {
         return policyDict
     }
 
-    public static var manager: SessionManager {
+    static var manager: SessionManager {
         let config = URLSessionConfiguration.default
         config.sharedContainerIdentifier = ElloGroupName
         return SessionManager(
@@ -29,7 +29,7 @@ public struct ElloManager {
         )
     }
 
-    public static var shareExtensionManager: SessionManager {
+    static var shareExtensionManager: SessionManager {
         let config = URLSessionConfiguration.background(withIdentifier: "co.ello.shareextension.background")
         config.sharedContainerIdentifier = ElloGroupName
         config.sessionSendsLaunchEvents = false

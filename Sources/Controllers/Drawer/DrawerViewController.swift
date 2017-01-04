@@ -4,20 +4,20 @@
 
 import Crashlytics
 
-public class DrawerViewController: StreamableViewController {
-    @IBOutlet weak open var tableView: UITableView!
-    weak open var navigationBar: ElloNavigationBar!
-    open var isLoggingOut = false
+class DrawerViewController: StreamableViewController {
+    @IBOutlet weak var tableView: UITableView!
+    weak var navigationBar: ElloNavigationBar!
+    var isLoggingOut = false
 
     override var backGestureEdges: UIRectEdge { return .right }
 
-    open let dataSource = DrawerViewDataSource()
+    let dataSource = DrawerViewDataSource()
 
-    required public init() {
+    required init() {
         super.init(nibName: "DrawerViewController", bundle: .none)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -30,7 +30,7 @@ public class DrawerViewController: StreamableViewController {
 
 // MARK: View Lifecycle
 extension DrawerViewController {
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         addLeftButtons()
@@ -39,7 +39,7 @@ extension DrawerViewController {
         registerCells()
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
         Crashlytics.sharedInstance().setObjectValue("Drawer", forKey: CrashlyticsKey.streamName.rawValue)
@@ -48,7 +48,7 @@ extension DrawerViewController {
 
 // MARK: UITableViewDelegate
 extension DrawerViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let item = dataSource.itemForIndexPath(indexPath) {
             switch item.type {
             case let .external(link):

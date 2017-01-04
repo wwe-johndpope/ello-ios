@@ -10,25 +10,25 @@ import DeltaCalculator
 
 
 // MARK: Delegate Implementations
-public protocol InviteDelegate: class {
+protocol InviteDelegate: class {
     func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion)
 }
 
-public protocol SimpleStreamDelegate: class {
+protocol SimpleStreamDelegate: class {
     func showSimpleStream(endpoint: ElloAPI, title: String, noResultsMessages: (title: String, body: String)?)
 }
 
-public protocol StreamImageCellDelegate: class {
+protocol StreamImageCellDelegate: class {
     func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell)
 }
 
-public protocol StreamEditingDelegate: class {
+protocol StreamEditingDelegate: class {
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint)
     func cellLongPressed(cell: UICollectionViewCell)
 }
 
-public typealias StreamCellItemGenerator = () -> [StreamCellItem]
-public protocol StreamViewDelegate: class {
+typealias StreamCellItemGenerator = () -> [StreamCellItem]
+protocol StreamViewDelegate: class {
     func streamViewCustomLoadFailed() -> Bool
     func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator: StreamCellItemGenerator) -> [StreamCellItem]?
     func streamViewDidScroll(scrollView: UIScrollView)
@@ -36,15 +36,15 @@ public protocol StreamViewDelegate: class {
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
 }
 
-public protocol CategoryDelegate: class {
+protocol CategoryDelegate: class {
     func categoryCellTapped(cell: UICollectionViewCell)
 }
 
-public protocol SelectedCategoryDelegate: class {
+protocol SelectedCategoryDelegate: class {
     func categoriesSelectionChanged(selection: [Category])
 }
 
-public protocol UserDelegate: class {
+protocol UserDelegate: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
     func userTappedText(cell: UICollectionViewCell)
@@ -52,48 +52,48 @@ public protocol UserDelegate: class {
     func userTapped(user: User)
 }
 
-public protocol WebLinkDelegate: class {
+protocol WebLinkDelegate: class {
     func webLinkTapped(type: ElloURI, data: String)
 }
 
 @objc
-public protocol GridListToggleDelegate: class {
+protocol GridListToggleDelegate: class {
     func gridListToggled(_ sender: UIButton)
 }
 
-public protocol CategoryListCellDelegate: class {
+protocol CategoryListCellDelegate: class {
     func categoryListCellTapped(slug: String, name: String)
 }
 
-public protocol SearchStreamDelegate: class {
+protocol SearchStreamDelegate: class {
     func searchFieldChanged(text: String)
 }
 
-public protocol AnnouncementCellDelegate: class {
+protocol AnnouncementCellDelegate: class {
     func markAnnouncementAsRead(cell: UICollectionViewCell)
 }
 
-public protocol AnnouncementDelegate: class {
+protocol AnnouncementDelegate: class {
     func markAnnouncementAsRead(announcement: Announcement)
 }
 
 // MARK: StreamNotification
-public struct StreamNotification {
+struct StreamNotification {
     static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
     static let UpdateCellHeightNotification = TypedNotification<UICollectionViewCell>(name: "UpdateCellHeightNotification")
 }
 
 // MARK: StreamViewController
-public final class StreamViewController: BaseElloViewController {
+final class StreamViewController: BaseElloViewController {
 
-    @IBOutlet weak public var collectionView: ElloCollectionView!
-    @IBOutlet weak public var noResultsLabel: UILabel!
-    @IBOutlet weak public var noResultsTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionView: ElloCollectionView!
+    @IBOutlet weak var noResultsLabel: UILabel!
+    @IBOutlet weak var noResultsTopConstraint: NSLayoutConstraint!
     fileprivate let defaultNoResultsTopConstant: CGFloat = 113
 
     var currentJSONables = [JSONAble]()
 
-    public var noResultsMessages = (title: "", body: "") {
+    var noResultsMessages = (title: "", body: "") {
         didSet {
             let titleParagraphStyle = NSMutableParagraphStyle()
             titleParagraphStyle.lineSpacing = 17
@@ -119,17 +119,17 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public typealias ToggleClosure = (Bool) -> Void
+    typealias ToggleClosure = (Bool) -> Void
 
-    public var dataSource: StreamDataSource!
-    public var postbarController: PostbarController?
+    var dataSource: StreamDataSource!
+    var postbarController: PostbarController?
     var relationshipController: RelationshipController?
-    public var responseConfig: ResponseConfig?
-    public var pagingEnabled = false
+    var responseConfig: ResponseConfig?
+    var pagingEnabled = false
     fileprivate var scrollToPaginateGuard = false
 
-    public let streamService = StreamService()
-    lazy public var loadingToken: LoadingToken = self.createLoadingToken()
+    let streamService = StreamService()
+    lazy var loadingToken: LoadingToken = self.createLoadingToken()
 
     // moved into a separate function to save compile time
     fileprivate func createLoadingToken() -> LoadingToken {
@@ -140,11 +140,11 @@ public final class StreamViewController: BaseElloViewController {
         return token
     }
 
-    public var pullToRefreshView: SSPullToRefreshView?
+    var pullToRefreshView: SSPullToRefreshView?
     var allOlderPagesLoaded = false
-    public var initialLoadClosure: ElloEmptyCompletion?
-    public var reloadClosure: ElloEmptyCompletion?
-    public var toggleClosure: ToggleClosure?
+    var initialLoadClosure: ElloEmptyCompletion?
+    var reloadClosure: ElloEmptyCompletion?
+    var toggleClosure: ToggleClosure?
     var initialDataLoaded = false
     var parentTabBarController: ElloTabBarController? {
         if let parentViewController = self.parent,
@@ -155,7 +155,7 @@ public final class StreamViewController: BaseElloViewController {
         return nil
     }
 
-    public var streamKind: StreamKind = StreamKind.unknown {
+    var streamKind: StreamKind = StreamKind.unknown {
         didSet {
             dataSource.streamKind = streamKind
             setupCollectionViewLayout()
@@ -197,7 +197,7 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
+    func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
         let delta = dataSource.updateFilter(filter)
         let collectionView = self.collectionView
         collectionView?.performBatchUpdates({
@@ -205,7 +205,7 @@ public final class StreamViewController: BaseElloViewController {
         }, completion: nil)
     }
 
-    public var contentInset: UIEdgeInsets {
+    var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
         set {
             collectionView.contentInset = newValue
@@ -213,7 +213,7 @@ public final class StreamViewController: BaseElloViewController {
             pullToRefreshView?.defaultContentInset = newValue
         }
     }
-    public var columnCount: Int {
+    var columnCount: Int {
         guard let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout else {
             return 1
         }
@@ -224,12 +224,12 @@ public final class StreamViewController: BaseElloViewController {
         didSet { pullToRefreshView?.isHidden = !pullToRefreshEnabled }
     }
 
-    override public func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         initialSetup()
     }
 
-    override public func didSetCurrentUser() {
+    override func didSetCurrentUser() {
         dataSource.currentUser = currentUser
         relationshipController?.currentUser = currentUser
         postbarController?.currentUser = currentUser
@@ -249,7 +249,7 @@ public final class StreamViewController: BaseElloViewController {
         removeNotificationObservers()
     }
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         pullToRefreshView = SSPullToRefreshView(scrollView: collectionView, delegate: self)
@@ -260,22 +260,22 @@ public final class StreamViewController: BaseElloViewController {
         addNotificationObservers()
     }
 
-    public override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Crashlytics.sharedInstance().setObjectValue(streamKind.name, forKey: CrashlyticsKey.streamName.rawValue)
     }
 
-    public class func instantiateFromStoryboard() -> StreamViewController {
+    class func instantiateFromStoryboard() -> StreamViewController {
         return UIStoryboard.storyboardWithId(.stream) as! StreamViewController
     }
 
 // MARK: Public Functions
 
-    public func scrollToTop() {
+    func scrollToTop() {
         collectionView.contentOffset = CGPoint(x: 0, y: contentInset.top)
     }
 
-    public func doneLoading() {
+    func doneLoading() {
         ElloHUD.hideLoadingHudInView(view)
         pullToRefreshView?.finishLoading()
         initialDataLoaded = true
@@ -283,7 +283,7 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate var debounceCellReload = debounce(0.05)
-    public func reloadCells(now: Bool = false) {
+    func reloadCells(now: Bool = false) {
         if now {
             debounceCellReload {}
             self.collectionView.reloadData()
@@ -295,12 +295,12 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func removeAllCellItems() {
+    func removeAllCellItems() {
         dataSource.removeAllCellItems()
         reloadCells(now: true)
     }
 
-    public func imageCellHeightUpdated(_ cell: StreamImageCell) {
+    func imageCellHeightUpdated(_ cell: StreamImageCell) {
         if let indexPath = collectionView.indexPath(for: cell),
             let calculatedHeight = cell.calculatedHeight
         {
@@ -308,12 +308,12 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func appendStreamCellItems(_ items: [StreamCellItem]) {
+    func appendStreamCellItems(_ items: [StreamCellItem]) {
         dataSource.appendStreamCellItems(items)
         reloadCells(now: true)
     }
 
-    public func appendUnsizedCellItems(_ items: [StreamCellItem], withWidth: CGFloat?, completion: StreamDataSource.StreamContentReady? = nil) {
+    func appendUnsizedCellItems(_ items: [StreamCellItem], withWidth: CGFloat?, completion: StreamDataSource.StreamContentReady? = nil) {
         let width = withWidth ?? self.view.frame.width
         dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
             self.reloadCells()
@@ -322,14 +322,14 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping ElloEmptyCompletion = {}) {
+    func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping ElloEmptyCompletion = {}) {
         dataSource.insertUnsizedCellItems(cellItems, withWidth: self.view.frame.width, startingIndexPath: startingIndexPath) { _ in
             self.reloadCells()
             completion()
         }
     }
 
-    public func replacePlaceholder(
+    func replacePlaceholder(
         _ placeholderType: StreamCellType.PlaceholderType,
         with streamCellItems: [StreamCellItem],
         completion: @escaping ElloEmptyCompletion = {}
@@ -354,7 +354,7 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func loadInitialPage(reload: Bool = false) {
+    func loadInitialPage(reload: Bool = false) {
         if let reloadClosure = reloadClosure, reload {
             responseConfig = nil
             pagingEnabled = false
@@ -388,7 +388,7 @@ public final class StreamViewController: BaseElloViewController {
 
     /// This method can be called by a `StreamableViewController` if it wants to
     /// override `loadInitialPage`, but doesn't need to customize the cell generation.
-    public func showInitialJSONAbles(_ jsonables: [JSONAble]) {
+    func showInitialJSONAbles(_ jsonables: [JSONAble]) {
         self.clearForInitialLoad()
         self.currentJSONables = jsonables
 
@@ -418,19 +418,19 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func hideNoResults() {
+    func hideNoResults() {
         noResultsLabel.isHidden = true
         noResultsLabel.alpha = 0
     }
 
-    public func showNoResults() {
+    func showNoResults() {
         noResultsLabel.isHidden = false
         UIView.animate(withDuration: 0.25, animations: {
             self.noResultsLabel.alpha = 1
         })
     }
 
-    public func clearForInitialLoad() {
+    func clearForInitialLoad() {
         allOlderPagesLoaded = false
         dataSource.removeAllCellItems()
         reloadCells(now: true)
@@ -674,7 +674,7 @@ public final class StreamViewController: BaseElloViewController {
 // MARK: StreamViewController: InviteDelegate
 extension StreamViewController: InviteDelegate {
 
-    public func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion) {
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion) {
         if let email = person.emails.first {
             if isOnboarding {
                 Tracker.sharedTracker.onboardingFriendInvited()
@@ -698,7 +698,7 @@ extension StreamViewController: InviteDelegate {
 
 // MARK: StreamViewController: GridListToggleDelegate
 extension StreamViewController: GridListToggleDelegate {
-    public func gridListToggled(_ sender: UIButton) {
+    func gridListToggled(_ sender: UIButton) {
         let isGridView = !streamKind.isGridView
         sender.setImage(isGridView ? .listView : .gridView, imageStyle: .normal, for: .normal)
         streamKind.setIsGridView(isGridView)
@@ -734,7 +734,7 @@ extension StreamViewController: GridListToggleDelegate {
 // MARK: StreamViewController: CategoryListCellDelegate
 extension StreamViewController: CategoryListCellDelegate {
 
-    public func categoryListCellTapped(slug: String, name: String) {
+    func categoryListCellTapped(slug: String, name: String) {
         showCategoryViewController(slug: slug, name: name)
     }
 
@@ -742,7 +742,7 @@ extension StreamViewController: CategoryListCellDelegate {
 
 // MARK: StreamViewController: SimpleStreamDelegate
 extension StreamViewController: SimpleStreamDelegate {
-    public func showSimpleStream(endpoint: ElloAPI, title: String, noResultsMessages: (title: String, body: String)? = nil ) {
+    func showSimpleStream(endpoint: ElloAPI, title: String, noResultsMessages: (title: String, body: String)? = nil ) {
         let vc = SimpleStreamViewController(endpoint: endpoint, title: title)
         vc.currentUser = currentUser
         if let messages = noResultsMessages {
@@ -754,11 +754,11 @@ extension StreamViewController: SimpleStreamDelegate {
 
 // MARK: StreamViewController: SSPullToRefreshViewDelegate
 extension StreamViewController: SSPullToRefreshViewDelegate {
-    public func pull(toRefreshViewShouldStartLoading view: SSPullToRefreshView!) -> Bool {
+    func pull(toRefreshViewShouldStartLoading view: SSPullToRefreshView!) -> Bool {
         return pullToRefreshEnabled
     }
 
-    public func pull(_ view: SSPullToRefreshView, didTransitionTo toState: SSPullToRefreshViewState, from fromState: SSPullToRefreshViewState, animated: Bool) {
+    func pull(_ view: SSPullToRefreshView, didTransitionTo toState: SSPullToRefreshViewState, from fromState: SSPullToRefreshViewState, animated: Bool) {
         if toState == .loading {
             if pullToRefreshEnabled {
                 self.loadInitialPage(reload: true)
@@ -774,7 +774,7 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
 // MARK: StreamViewController: StreamCollectionViewLayoutDelegate
 extension StreamViewController: StreamCollectionViewLayoutDelegate {
 
-    public func collectionView(_ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
             let width = calculateColumnWidth(frameWidth: UIWindow.windowWidth(), columnCount: columnCount)
@@ -782,19 +782,19 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
             return CGSize(width: width, height: height)
     }
 
-    public func collectionView(_ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         groupForItemAtIndexPath indexPath: IndexPath) -> String? {
             return dataSource.groupForIndexPath(indexPath)
     }
 
-    public func collectionView(_ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         heightForItemAtIndexPath indexPath: IndexPath, numberOfColumns: NSInteger) -> CGFloat {
             return dataSource.heightForIndexPath(indexPath, numberOfColumns: numberOfColumns)
     }
 
-    public func collectionView (_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+    func collectionView (_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
         isFullWidthAtIndexPath indexPath: IndexPath) -> Bool {
             return dataSource.isFullWidthAtIndexPath(indexPath)
     }
@@ -802,7 +802,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
 
 // MARK: StreamViewController: StreamEditingDelegate
 extension StreamViewController: StreamEditingDelegate {
-    public func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint) {
+    func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint) {
         if let path = collectionView.indexPath(for: cell),
             let post = dataSource.postForIndexPath(path),
             let footerPath = dataSource.footerIndexPathForPost(post)
@@ -833,7 +833,7 @@ extension StreamViewController: StreamEditingDelegate {
         }
     }
 
-    public func cellLongPressed(cell: UICollectionViewCell) {
+    func cellLongPressed(cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell),
             let post = dataSource.postForIndexPath(indexPath),
             let currentUser = currentUser, currentUser.isOwn(post: post)
@@ -851,7 +851,7 @@ extension StreamViewController: StreamEditingDelegate {
 
 // MARK: StreamViewController: StreamImageCellDelegate
 extension StreamViewController: StreamImageCellDelegate {
-    public func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell) {
+    func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell) {
         let indexPath = collectionView.indexPath(for: cell)
         let post = indexPath.flatMap(dataSource.postForIndexPath)
         let imageAsset = indexPath.flatMap(dataSource.imageAssetForIndexPath)
@@ -874,7 +874,7 @@ extension StreamViewController: StreamImageCellDelegate {
 // MARK: StreamViewController: Commenting
 extension StreamViewController {
 
-    public func createCommentTapped(_ post: Post) {
+    func createCommentTapped(_ post: Post) {
         createPostDelegate?.createComment(post, text: nil, fromController: self)
     }
 }
@@ -882,11 +882,11 @@ extension StreamViewController {
 // MARK: StreamViewController: Open category
 extension StreamViewController {
 
-    public func categoryTapped(_ category: Category) {
+    func categoryTapped(_ category: Category) {
         showCategoryViewController(slug: category.slug, name: category.name)
     }
 
-    public func showCategoryViewController(slug: String, name: String) {
+    func showCategoryViewController(slug: String, name: String) {
         Tracker.sharedTracker.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug, name: name)
         vc.currentUser = currentUser
@@ -897,7 +897,7 @@ extension StreamViewController {
 // MARK: StreamViewController: CategoryDelegate
 extension StreamViewController: CategoryDelegate {
 
-    public func categoryCellTapped(cell: UICollectionViewCell) {
+    func categoryCellTapped(cell: UICollectionViewCell) {
         guard let
             indexPath = collectionView.indexPath(for: cell),
             let post = dataSource.jsonableForIndexPath(indexPath) as? Post,
@@ -912,7 +912,7 @@ extension StreamViewController: CategoryDelegate {
 // MARK: StreamViewController: UserDelegate
 extension StreamViewController: UserDelegate {
 
-    public func userTappedText(cell: UICollectionViewCell) {
+    func userTappedText(cell: UICollectionViewCell) {
         guard streamKind.tappingTextOpensDetail,
             let indexPath = collectionView.indexPath(for: cell)
         else { return }
@@ -920,11 +920,11 @@ extension StreamViewController: UserDelegate {
         collectionView(collectionView, didSelectItemAt: indexPath)
     }
 
-    public func userTapped(user: User) {
+    func userTapped(user: User) {
         userTappedDelegate?.userTapped(user)
     }
 
-    public func userTappedAuthor(cell: UICollectionViewCell) {
+    func userTappedAuthor(cell: UICollectionViewCell) {
         guard let
             indexPath = collectionView.indexPath(for: cell),
             let user = dataSource.userForIndexPath(indexPath)
@@ -933,7 +933,7 @@ extension StreamViewController: UserDelegate {
         userTapped(user: user)
     }
 
-    public func userTappedReposter(cell: UICollectionViewCell) {
+    func userTappedReposter(cell: UICollectionViewCell) {
         guard let
             indexPath = collectionView.indexPath(for: cell),
             let reposter = dataSource.reposterForIndexPath(indexPath)
@@ -942,11 +942,11 @@ extension StreamViewController: UserDelegate {
         userTapped(user: reposter)
     }
 
-    public func userTappedUser(_ user: User) {
+    func userTappedUser(_ user: User) {
         userTapped(user: user)
     }
 
-    public func userTappedFeaturedCategories(cell: UICollectionViewCell) {
+    func userTappedFeaturedCategories(cell: UICollectionViewCell) {
         guard let
             indexPath = collectionView.indexPath(for: cell),
             let user = dataSource.userForIndexPath(indexPath)
@@ -960,7 +960,7 @@ extension StreamViewController: UserDelegate {
 // MARK: StreamViewController: WebLinkDelegate
 extension StreamViewController: WebLinkDelegate {
 
-    public func webLinkTapped(type: ElloURI, data: String) {
+    func webLinkTapped(type: ElloURI, data: String) {
         switch type {
         case .confirm,
              .faceMaker,
@@ -1031,7 +1031,7 @@ extension StreamViewController: WebLinkDelegate {
 
 // MARK: StreamViewController: AnnouncementCellDelegate
 extension StreamViewController: AnnouncementCellDelegate {
-    public func markAnnouncementAsRead(cell: UICollectionViewCell) {
+    func markAnnouncementAsRead(cell: UICollectionViewCell) {
         guard let
             indexPath = collectionView.indexPath(for: cell),
             let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement
@@ -1044,13 +1044,13 @@ extension StreamViewController: AnnouncementCellDelegate {
 // MARK: StreamViewController: UICollectionViewDelegate
 extension StreamViewController: UICollectionViewDelegate {
 
-    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? DismissableCell {
             cell.didEndDisplay()
         }
     }
 
-    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let tappedCell = collectionView.cellForItem(at: indexPath)
 
         if let item = dataSource.visibleStreamCellItem(at: indexPath),
@@ -1062,7 +1062,7 @@ extension StreamViewController: UICollectionViewDelegate {
         }
     }
 
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tappedCell = collectionView.cellForItem(at: indexPath)
 
         var keepSelected = false
@@ -1126,7 +1126,7 @@ extension StreamViewController: UICollectionViewDelegate {
         }
     }
 
-    public func collectionView(_ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath) -> Bool {
             guard let
                 cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
@@ -1139,7 +1139,7 @@ extension StreamViewController: UICollectionViewDelegate {
 // MARK: StreamViewController: UIScrollViewDelegate
 extension StreamViewController: UIScrollViewDelegate {
 
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         streamViewDelegate?.streamViewDidScroll(scrollView: scrollView)
         if !noResultsLabel.isHidden {
             noResultsTopConstraint.constant = -scrollView.contentOffset.y + defaultNoResultsTopConstant
@@ -1151,16 +1151,16 @@ extension StreamViewController: UIScrollViewDelegate {
         }
     }
 
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollToPaginateGuard = true
         streamViewDelegate?.streamViewWillBeginDragging(scrollView: scrollView)
     }
 
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
         streamViewDelegate?.streamViewDidEndDragging(scrollView: scrollView, willDecelerate: willDecelerate)
     }
 
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollToPaginateGuard = false
     }
 

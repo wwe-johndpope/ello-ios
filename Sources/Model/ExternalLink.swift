@@ -3,19 +3,19 @@
 //
 
 
-public struct ExternalLink {
-    public let url: URL
-    public let text: String
-    public let iconURL: URL?
+struct ExternalLink {
+    let url: URL
+    let text: String
+    let iconURL: URL?
 
-    public init(url: URL, text: String, iconURL: URL? = nil) {
+    init(url: URL, text: String, iconURL: URL? = nil) {
         self.url = url
         self.text = text
         self.iconURL = iconURL
     }
 }
 
-public extension ExternalLink {
+extension ExternalLink {
     static func fromDict(_ link: [String: String]) -> ExternalLink? {
         guard let
             urlStr = link["url"],
@@ -49,6 +49,6 @@ public extension ExternalLink {
 
 extension ExternalLink: Equatable {}
 
-public func == (lhs: ExternalLink, rhs: ExternalLink) -> Bool {
+func == (lhs: ExternalLink, rhs: ExternalLink) -> Bool {
     return lhs.url == rhs.url && lhs.text == rhs.text && lhs.iconURL == rhs.iconURL
 }

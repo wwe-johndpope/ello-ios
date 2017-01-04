@@ -2,42 +2,42 @@
 ///  AutoComplete.swift
 //
 
-public struct AutoCompleteMatch: CustomStringConvertible, Equatable {
+struct AutoCompleteMatch: CustomStringConvertible, Equatable {
 
-    public var description: String {
+    var description: String {
         return "type: \(self.type), range: \(self.range), text: \(self.text)"
     }
 
-    public let type: AutoCompleteType
-    public let range: Range<String.Index>
-    public let text: String
+    let type: AutoCompleteType
+    let range: Range<String.Index>
+    let text: String
 
-    public init(type: AutoCompleteType, range: Range<String.Index>, text: String ){
+    init(type: AutoCompleteType, range: Range<String.Index>, text: String ){
         self.type = type
         self.range = range
         self.text = text
     }
 }
 
-public func == (lhs: AutoCompleteMatch, rhs: AutoCompleteMatch) -> Bool {
+func == (lhs: AutoCompleteMatch, rhs: AutoCompleteMatch) -> Bool {
     return lhs.type == rhs.type && lhs.range == rhs.range && lhs.text == rhs.text
 }
 
-public enum AutoCompleteType: String, CustomStringConvertible {
+enum AutoCompleteType: String, CustomStringConvertible {
     case emoji = "Emoji"
     case username = "Username"
     case location = "Location"
 
-    public var description: String {
+    var description: String {
         return self.rawValue
     }
 }
 
-public struct AutoComplete {
+struct AutoComplete {
 
-    public init(){}
+    init(){}
 
-    public func eagerCheck(_ text: String, location: Int) -> Bool {
+    func eagerCheck(_ text: String, location: Int) -> Bool {
         if location >= text.characters.count { return false }
 
         let wordStartIndex = getIndexOfWordStart(location, fromString: text)
@@ -51,7 +51,7 @@ public struct AutoComplete {
         return char == "@" || char == ":"
     }
 
-    public func check(_ text: String, location: Int) -> AutoCompleteMatch? {
+    func check(_ text: String, location: Int) -> AutoCompleteMatch? {
         if location > text.characters.count { return .none }
 
         let wordStartIndex = getIndexOfWordStart(location, fromString: text)

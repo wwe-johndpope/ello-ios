@@ -1,7 +1,7 @@
 ////
 ///  PostDetailViewController.swift
 //
-public final class PostDetailViewController: StreamableViewController {
+final class PostDetailViewController: StreamableViewController {
     var post: Post?
     var postParam: String
     var scrollToComment: ElloComment?
@@ -11,7 +11,7 @@ public final class PostDetailViewController: StreamableViewController {
     var deeplinkPath: String?
     var generator: PostDetailGenerator?
 
-    required public init(postParam: String) {
+    required init(postParam: String) {
         self.postParam = postParam
         super.init(nibName: nil, bundle: nil)
         if self.post == nil {
@@ -22,11 +22,11 @@ public final class PostDetailViewController: StreamableViewController {
         self.localToken = streamViewController.loadingToken.resetInitialPageLoadingToken()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         streamViewController.streamKind = .postDetail(postParam: postParam)
@@ -55,12 +55,12 @@ public final class PostDetailViewController: StreamableViewController {
         updateInsets(navBar: navigationBar, streamController: streamViewController)
     }
 
-    override public func didSetCurrentUser() {
+    override func didSetCurrentUser() {
         generator?.currentUser = currentUser
         super.didSetCurrentUser()
     }
 
-    override public func showNavBars(_ scrollToBottom: Bool) {
+    override func showNavBars(_ scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         positionNavBar(navigationBar, visible: true)
         updateInsets()
@@ -70,7 +70,7 @@ public final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    override public func hideNavBars() {
+    override func hideNavBars() {
         super.hideNavBars()
         positionNavBar(navigationBar, visible: false)
         updateInsets()
@@ -147,7 +147,7 @@ public final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    override public func postTapped(_ post: Post) {
+    override func postTapped(_ post: Post) {
         if let selfPost = self.post, post.id != selfPost.id {
             super.postTapped(post)
         }
@@ -160,7 +160,7 @@ public final class PostDetailViewController: StreamableViewController {
         return currentUser.isOwn(post: post)
     }
 
-    public func flagPost() {
+    func flagPost() {
         guard let post = post else { return }
 
         let flagger = ContentFlagger(presentingController: self,
@@ -169,7 +169,7 @@ public final class PostDetailViewController: StreamableViewController {
         flagger.displayFlaggingSheet()
     }
 
-    public func editPostAction() {
+    func editPostAction() {
         guard let post = post, isOwnPost() else {
             return
         }
@@ -180,7 +180,7 @@ public final class PostDetailViewController: StreamableViewController {
         editPost(post, fromController: self)
     }
 
-    public func deletePost() {
+    func deletePost() {
         guard let post = post, let currentUser = currentUser, isOwnPost() else {
             return
         }
@@ -216,16 +216,16 @@ public final class PostDetailViewController: StreamableViewController {
 // MARK: PostDetailViewController: StreamDestination
 extension PostDetailViewController: StreamDestination {
 
-    public var pagingEnabled: Bool {
+    var pagingEnabled: Bool {
         get { return streamViewController.pagingEnabled }
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 
-    public func setPlaceholders(items: [StreamCellItem]) {
+    func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in
             if let scrollToComment = self.scrollToComment {
@@ -238,7 +238,7 @@ extension PostDetailViewController: StreamDestination {
         }
     }
 
-    public func setPrimary(jsonable: JSONAble) {
+    func setPrimary(jsonable: JSONAble) {
         guard let post = jsonable as? Post else { return }
 
         self.post = post
@@ -268,11 +268,11 @@ extension PostDetailViewController: StreamDestination {
         Tracker.sharedTracker.postLoaded(post.id)
     }
 
-    public func setPagingConfig(responseConfig: ResponseConfig) {
+    func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
     }
 
-    public func primaryJSONAbleNotFound() {
+    func primaryJSONAbleNotFound() {
         if let deeplinkPath = self.deeplinkPath,
             let deeplinkURL = URL(string: deeplinkPath)
         {

@@ -3,11 +3,11 @@
 //
 
 extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableViewRegions.count
     }
 
-    public func tableView(_ tableView: UITableView, heightForRowAt path: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt path: IndexPath) -> CGFloat {
         if let (_, region) = tableViewRegions.safeValue(path.row) {
             switch region {
             case let .attributedText(attrdString):
@@ -27,7 +27,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         return 0
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt path: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt path: IndexPath) -> UITableViewCell {
         if let (_, region) = tableViewRegions.safeValue(path.row) {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: region.reuseIdentifier, for: path)
             cell.selectionStyle = .none
@@ -58,7 +58,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt path: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt path: IndexPath) {
         if let (_, region) = tableViewRegions.safeValue(path.row) {
             switch region {
             case .attributedText(_):
@@ -69,7 +69,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    public func tableView(_ tableView: UITableView, canMoveRowAt path: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canMoveRowAt path: IndexPath) -> Bool {
         if let (_, region) = tableViewRegions.safeValue(path.row) {
             switch region {
             case .error, .spacer: return false
@@ -79,21 +79,21 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         return false
     }
 
-    public func tableView(_ tableView: UITableView, moveRowAt sourcePath: IndexPath, to destPath: IndexPath) {
+    func tableView(_ tableView: UITableView, moveRowAt sourcePath: IndexPath, to destPath: IndexPath) {
         if let source = reorderableRegions.safeValue(sourcePath.row) {
             reorderableRegions.remove(at: sourcePath.row)
             reorderableRegions.insert(source, at: destPath.row)
         }
     }
 
-    public func tableView(_ tableView: UITableView, canEditRowAt path: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt path: IndexPath) -> Bool {
         if let (_, region) = tableViewRegions.safeValue(path.row) {
             return region.editable
         }
         return false
     }
 
-    public func tableView(_ tableView: UITableView, commit style: UITableViewCellEditingStyle, forRowAt path: IndexPath) {
+    func tableView(_ tableView: UITableView, commit style: UITableViewCellEditingStyle, forRowAt path: IndexPath) {
         if style == .delete {
             if reordering {
                 deleteReorderableAtIndexPath(path)
@@ -104,7 +104,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    public func deleteReorderableAtIndexPath(_ path: IndexPath) {
+    func deleteReorderableAtIndexPath(_ path: IndexPath) {
         if let (_, region) = reorderableRegions.safeValue(path.row), region.editable
         {
             reorderableRegions.remove(at: path.row)
@@ -115,7 +115,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    public func deleteEditableAtIndexPath(_ path: IndexPath) {
+    func deleteEditableAtIndexPath(_ path: IndexPath) {
         if let (index_, region) = editableRegions.safeValue(path.row),
             let index = index_, region.editable
         {
@@ -168,13 +168,13 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
         updateButtons()
     }
 
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView == textScrollView {
             synchronizeScrollViews()
         }
     }
 
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView != regionsTableView {
             regionsTableView.contentOffset = scrollView.contentOffset
         }

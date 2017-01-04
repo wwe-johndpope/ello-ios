@@ -4,13 +4,13 @@
 
 import Foundation
 
-public enum StreamCellState: CustomStringConvertible, CustomDebugStringConvertible {
+enum StreamCellState: CustomStringConvertible, CustomDebugStringConvertible {
     case none
     case loading
     case expanded
     case collapsed
 
-    public var description: String {
+    var description: String {
         switch self {
         case .none: return "None"
         case .loading: return "Loading"
@@ -18,36 +18,36 @@ public enum StreamCellState: CustomStringConvertible, CustomDebugStringConvertib
         case .collapsed: return "Collapsed"
         }
     }
-    public var debugDescription: String { return "StreamCellState.\(description)" }
+    var debugDescription: String { return "StreamCellState.\(description)" }
 }
 
 
-public final class StreamCellItem: NSObject, NSCopying {
-    public var jsonable: JSONAble
-    public var type: StreamCellType
-    public var placeholderType: StreamCellType.PlaceholderType?
-    public var calculatedCellHeights = CalculatedCellHeights()
-    public var state: StreamCellState = .none
+final class StreamCellItem: NSObject, NSCopying {
+    var jsonable: JSONAble
+    var type: StreamCellType
+    var placeholderType: StreamCellType.PlaceholderType?
+    var calculatedCellHeights = CalculatedCellHeights()
+    var state: StreamCellState = .none
 
-    public convenience init(type: StreamCellType) {
+    convenience init(type: StreamCellType) {
         self.init(jsonable: JSONAble(version: 1), type: type)
     }
 
-    public convenience init(type: StreamCellType, placeholderType: StreamCellType.PlaceholderType) {
+    convenience init(type: StreamCellType, placeholderType: StreamCellType.PlaceholderType) {
         self.init(jsonable: JSONAble(version: 1), type: type, placeholderType: placeholderType)
     }
 
-    public convenience init(jsonable: JSONAble, type: StreamCellType, placeholderType: StreamCellType.PlaceholderType) {
+    convenience init(jsonable: JSONAble, type: StreamCellType, placeholderType: StreamCellType.PlaceholderType) {
         self.init(jsonable: jsonable, type: type)
         self.placeholderType = placeholderType
     }
 
-    public required init(jsonable: JSONAble, type: StreamCellType) {
+    required init(jsonable: JSONAble, type: StreamCellType) {
         self.jsonable = jsonable
         self.type = type
     }
 
-    public func copy(with zone: NSZone?) -> Any {
+    func copy(with zone: NSZone?) -> Any {
         let copy = type(of: self).init(
             jsonable: self.jsonable,
             type: self.type
@@ -58,14 +58,14 @@ public final class StreamCellItem: NSObject, NSCopying {
         return copy
     }
 
-    public func alwaysShow() -> Bool {
+    func alwaysShow() -> Bool {
         if type == .streamLoading {
             return true
         }
         return false
     }
 
-    public override var description: String {
+    override var description: String {
         switch type {
         case let .text(data):
             let text: String

@@ -5,7 +5,7 @@
 import Foundation
 
 extension UICollectionView {
-    public func lastIndexPathForSection(_ section: Int) -> IndexPath? {
+    func lastIndexPathForSection(_ section: Int) -> IndexPath? {
         if self.numberOfItems(inSection: section) > 0 {
             return IndexPath(item: self.numberOfItems(inSection: section) - 1, section: section)
         }
@@ -14,7 +14,7 @@ extension UICollectionView {
 }
 
 extension UICollectionViewCell {
-    public var indexPath: IndexPath? {
+    var indexPath: IndexPath? {
         var superview: UIView? = self.superview
         while superview != nil {
             if superview is UICollectionView { break }

@@ -1,5 +1,4 @@
-@testable
-import Ello
+@testable import Ello
 import Quick
 import Nimble
 

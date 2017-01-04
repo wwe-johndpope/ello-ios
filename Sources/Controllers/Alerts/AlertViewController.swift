@@ -9,7 +9,7 @@ private let DesiredWidth: CGFloat = 300
 
 let MaxHeight = UIScreen.main.bounds.height - 20
 
-public enum AlertType {
+enum AlertType {
     case normal
     case danger
     case clear
@@ -120,7 +120,7 @@ class AlertViewController: UIViewController {
         return 2 * topPadding.constant
     }
 
-    public init(message: String? = nil, textAlignment: NSTextAlignment = .center, type: AlertType = .normal) {
+    init(message: String? = nil, textAlignment: NSTextAlignment = .center, type: AlertType = .normal) {
         self.textAlignment = textAlignment
         super.init(nibName: "AlertViewController", bundle: Bundle(for: AlertViewController.self))
         modalPresentationStyle = .custom
@@ -138,11 +138,11 @@ class AlertViewController: UIViewController {
         self.type = type
     }
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("This isn't implemented")
     }
 
-    public convenience init(error: String, handler: AlertHandler = nil) {
+    convenience init(error: String, handler: AlertHandler = nil) {
         self.init(message: error)
         let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: handler)
         addAction(action)
@@ -150,12 +150,12 @@ class AlertViewController: UIViewController {
 }
 
 extension AlertViewController {
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(AlertCell.nib(), forCellReuseIdentifier: AlertCell.reuseIdentifier)
     }
 
-    public override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardUpdateFrame)
@@ -167,12 +167,12 @@ extension AlertViewController {
         }
     }
 
-    public override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.isScrollEnabled = (view.frame.height == MaxHeight)
     }
 
-    public override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         keyboardWillShowObserver?.removeObserver()
         keyboardWillShowObserver = nil
@@ -180,7 +180,7 @@ extension AlertViewController {
         keyboardWillHideObserver = nil
     }
 
-    public func dismiss(_ animated: Bool = true, completion: ElloEmptyCompletion? = .none) {
+    func dismiss(_ animated: Bool = true, completion: ElloEmptyCompletion? = .none) {
         self.dismiss(animated: animated, completion: completion)
     }
 }
@@ -220,7 +220,7 @@ extension AlertViewController {
         resize()
     }
 
-    public func resize() {
+    func resize() {
         self.view.frame.size = self.desiredSize
         if let superview = self.view.superview {
             self.view.center = superview.center
@@ -230,7 +230,7 @@ extension AlertViewController {
 
 // MARK: UIViewControllerTransitioningDelegate
 extension AlertViewController: UIViewControllerTransitioningDelegate {
-    public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         guard presented == self
             else { return .none }
 
@@ -240,7 +240,7 @@ extension AlertViewController: UIViewControllerTransitioningDelegate {
 
 // MARK: UITableViewDelegate
 extension AlertViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // apparently iOS (9?) has a bug where main-queue updates take a long time. WTF.
         nextTick {
             if self.autoDismiss {
@@ -254,14 +254,14 @@ extension AlertViewController: UITableViewDelegate {
         }
     }
 
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if message.characters.count == 0 {
             return nil
         }
         return headerView
     }
 
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if message.characters.count == 0 {
             return 0
         }
@@ -273,11 +273,11 @@ extension AlertViewController: UITableViewDelegate {
 
 // MARK: UITableViewDataSource
 extension AlertViewController: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actions.count
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AlertCell.reuseIdentifier, for: indexPath) as! AlertCell
 
         if let action = actions.safeValue(indexPath.row), let input = inputs.safeValue(indexPath.row) {
@@ -296,7 +296,7 @@ extension AlertViewController: UITableViewDataSource {
 }
 
 extension AlertViewController: AlertCellDelegate {
-    public func tappedOkButton() {
+    func tappedOkButton() {
         dismiss()
 
         if let action = actions.find({ action in
@@ -309,7 +309,7 @@ extension AlertViewController: AlertCellDelegate {
         }
     }
 
-    public func tappedCancelButton() {
+    func tappedCancelButton() {
         dismiss()
     }
 }

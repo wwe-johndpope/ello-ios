@@ -6,29 +6,29 @@ import UIKit
 import Foundation
 import CoreGraphics
 
-open class Keyboard {
-    public struct Notifications {
-        public static let KeyboardWillShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillShow")
-        public static let KeyboardDidShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardDidShow")
-        public static let KeyboardWillHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillHide")
-        public static let KeyboardDidHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardDidHide")
+class Keyboard {
+    struct Notifications {
+        static let KeyboardWillShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillShow")
+        static let KeyboardDidShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardDidShow")
+        static let KeyboardWillHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillHide")
+        static let KeyboardDidHide = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardDidHide")
     }
 
-    open static let shared = Keyboard()
+    static let shared = Keyboard()
 
-    open class func setup() {
+    class func setup() {
         let _ = shared
     }
 
-    open var active = false
-    open var external = false
-    open var bottomInset: CGFloat = 0.0
-    open var endFrame: CGRect = .zero
-    open var curve = UIViewAnimationCurve.linear
-    open var options = UIViewAnimationOptions.curveLinear
-    open var duration: Double = 0.0
+    var active = false
+    var external = false
+    var bottomInset: CGFloat = 0.0
+    var endFrame: CGRect = .zero
+    var curve = UIViewAnimationCurve.linear
+    var options = UIViewAnimationOptions.curveLinear
+    var duration: Double = 0.0
 
-    public init() {
+    init() {
         let center: NotificationCenter = NotificationCenter.default
         center.addObserver(self, selector: #selector(Keyboard.willShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         center.addObserver(self, selector: #selector(Keyboard.didShow(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
@@ -41,7 +41,7 @@ open class Keyboard {
         center.removeObserver(self)
     }
 
-    open func keyboardBottomInset(inView: UIView) -> CGFloat {
+    func keyboardBottomInset(inView: UIView) -> CGFloat {
         let window: UIView = inView.window ?? inView
         let bottom = window.convert(CGPoint(x: 0, y: window.bounds.size.height - bottomInset), to: inView.superview).y
         let inset = inView.frame.size.height - bottom

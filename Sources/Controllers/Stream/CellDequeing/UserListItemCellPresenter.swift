@@ -4,9 +4,9 @@
 
 import Foundation
 
-public struct UserListItemCellPresenter {
+struct UserListItemCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

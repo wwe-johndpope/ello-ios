@@ -4,14 +4,14 @@
 
 import OnePasswordExtension
 
-open class JoinViewController: BaseElloViewController, HasAppController {
+class JoinViewController: BaseElloViewController, HasAppController {
     var mockScreen: JoinScreenProtocol?
     var screen: JoinScreenProtocol { return mockScreen ?? (self.view as! JoinScreenProtocol) }
 
     var parentAppController: AppViewController?
     var invitationCode: String?
 
-    override open func loadView() {
+    override func loadView() {
         let screen = JoinScreen()
         screen.delegate = self
         screen.onePasswordAvailable = OnePasswordExtension.shared().isAppExtensionAvailable()

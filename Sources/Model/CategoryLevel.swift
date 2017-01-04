@@ -2,7 +2,7 @@
 ///  CategoryLevel.swift
 //
 
-public enum CategoryLevel: String, Equatable {
+enum CategoryLevel: String, Equatable {
     case meta = "meta"
     case primary = "primary"
     case secondary = "secondary"
@@ -20,6 +20,6 @@ public enum CategoryLevel: String, Equatable {
     }
 }
 
-public func == (lhs: CategoryLevel, rhs: CategoryLevel) -> Bool {
+func == (lhs: CategoryLevel, rhs: CategoryLevel) -> Bool {
     return lhs.rawValue == rhs.rawValue
 }

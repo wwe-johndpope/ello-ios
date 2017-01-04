@@ -5,7 +5,7 @@
 import FutureKit
 
 
-open class ProfileHeaderCellSizeCalculator {
+class ProfileHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 211
 
     fileprivate var maxWidth: CGFloat = 0.0
@@ -23,9 +23,9 @@ open class ProfileHeaderCellSizeCalculator {
     let totalCountSizeCalculator = ProfileTotalCountSizeCalculator()
 
 // MARK: Public
-    public init() {}
+    init() {}
 
-    open func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {

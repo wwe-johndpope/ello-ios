@@ -2,8 +2,7 @@
 ///  QuickExtensions.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import Quick
 import Nimble
 import Nimble_Snapshots
@@ -42,7 +41,7 @@ func showView(_ view: UIView) {
     showController(controller)
 }
 
-public enum SnapshotDevice {
+enum SnapshotDevice {
     case pad_Landscape
     case pad_Portrait
     case phone4_Portrait
@@ -124,7 +123,7 @@ func prepareForSnapshot(_ subject: Snapshotable, size: CGSize) {
 }
 
 
-public extension UIStoryboard {
+extension UIStoryboard {
 
     class func storyboardWithId(_ identifier: String, storyboardName: String = "Main") -> UIViewController {
         return UIStoryboard(name: storyboardName, bundle: Bundle(for: AppDelegate.self)).instantiateViewController(withIdentifier: identifier)
@@ -132,7 +131,7 @@ public extension UIStoryboard {
 
 }
 
-public func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> NonNilMatcherFunc<T> {
+func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> NonNilMatcherFunc<T> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "\(identifier) should be registered"
         let tableView = try! actualExpression.evaluate() as! UITableView
@@ -143,7 +142,7 @@ public func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> No
     }
 }
 
-public func beVisibleIn<S: UIView>(_ view: UIView) -> NonNilMatcherFunc<S> {
+func beVisibleIn<S: UIView>(_ view: UIView) -> NonNilMatcherFunc<S> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be visible in \(view)"
         let childView = try! actualExpression.evaluate()
@@ -164,7 +163,7 @@ public func beVisibleIn<S: UIView>(_ view: UIView) -> NonNilMatcherFunc<S> {
     }
 }
 
-public func checkRegions(_ regions: [OmnibarRegion], contain text: String) {
+func checkRegions(_ regions: [OmnibarRegion], contain text: String) {
     for region in regions {
         if let regionText = region.text, regionText.string.contains(text) {
             expect(regionText.string).to(contain(text))
@@ -174,7 +173,7 @@ public func checkRegions(_ regions: [OmnibarRegion], contain text: String) {
     fail("could not find \(text) in regions \(regions)")
 }
 
-public func checkRegions(_ regions: [OmnibarRegion], notToContain text: String) {
+func checkRegions(_ regions: [OmnibarRegion], notToContain text: String) {
     for region in regions {
         if let regionText = region.text, regionText.string.contains(text) {
             expect(regionText.string).notTo(contain(text))
@@ -182,7 +181,7 @@ public func checkRegions(_ regions: [OmnibarRegion], notToContain text: String) 
     }
 }
 
-public func checkRegions(_ regions: [OmnibarRegion], equal text: String) {
+func checkRegions(_ regions: [OmnibarRegion], equal text: String) {
     for region in regions {
         if let regionText = region.text, regionText.string == text {
             expect(regionText.string) == text
@@ -192,7 +191,7 @@ public func checkRegions(_ regions: [OmnibarRegion], equal text: String) {
     fail("could not find \(text) in regions \(regions)")
 }
 
-public func haveImageRegion<S: OmnibarScreenProtocol>() -> NonNilMatcherFunc<S> {
+func haveImageRegion<S: OmnibarScreenProtocol>() -> NonNilMatcherFunc<S> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "have image"
 
@@ -207,7 +206,7 @@ public func haveImageRegion<S: OmnibarScreenProtocol>() -> NonNilMatcherFunc<S> 
     }
 }
 
-public func haveImageRegion<S: OmnibarScreenProtocol>(equal image: UIImage) -> NonNilMatcherFunc<S> {
+func haveImageRegion<S: OmnibarScreenProtocol>(equal image: UIImage) -> NonNilMatcherFunc<S> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "have image that equals \(image)"
 
@@ -226,7 +225,7 @@ private func allSubviews(_ view: UIView) -> [UIView] {
     return view.subviews + view.subviews.flatMap { allSubviews($0) }
 }
 
-public func subviewThatMatches<T>(_ view: UIView, test: (UIView) -> Bool) -> T? where T: UIView {
+func subviewThatMatches<T>(_ view: UIView, test: (UIView) -> Bool) -> T? where T: UIView {
     for subview in allSubviews(view) {
         if test(subview) {
             return subview as? T
@@ -235,7 +234,7 @@ public func subviewThatMatches<T>(_ view: UIView, test: (UIView) -> Bool) -> T? 
     return nil
 }
 
-public func haveSubview<V: UIView>(thatMatches test: @escaping (UIView) -> Bool) -> NonNilMatcherFunc<V> {
+func haveSubview<V: UIView>(thatMatches test: @escaping (UIView) -> Bool) -> NonNilMatcherFunc<V> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "have subview that matches"
 

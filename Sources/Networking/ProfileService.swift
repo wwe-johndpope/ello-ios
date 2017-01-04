@@ -5,16 +5,16 @@
 import Moya
 import SwiftyJSON
 
-public typealias AccountDeletionSuccessCompletion = () -> Void
-public typealias ProfileSuccessCompletion = (User) -> Void
-public typealias ProfileUploadSuccessCompletion = (URL, User) -> Void
-public typealias ProfileUploadBothSuccessCompletion = (URL?, URL?, User) -> Void
+typealias AccountDeletionSuccessCompletion = () -> Void
+typealias ProfileSuccessCompletion = (User) -> Void
+typealias ProfileUploadSuccessCompletion = (URL, User) -> Void
+typealias ProfileUploadBothSuccessCompletion = (URL?, URL?, User) -> Void
 
-public struct ProfileService {
+struct ProfileService {
 
-    public init(){}
+    init(){}
 
-    public func loadCurrentUser(success: @escaping ProfileSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func loadCurrentUser(success: @escaping ProfileSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         let endpoint: ElloAPI = .currentUserProfile
         ElloProvider.shared.elloRequest(endpoint,
             success: { (data, _) in
@@ -28,7 +28,7 @@ public struct ProfileService {
             failure: failure )
     }
 
-    public func updateUserProfile(_ content: [String: AnyObject], success: @escaping ProfileSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func updateUserProfile(_ content: [String: AnyObject], success: @escaping ProfileSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         ElloProvider.shared.elloRequest(ElloAPI.profileUpdate(body: content),
             success: { data, responseConfig in
                 if let user = data as? User {
@@ -41,7 +41,7 @@ public struct ProfileService {
         )
     }
 
-    public func updateUserCoverImage(
+    func updateUserCoverImage(
         _ image: ImageRegionData,
         properties: [String: AnyObject] = [:],
         success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
@@ -51,7 +51,7 @@ public struct ProfileService {
         }, failure: failure)
     }
 
-    public func updateUserAvatarImage(
+    func updateUserAvatarImage(
         _ image: ImageRegionData,
         properties: [String: AnyObject] = [:],
         success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
@@ -61,7 +61,7 @@ public struct ProfileService {
         }, failure: failure)
     }
 
-    public func updateUserImages(
+    func updateUserImages(
         avatarImage: ImageRegionData?,
         coverImage: ImageRegionData?,
         properties: [String: AnyObject] = [:],
@@ -124,13 +124,13 @@ public struct ProfileService {
         }
     }
 
-    public func updateUserDeviceToken(_ token: Data) {
+    func updateUserDeviceToken(_ token: Data) {
         log(comment: "push token", object: String(token.description.characters.filter { !"<> ".characters.contains($0) }))
         ElloProvider.shared.elloRequest(ElloAPI.pushSubscriptions(token: token),
             success: { _, _ in })
     }
 
-    public func removeUserDeviceToken(_ token: Data) {
+    func removeUserDeviceToken(_ token: Data) {
         ElloProvider.shared.elloRequest(ElloAPI.deleteSubscriptions(token: token),
             success: { _, _ in })
     }
@@ -149,7 +149,7 @@ public struct ProfileService {
         }, failure: failure)
     }
 
-    public func deleteAccount(success: @escaping AccountDeletionSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func deleteAccount(success: @escaping AccountDeletionSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         ElloProvider.shared.elloRequest(ElloAPI.profileDelete,
             success: { _, _ in success() },
             failure: failure)

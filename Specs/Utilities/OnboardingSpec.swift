@@ -5,8 +5,7 @@
 import Quick
 import Nimble
 import SwiftyUserDefaults
-@testable
-import Ello
+@testable import Ello
 
 
 class OnboardingSpec: QuickSpec {

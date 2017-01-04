@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum SettingsRow: Int {
+enum SettingsRow: Int {
     case coverImage
     case avatarImage
     case profileDescription
@@ -18,8 +18,8 @@ public enum SettingsRow: Int {
 }
 
 
-open class SettingsContainerViewController: BaseElloViewController {
-    weak open var navigationBar: ElloNavigationBar!
+class SettingsContainerViewController: BaseElloViewController {
+    weak var navigationBar: ElloNavigationBar!
     @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     fileprivate var settingsViewController: SettingsViewController?
 
@@ -62,7 +62,7 @@ open class SettingsContainerViewController: BaseElloViewController {
         }
     }
 
-    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SettingsContainerSegue" {
             let settings = segue.destination as! SettingsViewController
             settings.currentUser = currentUser
@@ -77,7 +77,7 @@ open class SettingsContainerViewController: BaseElloViewController {
         settingsViewController?.currentUser = currentUser
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         let hidden = elloTabBarController?.tabBarHidden ?? UIApplication.shared.isStatusBarHidden
@@ -87,12 +87,12 @@ open class SettingsContainerViewController: BaseElloViewController {
 }
 
 
-open class SettingsViewController: UITableViewController, ControllerThatMightHaveTheCurrentUser {
+class SettingsViewController: UITableViewController, ControllerThatMightHaveTheCurrentUser {
 
-    @IBOutlet weak open var avatarImageView: UIView!
-    weak open var profileDescription: StyledLabel!
-    @IBOutlet weak open var coverImage: UIImageView!
-    @IBOutlet weak open var avatarImage: UIImageView!
+    @IBOutlet weak var avatarImageView: UIView!
+    weak var profileDescription: StyledLabel!
+    @IBOutlet weak var coverImage: UIImageView!
+    @IBOutlet weak var avatarImage: UIImageView!
     var scrollLogic: ElloScrollLogic!
     var appViewController: AppViewController? {
         return (parent as? SettingsContainerViewController)?.appViewController
@@ -109,19 +109,19 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
         }
     }
 
-    weak open var nameTextFieldView: ElloTextFieldView!
-    @IBOutlet weak open var bioTextView: ElloEditableTextView!
-    weak open var bioTextCountLabel: StyledLabel!
-    @IBOutlet weak open var bioTextStatusImage: UIImageView!
+    weak var nameTextFieldView: ElloTextFieldView!
+    @IBOutlet weak var bioTextView: ElloEditableTextView!
+    weak var bioTextCountLabel: StyledLabel!
+    @IBOutlet weak var bioTextStatusImage: UIImageView!
     fileprivate var bioTextViewDidChange: (() -> Void)?
 
-    @IBOutlet weak open var linksTextFieldView: ElloTextFieldView!
-    @IBOutlet weak open var locationTextFieldView: ElloTextFieldView!
+    @IBOutlet weak var linksTextFieldView: ElloTextFieldView!
+    @IBOutlet weak var locationTextFieldView: ElloTextFieldView!
 
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
 
-    open var currentUser: User? {
+    var currentUser: User? {
         didSet {
             credentialSettingsViewController?.currentUser = currentUser
             dynamicSettingsViewController?.currentUser = currentUser
@@ -135,7 +135,7 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
     var dynamicSettingsViewController: DynamicSettingsViewController?
     var photoSaveCallback: ((UIImage) -> Void)?
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         setupNavigationBar()
         scrollLogic = ElloScrollLogic(
@@ -173,7 +173,7 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
         containerController?.hideNavBars()
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         _ = ElloHUD.showLoadingHud()
 
@@ -197,7 +197,7 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
         setupViews()
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let superview = view.superview {
             superview.addSubview(autoCompleteVC.view)
@@ -208,7 +208,7 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
         keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: self.keyboardWillHide)
     }
 
-    open override func viewDidDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         autoCompleteVC.view.removeFromSuperview()
 
@@ -383,7 +383,7 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
         _ = navigationController?.popViewController(animated: true)
     }
 
-    override open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch SettingsRow(rawValue: indexPath.row) ?? .unknown {
         case .coverImage: return 200
         case .avatarImage: return 250
@@ -398,7 +398,7 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
         }
     }
 
-    override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier ?? "" {
         case "CredentialSettingsSegue":
             credentialSettingsViewController = segue.destination as? CredentialSettingsViewController
@@ -481,24 +481,24 @@ open class SettingsViewController: UITableViewController, ControllerThatMightHav
 }
 
 extension SettingsViewController {
-    public func keyboardWillShow(_ keyboard: Keyboard) {
+    func keyboardWillShow(_ keyboard: Keyboard) {
         updateAutoCompleteFrame(animated: true)
     }
 
-    public func keyboardWillHide(_ keyboard: Keyboard) {
+    func keyboardWillHide(_ keyboard: Keyboard) {
         updateAutoCompleteFrame(animated: true)
     }
 }
 
 extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDelegate {
-    public func dynamicSettingsUserChanged(_ user: User) {
+    func dynamicSettingsUserChanged(_ user: User) {
         updateCurrentUser(user)
     }
-    public func credentialSettingsUserChanged(_ user: User) {
+    func credentialSettingsUserChanged(_ user: User) {
         updateCurrentUser(user)
     }
 
-    public func credentialSettingsDidUpdate() {
+    func credentialSettingsDidUpdate() {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
@@ -506,7 +506,7 @@ extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDel
 
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image.copyWithCorrectOrientationAndSize() { image in
                 if let image = image {
@@ -520,19 +520,19 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
         }
     }
 
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: .none)
     }
 }
 
-public extension SettingsViewController {
+extension SettingsViewController {
     class func instantiateFromStoryboard() -> SettingsViewController {
         return UIStoryboard(name: "Settings", bundle: Bundle(for: AppDelegate.self)).instantiateInitialViewController() as! SettingsViewController
     }
 }
 
 extension SettingsViewController: UITextViewDelegate {
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         let characterCount = textView.text.lengthOfBytes(using: String.Encoding.ascii)
         bioTextCountLabel.text = "\(characterCount)"
         bioTextCountLabel.isHidden = characterCount <= 192
@@ -546,22 +546,22 @@ extension SettingsViewController: UITextViewDelegate {
 // UITableViewController doesn't implement them.
 extension SettingsViewController {
 
-    open override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }
 
-    open override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollLogic.scrollViewWillBeginDragging(scrollView)
     }
 
-    open override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
         scrollLogic.scrollViewDidEndDragging(scrollView, willDecelerate: willDecelerate)
     }
 
 }
 
 extension SettingsViewController: AutoCompleteDelegate {
-    public func updateAutoCompleteFrame(animated: Bool = false) {
+    func updateAutoCompleteFrame(animated: Bool = false) {
         guard isViewLoaded else { return }
 
         let rowHeight: CGFloat = AutoCompleteCell.Size.height
@@ -581,7 +581,7 @@ extension SettingsViewController: AutoCompleteDelegate {
         }
     }
 
-    public func autoComplete(_ controller: AutoCompleteViewController, itemSelected item: AutoCompleteItem) {
+    func autoComplete(_ controller: AutoCompleteViewController, itemSelected item: AutoCompleteItem) {
         guard let name = item.result.name else { return }
 
         locationTextFieldView.textField.text = name

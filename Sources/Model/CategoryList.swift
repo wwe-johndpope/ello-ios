@@ -4,12 +4,12 @@
 
 import SwiftyJSON
 
-public let CategoryListVersion = 1
+let CategoryListVersion = 1
 
-open class CategoryList: JSONAble {
-    open let categories: [Category]
+class CategoryList: JSONAble {
+    let categories: [Category]
 
-    public init(categories: [Category]) {
+    init(categories: [Category]) {
         self.categories = categories.sorted { (catA, catB) in
             if catA.level.order != catB.level.order {
                 return catA.level.order < catB.level.order
@@ -19,19 +19,19 @@ open class CategoryList: JSONAble {
         super.init(version: CategoryListVersion)
     }
 
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         let decoder = Coder(coder)
         categories = decoder.decodeKey("categories")
         super.init(coder: coder)
     }
 
-    open override func encode(with coder: NSCoder) {
+    override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(categories, forKey: "categories")
         super.encode(with: coder)
     }
 
-    override open class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let categories: [Category]
         if let jsonCategories = json["categories"].array {

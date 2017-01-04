@@ -7,15 +7,15 @@ import FLAnimatedImage
 import PINRemoteImage
 
 
-open class CategoryHeaderCell: UICollectionViewCell {
+class CategoryHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryHeaderCell"
 
-    public enum Style {
+    enum Style {
         case category
         case page
     }
 
-    public struct Config {
+    struct Config {
         var style: Style
         var title: String
         var tracking: String
@@ -26,14 +26,14 @@ open class CategoryHeaderCell: UICollectionViewCell {
         var callToAction: String?
         var callToActionURL: URL?
 
-        public init(style: Style) {
+        init(style: Style) {
             self.style = style
             self.title = ""
             self.tracking = ""
         }
     }
 
-    public struct Size {
+    struct Size {
         static let defaultMargin: CGFloat = 15
         static let topMargin: CGFloat = 25
         static let bodyMargin: CGFloat = 24
@@ -49,8 +49,8 @@ open class CategoryHeaderCell: UICollectionViewCell {
         static let failImageHeight: CGFloat = 160
     }
 
-    open weak var webLinkDelegate: WebLinkDelegate?
-    open weak var userDelegate: UserDelegate?
+    weak var webLinkDelegate: WebLinkDelegate?
+    weak var userDelegate: UserDelegate?
 
     let imageView = FLAnimatedImageView()
     let imageOverlay = UIView()
@@ -87,7 +87,7 @@ open class CategoryHeaderCell: UICollectionViewCell {
         return frame.width / aspectRatio
     }
 
-    open var config: Config = Config(style: .category) {
+    var config: Config = Config(style: .category) {
         didSet {
             titleLabel.attributedText = config.attributedTitle
             bodyLabel.attributedText = config.attributedBody
@@ -110,7 +110,7 @@ open class CategoryHeaderCell: UICollectionViewCell {
         }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
@@ -118,11 +118,11 @@ open class CategoryHeaderCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         if callToActionButton.frame.intersects(postedByButton.frame) {
@@ -139,7 +139,7 @@ open class CategoryHeaderCell: UICollectionViewCell {
         }
     }
 
-    open func setImageURL(_ url: URL?) {
+    func setImageURL(_ url: URL?) {
         guard let url = url else {
             imageView.pin_cancelImageDownload()
             imageView.image = nil
@@ -155,7 +155,7 @@ open class CategoryHeaderCell: UICollectionViewCell {
         loadImage(url)
     }
 
-    open func setImage(_ image: UIImage) {
+    func setImage(_ image: UIImage) {
         imageView.pin_cancelImageDownload()
         imageView.image = image
         imageView.alpha = 1
@@ -165,7 +165,7 @@ open class CategoryHeaderCell: UICollectionViewCell {
     }
 
 
-    open override func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         let config = Config(style: .category)
         self.config = config
@@ -173,12 +173,12 @@ open class CategoryHeaderCell: UICollectionViewCell {
         userDelegate = nil
     }
 
-    open func postedByTapped() {
+    func postedByTapped() {
         Tracker.sharedTracker.categoryHeaderPostedBy(config.tracking)
         userDelegate?.userTappedAuthor(cell: self)
     }
 
-    open func callToActionTapped() {
+    func callToActionTapped() {
         guard let url = callToActionURL else { return }
         Tracker.sharedTracker.categoryHeaderCallToAction(config.tracking)
         let request = URLRequest(url: url)

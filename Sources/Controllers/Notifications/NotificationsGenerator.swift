@@ -2,20 +2,20 @@
 ///  NotificationsGenerator.swift
 //
 
-public final class NotificationsGenerator: StreamGenerator {
-    public var currentUser: User?
-    public var streamKind: StreamKind
+final class NotificationsGenerator: StreamGenerator {
+    var currentUser: User?
+    var streamKind: StreamKind
 
     fileprivate var notifications: [Activity] = []
     fileprivate var announcements: [Announcement] = []
     fileprivate var hasNotifications: Bool?
 
-    weak public var destination: StreamDestination?
+    weak var destination: StreamDestination?
 
     fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
 
-    public init(
+    init(
         currentUser: User?,
         streamKind: StreamKind,
         destination: StreamDestination?
@@ -26,7 +26,7 @@ public final class NotificationsGenerator: StreamGenerator {
         self.localToken = loadingToken.resetInitialPageLoadingToken()
     }
 
-    public func load(reload: Bool = false) {
+    func load(reload: Bool = false) {
         localToken = loadingToken.resetInitialPageLoadingToken()
 
         if reload {
@@ -39,7 +39,7 @@ public final class NotificationsGenerator: StreamGenerator {
         loadNotifications()
     }
 
-    public func reloadAnnouncements() {
+    func reloadAnnouncements() {
         loadAnnouncements()
     }
 

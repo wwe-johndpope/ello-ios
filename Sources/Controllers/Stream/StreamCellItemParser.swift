@@ -4,11 +4,11 @@
 
 import Foundation
 
-public struct StreamCellItemParser {
+struct StreamCellItemParser {
 
-    public init(){}
+    init(){}
 
-    public func parse(_ items: [JSONAble], streamKind: StreamKind, currentUser: User? = nil) -> [StreamCellItem] {
+    func parse(_ items: [JSONAble], streamKind: StreamKind, currentUser: User? = nil) -> [StreamCellItem] {
         let viewsAdultContent = currentUser?.viewsAdultContent ?? false
         let filteredItems = streamKind.filter(items, viewsAdultContent: viewsAdultContent)
         if let posts = filteredItems as? [Post] {
@@ -130,26 +130,26 @@ public struct StreamCellItemParser {
 
 
 // MARK: For Testing
-public extension StreamCellItemParser {
-    public func testingNotificationCellItems(_ notifications: [Notification]) -> [StreamCellItem] {
+extension StreamCellItemParser {
+    func testingNotificationCellItems(_ notifications: [Notification]) -> [StreamCellItem] {
         return notificationCellItems(notifications)
     }
-    public func testingPostCellItems(_ posts: [Post], streamKind: StreamKind) -> [StreamCellItem] {
+    func testingPostCellItems(_ posts: [Post], streamKind: StreamKind) -> [StreamCellItem] {
         return postCellItems(posts, streamKind: streamKind)
     }
-    public func testingCommentCellItems(_ comments: [ElloComment]) -> [StreamCellItem] {
+    func testingCommentCellItems(_ comments: [ElloComment]) -> [StreamCellItem] {
         return commentCellItems(comments)
     }
-    public func testingPostToggleItems(_ post: Post) -> [StreamCellItem] {
+    func testingPostToggleItems(_ post: Post) -> [StreamCellItem] {
         return postToggleItems(post)
     }
-    public func testingRegionItems(_ jsonable: JSONAble, content: [Regionable]) -> [StreamCellItem] {
+    func testingRegionItems(_ jsonable: JSONAble, content: [Regionable]) -> [StreamCellItem] {
         return regionItems(jsonable, content: content)
     }
-    public func testingUserCellItems(_ users: [User]) -> [StreamCellItem] {
+    func testingUserCellItems(_ users: [User]) -> [StreamCellItem] {
         return userCellItems(users)
     }
-    public func testingFooterStreamCellItems(_ post: Post) -> [StreamCellItem] {
+    func testingFooterStreamCellItems(_ post: Post) -> [StreamCellItem] {
         return footerStreamCellItems(post)
     }
 }

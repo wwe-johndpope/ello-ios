@@ -2,8 +2,7 @@
 ///  FakeStreamTextCellSizeCalculator.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 
 
 class FakeStreamTextCellSizeCalculator: StreamTextCellSizeCalculator {

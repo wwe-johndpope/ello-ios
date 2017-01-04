@@ -4,13 +4,13 @@
 
 import Foundation
 
-public typealias LovesCreateSuccessCompletion = (_ love: Love, _ responseConfig: ResponseConfig) -> Void
+typealias LovesCreateSuccessCompletion = (_ love: Love, _ responseConfig: ResponseConfig) -> Void
 
-public struct LovesService {
+struct LovesService {
 
-    public init(){}
+    init(){}
 
-    public func lovePost(
+    func lovePost(
         postId: String,
         success: @escaping LovesCreateSuccessCompletion,
         failure: @escaping ElloFailureCompletion)
@@ -29,7 +29,7 @@ public struct LovesService {
         )
     }
 
-    public func unlovePost(
+    func unlovePost(
         postId: String,
         success: @escaping ElloEmptyCompletion,
         failure: @escaping ElloFailureCompletion)

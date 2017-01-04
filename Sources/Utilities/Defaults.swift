@@ -4,8 +4,8 @@
 
 import Foundation
 
-public let ElloGroupName = "group.ello.Ello"
-public let GroupDefaults = defaults()
+let ElloGroupName = "group.ello.Ello"
+let GroupDefaults = defaults()
 
 private func defaults() -> UserDefaults {
     if AppSetup.sharedState.isTesting {

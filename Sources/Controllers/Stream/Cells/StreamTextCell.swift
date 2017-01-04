@@ -5,7 +5,7 @@
 import WebKit
 import Foundation
 
-open class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecognizerDelegate {
+class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecognizerDelegate {
     static let reuseIdentifier = "StreamTextCell"
 
     typealias WebContentReady = (_ webView: UIWebView) -> Void
@@ -17,7 +17,7 @@ open class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRec
     weak var streamEditingDelegate: StreamEditingDelegate?
     var webContentReady: WebContentReady?
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.scrollsToTop = false
@@ -33,7 +33,7 @@ open class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRec
         webView.addGestureRecognizer(longPressGesture)
     }
 
-    open func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
         return true
     }
 
@@ -52,7 +52,7 @@ open class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRec
         webContentReady = handler
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         hideBorder()
         webContentReady = nil
@@ -60,7 +60,7 @@ open class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRec
         webView.loadHTMLString("", baseURL: nil)
     }
 
-    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default"
         {
             userDelegate?.userTappedText(cell: self)
@@ -71,7 +71,7 @@ open class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRec
         }
     }
 
-    open func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         webContentReady?(webView)
     }
 }

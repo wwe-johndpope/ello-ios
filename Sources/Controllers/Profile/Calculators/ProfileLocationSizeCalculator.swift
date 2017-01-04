@@ -5,11 +5,11 @@
 import FutureKit
 
 
-public struct ProfileLocationSizeCalculator {
+struct ProfileLocationSizeCalculator {
 
     let promise = Promise<CGFloat>()
 
-    public func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
+    func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
         guard let
             user = item.jsonable as? User,
             let location = user.location, !location.isEmpty

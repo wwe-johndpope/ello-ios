@@ -2,8 +2,8 @@
 ///  StyledLabel.swift
 //
 
-open class StyledLabel: UILabel {
-    public enum FontFamily {
+class StyledLabel: UILabel {
+    enum FontFamily {
         case small
         case normal
         case large
@@ -21,7 +21,7 @@ open class StyledLabel: UILabel {
         }
     }
 
-    public struct Style {
+    struct Style {
         let backgroundColor: UIColor
         let textColor: UIColor
         let fontFamily: FontFamily
@@ -30,7 +30,7 @@ open class StyledLabel: UILabel {
             return fontFamily.font
         }
 
-        public init(
+        init(
             textColor: UIColor,
             backgroundColor: UIColor = .clear,
 
@@ -47,13 +47,13 @@ open class StyledLabel: UILabel {
         static let extraBottomMargin: CGFloat = 10
     }
 
-    open override var text: String? {
+    override var text: String? {
         didSet { updateStyle() }
     }
-    open var style: Style = .Default {
+    var style: Style = .Default {
         didSet { updateStyle() }
     }
-    open var styleName: String = "Default" {
+    var styleName: String = "Default" {
         didSet { style = Style.byName(styleName) }
     }
 
@@ -68,12 +68,12 @@ open class StyledLabel: UILabel {
         }
     }
 
-    required override public init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         updateStyle()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         updateStyle()
     }
@@ -94,7 +94,7 @@ extension StyledLabel {
             context: nil).size.height).map(ceil) ?? 0
     }
 
-    open override func sizeThatFits(_ size: CGSize) -> CGSize {
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)
         size.height = heightForWidth(size.width) + Size.extraBottomMargin
         return size
@@ -102,46 +102,46 @@ extension StyledLabel {
 }
 
 extension StyledLabel.Style {
-    public static let Default = StyledLabel.Style(
+    static let Default = StyledLabel.Style(
         textColor: .black
         )
-    public static let SmallWhite = StyledLabel.Style(
+    static let SmallWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .small
         )
-    public static let White = StyledLabel.Style(
+    static let White = StyledLabel.Style(
         textColor: .white
         )
-    public static let BoldWhite = StyledLabel.Style(
+    static let BoldWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .bold
         )
-    public static let LargeWhite = StyledLabel.Style(
+    static let LargeWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .largeBold
         )
-    public static let Black = StyledLabel.Style(
+    static let Black = StyledLabel.Style(
         textColor: .black
         )
-    public static let Large = StyledLabel.Style(
+    static let Large = StyledLabel.Style(
         textColor: .black,
         fontFamily: .largeBold
         )
-    public static let Gray = StyledLabel.Style(
+    static let Gray = StyledLabel.Style(
         textColor: .greyA()
         )
-    public static let LightGray = StyledLabel.Style(
+    static let LightGray = StyledLabel.Style(
         textColor: UIColor(hex: 0x9a9a9a)
         )
-    public static let LargePlaceholder = StyledLabel.Style(
+    static let LargePlaceholder = StyledLabel.Style(
         textColor: .greyC(),
         fontFamily: .large
         )
-    public static let Error = StyledLabel.Style(
+    static let Error = StyledLabel.Style(
         textColor: .red
         )
 
-    public static func byName(_ name: String) -> StyledLabel.Style {
+    static func byName(_ name: String) -> StyledLabel.Style {
         switch name {
         case "SmallWhite": return .SmallWhite
         case "White": return .White

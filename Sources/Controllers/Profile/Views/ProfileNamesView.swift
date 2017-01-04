@@ -2,8 +2,8 @@
 ///  ProfileNamesView.swift
 //
 
-open class ProfileNamesView: ProfileBaseView {
-    public struct Size {
+class ProfileNamesView: ProfileBaseView {
+    struct Size {
         static let horizNameMargin: CGFloat = 10
         static let vertNameMargin: CGFloat = 5
         static let outerMargins = UIEdgeInsets(top: 19, left: 15, bottom: 20, right: 15)
@@ -11,7 +11,7 @@ open class ProfileNamesView: ProfileBaseView {
     static let nameFont = UIFont.defaultFont(18)
     static let usernameFont = UIFont.defaultFont()
 
-    static open func preferredHeight(nameSize: CGSize, usernameSize: CGSize, maxWidth: CGFloat) -> (CGFloat, isVertical: Bool) {
+    static func preferredHeight(nameSize: CGSize, usernameSize: CGSize, maxWidth: CGFloat) -> (CGFloat, isVertical: Bool) {
         let bothNamesWidth = nameSize.width + usernameSize.width + Size.horizNameMargin
         let maxAllowedWidth = maxWidth - Size.outerMargins.left - Size.outerMargins.right
         if bothNamesWidth > maxAllowedWidth {
@@ -24,7 +24,7 @@ open class ProfileNamesView: ProfileBaseView {
         }
     }
 
-    open var name: String {
+    var name: String {
         get { return nameLabel.text ?? "" }
         set {
             nameLabel.text = newValue
@@ -33,7 +33,7 @@ open class ProfileNamesView: ProfileBaseView {
             setNeedsLayout()
         }
     }
-    open var username: String {
+    var username: String {
         get { return usernameLabel.text ?? "" }
         set {
             usernameLabel.text = newValue
@@ -72,7 +72,7 @@ extension ProfileNamesView {
         addSubview(usernameLabel)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         nameLabel.frame.origin.y = Size.outerMargins.top
@@ -94,7 +94,7 @@ extension ProfileNamesView {
         }
     }
 
-    public func prepareForReuse() {
+    func prepareForReuse() {
         // nothing here yet
     }
 }

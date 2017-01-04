@@ -6,18 +6,18 @@ import FLAnimatedImage
 import SnapKit
 
 
-open class StreamCreateCommentCell: UICollectionViewCell {
+class StreamCreateCommentCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamCreateCommentCell"
 
-    public struct Size {
-        public static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 15)
-        public static let AvatarRightMargin: CGFloat = 10
-        public static let ButtonLabelMargin: CGFloat = 30
-        public static let ReplyButtonSize: CGFloat = 50
-        public static let AvatarSize: CGFloat = 30
-        public static let WatchSize: CGFloat = 40
-        public static let WatchMargin: CGFloat = 14
-        public static let ReplyAllRightMargin: CGFloat = 5
+    struct Size {
+        static let Margins = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 15)
+        static let AvatarRightMargin: CGFloat = 10
+        static let ButtonLabelMargin: CGFloat = 30
+        static let ReplyButtonSize: CGFloat = 50
+        static let AvatarSize: CGFloat = 30
+        static let WatchSize: CGFloat = 40
+        static let WatchMargin: CGFloat = 14
+        static let ReplyAllRightMargin: CGFloat = 5
     }
 
     weak var delegate: PostbarDelegate?
@@ -59,7 +59,7 @@ open class StreamCreateCommentCell: UICollectionViewCell {
         }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
@@ -67,7 +67,7 @@ open class StreamCreateCommentCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
 
         style()
@@ -142,7 +142,7 @@ open class StreamCreateCommentCell: UICollectionViewCell {
         layoutIfNeeded()
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         avatarView.pin_cancelImageDownload()
         watching = false
@@ -170,7 +170,7 @@ open class StreamCreateCommentCell: UICollectionViewCell {
         setNeedsLayout()
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         avatarView.setNeedsLayout()
         avatarView.layoutIfNeeded()

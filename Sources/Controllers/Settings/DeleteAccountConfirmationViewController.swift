@@ -8,26 +8,26 @@ private enum DeleteAccountState {
     case noTurningBack
 }
 
-open class DeleteAccountConfirmationViewController: BaseElloViewController {
-    @IBOutlet open weak var titleLabel: UILabel!
-    open weak var infoLabel: StyledLabel!
-    @IBOutlet open weak var buttonView: UIView!
-    @IBOutlet open weak var cancelView: UIView!
-    open weak var cancelLabel: StyledLabel!
+class DeleteAccountConfirmationViewController: BaseElloViewController {
+    @IBOutlet weak var titleLabel: UILabel!
+    weak var infoLabel: StyledLabel!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var cancelView: UIView!
+    weak var cancelLabel: StyledLabel!
 
     fileprivate var state: DeleteAccountState = .askNicely
     fileprivate var timer: Timer?
     fileprivate var counter = 5
 
-    public init() {
+    init() {
         super.init(nibName: "DeleteAccountConfirmationView", bundle: Bundle(for: DeleteAccountConfirmationViewController.self))
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         infoLabel.text = "* \(InterfaceString.Settings.DeleteAccountExplanation)"

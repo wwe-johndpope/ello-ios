@@ -5,8 +5,8 @@
 import SnapKit
 
 
-open class ProfileLinksView: ProfileBaseView {
-    public struct Size {
+class ProfileLinksView: ProfileBaseView {
+    struct Size {
         static let margins = UIEdgeInsets(top: 12, left: 15, bottom: 15, right: 15)
         static let iconInsets = UIEdgeInsets(all: 15)
         static let iconSize = CGSize(width: 22, height: 22)
@@ -16,7 +16,7 @@ open class ProfileLinksView: ProfileBaseView {
         static let linkHeight: CGFloat = 26
     }
 
-    open var externalLinks: [ExternalLink] = [] {
+    var externalLinks: [ExternalLink] = [] {
         didSet {
             setNeedsUpdateConstraints()
             rearrangeLinks()

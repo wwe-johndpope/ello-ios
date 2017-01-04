@@ -5,9 +5,9 @@
 import Foundation
 
 
-public struct ProfileLocationPresenter {
+struct ProfileLocationPresenter {
 
-    public static func configure(
+    static func configure(
         _ view: ProfileLocationView,
         user: User,
         currentUser: User?)

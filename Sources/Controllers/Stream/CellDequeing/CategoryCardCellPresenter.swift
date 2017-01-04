@@ -2,7 +2,7 @@
 ///  CategoryCardCellPresenter.swift
 //
 
-public struct CategoryCardCellPresenter {
+struct CategoryCardCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

@@ -11,7 +11,7 @@ extension ElloProvider {
         failure(elloError, 200)
     }
 
-    public static func generateElloError(_ data: Data?, statusCode: Int?) -> NSError {
+    static func generateElloError(_ data: Data?, statusCode: Int?) -> NSError {
         var elloNetworkError: ElloNetworkError?
 
         if let data = data {
@@ -33,12 +33,12 @@ extension ElloProvider {
         return elloError
     }
 
-    public static func failedToSendRequest(_ failure: ElloFailureCompletion) {
+    static func failedToSendRequest(_ failure: ElloFailureCompletion) {
         let elloError = NSError.networkError("Failed to send request" as AnyObject?, code: ElloErrorCode.networkFailure)
         failure(elloError, nil)
     }
 
-    public static func failedToMapObjects(_ failure: ElloFailureCompletion) {
+    static func failedToMapObjects(_ failure: ElloFailureCompletion) {
         let jsonMappingError = ElloNetworkError(attrs: nil, code: ElloNetworkError.CodeType.unknown, detail: "NEED DEFAULT HERE", messages: nil, status: nil, title: "Unknown Error")
         let elloError = NSError.networkError(jsonMappingError, code: ElloErrorCode.jsonMapping)
         failure(elloError, nil)

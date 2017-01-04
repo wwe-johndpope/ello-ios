@@ -6,9 +6,9 @@ import Moya
 import Result
 
 
-public typealias MoyaResult = Result<Moya.Response, Moya.Error>
+typealias MoyaResult = Result<Moya.Response, Moya.Error>
 
-public enum ElloAPI {
+enum ElloAPI {
     case amazonCredentials
     case announcements
     case announcementsNewContent(createdAt: Date?)
@@ -77,9 +77,9 @@ public enum ElloAPI {
     case userStreamPosts(userId: String)
     case userNameAutoComplete(terms: String)
 
-    public static let apiVersion = "v2"
+    static let apiVersion = "v2"
 
-    public var pagingPath: String? {
+    var pagingPath: String? {
         switch self {
         case .postDetail:
             return "\(path)/comments"
@@ -106,7 +106,7 @@ public enum ElloAPI {
         }
     }
 
-    public var mappingType: MappingType {
+    var mappingType: MappingType {
         switch self {
         case .anonymousCredentials,
              .auth,
@@ -208,7 +208,7 @@ public enum ElloAPI {
 }
 
 extension ElloAPI {
-    public var supportsAnonymousToken: Bool {
+    var supportsAnonymousToken: Bool {
         switch self {
         case .availability,
              .join, .deleteSubscriptions:
@@ -218,7 +218,7 @@ extension ElloAPI {
         }
     }
 
-    public var requiresAnyToken: Bool {
+    var requiresAnyToken: Bool {
         switch self {
         case .anonymousCredentials,
              .auth,
@@ -230,13 +230,13 @@ extension ElloAPI {
     }
 }
 
-public protocol ElloTarget: Moya.TargetType {
+protocol ElloTarget: Moya.TargetType {
     var sampleResponse: HTTPURLResponse { get }
 }
 
 extension ElloAPI: Moya.TargetType {
-    public var baseURL: URL { return URL(string: ElloURI.baseURL)! }
-    public var method: Moya.Method {
+    var baseURL: URL { return URL(string: ElloURI.baseURL)! }
+    var method: Moya.Method {
         switch self {
         case .anonymousCredentials,
              .auth,
@@ -285,7 +285,7 @@ extension ElloAPI: Moya.TargetType {
         }
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case .amazonCredentials:
             return "/api/\(ElloAPI.apiVersion)/assets/credentials"
@@ -425,7 +425,7 @@ extension ElloAPI: Moya.TargetType {
         }
     }
 
-    public var sampleData: Data {
+    var sampleData: Data {
         switch self {
         case .announcements:
             return stubbedData("announcements")
@@ -543,11 +543,11 @@ extension ElloAPI: Moya.TargetType {
         }
     }
 
-    public var multipartBody: [Moya.MultipartFormData]? {
+    var multipartBody: [Moya.MultipartFormData]? {
         return nil
     }
 
-    public var encoding: Moya.ParameterEncoding {
+    var encoding: Moya.ParameterEncoding {
         if self.method == .get || self.method == .head {
             return URLEncoding.default
         }
@@ -556,15 +556,15 @@ extension ElloAPI: Moya.TargetType {
         }
     }
 
-    public var validate: Bool {
+    var validate: Bool {
         return false
     }
 
-    public var task: Task {
+    var task: Task {
         return .request
     }
 
-    public func headers() -> [String: String] {
+    func headers() -> [String: String] {
         var assigned: [String: String] = [
             "Accept": "application/json",
             "Accept-Language": "",
@@ -609,7 +609,7 @@ extension ElloAPI: Moya.TargetType {
         return assigned
     }
 
-    public var parameters: [String: Any]? {
+    var parameters: [String: Any]? {
         switch self {
         case .anonymousCredentials:
             return [
@@ -796,13 +796,13 @@ extension ElloAPI: Moya.TargetType {
     }
 }
 
-public func stubbedData(_ filename: String) -> Data {
+func stubbedData(_ filename: String) -> Data {
     let bundle = Bundle.main
     let path = bundle.path(forResource: filename, ofType: "json")
     return (try! Data(contentsOf: URL(fileURLWithPath: path!)))
 }
 
-public func url(_ route: Moya.TargetType) -> String {
+func url(_ route: Moya.TargetType) -> String {
     return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
@@ -810,7 +810,7 @@ private func tokenStringFromData(_ data: Data) -> String {
     return String((data as NSData).description.characters.filter { !"<> ".characters.contains($0) })
 }
 
-public extension ElloAPI {
+extension ElloAPI {
     static func generateSeed() -> Int { return Int(Date().timeIntervalSince1970) }
 }
 
@@ -822,7 +822,7 @@ func += <KeyType, ValueType> (left: inout Dictionary<KeyType, ValueType>, right:
 
 //extension Moya.ParameterEncoding: Equatable {}
 //
-//public func == (lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
+//func == (lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
 //    switch (lhs, rhs) {
 //    case (.url, .url),
 //         (.json, .json),

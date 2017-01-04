@@ -6,7 +6,7 @@ import Foundation
 
 private let CredentialSettingsSubmitViewHeight: CGFloat = 128
 
-public protocol CredentialSettingsDelegate: class {
+protocol CredentialSettingsDelegate: class {
     func credentialSettingsUserChanged(_ user: User)
     func credentialSettingsDidUpdate()
 }

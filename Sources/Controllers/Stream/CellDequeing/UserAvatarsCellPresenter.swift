@@ -2,9 +2,9 @@
 ///  UserAvatarsCellPresenter.swift
 //
 
-public struct UserAvatarsCellPresenter {
+struct UserAvatarsCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

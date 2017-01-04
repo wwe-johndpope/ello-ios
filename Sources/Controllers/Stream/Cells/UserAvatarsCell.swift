@@ -4,13 +4,13 @@
 
 import Foundation
 
-open class UserAvatarsCell: UICollectionViewCell {
+class UserAvatarsCell: UICollectionViewCell {
     static let reuseIdentifier = "UserAvatarsCell"
 
-    @IBOutlet weak open var imageView: UIImageView!
-    @IBOutlet weak open var loadingLabel: UILabel!
-    @IBOutlet weak open var seeAllButton: UIButton!
-    @IBOutlet weak open var avatarsView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak var seeAllButton: UIButton!
+    @IBOutlet weak var avatarsView: UIView!
     var users = [User]()
     var avatarButtons = [AvatarButton]()
     var maxAvatars: Int {
@@ -27,7 +27,7 @@ open class UserAvatarsCell: UICollectionViewCell {
     weak var userDelegate: UserDelegate?
     weak var simpleStreamDelegate: SimpleStreamDelegate?
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         style()
     }

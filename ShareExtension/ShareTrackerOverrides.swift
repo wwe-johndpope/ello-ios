@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum ContentType: String {
+enum ContentType: String {
     case post = "Post"
     case comment = "Comment"
     case user = "User"
@@ -12,10 +12,10 @@ public enum ContentType: String {
 
 func logPresentingAlert(_ name: String) {}
 
-open class Tracker {
-    open static let sharedTracker = Tracker()
+class Tracker {
+    static let sharedTracker = Tracker()
 
-    public init() {}
+    init() {}
 
     static func trackRequest(headers: String, statusCode: Int, responseJSON: String) {}
 
@@ -26,7 +26,7 @@ open class Tracker {
     func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {}
 }
 
-open class Window {
-    static open func isWide(_ width: Float) -> Bool { return false }
-    static open var width: Float { return 0 }
+class Window {
+    static func isWide(_ width: Float) -> Bool { return false }
+    static var width: Float { return 0 }
 }

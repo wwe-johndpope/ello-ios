@@ -4,7 +4,7 @@
 
 private let DynamicSettingsCellHeight: CGFloat = 50
 
-public protocol DynamicSettingsDelegate: class {
+protocol DynamicSettingsDelegate: class {
     func dynamicSettingsUserChanged(_ user: User)
 }
 

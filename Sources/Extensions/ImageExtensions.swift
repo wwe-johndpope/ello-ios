@@ -5,7 +5,7 @@
 import UIKit
 import CoreGraphics
 
-public extension UIImage {
+extension UIImage {
 
     class func isGif(_ imageData: Data) -> Bool {
         let length = imageData.count

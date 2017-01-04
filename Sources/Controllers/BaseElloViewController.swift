@@ -2,21 +2,22 @@
 ///  BaseElloViewController.swift
 //
 
-@objc public protocol ControllerThatMightHaveTheCurrentUser {
+@objc
+protocol ControllerThatMightHaveTheCurrentUser {
     var currentUser: User? { get set }
 }
 
-open class BaseElloViewController: UIViewController, ControllerThatMightHaveTheCurrentUser {
+class BaseElloViewController: UIViewController, ControllerThatMightHaveTheCurrentUser {
 
-    open var elloNavigationItem = UINavigationItem()
+    var elloNavigationItem = UINavigationItem()
 
-    override open var title: String? {
+    override var title: String? {
         didSet {
             elloNavigationItem.title = title ?? ""
         }
     }
 
-    open var currentUser: User? {
+    var currentUser: User? {
         didSet { didSetCurrentUser() }
     }
 
@@ -28,12 +29,12 @@ open class BaseElloViewController: UIViewController, ControllerThatMightHaveTheC
         return findViewController { vc in vc is ElloTabBarController } as? ElloTabBarController
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.fixNavBarItemPadding()
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
@@ -48,7 +49,7 @@ open class BaseElloViewController: UIViewController, ControllerThatMightHaveTheC
         _ = navigationController.popViewController(animated: true)
     }
 
-    open func isRootViewController() -> Bool {
+    func isRootViewController() -> Bool {
         if let viewControllers = navigationController?.viewControllers {
             return (viewControllers[0] ) == self
         }
@@ -57,7 +58,7 @@ open class BaseElloViewController: UIViewController, ControllerThatMightHaveTheC
 }
 
 // MARK: Search
-public extension BaseElloViewController {
+extension BaseElloViewController {
     func searchButtonTapped() {
         let search = SearchViewController()
         search.currentUser = currentUser

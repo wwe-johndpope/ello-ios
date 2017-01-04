@@ -6,9 +6,9 @@ import QuartzCore
 import FLAnimatedImage
 import CoreGraphics
 
-open class ElloLogoView: UIImageView {
+class ElloLogoView: UIImageView {
 
-    public enum Config {
+    enum Config {
         case normal
         case grey
 
@@ -27,27 +27,27 @@ open class ElloLogoView: UIImageView {
     fileprivate var wasAnimating = false
     fileprivate var config: ElloLogoView.Config = .normal
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    convenience public init() {
+    convenience init() {
         self.init(frame: .zero)
     }
 
-    convenience public init(config: ElloLogoView.Config) {
+    convenience init(config: ElloLogoView.Config) {
         self.init(frame: .zero)
         self.config = config
         self.image = self.config.image
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.image = self.config.image
         self.contentMode = .scaleAspectFit
     }
 
-    override open func didMoveToWindow() {
+    override func didMoveToWindow() {
         super.didMoveToWindow()
         if window != nil && wasAnimating {
             animateLogo()

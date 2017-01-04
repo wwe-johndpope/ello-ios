@@ -15,44 +15,44 @@ import SwiftyJSON
 let UserVersion: Int = 7
 
 @objc(User)
-public final class User: JSONAble {
+final class User: JSONAble {
 
     // active record
-    public let id: String
+    let id: String
     // required
-    public let href: String
-    public let username: String
-    public let name: String
-    public var displayName: String {
+    let href: String
+    let username: String
+    let name: String
+    var displayName: String {
         if name.isEmpty {
             return atName
         }
         return name
     }
-    public let experimentalFeatures: Bool
-    public var relationshipPriority: RelationshipPriority
-    public let postsAdultContent: Bool
-    public let viewsAdultContent: Bool
-    public var hasCommentingEnabled: Bool
-    public var hasSharingEnabled: Bool
-    public var hasRepostingEnabled: Bool
-    public var hasLovesEnabled: Bool
-    public var isCollaborateable: Bool
-    public var isHireable: Bool
+    let experimentalFeatures: Bool
+    var relationshipPriority: RelationshipPriority
+    let postsAdultContent: Bool
+    let viewsAdultContent: Bool
+    var hasCommentingEnabled: Bool
+    var hasSharingEnabled: Bool
+    var hasRepostingEnabled: Bool
+    var hasLovesEnabled: Bool
+    var isCollaborateable: Bool
+    var isHireable: Bool
     // optional
-    public var avatar: Asset? // required, but kinda optional due to it being nested in json
-    public var identifiableBy: String?
-    public var postsCount: Int?
-    public var lovesCount: Int?
-    public var followersCount: String? // string due to this returning "∞" for the ello user
-    public var followingCount: Int?
-    public var formattedShortBio: String?
-    public var externalLinksList: [ExternalLink]?
-    public var coverImage: Asset?
-    public var backgroundPosition: String?
-    public var onboardingVersion: Int?
-    public var totalViewsCount: Int?
-    public var formattedTotalCount: String? {
+    var avatar: Asset? // required, but kinda optional due to it being nested in json
+    var identifiableBy: String?
+    var postsCount: Int?
+    var lovesCount: Int?
+    var followersCount: String? // string due to this returning "∞" for the ello user
+    var followingCount: Int?
+    var formattedShortBio: String?
+    var externalLinksList: [ExternalLink]?
+    var coverImage: Asset?
+    var backgroundPosition: String?
+    var onboardingVersion: Int?
+    var totalViewsCount: Int?
+    var formattedTotalCount: String? {
         guard let count = totalViewsCount else { return nil }
 
         if count < 1000 {
@@ -60,26 +60,26 @@ public final class User: JSONAble {
         }
         return count.numberToHuman(rounding: 2, showZero: true)
     }
-    public var location: String?
+    var location: String?
 
     // links
-    public var posts: [Post]? { return getLinkArray("posts") as? [Post] }
-    public var categories: [Category]? { return getLinkArray("categories") as? [Category] }
-    public var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
+    var posts: [Post]? { return getLinkArray("posts") as? [Post] }
+    var categories: [Category]? { return getLinkArray("categories") as? [Category] }
+    var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
 
     // computed
-    public var atName: String { return "@\(username)"}
-    public var isCurrentUser: Bool { return self.profile != nil }
+    var atName: String { return "@\(username)"}
+    var isCurrentUser: Bool { return self.profile != nil }
     // profile
-    public var profile: Profile?
+    var profile: Profile?
 
-    public var shareLink: String? {
+    var shareLink: String? {
         get {
             return "\(ElloURI.baseURL)/\(username)"
         }
     }
 
-    public init(id: String,
+    init(id: String,
         href: String,
         username: String,
         name: String,
@@ -113,7 +113,7 @@ public final class User: JSONAble {
 
 // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
         self.id = decoder.decodeKey("id")
@@ -188,7 +188,7 @@ public final class User: JSONAble {
             isHireable: false)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
 
         // active record
@@ -231,7 +231,7 @@ public final class User: JSONAble {
 
 // MARK: JSONAble
 
-    public override func merge(_ other: JSONAble) -> JSONAble {
+    override func merge(_ other: JSONAble) -> JSONAble {
         if let otherUser = other as? User {
             if otherUser.formattedShortBio == nil {
                 otherUser.formattedShortBio = formattedShortBio
@@ -244,7 +244,7 @@ public final class User: JSONAble {
         return other
     }
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.userFromJSON.rawValue)
         // create user
@@ -349,14 +349,14 @@ extension User {
 }
 
 extension User {
-    public func coverImageURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
+    func coverImageURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
         if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.hasSuffix(".gif") == true {
             return coverImage?.original?.url as URL?
         }
         return coverImage?.xhdpi?.url as URL?
     }
 
-    public func avatarURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
+    func avatarURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
         if animated && (!postsAdultContent || viewsAdultContent == true) && avatar?.original?.url.absoluteString.hasSuffix(".gif") == true {
             return avatar?.original?.url as URL?
         }

@@ -5,11 +5,11 @@
 import Foundation
 import iRate
 
-open class Rate: NSObject {
+class Rate: NSObject {
 
-    open static let sharedRate = Rate()
+    static let sharedRate = Rate()
 
-    open func setup() {
+    func setup() {
         iRate.sharedInstance().delegate = self
         iRate.sharedInstance().onlyPromptIfLatestVersion = true
         iRate.sharedInstance().previewMode = false
@@ -25,37 +25,37 @@ open class Rate: NSObject {
         iRate.sharedInstance().remindPeriod = 7
     }
 
-    open func prompt() {
+    func prompt() {
         iRate.sharedInstance().promptForRating()
     }
 
-    open func logEvent() {
+    func logEvent() {
         iRate.sharedInstance().logEvent(false)
     }
 }
 
 extension Rate: iRateDelegate {
-    public func iRateCouldNotConnect(toAppStore error: Error!){
+    func iRateCouldNotConnect(toAppStore error: Error!){
         Tracker.sharedTracker.ratePromptCouldNotConnectToAppStore()
     }
 
-    public func iRateDidPromptForRating(){
+    func iRateDidPromptForRating(){
         Tracker.sharedTracker.ratePromptShown()
     }
 
-    public func iRateUserDidAttemptToRateApp(){
+    func iRateUserDidAttemptToRateApp(){
         Tracker.sharedTracker.ratePromptUserAttemptedToRateApp()
     }
 
-    public func iRateUserDidDeclineToRateApp(){
+    func iRateUserDidDeclineToRateApp(){
         Tracker.sharedTracker.ratePromptUserDeclinedToRateApp()
     }
 
-    public func iRateUserDidRequestReminderToRateApp(){
+    func iRateUserDidRequestReminderToRateApp(){
         Tracker.sharedTracker.ratePromptRemindMeLater()
     }
 
-    public func iRateDidOpenAppStore(){
+    func iRateDidOpenAppStore(){
         Tracker.sharedTracker.ratePromptOpenedAppStore()
     }
 }

@@ -5,20 +5,20 @@
 import Moya
 import SwiftyJSON
 
-public typealias InviteFriendsSuccessCompletion = () -> Void
-public typealias FindFriendsSuccessCompletion = ([(LocalPerson, User?)]) -> Void
+typealias InviteFriendsSuccessCompletion = () -> Void
+typealias FindFriendsSuccessCompletion = ([(LocalPerson, User?)]) -> Void
 
-public struct InviteService {
+struct InviteService {
 
-    public init(){}
+    init(){}
 
-    public func invite(_ contact: String, success: @escaping InviteFriendsSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func invite(_ contact: String, success: @escaping InviteFriendsSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         ElloProvider.shared.elloRequest(ElloAPI.inviteFriends(contact: contact),
             success: { _ in success() },
             failure: failure)
     }
 
-    public func find(_ addressBook: AddressBookProtocol, currentUser: User?, success: @escaping FindFriendsSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func find(_ addressBook: AddressBookProtocol, currentUser: User?, success: @escaping FindFriendsSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         var contacts = [String: [String]]()
         for person in addressBook.localPeople {
             contacts[person.identifier] = person.emails

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct StreamToggleCellPresenter {
+struct StreamToggleCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

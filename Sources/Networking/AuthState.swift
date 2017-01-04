@@ -4,8 +4,8 @@
 
 import Foundation
 
-public enum AuthState {
-    public static var uuid: UUID = UUID()
+enum AuthState {
+    static var uuid: UUID = UUID()
 
     case initial  // auth is in indeterminate state
 

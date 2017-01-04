@@ -4,13 +4,13 @@
 
 import SnapKit
 
-public protocol BuyButtonLinkDelegate: class {
+protocol BuyButtonLinkDelegate: class {
     func closeModal()
     func submitLink(_ url: URL)
     func clearLink()
 }
 
-open class BuyButtonLinkScreen: UIView {
+class BuyButtonLinkScreen: UIView {
     struct Size {
         static let topMargin: CGFloat = 120
         static let sideMargin: CGFloat = 10
@@ -51,7 +51,7 @@ open class BuyButtonLinkScreen: UIView {
         }
     }
 
-    public required override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
@@ -60,7 +60,7 @@ open class BuyButtonLinkScreen: UIView {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

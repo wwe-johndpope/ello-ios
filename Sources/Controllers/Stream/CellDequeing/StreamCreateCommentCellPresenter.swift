@@ -2,7 +2,7 @@
 ///  StreamCreateCommentCellPresenter.swift
 //
 
-public struct StreamCreateCommentCellPresenter {
+struct StreamCreateCommentCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

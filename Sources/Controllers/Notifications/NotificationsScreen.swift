@@ -3,11 +3,11 @@
 //
 
 @objc
-public protocol NotificationsScreenDelegate {
+protocol NotificationsScreenDelegate {
     func activatedCategory(_ filter: String)
 }
 
-open class NotificationsScreen: UIView {
+class NotificationsScreen: UIView {
 
     fileprivate let filterAllButton = NotificationsScreen.filterButton(title: "All")
     fileprivate let filterCommentsButton = NotificationsScreen.filterButton(image: .comments)
@@ -45,7 +45,7 @@ open class NotificationsScreen: UIView {
 
     var navBarVisible = true
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
 
         filterMentionButton.titleLabel!.font = UIFont.defaultFont(16)
 
@@ -68,11 +68,11 @@ open class NotificationsScreen: UIView {
         self.addSubview(filterBar)
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         positionFilterBar()

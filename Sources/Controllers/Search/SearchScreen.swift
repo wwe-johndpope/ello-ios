@@ -2,7 +2,7 @@
 ///  SearchScreen.swift
 //
 
-public protocol SearchScreenDelegate: class {
+protocol SearchScreenDelegate: class {
     func searchCanceled()
     func searchFieldCleared()
     func searchFieldChanged(_ text: String, isPostSearch: Bool)
@@ -11,7 +11,7 @@ public protocol SearchScreenDelegate: class {
     func findFriendsTapped()
 }
 
-public protocol SearchScreenProtocol: class {
+protocol SearchScreenProtocol: class {
     var delegate: SearchScreenDelegate? { get set }
     var hasBackButton: Bool { get set }
     var hasGridViewToggle: Bool { get set }
@@ -26,35 +26,35 @@ public protocol SearchScreenProtocol: class {
     func updateInsets(bottom: CGFloat)
 }
 
-open class SearchScreen: UIView, SearchScreenProtocol {
+class SearchScreen: UIView, SearchScreenProtocol {
     struct Size {
         static let containerMargin: CGFloat = 15
     }
 
     fileprivate var debounced: ThrottledBlock
-    open let navigationBar = ElloNavigationBar()
-    open let searchField = UITextField()
-    open let searchControlsContainer = UIView()
+    let navigationBar = ElloNavigationBar()
+    let searchField = UITextField()
+    let searchControlsContainer = UIView()
     fileprivate let postsToggleButton = StyledButton(style: .SquareBlack)
     fileprivate let peopleToggleButton = StyledButton(style: .SquareBlack)
     fileprivate var streamViewContainer = UIView()
-    open fileprivate(set) var findFriendsContainer: UIView!
+    fileprivate(set) var findFriendsContainer: UIView!
     fileprivate var bottomInset: CGFloat
     fileprivate var navBarTitle: String = ""
     fileprivate var fieldPlaceholderText: String = ""
     fileprivate var isSearchView: Bool
-    open var hasBackButton: Bool = true {
+    var hasBackButton: Bool = true {
         didSet {
             setupNavigationItems()
         }
     }
-    open var gridListItem: UIBarButtonItem?
-    open var hasGridViewToggle: Bool = true {
+    var gridListItem: UIBarButtonItem?
+    var hasGridViewToggle: Bool = true {
         didSet {
             setupNavigationItems()
         }
     }
-    open let navigationItem = UINavigationItem()
+    let navigationItem = UINavigationItem()
 
     fileprivate var btnWidth: CGFloat {
         get {
@@ -66,11 +66,11 @@ open class SearchScreen: UIView, SearchScreenProtocol {
             return searchControlsContainer.frame.size.height - 43
         }
     }
-    weak open var delegate: SearchScreenDelegate?
+    weak var delegate: SearchScreenDelegate?
 
 // MARK: init
 
-    public init(frame: CGRect, isSearchView: Bool, navBarTitle: String = InterfaceString.Search.Title, fieldPlaceholderText: String = InterfaceString.Search.Prompt) {
+    init(frame: CGRect, isSearchView: Bool, navBarTitle: String = InterfaceString.Search.Title, fieldPlaceholderText: String = InterfaceString.Search.Prompt) {
         debounced = debounce(0.8)
         bottomInset = 0
         self.navBarTitle = navBarTitle
@@ -87,18 +87,18 @@ open class SearchScreen: UIView, SearchScreenProtocol {
         findFriendsContainer.isHidden = !self.isSearchView
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func showNavBars() {
+    func showNavBars() {
         animate(animated: true) {
             self.searchControlsContainer.frame.origin.y = 64
             self.streamViewContainer.frame = self.getStreamViewFrame()
         }
     }
 
-    open func hideNavBars() {
+    func hideNavBars() {
         animate(animated: true) {
             self.searchControlsContainer.frame.origin.y = 0
             self.streamViewContainer.frame = self.getStreamViewFrame()
@@ -194,7 +194,7 @@ open class SearchScreen: UIView, SearchScreenProtocol {
         onPostsTapped()
     }
 
-    open func onPostsTapped() {
+    func onPostsTapped() {
         postsToggleButton.isSelected = true
         peopleToggleButton.isSelected = false
         var searchFieldText = searchField.text ?? ""
@@ -205,7 +205,7 @@ open class SearchScreen: UIView, SearchScreenProtocol {
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton.isSelected)
     }
 
-    open func onPeopleTapped() {
+    func onPeopleTapped() {
         peopleToggleButton.isSelected = true
         postsToggleButton.isSelected = false
         var searchFieldText = searchField.text ?? ""
@@ -262,7 +262,7 @@ open class SearchScreen: UIView, SearchScreenProtocol {
         findFriendsContainer.addSubview(button)
     }
 
-    open func viewForStream() -> UIView {
+    func viewForStream() -> UIView {
         return streamViewContainer
     }
 
@@ -271,19 +271,19 @@ open class SearchScreen: UIView, SearchScreenProtocol {
         debounced {}
     }
 
-    open func updateInsets(bottom: CGFloat) {
+    func updateInsets(bottom: CGFloat) {
         bottomInset = bottom
         setNeedsLayout()
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         findFriendsContainer.frame.origin.y = frame.size.height - findFriendsContainer.frame.height - bottomInset - ElloTabBar.Size.height
         postsToggleButton.frame = CGRect(x: Size.containerMargin, y: buttonY, width: btnWidth, height: 33)
         peopleToggleButton.frame = CGRect(x: postsToggleButton.frame.maxX, y: buttonY, width: btnWidth, height: 33)
     }
 
-    open func searchForText() {
+    func searchForText() {
         let text = searchField.text ?? ""
         if text.characters.count == 0 { return }
         hideFindFriends()
@@ -322,13 +322,13 @@ open class SearchScreen: UIView, SearchScreenProtocol {
 extension SearchScreen: UITextFieldDelegate {
 
     @objc
-    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
         clearSearch()
         showFindFriends()
         return true
     }
 
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         _ = textField.resignFirstResponder()
         return true
     }

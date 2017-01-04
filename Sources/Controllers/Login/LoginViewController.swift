@@ -5,13 +5,13 @@
 import Alamofire
 import OnePasswordExtension
 
-open class LoginViewController: BaseElloViewController, HasAppController {
+class LoginViewController: BaseElloViewController, HasAppController {
     var mockScreen: LoginScreenProtocol?
     var screen: LoginScreenProtocol { return mockScreen ?? (self.view as! LoginScreenProtocol) }
 
     var parentAppController: AppViewController?
 
-    override open func loadView() {
+    override func loadView() {
         let screen = LoginScreen()
         screen.delegate = self
         screen.onePasswordAvailable = OnePasswordExtension.shared().isAppExtensionAvailable()

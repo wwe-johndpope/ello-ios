@@ -16,7 +16,7 @@ extension UIViewController: GestureNavigation {
         }
     }
 
-    public func findViewController(_ find: (UIViewController) -> Bool) -> UIViewController? {
+    func findViewController(_ find: (UIViewController) -> Bool) -> UIViewController? {
         var controller: UIViewController?
         controller = self
         while controller != nil {

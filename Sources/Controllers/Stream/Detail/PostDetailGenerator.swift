@@ -2,11 +2,11 @@
 ///  PostDetailGenerator.swift
 //
 
-public final class PostDetailGenerator: StreamGenerator {
+final class PostDetailGenerator: StreamGenerator {
 
-    public var currentUser: User?
-    public var streamKind: StreamKind
-    weak public var destination: StreamDestination?
+    var currentUser: User?
+    var streamKind: StreamKind
+    weak var destination: StreamDestination?
 
     fileprivate var post: Post?
     fileprivate let postParam: String
@@ -15,7 +15,7 @@ public final class PostDetailGenerator: StreamGenerator {
     fileprivate var hasPaddedSocial = false
     fileprivate let queue = OperationQueue()
 
-    public init(currentUser: User?,
+    init(currentUser: User?,
          postParam: String,
          post: Post?,
          streamKind: StreamKind,
@@ -29,7 +29,7 @@ public final class PostDetailGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    public func load(reload: Bool = false) {
+    func load(reload: Bool = false) {
         let doneOperation = AsyncOperation()
         queue.addOperation(doneOperation)
 

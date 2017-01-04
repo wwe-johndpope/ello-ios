@@ -2,18 +2,18 @@
 ///  StreamableScreen.swift
 //
 
-public protocol StreamableScreenProtocol: class {
+protocol StreamableScreenProtocol: class {
     var navigationBarTopConstraint: NSLayoutConstraint! { get }
     var navigationBar: ElloNavigationBar { get }
     var navigationItem: UINavigationItem? { get set }
 }
 
-open class StreamableScreen: Screen, StreamableScreenProtocol {
-    open let navigationBar = ElloNavigationBar()
-    open var navigationBarTopConstraint: NSLayoutConstraint!
+class StreamableScreen: Screen, StreamableScreenProtocol {
+    let navigationBar = ElloNavigationBar()
+    var navigationBarTopConstraint: NSLayoutConstraint!
     let streamContainer = UIView()
 
-    open var navigationItem: UINavigationItem? {
+    var navigationItem: UINavigationItem? {
         get { return navigationBar.items?.first }
         set {
             navigationBar.items = newValue.flatMap { [$0] }

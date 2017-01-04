@@ -3,21 +3,21 @@
 //
 
 
-open class NotificationsViewController: StreamableViewController, NotificationDelegate, NotificationsScreenDelegate {
+class NotificationsViewController: StreamableViewController, NotificationDelegate, NotificationsScreenDelegate {
     var generator: NotificationsGenerator?
     var hasNewContent = false
     var fromTabBar = false
     fileprivate var reloadNotificationsObserver: NotificationObserver?
     fileprivate var newAnnouncementsObserver: NotificationObserver?
-    open var categoryFilterType = NotificationFilterType.all
-    open var categoryStreamKind: StreamKind { return .notifications(category: categoryFilterType.category) }
+    var categoryFilterType = NotificationFilterType.all
+    var categoryStreamKind: StreamKind { return .notifications(category: categoryFilterType.category) }
 
-    override open var tabBarItem: UITabBarItem? {
+    override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.bolt) }
         set { self.tabBarItem = newValue }
     }
 
-    override open func loadView() {
+    override func loadView() {
         self.view = NotificationsScreen(frame: UIScreen.main.bounds)
     }
 
@@ -27,7 +27,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
 
     var navigationNotificationObserver: NotificationObserver?
 
-    public init() {
+    init() {
         super.init(nibName: nil, bundle: nil)
         addNotificationObservers()
 
@@ -38,7 +38,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         )
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -48,12 +48,12 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         newAnnouncementsObserver?.removeObserver()
     }
 
-    override open func didSetCurrentUser() {
+    override func didSetCurrentUser() {
         generator?.currentUser = currentUser
         super.didSetCurrentUser()
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         screen.delegate = self
@@ -65,7 +65,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         reload()
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if hasNewContent && fromTabBar {
@@ -103,7 +103,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         streamViewController.reloadClosure = { [weak self] in self?.reload() }
     }
 
-    override open func showNavBars(_ scrollToBottom: Bool) {
+    override func showNavBars(_ scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         screen.animateNavigationBar(visible: true)
         updateInsets()
@@ -113,7 +113,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         }
     }
 
-    override open func hideNavBars() {
+    override func hideNavBars() {
         super.hideNavBars()
         screen.animateNavigationBar(visible: false)
         updateInsets()
@@ -126,12 +126,12 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         return self.screen.streamContainer
     }
 
-    open func activatedCategory(_ filterTypeStr: String) {
+    func activatedCategory(_ filterTypeStr: String) {
         let filterType = NotificationFilterType(rawValue: filterTypeStr)!
         activatedCategory(filterType)
     }
 
-    open func activatedCategory(_ filterType: NotificationFilterType) {
+    func activatedCategory(_ filterType: NotificationFilterType) {
         screen.selectFilterButton(filterType)
         categoryFilterType = filterType
 
@@ -142,7 +142,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         reload()
     }
 
-    open func commentTapped(_ comment: ElloComment) {
+    func commentTapped(_ comment: ElloComment) {
         if let post = comment.loadedFromPost {
             postTapped(post)
         }
@@ -151,7 +151,7 @@ open class NotificationsViewController: StreamableViewController, NotificationDe
         }
     }
 
-    open func respondToNotification(_ components: [String]) {
+    func respondToNotification(_ components: [String]) {
         var popToRoot: Bool = true
         if let path = components.safeValue(0) {
             switch path {
@@ -213,16 +213,16 @@ private extension NotificationsViewController {
 // MARK: NotificationsViewController: StreamDestination
 extension NotificationsViewController: StreamDestination {
 
-    public var pagingEnabled: Bool {
+    var pagingEnabled: Bool {
         get { return streamViewController.pagingEnabled }
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 
-    public func setPlaceholders(items: [StreamCellItem]) {
+    func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
 
@@ -233,22 +233,22 @@ extension NotificationsViewController: StreamDestination {
         }
     }
 
-    public func setPrimary(jsonable: JSONAble) {
+    func setPrimary(jsonable: JSONAble) {
         self.streamViewController.doneLoading()
     }
 
-    public func setPagingConfig(responseConfig: ResponseConfig) {
+    func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
     }
 
-    public func primaryJSONAbleNotFound() {
+    func primaryJSONAbleNotFound() {
         self.streamViewController.doneLoading()
     }
 }
 
 // MARK: NotificationsViewController:
 extension NotificationsViewController: AnnouncementDelegate {
-    public func markAnnouncementAsRead(announcement: Announcement) {
+    func markAnnouncementAsRead(announcement: Announcement) {
         Tracker.sharedTracker.announcementDismissed(announcement)
         generator?.markAnnouncementAsRead(announcement)
         postNotification(JSONAbleChangedNotification, value: (announcement, .delete))

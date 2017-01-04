@@ -8,18 +8,18 @@ import SwiftyJSON
 let ActivityVersion = 1
 
 @objc(Activity)
-public final class Activity: JSONAble {
+final class Activity: JSONAble {
 
     // active record
-    public let id: String
-    public let createdAt: Date
+    let id: String
+    let createdAt: Date
     // required
-    public let kind: Kind
-    public let subjectType: SubjectType
+    let kind: Kind
+    let subjectType: SubjectType
     // links
-    public var subject: JSONAble? { return getLinkObject("subject") }
+    var subject: JSONAble? { return getLinkObject("subject") }
 
-    public enum Kind: String {
+    enum Kind: String {
         // Posts
         case friendPost = "friend_post" // main feed
         case ownPost = "own_post" // main feed
@@ -60,7 +60,7 @@ public final class Activity: JSONAble {
         case unknown = "Unknown"
     }
 
-    public enum SubjectType: String {
+    enum SubjectType: String {
         case user = "User"
         case post = "Post"
         case comment = "Comment"
@@ -69,7 +69,7 @@ public final class Activity: JSONAble {
 
 // MARK: Initialization
 
-    public init(id: String,
+    init(id: String,
         createdAt: Date,
         kind: Kind,
         subjectType: SubjectType)
@@ -83,7 +83,7 @@ public final class Activity: JSONAble {
 
 // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
         self.id = decoder.decodeKey("id")
@@ -96,7 +96,7 @@ public final class Activity: JSONAble {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
         coder.encodeObject(id, forKey: "id")
@@ -109,7 +109,7 @@ public final class Activity: JSONAble {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.activityFromJSON.rawValue)
         // active record

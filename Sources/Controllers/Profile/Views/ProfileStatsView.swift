@@ -2,8 +2,8 @@
 ///  ProfileStatsView.swift
 //
 
-open class ProfileStatsView: ProfileBaseView {
-    public struct Size {
+class ProfileStatsView: ProfileBaseView {
+    struct Size {
         static let height: CGFloat = 60
         static let horizontalMargin: CGFloat = 47
         static let horizontalInset: CGFloat = -3
@@ -12,19 +12,19 @@ open class ProfileStatsView: ProfileBaseView {
         static let captionVerticalOffset: CGFloat = 3
     }
 
-    open var postsCount: String {
+    var postsCount: String {
         get { return postsCountLabel.text ?? "" }
         set { postsCountLabel.text = newValue }
     }
-    open var followingCount: String {
+    var followingCount: String {
         get { return followingCountLabel.text ?? "" }
         set { followingCountLabel.text = newValue }
     }
-    open var followersCount: String {
+    var followersCount: String {
         get { return followersCountLabel.text ?? "" }
         set { followersCountLabel.text = newValue }
     }
-    open var lovesCount: String {
+    var lovesCount: String {
         get { return lovesCountLabel.text ?? "" }
         set { lovesCountLabel.text = newValue }
     }

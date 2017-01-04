@@ -203,7 +203,7 @@ class DeepLinkingSpec: QuickSpec {
 
                 it("returns false if not viewing any category") {
                     let onCategory = DeepLinking.alreadyOnCurrentCategory(navVC: fakeNavController, slug: "art")
-                    
+
                     expect(onCategory) == false
                 }
             }
@@ -257,7 +257,7 @@ class DeepLinkingSpec: QuickSpec {
 
                 it("returns false if not viewing any post detail") {
                     let onPostDetail = DeepLinking.alreadyOnPostDetail(navVC: fakeNavController, postParam: "other-param")
-                    
+
                     expect(onPostDetail) == false
                 }
             }

@@ -4,8 +4,8 @@
 
 import Foundation
 
-open class AsyncOperation: Operation {
-    public typealias AsyncBlock = (@escaping () -> Void) -> Void
+class AsyncOperation: Operation {
+    typealias AsyncBlock = (@escaping () -> Void) -> Void
     var _block: AsyncBlock?
     var block: AsyncBlock? {
         get { return _block }
@@ -25,7 +25,7 @@ open class AsyncOperation: Operation {
     }
 
     fileprivate var _executing: Bool = false
-    override open var isExecuting: Bool {
+    override var isExecuting: Bool {
         get { return _executing }
         set {
             willChangeValue(forKey: "isExecuting")
@@ -35,7 +35,7 @@ open class AsyncOperation: Operation {
     }
 
     fileprivate var _finished: Bool = false
-    override open var isFinished: Bool {
+    override var isFinished: Bool {
         get { return _finished }
         set {
             willChangeValue(forKey: "isFinished")
@@ -44,14 +44,14 @@ open class AsyncOperation: Operation {
         }
     }
 
-    override open var isAsynchronous: Bool { return true }
+    override var isAsynchronous: Bool { return true }
 
-    public init(block: AsyncBlock? = nil) {
+    init(block: AsyncBlock? = nil) {
         _block = block
         super.init()
     }
 
-    override open func start() {
+    override func start() {
         guard !isFinished else {
             return
         }
@@ -64,7 +64,7 @@ open class AsyncOperation: Operation {
         block?(done)
     }
 
-    open func run(_ block: @escaping () -> Void = {}) {
+    func run(_ block: @escaping () -> Void = {}) {
         self.block = { done in
             block()
             done()

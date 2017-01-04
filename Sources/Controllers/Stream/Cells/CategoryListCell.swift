@@ -4,7 +4,7 @@
 
 import SnapKit
 
-open class CategoryListCell: UICollectionViewCell {
+class CategoryListCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryListCell"
     weak var delegate: CategoryListCellDelegate?
 
@@ -13,8 +13,8 @@ open class CategoryListCell: UICollectionViewCell {
         static let spacing: CGFloat = 1
     }
 
-    public typealias CategoryInfo = (title: String, slug: String)
-    open var categoriesInfo: [CategoryInfo] = [] {
+    typealias CategoryInfo = (title: String, slug: String)
+    var categoriesInfo: [CategoryInfo] = [] {
         didSet {
             let changed: Bool = (categoriesInfo.count != oldValue.count) || oldValue.enumerated().any { (index, info) in
                 return info.title != categoriesInfo[index].title || info.slug != categoriesInfo[index].slug
@@ -37,7 +37,7 @@ open class CategoryListCell: UICollectionViewCell {
         return attributedString
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
@@ -45,11 +45,11 @@ open class CategoryListCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
     }
 

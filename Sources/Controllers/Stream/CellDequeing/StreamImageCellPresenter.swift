@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct StreamImageCellPresenter {
+struct StreamImageCellPresenter {
 
     static func preventImageStretching(_ cell: StreamImageCell, attachmentWidth: Int, columnWidth: CGFloat, leftMargin: CGFloat) {
         let width = CGFloat(attachmentWidth)
@@ -33,7 +33,7 @@ public struct StreamImageCellPresenter {
         }
     }
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

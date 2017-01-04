@@ -2,13 +2,12 @@
 ///  ElloManagerSpec.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import Quick
 import Moya
 import Nimble
 import Alamofire
-import ElloCerts
+@testable import ElloCerts
 
 class ElloManagerSpec: QuickSpec {
     override func spec() {

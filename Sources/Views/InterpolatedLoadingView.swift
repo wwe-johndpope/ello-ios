@@ -2,23 +2,23 @@
 ///  InterpolatedLoadingView.swift
 //
 
-open class InterpolatedLoadingView: UIView {
-    open var round = false {
+class InterpolatedLoadingView: UIView {
+    var round = false {
         didSet { setNeedsLayout() }
     }
     fileprivate var animating = false
 
-    override open func didMoveToWindow() {
+    override func didMoveToWindow() {
         super.didMoveToWindow()
         self.animateIfPossible()
     }
 
-    override open func didMoveToSuperview() {
+    override func didMoveToSuperview() {
         super.didMoveToSuperview()
         self.animateIfPossible()
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         if round {

@@ -2,21 +2,21 @@
 ///  ElloNavigationBar.swift
 //
 
-open class ElloNavigationBar: UINavigationBar {
+class ElloNavigationBar: UINavigationBar {
     struct Size {
         static let height: CGFloat = 64
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         privateInit()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         privateInit()
     }
@@ -34,13 +34,13 @@ open class ElloNavigationBar: UINavigationBar {
         addSubview(bar)
     }
 
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
         size.height = Size.height
         return size
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         if let navItem = topItem, let items = navItem.rightBarButtonItems {

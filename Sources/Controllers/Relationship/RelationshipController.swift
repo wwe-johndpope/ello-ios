@@ -2,20 +2,20 @@
 ///  RelationshipController.swift
 //
 
-public typealias RelationshipChangeClosure = (_ relationshipPriority: RelationshipPriority) -> Void
-public typealias RelationshipChangeCompletion = (_ status: RelationshipRequestStatus, _ relationship: Relationship?, _ isFinalValue: Bool) -> Void
+typealias RelationshipChangeClosure = (_ relationshipPriority: RelationshipPriority) -> Void
+typealias RelationshipChangeCompletion = (_ status: RelationshipRequestStatus, _ relationship: Relationship?, _ isFinalValue: Bool) -> Void
 
-public enum RelationshipRequestStatus: String {
+enum RelationshipRequestStatus: String {
     case success = "success"
     case failure = "failure"
 }
 
-public protocol RelationshipControllerDelegate: class {
+protocol RelationshipControllerDelegate: class {
     func shouldSubmitRelationship(_ userId: String, relationshipPriority: RelationshipPriority) -> Bool
     func relationshipChanged(_ userId: String, status: RelationshipRequestStatus, relationship: Relationship?)
 }
 
-public protocol RelationshipDelegate: class {
+protocol RelationshipDelegate: class {
     func relationshipTapped(_ userId: String, prev prevRelationshipPriority: RelationshipPriority, relationshipPriority: RelationshipPriority, complete: @escaping RelationshipChangeCompletion)
     func launchBlockModal(_ userId: String, userAtName: String, relationshipPriority: RelationshipPriority, changeClosure: @escaping RelationshipChangeClosure)
     func updateRelationship(_ currentUserId: String, userId: String, prev prevRelationshipPriority: RelationshipPriority, relationshipPriority: RelationshipPriority, complete: @escaping RelationshipChangeCompletion)

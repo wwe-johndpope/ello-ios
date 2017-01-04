@@ -4,14 +4,14 @@
 
 import PINRemoteImage
 
-public struct Preloader {
+struct Preloader {
 
-    // public so that we can swap out a fake in specs
-    public var manager = PINRemoteImageManager.shared()
+    // exposed so that we can swap out a fake in specs
+    var manager = PINRemoteImageManager.shared()
 
-    public init(){}
+    init(){}
 
-    public func preloadImages(_ jsonables: [JSONAble]) {
+    func preloadImages(_ jsonables: [JSONAble]) {
         for jsonable in jsonables {
 
             // activities avatar

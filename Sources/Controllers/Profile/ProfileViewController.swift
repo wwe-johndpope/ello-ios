@@ -29,15 +29,15 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 
-public final class ProfileViewController: StreamableViewController {
+final class ProfileViewController: StreamableViewController {
 
-    override public var tabBarItem: UITabBarItem? {
+    override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.person) }
         set { self.tabBarItem = newValue }
     }
 
     var _mockScreen: ProfileScreenProtocol?
-    public var screen: ProfileScreenProtocol {
+    var screen: ProfileScreenProtocol {
         set(screen) { _mockScreen = screen }
         get { return _mockScreen ?? self.view as! ProfileScreenProtocol }
     }
@@ -55,7 +55,7 @@ public final class ProfileViewController: StreamableViewController {
     var generator: ProfileGenerator?
     fileprivate var isSetup = false
 
-    public init(userParam: String, username: String? = nil) {
+    init(userParam: String, username: String? = nil) {
         self.userParam = userParam
         self.initialStreamKind = .userStream(userParam: self.userParam)
         super.init(nibName: nil, bundle: nil)
@@ -80,7 +80,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     // this should only be initialized this way for currentUser in tab nav
-    public init(user: User) {
+    init(user: User) {
         // this user must have the profile property assigned (since it is currentUser)
         self.user = user
         self.userParam = user.id
@@ -117,11 +117,11 @@ public final class ProfileViewController: StreamableViewController {
         relationshipChangedNotification = nil
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         if user == nil {
@@ -138,7 +138,7 @@ public final class ProfileViewController: StreamableViewController {
         }
     }
 
-    override public func loadView() {
+    override func loadView() {
         let screen = ProfileScreen()
         screen.delegate = self
         screen.navigationItem = elloNavigationItem
@@ -146,7 +146,7 @@ public final class ProfileViewController: StreamableViewController {
         viewContainer = screen.streamContainer
     }
 
-    override public func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let ratio: CGFloat = ProfileHeaderCellSizeCalculator.ratio
         let headerHeight: CGFloat = view.frame.width / ratio
@@ -157,7 +157,7 @@ public final class ProfileViewController: StreamableViewController {
         coverImageHeightStart = scrollAdjustedHeight
     }
 
-    override public func didSetCurrentUser() {
+    override func didSetCurrentUser() {
         generator?.currentUser = currentUser
         super.didSetCurrentUser()
     }
@@ -290,13 +290,13 @@ public final class ProfileViewController: StreamableViewController {
 }
 
 extension ProfileViewController: ProfileScreenDelegate {
-    public func mentionTapped() {
+    func mentionTapped() {
         guard let user = user else { return }
 
         createPost(text: "\(user.atName) ", fromController: self)
     }
 
-    public func hireTapped() {
+    func hireTapped() {
         guard let user = user else { return }
 
         Tracker.sharedTracker.tappedHire(user)
@@ -304,15 +304,15 @@ extension ProfileViewController: ProfileScreenDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    public func editTapped() {
+    func editTapped() {
         onEditProfile()
     }
 
-    public func inviteTapped() {
+    func inviteTapped() {
         onInviteFriends()
     }
 
-    public func collaborateTapped() {
+    func collaborateTapped() {
         guard let user = user else { return }
 
         Tracker.sharedTracker.tappedCollaborate(user)
@@ -323,14 +323,14 @@ extension ProfileViewController: ProfileScreenDelegate {
 
 // MARK: Check for cached coverImage and avatar (only for currentUser)
 extension ProfileViewController {
-    public func cachedImage(_ key: CacheKey) -> UIImage? {
+    func cachedImage(_ key: CacheKey) -> UIImage? {
         guard user?.id == currentUser?.id else {
             return nil
         }
         return TemporaryCache.load(key)
     }
 
-    public func updateCachedImages() {
+    func updateCachedImages() {
         guard let cachedImage = cachedImage(.coverImage) else {
             return
         }
@@ -338,7 +338,7 @@ extension ProfileViewController {
         screen.coverImage = cachedImage
     }
 
-    public func updateUser(_ user: User) {
+    func updateUser(_ user: User) {
         screen.enableButtons()
 
         guard user.id == self.currentUser?.id else {
@@ -361,7 +361,7 @@ extension ProfileViewController {
         screen.configureButtonsForCurrentUser()
     }
 
-    public func updateRelationshipPriority(_ relationshipPriority: RelationshipPriority) {
+    func updateRelationshipPriority(_ relationshipPriority: RelationshipPriority) {
         screen.updateRelationshipPriority(relationshipPriority)
         self.user?.relationshipPriority = relationshipPriority
     }
@@ -369,7 +369,7 @@ extension ProfileViewController {
 
 // MARK: ProfileViewController: PostsTappedResponder
 extension ProfileViewController: PostsTappedResponder {
-    public func onPostsTapped() {
+    func onPostsTapped() {
         let indexPath = IndexPath(item: 1, section: 0)
         guard streamViewController.dataSource.isValidIndexPath(indexPath) else { return }
         streamViewController.collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top, animated: true)
@@ -379,7 +379,7 @@ extension ProfileViewController: PostsTappedResponder {
 // MARK: ProfileHeaderResponder
 extension ProfileViewController: ProfileHeaderResponder {
 
-    public func onCategoryBadgeTapped(_ cell: UICollectionViewCell) {
+    func onCategoryBadgeTapped(_ cell: UICollectionViewCell) {
         guard let
             categories = user?.categories, user?.categories?.count > 0
         else { return }
@@ -393,7 +393,7 @@ extension ProfileViewController: ProfileHeaderResponder {
         present(navVC, animated: true, completion: nil)
     }
 
-    public func onLovesTapped(_ cell: UICollectionViewCell) {
+    func onLovesTapped(_ cell: UICollectionViewCell) {
         guard let user = self.user else { return }
 
         let noResultsTitle: String
@@ -409,7 +409,7 @@ extension ProfileViewController: ProfileHeaderResponder {
         streamViewController.showSimpleStream(endpoint: .loves(userId: user.id), title: InterfaceString.Loves.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
     }
 
-    public func onFollowersTapped(_ cell: UICollectionViewCell) {
+    func onFollowersTapped(_ cell: UICollectionViewCell) {
         guard let user = self.user else { return }
 
         let noResultsTitle: String
@@ -425,7 +425,7 @@ extension ProfileViewController: ProfileHeaderResponder {
         streamViewController.showSimpleStream(endpoint: .userStreamFollowers(userId: user.id), title: InterfaceString.Followers.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
     }
 
-    public func onFollowingTapped(_ cell: UICollectionViewCell) {
+    func onFollowingTapped(_ cell: UICollectionViewCell) {
         guard let user = user else { return }
 
         let noResultsTitle: String
@@ -445,7 +445,7 @@ extension ProfileViewController: ProfileHeaderResponder {
 // MARK: ProfileViewController: EditProfileResponder
 extension ProfileViewController: EditProfileResponder {
 
-    public func onEditProfile() {
+    func onEditProfile() {
         guard let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController else { return }
         settings.currentUser = currentUser
         navigationController?.pushViewController(settings, animated: true)
@@ -455,7 +455,7 @@ extension ProfileViewController: EditProfileResponder {
 // MARK: ProfileViewController: StreamViewDelegate
 extension ProfileViewController {
 
-    override public func streamViewDidScroll(scrollView: UIScrollView) {
+    override func streamViewDidScroll(scrollView: UIScrollView) {
         if let start = coverImageHeightStart {
             screen.updateHeaderHeightConstraints(max: max(start - scrollView.contentOffset.y, start), scrollAdjusted: start - scrollView.contentOffset.y)
         }
@@ -466,22 +466,22 @@ extension ProfileViewController {
 // MARK: ProfileViewController: StreamDestination
 extension ProfileViewController:  StreamDestination {
 
-    public var pagingEnabled: Bool {
+    var pagingEnabled: Bool {
         get { return streamViewController.pagingEnabled }
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items, completion: completion)
     }
 
-    public func setPlaceholders(items: [StreamCellItem]) {
+    func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
         setupNavigationItems()
     }
 
-    public func setPrimary(jsonable: JSONAble) {
+    func setPrimary(jsonable: JSONAble) {
         guard let user = jsonable as? User else { return }
 
         self.user = user
@@ -504,11 +504,11 @@ extension ProfileViewController:  StreamDestination {
         }
     }
 
-    public func setPagingConfig(responseConfig: ResponseConfig) {
+    func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
     }
 
-    public func primaryJSONAbleNotFound() {
+    func primaryJSONAbleNotFound() {
         if let deeplinkPath = self.deeplinkPath,
             let deeplinkURL = URL(string: deeplinkPath)
         {

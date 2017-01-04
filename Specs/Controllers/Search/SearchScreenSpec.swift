@@ -2,9 +2,9 @@
 ///  SearchScreenSpec.swift
 //
 
+@testable import Ello
 import Quick
 import Nimble
-import Ello
 import Nimble_Snapshots
 
 class MockSearchScreenDelegate: NSObject, SearchScreenDelegate {

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct StreamLoadingCellPresenter {
+struct StreamLoadingCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

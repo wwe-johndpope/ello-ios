@@ -2,11 +2,11 @@
 ///  ElloWebViewHelper.swift
 //
 
-public struct ElloWebViewHelper {
+struct ElloWebViewHelper {
     static let jsCommandProtocol = "ello://"
 
     @discardableResult
-    public static func handle(request: URLRequest, webLinkDelegate: WebLinkDelegate?, fromWebView: Bool = false) -> Bool {
+    static func handle(request: URLRequest, webLinkDelegate: WebLinkDelegate?, fromWebView: Bool = false) -> Bool {
         guard let requestUrlString = request.url?.absoluteString
         else { return true }
 
@@ -30,7 +30,7 @@ public struct ElloWebViewHelper {
         return true
     }
 
-    public static func bypassInAppBrowser(_ url: URL?) -> Bool {
+    static func bypassInAppBrowser(_ url: URL?) -> Bool {
         guard let urlString = url?.absoluteString else { return false }
 
         if urlString =~ "(https?:\\/\\/appstore.com)" { return true }

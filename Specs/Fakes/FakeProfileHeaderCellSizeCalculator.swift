@@ -2,8 +2,7 @@
 ///  FakeProfileHeaderCellSizeCalculator.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 
 
 class FakeProfileHeaderCellSizeCalculator: ProfileHeaderCellSizeCalculator {

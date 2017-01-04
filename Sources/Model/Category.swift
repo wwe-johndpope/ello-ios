@@ -4,36 +4,36 @@
 
 import SwiftyJSON
 
-public let CategoryVersion = 3
+let CategoryVersion = 3
 
 // Version 3: isSponsored, body, header, ctaCaption, ctaURL, promotionals
 
-public final class Category: JSONAble, Groupable {
+final class Category: JSONAble, Groupable {
     static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "recommended", order: 0, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
     static let trending = Category(id: "meta2", name: InterfaceString.Discover.Trending, slug: "trending", order: 1, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
     static let recent = Category(id: "meta3", name: InterfaceString.Discover.Recent, slug: "recent", order: 2, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
 
-    public let id: String
-    public var groupId: String { return "Category-\(id)" }
-    public let name: String
-    public let slug: String
-    public var tileURL: URL? { return tileImage?.url as URL? }
-    public var isSponsored: Bool?
-    public var body: String?
-    public var header: String?
-    public var ctaCaption: String?
-    public var ctaURL: URL?
-    public let tileImage: Attachment?
-    public let order: Int
-    public let allowInOnboarding: Bool
-    public let level: CategoryLevel
-    public var isMeta: Bool { return level == .meta }
-    public var usesPagePromo: Bool
-    public var hasPromotionalData: Bool {
+    let id: String
+    var groupId: String { return "Category-\(id)" }
+    let name: String
+    let slug: String
+    var tileURL: URL? { return tileImage?.url as URL? }
+    var isSponsored: Bool?
+    var body: String?
+    var header: String?
+    var ctaCaption: String?
+    var ctaURL: URL?
+    let tileImage: Attachment?
+    let order: Int
+    let allowInOnboarding: Bool
+    let level: CategoryLevel
+    var isMeta: Bool { return level == .meta }
+    var usesPagePromo: Bool
+    var hasPromotionalData: Bool {
         return body != nil
     }
 
-    public var endpoint: ElloAPI {
+    var endpoint: ElloAPI {
         switch level {
         case .meta: return .discover(type: DiscoverType(rawValue: slug)!)
         default: return .categoryPosts(slug: slug)
@@ -41,9 +41,9 @@ public final class Category: JSONAble, Groupable {
     }
 
     // links
-    public var promotionals: [Promotional]? { return getLinkArray("promotionals") as? [Promotional] }
+    var promotionals: [Promotional]? { return getLinkArray("promotionals") as? [Promotional] }
     fileprivate var _randomPromotional: Promotional?
-    public var randomPromotional: Promotional? {
+    var randomPromotional: Promotional? {
         get {
             if _randomPromotional == nil {
                 _randomPromotional = promotionals?.randomItem()
@@ -59,7 +59,7 @@ public final class Category: JSONAble, Groupable {
         return level == .primary || level == .secondary
     }
 
-    public init(id: String,
+    init(id: String,
         name: String,
         slug: String,
         order: Int,
@@ -79,7 +79,7 @@ public final class Category: JSONAble, Groupable {
         super.init(version: CategoryVersion)
     }
 
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         let decoder = Coder(coder)
         id = decoder.decodeKey("id")
         name = decoder.decodeKey("name")
@@ -108,7 +108,7 @@ public final class Category: JSONAble, Groupable {
         super.init(coder: coder)
     }
 
-    public override func encode(with coder: NSCoder) {
+    override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(id, forKey: "id")
         encoder.encodeObject(name, forKey: "name")
@@ -126,7 +126,7 @@ public final class Category: JSONAble, Groupable {
         super.encode(with: coder)
     }
 
-    override public func merge(_ other: JSONAble) -> JSONAble {
+    override func merge(_ other: JSONAble) -> JSONAble {
         if let other = other as? Category {
             if other.links?["promotionals"] == nil, let promotionals = promotionals, promotionals.count > 0 {
                 other.addLinkArray("promotionals", array: promotionals.map { $0.id }, type: .promotionalsType)
@@ -135,7 +135,7 @@ public final class Category: JSONAble, Groupable {
         return other
     }
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let name = json["name"].stringValue

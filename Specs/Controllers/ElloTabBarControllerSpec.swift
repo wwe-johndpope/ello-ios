@@ -3,8 +3,7 @@
 ///  ElloTabBarControllerSpec.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import SwiftyUserDefaults
 import Quick
 import Nimble

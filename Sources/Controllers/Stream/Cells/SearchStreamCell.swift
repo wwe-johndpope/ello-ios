@@ -2,7 +2,7 @@
 ///  SearchStreamCell.swift
 //
 
-open class SearchStreamCell: UICollectionViewCell {
+class SearchStreamCell: UICollectionViewCell {
     static let reuseIdentifier = "SearchStreamCell"
     struct Size {
         static let insets: CGFloat = 10
@@ -10,18 +10,18 @@ open class SearchStreamCell: UICollectionViewCell {
 
     fileprivate var debounced: ThrottledBlock = debounce(0.8)
     fileprivate let searchField = SearchTextField()
-    open weak var delegate: SearchStreamDelegate?
+    weak var delegate: SearchStreamDelegate?
 
-    open var placeholder: String? {
+    var placeholder: String? {
         get { return searchField.placeholder }
         set { searchField.placeholder = newValue }
     }
-    open var search: String? {
+    var search: String? {
         get { return searchField.text }
         set { searchField.text = newValue }
     }
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
 
@@ -32,7 +32,7 @@ open class SearchStreamCell: UICollectionViewCell {
         searchField.addTarget(self, action: #selector(searchFieldDidChange), for: .editingChanged)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -50,7 +50,7 @@ open class SearchStreamCell: UICollectionViewCell {
 }
 
 extension SearchStreamCell: DismissableCell {
-    public func didEndDisplay() {
+    func didEndDisplay() {
         _ = searchField.resignFirstResponder()
     }
 }
@@ -58,7 +58,7 @@ extension SearchStreamCell: DismissableCell {
 extension SearchStreamCell: UITextFieldDelegate {
 
     @objc
-    public func searchFieldDidChange() {
+    func searchFieldDidChange() {
         let text = searchField.text ?? ""
         if text.characters.count == 0 {
             clearSearch()
@@ -71,13 +71,13 @@ extension SearchStreamCell: UITextFieldDelegate {
     }
 
     @objc
-    public func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         textField.setNeedsLayout()
         textField.layoutIfNeeded()
     }
 
     @objc
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         _ = textField.resignFirstResponder()
         return true
     }

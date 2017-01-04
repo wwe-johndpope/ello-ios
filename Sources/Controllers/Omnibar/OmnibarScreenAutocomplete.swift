@@ -42,7 +42,7 @@ extension OmnibarScreen: UITextViewDelegate {
         }
     }
 
-    public func textView(_ textView: UITextView, shouldChangeTextIn nsrange: NSRange, replacementText: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn nsrange: NSRange, replacementText: String) -> Bool {
         if autoCompleteShowing && emojiKeyboardShowing() {
             return false
         }
@@ -59,7 +59,7 @@ extension OmnibarScreen: UITextViewDelegate {
         return true
     }
 
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if let path = currentTextPath, regionsTableView.cellForRow(at: path as IndexPath) != nil
         {
             var currentText = textView.attributedText
@@ -75,7 +75,7 @@ extension OmnibarScreen: UITextViewDelegate {
         updateButtons()
     }
 
-    public func textViewDidChangeSelection(_ textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: UITextView) {
         let font = textView.typingAttributes[NSFontAttributeName] as? UIFont
         let fontName = font?.fontName ?? "AtlasGrotesk-Regular"
 
@@ -152,7 +152,7 @@ extension OmnibarScreen: UITextViewDelegate {
 
 
 extension OmnibarScreen: AutoCompleteDelegate {
-    public func autoComplete(_ controller: AutoCompleteViewController, itemSelected item: AutoCompleteItem) {
+    func autoComplete(_ controller: AutoCompleteViewController, itemSelected item: AutoCompleteItem) {
         if let name = item.result.name {
             let prefix: String
             let suffix: String

@@ -5,7 +5,7 @@
 import Foundation
 import Keys
 
-public enum ElloURI: String {
+enum ElloURI: String {
     // matching stream or page in app
     case discover = "discover(/featured|/recommended)?/?$"
     case discoverRandom = "discover/random"
@@ -65,7 +65,7 @@ public enum ElloURI: String {
     case email = "(.+)@(.+)\\.([a-z]{2,})"
     case external = "https?:\\/\\/.{3,}"
 
-    public var loadsInWebViewFromWebView: Bool {
+    var loadsInWebViewFromWebView: Bool {
         switch self {
         case .discover,
              .category,
@@ -85,7 +85,7 @@ public enum ElloURI: String {
         }
     }
 
-    public var shouldLoadInApp: Bool {
+    var shouldLoadInApp: Bool {
         switch self {
         case .confirm,
              .downloads,
@@ -113,7 +113,7 @@ public enum ElloURI: String {
 
     // get the proper domain
     fileprivate static var _httpProtocol: String?
-    public static var httpProtocol: String {
+    static var httpProtocol: String {
         get {
             return ElloURI._httpProtocol ?? ElloKeys().httpProtocol()
         }
@@ -124,7 +124,7 @@ public enum ElloURI: String {
         }
     }
     fileprivate static var _domain: String?
-    public static var domain: String {
+    static var domain: String {
         get {
         return ElloURI._domain ?? ElloKeys().domain()
         }
@@ -134,14 +134,14 @@ public enum ElloURI: String {
             }
         }
     }
-    public static var baseURL: String { return "\(ElloURI.httpProtocol)://\(ElloURI.domain)" }
+    static var baseURL: String { return "\(ElloURI.httpProtocol)://\(ElloURI.domain)" }
 
     // this is taken directly from app/models/user.rb
     static let usernameRegex = "([\\w\\-]+)"
     static let fuzzyDomain: String = "((w{3}\\.)?ello\\.co|ello-stag(?:ing|e)\\d?\\.herokuapp\\.com|ello-fg-stage\\d?\\.herokuapp\\.com)"
     static var userPathRegex: String { return "\(ElloURI.fuzzyDomain)\\/\(ElloURI.usernameRegex)\\??.*" }
 
-    public static func match(_ url: String) -> (type: ElloURI, data: String) {
+    static func match(_ url: String) -> (type: ElloURI, data: String) {
         let trimmed = ElloURI.replaceElloScheme(url)
         for type in self.all {
             if let _ = trimmed.range(of: type.regexPattern, options: .regularExpression) {

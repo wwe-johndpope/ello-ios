@@ -41,7 +41,7 @@ fileprivate func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 
-open class ElloS3 {
+class ElloS3 {
     let filename: String
     let data: Data
     let contentType: String
@@ -55,7 +55,7 @@ open class ElloS3 {
     fileprivate var failureHandler: FailureHandler?
     fileprivate var progressHandler: ProgressHandler?
 
-    public init(credentials: AmazonCredentials, filename: String, data: Data, contentType: String) {
+    init(credentials: AmazonCredentials, filename: String, data: Data, contentType: String) {
         self.filename = filename
         self.data = data
         self.contentType = contentType

@@ -5,7 +5,7 @@
 import FutureKit
 
 
-open class CategoryHeaderCellSizeCalculator {
+class CategoryHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 192
 
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
@@ -16,7 +16,7 @@ open class CategoryHeaderCellSizeCalculator {
 
     // MARK: Public
 
-    open func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
@@ -24,17 +24,17 @@ open class CategoryHeaderCellSizeCalculator {
         }
     }
 
-    open static func calculateCategoryHeight(_ category: Category, cellWidth: CGFloat) -> CGFloat {
+    static func calculateCategoryHeight(_ category: Category, cellWidth: CGFloat) -> CGFloat {
         let config = CategoryHeaderCell.Config(category: category)
         return CategoryHeaderCellSizeCalculator.calculateHeight(config, cellWidth: cellWidth)
     }
 
-    open static func calculatePagePromotionalHeight(_ pagePromotional: PagePromotional, cellWidth: CGFloat) -> CGFloat {
+    static func calculatePagePromotionalHeight(_ pagePromotional: PagePromotional, cellWidth: CGFloat) -> CGFloat {
         let config = CategoryHeaderCell.Config(pagePromotional: pagePromotional)
         return CategoryHeaderCellSizeCalculator.calculateHeight(config, cellWidth: cellWidth)
     }
 
-    open static func calculateHeight(_ config: CategoryHeaderCell.Config, cellWidth: CGFloat) -> CGFloat {
+    static func calculateHeight(_ config: CategoryHeaderCell.Config, cellWidth: CGFloat) -> CGFloat {
         var calcHeight: CGFloat = 0
         let textWidth = cellWidth - 2 * CategoryHeaderCell.Size.defaultMargin
         let boundingSize = CGSize(width: textWidth, height: CGFloat.greatestFiniteMagnitude)

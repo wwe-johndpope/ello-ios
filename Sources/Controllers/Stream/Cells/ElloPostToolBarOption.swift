@@ -2,7 +2,7 @@
 ///  ElloPostToolBarOption.swift
 //
 
-public enum ElloPostToolBarOption {
+enum ElloPostToolBarOption {
     case views
     case comments
     case loves

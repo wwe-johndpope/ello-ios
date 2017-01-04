@@ -5,9 +5,9 @@
 import Foundation
 
 
-public struct ProfileStatsPresenter {
+struct ProfileStatsPresenter {
 
-    public static func configure(
+    static func configure(
         _ view: ProfileStatsView,
         user: User,
         currentUser: User?)

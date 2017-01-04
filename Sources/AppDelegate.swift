@@ -114,11 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: Notifications
 extension AppDelegate {
-    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         PushNotificationController.sharedController.updateToken(deviceToken)
     }
 
-    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         log(comment: "notification received \(Date())", object: userInfo)
         PushNotificationController.sharedController.receivedNotification(application, userInfo: userInfo)
         completionHandler(.noData)
@@ -127,7 +127,7 @@ extension AppDelegate {
 
 // MARK: URLs
 extension AppDelegate {
-    public func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
         guard let
             appVC = window?.rootViewController as? AppViewController
         else {
@@ -141,7 +141,7 @@ extension AppDelegate {
 
 extension AppDelegate {
 
-    public func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             if AppDelegate.restrictRotation {
                 return .portrait
@@ -155,7 +155,7 @@ extension AppDelegate {
 
 // universal links
 extension AppDelegate {
-    public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         guard let
             webpageURL = userActivity.webpageURL,
             let appVC = window?.rootViewController as? AppViewController,

@@ -2,18 +2,18 @@
 ///  StreamableViewController.swift
 //
 
-public protocol PostTappedDelegate: class {
+protocol PostTappedDelegate: class {
     func postTapped(_ post: Post)
     func postTapped(_ post: Post, scrollToComment: ElloComment?)
     func postTapped(postId: String)
 }
 
-public protocol UserTappedDelegate: class {
+protocol UserTappedDelegate: class {
     func userTapped(_ user: User)
     func userParamTapped(_ param: String, username: String?)
 }
 
-public protocol CreatePostDelegate: class {
+protocol CreatePostDelegate: class {
     func createPost(text: String?, fromController: UIViewController)
     func createComment(_ post: Post, text: String?, fromController: UIViewController)
     func editComment(_ comment: ElloComment, fromController: UIViewController)
@@ -21,14 +21,14 @@ public protocol CreatePostDelegate: class {
 }
 
 @objc
-public protocol InviteResponder: NSObjectProtocol {
+protocol InviteResponder: NSObjectProtocol {
     func onInviteFriends()
 }
 
-open class StreamableViewController: BaseElloViewController, PostTappedDelegate {
+class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false
-    open let streamViewController = StreamViewController.instantiateFromStoryboard()
+    let streamViewController = StreamViewController.instantiateFromStoryboard()
 
     func setupStreamController() {
         streamViewController.currentUser = currentUser
@@ -52,23 +52,23 @@ open class StreamableViewController: BaseElloViewController, PostTappedDelegate 
         return viewContainer
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showing = true
         willPresentStreamable(tabBarVisible())
     }
 
-    open override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         showing = false
     }
 
-    override open func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         willPresentStreamable(tabBarVisible())
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         setupStreamController()
@@ -156,15 +156,15 @@ open class StreamableViewController: BaseElloViewController, PostTappedDelegate 
 
 // MARK: PostTappedDelegate
 
-    open func postTapped(_ post: Post) {
+    func postTapped(_ post: Post) {
         self.postTapped(postId: post.id, scrollToComment: nil)
     }
 
-    open func postTapped(_ post: Post, scrollToComment lastComment: ElloComment?) {
+    func postTapped(_ post: Post, scrollToComment lastComment: ElloComment?) {
         self.postTapped(postId: post.id, scrollToComment: lastComment)
     }
 
-    open func postTapped(postId: String) {
+    func postTapped(postId: String) {
         self.postTapped(postId: postId, scrollToComment: nil)
     }
 
@@ -178,12 +178,12 @@ open class StreamableViewController: BaseElloViewController, PostTappedDelegate 
 
 // MARK: UserTappedDelegate
 extension StreamableViewController: UserTappedDelegate {
-    public func userTapped(_ user: User) {
+    func userTapped(_ user: User) {
         guard user.relationshipPriority != .block else { return }
         userParamTapped(user.id, username: user.username)
     }
 
-    public func userParamTapped(_ param: String, username: String?) {
+    func userParamTapped(_ param: String, username: String?) {
         guard !DeepLinking.alreadyOnUserProfile(navVC: navigationController, userParam: param)
             else { return }
 
@@ -210,7 +210,7 @@ extension StreamableViewController: UserTappedDelegate {
 
 // MARK: CreatePostDelegate
 extension StreamableViewController: CreatePostDelegate {
-    public func createPost(text: String?, fromController: UIViewController) {
+    func createPost(text: String?, fromController: UIViewController) {
         let vc = OmnibarViewController(defaultText: text)
         vc.currentUser = self.currentUser
         vc.onPostSuccess { _ in
@@ -219,7 +219,7 @@ extension StreamableViewController: CreatePostDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    public func createComment(_ post: Post, text: String?, fromController: UIViewController) {
+    func createComment(_ post: Post, text: String?, fromController: UIViewController) {
         let vc = OmnibarViewController(parentPost: post, defaultText: text)
         vc.currentUser = self.currentUser
         vc.onCommentSuccess { _ in
@@ -228,7 +228,7 @@ extension StreamableViewController: CreatePostDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    public func editComment(_ comment: ElloComment, fromController: UIViewController) {
+    func editComment(_ comment: ElloComment, fromController: UIViewController) {
         if OmnibarViewController.canEditRegions(comment.content) {
             let vc = OmnibarViewController(editComment: comment)
             vc.currentUser = self.currentUser
@@ -246,7 +246,7 @@ extension StreamableViewController: CreatePostDelegate {
         }
     }
 
-    public func editPost(_ post: Post, fromController: UIViewController) {
+    func editPost(_ post: Post, fromController: UIViewController) {
         if OmnibarViewController.canEditRegions(post.content) {
             let vc = OmnibarViewController(editPost: post)
             vc.currentUser = self.currentUser
@@ -267,30 +267,30 @@ extension StreamableViewController: CreatePostDelegate {
 
 // MARK: StreamViewDelegate
 extension StreamableViewController: StreamViewDelegate {
-    public func streamViewCustomLoadFailed() -> Bool {
+    func streamViewCustomLoadFailed() -> Bool {
         return false
     }
 
-    public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+    func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         return nil
     }
 
-    public func streamViewDidScroll(scrollView: UIScrollView) {
+    func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }
 
-    public func streamViewWillBeginDragging(scrollView: UIScrollView) {
+    func streamViewWillBeginDragging(scrollView: UIScrollView) {
         scrollLogic.scrollViewWillBeginDragging(scrollView)
     }
 
-    public func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool) {
+    func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool) {
         scrollLogic.scrollViewDidEndDragging(scrollView, willDecelerate: willDecelerate)
     }
 }
 
 // MARK: InviteResponder
 extension StreamableViewController: InviteResponder {
-    public func onInviteFriends() {
+    func onInviteFriends() {
         Tracker.sharedTracker.inviteFriendsTapped()
         AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
             switch result {

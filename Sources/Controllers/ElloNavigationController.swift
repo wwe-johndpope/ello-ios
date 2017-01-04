@@ -2,21 +2,21 @@
 ///  ElloNavigationController.swift
 //
 
-public let ExternalWebNotification = TypedNotification<String>(name: "ExternalWebNotification")
+let ExternalWebNotification = TypedNotification<String>(name: "ExternalWebNotification")
 
-open class ElloNavigationController: UINavigationController, ControllerThatMightHaveTheCurrentUser {
+class ElloNavigationController: UINavigationController, ControllerThatMightHaveTheCurrentUser {
 
     var interactionController: UIPercentDrivenInteractiveTransition?
     var postChangedNotification: NotificationObserver?
     var relationshipChangedNotification: NotificationObserver?
     var rootViewControllerName: String?
-    open var currentUser: User? {
+    var currentUser: User? {
         didSet { didSetCurrentUser() }
     }
 
     var backGesture: UIScreenEdgePanGestureRecognizer?
 
-    override open var tabBarItem: UITabBarItem? {
+    override var tabBarItem: UITabBarItem? {
         get { return childViewControllers.first?.tabBarItem ?? super.tabBarItem }
         set { self.tabBarItem = newValue }
     }
@@ -61,7 +61,7 @@ open class ElloNavigationController: UINavigationController, ControllerThatMight
         }
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavigationBarHidden(true, animated: false)
 
@@ -137,7 +137,7 @@ open class ElloNavigationController: UINavigationController, ControllerThatMight
 
 extension ElloNavigationController: UIGestureRecognizerDelegate {
 
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 
@@ -146,7 +146,7 @@ extension ElloNavigationController: UIGestureRecognizerDelegate {
 private let throttledTracker = debounce(0.1)
 extension ElloNavigationController: UINavigationControllerDelegate {
 
-    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         backGesture?.edges = viewController.backGestureEdges
 
         throttledTracker {
@@ -154,7 +154,7 @@ extension ElloNavigationController: UINavigationControllerDelegate {
         }
     }
 
-    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
         switch operation {
         case .push: return ForwardAnimator()
@@ -163,7 +163,7 @@ extension ElloNavigationController: UINavigationControllerDelegate {
         }
     }
 
-    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactionController
     }
 

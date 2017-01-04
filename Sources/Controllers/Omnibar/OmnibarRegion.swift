@@ -2,7 +2,7 @@
 ///  OmnibarRegion.swift
 //
 
-public enum OmnibarRegion {
+enum OmnibarRegion {
     case image(UIImage)
     case imageData(UIImage, Data, String)
     case imageURL(URL)
@@ -10,12 +10,12 @@ public enum OmnibarRegion {
     case spacer
     case error(URL)
 
-    public static func text(_ str: String) -> OmnibarRegion {
+    static func text(_ str: String) -> OmnibarRegion {
         return attributedText(ElloAttributedString.style(str))
     }
 }
 
-public extension OmnibarRegion {
+extension OmnibarRegion {
     var editable: Bool {
         switch self {
         case .imageData, .image: return true
@@ -81,7 +81,7 @@ public extension OmnibarRegion {
     static let OmnibarSpacerCell = "OmnibarSpacerCell"
 }
 
-public extension OmnibarRegion {
+extension OmnibarRegion {
     var rawRegion: NSObject? {
         switch self {
         case let .image(image): return image
@@ -102,7 +102,7 @@ public extension OmnibarRegion {
 }
 
 extension OmnibarRegion: CustomStringConvertible, CustomDebugStringConvertible {
-    public var description: String {
+    var description: String {
         switch self {
         case let .image(image): return "Image(size: \(image.size))"
         case let .imageData(image, _, _): return "ImageData(size: \(image.size))"
@@ -113,7 +113,7 @@ extension OmnibarRegion: CustomStringConvertible, CustomDebugStringConvertible {
         }
     }
 
-    public var debugDescription: String {
+    var debugDescription: String {
         return description
     }
 

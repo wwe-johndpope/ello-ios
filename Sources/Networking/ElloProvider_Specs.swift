@@ -5,8 +5,8 @@
 import Moya
 
 
-public struct ElloProvider_Specs {
-    public static var errorStatusCode: ErrorStatusCode = .status404
+struct ElloProvider_Specs {
+    static var errorStatusCode: ErrorStatusCode = .status404
 
     static func errorEndpointsClosure(_ target: ElloAPI) -> Endpoint<ElloAPI> {
         let sampleResponseClosure = { () -> EndpointSampleResponse in
@@ -55,19 +55,19 @@ public struct ElloProvider_Specs {
 
 extension ElloProvider {
 
-    public static func StubbingProvider() -> MoyaProvider<ElloAPI> {
+    static func StubbingProvider() -> MoyaProvider<ElloAPI> {
         return MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
     }
 
-    public static func DelayedStubbingProvider() -> MoyaProvider<ElloAPI> {
+    static func DelayedStubbingProvider() -> MoyaProvider<ElloAPI> {
         return MoyaProvider<ElloAPI>(endpointClosure: ElloProvider.endpointClosure, stubClosure: MoyaProvider.delayedStub(1))
     }
 
-    public static func ErrorStubbingProvider() -> MoyaProvider<ElloAPI> {
+    static func ErrorStubbingProvider() -> MoyaProvider<ElloAPI> {
         return MoyaProvider<ElloAPI>(endpointClosure: ElloProvider_Specs.errorEndpointsClosure, stubClosure: MoyaProvider.immediatelyStub)
     }
 
-    public static func RecordedStubbingProvider(_ recordings: [RecordedResponse]) -> MoyaProvider<ElloAPI> {
+    static func RecordedStubbingProvider(_ recordings: [RecordedResponse]) -> MoyaProvider<ElloAPI> {
         return MoyaProvider<ElloAPI>(endpointClosure: ElloProvider_Specs.recordedEndpointsClosure(recordings), stubClosure: MoyaProvider.immediatelyStub)
     }
 

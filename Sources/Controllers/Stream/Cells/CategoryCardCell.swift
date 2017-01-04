@@ -4,7 +4,7 @@
 
 import SnapKit
 
-open class CategoryCardCell: UICollectionViewCell {
+class CategoryCardCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryCardCell"
     static let selectableReuseIdentifier = "SelectableCategoryCardCell"
 
@@ -13,10 +13,10 @@ open class CategoryCardCell: UICollectionViewCell {
         static let selectedImageOffset: CGFloat = 5
     }
 
-    open var selectable: Bool = false {
+    var selectable: Bool = false {
         didSet { updateSelected() }
     }
-    override open var isSelected: Bool {
+    override var isSelected: Bool {
         didSet { updateSelected() }
     }
     var title: String {
@@ -34,14 +34,14 @@ open class CategoryCardCell: UICollectionViewCell {
     fileprivate let imageView = UIImageView()
     fileprivate let selectedImageView = UIImageView()
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -58,7 +58,7 @@ open class CategoryCardCell: UICollectionViewCell {
         }
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         label.text = ""
         imageView.image = nil

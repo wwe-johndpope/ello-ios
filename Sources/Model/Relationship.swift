@@ -9,23 +9,23 @@ import SwiftyJSON
 let RelationshipVersion = 1
 
 @objc(Relationship)
-public final class Relationship: JSONAble {
+final class Relationship: JSONAble {
 
     // active record
-    public let id: String
-    public let createdAt: Date
+    let id: String
+    let createdAt: Date
     // required
-    public let ownerId: String
-    public let subjectId: String
+    let ownerId: String
+    let subjectId: String
     // computed
-    public var owner: User? {
+    var owner: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.ownerId, type: .usersType) as? User
     }
-    public var subject: User? {
+    var subject: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.subjectId, type: .usersType) as? User
     }
 
-    public init(id: String, createdAt: Date, ownerId: String, subjectId: String) {
+    init(id: String, createdAt: Date, ownerId: String, subjectId: String) {
         self.id = id
         self.createdAt = createdAt
         self.ownerId = ownerId
@@ -35,7 +35,7 @@ public final class Relationship: JSONAble {
 
 // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
         self.id = decoder.decodeKey("id")
@@ -46,7 +46,7 @@ public final class Relationship: JSONAble {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
         coder.encodeObject(id, forKey: "id")
@@ -59,7 +59,7 @@ public final class Relationship: JSONAble {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.relationshipFromJSON.rawValue)
         var createdAt: Date

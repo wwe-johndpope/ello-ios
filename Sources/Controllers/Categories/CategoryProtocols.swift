@@ -2,7 +2,7 @@
 ///  CategoryProtocols.swift
 //
 
-public protocol CategoryScreenProtocol: StreamableScreenProtocol {
+protocol CategoryScreenProtocol: StreamableScreenProtocol {
     var topInsetView: UIView { get }
     var categoryCardsVisible: Bool { get }
     func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion)
@@ -11,6 +11,6 @@ public protocol CategoryScreenProtocol: StreamableScreenProtocol {
     func selectCategory(index: Int)
 }
 
-public protocol CategoryScreenDelegate: class {
+protocol CategoryScreenDelegate: class {
     func categorySelected(index: Int)
 }

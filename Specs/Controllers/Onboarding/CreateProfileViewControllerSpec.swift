@@ -6,7 +6,7 @@
 import Quick
 import Nimble
 
-	
+
 class CreateProfileViewControllerSpec: QuickSpec {
     class MockCreateProfileScreen: CreateProfileScreenProtocol {
         var name: String?

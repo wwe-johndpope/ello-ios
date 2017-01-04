@@ -2,18 +2,17 @@
 ///  DateFormattingSpec.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import Quick
 import Nimble
 
 // GROSS, thanks Apple for making it hard to change Locale for testing purposes
 extension NSLocale {
-    public class func defaultToArab() {
+    class func defaultToArab() {
         method_exchangeImplementations(class_getClassMethod(self, #selector(getter: NSLocale.current)), class_getClassMethod(self, #selector(NSLocale.ello_currentLocale)))
     }
 
-    public class func defaultToNormal() {
+    class func defaultToNormal() {
         method_exchangeImplementations(class_getClassMethod(self, #selector(NSLocale.ello_currentLocale)), class_getClassMethod(self, #selector(getter: NSLocale.current)))
     }
 

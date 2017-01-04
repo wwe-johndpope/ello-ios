@@ -5,9 +5,9 @@
 import SnapKit
 
 
-open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
+class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
-    public struct Size {
+    struct Size {
         static let whiteTopOffset: CGFloat = 338
         static let profileButtonsContainerViewHeight: CGFloat = 64
         static let navBarHeight: CGFloat = 64
@@ -21,17 +21,17 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         static let editButtonMargin: CGFloat = 10
     }
 
-    weak open var relationshipDelegate: RelationshipDelegate? {
+    weak var relationshipDelegate: RelationshipDelegate? {
         get { return self.relationshipControl.relationshipDelegate }
         set { self.relationshipControl.relationshipDelegate = newValue }
     }
 
-    open var coverImage: UIImage? {
+    var coverImage: UIImage? {
         get { return coverImageView.image }
         set { coverImageView.image = newValue }
     }
 
-    open var coverImageURL: URL? {
+    var coverImageURL: URL? {
         get { return nil }
         set { coverImageView.pin_setImage(from: newValue) { result in } }
     }
@@ -39,12 +39,12 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     // views
     let whiteSolidView = UIView()
     let loaderView = InterpolatedLoadingView()
-    open var topInsetView: UIView { return profileButtonsEffect }
-    open let coverImageView = FLAnimatedImageView()
-    open let relationshipControl = RelationshipControl()
-    open let mentionButton = StyledButton(style: .BlackPill)
-    open let collaborateButton = StyledButton(style: .BlackPill)
-    open let hireButton = StyledButton(style: .BlackPill)
+    var topInsetView: UIView { return profileButtonsEffect }
+    let coverImageView = FLAnimatedImageView()
+    let relationshipControl = RelationshipControl()
+    let mentionButton = StyledButton(style: .BlackPill)
+    let collaborateButton = StyledButton(style: .BlackPill)
+    let hireButton = StyledButton(style: .BlackPill)
     fileprivate let editButton = StyledButton(style: .BlackPill)
     fileprivate let inviteButton = StyledButton(style: .BlackPill)
     fileprivate let ghostLeftButton = StyledButton(style: .BlackPill)
@@ -62,7 +62,7 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     fileprivate var relationshipCollabConstraint: Constraint!
     fileprivate var relationshipHireConstraint: Constraint!
 
-    weak open var delegate: ProfileScreenDelegate?
+    weak var delegate: ProfileScreenDelegate?
 
     override func arrange() {
         super.arrange()
@@ -209,35 +209,35 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), for: .touchUpInside)
     }
 
-    open func mentionTapped(_ button: UIButton) {
+    func mentionTapped(_ button: UIButton) {
         delegate?.mentionTapped()
     }
 
-    open func hireTapped(_ button: UIButton) {
+    func hireTapped(_ button: UIButton) {
         delegate?.hireTapped()
     }
 
-    open func editTapped(_ button: UIButton) {
+    func editTapped(_ button: UIButton) {
         delegate?.editTapped()
     }
 
-    open func inviteTapped(_ button: UIButton) {
+    func inviteTapped(_ button: UIButton) {
         delegate?.inviteTapped()
     }
 
-    open func collaborateTapped(_ button: UIButton) {
+    func collaborateTapped(_ button: UIButton) {
         delegate?.collaborateTapped()
     }
 
-    open func enableButtons() {
+    func enableButtons() {
         setButtonsEnabled(true)
     }
 
-    open func disableButtons() {
+    func disableButtons() {
         setButtonsEnabled(false)
     }
 
-    open func configureButtonsForNonCurrentUser(isHireable: Bool, isCollaborateable: Bool) {
+    func configureButtonsForNonCurrentUser(isHireable: Bool, isCollaborateable: Bool) {
         if isHireable && isCollaborateable {
             hireLeftConstraint.deactivate()
             hireRightConstraint.activate()
@@ -277,7 +277,7 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         ghostRightButton.isHidden = true
     }
 
-    open func configureButtonsForCurrentUser() {
+    func configureButtonsForCurrentUser() {
         collaborateButton.isHidden = true
         hireButton.isHidden = true
         mentionButton.isHidden = true
@@ -297,27 +297,27 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         relationshipControl.enabled = enabled
     }
 
-    open func updateRelationshipControl(user: User) {
+    func updateRelationshipControl(user: User) {
         relationshipControl.userId = user.id
         relationshipControl.userAtName = user.atName
         relationshipControl.relationshipPriority = user.relationshipPriority
     }
 
-    open func updateRelationshipPriority(_ relationshipPriority: RelationshipPriority) {
+    func updateRelationshipPriority(_ relationshipPriority: RelationshipPriority) {
         relationshipControl.relationshipPriority = relationshipPriority
     }
 
-    open func updateHeaderHeightConstraints(max maxHeaderHeight: CGFloat, scrollAdjusted scrollAdjustedHeight: CGFloat) {
+    func updateHeaderHeightConstraints(max maxHeaderHeight: CGFloat, scrollAdjusted scrollAdjustedHeight: CGFloat) {
         coverImageHeight.update(offset: maxHeaderHeight)
         whiteSolidTop.update(offset: max(scrollAdjustedHeight, 0))
     }
 
-    open func resetCoverImage() {
+    func resetCoverImage() {
         coverImageView.pin_cancelImageDownload()
         coverImageView.image = nil
     }
 
-    open func showNavBars() {
+    func showNavBars() {
         animate {
             let height = self.navigationBar.frame.height
             self.profileButtonsContainerTopConstraint.update(offset: height)
@@ -325,7 +325,7 @@ open class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         }
     }
 
-    open func hideNavBars(_ offset: CGPoint, isCurrentUser: Bool) {
+    func hideNavBars(_ offset: CGPoint, isCurrentUser: Bool) {
         animate {
             let height: CGFloat
             if isCurrentUser {

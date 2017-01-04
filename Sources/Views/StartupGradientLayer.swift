@@ -2,7 +2,7 @@
 ///  StartupGradientLayer.swift
 //
 
-open class StartupGradientLayer: CAGradientLayer {
+class StartupGradientLayer: CAGradientLayer {
     override init(layer: Any) {
         super.init(layer: layer)
     }
@@ -20,7 +20,7 @@ open class StartupGradientLayer: CAGradientLayer {
         addGradientAnimation()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

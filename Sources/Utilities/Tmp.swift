@@ -2,10 +2,10 @@
 ///  Tmp.swift
 //
 
-public struct Tmp {
-    public static let uniqDir = Tmp.uniqueName()
+struct Tmp {
+    static let uniqDir = Tmp.uniqueName()
 
-    public static func fileExists(_ fileName: String) -> Bool {
+    static func fileExists(_ fileName: String) -> Bool {
         if let fileURL = self.fileURL(fileName) {
             let filePath = fileURL.path
             return FileManager.default.fileExists(atPath: filePath)
@@ -15,7 +15,7 @@ public struct Tmp {
         }
     }
 
-    public static func directoryURL() -> URL? {
+    static func directoryURL() -> URL? {
         if let pathURL = URL(string: NSTemporaryDirectory()) {
             let directoryName = pathURL.appendingPathComponent(Tmp.uniqDir).absoluteString
             return URL(fileURLWithPath: directoryName, isDirectory: true)
@@ -23,7 +23,7 @@ public struct Tmp {
         return nil
     }
 
-    public static func fileURL(_ fileName: String) -> URL? {
+    static func fileURL(_ fileName: String) -> URL? {
         if let directoryURL = directoryURL() {
             return directoryURL.appendingPathComponent(fileName)
         }
@@ -34,7 +34,7 @@ public struct Tmp {
         return ProcessInfo.processInfo.globallyUniqueString
     }
 
-    public static func write(_ toDataable: ToData, to fileName: String) -> URL? {
+    static func write(_ toDataable: ToData, to fileName: String) -> URL? {
         if let data = toDataable.toData() {
             if let directoryURL = self.directoryURL() {
                 do {
@@ -53,7 +53,7 @@ public struct Tmp {
         return nil
     }
 
-    public static func read(_ fileName: String) -> Data? {
+    static func read(_ fileName: String) -> Data? {
         if fileExists(fileName) {
             if let fileURL = fileURL(fileName) {
                 return (try? Data(contentsOf: fileURL))
@@ -62,21 +62,21 @@ public struct Tmp {
         return nil
     }
 
-    public static func read(_ fileName: String) -> String? {
+    static func read(_ fileName: String) -> String? {
         if let data: Data = read(fileName) {
             return NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String
         }
         return nil
     }
 
-    public static func read(_ fileName: String) -> UIImage? {
+    static func read(_ fileName: String) -> UIImage? {
         if let data: Data = read(fileName) {
             return UIImage(data: data)
         }
         return nil
     }
 
-    public static func remove(_ fileName: String) -> Bool {
+    static func remove(_ fileName: String) -> Bool {
         let fileURL = self.fileURL(fileName)
         if let filePath = fileURL?.path {
             if FileManager.default.fileExists(atPath: filePath) {

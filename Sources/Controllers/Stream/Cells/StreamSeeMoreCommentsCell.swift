@@ -5,13 +5,13 @@
 import Foundation
 
 
-open class StreamSeeMoreCommentsCell: UICollectionViewCell {
+class StreamSeeMoreCommentsCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamSeeMoreCommentsCell"
 
-    @IBOutlet weak open var buttonContainer: UIView!
-    @IBOutlet weak open var seeMoreButton: UIButton!
+    @IBOutlet weak var buttonContainer: UIView!
+    @IBOutlet weak var seeMoreButton: UIButton!
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         style()
     }

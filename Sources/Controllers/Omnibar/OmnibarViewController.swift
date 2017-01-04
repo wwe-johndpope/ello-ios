@@ -7,11 +7,11 @@ import SwiftyUserDefaults
 import PINRemoteImage
 
 
-open class OmnibarViewController: BaseElloViewController {
+class OmnibarViewController: BaseElloViewController {
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
 
-    override open var tabBarItem: UITabBarItem? {
+    override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.omni) }
         set { self.tabBarItem = newValue }
     }
@@ -36,7 +36,7 @@ open class OmnibarViewController: BaseElloViewController {
     var postSuccessListener: PostSuccessListener?
 
     var _mockScreen: OmnibarScreenProtocol?
-    open var screen: OmnibarScreenProtocol {
+    var screen: OmnibarScreenProtocol {
         set(screen) { _mockScreen = screen }
         get {
             if let mock = _mockScreen { return mock }
@@ -44,12 +44,12 @@ open class OmnibarViewController: BaseElloViewController {
         }
     }
 
-    convenience public init(parentPost post: Post) {
+    convenience init(parentPost post: Post) {
         self.init(nibName: nil, bundle: nil)
         parentPost = post
     }
 
-    convenience public init(editComment comment: ElloComment) {
+    convenience init(editComment comment: ElloComment) {
         self.init(nibName: nil, bundle: nil)
         editComment = comment
         PostService().loadComment(comment.postId, commentId: comment.id, success: { (comment, _) in
@@ -60,7 +60,7 @@ open class OmnibarViewController: BaseElloViewController {
         })
     }
 
-    convenience public init(editPost post: Post) {
+    convenience init(editPost post: Post) {
         self.init(nibName: nil, bundle: nil)
         editPost = post
         PostService().loadPost(post.id, needsComments: false)
@@ -73,12 +73,12 @@ open class OmnibarViewController: BaseElloViewController {
             .ignoreFailures()
     }
 
-    convenience public init(parentPost post: Post, defaultText: String?) {
+    convenience init(parentPost post: Post, defaultText: String?) {
         self.init(parentPost: post)
         self.defaultText = defaultText
     }
 
-    convenience public init(defaultText: String?) {
+    convenience init(defaultText: String?) {
         self.init(nibName: nil, bundle: nil)
         self.defaultText = defaultText
     }
@@ -103,7 +103,7 @@ open class OmnibarViewController: BaseElloViewController {
         postSuccessListener = listener
     }
 
-    override open func loadView() {
+    override func loadView() {
         self.view = OmnibarScreen(frame: UIScreen.main.bounds)
 
         screen.canGoBack = canGoBack
@@ -161,7 +161,7 @@ open class OmnibarViewController: BaseElloViewController {
         screen.delegate = self
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
         UIApplication.shared.statusBarStyle = .lightContent
@@ -202,13 +202,13 @@ open class OmnibarViewController: BaseElloViewController {
         screen.updateButtons()
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         elloTabBarController?.setTabBarHidden(false, animated: animated)
         Crashlytics.sharedInstance().setObjectValue("Omnibar", forKey: CrashlyticsKey.streamName.rawValue)
     }
 
-    override open func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         screen.stopEditing()
 
@@ -286,7 +286,7 @@ open class OmnibarViewController: BaseElloViewController {
 
 extension OmnibarViewController {
 
-    public class func canEditRegions(_ regions: [Regionable]?) -> Bool {
+    class func canEditRegions(_ regions: [Regionable]?) -> Bool {
         return OmnibarScreen.canEditRegions(regions)
     }
 }
@@ -294,7 +294,7 @@ extension OmnibarViewController {
 
 extension OmnibarViewController: OmnibarScreenDelegate {
 
-    public func omnibarCancel() {
+    func omnibarCancel() {
         if canGoBack {
             if let fileName = omnibarDataName() {
                 var dataRegions = [NSObject]()
@@ -329,22 +329,22 @@ extension OmnibarViewController: OmnibarScreenDelegate {
         }
     }
 
-    public func omnibarPresentController(_ controller: UIViewController) {
+    func omnibarPresentController(_ controller: UIViewController) {
         if !(controller is AlertViewController) {
             UIApplication.shared.statusBarStyle = .lightContent
         }
         self.present(controller, animated: true, completion: nil)
     }
 
-    public func omnibarPushController(_ controller: UIViewController) {
+    func omnibarPushController(_ controller: UIViewController) {
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
-    public func omnibarDismissController() {
+    func omnibarDismissController() {
         self.dismiss(animated: true, completion: nil)
     }
 
-    public func omnibarSubmitted(_ regions: [OmnibarRegion], buyButtonURL: URL?) {
+    func omnibarSubmitted(_ regions: [OmnibarRegion], buyButtonURL: URL?) {
         let content = generatePostContent(regions)
         guard content.count > 0 else {
             return
@@ -363,7 +363,7 @@ extension OmnibarViewController: OmnibarScreenDelegate {
 // MARK: Posting the content to API
 extension OmnibarViewController {
 
-    public func generatePostContent(_ regions: [OmnibarRegion]) -> [PostEditingService.PostContentRegion] {
+    func generatePostContent(_ regions: [OmnibarRegion]) -> [PostEditingService.PostContentRegion] {
         var content: [PostEditingService.PostContentRegion] = []
         for region in regions {
             switch region {
@@ -528,7 +528,7 @@ extension OmnibarViewController {
 }
 
 extension OmnibarViewController {
-    public func omnibarDataName() -> String? {
+    func omnibarDataName() -> String? {
         if let post = parentPost {
             return "omnibar_v2_comment_\(post.repostId ?? post.id)"
         }

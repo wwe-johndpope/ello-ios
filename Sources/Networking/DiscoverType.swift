@@ -2,7 +2,7 @@
 ///  DiscoverType.swift
 //
 
-public enum DiscoverType: String {
+enum DiscoverType: String {
     case featured = "recommended"
     case trending = "trending"
     case recent = "recent"
@@ -20,8 +20,8 @@ public enum DiscoverType: String {
         }
     }
 
-    public var slug: String { return rawValue }
-    public var name: String {
+    var slug: String { return rawValue }
+    var name: String {
         switch self {
         case .featured: return InterfaceString.Discover.Featured
         case .trending: return InterfaceString.Discover.Trending

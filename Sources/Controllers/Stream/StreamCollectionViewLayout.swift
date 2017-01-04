@@ -8,7 +8,7 @@
 //  Swiftified and modified https://github.com/chiahsien/CHTCollectionViewWaterfallLayout
 
 @objc
-public protocol StreamCollectionViewLayoutDelegate: UICollectionViewDelegate {
+protocol StreamCollectionViewLayoutDelegate: UICollectionViewDelegate {
 
     func collectionView (_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -33,7 +33,7 @@ public protocol StreamCollectionViewLayoutDelegate: UICollectionViewDelegate {
         isFullWidthAtIndexPath indexPath: IndexPath) -> Bool
 }
 
-open class StreamCollectionViewLayout: UICollectionViewLayout {
+class StreamCollectionViewLayout: UICollectionViewLayout {
 
     enum Direction {
         case shortestFirst
@@ -89,7 +89,7 @@ open class StreamCollectionViewLayout: UICollectionViewLayout {
         super.init()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         columnCount = 2
         minimumInteritemSpacing = 0
         minimumColumnSpacing = 12
@@ -98,7 +98,7 @@ open class StreamCollectionViewLayout: UICollectionViewLayout {
         super.init(coder: aDecoder)
     }
 
-    override open func prepare(){
+    override func prepare(){
         super.prepare()
 
         guard let numberOfSections = self.collectionView?.numberOfSections else {
@@ -201,7 +201,7 @@ open class StreamCollectionViewLayout: UICollectionViewLayout {
         sectionItemAttributes.append(itemAttributes)
     }
 
-    override open var collectionViewContentSize: CGSize {
+    override var collectionViewContentSize: CGSize {
         let numberOfSections = collectionView!.numberOfSections
         if numberOfSections == 0 {
             return .zero
@@ -211,11 +211,11 @@ open class StreamCollectionViewLayout: UICollectionViewLayout {
         return CGSize(width: contentWidth, height: CGFloat(columnHeights.max() ?? 0))
     }
 
-    override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return sectionItemAttributes[indexPath.section][indexPath.item]
     }
 
-    override open func layoutAttributesForElements (in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
+    override func layoutAttributesForElements (in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
         var begin = 0
         var end = unionRects.count
         var attrs = [UICollectionViewLayoutAttributes]()
@@ -243,11 +243,11 @@ open class StreamCollectionViewLayout: UICollectionViewLayout {
         return attrs
     }
 
-    override open func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "profileHeader", with: indexPath)
     }
 
-    override open func shouldInvalidateLayout (forBoundsChange newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout (forBoundsChange newBounds: CGRect) -> Bool {
         let oldBounds = collectionView!.bounds
         return newBounds.width != oldBounds.width
     }

@@ -5,23 +5,23 @@
 import Foundation
 import UIKit
 
-open class ContentFlagger {
+class ContentFlagger {
 
     var contentFlagged: Bool?
 
-    weak open var presentingController: UIViewController?
+    weak var presentingController: UIViewController?
     let flaggableId: String
     let contentType: ContentType
     var commentPostId: String?
 
-    public init(presentingController: UIViewController, flaggableId: String, contentType: ContentType, commentPostId: String? = nil) {
+    init(presentingController: UIViewController, flaggableId: String, contentType: ContentType, commentPostId: String? = nil) {
         self.presentingController = presentingController
         self.flaggableId = flaggableId
         self.contentType = contentType
         self.commentPostId = commentPostId
     }
 
-    public enum AlertOption: String {
+    enum AlertOption: String {
         case spam = "Spam"
         case violence = "Violence"
         case copyright = "Copyright infringement"
@@ -30,11 +30,11 @@ open class ContentFlagger {
         case adult = "NSFW Content"
         case dontLike = "I don't like it"
 
-        public var name: String {
+        var name: String {
             return self.rawValue
         }
 
-        public var kind: String {
+        var kind: String {
             switch self {
             case .spam: return "spam"
             case .violence: return "violence"
@@ -74,7 +74,7 @@ open class ContentFlagger {
         }
     }
 
-    open func displayFlaggingSheet() {
+    func displayFlaggingSheet() {
         guard let presentingController = presentingController else {
             return
         }

@@ -4,14 +4,14 @@
 
 import SwiftyUserDefaults
 
-open class AppSetup {
-    public struct Size {
-        public static let calculatorHeight = CGFloat(20)
+class AppSetup {
+    struct Size {
+        static let calculatorHeight = CGFloat(20)
     }
 
-    open var isTesting = false
+    var isTesting = false
     fileprivate var _isSimulator: Bool?
-    open var isSimulator: Bool {
+    var isSimulator: Bool {
         get {
             return _isSimulator ?? AppSetup.isRunningOnSimulator }
         set {
@@ -35,14 +35,14 @@ open class AppSetup {
     }
 
 
-    open class var sharedState: AppSetup {
+    class var sharedState: AppSetup {
         struct Static {
             static let instance = AppSetup()
         }
         return Static.instance
     }
 
-    public init() {
+    init() {
         if NSClassFromString("XCTest") != nil {
             isTesting = true
         }

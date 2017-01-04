@@ -2,17 +2,17 @@
 ///  ExperienceUpdate.swift
 //
 
-public let CommentChangedNotification = TypedNotification<(ElloComment, ContentChange)>(name: "commentChangedNotification")
-public let PostChangedNotification = TypedNotification<(Post, ContentChange)>(name: "postChangedNotification")
-public let PostCommentsCountChangedNotification = TypedNotification<(Post, Int)>(name: "postCommentsCountChangedNotification")
-public let JSONAbleChangedNotification = TypedNotification<(JSONAble, ContentChange)>(name: "jsonableChangedNotification")
-public let RelationshipChangedNotification = TypedNotification<User>(name: "relationshipChangedNotification")
-public let BlockedCountChangedNotification = TypedNotification<(String, Int)>(name: "BlockedCountChangedNotification")
-public let MutedCountChangedNotification = TypedNotification<(String, Int)>(name: "MutedCountChangedNotification")
-public let CurrentUserChangedNotification = TypedNotification<User>(name: "currentUserChangedNotification")
-public let SettingChangedNotification = TypedNotification<User>(name: "settingChangedNotification")
+let CommentChangedNotification = TypedNotification<(ElloComment, ContentChange)>(name: "commentChangedNotification")
+let PostChangedNotification = TypedNotification<(Post, ContentChange)>(name: "postChangedNotification")
+let PostCommentsCountChangedNotification = TypedNotification<(Post, Int)>(name: "postCommentsCountChangedNotification")
+let JSONAbleChangedNotification = TypedNotification<(JSONAble, ContentChange)>(name: "jsonableChangedNotification")
+let RelationshipChangedNotification = TypedNotification<User>(name: "relationshipChangedNotification")
+let BlockedCountChangedNotification = TypedNotification<(String, Int)>(name: "BlockedCountChangedNotification")
+let MutedCountChangedNotification = TypedNotification<(String, Int)>(name: "MutedCountChangedNotification")
+let CurrentUserChangedNotification = TypedNotification<User>(name: "currentUserChangedNotification")
+let SettingChangedNotification = TypedNotification<User>(name: "settingChangedNotification")
 
-public enum ContentChange {
+enum ContentChange {
     case create
     case read
     case update
@@ -21,7 +21,7 @@ public enum ContentChange {
     case replaced
     case delete
 
-    public static func updateCommentCount(_ comment: ElloComment, delta: Int) {
+    static func updateCommentCount(_ comment: ElloComment, delta: Int) {
         var affectedPosts: [Post?]
         if comment.postId == comment.loadedFromPostId {
             affectedPosts = [comment.parentPost]

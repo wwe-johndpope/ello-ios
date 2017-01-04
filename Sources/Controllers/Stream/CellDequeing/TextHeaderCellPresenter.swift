@@ -2,7 +2,7 @@
 ///  TextHeaderCellPresenter.swift
 //
 
-public struct TextHeaderCellPresenter {
+struct TextHeaderCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

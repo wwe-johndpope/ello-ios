@@ -2,8 +2,7 @@
 ///  SimpleStreamViewControllerSpec.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import Foundation
 import Quick
 import Nimble

@@ -4,13 +4,13 @@
 
 import CRToast
 
-public struct NotificationBanner {
-    public static func displayAlert(payload: PushPayload) {
+struct NotificationBanner {
+    static func displayAlert(payload: PushPayload) {
         configureDefaultsWith(payload: payload)
         CRToastManager.showNotification(withMessage: payload.message) { }
     }
 
-    public static func displayAlert(message: String) {
+    static func displayAlert(message: String) {
         configureDefaults()
         CRToastManager.showNotification(withMessage: message) { }
     }

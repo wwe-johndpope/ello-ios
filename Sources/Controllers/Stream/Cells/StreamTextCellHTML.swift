@@ -4,11 +4,11 @@
 
 import Foundation
 
-public struct StreamTextCellHTML {
+struct StreamTextCellHTML {
 
     static var indexFile: String?
 
-    public static func indexFileAsString() -> String {
+    static func indexFileAsString() -> String {
         if let indexFile = StreamTextCellHTML.indexFile {
             return indexFile
         }
@@ -35,7 +35,7 @@ public struct StreamTextCellHTML {
         }
     }
 
-    public static func postHTML(_ string: String) -> String {
+    static func postHTML(_ string: String) -> String {
         let htmlString = StreamTextCellHTML.indexFileAsString().replacingOccurrences(of: "{{base-url}}", with: ElloURI.baseURL)
         return htmlString.replacingOccurrences(of: "{{post-content}}", with: string)
     }

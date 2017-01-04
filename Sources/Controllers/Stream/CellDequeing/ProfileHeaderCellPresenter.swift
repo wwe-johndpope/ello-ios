@@ -5,9 +5,9 @@
 import Foundation
 
 
-public struct ProfileHeaderCellPresenter {
+struct ProfileHeaderCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

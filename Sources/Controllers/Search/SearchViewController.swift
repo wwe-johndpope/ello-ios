@@ -2,22 +2,22 @@
 ///  SearchViewController.swift
 //
 
-open class SearchViewController: StreamableViewController {
+class SearchViewController: StreamableViewController {
     var searchText: String?
 
     var _mockScreen: SearchScreenProtocol?
-    open var screen: SearchScreenProtocol {
+    var screen: SearchScreenProtocol {
         set(screen) { _mockScreen = screen }
         get { return _mockScreen ?? self.view as! SearchScreenProtocol }
     }
 
-    override open func loadView() {
+    override func loadView() {
         let screen = SearchScreen(frame: UIScreen.main.bounds, isSearchView: true)
         self.view = screen
         screen.delegate = self
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         streamViewController.pullToRefreshEnabled = false
         screen.gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
@@ -25,7 +25,7 @@ open class SearchViewController: StreamableViewController {
         updateInsets()
     }
 
-    open func searchForPosts(_ terms: String) {
+    func searchForPosts(_ terms: String) {
         screen.searchField.text = terms
         screen.searchForText()
     }
@@ -60,11 +60,11 @@ open class SearchViewController: StreamableViewController {
 
 extension SearchViewController: SearchScreenDelegate {
 
-    public func searchCanceled() {
+    func searchCanceled() {
        _ = navigationController?.popViewController(animated: true)
     }
 
-    public func searchFieldCleared() {
+    func searchFieldCleared() {
         showNavBars(false)
         searchText = ""
         streamViewController.removeAllCellItems()
@@ -73,20 +73,20 @@ extension SearchViewController: SearchScreenDelegate {
         screen.hasGridViewToggle = false
     }
 
-    public func searchFieldChanged(_ text: String, isPostSearch: Bool) {
+    func searchFieldChanged(_ text: String, isPostSearch: Bool) {
         loadEndpoint(text, isPostSearch: isPostSearch)
     }
 
-    public func searchShouldReset() {
+    func searchShouldReset() {
         streamViewController.hideNoResults()
     }
 
-    public func toggleChanged(_ text: String, isPostSearch: Bool) {
+    func toggleChanged(_ text: String, isPostSearch: Bool) {
         searchShouldReset()
         loadEndpoint(text, isPostSearch: isPostSearch, checkSearchText: false)
     }
 
-    public func findFriendsTapped() {
+    func findFriendsTapped() {
         let responder = target(forAction: #selector(InviteResponder.onInviteFriends), withSender: self) as? InviteResponder
         responder?.onInviteFriends()
     }
@@ -107,7 +107,7 @@ extension SearchViewController: SearchScreenDelegate {
         streamViewController.loadInitialPage()
     }
 
-    public func trackSearch(_ text: String, isPostSearch: Bool) {
+    func trackSearch(_ text: String, isPostSearch: Bool) {
         if isPostSearch {
             if text.hasPrefix("#") {
                 Tracker.sharedTracker.searchFor("hashtags")

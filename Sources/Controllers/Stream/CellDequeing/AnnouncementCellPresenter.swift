@@ -2,7 +2,7 @@
 ///  AnnouncementCellPresenter.swift
 //
 
-public struct AnnouncementCellPresenter {
+struct AnnouncementCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

@@ -2,16 +2,16 @@
 ///  AvatarButton.swift
 //
 
-open class AvatarButton: UIButton {
+class AvatarButton: UIButton {
     // for specs; ensure the correct URL is assigned
-    open var imageURL: URL?
+    var imageURL: URL?
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    public required init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         setup()
     }
@@ -55,7 +55,7 @@ open class AvatarButton: UIButton {
         setImage(nil, for: .normal)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         if let imageView = self.imageView {
             imageView.layer.cornerRadius = imageView.bounds.size.height / CGFloat(2)

@@ -2,16 +2,16 @@
 ///  CategoryGenerator.swift
 //
 
-public protocol CategoryStreamDestination: StreamDestination {
+protocol CategoryStreamDestination: StreamDestination {
     func set(categories: [Category])
 }
 
-public final class CategoryGenerator: StreamGenerator {
+final class CategoryGenerator: StreamGenerator {
 
-    public var currentUser: User?
-    public var streamKind: StreamKind
+    var currentUser: User?
+    var streamKind: StreamKind
     weak fileprivate var categoryStreamDestination: CategoryStreamDestination?
-    weak public var destination: StreamDestination? {
+    weak var destination: StreamDestination? {
         get { return categoryStreamDestination }
         set {
             if !(newValue is CategoryStreamDestination) { fatalError("CategoryGenerator.destination must conform to CategoryStreamDestination") }
@@ -45,7 +45,7 @@ public final class CategoryGenerator: StreamGenerator {
         return items
     }
 
-    public init(slug: String,
+    init(slug: String,
                 currentUser: User?,
                 streamKind: StreamKind,
                 destination: StreamDestination?
@@ -57,14 +57,14 @@ public final class CategoryGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    public func reset(streamKind: StreamKind, category: Category, pagePromotional: PagePromotional?) {
+    func reset(streamKind: StreamKind, category: Category, pagePromotional: PagePromotional?) {
         self.streamKind = streamKind
         self.category = category
         self.slug = category.slug
         self.pagePromotional = nil
     }
 
-    public func load(reload: Bool = false) {
+    func load(reload: Bool = false) {
         if reload {
             pagePromotional = nil
         }
@@ -83,7 +83,7 @@ public final class CategoryGenerator: StreamGenerator {
         loadCategoryPosts(doneOperation)
     }
 
-    public func toggleGrid() {
+    func toggleGrid() {
         guard let posts = posts else { return }
         destination?.replacePlaceholder(type: .categoryPosts, items: parse(jsonables: posts)) {}
     }

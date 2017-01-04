@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol StreamGenerator {
+protocol StreamGenerator {
 
     func load(reload: Bool)
 
@@ -16,7 +16,7 @@ extension StreamGenerator {
     }
 }
 
-public protocol StreamDestination: class {
+protocol StreamDestination: class {
     func setPlaceholders(items: [StreamCellItem])
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion)
     func setPrimary(jsonable: JSONAble)

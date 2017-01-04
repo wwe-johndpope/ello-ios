@@ -4,8 +4,8 @@
 
 import Foundation
 
-open class ResponseConfig: CustomStringConvertible {
-    open var description: String {
+class ResponseConfig: CustomStringConvertible {
+    var description: String {
         let descripArray = [
             "ResponseConfig:",
             "nextQueryItems: \(nextQueryItems)",
@@ -18,22 +18,22 @@ open class ResponseConfig: CustomStringConvertible {
         ]
         return descripArray.joined(separator: "\n\t")
     }
-    open var nextQueryItems: [AnyObject]? // before (older)
-    open var prevQueryItems: [AnyObject]? // after (newer)
-    open var firstQueryItems: [AnyObject]? // first page
-    open var lastQueryItems: [AnyObject]? // last page
-    open var totalCount: String?
-    open var totalPages: String?
-    open var totalPagesRemaining: String?
-    open var statusCode: Int?
-    open var lastModified: String?
-    open var isFinalValue: Bool
+    var nextQueryItems: [AnyObject]? // before (older)
+    var prevQueryItems: [AnyObject]? // after (newer)
+    var firstQueryItems: [AnyObject]? // first page
+    var lastQueryItems: [AnyObject]? // last page
+    var totalCount: String?
+    var totalPages: String?
+    var totalPagesRemaining: String?
+    var statusCode: Int?
+    var lastModified: String?
+    var isFinalValue: Bool
 
-    public init(isFinalValue: Bool = true) {
+    init(isFinalValue: Bool = true) {
         self.isFinalValue = isFinalValue
     }
 
-    open func isOutOfData() -> Bool {
+    func isOutOfData() -> Bool {
 
         return totalPagesRemaining == "0"
             || totalPagesRemaining == nil

@@ -5,7 +5,7 @@
 import SnapKit
 
 
-open class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
+class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
 
     struct Size {
         static let textInset: CGFloat = 15
@@ -13,20 +13,20 @@ open class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
 
     weak var delegate: ProfileCategoriesDelegate?
 
-    open let background = UIView()
+    let background = UIView()
     let textView = ElloTextView()
     var categories: [Category]
 
-    public init(categories: [Category]) {
+    init(categories: [Category]) {
         self.categories = categories
         super.init(frame: .zero)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public required init(frame: CGRect) {
+    required init(frame: CGRect) {
         self.categories = []
         super.init(frame: frame)
     }

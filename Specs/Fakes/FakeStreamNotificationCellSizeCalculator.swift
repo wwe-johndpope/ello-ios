@@ -2,8 +2,7 @@
 ///  FakeStreamNotificationCellSizeCalculator.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import Foundation
 
 

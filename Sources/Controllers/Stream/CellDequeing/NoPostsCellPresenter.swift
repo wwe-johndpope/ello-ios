@@ -2,7 +2,7 @@
 ///  NoPostsCellPresenter.swift
 //
 
-public struct NoPostsCellPresenter {
+struct NoPostsCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

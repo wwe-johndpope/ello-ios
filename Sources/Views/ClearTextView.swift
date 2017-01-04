@@ -2,38 +2,38 @@
 ///  ClearTextView.swift
 //
 
-open class ClearTextView: UITextView {
+class ClearTextView: UITextView {
     struct Size {
         static let minTextViewHeight: CGFloat = 38
         static let placeholderOffset: CGFloat = 3
     }
-    open var lineColor: UIColor? = .grey6() {
+    var lineColor: UIColor? = .grey6() {
         didSet {
             if !isFirstResponder {
                 line.backgroundColor = lineColor
             }
         }
     }
-    open var selectedLineColor: UIColor? = .white {
+    var selectedLineColor: UIColor? = .white {
         didSet {
             if isFirstResponder {
                 line.backgroundColor = selectedLineColor
             }
         }
     }
-    open var placeholder: String? {
+    var placeholder: String? {
         get { return placeholderLabel.text }
         set { placeholderLabel.text = newValue }
     }
-    override open var text: String? {
+    override var text: String? {
         didSet {
             textDidChange()
         }
     }
-    override open var textColor: UIColor? {
+    override var textColor: UIColor? {
         didSet { updateTextStyle() }
     }
-    override open var font: UIFont? {
+    override var font: UIFont? {
         didSet { updateTextStyle() }
     }
     fileprivate var line = UIView()
@@ -47,12 +47,12 @@ open class ClearTextView: UITextView {
         }
     }
 
-    required override public init(frame: CGRect, textContainer: NSTextContainer?) {
+    required override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         sharedSetup()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         sharedSetup()
     }
@@ -76,7 +76,7 @@ open class ClearTextView: UITextView {
         addSubview(rightView)
     }
 
-    open func textDidChange() {
+    func textDidChange() {
         placeholderLabel.isHidden = text?.isEmpty == false
         invalidateIntrinsicContentSize()
     }
@@ -96,29 +96,29 @@ open class ClearTextView: UITextView {
         typingAttributes = attributes
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         rightView.frame.origin = CGPoint(x: frame.size.width - rightView.frame.size.width - 10, y: 0)
         line.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 1)
     }
 
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         let fixedWidth = max(self.frame.size.width, 20)
         let newSize = self.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         return CGSize(width: fixedWidth, height: max(newSize.height + 2.5, Size.minTextViewHeight))
     }
 
-    override open func becomeFirstResponder() -> Bool {
+    override func becomeFirstResponder() -> Bool {
         line.backgroundColor = selectedLineColor
         return super.becomeFirstResponder()
     }
 
-    override open func resignFirstResponder() -> Bool {
+    override func resignFirstResponder() -> Bool {
         line.backgroundColor = lineColor
         return super.resignFirstResponder()
     }
 
-    override open func caretRect(for position: UITextPosition) -> CGRect {
+    override func caretRect(for position: UITextPosition) -> CGRect {
         var rect = super.caretRect(for: position)
         if let font = font {
             rect.size.height = font.pointSize - font.descender

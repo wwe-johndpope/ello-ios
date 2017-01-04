@@ -3,7 +3,7 @@
 //
 
 
-public enum RelationshipControlStyle {
+enum RelationshipControlStyle {
     case `default`
     case profileView
 
@@ -23,7 +23,7 @@ public enum RelationshipControlStyle {
 }
 
 
-open class RelationshipControl: UIView {
+class RelationshipControl: UIView {
     struct Size {
         static let viewHeight: CGFloat = 30
         static let minViewWidth: CGFloat = 105
@@ -40,22 +40,22 @@ open class RelationshipControl: UIView {
         }
     }
 
-    open var enabled: Bool {
+    var enabled: Bool {
         set {
             followingButton.isEnabled = newValue
             starButton.isEnabled = newValue
         }
         get { return followingButton.isEnabled }
     }
-    open var userId: String
-    open var userAtName: String
+    var userId: String
+    var userAtName: String
 
-    open weak var relationshipDelegate: RelationshipDelegate?
-    open var relationshipPriority: RelationshipPriority = .none {
+    weak var relationshipDelegate: RelationshipDelegate?
+    var relationshipPriority: RelationshipPriority = .none {
         didSet { updateRelationshipPriority() }
     }
 
-    open var showStarButton = true {
+    var showStarButton = true {
         didSet {
             starButton.isHidden = !showStarButton
             setNeedsLayout()
@@ -63,14 +63,14 @@ open class RelationshipControl: UIView {
         }
     }
 
-    required public override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         self.userId = ""
         self.userAtName = ""
         super.init(frame: frame)
         setup()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         self.userId = ""
         self.userAtName = ""
         super.init(coder: coder)
@@ -85,7 +85,7 @@ open class RelationshipControl: UIView {
         backgroundColor = .clear
     }
 
-    open override var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         var totalSize = CGSize(width: 0, height: Size.viewHeight)
         let followingSize = followingButton.intrinsicContentSize
         if followingSize.width > Size.minViewWidth {
@@ -209,7 +209,7 @@ open class RelationshipControl: UIView {
         invalidateIntrinsicContentSize()
     }
 
-    open override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         let starButtonWidth: CGFloat

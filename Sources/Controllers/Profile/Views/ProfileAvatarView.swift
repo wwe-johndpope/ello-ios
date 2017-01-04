@@ -2,9 +2,9 @@
 ///  ProfileAvatarView.swift
 //
 
-open class ProfileAvatarView: ProfileBaseView {
+class ProfileAvatarView: ProfileBaseView {
 
-    public struct Size {
+    struct Size {
         static let avatarSize: CGFloat = 180
         static let whiteBarHeight: CGFloat = 60
 
@@ -14,12 +14,12 @@ open class ProfileAvatarView: ProfileBaseView {
         static let badgeHeight: CGFloat = 44
     }
 
-    open var avatarImage: UIImage? {
+    var avatarImage: UIImage? {
         get { return avatarImageView.image }
         set { avatarImageView.image = newValue }
     }
 
-    open var avatarURL: URL? {
+    var avatarURL: URL? {
         get { return _avatarURL }
         set {
             _avatarURL = newValue
@@ -33,7 +33,7 @@ open class ProfileAvatarView: ProfileBaseView {
     // temporarily move badge button here. Remove once Total Views is available
     fileprivate let badgeButton = UIButton()
 
-    open var badgeVisible: Bool {
+    var badgeVisible: Bool {
         set { badgeButton.isHidden = !newValue }
         get { return !badgeButton.isHidden }
     }
@@ -88,7 +88,7 @@ extension ProfileAvatarView {
         }
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = Size.avatarSize / 2
 
@@ -98,7 +98,7 @@ extension ProfileAvatarView {
         }
     }
 
-    public func prepareForReuse() {
+    func prepareForReuse() {
         avatarImageView.pin_cancelImageDownload()
         avatarImageView.image = nil
         _avatarURL = nil

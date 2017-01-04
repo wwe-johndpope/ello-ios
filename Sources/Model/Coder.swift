@@ -4,15 +4,15 @@
 
 import Foundation
 
-public struct Coder {
-    public let coder: NSCoder
+struct Coder {
+    let coder: NSCoder
 
-    public init(_ coder: NSCoder) {
+    init(_ coder: NSCoder) {
         self.coder = coder
     }
 }
 
-public extension Coder {
+extension Coder {
     func decodeKey<T>(_ key: String) -> T {
         return coder.decodeObject(forKey: key) as! T
     }
@@ -30,7 +30,7 @@ public extension Coder {
     }
 }
 
-public extension Coder {
+extension Coder {
     func decodeOptionalKey<T>(_ key: String) -> T? {
         if coder.containsValue(forKey: key) {
             return coder.decodeObject(forKey: key) as? T
@@ -56,7 +56,7 @@ public extension Coder {
     }
 }
 
-public extension Coder {
+extension Coder {
     func encodeObject(_ obj: Any?, forKey key: String) {
         if let bool = obj as? Bool {
             coder.encode(bool, forKey: key)

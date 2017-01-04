@@ -2,9 +2,9 @@
 ///  EmptyStreamCellPresenter.swift
 //
 
-public struct EmptyStreamCellPresenter {
+struct EmptyStreamCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

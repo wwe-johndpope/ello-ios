@@ -2,15 +2,15 @@
 ///  ProfileLocationView.swift
 //
 
-open class ProfileLocationView: ProfileBaseView {
-    public struct Size {
+class ProfileLocationView: ProfileBaseView {
+    struct Size {
         static let height: CGFloat = 48
         static let markerHeight: CGFloat = 14
         static let leadingMargin: CGFloat = 12
         static let markerLocationMargin: CGFloat = 6
     }
 
-    open var location: String {
+    var location: String {
         get { return locationLabel.text ?? "" }
         set {
             locationLabel.text = newValue
@@ -31,12 +31,12 @@ open class ProfileLocationView: ProfileBaseView {
     fileprivate let markerImageView = UIImageView(image: InterfaceImage.marker.normalImage)
 
     fileprivate let grayLine = UIView()
-    open var grayLineVisible: Bool {
+    var grayLineVisible: Bool {
         get { return !grayLine.isHidden }
         set { grayLine.isHidden = !newValue }
     }
 
-    open var onHeightMismatch: OnHeightMismatch?
+    var onHeightMismatch: OnHeightMismatch?
 }
 
 extension ProfileLocationView {
@@ -72,7 +72,7 @@ extension ProfileLocationView {
         }
     }
 
-    public func prepareForReuse() {
+    func prepareForReuse() {
         location = ""
     }
 }

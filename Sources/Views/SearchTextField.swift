@@ -2,8 +2,8 @@
 ///  SearchTextField.swift
 //
 
-open class SearchTextField: UITextField {
-    override open var placeholder: String? {
+class SearchTextField: UITextField {
+    override var placeholder: String? {
         didSet {
             if let placeholder = placeholder {
                 attributedPlaceholder = NSAttributedString(
@@ -16,12 +16,12 @@ open class SearchTextField: UITextField {
     }
     fileprivate var line = UIView()
 
-    override required public init(frame: CGRect) {
+    override required init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         sharedInit()
     }
@@ -49,11 +49,11 @@ open class SearchTextField: UITextField {
         }
     }
 
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
         return rectForBounds(bounds)
     }
 
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return rectForBounds(bounds)
     }
 

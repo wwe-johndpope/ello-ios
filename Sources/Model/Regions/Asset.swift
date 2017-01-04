@@ -9,20 +9,20 @@ import SwiftyJSON
 let AssetVersion = 1
 
 @objc(Asset)
-public final class Asset: JSONAble {
+final class Asset: JSONAble {
 
     // active record
-    public let id: String
+    let id: String
     // optional
-    public var optimized: Attachment?
-    public var smallScreen: Attachment?
-    public var ldpi: Attachment?
-    public var mdpi: Attachment?
-    public var hdpi: Attachment?
-    public var xhdpi: Attachment?
-    public var original: Attachment?
+    var optimized: Attachment?
+    var smallScreen: Attachment?
+    var ldpi: Attachment?
+    var mdpi: Attachment?
+    var hdpi: Attachment?
+    var xhdpi: Attachment?
+    var original: Attachment?
     // optional avatar
-    public var largeOrBest: Attachment? {
+    var largeOrBest: Attachment? {
         // we originally had this expressed via
         // return large ?? optimized ?? xhdpi ?? hdpi ?? regular
         //
@@ -36,14 +36,14 @@ public final class Asset: JSONAble {
         return nil
 
     }
-    public var large: Attachment?
-    public var regular: Attachment?
-    public var small: Attachment?
+    var large: Attachment?
+    var regular: Attachment?
+    var small: Attachment?
     // computed
-    public var isGif: Bool {
+    var isGif: Bool {
         return self.optimized?.type == "image/gif"
     }
-    public var isLargeGif: Bool {
+    var isLargeGif: Bool {
         if isGif {
             if let size = self.optimized?.size {
                 return size >= 3_145_728
@@ -52,11 +52,11 @@ public final class Asset: JSONAble {
         return false
     }
 
-	public var oneColumnAttachment: Attachment? {
+	var oneColumnAttachment: Attachment? {
         return self.hdpi
     }
 
-    public var gridLayoutAttachment: Attachment? {
+    var gridLayoutAttachment: Attachment? {
         let isWide = Window.isWide(Window.width)
         if isWide {
             return self.hdpi
@@ -68,14 +68,14 @@ public final class Asset: JSONAble {
 
 // MARK: Initialization
 
-    public convenience init(url: URL) {
+    convenience init(url: URL) {
         self.init(id: UUID().uuidString)
 
         let attachment = Attachment(url: url)
         self.optimized = attachment
     }
 
-    public convenience init(url: URL, gifData: Data, posterImage: UIImage) {
+    convenience init(url: URL, gifData: Data, posterImage: UIImage) {
         self.init(id: UUID().uuidString)
 
         let optimized = Attachment(url: url)
@@ -92,7 +92,7 @@ public final class Asset: JSONAble {
         self.hdpi = hdpi
     }
 
-    public convenience init(url: URL, image: UIImage) {
+    convenience init(url: URL, image: UIImage) {
         self.init(id: UUID().uuidString)
 
         let optimized = Attachment(url: url)
@@ -103,7 +103,7 @@ public final class Asset: JSONAble {
         self.optimized = optimized
     }
 
-    public init(id: String)
+    init(id: String)
     {
         self.id = id
         super.init(version: AssetVersion)
@@ -111,7 +111,7 @@ public final class Asset: JSONAble {
 
 // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // required
         self.id = decoder.decodeKey("id")
@@ -130,7 +130,7 @@ public final class Asset: JSONAble {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         // required
         coder.encodeObject(id, forKey: "id")
@@ -151,13 +151,13 @@ public final class Asset: JSONAble {
 
 // MARK: JSONAble
 
-    override class public func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.assetFromJSON.rawValue)
         return parseAsset(json["id"].stringValue, node: data["attachment"] as? [String: AnyObject])
     }
 
-    class public func parseAsset(_ id: String, node: [String: AnyObject]?) -> Asset {
+    class func parseAsset(_ id: String, node: [String: AnyObject]?) -> Asset {
         let asset = Asset(id: id)
         // optional
         if let optimized = node?["optimized"] as? [String: AnyObject] {

@@ -6,7 +6,7 @@ import Foundation
 import Keys
 
 
-public extension String {
+extension String {
 
     var saltedSHA1String: String? {
         let sodiumChloride: String = ElloKeys().sodiumChloride()

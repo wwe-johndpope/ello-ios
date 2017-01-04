@@ -5,7 +5,7 @@
 import Foundation
 import TimeAgoInWords
 
-public struct StreamHeaderCellPresenter {
+struct StreamHeaderCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

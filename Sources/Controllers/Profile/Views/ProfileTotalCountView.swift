@@ -2,13 +2,13 @@
 ///  ProfileTotalCountView.swift
 //
 
-open class ProfileTotalCountView: ProfileBaseView {
+class ProfileTotalCountView: ProfileBaseView {
 
     fileprivate let totalLabel = UILabel()
     fileprivate let badgeButton = UIButton()
     fileprivate let greyLine = UIView()
 
-    public struct Size {
+    struct Size {
         static let height: CGFloat = 60
         static let labelVerticalOffset: CGFloat = 3.5
         static let badgeMargin: CGFloat = 12
@@ -17,13 +17,13 @@ open class ProfileTotalCountView: ProfileBaseView {
 
     static let totalFont = UIFont.defaultFont(14)
 
-    open var count: String? {
+    var count: String? {
         didSet {
             updateAttributedCountText()
         }
     }
 
-    open var badgeVisible: Bool {
+    var badgeVisible: Bool {
         set { badgeButton.isHidden = !newValue }
         get { return !badgeButton.isHidden }
     }
@@ -72,7 +72,7 @@ extension ProfileTotalCountView {
         }
     }
 
-    public func prepareForReuse() {
+    func prepareForReuse() {
     }
 }
 

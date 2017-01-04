@@ -2,7 +2,7 @@
 ///  OmnibarImageCell.swift
 //
 
-open class OmnibarImageCell: UITableViewCell {
+class OmnibarImageCell: UITableViewCell {
     static let reuseIdentifier = "OmnibarImageCell"
 
     struct Size {
@@ -11,17 +11,17 @@ open class OmnibarImageCell: UITableViewCell {
         static let editingHeight = CGFloat(80)
     }
 
-    open let flImageView = FLAnimatedImageView()
-    open let buyButton = UIButton()
-    open var reordering = false
-    open var hasBuyButtonURL = false
+    let flImageView = FLAnimatedImageView()
+    let buyButton = UIButton()
+    var reordering = false
+    var hasBuyButtonURL = false
 
-    open var omnibarImage: UIImage? {
+    var omnibarImage: UIImage? {
         get { return flImageView.image }
         set { flImageView.image = newValue }
     }
 
-    open var omnibarAnimagedImage: FLAnimatedImage? {
+    var omnibarAnimagedImage: FLAnimatedImage? {
         get { return flImageView.animatedImage }
         set { flImageView.animatedImage = newValue }
     }
@@ -33,7 +33,7 @@ open class OmnibarImageCell: UITableViewCell {
         self.style()
     }
 
-    required public init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -56,7 +56,7 @@ open class OmnibarImageCell: UITableViewCell {
         contentView.addSubview(buyButton)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         let margins: UIEdgeInsets
@@ -88,7 +88,7 @@ open class OmnibarImageCell: UITableViewCell {
             )
     }
 
-    open class func heightForImage(_ image: UIImage, tableWidth: CGFloat, editing: Bool) -> CGFloat {
+    class func heightForImage(_ image: UIImage, tableWidth: CGFloat, editing: Bool) -> CGFloat {
         if editing {
             return Size.editingHeight
         }

@@ -30,7 +30,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 // swiftlint:enable colon
-public protocol PostbarDelegate: class {
+protocol PostbarDelegate: class {
     func viewsButtonTapped(_ indexPath: IndexPath)
     func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl)
     func deleteCommentButtonTapped(_ indexPath: IndexPath)
@@ -44,17 +44,17 @@ public protocol PostbarDelegate: class {
     func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath)
 }
 
-open class PostbarController: PostbarDelegate {
+class PostbarController: PostbarDelegate {
 
     weak var presentingController: StreamViewController?
-    open var collectionView: UICollectionView
-    open let dataSource: StreamDataSource
-    open var currentUser: User?
+    var collectionView: UICollectionView
+    let dataSource: StreamDataSource
+    var currentUser: User?
 
     // on the post detail screen, the comments don't show/hide
     var toggleableComments: Bool = true
 
-    public init(collectionView: UICollectionView, dataSource: StreamDataSource, presentingController: StreamViewController) {
+    init(collectionView: UICollectionView, dataSource: StreamDataSource, presentingController: StreamViewController) {
         self.collectionView = collectionView
         self.dataSource = dataSource
         self.presentingController = presentingController
@@ -62,7 +62,7 @@ open class PostbarController: PostbarDelegate {
 
     // MARK:
 
-    open func viewsButtonTapped(_ indexPath: IndexPath) {
+    func viewsButtonTapped(_ indexPath: IndexPath) {
         if let post = postForIndexPath(indexPath) {
             Tracker.sharedTracker.viewsButtonTapped(post: post)
             // This is a bit dirty, we should not call a method on a compositionally held
@@ -71,7 +71,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
+    func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
         guard !dataSource.streamKind.isGridView else {
             cell.cancelCommentLoading()
             if let indexPath = collectionView.indexPath(for: cell) {
@@ -141,7 +141,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func deleteCommentButtonTapped(_ indexPath: IndexPath) {
+    func deleteCommentButtonTapped(_ indexPath: IndexPath) {
         let message = InterfaceString.Post.DeleteCommentConfirm
         let alertController = AlertViewController(message: message)
 
@@ -169,7 +169,7 @@ open class PostbarController: PostbarDelegate {
         presentingController?.present(alertController, animated: true, completion: .none)
     }
 
-    open func editCommentButtonTapped(_ indexPath: IndexPath) {
+    func editCommentButtonTapped(_ indexPath: IndexPath) {
         // This is a bit dirty, we should not call a method on a compositionally held
         // controller's createPostDelegate. Can this use the responder chain when we have
         // parameters to pass?
@@ -180,7 +180,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
+    func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
             Tracker.sharedTracker.postLoved(post)
             cell?.lovesControl.isUserInteractionEnabled = false
@@ -235,7 +235,7 @@ open class PostbarController: PostbarDelegate {
             })
     }
 
-    open func repostButtonTapped(_ indexPath: IndexPath) {
+    func repostButtonTapped(_ indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
             Tracker.sharedTracker.postReposted(post)
             let message = InterfaceString.Post.RepostConfirm
@@ -290,7 +290,7 @@ open class PostbarController: PostbarDelegate {
             })
     }
 
-    open func shareButtonTapped(_ indexPath: IndexPath, sourceView: UIView) {
+    func shareButtonTapped(_ indexPath: IndexPath, sourceView: UIView) {
         if let post = dataSource.postForIndexPath(indexPath),
             let shareLink = post.shareLink,
             let shareURL = URL(string: shareLink)
@@ -311,7 +311,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func flagCommentButtonTapped(_ indexPath: IndexPath) {
+    func flagCommentButtonTapped(_ indexPath: IndexPath) {
         if let comment = commentForIndexPath(indexPath),
             let presentingController = presentingController
         {
@@ -326,7 +326,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func replyToCommentButtonTapped(_ indexPath: IndexPath) {
+    func replyToCommentButtonTapped(_ indexPath: IndexPath) {
         if let comment = commentForIndexPath(indexPath) {
             // This is a bit dirty, we should not call a method on a compositionally held
             // controller's createPostDelegate. Can this use the responder chain when we have
@@ -340,7 +340,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func replyToAllButtonTapped(_ indexPath: IndexPath) {
+    func replyToAllButtonTapped(_ indexPath: IndexPath) {
         // This is a bit dirty, we should not call a method on a compositionally held
         // controller's createPostDelegate. Can this use the responder chain when we have
         // parameters to pass?
@@ -359,7 +359,7 @@ open class PostbarController: PostbarDelegate {
         }
     }
 
-    open func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
+    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
         guard let
             comment = dataSource.commentForIndexPath(indexPath),
             let post = comment.parentPost

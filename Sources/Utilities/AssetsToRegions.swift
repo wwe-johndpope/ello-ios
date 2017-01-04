@@ -5,9 +5,9 @@
 import Photos
 
 
-public struct AssetsToRegions {
+struct AssetsToRegions {
 
-    public static func processPHAssets(_ assets: [PHAsset], completion: @escaping ([ImageRegionData]) -> Void) {
+    static func processPHAssets(_ assets: [PHAsset], completion: @escaping ([ImageRegionData]) -> Void) {
         nextPHAsset(assets, stack: [], completion: completion)
     }
 

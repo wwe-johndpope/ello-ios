@@ -5,13 +5,13 @@
 import KINWebBrowser
 import Crashlytics
 
-open class ElloWebBrowserViewController: KINWebBrowserViewController {
+class ElloWebBrowserViewController: KINWebBrowserViewController {
     var toolbarHidden = false
     var prevRequestURL: URL?
     static var currentUser: User?
     static var elloTabBarController: ElloTabBarController?
 
-    open class func navigationControllerWithBrowser(_ webBrowser: ElloWebBrowserViewController) -> ElloNavigationController {
+    class func navigationControllerWithBrowser(_ webBrowser: ElloWebBrowserViewController) -> ElloNavigationController {
         // tell AppDelegate to allow rotation
         AppDelegate.restrictRotation = false
         let xButton = UIBarButtonItem.closeButton(target: webBrowser, action: #selector(ElloWebBrowserViewController.doneButtonPressed(_:)))
@@ -24,29 +24,29 @@ open class ElloWebBrowserViewController: KINWebBrowserViewController {
         return ElloNavigationController(rootViewController: webBrowser)
     }
 
-    override open class func navigationControllerWithWebBrowser() -> ElloNavigationController {
+    override class func navigationControllerWithWebBrowser() -> ElloNavigationController {
         let browser = self.init()
         return navigationControllerWithBrowser(browser)
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setToolbarHidden(toolbarHidden, animated: false)
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.shared.statusBarStyle = .default
         Crashlytics.sharedInstance().setObjectValue("ElloWebBrowser", forKey: CrashlyticsKey.streamName.rawValue)
         delegate = self
     }
 
-    override open func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
 
-    open func shareButtonPressed(_ barButtonItem: UIBarButtonItem) {
+    func shareButtonPressed(_ barButtonItem: UIBarButtonItem) {
         var webViewUrl: URL?
         if let wkWebView = wkWebView {
             webViewUrl = wkWebView.url
@@ -77,19 +77,19 @@ open class ElloWebBrowserViewController: KINWebBrowserViewController {
 // MARK: ElloWebBrowserViewConteroller: KINWebBrowserDelegate
 extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
-    public func webBrowser(_ webBrowser: KINWebBrowserViewController!, didFailToLoad url: URL?, error: NSError!) {
+    func webBrowser(_ webBrowser: KINWebBrowserViewController!, didFailToLoad url: URL?, error: NSError!) {
         if let url = url ?? prevRequestURL {
             UIApplication.shared.openURL(url)
         }
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
 
-    public func webBrowser(_ webBrowser: KINWebBrowserViewController!, shouldStartLoadWith request: URLRequest!) -> Bool {
+    func webBrowser(_ webBrowser: KINWebBrowserViewController!, shouldStartLoadWith request: URLRequest!) -> Bool {
         prevRequestURL = request.url
         return ElloWebViewHelper.handle(request: request, webLinkDelegate: self, fromWebView: true)
     }
 
-    public func willDismissWebBrowser(_ webView: KINWebBrowserViewController) {
+    func willDismissWebBrowser(_ webView: KINWebBrowserViewController) {
         AppDelegate.restrictRotation = true
     }
 
@@ -97,7 +97,7 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
 // MARK: ElloWebBrowserViewController : WebLinkDelegate
 extension ElloWebBrowserViewController : WebLinkDelegate {
-    public func webLinkTapped(type: ElloURI, data: String) {
+    func webLinkTapped(type: ElloURI, data: String) {
         switch type {
         case .confirm,
              .downloads,

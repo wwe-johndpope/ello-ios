@@ -4,25 +4,25 @@
 
 import Foundation
 
-open class StreamInviteFriendsCell: UICollectionViewCell {
+class StreamInviteFriendsCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamInviteFriendsCell"
 
-    @IBOutlet weak open var nameLabel: UILabel!
-    @IBOutlet weak open var inviteButton: StyledButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var inviteButton: StyledButton!
 
-    open weak var inviteDelegate: InviteDelegate?
-    open var inviteCache: InviteCache?
+    weak var inviteDelegate: InviteDelegate?
+    var inviteCache: InviteCache?
     var bottomBorder = CALayer()
     var isOnboarding = false
 
-    open var person: LocalPerson? {
+    var person: LocalPerson? {
         didSet {
             nameLabel.text = person!.name
             styleInviteButton(inviteCache?.has(person!.identifier))
         }
     }
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.font = UIFont.defaultFont(18)
         nameLabel.textColor = UIColor.greyA()
@@ -32,12 +32,12 @@ open class StreamInviteFriendsCell: UICollectionViewCell {
         self.layer.addSublayer(bottomBorder)
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         isOnboarding = false
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         bottomBorder.frame = CGRect(x: 0, y: self.bounds.height - 1, width: self.bounds.width, height: 1)
         super.layoutSubviews()
     }
@@ -51,7 +51,7 @@ open class StreamInviteFriendsCell: UICollectionViewCell {
         }
     }
 
-    open func styleInviteButton(_ invited: Bool? = false) {
+    func styleInviteButton(_ invited: Bool? = false) {
         if invited == true {
             inviteButton.style = .Invited
             inviteButton.setTitle(InterfaceString.Friends.Resend, for: .normal)

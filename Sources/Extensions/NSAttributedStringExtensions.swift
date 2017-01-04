@@ -18,7 +18,7 @@ extension NSAttributedString {
         return NSAttributedString(attributedString: retval)
     }
 
-    public convenience init(_ string: String, color: UIColor = .black, underlineStyle: NSUnderlineStyle? = nil, font: UIFont = .defaultFont(), alignment: NSTextAlignment = .left) {
+    convenience init(_ string: String, color: UIColor = .black, underlineStyle: NSUnderlineStyle? = nil, font: UIFont = .defaultFont(), alignment: NSTextAlignment = .left) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = alignment
@@ -32,11 +32,11 @@ extension NSAttributedString {
         self.init(string: string, attributes: attrs)
     }
 
-    public convenience init(label string: String, style: StyledLabel.Style) {
+    convenience init(label string: String, style: StyledLabel.Style) {
         self.init(string, color: style.textColor, font: style.font)
     }
 
-    public convenience init(button string: String, style: StyledButton.Style, state: UIControlState = .normal) {
+    convenience init(button string: String, style: StyledButton.Style, state: UIControlState = .normal) {
         let stateColor: UIColor?
         if state == .disabled {
             stateColor = style.disabledTitleColor
@@ -55,7 +55,7 @@ extension NSAttributedString {
         self.init(string, color: color, underlineStyle: style.underline ? .styleSingle : .styleNone, font: style.font)
     }
 
-    public convenience init(primaryHeader: String, secondaryHeader: String) {
+    convenience init(primaryHeader: String, secondaryHeader: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         let bold: [String: AnyObject] = [

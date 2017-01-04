@@ -8,7 +8,7 @@ let billion = 1_000_000_000.0
 let million = 1_000_000.0
 let thousand = 1_000.0
 
-public extension Int {
+extension Int {
 
     func numberToHuman(rounding: Int = 2, showZero: Bool = false) -> String {
         if self == 0 && !showZero { return "" }

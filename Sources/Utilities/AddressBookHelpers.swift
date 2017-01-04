@@ -2,8 +2,8 @@
 ///  AddressBookHelpers.swift
 //
 
-public struct AddressBookHelpers {
-    static public func searchFilter(_ text: String) -> ((StreamCellItem) -> Bool)? {
+struct AddressBookHelpers {
+    static func searchFilter(_ text: String) -> ((StreamCellItem) -> Bool)? {
         if text.characters.count < 2 { return nil }
         return { item in
             if let user = item.jsonable as? User {
@@ -16,7 +16,7 @@ public struct AddressBookHelpers {
         }
     }
 
-    static public func process(_ contacts: [(LocalPerson, User?)], currentUser: User?) -> [StreamCellItem] {
+    static func process(_ contacts: [(LocalPerson, User?)], currentUser: User?) -> [StreamCellItem] {
         var foundItems = [StreamCellItem]()
         var inviteItems = [StreamCellItem]()
         let currentUserEmail = currentUser?.profile?.email

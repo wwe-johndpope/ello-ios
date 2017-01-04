@@ -5,22 +5,22 @@
 import SwiftyJSON
 
 
-public let PagePromotionalVersion = 1
+let PagePromotionalVersion = 1
 
-public final class PagePromotional: JSONAble {
+final class PagePromotional: JSONAble {
 
-    public let id: String
-    public let header: String
-    public let subheader: String
-    public let ctaCaption: String
-    public let ctaURL: URL?
-    public let image: Asset?
-    public var tileURL: URL? { return image?.xhdpi?.url as URL? }
+    let id: String
+    let header: String
+    let subheader: String
+    let ctaCaption: String
+    let ctaURL: URL?
+    let image: Asset?
+    var tileURL: URL? { return image?.xhdpi?.url as URL? }
 
     // links
-    public var user: User? { return getLinkObject("user") as? User }
+    var user: User? { return getLinkObject("user") as? User }
 
-    public init(
+    init(
         id: String,
         header: String,
         subheader: String,
@@ -37,7 +37,7 @@ public final class PagePromotional: JSONAble {
         super.init(version: PagePromotionalVersion)
     }
 
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         let decoder = Coder(coder)
         id = decoder.decodeKey("id")
         header = decoder.decodeKey("header")
@@ -48,7 +48,7 @@ public final class PagePromotional: JSONAble {
         super.init(coder: coder)
     }
 
-    public override func encode(with coder: NSCoder) {
+    override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(id, forKey: "id")
         encoder.encodeObject(header, forKey: "header")
@@ -59,7 +59,7 @@ public final class PagePromotional: JSONAble {
         super.encode(with: coder)
     }
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let header = json["header"].stringValue

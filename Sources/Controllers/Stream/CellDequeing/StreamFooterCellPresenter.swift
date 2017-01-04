@@ -5,7 +5,7 @@
 import Foundation
 
 
-public enum InteractionVisibility {
+enum InteractionVisibility {
     case enabled
     case selectedAndEnabled
     case selectedAndDisabled
@@ -18,9 +18,9 @@ public enum InteractionVisibility {
 }
 
 
-public struct StreamFooterCellPresenter {
+struct StreamFooterCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

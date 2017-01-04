@@ -4,17 +4,17 @@
 
 import Foundation
 
-open class UserListItemCell: UICollectionViewCell {
+class UserListItemCell: UICollectionViewCell {
     static let reuseIdentifier = "UserListItemCell"
 
-    weak open var avatarButton: AvatarButton!
-    @IBOutlet weak open var usernameLabel: UILabel!
-    @IBOutlet weak open var nameLabel: UILabel!
-    weak open var relationshipControl: RelationshipControl!
+    weak var avatarButton: AvatarButton!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    weak var relationshipControl: RelationshipControl!
     weak var userDelegate: UserDelegate?
     var bottomBorder = CALayer()
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         style()
     }
@@ -44,7 +44,7 @@ open class UserListItemCell: UICollectionViewCell {
         self.layer.addSublayer(bottomBorder)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         bottomBorder.frame = CGRect(x: 0, y: self.bounds.height - 1, width: self.bounds.width, height: 1)
         super.layoutSubviews()
     }

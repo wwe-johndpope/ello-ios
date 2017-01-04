@@ -5,11 +5,11 @@
 import FutureKit
 
 
-open class HireService {
+class HireService {
 
-    public init() {}
+    init() {}
 
-    open func hire(user: User, body: String) -> Future<Void> {
+    func hire(user: User, body: String) -> Future<Void> {
         let promise = Promise<Void>()
         ElloProvider.shared.elloRequest(.hire(userId: user.id, body: body),
             success: { _ in
@@ -22,7 +22,7 @@ open class HireService {
         return promise.future
     }
 
-    open func collaborate(user: User, body: String) -> Future<Void> {
+    func collaborate(user: User, body: String) -> Future<Void> {
         let promise = Promise<Void>()
         ElloProvider.shared.elloRequest(.collaborate(userId: user.id, body: body),
             success: { _ in

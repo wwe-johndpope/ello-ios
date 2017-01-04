@@ -5,19 +5,19 @@
 import Foundation
 import FutureKit
 
-public typealias PostSuccessCompletion = (_ post: Post, _ responseConfig: ResponseConfig) -> Void
-public typealias PostCommentsSuccessCompletion = (_ comments: [ElloComment], _ responseConfig: ResponseConfig) -> Void
-public typealias PostLoversSuccessCompletion = (_ users: [User], _ responseConfig: ResponseConfig) -> Void
-public typealias PostRepostersSuccessCompletion = (_ users: [User], _ responseConfig: ResponseConfig) -> Void
-public typealias UsernamesSuccessCompletion = (_ usernames: [String]) -> Void
-public typealias CommentSuccessCompletion = (_ comment: ElloComment, _ responseConfig: ResponseConfig) -> Void
-public typealias DeletePostSuccessCompletion = () -> Void
+typealias PostSuccessCompletion = (_ post: Post, _ responseConfig: ResponseConfig) -> Void
+typealias PostCommentsSuccessCompletion = (_ comments: [ElloComment], _ responseConfig: ResponseConfig) -> Void
+typealias PostLoversSuccessCompletion = (_ users: [User], _ responseConfig: ResponseConfig) -> Void
+typealias PostRepostersSuccessCompletion = (_ users: [User], _ responseConfig: ResponseConfig) -> Void
+typealias UsernamesSuccessCompletion = (_ usernames: [String]) -> Void
+typealias CommentSuccessCompletion = (_ comment: ElloComment, _ responseConfig: ResponseConfig) -> Void
+typealias DeletePostSuccessCompletion = () -> Void
 
-public struct PostService {
+struct PostService {
 
-    public init(){}
+    init(){}
 
-    public func loadPost(
+    func loadPost(
         _ postParam: String,
         needsComments: Bool) -> Future<Post>
     {
@@ -41,7 +41,7 @@ public struct PostService {
         return promise.future
     }
 
-    public func loadPostComments(
+    func loadPostComments(
         _ postId: String,
         success: @escaping PostCommentsSuccessCompletion,
         failure: @escaping ElloFailureCompletion = { _ in })
@@ -62,7 +62,7 @@ public struct PostService {
         })
     }
 
-    public func loadPostLovers(
+    func loadPostLovers(
         _ postId: String,
         success: @escaping PostLoversSuccessCompletion,
         failure: @escaping ElloFailureCompletion = { _ in })
@@ -83,7 +83,7 @@ public struct PostService {
             })
     }
 
-    public func loadPostReposters(
+    func loadPostReposters(
         _ postId: String,
         success: @escaping PostRepostersSuccessCompletion,
         failure: @escaping ElloFailureCompletion = { _ in })
@@ -104,7 +104,7 @@ public struct PostService {
         })
     }
 
-    public func loadComment(
+    func loadComment(
         _ postId: String,
         commentId: String,
         success: @escaping CommentSuccessCompletion,
@@ -126,7 +126,7 @@ public struct PostService {
             })
     }
 
-    public func loadReplyAll(
+    func loadReplyAll(
         _ postId: String,
         success: @escaping UsernamesSuccessCompletion,
         failure: @escaping ElloEmptyCompletion)
@@ -146,7 +146,7 @@ public struct PostService {
             }, failure: { _ in failure() })
     }
 
-    public func deletePost(
+    func deletePost(
         _ postId: String,
         success: @escaping ElloEmptyCompletion,
         failure: @escaping ElloFailureCompletion)
@@ -159,7 +159,7 @@ public struct PostService {
         )
     }
 
-    public func deleteComment(_ postId: String, commentId: String, success: @escaping ElloEmptyCompletion, failure: @escaping ElloFailureCompletion) {
+    func deleteComment(_ postId: String, commentId: String, success: @escaping ElloEmptyCompletion, failure: @escaping ElloFailureCompletion) {
         ElloProvider.shared.elloRequest(ElloAPI.deleteComment(postId: postId, commentId: commentId),
             success: { (_, _) in
                 success()
@@ -167,7 +167,7 @@ public struct PostService {
         )
     }
 
-    public func toggleWatchPost(_ post: Post, watching: Bool) -> Future<Post> {
+    func toggleWatchPost(_ post: Post, watching: Bool) -> Future<Post> {
         let api: ElloAPI
         if watching {
             api = ElloAPI.createWatchPost(postId: post.id)

@@ -14,7 +14,7 @@ private var srcRegex: NSRegularExpression? = try? NSRegularExpression(
                 options: .caseInsensitive)
 
 
-public extension String {
+extension String {
 
     func rangeFromNSRange(_ nsRange: NSRange) -> Range<String.Index>? {
         guard

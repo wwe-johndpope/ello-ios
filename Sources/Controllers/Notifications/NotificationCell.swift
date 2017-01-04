@@ -6,14 +6,14 @@ import FLAnimatedImage
 import TimeAgoInWords
 
 
-public protocol NotificationDelegate: class {
+protocol NotificationDelegate: class {
     func userTapped(_ user: User)
     func commentTapped(_ comment: ElloComment)
     func postTapped(_ post: Post)
 }
 
 
-open class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
+class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
 
     struct Size {
@@ -199,7 +199,7 @@ open class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         }
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
@@ -222,7 +222,7 @@ open class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         }
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         let outerFrame = contentView.bounds.inset(all: Size.SideMargins)
@@ -298,7 +298,7 @@ open class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         }
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         messageWebView.stopLoading()
         messageWebView.isHidden = true
@@ -313,7 +313,7 @@ open class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         buyButtonImage.isHidden = true
     }
 
-    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default"
         {
             userDelegate?.userTappedText(cell: self)
@@ -324,7 +324,7 @@ open class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         }
     }
 
-    open func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         if messageVisible {
             messageWebView.isHidden = !messageVisible
         }
@@ -359,7 +359,7 @@ extension NotificationCell: ElloTextViewDelegate {
 
 extension NotificationCell {
 
-    public func replyTapped() {
+    func replyTapped() {
         if let post = post {
             delegate?.postTapped(post)
         }
@@ -368,7 +368,7 @@ extension NotificationCell {
         }
     }
 
-    public func avatarTapped() {
+    func avatarTapped() {
         userDelegate?.userTappedAuthor(cell: self)
     }
 

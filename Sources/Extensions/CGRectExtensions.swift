@@ -6,7 +6,7 @@ import CoreGraphics
 import UIKit
 import Foundation
 
-public extension CGRect {
+extension CGRect {
 
 // MARK: debug
     func tap(_ name: String = "frame") -> CGRect {

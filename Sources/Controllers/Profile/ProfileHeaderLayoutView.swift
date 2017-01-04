@@ -29,7 +29,7 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 
-open class ProfileHeaderLayoutView: ProfileBaseView {
+class ProfileHeaderLayoutView: ProfileBaseView {
     var calculatedCellHeights: CalculatedCellHeights? {
         didSet {
             guard let calculatedCellHeights = calculatedCellHeights else { return }

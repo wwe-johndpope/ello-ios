@@ -9,27 +9,27 @@ import Foundation
 let WatchVersion: Int = 1
 
 @objc(Watch)
-public final class Watch: JSONAble, PostActionable {
+final class Watch: JSONAble, PostActionable {
 
     // active record
-    public let id: String
-    public let createdAt: Date
-    public let updatedAt: Date
+    let id: String
+    let createdAt: Date
+    let updatedAt: Date
     // required
-    public let postId: String
-    public let userId: String
+    let postId: String
+    let userId: String
 
-    public var post: Post? {
+    var post: Post? {
         return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .postsType) as? Post
     }
 
-    public var user: User? {
+    var user: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.userId, type: .usersType) as? User
     }
 
 // MARK: Initialization
 
-    public init(id: String,
+    init(id: String,
         createdAt: Date,
         updatedAt: Date,
         postId: String,
@@ -47,7 +47,7 @@ public final class Watch: JSONAble, PostActionable {
 
 
 // MARK: NSCoding
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
         self.id = decoder.decodeKey("id")
@@ -59,7 +59,7 @@ public final class Watch: JSONAble, PostActionable {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
         coder.encodeObject(id, forKey: "id")
@@ -73,7 +73,7 @@ public final class Watch: JSONAble, PostActionable {
 
 // MARK: JSONAble
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.watchFromJSON.rawValue)
         var createdAt: Date

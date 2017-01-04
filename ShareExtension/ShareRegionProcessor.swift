@@ -4,11 +4,11 @@
 
 import Foundation
 
-open class ShareRegionProcessor {
+class ShareRegionProcessor {
 
-    public init(){}
+    init(){}
 
-    open static func prepContent(_ contentText: String, itemPreviews: [ExtensionItemPreview]) -> [PostEditingService.PostContentRegion] {
+    static func prepContent(_ contentText: String, itemPreviews: [ExtensionItemPreview]) -> [PostEditingService.PostContentRegion] {
         var content: [PostEditingService.PostContentRegion] = []
 
         let cleanedText = contentText.trimmingCharacters(in: CharacterSet.whitespaces)

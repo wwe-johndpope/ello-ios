@@ -2,7 +2,7 @@
 ///  OmnibarErrorCell.swift
 //
 
-open class OmnibarErrorCell: UITableViewCell {
+class OmnibarErrorCell: UITableViewCell {
     static let reuseIdentifier = "OmnibarErrorCell"
     struct Size {
         static let margin = CGFloat(10)
@@ -11,7 +11,7 @@ open class OmnibarErrorCell: UITableViewCell {
 
     fileprivate let label = StyledLabel(style: .Error)
 
-    open var url: URL? {
+    var url: URL? {
         get { return nil }
         set {
             if let url = newValue {
@@ -30,7 +30,7 @@ open class OmnibarErrorCell: UITableViewCell {
         contentView.addSubview(label)
     }
 
-    required public init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

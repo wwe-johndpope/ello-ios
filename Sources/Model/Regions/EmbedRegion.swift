@@ -8,7 +8,7 @@ import SwiftyJSON
 
 let EmbedRegionVersion = 1
 
-public enum EmbedType: String {
+enum EmbedType: String {
     case codepen = "codepen"
     case dailymotion = "dailymotion"
     case mixcloud = "mixcloud"
@@ -21,24 +21,24 @@ public enum EmbedType: String {
 }
 
 @objc(EmbedRegion)
-public final class EmbedRegion: JSONAble, Regionable {
-    public var isRepost: Bool = false
+final class EmbedRegion: JSONAble, Regionable {
+    var isRepost: Bool = false
 
     // active record
-    public let id: String
+    let id: String
     // required
-    public let service: EmbedType
-    public let url: URL
-    public let thumbnailSmallUrl: URL
-    public let thumbnailLargeUrl: URL
+    let service: EmbedType
+    let url: URL
+    let thumbnailSmallUrl: URL
+    let thumbnailLargeUrl: URL
     // computed
-    public var isAudioEmbed: Bool {
+    var isAudioEmbed: Bool {
         return service == EmbedType.mixcloud || service == EmbedType.soundcloud || service == EmbedType.bandcamp
     }
 
     // MARK: Initialization
 
-    public init(
+    init(
         id: String,
         service: EmbedType,
         url: URL,
@@ -56,7 +56,7 @@ public final class EmbedRegion: JSONAble, Regionable {
 
     // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
         self.id = decoder.decodeKey("id")
@@ -70,7 +70,7 @@ public final class EmbedRegion: JSONAble, Regionable {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
         coder.encodeObject(id, forKey: "id")
@@ -85,7 +85,7 @@ public final class EmbedRegion: JSONAble, Regionable {
 
     // MARK: JSONAble
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.embedRegionFromJSON.rawValue)
         // create region
@@ -105,13 +105,13 @@ public final class EmbedRegion: JSONAble, Regionable {
 
 // MARK: Regionable
 
-    public var kind: String { return RegionKind.embed.rawValue }
+    var kind: String { return RegionKind.embed.rawValue }
 
-    public func coding() -> NSCoding {
+    func coding() -> NSCoding {
         return self
     }
 
-    public func toJSON() -> [String: AnyObject] {
+    func toJSON() -> [String: AnyObject] {
         return [
             "kind": self.kind as AnyObject,
             "data": [

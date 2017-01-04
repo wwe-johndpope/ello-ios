@@ -2,22 +2,22 @@
 ///  StreamHeaderCell.swift
 //
 
-open class StreamHeaderCell: UICollectionViewCell {
+class StreamHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamHeaderCell"
 
-    open var ownPost = false {
+    var ownPost = false {
         didSet {
             self.updateItems()
         }
     }
 
-    open var ownComment = false {
+    var ownComment = false {
         didSet {
             self.updateItems()
         }
     }
 
-    open var followButtonVisible = false {
+    var followButtonVisible = false {
         didSet {
             setNeedsLayout()
         }
@@ -31,7 +31,7 @@ open class StreamHeaderCell: UICollectionViewCell {
             return 54.0
         }
     }
-    open var canReply = false {
+    var canReply = false {
         didSet {
             self.setNeedsLayout()
         }
@@ -62,14 +62,14 @@ open class StreamHeaderCell: UICollectionViewCell {
         }
     }
 
-    open weak var relationshipDelegate: RelationshipDelegate? {
+    weak var relationshipDelegate: RelationshipDelegate? {
         get { return relationshipControl.relationshipDelegate }
         set { relationshipControl.relationshipDelegate = newValue }
     }
-    open weak var postbarDelegate: PostbarDelegate?
-    open weak var userDelegate: UserDelegate?
-    open weak var categoryDelegate: CategoryDelegate?
-    open weak var streamEditingDelegate: StreamEditingDelegate?
+    weak var postbarDelegate: PostbarDelegate?
+    weak var userDelegate: UserDelegate?
+    weak var categoryDelegate: CategoryDelegate?
+    weak var streamEditingDelegate: StreamEditingDelegate?
 
     var avatarHeight: CGFloat = 60.0 {
         didSet { setNeedsDisplay() }
@@ -91,17 +91,17 @@ open class StreamHeaderCell: UICollectionViewCell {
     var chevronHidden = false
 
     let flagItem = ElloPostToolBarOption.flag.barButtonItem()
-    open var flagControl: ImageLabelControl {
+    var flagControl: ImageLabelControl {
         return self.flagItem.customView as! ImageLabelControl
     }
 
     let editItem = ElloPostToolBarOption.edit.barButtonItem()
-    open var editControl: ImageLabelControl {
+    var editControl: ImageLabelControl {
        return self.editItem.customView as! ImageLabelControl
     }
 
     let deleteItem = ElloPostToolBarOption.delete.barButtonItem()
-    open var deleteControl: ImageLabelControl {
+    var deleteControl: ImageLabelControl {
         return self.deleteItem.customView as! ImageLabelControl
     }
 
@@ -150,7 +150,7 @@ open class StreamHeaderCell: UICollectionViewCell {
         setNeedsLayout()
     }
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
 
         bottomToolBar.isTranslucent = false
@@ -180,7 +180,7 @@ open class StreamHeaderCell: UICollectionViewCell {
         repostIconView.image = InterfaceImage.repost.selectedImage
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = bounds
         innerContentView.frame = bounds
@@ -196,7 +196,7 @@ open class StreamHeaderCell: UICollectionViewCell {
 
 // MARK: - Public
 
-    open func close() {
+    func close() {
         isOpen = false
         closeChevron()
         scrollView.contentOffset = .zero
@@ -506,7 +506,7 @@ extension StreamHeaderCell: ElloTextViewDelegate {
 // MARK: UIScrollViewDelegate
 extension StreamHeaderCell: UIScrollViewDelegate {
 
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         repositionBottomContent()
 
         if scrollView.contentOffset.x < 0 {
@@ -527,7 +527,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
         }
     }
 
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if velocity.x > 0 {
             targetContentOffset.pointee.x = revealWidth
         }

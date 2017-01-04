@@ -10,26 +10,26 @@ import SwiftyJSON
 let AutoCompleteResultVersion: Int = 2
 
 @objc(AutoCompleteResult)
-public final class AutoCompleteResult: JSONAble {
+final class AutoCompleteResult: JSONAble {
 
-    public var name: String?
-    public var url: URL?
-    public var image: UIImage?
+    var name: String?
+    var url: URL?
+    var image: UIImage?
 
     // MARK: Initialization
 
-    public init(name: String?) {
+    init(name: String?) {
         self.name = name
         super.init(version: AutoCompleteResultVersion)
     }
 
-    public convenience init(name: String, url: String) {
+    convenience init(name: String, url: String) {
         self.init(name: name)
         self.url = URL(string: url)
     }
 
     // MARK: NSCoding
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         self.url = decoder.decodeOptionalKey("url")
         self.name = decoder.decodeOptionalKey("name")
@@ -40,7 +40,7 @@ public final class AutoCompleteResult: JSONAble {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         coder.encodeObject(url, forKey: "url")
         coder.encodeObject(name, forKey: "name")
@@ -50,7 +50,7 @@ public final class AutoCompleteResult: JSONAble {
 
     // MARK: JSONAble
 
-    override public class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.autoCompleteResultFromJSON.rawValue)
         let name = json["name"].string ?? json["location"].string

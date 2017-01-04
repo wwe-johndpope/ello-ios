@@ -3,24 +3,24 @@
 //
 
 @objc
-public protocol EditProfileResponder {
+protocol EditProfileResponder {
     func onEditProfile()
 }
 
 @objc
-public protocol PostsTappedResponder {
+protocol PostsTappedResponder {
     func onPostsTapped()
 }
 
 @objc
-public protocol ProfileHeaderResponder {
+protocol ProfileHeaderResponder {
     func onCategoryBadgeTapped(_ cell: UICollectionViewCell)
     func onLovesTapped(_ cell: UICollectionViewCell)
     func onFollowersTapped(_ cell: UICollectionViewCell)
     func onFollowingTapped(_ cell: UICollectionViewCell)
 }
 
-open class ProfileHeaderCell: UICollectionViewCell {
+class ProfileHeaderCell: UICollectionViewCell {
 
     static let reuseIdentifier = "ProfileHeaderCell"
 
@@ -56,7 +56,7 @@ open class ProfileHeaderCell: UICollectionViewCell {
     var onHeightMismatch: OnCalculatedCellHeightsMismatch?
 
     // this little hack prevents constraints from breaking on initial load
-    override open var bounds: CGRect {
+    override var bounds: CGRect {
         didSet {
           contentView.frame = bounds
         }
@@ -69,7 +69,7 @@ open class ProfileHeaderCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -118,7 +118,7 @@ open class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
-    open override func prepareForReuse() {
+    override func prepareForReuse() {
         onHeightMismatch = nil
 
         avatarView.prepareForReuse()

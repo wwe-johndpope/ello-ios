@@ -2,8 +2,8 @@
 ///  ElloTextField.swift
 //
 
-open class ElloTextField: UITextField {
-    open var firstResponderDidChange: ((Bool) -> Void)?
+class ElloTextField: UITextField {
+    var firstResponderDidChange: ((Bool) -> Void)?
     var hasOnePassword = false
     var validationState = ValidationState.none {
         didSet {
@@ -12,12 +12,12 @@ open class ElloTextField: UITextField {
         }
     }
 
-    required override public init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         self.sharedSetup()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.sharedSetup()
     }
@@ -30,15 +30,15 @@ open class ElloTextField: UITextField {
         self.setNeedsDisplay()
     }
 
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
         return rectForBounds(bounds)
     }
 
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return rectForBounds(bounds)
     }
 
-    override open func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
+    override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
         var rect = super.clearButtonRect(forBounds: bounds)
         rect.origin.x -= 10
         if hasOnePassword {
@@ -47,13 +47,13 @@ open class ElloTextField: UITextField {
         return rect
     }
 
-    override open func rightViewRect(forBounds bounds: CGRect) -> CGRect {
+    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
         var rect = super.rightViewRect(forBounds: bounds)
         rect.origin.x -= 10
         return rect
     }
 
-    override open func leftViewRect(forBounds bounds: CGRect) -> CGRect {
+    override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
         var rect = super.leftViewRect(forBounds: bounds)
         rect.origin.x += 11
         return rect
@@ -67,13 +67,13 @@ open class ElloTextField: UITextField {
         return rect
     }
 
-    override open func becomeFirstResponder() -> Bool {
+    override func becomeFirstResponder() -> Bool {
         let val = super.becomeFirstResponder()
         firstResponderDidChange?(true)
         return val
     }
 
-    override open func resignFirstResponder() -> Bool {
+    override func resignFirstResponder() -> Bool {
         let val = super.resignFirstResponder()
         firstResponderDidChange?(false)
         return val

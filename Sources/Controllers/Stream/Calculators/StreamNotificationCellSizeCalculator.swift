@@ -3,7 +3,7 @@
 //
 
 
-open class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
+class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     fileprivate static let textViewForSizing = ElloTextView(frame: CGRect.zero, textContainer: nil)
     let webView: UIWebView
     var originalWidth: CGFloat = 0
@@ -13,7 +13,7 @@ open class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     fileprivate var cellItems: [StreamCellItem] = []
     fileprivate var completion: ElloEmptyCompletion = {}
 
-    public init(webView: UIWebView) {
+    init(webView: UIWebView) {
         self.webView = webView
         super.init()
         self.webView.delegate = self
@@ -21,7 +21,7 @@ open class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
 
 // MARK: Public
 
-    open func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
@@ -69,7 +69,7 @@ open class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
     }
 
-    open func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         if let webContentHeight = self.webView.windowContentSize()?.height {
             assignCellHeight(webContentHeight)
         }

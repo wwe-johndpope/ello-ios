@@ -8,7 +8,7 @@ import Result
 
 typealias Completion = (Result<AddressBook, AddressBookError>) -> Void
 
-public struct AddressBookController {
+struct AddressBookController {
     static func promptForAddressBookAccess(fromController controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping ElloEmptyCompletion = {}) {
         switch AddressBookController.authenticationStatus() {
         case .authorized:

@@ -2,7 +2,7 @@
 ///  StreamFooterButton.swift
 //
 
-open class StreamFooterButton: UIButton {
+class StreamFooterButton: UIButton {
 
     var attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")
 
@@ -35,7 +35,7 @@ open class StreamFooterButton: UIButton {
         self.setAttributedTitle(attributedText, for: state)
     }
 
-    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
         let size = super.sizeThatFits(size)
         return CGSize(width: max(44.0, size.width), height: 44.0)
     }

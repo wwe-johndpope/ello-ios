@@ -7,12 +7,12 @@ import Foundation
 import ElloUIFonts
 import CoreGraphics
 
-public protocol AlertCellDelegate: class {
+protocol AlertCellDelegate: class {
     func tappedOkButton()
     func tappedCancelButton()
 }
 
-open class AlertCell: UITableViewCell {
+class AlertCell: UITableViewCell {
     static let reuseIdentifier = "AlertCell"
 
     weak var delegate: AlertCellDelegate?
@@ -26,7 +26,7 @@ open class AlertCell: UITableViewCell {
 
     var onInputChanged: ((String) -> Void)?
 
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
 
         label.font = .defaultFont()
@@ -43,12 +43,12 @@ open class AlertCell: UITableViewCell {
         input.addSubview(inputBorder)
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         inputBorder.frame = input.bounds.fromBottom().grow(top: 1, sides: 10, bottom: 0)
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
 
         label.text = ""

@@ -5,17 +5,17 @@
 import SnapKit
 
 
-open class EmptyStreamCell: UICollectionViewCell {
+class EmptyStreamCell: UICollectionViewCell {
     static let reuseEmbedIdentifier = "EmptyStreamCell"
 
-    public struct Size {
+    struct Size {
         static let bottomMargin: CGFloat = 15
         static let sideMargin: CGFloat = 15
         static let logoWidth: CGFloat = 60
         static let logoBottomPadding: CGFloat = 20
     }
 
-    open var title: String {
+    var title: String {
         set { label.text = newValue }
         get { return label.text ?? "" }
     }
@@ -23,14 +23,14 @@ open class EmptyStreamCell: UICollectionViewCell {
     fileprivate let label = UILabel()
     fileprivate let logo = ElloLogoView(config: ElloLogoView.Config.grey)
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

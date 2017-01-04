@@ -5,12 +5,12 @@
 import PINRemoteImage
 
 
-open class OnboardingViewController: BaseElloViewController, HasAppController {
+class OnboardingViewController: BaseElloViewController, HasAppController {
     fileprivate enum OnboardingDirection: CGFloat {
         case left = -1
         case right = 1
     }
-    public enum OnboardingProceed {
+    enum OnboardingProceed {
         case `continue`
         case abort
         case error
@@ -37,15 +37,15 @@ open class OnboardingViewController: BaseElloViewController, HasAppController {
     fileprivate var visibleViewControllerIndex: Int = 0
     fileprivate var onboardingViewControllers = [UIViewController]()
 
-    open var hasAbortButton: Bool {
+    var hasAbortButton: Bool {
         get { return screen.hasAbortButton }
         set { screen.hasAbortButton = newValue }
     }
-    open var canGoNext: Bool {
+    var canGoNext: Bool {
         get { return screen.canGoNext }
         set { screen.canGoNext = newValue }
     }
-    open var prompt: String? {
+    var prompt: String? {
         get { return screen.prompt }
         set { screen.prompt = newValue }
     }
@@ -99,19 +99,19 @@ open class OnboardingViewController: BaseElloViewController, HasAppController {
         }
     }
 
-    override open func loadView() {
+    override func loadView() {
         let screen = OnboardingScreen()
         screen.delegate = self
         self.view = screen
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         setupOnboardingControllers()
     }
 
-    override open func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         visibleViewController?.view.frame.origin.y = screen.controllerContainer.bounds.origin.y
@@ -141,13 +141,13 @@ private extension OnboardingViewController {
 }
 
 extension OnboardingViewController: OnboardingDelegate {
-    public func nextAction() { proceedToNextStep(abort: false) }
-    public func abortAction() { proceedToNextStep(abort: true) }
+    func nextAction() { proceedToNextStep(abort: false) }
+    func abortAction() { proceedToNextStep(abort: true) }
 }
 
 // MARK: Child View Controller handling
 extension OnboardingViewController {
-    override open func size(forChildContentContainer container: UIContentContainer, withParentContainerSize: CGSize) -> CGSize {
+    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize: CGSize) -> CGSize {
         return screen.controllerContainer.frame.size
     }
 }
@@ -155,7 +155,7 @@ extension OnboardingViewController {
 // MARK: Button Actions
 extension OnboardingViewController {
 
-    public func proceedToNextStep(abort: Bool) {
+    func proceedToNextStep(abort: Bool) {
         if visibleViewController is CategoriesSelectionViewController {
             Tracker.sharedTracker.completedCategories()
             if abort {
@@ -228,7 +228,7 @@ extension OnboardingViewController {
 // MARK: Moving through the screens
 extension OnboardingViewController {
 
-    public func goToNextStep() {
+    func goToNextStep() {
         self.visibleViewControllerIndex += 1
 
         if let nextViewController = onboardingViewControllers.safeValue(visibleViewControllerIndex) {
@@ -239,7 +239,7 @@ extension OnboardingViewController {
         }
     }
 
-    public func goToPreviousStep() {
+    func goToPreviousStep() {
         self.visibleViewControllerIndex -= 1
 
         if self.visibleViewControllerIndex == -1 {
@@ -256,7 +256,7 @@ extension OnboardingViewController {
         parentAppController?.doneOnboarding()
     }
 
-    public func goToController(_ viewController: UIViewController) {
+    func goToController(_ viewController: UIViewController) {
         goToController(viewController, direction: .right)
     }
 

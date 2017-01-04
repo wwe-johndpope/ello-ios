@@ -4,7 +4,7 @@
 
 import UIKit
 
-open class ProfileCategoriesPresentationController: UIPresentationController {
+class ProfileCategoriesPresentationController: UIPresentationController {
 
     let background: UIView = {
         let background = UIView(frame: .zero)
@@ -12,7 +12,7 @@ open class ProfileCategoriesPresentationController: UIPresentationController {
         return background
     }()
 
-    public init(presentedViewController: UIViewController, presentingViewController: UIViewController?, backgroundColor: UIColor) {
+    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, backgroundColor: UIColor) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         self.background.backgroundColor = backgroundColor
     }
@@ -20,7 +20,7 @@ open class ProfileCategoriesPresentationController: UIPresentationController {
 
 // MARK: Presentation
 extension ProfileCategoriesPresentationController {
-    override open func presentationTransitionWillBegin() {
+    override func presentationTransitionWillBegin() {
         guard let containerView = containerView else { return }
         background.alpha = 0
         background.frame = containerView.bounds
@@ -35,14 +35,14 @@ extension ProfileCategoriesPresentationController {
         }
     }
 
-    override open func dismissalTransitionWillBegin() {
+    override func dismissalTransitionWillBegin() {
         let transitionCoordinator = presentingViewController.transitionCoordinator
         transitionCoordinator?.animate(alongsideTransition: { _ in
             self.background.alpha = 0
             }, completion: .none)
     }
 
-    override open func dismissalTransitionDidEnd(_ completed: Bool) {
+    override func dismissalTransitionDidEnd(_ completed: Bool) {
         if completed {
             background.removeFromSuperview()
         }

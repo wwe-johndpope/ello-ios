@@ -4,18 +4,18 @@
 
 import Moya
 
-public typealias StreamSuccessCompletion = ([JSONAble], ResponseConfig) -> Void
-public typealias UserSuccessCompletion = (User, ResponseConfig) -> Void
-public typealias UserPostsSuccessCompletion = ([Post], ResponseConfig) -> Void
+typealias StreamSuccessCompletion = ([JSONAble], ResponseConfig) -> Void
+typealias UserSuccessCompletion = (User, ResponseConfig) -> Void
+typealias UserPostsSuccessCompletion = ([Post], ResponseConfig) -> Void
 
-public struct StreamLoadedNotifications {
+struct StreamLoadedNotifications {
     static let streamLoaded = TypedNotification<StreamKind>(name: "StreamLoadedNotification")
 }
 
-open class StreamService {
-    public init() {}
+class StreamService {
+    init() {}
 
-    open func loadStream(
+    func loadStream(
         streamKind: StreamKind,
         success: @escaping StreamSuccessCompletion,
         failure: @escaping ElloFailureCompletion = { _ in },
@@ -24,7 +24,7 @@ open class StreamService {
         return loadStream(endpoint: streamKind.endpoint, streamKind: streamKind, success: success, failure: failure, noContent: noContent)
     }
 
-    open func loadStream(
+    func loadStream(
         endpoint: ElloAPI,
         streamKind: StreamKind?,
         success: @escaping StreamSuccessCompletion,
@@ -55,7 +55,7 @@ open class StreamService {
             })
     }
 
-    open func loadUser(
+    func loadUser(
         _ endpoint: ElloAPI,
         streamKind: StreamKind?,
         success: @escaping UserSuccessCompletion,
@@ -76,7 +76,7 @@ open class StreamService {
         )
     }
 
-    open func loadUserPosts(
+    func loadUserPosts(
         _ userId: String,
         success: @escaping UserPostsSuccessCompletion,
         failure: @escaping ElloFailureCompletion)
@@ -107,7 +107,7 @@ open class StreamService {
         )
     }
 
-    open func loadMoreCommentsForPost(
+    func loadMoreCommentsForPost(
         _ postId: String,
         streamKind: StreamKind?,
         success: @escaping StreamSuccessCompletion,

@@ -5,9 +5,9 @@
 import Moya
 import SwiftyJSON
 
-open class RelationshipService: NSObject {
+class RelationshipService: NSObject {
 
-    open func updateRelationship(
+    func updateRelationship(
         currentUserId: String,
         userId: String,
         relationshipPriority: RelationshipPriority,
@@ -40,7 +40,7 @@ open class RelationshipService: NSObject {
         })
     }
 
-    open func bulkUpdateRelationships(userIds: [String], relationshipPriority: RelationshipPriority, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func bulkUpdateRelationships(userIds: [String], relationshipPriority: RelationshipPriority, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         let endpoint = ElloAPI.relationshipBatch(userIds: userIds, relationship: relationshipPriority.rawValue)
         ElloProvider.shared.elloRequest(endpoint,
             success: success,

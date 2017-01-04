@@ -4,7 +4,7 @@
 
 import Foundation
 
-open class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
+class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     let webView: UIWebView
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     fileprivate var cellJobs: [CellJob] = []
@@ -12,7 +12,7 @@ open class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     fileprivate var maxWidth: CGFloat
     fileprivate var completion: ElloEmptyCompletion = {}
 
-    public init(webView: UIWebView) {
+    init(webView: UIWebView) {
         self.webView = webView
         self.maxWidth = 0
         super.init()
@@ -21,7 +21,7 @@ open class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
 
 // MARK: Public
 
-    open func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
         let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
@@ -80,7 +80,7 @@ open class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
     }
 
-    open func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         let textHeight = self.webView.windowContentSize()?.height
         assignCellHeight(textHeight ?? 0)
     }

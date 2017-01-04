@@ -2,14 +2,14 @@
 ///  ElloTabBar.swift
 //
 
-open class ElloTabBar: UITabBar {
+class ElloTabBar: UITabBar {
     struct Size {
         static let height = CGFloat(49)
     }
 
     fileprivate var redDotViews = [(Int, UIView)]()
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         privateInit()
     }
@@ -34,7 +34,7 @@ open class ElloTabBar: UITabBar {
         self.shadowImage = UIImage.imageWithColor(UIColor.white)
     }
 
-    open func addRedDotAtIndex(_ index: Int) -> UIView {
+    func addRedDotAtIndex(_ index: Int) -> UIView {
         let redDot: UIView
         if let entryIndex = (redDotViews.index { $0.0 == index }) {
             redDot = redDotViews[entryIndex].1
@@ -75,7 +75,7 @@ open class ElloTabBar: UITabBar {
         redDot.frame = frame
     }
 
-    open override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         for (index, redDot) in redDotViews {
             positionRedDot(redDot, atIndex: index)

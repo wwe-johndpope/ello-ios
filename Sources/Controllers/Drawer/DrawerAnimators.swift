@@ -2,12 +2,12 @@
 ///  DrawerAnimators.swift
 //
 
-public typealias Animator = (_ animations: @escaping () -> Void, _ completion: @escaping (Bool) -> Void) -> Void
+typealias Animator = (_ animations: @escaping () -> Void, _ completion: @escaping (Bool) -> Void) -> Void
 
-open class DrawerAnimator: NSObject, UIViewControllerTransitioningDelegate  {
+class DrawerAnimator: NSObject, UIViewControllerTransitioningDelegate  {
     let popControl = DrawerPopControl()
 
-    open func animationController(
+    func animationController(
         forPresented presented: UIViewController, presenting: UIViewController,
         source: UIViewController
         ) -> UIViewControllerAnimatedTransitioning? {
@@ -15,7 +15,7 @@ open class DrawerAnimator: NSObject, UIViewControllerTransitioningDelegate  {
             return DrawerPushAnimator(popControl: popControl)
     }
 
-    open func animationController(
+    func animationController(
         forDismissed dismissed: UIViewController
         ) -> UIViewControllerAnimatedTransitioning? {
             return DrawerPopAnimator(popControl: popControl)
@@ -23,7 +23,7 @@ open class DrawerAnimator: NSObject, UIViewControllerTransitioningDelegate  {
 
 }
 
-open class DrawerPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class DrawerPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let popControl: DrawerPopControl
 
     init(popControl: DrawerPopControl) {
@@ -31,11 +31,11 @@ open class DrawerPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         super.init()
     }
 
-    open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return TransitionAnimationDuration
     }
 
-    open func animateTransition(using context: UIViewControllerContextTransitioning) {
+    func animateTransition(using context: UIViewControllerContextTransitioning) {
         let streamController = context.viewController(forKey: UITransitionContextViewControllerKey.from)!
         let drawerView = context.view(forKey: UITransitionContextViewKey.to)!
         let streamView = streamController.view
@@ -77,7 +77,7 @@ open class DrawerPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 }
 
-open class DrawerPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class DrawerPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let popControl: DrawerPopControl
 
     init(popControl: DrawerPopControl) {
@@ -85,7 +85,7 @@ open class DrawerPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         super.init()
     }
 
-    open func transitionDuration(using context: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using context: UIViewControllerContextTransitioning?) -> TimeInterval {
         if let drawerController = context?.viewController(forKey: UITransitionContextViewControllerKey.from) as? DrawerViewController {
             if drawerController.isLoggingOut {
                 return 0
@@ -94,7 +94,7 @@ open class DrawerPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         return TransitionAnimationDuration
     }
 
-    open func animateTransition(using context: UIViewControllerContextTransitioning) {
+    func animateTransition(using context: UIViewControllerContextTransitioning) {
         let streamController = context.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let streamView = streamController.view
         let drawerView = context.view(forKey: UITransitionContextViewKey.from)!

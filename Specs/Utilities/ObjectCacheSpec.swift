@@ -2,25 +2,24 @@
 ///  InviteControllerSpec.swift
 //
 
-@testable
-import Ello
+@testable import Ello
 import Quick
 import Nimble
 
-public class FakePersistentLayer: PersistentLayer {
+class FakePersistentLayer: PersistentLayer {
     var object: [Any]?
 
     init() { }
 
-    public func setObject(_ value: Any?, forKey: String) {
+    func setObject(_ value: Any?, forKey: String) {
         object = value as? [String]
     }
 
-    public func objectForKey(_ defaultName: String) -> Any? {
+    func objectForKey(_ defaultName: String) -> Any? {
         return object ?? []
     }
 
-    public func removeObjectForKey(_ defaultName: String) {
+    func removeObjectForKey(_ defaultName: String) {
         object = nil
     }
 }

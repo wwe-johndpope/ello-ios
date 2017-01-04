@@ -11,13 +11,13 @@ func logPresentingAlert(_ name: String) {
 }
 
 
-public enum ContentType: String {
+enum ContentType: String {
     case post = "Post"
     case comment = "Comment"
     case user = "User"
 }
 
-public protocol AnalyticsAgent {
+protocol AnalyticsAgent {
     func identify(_ userId: String!, traits: [AnyHashable: Any]!)
     func track(_ event: String!)
     func track(_ event: String!, properties: [AnyHashable: Any]!)
@@ -26,23 +26,23 @@ public protocol AnalyticsAgent {
     func reset()
 }
 
-public struct NullAgent: AnalyticsAgent {
-    public func identify(_ userId: String!, traits: [AnyHashable: Any]!) { }
-    public func track(_ event: String!) { }
-    public func track(_ event: String!, properties: [AnyHashable: Any]!) { }
-    public func screen(_ screenTitle: String!) { }
-    public func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) { }
-    public func reset() { }
+struct NullAgent: AnalyticsAgent {
+    func identify(_ userId: String!, traits: [AnyHashable: Any]!) { }
+    func track(_ event: String!) { }
+    func track(_ event: String!, properties: [AnyHashable: Any]!) { }
+    func screen(_ screenTitle: String!) { }
+    func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) { }
+    func reset() { }
 }
 
 extension SEGAnalytics: AnalyticsAgent { }
 
-open class Tracker {
-    open static var responseHeaders: NSString = ""
-    open static var responseJSON: NSString = ""
+class Tracker {
+    static var responseHeaders: NSString = ""
+    static var responseJSON: NSString = ""
 
-    open var overrideAgent: AnalyticsAgent?
-    open static let sharedTracker = Tracker()
+    var overrideAgent: AnalyticsAgent?
+    static let sharedTracker = Tracker()
     var settingChangedNotification: NotificationObserver?
     fileprivate var shouldTrackUser = true
     fileprivate var currentUser: User?
@@ -50,7 +50,7 @@ open class Tracker {
         return overrideAgent ?? (shouldTrackUser ? SEGAnalytics.shared() : NullAgent())
     }
 
-    public init() {
+    init() {
         let configuration = SEGAnalyticsConfiguration(writeKey: ElloKeys().segmentKey())
          SEGAnalytics.setup(with: configuration)
 
@@ -62,7 +62,7 @@ open class Tracker {
 }
 
 // MARK: Session Info
-public extension Tracker {
+extension Tracker {
 
     func identify(_ user: User) {
         currentUser = user
@@ -91,7 +91,7 @@ public extension Tracker {
 }
 
 // MARK: Signup and Login
-public extension Tracker {
+extension Tracker {
 
     func tappedJoinFromStartup() {
         agent.track("tapped join from startup")
@@ -180,7 +180,7 @@ public extension Tracker {
 }
 
 // MARK: iRate
-public extension Tracker {
+extension Tracker {
     func ratePromptShown() {
         agent.track("rate prompt shown")
     }
@@ -207,7 +207,7 @@ public extension Tracker {
 }
 
 // MARK: Hire Me
-public extension Tracker {
+extension Tracker {
     func tappedCollaborate(_ user: User) {
         agent.track("open collaborate dialog profile", properties: ["id": user.id])
     }
@@ -223,7 +223,7 @@ public extension Tracker {
 }
 
 // MARK: Share Extension
-public extension Tracker {
+extension Tracker {
     func shareSuccessful() {
         agent.track("successfully shared from the share extension")
     }
@@ -234,7 +234,7 @@ public extension Tracker {
 }
 
 // MARK: Onboarding
-public extension Tracker {
+extension Tracker {
     func completedCategories() {
         agent.track("completed categories in onboarding")
     }
@@ -284,7 +284,7 @@ public extension Tracker {
     }
 }
 
-public extension UIViewController {
+extension UIViewController {
     func trackerName() -> String { return readableClassName() }
     func trackerProps() -> [String: AnyObject]? { return nil }
 
@@ -294,7 +294,7 @@ public extension UIViewController {
 }
 
 // MARK: View Appearance
-public extension Tracker {
+extension Tracker {
     func screenAppeared(_ viewController: UIViewController) {
         let (name, props) = viewController.trackerData()
         screenAppeared(name, properties: props)
@@ -365,7 +365,7 @@ public extension Tracker {
 }
 
 // MARK: Content Actions
-public extension Tracker {
+extension Tracker {
     fileprivate func regionDetails(_ regions: [Regionable]?) -> [String: AnyObject] {
         guard let regions = regions else {
             return [:]
@@ -467,7 +467,7 @@ public extension Tracker {
 }
 
 // MARK: User Actions
-public extension Tracker {
+extension Tracker {
     func userBlocked(_ userId: String) {
         agent.track("User blocked", properties: ["blocked_user_id": userId])
     }
@@ -514,7 +514,7 @@ public extension Tracker {
 }
 
 // MARK: Image Actions
-public extension Tracker {
+extension Tracker {
     func imageAddedFromCamera() {
         agent.track("Image added from camera")
     }
@@ -529,7 +529,7 @@ public extension Tracker {
 }
 
 // MARK: Import Friend Actions
-public extension Tracker {
+extension Tracker {
     func inviteFriendsTapped() {
         agent.track("Invite Friends tapped")
     }
@@ -548,7 +548,7 @@ public extension Tracker {
 }
 
 // MARK:  Preferences
-public extension Tracker {
+extension Tracker {
     func pushNotificationPreferenceChanged(_ granted: Bool) {
         let accessLevel = granted ? "granted" : "denied"
         agent.track("Push notification access \(accessLevel)")
@@ -561,7 +561,7 @@ public extension Tracker {
 }
 
 // MARK: Errors
-public extension Tracker {
+extension Tracker {
     func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {
         agent.track("Encountered network error", properties: ["path": path, "message": error.description, "statusCode": statusCode ?? 0])
     }
@@ -573,14 +573,14 @@ public extension Tracker {
 }
 
 // MARK: Search
-public extension Tracker {
+extension Tracker {
     func searchFor(_ type: String) {
         agent.track("Search for \(type)")
     }
 }
 
 // MARK: Announcements
-public extension Tracker {
+extension Tracker {
 
     func announcementViewed(_ announcement: Announcement) {
         agent.track("Announcement Viewed", properties: ["announcement": announcement.id])

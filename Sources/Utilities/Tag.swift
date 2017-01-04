@@ -175,7 +175,7 @@ enum AttrValue {
     }
 }
 
-open class Tag: CustomStringConvertible {
+class Tag: CustomStringConvertible {
     var isSingleton = false
     var name: String?
     var attrs = [String: AttrValue]()
@@ -183,8 +183,8 @@ open class Tag: CustomStringConvertible {
     var text: String?
     var comment: String?
 
-    public init() {}
-    public init?(input: String) {
+    init() {}
+    init?(input: String) {
         var state: State = .start
         var lastTag = self
         var lastAttr: String? = nil
@@ -300,7 +300,7 @@ open class Tag: CustomStringConvertible {
         return NSAttributedString(string: text, attributes: defaultAttrs + addlAttrs)
     }
 
-    open func makeEditable(_ inheritedAttrs: [String: AnyObject] = [:]) -> NSAttributedString {
+    func makeEditable(_ inheritedAttrs: [String: AnyObject] = [:]) -> NSAttributedString {
         if comment != nil {
             return NSAttributedString()
         }
@@ -391,7 +391,7 @@ open class Tag: CustomStringConvertible {
         return nil
     }
 
-    open var description: String {
+    var description: String {
         var retval = ""
         if let tag = name {
             retval += "<\(tag)"
@@ -430,7 +430,7 @@ open class Tag: CustomStringConvertible {
     }
 }
 
-open class Doctype: Tag {
+class Doctype: Tag {
 }
 
 extension String {

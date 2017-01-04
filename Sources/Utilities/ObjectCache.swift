@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol PersistentLayer {
+protocol PersistentLayer {
     func setObject(_ value: Any?, forKey: String)
     func objectForKey(_ defaultName: String) -> Any?
     func removeObjectForKey(_ defaultName: String)
@@ -12,27 +12,27 @@ public protocol PersistentLayer {
 
 extension UserDefaults: PersistentLayer { }
 
-open class ObjectCache<T: Any> {
+class ObjectCache<T: Any> {
     fileprivate let persistentLayer: PersistentLayer
-    open var cache: [T] = []
-    open let name: String
+    var cache: [T] = []
+    let name: String
 
-    public init(name: String) {
+    init(name: String) {
         self.name = name
         persistentLayer = GroupDefaults
     }
 
-    public init(name: String, persistentLayer: PersistentLayer) {
+    init(name: String, persistentLayer: PersistentLayer) {
         self.name = name
         self.persistentLayer = persistentLayer
     }
 
-    open func append(_ item: T) {
+    func append(_ item: T) {
         cache.append(item)
         persist()
     }
 
-    open func getAll() -> [T] {
+    func getAll() -> [T] {
         return cache
     }
 
@@ -40,11 +40,11 @@ open class ObjectCache<T: Any> {
         persistentLayer.setObject(cache as AnyObject?, forKey: name)
     }
 
-    open func load() {
+    func load() {
         cache = persistentLayer.objectForKey(name) as? [T] ?? []
     }
 
-    open func clear() {
+    func clear() {
         persistentLayer.removeObjectForKey(name)
     }
 }

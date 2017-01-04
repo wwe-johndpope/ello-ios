@@ -2,22 +2,22 @@
 ///  TwoLineButton.swift
 //
 
-open class TwoLineButton: UIButton {
+class TwoLineButton: UIButton {
 
-    open var title: String = "" {
+    var title: String = "" {
         didSet { updateText() }
     }
 
-    open var count: String = "" {
+    var count: String = "" {
         didSet { updateText() }
     }
 
-    required override public init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         self.sharedSetup()
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.sharedSetup()
     }

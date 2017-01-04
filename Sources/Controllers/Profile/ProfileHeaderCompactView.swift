@@ -5,7 +5,7 @@
 import SnapKit
 
 
-open class ProfileHeaderCompactView: ProfileHeaderLayoutView {
+class ProfileHeaderCompactView: ProfileHeaderLayoutView {
     override func style() {
         backgroundColor = .clear
     }

@@ -5,7 +5,7 @@
 import Foundation
 
 extension RegionKind {
-    public func streamCellTypes(_ regionable: Regionable) -> [StreamCellType] {
+    func streamCellTypes(_ regionable: Regionable) -> [StreamCellType] {
         switch self {
         case .image:
             return [.image(data: regionable)]

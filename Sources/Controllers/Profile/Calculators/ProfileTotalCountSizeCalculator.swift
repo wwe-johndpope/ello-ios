@@ -5,10 +5,10 @@
 import FutureKit
 
 
-public struct ProfileTotalCountSizeCalculator {
+struct ProfileTotalCountSizeCalculator {
     let promise = Promise<CGFloat>()
 
-    public func calculate(_ item: StreamCellItem) -> Future<CGFloat> {
+    func calculate(_ item: StreamCellItem) -> Future<CGFloat> {
         guard let
             user = item.jsonable as? User,
             user.totalViewsCount != nil

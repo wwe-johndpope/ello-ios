@@ -4,9 +4,9 @@
 
 import Foundation
 
-public struct StreamInviteFriendsCellPresenter {
+struct StreamInviteFriendsCellPresenter {
 
-    public static func configure(
+    static func configure(
         _ cell: UICollectionViewCell,
         streamCellItem: StreamCellItem,
         streamKind: StreamKind,

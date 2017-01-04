@@ -2,30 +2,30 @@
 ///  CategoriesSelectionViewController.swift
 //
 
-open class CategoriesSelectionViewController: StreamableViewController, HasAppController {
+class CategoriesSelectionViewController: StreamableViewController, HasAppController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
     var parentAppController: AppViewController?
     var selectedCategories: [Category] = []
-    open var onboardingViewController: OnboardingViewController?
-    open var onboardingData: OnboardingData!
+    var onboardingViewController: OnboardingViewController?
+    var onboardingData: OnboardingData!
 
-    required public init() {
+    required init() {
         super.init(nibName: nil, bundle: nil)
         streamViewController.streamKind = .allCategories
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func loadView() {
+    override func loadView() {
         let screen = Screen()
         self.view = screen
         viewContainer = screen
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         streamViewController.selectedCategoryDelegate = self
@@ -33,10 +33,10 @@ open class CategoriesSelectionViewController: StreamableViewController, HasAppCo
         streamViewController.loadInitialPage()
     }
 
-    override open func showNavBars(_ scrollToBottom: Bool) {}
-    override open func hideNavBars() {}
+    override func showNavBars(_ scrollToBottom: Bool) {}
+    override func hideNavBars() {}
 
-    override open func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+    override func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         let header = NSAttributedString(
             primaryHeader: InterfaceString.Onboard.PickCategoriesPrimary,
             secondaryHeader: InterfaceString.Onboard.PickCategoriesSecondary
@@ -53,14 +53,14 @@ open class CategoriesSelectionViewController: StreamableViewController, HasAppCo
 }
 
 extension CategoriesSelectionViewController: OnboardingStepController {
-    public func onboardingStepBegin() {
+    func onboardingStepBegin() {
         let prompt = NSString(format: InterfaceString.Onboard.PickTemplate as NSString, 3) as String
         onboardingViewController?.hasAbortButton = false
         onboardingViewController?.canGoNext = false
         onboardingViewController?.prompt = prompt
     }
 
-    public func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
+    func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
         if selectedCategories.count > 0 {
             let categories = self.selectedCategories
             for category in categories {
@@ -85,7 +85,7 @@ extension CategoriesSelectionViewController: OnboardingStepController {
 }
 
 extension CategoriesSelectionViewController: SelectedCategoryDelegate {
-    public func categoriesSelectionChanged(selection: [Category]) {
+    func categoriesSelectionChanged(selection: [Category]) {
         let selectionCount = selection.count
         let prompt: String?
         let canGoNext: Bool

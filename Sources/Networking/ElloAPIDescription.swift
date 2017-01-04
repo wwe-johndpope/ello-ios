@@ -3,7 +3,7 @@
 //
 
 extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
-    public var debugDescription: String {
+    var debugDescription: String {
         switch self {
         case let .announcementsNewContent(createdAt):
             return "AnnouncementsNewContent(createdAt: \(createdAt))"
@@ -87,7 +87,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return description
         }
     }
-    public var description: String {
+    var description: String {
         switch self {
         case .announcements:
             return "Announcements"

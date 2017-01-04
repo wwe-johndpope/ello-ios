@@ -2,7 +2,7 @@
 ///  Animators.swift
 //
 
-public let TransitionAnimationDuration: TimeInterval = 0.25
+let TransitionAnimationDuration: TimeInterval = 0.25
 
 class ForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {

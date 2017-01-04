@@ -4,7 +4,7 @@
 
 import Foundation
 
-public typealias CellConfigClosure = (
+typealias CellConfigClosure = (
     _ cell: UICollectionViewCell,
     _ streamCellItem: StreamCellItem,
     _ streamKind: StreamKind,
@@ -13,11 +13,11 @@ public typealias CellConfigClosure = (
 ) -> Void
 
 // MARK: Equatable
-public func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
+func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
     return lhs.identifier == rhs.identifier
 }
 
-public enum StreamCellType: Equatable {
+enum StreamCellType: Equatable {
     case categoryCard
     case selectableCategoryCard
     case categoryList
@@ -50,7 +50,7 @@ public enum StreamCellType: Equatable {
     case userAvatars
     case userListItem
 
-    public enum PlaceholderType {
+    enum PlaceholderType {
         case categoryList
         case categoryHeader
         case categoryPosts
@@ -106,7 +106,7 @@ public enum StreamCellType: Equatable {
         userListItem
     ]
 
-    public var data: Any? {
+    var data: Any? {
         switch self {
         case let .embed(data): return data
         case let .image(data): return data
@@ -117,11 +117,11 @@ public enum StreamCellType: Equatable {
     }
 
     // this is just stupid...
-    public var identifier: String {
+    var identifier: String {
         return "\(self)"
     }
 
-    public var name: String {
+    var name: String {
         switch self {
         case .categoryCard: return CategoryCardCell.reuseIdentifier
         case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
@@ -154,7 +154,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var selectable: Bool {
+    var selectable: Bool {
         switch self {
         case .categoryCard,
              .selectableCategoryCard,
@@ -172,7 +172,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var configure: CellConfigClosure {
+    var configure: CellConfigClosure {
         switch self {
         case .categoryCard: return CategoryCardCellPresenter.configure
         case .categoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
@@ -203,7 +203,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var classType: UICollectionViewCell.Type {
+    var classType: UICollectionViewCell.Type {
         switch self {
         case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.self
         case .categoryCard: return CategoryCardCell.self
@@ -234,7 +234,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var oneColumnHeight: CGFloat {
+    var oneColumnHeight: CGFloat {
         switch self {
         case .categoryPromotionalHeader, .pagePromotionalHeader:
             return 150
@@ -280,7 +280,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var multiColumnHeight: CGFloat {
+    var multiColumnHeight: CGFloat {
         switch self {
         case .header,
             .notification:
@@ -290,7 +290,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var isFullWidth: Bool {
+    var isFullWidth: Bool {
         switch self {
         case .categoryPromotionalHeader,
              .categoryList,
@@ -328,7 +328,7 @@ public enum StreamCellType: Equatable {
         }
     }
 
-    public var collapsable: Bool {
+    var collapsable: Bool {
         switch self {
         case .image, .text, .embed: return true
         default: return false

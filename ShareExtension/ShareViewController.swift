@@ -14,9 +14,9 @@ import Moya
 import Alamofire
 import MobileCoreServices
 
-open class ShareViewController: SLComposeServiceViewController {
+class ShareViewController: SLComposeServiceViewController {
 
-    open var itemPreviews: [ExtensionItemPreview] = []
+    var itemPreviews: [ExtensionItemPreview] = []
     fileprivate var postService = PostEditingService()
     fileprivate lazy var background: UIView = self.createBackground()
 
@@ -29,7 +29,7 @@ open class ShareViewController: SLComposeServiceViewController {
         return view
     }
 
-    open override func presentationAnimationDidFinish() {
+    override func presentationAnimationDidFinish() {
         guard checkIfLoggedIn() else {
             return
         }
@@ -39,11 +39,11 @@ open class ShareViewController: SLComposeServiceViewController {
         super.presentationAnimationDidFinish()
     }
 
-    open override func isContentValid() -> Bool {
+    override func isContentValid() -> Bool {
         return ShareAttachmentProcessor.hasContent(contentText, extensionItem: extensionContext?.inputItems.safeValue(0) as? NSExtensionItem)
     }
 
-    open override func didSelectPost() {
+    override func didSelectPost() {
         showSpinner()
         let content = ShareRegionProcessor.prepContent(contentText, itemPreviews: itemPreviews)
         postContent(content)

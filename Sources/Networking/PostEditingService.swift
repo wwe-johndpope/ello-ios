@@ -16,7 +16,7 @@
 import Foundation
 import UIKit
 
-public func == (lhs: PostEditingService.PostContentRegion, rhs: PostEditingService.PostContentRegion) -> Bool {
+func == (lhs: PostEditingService.PostContentRegion, rhs: PostEditingService.PostContentRegion) -> Bool {
     switch (lhs, rhs) {
     case let (.text(a), .text(b)):
         return a == b
@@ -30,20 +30,20 @@ public func == (lhs: PostEditingService.PostContentRegion, rhs: PostEditingServi
 }
 
 
-public struct ImageRegionData {
+struct ImageRegionData {
     let image: UIImage
     let data: Data?
     let contentType: String?
     let buyButtonURL: URL?
 
-    public init(image: UIImage, buyButtonURL: URL? = nil) {
+    init(image: UIImage, buyButtonURL: URL? = nil) {
         self.image = image
         self.data = nil
         self.contentType = nil
         self.buyButtonURL = buyButtonURL
     }
 
-    public init(image: UIImage, data: Data, contentType: String, buyButtonURL: URL? = nil) {
+    init(image: UIImage, data: Data, contentType: String, buyButtonURL: URL? = nil) {
         self.image = image
         self.data = data
         self.contentType = contentType
@@ -53,7 +53,7 @@ public struct ImageRegionData {
 
 extension ImageRegionData: Equatable{}
 
-public func == (lhs: ImageRegionData, rhs: ImageRegionData) -> Bool {
+func == (lhs: ImageRegionData, rhs: ImageRegionData) -> Bool {
     guard lhs.image == rhs.image else { return false }
 
     if let lhData = lhs.data, let rhData = rhs.data, let lhContentType = lhs.contentType, let rhContentType = rhs.contentType {
@@ -63,12 +63,12 @@ public func == (lhs: ImageRegionData, rhs: ImageRegionData) -> Bool {
 }
 
 
-open class PostEditingService {
+class PostEditingService {
     // this can return either a Post or Comment
     typealias CreatePostSuccessCompletion = (_ post: AnyObject) -> Void
     typealias UploadImagesSuccessCompletion = ([(Int, ImageRegion)]) -> Void
 
-    public enum PostContentRegion {
+    enum PostContentRegion {
         case text(String)
         case imageData(UIImage, Data, String)
         case image(UIImage)

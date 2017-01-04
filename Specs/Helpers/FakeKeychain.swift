@@ -1,5 +1,4 @@
-@testable
-import Ello
+@testable import Ello
 
 
 class FakeKeychain: KeychainType {

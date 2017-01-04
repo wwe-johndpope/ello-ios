@@ -26,9 +26,9 @@ extension UIWindow {
 }
 
 
-open class Window {
-    static open func isWide(_ width: CGFloat) -> Bool {
+class Window {
+    static func isWide(_ width: CGFloat) -> Bool {
         return width > 1000
     }
-    static open var width: CGFloat { return UIWindow.mainWindow.frame.size.width }
+    static var width: CGFloat { return UIWindow.mainWindow.frame.size.width }
 }

@@ -17,19 +17,19 @@ class AnnouncementCell: UICollectionViewCell {
         static let closeButtonSize: CGFloat = 50
     }
 
-    public struct Config {
+    struct Config {
         var title: String?
         var body: String?
         var imageURL: URL?
         var image: UIImage? // for testing
         var callToAction: String?
 
-        public init() {}
+        init() {}
     }
 
     weak var delegate: AnnouncementCellDelegate?
 
-    open var config = Config() {
+    var config = Config() {
         didSet {
             titleLabel.text = config.title
             bodyLabel.text = config.body
@@ -58,7 +58,7 @@ class AnnouncementCell: UICollectionViewCell {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -109,7 +109,7 @@ class AnnouncementCell: UICollectionViewCell {
 }
 
 extension AnnouncementCell {
-    override public func prepareForReuse() {
+    override func prepareForReuse() {
         config = Config()
     }
 }

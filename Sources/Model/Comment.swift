@@ -8,39 +8,39 @@ import SwiftyJSON
 let CommentVersion = 1
 
 @objc(ElloComment)
-public final class ElloComment: JSONAble, Authorable, Groupable {
+final class ElloComment: JSONAble, Authorable, Groupable {
 
     // active record
-    public let id: String
-    public let createdAt: Date
+    let id: String
+    let createdAt: Date
     // required
-    public let authorId: String
-    public let postId: String
-    public var content: [Regionable]
-    public var body: [Regionable]?
+    let authorId: String
+    let postId: String
+    var content: [Regionable]
+    var body: [Regionable]?
     // optional
-    public var summary: [Regionable]?
+    var summary: [Regionable]?
     // links
-    public var assets: [Asset]? {
+    var assets: [Asset]? {
         return getLinkArray("assets") as? [Asset]
     }
-    public var author: User? {
+    var author: User? {
         return ElloLinkedStore.sharedInstance.getObject(self.authorId, type: .usersType) as? User
     }
-    public var parentPost: Post? {
+    var parentPost: Post? {
         return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .postsType) as? Post
     }
-    public var loadedFromPost: Post? {
+    var loadedFromPost: Post? {
         return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, type: .postsType) as? Post) ?? parentPost
     }
     // computed properties
-    public var groupId: String { return "Post-\(postId)" }
+    var groupId: String { return "Post-\(postId)" }
     // to show hide in the stream, and for comment replies
-    public var loadedFromPostId: String
+    var loadedFromPostId: String
 
 // MARK: Initialization
 
-    public init(id: String,
+    init(id: String,
         createdAt: Date,
         authorId: String,
         postId: String,
@@ -59,7 +59,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
 
 // MARK: NSCoding
 
-    public required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         let decoder = Coder(aDecoder)
         // active record
         self.id = decoder.decodeKey("id")
@@ -75,7 +75,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         super.init(coder: decoder.coder)
     }
 
-    public override func encode(with encoder: NSCoder) {
+    override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         // active record
         coder.encodeObject(id, forKey: "id")
@@ -93,7 +93,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
 
 // MARK: JSONAble
 
-    override class public func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.commentFromJSON.rawValue)
         // create comment
@@ -124,7 +124,7 @@ public final class ElloComment: JSONAble, Authorable, Groupable {
         return comment
     }
 
-    public class func newCommentForPost(_ post: Post, currentUser: User) -> ElloComment {
+    class func newCommentForPost(_ post: Post, currentUser: User) -> ElloComment {
         let comment = ElloComment(
             id: UUID().uuidString,
             createdAt: Date(),

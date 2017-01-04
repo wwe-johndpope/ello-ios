@@ -2,9 +2,9 @@
 ///  TagSpec.swift
 //
 
+@testable import Ello
 import Quick
 import Nimble
-import Ello
 
 
 class TagSpec: QuickSpec {

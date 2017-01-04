@@ -2,11 +2,11 @@
 ///  ProfileGenerator.swift
 //
 
-public final class ProfileGenerator: StreamGenerator {
+final class ProfileGenerator: StreamGenerator {
 
-    public var currentUser: User?
-    public var streamKind: StreamKind
-    weak public var destination: StreamDestination?
+    var currentUser: User?
+    var streamKind: StreamKind
+    weak var destination: StreamDestination?
 
     fileprivate var user: User?
     fileprivate let userParam: String
@@ -31,7 +31,7 @@ public final class ProfileGenerator: StreamGenerator {
         return items
     }
 
-    public init(
+    init(
         currentUser: User?,
         userParam: String,
         user: User?,
@@ -46,7 +46,7 @@ public final class ProfileGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    public func load(reload: Bool = false) {
+    func load(reload: Bool = false) {
         let doneOperation = AsyncOperation()
         queue.addOperation(doneOperation)
 
@@ -57,7 +57,7 @@ public final class ProfileGenerator: StreamGenerator {
         loadUserPosts(doneOperation)
     }
 
-    public func toggleGrid() {
+    func toggleGrid() {
         if let posts = posts, hasPosts == true {
             destination?.replacePlaceholder(type: .profilePosts, items: parse(jsonables: posts)) {}
         }

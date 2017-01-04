@@ -2,31 +2,31 @@
 ///  OnboardingScreen.swift
 //
 
-open class OnboardingScreen: EmptyScreen {
-    public struct Size {
+class OnboardingScreen: EmptyScreen {
+    struct Size {
         static let buttonHeight: CGFloat = 50
         static let buttonInset: CGFloat = 10
         static let abortButtonWidth: CGFloat = 70
     }
-    open var controllerContainer = UIView()
+    var controllerContainer = UIView()
     fileprivate var buttonContainer = UIView()
     fileprivate var promptButton = StyledButton(style: .RoundedGray)
     fileprivate var nextButton = StyledButton(style: .Green)
     fileprivate var abortButton = StyledButton(style: .GrayText)
 
-    open weak var delegate: OnboardingDelegate?
+    weak var delegate: OnboardingDelegate?
 
-    open var hasAbortButton: Bool = false {
+    var hasAbortButton: Bool = false {
         didSet {
             updateButtonVisibility()
         }
     }
-    open var canGoNext: Bool = false {
+    var canGoNext: Bool = false {
         didSet {
             updateButtonVisibility()
         }
     }
-    open var prompt: String? {
+    var prompt: String? {
         get { return promptButton.currentTitle }
         set { promptButton.setTitle(newValue ?? InterfaceString.Onboard.CreateProfile, for: .normal) }
     }
@@ -101,7 +101,7 @@ open class OnboardingScreen: EmptyScreen {
         }
     }
 
-    open func styleFor(step: OnboardingStep) {
+    func styleFor(step: OnboardingStep) {
         let nextString: String
         switch step {
         case .categories: nextString = InterfaceString.Onboard.CreateProfile

@@ -2,7 +2,7 @@
 ///  OmnibarTextCell.swift
 //
 
-open class OmnibarTextCell: UITableViewCell {
+class OmnibarTextCell: UITableViewCell {
     static let reuseIdentifier = "OmnibarTextCell"
     struct Size {
         static let textMargins = UIEdgeInsets(top: 11, left: 15, bottom: 11, right: 15)
@@ -10,8 +10,8 @@ open class OmnibarTextCell: UITableViewCell {
         static let maxEditingHeight = CGFloat(77)
     }
 
-    open let textView: UITextView
-    open var isFirst = false {
+    let textView: UITextView
+    var isFirst = false {
         didSet {
             if isFirst && attributedText.string.characters.count == 0 {
                 textView.attributedText = ElloAttributedString.style(InterfaceString.Omnibar.SayEllo, [NSForegroundColorAttributeName: UIColor.black])
@@ -37,7 +37,7 @@ open class OmnibarTextCell: UITableViewCell {
         return textView
     }
 
-    open var attributedText: NSAttributedString {
+    var attributedText: NSAttributedString {
         didSet {
             if attributedText.string.characters.count > 0 {
                 textView.attributedText = attributedText
@@ -65,21 +65,21 @@ open class OmnibarTextCell: UITableViewCell {
         contentView.addSubview(textView)
     }
 
-    required public init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         textView.frame = OmnibarTextCell.boundsForTextView(contentView.bounds)
     }
 
-    open class func boundsForTextView(_ frame: CGRect) -> CGRect {
+    class func boundsForTextView(_ frame: CGRect) -> CGRect {
         return frame.inset(Size.textMargins)
     }
 
-    open class func heightForText(_ attributedText: NSAttributedString, tableWidth: CGFloat, editing: Bool) -> CGFloat {
+    class func heightForText(_ attributedText: NSAttributedString, tableWidth: CGFloat, editing: Bool) -> CGFloat {
         var textWidth = tableWidth - (Size.textMargins.left + Size.textMargins.right)
         if editing {
             textWidth -= 80

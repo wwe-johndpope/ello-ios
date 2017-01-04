@@ -5,12 +5,12 @@
 import WebKit
 
 
-open class ProfileBioView: ProfileBaseView {
-    public struct Size {
+class ProfileBioView: ProfileBaseView {
+    struct Size {
         static let margins = UIEdgeInsets(top: 15, left: 15, bottom: 10, right: 15)
     }
 
-    open var bio: String = "" {
+    var bio: String = "" {
         didSet {
             bioView.loadHTMLString(StreamTextCellHTML.postHTML(bio), baseURL: URL(string: "/"))
         }
@@ -68,7 +68,7 @@ extension ProfileBioView {
 
 extension ProfileBioView: UIWebViewDelegate {
 
-    public func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         let webViewHeight = webView.windowContentSize()?.height ?? 0
         let totalHeight: CGFloat
         if bio == "" {
@@ -82,7 +82,7 @@ extension ProfileBioView: UIWebViewDelegate {
         }
     }
 
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         return ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
     }
 }

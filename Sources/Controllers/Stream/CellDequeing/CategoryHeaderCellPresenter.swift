@@ -2,7 +2,7 @@
 ///  CategoryHeaderCellPresenter.swift
 //
 
-public struct CategoryHeaderCellPresenter {
+struct CategoryHeaderCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,

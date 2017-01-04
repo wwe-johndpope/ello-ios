@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public struct NotificationAttributedTitle {
+struct NotificationAttributedTitle {
 
     static fileprivate func attrs(_ addlAttrs: [String : AnyObject] = [:]) -> [String : AnyObject] {
         let attrs: [String: AnyObject] = [

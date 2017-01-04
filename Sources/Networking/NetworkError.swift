@@ -4,9 +4,9 @@
 
 import Foundation
 
-public let ElloErrorDomain = "co.ello.Ello"
+let ElloErrorDomain = "co.ello.Ello"
 
-public enum ElloErrorCode: Int {
+enum ElloErrorCode: Int {
     case imageMapping = 0
     case jsonMapping
     case stringMapping

@@ -5,12 +5,12 @@
 import SnapKit
 
 
-open class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
+class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     weak var delegate: CategoryScreenDelegate?
 
     fileprivate let categoryCardList = CategoryCardListView()
 
-    open var topInsetView: UIView {
+    var topInsetView: UIView {
         if categoryCardList.isHidden {
             return navigationBar
         }
@@ -19,7 +19,7 @@ open class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    open var categoryCardsVisible: Bool {
+    var categoryCardsVisible: Bool {
         return !categoryCardList.isHidden
     }
 
@@ -41,7 +41,7 @@ open class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    open func set(categoriesInfo newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
+    func set(categoriesInfo newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
         categoryCardList.isHidden = newValue.isEmpty
         categoryCardList.categoriesInfo = newValue
 
@@ -57,7 +57,7 @@ open class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    open func animateCategoriesList(navBarVisible: Bool) {
+    func animateCategoriesList(navBarVisible: Bool) {
         animate {
             if navBarVisible {
                 self.categoryCardList.frame.origin.y = self.navigationBar.frame.height
@@ -68,17 +68,17 @@ open class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    open func scrollToCategory(index: Int) {
+    func scrollToCategory(index: Int) {
         self.categoryCardList.scrollToIndex(index, animated: false)
     }
 
-    open func selectCategory(index: Int) {
+    func selectCategory(index: Int) {
         self.categoryCardList.selectCategoryIndex(index)
     }
 }
 
 extension CategoryScreen: CategoryCardListDelegate {
-    public func categoryCardSelected(_ index: Int) {
+    func categoryCardSelected(_ index: Int) {
         delegate?.categorySelected(index: index)
     }
 }

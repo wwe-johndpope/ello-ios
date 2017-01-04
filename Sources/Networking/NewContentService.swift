@@ -5,36 +5,36 @@
 import Foundation
 import SwiftyUserDefaults
 
-public struct NewContentNotifications {
-    public static let newAnnouncements = TypedNotification<Void?>(name: "NewAnnouncementsNotification")
-    public static let newNotifications = TypedNotification<Void?>(name: "NewNotificationsNotification")
-    public static let newStreamContent = TypedNotification<Void?>(name: "NewStreamContentNotification")
-    public static let reloadStreamContent = TypedNotification<Void?>(name: "ReloadStreamContentNotification")
-    public static let reloadNotifications = TypedNotification<Void?>(name: "ReloadNotificationsNotification")
+struct NewContentNotifications {
+    static let newAnnouncements = TypedNotification<Void?>(name: "NewAnnouncementsNotification")
+    static let newNotifications = TypedNotification<Void?>(name: "NewNotificationsNotification")
+    static let newStreamContent = TypedNotification<Void?>(name: "NewStreamContentNotification")
+    static let reloadStreamContent = TypedNotification<Void?>(name: "ReloadStreamContentNotification")
+    static let reloadNotifications = TypedNotification<Void?>(name: "ReloadNotificationsNotification")
 }
 
-open class NewContentService {
+class NewContentService {
     var timer: Timer?
-    public init(){}
+    init(){}
 }
 
-public extension NewContentService {
+extension NewContentService {
 
-    public func startPolling() {
+    func startPolling() {
         checkForNewNotifications()
         timer = Timer.scheduledTimer(timeInterval: TimeInterval(10), target: self, selector: #selector(NewContentService.checkForNewContent), userInfo: nil, repeats: false)
     }
 
-    public func restartPolling() {
+    func restartPolling() {
         timer = Timer.scheduledTimer(timeInterval: TimeInterval(10), target: self, selector: #selector(NewContentService.checkForNewContent), userInfo: nil, repeats: false)
     }
 
-    public func stopPolling() {
+    func stopPolling() {
         timer?.invalidate()
     }
 
     @objc
-    public func checkForNewContent() {
+    func checkForNewContent() {
         stopPolling()
         let (restart, done) = afterN(restartPolling)
         checkForNewNotifications(restart())
@@ -42,7 +42,7 @@ public extension NewContentService {
         done()
     }
 
-    public func updateCreatedAt(_ jsonables: [JSONAble], streamKind: StreamKind) {
+    func updateCreatedAt(_ jsonables: [JSONAble], streamKind: StreamKind) {
         let old = Date(timeIntervalSince1970: 0)
         let new = newestDate(jsonables)
         let storedKey = streamKind.lastViewedCreatedAtKey

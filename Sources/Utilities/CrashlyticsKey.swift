@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum CrashlyticsKey: String {
+enum CrashlyticsKey: String {
     case alertPresenter = "alert presenting controller"
     case requestPath = "most recent request path"
     case responseHeaders = "most recent response headers"

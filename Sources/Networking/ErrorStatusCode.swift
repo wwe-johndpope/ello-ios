@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum ErrorStatusCode: Int {
+enum ErrorStatusCode: Int {
     case status401_Unauthorized = 401
     case status403 = 403
     case status404 = 404
@@ -20,7 +20,7 @@ public enum ErrorStatusCode: Int {
         return stubbedData(String(self.rawValue))
     }
 
-    public var notification: TypedNotification<NSError> {
+    var notification: TypedNotification<NSError> {
         switch self {
         case .statusUnknown:
             return TypedNotification(name: "ElloProviderNotificationUnknown")

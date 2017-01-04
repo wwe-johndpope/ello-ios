@@ -4,8 +4,7 @@
 
 import Foundation
 
-@testable
-import Ello
+@testable import Ello
 import Quick
 import Moya
 import Nimble

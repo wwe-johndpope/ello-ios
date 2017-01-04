@@ -2,9 +2,9 @@
 ///  DrawerCellPresenter.swift
 //
 
-public struct DrawerCellPresenter {
+struct DrawerCellPresenter {
 
-    public static func configure(_ cell: DrawerCell, item: DrawerItem) {
+    static func configure(_ cell: DrawerCell, item: DrawerItem) {
         switch item.type {
         case .version:
             cell.label.font = UIFont.defaultFont(12)

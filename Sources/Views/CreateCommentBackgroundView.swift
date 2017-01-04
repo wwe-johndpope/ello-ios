@@ -2,19 +2,19 @@
 ///  CreateCommentBackgroundView.swift
 //
 
-open class CreateCommentBackgroundView: UIView {
+class CreateCommentBackgroundView: UIView {
 
-    required override public init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
     }
 
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.backgroundColor = UIColor.clear
     }
 
-    override open func draw(_ rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let color = UIColor.black
         let margin: CGFloat = 10
         let midY = self.frame.height / CGFloat(2)

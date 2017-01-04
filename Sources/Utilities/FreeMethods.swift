@@ -28,26 +28,26 @@ func getlog() -> [(String, String)] { return [] }
 
 // MARK: Animations
 
-public struct AnimationOptions {
+struct AnimationOptions {
     let duration: TimeInterval
     let delay: TimeInterval
     let options: UIViewAnimationOptions
     let completion: ((Bool) -> Void)
 }
 
-public let DefaultAnimationDuration: TimeInterval = 0.2
-public let DefaultAppleAnimationDuration: TimeInterval = 0.3
-public func animate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
+let DefaultAnimationDuration: TimeInterval = 0.2
+let DefaultAppleAnimationDuration: TimeInterval = 0.3
+func animate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
     let shouldAnimate: Bool = animated ?? !AppSetup.sharedState.isTesting
     let options = AnimationOptions(duration: duration, delay: delay, options: options, completion: completion)
     animate(options: options, animated: shouldAnimate, animations: animations)
 }
 
-public func animateWithKeyboard(animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
+func animateWithKeyboard(animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
     animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, completion: completion, animations: animations)
 }
 
-public func animate(options: AnimationOptions, animated: Bool = true, animations: @escaping () -> Void) {
+func animate(options: AnimationOptions, animated: Bool = true, animations: @escaping () -> Void) {
     if animated {
         UIView.animate(withDuration: options.duration, delay: options.delay, options: options.options, animations: animations, completion: options.completion)
     }
@@ -60,17 +60,17 @@ public func animate(options: AnimationOptions, animated: Bool = true, animations
 
 // MARK: Async, Timed, and Throttled closures
 
-public typealias BasicBlock = () -> Void
-public typealias ThrottledBlock = (@escaping BasicBlock) -> Void
-public typealias CancellableBlock = (Bool) -> Void
-public typealias TakesIndexBlock = (Int) -> Void
-public typealias OnHeightMismatch = (CGFloat) -> Void
+typealias BasicBlock = () -> Void
+typealias ThrottledBlock = (@escaping BasicBlock) -> Void
+typealias CancellableBlock = (Bool) -> Void
+typealias TakesIndexBlock = (Int) -> Void
+typealias OnHeightMismatch = (CGFloat) -> Void
 
 
-open class Proc {
+class Proc {
     var block: BasicBlock
 
-    public init(_ block: @escaping BasicBlock) {
+    init(_ block: @escaping BasicBlock) {
         self.block = block
     }
 
@@ -81,11 +81,11 @@ open class Proc {
 }
 
 
-public func times(_ times: Int, block: BasicBlock) {
+func times(_ times: Int, block: BasicBlock) {
     times_(times) { (index: Int) in block() }
 }
 
-public func profiler(_ message: String = "") -> BasicBlock {
+func profiler(_ message: String = "") -> BasicBlock {
     let start = Date()
     print("--------- PROFILING \(message)...")
     return {
@@ -93,13 +93,13 @@ public func profiler(_ message: String = "") -> BasicBlock {
     }
 }
 
-public func profiler(_ message: String = "", block: BasicBlock) {
+func profiler(_ message: String = "", block: BasicBlock) {
     let p = profiler(message)
     block()
     p()
 }
 
-public func times(_ times: Int, block: TakesIndexBlock) {
+func times(_ times: Int, block: TakesIndexBlock) {
     times_(times, block: block)
 }
 
@@ -126,7 +126,7 @@ private func times_(_ times: Int, block: TakesIndexBlock) {
 //
 // without this 'done' trick, there is a bug where if the first process is synchronous, the 'count'
 // is incremented (by calling 'afterAll') and then immediately decremented.
-public func afterN(_ block: @escaping BasicBlock) -> (() -> BasicBlock, BasicBlock) {
+func afterN(_ block: @escaping BasicBlock) -> (() -> BasicBlock, BasicBlock) {
     var count = 0
     var called = false
     let decrementCount: BasicBlock = {
@@ -143,7 +143,7 @@ public func afterN(_ block: @escaping BasicBlock) -> (() -> BasicBlock, BasicBlo
     return (incrementCount, incrementCount())
 }
 
-public func after(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
+func after(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
     if times == 0 {
         block()
         return {}
@@ -158,7 +158,7 @@ public func after(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
     }
 }
 
-public func until(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
+func until(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
     if times == 0 {
         return {}
     }
@@ -172,11 +172,11 @@ public func until(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
     }
 }
 
-public func once(_ block: @escaping BasicBlock) -> BasicBlock {
+func once(_ block: @escaping BasicBlock) -> BasicBlock {
     return until(1, block: block)
 }
 
-public func inBackground(_ block: @escaping BasicBlock) {
+func inBackground(_ block: @escaping BasicBlock) {
     if AppSetup.sharedState.isTesting {
         block()
     }
@@ -185,11 +185,11 @@ public func inBackground(_ block: @escaping BasicBlock) {
     }
 }
 
-public func inForeground(_ block: @escaping BasicBlock) {
+func inForeground(_ block: @escaping BasicBlock) {
     nextTick(block)
 }
 
-public func nextTick(_ block: @escaping BasicBlock) {
+func nextTick(_ block: @escaping BasicBlock) {
     if AppSetup.sharedState.isTesting {
         if Thread.isMainThread {
             block()
@@ -203,11 +203,11 @@ public func nextTick(_ block: @escaping BasicBlock) {
     }
 }
 
-public func nextTick(_ on: DispatchQueue, block: @escaping BasicBlock) {
+func nextTick(_ on: DispatchQueue, block: @escaping BasicBlock) {
     on.async(execute: block)
 }
 
-public func timeout(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func timeout(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
     let handler = once(block)
     _ = delay(duration) {
         handler()
@@ -215,14 +215,14 @@ public func timeout(_ duration: TimeInterval, block: @escaping BasicBlock) -> Ba
     return handler
 }
 
-public func delay(_ duration: TimeInterval, background: Bool = false, block: @escaping BasicBlock) {
+func delay(_ duration: TimeInterval, background: Bool = false, block: @escaping BasicBlock) {
     let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
     let killTime = DispatchTime.now() + Double(killTimeOffset) / Double(NSEC_PER_SEC)
     let queue: DispatchQueue = background ? .global(qos: .background) : .main
     queue.asyncAfter(deadline: killTime, execute: block)
 }
 
-public func cancelableDelay(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func cancelableDelay(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
     let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
     let killTime = DispatchTime.now() + Double(killTimeOffset) / Double(NSEC_PER_SEC)
     var cancelled = false
@@ -232,7 +232,7 @@ public func cancelableDelay(_ duration: TimeInterval, block: @escaping BasicBloc
     return { cancelled = true }
 }
 
-public func debounce(_ timeout: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func debounce(_ timeout: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
     var timer: Timer? = nil
     let proc = Proc(block)
 
@@ -244,7 +244,7 @@ public func debounce(_ timeout: TimeInterval, block: @escaping BasicBlock) -> Ba
     }
 }
 
-public func debounce(_ timeout: TimeInterval) -> ThrottledBlock {
+func debounce(_ timeout: TimeInterval) -> ThrottledBlock {
     var timer: Timer? = nil
 
     return { block in
@@ -256,7 +256,7 @@ public func debounce(_ timeout: TimeInterval) -> ThrottledBlock {
     }
 }
 
-public func throttle(_ interval: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func throttle(_ interval: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
     var timer: Timer? = nil
     let proc = Proc() {
         timer = nil
@@ -270,7 +270,7 @@ public func throttle(_ interval: TimeInterval, block: @escaping BasicBlock) -> B
     }
 }
 
-public func throttle(_ interval: TimeInterval) -> ThrottledBlock {
+func throttle(_ interval: TimeInterval) -> ThrottledBlock {
     var timer: Timer? = nil
     var lastBlock: BasicBlock?
 

@@ -3,7 +3,7 @@
 //
 
 
-public enum RelationshipPriority: String {
+enum RelationshipPriority: String {
     case following = "friend"
     case starred = "noise"
     case block = "block"
@@ -15,7 +15,7 @@ public enum RelationshipPriority: String {
 
     static let all = [following, starred, block, mute, inactive, none, null, me]
 
-    public init(stringValue: String) {
+    init(stringValue: String) {
         self = RelationshipPriority(rawValue: stringValue) ?? .none
     }
 

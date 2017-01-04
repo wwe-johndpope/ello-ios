@@ -2,27 +2,27 @@
 ///  DiscoverAllCategoriesViewController.swift
 //
 
-open class DiscoverAllCategoriesViewController: StreamableViewController {
+class DiscoverAllCategoriesViewController: StreamableViewController {
 
-    override open var tabBarItem: UITabBarItem? {
+    override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
         set { self.tabBarItem = newValue }
     }
 
     var screen: DiscoverAllCategoriesScreen { return self.view as! DiscoverAllCategoriesScreen }
 
-    required public init() {
+    required init() {
         super.init(nibName: nil, bundle: nil)
 
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategories() }
         streamViewController.streamKind = .allCategories
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func loadView() {
+    override func loadView() {
         title = InterfaceString.Discover.Title
 
         if !isRootViewController() {
@@ -49,7 +49,7 @@ open class DiscoverAllCategoriesViewController: StreamableViewController {
         }.ignoreFailures()
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
@@ -59,7 +59,7 @@ open class DiscoverAllCategoriesViewController: StreamableViewController {
         updateInsets(navBar: screen.navigationBar, streamController: streamViewController)
     }
 
-    override open func showNavBars(_ scrollToBottom: Bool) {
+    override func showNavBars(_ scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
@@ -69,7 +69,7 @@ open class DiscoverAllCategoriesViewController: StreamableViewController {
         }
     }
 
-    override open func hideNavBars() {
+    override func hideNavBars() {
         super.hideNavBars()
         positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
@@ -80,7 +80,7 @@ open class DiscoverAllCategoriesViewController: StreamableViewController {
 // MARK: StreamViewDelegate
 extension DiscoverAllCategoriesViewController {
 
-    override public func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
+    override func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         guard let categories = jsonables as? [Category] else { return [] }
 
         let metaCategories = categories.filter { $0.isMeta }

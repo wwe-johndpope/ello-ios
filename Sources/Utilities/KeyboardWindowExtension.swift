@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public extension Keyboard {
+extension Keyboard {
     @objc
     func willShow(_ notification: Foundation.Notification) {
         active = true

@@ -2,14 +2,14 @@
 ///  CategoryCardListView.swift
 //
 
-public protocol CategoryCardListDelegate: class {
+protocol CategoryCardListDelegate: class {
     func categoryCardSelected(_ index: Int)
 }
 
-open class CategoryCardListView: UIView {
+class CategoryCardListView: UIView {
     weak var delegate: CategoryCardListDelegate?
 
-    public struct CategoryInfo {
+    struct CategoryInfo {
         let title: String
         let imageURL: URL?
     }
@@ -20,7 +20,7 @@ open class CategoryCardListView: UIView {
         static let spacing: CGFloat = 1
     }
 
-    open var categoriesInfo: [CategoryInfo] = [] {
+    var categoriesInfo: [CategoryInfo] = [] {
         didSet {
             let changed: Bool = (categoriesInfo.count != oldValue.count) || oldValue.enumerated().any { (index, info) in
                 return info.title != categoriesInfo[index].title
@@ -35,7 +35,7 @@ open class CategoryCardListView: UIView {
     fileprivate var categoryViews: [CategoryCardView] = []
     fileprivate var scrollView = UIScrollView()
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         style()
@@ -43,7 +43,7 @@ open class CategoryCardListView: UIView {
         arrange()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -70,14 +70,14 @@ open class CategoryCardListView: UIView {
         delegate?.categoryCardSelected(index)
     }
 
-    open func scrollToIndex(_ index: Int, animated: Bool) {
+    func scrollToIndex(_ index: Int, animated: Bool) {
         guard let view = categoryViews.safeValue(index) else { return }
 
         let x = max(min(view.frame.minX, scrollView.contentSize.width - frame.width), 0)
         scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: animated)
     }
 
-    open func selectCategoryIndex(_ index: Int) {
+    func selectCategoryIndex(_ index: Int) {
         guard let view = categoryViews.safeValue(index) else { return }
         for card in categoryViews {
             card.selected = false
