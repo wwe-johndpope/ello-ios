@@ -165,7 +165,6 @@
 		122B30DE1C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */; };
 		122B30DF1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = F872635F1AB0BB1800FCB59D /* Relationship.swift */; };
 		122B30E01C6A3FBF00C1B9D8 /* RelationshipPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B5A1C602621001386CE /* RelationshipPriority.swift */; };
-		122B30E11C6A3FBF00C1B9D8 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A65C11AD6F6DB001E451A /* Tracker.swift */; };
 		122B30E21C6A3FBF00C1B9D8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE391A43392D00493660 /* User.swift */; };
 		122B30E31C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */; };
 		122B30E41C6A3FC400C1B9D8 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D56B661A8C6BC000671280 /* Asset.swift */; };
@@ -656,6 +655,7 @@
 		1D8AFAD01A9691F90034DDAD /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
 		1D9201BC1B6AD7CD007528BF /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9201BB1B6AD7CD007528BF /* Tag.swift */; };
 		1D9225541C3B23E000553BAE /* ExperienceUpdateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9225531C3B23E000553BAE /* ExperienceUpdateSpec.swift */; };
+		1D971CF11E1ECD3100A167A2 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D971CF01E1ECD3100A167A2 /* Tracker.swift */; };
 		1D98563B1C6D7D3300C1BF78 /* DrawerAnimators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D98563A1C6D7D3300C1BF78 /* DrawerAnimators.swift */; };
 		1D98563F1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D98563E1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift */; };
 		1D9856421C723EAA00C1BF78 /* DrawerPopControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9856401C723E6100C1BF78 /* DrawerPopControl.swift */; };
@@ -1639,6 +1639,7 @@
 		1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		1D9201BB1B6AD7CD007528BF /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		1D9225531C3B23E000553BAE /* ExperienceUpdateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceUpdateSpec.swift; sourceTree = "<group>"; };
+		1D971CF01E1ECD3100A167A2 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		1D98563A1C6D7D3300C1BF78 /* DrawerAnimators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimators.swift; sourceTree = "<group>"; };
 		1D98563E1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerAnimatorsSpec.swift; sourceTree = "<group>"; };
 		1D9856401C723E6100C1BF78 /* DrawerPopControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerPopControl.swift; sourceTree = "<group>"; };
@@ -2038,7 +2039,6 @@
 		F8158C481ACDD4C1008C15A1 /* AlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
 		F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertCellPresenter.swift; sourceTree = "<group>"; };
 		F8158C4C1ACDD52D008C15A1 /* AlertPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresentationController.swift; sourceTree = "<group>"; };
-		F81A65C11AD6F6DB001E451A /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Tracker.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F81ED61C1AAF499D00A20794 /* DrawerViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewControllerSpec.swift; sourceTree = "<group>"; };
 		F82B8B6D1AEFFA6E00A9FC97 /* ElloKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloKeychain.swift; sourceTree = "<group>"; };
 		F83648ED1B0CDDC0000CDBC5 /* PushPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPayload.swift; sourceTree = "<group>"; };
@@ -3026,7 +3026,6 @@
 				F872635F1AB0BB1800FCB59D /* Relationship.swift */,
 				122D1B5A1C602621001386CE /* RelationshipPriority.swift */,
 				1DB8C6B21D7F24B4007E1447 /* SearchString.swift */,
-				F81A65C11AD6F6DB001E451A /* Tracker.swift */,
 				12F6AE391A43392D00493660 /* User.swift */,
 				76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */,
 				1DF806521CDD1A42002D60AD /* Username.swift */,
@@ -3081,6 +3080,7 @@
 				1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */,
 				1D7750F11ABA48F200D92191 /* Tmp.swift */,
 				1D7750F81ABB68DF00D92191 /* ToData.swift */,
+				1D971CF01E1ECD3100A167A2 /* Tracker.swift */,
 				127128251A77373300695F15 /* TypedNotifications.swift */,
 				12F6AE611A4339C600493660 /* Validator.swift */,
 			);
@@ -4937,7 +4937,6 @@
 				1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */,
 				1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */,
 				1207C9771C73FEE000939ADB /* DateFormatting.swift in Sources */,
-				122B30E11C6A3FBF00C1B9D8 /* Tracker.swift in Sources */,
 				12551FBA1A68729900ABC5D9 /* OmnibarViewController.swift in Sources */,
 				1DADA1661A96DC130000DDA1 /* NotificationsScreen.swift in Sources */,
 				1D66803D1A8AA7B1003E93C8 /* NotificationsFilterBar.swift in Sources */,
@@ -5228,6 +5227,7 @@
 				1DA18E1C1DB55D42000231CC /* ExternalLink.swift in Sources */,
 				1D7152D91D74C7FD005998FE /* OnboardingProtocols.swift in Sources */,
 				1D7750F21ABA48F200D92191 /* Tmp.swift in Sources */,
+				1D971CF11E1ECD3100A167A2 /* Tracker.swift in Sources */,
 				12F6AE6C1A4339EF00493660 /* ElloTabBar.swift in Sources */,
 				762EE9EB1A840E4A00A3B805 /* AvatarButton.swift in Sources */,
 				1D7152961D6CBE0E005998FE /* NoPostsCell.swift in Sources */,
