@@ -35,11 +35,11 @@ PODS:
   - Keys (1.0.0)
   - KINWebBrowser (1.1.0)
   - MBProgressHUD (0.9.2)
-  - Moya (8.0.0-beta.6):
-    - Moya/Core (= 8.0.0-beta.6)
-  - Moya/Core (8.0.0-beta.6):
-    - Alamofire (~> 4.0)
-    - Result (~> 3.0)
+  - Moya (8.0.0):
+    - Moya/Core (= 8.0.0)
+  - Moya/Core (8.0.0):
+    - Alamofire (~> 4.2.0)
+    - Result (~> 3.1.0)
   - Nimble (5.1.0)
   - Nimble-Snapshots (4.4.0):
     - Nimble-Snapshots/Core (= 4.4.0)
@@ -244,7 +244,7 @@ SPEC CHECKSUMS:
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   KINWebBrowser: dad85d7d93e6f4620a8589b96992394affffa66e
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  Moya: a29e2503a0c5067d462ba2f07cc6b6b1f3fc172d
+  Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
   Nimble: 5ea121a2eda60440287054cde077fc0ad22227b3
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
   PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
@@ -263,4 +263,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cf4605054c8a169681bda3c27509cbf8c593a0cc
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

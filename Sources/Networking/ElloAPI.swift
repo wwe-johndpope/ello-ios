@@ -547,7 +547,7 @@ extension ElloAPI: Moya.TargetType {
         return nil
     }
 
-    var encoding: Moya.ParameterEncoding {
+    var parameterEncoding: Moya.ParameterEncoding {
         if self.method == .get || self.method == .head {
             return URLEncoding.default
         }
