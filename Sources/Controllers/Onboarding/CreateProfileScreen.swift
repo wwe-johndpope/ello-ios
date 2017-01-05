@@ -261,7 +261,7 @@ extension CreateProfileScreen {
             config: config,
             callback: openImageSheet)
         pickerSheet.maximumSelection = 1
-        delegate?.presentController(pickerSheet)
+        delegate?.present(controller: pickerSheet)
     }
 
     func uploadAvatarAction() {
@@ -273,7 +273,7 @@ extension CreateProfileScreen {
             config: config,
             callback: openImageSheet)
         pickerSheet.maximumSelection = 1
-        delegate?.presentController(pickerSheet)
+        delegate?.present(controller: pickerSheet)
     }
 }
 
@@ -325,11 +325,11 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         case .coverImage:
             imageView = coverImageView
             uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGray
-            if let imageRegion = imageRegion, updateDelegate { delegate?.assignCoverImage(imageRegion) }
+            if let imageRegion = imageRegion, updateDelegate { delegate?.assign(coverImage: imageRegion) }
         case .avatar:
             imageView = avatarImageView
             uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGray
-            if let imageRegion = imageRegion, updateDelegate  { delegate?.assignAvatar(imageRegion) }
+            if let imageRegion = imageRegion, updateDelegate  { delegate?.assign(avatarImage: imageRegion) }
         }
 
         if let imageRegion = imageRegion {
@@ -354,7 +354,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         switch imageSheetResult {
         case let .controller(imageController):
             imageController.delegate = self
-            delegate?.presentController(imageController)
+            delegate?.present(controller: imageController)
         case let .images(assets):
             processPHAssets(assets)
         }
@@ -375,7 +375,7 @@ extension CreateProfileScreen: UITextViewDelegate {
             if replacementText == "\n" {
                 text = originalText
             }
-            nameTextView.validationState = delegate?.assignName(text) ?? .none
+            nameTextView.validationState = delegate?.assign(name: text) ?? .none
 
             if replacementText == "\n" {
                 _ = nameTextView.resignFirstResponder()
@@ -383,9 +383,9 @@ extension CreateProfileScreen: UITextViewDelegate {
                 return false
             }
         case bioTextView:
-            bioTextView.validationState = delegate?.assignBio(text) ?? .none
+            bioTextView.validationState = delegate?.assign(bio: text) ?? .none
         case linksTextView:
-            linksTextView.validationState = delegate?.assignLinks(text) ?? .none
+            linksTextView.validationState = delegate?.assign(links: text) ?? .none
         default: break
         }
 

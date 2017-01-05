@@ -33,7 +33,7 @@ class CreateProfileViewController: UIViewController, HasAppController {
 }
 
 extension CreateProfileViewController: CreateProfileDelegate {
-    func presentController(_ controller: UIViewController) {
+    func present(controller: UIViewController) {
         present(controller, animated: true, completion: nil)
     }
 
@@ -41,21 +41,21 @@ extension CreateProfileViewController: CreateProfileDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-    func assignName(_ name: String?) -> ValidationState {
+    func assign(name: String?) -> ValidationState {
         onboardingData.name = name
         didSetName = (name?.isEmpty == false)
         onboardingViewController?.canGoNext = profileIsValid
         return didSetName ? .okSmall : .none
     }
 
-    func assignBio(_ bio: String?) -> ValidationState {
+    func assign(bio: String?) -> ValidationState {
         onboardingData.bio = bio
         didSetBio = (bio?.isEmpty == false)
         onboardingViewController?.canGoNext = profileIsValid
         return didSetBio ? .okSmall : .none
     }
 
-    func assignLinks(_ links: String?) -> ValidationState {
+    func assign(links: String?) -> ValidationState {
         if let links = links, Validator.hasValidLinks(links) {
             onboardingData.links = links
             didSetLinks = true
@@ -80,14 +80,14 @@ extension CreateProfileViewController: CreateProfileDelegate {
         return linksAreValid ? .okSmall : .none
     }
 
-    func assignCoverImage(_ image: ImageRegionData) {
+    func assign(coverImage: ImageRegionData) {
         didUploadCoverImage = true
-        onboardingData.coverImage = image
+        onboardingData.coverImage = coverImage
         onboardingViewController?.canGoNext = profileIsValid
     }
-    func assignAvatar(_ image: ImageRegionData) {
+    func assign(avatarImage: ImageRegionData) {
         didUploadAvatarImage = true
-        onboardingData.avatarImage = image
+        onboardingData.avatarImage = avatarImage
         onboardingViewController?.canGoNext = profileIsValid
     }
 }
