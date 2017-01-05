@@ -105,7 +105,7 @@ extension HireViewController: HireDelegate {
 
         endpoint
             .onSuccess { _ in
-                Tracker.sharedTracker.hiredUser(self.user)
+                Tracker.shared.hiredUser(self.user)
                 hireSuccess()
             }
             .onFail { error in

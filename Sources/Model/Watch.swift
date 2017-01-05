@@ -85,7 +85,7 @@ final class Watch: JSONAble, PostActionable {
         else {
             createdAt = Date()
             // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Watch", json: json.rawString())
+            Tracker.shared.createdAtCrash("Watch", json: json.rawString())
         }
         if let date = json["updated_at"].stringValue.toDate() {
             // good to go
@@ -94,7 +94,7 @@ final class Watch: JSONAble, PostActionable {
         else {
             updatedAt = Date()
             // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Watch Updated", json: json.rawString())
+            Tracker.shared.createdAtCrash("Watch Updated", json: json.rawString())
         }
 
         // create Watch

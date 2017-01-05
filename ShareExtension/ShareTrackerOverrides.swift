@@ -13,7 +13,7 @@ enum ContentType: String {
 func logPresentingAlert(_ name: String) {}
 
 class Tracker {
-    static let sharedTracker = Tracker()
+    static let shared = Tracker()
 
     init() {}
 

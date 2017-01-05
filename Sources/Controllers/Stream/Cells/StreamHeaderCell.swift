@@ -458,7 +458,7 @@ class StreamHeaderCell: UICollectionViewCell {
             self.scrollView.contentOffset = contentOffset
             self.openChevron(isOpen: self.isOpen)
         }
-        Tracker.sharedTracker.commentBarVisibilityChanged(isOpen)
+        Tracker.shared.commentBarVisibilityChanged(isOpen)
     }
 
     @IBAction func longPressed(_ gesture: UIGestureRecognizer) {
@@ -518,7 +518,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
                 isOpen = true
                 openChevron(isOpen: true)
                 postNotification(streamCellDidOpenNotification, value: self)
-                Tracker.sharedTracker.commentBarVisibilityChanged(true)
+                Tracker.shared.commentBarVisibilityChanged(true)
             }
         } else {
             let angle: CGFloat = -CGFloat(M_PI) + CGFloat(M_PI) * scrollView.contentOffset.x / revealWidth

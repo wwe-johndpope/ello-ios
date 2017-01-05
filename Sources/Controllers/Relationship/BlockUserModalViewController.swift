@@ -48,14 +48,14 @@ class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelega
         }
 
         switch newRelationship {
-            case .block: Tracker.sharedTracker.userBlocked(userId)
-            case .mute: Tracker.sharedTracker.userMuted(userId)
+            case .block: Tracker.shared.userBlocked(userId)
+            case .mute: Tracker.shared.userMuted(userId)
             case .inactive:
                 if relationshipPriority == .block {
-                    Tracker.sharedTracker.userUnblocked(userId)
+                    Tracker.shared.userUnblocked(userId)
                 }
                 else if relationshipPriority == .mute {
-                    Tracker.sharedTracker.userUnmuted(userId)
+                    Tracker.shared.userUnmuted(userId)
                 }
             default: break
         }
@@ -91,7 +91,7 @@ class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelega
     }
 
     func closeModalAndThen(_ completion: @escaping BasicBlock) {
-        Tracker.sharedTracker.userBlockCanceled(userId)
+        Tracker.shared.userBlockCanceled(userId)
         self.dismiss(animated: true, completion: completion)
     }
 

@@ -415,7 +415,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
     }
 
     @IBAction func logOutTapped() {
-        Tracker.sharedTracker.tappedLogout()
+        Tracker.shared.tappedLogout()
         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
     }
 

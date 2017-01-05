@@ -268,7 +268,7 @@ final class ProfileViewController: StreamableViewController {
             let shareURL = URL(string: shareLink)
         else { return }
 
-        Tracker.sharedTracker.userShared(user)
+        Tracker.shared.userShared(user)
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
@@ -299,7 +299,7 @@ extension ProfileViewController: ProfileScreenDelegate {
     func hireTapped() {
         guard let user = user else { return }
 
-        Tracker.sharedTracker.tappedHire(user)
+        Tracker.shared.tappedHire(user)
         let vc = HireViewController(user: user, type: .hire)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -315,7 +315,7 @@ extension ProfileViewController: ProfileScreenDelegate {
     func collaborateTapped() {
         guard let user = user else { return }
 
-        Tracker.sharedTracker.tappedCollaborate(user)
+        Tracker.shared.tappedCollaborate(user)
         let vc = HireViewController(user: user, type: .collaborate)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -491,7 +491,7 @@ extension ProfileViewController:  StreamDestination {
         title = user.atName
 
         setupNavigationItems()
-        Tracker.sharedTracker.profileLoaded(user.atName)
+        Tracker.shared.profileLoaded(user.atName)
 
         screen.updateRelationshipControl(user: user)
 

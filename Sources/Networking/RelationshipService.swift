@@ -32,10 +32,10 @@ class RelationshipService: NSObject {
 
         let endpoint = ElloAPI.relationship(userId: userId, relationship: relationshipPriority.rawValue)
         ElloProvider.shared.elloRequest(endpoint, success: { (data, responseConfig) in
-            Tracker.sharedTracker.relationshipStatusUpdated(relationshipPriority, userId: userId)
+            Tracker.shared.relationshipStatusUpdated(relationshipPriority, userId: userId)
             success(data, responseConfig)
         }, failure: { (error, statusCode) in
-            Tracker.sharedTracker.relationshipStatusUpdateFailed(relationshipPriority, userId: userId)
+            Tracker.shared.relationshipStatusUpdateFailed(relationshipPriority, userId: userId)
             failure(error, statusCode)
         })
     }

@@ -40,23 +40,23 @@ extension UIImagePickerController {
             alertController = AlertViewController(message: InterfaceString.ImagePicker.ChooseSource)
 
             let cameraAction = AlertAction(title: InterfaceString.ImagePicker.Camera, style: .dark) { _ in
-                Tracker.sharedTracker.imageAddedFromCamera()
+                Tracker.shared.imageAddedFromCamera()
                 callback(.elloCameraPickerController)
             }
             alertController.addAction(cameraAction)
 
             let libraryAction = AlertAction(title: InterfaceString.ImagePicker.Library, style: .dark) { _ in
-                Tracker.sharedTracker.imageAddedFromLibrary()
+                Tracker.shared.imageAddedFromLibrary()
                 callback(.elloPhotoLibraryPickerController)
             }
             alertController.addAction(libraryAction)
 
             let cancelAction = AlertAction(title: InterfaceString.Cancel, style: .light) { _ in
-                Tracker.sharedTracker.addImageCanceled()
+                Tracker.shared.addImageCanceled()
             }
             alertController.addAction(cancelAction)
         } else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            Tracker.sharedTracker.imageAddedFromLibrary()
+            Tracker.shared.imageAddedFromLibrary()
             callback(.elloPhotoLibraryPickerController)
             return nil
         } else {
@@ -81,7 +81,7 @@ extension UIImagePickerController {
                 ImagePickerAction(
                     title: config.cameraAction,
                     handler: { _ in
-                        Tracker.sharedTracker.imageAddedFromCamera()
+                        Tracker.shared.imageAddedFromCamera()
                         callback(.controller(.elloCameraPickerController))
                     })
             )
@@ -91,14 +91,14 @@ extension UIImagePickerController {
                 title: config.photoLibrary,
                 secondaryTitle: config.addImage,
                 handler: { _ in
-                    Tracker.sharedTracker.imageAddedFromLibrary()
+                    Tracker.shared.imageAddedFromLibrary()
                     callback(.controller(.elloPhotoLibraryPickerController))
                 }, secondaryHandler: { _, numberOfPhotos in
                     callback(.images(controller.selectedAssets))
                 })
         )
         controller.addAction(ImagePickerAction(title: InterfaceString.Cancel, style: .cancel, handler: { _ in
-            Tracker.sharedTracker.addImageCanceled()
+            Tracker.shared.addImageCanceled()
         }))
 
         return controller

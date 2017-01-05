@@ -228,7 +228,7 @@ extension NotificationsViewController: StreamDestination {
 
         for item in items {
             if let announcement = item.jsonable as? Announcement {
-                Tracker.sharedTracker.announcementViewed(announcement)
+                Tracker.shared.announcementViewed(announcement)
             }
         }
     }
@@ -249,7 +249,7 @@ extension NotificationsViewController: StreamDestination {
 // MARK: NotificationsViewController:
 extension NotificationsViewController: AnnouncementDelegate {
     func markAnnouncementAsRead(announcement: Announcement) {
-        Tracker.sharedTracker.announcementDismissed(announcement)
+        Tracker.shared.announcementDismissed(announcement)
         generator?.markAnnouncementAsRead(announcement)
         postNotification(JSONAbleChangedNotification, value: (announcement, .delete))
     }

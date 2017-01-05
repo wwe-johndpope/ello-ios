@@ -110,14 +110,14 @@ extension SearchViewController: SearchScreenDelegate {
     func trackSearch(_ text: String, isPostSearch: Bool) {
         if isPostSearch {
             if text.hasPrefix("#") {
-                Tracker.sharedTracker.searchFor("hashtags")
+                Tracker.shared.searchFor("hashtags")
             }
             else {
-                Tracker.sharedTracker.searchFor("posts")
+                Tracker.shared.searchFor("posts")
             }
         }
         else {
-            Tracker.sharedTracker.searchFor("users")
+            Tracker.shared.searchFor("users")
         }
     }
 }

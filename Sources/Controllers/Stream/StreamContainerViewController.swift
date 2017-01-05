@@ -78,7 +78,7 @@ class StreamContainerViewController: StreamableViewController {
         initialController.loadInitialPage()
         streamLoaded[index] = true
 
-        Tracker.sharedTracker.streamAppeared(stream.name)
+        Tracker.shared.streamAppeared(stream.name)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -236,7 +236,7 @@ class StreamContainerViewController: StreamableViewController {
 
         currentStreamIndex = index
         let stream = streamValues[currentStreamIndex]
-        Tracker.sharedTracker.streamAppeared(stream.name)
+        Tracker.shared.streamAppeared(stream.name)
 
         setupNavigationBar(controller: currentController)
 

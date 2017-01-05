@@ -265,7 +265,7 @@ extension PostDetailViewController: StreamDestination {
             showNavBars(false)
         }
 
-        Tracker.sharedTracker.postLoaded(post.id)
+        Tracker.shared.postLoaded(post.id)
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {

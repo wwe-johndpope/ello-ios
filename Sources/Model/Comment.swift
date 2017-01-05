@@ -105,7 +105,7 @@ final class ElloComment: JSONAble, Authorable, Groupable {
         else {
             createdAt = Date()
             // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Comment", json: json.rawString())
+            Tracker.shared.createdAtCrash("Comment", json: json.rawString())
         }
 
         let comment = ElloComment(

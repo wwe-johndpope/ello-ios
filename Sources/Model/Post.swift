@@ -223,7 +223,7 @@ final class Post: JSONAble, Authorable, Groupable {
         else {
             createdAt = Date()
             // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Post", json: json.rawString())
+            Tracker.shared.createdAtCrash("Post", json: json.rawString())
         }
         // create post
         let post = Post(

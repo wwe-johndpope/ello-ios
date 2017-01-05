@@ -354,15 +354,15 @@ extension JoinScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case emailField:
-            Tracker.sharedTracker.enteredEmail()
+            Tracker.shared.enteredEmail()
             _ = usernameField.becomeFirstResponder()
             return true
         case usernameField:
-            Tracker.sharedTracker.enteredEmail()
+            Tracker.shared.enteredEmail()
             _ = passwordField.becomeFirstResponder()
             return true
         case passwordField:
-            Tracker.sharedTracker.enteredPassword()
+            Tracker.shared.enteredPassword()
             delegate?.submit(email: email, username: username, password: password)
             return false
         default:

@@ -70,7 +70,7 @@ final class Relationship: JSONAble {
         else {
             createdAt = Date()
             // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Relationship", json: json.rawString())
+            Tracker.shared.createdAtCrash("Relationship", json: json.rawString())
         }
         let relationship = Relationship(
             id: json["id"].stringValue,

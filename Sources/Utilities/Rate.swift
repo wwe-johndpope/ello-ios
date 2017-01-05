@@ -36,26 +36,26 @@ class Rate: NSObject {
 
 extension Rate: iRateDelegate {
     func iRateCouldNotConnect(toAppStore error: Error!){
-        Tracker.sharedTracker.ratePromptCouldNotConnectToAppStore()
+        Tracker.shared.ratePromptCouldNotConnectToAppStore()
     }
 
     func iRateDidPromptForRating(){
-        Tracker.sharedTracker.ratePromptShown()
+        Tracker.shared.ratePromptShown()
     }
 
     func iRateUserDidAttemptToRateApp(){
-        Tracker.sharedTracker.ratePromptUserAttemptedToRateApp()
+        Tracker.shared.ratePromptUserAttemptedToRateApp()
     }
 
     func iRateUserDidDeclineToRateApp(){
-        Tracker.sharedTracker.ratePromptUserDeclinedToRateApp()
+        Tracker.shared.ratePromptUserDeclinedToRateApp()
     }
 
     func iRateUserDidRequestReminderToRateApp(){
-        Tracker.sharedTracker.ratePromptRemindMeLater()
+        Tracker.shared.ratePromptRemindMeLater()
     }
 
     func iRateDidOpenAppStore(){
-        Tracker.sharedTracker.ratePromptOpenedAppStore()
+        Tracker.shared.ratePromptOpenedAppStore()
     }
 }

@@ -230,11 +230,11 @@ extension LoginScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case usernameField:
-            Tracker.sharedTracker.enteredEmail()
+            Tracker.shared.enteredEmail()
             _ = passwordField.becomeFirstResponder()
             return true
         case passwordField:
-            Tracker.sharedTracker.enteredPassword()
+            Tracker.shared.enteredPassword()
             delegate?.submit(username: username, password: password)
             return false
         default:

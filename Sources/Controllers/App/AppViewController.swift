@@ -187,7 +187,7 @@ extension AppViewController {
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
         guard !((visibleViewController as? UINavigationController)?.visibleViewController is StartupViewController) else { return }
 
-        Tracker.sharedTracker.screenAppeared("Startup")
+        Tracker.shared.screenAppeared("Startup")
         let startupController = StartupViewController()
         startupController.parentAppController = self
         let nav = ElloNavigationController(rootViewController: startupController)
@@ -244,7 +244,7 @@ extension AppViewController {
     }
 
     func showMainScreen(_ user: User) {
-        Tracker.sharedTracker.identify(user)
+        Tracker.shared.identify(user)
 
         let vc = ElloTabBarController.instantiateFromStoryboard()
         ElloWebBrowserViewController.elloTabBarController = vc
@@ -271,7 +271,7 @@ extension AppViewController {
 extension AppViewController {
 
     func showExternalWebView(_ url: String) {
-        Tracker.sharedTracker.webViewAppeared(url)
+        Tracker.shared.webViewAppeared(url)
         if let externalURL = URL(string: url), ElloWebViewHelper.bypassInAppBrowser(externalURL) {
             UIApplication.shared.openURL(externalURL)
         }
@@ -363,7 +363,7 @@ extension AppViewController {
 
     fileprivate func prepareToShowViewController(_ newViewController: UIViewController) {
         let controller = (newViewController as? UINavigationController)?.topViewController ?? newViewController
-        Tracker.sharedTracker.screenAppeared(controller)
+        Tracker.shared.screenAppeared(controller)
 
         view.addSubview(newViewController.view)
         newViewController.view.frame = self.view.bounds
@@ -436,7 +436,7 @@ extension AppViewController {
 // MARK: URL Handling
 extension AppViewController {
     func navigateToDeepLink(_ path: String) {
-        Tracker.sharedTracker.deepLinkVisited(path)
+        Tracker.shared.deepLinkVisited(path)
 
         let (type, data) = ElloURI.match(path)
 
@@ -580,7 +580,7 @@ extension AppViewController {
             navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
         else { return }
 
-        Tracker.sharedTracker.categoryOpened(slug)
+        Tracker.shared.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug)
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)

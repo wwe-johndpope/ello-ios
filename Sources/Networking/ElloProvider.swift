@@ -432,7 +432,7 @@ extension ElloProvider {
 
     fileprivate func handleServerError(_ path: String, failure: ElloFailureCompletion, data: Data?, statusCode: Int?) {
         let elloError = ElloProvider.generateElloError(data, statusCode: statusCode)
-        Tracker.sharedTracker.encounteredNetworkError(path, error: elloError, statusCode: statusCode)
+        Tracker.shared.encounteredNetworkError(path, error: elloError, statusCode: statusCode)
         failure(elloError, statusCode)
     }
 

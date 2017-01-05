@@ -98,7 +98,7 @@ final class EmbedRegion: JSONAble, Regionable {
         )
         if embedRegion.url.absoluteString.hasPrefix("https://ello.co/404") || embedRegion.thumbnailSmallUrl.absoluteString.hasPrefix("https://ello.co/404") || embedRegion.thumbnailLargeUrl.absoluteString.hasPrefix("https://ello.co/404") {
             // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("EmbedRegion", json: json.rawString())
+            Tracker.shared.createdAtCrash("EmbedRegion", json: json.rawString())
         }
         return embedRegion
     }

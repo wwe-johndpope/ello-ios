@@ -56,7 +56,7 @@ extension JoinViewController: JoinDelegate {
     }
 
     func submit(email: String, username: String, password: String) {
-        Tracker.sharedTracker.tappedJoin()
+        Tracker.shared.tappedJoin()
 
         screen.hideMessage()
         _ = screen.resignFirstResponder()
@@ -77,7 +77,7 @@ extension JoinViewController: JoinDelegate {
                     return
                 }
 
-                Tracker.sharedTracker.joinValid()
+                Tracker.shared.joinValid()
 
                 UserService().join(
                     email: email,
@@ -89,11 +89,11 @@ extension JoinViewController: JoinDelegate {
                         authService.authenticate(email: email,
                             password: password,
                             success: {
-                                Tracker.sharedTracker.joinSuccessful()
+                                Tracker.shared.joinSuccessful()
                                 self.showOnboardingScreen(user)
                             },
                             failure: { _, _ in
-                                Tracker.sharedTracker.joinFailed()
+                                Tracker.shared.joinFailed()
                                 self.showLoginScreen(email, password)
                             })
                     }
@@ -115,7 +115,7 @@ extension JoinViewController: JoinDelegate {
             }
         }
         else {
-            Tracker.sharedTracker.joinInvalid()
+            Tracker.shared.joinInvalid()
             if let msg = Validator.invalidSignUpEmailReason(email) {
                 screen.showEmailError(msg)
             }
@@ -143,7 +143,7 @@ extension JoinViewController: JoinDelegate {
         let nav = ElloWebBrowserViewController.navigationControllerWithWebBrowser()
         let browser = nav.rootWebBrowser()
         let url = "\(ElloURI.baseURL)/wtf/post/terms-of-use"
-        Tracker.sharedTracker.webViewAppeared(url)
+        Tracker.shared.webViewAppeared(url)
         browser?.loadURLString(url)
         browser?.tintColor = UIColor.greyA()
         browser?.showsURLInNavigationBar = false

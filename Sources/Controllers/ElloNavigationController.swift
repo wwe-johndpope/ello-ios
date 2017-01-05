@@ -150,7 +150,7 @@ extension ElloNavigationController: UINavigationControllerDelegate {
         backGesture?.edges = viewController.backGestureEdges
 
         throttledTracker {
-            Tracker.sharedTracker.screenAppeared(viewController)
+            Tracker.shared.screenAppeared(viewController)
         }
     }
 

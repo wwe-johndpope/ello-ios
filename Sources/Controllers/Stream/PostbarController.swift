@@ -64,7 +64,7 @@ class PostbarController: PostbarDelegate {
 
     func viewsButtonTapped(_ indexPath: IndexPath) {
         if let post = postForIndexPath(indexPath) {
-            Tracker.sharedTracker.viewsButtonTapped(post: post)
+            Tracker.shared.viewsButtonTapped(post: post)
             // This is a bit dirty, we should not call a method on a compositionally held
             // controller's postTappedDelegate. Need to chat about this with the crew.
             presentingController?.postTappedDelegate?.postTapped(post)
@@ -182,7 +182,7 @@ class PostbarController: PostbarDelegate {
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
-            Tracker.sharedTracker.postLoved(post)
+            Tracker.shared.postLoved(post)
             cell?.lovesControl.isUserInteractionEnabled = false
             if post.loved { unlovePost(post, cell: cell) }
             else { lovePost(post, cell: cell) }
@@ -190,7 +190,7 @@ class PostbarController: PostbarDelegate {
     }
 
     fileprivate func unlovePost(_ post: Post, cell: StreamFooterCell?) {
-        Tracker.sharedTracker.postUnloved(post)
+        Tracker.shared.postUnloved(post)
         if let count = post.lovesCount {
             post.lovesCount = count - 1
             post.loved = false
@@ -213,7 +213,7 @@ class PostbarController: PostbarDelegate {
     }
 
     fileprivate func lovePost(_ post: Post, cell: StreamFooterCell?) {
-        Tracker.sharedTracker.postLoved(post)
+        Tracker.shared.postLoved(post)
         if let count = post.lovesCount {
             post.lovesCount = count + 1
             post.loved = true
@@ -237,7 +237,7 @@ class PostbarController: PostbarDelegate {
 
     func repostButtonTapped(_ indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
-            Tracker.sharedTracker.postReposted(post)
+            Tracker.shared.postReposted(post)
             let message = InterfaceString.Post.RepostConfirm
             let alertController = AlertViewController(message: message)
             alertController.autoDismiss = false
@@ -295,7 +295,7 @@ class PostbarController: PostbarDelegate {
             let shareLink = post.shareLink,
             let shareURL = URL(string: shareLink)
         {
-            Tracker.sharedTracker.postShared(post)
+            Tracker.shared.postShared(post)
             let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
             if UI_USER_INTERFACE_IDIOM() == .phone {
                 activityVC.modalPresentationStyle = .fullScreen

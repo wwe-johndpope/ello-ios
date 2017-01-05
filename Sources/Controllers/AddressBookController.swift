@@ -30,14 +30,14 @@ extension AddressBookController {
 
         let importMessage = InterfaceString.Friends.ImportAllow
         let action = AlertAction(title: importMessage, style: .green) { action in
-            Tracker.sharedTracker.importContactsInitiated()
+            Tracker.shared.importContactsInitiated()
             self.proceedWithImport(completion)
         }
         alertController.addAction(action)
 
         let cancelMessage = InterfaceString.Friends.ImportNotNow
         let cancelAction = AlertAction(title: cancelMessage, style: .roundedGrayFill) { _ in
-            Tracker.sharedTracker.importContactsDenied()
+            Tracker.shared.importContactsDenied()
             cancelCompletion()
         }
         alertController.addAction(cancelAction)
@@ -46,7 +46,7 @@ extension AddressBookController {
     }
 
     fileprivate static func proceedWithImport(_ completion: @escaping Completion) {
-        Tracker.sharedTracker.addressBookAccessed()
+        Tracker.shared.addressBookAccessed()
         AddressBookController.getAddressBook { result in
             nextTick {
                 completion(result)

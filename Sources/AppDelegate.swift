@@ -103,11 +103,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        Tracker.sharedTracker.sessionEnded()
+        Tracker.shared.sessionEnded()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        Tracker.sharedTracker.sessionStarted()
+        Tracker.shared.sessionStarted()
     }
 
 }

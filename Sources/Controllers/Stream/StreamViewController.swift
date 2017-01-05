@@ -677,10 +677,10 @@ extension StreamViewController: InviteDelegate {
     func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion) {
         if let email = person.emails.first {
             if isOnboarding {
-                Tracker.sharedTracker.onboardingFriendInvited()
+                Tracker.shared.onboardingFriendInvited()
             }
             else {
-                Tracker.sharedTracker.friendInvited()
+                Tracker.shared.friendInvited()
             }
             ElloHUD.showLoadingHudInView(view)
             InviteService().invite(email,
@@ -865,7 +865,7 @@ extension StreamViewController: StreamImageCellDelegate {
             imageViewer.imageTapped(imageView, imageURL: cell.presentedImageUrl)
             if let post = post,
                     let asset = imageAsset {
-                Tracker.sharedTracker.viewedImage(asset, post: post)
+                Tracker.shared.viewedImage(asset, post: post)
             }
         }
     }
@@ -887,7 +887,7 @@ extension StreamViewController {
     }
 
     func showCategoryViewController(slug: String, name: String) {
-        Tracker.sharedTracker.categoryOpened(slug)
+        Tracker.shared.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug, name: name)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
@@ -1098,7 +1098,7 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
             let callToAction = announcement.ctaURL
         {
-            Tracker.sharedTracker.announcementOpened(announcement)
+            Tracker.shared.announcementOpened(announcement)
             let request = URLRequest(url: callToAction)
             ElloWebViewHelper.handle(request: request, webLinkDelegate: self)
         }
