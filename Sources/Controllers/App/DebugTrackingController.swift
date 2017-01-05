@@ -52,13 +52,20 @@ class DebugAgent: AnalyticsAgent {
     typealias Entry = (String, String, String?)
     var log: [Entry] = []
     let logView = UITextView()
+    var cancelAnimation: BasicBlock?
+
+    static func format(_ entry: Entry) -> NSAttributedString {
+        let retval = NSMutableAttributedString()
+        retval.append(NSAttributedString("\(entry.0): ", color: .white))
+        retval.append(NSAttributedString(entry.1, color: .white, font: UIFont.defaultBoldFont()))
+        if let props = entry.2 {
+            retval.append(NSAttributedString(" \(props)", color: .white))
+        }
+        return retval
+    }
 
     init() {
-        logView.font = .defaultFont()
-        logView.textColor = .white
         logView.backgroundColor = .black
-        logView.isUserInteractionEnabled = false
-        logView.alpha = 0.5
     }
 
     private func describe(_ props: [AnyHashable: Any]) -> String {
@@ -78,18 +85,30 @@ class DebugAgent: AnalyticsAgent {
     private func append(_ entry: Entry) {
         if logView.superview == nil {
             UIWindow.mainWindow.addSubview(logView)
-            logView.frame = UIWindow.mainWindow.bounds.fromTop().grow(down: ElloTabBar.Size.height)
         }
         else {
             UIWindow.mainWindow.bringSubview(toFront: logView)
         }
 
-        log.append(entry)
-        var line = entry.1
-        if let props = entry.2 {
-            line += " \(props)"
+        cancelAnimation?()
+        animate {
+            self.logView.frame = UIWindow.mainWindow.bounds.fromTop().grow(down: ElloTabBar.Size.height)
         }
-        logView.text = (logView.text ?? "") + "\n\(line)"
+        cancelAnimation = cancelableDelay(3) {
+            animate {
+                self.logView.frame.origin.y = -self.logView.frame.height
+            }
+        }
+
+        log.append(entry)
+        let attributedText: NSAttributedString
+        if let existing = logView.attributedText, !existing.string.isEmpty {
+            attributedText = existing + NSAttributedString("\n")
+        }
+        else {
+            attributedText = NSAttributedString()
+        }
+        logView.attributedText = attributedText + DebugAgent.format(entry)
         let contentOffsetY: CGFloat = logView.contentSize.height - logView.frame.size.height
         if contentOffsetY > 0 {
             logView.setContentOffset(CGPoint(x: 0, y: contentOffsetY), animated: true)

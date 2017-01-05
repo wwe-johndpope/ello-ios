@@ -106,7 +106,7 @@ extension NSAttributedString {
 }
 
 func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
-    let retval: NSMutableAttributedString = NSMutableAttributedString(attributedString: left)
+    let retval = NSMutableAttributedString(attributedString: left)
     retval.append(right)
     return NSAttributedString(attributedString: retval)
 }
