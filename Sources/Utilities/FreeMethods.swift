@@ -62,7 +62,6 @@ func animate(options: AnimationOptions, animated: Bool = true, animations: @esca
 
 typealias BasicBlock = () -> Void
 typealias ThrottledBlock = (@escaping BasicBlock) -> Void
-typealias CancellableBlock = (Bool) -> Void
 typealias TakesIndexBlock = (Int) -> Void
 typealias OnHeightMismatch = (CGFloat) -> Void
 
