@@ -745,7 +745,7 @@ extension AppViewController {
 #if DEBUG
 
 var isShowingDebug = false
-var debugTodoController = DebugTodoController()
+var debugController = DebugController()
 
 extension AppViewController {
 
@@ -760,8 +760,8 @@ extension AppViewController {
             }
             else {
                 isShowingDebug = true
-                let ctlr = debugTodoController
-                ctlr.title = "Test Me Test Me"
+                let ctlr = debugController
+                ctlr.title = "Debugging"
 
                 let nav = UINavigationController(rootViewController: ctlr)
                 let bar = UIView(frame: CGRect(x: 0, y: -20, width: view.frame.width, height: 20))
