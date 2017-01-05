@@ -11,8 +11,8 @@ struct TextHeaderCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? TextHeaderCell,
+        guard
+            let cell = cell as? TextHeaderCell,
             let header = streamCellItem.type.data as? NSAttributedString
         else { return}
 

@@ -11,8 +11,8 @@ struct CategoryListCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? CategoryListCell,
+        guard
+            let cell = cell as? CategoryListCell,
             let categoryList = streamCellItem.jsonable as? CategoryList
         else { return }
 

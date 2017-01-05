@@ -128,8 +128,8 @@ extension AppDelegate {
 // MARK: URLs
 extension AppDelegate {
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
-        guard let
-            appVC = window?.rootViewController as? AppViewController
+        guard
+            let appVC = window?.rootViewController as? AppViewController
         else {
             return true
         }
@@ -156,8 +156,8 @@ extension AppDelegate {
 // universal links
 extension AppDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        guard let
-            webpageURL = userActivity.webpageURL,
+        guard
+            let webpageURL = userActivity.webpageURL,
             let appVC = window?.rootViewController as? AppViewController,
             userActivity.activityType == NSUserActivityTypeBrowsingWeb
         else { return false }

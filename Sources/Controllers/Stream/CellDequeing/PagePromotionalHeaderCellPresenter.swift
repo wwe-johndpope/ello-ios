@@ -11,8 +11,8 @@ struct PagePromotionalHeaderCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? CategoryHeaderCell,
+        guard
+            let cell = cell as? CategoryHeaderCell,
             let pagePromotional = streamCellItem.jsonable as? PagePromotional
         else { return }
 

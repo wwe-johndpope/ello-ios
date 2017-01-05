@@ -192,8 +192,8 @@ extension ProfileLinksView {
     }
 
     func buttonTapped(_ button: UIButton) {
-        guard let
-            externalLink = buttonLinks[button]
+        guard
+            let externalLink = buttonLinks[button]
             else { return }
 
         let request = URLRequest(url: externalLink.url as URL)

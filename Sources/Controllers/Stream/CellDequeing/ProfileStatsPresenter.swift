@@ -14,8 +14,8 @@ struct ProfileStatsPresenter {
     {
         view.postsCount = (user.postsCount ?? 0).numberToHuman(rounding: 2, showZero: true)
         view.followingCount = (user.followingCount ?? 0).numberToHuman(rounding: 2, showZero: true)
-        if let
-            string = user.followersCount,
+        if
+            let string = user.followersCount,
             let followersCount = Int(string)
         {
             view.followersCount = followersCount.numberToHuman(rounding: 2, showZero: true)

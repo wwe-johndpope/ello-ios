@@ -360,8 +360,8 @@ class PostbarController: PostbarDelegate {
     }
 
     func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
-        guard let
-            comment = dataSource.commentForIndexPath(indexPath),
+        guard
+            let comment = dataSource.commentForIndexPath(indexPath),
             let post = comment.parentPost
         else { return }
 

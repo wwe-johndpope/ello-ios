@@ -566,8 +566,8 @@ extension AppViewController {
     }
 
     fileprivate func showDiscoverScreen(_ vc: ElloTabBarController) {
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController, !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController, !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
         else { return }
 
         let vc = DiscoverAllCategoriesViewController()
@@ -576,8 +576,8 @@ extension AppViewController {
     }
 
     fileprivate func showCategoryScreen(_ vc: ElloTabBarController, slug: String) {
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
         else { return }
 
         Tracker.shared.categoryOpened(slug)
@@ -590,8 +590,8 @@ extension AppViewController {
     fileprivate func showStreamContainerScreen(vc: ElloTabBarController, type: ElloURI) {
         vc.selectedTab = .stream
 
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController,
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController,
             let streamVC = navVC.visibleViewController as? StreamContainerViewController
         else { return }
 
@@ -606,8 +606,8 @@ extension AppViewController {
 
     fileprivate func showNotificationsScreen(_ vc: ElloTabBarController, category: String) {
         vc.selectedTab = .notifications
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController,
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController,
             let notificationsVC = navVC.visibleViewController as? NotificationsViewController
         else { return }
 
@@ -704,8 +704,8 @@ extension AppViewController {
     }
 
     fileprivate func pushDeepLinkViewController(_ vc: UIViewController) {
-        guard let
-            tabController = self.visibleViewController as? ElloTabBarController,
+        guard
+            let tabController = self.visibleViewController as? ElloTabBarController,
             let navController = tabController.selectedViewController as? UINavigationController
         else { return }
 

@@ -9,8 +9,8 @@ struct ProfileLinksSizeCalculator {
 
     func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
         let promise = Promise<CGFloat>()
-        guard let
-            user = item.jsonable as? User,
+        guard
+            let user = item.jsonable as? User,
             let externalLinks = user.externalLinksList, externalLinks.count > 0
         else {
             promise.completeWithSuccess(0)

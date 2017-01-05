@@ -279,8 +279,8 @@ extension CreateProfileScreen {
 
 extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-        guard let
-            uploading = uploading,
+        guard
+            let uploading = uploading,
             let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         else {
             delegate?.dismissController()

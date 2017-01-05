@@ -13,8 +13,8 @@ struct StreamToggleCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? StreamToggleCell,
+        guard
+            let cell = cell as? StreamToggleCell,
             let post = streamCellItem.jsonable as? Post
         else { return }
 

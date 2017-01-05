@@ -11,8 +11,8 @@ struct NotificationCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? NotificationCell,
+        guard
+            let cell = cell as? NotificationCell,
             let notification = streamCellItem.jsonable as? Notification
         else { return }
 
