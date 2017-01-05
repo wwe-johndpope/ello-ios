@@ -2,6 +2,13 @@
 ///  PostDetailViewController.swift
 //
 final class PostDetailViewController: StreamableViewController {
+    override func trackerProps() -> [String: AnyObject]? {
+        if let post = post {
+            return ["id": post.id as AnyObject]
+        }
+        return ["id": postParam as AnyObject]
+    }
+
     var post: Post?
     var postParam: String
     var scrollToComment: ElloComment?
@@ -264,8 +271,6 @@ extension PostDetailViewController: StreamDestination {
         if isOwnPost() {
             showNavBars(false)
         }
-
-        Tracker.shared.postLoaded(post.id)
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {

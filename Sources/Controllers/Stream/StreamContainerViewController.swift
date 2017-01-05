@@ -7,6 +7,12 @@ import SwiftyUserDefaults
 let CurrentStreamKey = "Ello.StreamContainerViewController.CurrentStream"
 
 class StreamContainerViewController: StreamableViewController {
+    override func trackerName() -> String { return "Stream" }
+    override func trackerProps() -> [String: AnyObject]? {
+        let stream = streamValues[currentStreamIndex]
+        return ["kind": stream.name as AnyObject]
+    }
+
     fileprivate var loggedPromptEventForThisSession = false
     fileprivate var reloadStreamContentObserver: NotificationObserver?
     fileprivate var friendsViewController: StreamViewController?
@@ -77,8 +83,6 @@ class StreamContainerViewController: StreamableViewController {
         streamsSegmentedControl.selectedSegmentIndex = index
         initialController.loadInitialPage()
         streamLoaded[index] = true
-
-        Tracker.shared.streamAppeared(stream.name)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -236,7 +240,7 @@ class StreamContainerViewController: StreamableViewController {
 
         currentStreamIndex = index
         let stream = streamValues[currentStreamIndex]
-        Tracker.shared.streamAppeared(stream.name)
+        Tracker.shared.screenAppeared(self)
 
         setupNavigationBar(controller: currentController)
 

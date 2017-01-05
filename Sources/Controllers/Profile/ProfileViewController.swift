@@ -3,33 +3,15 @@
 //
 
 import FLAnimatedImage
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 
 final class ProfileViewController: StreamableViewController {
+    override func trackerProps() -> [String: AnyObject]? {
+        if let user = user {
+            return ["username": user.username as AnyObject]
+        }
+        return nil
+    }
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.person) }
@@ -380,8 +362,10 @@ extension ProfileViewController: PostsTappedResponder {
 extension ProfileViewController: ProfileHeaderResponder {
 
     func onCategoryBadgeTapped(_ cell: UICollectionViewCell) {
-        guard let
-            categories = user?.categories, user?.categories?.count > 0
+        guard
+            let categories = user?.categories,
+            let count = user?.categories?.count,
+            count > 0
         else { return }
 
         let vc = ProfileCategoriesViewController(categories: categories)
@@ -491,7 +475,6 @@ extension ProfileViewController:  StreamDestination {
         title = user.atName
 
         setupNavigationItems()
-        Tracker.shared.profileLoaded(user.atName)
 
         screen.updateRelationshipControl(user: user)
 

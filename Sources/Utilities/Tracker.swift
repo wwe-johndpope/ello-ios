@@ -310,14 +310,6 @@ extension Tracker {
         agent.screen("Web View", properties: ["url": url])
     }
 
-    func profileLoaded(_ handle: String) {
-        agent.track("Profile Loaded", properties: ["handle": handle])
-    }
-
-    func postLoaded(_ id: String) {
-        agent.track("Post Loaded", properties: ["id": id])
-    }
-
     func categoryOpened(_ categorySlug: String) {
         agent.track("category opened", properties: ["category": categorySlug])
     }

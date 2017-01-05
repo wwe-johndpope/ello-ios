@@ -52,6 +52,11 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         return viewContainer
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Tracker.shared.screenAppeared(self)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showing = true
