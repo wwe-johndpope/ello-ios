@@ -613,7 +613,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func modifyUserSettingsItems(_ user: User, collectionView: ElloCollectionView) {
-        let (changedPaths, changedItems) = elementsFor(jsonable: user, change: .update)
+        let (_, changedItems) = elementsFor(jsonable: user, change: .update)
         for item in changedItems {
             if item.jsonable is User {
                 item.jsonable = user
