@@ -7,7 +7,7 @@ import SwiftyUserDefaults
 let CurrentStreamKey = "Ello.StreamContainerViewController.CurrentStream"
 
 class StreamContainerViewController: StreamableViewController {
-    override func trackerName() -> String { return "Stream" }
+    override func trackerName() -> String? { return "Stream" }
     override func trackerProps() -> [String: AnyObject]? {
         let stream = streamValues[currentStreamIndex]
         return ["kind": stream.name as AnyObject]

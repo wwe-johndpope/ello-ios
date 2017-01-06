@@ -4,6 +4,11 @@
 
 
 class NotificationsViewController: StreamableViewController, NotificationDelegate, NotificationsScreenDelegate {
+    override func trackerName() -> String? { return "Notifications" }
+    override func trackerProps() -> [String: AnyObject]? {
+        return ["filter": categoryFilterType.rawValue as AnyObject]
+    }
+
     var generator: NotificationsGenerator?
     var hasNewContent = false
     var fromTabBar = false

@@ -8,14 +8,27 @@ import PINRemoteImage
 
 
 class OmnibarViewController: BaseElloViewController {
-    var keyboardWillShowObserver: NotificationObserver?
-    var keyboardWillHideObserver: NotificationObserver?
+    override func trackerName() -> String? { return "Omnibar" }
+    override func trackerProps() -> [String: AnyObject]? {
+        if let parentPost = parentPost {
+            return ["creating": "comment" as AnyObject]
+        }
+        if let editPost = editPost {
+            return ["editing": "post" as AnyObject]
+        }
+        if let editComment = editComment {
+            return ["editing": "post" as AnyObject]
+        }
+        return ["creating": "post" as AnyObject]
+    }
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.omni) }
         set { self.tabBarItem = newValue }
     }
 
+    var keyboardWillShowObserver: NotificationObserver?
+    var keyboardWillHideObserver: NotificationObserver?
     var previousTab: ElloTab = .DefaultTab
     var parentPost: Post?
     var editPost: Post?

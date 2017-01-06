@@ -3,6 +3,10 @@
 //
 
 class DiscoverAllCategoriesViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Discover" }
+    override func trackerProps() -> [String: AnyObject]? {
+        return ["category": "all" as AnyObject]
+    }
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }

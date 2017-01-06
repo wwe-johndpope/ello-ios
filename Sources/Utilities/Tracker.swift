@@ -283,19 +283,18 @@ extension Tracker {
 }
 
 extension UIViewController {
-    func trackerName() -> String { return readableClassName() }
+    // return 'nil' to disable tracking, e.g. in StreamViewController
+    func trackerName() -> String? { return readableClassName() }
     func trackerProps() -> [String: AnyObject]? { return nil }
-
-    func trackerData() -> (String, [String: AnyObject]?) {
-        return (trackerName(), trackerProps())
-    }
 }
 
 // MARK: View Appearance
 extension Tracker {
     func screenAppeared(_ viewController: UIViewController) {
-        let (name, props) = viewController.trackerData()
-        screenAppeared(name, properties: props)
+        if let name = viewController.trackerName() {
+            let props = viewController.trackerProps()
+            screenAppeared(name, properties: props)
+        }
     }
 
     func screenAppeared(_ name: String, properties: [String: AnyObject]? = nil) {

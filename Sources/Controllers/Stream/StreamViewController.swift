@@ -85,6 +85,7 @@ struct StreamNotification {
 
 // MARK: StreamViewController
 final class StreamViewController: BaseElloViewController {
+    override func trackerName() -> String? { return nil }
 
     @IBOutlet weak var collectionView: ElloCollectionView!
     @IBOutlet weak var noResultsLabel: UILabel!

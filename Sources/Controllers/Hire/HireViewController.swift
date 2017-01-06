@@ -6,6 +6,16 @@ import FutureKit
 
 
 class HireViewController: BaseElloViewController {
+    override func trackerName() -> String? {
+        switch contactType {
+        case .hire: return "Hire"
+        case .collaborate: return "Collaborate"
+        }
+    }
+    override func trackerProps() -> [String: AnyObject]? {
+        return ["username": user.username as AnyObject]
+    }
+
     enum UserEmailType {
         case hire
         case collaborate

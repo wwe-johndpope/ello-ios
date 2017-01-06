@@ -5,7 +5,7 @@
 import Foundation
 
 class SimpleStreamViewController: StreamableViewController {
-    override func trackerName() -> String {
+    override func trackerName() -> String? {
         return "\(endpoint.description)ViewController"
     }
 
