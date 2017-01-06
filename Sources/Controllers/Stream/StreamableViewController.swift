@@ -79,7 +79,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     }
 
     fileprivate func willPresentStreamable(_ navBarsVisible: Bool) {
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (!navBarsVisible, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: !navBarsVisible)
         UIView.setAnimationsEnabled(false)
         if navBarsVisible {
             showNavBars(false)
@@ -127,7 +127,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         }
 
         if showing {
-            postNotification(StatusBarNotifications.statusBarShouldChange, value: (!visible, .slide))
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: !visible)
         }
     }
 

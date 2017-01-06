@@ -41,7 +41,7 @@ extension DrawerViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
         Crashlytics.sharedInstance().setObjectValue("Drawer", forKey: CrashlyticsKey.streamName.rawValue)
     }
 }

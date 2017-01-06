@@ -619,7 +619,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         let screenTop: CGFloat
         if canGoBack {
-            postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
             navigationBar.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: ElloNavigationBar.Size.height)
             screenTop = navigationBar.frame.height
             statusBarUnderlay.isHidden = true

@@ -29,7 +29,7 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
         navigationItem.title = category?.label
         navigationItem.fixNavBarItemPadding()
         navBar.items = [navigationItem]
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
     }
 
     func backAction() {

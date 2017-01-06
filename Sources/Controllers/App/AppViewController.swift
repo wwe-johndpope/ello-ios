@@ -11,7 +11,7 @@ struct NavigationNotifications {
 }
 
 struct StatusBarNotifications {
-    static let statusBarShouldChange = TypedNotification<(Bool, UIStatusBarAnimation)>(name: "co.ello.StatusBarNotifications.statusBarShouldChange")
+    static let statusBarShouldHide = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarShouldHide")
 }
 
 
@@ -30,18 +30,16 @@ class AppViewController: BaseElloViewController {
     fileprivate var receivedPushNotificationObserver: NotificationObserver?
     fileprivate var externalWebObserver: NotificationObserver?
     fileprivate var apiOutOfDateObserver: NotificationObserver?
-    fileprivate var statusBarShouldChangeObserver: NotificationObserver?
+    fileprivate var statusBarShouldHideObserver: NotificationObserver?
 
     fileprivate var pushPayload: PushPayload?
 
     fileprivate var deepLinkPath: String?
 
     var statusBarShouldHide = false
-    var statusBarAnimation: UIStatusBarAnimation = .slide
 
-    func hideStatusBar(_ hide: Bool, with animation: UIStatusBarAnimation) {
+    func hideStatusBar(_ hide: Bool) {
         statusBarShouldHide = hide
-        statusBarAnimation = animation
         animate {
             self.setNeedsStatusBarAppearanceUpdate()
         }
@@ -51,10 +49,13 @@ class AppViewController: BaseElloViewController {
         return statusBarShouldHide
     }
 
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return statusBarAnimation
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
 
     override func loadView() {
         self.view = AppScreen()
@@ -166,8 +167,8 @@ class AppViewController: BaseElloViewController {
             postNotification(AuthenticationNotifications.invalidToken, value: false)
         }
 
-        statusBarShouldChangeObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldChange) { [weak self] (hide, animation) in
-            self?.hideStatusBar(hide, with: animation)
+        statusBarShouldHideObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldHide) { [weak self] (hide) in
+            self?.hideStatusBar(hide)
         }
     }
 
@@ -176,7 +177,7 @@ class AppViewController: BaseElloViewController {
         receivedPushNotificationObserver?.removeObserver()
         externalWebObserver?.removeObserver()
         apiOutOfDateObserver?.removeObserver()
-        statusBarShouldChangeObserver?.removeObserver()
+        statusBarShouldHideObserver?.removeObserver()
     }
 }
 
@@ -336,7 +337,7 @@ extension AppViewController {
         if presentingViewController != nil {
             dismiss(animated: false, completion: .none)
         }
-        self.hideStatusBar(false, with: .slide)
+        self.hideStatusBar(false)
 
         if let visibleViewController = visibleViewController {
             visibleViewController.willMove(toParentViewController: nil)
