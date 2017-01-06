@@ -43,7 +43,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
         self.cellItems = job.cellItems
         self.originalWidth = job.width
-        self.webView.frame = self.webView.frame.withWidth(job.width)
+        self.webView.frame = self.webView.frame.with(width: job.width)
         loadNext()
     }
 

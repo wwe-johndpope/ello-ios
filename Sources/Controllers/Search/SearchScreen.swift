@@ -122,7 +122,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
 
     fileprivate func setupSearchContainer() {
         searchControlsContainer.backgroundColor = .white
-        searchControlsContainer.frame = frame.atY(64).withHeight(50).withWidth(frame.size.width)
+        searchControlsContainer.frame = frame.at(y: 64).with(height: 50).with(width: frame.size.width)
         searchControlsContainer.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
         addSubview(searchControlsContainer)
     }

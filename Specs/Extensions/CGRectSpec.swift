@@ -63,42 +63,42 @@ class CGRectExtensionSpec: QuickSpec {
         describe("setters") {
             let frame = CGRect(x: 1, y: 2, width: 3, height: 4)
             describe("-atOrigin:") {
-                let newFrame = frame.atOrigin(CGPoint(x: 5, y: 5))
+                let newFrame = frame.at(origin: CGPoint(x: 5, y: 5))
                 it("should set x")      { expect(newFrame.origin.x).to(equal(CGFloat(5)))}
                 it("should set y")      { expect(newFrame.origin.y).to(equal(CGFloat(5)))}
                 it("should ignore width")     { expect(newFrame.size.width).to(equal(CGFloat(3)))}
                 it("should ignore height") { expect(newFrame.size.height).to(equal(CGFloat(4)))}
             }
             describe("-withSize:") {
-                let newFrame = frame.withSize(CGSize(width: 5, height: 5))
+                let newFrame = frame.with(size: CGSize(width: 5, height: 5))
                 it("should ignore x")      { expect(newFrame.origin.x).to(equal(CGFloat(1)))}
                 it("should ignore y")      { expect(newFrame.origin.y).to(equal(CGFloat(2)))}
                 it("should set width")     { expect(newFrame.size.width).to(equal(CGFloat(5)))}
                 it("should set height") { expect(newFrame.size.height).to(equal(CGFloat(5)))}
             }
             describe("-atX:") {
-                let newFrame = frame.atX(5)
+                let newFrame = frame.at(x: 5)
                 it("should set x")      { expect(newFrame.origin.x).to(equal(CGFloat(5)))}
                 it("should ignore y")      { expect(newFrame.origin.y).to(equal(CGFloat(2)))}
                 it("should ignore width")     { expect(newFrame.size.width).to(equal(CGFloat(3)))}
                 it("should ignore height") { expect(newFrame.size.height).to(equal(CGFloat(4)))}
             }
             describe("-atY:") {
-                let newFrame = frame.atY(5)
+                let newFrame = frame.at(y: 5)
                 it("should ignore x")      { expect(newFrame.origin.x).to(equal(CGFloat(1)))}
                 it("should set y")      { expect(newFrame.origin.y).to(equal(CGFloat(5)))}
                 it("should ignore width")     { expect(newFrame.size.width).to(equal(CGFloat(3)))}
                 it("should ignore height") { expect(newFrame.size.height).to(equal(CGFloat(4)))}
             }
             describe("-withWidth:") {
-                let newFrame = frame.withWidth(5)
+                let newFrame = frame.with(width: 5)
                 it("should ignore x")      { expect(newFrame.origin.x).to(equal(CGFloat(1)))}
                 it("should ignore y")      { expect(newFrame.origin.y).to(equal(CGFloat(2)))}
                 it("should set width")     { expect(newFrame.size.width).to(equal(CGFloat(5)))}
                 it("should ignore height") { expect(newFrame.size.height).to(equal(CGFloat(4)))}
             }
             describe("-withHeight:") {
-                let newFrame = frame.withHeight(5)
+                let newFrame = frame.with(height: 5)
                 it("should ignore x")      { expect(newFrame.origin.x).to(equal(CGFloat(1)))}
                 it("should ignore y")      { expect(newFrame.origin.y).to(equal(CGFloat(2)))}
                 it("should ignore width")     { expect(newFrame.size.width).to(equal(CGFloat(3)))}
@@ -221,19 +221,19 @@ class CGRectExtensionSpec: QuickSpec {
         describe("shiftXyz") {
             let frame = CGRect(x: 5, y: 7, width: 10, height: 14)
             it("-shiftUp:") {
-                let newFrame = frame.shiftUp(1)
+                let newFrame = frame.shift(up: 1)
                 expect(newFrame).to(equal(CGRect(x: 5, y: 6, width: 10, height: 14)))
             }
             it("-shiftDown:") {
-                let newFrame = frame.shiftDown(1)
+                let newFrame = frame.shift(down: 1)
                 expect(newFrame).to(equal(CGRect(x: 5, y: 8, width: 10, height: 14)))
             }
             it("-shiftLeft:") {
-                let newFrame = frame.shiftLeft(1)
+                let newFrame = frame.shift(left: 1)
                 expect(newFrame).to(equal(CGRect(x: 4, y: 7, width: 10, height: 14)))
             }
             it("-shiftRight:") {
-                let newFrame = frame.shiftRight(1)
+                let newFrame = frame.shift(right: 1)
                 expect(newFrame).to(equal(CGRect(x: 6, y: 7, width: 10, height: 14)))
             }
         }

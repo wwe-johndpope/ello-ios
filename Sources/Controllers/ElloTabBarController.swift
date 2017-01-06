@@ -164,7 +164,7 @@ extension ElloTabBarController {
         if !tabBarHidden || isShowingNarration {
             upAmount = tabBar.frame.height
         }
-        tabBar.frame = view.bounds.fromBottom().withHeight(tabBar.frame.height).shiftUp(upAmount)
+        tabBar.frame = view.bounds.fromBottom().with(height: tabBar.frame.height).shift(up: upAmount)
     }
 
     func setTabBarHidden(_ hidden: Bool, animated: Bool) {

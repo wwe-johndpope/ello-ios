@@ -77,7 +77,7 @@ class NotificationsScreen: UIView {
 
         positionFilterBar()
         streamContainer.frame = self.bounds.fromTop()
-            .withHeight(self.frame.height)
+            .with(height: self.frame.height)
     }
 
     func allButtonTapped(_ sender: UIButton) {
@@ -136,7 +136,7 @@ extension NotificationsScreen {
     }
 
     fileprivate func positionFilterBar() {
-        filterBar.frame = self.bounds.withHeight(NotificationsFilterBar.Size.height)
+        filterBar.frame = self.bounds.with(height: NotificationsFilterBar.Size.height)
         if navBarVisible {
             filterBar.frame.origin.y = 0
         }

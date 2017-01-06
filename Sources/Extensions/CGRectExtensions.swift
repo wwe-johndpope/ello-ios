@@ -48,37 +48,37 @@ extension CGRect {
     }
 
 // MARK: dimension setters
-    func atOrigin(_ amt: CGPoint) -> CGRect {
+    func at(origin amt: CGPoint) -> CGRect {
         var f = self
         f.origin = amt
         return f
     }
 
-    func withSize(_ amt: CGSize) -> CGRect {
+    func with(size amt: CGSize) -> CGRect {
         var f = self
         f.size = amt
         return f
     }
 
-    func atX(_ amt: CGFloat) -> CGRect {
+    func at(x amt: CGFloat) -> CGRect {
         var f = self
         f.origin.x = amt
         return f
     }
 
-    func atY(_ amt: CGFloat) -> CGRect {
+    func at(y amt: CGFloat) -> CGRect {
         var f = self
         f.origin.y = amt
         return f
     }
 
-    func withWidth(_ amt: CGFloat) -> CGRect {
+    func with(width amt: CGFloat) -> CGRect {
         var f = self
         f.size.width = amt
         return f
     }
 
-    func withHeight(_ amt: CGFloat) -> CGRect {
+    func with(height amt: CGFloat) -> CGRect {
         var f = self
         f.size.height = amt
         return f
@@ -185,20 +185,20 @@ extension CGRect {
     }
 
 // MARK: shift(xxx:)
-    func shiftUp(_ amt: CGFloat) -> CGRect {
-        return self.atY(self.y - amt)
+    func shift(up amt: CGFloat) -> CGRect {
+        return self.at(y: self.y - amt)
     }
 
-    func shiftDown(_ amt: CGFloat) -> CGRect {
-        return self.atY(self.y + amt)
+    func shift(down amt: CGFloat) -> CGRect {
+        return self.at(y: self.y + amt)
     }
 
-    func shiftLeft(_ amt: CGFloat) -> CGRect {
-        return self.atX(self.x - amt)
+    func shift(left amt: CGFloat) -> CGRect {
+        return self.at(x: self.x - amt)
     }
 
-    func shiftRight(_ amt: CGFloat) -> CGRect {
-        return self.atX(self.x + amt)
+    func shift(right amt: CGFloat) -> CGRect {
+        return self.at(x: self.x + amt)
     }
 
 }
