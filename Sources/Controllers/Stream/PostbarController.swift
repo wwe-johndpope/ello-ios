@@ -3,31 +3,7 @@
 //
 
 import Foundation
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-// Xcode modifies these regardless of changing them
-// swiftlint:disable colon
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
 
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
 
 // swiftlint:enable colon
 protocol PostbarDelegate: class {
@@ -396,7 +372,10 @@ class PostbarController: PostbarDelegate {
 
         if let currentUser = currentUser {
             let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
-            if post.commentsCount > ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int {
+            if let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
+                let postCommentCount = post.commentsCount,
+                postCommentCount > maxCount
+            {
                 items.append(StreamCellItem(jsonable: jsonables.last ?? newComment, type: .seeMoreComments))
             }
             else {

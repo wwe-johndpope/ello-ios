@@ -3,30 +3,6 @@
 //
 
 import SnapKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 
 class ProfileHeaderLayoutView: ProfileBaseView {
@@ -41,13 +17,13 @@ class ProfileHeaderLayoutView: ProfileBaseView {
             if let locationHeight = calculatedCellHeights.profileLocation { locationHeightConstraint.update(offset: locationHeight) }
             if let linksHeight = calculatedCellHeights.profileLinks { linksHeightConstraint.update(offset: linksHeight) }
 
-            let bioLinksOrLocationHaveContent = calculatedCellHeights.profileBio > 0 || calculatedCellHeights.profileLinks > 0 || calculatedCellHeights.profileLocation > 0
+            let bioLinksOrLocationHaveContent = (calculatedCellHeights.profileBio ?? 0) > 0 || (calculatedCellHeights.profileLinks ?? 0) > 0 || (calculatedCellHeights.profileLocation ?? 0) > 0
             statsView.grayLineVisible = bioLinksOrLocationHaveContent
 
-            let locationOrLinksHasContent = calculatedCellHeights.profileLocation > 0 || calculatedCellHeights.profileLinks > 0
+            let locationOrLinksHasContent = (calculatedCellHeights.profileLocation ?? 0) > 0 || (calculatedCellHeights.profileLinks ?? 0) > 0
             bioView.grayLineVisible = locationOrLinksHasContent
 
-            let linksHasContent = calculatedCellHeights.profileLinks > 0
+            let linksHasContent = (calculatedCellHeights.profileLinks ?? 0) > 0
             locationView.grayLineVisible = linksHasContent
 
             setNeedsLayout()

@@ -7,29 +7,6 @@ import Foundation
 import Moya
 import Result
 import Alamofire
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
 
 
 typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
@@ -402,6 +379,8 @@ extension ElloProvider {
     }
 
     fileprivate func isEmptySuccess(_ data: Data, statusCode: Int?) -> Bool {
+        guard let statusCode = statusCode else { return false }
+
         // accepted || no content
         if statusCode == 202 || statusCode == 204 {
             return true
