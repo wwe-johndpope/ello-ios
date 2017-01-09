@@ -253,6 +253,7 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
 
 extension CreateProfileScreen {
     func uploadCoverImageAction() {
+
         _ = resignFirstResponder()
         uploading = .coverImage
         var config = ImagePickerSheetConfig()
