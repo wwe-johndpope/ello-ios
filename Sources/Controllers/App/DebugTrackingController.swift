@@ -52,7 +52,8 @@ class DebugAgent: AnalyticsAgent {
     typealias Entry = (String, String, String?)
     var log: [Entry] = []
     let logView = UITextView()
-    var cancelAnimation: BasicBlock?
+    let logTextView = UITextView()
+    var shouldHideStatusBar: Bool?
 
     static func format(_ entry: Entry) -> NSAttributedString {
         let retval = NSMutableAttributedString()
@@ -65,7 +66,48 @@ class DebugAgent: AnalyticsAgent {
     }
 
     init() {
-        logView.backgroundColor = .black
+        logTextView.backgroundColor = .black
+        logTextView.isUserInteractionEnabled = false
+        logView.addSubview(logTextView)
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(DebugAgent.viewTapped))
+        logView.addGestureRecognizer(recognizer)
+    }
+
+    private func show() {
+        if logView.superview == nil {
+            UIWindow.mainWindow.addSubview(logView)
+        }
+        else {
+            UIWindow.mainWindow.bringSubview(toFront: logView)
+        }
+
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+            shouldHideStatusBar = rootViewController.prefersStatusBarHidden
+        }
+        else {
+            shouldHideStatusBar = nil
+        }
+
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
+        animate {
+            self.logView.frame = UIWindow.mainWindow.bounds.fromTop().grow(down: ElloTabBar.Size.height)
+            self.logTextView.frame.size = self.logView.frame.size
+        }
+    }
+
+    private func dismiss() {
+        animate {
+            self.logView.frame.origin.y = -self.logView.frame.height
+        }
+
+        if let shouldHideStatusBar = shouldHideStatusBar {
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: shouldHideStatusBar)
+        }
+    }
+
+    @objc
+    func viewTapped() {
+        dismiss()
     }
 
     private func describe(_ props: [AnyHashable: Any]) -> String {
@@ -82,57 +124,21 @@ class DebugAgent: AnalyticsAgent {
         return retval
     }
 
-    private func show() {
-        if logView.superview == nil {
-            UIWindow.mainWindow.addSubview(logView)
-        }
-        else {
-            UIWindow.mainWindow.bringSubview(toFront: logView)
-        }
-
-        let shouldHideStatusBar: Bool?
-        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
-            shouldHideStatusBar = rootViewController.prefersStatusBarHidden
-        }
-        else {
-            shouldHideStatusBar = nil
-        }
-
-        cancelAnimation?()
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
-        animate {
-            self.logView.frame = UIWindow.mainWindow.bounds.fromTop().grow(down: ElloTabBar.Size.height)
-        }
-        cancelAnimation = cancelableDelay(3) {
-            self.dismiss(shouldHideStatusBar)
-        }
-    }
-
-    private func dismiss(_ shouldHideStatusBar: Bool?) {
-        animate {
-            self.logView.frame.origin.y = -self.logView.frame.height
-        }
-
-        if let shouldHideStatusBar = shouldHideStatusBar {
-            postNotification(StatusBarNotifications.statusBarShouldHide, value: shouldHideStatusBar)
-        }
-    }
-
     private func append(_ entry: Entry) {
         show()
 
         log.append(entry)
         let attributedText: NSAttributedString
-        if let existing = logView.attributedText, !existing.string.isEmpty {
+        if let existing = logTextView.attributedText, !existing.string.isEmpty {
             attributedText = existing + NSAttributedString("\n")
         }
         else {
             attributedText = NSAttributedString()
         }
-        logView.attributedText = attributedText + DebugAgent.format(entry)
-        let contentOffsetY: CGFloat = logView.contentSize.height - logView.frame.size.height
+        logTextView.attributedText = attributedText + DebugAgent.format(entry)
+        let contentOffsetY: CGFloat = logTextView.contentSize.height - logTextView.frame.size.height
         if contentOffsetY > 0 {
-            logView.setContentOffset(CGPoint(x: 0, y: contentOffsetY), animated: true)
+            logTextView.setContentOffset(CGPoint(x: 0, y: contentOffsetY), animated: true)
         }
     }
 
