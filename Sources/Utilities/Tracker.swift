@@ -375,35 +375,33 @@ extension Tracker {
     }
 
     func postCreated(_ post: Post) {
-        let type: ContentType = .post
         let properties = regionDetails(post.content)
-        agent.track("\(type.rawValue) created", properties: properties)
+        agent.track("Post created", properties: properties)
     }
 
     func postEdited(_ post: Post) {
-        let type: ContentType = .post
         let properties = regionDetails(post.content)
-        agent.track("\(type.rawValue) edited", properties: properties)
+        agent.track("Post edited", properties: properties)
+    }
+
+    func postDeleted(_ post: Post) {
+        let properties = regionDetails(post.content)
+        agent.track("Post deleted", properties: properties)
     }
 
     func commentCreated(_ comment: ElloComment) {
-        let type: ContentType = .comment
         let properties = regionDetails(comment.content)
-        agent.track("\(type.rawValue) created", properties: properties)
+        agent.track("Comment created", properties: properties)
     }
 
     func commentEdited(_ comment: ElloComment) {
-        let type: ContentType = .comment
         let properties = regionDetails(comment.content)
-        agent.track("\(type.rawValue) edited", properties: properties)
+        agent.track("Comment edited", properties: properties)
     }
 
-    func contentCreated(_ type: ContentType) {
-        agent.track("\(type.rawValue) created")
-    }
-
-    func contentEdited(_ type: ContentType) {
-        agent.track("\(type.rawValue) edited")
+    func commentDeleted(_ comment: ElloComment) {
+        let properties = regionDetails(comment.content)
+        agent.track("Comment deleted", properties: properties)
     }
 
     func contentCreationCanceled(_ type: ContentType) {
@@ -554,8 +552,8 @@ extension Tracker {
 
 // MARK: Search
 extension Tracker {
-    func searchFor(_ type: String) {
-        agent.track("Search for \(type)")
+    func searchFor(_ searchType: String, _ text: String) {
+        agent.track("Search", properties: ["for": searchType, "text": text])
     }
 }
 

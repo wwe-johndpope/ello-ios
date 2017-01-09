@@ -206,7 +206,9 @@ final class PostDetailViewController: StreamableViewController {
 
             postNotification(PostChangedNotification, value: (post, .delete))
             PostService().deletePost(post.id,
-                success: {},
+                success: {
+                    Tracker.shared.postDeleted(post)
+                },
                 failure: { (error, statusCode)  in
                     // TODO: add error handling
                     print("failed to delete post, error: \(error.elloErrorMessage ?? error.localizedDescription)")

@@ -272,7 +272,6 @@ extension AppViewController {
 extension AppViewController {
 
     func showExternalWebView(_ url: String) {
-        Tracker.shared.webViewAppeared(url)
         if let externalURL = URL(string: url), ElloWebViewHelper.bypassInAppBrowser(externalURL) {
             UIApplication.shared.openURL(externalURL)
         }
@@ -285,6 +284,7 @@ extension AppViewController {
                 externalWebView.loadURLString(url)
             }
         }
+        Tracker.shared.webViewAppeared(url)
     }
 
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {

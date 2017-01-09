@@ -129,7 +129,9 @@ class PostbarController: PostbarDelegate {
                 // post comment count updated
                 ContentChange.updateCommentCount(comment, delta: -1)
                 PostService().deleteComment(comment.postId, commentId: comment.id,
-                    success: {},
+                    success: {
+                        Tracker.shared.commentDeleted(comment)
+                    },
                     failure: { (error, statusCode)  in
                         // TODO: add error handling
                         print("failed to delete comment, error: \(error.elloErrorMessage ?? error.localizedDescription)")
@@ -158,7 +160,6 @@ class PostbarController: PostbarDelegate {
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
-            Tracker.shared.postLoved(post)
             cell?.lovesControl.isUserInteractionEnabled = false
             if post.loved { unlovePost(post, cell: cell) }
             else { lovePost(post, cell: cell) }

@@ -95,6 +95,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
 
         generator?.streamKind = categoryStreamKind
         generator?.load(reload: true)
+        Tracker.shared.screenAppeared(self)
     }
 
     func reloadAnnouncements() {
