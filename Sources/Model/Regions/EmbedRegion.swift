@@ -2,9 +2,8 @@
 ///  EmbedRegion.swift
 //
 
-import Crashlytics
-import Foundation
 import SwiftyJSON
+
 
 let EmbedRegionVersion = 1
 
@@ -87,7 +86,6 @@ final class EmbedRegion: JSONAble, Regionable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.embedRegionFromJSON.rawValue)
         // create region
         let embedRegion = EmbedRegion(
             id: json["data"]["id"].stringValue,
@@ -96,10 +94,6 @@ final class EmbedRegion: JSONAble, Regionable {
             thumbnailSmallUrl: URL(string: json["data"]["thumbnail_small_url"].stringValue) ?? URL(string: "https://ello.co/404/jibberish.jpg")!,
             thumbnailLargeUrl: URL(string: json["data"]["thumbnail_large_url"].stringValue) ?? URL(string: "https://ello.co/404/jibberish.jpg")!
         )
-        if embedRegion.url.absoluteString.hasPrefix("https://ello.co/404") || embedRegion.thumbnailSmallUrl.absoluteString.hasPrefix("https://ello.co/404") || embedRegion.thumbnailLargeUrl.absoluteString.hasPrefix("https://ello.co/404") {
-            // send data to segment to try to get more data about this
-            Tracker.shared.createdAtCrash("EmbedRegion", json: json.rawString())
-        }
         return embedRegion
     }
 

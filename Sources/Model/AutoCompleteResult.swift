@@ -2,8 +2,8 @@
 ///  AutoCompleteResult.swift
 //
 
-import Crashlytics
 import SwiftyJSON
+
 
 // version 1: initial
 // version 2: added image
@@ -52,7 +52,6 @@ final class AutoCompleteResult: JSONAble {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.autoCompleteResultFromJSON.rawValue)
         let name = json["name"].string ?? json["location"].string
         let result = AutoCompleteResult(name: name)
         if let imageUrl = json["image_url"].string,

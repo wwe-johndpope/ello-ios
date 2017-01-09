@@ -2,9 +2,9 @@
 ///  Asset.swift
 //
 
-import Crashlytics
 import Foundation
 import SwiftyJSON
+
 
 let AssetVersion = 1
 
@@ -153,7 +153,6 @@ final class Asset: JSONAble {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.assetFromJSON.rawValue)
         return parseAsset(json["id"].stringValue, node: data["attachment"] as? [String: AnyObject])
     }
 

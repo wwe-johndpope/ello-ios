@@ -2,8 +2,8 @@
 ///  Comment.swift
 //
 
-import Crashlytics
 import SwiftyJSON
+
 
 let CommentVersion = 1
 
@@ -95,7 +95,6 @@ final class ElloComment: JSONAble, Authorable, Groupable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.commentFromJSON.rawValue)
         // create comment
         var createdAt: Date
         if let date = json["created_at"].stringValue.toDate() {
@@ -104,8 +103,6 @@ final class ElloComment: JSONAble, Authorable, Groupable {
         }
         else {
             createdAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.shared.createdAtCrash("Comment", json: json.rawString())
         }
 
         let comment = ElloComment(

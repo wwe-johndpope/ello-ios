@@ -2,9 +2,9 @@
 ///  TextRegion.swift
 //
 
-import Crashlytics
 import Foundation
 import SwiftyJSON
+
 
 let TextRegionVersion = 1
 
@@ -41,7 +41,6 @@ final class TextRegion: JSONAble, Regionable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.textRegionFromJSON.rawValue)
         let content = json["data"].stringValue
         return TextRegion(content: content)
     }

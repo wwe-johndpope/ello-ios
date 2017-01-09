@@ -2,9 +2,9 @@
 ///  ImageRegion.swift
 //
 
-import Crashlytics
 import Foundation
 import SwiftyJSON
+
 
 let ImageRegionVersion = 1
 
@@ -57,7 +57,6 @@ final class ImageRegion: JSONAble, Regionable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.imageRegionFromJSON.rawValue)
         // create region
         let imageRegion = ImageRegion(
             alt: json["data"]["alt"].string
