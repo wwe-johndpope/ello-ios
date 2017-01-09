@@ -1,7 +1,10 @@
 ////
 ///  PostDetailViewController.swift
 //
+
+
 final class PostDetailViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Post Detail" }
     override func trackerProps() -> [String: AnyObject]? {
         if let post = post {
             return ["id": post.id as AnyObject]

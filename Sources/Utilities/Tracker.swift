@@ -298,11 +298,7 @@ extension Tracker {
     }
 
     func screenAppeared(_ name: String, properties: [String: AnyObject]? = nil) {
-        agent.screen(name, properties: properties)
-    }
-
-    func streamAppeared(_ kind: String) {
-        agent.screen("Stream", properties: ["kind": kind])
+        agent.screen("Screen \(name)", properties: properties)
     }
 
     func webViewAppeared(_ url: String) {
@@ -553,11 +549,6 @@ extension Tracker {
 extension Tracker {
     func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {
         agent.track("Encountered network error", properties: ["path": path, "message": error.description, "statusCode": statusCode ?? 0])
-    }
-
-    func createdAtCrash(_ identifier: String, json: String?) {
-        let jsonText: NSString = json as NSString? ?? Tracker.responseJSON
-        agent.track("\(identifier) Created At Crash", properties: ["responseHeaders": Tracker.responseHeaders, "responseJSON": jsonText, "currentUserId": currentUser?.id ?? "no id"])
     }
 }
 

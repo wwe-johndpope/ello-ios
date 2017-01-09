@@ -41,9 +41,11 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {
-                Tracker.shared.overrideAgent = DebugAgent()
-                let alertController = AlertViewController(error: "Debug tracking is on")
-                appController.present(alertController, animated: true, completion: nil)
+                appController.closeTodoController() {
+                    Tracker.shared.overrideAgent = DebugAgent()
+                    let alertController = AlertViewController(error: "Debug tracking is on")
+                    appController.present(alertController, animated: true, completion: nil)
+                }
             }
         }
         addAction(name: "Deep Linking") {

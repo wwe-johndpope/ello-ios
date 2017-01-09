@@ -1214,6 +1214,10 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         if jsonables.count > 0 {
+            if let controller = parent as? BaseElloViewController {
+                Tracker.shared.screenAppeared(controller)
+            }
+
             let items = StreamCellItemParser().parse(jsonables, streamKind: streamKind, currentUser: currentUser)
             for item in items {
                 item.placeholderType = placeholderType

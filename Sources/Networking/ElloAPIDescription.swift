@@ -3,6 +3,27 @@
 //
 
 extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
+    var trackerName: String? {
+        switch self {
+        case .userStreamFollowers:
+            return "Followers"
+        case .userStreamFollowing:
+            return "Following"
+        case .loves:
+            return "Loves"
+        case .currentUserBlockedList:
+            return "Blocked"
+        case .currentUserMutedList:
+            return "Muted"
+        case .postLovers:
+            return "Post Lovers"
+        case .postReposters:
+            return "Post Reposters"
+        default:
+            return nil
+        }
+    }
+
     var debugDescription: String {
         switch self {
         case let .announcementsNewContent(createdAt):

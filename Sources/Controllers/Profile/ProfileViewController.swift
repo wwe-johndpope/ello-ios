@@ -6,6 +6,7 @@ import FLAnimatedImage
 
 
 final class ProfileViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Profile" }
     override func trackerProps() -> [String: AnyObject]? {
         if let user = user {
             return ["username": user.username as AnyObject]

@@ -6,7 +6,10 @@
 class NotificationsViewController: StreamableViewController, NotificationDelegate, NotificationsScreenDelegate {
     override func trackerName() -> String? { return "Notifications" }
     override func trackerProps() -> [String: AnyObject]? {
-        return ["filter": categoryFilterType.rawValue as AnyObject]
+        if let category = categoryFilterType.category {
+            return ["filter": category as AnyObject]
+        }
+        return nil
     }
 
     var generator: NotificationsGenerator?
@@ -145,6 +148,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         streamViewController.removeAllCellItems()
 
         reload()
+        Tracker.shared.screenAppeared(self)
     }
 
     func commentTapped(_ comment: ElloComment) {

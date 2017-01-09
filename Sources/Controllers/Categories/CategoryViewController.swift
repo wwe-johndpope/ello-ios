@@ -249,5 +249,6 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.slug = category.slug
         self.title = category.name
         reloadEntireCategory()
+        Tracker.shared.screenAppeared(self)
     }
 }

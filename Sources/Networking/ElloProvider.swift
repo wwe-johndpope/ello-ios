@@ -386,7 +386,7 @@ extension ElloProvider {
             return true
         }
         // no content
-        return  NSString(data: data, encoding: String.Encoding.utf8.rawValue) == "" &&
+        return String(data: data, encoding: .utf8) == "" &&
                 statusCode >= 200 &&
                 statusCode < 400
     }

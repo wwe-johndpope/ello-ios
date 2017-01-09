@@ -82,7 +82,7 @@ class DebugAgent: AnalyticsAgent {
         return retval
     }
 
-    private func append(_ entry: Entry) {
+    private func show() {
         if logView.superview == nil {
             UIWindow.mainWindow.addSubview(logView)
         }
@@ -90,15 +90,36 @@ class DebugAgent: AnalyticsAgent {
             UIWindow.mainWindow.bringSubview(toFront: logView)
         }
 
+        let shouldHideStatusBar: Bool?
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+            shouldHideStatusBar = rootViewController.prefersStatusBarHidden
+        }
+        else {
+            shouldHideStatusBar = nil
+        }
+
         cancelAnimation?()
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
         animate {
             self.logView.frame = UIWindow.mainWindow.bounds.fromTop().grow(down: ElloTabBar.Size.height)
         }
         cancelAnimation = cancelableDelay(3) {
-            animate {
-                self.logView.frame.origin.y = -self.logView.frame.height
-            }
+            self.dismiss(shouldHideStatusBar)
         }
+    }
+
+    private func dismiss(_ shouldHideStatusBar: Bool?) {
+        animate {
+            self.logView.frame.origin.y = -self.logView.frame.height
+        }
+
+        if let shouldHideStatusBar = shouldHideStatusBar {
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: shouldHideStatusBar)
+        }
+    }
+
+    private func append(_ entry: Entry) {
+        show()
 
         log.append(entry)
         let attributedText: NSAttributedString
