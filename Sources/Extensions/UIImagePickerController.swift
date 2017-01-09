@@ -93,7 +93,8 @@ extension UIImagePickerController {
                 handler: { _ in
                     Tracker.sharedTracker.imageAddedFromLibrary()
                     callback(.controller(.elloPhotoLibraryPickerController))
-                }, secondaryHandler: { _, numberOfPhotos in
+                }, secondaryHandler: { [weak controller] _, numberOfPhotos in
+                    guard let controller = controller else { return }
                     callback(.images(controller.selectedAssets))
                 })
         )
