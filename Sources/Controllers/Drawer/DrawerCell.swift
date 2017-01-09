@@ -3,7 +3,7 @@
 //
 
 public class DrawerCell: UITableViewCell {
-    static let reuseIdentifier = "DrawerCell"
+    public static let reuseIdentifier = "DrawerCell"
     @IBOutlet weak public var label: UILabel!
     @IBOutlet weak public var line: UIView!
 

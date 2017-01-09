@@ -3,7 +3,7 @@
 //
 
 public class AutoCompleteCell: UITableViewCell {
-    static let reuseIdentifier = "AutoCompleteCell"
+    public static let reuseIdentifier = "AutoCompleteCell"
 
     @IBOutlet weak public var name: UILabel!
     weak public var avatar: AvatarButton!
