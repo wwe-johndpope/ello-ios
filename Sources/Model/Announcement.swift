@@ -15,7 +15,8 @@ public final class Announcement: JSONAble, Groupable {
     public let ctaCaption: String
     public let createdAt: NSDate
     public var image: Asset?
-    public var imageURL: NSURL? { return image?.hdpi?.url }
+    public var preferredAttachment: Attachment? { return image?.hdpi }
+    public var imageURL: NSURL? { return preferredAttachment?.url }
 
     public var groupId: String { return "Announcement-\(id)" }
 

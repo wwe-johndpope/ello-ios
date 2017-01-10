@@ -36,20 +36,33 @@ class AnnouncementCell: UICollectionViewCell {
             callToActionButton.title = config.callToAction
 
             if let url = config.imageURL {
-                imageView.pin_setImageFromURL(url) { _ in }
+                imageView.pin_setImageFromURL(url) { result in
+                    let height: CGFloat
+                    if let image = result.image {
+                        let size = image.size
+                        height = size.height * self.imageView.frame.width / size.width
+                    }
+                    else {
+                        height = 0
+                    }
+                    self.imageHeightConstraint.updateOffset(height)
+                }
             }
             else {
+                imageHeightConstraint.updateOffset(0)
                 imageView.pin_cancelImageDownload()
                 imageView.image = config.image // for testing, nice to be able to assign an image sync'ly
             }
         }
     }
 
+    private let blackView = UIView()
     private let imageView = FLAnimatedImageView()
     private let closeButton = UIButton()
     private let titleLabel = StyledLabel(style: .BoldWhite)
     private let bodyLabel = StyledLabel(style: .White)
     private let callToActionButton = StyledButton(style: .WhiteUnderlined)
+    private var imageHeightConstraint: Constraint!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,9 +76,13 @@ class AnnouncementCell: UICollectionViewCell {
     }
 
     func style() {
-        contentView.backgroundColor = .blackColor()
-        closeButton.setImages(.X)
+        contentView.backgroundColor = .whiteColor()
+        blackView.backgroundColor = .blackColor()
+        closeButton.setImages(.X, white: true)
 
+        imageView.clipsToBounds = true
+        imageView.contentMode = .ScaleAspectFill
+        imageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Vertical)
         titleLabel.numberOfLines = 0
         bodyLabel.numberOfLines = 0
         callToActionButton.contentHorizontalAlignment = .Left
@@ -77,15 +94,21 @@ class AnnouncementCell: UICollectionViewCell {
     }
 
     func arrange() {
+        contentView.addSubview(blackView)
         contentView.addSubview(imageView)
         contentView.addSubview(closeButton)
         contentView.addSubview(titleLabel)
         contentView.addSubview(bodyLabel)
         contentView.addSubview(callToActionButton)
 
+        blackView.snp_makeConstraints { make in
+            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 1))
+        }
         imageView.snp_makeConstraints { make in
             make.top.leading.equalTo(contentView).inset(Size.margins)
-            make.width.height.equalTo(Size.imageSize)
+            make.width.equalTo(Size.imageSize)
+            make.bottom.lessThanOrEqualTo(contentView.snp_bottom).inset(Size.margins).priorityHigh()
+            imageHeightConstraint = make.height.equalTo(0).priorityMedium().constraint
         }
         closeButton.snp_makeConstraints { make in
             make.top.trailing.equalTo(contentView)
