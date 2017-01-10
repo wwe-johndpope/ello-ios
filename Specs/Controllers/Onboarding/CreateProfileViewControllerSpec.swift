@@ -132,21 +132,21 @@ class CreateProfileViewControllerSpec: QuickSpec {
                     onboardingViewController.canGoNext = false
                 }
                 it("forwards name") {
-                    _ = subject.assignName("my name")
+                    _ = subject.assign(name: "my name")
                     expect(onboardingData.name) == "my name"
                     expect(subject.didSetName) == true
                     expect(subject.didSetBio) == false
                     expect(onboardingViewController.canGoNext) == true
                 }
                 it("forwards links") {
-                    _ = subject.assignLinks("http://my.links")
+                    _ = subject.assign(links: "http://my.links")
                     expect(onboardingData.links) == "http://my.links"
                     expect(subject.didSetLinks) == true
                     expect(subject.didSetBio) == false
                     expect(onboardingViewController.canGoNext) == true
                 }
                 it("forwards bio") {
-                    _ = subject.assignBio("my bio")
+                    _ = subject.assign(bio: "my bio")
                     expect(onboardingData.bio) == "my bio"
                     expect(subject.didSetBio) == true
                     expect(subject.didUploadCoverImage) == false
@@ -154,7 +154,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                 }
                 it("forwards coverImage") {
                     let image = ImageRegionData(image: UIImage.imageWithColor(.blue)!)
-                    subject.assignCoverImage(image)
+                    subject.assign(coverImage: image)
                     expect(onboardingData.coverImage) == image
                     expect(subject.didUploadCoverImage) == true
                     expect(subject.didUploadAvatarImage) == false
@@ -162,7 +162,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                 }
                 it("forwards avatar") {
                     let image = ImageRegionData(image: UIImage.imageWithColor(.blue)!)
-                    subject.assignAvatar(image)
+                    subject.assign(avatarImage: image)
                     expect(onboardingData.avatarImage) == image
                     expect(subject.didUploadAvatarImage) == true
                     expect(subject.didSetName) == false
@@ -183,14 +183,14 @@ class CreateProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("changed name") {
-                    _ = subject.assignName("my name")
+                    _ = subject.assign(name: "my name")
                     subject.onboardingWillProceed(abort: false, proceedClosure: { _ in })
                     expect(props["name"] as? String) == "my name"
                 }
                 it("changed name,links,bio") {
-                    _ = subject.assignName("my name")
-                    _ = subject.assignLinks("http://my.links")
-                    _ = subject.assignBio("my bio")
+                    _ = subject.assign(name: "my name")
+                    _ = subject.assign(links: "http://my.links")
+                    _ = subject.assign(bio: "my bio")
                     subject.onboardingWillProceed(abort: false, proceedClosure: { _ in })
                     expect(props["name"] as? String) == "my name"
                     expect(props["external_links"] as? String) == "http://my.links"

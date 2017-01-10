@@ -42,7 +42,7 @@ class ShareAttachmentProcessorSpec: QuickSpec {
                 var fileURL: URL!
                 beforeEach {
                     let tempURL = try! FileManager.default.url(for: .sharedPublicDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                    fileURL = tempURL.appendingPathComponent("ShareAttachmentProcessorSpec") as! URL
+                    fileURL = tempURL.appendingPathComponent("ShareAttachmentProcessorSpec")
                 }
 
                 afterEach {

@@ -15,25 +15,25 @@ class CreateProfileScreenSpec: QuickSpec {
         var didAssignCoverImage = false
         var didAssignAvatar = false
 
-        func presentController(_ controller: UIViewController) {}
+        func present(controller: UIViewController) {}
         func dismissController() {}
 
-        func assignName(_ name: String?) -> ValidationState {
+        func assign(name: String?) -> ValidationState {
             didAssignName = true
             return (name?.isEmpty == false) ? ValidationState.ok : ValidationState.none
         }
-        func assignBio(_ bio: String?) -> ValidationState {
+        func assign(bio: String?) -> ValidationState {
             didAssignBio = true
             return (bio?.isEmpty == false) ? ValidationState.ok : ValidationState.none
         }
-        func assignLinks(_ links: String?) -> ValidationState {
+        func assign(links: String?) -> ValidationState {
             didAssignLinks = true
             return (links?.isEmpty == false) ? ValidationState.ok : ValidationState.none
         }
-        func assignCoverImage(_ image: ImageRegionData) {
+        func assign(coverImage: ImageRegionData) {
             didAssignCoverImage = true
         }
-        func assignAvatar(_ image: ImageRegionData) {
+        func assign(avatarImage: ImageRegionData) {
             didAssignAvatar = true
         }
     }
