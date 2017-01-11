@@ -808,6 +808,8 @@ extension StreamViewController: StreamEditingDelegate {
             let post = dataSource.postForIndexPath(path),
             let footerPath = dataSource.footerIndexPathForPost(post)
         {
+            guard post.author?.hasLovesEnabled == true else { return }
+
             if let window = cell.window {
                 let fullDuration: TimeInterval = 0.4
                 let halfDuration: TimeInterval = fullDuration / 2
