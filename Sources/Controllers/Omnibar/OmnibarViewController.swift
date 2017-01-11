@@ -10,13 +10,13 @@ import PINRemoteImage
 class OmnibarViewController: BaseElloViewController {
     override func trackerName() -> String? { return "Omnibar" }
     override func trackerProps() -> [String: AnyObject]? {
-        if let parentPost = parentPost {
+        if parentPost != nil {
             return ["creating": "comment" as AnyObject]
         }
-        if let editPost = editPost {
+        if editPost != nil {
             return ["editing": "post" as AnyObject]
         }
-        if let editComment = editComment {
+        if editComment != nil {
             return ["editing": "post" as AnyObject]
         }
         return ["creating": "post" as AnyObject]
