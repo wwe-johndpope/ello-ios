@@ -3,7 +3,19 @@
 //
 
 class SearchViewController: StreamableViewController {
+    override func trackerName() -> String? {
+        let searchFor: String
+        if isPostSearch {
+            searchFor = "Posts"
+        }
+        else {
+            searchFor = "Users"
+        }
+        return "Search for \(searchFor)"
+    }
+
     var searchText: String?
+    var isPostSearch = true
 
     var _mockScreen: SearchScreenProtocol?
     var screen: SearchScreenProtocol {
@@ -92,10 +104,13 @@ extension SearchViewController: SearchScreenDelegate {
     }
 
     fileprivate func loadEndpoint(_ text: String, isPostSearch: Bool, checkSearchText: Bool = true) {
-        if text.characters.count < 2 { return }  // just.. no (and the server doesn't guard against empty/short searches)
-        if checkSearchText && searchText == text { return }  // a search is already in progress for this text
+        guard
+            text.characters.count > 2,  // just.. no (and the server doesn't guard against empty/short searches)
+            !checkSearchText || searchText != text  // a search is already in progress for this text
+        else { return }
+
+        self.isPostSearch = isPostSearch
         streamViewController.hideNoResults()
-        trackSearch(text, isPostSearch: isPostSearch)
         searchText = text
         let endpoint = isPostSearch ? ElloAPI.searchForPosts(terms: text) : ElloAPI.searchForUsers(terms: text)
         streamViewController.noResultsMessages = (title: InterfaceString.Search.NoMatches, body: InterfaceString.Search.TryAgain)
@@ -105,19 +120,25 @@ extension SearchViewController: SearchScreenDelegate {
         streamViewController.removeAllCellItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+
+        trackSearch()
     }
 
-    func trackSearch(_ text: String, isPostSearch: Bool) {
+    func trackSearch() {
+        guard let text = searchText else { return }
+
+        Tracker.shared.screenAppeared(self)
+
         if isPostSearch {
             if text.hasPrefix("#") {
-                Tracker.sharedTracker.searchFor("hashtags")
+                Tracker.shared.searchFor("hashtags", text)
             }
             else {
-                Tracker.sharedTracker.searchFor("posts")
+                Tracker.shared.searchFor("posts", text)
             }
         }
         else {
-            Tracker.sharedTracker.searchFor("users")
+            Tracker.shared.searchFor("users", text)
         }
     }
 }

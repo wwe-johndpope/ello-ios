@@ -23,7 +23,6 @@ protocol AnalyticsAgent {
     func track(_ event: String!, properties: [AnyHashable: Any]!)
     func screen(_ screenTitle: String!)
     func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!)
-    func reset()
 }
 
 struct NullAgent: AnalyticsAgent {
@@ -32,7 +31,6 @@ struct NullAgent: AnalyticsAgent {
     func track(_ event: String!, properties: [AnyHashable: Any]!) { }
     func screen(_ screenTitle: String!) { }
     func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) { }
-    func reset() { }
 }
 
 extension SEGAnalytics: AnalyticsAgent { }
@@ -42,7 +40,7 @@ class Tracker {
     static var responseJSON: NSString = ""
 
     var overrideAgent: AnalyticsAgent?
-    static let sharedTracker = Tracker()
+    static let shared = Tracker()
     var settingChangedNotification: NotificationObserver?
     fileprivate var shouldTrackUser = true
     fileprivate var currentUser: User?
@@ -285,39 +283,26 @@ extension Tracker {
 }
 
 extension UIViewController {
-    func trackerName() -> String { return readableClassName() }
+    // return 'nil' to disable tracking, e.g. in StreamViewController
+    func trackerName() -> String? { return readableClassName() }
     func trackerProps() -> [String: AnyObject]? { return nil }
-
-    func trackerData() -> (String, [String: AnyObject]?) {
-        return (trackerName(), trackerProps())
-    }
 }
 
 // MARK: View Appearance
 extension Tracker {
     func screenAppeared(_ viewController: UIViewController) {
-        let (name, props) = viewController.trackerData()
-        screenAppeared(name, properties: props)
+        if let name = viewController.trackerName() {
+            let props = viewController.trackerProps()
+            screenAppeared(name, properties: props)
+        }
     }
 
     func screenAppeared(_ name: String, properties: [String: AnyObject]? = nil) {
-        agent.screen(name, properties: properties)
-    }
-
-    func streamAppeared(_ kind: String) {
-        agent.screen("Stream", properties: ["kind": kind])
+        agent.screen("Screen \(name)", properties: properties)
     }
 
     func webViewAppeared(_ url: String) {
         agent.screen("Web View", properties: ["url": url])
-    }
-
-    func profileLoaded(_ handle: String) {
-        agent.track("Profile Loaded", properties: ["handle": handle])
-    }
-
-    func postLoaded(_ id: String) {
-        agent.track("Post Loaded", properties: ["id": id])
     }
 
     func categoryOpened(_ categorySlug: String) {
@@ -390,35 +375,33 @@ extension Tracker {
     }
 
     func postCreated(_ post: Post) {
-        let type: ContentType = .post
         let properties = regionDetails(post.content)
-        agent.track("\(type.rawValue) created", properties: properties)
+        agent.track("Post created", properties: properties)
     }
 
     func postEdited(_ post: Post) {
-        let type: ContentType = .post
         let properties = regionDetails(post.content)
-        agent.track("\(type.rawValue) edited", properties: properties)
+        agent.track("Post edited", properties: properties)
+    }
+
+    func postDeleted(_ post: Post) {
+        let properties = regionDetails(post.content)
+        agent.track("Post deleted", properties: properties)
     }
 
     func commentCreated(_ comment: ElloComment) {
-        let type: ContentType = .comment
         let properties = regionDetails(comment.content)
-        agent.track("\(type.rawValue) created", properties: properties)
+        agent.track("Comment created", properties: properties)
     }
 
     func commentEdited(_ comment: ElloComment) {
-        let type: ContentType = .comment
         let properties = regionDetails(comment.content)
-        agent.track("\(type.rawValue) edited", properties: properties)
+        agent.track("Comment edited", properties: properties)
     }
 
-    func contentCreated(_ type: ContentType) {
-        agent.track("\(type.rawValue) created")
-    }
-
-    func contentEdited(_ type: ContentType) {
-        agent.track("\(type.rawValue) edited")
+    func commentDeleted(_ comment: ElloComment) {
+        let properties = regionDetails(comment.content)
+        agent.track("Comment deleted", properties: properties)
     }
 
     func contentCreationCanceled(_ type: ContentType) {
@@ -565,17 +548,12 @@ extension Tracker {
     func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {
         agent.track("Encountered network error", properties: ["path": path, "message": error.description, "statusCode": statusCode ?? 0])
     }
-
-    func createdAtCrash(_ identifier: String, json: String?) {
-        let jsonText: NSString = json as NSString? ?? Tracker.responseJSON
-        agent.track("\(identifier) Created At Crash", properties: ["responseHeaders": Tracker.responseHeaders, "responseJSON": jsonText, "currentUserId": currentUser?.id ?? "no id"])
-    }
 }
 
 // MARK: Search
 extension Tracker {
-    func searchFor(_ type: String) {
-        agent.track("Search for \(type)")
+    func searchFor(_ searchType: String, _ text: String) {
+        agent.track("Search", properties: ["for": searchType, "text": text])
     }
 }
 

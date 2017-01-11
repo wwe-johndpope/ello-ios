@@ -6,6 +6,16 @@ import FutureKit
 
 
 class HireViewController: BaseElloViewController {
+    override func trackerName() -> String? {
+        switch contactType {
+        case .hire: return "Hire"
+        case .collaborate: return "Collaborate"
+        }
+    }
+    override func trackerProps() -> [String: AnyObject]? {
+        return ["username": user.username as AnyObject]
+    }
+
     enum UserEmailType {
         case hire
         case collaborate
@@ -50,7 +60,7 @@ class HireViewController: BaseElloViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
         UIApplication.shared.statusBarStyle = .lightContent
 
         elloTabBarController?.tabBarHidden = false
@@ -105,7 +115,7 @@ extension HireViewController: HireDelegate {
 
         endpoint
             .onSuccess { _ in
-                Tracker.sharedTracker.hiredUser(self.user)
+                Tracker.shared.hiredUser(self.user)
                 hireSuccess()
             }
             .onFail { error in

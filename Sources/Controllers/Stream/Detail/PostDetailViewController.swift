@@ -1,7 +1,17 @@
 ////
 ///  PostDetailViewController.swift
 //
+
+
 final class PostDetailViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Post Detail" }
+    override func trackerProps() -> [String: AnyObject]? {
+        if let post = post {
+            return ["id": post.id as AnyObject]
+        }
+        return ["id": postParam as AnyObject]
+    }
+
     var post: Post?
     var postParam: String
     var scrollToComment: ElloComment?
@@ -196,7 +206,9 @@ final class PostDetailViewController: StreamableViewController {
 
             postNotification(PostChangedNotification, value: (post, .delete))
             PostService().deletePost(post.id,
-                success: {},
+                success: {
+                    Tracker.shared.postDeleted(post)
+                },
                 failure: { (error, statusCode)  in
                     // TODO: add error handling
                     print("failed to delete post, error: \(error.elloErrorMessage ?? error.localizedDescription)")
@@ -264,8 +276,6 @@ extension PostDetailViewController: StreamDestination {
         if isOwnPost() {
             showNavBars(false)
         }
-
-        Tracker.sharedTracker.postLoaded(post.id)
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {

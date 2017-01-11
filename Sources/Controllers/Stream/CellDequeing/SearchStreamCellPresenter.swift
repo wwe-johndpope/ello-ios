@@ -11,8 +11,8 @@ struct SearchStreamCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? SearchStreamCell,
+        guard
+            let cell = cell as? SearchStreamCell,
             let search = streamCellItem.jsonable as? SearchString,
             case let .search(placeholder) = streamCellItem.type
         else { return }

@@ -29,7 +29,7 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
         navigationItem.title = category?.label
         navigationItem.fixNavBarItemPadding()
         navBar.items = [navigationItem]
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
     }
 
     func backAction() {
@@ -76,8 +76,8 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
     typealias SettingConfig = (setting: DynamicSetting, indexPath: IndexPath, value: Bool, isVisible: Bool)
 
     func toggleSetting(_ setting: DynamicSetting, value: Bool) {
-        guard let
-            currentUser = currentUser,
+        guard
+            let currentUser = currentUser,
             let category = self.category else { return }
         let settings = category.settings
 

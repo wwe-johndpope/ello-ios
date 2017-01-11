@@ -4,6 +4,14 @@
 
 
 class NotificationsViewController: StreamableViewController, NotificationDelegate, NotificationsScreenDelegate {
+    override func trackerName() -> String? { return "Notifications" }
+    override func trackerProps() -> [String: AnyObject]? {
+        if let category = categoryFilterType.category {
+            return ["filter": category as AnyObject]
+        }
+        return nil
+    }
+
     var generator: NotificationsGenerator?
     var hasNewContent = false
     var fromTabBar = false
@@ -87,6 +95,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
 
         generator?.streamKind = categoryStreamKind
         generator?.load(reload: true)
+        Tracker.shared.screenAppeared(self)
     }
 
     func reloadAnnouncements() {
@@ -140,6 +149,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         streamViewController.removeAllCellItems()
 
         reload()
+        Tracker.shared.screenAppeared(self)
     }
 
     func commentTapped(_ comment: ElloComment) {
@@ -228,7 +238,7 @@ extension NotificationsViewController: StreamDestination {
 
         for item in items {
             if let announcement = item.jsonable as? Announcement {
-                Tracker.sharedTracker.announcementViewed(announcement)
+                Tracker.shared.announcementViewed(announcement)
             }
         }
     }
@@ -249,7 +259,7 @@ extension NotificationsViewController: StreamDestination {
 // MARK: NotificationsViewController:
 extension NotificationsViewController: AnnouncementDelegate {
     func markAnnouncementAsRead(announcement: Announcement) {
-        Tracker.sharedTracker.announcementDismissed(announcement)
+        Tracker.shared.announcementDismissed(announcement)
         generator?.markAnnouncementAsRead(announcement)
         postNotification(JSONAbleChangedNotification, value: (announcement, .delete))
     }

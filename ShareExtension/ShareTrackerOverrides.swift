@@ -13,7 +13,7 @@ enum ContentType: String {
 func logPresentingAlert(_ name: String) {}
 
 class Tracker {
-    static let sharedTracker = Tracker()
+    static let shared = Tracker()
 
     init() {}
 
@@ -22,7 +22,6 @@ class Tracker {
     func contentFlagged(_ type: ContentType, flag: ContentFlagger.AlertOption, contentId: String) {}
     func contentFlaggingFailed(_ type: ContentType, message: String, contentId: String) {}
     func contentFlaggingCanceled(_ type: ContentType, contentId: String) {}
-    func createdAtCrash(_ identifier: String, json: String?) {}
     func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {}
 }
 

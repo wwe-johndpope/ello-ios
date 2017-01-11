@@ -157,19 +157,19 @@ extension OnboardingViewController {
 
     func proceedToNextStep(abort: Bool) {
         if visibleViewController is CategoriesSelectionViewController {
-            Tracker.sharedTracker.completedCategories()
+            Tracker.shared.completedCategories()
             if abort {
-                Tracker.sharedTracker.skippedNameBio()
+                Tracker.shared.skippedNameBio()
             }
         }
         else if visibleViewController is CreateProfileViewController {
-            Tracker.sharedTracker.addedNameBio()
+            Tracker.shared.addedNameBio()
             if abort {
-                Tracker.sharedTracker.skippedContactImport()
+                Tracker.shared.skippedContactImport()
             }
         }
         else if visibleViewController is InviteFriendsViewController {
-            Tracker.sharedTracker.completedContactImport()
+            Tracker.shared.completedContactImport()
         }
 
         let proceedClosure: (_ success: OnboardingProceed) -> Void
@@ -209,7 +209,7 @@ extension OnboardingViewController {
     }
 
     fileprivate func showFirstViewController(_ viewController: UIViewController) {
-        Tracker.sharedTracker.screenAppeared(viewController)
+        Tracker.shared.screenAppeared(viewController)
 
         prepareOnboardingController(viewController)
 
@@ -288,7 +288,7 @@ extension OnboardingViewController {
             return
         }
 
-        Tracker.sharedTracker.screenAppeared(nextViewController)
+        Tracker.shared.screenAppeared(nextViewController)
 
         visibleViewController.willMove(toParentViewController: nil)
         addChildViewController(nextViewController)

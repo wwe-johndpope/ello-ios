@@ -2,9 +2,8 @@
 ///  Post.swift
 //
 
-import Crashlytics
 import SwiftyJSON
-import YapDatabase
+
 
 // version 1: initial
 // version 2: added "watching"
@@ -213,17 +212,13 @@ final class Post: JSONAble, Authorable, Groupable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.postFromJSON.rawValue)
         let repostContent = RegionParser.regions("repost_content", json: json)
         var createdAt: Date
         if let date = json["created_at"].stringValue.toDate() {
-            // good to go
             createdAt = date
         }
         else {
             createdAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Post", json: json.rawString())
         }
         // create post
         let post = Post(

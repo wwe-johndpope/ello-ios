@@ -24,8 +24,8 @@ extension UICollectionViewCell {
         guard let collectionView = superview as? UICollectionView else { return nil }
 
         for path in collectionView.indexPathsForVisibleItems {
-            guard let
-                cell = collectionView.cellForItem(at: path), cell == self
+            guard
+                let cell = collectionView.cellForItem(at: path), cell == self
             else { continue }
 
             return path

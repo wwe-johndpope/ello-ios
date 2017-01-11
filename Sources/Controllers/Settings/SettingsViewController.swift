@@ -39,7 +39,7 @@ class SettingsContainerViewController: BaseElloViewController {
     func showNavBars() {
         navigationBarTopConstraint.constant = 0
         animate {
-            postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
             self.view.layoutIfNeeded()
         }
 
@@ -52,7 +52,7 @@ class SettingsContainerViewController: BaseElloViewController {
     func hideNavBars() {
         navigationBarTopConstraint.constant = -ElloNavigationBar.Size.height - 1
         animate {
-            postNotification(StatusBarNotifications.statusBarShouldChange, value: (true, .slide))
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
             self.view.layoutIfNeeded()
         }
 
@@ -81,7 +81,7 @@ class SettingsContainerViewController: BaseElloViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         let hidden = elloTabBarController?.tabBarHidden ?? UIApplication.shared.isStatusBarHidden
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (hidden, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: hidden)
         updateNavBars()
     }
 }
@@ -415,7 +415,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
     }
 
     @IBAction func logOutTapped() {
-        Tracker.sharedTracker.tappedLogout()
+        Tracker.shared.tappedLogout()
         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
     }
 

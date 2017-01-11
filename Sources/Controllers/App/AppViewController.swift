@@ -11,7 +11,7 @@ struct NavigationNotifications {
 }
 
 struct StatusBarNotifications {
-    static let statusBarShouldChange = TypedNotification<(Bool, UIStatusBarAnimation)>(name: "co.ello.StatusBarNotifications.statusBarShouldChange")
+    static let statusBarShouldHide = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarShouldHide")
 }
 
 
@@ -30,18 +30,16 @@ class AppViewController: BaseElloViewController {
     fileprivate var receivedPushNotificationObserver: NotificationObserver?
     fileprivate var externalWebObserver: NotificationObserver?
     fileprivate var apiOutOfDateObserver: NotificationObserver?
-    fileprivate var statusBarShouldChangeObserver: NotificationObserver?
+    fileprivate var statusBarShouldHideObserver: NotificationObserver?
 
     fileprivate var pushPayload: PushPayload?
 
     fileprivate var deepLinkPath: String?
 
     var statusBarShouldHide = false
-    var statusBarAnimation: UIStatusBarAnimation = .slide
 
-    func hideStatusBar(_ hide: Bool, with animation: UIStatusBarAnimation) {
+    func hideStatusBar(_ hide: Bool) {
         statusBarShouldHide = hide
-        statusBarAnimation = animation
         animate {
             self.setNeedsStatusBarAppearanceUpdate()
         }
@@ -51,10 +49,13 @@ class AppViewController: BaseElloViewController {
         return statusBarShouldHide
     }
 
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return statusBarAnimation
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
 
     override func loadView() {
         self.view = AppScreen()
@@ -166,8 +167,8 @@ class AppViewController: BaseElloViewController {
             postNotification(AuthenticationNotifications.invalidToken, value: false)
         }
 
-        statusBarShouldChangeObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldChange) { [weak self] (hide, animation) in
-            self?.hideStatusBar(hide, with: animation)
+        statusBarShouldHideObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldHide) { [weak self] (hide) in
+            self?.hideStatusBar(hide)
         }
     }
 
@@ -176,7 +177,7 @@ class AppViewController: BaseElloViewController {
         receivedPushNotificationObserver?.removeObserver()
         externalWebObserver?.removeObserver()
         apiOutOfDateObserver?.removeObserver()
-        statusBarShouldChangeObserver?.removeObserver()
+        statusBarShouldHideObserver?.removeObserver()
     }
 }
 
@@ -187,12 +188,12 @@ extension AppViewController {
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
         guard !((visibleViewController as? UINavigationController)?.visibleViewController is StartupViewController) else { return }
 
-        Tracker.sharedTracker.screenAppeared("Startup")
         let startupController = StartupViewController()
         startupController.parentAppController = self
         let nav = ElloNavigationController(rootViewController: startupController)
         nav.isNavigationBarHidden = true
         swapViewController(nav, completion: completion)
+        Tracker.shared.screenAppeared(startupController)
     }
 
     func showJoinScreen(animated: Bool, invitationCode: String? = nil) {
@@ -244,7 +245,7 @@ extension AppViewController {
     }
 
     func showMainScreen(_ user: User) {
-        Tracker.sharedTracker.identify(user)
+        Tracker.shared.identify(user)
 
         let vc = ElloTabBarController.instantiateFromStoryboard()
         ElloWebBrowserViewController.elloTabBarController = vc
@@ -271,7 +272,6 @@ extension AppViewController {
 extension AppViewController {
 
     func showExternalWebView(_ url: String) {
-        Tracker.sharedTracker.webViewAppeared(url)
         if let externalURL = URL(string: url), ElloWebViewHelper.bypassInAppBrowser(externalURL) {
             UIApplication.shared.openURL(externalURL)
         }
@@ -284,6 +284,7 @@ extension AppViewController {
                 externalWebView.loadURLString(url)
             }
         }
+        Tracker.shared.webViewAppeared(url)
     }
 
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
@@ -336,7 +337,7 @@ extension AppViewController {
         if presentingViewController != nil {
             dismiss(animated: false, completion: .none)
         }
-        self.hideStatusBar(false, with: .slide)
+        self.hideStatusBar(false)
 
         if let visibleViewController = visibleViewController {
             visibleViewController.willMove(toParentViewController: nil)
@@ -363,7 +364,7 @@ extension AppViewController {
 
     fileprivate func prepareToShowViewController(_ newViewController: UIViewController) {
         let controller = (newViewController as? UINavigationController)?.topViewController ?? newViewController
-        Tracker.sharedTracker.screenAppeared(controller)
+        Tracker.shared.screenAppeared(controller)
 
         view.addSubview(newViewController.view)
         newViewController.view.frame = self.view.bounds
@@ -436,7 +437,7 @@ extension AppViewController {
 // MARK: URL Handling
 extension AppViewController {
     func navigateToDeepLink(_ path: String) {
-        Tracker.sharedTracker.deepLinkVisited(path)
+        Tracker.shared.deepLinkVisited(path)
 
         let (type, data) = ElloURI.match(path)
 
@@ -566,8 +567,8 @@ extension AppViewController {
     }
 
     fileprivate func showDiscoverScreen(_ vc: ElloTabBarController) {
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController, !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController, !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
         else { return }
 
         let vc = DiscoverAllCategoriesViewController()
@@ -576,11 +577,11 @@ extension AppViewController {
     }
 
     fileprivate func showCategoryScreen(_ vc: ElloTabBarController, slug: String) {
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
         else { return }
 
-        Tracker.sharedTracker.categoryOpened(slug)
+        Tracker.shared.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug)
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)
@@ -590,8 +591,8 @@ extension AppViewController {
     fileprivate func showStreamContainerScreen(vc: ElloTabBarController, type: ElloURI) {
         vc.selectedTab = .stream
 
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController,
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController,
             let streamVC = navVC.visibleViewController as? StreamContainerViewController
         else { return }
 
@@ -606,8 +607,8 @@ extension AppViewController {
 
     fileprivate func showNotificationsScreen(_ vc: ElloTabBarController, category: String) {
         vc.selectedTab = .notifications
-        guard let
-            navVC = vc.selectedViewController as? ElloNavigationController,
+        guard
+            let navVC = vc.selectedViewController as? ElloNavigationController,
             let notificationsVC = navVC.visibleViewController as? NotificationsViewController
         else { return }
 
@@ -704,8 +705,8 @@ extension AppViewController {
     }
 
     fileprivate func pushDeepLinkViewController(_ vc: UIViewController) {
-        guard let
-            tabController = self.visibleViewController as? ElloTabBarController,
+        guard
+            let tabController = self.visibleViewController as? ElloTabBarController,
             let navController = tabController.selectedViewController as? UINavigationController
         else { return }
 
@@ -745,7 +746,7 @@ extension AppViewController {
 #if DEBUG
 
 var isShowingDebug = false
-var debugTodoController = DebugTodoController()
+var debugController = DebugController()
 
 extension AppViewController {
 
@@ -760,8 +761,8 @@ extension AppViewController {
             }
             else {
                 isShowingDebug = true
-                let ctlr = debugTodoController
-                ctlr.title = "Test Me Test Me"
+                let ctlr = debugController
+                ctlr.title = "Debugging"
 
                 let nav = UINavigationController(rootViewController: ctlr)
                 let bar = UIView(frame: CGRect(x: 0, y: -20, width: view.frame.width, height: 20))

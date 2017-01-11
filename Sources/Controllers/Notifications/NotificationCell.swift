@@ -229,7 +229,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: imageURL != nil)
         separator.frame = contentView.bounds.fromBottom().grow(up: 1)
 
-        avatarButton.frame = outerFrame.withSize(CGSize(width: Size.AvatarSize, height: Size.AvatarSize))
+        avatarButton.frame = outerFrame.with(size: CGSize(width: Size.AvatarSize, height: Size.AvatarSize))
 
         if imageURL == nil {
             notificationImageView.frame = .zero
@@ -237,7 +237,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         else {
             notificationImageView.frame = outerFrame.fromRight()
                 .grow(left: Size.ImageWidth)
-                .withHeight(Size.ImageWidth / aspectRatio)
+                .with(height: Size.ImageWidth / aspectRatio)
             buyButtonImage.frame.origin = CGPoint(
                 x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
                 y: notificationImageView.frame.minY + Size.BuyButtonMargin
@@ -245,8 +245,8 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         }
 
         titleTextView.frame = avatarButton.frame.fromRight()
-            .shiftRight(Size.InnerMargin)
-            .withWidth(titleWidth)
+            .shift(right: Size.InnerMargin)
+            .with(width: titleWidth)
 
         let tvSize = titleTextView.sizeThatFits(CGSize(width: titleWidth, height: .greatestFiniteMagnitude))
         titleTextView.frame.size.height = ceil(tvSize.height)
@@ -256,9 +256,9 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         if messageVisible {
             createdAtY += messageHeight + Size.MessageMargin
             messageWebView.frame = titleTextView.frame.fromBottom()
-                .withWidth(titleWidth)
-                .shiftDown(Size.InnerMargin)
-                .withHeight(messageHeight)
+                .with(width: titleWidth)
+                .shift(down: Size.InnerMargin)
+                .with(height: messageHeight)
         }
 
         createdAtLabel.frame = CGRect(
@@ -276,7 +276,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
             height: Size.ButtonHeight
             )
         let relationshipControlWidth = relationshipControl.intrinsicContentSize.width
-        relationshipControl.frame = replyButton.frame.withWidth(relationshipControlWidth)
+        relationshipControl.frame = replyButton.frame.with(width: relationshipControlWidth)
 
         let bottomControl: UIView
         if !replyButton.isHidden {

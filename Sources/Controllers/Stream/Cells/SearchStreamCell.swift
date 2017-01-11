@@ -83,8 +83,8 @@ extension SearchStreamCell: UITextFieldDelegate {
     }
 
     fileprivate func searchForText() {
-        guard let
-            text = searchField.text,
+        guard
+            let text = searchField.text,
             text.characters.count > 0
         else { return }
 

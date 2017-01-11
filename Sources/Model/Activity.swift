@@ -2,8 +2,8 @@
 ///  Activity.swift
 //
 
-import Crashlytics
 import SwiftyJSON
+
 
 let ActivityVersion = 1
 
@@ -111,7 +111,6 @@ final class Activity: JSONAble {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.activityFromJSON.rawValue)
         // active record
         let id = json["created_at"].stringValue
         var createdAt: Date
@@ -121,8 +120,6 @@ final class Activity: JSONAble {
         }
         else {
             createdAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Activity", json: json.rawString())
         }
 
         // create activity

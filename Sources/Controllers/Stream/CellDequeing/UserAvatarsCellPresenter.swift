@@ -11,8 +11,8 @@ struct UserAvatarsCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? UserAvatarsCell,
+        guard
+            let cell = cell as? UserAvatarsCell,
             let model = streamCellItem.jsonable as? UserAvatarCellModel
         else { return }
         cell.imageView.image = model.icon.normalImage

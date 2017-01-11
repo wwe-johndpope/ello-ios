@@ -7,19 +7,19 @@ import SwiftyUserDefaults
 let CurrentStreamKey = "Ello.StreamContainerViewController.CurrentStream"
 
 class StreamContainerViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Stream" }
+    override func trackerProps() -> [String: AnyObject]? {
+        let stream = streamValues[currentStreamIndex]
+        return ["kind": stream.name as AnyObject]
+    }
+
     fileprivate var loggedPromptEventForThisSession = false
     fileprivate var reloadStreamContentObserver: NotificationObserver?
-    fileprivate var friendsViewController: StreamViewController?
     fileprivate var appBackgroundObserver: NotificationObserver?
     fileprivate var appForegroundObserver: NotificationObserver?
 
     let streamValues: [StreamKind] = [.following, .starred]
-    fileprivate lazy var streamLoaded: [Bool] = self.defaultSreamLoadedValues() // needs to hold same number of 'false's as streamValues
-
-    // moved into a separate function to save compile time
-    fileprivate func defaultSreamLoadedValues() -> [Bool] {
-        return [false, false]
-    }
+    fileprivate var streamLoaded: [Bool] = [false, false] // needs to hold same number of 'false's as streamValues
 
     var currentStreamIndex: Int {
         get {
@@ -77,8 +77,6 @@ class StreamContainerViewController: StreamableViewController {
         streamsSegmentedControl.selectedSegmentIndex = index
         initialController.loadInitialPage()
         streamLoaded[index] = true
-
-        Tracker.sharedTracker.streamAppeared(stream.name)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -103,6 +101,24 @@ class StreamContainerViewController: StreamableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeNotificationObservers()
+    }
+
+    func reload(streamKind: StreamKind) {
+        let controller: StreamViewController?
+        switch streamKind {
+        case .following:
+            controller = childStreamControllers[0]
+        case .starred:
+            controller = childStreamControllers[1]
+        default:
+            controller = nil
+        }
+
+        if let controller = controller, controller == childStreamControllers[currentStreamIndex] {
+            ElloHUD.showLoadingHudInView(controller.view)
+            controller.loadInitialPage()
+            Tracker.shared.screenAppeared(self)
+        }
     }
 
     fileprivate func updateInsets() {
@@ -197,7 +213,6 @@ class StreamContainerViewController: StreamableViewController {
             case .following:
                 let noResultsTitle = InterfaceString.FollowingStream.NoResultsTitle
                 let noResultsBody = InterfaceString.FollowingStream.NoResultsBody
-                friendsViewController = vc
                 vc.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
             case .starred:
                 let noResultsTitle = InterfaceString.StarredStream.NoResultsTitle
@@ -236,7 +251,7 @@ class StreamContainerViewController: StreamableViewController {
 
         currentStreamIndex = index
         let stream = streamValues[currentStreamIndex]
-        Tracker.sharedTracker.streamAppeared(stream.name)
+        Tracker.shared.screenAppeared(self)
 
         setupNavigationBar(controller: currentController)
 
@@ -282,10 +297,7 @@ private extension StreamContainerViewController {
     func addTemporaryNotificationObservers() {
         reloadStreamContentObserver = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) {
             [unowned self] _ in
-            if let vc = self.friendsViewController {
-                ElloHUD.showLoadingHudInView(vc.view)
-                vc.loadInitialPage()
-            }
+            self.reload(streamKind: .following)
         }
     }
 

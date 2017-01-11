@@ -34,6 +34,11 @@ class BaseElloViewController: UIViewController, ControllerThatMightHaveTheCurren
         self.navigationItem.fixNavBarItemPadding()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Tracker.shared.screenAppeared(self)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent

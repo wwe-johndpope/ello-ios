@@ -11,8 +11,8 @@ struct NoPostsCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? NoPostsCell,
+        guard
+            let cell = cell as? NoPostsCell,
             let user = streamCellItem.jsonable as? User
         else { return }
 

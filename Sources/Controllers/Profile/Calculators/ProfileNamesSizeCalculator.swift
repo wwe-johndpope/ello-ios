@@ -9,8 +9,8 @@ struct ProfileNamesSizeCalculator {
     let promise = Promise<CGFloat>()
 
     func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
-        guard let
-            user = item.jsonable as? User
+        guard
+            let user = item.jsonable as? User
         else {
             promise.completeWithSuccess(0)
             return promise.future

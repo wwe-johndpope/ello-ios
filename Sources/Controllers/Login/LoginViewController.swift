@@ -34,12 +34,12 @@ extension LoginViewController: LoginDelegate {
     }
 
     func forgotPasswordAction() {
-        Tracker.sharedTracker.tappedForgotPassword()
+        Tracker.shared.tappedForgotPassword()
 
         let browser = ElloWebBrowserViewController()
         let nav = ElloWebBrowserViewController.navigationControllerWithBrowser(browser)
         let url = "\(ElloURI.baseURL)/forgot-password"
-        Tracker.sharedTracker.webViewAppeared(url)
+        Tracker.shared.webViewAppeared(url)
         browser.loadURLString(url)
         browser.tintColor = UIColor.greyA()
 
@@ -89,23 +89,23 @@ extension LoginViewController: LoginDelegate {
     }
 
     func submit(username: String, password: String) {
-        Tracker.sharedTracker.tappedLogin()
+        Tracker.shared.tappedLogin()
 
         _ = screen.resignFirstResponder()
 
         if Validator.hasValidLoginCredentials(username: username, password: password) {
-            Tracker.sharedTracker.loginValid()
+            Tracker.shared.loginValid()
             screen.hideError()
             screen.loadingHUD(visible: true)
 
             CredentialsAuthService().authenticate(email: username,
                 password: password,
                 success: {
-                    Tracker.sharedTracker.loginSuccessful()
+                    Tracker.shared.loginSuccessful()
                     self.loadCurrentUser()
                 },
                 failure: { (error, statusCode) in
-                    Tracker.sharedTracker.loginFailed()
+                    Tracker.shared.loginFailed()
                     self.screen.loadingHUD(visible: false)
                     let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
                     self.screen.showError(errorTitle)
@@ -113,7 +113,7 @@ extension LoginViewController: LoginDelegate {
             )
         }
         else {
-            Tracker.sharedTracker.loginInvalid()
+            Tracker.shared.loginInvalid()
             if let errorTitle = Validator.invalidLoginCredentialsReason(username: username, password: password) {
                 screen.showError(errorTitle)
             }

@@ -2,9 +2,8 @@
 ///  Relationship.swift
 //
 
-import Crashlytics
-import Foundation
 import SwiftyJSON
+
 
 let RelationshipVersion = 1
 
@@ -61,7 +60,6 @@ final class Relationship: JSONAble {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.relationshipFromJSON.rawValue)
         var createdAt: Date
         if let date = json["created_at"].stringValue.toDate() {
             // good to go
@@ -69,9 +67,8 @@ final class Relationship: JSONAble {
         }
         else {
             createdAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Relationship", json: json.rawString())
         }
+
         let relationship = Relationship(
             id: json["id"].stringValue,
             createdAt: createdAt,

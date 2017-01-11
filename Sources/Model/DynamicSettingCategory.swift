@@ -2,8 +2,8 @@
 ///  DynamicSettingCategory.swift
 //
 
-import Crashlytics
 import SwiftyJSON
+
 
 let DynamicSettingCategoryVersion = 1
 
@@ -36,7 +36,6 @@ final class DynamicSettingCategory: JSONAble {
 extension DynamicSettingCategory {
     override class func fromJSON(_ data: [String: AnyObject]) -> DynamicSettingCategory {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.dynamicSettingCategoryFromJSON.rawValue)
         let label = json["label"].stringValue
         let settings: [DynamicSetting] = json["items"].arrayValue.map { DynamicSetting.fromJSON($0.object as! [String: AnyObject]) }
 

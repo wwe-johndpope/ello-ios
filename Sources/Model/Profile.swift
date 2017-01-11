@@ -2,9 +2,9 @@
 ///  Profile.swift
 //
 
-import Crashlytics
 import Foundation
 import SwiftyJSON
+
 
 // version 1: initial
 // version 2: added hasAutoWatchEnabled and moved in notifyOfWatch* settings
@@ -231,7 +231,6 @@ final class Profile: JSONAble {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.profileFromJSON.rawValue)
         // create profile
         let profile = Profile(
             id: json["id"].string ?? "",

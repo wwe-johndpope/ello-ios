@@ -82,12 +82,12 @@ private extension ShareViewController {
             content: content,
             buyButtonURL: nil,
             success: { post in
-//                Tracker.sharedTracker.shareSuccessful()
+//                Tracker.shared.shareSuccessful()
                 self.donePosting()
                 self.dismissPostingForm()
             },
             failure: { error, statusCode in
-//                Tracker.sharedTracker.shareFailed()
+//                Tracker.shared.shareFailed()
                 self.donePosting()
                 self.showFailedToPost()
             }

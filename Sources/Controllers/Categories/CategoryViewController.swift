@@ -3,6 +3,10 @@
 //
 
 final class CategoryViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Discover" }
+    override func trackerProps() -> [String: AnyObject]? {
+        return ["category": slug as AnyObject]
+    }
 
     var mockScreen: CategoryScreenProtocol?
     var screen: CategoryScreenProtocol {
@@ -223,7 +227,7 @@ extension CategoryViewController: CategoryScreenDelegate {
     }
 
     func select(category: Category) {
-		Tracker.sharedTracker.categoryOpened(category.slug)
+		Tracker.shared.categoryOpened(category.slug)
 
         var kind: StreamKind?
         switch category.level {
@@ -245,5 +249,6 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.slug = category.slug
         self.title = category.name
         reloadEntireCategory()
+        Tracker.shared.screenAppeared(self)
     }
 }

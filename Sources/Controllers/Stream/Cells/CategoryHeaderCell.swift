@@ -174,13 +174,13 @@ class CategoryHeaderCell: UICollectionViewCell {
     }
 
     func postedByTapped() {
-        Tracker.sharedTracker.categoryHeaderPostedBy(config.tracking)
+        Tracker.shared.categoryHeaderPostedBy(config.tracking)
         userDelegate?.userTappedAuthor(cell: self)
     }
 
     func callToActionTapped() {
         guard let url = callToActionURL else { return }
-        Tracker.sharedTracker.categoryHeaderCallToAction(config.tracking)
+        Tracker.shared.categoryHeaderCallToAction(config.tracking)
         let request = URLRequest(url: url)
         ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
     }

@@ -2,9 +2,8 @@
 ///  Love.swift
 //
 
-import Crashlytics
 import SwiftyJSON
-import Foundation
+
 
 let LoveVersion: Int = 1
 
@@ -80,7 +79,6 @@ final class Love: JSONAble, PostActionable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.loveFromJSON.rawValue)
         var createdAt: Date
         var updatedAt: Date
         if let date = json["created_at"].stringValue.toDate() {
@@ -89,17 +87,14 @@ final class Love: JSONAble, PostActionable {
         }
         else {
             createdAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Love", json: json.rawString())
         }
+
         if let date = json["updated_at"].stringValue.toDate() {
             // good to go
             updatedAt = date
         }
         else {
             updatedAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Love Updated", json: json.rawString())
         }
 
         // create Love

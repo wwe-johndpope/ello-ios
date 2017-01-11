@@ -40,8 +40,8 @@ struct StreamImageCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? StreamImageCell,
+        guard
+            let cell = cell as? StreamImageCell,
             let imageRegion = streamCellItem.type.data as? ImageRegion
         else {
             return

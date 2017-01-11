@@ -85,6 +85,7 @@ struct StreamNotification {
 
 // MARK: StreamViewController
 final class StreamViewController: BaseElloViewController {
+    override func trackerName() -> String? { return nil }
 
     @IBOutlet weak var collectionView: ElloCollectionView!
     @IBOutlet weak var noResultsLabel: UILabel!
@@ -496,8 +497,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [weak self] (comment, change) in
-            guard let
-                sself = self, sself.initialDataLoaded && sself.isViewLoaded
+            guard
+                let sself = self, sself.initialDataLoaded && sself.isViewLoaded
             else { return }
 
             switch change {
@@ -509,8 +510,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         postChangedNotification = NotificationObserver(notification: PostChangedNotification) { [weak self] (post, change) in
-            guard let
-                sself = self, sself.initialDataLoaded && sself.isViewLoaded
+            guard
+                let sself = self, sself.initialDataLoaded && sself.isViewLoaded
             else { return }
 
             switch change {
@@ -533,8 +534,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         jsonableChangedNotification = NotificationObserver(notification: JSONAbleChangedNotification) { [weak self] (jsonable, change) in
-            guard let
-                sself = self, sself.initialDataLoaded && sself.isViewLoaded
+            guard
+                let sself = self, sself.initialDataLoaded && sself.isViewLoaded
             else { return }
 
             sself.dataSource.modifyItems(jsonable, change: change, collectionView: sself.collectionView)
@@ -542,8 +543,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [weak self] user in
-            guard let
-                sself = self, sself.initialDataLoaded && sself.isViewLoaded
+            guard
+                let sself = self, sself.initialDataLoaded && sself.isViewLoaded
             else { return }
 
             sself.dataSource.modifyUserRelationshipItems(user, collectionView: sself.collectionView)
@@ -551,8 +552,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { [weak self] user in
-            guard let
-                sself = self, sself.initialDataLoaded && sself.isViewLoaded
+            guard
+                let sself = self, sself.initialDataLoaded && sself.isViewLoaded
             else { return }
 
             sself.dataSource.modifyUserSettingsItems(user, collectionView: sself.collectionView)
@@ -560,8 +561,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] user in
-            guard let
-                sself = self, sself.initialDataLoaded && sself.isViewLoaded
+            guard
+                let sself = self, sself.initialDataLoaded && sself.isViewLoaded
             else { return }
 
             sself.dataSource.modifyItems(user, change: .update, collectionView: sself.collectionView)
@@ -677,10 +678,10 @@ extension StreamViewController: InviteDelegate {
     func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion) {
         if let email = person.emails.first {
             if isOnboarding {
-                Tracker.sharedTracker.onboardingFriendInvited()
+                Tracker.shared.onboardingFriendInvited()
             }
             else {
-                Tracker.sharedTracker.friendInvited()
+                Tracker.shared.friendInvited()
             }
             ElloHUD.showLoadingHudInView(view)
             InviteService().invite(email,
@@ -865,7 +866,7 @@ extension StreamViewController: StreamImageCellDelegate {
             imageViewer.imageTapped(imageView, imageURL: cell.presentedImageUrl)
             if let post = post,
                     let asset = imageAsset {
-                Tracker.sharedTracker.viewedImage(asset, post: post)
+                Tracker.shared.viewedImage(asset, post: post)
             }
         }
     }
@@ -887,7 +888,7 @@ extension StreamViewController {
     }
 
     func showCategoryViewController(slug: String, name: String) {
-        Tracker.sharedTracker.categoryOpened(slug)
+        Tracker.shared.categoryOpened(slug)
         let vc = CategoryViewController(slug: slug, name: name)
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
@@ -898,8 +899,8 @@ extension StreamViewController {
 extension StreamViewController: CategoryDelegate {
 
     func categoryCellTapped(cell: UICollectionViewCell) {
-        guard let
-            indexPath = collectionView.indexPath(for: cell),
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
             let post = dataSource.jsonableForIndexPath(indexPath) as? Post,
             let category = post.category
         else { return }
@@ -925,8 +926,8 @@ extension StreamViewController: UserDelegate {
     }
 
     func userTappedAuthor(cell: UICollectionViewCell) {
-        guard let
-            indexPath = collectionView.indexPath(for: cell),
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
             let user = dataSource.userForIndexPath(indexPath)
         else { return }
 
@@ -934,8 +935,8 @@ extension StreamViewController: UserDelegate {
     }
 
     func userTappedReposter(cell: UICollectionViewCell) {
-        guard let
-            indexPath = collectionView.indexPath(for: cell),
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
             let reposter = dataSource.reposterForIndexPath(indexPath)
         else { return }
 
@@ -947,8 +948,8 @@ extension StreamViewController: UserDelegate {
     }
 
     func userTappedFeaturedCategories(cell: UICollectionViewCell) {
-        guard let
-            indexPath = collectionView.indexPath(for: cell),
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
             let user = dataSource.userForIndexPath(indexPath)
         else { return }
 
@@ -1032,8 +1033,8 @@ extension StreamViewController: WebLinkDelegate {
 // MARK: StreamViewController: AnnouncementCellDelegate
 extension StreamViewController: AnnouncementCellDelegate {
     func markAnnouncementAsRead(cell: UICollectionViewCell) {
-        guard let
-            indexPath = collectionView.indexPath(for: cell),
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
             let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement
         else { return }
 
@@ -1098,7 +1099,7 @@ extension StreamViewController: UICollectionViewDelegate {
         else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
             let callToAction = announcement.ctaURL
         {
-            Tracker.sharedTracker.announcementOpened(announcement)
+            Tracker.shared.announcementOpened(announcement)
             let request = URLRequest(url: callToAction)
             ElloWebViewHelper.handle(request: request, webLinkDelegate: self)
         }
@@ -1128,8 +1129,8 @@ extension StreamViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath) -> Bool {
-            guard let
-                cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
+            guard
+                let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
             else { return false }
 
             return cellItemType.selectable
@@ -1176,8 +1177,8 @@ extension StreamViewController: UIScrollViewDelegate {
             responseConfig?.totalPagesRemaining != "0"
         else { return }
 
-        guard let
-            nextQueryItems = responseConfig?.nextQueryItems
+        guard
+            let nextQueryItems = responseConfig?.nextQueryItems
         else { return }
 
         guard let lastCellItem = dataSource.visibleCellItems.last, lastCellItem.type != .streamLoading
@@ -1213,6 +1214,10 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         if jsonables.count > 0 {
+            if let controller = parent as? BaseElloViewController {
+                Tracker.shared.screenAppeared(controller)
+            }
+
             let items = StreamCellItemParser().parse(jsonables, streamKind: streamKind, currentUser: currentUser)
             for item in items {
                 item.placeholderType = placeholderType

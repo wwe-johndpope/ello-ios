@@ -34,8 +34,8 @@ class ProfileHeaderCellSizeCalculator {
     }
 
     static func calculateHeightFromCellHeights(_ calculatedCellHeights: CalculatedCellHeights) -> CGFloat? {
-        guard let
-            profileAvatar = calculatedCellHeights.profileAvatar,
+        guard
+            let profileAvatar = calculatedCellHeights.profileAvatar,
             let profileNames = calculatedCellHeights.profileNames,
             let profileTotalCount = calculatedCellHeights.profileTotalCount,
             let profileStats = calculatedCellHeights.profileStats,

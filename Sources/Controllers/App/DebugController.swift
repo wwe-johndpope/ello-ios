@@ -1,5 +1,5 @@
 ////
-///  DebugTodoController.swift
+///  DebugController.swift
 //
 
 #if DEBUG
@@ -8,7 +8,7 @@ import SwiftyUserDefaults
 import Crashlytics
 import ImagePickerSheetController
 
-class DebugTodoController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let tableView = UITableView()
     var actions = [(String, BasicBlock)]()
@@ -33,6 +33,19 @@ class DebugTodoController: UIViewController, UITableViewDataSource, UITableViewD
         addAction(name: "Logout") {
             appController.closeTodoController() {
                 appController.userLoggedOut()
+            }
+        }
+        addAction(name: "Debug Tracking") {
+            if Tracker.shared.overrideAgent is DebugAgent {
+                let vc = DebugTrackingController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            else {
+                appController.closeTodoController() {
+                    Tracker.shared.overrideAgent = DebugAgent()
+                    let alertController = AlertViewController(error: "Debug tracking is on")
+                    appController.present(alertController, animated: true, completion: nil)
+                }
             }
         }
         addAction(name: "Deep Linking") {
@@ -147,7 +160,7 @@ class DebugTodoController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "todo")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Action")
         view.addSubview(tableView)
     }
 

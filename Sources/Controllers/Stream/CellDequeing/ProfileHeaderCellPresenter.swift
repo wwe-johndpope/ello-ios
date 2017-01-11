@@ -14,8 +14,8 @@ struct ProfileHeaderCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? ProfileHeaderCell,
+        guard
+            let cell = cell as? ProfileHeaderCell,
             let user = streamCellItem.jsonable as? User
         else { return }
 

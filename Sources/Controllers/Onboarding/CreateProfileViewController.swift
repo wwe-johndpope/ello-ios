@@ -120,28 +120,28 @@ extension CreateProfileViewController: OnboardingStepController {
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
         var properties: [String: AnyObject] = [:]
         if let name = onboardingData.name, didSetName {
-            Tracker.sharedTracker.enteredOnboardName()
+            Tracker.shared.enteredOnboardName()
             properties["name"] = name as AnyObject?
         }
 
         if let bio = onboardingData.bio, didSetBio {
-            Tracker.sharedTracker.enteredOnboardBio()
+            Tracker.shared.enteredOnboardBio()
             properties["unsanitized_short_bio"] = bio as AnyObject?
         }
 
         if let links = onboardingData.links, didSetLinks {
-            Tracker.sharedTracker.enteredOnboardLinks()
+            Tracker.shared.enteredOnboardLinks()
             properties["external_links"] = links as AnyObject?
         }
 
         let avatarImage: ImageRegionData? = didUploadAvatarImage ? onboardingData.avatarImage : nil
         if avatarImage != nil {
-            Tracker.sharedTracker.uploadedOnboardAvatar()
+            Tracker.shared.uploadedOnboardAvatar()
         }
 
         let coverImage: ImageRegionData? = didUploadCoverImage ? onboardingData.coverImage : nil
         if coverImage != nil {
-            Tracker.sharedTracker.uploadedOnboardCoverImage()
+            Tracker.shared.uploadedOnboardCoverImage()
         }
 
         guard avatarImage != nil || coverImage != nil || !properties.isEmpty else {
@@ -173,18 +173,18 @@ extension CreateProfileViewController: OnboardingStepController {
     }
 
     func goToNextStep(_ abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
-        guard let
-            presenter = onboardingViewController?.parentAppController, !abort else {
+        guard
+            let presenter = onboardingViewController?.parentAppController, !abort else {
             proceedClosure(.abort)
             return
         }
 
-        Tracker.sharedTracker.inviteFriendsTapped()
+        Tracker.shared.inviteFriendsTapped()
         AddressBookController.promptForAddressBookAccess(fromController: self,
             completion: { result in
             switch result {
             case let .success(addressBook):
-                Tracker.sharedTracker.contactAccessPreferenceChanged(true)
+                Tracker.shared.contactAccessPreferenceChanged(true)
 
                 let vc = InviteFriendsViewController(addressBook: addressBook)
                 vc.currentUser = self.currentUser
@@ -198,7 +198,7 @@ extension CreateProfileViewController: OnboardingStepController {
                     return
                 }
 
-                Tracker.sharedTracker.contactAccessPreferenceChanged(false)
+                Tracker.shared.contactAccessPreferenceChanged(false)
                 let message = addressBookError.rawValue
                 let alertController = AlertViewController(error: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate as NSString, [message]) as String)
                 presenter.present(alertController, animated: true, completion: .none)

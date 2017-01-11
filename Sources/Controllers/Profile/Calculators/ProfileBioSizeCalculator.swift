@@ -14,8 +14,8 @@ class ProfileBioSizeCalculator: NSObject {
     }
 
     func calculate(_ item: StreamCellItem, maxWidth: CGFloat) -> Future<CGFloat> {
-        guard let
-            user = item.jsonable as? User,
+        guard
+            let user = item.jsonable as? User,
             let formattedShortBio = user.formattedShortBio, !formattedShortBio.isEmpty
         else {
             promise.completeWithSuccess(0)

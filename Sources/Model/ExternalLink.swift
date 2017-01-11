@@ -17,8 +17,8 @@ struct ExternalLink {
 
 extension ExternalLink {
     static func fromDict(_ link: [String: String]) -> ExternalLink? {
-        guard let
-            urlStr = link["url"],
+        guard
+            let urlStr = link["url"],
             let url = URL(string: urlStr),
             let text = link["text"]
         else {

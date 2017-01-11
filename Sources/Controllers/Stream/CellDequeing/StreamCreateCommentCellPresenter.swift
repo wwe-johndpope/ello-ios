@@ -11,8 +11,8 @@ struct StreamCreateCommentCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        guard let
-            cell = cell as? StreamCreateCommentCell,
+        guard
+            let cell = cell as? StreamCreateCommentCell,
             let comment = streamCellItem.jsonable as? ElloComment,
             let post = comment.loadedFromPost,
             let user = comment.author

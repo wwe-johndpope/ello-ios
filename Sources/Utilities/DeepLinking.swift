@@ -13,8 +13,8 @@ struct DeepLinking {
     }
 
     static func showSettings(navVC: UINavigationController?, currentUser: User?) {
-        guard let
-            settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController()
+        guard
+            let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController()
                 as? SettingsContainerViewController
         else { return }
 

@@ -2,9 +2,8 @@
 ///  Watch.swift
 //
 
-import Crashlytics
 import SwiftyJSON
-import Foundation
+
 
 let WatchVersion: Int = 1
 
@@ -75,7 +74,6 @@ final class Watch: JSONAble, PostActionable {
 
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
-        Crashlytics.sharedInstance().setObjectValue(json.rawString(), forKey: CrashlyticsKey.watchFromJSON.rawValue)
         var createdAt: Date
         var updatedAt: Date
         if let date = json["created_at"].stringValue.toDate() {
@@ -84,17 +82,14 @@ final class Watch: JSONAble, PostActionable {
         }
         else {
             createdAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Watch", json: json.rawString())
         }
+
         if let date = json["updated_at"].stringValue.toDate() {
             // good to go
             updatedAt = date
         }
         else {
             updatedAt = Date()
-            // send data to segment to try to get more data about this
-            Tracker.sharedTracker.createdAtCrash("Watch Updated", json: json.rawString())
         }
 
         // create Watch

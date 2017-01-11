@@ -3,33 +3,16 @@
 //
 
 import FLAnimatedImage
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 
 final class ProfileViewController: StreamableViewController {
+    override func trackerName() -> String? { return "Profile" }
+    override func trackerProps() -> [String: AnyObject]? {
+        if let user = user {
+            return ["username": user.username as AnyObject]
+        }
+        return nil
+    }
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.person) }
@@ -268,7 +251,7 @@ final class ProfileViewController: StreamableViewController {
             let shareURL = URL(string: shareLink)
         else { return }
 
-        Tracker.sharedTracker.userShared(user)
+        Tracker.shared.userShared(user)
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
@@ -299,7 +282,7 @@ extension ProfileViewController: ProfileScreenDelegate {
     func hireTapped() {
         guard let user = user else { return }
 
-        Tracker.sharedTracker.tappedHire(user)
+        Tracker.shared.tappedHire(user)
         let vc = HireViewController(user: user, type: .hire)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -315,7 +298,7 @@ extension ProfileViewController: ProfileScreenDelegate {
     func collaborateTapped() {
         guard let user = user else { return }
 
-        Tracker.sharedTracker.tappedCollaborate(user)
+        Tracker.shared.tappedCollaborate(user)
         let vc = HireViewController(user: user, type: .collaborate)
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -380,8 +363,10 @@ extension ProfileViewController: PostsTappedResponder {
 extension ProfileViewController: ProfileHeaderResponder {
 
     func onCategoryBadgeTapped(_ cell: UICollectionViewCell) {
-        guard let
-            categories = user?.categories, user?.categories?.count > 0
+        guard
+            let categories = user?.categories,
+            let count = user?.categories?.count,
+            count > 0
         else { return }
 
         let vc = ProfileCategoriesViewController(categories: categories)
@@ -491,7 +476,6 @@ extension ProfileViewController:  StreamDestination {
         title = user.atName
 
         setupNavigationItems()
-        Tracker.sharedTracker.profileLoaded(user.atName)
 
         screen.updateRelationshipControl(user: user)
 

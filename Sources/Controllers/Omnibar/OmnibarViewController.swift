@@ -8,14 +8,27 @@ import PINRemoteImage
 
 
 class OmnibarViewController: BaseElloViewController {
-    var keyboardWillShowObserver: NotificationObserver?
-    var keyboardWillHideObserver: NotificationObserver?
+    override func trackerName() -> String? { return "Omnibar" }
+    override func trackerProps() -> [String: AnyObject]? {
+        if let parentPost = parentPost {
+            return ["creating": "comment" as AnyObject]
+        }
+        if let editPost = editPost {
+            return ["editing": "post" as AnyObject]
+        }
+        if let editComment = editComment {
+            return ["editing": "post" as AnyObject]
+        }
+        return ["creating": "post" as AnyObject]
+    }
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.omni) }
         set { self.tabBarItem = newValue }
     }
 
+    var keyboardWillShowObserver: NotificationObserver?
+    var keyboardWillHideObserver: NotificationObserver?
     var previousTab: ElloTab = .DefaultTab
     var parentPost: Post?
     var editPost: Post?
@@ -163,7 +176,7 @@ class OmnibarViewController: BaseElloViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (false, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
         UIApplication.shared.statusBarStyle = .lightContent
 
         if let previousTab = elloTabBarController?.previousTab {
@@ -310,21 +323,21 @@ extension OmnibarViewController: OmnibarScreenDelegate {
             }
 
             if parentPost != nil {
-                Tracker.sharedTracker.contentCreationCanceled(.comment)
+                Tracker.shared.contentCreationCanceled(.comment)
             }
             else if editPost != nil {
-                Tracker.sharedTracker.contentEditingCanceled(.post)
+                Tracker.shared.contentEditingCanceled(.post)
             }
             else if editComment != nil {
-                Tracker.sharedTracker.contentEditingCanceled(.comment)
+                Tracker.shared.contentEditingCanceled(.comment)
             }
             else {
-                Tracker.sharedTracker.contentCreationCanceled(.post)
+                Tracker.shared.contentCreationCanceled(.post)
             }
             _ = navigationController?.popViewController(animated: true)
         }
         else {
-            Tracker.sharedTracker.contentCreationCanceled(.post)
+            Tracker.shared.contentCreationCanceled(.post)
             goToPreviousTab()
         }
     }
@@ -445,13 +458,13 @@ extension OmnibarViewController {
 
     fileprivate func emitCommentSuccess(_ comment: ElloComment) {
         if editComment != nil {
-            Tracker.sharedTracker.commentEdited(comment)
+            Tracker.shared.commentEdited(comment)
             postNotification(CommentChangedNotification, value: (comment, .replaced))
             stopSpinner()
         }
         else {
             ContentChange.updateCommentCount(comment, delta: 1)
-            Tracker.sharedTracker.commentCreated(comment)
+            Tracker.shared.commentCreated(comment)
             postNotification(CommentChangedNotification, value: (comment, .create))
 
             if let post = comment.parentPost {
@@ -479,7 +492,7 @@ extension OmnibarViewController {
         stopSpinner()
 
         if editPost != nil {
-            Tracker.sharedTracker.postEdited(post)
+            Tracker.shared.postEdited(post)
             postNotification(PostChangedNotification, value: (post, .replaced))
         }
         else {
@@ -488,7 +501,7 @@ extension OmnibarViewController {
                 postNotification(CurrentUserChangedNotification, value: user)
             }
 
-            Tracker.sharedTracker.postCreated(post)
+            Tracker.shared.postCreated(post)
             postNotification(PostChangedNotification, value: (post, .create))
         }
 
@@ -521,7 +534,7 @@ extension OmnibarViewController {
         else {
             contentType = .comment
         }
-        Tracker.sharedTracker.contentCreationFailed(contentType, message: errorMessage)
+        Tracker.shared.contentCreationFailed(contentType, message: errorMessage)
         screen.reportError("Could not create \(contentType.rawValue)", errorMessage: errorMessage)
     }
 

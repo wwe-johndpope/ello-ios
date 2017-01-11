@@ -3,31 +3,7 @@
 //
 
 import Foundation
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-// Xcode modifies these regardless of changing them
-// swiftlint:disable colon
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
 
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
 
 // swiftlint:enable colon
 protocol PostbarDelegate: class {
@@ -64,7 +40,7 @@ class PostbarController: PostbarDelegate {
 
     func viewsButtonTapped(_ indexPath: IndexPath) {
         if let post = postForIndexPath(indexPath) {
-            Tracker.sharedTracker.viewsButtonTapped(post: post)
+            Tracker.shared.viewsButtonTapped(post: post)
             // This is a bit dirty, we should not call a method on a compositionally held
             // controller's postTappedDelegate. Need to chat about this with the crew.
             presentingController?.postTappedDelegate?.postTapped(post)
@@ -153,7 +129,9 @@ class PostbarController: PostbarDelegate {
                 // post comment count updated
                 ContentChange.updateCommentCount(comment, delta: -1)
                 PostService().deleteComment(comment.postId, commentId: comment.id,
-                    success: {},
+                    success: {
+                        Tracker.shared.commentDeleted(comment)
+                    },
                     failure: { (error, statusCode)  in
                         // TODO: add error handling
                         print("failed to delete comment, error: \(error.elloErrorMessage ?? error.localizedDescription)")
@@ -182,7 +160,6 @@ class PostbarController: PostbarDelegate {
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
-            Tracker.sharedTracker.postLoved(post)
             cell?.lovesControl.isUserInteractionEnabled = false
             if post.loved { unlovePost(post, cell: cell) }
             else { lovePost(post, cell: cell) }
@@ -190,7 +167,7 @@ class PostbarController: PostbarDelegate {
     }
 
     fileprivate func unlovePost(_ post: Post, cell: StreamFooterCell?) {
-        Tracker.sharedTracker.postUnloved(post)
+        Tracker.shared.postUnloved(post)
         if let count = post.lovesCount {
             post.lovesCount = count - 1
             post.loved = false
@@ -213,7 +190,7 @@ class PostbarController: PostbarDelegate {
     }
 
     fileprivate func lovePost(_ post: Post, cell: StreamFooterCell?) {
-        Tracker.sharedTracker.postLoved(post)
+        Tracker.shared.postLoved(post)
         if let count = post.lovesCount {
             post.lovesCount = count + 1
             post.loved = true
@@ -237,7 +214,7 @@ class PostbarController: PostbarDelegate {
 
     func repostButtonTapped(_ indexPath: IndexPath) {
         if let post = self.postForIndexPath(indexPath) {
-            Tracker.sharedTracker.postReposted(post)
+            Tracker.shared.postReposted(post)
             let message = InterfaceString.Post.RepostConfirm
             let alertController = AlertViewController(message: message)
             alertController.autoDismiss = false
@@ -295,7 +272,7 @@ class PostbarController: PostbarDelegate {
             let shareLink = post.shareLink,
             let shareURL = URL(string: shareLink)
         {
-            Tracker.sharedTracker.postShared(post)
+            Tracker.shared.postShared(post)
             let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
             if UI_USER_INTERFACE_IDIOM() == .phone {
                 activityVC.modalPresentationStyle = .fullScreen
@@ -360,8 +337,8 @@ class PostbarController: PostbarDelegate {
     }
 
     func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
-        guard let
-            comment = dataSource.commentForIndexPath(indexPath),
+        guard
+            let comment = dataSource.commentForIndexPath(indexPath),
             let post = comment.parentPost
         else { return }
 
@@ -396,7 +373,10 @@ class PostbarController: PostbarDelegate {
 
         if let currentUser = currentUser {
             let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
-            if post.commentsCount > ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int {
+            if let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
+                let postCommentCount = post.commentsCount,
+                postCommentCount > maxCount
+            {
                 items.append(StreamCellItem(jsonable: jsonables.last ?? newComment, type: .seeMoreComments))
             }
             else {

@@ -42,8 +42,8 @@ class ElloNavigationController: UINavigationController, ControllerThatMightHaveT
 
     func didSetCurrentUser() {
         if self.viewControllers.count == 0 {
-            if let
-                rootViewControllerName = rootViewControllerName,
+            if
+                let rootViewControllerName = rootViewControllerName,
                 let currentUser = currentUser
             {
                 if let controller = RootViewControllers(rawValue:rootViewControllerName)?.controllerInstance(currentUser) {
@@ -148,10 +148,6 @@ extension ElloNavigationController: UINavigationControllerDelegate {
 
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         backGesture?.edges = viewController.backGestureEdges
-
-        throttledTracker {
-            Tracker.sharedTracker.screenAppeared(viewController)
-        }
     }
 
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

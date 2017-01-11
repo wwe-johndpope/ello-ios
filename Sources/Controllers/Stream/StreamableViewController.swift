@@ -79,7 +79,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     }
 
     fileprivate func willPresentStreamable(_ navBarsVisible: Bool) {
-        postNotification(StatusBarNotifications.statusBarShouldChange, value: (!navBarsVisible, .slide))
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: !navBarsVisible)
         UIView.setAnimationsEnabled(false)
         if navBarsVisible {
             showNavBars(false)
@@ -127,7 +127,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         }
 
         if showing {
-            postNotification(StatusBarNotifications.statusBarShouldChange, value: (!visible, .slide))
+            postNotification(StatusBarNotifications.statusBarShouldHide, value: !visible)
         }
     }
 
@@ -291,11 +291,11 @@ extension StreamableViewController: StreamViewDelegate {
 // MARK: InviteResponder
 extension StreamableViewController: InviteResponder {
     func onInviteFriends() {
-        Tracker.sharedTracker.inviteFriendsTapped()
+        Tracker.shared.inviteFriendsTapped()
         AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
             switch result {
             case let .success(addressBook):
-                Tracker.sharedTracker.contactAccessPreferenceChanged(true)
+                Tracker.shared.contactAccessPreferenceChanged(true)
                 let vc = AddFriendsViewController(addressBook: addressBook)
                 vc.currentUser = self.currentUser
                 if let navigationController = self.navigationController {
@@ -307,7 +307,7 @@ extension StreamableViewController: InviteResponder {
             case let .failure(addressBookError):
                 guard addressBookError != .cancelled else { return }
 
-                Tracker.sharedTracker.contactAccessPreferenceChanged(false)
+                Tracker.shared.contactAccessPreferenceChanged(false)
                 let message = addressBookError.rawValue
                 let alertController = AlertViewController(
                     message: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate as NSString, message) as String

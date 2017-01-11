@@ -2,7 +2,6 @@
 ///  AmazonCredentials.swift
 //
 
-import Crashlytics
 
 let AmazonCredentialsVersion = 2
 
@@ -53,7 +52,6 @@ class AmazonCredentials: JSONAble {
     }
 
     override class func fromJSON(_ data: [String : AnyObject]) -> JSONAble {
-        Crashlytics.sharedInstance().setObjectValue(data.description, forKey: CrashlyticsKey.amazonCredentialsFromJSON.rawValue)
         return AmazonCredentials(
             accessKey: data["access_key"] as! String,
             endpoint:  data["endpoint"] as! String,
