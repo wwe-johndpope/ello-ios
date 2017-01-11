@@ -266,6 +266,5 @@ extension NotificationsViewController: AnnouncementDelegate {
         for announcement in announcements {
             Tracker.sharedTracker.announcementViewed(announcement)
         }
-        print("=============== \(#file) line \(#line) ===============")
     }
 }
