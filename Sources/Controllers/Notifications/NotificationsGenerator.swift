@@ -65,24 +65,15 @@ public final class NotificationsGenerator: StreamGenerator {
             return
         }
 
-        let announcement = Announcement(
-            id: NSUUID().UUIDString,
-            header: "header",
-            body: "body",
-            ctaURL: nil,
-            ctaCaption: "caption",
-            createdAt: NSDate()
-            )
-
         NotificationService().loadAnnouncements()
-            .onSuccess { [weak self] _ in
+            .onSuccess { [weak self] announcement in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
 
                 sself.compareAndUpdateAnnouncements([announcement])
             }
             .onFail { [weak self] _ in
-                self?.compareAndUpdateAnnouncements([announcement])
+                self?.compareAndUpdateAnnouncements([])
             }
     }
 
