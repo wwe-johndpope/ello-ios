@@ -37,20 +37,6 @@ struct AutoComplete {
 
     init(){}
 
-    func eagerCheck(_ text: String, location: Int) -> Bool {
-        if location >= text.characters.count { return false }
-
-        let wordStartIndex = getIndexOfWordStart(location, fromString: text)
-        let wordEndIndex = text.characters.index(text.startIndex, offsetBy: location)
-        let charEndIndex = text.characters.index(wordStartIndex, offsetBy: 1)
-        let char = text.substring(with: wordStartIndex..<charEndIndex)
-        let substr = text.substring(with: wordStartIndex..<wordEndIndex)
-        if (substr.characters.split { $0 == ":" }).count > 1 {
-            return false
-        }
-        return char == "@" || char == ":"
-    }
-
     func check(_ text: String, location: Int) -> AutoCompleteMatch? {
         if location > text.characters.count { return .none }
 

@@ -6,38 +6,24 @@
 extension OmnibarScreen: UITextViewDelegate {
     fileprivate func throttleAutoComplete(_ textView: UITextView, text: String, location: Int) {
         let autoComplete = AutoComplete()
-        let mightMatch = autoComplete.eagerCheck(text, location: location)
-        if mightMatch && textView.autocorrectionType == .yes {
-            textView.spellCheckingType = .no
-            textView.autocorrectionType = .no
-            _ = textView.resignFirstResponder()
-            _ = textView.becomeFirstResponder()
-        }
-        else if !mightMatch && textView.autocorrectionType == .no {
-            textView.spellCheckingType = .yes
-            textView.autocorrectionType = .yes
-            _ = textView.resignFirstResponder()
-            _ = textView.becomeFirstResponder()
-        }
-
         self.autoCompleteThrottle { [weak self] in
-            guard let wSelf = self else { return }
+            guard let sself = self else { return }
 
             // deleting characters yields a range.length > 0, go back 1 character for deletes
             if let match = autoComplete.check(text, location: location) {
-                wSelf.autoCompleteVC.load(match) { [weak self] count in
-                    guard let wSelf = self else { return }
+                sself.autoCompleteVC.load(match) { [weak self] count in
+                    guard let sself = self else { return }
                     guard text == textView.text else { return }
 
                     if count > 0 {
-                        wSelf.showAutoComplete(textView, count: count)
+                        sself.showAutoComplete(textView, count: count)
                     }
                     else if count == 0 {
-                        wSelf.hideAutoComplete(textView)
+                        sself.hideAutoComplete(textView)
                     }
                 }
             } else {
-                wSelf.hideAutoComplete(textView)
+                sself.hideAutoComplete(textView)
             }
         }
     }
@@ -116,6 +102,7 @@ extension OmnibarScreen: UITextViewDelegate {
         if autoCompleteShowing {
             autoCompleteShowing = false
             textView.spellCheckingType = .yes
+            textView.autocorrectionType = .yes
             textView.inputAccessoryView = keyboardButtonView
             _ = textView.resignFirstResponder()
             _ = textView.becomeFirstResponder()
