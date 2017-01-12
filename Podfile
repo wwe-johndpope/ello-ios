@@ -22,10 +22,10 @@ def ello_app_pods
   pod 'KINWebBrowser', git: 'https://github.com/ello/KINWebBrowser'
   pod 'PINRemoteImage', git: 'https://github.com/pinterest/PINRemoteImage.git', commit: 'af312667f0ce830264198366f481f1b222675a31'
   pod 'SSPullToRefresh', '~> 1.2'
-  pod 'ImagePickerSheetController', git: 'https://github.com/lbrndnr/ImagePickerSheetController', branch: 'swift2.3-improvements'
+  pod 'ImagePickerSheetController', git: 'https://github.com/lbrndnr/ImagePickerSheetController', commit: '92bcc3fde8def54c1947771247d5d677377a2f39'
   pod 'iRate', '~> 1.11'
   # swift pods
-  pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
+  pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords', commit: '3cf3e8b3b8d76168a2324294db70790fade54925'
   pod 'WebLinking', '~> 1.0'
   pod 'SnapKit', git: 'https://github.com/SnapKit/SnapKit', commit: '307d03ec433d61fbb25c9c4a6bb32689537db4d6'
   pod 'FutureKit', '~> 2.0'
@@ -44,7 +44,7 @@ def common_pods
     pod 'ElloOSSCerts', '~> 1.1'
   end
   pod 'MBProgressHUD', '~> 0.9.0'
-  pod 'SVGKit', git: 'https://github.com/SVGKit/SVGKit'
+  pod 'SVGKit', git: 'https://github.com/ello/SVGKit', commit: '6160bbdfd0a8924b5e57b13c462db6a0944c8966'
   pod 'FLAnimatedImage', '~> 1.0'
   pod 'YapDatabase', '2.8.1'
   pod 'Alamofire', '~> 3.0'
