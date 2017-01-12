@@ -10,6 +10,18 @@ let AssetVersion = 1
 
 @objc(Asset)
 final class Asset: JSONAble {
+    enum AttachmentType {
+        case optimized
+        case smallScreen
+        case ldpi
+        case mdpi
+        case hdpi
+        case xhdpi
+        case original
+        case large
+        case regular
+        case small
+    }
 
     // active record
     let id: String
@@ -39,6 +51,14 @@ final class Asset: JSONAble {
     var large: Attachment?
     var regular: Attachment?
     var small: Attachment?
+    var allAttachments: [(AttachmentType, Attachment)] {
+        let possibles: [(AttachmentType, Attachment?)] = [(.optimized, optimized), (.smallScreen, smallScreen), (.ldpi, ldpi), (.mdpi, mdpi), (.hdpi, hdpi), (.xhdpi, xhdpi), (.original, original), (.large, large), (.regular, regular), (.small, small)]
+        return possibles.flatMap() { type, attachment in
+            guard  let attachment = attachment else { return nil }
+            return (type, attachment)
+        }
+    }
+
     // computed
     var isGif: Bool {
         return self.optimized?.type == "image/gif"
@@ -73,6 +93,15 @@ final class Asset: JSONAble {
 
         let attachment = Attachment(url: url)
         self.optimized = attachment
+        self.smallScreen = attachment
+        self.ldpi = attachment
+        self.mdpi = attachment
+        self.hdpi = attachment
+        self.xhdpi = attachment
+        self.original = attachment
+        self.large = attachment
+        self.regular = attachment
+        self.small = attachment
     }
 
     convenience init(url: URL, gifData: Data, posterImage: UIImage) {
@@ -191,6 +220,33 @@ final class Asset: JSONAble {
             asset.small = Attachment.fromJSON(small) as? Attachment
         }
         return asset
+    }
+}
+
+extension Asset {
+    func replace(attachmentType: AttachmentType, with attachment: Attachment?) {
+        switch attachmentType {
+        case .optimized:
+            optimized = attachment
+        case .smallScreen:
+            smallScreen = attachment
+        case .ldpi:
+            ldpi = attachment
+        case .mdpi:
+            mdpi = attachment
+        case .hdpi:
+            hdpi = attachment
+        case .xhdpi:
+            xhdpi = attachment
+        case .original:
+            original = attachment
+        case .large:
+            large = attachment
+        case .regular:
+            regular = attachment
+        case .small:
+            small = attachment
+        }
     }
 }
 
