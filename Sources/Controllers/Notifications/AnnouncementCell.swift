@@ -40,7 +40,7 @@ class AnnouncementCell: UICollectionViewCell {
                     let height: CGFloat
                     if let image = result?.image {
                         let size = image.size
-                        height = size.height * self.imageView.frame.width / size.width
+                        height = size.height * Size.imageSize / size.width
                     }
                     else {
                         height = 0
@@ -49,9 +49,17 @@ class AnnouncementCell: UICollectionViewCell {
                 }
             }
             else {
-                imageHeightConstraint.update(offset: 0)
                 imageView.pin_cancelImageDownload()
-                imageView.image = config.image // for testing, nice to be able to assign an image sync'ly
+                let height: CGFloat
+                if let image = config.image {
+                    imageView.image = image // for testing, nice to be able to assign an image sync'ly
+                    let size = image.size
+                    height = size.height * Size.imageSize / size.width
+                }
+                else {
+                    height = 0
+                }
+                imageHeightConstraint.update(offset: height)
             }
         }
     }
