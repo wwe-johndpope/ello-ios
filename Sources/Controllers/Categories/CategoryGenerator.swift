@@ -137,17 +137,17 @@ private extension CategoryGenerator {
 
         CategoryService().loadCategory(slug)
             .onSuccess { [weak self] category in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
-                sself.category = category
-                sself.destination?.setPrimary(jsonable: category)
-                sself.destination?.replacePlaceholder(type: .categoryHeader, items: sself.headerItems()) {}
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                self.category = category
+                self.destination?.setPrimary(jsonable: category)
+                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
                 doneOperation.run()
             }
             .onFail { [weak self] _ in
-                guard let sself = self else { return }
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                guard let `self` = self else { return }
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
             }
     }
 
@@ -156,29 +156,29 @@ private extension CategoryGenerator {
 
         PagePromotionalService().loadPagePromotionals()
             .onSuccess { [weak self] promotionals in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
                 if let pagePromotional = promotionals?.randomItem() {
-                    sself.pagePromotional = pagePromotional
-                    sself.destination?.setPrimary(jsonable: pagePromotional)
+                    self.pagePromotional = pagePromotional
+                    self.destination?.setPrimary(jsonable: pagePromotional)
                 }
-                sself.destination?.replacePlaceholder(type: .categoryHeader, items: sself.headerItems()) {}
+                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
                 doneOperation.run()
             }
             .onFail { [weak self] _ in
-                guard let sself = self else { return }
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                guard let `self` = self else { return }
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
         }
     }
 
     func loadCategories() {
         CategoryService().loadCategories()
             .onSuccess { [weak self] categories in
-                guard let sself = self else { return }
-                sself.categories = categories
-                sself.categoryStreamDestination?.set(categories: categories)
+                guard let `self` = self else { return }
+                self.categories = categories
+                self.categoryStreamDestination?.set(categories: categories)
             }.ignoreFailures()
     }
 
@@ -204,39 +204,39 @@ private extension CategoryGenerator {
             endpoint: endpoint,
             streamKind: streamKind,
             success: { [weak self] (jsonables, responseConfig) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                sself.destination?.setPagingConfig(responseConfig: responseConfig)
-                sself.posts = jsonables as? [Post]
-                let items = sself.parse(jsonables: jsonables)
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
+                self.posts = jsonables as? [Post]
+                let items = self.parse(jsonables: jsonables)
                 displayPostsOperation.run {
                     inForeground {
                         if items.count == 0 {
-                            sself.hasPosts = false
+                            self.hasPosts = false
                             let noItems = [StreamCellItem(type: .noPosts)]
-                            sself.destination?.replacePlaceholder(type: .categoryPosts, items: noItems) {
-                                sself.destination?.pagingEnabled = false
+                            self.destination?.replacePlaceholder(type: .categoryPosts, items: noItems) {
+                                self.destination?.pagingEnabled = false
                             }
-                            sself.destination?.replacePlaceholder(type: .categoryHeader, items: sself.headerItems()) {}
+                            self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
                         }
                         else {
-                            sself.destination?.replacePlaceholder(type: .categoryPosts, items: items) {
-                                sself.destination?.pagingEnabled = true
+                            self.destination?.replacePlaceholder(type: .categoryPosts, items: items) {
+                                self.destination?.pagingEnabled = true
                             }
                         }
                     }
                 }
             }, failure: { [weak self] _ in
-                guard let sself = self else { return }
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                guard let `self` = self else { return }
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
             }, noContent: { [weak self] in
-                guard let sself = self else { return }
+                guard let `self` = self else { return }
                 let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
-                sself.destination?.replacePlaceholder(type: .categoryPosts, items: [noContentItem]) {}
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                self.destination?.replacePlaceholder(type: .categoryPosts, items: [noContentItem]) {}
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
         })
     }
 }

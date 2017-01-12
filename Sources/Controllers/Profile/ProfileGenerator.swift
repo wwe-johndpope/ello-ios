@@ -97,18 +97,18 @@ private extension ProfileGenerator {
             streamKind.endpoint,
             streamKind: streamKind,
             success: { [weak self] (user, _) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                sself.user = user
-                sself.destination?.setPrimary(jsonable: user)
-                sself.destination?.replacePlaceholder(type: .profileHeader, items: sself.headerItems()) {}
+                self.user = user
+                self.destination?.setPrimary(jsonable: user)
+                self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
                 doneOperation.run()
             },
             failure: { [weak self] _ in
-                guard let sself = self else { return }
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                guard let `self` = self else { return }
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
         })
     }
 
@@ -122,40 +122,40 @@ private extension ProfileGenerator {
         StreamService().loadUserPosts(
             userParam,
             success: { [weak self] (posts, responseConfig) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                sself.destination?.setPagingConfig(responseConfig: responseConfig)
-                sself.posts = posts
-                let userPostItems = sself.parse(jsonables: posts)
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
+                self.posts = posts
+                let userPostItems = self.parse(jsonables: posts)
                 displayPostsOperation.run {
                     inForeground {
                         if userPostItems.count == 0 {
-                            sself.hasPosts = false
-                            let user: User = sself.user ?? User.empty(id: sself.userParam)
+                            self.hasPosts = false
+                            let user: User = self.user ?? User.empty(id: self.userParam)
                             let noItems = [StreamCellItem(jsonable: user, type: .noPosts)]
-                            sself.destination?.replacePlaceholder(type: .profilePosts, items: noItems) {
-                                sself.destination?.pagingEnabled = false
+                            self.destination?.replacePlaceholder(type: .profilePosts, items: noItems) {
+                                self.destination?.pagingEnabled = false
                             }
-                            sself.destination?.replacePlaceholder(type: .profileHeader, items: sself.headerItems()) {}
+                            self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
                         }
                         else {
-                            let updateHeaderItems = sself.hasPosts == false
-                            sself.hasPosts = true
+                            let updateHeaderItems = self.hasPosts == false
+                            self.hasPosts = true
                             if updateHeaderItems {
-                                sself.destination?.replacePlaceholder(type: .profileHeader, items: sself.headerItems()) {}
+                                self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
                             }
-                            sself.destination?.replacePlaceholder(type: .profilePosts, items: userPostItems) {
-                                sself.destination?.pagingEnabled = true
+                            self.destination?.replacePlaceholder(type: .profilePosts, items: userPostItems) {
+                                self.destination?.pagingEnabled = true
                             }
                         }
                     }
                 }
             },
             failure: { [weak self] _ in
-                guard let sself = self else { return }
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                guard let `self` = self else { return }
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
         })
     }
 }

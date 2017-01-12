@@ -78,18 +78,18 @@ private extension PostDetailGenerator {
         // load the post with no comments
         PostService().loadPost(postParam, needsComments: false)
             .onSuccess { [weak self] post in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
-                sself.post = post
-                sself.destination?.setPrimary(jsonable: post)
-                let postItems = sself.parse(jsonables: [post])
-                sself.destination?.replacePlaceholder(type: .postHeader, items: postItems) {}
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                self.post = post
+                self.destination?.setPrimary(jsonable: post)
+                let postItems = self.parse(jsonables: [post])
+                self.destination?.replacePlaceholder(type: .postHeader, items: postItems) {}
                 doneOperation.run()
             }
             .onFail { [weak self] _ in
-                guard let sself = self else { return }
-                sself.destination?.primaryJSONAbleNotFound()
-                sself.queue.cancelAllOperations()
+                guard let `self` = self else { return }
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
             }
     }
 
@@ -100,14 +100,14 @@ private extension PostDetailGenerator {
         queue.addOperation(displayCommentBarOperation)
 
         displayCommentBarOperation.run { [weak self] in
-            guard let sself = self else { return }
-            guard let post = sself.post else { return }
+            guard let `self` = self else { return }
+            guard let post = self.post else { return }
             let commentingEnabled = post.author?.hasCommentingEnabled ?? true
-            guard let currentUser = sself.currentUser, commentingEnabled else { return }
+            guard let currentUser = self.currentUser, commentingEnabled else { return }
 
             let barItems = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .createComment)]
             inForeground {
-                sself.destination?.replacePlaceholder(type: .postCommentBar, items: barItems) {}
+                self.destination?.replacePlaceholder(type: .postCommentBar, items: barItems) {}
             }
         }
     }
@@ -127,15 +127,15 @@ private extension PostDetailGenerator {
         PostService().loadPostComments(
             postParam,
             success: { [weak self] (comments, responseConfig) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                let commentItems = sself.parse(jsonables: comments)
+                let commentItems = self.parse(jsonables: comments)
                 displayCommentsOperation.run {
-                    sself.destination?.setPagingConfig(responseConfig: responseConfig)
+                    self.destination?.setPagingConfig(responseConfig: responseConfig)
                     inForeground {
-                        sself.destination?.replacePlaceholder(type: .postComments, items: commentItems) {
-                            sself.destination?.pagingEnabled = true
+                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {
+                            self.destination?.pagingEnabled = true
                         }
                     }
                 }
@@ -155,19 +155,19 @@ private extension PostDetailGenerator {
         PostService().loadPostLovers(
             postParam,
             success: { [weak self] (users, _) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
 
-                let loversItems = sself.userAvatarCellItems(
+                let loversItems = self.userAvatarCellItems(
                     users,
                     icon: .heart,
-                    endpoint: .postLovers(postId: sself.postParam),
+                    endpoint: .postLovers(postId: self.postParam),
                     seeMoreTitle: InterfaceString.Post.LovedByList
                 )
                 displayLoversOperation.run {
                     inForeground {
-                        sself.destination?.replacePlaceholder(type: .postLovers, items: loversItems) {}
+                        self.destination?.replacePlaceholder(type: .postLovers, items: loversItems) {}
                     }
                 }
             },
@@ -186,19 +186,19 @@ private extension PostDetailGenerator {
         PostService().loadPostReposters(
             postParam,
             success: { [weak self] (users, _) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
 
-                let repostersItems = sself.userAvatarCellItems(
+                let repostersItems = self.userAvatarCellItems(
                     users,
                     icon: .repost,
-                    endpoint: .postReposters(postId: sself.postParam),
+                    endpoint: .postReposters(postId: self.postParam),
                     seeMoreTitle: InterfaceString.Post.RepostedByList
                 )
                 displayRepostersOperation.run {
                     inForeground {
-                        sself.destination?.replacePlaceholder(type: .postReposters, items: repostersItems) {}
+                        self.destination?.replacePlaceholder(type: .postReposters, items: repostersItems) {}
                     }
                 }
             },

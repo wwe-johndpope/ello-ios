@@ -200,25 +200,25 @@ private extension NotificationsViewController {
 
     func addNotificationObservers() {
         navigationNotificationObserver = NotificationObserver(notification: NavigationNotifications.showingNotificationsTab) { [weak self] components in
-            guard let sself = self else { return }
-            sself.respondToNotification(components)
+            guard let `self` = self else { return }
+            self.respondToNotification(components)
         }
 
         reloadNotificationsObserver = NotificationObserver(notification: NewContentNotifications.reloadNotifications) {
             [weak self] _ in
-            guard let sself = self else { return }
-            if sself.navigationController?.childViewControllers.count == 1 {
-                sself.reload()
+            guard let `self` = self else { return }
+            if self.navigationController?.childViewControllers.count == 1 {
+                self.reload()
             }
             else {
-                sself.hasNewContent = true
+                self.hasNewContent = true
             }
         }
 
         newAnnouncementsObserver = NotificationObserver(notification: NewContentNotifications.newAnnouncements) {
             [weak self] _ in
-            guard let sself = self else { return }
-            sself.reloadAnnouncements()
+            guard let `self` = self else { return }
+            self.reloadAnnouncements()
         }
     }
 

@@ -286,13 +286,13 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         nameTextFieldView.textField.text = currentUser?.name
 
         let updateNameFunction = debounce(0.5) { [weak self] in
-            guard let sself = self else { return }
-            let name = sself.nameTextFieldView.textField.text ?? ""
+            guard let `self` = self else { return }
+            let name = self.nameTextFieldView.textField.text ?? ""
             ProfileService().updateUserProfile(["name": name as AnyObject], success: { user in
-                sself.updateCurrentUser(user)
-                sself.nameTextFieldView.setState(.ok)
+                self.updateCurrentUser(user)
+                self.nameTextFieldView.setState(.ok)
             }, failure: { _, _ in
-                sself.nameTextFieldView.setState(.error)
+                self.nameTextFieldView.setState(.error)
             })
         }
 
@@ -307,12 +307,12 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         bioTextView.delegate = self
 
         bioTextViewDidChange = debounce(0.5) { [weak self] in
-            guard let sself = self, let bio = sself.bioTextView.text else { return }
+            guard let `self` = self, let bio = self.bioTextView.text else { return }
             ProfileService().updateUserProfile(["unsanitized_short_bio": bio as AnyObject], success: { user in
-                sself.updateCurrentUser(user)
-                sself.bioTextStatusImage.image = ValidationState.ok.imageRepresentation
+                self.updateCurrentUser(user)
+                self.bioTextStatusImage.image = ValidationState.ok.imageRepresentation
             }, failure: { _, _ in
-                sself.bioTextStatusImage.image = ValidationState.error.imageRepresentation
+                self.bioTextStatusImage.image = ValidationState.error.imageRepresentation
             })
         }
     }
@@ -326,12 +326,12 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         linksTextFieldView.textField.keyboardType = .asciiCapable
 
         let updateLinksFunction = debounce(0.5) { [weak self] in
-            guard let sself = self, let links = sself.linksTextFieldView.textField.text else { return }
+            guard let `self` = self, let links = self.linksTextFieldView.textField.text else { return }
             ProfileService().updateUserProfile(["external_links": links as AnyObject], success: { user in
-                sself.updateCurrentUser(user)
-                sself.linksTextFieldView.setState(.ok)
+                self.updateCurrentUser(user)
+                self.linksTextFieldView.setState(.ok)
             }, failure: { _, _ in
-                sself.linksTextFieldView.setState(.error)
+                self.linksTextFieldView.setState(.error)
             })
         }
 
@@ -349,32 +349,32 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         locationTextFieldView.textField.leftViewMode = .always
 
         let updateLocationFunction = debounce(0.5) { [weak self] in
-            guard let sself = self, let location = sself.locationTextFieldView.textField.text else { return }
-            if location != sself.currentUser?.location {
+            guard let `self` = self, let location = self.locationTextFieldView.textField.text else { return }
+            if location != self.currentUser?.location {
                 ProfileService().updateUserProfile(["location": location as AnyObject], success: { user in
-                    sself.updateCurrentUser(user)
-                    sself.locationTextFieldView.setState(.ok)
+                    self.updateCurrentUser(user)
+                    self.locationTextFieldView.setState(.ok)
                 }, failure: { _, _ in
-                    sself.locationTextFieldView.setState(.error)
+                    self.locationTextFieldView.setState(.error)
                 })
             }
 
-            sself.autoCompleteVC.load(AutoCompleteMatch(type: .location, range: location.characters.startIndex..<location.characters.endIndex, text: location)) { count in
-                guard location == sself.locationTextFieldView.textField.text else { return }
+            self.autoCompleteVC.load(AutoCompleteMatch(type: .location, range: location.characters.startIndex..<location.characters.endIndex, text: location)) { count in
+                guard location == self.locationTextFieldView.textField.text else { return }
 
-                sself.locationAutoCompleteResultCount = count
+                self.locationAutoCompleteResultCount = count
             }
         }
 
         locationTextFieldView.textFieldDidChange = { [weak self] text in
-            guard let sself = self else { return }
-            sself.locationTextFieldView.setState(.loading)
+            guard let `self` = self else { return }
+            self.locationTextFieldView.setState(.loading)
             updateLocationFunction()
         }
 
         locationTextFieldView.firstResponderDidChange = { [weak self] isFirstResponder in
-            guard let sself = self else { return }
-            sself.locationTextViewSelected = isFirstResponder
+            guard let `self` = self else { return }
+            self.locationTextViewSelected = isFirstResponder
             updateLocationFunction()
         }
     }

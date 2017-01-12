@@ -74,8 +74,8 @@ extension CreateProfileViewController: CreateProfileDelegate {
         onboardingViewController?.canGoNext = profileIsValid
 
         debouncedLinksValidator { [weak self] in
-            guard let sself = self else { return }
-            sself.screen.linksValid = sself.didSetLinks ? sself.linksAreValid : nil
+            guard let `self` = self else { return }
+            self.screen.linksValid = self.didSetLinks ? self.linksAreValid : nil
         }
         return linksAreValid ? .okSmall : .none
     }
@@ -85,7 +85,7 @@ extension CreateProfileViewController: CreateProfileDelegate {
         onboardingData.coverImage = coverImage
         onboardingViewController?.canGoNext = profileIsValid
     }
-    
+
     func assign(avatarImage: ImageRegionData) {
         didUploadAvatarImage = true
         onboardingData.avatarImage = avatarImage
