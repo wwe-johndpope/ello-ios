@@ -85,7 +85,7 @@ extension CreateProfileViewController: CreateProfileDelegate {
         onboardingData.coverImage = coverImage
         onboardingViewController?.canGoNext = profileIsValid
     }
-    
+
     func assign(avatarImage: ImageRegionData) {
         didUploadAvatarImage = true
         onboardingData.avatarImage = avatarImage

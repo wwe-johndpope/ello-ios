@@ -69,7 +69,6 @@ class StreamContainerViewController: StreamableViewController {
         updateInsets()
 
         let index = currentStreamIndex
-        let stream = streamValues[index]
         let initialController = childStreamControllers[index]
         setupNavigationBar(controller: initialController)
 
@@ -250,7 +249,6 @@ class StreamContainerViewController: StreamableViewController {
         scrollView.scrollRectToVisible(rect, animated: true)
 
         currentStreamIndex = index
-        let stream = streamValues[currentStreamIndex]
         Tracker.shared.screenAppeared(self)
 
         setupNavigationBar(controller: currentController)

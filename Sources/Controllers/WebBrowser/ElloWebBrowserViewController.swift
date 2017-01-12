@@ -77,7 +77,7 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
 // MARK: ElloWebBrowserViewConteroller: KINWebBrowserDelegate
 extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
-    func webBrowser(_ webBrowser: KINWebBrowserViewController!, didFailToLoad url: URL?, error: NSError!) {
+    func webBrowser(_ webBrowser: KINWebBrowserViewController!, didFailToLoad url: URL?, error: Error!) {
         if let url = url ?? prevRequestURL {
             UIApplication.shared.openURL(url)
         }
