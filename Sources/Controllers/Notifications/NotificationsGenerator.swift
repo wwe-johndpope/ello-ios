@@ -66,10 +66,10 @@ final class NotificationsGenerator: StreamGenerator {
 
         NotificationService().loadAnnouncements()
             .onSuccess { [weak self] announcement in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                sself.compareAndUpdateAnnouncements([announcement])
+                self.compareAndUpdateAnnouncements([announcement])
             }
             .onFail { [weak self] _ in
                 self?.compareAndUpdateAnnouncements([])
@@ -94,26 +94,26 @@ final class NotificationsGenerator: StreamGenerator {
         StreamService().loadStream(
             streamKind: streamKind,
             success: { [weak self] (jsonables, responseConfig) in
-                guard let sself = self else { return }
-                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard let notifications = jsonables as? [Activity] else { return }
 
-                sself.notifications = notifications
+                self.notifications = notifications
                 // setting primaryJSONAble also triggers the "done loading" code
-                sself.destination?.setPrimary(jsonable: JSONAble(version: JSONAbleVersion))
-                sself.destination?.setPagingConfig(responseConfig: responseConfig)
+                self.destination?.setPrimary(jsonable: JSONAble(version: JSONAbleVersion))
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
 
-                let notificationItems = sself.parse(jsonables: notifications)
+                let notificationItems = self.parse(jsonables: notifications)
                 if notificationItems.count == 0 {
-                    sself.hasNotifications = false
-                    sself.destination?.replacePlaceholder(type: .notifications, items: []) {
-                        sself.destination?.pagingEnabled = false
+                    self.hasNotifications = false
+                    self.destination?.replacePlaceholder(type: .notifications, items: []) {
+                        self.destination?.pagingEnabled = false
                     }
                 }
                 else {
-                    sself.hasNotifications = true
-                    sself.destination?.replacePlaceholder(type: .notifications, items: notificationItems) {
-                        sself.destination?.pagingEnabled = true
+                    self.hasNotifications = true
+                    self.destination?.replacePlaceholder(type: .notifications, items: notificationItems) {
+                        self.destination?.pagingEnabled = true
                     }
                 }
             },

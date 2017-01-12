@@ -45,11 +45,11 @@ class DiscoverAllCategoriesViewController: StreamableViewController {
 
     func loadCategories() {
         CategoryService().loadCategories().onSuccess { [weak self] categories in
-            guard let sself = self else { return }
+            guard let `self` = self else { return }
 
             let sortedCategories = CategoryList(categories: categories).categories
 
-            sself.streamViewController.showInitialJSONAbles(sortedCategories)
+            self.streamViewController.showInitialJSONAbles(sortedCategories)
         }.ignoreFailures()
     }
 
