@@ -46,6 +46,7 @@ struct ProfileService {
         properties: [String: AnyObject] = [:],
         success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         updateUserImage(image, key: "remote_cover_image_url", properties: properties, success: { (url, user) in
+            user.updateDefaultImages(avatarURL: nil, coverImageURL: url)
             TemporaryCache.save(.coverImage, image: image.image)
             success(url, user)
         }, failure: failure)
@@ -56,6 +57,7 @@ struct ProfileService {
         properties: [String: AnyObject] = [:],
         success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         updateUserImage(image, key: "remote_avatar_url", properties: properties, success: { (url, user) in
+            user.updateDefaultImages(avatarURL: url, coverImageURL: nil)
             TemporaryCache.save(.avatar, image: image.image)
             success(url, user)
         }, failure: failure)
@@ -90,6 +92,7 @@ struct ProfileService {
                 }
 
                 self.updateUserProfile(mergedProperties, success: { user in
+                    user.updateDefaultImages(avatarURL: avatarURL, coverImageURL: coverImageURL)
                     success(avatarURL, coverImageURL, user)
                 }, failure: failure)
             }
