@@ -9,6 +9,20 @@ extension OmnibarScreen: UITextViewDelegate {
         self.autoCompleteThrottle { [weak self] in
             guard let sself = self else { return }
 
+            let mightMatch = autoComplete.eagerCheck(text, location: location)
+            if mightMatch && textView.autocorrectionType == .yes {
+                textView.spellCheckingType = .no
+                textView.autocorrectionType = .no
+                _ = textView.resignFirstResponder()
+                _ = textView.becomeFirstResponder()
+            }
+            else if !mightMatch && textView.autocorrectionType == .no {
+                textView.spellCheckingType = .yes
+                textView.autocorrectionType = .yes
+                _ = textView.resignFirstResponder()
+                _ = textView.becomeFirstResponder()
+            }
+
             // deleting characters yields a range.length > 0, go back 1 character for deletes
             if let match = autoComplete.check(text, location: location) {
                 sself.autoCompleteVC.load(match) { [weak self] count in
@@ -102,7 +116,6 @@ extension OmnibarScreen: UITextViewDelegate {
         if autoCompleteShowing {
             autoCompleteShowing = false
             textView.spellCheckingType = .yes
-            textView.autocorrectionType = .yes
             textView.inputAccessoryView = keyboardButtonView
             _ = textView.resignFirstResponder()
             _ = textView.becomeFirstResponder()
