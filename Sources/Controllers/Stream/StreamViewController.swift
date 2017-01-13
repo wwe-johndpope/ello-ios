@@ -736,7 +736,7 @@ extension StreamViewController: GridListToggleDelegate {
         self.removeAllCellItems()
         var items = generateStreamCellItems(self.currentJSONables)
 
-        if let item = emptyStreamCellItem where items.count == 0 {
+        if let item = emptyStreamCellItem, items.count == 0 {
             items = [item]
         }
 
