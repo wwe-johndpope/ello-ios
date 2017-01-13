@@ -207,6 +207,8 @@ extension CreateProfileViewController: OnboardingStepController {
             cancelCompletion: {
                 guard let onboardingView = self.onboardingViewController?.view else { return }
                 ElloHUD.hideLoadingHudInView(onboardingView)
+
+                proceedClosure(.continue)
         })
     }
 }

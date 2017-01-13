@@ -38,7 +38,7 @@ struct TemporaryCache {
             entry = TemporaryCache.avatar
         }
 
-        if let entry = entry, (entry.expiration as NSDate).earlierDate(date) == date {
+        if let entry = entry, entry.expiration > date {
             return entry.image
         }
         return nil

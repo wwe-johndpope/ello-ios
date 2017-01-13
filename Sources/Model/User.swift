@@ -348,6 +348,38 @@ extension User {
 }
 
 extension User {
+    func updateDefaultImages(avatarURL: URL?, coverImageURL: URL?) {
+        if let avatarURL = avatarURL {
+            if let avatar = avatar {
+                let replacement = Attachment(url: avatarURL)
+                for (type, attachment) in avatar.allAttachments {
+                    if attachment.url.absoluteString.contains("/ello-default-") {
+                        avatar.replace(attachmentType: type, with: replacement)
+                    }
+                }
+            }
+            else {
+                avatar = Asset(url: avatarURL)
+            }
+        }
+
+        if let coverImageURL = coverImageURL {
+            if let coverImage = coverImage {
+                let replacement = Attachment(url: coverImageURL)
+                for (type, attachment) in coverImage.allAttachments {
+                    if attachment.url.absoluteString.contains("/ello-default-") {
+                        coverImage.replace(attachmentType: type, with: replacement)
+                    }
+                }
+            }
+            else {
+                coverImage = Asset(url: coverImageURL)
+            }
+        }
+    }
+}
+
+extension User {
     func coverImageURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
         if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.hasSuffix(".gif") == true {
             return coverImage?.original?.url as URL?

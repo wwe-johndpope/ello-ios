@@ -325,5 +325,43 @@ class UserSpec: QuickSpec {
                 expect(merged.formattedShortBio) == "userA"
             }
         }
+
+        describe("updateDefaultImages") {
+            let uploadedURL = URL(string: "https://assets0.ello.co/images/uploaded.png")
+            let defaultAsset: Asset = stub(["url": "https://assets0.ello.co/images/ello-default-large.png"])
+            let customAsset: Asset = stub(["url": "https://assets0.ello.co/images/custom.png"])
+
+            it("ignores nil URLs") {
+                let user = User.stub(["avatar": defaultAsset, "coverImage": defaultAsset])
+                user.updateDefaultImages(avatarURL: nil, coverImageURL: nil)
+                expect(user.avatarURL()?.absoluteString).to(contain("ello-default-large"))
+            }
+            it("ignores replaces nil assets") {
+                let user = User.stub([:])
+                user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: uploadedURL)
+                expect(user.avatarURL()?.absoluteString).to(contain("uploaded"))
+                expect(user.coverImageURL()?.absoluteString).to(contain("uploaded"))
+            }
+            it("replaces default avatar") {
+                let user = User.stub(["avatar": defaultAsset])
+                user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: nil)
+                expect(user.avatarURL()?.absoluteString).to(contain("uploaded"))
+            }
+            it("replaces default cover image") {
+                let user = User.stub(["coverImage": defaultAsset])
+                user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: nil)
+                expect(user.coverImageURL()?.absoluteString).to(contain("uploaded"))
+            }
+            it("ignores custom avatar") {
+                let user = User.stub(["avatar": customAsset])
+                user.updateDefaultImages(avatarURL: nil, coverImageURL: uploadedURL)
+                expect(user.avatarURL()?.absoluteString).to(contain("custom"))
+            }
+            it("ignores custom cover image") {
+                let user = User.stub(["coverImage": customAsset])
+                user.updateDefaultImages(avatarURL: nil, coverImageURL: uploadedURL)
+                expect(user.coverImageURL()?.absoluteString).to(contain("custom"))
+            }
+        }
     }
 }
