@@ -27,7 +27,13 @@ public class CredentialSettingsViewController: UITableViewController {
     weak public var errorLabel: StyledLabel!
     @IBOutlet weak public var saveButton: StyledButton!
 
-    public var currentUser: User?
+    public var currentUser: User? {
+        didSet {
+            if isViewLoaded() {
+                setupViews()
+            }
+        }
+    }
     weak public var delegate: CredentialSettingsDelegate?
     var validationCancel: BasicBlock?
 
