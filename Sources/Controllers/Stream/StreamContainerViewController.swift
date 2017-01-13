@@ -208,10 +208,6 @@ class StreamContainerViewController: StreamableViewController {
             self.addChildViewController(vc)
             vc.didMove(toParentViewController: self)
             ElloHUD.showLoadingHudInView(vc.view)
-
-            if case .following = kind {
-                friendsViewController = vc
-            }
         }
     }
 
