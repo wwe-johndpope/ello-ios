@@ -44,14 +44,10 @@ struct InterfaceString {
 
     struct FollowingStream {
         static let Title: String = NSLocalizedString("Following", comment: "Following title")
-        static let NoResultsTitle: String = NSLocalizedString("Welcome to Following!", comment: "No following results title")
-        static let NoResultsBody: String = NSLocalizedString("Follow people and things that inspire you.", comment: "No following results body.")
     }
 
     struct StarredStream {
         static let Title: String = NSLocalizedString("Starred", comment: "Starred title")
-        static let NoResultsTitle: String = NSLocalizedString("Welcome to Starred!", comment: "No starred results title")
-        static let NoResultsBody: String = NSLocalizedString("When you Star someone their posts appear here. Star people to create a second stream.", comment: "No following results body.")
     }
 
     struct Notifications {
