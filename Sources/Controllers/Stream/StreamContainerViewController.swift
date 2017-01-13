@@ -209,17 +209,8 @@ class StreamContainerViewController: StreamableViewController {
             vc.didMove(toParentViewController: self)
             ElloHUD.showLoadingHudInView(vc.view)
 
-            switch kind {
-            case .following:
-                let noResultsTitle = InterfaceString.FollowingStream.NoResultsTitle
-                let noResultsBody = InterfaceString.FollowingStream.NoResultsBody
-                vc.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
-            case .starred:
-                let noResultsTitle = InterfaceString.StarredStream.NoResultsTitle
-                let noResultsBody = InterfaceString.StarredStream.NoResultsBody
-                vc.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
-            default:
-                break
+            if case .following = kind {
+                friendsViewController = vc
             }
         }
     }

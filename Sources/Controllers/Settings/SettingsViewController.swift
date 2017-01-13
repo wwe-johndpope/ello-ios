@@ -74,6 +74,7 @@ class SettingsContainerViewController: BaseElloViewController {
     }
 
     override func didSetCurrentUser() {
+        super.didSetCurrentUser()
         settingsViewController?.currentUser = currentUser
     }
 
