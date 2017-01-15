@@ -362,7 +362,7 @@ class AutoCompleteSpec: QuickSpec {
 
                         let startIndex = str.characters.index(str.startIndex, offsetBy: 4)
                         let endIndex = str.characters.index(str.startIndex, offsetBy: 8)
-                        
+
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex
                         expect(result?.text) == ":two"
