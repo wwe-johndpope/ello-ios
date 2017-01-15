@@ -7,7 +7,7 @@ extension OmnibarScreen: UITextViewDelegate {
     fileprivate func throttleAutoComplete(_ textView: UITextView, text: String, location: Int) {
         let autoComplete = AutoComplete()
         self.autoCompleteThrottle { [weak self] in
-            guard let sself = self else { return }
+            guard let `self` = self else { return }
 
             let mightMatch = autoComplete.eagerCheck(text, location: location)
             if mightMatch && textView.autocorrectionType == .yes {
@@ -25,19 +25,19 @@ extension OmnibarScreen: UITextViewDelegate {
 
             // deleting characters yields a range.length > 0, go back 1 character for deletes
             if let match = autoComplete.check(text, location: location) {
-                sself.autoCompleteVC.load(match) { [weak self] count in
-                    guard let sself = self else { return }
+                self.autoCompleteVC.load(match) { [weak self] count in
+                    guard let `self` = self else { return }
                     guard text == textView.text else { return }
 
                     if count > 0 {
-                        sself.showAutoComplete(textView, count: count)
+                        self.showAutoComplete(textView, count: count)
                     }
                     else if count == 0 {
-                        sself.hideAutoComplete(textView)
+                        self.hideAutoComplete(textView)
                     }
                 }
             } else {
-                sself.hideAutoComplete(textView)
+                self.hideAutoComplete(textView)
             }
         }
     }
