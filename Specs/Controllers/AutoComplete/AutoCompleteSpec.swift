@@ -339,19 +339,19 @@ class AutoCompleteSpec: QuickSpec {
                     it("returns nil") {
                         let str = ":+1:two"
                         let result = subject.check(str, location: 7)
-                        
+
                         expect(result).to(beNil())
                     }
                 }
-                
+
                 context("emoji already in string, started new emoji") {
                     it("returns :two when separated by space") {
                         let str = ":+1: :two"
                         let result = subject.check(str, location: 9)
-                        
+
                         let startIndex = str.characters.index(str.startIndex, offsetBy: 5)
                         let endIndex = str.characters.index(str.startIndex, offsetBy: 9)
-                        
+
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex
                         expect(result?.text) == ":two"
@@ -359,7 +359,7 @@ class AutoCompleteSpec: QuickSpec {
                     it("returns :two when emojis are touching") {
                         let str = ":+1::two"
                         let result = subject.check(str, location: 8)
-                        
+
                         let startIndex = str.characters.index(str.startIndex, offsetBy: 4)
                         let endIndex = str.characters.index(str.startIndex, offsetBy: 8)
                         
