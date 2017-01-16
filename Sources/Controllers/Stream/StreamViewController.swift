@@ -208,7 +208,7 @@ public final class StreamViewController: BaseElloViewController {
     public var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
         set {
-            collectionView.elloContentInset = newValue
+            collectionView.contentInset = newValue
             collectionView.scrollIndicatorInsets = newValue
             pullToRefreshView?.defaultContentInset = newValue
         }
@@ -313,8 +313,8 @@ public final class StreamViewController: BaseElloViewController {
         reloadCells(now: true)
     }
 
-    public func appendUnsizedCellItems(items: [StreamCellItem], withWidth: CGFloat?, completion: StreamDataSource.StreamContentReady? = nil) {
-        let width = withWidth ?? self.view.frame.width
+    public func appendUnsizedCellItems(items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
+        let width = view.frame.width
         dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
             self.reloadCells()
             self.doneLoading()
@@ -323,7 +323,8 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     public func insertUnsizedCellItems(cellItems: [StreamCellItem], startingIndexPath: NSIndexPath, completion: ElloEmptyCompletion? = nil) {
-        dataSource.insertUnsizedCellItems(cellItems, withWidth: self.view.frame.width, startingIndexPath: startingIndexPath) { _ in
+        let width = view.frame.width
+        dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { _ in
             self.reloadCells()
             completion?()
         }
@@ -344,7 +345,8 @@ public final class StreamViewController: BaseElloViewController {
             item.placeholderType = placeholderType
         }
 
-        dataSource.calculateCellItems(streamCellItems, withWidth: view.frame.width) {
+        let width = view.frame.width
+        dataSource.calculateCellItems(streamCellItems, withWidth: width) {
             let indexPathsToReplace = self.dataSource.indexPathsForPlaceholderType(placeholderType)
             guard indexPathsToReplace.count > 0 else { return }
 
@@ -381,7 +383,7 @@ public final class StreamViewController: BaseElloViewController {
                     self.currentJSONables = []
                     var items = self.generateStreamCellItems([])
                     items.append(StreamCellItem(type: .EmptyStream(height: 282)))
-                    self.appendUnsizedCellItems(items, withWidth: nil, completion: { _ in })
+                    self.appendUnsizedCellItems(items, completion: { _ in })
                 })
         }
     }
@@ -393,9 +395,9 @@ public final class StreamViewController: BaseElloViewController {
         self.currentJSONables = jsonables
 
         let items = self.generateStreamCellItems(jsonables)
-        self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
+        self.appendUnsizedCellItems(items) { indexPaths in
             self.pagingEnabled = true
-        })
+        }
     }
 
     private func generateStreamCellItems(jsonables: [JSONAble]) -> [StreamCellItem] {
@@ -721,9 +723,9 @@ extension StreamViewController: GridListToggleDelegate {
         else {
             UIView.animateWithDuration(0.2, animations: {
                 self.collectionView.alpha = 0
-                }, completion: { _ in
-                    self.toggleGrid(isGridView)
-                })
+            }, completion: { _ in
+                self.toggleGrid(isGridView)
+            })
         }
     }
 
@@ -743,7 +745,7 @@ extension StreamViewController: GridListToggleDelegate {
             items = [item]
         }
 
-        self.appendUnsizedCellItems(items, withWidth: nil) { indexPaths in
+        self.appendUnsizedCellItems(items) { indexPaths in
             animate {
                 self.collectionView.alpha = 1
             }
