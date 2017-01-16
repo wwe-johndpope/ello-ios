@@ -61,26 +61,26 @@ extension CategoriesSelectionViewController: OnboardingStepController {
     }
 
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
-        if selectedCategories.count > 0 {
-            let categories = self.selectedCategories
-            for category in categories {
-                Tracker.shared.onboardingCategorySelected(category)
-            }
+        guard selectedCategories.count > 0 else { return }
 
-            UserService().setUser(categories: categories)
-                .onSuccess { _ in
-                    // onboarding can be considered "done", even if they abort the app
-                    Onboarding.shared().updateVersionToLatest()
-
-                    self.onboardingData.categories = categories
-                    proceedClosure(.continue)
-                }
-                .onFail { _ in
-                    let alertController = AlertViewController(error: InterfaceString.GenericError)
-                    self.parentAppController?.present(alertController, animated: true, completion: nil)
-                    proceedClosure(.error)
-                }
+        let categories = self.selectedCategories
+        for category in categories {
+            Tracker.shared.onboardingCategorySelected(category)
         }
+
+        UserService().setUser(categories: categories)
+            .onSuccess { _ in
+                // onboarding can be considered "done", even if they abort the app
+                Onboarding.shared().updateVersionToLatest()
+
+                self.onboardingData.categories = categories
+                proceedClosure(.continue)
+            }
+            .onFail { _ in
+                let alertController = AlertViewController(error: InterfaceString.GenericError)
+                self.parentAppController?.present(alertController, animated: true, completion: nil)
+                proceedClosure(.error)
+            }
     }
 }
 

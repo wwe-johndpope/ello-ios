@@ -43,11 +43,10 @@ class StreamInviteFriendsCell: UICollectionViewCell {
     }
 
     @IBAction func invite() {
-        if let person = person {
-            inviteDelegate?.sendInvite(person: person, isOnboarding: isOnboarding) {
-                self.inviteCache?.saveInvite(person.identifier)
-                self.styleInviteButton(self.inviteCache?.has(person.identifier))
-            }
+        guard let person = person else { return }
+        inviteDelegate?.sendInvite(person: person, isOnboarding: isOnboarding) {
+            self.inviteCache?.saveInvite(person.identifier)
+            self.styleInviteButton(self.inviteCache?.has(person.identifier))
         }
     }
 
