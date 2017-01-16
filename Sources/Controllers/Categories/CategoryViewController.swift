@@ -151,7 +151,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 
     public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
-        streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
+        streamViewController.appendStreamCellItems(items)
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
@@ -171,6 +171,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             self.pagePromotional = pagePromotional
         }
         updateInsets()
+        streamViewController.doneLoading()
     }
 
     public func setCategories(categories: [Category]) {

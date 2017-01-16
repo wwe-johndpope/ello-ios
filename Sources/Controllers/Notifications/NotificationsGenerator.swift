@@ -33,8 +33,10 @@ public final class NotificationsGenerator: StreamGenerator {
             announcements = []
             notifications = []
         }
+        else {
+            setPlaceHolders()
+        }
 
-        setPlaceHolders()
         loadAnnouncements()
         loadNotifications()
     }
