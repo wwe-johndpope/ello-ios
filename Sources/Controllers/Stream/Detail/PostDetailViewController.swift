@@ -133,17 +133,24 @@ public final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    private func scrollToComment(comment: ElloComment) {
+    private func checkScrollToComment() {
+        guard let comment = self.scrollToComment else { return }
+
         let commentItem = streamViewController.dataSource.visibleCellItems.find { item in
             return (item.jsonable as? ElloComment)?.id == comment.id
         } ?? streamViewController.dataSource.visibleCellItems.last
 
         if let commentItem = commentItem, indexPath = self.streamViewController.dataSource.indexPathForItem(commentItem) {
-            self.streamViewController.collectionView.scrollToItemAtIndexPath(
-                indexPath,
-                atScrollPosition: .Top,
-                animated: true
-            )
+            self.scrollToComment = nil
+            // nextTick didn't work, the collection view hadn't shown its
+            // cells or updated contentView.  so this.
+            delay(0.1) {
+                self.streamViewController.collectionView.scrollToItemAtIndexPath(
+                    indexPath,
+                    atScrollPosition: .Top,
+                    animated: true
+                )
+            }
         }
     }
 
@@ -223,13 +230,7 @@ extension PostDetailViewController: StreamDestination {
 
     public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items) {
-            if let scrollToComment = self.scrollToComment {
-                // nextTick didn't work, the collection view hadn't shown its
-                // cells or updated contentView.  so this.
-                delay(0.1) {
-                    self.scrollToComment(scrollToComment)
-                }
-            }
+            self.checkScrollToComment()
             completion()
         }
     }
