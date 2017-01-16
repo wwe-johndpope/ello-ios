@@ -342,7 +342,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .Image:
             (cell as! StreamImageCell).streamImageCellDelegate = imageDelegate
             (cell as! StreamImageCell).streamEditingDelegate = editingDelegate
-        case .InviteFriends:
+        case .InviteFriends, .OnboardingInviteFriends:
             (cell as! StreamInviteFriendsCell).inviteDelegate = inviteDelegate
             (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
         case .Notification:
