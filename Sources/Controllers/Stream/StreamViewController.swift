@@ -723,9 +723,9 @@ extension StreamViewController: GridListToggleDelegate {
         else {
             UIView.animateWithDuration(0.2, animations: {
                 self.collectionView.alpha = 0
-                }, completion: { _ in
-                    self.toggleGrid(isGridView)
-                })
+            }, completion: { _ in
+                self.toggleGrid(isGridView)
+            })
         }
     }
 
