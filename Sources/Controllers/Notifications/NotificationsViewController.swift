@@ -70,7 +70,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
 
         scrollLogic.navBarHeight = 44
 
-        reload()
+        initialLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -100,7 +100,6 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         ElloHUD.showLoadingHudInView(streamViewController.view)
         hasNewContent = false
 
-        generator?.streamKind = categoryStreamKind
         generator?.load(reload: true)
         Tracker.shared.screenAppeared(self)
     }
@@ -135,7 +134,6 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         updateInsets()
     }
 
-
     // used to provide StreamableViewController access to the container it then
     // loads the StreamViewController's content into
     override func viewForStream() -> UIView {
@@ -151,11 +149,12 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         screen.selectFilterButton(filterType)
         categoryFilterType = filterType
 
+        generator?.streamKind = categoryStreamKind
         streamViewController.streamKind = categoryStreamKind
         streamViewController.hideNoResults()
         streamViewController.removeAllCellItems()
+        streamViewController.loadInitialPage()
 
-        reload()
         Tracker.shared.screenAppeared(self)
     }
 
@@ -246,7 +245,7 @@ extension NotificationsViewController: StreamDestination {
 
     func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
-        streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
+        streamViewController.appendStreamCellItems(items)
     }
 
     func setPrimary(jsonable: JSONAble) {

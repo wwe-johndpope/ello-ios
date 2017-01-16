@@ -314,8 +314,8 @@ final class StreamViewController: BaseElloViewController {
         reloadCells(now: true)
     }
 
-    func appendUnsizedCellItems(_ items: [StreamCellItem], withWidth: CGFloat?, completion: StreamDataSource.StreamContentReady? = nil) {
-        let width = withWidth ?? self.view.frame.width
+    func appendUnsizedCellItems(_ items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
+        let width = view.frame.width
         dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
             self.reloadCells()
             self.doneLoading()
@@ -324,7 +324,8 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping ElloEmptyCompletion = {}) {
-        dataSource.insertUnsizedCellItems(cellItems, withWidth: self.view.frame.width, startingIndexPath: startingIndexPath) { _ in
+        let width = view.frame.width
+        dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { _ in
             self.reloadCells()
             completion()
         }
@@ -345,7 +346,8 @@ final class StreamViewController: BaseElloViewController {
             item.placeholderType = placeholderType
         }
 
-        dataSource.calculateCellItems(streamCellItems, withWidth: view.frame.width) {
+        let width = view.frame.width
+        dataSource.calculateCellItems(streamCellItems, withWidth: width) {
             let indexPathsToReplace = self.dataSource.indexPathsForPlaceholderType(placeholderType)
             guard indexPathsToReplace.count > 0 else { return }
 
@@ -378,7 +380,6 @@ final class StreamViewController: BaseElloViewController {
                     print("failed to load \(self.streamKind.cacheKey) stream (reason: \(error))")
                     self.initialLoadFailure()
                 }, noContent: {
-                    self.clearForInitialLoad()
                     self.showInitialJSONAbles([])
                 })
         }
@@ -394,9 +395,9 @@ final class StreamViewController: BaseElloViewController {
         if jsonables.count == 0 {
             items.append(StreamCellItem(type: .emptyStream(height: 282)))
         }
-        self.appendUnsizedCellItems(items, withWidth: nil, completion: { indexPaths in
+        self.appendUnsizedCellItems(items) { indexPaths in
             self.pagingEnabled = true
-        })
+        }
     }
 
     fileprivate func generateStreamCellItems(_ jsonables: [JSONAble]) -> [StreamCellItem] {
@@ -718,9 +719,9 @@ extension StreamViewController: GridListToggleDelegate {
         else {
             UIView.animate(withDuration: 0.2, animations: {
                 self.collectionView.alpha = 0
-                }, completion: { _ in
-                    self.toggleGrid(isGridView: isGridView)
-                })
+            }, completion: { _ in
+                self.toggleGrid(isGridView: isGridView)
+            })
         }
     }
 
@@ -740,7 +741,7 @@ extension StreamViewController: GridListToggleDelegate {
             items = [item]
         }
 
-        self.appendUnsizedCellItems(items, withWidth: nil) { indexPaths in
+        self.appendUnsizedCellItems(items) { indexPaths in
             animate {
                 self.collectionView.alpha = 1
             }

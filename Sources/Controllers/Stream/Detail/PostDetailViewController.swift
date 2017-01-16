@@ -143,17 +143,24 @@ final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    fileprivate func scrollToComment(_ comment: ElloComment) {
+    fileprivate func checkScrollToComment() {
+        guard let comment = self.scrollToComment else { return }
+
         let commentItem = streamViewController.dataSource.visibleCellItems.find { item in
             return (item.jsonable as? ElloComment)?.id == comment.id
         } ?? streamViewController.dataSource.visibleCellItems.last
 
         if let commentItem = commentItem, let indexPath = self.streamViewController.dataSource.indexPathForItem(commentItem) {
-            self.streamViewController.collectionView.scrollToItem(
-                at: indexPath,
-                at: .top,
-                animated: true
-            )
+            self.scrollToComment = nil
+            // nextTick didn't work, the collection view hadn't shown its
+            // cells or updated contentView.  so this.
+            delay(0.1) {
+                self.streamViewController.collectionView.scrollToItem(
+                    at: indexPath,
+                    at: .top,
+                    animated: true
+                )
+            }
         }
     }
 
@@ -234,26 +241,22 @@ extension PostDetailViewController: StreamDestination {
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
-        streamViewController.replacePlaceholder(type, with: items, completion: completion)
+        streamViewController.replacePlaceholder(type, with: items) {
+            self.checkScrollToComment()
+            completion()
+        }
     }
 
     func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
-        streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in
-            if let scrollToComment = self.scrollToComment {
-                // nextTick didn't work, the collection view hadn't shown its
-                // cells or updated contentView.  so this.
-                delay(0.1) {
-                    self.scrollToComment(scrollToComment)
-                }
-            }
-        }
+        streamViewController.appendStreamCellItems(items)
     }
 
     func setPrimary(jsonable: JSONAble) {
         guard let post = jsonable as? Post else { return }
 
         self.post = post
+        streamViewController.doneLoading()
 
         // need to reassign the userParam to the id for paging
         self.postParam = post.id

@@ -462,7 +462,7 @@ extension ProfileViewController:  StreamDestination {
 
     func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
-        streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }
+        streamViewController.appendStreamCellItems(items)
         setupNavigationItems()
     }
 
@@ -471,6 +471,7 @@ extension ProfileViewController:  StreamDestination {
 
         self.user = user
         updateUser(user)
+        streamViewController.doneLoading()
 
         userParam = user.id
         title = user.atName
