@@ -222,12 +222,7 @@ extension PostDetailViewController: StreamDestination {
     }
 
     public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
-        streamViewController.replacePlaceholder(type, with: items, completion: completion)
-    }
-
-    public func setPlaceholders(items: [StreamCellItem]) {
-        streamViewController.clearForInitialLoad()
-        streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in
+        streamViewController.replacePlaceholder(type, with: items) {
             if let scrollToComment = self.scrollToComment {
                 // nextTick didn't work, the collection view hadn't shown its
                 // cells or updated contentView.  so this.
@@ -235,13 +230,20 @@ extension PostDetailViewController: StreamDestination {
                     self.scrollToComment(scrollToComment)
                 }
             }
+            completion()
         }
+    }
+
+    public func setPlaceholders(items: [StreamCellItem]) {
+        streamViewController.clearForInitialLoad()
+        streamViewController.appendStreamCellItems(items)
     }
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
         guard let post = jsonable as? Post else { return }
 
         self.post = post
+        streamViewController.doneLoading()
 
         // need to reassign the userParam to the id for paging
         self.postParam = post.id
