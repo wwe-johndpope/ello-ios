@@ -89,7 +89,7 @@ class AutoCompleteSpec: QuickSpec {
                 context("colon at end of word") {
                     it("returns true") {
                         let str = "list:"
-                        let result = subject.eagerCheck(str, location: 5)
+                        let result = subject.eagerCheck(str, location: 6)
 
                         expect(result) == false
                     }
@@ -98,7 +98,7 @@ class AutoCompleteSpec: QuickSpec {
                 context("emoji") {
                     it("returns true") {
                         let str = "start :emoji"
-                        let result = subject.eagerCheck(str, location: 9)
+                        let result = subject.eagerCheck(str, location: 8)
 
                         expect(result) == true
                     }
@@ -107,7 +107,7 @@ class AutoCompleteSpec: QuickSpec {
                 context("end of emoji") {
                     it("returns false") {
                         let str = "start :emoji:"
-                        let result = subject.eagerCheck(str, location: 13)
+                        let result = subject.eagerCheck(str, location: 14)
 
                         expect(result) == false
                     }
@@ -125,7 +125,7 @@ class AutoCompleteSpec: QuickSpec {
                 context("location at the end of the string") {
                     it("returns the correct character range and string") {
                         let str = "@hi"
-                        let result = subject.eagerCheck(str, location: 2)
+                        let result = subject.eagerCheck(str, location: 3)
 
                         expect(result) == true
                     }
@@ -161,7 +161,7 @@ class AutoCompleteSpec: QuickSpec {
                 context("location one past the end") {
                     it("returns false") {
                         let str = ":hi"
-                        let result = subject.eagerCheck(str, location: 3)
+                        let result = subject.eagerCheck(str, location: 4)
 
                         expect(result) == false
                     }
