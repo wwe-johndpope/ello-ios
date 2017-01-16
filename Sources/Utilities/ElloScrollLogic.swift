@@ -21,15 +21,15 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         set { showingState = newValue }
     }
 
-    fileprivate var onShow: ((Bool) -> Void)!
+    fileprivate var onShow: (() -> Void)!
     fileprivate var onHide: (() -> Void)!
 
-    init(onShow: @escaping (Bool) -> Void, onHide: @escaping () -> Void) {
+    init(onShow: @escaping () -> Void, onHide: @escaping () -> Void) {
         self.onShow = onShow
         self.onHide = onHide
     }
 
-    func onShow(_ handler: @escaping (Bool) -> Void) {
+    func onShow(_ handler: @escaping () -> Void) {
         self.onShow = handler
     }
 
@@ -46,14 +46,14 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         return now - lastStateChange < 0.5
     }
 
-    fileprivate func show(_ scrollToBottom: Bool = false) {
+    fileprivate func show() {
         let wasShowing = self.showingState ?? false
 
         if !changedRecently() {
             if !wasShowing {
                 let prevIgnore = self.shouldIgnoreScroll
                 self.shouldIgnoreScroll = true
-                self.onShow(scrollToBottom)
+                self.onShow()
                 self.shouldIgnoreScroll = prevIgnore
                 lastStateChange = CACurrentMediaTime()
             }
@@ -115,7 +115,7 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate: Bool) {
         if self.isAtTop(scrollView) {
-            show(false)
+            show()
         }
         shouldIgnoreScroll = true
     }

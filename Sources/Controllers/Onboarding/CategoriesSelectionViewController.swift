@@ -33,7 +33,7 @@ class CategoriesSelectionViewController: StreamableViewController, HasAppControl
         streamViewController.loadInitialPage()
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {}
+    override func showNavBars() {}
     override func hideNavBars() {}
 
     override func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {

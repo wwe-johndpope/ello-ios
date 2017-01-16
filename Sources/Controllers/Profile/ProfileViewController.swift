@@ -145,14 +145,10 @@ final class ProfileViewController: StreamableViewController {
         super.didSetCurrentUser()
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
-
-        if scrollToBottom {
-            self.scrollToBottom(streamViewController)
-        }
 
         screen.showNavBars()
     }

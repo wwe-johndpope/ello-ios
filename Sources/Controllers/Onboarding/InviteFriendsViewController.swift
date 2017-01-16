@@ -37,7 +37,7 @@ class InviteFriendsViewController: StreamableViewController {
         streamViewController.loadInitialPage()
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {}
+    override func showNavBars() {}
     override func hideNavBars() {}
 }
 

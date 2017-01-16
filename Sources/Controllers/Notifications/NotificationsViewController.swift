@@ -118,14 +118,10 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         streamViewController.reloadClosure = { [weak self] in self?.reload() }
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         screen.animateNavigationBar(visible: true)
         updateInsets()
-
-        if scrollToBottom {
-            self.scrollToBottom(streamViewController)
-        }
     }
 
     override func hideNavBars() {

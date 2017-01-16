@@ -41,7 +41,7 @@ class AddFriendsViewController: StreamableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if isMovingToParentViewController || presentingViewController != nil {
-            showNavBars(false)
+            showNavBars()
             updateInsets()
             ElloHUD.showLoadingHudInView(streamViewController.view)
             streamViewController.loadInitialPage()
@@ -52,17 +52,13 @@ class AddFriendsViewController: StreamableViewController {
         return screen.viewForStream()
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         if let ss = self.view as? SearchScreen {
             positionNavBar(ss.navigationBar, visible: true)
             ss.showNavBars()
         }
         updateInsets()
-
-        if scrollToBottom {
-            self.scrollToBottom(streamViewController)
-        }
     }
 
     override func hideNavBars() {
