@@ -46,10 +46,10 @@ public final class CategoryGenerator: StreamGenerator {
     }
 
     public init(slug: String,
-                currentUser: User?,
-                streamKind: StreamKind,
-                destination: StreamDestination?
-        ) {
+        currentUser: User?,
+        streamKind: StreamKind,
+        destination: StreamDestination?
+    ) {
         self.slug = slug
         self.currentUser = currentUser
         self.streamKind = streamKind
