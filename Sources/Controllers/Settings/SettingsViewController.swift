@@ -354,6 +354,10 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             if location != self.currentUser?.location {
                 ProfileService().updateUserProfile(["location": location as AnyObject], success: { user in
                     self.updateCurrentUser(user)
+                    guard let count = self.locationTextFieldView.textField.text?.characters.count, count > 0 else {
+                        self.locationTextFieldView.setState(.none)
+                        return
+                    }
                     self.locationTextFieldView.setState(.ok)
                 }, failure: { _, _ in
                     self.locationTextFieldView.setState(.error)
