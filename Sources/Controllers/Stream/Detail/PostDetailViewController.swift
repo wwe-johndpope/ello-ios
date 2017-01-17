@@ -138,7 +138,7 @@ public final class PostDetailViewController: StreamableViewController {
 
         let commentItem = streamViewController.dataSource.visibleCellItems.find { item in
             return (item.jsonable as? ElloComment)?.id == comment.id
-        } ?? streamViewController.dataSource.visibleCellItems.last
+        }
 
         if let commentItem = commentItem, indexPath = self.streamViewController.dataSource.indexPathForItem(commentItem) {
             self.scrollToComment = nil
