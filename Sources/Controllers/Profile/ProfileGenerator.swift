@@ -51,7 +51,13 @@ final class ProfileGenerator: StreamGenerator {
         queue.addOperation(doneOperation)
 
         localToken = loadingToken.resetInitialPageLoadingToken()
-        setPlaceHolders()
+        if reload {
+            user = nil
+            posts = nil
+        }
+        else {
+            setPlaceHolders()
+        }
         setInitialUser(doneOperation)
         loadUser(doneOperation, reload: reload)
         loadUserPosts(doneOperation)
