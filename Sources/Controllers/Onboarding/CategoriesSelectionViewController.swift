@@ -28,6 +28,7 @@ public class CategoriesSelectionViewController: StreamableViewController, HasApp
     override public func viewDidLoad() {
         super.viewDidLoad()
 
+        streamViewController.pullToRefreshEnabled = false
         streamViewController.selectedCategoryDelegate = self
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
