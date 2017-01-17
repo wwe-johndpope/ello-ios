@@ -208,9 +208,12 @@ public final class StreamViewController: BaseElloViewController {
     public var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
         set {
+            // the order here is important, because SSPullToRefresh will try to
+            // set the contentInset, and that can have weird side effects, so
+            // we need to set the contentInset *after* pullToRefreshView.
+            pullToRefreshView?.defaultContentInset = newValue
             collectionView.contentInset = newValue
             collectionView.scrollIndicatorInsets = newValue
-            pullToRefreshView?.defaultContentInset = newValue
         }
     }
     public var columnCount: Int {
