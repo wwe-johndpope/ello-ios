@@ -62,7 +62,7 @@ public final class CategoryViewController: StreamableViewController {
         scrollLogic.prevOffset = streamViewController.collectionView.contentOffset
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory() }
-        streamViewController.reloadClosure = { [unowned self] in self.reloadEntireCategory() }
+        streamViewController.reloadClosure = { [unowned self] in self.reloadCurrentCategory() }
         streamViewController.toggleClosure = { [unowned self] isGridView in self.toggleGrid(isGridView) }
 
         streamViewController.loadInitialPage()
@@ -125,10 +125,13 @@ private extension CategoryViewController {
     }
 
     func loadCategory() {
+        pagePromotional = nil
+        categoryPromotional = nil
+        category?.randomPromotional = nil
         generator?.load()
     }
 
-    func reloadEntireCategory() {
+    func reloadCurrentCategory() {
         pagePromotional = nil
         categoryPromotional = nil
         category?.randomPromotional = nil
@@ -240,6 +243,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         guard let streamKind = kind else { return }
 
+
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
@@ -247,6 +251,6 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.category = category
         self.slug = category.slug
         self.title = category.name
-        reloadEntireCategory()
+        loadCategory()
     }
 }
