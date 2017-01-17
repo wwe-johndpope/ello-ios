@@ -90,7 +90,6 @@ public class NotificationsViewController: StreamableViewController, Notification
     }
 
     func reload() {
-        ElloHUD.showLoadingHudInView(streamViewController.view)
         hasNewContent = false
 
         generator?.load(reload: true)
