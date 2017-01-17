@@ -83,15 +83,11 @@ final class CategoryViewController: StreamableViewController {
         }
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         screen.animateCategoriesList(navBarVisible: true)
         updateInsets()
-
-        if scrollToBottom {
-            self.scrollToBottom(streamViewController)
-        }
     }
 
     override func hideNavBars() {

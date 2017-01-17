@@ -46,15 +46,11 @@ class SearchViewController: StreamableViewController {
         return screen.viewForStream()
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         positionNavBar(screen.navigationBar, visible: true)
         screen.showNavBars()
         updateInsets()
-
-        if scrollToBottom {
-            self.scrollToBottom(streamViewController)
-        }
     }
 
     override func hideNavBars() {
@@ -77,7 +73,7 @@ extension SearchViewController: SearchScreenDelegate {
     }
 
     func searchFieldCleared() {
-        showNavBars(false)
+        showNavBars()
         searchText = ""
         streamViewController.removeAllCellItems()
         streamViewController.loadingToken.cancelInitialPage()

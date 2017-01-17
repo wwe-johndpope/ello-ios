@@ -681,24 +681,24 @@ final class StreamViewController: BaseElloViewController {
 extension StreamViewController: InviteDelegate {
 
     func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion) {
-        if let email = person.emails.first {
-            if isOnboarding {
-                Tracker.shared.onboardingFriendInvited()
-            }
-            else {
-                Tracker.shared.friendInvited()
-            }
-            ElloHUD.showLoadingHudInView(view)
-            InviteService().invite(email,
-                success: {
-                    ElloHUD.hideLoadingHudInView(self.view)
-                    didUpdate()
-                },
-                failure: { _ in
-                    ElloHUD.hideLoadingHudInView(self.view)
-                    didUpdate()
-                })
+        guard let email = person.emails.first else { return }
+
+        if isOnboarding {
+            Tracker.shared.onboardingFriendInvited()
         }
+        else {
+            Tracker.shared.friendInvited()
+        }
+        ElloHUD.showLoadingHudInView(view)
+        InviteService().invite(email,
+            success: {
+                ElloHUD.hideLoadingHudInView(self.view)
+                didUpdate()
+            },
+            failure: { _ in
+                ElloHUD.hideLoadingHudInView(self.view)
+                didUpdate()
+            })
     }
 }
 

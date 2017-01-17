@@ -35,7 +35,13 @@ final class PostDetailGenerator: StreamGenerator {
 
         hasPaddedSocial = false
         localToken = loadingToken.resetInitialPageLoadingToken()
-        setPlaceHolders()
+
+        if reload {
+            post = nil
+        }
+        else {
+            setPlaceHolders()
+        }
         setInitialPost(doneOperation)
         loadPost(doneOperation, reload: reload)
         displayCommentBar(doneOperation)
@@ -73,7 +79,9 @@ private extension PostDetailGenerator {
     func loadPost(_ doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.isFinished || reload else { return }
 
-        self.destination?.replacePlaceholder(type: .postHeader, items: [StreamCellItem(type: .streamLoading)]) {}
+        if post == nil && !reload {
+            self.destination?.replacePlaceholder(type: .postHeader, items: [StreamCellItem(type: .streamLoading)]) {}
+        }
 
         // load the post with no comments
         PostService().loadPost(postParam, needsComments: false)

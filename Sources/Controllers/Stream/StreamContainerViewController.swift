@@ -126,16 +126,10 @@ class StreamContainerViewController: StreamableViewController {
         }
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         positionNavBar(navigationBar, visible: true, withConstraint: navigationBarTopConstraint)
         updateInsets()
-
-        if scrollToBottom {
-            for controller in childStreamControllers {
-                self.scrollToBottom(controller)
-            }
-        }
     }
 
     override func hideNavBars() {

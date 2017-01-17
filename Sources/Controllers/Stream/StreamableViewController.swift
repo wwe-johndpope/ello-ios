@@ -73,8 +73,8 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
 
         setupStreamController()
         scrollLogic = ElloScrollLogic(
-            onShow: { [unowned self] scroll in self.showNavBars(scroll) },
-            onHide: { [unowned self] in self.hideNavBars() }
+            onShow: { [weak self] in self?.showNavBars() },
+            onHide: { [weak self] in self?.hideNavBars() }
         )
     }
 
@@ -82,7 +82,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         postNotification(StatusBarNotifications.statusBarShouldHide, value: !navBarsVisible)
         UIView.setAnimationsEnabled(false)
         if navBarsVisible {
-            showNavBars(false)
+            showNavBars()
         }
         else {
             hideNavBars()
@@ -131,7 +131,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         }
     }
 
-    func showNavBars(_ scrollToBottom: Bool) {
+    func showNavBars() {
         if let tabBarController = self.elloTabBarController {
             tabBarController.setTabBarHidden(false, animated: true)
         }
@@ -140,17 +140,6 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     func hideNavBars() {
         if let tabBarController = self.elloTabBarController {
             tabBarController.setTabBarHidden(true, animated: true)
-        }
-    }
-
-    func scrollToBottom(_ controller: StreamViewController) {
-        if let scrollView = streamViewController.collectionView {
-            let contentOffsetY: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height
-            if contentOffsetY > 0 {
-                scrollView.isScrollEnabled = false
-                scrollView.setContentOffset(CGPoint(x: 0, y: contentOffsetY), animated: true)
-                scrollView.isScrollEnabled = true
-            }
         }
     }
 

@@ -140,8 +140,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         super.awakeFromNib()
         setupNavigationBar()
         scrollLogic = ElloScrollLogic(
-            onShow: { [unowned self] scroll in self.showNavBars(scroll) },
-            onHide: { [unowned self] in self.hideNavBars() }
+            onShow: { [weak self] in self?.showNavBars() },
+            onHide: { [weak self] in self?.hideNavBars() }
         )
 
         locationTextViewSelected = false
@@ -158,7 +158,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         return findViewController { vc in vc is SettingsContainerViewController } as! SettingsContainerViewController?
     }
 
-    func showNavBars(_ scrollToBottom: Bool) {
+    func showNavBars() {
         if let tabBarController = self.elloTabBarController {
             tabBarController.setTabBarHidden(false, animated: true)
         }

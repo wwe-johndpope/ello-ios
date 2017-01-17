@@ -70,14 +70,10 @@ final class PostDetailViewController: StreamableViewController {
         super.didSetCurrentUser()
     }
 
-    override func showNavBars(_ scrollToBottom: Bool) {
-        super.showNavBars(scrollToBottom)
+    override func showNavBars() {
+        super.showNavBars()
         positionNavBar(navigationBar, visible: true)
         updateInsets()
-
-        if scrollToBottom {
-            self.scrollToBottom(streamViewController)
-        }
     }
 
     override func hideNavBars() {
@@ -148,7 +144,7 @@ final class PostDetailViewController: StreamableViewController {
 
         let commentItem = streamViewController.dataSource.visibleCellItems.find { item in
             return (item.jsonable as? ElloComment)?.id == comment.id
-        } ?? streamViewController.dataSource.visibleCellItems.last
+        }
 
         if let commentItem = commentItem, let indexPath = self.streamViewController.dataSource.indexPathForItem(commentItem) {
             self.scrollToComment = nil
@@ -277,7 +273,7 @@ extension PostDetailViewController: StreamDestination {
         setupNavigationItems()
 
         if isOwnPost() {
-            showNavBars(false)
+            showNavBars()
         }
     }
 
