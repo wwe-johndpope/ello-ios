@@ -55,6 +55,7 @@ public class NotificationsViewController: StreamableViewController, Notification
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        automaticallyAdjustsScrollViewInsets = false
 
         screen.delegate = self
         title = InterfaceString.Notifications.Title
