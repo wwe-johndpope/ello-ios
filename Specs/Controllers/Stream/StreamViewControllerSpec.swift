@@ -12,12 +12,11 @@ class StreamViewControllerSpec: QuickSpec {
     override func spec() {
 
         var controller: StreamViewController!
+        beforeEach {
+            controller = StreamViewController.instantiateFromStoryboard()
+        }
 
         describe("initialization") {
-
-            beforeEach {
-                controller = StreamViewController.instantiateFromStoryboard()
-            }
 
             describe("storyboard") {
 
@@ -42,6 +41,27 @@ class StreamViewControllerSpec: QuickSpec {
                 expect(controller).to(beAKindOf(StreamViewController.self))
             }
 
+        }
+
+        describe("hasCellItems(for:)") {
+            it("returns 'false' if 0 items") {
+                expect(controller.hasCellItems(for: .ProfilePosts)) == false
+            }
+            it("returns 'false' if 1 placeholder item") {
+                controller.appendStreamCellItems([StreamCellItem(type: .Placeholder, placeholderType: .ProfilePosts)])
+                expect(controller.hasCellItems(for: .ProfilePosts)) == false
+            }
+            it("returns 'true' if 1 jsonable item") {
+                controller.appendStreamCellItems([StreamCellItem(type: .StreamLoading, placeholderType: .ProfilePosts)])
+                expect(controller.hasCellItems(for: .ProfilePosts)) == true
+            }
+            it("returns 'true' if more than 1 jsonable item") {
+                controller.appendStreamCellItems([
+                    StreamCellItem(type: .StreamLoading, placeholderType: .ProfilePosts),
+                    StreamCellItem(type: .StreamLoading, placeholderType: .ProfilePosts),
+                ])
+                expect(controller.hasCellItems(for: .ProfilePosts)) == true
+            }
         }
 
         xdescribe("viewDidAppear(_:)") {

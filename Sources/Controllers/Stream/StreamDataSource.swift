@@ -95,6 +95,24 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
+    public func hasCellItems(for placeholderType: StreamCellType.PlaceholderType) -> Bool {
+        // don't filter on 'type', because we need to check that the number of
+        // items is 1 or 0, and if it's 1, then we need to see if its type is
+        // .Placeholder
+        let items = streamCellItems.filter {
+            $0.placeholderType == placeholderType
+        }
+        if let item = items.first where items.count == 1 {
+            switch item.type {
+            case .Placeholder:
+                return false
+            default:
+                return true
+            }
+        }
+        return items.count > 0
+    }
+
     public func indexPathsForPlaceholderType(placeholderType: StreamCellType.PlaceholderType) -> [NSIndexPath] {
 
         guard let index = self.visibleCellItems.indexOf({$0.placeholderType == placeholderType}) else { return [] }
