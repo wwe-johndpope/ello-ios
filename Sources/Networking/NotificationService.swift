@@ -9,13 +9,16 @@ public class NotificationService {
 
     public init() {}
 
-    public func loadAnnouncements() -> Future<Announcement> {
-        let promise = Promise<Announcement>()
+    public func loadAnnouncements() -> Future<Announcement?> {
+        let promise = Promise<Announcement?>()
         ElloProvider.shared.elloRequest(
             .Announcements,
             success: { (data, responseConfig) in
                 if let results = data as? Announcement {
                     promise.completeWithSuccess(results)
+                }
+                else if data as? String == "" {
+                    promise.completeWithSuccess(nil)
                 }
                 else {
                     let error = NSError.uncastableJSONAble()
