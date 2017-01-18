@@ -333,6 +333,20 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
+    public func hasCellItems(for placeholderType: StreamCellType.PlaceholderType) -> Bool {
+        let paths = dataSource.indexPathsForPlaceholderType(placeholderType)
+        if let path = paths.first where paths.count == 1 {
+            let item = dataSource.visibleCellItems[path.row]
+            switch item.type {
+            case .Placeholder:
+                return false
+            default:
+                return true
+            }
+        }
+        return paths.count > 0
+    }
+
     public func replacePlaceholder(
         placeholderType: StreamCellType.PlaceholderType,
         with streamCellItems: [StreamCellItem],

@@ -175,6 +175,10 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         }
         updateInsets()
         streamViewController.doneLoading()
+
+        if !streamViewController.hasCellItems(for: .CategoryPosts) {
+            streamViewController.replacePlaceholder(.CategoryPosts, with: [StreamCellItem(type: .StreamLoading)]) {}
+        }
     }
 
     public func setCategories(categories: [Category]) {
