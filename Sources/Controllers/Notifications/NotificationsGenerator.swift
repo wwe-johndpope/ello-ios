@@ -71,7 +71,12 @@ final class NotificationsGenerator: StreamGenerator {
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                self.compareAndUpdateAnnouncements([announcement])
+                if let announcement = announcement {
+                    self.compareAndUpdateAnnouncements([announcement])
+                }
+                else {
+                    self.compareAndUpdateAnnouncements([])
+                }
             }
             .onFail { [weak self] _ in
                 self?.compareAndUpdateAnnouncements([])

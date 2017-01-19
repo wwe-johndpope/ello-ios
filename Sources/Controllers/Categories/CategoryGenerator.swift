@@ -46,10 +46,11 @@ final class CategoryGenerator: StreamGenerator {
     }
 
     init(slug: String,
-                currentUser: User?,
-                streamKind: StreamKind,
-                destination: StreamDestination?
-        ) {
+        currentUser: User?,
+        streamKind: StreamKind,
+        destination: StreamDestination?
+        )
+    {
         self.slug = slug
         self.currentUser = currentUser
         self.streamKind = streamKind
@@ -73,14 +74,22 @@ final class CategoryGenerator: StreamGenerator {
         queue.addOperation(doneOperation)
 
         localToken = loadingToken.resetInitialPageLoadingToken()
-        setPlaceHolders()
+        if reload {
+            category = nil
+            categories = nil
+            pagePromotional = nil
+            posts = nil
+        }
+        else {
+            setPlaceHolders()
+        }
         setInitialJSONAble(doneOperation)
         loadCategories()
         loadCategory(doneOperation, reload: reload)
         if usesPagePromo() {
             loadPagePromotional(doneOperation)
         }
-        loadCategoryPosts(doneOperation)
+        loadCategoryPosts(doneOperation, reload: reload)
     }
 
     func toggleGrid() {
@@ -182,12 +191,14 @@ private extension CategoryGenerator {
             }.ignoreFailures()
     }
 
-    func loadCategoryPosts(_ doneOperation: AsyncOperation) {
+    func loadCategoryPosts(_ doneOperation: AsyncOperation, reload: Bool) {
         let displayPostsOperation = AsyncOperation()
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-        self.destination?.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+        if !reload && posts != nil {
+            self.destination?.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+        }
 
         var apiEndpoint: ElloAPI?
         if usesPagePromo() {

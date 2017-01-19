@@ -469,6 +469,10 @@ extension ProfileViewController:  StreamDestination {
         updateUser(user)
         streamViewController.doneLoading()
 
+        if !streamViewController.hasCellItems(for: .profilePosts) {
+            streamViewController.replacePlaceholder(.profilePosts, with: [StreamCellItem(type: .streamLoading)]) {}
+        }
+
         userParam = user.id
         title = user.atName
 

@@ -12,19 +12,14 @@ class StreamViewControllerSpec: QuickSpec {
     override func spec() {
 
         var controller: StreamViewController!
+        beforeEach {
+            controller = StreamViewController.instantiateFromStoryboard()
+            showController(controller)
+        }
 
         describe("initialization") {
 
-            beforeEach {
-                controller = StreamViewController.instantiateFromStoryboard()
-            }
-
             describe("storyboard") {
-
-                beforeEach {
-                    showController(controller)
-                }
-
                 it("IBOutlets are  not nil") {
                     expect(controller.collectionView).notTo(beNil())
                 }
@@ -42,6 +37,27 @@ class StreamViewControllerSpec: QuickSpec {
                 expect(controller).to(beAKindOf(StreamViewController.self))
             }
 
+        }
+
+        describe("hasCellItems(for:)") {
+            it("returns 'false' if 0 items") {
+                expect(controller.hasCellItems(for: .profilePosts)) == false
+            }
+            it("returns 'false' if 1 placeholder item") {
+                controller.appendStreamCellItems([StreamCellItem(type: .placeholder, placeholderType: .profilePosts)])
+                expect(controller.hasCellItems(for: .profilePosts)) == false
+            }
+            it("returns 'true' if 1 jsonable item") {
+                controller.appendStreamCellItems([StreamCellItem(type: .streamLoading, placeholderType: .profilePosts)])
+                expect(controller.hasCellItems(for: .profilePosts)) == true
+            }
+            it("returns 'true' if more than 1 jsonable item") {
+                controller.appendStreamCellItems([
+                    StreamCellItem(type: .streamLoading, placeholderType: .profilePosts),
+                    StreamCellItem(type: .streamLoading, placeholderType: .profilePosts),
+                ])
+                expect(controller.hasCellItems(for: .profilePosts)) == true
+            }
         }
 
         xdescribe("viewDidAppear(_:)") {
@@ -74,12 +90,6 @@ class StreamViewControllerSpec: QuickSpec {
         }
 
         describe("viewDidLoad()") {
-
-            beforeEach {
-                controller = StreamViewController.instantiateFromStoryboard()
-                showController(controller)
-            }
-
             it("properly configures dataSource") {
                 expect(controller.dataSource).to(beAnInstanceOf(StreamDataSource.self))
 
@@ -111,9 +121,7 @@ class StreamViewControllerSpec: QuickSpec {
         xdescribe("loading more posts on scrolling") {
 
             beforeEach {
-                controller = StreamViewController.instantiateFromStoryboard()
                 controller.streamKind = StreamKind.following
-                showController(controller)
                 controller.streamService.loadStream(endpoint: controller.streamKind.endpoint, streamKind: nil,
                     success: { (jsonables, responseConfig) in
                         controller.appendUnsizedCellItems(StreamCellItemParser().parse(jsonables, streamKind: controller.streamKind))
@@ -139,11 +147,6 @@ class StreamViewControllerSpec: QuickSpec {
         context("protocol conformance") {
 
             var externalWebObserver: NotificationObserver?
-
-            beforeEach {
-                controller = StreamViewController.instantiateFromStoryboard()
-                showController(controller)
-            }
 
             afterEach {
                 externalWebObserver?.removeObserver()

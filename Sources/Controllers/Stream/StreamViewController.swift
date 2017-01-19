@@ -209,9 +209,12 @@ final class StreamViewController: BaseElloViewController {
     var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
         set {
+            // the order here is important, because SSPullToRefresh will try to
+            // set the contentInset, and that can have weird side effects, so
+            // we need to set the contentInset *after* pullToRefreshView.
+            pullToRefreshView?.defaultContentInset = newValue
             collectionView.contentInset = newValue
             collectionView.scrollIndicatorInsets = newValue
-            pullToRefreshView?.defaultContentInset = newValue
         }
     }
     var columnCount: Int {
@@ -329,6 +332,10 @@ final class StreamViewController: BaseElloViewController {
             self.reloadCells()
             completion()
         }
+    }
+
+    func hasCellItems(for placeholderType: StreamCellType.PlaceholderType) -> Bool {
+        return dataSource.hasCellItems(for: placeholderType)
     }
 
     func replacePlaceholder(
