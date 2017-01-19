@@ -290,10 +290,12 @@ public final class StreamViewController: BaseElloViewController {
         if now {
             debounceCellReload {}
             self.collectionView.reloadData()
+            self.collectionView.layoutIfNeeded()
         }
         else {
             debounceCellReload {
                 self.collectionView.reloadData()
+                self.collectionView.layoutIfNeeded()
             }
         }
     }
