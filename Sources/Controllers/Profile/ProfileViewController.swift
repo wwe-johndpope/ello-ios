@@ -32,7 +32,6 @@ final class ProfileViewController: StreamableViewController {
     var coverImageHeightStart: CGFloat?
     let initialStreamKind: StreamKind
     var currentUserChangedNotification: NotificationObserver?
-    var postChangedNotification: NotificationObserver?
     var relationshipChangedNotification: NotificationObserver?
     var deeplinkPath: String?
     var generator: ProfileGenerator?
@@ -94,8 +93,6 @@ final class ProfileViewController: StreamableViewController {
     deinit {
         currentUserChangedNotification?.removeObserver()
         currentUserChangedNotification = nil
-        postChangedNotification?.removeObserver()
-        postChangedNotification = nil
         relationshipChangedNotification?.removeObserver()
         relationshipChangedNotification = nil
     }
