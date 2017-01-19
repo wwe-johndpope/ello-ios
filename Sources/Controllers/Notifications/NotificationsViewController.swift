@@ -63,6 +63,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        automaticallyAdjustsScrollViewInsets = false
 
         screen.delegate = self
         title = InterfaceString.Notifications.Title
@@ -97,7 +98,6 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
     }
 
     func reload() {
-        ElloHUD.showLoadingHudInView(streamViewController.view)
         hasNewContent = false
 
         generator?.load(reload: true)

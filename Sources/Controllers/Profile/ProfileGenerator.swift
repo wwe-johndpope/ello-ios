@@ -60,7 +60,7 @@ final class ProfileGenerator: StreamGenerator {
         }
         setInitialUser(doneOperation)
         loadUser(doneOperation, reload: reload)
-        loadUserPosts(doneOperation)
+        loadUserPosts(doneOperation, reload: reload)
     }
 
     func toggleGrid() {
@@ -95,7 +95,7 @@ private extension ProfileGenerator {
         doneOperation.run()
     }
 
-    func loadUser(_ doneOperation: AsyncOperation, reload: Bool = false) {
+    func loadUser(_ doneOperation: AsyncOperation, reload: Bool) {
         guard !doneOperation.isFinished || reload else { return }
 
         // load the user with no posts
@@ -118,12 +118,14 @@ private extension ProfileGenerator {
         })
     }
 
-    func loadUserPosts(_ doneOperation: AsyncOperation) {
+    func loadUserPosts(_ doneOperation: AsyncOperation, reload: Bool) {
         let displayPostsOperation = AsyncOperation()
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-        self.destination?.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)]) {}
+        if !reload && posts != nil {
+            self.destination?.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)]) {}
+        }
 
         StreamService().loadUserPosts(
             userParam,
