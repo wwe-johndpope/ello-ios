@@ -231,6 +231,10 @@ extension PostDetailViewController: StreamDestination {
     public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
         streamViewController.replacePlaceholder(type, with: items) {
             self.checkScrollToComment()
+
+            if self.streamViewController.hasCellItems(for: .ProfileHeader) && !self.streamViewController.hasCellItems(for: .ProfilePosts) {
+                self.streamViewController.replacePlaceholder(.ProfilePosts, with: [StreamCellItem(type: .StreamLoading)]) {}
+            }
             completion()
         }
     }

@@ -195,10 +195,6 @@ private extension CategoryGenerator {
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-        if !reload && posts != nil {
-            self.destination?.replacePlaceholder(.CategoryPosts, items: [StreamCellItem(type: .StreamLoading)]) {}
-        }
-
         var apiEndpoint: ElloAPI?
         if usesPagePromo() {
             guard let discoverType = DiscoverType.fromURL(slug) else { return }

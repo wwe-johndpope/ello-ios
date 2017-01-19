@@ -148,7 +148,13 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     }
 
     public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
-        streamViewController.replacePlaceholder(type, with: items, completion: completion)
+        streamViewController.replacePlaceholder(type, with: items) {
+            if self.streamViewController.hasCellItems(for: .CategoryHeader) && !self.streamViewController.hasCellItems(for: .CategoryPosts) {
+                self.streamViewController.replacePlaceholder(.CategoryPosts, with: [StreamCellItem(type: .StreamLoading)]) {}
+            }
+
+            completion()
+        }
         updateInsets()
     }
 
@@ -175,10 +181,6 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         }
         updateInsets()
         streamViewController.doneLoading()
-
-        if !streamViewController.hasCellItems(for: .CategoryPosts) {
-            streamViewController.replacePlaceholder(.CategoryPosts, with: [StreamCellItem(type: .StreamLoading)]) {}
-        }
     }
 
     public func setCategories(categories: [Category]) {

@@ -123,10 +123,6 @@ private extension ProfileGenerator {
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-        if !reload && posts != nil {
-            self.destination?.replacePlaceholder(.ProfilePosts, items: [StreamCellItem(type: .StreamLoading)]) {}
-        }
-
         StreamService().loadUserPosts(
             userParam,
             success: { [weak self] (posts, responseConfig) in

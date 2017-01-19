@@ -451,7 +451,13 @@ extension ProfileViewController:  StreamDestination {
     }
 
     public func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: ElloEmptyCompletion) {
-        streamViewController.replacePlaceholder(type, with: items, completion: completion)
+        streamViewController.replacePlaceholder(type, with: items) {
+            if self.streamViewController.hasCellItems(for: .ProfileHeader) && !self.streamViewController.hasCellItems(for: .ProfilePosts) {
+                self.streamViewController.replacePlaceholder(.ProfilePosts, with: [StreamCellItem(type: .StreamLoading)]) {}
+            }
+
+            completion()
+        }
     }
 
     public func setPlaceholders(items: [StreamCellItem]) {
@@ -466,10 +472,6 @@ extension ProfileViewController:  StreamDestination {
         self.user = user
         updateUser(user)
         streamViewController.doneLoading()
-
-        if !streamViewController.hasCellItems(for: .ProfilePosts) {
-            streamViewController.replacePlaceholder(.ProfilePosts, with: [StreamCellItem(type: .StreamLoading)]) {}
-        }
 
         userParam = user.id
         title = user.atName
