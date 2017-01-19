@@ -14,6 +14,7 @@ protocol KeychainType {
     var isPasswordBased: Bool? { get set }
     var username: String? { get set }
     var password: String? { get set }
+    var isStaff: Bool? { get set }
 }
 
 private let PushToken = "ElloPushToken"
@@ -23,6 +24,7 @@ private let AuthTokenType = "ElloAuthTokenType"
 private let AuthTokenAuthenticated = "ElloAuthTokenAuthenticated"
 private let AuthUsername = "ElloAuthUsername"
 private let AuthPassword = "ElloAuthPassword"
+private let AuthIsStaff = "ElloAuthIsStaff"
 
 struct ElloKeychain: KeychainType {
     var keychain: Keychain
@@ -85,6 +87,33 @@ struct ElloKeychain: KeychainType {
             }
             catch {
                 print("Unable to save is password based")
+            }
+        }
+    }
+
+    var isStaff: Bool? {
+        get {
+            if let tryData = try? keychain.getData(AuthIsStaff),
+                let data = tryData,
+                let number = NSKeyedUnarchiver.unarchiveObject(with: data) as? NSNumber
+            {
+                return number.boolValue
+            }
+            return nil
+        }
+        set {
+            do {
+                if let newValue = newValue {
+                    let boolAsNumber = NSNumber(value: newValue as Bool)
+                    let data = NSKeyedArchiver.archivedData(withRootObject: boolAsNumber)
+                    try keychain.set(data, key: AuthIsStaff)
+                }
+                else {
+                    try keychain.remove(AuthIsStaff)
+                }
+            }
+            catch {
+                print("Unable to save is staff")
             }
         }
     }
