@@ -531,6 +531,7 @@ final class StreamViewController: BaseElloViewController {
                 .update,
                 .replaced,
                 .loved,
+                .reposted,
                 .watching:
                 self.dataSource.modifyItems(post, change: change, collectionView: self.collectionView)
             case .read: break

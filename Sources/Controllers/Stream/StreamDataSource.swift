@@ -459,7 +459,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
         case .delete:
-            let _ = removeItemsFor(jsonable: jsonable, change: change)
+            removeItemsFor(jsonable: jsonable, change: change)
             collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
         case .replaced:
             let (oldIndexPaths, _) = elementsFor(jsonable: jsonable, change: change)
@@ -515,7 +515,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 case .loves:
                     if let post = jsonable as? Post, !post.loved {
                         // the post was unloved
-                        let _ = removeItemsFor(jsonable: jsonable, change: .delete)
+                        removeItemsFor(jsonable: jsonable, change: .delete)
                         collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
                         shouldReload = false
                     }
@@ -525,36 +525,22 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
             if shouldReload {
-                let (_, items) = elementsFor(jsonable: jsonable, change: change)
-                for item in items {
-                    item.jsonable = item.jsonable.merge(jsonable)
-                }
-                collectionView.reloadData() // reload(indexPaths)
+                mergeAndReloadElementsFor(jsonable: jsonable, change: change, collectionView: collectionView)
             }
-        case .loved:
-            let (_, items) = elementsFor(jsonable: jsonable, change: change)
-            var indexPaths = [IndexPath]()
-            for item in items {
-                if let path = indexPathForItem(item), item.type == .footer {
-                    indexPaths.append(path)
-                }
-                item.jsonable = item.jsonable.merge(jsonable)
-            }
-            collectionView.reloadData() // reload(indexPaths)
-        case .watching:
-            let (_, items) = elementsFor(jsonable: jsonable, change: change)
-            var indexPaths = [IndexPath]()
-            for item in items {
-                if let path = indexPathForItem(item), item.type == .createComment {
-                    indexPaths.append(path)
-                }
-                else {
-                    item.jsonable = item.jsonable.merge(jsonable)
-                }
-            }
-            collectionView.reloadData() // reload(indexPaths)
+        case .loved,
+             .reposted,
+             .watching:
+            mergeAndReloadElementsFor(jsonable: jsonable, change: change, collectionView: collectionView)
         default: break
         }
+    }
+
+    func mergeAndReloadElementsFor(jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
+        let (_, items) = elementsFor(jsonable: jsonable, change: change)
+        for item in items {
+            item.jsonable = item.jsonable.merge(jsonable)
+        }
+        collectionView.reloadData() // reload(indexPaths)
     }
 
     func modifyUserRelationshipItems(_ user: User, collectionView: ElloCollectionView) {
@@ -622,6 +608,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         collectionView.reloadData()
     }
 
+    @discardableResult
     func removeItemsFor(jsonable: JSONAble, change: ContentChange) -> [IndexPath] {
         let indexPaths = self.elementsFor(jsonable: jsonable, change: change).0
         temporarilyUnfilter() {

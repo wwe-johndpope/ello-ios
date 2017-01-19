@@ -213,25 +213,25 @@ class PostbarController: PostbarDelegate {
     }
 
     func repostButtonTapped(_ indexPath: IndexPath) {
-        if let post = self.postForIndexPath(indexPath) {
-            Tracker.shared.postReposted(post)
-            let message = InterfaceString.Post.RepostConfirm
-            let alertController = AlertViewController(message: message)
-            alertController.autoDismiss = false
+        guard let post = self.postForIndexPath(indexPath) else { return }
 
-            let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) { action in
-                self.createRepost(post, alertController: alertController)
-            }
-            let noAction = AlertAction(title: InterfaceString.No, style: .light) { action in
-                alertController.dismiss()
-            }
+        Tracker.shared.postReposted(post)
+        let message = InterfaceString.Post.RepostConfirm
+        let alertController = AlertViewController(message: message)
+        alertController.autoDismiss = false
 
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-
-            logPresentingAlert(presentingController?.readableClassName() ?? "PostbarController")
-            presentingController?.present(alertController, animated: true, completion: .none)
+        let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) { action in
+            self.createRepost(post, alertController: alertController)
         }
+        let noAction = AlertAction(title: InterfaceString.No, style: .light) { action in
+            alertController.dismiss()
+        }
+
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+
+        logPresentingAlert(presentingController?.readableClassName() ?? "PostbarController")
+        presentingController?.present(alertController, animated: true, completion: .none)
     }
 
     fileprivate func createRepost(_ post: Post, alertController: AlertViewController)
@@ -249,6 +249,17 @@ class PostbarController: PostbarDelegate {
             user.postsCount = userPostsCount + 1
             postNotification(CurrentUserChangedNotification, value: user)
         }
+
+        post.reposted = true
+        if let repostsCount = post.repostsCount {
+            post.repostsCount = repostsCount + 1
+        }
+        else {
+            post.repostsCount = 1
+        }
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+        postNotification(PostChangedNotification, value: (post, .reposted))
+
         RePostService().repost(post: post,
             success: { repost in
                 postNotification(PostChangedNotification, value: (repost, .create))

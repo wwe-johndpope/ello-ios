@@ -19,6 +19,7 @@ enum ContentChange {
     case loved
     case watching
     case replaced
+    case reposted
     case delete
 
     static func updateCommentCount(_ comment: ElloComment, delta: Int) {
