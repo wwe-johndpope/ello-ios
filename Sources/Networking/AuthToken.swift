@@ -65,6 +65,11 @@ struct AuthToken {
         set { keychain.password = newValue }
     }
 
+    var isStaff: Bool {
+        get { return keychain.isStaff ?? false }
+        set { keychain.isStaff = newValue }
+    }
+
     static func storeToken(_ data: Data, isPasswordBased: Bool, email: String? = nil, password: String? = nil) {
         var authToken = AuthToken()
         authToken.isPasswordBased = isPasswordBased
@@ -79,6 +84,8 @@ struct AuthToken {
         authToken.token = json["access_token"].stringValue
         authToken.type = json["token_type"].stringValue
         authToken.refreshToken = json["refresh_token"].stringValue
+
+        JWT.refresh()
     }
 
     static func reset() {
@@ -89,5 +96,6 @@ struct AuthToken {
         keychain.isPasswordBased = false
         keychain.username = nil
         keychain.password = nil
+        keychain.isStaff = nil
     }
 }

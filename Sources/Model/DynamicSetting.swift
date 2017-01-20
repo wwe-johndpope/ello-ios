@@ -145,7 +145,7 @@ extension DynamicSetting {
 
         let info = json["info"].string
         let linkLabel = json["link"]["label"].string
-        let linkURL = json["link"]["url"].URL
+        let linkURL = json["link"]["url"].url
 
         return DynamicSetting(label: label, key: key, info: info, linkLabel: linkLabel, linkURL: linkURL, dependentOn: dependentOn, conflictsWith: conflictsWith, setsAnother: setsAnother)
     }

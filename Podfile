@@ -52,6 +52,7 @@ def common_pods
   pod 'KeychainAccess', '~> 3.0'
   pod 'SwiftyUserDefaults', '~> 3.0'
   pod 'SwiftyJSON', '~> 3.1'
+  pod 'JWTDecode', '~> 2.0'
   pod 'Crashlytics', '~> 3.4'
 end
 

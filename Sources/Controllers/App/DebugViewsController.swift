@@ -2,7 +2,6 @@
 ///  DebugViewsController.swift
 //
 
-#if DEBUG
 
 class DebugViewsController: UIViewController {
 
@@ -43,5 +42,3 @@ class DebugViewsController: UIViewController {
     }
 
 }
-
-#endif

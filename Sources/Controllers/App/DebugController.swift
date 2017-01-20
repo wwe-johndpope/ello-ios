@@ -2,8 +2,6 @@
 ///  DebugController.swift
 //
 
-#if DEBUG
-
 import SwiftyUserDefaults
 import Crashlytics
 import ImagePickerSheetController
@@ -193,4 +191,3 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
 
 }
-#endif

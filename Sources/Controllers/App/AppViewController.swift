@@ -129,6 +129,9 @@ class AppViewController: BaseElloViewController {
 
         ProfileService().loadCurrentUser(
             success: { user in
+
+                JWT.refresh()
+
                 self.screen.stopAnimatingLogo()
                 self.currentUser = user
 
@@ -743,15 +746,17 @@ extension AppViewController {
     }
 }
 
-#if DEBUG
-
 var isShowingDebug = false
 var debugController = DebugController()
 
 extension AppViewController {
 
     override var canBecomeFirstResponder: Bool {
-        return true
+        #if DEBUG
+            return true
+        #else
+            return AuthToken().isStaff
+        #endif
     }
 
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
@@ -788,5 +793,3 @@ extension AppViewController {
     }
 
 }
-
-#endif

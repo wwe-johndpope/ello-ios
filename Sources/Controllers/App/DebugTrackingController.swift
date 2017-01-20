@@ -2,7 +2,6 @@
 ///  DebugTrackingController.swift
 //
 
-#if DEBUG
 
 import SnapKit
 
@@ -172,5 +171,3 @@ class DebugAgent: AnalyticsAgent {
         }
     }
 }
-
-#endif
