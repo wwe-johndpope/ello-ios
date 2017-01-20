@@ -320,10 +320,10 @@ class PostbarController: PostbarDelegate {
             // controller's createPostDelegate. Can this use the responder chain when we have
             // parameters to pass?
             if let presentingController = presentingController,
-                let post = comment.loadedFromPost,
                 let atName = comment.author?.atName
             {
-                presentingController.createPostDelegate?.createComment(post, text: "\(atName) ", fromController: presentingController)
+                let postId = comment.loadedFromPostId
+                presentingController.createPostDelegate?.createComment(postId, text: "\(atName) ", fromController: presentingController)
             }
         }
     }
@@ -333,16 +333,16 @@ class PostbarController: PostbarDelegate {
         // controller's createPostDelegate. Can this use the responder chain when we have
         // parameters to pass?
         if let comment = commentForIndexPath(indexPath),
-            let presentingController = presentingController,
-            let post = comment.loadedFromPost
+            let presentingController = presentingController
         {
-            PostService().loadReplyAll(post.id, success: { usernames in
+            let postId = comment.loadedFromPostId
+            PostService().loadReplyAll(postId, success: { usernames in
                 let usernamesText = usernames.reduce("") { memo, username in
                     return memo + "@\(username) "
                 }
-                presentingController.createPostDelegate?.createComment(post, text: usernamesText, fromController: presentingController)
+                presentingController.createPostDelegate?.createComment(postId, text: usernamesText, fromController: presentingController)
             }, failure: {
-                presentingController.createCommentTapped(post)
+                presentingController.createCommentTapped(postId)
             })
         }
     }
@@ -402,7 +402,7 @@ class PostbarController: PostbarDelegate {
                 cell.commentsControl.isEnabled = true
 
                 if indexPaths.count == 1 && jsonables.count == 0 {
-                    self.presentingController?.createCommentTapped(post)
+                    self.presentingController?.createCommentTapped(post.id)
                 }
             }
     }
