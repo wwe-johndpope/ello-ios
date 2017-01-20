@@ -908,8 +908,8 @@ extension StreamViewController: StreamImageCellDelegate {
 // MARK: StreamViewController: Commenting
 extension StreamViewController {
 
-    public func createCommentTapped(post: Post) {
-        createPostDelegate?.createComment(post, text: nil, fromController: self)
+    public func createCommentTapped(postId: String) {
+        createPostDelegate?.createComment(postId, text: nil, fromController: self)
     }
 }
 
@@ -1137,10 +1137,8 @@ extension StreamViewController: UICollectionViewDelegate {
             let request = NSURLRequest(URL: callToAction)
             ElloWebViewHelper.handleRequest(request, webLinkDelegate: self)
         }
-        else if let comment = dataSource.commentForIndexPath(indexPath),
-            post = comment.loadedFromPost
-        {
-            createCommentTapped(post)
+        else if let comment = dataSource.commentForIndexPath(indexPath) {
+            createCommentTapped(comment.loadedFromPostId)
         }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
             category = dataSource.jsonableForIndexPath(indexPath) as? Category

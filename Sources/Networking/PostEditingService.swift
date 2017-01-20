@@ -74,18 +74,18 @@ public class PostEditingService {
         case Image(UIImage)
     }
 
-    var editPost: Post?
+    var editPostId: String?
     var editComment: ElloComment?
-    var parentPost: Post?
+    var parentPostId: String?
 
-    convenience init(parentPost post: Post) {
+    convenience init(parentPostId postId: String) {
         self.init()
-        parentPost = post
+        parentPostId = postId
     }
 
-    convenience init(editPost post: Post) {
+    convenience init(editPostId postId: String) {
         self.init()
-        editPost = post
+        editPostId = postId
     }
 
     convenience init(editComment comment: ElloComment) {
@@ -138,11 +138,11 @@ public class PostEditingService {
         let params = ["body": body]
 
         let endpoint: ElloAPI
-        if let parentPost = parentPost {
-            endpoint = ElloAPI.CreateComment(parentPostId: parentPost.id, body: params)
+        if let parentPostId = parentPostId {
+            endpoint = ElloAPI.CreateComment(parentPostId: parentPostId, body: params)
         }
-        else if let editPost = editPost {
-            endpoint = ElloAPI.UpdatePost(postId: editPost.id, body: params)
+        else if let editPostId = editPostId {
+            endpoint = ElloAPI.UpdatePost(postId: editPostId, body: params)
         }
         else if let editComment = editComment {
             endpoint = ElloAPI.UpdateComment(postId: editComment.postId, commentId: editComment.id, body: params)

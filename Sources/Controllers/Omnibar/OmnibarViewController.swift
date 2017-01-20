@@ -17,7 +17,7 @@ public class OmnibarViewController: BaseElloViewController {
     }
 
     var previousTab: ElloTab = .DefaultTab
-    var parentPost: Post?
+    var parentPostId: String?
     var editPost: Post?
     var editComment: ElloComment?
     var rawEditBody: [Regionable]?
@@ -44,9 +44,9 @@ public class OmnibarViewController: BaseElloViewController {
         }
     }
 
-    convenience public init(parentPost post: Post) {
+    convenience public init(parentPostId postId: String) {
         self.init(nibName: nil, bundle: nil)
-        parentPost = post
+        parentPostId = postId
     }
 
     convenience public init(editComment comment: ElloComment) {
@@ -72,8 +72,8 @@ public class OmnibarViewController: BaseElloViewController {
             }
     }
 
-    convenience public init(parentPost post: Post, defaultText: String?) {
-        self.init(parentPost: post)
+    convenience public init(parentPostId postId: String, defaultText: String?) {
+        self.init(parentPostId: postId)
         self.defaultText = defaultText
     }
 
@@ -130,7 +130,7 @@ public class OmnibarViewController: BaseElloViewController {
         }
         else {
             let isComment: Bool
-            if parentPost != nil {
+            if parentPostId != nil {
                 screen.title = InterfaceString.Omnibar.CreateCommentTitle
                 screen.submitTitle = InterfaceString.Omnibar.CreateCommentButton
                 isComment = true
@@ -309,7 +309,7 @@ extension OmnibarViewController: OmnibarScreenDelegate {
                 Tmp.write(data, to: fileName)
             }
 
-            if parentPost != nil {
+            if parentPostId != nil {
                 Tracker.sharedTracker.contentCreationCanceled(.Comment)
             }
             else if editPost != nil {
@@ -393,12 +393,12 @@ extension OmnibarViewController {
         let service: PostEditingService
         let didGoToPreviousTab: Bool
 
-        if let parentPost = parentPost {
-            service = PostEditingService(parentPost: parentPost)
+        if let parentPostId = parentPostId {
+            service = PostEditingService(parentPostId: parentPostId)
             didGoToPreviousTab = false
         }
         else if let editPost = editPost {
-            service = PostEditingService(editPost: editPost)
+            service = PostEditingService(editPostId: editPost.id)
             didGoToPreviousTab = false
         }
         else if let editComment = editComment {
@@ -516,7 +516,7 @@ extension OmnibarViewController {
 
     func contentCreationFailed(errorMessage: String) {
         let contentType: ContentType
-        if parentPost == nil && editComment == nil {
+        if parentPostId == nil && editComment == nil {
             contentType = .Post
         }
         else {
@@ -530,8 +530,8 @@ extension OmnibarViewController {
 
 extension OmnibarViewController {
     public func omnibarDataName() -> String? {
-        if let post = parentPost {
-            return "omnibar_v2_comment_\(post.repostId ?? post.id)"
+        if let postId = parentPostId {
+            return "omnibar_v2_comment_\(postId)"
         }
         else if editPost != nil || editComment != nil {
             return nil

@@ -15,7 +15,7 @@ public protocol UserTappedDelegate: class {
 
 public protocol CreatePostDelegate: class {
     func createPost(text text: String?, fromController: UIViewController)
-    func createComment(post: Post, text: String?, fromController: UIViewController)
+    func createComment(postId: String, text: String?, fromController: UIViewController)
     func editComment(comment: ElloComment, fromController: UIViewController)
     func editPost(post: Post, fromController: UIViewController)
 }
@@ -219,8 +219,8 @@ extension StreamableViewController: CreatePostDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    public func createComment(post: Post, text: String?, fromController: UIViewController) {
-        let vc = OmnibarViewController(parentPost: post, defaultText: text)
+    public func createComment(postId: String, text: String?, fromController: UIViewController) {
+        let vc = OmnibarViewController(parentPostId: postId, defaultText: text)
         vc.currentUser = self.currentUser
         vc.onCommentSuccess { _ in
             self.navigationController?.popViewControllerAnimated(true)
