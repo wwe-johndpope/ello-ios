@@ -291,10 +291,12 @@ final class StreamViewController: BaseElloViewController {
         if now {
             debounceCellReload {}
             self.collectionView.reloadData()
+            self.collectionView.layoutIfNeeded()
         }
         else {
             debounceCellReload {
                 self.collectionView.reloadData()
+                self.collectionView.layoutIfNeeded()
             }
         }
     }
@@ -903,8 +905,8 @@ extension StreamViewController: StreamImageCellDelegate {
 // MARK: StreamViewController: Commenting
 extension StreamViewController {
 
-    func createCommentTapped(_ post: Post) {
-        createPostDelegate?.createComment(post, text: nil, fromController: self)
+    func createCommentTapped(_ postId: String) {
+        createPostDelegate?.createComment(postId, text: nil, fromController: self)
     }
 }
 
@@ -1131,10 +1133,8 @@ extension StreamViewController: UICollectionViewDelegate {
             let request = URLRequest(url: callToAction)
             ElloWebViewHelper.handle(request: request, webLinkDelegate: self)
         }
-        else if let comment = dataSource.commentForIndexPath(indexPath),
-            let post = comment.loadedFromPost
-        {
-            createCommentTapped(post)
+        else if let comment = dataSource.commentForIndexPath(indexPath) {
+            createCommentTapped(comment.loadedFromPostId)
         }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
             let category = dataSource.jsonableForIndexPath(indexPath) as? Category

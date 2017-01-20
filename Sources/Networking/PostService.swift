@@ -51,6 +51,9 @@ struct PostService {
             success: { (data, responseConfig) in
                 if let comments = data as? [ElloComment] {
                     Preloader().preloadImages(comments)
+                    for comment in comments {
+                        comment.loadedFromPostId = postId
+                    }
                     success(comments, responseConfig)
                 }
                 else {

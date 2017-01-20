@@ -79,10 +79,6 @@ private extension PostDetailGenerator {
     func loadPost(_ doneOperation: AsyncOperation, reload: Bool = false) {
         guard !doneOperation.isFinished || reload else { return }
 
-        if post == nil && !reload {
-            self.destination?.replacePlaceholder(type: .postHeader, items: [StreamCellItem(type: .streamLoading)]) {}
-        }
-
         // load the post with no comments
         PostService().loadPost(postParam, needsComments: false)
             .onSuccess { [weak self] post in
