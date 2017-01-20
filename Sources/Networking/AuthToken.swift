@@ -4,7 +4,7 @@
 
 import Foundation
 import SwiftyJSON
-import JWTDecode
+
 
 struct AuthToken {
     static var sharedKeychain: KeychainType = ElloKeychain()
@@ -85,19 +85,7 @@ struct AuthToken {
         authToken.type = json["token_type"].stringValue
         authToken.refreshToken = json["refresh_token"].stringValue
 
-        guard let accessToken = authToken.token else { return }
-
-        do {
-            let jwt = try decode(jwt: accessToken)
-            guard
-                let data = jwt.body["data"] as? [String: Any],
-                let staff = data["is_staff"] as? Bool
-            else { return }
-            authToken.isStaff = staff
-        }
-        catch {
-            print("Unable to decode JWT")
-        }
+        JWT.refresh()
     }
 
     static func reset() {
@@ -108,5 +96,6 @@ struct AuthToken {
         keychain.isPasswordBased = false
         keychain.username = nil
         keychain.password = nil
+        keychain.isStaff = nil
     }
 }

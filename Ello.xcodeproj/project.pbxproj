@@ -76,6 +76,8 @@
 		1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */; };
 		1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
 		1207C9B11C7538D100939ADB /* ShareElloProviderLinkOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */; };
+		120E64141E327B7A00CAF03E /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
+		120E64151E327D6300CAF03E /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
 		120FF6C61C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C51C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift */; };
 		120FF6C81C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */; };
 		120FF6C91C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */; };
@@ -1152,6 +1154,7 @@
 		1207C9991C750E4B00939ADB /* ShareTrackerOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareTrackerOverrides.swift; sourceTree = "<group>"; };
 		1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloProviderLinkExension.swift; sourceTree = "<group>"; };
 		1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareElloProviderLinkOverrides.swift; sourceTree = "<group>"; };
+		120E64131E327B7A00CAF03E /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		120FF6C51C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAttachmentProcessorSpec.swift; sourceTree = "<group>"; };
 		120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessor.swift; sourceTree = "<group>"; };
 		120FF6CA1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessorSpec.swift; sourceTree = "<group>"; };
@@ -2685,6 +2688,7 @@
 				12D14C6D1A43762400C6F8E8 /* ElloNetworkErrorSpec.swift */,
 				1D9225531C3B23E000553BAE /* ExperienceUpdateSpec.swift */,
 				762ABBA41A8ACB7700B19E34 /* JSONAbleSpec.swift */,
+				120E641C1E32A84200CAF03E /* JWTSpec.swift */,
 				EA68A0EF1AAE1691003F0425 /* LocalPersonSpec.swift */,
 				12CFF6911B167717007CE68F /* LoveSpec.swift */,
 				1D7A28D21A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift */,
@@ -3015,6 +3019,7 @@
 				12E83D9E1ADF12120074ECF6 /* ExperienceUpdate.swift */,
 				1DA18E1B1DB55D42000231CC /* ExternalLink.swift */,
 				12F6AE371A43392D00493660 /* JSONAble.swift */,
+				120E64131E327B7A00CAF03E /* JWT.swift */,
 				EA68A0EC1AAE166F003F0425 /* LocalPerson.swift */,
 				12CFF69B1B167841007CE68F /* Love.swift */,
 				1DF2335B1A94005C0096DA65 /* Notification.swift */,
@@ -4523,6 +4528,7 @@
 				122B30BC1C6A3FBB00C1B9D8 /* JSONAble.swift in Sources */,
 				122B30F91C6A427F00C1B9D8 /* ElloTextView.swift in Sources */,
 				1207C9AA1C752FF000939ADB /* MultipartRequestBuilder.swift in Sources */,
+				120E64151E327D6300CAF03E /* JWT.swift in Sources */,
 				1207C9931C74CD3A00939ADB /* DateFormatting.swift in Sources */,
 				12DEB24B1C5BF9E600D4CDCE /* AppSetup.swift in Sources */,
 				122B30B91C6A3FBB00C1B9D8 /* ElloLinkedStore.swift in Sources */,
@@ -4937,6 +4943,7 @@
 				12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */,
 				1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */,
 				12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */,
+				120E64141E327B7A00CAF03E /* JWT.swift in Sources */,
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
 				1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */,
 				1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */,
