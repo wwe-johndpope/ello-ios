@@ -103,20 +103,15 @@ class StreamContainerViewController: StreamableViewController {
     }
 
     func reload(streamKind: StreamKind) {
-        let controller: StreamViewController?
         switch streamKind {
         case .following:
-            controller = childStreamControllers[0]
+            showSegmentIndex(0, forceReload: true)
+            streamsSegmentedControl.selectedSegmentIndex = 0
         case .starred:
-            controller = childStreamControllers[1]
+            showSegmentIndex(1, forceReload: true)
+            streamsSegmentedControl.selectedSegmentIndex = 1
         default:
-            controller = nil
-        }
-
-        if let controller = controller, controller == childStreamControllers[currentStreamIndex] {
-            ElloHUD.showLoadingHudInView(controller.view)
-            controller.loadInitialPage()
-            Tracker.shared.screenAppeared(self)
+            break
         }
     }
 
@@ -215,7 +210,7 @@ class StreamContainerViewController: StreamableViewController {
         streamsSegmentedControl = control
     }
 
-    fileprivate func showSegmentIndex(_ index: Int) {
+    fileprivate func showSegmentIndex(_ index: Int, forceReload: Bool) {
         for controller in childStreamControllers {
             controller.collectionView.scrollsToTop = false
         }
@@ -234,7 +229,10 @@ class StreamContainerViewController: StreamableViewController {
 
         setupNavigationBar(controller: currentController)
 
-        if !streamLoaded[index] {
+        if forceReload || !streamLoaded[index] {
+            if forceReload && streamLoaded[index] {
+                ElloHUD.showLoadingHudInView(currentController.view)
+            }
             streamLoaded[index] = true
             currentController.loadInitialPage()
         }
@@ -254,19 +252,19 @@ class StreamContainerViewController: StreamableViewController {
     }
 
     @IBAction func streamSegmentTapped(_ sender: UISegmentedControl) {
-        showSegmentIndex(sender.selectedSegmentIndex)
+        showSegmentIndex(sender.selectedSegmentIndex, forceReload: false)
     }
 }
 
 extension StreamContainerViewController {
 
     func showFriends() {
-        showSegmentIndex(0)
+        showSegmentIndex(0, forceReload: false)
         streamsSegmentedControl.selectedSegmentIndex = 0
     }
 
     func showNoise() {
-        showSegmentIndex(1)
+        showSegmentIndex(1, forceReload: false)
         streamsSegmentedControl.selectedSegmentIndex = 1
     }
 }
