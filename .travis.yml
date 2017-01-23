@@ -7,9 +7,10 @@ cache:
 - bundler
 - cocoapods
 before_install:
-
-- xcrun instruments -w "22FA2149-1241-469C-BF6D-462D3837DB72" ||
-  echo "(Pre)Launched the simulator."
+before_install:
+- export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 7 (10.2" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
+- echo $IOS_SIMULATOR_UDID
+- open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
 install:
 - gem install bundler
 - bundle install
@@ -27,7 +28,7 @@ before_script:
 - export LANG=en_US.UTF-8
 script:
 - gem install danger --no-ri --no-rdoc && danger
-- travis_wait set -o pipefail && xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
+- set -o pipefail && travis_retry xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
   Debug -destination "id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12" clean test | xcpretty -f `xcpretty-travis-formatter`
 notifications:
   email: false
