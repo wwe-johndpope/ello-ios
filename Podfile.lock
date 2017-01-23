@@ -41,7 +41,7 @@ PODS:
   - Moya/Core (8.0.0):
     - Alamofire (~> 4.2.0)
     - Result (~> 3.1.0)
-  - Nimble (5.1.0)
+  - Nimble (5.1.1)
   - Nimble-Snapshots (4.4.0):
     - Nimble-Snapshots/Core (= 4.4.0)
   - Nimble-Snapshots/Core (4.4.0):
@@ -133,7 +133,7 @@ DEPENDENCIES:
   - KINWebBrowser (from `https://github.com/ello/KINWebBrowser`)
   - MBProgressHUD (~> 0.9.0)
   - Moya (~> 8.0.0-beta.6)
-  - Nimble (= 5.1)
+  - Nimble (= 5.1.1)
   - Nimble-Snapshots (~> 4.4)
   - PINRemoteImage (from `https://github.com/pinterest/PINRemoteImage.git`, commit `af312667f0ce830264198366f481f1b222675a31`)
   - Quick (~> 1.0)
@@ -248,7 +248,7 @@ SPEC CHECKSUMS:
   KINWebBrowser: dad85d7d93e6f4620a8589b96992394affffa66e
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
-  Nimble: 5ea121a2eda60440287054cde077fc0ad22227b3
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
   PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
   PINRemoteImage: 77a7f7bfacd2b4040786a0e31192a81003fdd41f
@@ -264,6 +264,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 61588905f19f7d5b819c68efad6958429a636594
+PODFILE CHECKSUM: cb5cc74e76f9a8b541df4e98a5c03b0740984e24
 
 COCOAPODS: 1.1.1

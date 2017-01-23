@@ -80,7 +80,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                     let post = Post.stub([
                         "author": User.stub(["username": "colinta"])
                         ])
-                    subject = OmnibarViewController(parentPost: post)
+                    subject = OmnibarViewController(parentPostId: post.id)
                     expect(subject).notTo(beNil())
                 }
 
@@ -105,7 +105,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                     expect(subject.screen.isComment) == false
                 }
                 it("should be true for a new comment") {
-                    subject = OmnibarViewController(parentPost: stub([:]))
+                    subject = OmnibarViewController(parentPostId: "123")
                     showController(subject)
                     expect(subject.screen.isComment) == true
                 }
@@ -234,7 +234,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         ),
                     ])
 
-                    subject = OmnibarViewController(parentPost: post)
+                    subject = OmnibarViewController(parentPostId: post.id)
                     subject.currentUser = User.stub([:])
                     showController(subject)
                     let text = NSAttributedString(string: "test")
@@ -261,7 +261,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                     omnibarData.regions = [attributedString, image]
                     let data = NSKeyedArchiver.archivedData(withRootObject: omnibarData)
 
-                    subject = OmnibarViewController(parentPost: post)
+                    subject = OmnibarViewController(parentPostId: post.id)
                     if let fileName = subject.omnibarDataName() {
                         _ = Tmp.write(data, to: fileName)
                     }
@@ -293,7 +293,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         "author": User.stub(["username": "colinta"])
                     ])
 
-                    subject = OmnibarViewController(parentPost: post)
+                    subject = OmnibarViewController(parentPostId: post.id)
                     screen = OmnibarMockScreen()
                     subject.screen = screen
                     subject.beginAppearanceTransition(true, animated: false)
@@ -322,7 +322,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                 let post = Post.stub([:])
 
                 beforeEach {
-                    subject = OmnibarViewController(parentPost: post, defaultText: "@666 ")
+                    subject = OmnibarViewController(parentPostId: post.id, defaultText: "@666 ")
                     showController(subject)
                 }
 
@@ -349,7 +349,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         _ = Tmp.write(data, to: fileName)
                     }
 
-                    subject = OmnibarViewController(parentPost: post, defaultText: "@666 ")
+                    subject = OmnibarViewController(parentPostId: post.id, defaultText: "@666 ")
                     checkRegions(subject.screen.regions, contain: "@666 ")
                     checkRegions(subject.screen.regions, notToContain: "testing!")
                 }
@@ -367,7 +367,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         _ = Tmp.write(data, to: fileName)
                     }
 
-                    subject = OmnibarViewController(parentPost: Post.stub([:]), defaultText: "@666 ")
+                    subject = OmnibarViewController(parentPostId: "123", defaultText: "@666 ")
                     checkRegions(subject.screen.regions, contain: "@666 ")
                     checkRegions(subject.screen.regions, notToContain: "testing!")
                 }
