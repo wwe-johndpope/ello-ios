@@ -78,7 +78,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         super.viewWillAppear(animated)
 
         if hasNewContent && fromTabBar {
-            reload()
+            reload(showSpinner: true)
         }
         fromTabBar = false
 
@@ -97,8 +97,11 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         generator?.load(reload: false)
     }
 
-    func reload() {
+    func reload(showSpinner: Bool) {
         hasNewContent = false
+        if showSpinner {
+            ElloHUD.showLoadingHudInView(streamViewController.view)
+        }
 
         generator?.load(reload: true)
         Tracker.shared.screenAppeared(self)
@@ -115,7 +118,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         streamViewController.announcementDelegate = self
         streamViewController.notificationDelegate = self
         streamViewController.initialLoadClosure = { [weak self] in self?.initialLoad() }
-        streamViewController.reloadClosure = { [weak self] in self?.reload() }
+        streamViewController.reloadClosure = { [weak self] in self?.reload(showSpinner: false) }
     }
 
     override func showNavBars() {
@@ -186,7 +189,7 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
             _ = navigationController?.popToRootViewController(animated: true)
         }
 
-        reload()
+        reload(showSpinner: true)
     }
 
 }
@@ -203,7 +206,7 @@ private extension NotificationsViewController {
             [weak self] _ in
             guard let `self` = self else { return }
             if self.navigationController?.childViewControllers.count == 1 {
-                self.reload()
+                self.reload(showSpinner: true)
             }
             else {
                 self.hasNewContent = true
