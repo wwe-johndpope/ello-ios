@@ -10,6 +10,7 @@ import Moya
 
 class PostbarControllerSpec: QuickSpec {
     class ReplyAllCreatePostDelegate: CreatePostDelegate {
+        var postId: String?
         var post: Post?
         var comment: ElloComment?
         var text: String?
@@ -17,8 +18,8 @@ class PostbarControllerSpec: QuickSpec {
         func createPost(text: String?, fromController: UIViewController) {
             self.text = text
         }
-        func createComment(_ post: Post, text: String?, fromController: UIViewController) {
-            self.post = post
+        func createComment(_ postId: String, text: String?, fromController: UIViewController) {
+            self.postId = postId
             self.text = text
         }
         func editComment(_ comment: ElloComment, fromController: UIViewController) {
