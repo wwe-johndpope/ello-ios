@@ -293,6 +293,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     fileprivate func setupNameTextField() {
         nameTextFieldView.label.text = InterfaceString.Settings.Name
+        nameTextFieldView.textField.keyboardAppearance = .dark
         nameTextFieldView.textField.text = currentUser?.name
 
         let updateNameFunction = debounce(0.5) { [weak self] in
@@ -314,6 +315,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     fileprivate func setupBioTextField() {
         bioTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 30)
+        bioTextView.keyboardAppearance = .dark
         bioTextView.delegate = self
 
         bioTextViewDidChange = debounce(0.5) { [weak self] in
