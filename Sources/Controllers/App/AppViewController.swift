@@ -189,6 +189,10 @@ class AppViewController: BaseElloViewController {
 extension AppViewController {
 
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
+        let controller = DiscoverAllCategoriesViewController()
+        let navc = ElloNavigationController(rootViewController: controller)
+        swapViewController(navc) {}
+        return;
         guard !((visibleViewController as? UINavigationController)?.visibleViewController is StartupViewController) else { return }
 
         let startupController = StartupViewController()
