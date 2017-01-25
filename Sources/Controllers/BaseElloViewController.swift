@@ -29,6 +29,10 @@ class BaseElloViewController: UIViewController, ControllerThatMightHaveTheCurren
         return findViewController { vc in vc is ElloTabBarController } as? ElloTabBarController
     }
 
+    var bottomBarController: BottomBarable? {
+        return findViewController { vc in vc is BottomBarable } as? BottomBarable
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.fixNavBarItemPadding()

@@ -24,7 +24,7 @@ class SettingsContainerViewController: BaseElloViewController {
     fileprivate var settingsViewController: SettingsViewController?
 
     func tabBarVisible() -> Bool {
-        return !(elloTabBarController?.tabBarHidden ?? true)
+        return bottomBarController?.bottomBarVisible ?? false
     }
 
     func updateNavBars() {
@@ -81,8 +81,8 @@ class SettingsContainerViewController: BaseElloViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        let hidden = elloTabBarController?.tabBarHidden ?? UIApplication.shared.isStatusBarHidden
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: hidden)
+        let visible = bottomBarController?.bottomBarVisible ?? !UIApplication.shared.isStatusBarHidden
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: visible)
         updateNavBars()
     }
 }
@@ -151,24 +151,24 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         tableView.estimatedRowHeight = 100
     }
 
-    var elloTabBarController: ElloTabBarController? {
-        return findViewController { vc in vc is ElloTabBarController } as! ElloTabBarController?
+    var bottomBarController: BottomBarable? {
+        return findViewController { vc in vc is BottomBarable } as! BottomBarable?
     }
     var containerController: SettingsContainerViewController? {
         return findViewController { vc in vc is SettingsContainerViewController } as! SettingsContainerViewController?
     }
 
     func showNavBars() {
-        if let tabBarController = self.elloTabBarController {
-            tabBarController.setTabBarHidden(false, animated: true)
+        if let bottomBarController = bottomBarController {
+            bottomBarController.setBottomBarVisible(true, animated: true)
         }
 
         containerController?.showNavBars()
     }
 
     func hideNavBars() {
-        if let tabBarController = self.elloTabBarController {
-            tabBarController.setTabBarHidden(true, animated: true)
+        if let bottomBarController = bottomBarController {
+            bottomBarController.setBottomBarVisible(false, animated: true)
         }
 
         containerController?.hideNavBars()

@@ -46,7 +46,7 @@ enum ElloTab: Int {
 
 }
 
-class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
+class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser, BottomBarable {
     let tabBar = ElloTabBar()
     fileprivate var systemLoggedOutObserver: NotificationObserver?
     fileprivate var streamLoadedObserver: NotificationObserver?
@@ -72,10 +72,15 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     }
     fileprivate(set) var streamsDot: UIView?
 
-    fileprivate var _tabBarHidden = false
-    var tabBarHidden: Bool {
-        get { return _tabBarHidden }
-        set { setTabBarHidden(newValue, animated: false) }
+    fileprivate var _bottomBarVisible = true
+    var bottomBarVisible: Bool {
+        get { return _bottomBarVisible }
+        set { setBottomBarVisible(newValue, animated: false) }
+    }
+
+// MARK: BottomBarable
+    var bottomBarView: UIView {
+        return tabBar
     }
 
     fileprivate(set) var previousTab: ElloTab = .DefaultTab
@@ -161,14 +166,14 @@ extension ElloTabBarController {
 
     fileprivate func positionTabBar() {
         var upAmount = CGFloat(0)
-        if !tabBarHidden || isShowingNarration {
+        if bottomBarVisible || isShowingNarration {
             upAmount = tabBar.frame.height
         }
         tabBar.frame = view.bounds.fromBottom().with(height: tabBar.frame.height).shift(up: upAmount)
     }
 
-    func setTabBarHidden(_ hidden: Bool, animated: Bool) {
-        _tabBarHidden = hidden
+    func setBottomBarVisible(_ visible: Bool, animated: Bool) {
+        _bottomBarVisible = visible
 
         animate(animated: animated) {
             self.positionTabBar()

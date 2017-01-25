@@ -752,6 +752,7 @@
 		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309FC1B03F29300EAD920 /* communities.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC309FB1B03F29300EAD920 /* communities.json */; };
 		1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */; };
+		1DC8D5D51E395E8200E03EFC /* BottomBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC8D5D41E395E8200E03EFC /* BottomBarViewController.swift */; };
 		1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */; };
@@ -1737,6 +1738,7 @@
 		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309FB1B03F29300EAD920 /* communities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = communities.json; sourceTree = "<group>"; };
 		1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetupSpec.swift; sourceTree = "<group>"; };
+		1DC8D5D41E395E8200E03EFC /* BottomBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomBarViewController.swift; sourceTree = "<group>"; };
 		1DC91F741CF375F600336012 /* AutoCompleteResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResult.swift; sourceTree = "<group>"; };
 		1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedString.swift; sourceTree = "<group>"; };
 		1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentials.swift; sourceTree = "<group>"; };
@@ -2901,6 +2903,7 @@
 				12F6AE1C1A43385600493660 /* App */,
 				122C662B1B4240060035F4CD /* AutoComplete */,
 				12F6ADF61A43380C00493660 /* BaseElloViewController.swift */,
+				1DC8D5D41E395E8200E03EFC /* BottomBarViewController.swift */,
 				12431FF01DBAA69B006808D4 /* Categories */,
 				129C1E221AB7CF580013C1D7 /* Discover */,
 				12347A961AA8BDCC00736B42 /* Drawer */,
@@ -4941,6 +4944,7 @@
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
+				1DC8D5D51E395E8200E03EFC /* BottomBarViewController.swift in Sources */,
 				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
 				122B30D91C6A3FBC00C1B9D8 /* PushPayload.swift in Sources */,
 				1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */,

@@ -92,8 +92,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     }
 
     func tabBarVisible() -> Bool {
-        let hidden = elloTabBarController?.tabBarHidden ?? true
-        return !hidden
+        return bottomBarController?.bottomBarVisible ?? false
     }
 
     func updateInsets(navBar: UIView?, streamController controller: StreamViewController, tabBarVisible visible: Bool? = nil) {
@@ -132,14 +131,14 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     }
 
     func showNavBars() {
-        if let tabBarController = self.elloTabBarController {
-            tabBarController.setTabBarHidden(false, animated: true)
+        if let bottomBarController = bottomBarController {
+            bottomBarController.setBottomBarVisible(true, animated: true)
         }
     }
 
     func hideNavBars() {
-        if let tabBarController = self.elloTabBarController {
-            tabBarController.setTabBarHidden(true, animated: true)
+        if let bottomBarController = bottomBarController {
+            bottomBarController.setBottomBarVisible(false, animated: true)
         }
     }
 
