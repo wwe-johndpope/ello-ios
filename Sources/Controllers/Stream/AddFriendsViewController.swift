@@ -72,7 +72,7 @@ class AddFriendsViewController: StreamableViewController {
 
     fileprivate func updateInsets() {
         if let ss = self.view as? SearchScreen {
-            updateInsets(navBar: ss.navigationBar, streamController: streamViewController, tabBarVisible: false)
+            updateInsets(navBar: ss.navigationBar, streamController: streamViewController, navigationBarsVisible: false)
         }
     }
 

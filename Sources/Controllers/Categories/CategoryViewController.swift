@@ -76,7 +76,7 @@ final class CategoryViewController: StreamableViewController {
 
         if !userDidScroll && screen.categoryCardsVisible {
             var offset: CGFloat = CategoryCardListView.Size.height
-            if tabBarVisible() {
+            if screen.navigationBar.frame.maxY > 0 {
                 offset += ElloNavigationBar.Size.height
             }
             streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)

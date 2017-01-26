@@ -190,8 +190,14 @@ extension AppViewController {
 
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
         let controller = DiscoverAllCategoriesViewController()
-        let navc = ElloNavigationController(rootViewController: controller)
-        swapViewController(navc) {}
+        let navController = ElloNavigationController(rootViewController: controller)
+        let bottomController = LoggedOutViewController()
+
+        bottomController.addChildViewController(navController)
+        bottomController.parentAppController = self
+        navController.didMove(toParentViewController: bottomController)
+
+        swapViewController(bottomController) {}
         return;
         guard !((visibleViewController as? UINavigationController)?.visibleViewController is StartupViewController) else { return }
 

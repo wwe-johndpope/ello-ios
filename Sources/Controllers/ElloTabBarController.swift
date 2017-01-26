@@ -46,7 +46,7 @@ enum ElloTab: Int {
 
 }
 
-class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser, BottomBarable {
+class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser, BottomBarController {
     let tabBar = ElloTabBar()
     fileprivate var systemLoggedOutObserver: NotificationObserver?
     fileprivate var streamLoadedObserver: NotificationObserver?
@@ -72,13 +72,14 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     }
     fileprivate(set) var streamsDot: UIView?
 
+    // MARK: BottomBarController
     fileprivate var _bottomBarVisible = true
     var bottomBarVisible: Bool {
         get { return _bottomBarVisible }
-        set { setBottomBarVisible(newValue, animated: false) }
     }
+    var bottomBarHeight: CGFloat { return ElloTabBar.Size.height }
+    var navigationBarsVisible: Bool { return bottomBarVisible }
 
-// MARK: BottomBarable
     var bottomBarView: UIView {
         return tabBar
     }
@@ -172,7 +173,7 @@ extension ElloTabBarController {
         tabBar.frame = view.bounds.fromBottom().with(height: tabBar.frame.height).shift(up: upAmount)
     }
 
-    func setBottomBarVisible(_ visible: Bool, animated: Bool) {
+    func setNavigationBarsVisible(_ visible: Bool, animated: Bool) {
         _bottomBarVisible = visible
 
         animate(animated: animated) {

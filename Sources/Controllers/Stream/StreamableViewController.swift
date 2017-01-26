@@ -55,7 +55,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showing = true
-        willPresentStreamable(tabBarVisible())
+        willPresentStreamable(navigationBarsVisible())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,7 +65,7 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        willPresentStreamable(tabBarVisible())
+        willPresentStreamable(navigationBarsVisible())
     }
 
     override func viewDidLoad() {
@@ -91,15 +91,15 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         scrollLogic.isShowing = navBarsVisible
     }
 
-    func tabBarVisible() -> Bool {
-        return bottomBarController?.bottomBarVisible ?? false
+    func navigationBarsVisible() -> Bool {
+        return bottomBarController?.navigationBarsVisible ?? false
     }
 
-    func updateInsets(navBar: UIView?, streamController controller: StreamViewController, tabBarVisible visible: Bool? = nil) {
+    func updateInsets(navBar: UIView?, streamController controller: StreamViewController, navigationBarsVisible visible: Bool? = nil) {
         let topInset = max(0, navBar?.frame.maxY ?? 0)
         let bottomInset: CGFloat
-        if visible ?? tabBarVisible() {
-            bottomInset = ElloTabBar.Size.height
+        if visible ?? bottomBarController?.bottomBarVisible ?? false {
+            bottomInset = bottomBarController?.bottomBarHeight ?? 0
         }
         else {
             bottomInset = 0
@@ -132,13 +132,13 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
 
     func showNavBars() {
         if let bottomBarController = bottomBarController {
-            bottomBarController.setBottomBarVisible(true, animated: true)
+            bottomBarController.setNavigationBarsVisible(true, animated: true)
         }
     }
 
     func hideNavBars() {
         if let bottomBarController = bottomBarController {
-            bottomBarController.setBottomBarVisible(false, animated: true)
+            bottomBarController.setNavigationBarsVisible(false, animated: true)
         }
     }
 

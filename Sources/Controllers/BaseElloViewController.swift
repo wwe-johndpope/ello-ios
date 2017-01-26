@@ -29,8 +29,8 @@ class BaseElloViewController: UIViewController, ControllerThatMightHaveTheCurren
         return findViewController { vc in vc is ElloTabBarController } as? ElloTabBarController
     }
 
-    var bottomBarController: BottomBarable? {
-        return findViewController { vc in vc is BottomBarable } as? BottomBarable
+    var bottomBarController: BottomBarController? {
+        return findViewController { vc in vc is BottomBarController } as? BottomBarController
     }
 
     override func viewDidLoad() {
