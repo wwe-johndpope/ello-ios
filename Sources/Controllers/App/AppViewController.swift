@@ -192,15 +192,6 @@ extension AppViewController {
         childNavController.didMove(toParentViewController: loggedOutController)
 
         swapViewController(parentNavController) {}
-        return;
-        guard !((visibleViewController as? UINavigationController)?.visibleViewController is StartupViewController) else { return }
-
-        let startupController = StartupViewController()
-        startupController.parentAppController = self
-        let nav = ElloNavigationController(rootViewController: startupController)
-        nav.isNavigationBarHidden = true
-        swapViewController(nav, completion: completion)
-        Tracker.shared.screenAppeared(startupController)
     }
 
     func showJoinScreen(animated: Bool, invitationCode: String? = nil) {

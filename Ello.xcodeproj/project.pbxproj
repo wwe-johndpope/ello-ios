@@ -604,17 +604,13 @@
 		1D70DE751DF781AC008AF216 /* AnnouncementCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE6D1DF73ACB008AF216 /* AnnouncementCellSizeCalculator.swift */; };
 		1D70E7271D5A526C008758D7 /* ProfileHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */; };
 		1D71528F1D6CA22C005998FE /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71528E1D6CA22C005998FE /* Screen.swift */; };
-		1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152911D6CA248005998FE /* StartupScreen.swift */; };
-		1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152921D6CA248005998FE /* StartupViewController.swift */; };
 		1D7152961D6CBE0E005998FE /* NoPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152951D6CBE0E005998FE /* NoPostsCell.swift */; };
 		1D7152981D6CBE24005998FE /* NoPostsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D7152971D6CBE24005998FE /* NoPostsCell.xib */; };
 		1D71529A1D6CBFE2005998FE /* NoPostsCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */; };
 		1D71529C1D6D0558005998FE /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71529B1D6D0558005998FE /* AppScreen.swift */; };
 		1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71529D1D6D1040005998FE /* EmptyScreen.swift */; };
 		1D7152A01D6D212D005998FE /* ello-crazy-logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1D71529F1D6D212D005998FE /* ello-crazy-logo.gif */; };
-		1D7152A21D6D318B005998FE /* StartupProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A11D6D318B005998FE /* StartupProtocols.swift */; };
 		1D7152A41D6D3848005998FE /* StartupGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */; };
-		1D7152A71D6E0E2F005998FE /* StartupScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A61D6E0E2F005998FE /* StartupScreenSpec.swift */; };
 		1D7152AD1D6E12A5005998FE /* AppScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A81D6E0F9A005998FE /* AppScreenSpec.swift */; };
 		1D7152AE1D6E12AB005998FE /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152AA1D6E1215005998FE /* AppProtocols.swift */; };
 		1D7152B01D6E4782005998FE /* ClearTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152AF1D6E4782005998FE /* ClearTextField.swift */; };
@@ -1587,17 +1583,13 @@
 		1D70DE721DF78034008AF216 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCellSpec.swift; sourceTree = "<group>"; };
 		1D71528E1D6CA22C005998FE /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
-		1D7152911D6CA248005998FE /* StartupScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupScreen.swift; sourceTree = "<group>"; };
-		1D7152921D6CA248005998FE /* StartupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupViewController.swift; sourceTree = "<group>"; };
 		1D7152951D6CBE0E005998FE /* NoPostsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPostsCell.swift; sourceTree = "<group>"; };
 		1D7152971D6CBE24005998FE /* NoPostsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoPostsCell.xib; sourceTree = "<group>"; };
 		1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPostsCellPresenter.swift; sourceTree = "<group>"; };
 		1D71529B1D6D0558005998FE /* AppScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppScreen.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D71529D1D6D1040005998FE /* EmptyScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyScreen.swift; sourceTree = "<group>"; };
 		1D71529F1D6D212D005998FE /* ello-crazy-logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "ello-crazy-logo.gif"; sourceTree = "<group>"; };
-		1D7152A11D6D318B005998FE /* StartupProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupProtocols.swift; sourceTree = "<group>"; };
 		1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupGradientLayer.swift; sourceTree = "<group>"; };
-		1D7152A61D6E0E2F005998FE /* StartupScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupScreenSpec.swift; sourceTree = "<group>"; };
 		1D7152A81D6E0F9A005998FE /* AppScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScreenSpec.swift; sourceTree = "<group>"; };
 		1D7152AA1D6E1215005998FE /* AppProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppProtocols.swift; sourceTree = "<group>"; };
 		1D7152AF1D6E4782005998FE /* ClearTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextField.swift; sourceTree = "<group>"; };
@@ -2624,7 +2616,6 @@
 				76FF80571A9691DB00617A1E /* Relationship */,
 				1DEE2BED1AF96F4300EB9DFA /* Search */,
 				EA7BA1DE1AC05AC500A42D1E /* Settings */,
-				1D7152A51D6E0E20005998FE /* Startup */,
 				121E46BB1A6B2704004AEAB7 /* Stream */,
 				1DBF85BF1AF8022200889349 /* WebBrowser */,
 			);
@@ -2908,7 +2899,6 @@
 				76E5CBE71A92678500D6483F /* Relationship */,
 				1D33284C1AE74D6100446591 /* Search */,
 				EA8990161ABB4B0F00339CBE /* Settings */,
-				1D7152901D6CA236005998FE /* Startup */,
 				12B093641A6D874300BF104E /* Stream */,
 				1DADC5781AF449A5000DAC88 /* WebBrowser */,
 			);
@@ -3401,24 +3391,6 @@
 				1D70DE6B1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift */,
 			);
 			path = Calculators;
-			sourceTree = "<group>";
-		};
-		1D7152901D6CA236005998FE /* Startup */ = {
-			isa = PBXGroup;
-			children = (
-				1D7152A11D6D318B005998FE /* StartupProtocols.swift */,
-				1D7152911D6CA248005998FE /* StartupScreen.swift */,
-				1D7152921D6CA248005998FE /* StartupViewController.swift */,
-			);
-			path = Startup;
-			sourceTree = "<group>";
-		};
-		1D7152A51D6E0E20005998FE /* Startup */ = {
-			isa = PBXGroup;
-			children = (
-				1D7152A61D6E0E2F005998FE /* StartupScreenSpec.swift */,
-			);
-			path = Startup;
 			sourceTree = "<group>";
 		};
 		1D7426371B02973200C16322 /* Onboarding */ = {
@@ -4715,7 +4687,6 @@
 				128FDF371DD0E4A300DBADD0 /* CategoryScreenSpec.swift in Sources */,
 				122C663E1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift in Sources */,
 				1D8835A41CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift in Sources */,
-				1D7152A71D6E0E2F005998FE /* StartupScreenSpec.swift in Sources */,
 				1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */,
 				127BAD601A8512AA00628696 /* ElloLinkedStoreSpec.swift in Sources */,
 				EAC6054A1ADDA64B009B9426 /* DynamicSettingCellPresenterSpec.swift in Sources */,
@@ -4923,7 +4894,6 @@
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
-				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
 				122B30D91C6A3FBC00C1B9D8 /* PushPayload.swift in Sources */,
 				1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */,
 				1D70DE661DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift in Sources */,
@@ -4934,7 +4904,6 @@
 				1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */,
 				1207C9701C73FEE000939ADB /* AsyncOperation.swift in Sources */,
 				12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */,
-				1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */,
 				12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */,
 				120E64141E327B7A00CAF03E /* JWT.swift in Sources */,
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
@@ -5160,7 +5129,6 @@
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
 				12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */,
 				1D59EF921D6624DC0029C106 /* HireService.swift in Sources */,
-				1D7152A21D6D318B005998FE /* StartupProtocols.swift in Sources */,
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,
 				12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
