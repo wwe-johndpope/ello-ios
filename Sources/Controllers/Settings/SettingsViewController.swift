@@ -23,12 +23,12 @@ class SettingsContainerViewController: BaseElloViewController {
     @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     fileprivate var settingsViewController: SettingsViewController?
 
-    func tabBarVisible() -> Bool {
-        return !(elloTabBarController?.tabBarHidden ?? true)
+    func navigationBarsVisible() -> Bool {
+        return bottomBarController?.navigationBarsVisible ?? false
     }
 
     func updateNavBars() {
-        if tabBarVisible() {
+        if navigationBarsVisible() {
             showNavBars()
         }
         else {
@@ -69,7 +69,7 @@ class SettingsContainerViewController: BaseElloViewController {
             settingsViewController = settings
             updateNavBars()
             navigationBar.items = [settings.navigationItem]
-            settings.scrollLogic.isShowing = tabBarVisible()
+            settings.scrollLogic.isShowing = navigationBarsVisible()
         }
     }
 
@@ -81,8 +81,8 @@ class SettingsContainerViewController: BaseElloViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        let hidden = elloTabBarController?.tabBarHidden ?? UIApplication.shared.isStatusBarHidden
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: hidden)
+        let visible = bottomBarController?.navigationBarsVisible ?? !UIApplication.shared.isStatusBarHidden
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: visible)
         updateNavBars()
     }
 }
@@ -151,24 +151,24 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         tableView.estimatedRowHeight = 100
     }
 
-    var elloTabBarController: ElloTabBarController? {
-        return findViewController { vc in vc is ElloTabBarController } as! ElloTabBarController?
+    var bottomBarController: BottomBarController? {
+        return findViewController { vc in vc is BottomBarController } as! BottomBarController?
     }
     var containerController: SettingsContainerViewController? {
         return findViewController { vc in vc is SettingsContainerViewController } as! SettingsContainerViewController?
     }
 
     func showNavBars() {
-        if let tabBarController = self.elloTabBarController {
-            tabBarController.setTabBarHidden(false, animated: true)
+        if let bottomBarController = bottomBarController {
+            bottomBarController.setNavigationBarsVisible(true, animated: true)
         }
 
         containerController?.showNavBars()
     }
 
     func hideNavBars() {
-        if let tabBarController = self.elloTabBarController {
-            tabBarController.setTabBarHidden(true, animated: true)
+        if let bottomBarController = bottomBarController {
+            bottomBarController.setNavigationBarsVisible(false, animated: true)
         }
 
         containerController?.hideNavBars()

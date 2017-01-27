@@ -55,7 +55,9 @@ class AlertCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         input.text = ""
-        _ = input.resignFirstResponder()
+        if input.isFirstResponder {
+            _ = input.resignFirstResponder()
+        }
     }
 }
 
