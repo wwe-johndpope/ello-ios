@@ -49,3 +49,12 @@ extension Int {
     }
 
 }
+
+public extension Double {
+
+    func roundTo(decimals: Int = 2) -> Double {
+        let roundingFactor: Double = pow(10, Double(decimals))
+        let double = Double(self)
+        return (double * roundingFactor).rounded() / roundingFactor
+    }
+}
