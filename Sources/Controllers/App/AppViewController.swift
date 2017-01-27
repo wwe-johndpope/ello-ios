@@ -98,19 +98,12 @@ class AppViewController: BaseElloViewController {
 
     fileprivate func checkIfLoggedIn() {
         let authToken = AuthToken()
-        let introDisplayed = GroupDefaults["IntroDisplayed"].bool ?? false
 
         if authToken.isPasswordBased {
-            self.loadCurrentUser()
-        }
-        else if !introDisplayed {
-            present(IntroViewController(), animated: false) {
-                GroupDefaults["IntroDisplayed"] = true
-                self.showStartupScreen()
-            }
+            loadCurrentUser()
         }
         else {
-            self.showLoginScreen(animated: false)
+            showStartupScreen()
         }
     }
 
