@@ -482,6 +482,9 @@
 		1D061B521AAA1C6D00493435 /* StringExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D061B511AAA1C6D00493435 /* StringExtensionSpec.swift */; };
 		1D066FF31B8BA19E002B303D /* ArraySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D066FF21B8BA19E002B303D /* ArraySpec.swift */; };
 		1D066FF61B8BAF43002B303D /* OmnibarImageDownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */; };
+		1D06D6C11E3BADE6004FA878 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */; };
+		1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */; };
+		1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */; };
 		1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */; };
 		1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */; };
 		1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
@@ -752,7 +755,6 @@
 		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309FC1B03F29300EAD920 /* communities.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC309FB1B03F29300EAD920 /* communities.json */; };
 		1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */; };
-		1DC8D5D51E395E8200E03EFC /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC8D5D41E395E8200E03EFC /* LoggedOutViewController.swift */; };
 		1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */; };
@@ -1471,6 +1473,9 @@
 		1D061B511AAA1C6D00493435 /* StringExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionSpec.swift; sourceTree = "<group>"; };
 		1D066FF21B8BA19E002B303D /* ArraySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArraySpec.swift; sourceTree = "<group>"; };
 		1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarImageDownloadCell.swift; sourceTree = "<group>"; };
+		1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
+		1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreen.swift; sourceTree = "<group>"; };
+		1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenProtocol.swift; sourceTree = "<group>"; };
 		1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotificationSpec.swift; sourceTree = "<group>"; };
 		1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentialsSpec.swift; sourceTree = "<group>"; };
 		1D15C2761C7D12890013B192 /* InterfaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceImage.swift; sourceTree = "<group>"; };
@@ -1730,7 +1735,6 @@
 		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309FB1B03F29300EAD920 /* communities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = communities.json; sourceTree = "<group>"; };
 		1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetupSpec.swift; sourceTree = "<group>"; };
-		1DC8D5D41E395E8200E03EFC /* LoggedOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoggedOutViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1DC91F741CF375F600336012 /* AutoCompleteResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResult.swift; sourceTree = "<group>"; };
 		1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedString.swift; sourceTree = "<group>"; };
 		1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentials.swift; sourceTree = "<group>"; };
@@ -2886,7 +2890,6 @@
 				12F6AE1C1A43385600493660 /* App */,
 				122C662B1B4240060035F4CD /* AutoComplete */,
 				12F6ADF61A43380C00493660 /* BaseElloViewController.swift */,
-				1DC8D5D41E395E8200E03EFC /* LoggedOutViewController.swift */,
 				12431FF01DBAA69B006808D4 /* Categories */,
 				129C1E221AB7CF580013C1D7 /* Discover */,
 				12347A961AA8BDCC00736B42 /* Drawer */,
@@ -2894,6 +2897,7 @@
 				12F6ADF81A43380C00493660 /* ElloTabBarController.swift */,
 				1D59EF881D63C73F0029C106 /* Hire */,
 				12F6AE1F1A43386600493660 /* Join */,
+				1D06D6BF1E3BADA0004FA878 /* LoggedOut */,
 				12F6AE221A43387B00493660 /* Login */,
 				124357681A89276E008B24FB /* Notifications */,
 				12551FB81A68725100ABC5D9 /* Omnibar */,
@@ -3259,6 +3263,16 @@
 				124CFB971C5976E500727D11 /* ShareExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1D06D6BF1E3BADA0004FA878 /* LoggedOut */ = {
+			isa = PBXGroup;
+			children = (
+				1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */,
+				1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */,
+				1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */,
+			);
+			path = LoggedOut;
 			sourceTree = "<group>";
 		};
 		1D08320B1AAA4C360076C67D /* Resources */ = {
@@ -4909,7 +4923,6 @@
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
-				1DC8D5D51E395E8200E03EFC /* LoggedOutViewController.swift in Sources */,
 				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
 				122B30D91C6A3FBC00C1B9D8 /* PushPayload.swift in Sources */,
 				1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */,
@@ -4958,6 +4971,7 @@
 				1D70DE5B1DF6106B008AF216 /* AnnouncementCell.swift in Sources */,
 				12F6ADFF1A43380C00493660 /* ProfileViewController.swift in Sources */,
 				1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */,
+				1D06D6C11E3BADE6004FA878 /* LoggedOutViewController.swift in Sources */,
 				1D2F65B21D1870020099D036 /* DiscoverAllCategoriesViewController.swift in Sources */,
 				1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */,
 				1D2B50BD1D2C2FC000F6CE90 /* CategoryService.swift in Sources */,
@@ -5096,6 +5110,7 @@
 				12431FF21DBAA6D3006808D4 /* CategoryViewController.swift in Sources */,
 				1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */,
 				1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */,
+				1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
@@ -5199,6 +5214,7 @@
 				1D6A02431C73CC9B0054603B /* AssetsToRegions.swift in Sources */,
 				123375911DA6F1180019CFAD /* ProfileLinksSizeCalculator.swift in Sources */,
 				1207C9751C73FEE000939ADB /* ContentFlaggingService.swift in Sources */,
+				1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */,
 				12F6AE631A4339C600493660 /* Validator.swift in Sources */,
 				128D36B61A951F4600622833 /* NotificationCellPresenter.swift in Sources */,
 				1207C98B1C73FEE000939ADB /* ReAuthService.swift in Sources */,
