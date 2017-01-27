@@ -9,8 +9,6 @@ class LoginScreen: CredentialsScreen {
     struct Size {
         static let fieldsTopMargin: CGFloat = 55
         static let fieldsInnerMargin: CGFloat = 30
-        static let buttonHeight: CGFloat = 50
-        static let buttonInset: CGFloat = 10
         static let forgotPasswordFontSize: CGFloat = 11
     }
 
@@ -23,7 +21,7 @@ class LoginScreen: CredentialsScreen {
         didSet {
             if let usernameValid = usernameValid {
                 usernameField.validationState = usernameValid ? .okSmall : .error
-                styleContinueButton()
+                styleContinueButton(allValid: allFieldsValid())
             }
             else {
                 usernameField.validationState = .none
@@ -38,7 +36,7 @@ class LoginScreen: CredentialsScreen {
         didSet {
             if let passwordValid = passwordValid {
                 passwordField.validationState = passwordValid ? .okSmall : .error
-                styleContinueButton()
+                styleContinueButton(allValid: allFieldsValid())
             }
             else {
                 passwordField.validationState = .none
@@ -56,8 +54,6 @@ class LoginScreen: CredentialsScreen {
     fileprivate let errorLabel = StyledLabel(style: .SmallWhite)
 
     fileprivate let forgotPasswordButton = UIButton()
-    fileprivate let continueButton = StyledButton(style: .RoundedGray)
-    fileprivate let continueBackground = UIView()
 
     override func setText() {
         titleLabel.text = InterfaceString.Startup.Login
@@ -94,25 +90,6 @@ class LoginScreen: CredentialsScreen {
         forgotPasswordButton.setTitleColor(.greyA(), for: .normal)
     }
 
-    fileprivate func styleContinueButton() {
-        let allValid: Bool
-        if let usernameValid = usernameValid,
-            let passwordValid = passwordValid
-        {
-            allValid = usernameValid && passwordValid
-        }
-        else {
-            allValid = false
-        }
-
-        if allValid {
-            continueButton.style = .Green
-        }
-        else {
-            continueButton.style = .RoundedGray
-        }
-    }
-
     override func arrange() {
         super.arrange()
 
@@ -124,7 +101,6 @@ class LoginScreen: CredentialsScreen {
         scrollView.addSubview(errorLabel)
 
         addSubview(continueBackground)
-        continueBackground.addSubview(continueButton)
 
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self)
@@ -164,17 +140,6 @@ class LoginScreen: CredentialsScreen {
             make.trailing.equalTo(scrollView).inset(Size.buttonInset)
         }
 
-        continueButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self).inset(Size.buttonInset)
-            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.buttonInset)
-            make.height.equalTo(Size.buttonHeight)
-        }
-
-        continueBackground.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(self)
-            make.top.equalTo(continueButton).offset(-Size.buttonInset)
-        }
-
         errorLabel.snp.makeConstraints { make in
             make.firstBaseline.equalTo(forgotPasswordButton)
             make.leading.trailing.equalTo(scrollView).inset(Size.inset)
@@ -186,6 +151,19 @@ class LoginScreen: CredentialsScreen {
         _ = usernameField.resignFirstResponder()
         _ = passwordField.resignFirstResponder()
         return super.resignFirstResponder()
+    }
+}
+
+extension LoginScreen {
+    func allFieldsValid() -> Bool {
+        if let usernameValid = usernameValid,
+            let passwordValid = passwordValid
+        {
+            return usernameValid && passwordValid
+        }
+        else {
+            return false
+        }
     }
 }
 
