@@ -33,6 +33,10 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 appController.userLoggedOut()
             }
         }
+        addAction(name: "Adjust Image Quality") {
+            let controller = DebugImageUploadController()
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
         addAction(name: "Debug Tracking") {
             if Tracker.shared.overrideAgent is DebugAgent {
                 let vc = DebugTrackingController()

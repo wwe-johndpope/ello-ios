@@ -34,6 +34,15 @@ class AppSetup {
         #endif
     }
 
+    var imageQuality: CGFloat {
+        get {
+            return CGFloat(GroupDefaults["ElloImageUploadQuality"].double ?? 0.8)
+        }
+        set {
+            let quality = Double(newValue)
+            GroupDefaults["ElloImageUploadQuality"] = quality
+        }
+    }
 
     class var sharedState: AppSetup {
         struct Static {

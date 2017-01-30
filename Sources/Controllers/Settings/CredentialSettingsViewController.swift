@@ -60,16 +60,20 @@ class CredentialSettingsViewController: UITableViewController {
 
     fileprivate func setupViews() {
         ElloTextFieldView.styleAsUsername(usernameView)
+        usernameView.textField.keyboardAppearance = .dark
         usernameView.textField.text = currentUser?.username
         usernameView.textFieldDidChange = self.usernameChanged
 
         ElloTextFieldView.styleAsEmail(emailView)
+        emailView.textField.keyboardAppearance = .dark
         emailView.textField.text = currentUser?.profile?.email
         emailView.textFieldDidChange = self.emailChanged
 
         ElloTextFieldView.styleAsPassword(passwordView)
+        passwordView.textField.keyboardAppearance = .dark
         passwordView.textFieldDidChange = self.passwordChanged
 
+        currentPasswordField.keyboardAppearance = .dark
         currentPasswordField.addTarget(self, action: #selector(CredentialSettingsViewController.currentPasswordChanged), for: .editingChanged)
 
         tableView.scrollsToTop = false
