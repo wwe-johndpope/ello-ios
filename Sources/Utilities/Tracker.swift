@@ -23,6 +23,7 @@ protocol AnalyticsAgent {
     func track(_ event: String!, properties: [AnyHashable: Any]!)
     func screen(_ screenTitle: String!)
     func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!)
+    func reset()
 }
 
 struct NullAgent: AnalyticsAgent {
@@ -31,6 +32,7 @@ struct NullAgent: AnalyticsAgent {
     func track(_ event: String!, properties: [AnyHashable: Any]!) { }
     func screen(_ screenTitle: String!) { }
     func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) { }
+    func reset() { }
 }
 
 extension SEGAnalytics: AnalyticsAgent { }
@@ -62,12 +64,18 @@ class Tracker {
 // MARK: Session Info
 extension Tracker {
 
-    func identify(_ user: User) {
+    func identify(_ user: User?) {
         currentUser = user
-        shouldTrackUser = user.profile?.allowsAnalytics ?? true
-        Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
-        if let analyticsId = user.profile?.gaUniqueId {
+        if let user = user {
+            shouldTrackUser = user.profile?.allowsAnalytics ?? true
+            Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
+        }
+
+        if let user = user, let analyticsId = user.profile?.gaUniqueId {
             agent.identify(analyticsId, traits: [ "created_at": user.profile?.createdAt.toServerDateString() ?? "no-creation-date" ])
+        }
+        else {
+            agent.reset()
         }
     }
 

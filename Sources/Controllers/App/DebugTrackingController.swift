@@ -170,4 +170,6 @@ class DebugAgent: AnalyticsAgent {
             screen(screenTitle)
         }
     }
+
+    func reset() {}
 }

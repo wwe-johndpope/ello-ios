@@ -417,6 +417,7 @@ extension AppViewController {
         TemporaryCache.clear()
         var cache = InviteCache()
         cache.clear()
+        Tracker.shared.identify(nil)
         currentUser = nil
     }
 }
