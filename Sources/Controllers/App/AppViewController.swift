@@ -752,6 +752,10 @@ var debugController = DebugController()
 extension AppViewController {
 
     override var canBecomeFirstResponder: Bool {
+        return debugAllowed
+    }
+
+    var debugAllowed: Bool {
         #if DEBUG
             return true
         #else
@@ -760,6 +764,8 @@ extension AppViewController {
     }
 
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        guard debugAllowed else { return }
+
         if motion == .motionShake {
             if isShowingDebug {
                 closeTodoController()
