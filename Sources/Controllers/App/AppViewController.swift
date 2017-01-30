@@ -345,9 +345,9 @@ extension AppViewController {
             }
 
             UIView.animate(withDuration: 0.2, animations: {
-                self.showStartupScreen()
                 visibleViewController.view.alpha = 0
             }, completion: { _ in
+                self.showStartupScreen()
                 visibleViewController.view.removeFromSuperview()
                 visibleViewController.removeFromParentViewController()
                 self.visibleViewController = nil
