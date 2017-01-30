@@ -485,6 +485,7 @@
 		1D06D6C11E3BADE6004FA878 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */; };
 		1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */; };
 		1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */; };
+		1D06D6C81E3C0B6A004FA878 /* LoggedOutScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */; };
 		1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */; };
 		1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */; };
 		1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
@@ -1472,6 +1473,7 @@
 		1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
 		1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreen.swift; sourceTree = "<group>"; };
 		1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenProtocol.swift; sourceTree = "<group>"; };
+		1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenSpec.swift; sourceTree = "<group>"; };
 		1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotificationSpec.swift; sourceTree = "<group>"; };
 		1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentialsSpec.swift; sourceTree = "<group>"; };
 		1D15C2761C7D12890013B192 /* InterfaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceImage.swift; sourceTree = "<group>"; };
@@ -2607,6 +2609,7 @@
 				12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */,
 				1D59EFA11D6659ED0029C106 /* Hire */,
 				121D92571A5CACC7004F0455 /* Join */,
+				1D06D6C61E3C0B5D004FA878 /* LoggedOut */,
 				12D14C841A43766D00C6F8E8 /* Login */,
 				1DBFD9FC1DFF49D00058843D /* Notifications */,
 				12551FBC1A6873A300ABC5D9 /* Omnibar */,
@@ -3261,6 +3264,14 @@
 				1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */,
 				1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */,
 				1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */,
+			);
+			path = LoggedOut;
+			sourceTree = "<group>";
+		};
+		1D06D6C61E3C0B5D004FA878 /* LoggedOut */ = {
+			isa = PBXGroup;
+			children = (
+				1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */,
 			);
 			path = LoggedOut;
 			sourceTree = "<group>";
@@ -4576,6 +4587,7 @@
 				EAB484271AC2112200CE6A81 /* CredentialSettingsViewControllerSpec.swift in Sources */,
 				1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */,
 				1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */,
+				1D06D6C81E3C0B6A004FA878 /* LoggedOutScreenSpec.swift in Sources */,
 				768043781AC20382004FEE09 /* FakeProfileHeaderCellSizeCalculator.swift in Sources */,
 				1D59EFA51D6659FF0029C106 /* HireViewControllerSpec.swift in Sources */,
 				EAF43D991AB0EBE60016E110 /* InviteCacheSpec.swift in Sources */,
