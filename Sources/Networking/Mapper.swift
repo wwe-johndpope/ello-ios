@@ -10,7 +10,7 @@ struct Mapper {
         var error: NSError?
         var json: AnyObject?
         do {
-            json = try JSONSerialization.jsonObject(with: data) as? AnyObject
+            json = try JSONSerialization.jsonObject(with: data) as AnyObject
         } catch let error1 as NSError {
             error = error1
             json = nil
