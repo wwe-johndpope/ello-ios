@@ -122,7 +122,7 @@ class AppViewController: BaseElloViewController {
 
         ProfileService().loadCurrentUser(
             success: { user in
-
+                self.logInNewUser()
                 JWT.refresh()
 
                 self.screen.stopAnimatingLogo()
@@ -406,6 +406,11 @@ extension AppViewController {
             return true
         }
         return false
+    }
+
+    fileprivate func logInNewUser() {
+        URLCache.shared.removeAllCachedResponses()
+        TemporaryCache.clear()
     }
 
     fileprivate func logOutCurrentUser() {
