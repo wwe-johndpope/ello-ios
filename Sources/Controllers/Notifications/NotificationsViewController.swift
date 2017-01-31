@@ -123,13 +123,15 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
 
     override func showNavBars() {
         super.showNavBars()
-        screen.animateNavigationBar(visible: true)
+        screen.navBarVisible = true
+        positionNavBar(screen.filterBar, visible: true)
         updateInsets()
     }
 
     override func hideNavBars() {
         super.hideNavBars()
-        screen.animateNavigationBar(visible: false)
+        screen.navBarVisible = false
+        positionNavBar(screen.filterBar, visible: false)
         updateInsets()
     }
 

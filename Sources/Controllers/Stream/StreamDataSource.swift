@@ -554,8 +554,11 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     func mergeAndReloadElementsFor(jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
         let (_, items) = elementsFor(jsonable: jsonable, change: change)
+        let T = type(of: jsonable)
         for item in items {
-            item.jsonable = item.jsonable.merge(jsonable)
+            if item.jsonable.isKind(of: T) {
+                item.jsonable = item.jsonable.merge(jsonable)
+            }
         }
         collectionView.reloadData() // reload(indexPaths)
     }
