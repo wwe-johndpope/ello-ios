@@ -38,7 +38,6 @@ class NotificationsScreen: UIView {
         return button
     }
 
-
     weak var delegate: NotificationsScreenDelegate?
     let filterBar = NotificationsFilterBar()
     let streamContainer = UIView()
@@ -124,15 +123,6 @@ extension NotificationsScreen {
         case .repost: filterBar.selectButton(filterRepostButton)
         case .relationship: filterBar.selectButton(filterInviteButton)
         }
-    }
-
-    func animateNavigationBar(visible: Bool) {
-        navBarVisible = visible
-        animate {
-            self.positionFilterBar()
-        }
-//        UIApplication.shared.
-//        UIApplication.shared.setStatusBarHidden(!visible, with: .none)
     }
 
     fileprivate func positionFilterBar() {
