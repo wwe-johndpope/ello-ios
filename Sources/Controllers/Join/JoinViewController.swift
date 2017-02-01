@@ -4,11 +4,10 @@
 
 import OnePasswordExtension
 
-class JoinViewController: BaseElloViewController, HasAppController {
+class JoinViewController: BaseElloViewController {
     var mockScreen: JoinScreenProtocol?
     var screen: JoinScreenProtocol { return mockScreen ?? (self.view as! JoinScreenProtocol) }
 
-    var parentAppController: AppViewController?
     var invitationCode: String?
 
     override func loadView() {
@@ -19,11 +18,11 @@ class JoinViewController: BaseElloViewController, HasAppController {
     }
 
     fileprivate func showOnboardingScreen(_ user: User) {
-        parentAppController?.showOnboardingScreen(user)
+        appViewController?.showOnboardingScreen(user)
     }
 
     fileprivate func showLoginScreen(_ email: String, _ password: String) {
-        parentAppController?.showLoginScreen(animated: true)
+        appViewController?.showLoginScreen(animated: true)
     }
 }
 

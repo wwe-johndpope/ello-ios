@@ -5,8 +5,11 @@
 class CreateProfileViewController: UIViewController, HasAppController {
     var mockScreen: CreateProfileScreenProtocol?
     var screen: CreateProfileScreenProtocol { return mockScreen ?? (self.view as! CreateProfileScreenProtocol) }
-    var parentAppController: AppViewController?
     var currentUser: User?
+
+    var appViewController: AppViewController? {
+        return findViewController { vc in vc is AppViewController } as? AppViewController
+    }
 
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!
@@ -153,7 +156,7 @@ extension CreateProfileViewController: OnboardingStepController {
             avatarImage: avatarImage, coverImage: coverImage,
             properties: properties,
             success: { _avatarURL, _coverImageURL, user in
-                self.parentAppController?.currentUser = user
+                self.appViewController?.currentUser = user
                 self.goToNextStep(abort, proceedClosure: proceedClosure) },
             failure: { error, _ in
                 proceedClosure(.error)
@@ -168,13 +171,13 @@ extension CreateProfileViewController: OnboardingStepController {
                     message = InterfaceString.GenericError
                 }
                 let alertController = AlertViewController(error: message)
-                self.parentAppController?.present(alertController, animated: true, completion: nil)
+                self.appViewController?.present(alertController, animated: true, completion: nil)
             })
     }
 
     func goToNextStep(_ abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
         guard
-            let presenter = onboardingViewController?.parentAppController, !abort else {
+            let presenter = onboardingViewController?.appViewController, !abort else {
             proceedClosure(.abort)
             return
         }

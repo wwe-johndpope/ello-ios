@@ -58,7 +58,9 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     fileprivate var newStreamContentObserver: NotificationObserver?
 
     fileprivate var visibleViewController = UIViewController()
-    var parentAppController: AppViewController?
+    var appViewController: AppViewController? {
+        return findViewController { vc in vc is AppViewController } as? AppViewController
+    }
 
     fileprivate var notificationsDot: UIView?
     var newNotificationsAvailable: Bool {
@@ -254,7 +256,7 @@ extension ElloTabBarController {
     }
 
     func systemLoggedOut(_ shouldAlert: Bool) {
-        parentAppController?.forceLogOut(shouldAlert)
+        appViewController?.forceLogOut(shouldAlert)
     }
 }
 

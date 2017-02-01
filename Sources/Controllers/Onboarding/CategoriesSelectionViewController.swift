@@ -2,10 +2,9 @@
 ///  CategoriesSelectionViewController.swift
 //
 
-class CategoriesSelectionViewController: StreamableViewController, HasAppController {
+class CategoriesSelectionViewController: StreamableViewController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
-    var parentAppController: AppViewController?
     var selectedCategories: [Category] = []
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!
@@ -79,7 +78,7 @@ extension CategoriesSelectionViewController: OnboardingStepController {
             }
             .onFail { _ in
                 let alertController = AlertViewController(error: InterfaceString.GenericError)
-                self.parentAppController?.present(alertController, animated: true, completion: nil)
+                self.appViewController?.present(alertController, animated: true, completion: nil)
                 proceedClosure(.error)
             }
     }

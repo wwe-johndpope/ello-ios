@@ -17,7 +17,7 @@ struct StatusBarNotifications {
 
 @objc
 protocol HasAppController {
-    var parentAppController: AppViewController? { get set }
+    var appViewController: AppViewController? { get }
 }
 
 
@@ -188,7 +188,6 @@ extension AppViewController {
         let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
         loggedOutController.addChildViewController(childNavController)
-        loggedOutController.parentAppController = self
         childNavController.didMove(toParentViewController: loggedOutController)
 
         swapViewController(parentNavController) {}
@@ -206,7 +205,6 @@ extension AppViewController {
 
         pushPayload = .none
         let joinController = JoinViewController()
-        joinController.parentAppController = self
         joinController.invitationCode = invitationCode
         nav.setViewControllers([loggedOutController, joinController], animated: animated)
     }
@@ -223,7 +221,6 @@ extension AppViewController {
 
         pushPayload = .none
         let loginController = LoginViewController()
-        loginController.parentAppController = self
         nav.setViewControllers([loggedOutController, loginController], animated: animated)
     }
 
@@ -231,7 +228,6 @@ extension AppViewController {
         currentUser = user
 
         let vc = OnboardingViewController()
-        vc.parentAppController = self
         vc.currentUser = user
 
         swapViewController(vc) {}
@@ -320,9 +316,6 @@ extension AppViewController {
             self.visibleViewController?.removeFromParentViewController()
 
             self.addChildViewController(newViewController)
-            if let childController = newViewController as? HasAppController {
-                childController.parentAppController = self
-            }
 
             newViewController.didMove(toParentViewController: self)
 

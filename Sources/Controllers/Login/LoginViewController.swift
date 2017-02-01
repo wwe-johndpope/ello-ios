@@ -5,11 +5,9 @@
 import Alamofire
 import OnePasswordExtension
 
-class LoginViewController: BaseElloViewController, HasAppController {
+class LoginViewController: BaseElloViewController {
     var mockScreen: LoginScreenProtocol?
     var screen: LoginScreenProtocol { return mockScreen ?? (self.view as! LoginScreenProtocol) }
-
-    var parentAppController: AppViewController?
 
     override func loadView() {
         let screen = LoginScreen()
@@ -19,7 +17,7 @@ class LoginViewController: BaseElloViewController, HasAppController {
     }
 
     fileprivate func loadCurrentUser() {
-        parentAppController?.loadCurrentUser() { error in
+        appViewController?.loadCurrentUser() { error in
             self.screen.loadingHUD(visible: false)
             let errorTitle = error.elloErrorMessage ?? InterfaceString.Login.LoadUserError
             self.screen.showError(errorTitle)

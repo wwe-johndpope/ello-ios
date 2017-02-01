@@ -7,7 +7,7 @@ protocol ControllerThatMightHaveTheCurrentUser {
     var currentUser: User? { get set }
 }
 
-class BaseElloViewController: UIViewController, ControllerThatMightHaveTheCurrentUser {
+class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
 
     var elloNavigationItem = UINavigationItem()
 
