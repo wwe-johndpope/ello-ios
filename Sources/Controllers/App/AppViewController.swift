@@ -461,7 +461,7 @@ extension AppViewController {
             switch type {
             case .invite:
                 showJoinScreen(animated: false, invitationCode: data)
-            case .join:
+            case .join, .signup:
                 showJoinScreen(animated: false)
             case .login:
                 showLoginScreen(animated: false)
@@ -476,7 +476,7 @@ extension AppViewController {
         }
 
         switch type {
-        case .invite, .join, .login:
+        case .invite, .join, .signup, .login:
             break
         case .exploreRecommended,
              .exploreRecent,

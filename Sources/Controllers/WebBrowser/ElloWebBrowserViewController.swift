@@ -109,6 +109,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .invitations,
              .invite,
              .join,
+             .signup,
              .login,
              .manifesto,
              .nativeRedirect,

@@ -56,6 +56,7 @@ enum ElloURI: String {
     case requestInvitations = "request_invitations"
     case resetMyPassword = "reset-my-password"
     case root = "?$"
+    case signup = "signup"
     case subdomain = "\\/\\/.+(?<!(w{3}|staging))\\."
     case starred = "starred"
     case unblock = "unblock"
@@ -262,6 +263,7 @@ enum ElloURI: String {
         invitations,
         invite,
         join,
+        signup,
         login,
         manifesto,
         nativeRedirect,

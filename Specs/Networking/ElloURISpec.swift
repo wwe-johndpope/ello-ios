@@ -271,6 +271,7 @@ class ElloURISpec: QuickSpec {
                         "with FreedomOfSpeech urls": (input: "freedom-of-speech", output: .freedomOfSpeech),
                         "with Invitations urls": (input: "invitations", output: .invitations),
                         "with Join urls": (input: "join", output: .join),
+                        "with Signup urls": (input: "signup", output: .signup),
                         "with Login urls": (input: "login", output: .login),
                         "with Manifesto urls": (input: "manifesto", output: .manifesto),
                         "with NativeRedirect urls": (input: "native_redirect", output: .nativeRedirect),
