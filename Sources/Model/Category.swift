@@ -9,7 +9,7 @@ let CategoryVersion = 3
 // Version 3: isSponsored, body, header, ctaCaption, ctaURL, promotionals
 
 final class Category: JSONAble, Groupable {
-    static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "recommended", order: 0, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
+    static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "featured", order: 0, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
     static let trending = Category(id: "meta2", name: InterfaceString.Discover.Trending, slug: "trending", order: 1, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
     static let recent = Category(id: "meta3", name: InterfaceString.Discover.Recent, slug: "recent", order: 2, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
 
