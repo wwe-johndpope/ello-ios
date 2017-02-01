@@ -437,7 +437,10 @@ extension AppViewController {
         Tracker.shared.deepLinkVisited(path)
 
         let (type, data) = ElloURI.match(path)
+        navigateToURI(path: path, type: type, data: data)
+    }
 
+    func navigateToURI(path: String, type: ElloURI, data: String) {
         guard type.shouldLoadInApp else {
             if let pathURL = URL(string: path) {
                 UIApplication.shared.openURL(pathURL)
