@@ -487,6 +487,8 @@
 		1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */; };
 		1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */; };
 		1D06D6C81E3C0B6A004FA878 /* LoggedOutScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */; };
+		1D06D6CA1E43B771004FA878 /* GroupDefaultsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C91E43B771004FA878 /* GroupDefaultsSpec.swift */; };
+		1D06D6CC1E43B7DD004FA878 /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6CB1E43B7DD004FA878 /* AppDefaults.swift */; };
 		1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */; };
 		1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */; };
 		1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
@@ -1476,6 +1478,8 @@
 		1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreen.swift; sourceTree = "<group>"; };
 		1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenProtocol.swift; sourceTree = "<group>"; };
 		1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenSpec.swift; sourceTree = "<group>"; };
+		1D06D6C91E43B771004FA878 /* GroupDefaultsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDefaultsSpec.swift; sourceTree = "<group>"; };
+		1D06D6CB1E43B7DD004FA878 /* AppDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
 		1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotificationSpec.swift; sourceTree = "<group>"; };
 		1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentialsSpec.swift; sourceTree = "<group>"; };
 		1D15C2761C7D12890013B192 /* InterfaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceImage.swift; sourceTree = "<group>"; };
@@ -2736,6 +2740,7 @@
 				1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */,
 				76224E441B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift */,
 				1DF233661A9655860096DA65 /* FreeMethodsSpecs.swift */,
+				1D06D6C91E43B771004FA878 /* GroupDefaultsSpec.swift */,
 				1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */,
 				1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */,
 				EAF43D981AB0EBE60016E110 /* InviteCacheSpec.swift */,
@@ -3054,6 +3059,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB8C6A81D7A1BAA007E1447 /* AddressBookHelpers.swift */,
+				1D06D6CB1E43B7DD004FA878 /* AppDefaults.swift */,
 				1264A7D61B7145E700733179 /* Application.swift */,
 				1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */,
 				765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */,
@@ -4764,6 +4770,7 @@
 				12CFF6921B167717007CE68F /* LoveSpec.swift in Sources */,
 				1D2F65BD1D1C5BC00099D036 /* StreamHeaderCellSpec.swift in Sources */,
 				12D14C701A43762400C6F8E8 /* ActivitySpec.swift in Sources */,
+				1D06D6CA1E43B771004FA878 /* GroupDefaultsSpec.swift in Sources */,
 				1229432E1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift in Sources */,
 				76FF805B1A96A28D00617A1E /* RelationshipServiceSpec.swift in Sources */,
 				1DF984041D9B0C1E0055EFC7 /* CreateProfileViewControllerSpec.swift in Sources */,
@@ -5093,6 +5100,7 @@
 				1267C7391BA232530000D809 /* MutableBox.swift in Sources */,
 				76C0A51E1AB38C69009B96E6 /* UIButtonExtensions.swift in Sources */,
 				12431FF21DBAA6D3006808D4 /* CategoryViewController.swift in Sources */,
+				1D06D6CC1E43B7DD004FA878 /* AppDefaults.swift in Sources */,
 				1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */,
 				1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */,
 				1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */,
