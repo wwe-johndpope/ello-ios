@@ -45,7 +45,6 @@ class Tracker {
     static let shared = Tracker()
     var settingChangedNotification: NotificationObserver?
     fileprivate var shouldTrackUser = true
-    fileprivate var currentUser: User?
     fileprivate var agent: AnalyticsAgent {
         return overrideAgent ?? (shouldTrackUser ? SEGAnalytics.shared() : NullAgent())
     }
@@ -65,13 +64,16 @@ class Tracker {
 extension Tracker {
 
     func identify(user: User?) {
-        currentUser = user
-        if let user = user {
-            shouldTrackUser = user.profile?.allowsAnalytics ?? true
-            Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
+        guard let user = user else {
+            shouldTrackUser = true
+            agent.reset()
+            return
         }
 
-        if let user = user, let analyticsId = user.profile?.gaUniqueId {
+        shouldTrackUser = user.profile?.allowsAnalytics ?? true
+        Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
+
+        if let analyticsId = user.profile?.gaUniqueId {
             agent.identify(analyticsId, traits: [ "created_at": user.profile?.createdAt.toServerDateString() ?? "no-creation-date" ])
         }
         else {
