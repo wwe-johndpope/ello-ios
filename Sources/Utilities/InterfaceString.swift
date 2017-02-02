@@ -258,6 +258,8 @@ struct InterfaceString {
     struct Startup {
         static let SignUp: String = NSLocalizedString("Sign Up", comment: "sign up button")
         static let Login: String = NSLocalizedString("Login", comment: "login button")
+        static let Join: String = NSLocalizedString("Join The Creators Network.", comment: "Join the creators network label")
+        static let Tagline: String = NSLocalizedString("Be part of what’s next in art, design, fashion, web culture & more.", comment: "Be part of what's next tag line label")
     }
 
     struct Login {
