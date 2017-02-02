@@ -12,4 +12,5 @@ protocol LoggedOutScreenProtocol: class {
     var bottomBarView: UIView { get }
     var delegate: LoggedOutProtocol? { get }
     func setControllerView(_ childView: UIView)
+    func showJoinText()
 }

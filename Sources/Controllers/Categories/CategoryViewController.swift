@@ -110,9 +110,13 @@ final class CategoryViewController: StreamableViewController {
 private extension CategoryViewController {
 
     func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [backItem]
-        elloNavigationItem.fixNavBarItemPadding()
+        if let navigationController = navigationController,
+            navigationController.viewControllers.first != self
+        {
+            let backItem = UIBarButtonItem.backChevron(withController: self)
+            elloNavigationItem.leftBarButtonItems = [backItem]
+            elloNavigationItem.fixNavBarItemPadding()
+        }
 
         let searchItem = UIBarButtonItem.searchItem(controller: self)
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)

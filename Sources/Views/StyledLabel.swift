@@ -125,6 +125,10 @@ extension StyledLabel.Style {
         )
     static let Large = StyledLabel.Style(
         textColor: .black,
+        fontFamily: .large
+        )
+    static let LargeBold = StyledLabel.Style(
+        textColor: .black,
         fontFamily: .largeBold
         )
     static let Gray = StyledLabel.Style(
@@ -150,6 +154,7 @@ extension StyledLabel.Style {
 
         case "Black": return .Black
         case "Large": return .Large
+        case "LargeBold": return .LargeBold
 
         case "Gray": return .Gray
         case "LightGray": return .LightGray
