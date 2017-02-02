@@ -111,7 +111,8 @@ private extension CategoryViewController {
 
     func setupNavigationItems() {
         if let navigationController = navigationController,
-            navigationController.viewControllers.first != self {
+            navigationController.viewControllers.first != self
+        {
             let backItem = UIBarButtonItem.backChevron(withController: self)
             elloNavigationItem.leftBarButtonItems = [backItem]
             elloNavigationItem.fixNavBarItemPadding()
