@@ -44,19 +44,23 @@ class SettingsContainerViewController: BaseElloViewController {
         }
 
         if let tableView = settingsViewController?.tableView {
+            tableView.contentInset.top = ElloNavigationBar.Size.height
+            tableView.scrollIndicatorInsets.top = ElloNavigationBar.Size.height
             tableView.contentInset.bottom = ElloTabBar.Size.height
             tableView.scrollIndicatorInsets.bottom = ElloTabBar.Size.height
         }
     }
 
     func hideNavBars() {
-        navigationBarTopConstraint.constant = -ElloNavigationBar.Size.height - 1
+        navigationBarTopConstraint.constant = -ElloNavigationBar.Size.height
         animate {
             postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
             self.view.layoutIfNeeded()
         }
 
         if let tableView = settingsViewController?.tableView {
+            tableView.contentInset.top = 0
+            tableView.scrollIndicatorInsets.top = 0
             tableView.contentInset.bottom = 0
             tableView.scrollIndicatorInsets.bottom = 0
         }
@@ -67,6 +71,7 @@ class SettingsContainerViewController: BaseElloViewController {
             let settings = segue.destination as! SettingsViewController
             settings.currentUser = currentUser
             settingsViewController = settings
+            settings.tableView.contentOffset.y = 0
             updateNavBars()
             navigationBar.items = [settings.navigationItem]
             settings.scrollLogic.isShowing = navigationBarsVisible()
@@ -110,9 +115,9 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    weak var nameTextFieldView: ElloTextFieldView!
+    @IBOutlet weak var nameTextFieldView: ElloTextFieldView!
     @IBOutlet weak var bioTextView: ElloEditableTextView!
-    weak var bioTextCountLabel: StyledLabel!
+    @IBOutlet weak var bioTextCountLabel: StyledLabel!
     @IBOutlet weak var bioTextStatusImage: UIImageView!
     fileprivate var bioTextViewDidChange: (() -> Void)?
 
@@ -120,6 +125,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
     @IBOutlet weak var locationTextFieldView: ElloTextFieldView!
 
     var keyboardWillShowObserver: NotificationObserver?
+    var keyboardDidHideObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
 
     var currentUser: User? {
@@ -206,6 +212,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)
+        keyboardDidHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardDidHide, block: self.keyboardDidHide)
         keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: self.keyboardWillHide)
     }
 
@@ -215,6 +222,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
         keyboardWillShowObserver?.removeObserver()
         keyboardWillShowObserver = nil
+        keyboardDidHideObserver?.removeObserver()
+        keyboardDidHideObserver = nil
         keyboardWillHideObserver?.removeObserver()
         keyboardWillHideObserver = nil
     }
@@ -284,6 +293,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     fileprivate func setupNameTextField() {
         nameTextFieldView.label.text = InterfaceString.Settings.Name
+        nameTextFieldView.textField.keyboardAppearance = .dark
         nameTextFieldView.textField.text = currentUser?.name
 
         let updateNameFunction = debounce(0.5) { [weak self] in
@@ -305,6 +315,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     fileprivate func setupBioTextField() {
         bioTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 30)
+        bioTextView.keyboardAppearance = .dark
         bioTextView.delegate = self
 
         bioTextViewDidChange = debounce(0.5) { [weak self] in
@@ -490,6 +501,10 @@ extension SettingsViewController {
         updateAutoCompleteFrame(animated: true)
     }
 
+    func keyboardDidHide(_ keyboard: Keyboard) {
+        containerController?.updateNavBars()
+    }
+
     func keyboardWillHide(_ keyboard: Keyboard) {
         updateAutoCompleteFrame(animated: true)
     }
@@ -499,6 +514,7 @@ extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDel
     func dynamicSettingsUserChanged(_ user: User) {
         updateCurrentUser(user)
     }
+
     func credentialSettingsUserChanged(_ user: User) {
         updateCurrentUser(user)
     }
@@ -574,15 +590,22 @@ extension SettingsViewController: AutoCompleteDelegate {
         let height: CGFloat = min(maxHeight, CGFloat(locationAutoCompleteResultCount) * rowHeight)
         let inset = Keyboard.shared.keyboardBottomInset(inView: view) + height
         let y = view.frame.height - inset
-        if Keyboard.shared.active {
+        if locationTextViewSelected && Keyboard.shared.active {
             tableView.contentInset.bottom = inset
         }
-        else {
+        else if !Keyboard.shared.active {
             containerController?.updateNavBars()
         }
+
         animateWithKeyboard(animated: animated) {
             self.autoCompleteVC.view.alpha = (self.locationTextViewSelected && self.locationAutoCompleteResultCount > 0) ? 1 : 0
             self.autoCompleteVC.view.frame = CGRect(x: 0, y: y, width: self.view.frame.width, height: height)
+        }
+
+        if locationTextViewSelected,
+            let cell = locationTextFieldView.findParentView({ $0 is UITableViewCell })
+        {
+            tableView.scrollRectToVisible(cell.frame, animated: true)
         }
     }
 

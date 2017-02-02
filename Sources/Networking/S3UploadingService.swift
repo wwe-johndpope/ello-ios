@@ -22,7 +22,7 @@ class S3UploadingService {
 
     func upload(_ image: UIImage, success: @escaping S3UploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         inBackground {
-            if let data = UIImageJPEGRepresentation(image, 0.8) {
+            if let data = UIImageJPEGRepresentation(image, AppSetup.sharedState.imageQuality) {
                 // Head back to the thread the original caller was on before heading into the service calls. I may be overthinking it.
                 nextTick {
                     self.upload(data, contentType: "image/jpeg", success: success, failure: failure)
