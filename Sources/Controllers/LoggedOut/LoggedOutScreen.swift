@@ -10,12 +10,14 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
         static let bottomBarHeight: CGFloat = 70
         static let buttonInset: CGFloat = 10
         static let loginButtonWidth: CGFloat = 75
+        static let closeButtonOffset = CGPoint(x: 6, y: -5)
     }
 
     let controllerView = UIView()
     let bottomBarView = UIView()
     let joinButton = StyledButton(style: .Green)
     let loginButton = StyledButton(style: .LightGray)
+    let closeButton = UIButton()
     let joinLabel = StyledLabel(style: .Large)
     let tagLabel = StyledLabel(style: .Black)
     weak var delegate: LoggedOutProtocol?
@@ -46,9 +48,11 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
     override func bindActions() {
         joinButton.addTarget(self, action: #selector(joinAction), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(hideJoinText), for: .touchUpInside)
     }
 
     override func style() {
+        closeButton.setImages(.x)
         tagLabel.numberOfLines = 0
         bottomBarView.backgroundColor = .greyE5()
         bottomBarView.clipsToBounds = true
@@ -65,6 +69,7 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
         bottomBarView.addSubview(joinLabel)
         bottomBarView.addSubview(tagLabel)
         bottomBarView.addSubview(joinButton)
+        bottomBarView.addSubview(closeButton)
 
         controllerView.snp.makeConstraints { make in
             make.edges.equalTo(self)
@@ -98,6 +103,11 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
             make.leading.equalTo(joinButton.snp.trailing).offset(Size.buttonInset)
             make.width.equalTo(Size.loginButtonWidth)
         }
+
+        closeButton.snp.makeConstraints { make in
+            make.trailing.equalTo(bottomBarView).inset(Size.buttonInset + Size.closeButtonOffset.x)
+            make.top.equalTo(joinLabel).offset(Size.closeButtonOffset.y)
+        }
     }
 
     override func layoutSubviews() {
@@ -125,5 +135,14 @@ extension LoggedOutScreen {
     @objc
     func loginAction() {
         delegate?.showLoginScreen()
+    }
+
+    @objc
+    func hideJoinText() {
+        bottomBarCollapsedConstraint.activate()
+        bottomBarExpandedConstraint.deactivate()
+        animate {
+            self.layoutIfNeeded()
+        }
     }
 }
