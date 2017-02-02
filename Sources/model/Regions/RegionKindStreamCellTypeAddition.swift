@@ -13,14 +13,15 @@ extension RegionKind {
             if let textRegion = regionable as? TextRegion {
                 let content = textRegion.content
                 let paragraphs: [String] = content.components(separatedBy: "</p>").flatMap { (para: String) -> [String] in
+                    guard para.trimmed() != "" else { return [] }
+
                     var subparas = para.components(separatedBy: "<br>")
                     guard
                         subparas.count > 1
-                    else { return [para] }
+                    else { return [para + "</p>"] }
 
                     let first = subparas.removeFirst()
-                    let last = subparas.removeLast()
-                    return ["\(first)</p>"] + subparas.map({ "<p>\($0)</p>"}) + ["<p>\(last)"]
+                    return ["\(first)</p>"] + subparas.map({ "<p>\($0)</p>"})
                 }.map { line in
                     let max = 7500
                     guard line.characters.count < max + 10 else {
@@ -34,7 +35,7 @@ extension RegionKind {
                         return nil
                     }
 
-                    let newRegion = TextRegion(content: para + "</p>")
+                    let newRegion = TextRegion(content: para)
                     newRegion.isRepost = textRegion.isRepost
                     return .text(data: newRegion)
                 }
