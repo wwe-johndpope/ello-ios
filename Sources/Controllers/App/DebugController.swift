@@ -112,9 +112,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
             GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
         }
-        addAction(name: "Reset Intro") {
-            GroupDefaults["IntroDisplayed"] = nil
-        }
         addAction(name: "Crash the app") {
             Crashlytics.sharedInstance().crash()
         }
