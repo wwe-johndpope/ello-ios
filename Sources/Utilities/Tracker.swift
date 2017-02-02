@@ -64,7 +64,7 @@ class Tracker {
 // MARK: Session Info
 extension Tracker {
 
-    func identify(_ user: User?) {
+    func identify(user: User?) {
         currentUser = user
         if let user = user {
             shouldTrackUser = user.profile?.allowsAnalytics ?? true

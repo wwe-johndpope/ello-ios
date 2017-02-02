@@ -243,7 +243,7 @@ extension AppViewController {
     }
 
     func showMainScreen(_ user: User) {
-        Tracker.shared.identify(user)
+        Tracker.shared.identify(user: user)
 
         let vc = ElloTabBarController.instantiateFromStoryboard()
         ElloWebBrowserViewController.elloTabBarController = vc
@@ -417,7 +417,7 @@ extension AppViewController {
         TemporaryCache.clear()
         var cache = InviteCache()
         cache.clear()
-        Tracker.shared.identify(nil)
+        Tracker.shared.identify(user: nil)
         currentUser = nil
     }
 }
