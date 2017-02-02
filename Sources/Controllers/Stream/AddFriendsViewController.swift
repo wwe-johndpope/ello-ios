@@ -26,6 +26,7 @@ class AddFriendsViewController: StreamableViewController {
 
     override func loadView() {
         searchScreen = SearchScreen(frame: UIScreen.main.bounds,
+            hasCurrentUser: currentUser != nil,
             isSearchView: false,
             navBarTitle: InterfaceString.Friends.FindAndInvite,
             fieldPlaceholderText: InterfaceString.Friends.SearchPrompt)

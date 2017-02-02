@@ -24,7 +24,10 @@ class SearchViewController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = SearchScreen(frame: UIScreen.main.bounds, isSearchView: true)
+        let screen = SearchScreen(
+            frame: UIScreen.main.bounds,
+            hasCurrentUser: currentUser != nil,
+            isSearchView: true)
         self.view = screen
         screen.delegate = self
     }
