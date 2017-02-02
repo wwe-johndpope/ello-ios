@@ -6,19 +6,19 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     var trackerName: String? {
         switch self {
         case .userStreamFollowers:
-            return "followers"
+            return "Followers"
         case .userStreamFollowing:
-            return "following"
+            return "Following"
         case .loves:
-            return "loves"
+            return "Loves"
         case .currentUserBlockedList:
-            return "blocked"
+            return "Blocked"
         case .currentUserMutedList:
-            return "muted"
+            return "Muted"
         case .postLovers:
-            return "post Lovers"
+            return "Post Lovers"
         case .postReposters:
-            return "post Reposters"
+            return "Post Reposters"
         default:
             return nil
         }

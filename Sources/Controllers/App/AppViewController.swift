@@ -98,19 +98,12 @@ class AppViewController: BaseElloViewController {
 
     fileprivate func checkIfLoggedIn() {
         let authToken = AuthToken()
-        let introDisplayed = GroupDefaults["IntroDisplayed"].bool ?? false
 
         if authToken.isPasswordBased {
-            self.loadCurrentUser()
-        }
-        else if !introDisplayed {
-            present(IntroViewController(), animated: false) {
-                GroupDefaults["IntroDisplayed"] = true
-                self.showStartupScreen()
-            }
+            loadCurrentUser()
         }
         else {
-            self.showLoginScreen(animated: false)
+            showStartupScreen()
         }
     }
 
@@ -189,57 +182,49 @@ class AppViewController: BaseElloViewController {
 extension AppViewController {
 
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
-        let controller = DiscoverAllCategoriesViewController()
-        let navController = ElloNavigationController(rootViewController: controller)
-        let bottomController = LoggedOutViewController()
+        let discoverController = DiscoverAllCategoriesViewController()
+        let childNavController = ElloNavigationController(rootViewController: discoverController)
+        let loggedOutController = LoggedOutViewController()
+        let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
-        bottomController.addChildViewController(navController)
-        bottomController.parentAppController = self
-        navController.didMove(toParentViewController: bottomController)
+        loggedOutController.addChildViewController(childNavController)
+        loggedOutController.parentAppController = self
+        childNavController.didMove(toParentViewController: loggedOutController)
 
-        swapViewController(bottomController) {}
-        return;
-        guard !((visibleViewController as? UINavigationController)?.visibleViewController is StartupViewController) else { return }
-
-        let startupController = StartupViewController()
-        startupController.parentAppController = self
-        let nav = ElloNavigationController(rootViewController: startupController)
-        nav.isNavigationBarHidden = true
-        swapViewController(nav, completion: completion)
-        Tracker.shared.screenAppeared(startupController)
+        swapViewController(parentNavController) {}
     }
 
     func showJoinScreen(animated: Bool, invitationCode: String? = nil) {
-        guard let nav = visibleViewController as? UINavigationController else {
-            showStartupScreen() { self.showJoinScreen(animated: animated) }
-            return
-        }
+        guard
+            let nav = visibleViewController as? UINavigationController,
+            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
+        else { return }
 
-        if !(nav.visibleViewController is StartupViewController) {
+        if !(nav.visibleViewController is LoggedOutViewController) {
             _ = nav.popToRootViewController(animated: false)
         }
-        guard let startupController = nav.visibleViewController as? StartupViewController else { return }
 
         pushPayload = .none
         let joinController = JoinViewController()
         joinController.parentAppController = self
         joinController.invitationCode = invitationCode
-        nav.setViewControllers([startupController, joinController], animated: animated)
+        nav.setViewControllers([loggedOutController, joinController], animated: animated)
     }
 
     func showLoginScreen(animated: Bool) {
-        showStartupScreen()
-        guard let nav = visibleViewController as? UINavigationController else { return }
+        guard
+            let nav = visibleViewController as? UINavigationController,
+            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
+        else { return }
 
-        if !(nav.visibleViewController is StartupViewController) {
+        if !(nav.visibleViewController is LoggedOutViewController) {
             _ = nav.popToRootViewController(animated: false)
         }
-        guard let startupController = nav.visibleViewController as? StartupViewController else { return }
 
         pushPayload = .none
         let loginController = LoginViewController()
         loginController.parentAppController = self
-        nav.setViewControllers([startupController, loginController], animated: animated)
+        nav.setViewControllers([loggedOutController, loginController], animated: animated)
     }
 
     func showOnboardingScreen(_ user: User) {
@@ -258,7 +243,7 @@ extension AppViewController {
     }
 
     func showMainScreen(_ user: User) {
-        Tracker.shared.identify(user)
+        Tracker.shared.identify(user: user)
 
         let vc = ElloTabBarController.instantiateFromStoryboard()
         ElloWebBrowserViewController.elloTabBarController = vc
@@ -360,9 +345,9 @@ extension AppViewController {
             }
 
             UIView.animate(withDuration: 0.2, animations: {
-                self.showStartupScreen()
                 visibleViewController.view.alpha = 0
             }, completion: { _ in
+                self.showStartupScreen()
                 visibleViewController.view.removeFromSuperview()
                 visibleViewController.removeFromParentViewController()
                 self.visibleViewController = nil
@@ -432,6 +417,7 @@ extension AppViewController {
         TemporaryCache.clear()
         var cache = InviteCache()
         cache.clear()
+        Tracker.shared.identify(user: nil)
         currentUser = nil
     }
 }

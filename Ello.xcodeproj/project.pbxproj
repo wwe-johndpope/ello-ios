@@ -483,6 +483,10 @@
 		1D061B521AAA1C6D00493435 /* StringExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D061B511AAA1C6D00493435 /* StringExtensionSpec.swift */; };
 		1D066FF31B8BA19E002B303D /* ArraySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D066FF21B8BA19E002B303D /* ArraySpec.swift */; };
 		1D066FF61B8BAF43002B303D /* OmnibarImageDownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */; };
+		1D06D6C11E3BADE6004FA878 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */; };
+		1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */; };
+		1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */; };
+		1D06D6C81E3C0B6A004FA878 /* LoggedOutScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */; };
 		1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */; };
 		1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */; };
 		1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
@@ -602,17 +606,13 @@
 		1D70DE751DF781AC008AF216 /* AnnouncementCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE6D1DF73ACB008AF216 /* AnnouncementCellSizeCalculator.swift */; };
 		1D70E7271D5A526C008758D7 /* ProfileHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */; };
 		1D71528F1D6CA22C005998FE /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71528E1D6CA22C005998FE /* Screen.swift */; };
-		1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152911D6CA248005998FE /* StartupScreen.swift */; };
-		1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152921D6CA248005998FE /* StartupViewController.swift */; };
 		1D7152961D6CBE0E005998FE /* NoPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152951D6CBE0E005998FE /* NoPostsCell.swift */; };
 		1D7152981D6CBE24005998FE /* NoPostsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D7152971D6CBE24005998FE /* NoPostsCell.xib */; };
 		1D71529A1D6CBFE2005998FE /* NoPostsCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */; };
 		1D71529C1D6D0558005998FE /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71529B1D6D0558005998FE /* AppScreen.swift */; };
 		1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71529D1D6D1040005998FE /* EmptyScreen.swift */; };
 		1D7152A01D6D212D005998FE /* ello-crazy-logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1D71529F1D6D212D005998FE /* ello-crazy-logo.gif */; };
-		1D7152A21D6D318B005998FE /* StartupProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A11D6D318B005998FE /* StartupProtocols.swift */; };
 		1D7152A41D6D3848005998FE /* StartupGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */; };
-		1D7152A71D6E0E2F005998FE /* StartupScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A61D6E0E2F005998FE /* StartupScreenSpec.swift */; };
 		1D7152AD1D6E12A5005998FE /* AppScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152A81D6E0F9A005998FE /* AppScreenSpec.swift */; };
 		1D7152AE1D6E12AB005998FE /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152AA1D6E1215005998FE /* AppProtocols.swift */; };
 		1D7152B01D6E4782005998FE /* ClearTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152AF1D6E4782005998FE /* ClearTextField.swift */; };
@@ -753,7 +753,6 @@
 		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309FC1B03F29300EAD920 /* communities.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC309FB1B03F29300EAD920 /* communities.json */; };
 		1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */; };
-		1DC8D5D51E395E8200E03EFC /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC8D5D41E395E8200E03EFC /* LoggedOutViewController.swift */; };
 		1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */; };
@@ -1003,15 +1002,7 @@
 		76FF80591A96921100617A1E /* RelationshipControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FF80581A96921100617A1E /* RelationshipControllerSpec.swift */; };
 		76FF805B1A96A28D00617A1E /* RelationshipServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FF805A1A96A28D00617A1E /* RelationshipServiceSpec.swift */; };
 		76FF805D1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FF805C1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift */; };
-		867B527A1B1781D700177084 /* IntroViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B52791B1781D700177084 /* IntroViewControllerSpec.swift */; };
 		86D8D8FE1B1798B200CC8D6C /* RelationshipControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D8D8FD1B1798B200CC8D6C /* RelationshipControl.swift */; };
-		86E4F2E71B14E683008EBC5B /* Intro.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86E4F2E61B14E683008EBC5B /* Intro.storyboard */; };
-		86E4F2E91B14F249008EBC5B /* WelcomePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4F2E81B14F249008EBC5B /* WelcomePageController.swift */; };
-		86E4F2EB1B14FE02008EBC5B /* InspiredPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4F2EA1B14FE02008EBC5B /* InspiredPageController.swift */; };
-		86E4F2ED1B14FE6F008EBC5B /* FriendsPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4F2EC1B14FE6F008EBC5B /* FriendsPageController.swift */; };
-		86E4F2EF1B14FE9B008EBC5B /* LovesPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4F2EE1B14FE9B008EBC5B /* LovesPageController.swift */; };
-		86E4F2F11B150598008EBC5B /* IntroPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E4F2F01B150598008EBC5B /* IntroPageController.swift */; };
-		C2787E7F5FD7375A624964BF /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2787373AD61145193E6BE99 /* IntroViewController.swift */; };
 		C7EE78CC0CA7B5B463A2A74F /* Pods_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A54199AC75D0009416AD802 /* Pods_ShareExtension.framework */; };
 		EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */; };
 		EA004C941AC357320021B44B /* ElloTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA004C931AC357320021B44B /* ElloTextFieldView.xib */; };
@@ -1481,6 +1472,10 @@
 		1D061B511AAA1C6D00493435 /* StringExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionSpec.swift; sourceTree = "<group>"; };
 		1D066FF21B8BA19E002B303D /* ArraySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArraySpec.swift; sourceTree = "<group>"; };
 		1D066FF41B8BAEC5002B303D /* OmnibarImageDownloadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarImageDownloadCell.swift; sourceTree = "<group>"; };
+		1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
+		1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreen.swift; sourceTree = "<group>"; };
+		1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenProtocol.swift; sourceTree = "<group>"; };
+		1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOutScreenSpec.swift; sourceTree = "<group>"; };
 		1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotificationSpec.swift; sourceTree = "<group>"; };
 		1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentialsSpec.swift; sourceTree = "<group>"; };
 		1D15C2761C7D12890013B192 /* InterfaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceImage.swift; sourceTree = "<group>"; };
@@ -1592,17 +1587,13 @@
 		1D70DE721DF78034008AF216 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCellSpec.swift; sourceTree = "<group>"; };
 		1D71528E1D6CA22C005998FE /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
-		1D7152911D6CA248005998FE /* StartupScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupScreen.swift; sourceTree = "<group>"; };
-		1D7152921D6CA248005998FE /* StartupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupViewController.swift; sourceTree = "<group>"; };
 		1D7152951D6CBE0E005998FE /* NoPostsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPostsCell.swift; sourceTree = "<group>"; };
 		1D7152971D6CBE24005998FE /* NoPostsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoPostsCell.xib; sourceTree = "<group>"; };
 		1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPostsCellPresenter.swift; sourceTree = "<group>"; };
 		1D71529B1D6D0558005998FE /* AppScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppScreen.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D71529D1D6D1040005998FE /* EmptyScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyScreen.swift; sourceTree = "<group>"; };
 		1D71529F1D6D212D005998FE /* ello-crazy-logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "ello-crazy-logo.gif"; sourceTree = "<group>"; };
-		1D7152A11D6D318B005998FE /* StartupProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupProtocols.swift; sourceTree = "<group>"; };
 		1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupGradientLayer.swift; sourceTree = "<group>"; };
-		1D7152A61D6E0E2F005998FE /* StartupScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupScreenSpec.swift; sourceTree = "<group>"; };
 		1D7152A81D6E0F9A005998FE /* AppScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScreenSpec.swift; sourceTree = "<group>"; };
 		1D7152AA1D6E1215005998FE /* AppProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppProtocols.swift; sourceTree = "<group>"; };
 		1D7152AF1D6E4782005998FE /* ClearTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextField.swift; sourceTree = "<group>"; };
@@ -1740,7 +1731,6 @@
 		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309FB1B03F29300EAD920 /* communities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = communities.json; sourceTree = "<group>"; };
 		1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetupSpec.swift; sourceTree = "<group>"; };
-		1DC8D5D41E395E8200E03EFC /* LoggedOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoggedOutViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1DC91F741CF375F600336012 /* AutoCompleteResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResult.swift; sourceTree = "<group>"; };
 		1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedString.swift; sourceTree = "<group>"; };
 		1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentials.swift; sourceTree = "<group>"; };
@@ -1997,17 +1987,9 @@
 		76FF805A1A96A28D00617A1E /* RelationshipServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipServiceSpec.swift; sourceTree = "<group>"; };
 		76FF805C1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalViewControllerSpec.swift; sourceTree = "<group>"; };
 		8620DAA1EFF48E65387FA2DB /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
-		867B52791B1781D700177084 /* IntroViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewControllerSpec.swift; sourceTree = "<group>"; };
 		86D8D8FD1B1798B200CC8D6C /* RelationshipControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipControl.swift; sourceTree = "<group>"; };
-		86E4F2E61B14E683008EBC5B /* Intro.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Intro.storyboard; sourceTree = "<group>"; };
-		86E4F2E81B14F249008EBC5B /* WelcomePageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomePageController.swift; sourceTree = "<group>"; };
-		86E4F2EA1B14FE02008EBC5B /* InspiredPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspiredPageController.swift; sourceTree = "<group>"; };
-		86E4F2EC1B14FE6F008EBC5B /* FriendsPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsPageController.swift; sourceTree = "<group>"; };
-		86E4F2EE1B14FE9B008EBC5B /* LovesPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LovesPageController.swift; sourceTree = "<group>"; };
-		86E4F2F01B150598008EBC5B /* IntroPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroPageController.swift; sourceTree = "<group>"; };
 		91944BE577C550B17C0B263D /* Pods_Specs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Specs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A824F716382ED3E3CB5E30F4 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2787373AD61145193E6BE99 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		D31C162DB64BB76DA28AC6DC /* Pods-Ello.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ello.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ello/Pods-Ello.release.xcconfig"; sourceTree = "<group>"; };
 		E5DE3DFF4328700595DA8FCD /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
 		EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTextFieldView.swift; sourceTree = "<group>"; };
@@ -2628,8 +2610,8 @@
 				1D6680211A89BBF4003E93C8 /* ElloNavigationControllerSpec.swift */,
 				12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */,
 				1D59EFA11D6659ED0029C106 /* Hire */,
-				867B52791B1781D700177084 /* IntroViewControllerSpec.swift */,
 				121D92571A5CACC7004F0455 /* Join */,
+				1D06D6C61E3C0B5D004FA878 /* LoggedOut */,
 				12D14C841A43766D00C6F8E8 /* Login */,
 				1DBFD9FC1DFF49D00058843D /* Notifications */,
 				12551FBC1A6873A300ABC5D9 /* Omnibar */,
@@ -2639,7 +2621,6 @@
 				76FF80571A9691DB00617A1E /* Relationship */,
 				1DEE2BED1AF96F4300EB9DFA /* Search */,
 				EA7BA1DE1AC05AC500A42D1E /* Settings */,
-				1D7152A51D6E0E20005998FE /* Startup */,
 				121E46BB1A6B2704004AEAB7 /* Stream */,
 				1DBF85BF1AF8022200889349 /* WebBrowser */,
 			);
@@ -2905,15 +2886,14 @@
 				12F6AE1C1A43385600493660 /* App */,
 				122C662B1B4240060035F4CD /* AutoComplete */,
 				12F6ADF61A43380C00493660 /* BaseElloViewController.swift */,
-				1DC8D5D41E395E8200E03EFC /* LoggedOutViewController.swift */,
 				12431FF01DBAA69B006808D4 /* Categories */,
 				129C1E221AB7CF580013C1D7 /* Discover */,
 				12347A961AA8BDCC00736B42 /* Drawer */,
 				12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */,
 				12F6ADF81A43380C00493660 /* ElloTabBarController.swift */,
 				1D59EF881D63C73F0029C106 /* Hire */,
-				C27874546873C1EC3EAF2D85 /* Intro */,
 				12F6AE1F1A43386600493660 /* Join */,
+				1D06D6BF1E3BADA0004FA878 /* LoggedOut */,
 				12F6AE221A43387B00493660 /* Login */,
 				124357681A89276E008B24FB /* Notifications */,
 				12551FB81A68725100ABC5D9 /* Omnibar */,
@@ -2924,7 +2904,6 @@
 				76E5CBE71A92678500D6483F /* Relationship */,
 				1D33284C1AE74D6100446591 /* Search */,
 				EA8990161ABB4B0F00339CBE /* Settings */,
-				1D7152901D6CA236005998FE /* Startup */,
 				12B093641A6D874300BF104E /* Stream */,
 				1DADC5781AF449A5000DAC88 /* WebBrowser */,
 			);
@@ -3282,6 +3261,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1D06D6BF1E3BADA0004FA878 /* LoggedOut */ = {
+			isa = PBXGroup;
+			children = (
+				1D06D6C21E3BAFA9004FA878 /* LoggedOutScreen.swift */,
+				1D06D6C31E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift */,
+				1D06D6C01E3BADE6004FA878 /* LoggedOutViewController.swift */,
+			);
+			path = LoggedOut;
+			sourceTree = "<group>";
+		};
+		1D06D6C61E3C0B5D004FA878 /* LoggedOut */ = {
+			isa = PBXGroup;
+			children = (
+				1D06D6C71E3C0B6A004FA878 /* LoggedOutScreenSpec.swift */,
+			);
+			path = LoggedOut;
+			sourceTree = "<group>";
+		};
 		1D08320B1AAA4C360076C67D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -3408,24 +3405,6 @@
 				1D70DE6B1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift */,
 			);
 			path = Calculators;
-			sourceTree = "<group>";
-		};
-		1D7152901D6CA236005998FE /* Startup */ = {
-			isa = PBXGroup;
-			children = (
-				1D7152A11D6D318B005998FE /* StartupProtocols.swift */,
-				1D7152911D6CA248005998FE /* StartupScreen.swift */,
-				1D7152921D6CA248005998FE /* StartupViewController.swift */,
-			);
-			path = Startup;
-			sourceTree = "<group>";
-		};
-		1D7152A51D6E0E20005998FE /* Startup */ = {
-			isa = PBXGroup;
-			children = (
-				1D7152A61D6E0E2F005998FE /* StartupScreenSpec.swift */,
-			);
-			path = Startup;
 			sourceTree = "<group>";
 		};
 		1D7426371B02973200C16322 /* Onboarding */ = {
@@ -3735,20 +3714,6 @@
 				76F90E5C1A97992D00F5B42F /* RelationshipControlSpec.swift */,
 			);
 			path = Relationship;
-			sourceTree = "<group>";
-		};
-		C27874546873C1EC3EAF2D85 /* Intro */ = {
-			isa = PBXGroup;
-			children = (
-				C2787373AD61145193E6BE99 /* IntroViewController.swift */,
-				86E4F2F01B150598008EBC5B /* IntroPageController.swift */,
-				86E4F2E81B14F249008EBC5B /* WelcomePageController.swift */,
-				86E4F2EA1B14FE02008EBC5B /* InspiredPageController.swift */,
-				86E4F2EC1B14FE6F008EBC5B /* FriendsPageController.swift */,
-				86E4F2EE1B14FE9B008EBC5B /* LovesPageController.swift */,
-				86E4F2E61B14E683008EBC5B /* Intro.storyboard */,
-			);
-			path = Intro;
 			sourceTree = "<group>";
 		};
 		EA7BA1DE1AC05AC500A42D1E /* Settings */ = {
@@ -4267,7 +4232,6 @@
 				76F8DEFF1B6C0BC4009BCF61 /* trash_white.svg in Resources */,
 				1247276D1AB14D1B000079D7 /* text-region.json in Resources */,
 				1D472C241C1F2E0400B61E55 /* embetter_video_play.svg in Resources */,
-				86E4F2E71B14E683008EBC5B /* Intro.storyboard in Resources */,
 				1247275F1AB146C5000079D7 /* asset.json in Resources */,
 				12931BD31BFE8E30009B26F9 /* checkmini_normal.svg in Resources */,
 				1DF322471BD821FE008203F3 /* black_star_normal.svg in Resources */,
@@ -4626,6 +4590,7 @@
 				EAB484271AC2112200CE6A81 /* CredentialSettingsViewControllerSpec.swift in Sources */,
 				1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */,
 				1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */,
+				1D06D6C81E3C0B6A004FA878 /* LoggedOutScreenSpec.swift in Sources */,
 				768043781AC20382004FEE09 /* FakeProfileHeaderCellSizeCalculator.swift in Sources */,
 				1D59EFA51D6659FF0029C106 /* HireViewControllerSpec.swift in Sources */,
 				EAF43D991AB0EBE60016E110 /* InviteCacheSpec.swift in Sources */,
@@ -4737,7 +4702,6 @@
 				128FDF371DD0E4A300DBADD0 /* CategoryScreenSpec.swift in Sources */,
 				122C663E1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift in Sources */,
 				1D8835A41CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift in Sources */,
-				1D7152A71D6E0E2F005998FE /* StartupScreenSpec.swift in Sources */,
 				1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */,
 				127BAD601A8512AA00628696 /* ElloLinkedStoreSpec.swift in Sources */,
 				EAC6054A1ADDA64B009B9426 /* DynamicSettingCellPresenterSpec.swift in Sources */,
@@ -4756,7 +4720,6 @@
 				1D5933781D10CD2F00EAF03D /* CategoryListSpec.swift in Sources */,
 				1D6A02451C73CD390054603B /* AssetsToRegionsSpec.swift in Sources */,
 				F81ED61D1AAF499D00A20794 /* DrawerViewControllerSpec.swift in Sources */,
-				867B527A1B1781D700177084 /* IntroViewControllerSpec.swift in Sources */,
 				12A1D82D1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift in Sources */,
 				1DA18E161DB54AA0000231CC /* ProfileLinksViewSpec.swift in Sources */,
 				76FF805D1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift in Sources */,
@@ -4916,7 +4879,6 @@
 				122B30F41C6A3FC500C1B9D8 /* UnknownRegion.swift in Sources */,
 				1229432A1C6BF53C003FCD20 /* ShareAttachmentProcessor.swift in Sources */,
 				1DDC851A1D91D4F300C29552 /* Watch.swift in Sources */,
-				86E4F2F11B150598008EBC5B /* IntroPageController.swift in Sources */,
 				123438B71BBD9846001267DE /* Rate.swift in Sources */,
 				1207C9741C73FEE000939ADB /* AvailabilityService.swift in Sources */,
 				122B30E01C6A3FBF00C1B9D8 /* RelationshipPriority.swift in Sources */,
@@ -4947,8 +4909,6 @@
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
-				1DC8D5D51E395E8200E03EFC /* LoggedOutViewController.swift in Sources */,
-				1D7152941D6CA248005998FE /* StartupViewController.swift in Sources */,
 				122B30D91C6A3FBC00C1B9D8 /* PushPayload.swift in Sources */,
 				1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */,
 				1D70DE661DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift in Sources */,
@@ -4959,7 +4919,6 @@
 				1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */,
 				1207C9701C73FEE000939ADB /* AsyncOperation.swift in Sources */,
 				12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */,
-				1D7152931D6CA248005998FE /* StartupScreen.swift in Sources */,
 				12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */,
 				120E64141E327B7A00CAF03E /* JWT.swift in Sources */,
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
@@ -4996,6 +4955,7 @@
 				1D70DE5B1DF6106B008AF216 /* AnnouncementCell.swift in Sources */,
 				12F6ADFF1A43380C00493660 /* ProfileViewController.swift in Sources */,
 				1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */,
+				1D06D6C11E3BADE6004FA878 /* LoggedOutViewController.swift in Sources */,
 				1D2F65B21D1870020099D036 /* DiscoverAllCategoriesViewController.swift in Sources */,
 				1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */,
 				1D2B50BD1D2C2FC000F6CE90 /* CategoryService.swift in Sources */,
@@ -5047,7 +5007,6 @@
 				1DDF3C491A9D0D05000D0945 /* ElloNavigationBar.swift in Sources */,
 				EA68A0DA1AADF3D4003F0425 /* NSObjectClassName.swift in Sources */,
 				1D59EF8C1D63C74F0029C106 /* HireViewController.swift in Sources */,
-				86E4F2EB1B14FE02008EBC5B /* InspiredPageController.swift in Sources */,
 				1D066FF61B8BAF43002B303D /* OmnibarImageDownloadCell.swift in Sources */,
 				123375751DA6B8A80019CFAD /* ProfileHeaderCompactView.swift in Sources */,
 				1299D6A71ACEBE1000D47B35 /* UICollectionViewExtensions.swift in Sources */,
@@ -5080,7 +5039,6 @@
 				12A3A4721AB3556F00D2AFB0 /* Math.swift in Sources */,
 				12F6AE6E1A4339EF00493660 /* ElloTextField.swift in Sources */,
 				1D59336F1D10ADB800EAF03D /* CategoryListCell.swift in Sources */,
-				86E4F2EF1B14FE9B008EBC5B /* LovesPageController.swift in Sources */,
 				12454A551E37C2DC009FD27B /* DebugImageUploadController.swift in Sources */,
 				1247E5051A8C095700DDC24A /* StreamDataSource.swift in Sources */,
 				1D5933711D10ADC300EAF03D /* CategoryListCellPresenter.swift in Sources */,
@@ -5137,6 +5095,7 @@
 				12431FF21DBAA6D3006808D4 /* CategoryViewController.swift in Sources */,
 				1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */,
 				1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */,
+				1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
@@ -5176,7 +5135,6 @@
 				12F0E3B71A4333EC0012CEA2 /* AppSetup.swift in Sources */,
 				122B30D21C6A3FBC00C1B9D8 /* JSONAble.swift in Sources */,
 				1D8AFAD01A9691F90034DDAD /* DictionaryExtensions.swift in Sources */,
-				86E4F2ED1B14FE6F008EBC5B /* FriendsPageController.swift in Sources */,
 				1207C9801C73FEE000939ADB /* ErrorStatusCode.swift in Sources */,
 				122B30D71C6A3FBC00C1B9D8 /* Post.swift in Sources */,
 				1D7152E51D7620D2005998FE /* CreateProfileScreen.swift in Sources */,
@@ -5187,7 +5145,6 @@
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
 				12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */,
 				1D59EF921D6624DC0029C106 /* HireService.swift in Sources */,
-				1D7152A21D6D318B005998FE /* StartupProtocols.swift in Sources */,
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,
 				12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
@@ -5208,7 +5165,6 @@
 				1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */,
 				12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */,
 				124B48671DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift in Sources */,
-				86E4F2E91B14F249008EBC5B /* WelcomePageController.swift in Sources */,
 				122B30F11C6A3FC500C1B9D8 /* Regionable.swift in Sources */,
 				1D7152C51D6F81D2005998FE /* CredentialsScreen.swift in Sources */,
 				766375E01AA911090096FA51 /* SimpleStreamViewController.swift in Sources */,
@@ -5242,6 +5198,7 @@
 				1D6A02431C73CC9B0054603B /* AssetsToRegions.swift in Sources */,
 				123375911DA6F1180019CFAD /* ProfileLinksSizeCalculator.swift in Sources */,
 				1207C9751C73FEE000939ADB /* ContentFlaggingService.swift in Sources */,
+				1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */,
 				12F6AE631A4339C600493660 /* Validator.swift in Sources */,
 				128D36B61A951F4600622833 /* NotificationCellPresenter.swift in Sources */,
 				1207C98B1C73FEE000939ADB /* ReAuthService.swift in Sources */,
@@ -5266,7 +5223,6 @@
 				1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */,
 				1275351F1B73D1D1006B9A0F /* NSStringExtensions.swift in Sources */,
 				122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */,
-				C2787E7F5FD7375A624964BF /* IntroViewController.swift in Sources */,
 				1D7152B21D6E479A005998FE /* LoginScreen.swift in Sources */,
 				1233757B1DA6ECE40019CFAD /* ProfileHeaderCellSizeCalculator.swift in Sources */,
 			);

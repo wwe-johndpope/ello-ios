@@ -10,8 +10,6 @@ class JoinScreen: CredentialsScreen {
         static let fieldsTopMargin: CGFloat = 55
         static let fieldsErrorMargin: CGFloat = 15
         static let fieldsInnerMargin: CGFloat = 30
-        static let buttonHeight: CGFloat = 50
-        static let buttonInset: CGFloat = 10
         static let termsFontSize: CGFloat = 11
         static let termsBottomInset: CGFloat = 5
     }
@@ -21,7 +19,7 @@ class JoinScreen: CredentialsScreen {
         didSet {
             if let emailValid = emailValid {
                 emailField.validationState = emailValid ? .okSmall : .error
-                styleDiscoverButton()
+                styleContinueButton(allValid: allFieldsValid())
             }
             else {
                 emailField.validationState = .none
@@ -36,7 +34,7 @@ class JoinScreen: CredentialsScreen {
         didSet {
             if let usernameValid = usernameValid {
                 usernameField.validationState = usernameValid ? .okSmall : .error
-                styleDiscoverButton()
+                styleContinueButton(allValid: allFieldsValid())
             }
             else {
                 usernameField.validationState = .none
@@ -51,7 +49,7 @@ class JoinScreen: CredentialsScreen {
         didSet {
             if let passwordValid = passwordValid {
                 passwordField.validationState = passwordValid ? .okSmall : .error
-                styleDiscoverButton()
+                styleContinueButton(allValid: allFieldsValid())
             }
             else {
                 passwordField.validationState = .none
@@ -86,17 +84,14 @@ class JoinScreen: CredentialsScreen {
     let termsButtonNormal = UIButton()
     let termsButtonKeyboard = UIButton()
 
-    let discoverButton = StyledButton(style: .RoundedGray)
-    let continueBackground = UIView()
-
     override func setText() {
         titleLabel.text = InterfaceString.Startup.SignUp
-        discoverButton.setTitle(InterfaceString.Join.Discover, for: .normal)
+        continueButton.setTitle(InterfaceString.Join.Discover, for: .normal)
     }
 
     override func bindActions() {
         super.bindActions()
-        discoverButton.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
         termsButtonNormal.addTarget(self, action: #selector(termsAction), for: .touchUpInside)
         termsButtonKeyboard.addTarget(self, action: #selector(termsAction), for: .touchUpInside)
         passwordField.onePasswordButton.addTarget(self, action: #selector(onePasswordAction(_:)), for: .touchUpInside)
@@ -159,8 +154,6 @@ class JoinScreen: CredentialsScreen {
         scrollView.addSubview(termsButtonKeyboard)
 
         addSubview(termsButtonNormal)
-        addSubview(continueBackground)
-        continueBackground.addSubview(discoverButton)
 
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self)
@@ -241,17 +234,6 @@ class JoinScreen: CredentialsScreen {
             make.leading.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
             make.bottom.equalTo(continueBackground.snp.top).offset(-Size.termsBottomInset)
         }
-
-        discoverButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self).inset(Size.buttonInset)
-            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.buttonInset)
-            make.height.equalTo(Size.buttonHeight)
-        }
-
-        continueBackground.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(self)
-            make.top.equalTo(discoverButton).offset(-Size.buttonInset)
-        }
     }
 
     override func resignFirstResponder() -> Bool {
@@ -268,23 +250,15 @@ class JoinScreen: CredentialsScreen {
 }
 
 extension JoinScreen {
-    fileprivate func styleDiscoverButton() {
-        let allValid: Bool
+    func allFieldsValid() -> Bool {
         if let emailValid = emailValid,
             let usernameValid = usernameValid,
             let passwordValid = passwordValid
         {
-            allValid = emailValid && usernameValid && passwordValid
+            return emailValid && usernameValid && passwordValid
         }
         else {
-            allValid = false
-        }
-
-        if allValid {
-            discoverButton.style = .Green
-        }
-        else {
-            discoverButton.style = .RoundedGray
+            return false
         }
     }
 }
