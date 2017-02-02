@@ -122,7 +122,7 @@ class AppViewController: BaseElloViewController {
 
         ProfileService().loadCurrentUser(
             success: { user in
-
+                self.logInNewUser()
                 JWT.refresh()
 
                 self.screen.stopAnimatingLogo()
@@ -408,10 +408,15 @@ extension AppViewController {
         return false
     }
 
+    fileprivate func logInNewUser() {
+        URLCache.shared.removeAllCachedResponses()
+        TemporaryCache.clear()
+    }
+
     fileprivate func logOutCurrentUser() {
         PushNotificationController.sharedController.deregisterStoredToken()
         ElloProvider.shared.logout()
-        GroupDefaults[CurrentStreamKey] = nil
+        GroupDefaults.resetOnLogout()
         UIApplication.shared.applicationIconBadgeNumber = 0
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
