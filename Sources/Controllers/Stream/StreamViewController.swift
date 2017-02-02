@@ -147,14 +147,6 @@ final class StreamViewController: BaseElloViewController {
     var reloadClosure: ElloEmptyCompletion?
     var toggleClosure: ToggleClosure?
     var initialDataLoaded = false
-    var parentTabBarController: ElloTabBarController? {
-        if let parentViewController = self.parent,
-            let elloController = parentViewController as? BaseElloViewController
-        {
-            return elloController.elloTabBarController
-        }
-        return nil
-    }
 
     var streamKind: StreamKind = StreamKind.unknown {
         didSet {

@@ -159,11 +159,11 @@ class PostbarController: PostbarDelegate {
     }
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
-        if let post = self.postForIndexPath(indexPath) {
-            cell?.lovesControl.isUserInteractionEnabled = false
-            if post.loved { unlovePost(post, cell: cell) }
-            else { lovePost(post, cell: cell) }
-        }
+        guard let post = self.postForIndexPath(indexPath) else { return }
+        cell?.lovesControl.isUserInteractionEnabled = false
+
+        if post.loved { unlovePost(post, cell: cell) }
+        else { lovePost(post, cell: cell) }
     }
 
     fileprivate func unlovePost(_ post: Post, cell: StreamFooterCell?) {

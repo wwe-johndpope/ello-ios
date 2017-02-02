@@ -211,6 +211,10 @@ extension ElloAPI {
     var supportsAnonymousToken: Bool {
         switch self {
         case .availability,
+             .categories, .category, .categoryPosts, .discover, .pagePromotionals,
+             .searchForPosts, .searchForUsers,
+             .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
+             .postComments, .postLovers, .postReposters, .postDetail,
              .join, .deleteSubscriptions:
             return true
         default:

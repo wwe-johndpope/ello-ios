@@ -6,19 +6,19 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     var trackerName: String? {
         switch self {
         case .userStreamFollowers:
-            return "Followers"
+            return "followers"
         case .userStreamFollowing:
-            return "Following"
+            return "following"
         case .loves:
-            return "Loves"
+            return "loves"
         case .currentUserBlockedList:
-            return "Blocked"
+            return "blocked"
         case .currentUserMutedList:
-            return "Muted"
+            return "muted"
         case .postLovers:
-            return "Post Lovers"
+            return "post Lovers"
         case .postReposters:
-            return "Post Reposters"
+            return "post Reposters"
         default:
             return nil
         }
@@ -27,83 +27,83 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
         case let .announcementsNewContent(createdAt):
-            return "AnnouncementsNewContent(createdAt: \(createdAt))"
+            return "announcementsNewContent(createdAt: \(createdAt))"
         case let .commentDetail(postId, commentId):
-            return "CommentDetail(postId: \(postId), commentId: \(commentId))"
+            return "commentDetail(postId: \(postId), commentId: \(commentId))"
         case let .createComment(parentPostId, _):
-            return "CreateComment(parentPostId: \(parentPostId))"
+            return "createComment(parentPostId: \(parentPostId))"
         case let .createLove(postId):
-            return "CreateLove(postId: \(postId))"
+            return "createLove(postId: \(postId))"
         case let .createWatchPost(postId):
-            return "CreateWatchPost(postId: \(postId))"
+            return "createWatchPost(postId: \(postId))"
         case let .deleteComment(postId, commentId):
-            return "DeleteComment(postId: \(postId), commentId: \(commentId))"
+            return "deleteComment(postId: \(postId), commentId: \(commentId))"
         case let .deleteLove(postId):
-            return "DeleteLove(postId: \(postId))"
+            return "deleteLove(postId: \(postId))"
         case let .deletePost(postId):
-            return "DeletePost(postId: \(postId))"
+            return "deletePost(postId: \(postId))"
         case let .deleteSubscriptions(tokenData):
-            return "DeleteSubscriptions(tokenData: \(tokenData))"
+            return "deleteSubscriptions(tokenData: \(tokenData))"
         case let .deleteWatchPost(postId):
-            return "DeleteWatchPost(postId: \(postId))"
+            return "deleteWatchPost(postId: \(postId))"
         case let .discover(type):
-            return "Discover(type: \(type))"
+            return "discover(type: \(type))"
         case let .categoryPosts(slug):
-            return "CategoryPosts(slug: \(slug))"
+            return "categoryPosts(slug: \(slug))"
         case let .emojiAutoComplete(terms):
-            return "EmojiAutoComplete(terms: \(terms))"
+            return "emojiAutoComplete(terms: \(terms))"
         case .flagComment:
-            return "FlagComment"
+            return "flagComment"
         case let .flagPost(postId, kind):
-            return "FlagPost(postId: \(postId), kind: \(kind))"
+            return "flagPost(postId: \(postId), kind: \(kind))"
         case let .flagUser(userId, kind):
-            return "FlagUser(userId: \(userId), kind: \(kind))"
+            return "flagUser(userId: \(userId), kind: \(kind))"
         case let .friendNewContent(createdAt):
-            return "FriendNewContent(createdAt: \(createdAt))"
+            return "friendNewContent(createdAt: \(createdAt))"
         case let .hire(userId, body):
-            return "Hire(userId: \(userId), body: \(body.characters.count))"
+            return "hire(userId: \(userId), body: \(body.characters.count))"
         case let .collaborate(userId, body):
-            return "Collaborate(userId: \(userId), body: \(body.characters.count))"
+            return "collaborate(userId: \(userId), body: \(body.characters.count))"
         case let .infiniteScroll(_, elloApi):
-            return "InfiniteScroll(elloApi: \(elloApi()))"
+            return "infiniteScroll(elloApi: \(elloApi()))"
         case let .loves(userId):
-            return "Loves(userId: \(userId))"
+            return "loves(userId: \(userId))"
         case let .locationAutoComplete(terms):
-            return "LocationAutoComplete(terms: \(terms))"
+            return "locationAutoComplete(terms: \(terms))"
         case let .noiseNewContent(createdAt):
-            return "NoiseNewContent(createdAt: \(createdAt))"
+            return "noiseNewContent(createdAt: \(createdAt))"
         case let .notificationsNewContent(createdAt):
-            return "NotificationsNewContent(createdAt: \(createdAt))"
+            return "notificationsNewContent(createdAt: \(createdAt))"
         case let .postComments(postId):
-            return "PostComments(postId: \(postId))"
+            return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
-            return "PostDetail(postParam: \(postParam), commentCount: \(commentCount))"
+            return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
         case let .postLovers(postId):
-            return "PostLovers(postId: \(postId))"
+            return "postLovers(postId: \(postId))"
         case let .postReplyAll(postId):
-            return "PostReplyAll(postId: \(postId))"
+            return "postReplyAll(postId: \(postId))"
         case let .postReposters(postId):
-            return "PostReposters(postId: \(postId))"
+            return "postReposters(postId: \(postId))"
         case let .pushSubscriptions(tokenData):
-            return "PushSubscriptions(tokenData: \(tokenData))"
+            return "pushSubscriptions(tokenData: \(tokenData))"
         case let .relationship(userId, relationship):
-            return "Relationship(userId: \(userId), relationship: \(relationship))"
+            return "relationship(userId: \(userId), relationship: \(relationship))"
         case let .relationshipBatch(userIds, relationship):
-            return "RelationshipBatch(userIds: \(userIds), relationship: \(relationship))"
+            return "relationshipBatch(userIds: \(userIds), relationship: \(relationship))"
         case let .updatePost(postId, _):
-            return "UpdatePost(postId: \(postId))"
+            return "updatePost(postId: \(postId))"
         case let .updateComment(postId, commentId, _):
-            return "UpdateComment(postId: \(postId), commentId: \(commentId))"
+            return "updateComment(postId: \(postId), commentId: \(commentId))"
         case let .userCategories(categoryIds):
-            return "UserCategories(categoryIds: \(categoryIds))"
+            return "userCategories(categoryIds: \(categoryIds))"
         case let .userStream(userParam):
-            return "UserStream(userParam: \(userParam))"
+            return "userStream(userParam: \(userParam))"
         case let .userStreamFollowers(userId):
-            return "UserStreamFollowers(userId: \(userId))"
+            return "userStreamFollowers(userId: \(userId))"
         case let .userStreamFollowing(userId):
-            return "UserStreamFollowing(userId: \(userId))"
+            return "userStreamFollowing(userId: \(userId))"
         case let .userNameAutoComplete(terms):
-            return "UserNameAutoComplete(terms: \(terms))"
+            return "userNameAutoComplete(terms: \(terms))"
         default:
             return description
         }
@@ -111,139 +111,139 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     var description: String {
         switch self {
         case .announcements:
-            return "Announcements"
+            return "announcements"
         case .announcementsNewContent:
-            return "AnnouncementsNewContent"
+            return "announcementsNewContent"
         case .amazonCredentials:
-            return "AmazonCredentials"
+            return "amazonCredentials"
         case .anonymousCredentials:
-            return "AnonymousCredentials"
+            return "anonymousCredentials"
         case .auth:
-            return "Auth"
+            return "auth"
         case .reAuth:
-            return "ReAuth"
+            return "reAuth"
         case .availability:
-            return "Availability"
+            return "availability"
         case .categories:
-            return "Categories"
+            return "categories"
         case .commentDetail:
-            return "CommentDetail"
+            return "commentDetail"
         case .createComment:
-            return "CreateComment"
+            return "createComment"
         case .createLove:
-            return "CreateLove"
+            return "createLove"
         case .createPost:
-            return "CreatePost"
+            return "createPost"
         case .createWatchPost:
-            return "CreateWatchPost"
+            return "createWatchPost"
         case .currentUserBlockedList:
-            return "CurrentUserBlockedList"
+            return "currentUserBlockedList"
         case .currentUserMutedList:
-            return "CurrentUserMutedList"
+            return "currentUserMutedList"
         case .currentUserProfile:
-            return "CurrentUserProfile"
+            return "currentUserProfile"
         case .currentUserStream:
-            return "CurrentUserStream"
+            return "currentUserStream"
         case .rePost:
-            return "RePost"
+            return "rePost"
         case .deleteComment:
-            return "DeleteComment"
+            return "deleteComment"
         case .deleteLove:
-            return "DeleteLove"
+            return "deleteLove"
         case .deletePost:
-            return "DeletePost"
+            return "deletePost"
         case .deleteWatchPost:
-            return "DeleteWatchPost"
+            return "deleteWatchPost"
         case .deleteSubscriptions:
-            return "DeleteSubscriptions"
+            return "deleteSubscriptions"
         case .discover:
-            return "Discover"
+            return "discover"
         case .category:
-            return "Category"
+            return "category"
         case .categoryPosts:
-            return "CategoryPosts"
+            return "categoryPosts"
         case .emojiAutoComplete:
-            return "EmojiAutoComplete"
+            return "emojiAutoComplete"
         case .findFriends:
-            return "FindFriends"
+            return "findFriends"
         case .flagComment:
-            return "FlagComment"
+            return "flagComment"
         case .flagPost:
-            return "FlagPost"
+            return "flagPost"
         case .flagUser:
-            return "FlagUser"
+            return "flagUser"
         case .friendNewContent:
-            return "FriendNewContent"
+            return "friendNewContent"
         case .friendStream:
-            return "FriendStream"
+            return "friendStream"
         case .hire:
-            return "Hire"
+            return "hire"
         case .collaborate:
-            return "Collaborate"
+            return "collaborate"
         case .infiniteScroll:
-            return "InfiniteScroll"
+            return "infiniteScroll"
         case .inviteFriends:
-            return "InviteFriends"
+            return "inviteFriends"
         case .join:
-            return "Join"
+            return "join"
         case .loves:
-            return "Loves"
+            return "loves"
         case .locationAutoComplete:
-            return "LocationAutoComplete"
+            return "locationAutoComplete"
         case .markAnnouncementAsRead:
-            return "MarkAnnouncementAsRead"
+            return "markAnnouncementAsRead"
         case .noiseNewContent:
-            return "NoiseNewContent"
+            return "noiseNewContent"
         case .noiseStream:
-            return "NoiseStream"
+            return "noiseStream"
         case .notificationsNewContent:
-            return "NotificationsNewContent"
+            return "notificationsNewContent"
         case .notificationsStream:
-            return "NotificationsStream"
+            return "notificationsStream"
         case .pagePromotionals:
-            return "PagePromotionals"
+            return "pagePromotionals"
         case .postComments:
-            return "PostComments"
+            return "postComments"
         case .postDetail:
-            return "PostDetail"
+            return "postDetail"
         case .postLovers:
-            return "PostLovers"
+            return "postLovers"
         case .postReplyAll:
-            return "PostReplyAll"
+            return "postReplyAll"
         case .postReposters:
-            return "PostReposters"
+            return "postReposters"
         case .profileUpdate:
-            return "ProfileUpdate"
+            return "profileUpdate"
         case .profileDelete:
-            return "ProfileDelete"
+            return "profileDelete"
         case .profileToggles:
-            return "ProfileToggles"
+            return "profileToggles"
         case .pushSubscriptions:
-            return "PushSubscriptions"
+            return "pushSubscriptions"
         case .relationship:
-            return "Relationship"
+            return "relationship"
         case .relationshipBatch:
-            return "RelationshipBatch"
+            return "relationshipBatch"
         case .searchForPosts:
-            return "SearchForPosts"
+            return "searchForPosts"
         case .searchForUsers:
-            return "SearchForUsers"
+            return "searchForUsers"
         case .updatePost:
-            return "UpdatePost"
+            return "updatePost"
         case .updateComment:
-            return "UpdateComment"
+            return "updateComment"
         case .userCategories:
-            return "UserCategories"
+            return "userCategories"
         case .userStream:
-            return "UserStream"
+            return "userStream"
         case .userStreamFollowers:
-            return "UserStreamFollowers"
+            return "userStreamFollowers"
         case .userStreamFollowing:
-            return "UserStreamFollowing"
+            return "userStreamFollowing"
         case .userStreamPosts:
-            return "UserStreamPosts"
+            return "userStreamPosts"
         case .userNameAutoComplete:
-            return "UserNameAutoComplete"
+            return "userNameAutoComplete"
         }
     }
 }

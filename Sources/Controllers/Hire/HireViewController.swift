@@ -58,12 +58,13 @@ class HireViewController: BaseElloViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+
         super.viewWillAppear(animated)
 
         postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
         UIApplication.shared.statusBarStyle = .lightContent
 
-        elloTabBarController?.tabBarHidden = false
+        bottomBarController!.setNavigationBarsVisible(true, animated: false)
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)
         keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: self.keyboardWillHide)
