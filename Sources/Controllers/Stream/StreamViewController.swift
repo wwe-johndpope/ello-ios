@@ -53,7 +53,7 @@ protocol UserDelegate: class {
 }
 
 protocol WebLinkDelegate: class {
-    func webLinkTapped(type: ElloURI, data: String)
+    func webLinkTapped(path: String, type: ElloURI, data: String)
 }
 
 @objc
@@ -983,68 +983,13 @@ extension StreamViewController: UserDelegate {
 // MARK: StreamViewController: WebLinkDelegate
 extension StreamViewController: WebLinkDelegate {
 
-    func webLinkTapped(type: ElloURI, data: String) {
-        switch type {
-        case .confirm,
-             .faceMaker,
-             .freedomOfSpeech,
-             .invitations,
-             .invite,
-             .join,
-             .login,
-             .nativeRedirect,
-             .onboarding,
-             .passwordResetError,
-             .profileFollowers,
-             .profileFollowing,
-             .profileLoves,
-             .randomSearch,
-             .requestInvitations,
-             .resetMyPassword,
-             .searchPeople,
-             .searchPosts,
-             .unblock:
-            break
-        case .downloads,
-             .external,
-             .forgotMyPassword,
-             .manifesto,
-             .requestInvite,
-             .requestInvitation,
-             .subdomain,
-             .whoMadeThis,
-             .wtf:
-            postNotification(ExternalWebNotification, value: data)
-        case .discover:
-            DeepLinking.showDiscover(navVC: navigationController, currentUser: currentUser)
-        case .category,
-             .discoverRandom,
-             .discoverRecent,
-             .discoverRelated,
-             .discoverTrending,
-             .exploreRecommended,
-             .exploreRecent,
-             .exploreTrending:
-            DeepLinking.showCategory(navVC: navigationController, currentUser: currentUser, slug: data)
-        case .email: break // this is handled in ElloWebViewHelper
-        case .betaPublicProfiles,
-             .enter,
-             .exit,
-             .root,
-             .explore:
-            break // do nothing since we should already be in app
-        case .friends, .following, .noise, .starred: selectTab(.stream)
-        case .notifications: selectTab(.notifications)
-        case .post,
-             .pushNotificationComment,
-             .pushNotificationPost:
-            DeepLinking.showPostDetail(navVC: navigationController, currentUser: currentUser, token: data)
-        case .profile,
-             .pushNotificationUser:
-            DeepLinking.showProfile(navVC: navigationController, currentUser: currentUser, username: data)
-        case .search: DeepLinking.showSearch(navVC: navigationController, currentUser: currentUser, terms: data)
-        case .settings: DeepLinking.showSettings(navVC: navigationController, currentUser: currentUser)
-        }
+    func webLinkTapped(path: String, type: ElloURI, data: String) {
+        guard
+            let parentController = parent as? HasAppController,
+            let appViewController = parentController.appViewController
+        else { return }
+
+        appViewController.navigateToURI(path: path, type: type, data: data)
     }
 
     fileprivate func selectTab(_ tab: ElloTab) {

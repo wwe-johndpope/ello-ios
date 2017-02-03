@@ -97,7 +97,7 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
 // MARK: ElloWebBrowserViewController : WebLinkDelegate
 extension ElloWebBrowserViewController : WebLinkDelegate {
-    func webLinkTapped(type: ElloURI, data: String) {
+    func webLinkTapped(path: String, type: ElloURI, data: String) {
         switch type {
         case .confirm,
              .downloads,
@@ -109,6 +109,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .invitations,
              .invite,
              .join,
+             .signup,
              .login,
              .manifesto,
              .nativeRedirect,

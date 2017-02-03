@@ -2,10 +2,9 @@
 ///  CategoriesSelectionViewController.swift
 //
 
-class CategoriesSelectionViewController: StreamableViewController, HasAppController {
+class CategoriesSelectionViewController: StreamableViewController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
-    var parentAppController: AppViewController?
     var selectedCategories: [Category] = []
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!
@@ -70,16 +69,20 @@ extension CategoriesSelectionViewController: OnboardingStepController {
         }
 
         UserService().setUser(categories: categories)
-            .onSuccess { _ in
+            .onSuccess { [weak self] _ in
+                guard let `self` = self else { return }
+
                 // onboarding can be considered "done", even if they abort the app
                 Onboarding.shared().updateVersionToLatest()
 
                 self.onboardingData.categories = categories
                 proceedClosure(.continue)
             }
-            .onFail { _ in
+            .onFail { [weak self] _ in
+                guard let `self` = self else { return }
+
                 let alertController = AlertViewController(error: InterfaceString.GenericError)
-                self.parentAppController?.present(alertController, animated: true, completion: nil)
+                self.appViewController?.present(alertController, animated: true, completion: nil)
                 proceedClosure(.error)
             }
     }

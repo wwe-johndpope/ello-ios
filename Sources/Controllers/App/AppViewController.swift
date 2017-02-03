@@ -17,7 +17,7 @@ struct StatusBarNotifications {
 
 @objc
 protocol HasAppController {
-    var parentAppController: AppViewController? { get set }
+    var appViewController: AppViewController? { get }
 }
 
 
@@ -188,13 +188,12 @@ extension AppViewController {
         let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
         loggedOutController.addChildViewController(childNavController)
-        loggedOutController.parentAppController = self
         childNavController.didMove(toParentViewController: loggedOutController)
 
         swapViewController(parentNavController) {}
     }
 
-    func showJoinScreen(animated: Bool, invitationCode: String? = nil) {
+    func showJoinScreen(invitationCode: String? = nil) {
         guard
             let nav = visibleViewController as? UINavigationController,
             let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
@@ -206,12 +205,11 @@ extension AppViewController {
 
         pushPayload = .none
         let joinController = JoinViewController()
-        joinController.parentAppController = self
         joinController.invitationCode = invitationCode
-        nav.setViewControllers([loggedOutController, joinController], animated: animated)
+        nav.setViewControllers([loggedOutController, joinController], animated: true)
     }
 
-    func showLoginScreen(animated: Bool) {
+    func showLoginScreen() {
         guard
             let nav = visibleViewController as? UINavigationController,
             let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
@@ -223,15 +221,13 @@ extension AppViewController {
 
         pushPayload = .none
         let loginController = LoginViewController()
-        loginController.parentAppController = self
-        nav.setViewControllers([loggedOutController, loginController], animated: animated)
+        nav.setViewControllers([loggedOutController, loginController], animated: true)
     }
 
     func showOnboardingScreen(_ user: User) {
         currentUser = user
 
         let vc = OnboardingViewController()
-        vc.parentAppController = self
         vc.currentUser = user
 
         swapViewController(vc) {}
@@ -320,9 +316,6 @@ extension AppViewController {
             self.visibleViewController?.removeFromParentViewController()
 
             self.addChildViewController(newViewController)
-            if let childController = newViewController as? HasAppController {
-                childController.parentAppController = self
-            }
 
             newViewController.didMove(toParentViewController: self)
 
@@ -444,11 +437,12 @@ extension AppViewController {
         Tracker.shared.deepLinkVisited(path)
 
         let (type, data) = ElloURI.match(path)
+        navigateToURI(path: path, type: type, data: data)
+    }
 
+    func navigateToURI(path: String, type: ElloURI, data: String) {
         guard type.shouldLoadInApp else {
-            if let pathURL = URL(string: path) {
-                UIApplication.shared.openURL(pathURL)
-            }
+            showExternalWebView(path)
             return
         }
 
@@ -457,50 +451,48 @@ extension AppViewController {
             return
         }
 
-        guard isLoggedIn() else {
-            switch type {
-            case .invite:
-                showJoinScreen(animated: false, invitationCode: data)
-            case .join:
-                showJoinScreen(animated: false)
-            case .login:
-                showLoginScreen(animated: false)
-            default:
-                presentLoginOrSafariAlert(path)
-            }
-            return
-        }
-
-        guard let vc = self.visibleViewController as? ElloTabBarController else {
+        guard isLoggedIn() || !type.requiresLogin else {
+            presentLoginOrSafariAlert(path)
             return
         }
 
         switch type {
-        case .invite, .join, .login:
-            break
+        case .invite, .join, .signup, .login:
+            if !isLoggedIn() {
+                switch type {
+                case .invite:
+                    showJoinScreen(invitationCode: data)
+                case .join, .signup:
+                    showJoinScreen()
+                case .login:
+                    showLoginScreen()
+                default:
+                    break
+                }
+            }
         case .exploreRecommended,
              .exploreRecent,
              .exploreTrending:
-            showDiscoverScreen(vc)
+            showDiscoverScreen()
         case .discover:
-            showDiscoverScreen(vc)
+            showDiscoverScreen()
         case .discoverRandom,
              .discoverRecent,
              .discoverRelated,
              .discoverTrending,
              .category:
-            showCategoryScreen(vc, slug: data)
+            showCategoryScreen(slug: data)
         case .invitations:
-            showInvitationScreen(vc)
+            showInvitationScreen()
         case .enter, .exit, .root, .explore:
             break
         case .friends,
              .following,
              .noise,
              .starred:
-            showStreamContainerScreen(vc: vc, type: type)
+            showStreamContainerScreen(type: type)
         case .notifications:
-            showNotificationsScreen(vc, category: data)
+            showNotificationsScreen(category: data)
         case .onboarding:
             if let user = currentUser {
                 showOnboardingScreen(user)
@@ -549,7 +541,7 @@ extension AppViewController {
 
         let yes = AlertAction(title: InterfaceString.App.LoginAndView, style: .dark) { _ in
             self.deepLinkPath = path
-            self.showLoginScreen(animated: true)
+            self.showLoginScreen()
         }
         alertController.addAction(yes)
 
@@ -563,36 +555,62 @@ extension AppViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    fileprivate func showInvitationScreen(_ vc: ElloTabBarController) {
+    fileprivate func showInvitationScreen() {
+        guard
+            let vc = self.visibleViewController as? ElloTabBarController
+        else { return }
+
         vc.selectedTab = .discover
 
         let responder = target(forAction: #selector(InviteResponder.onInviteFriends), withSender: self) as? InviteResponder
         responder?.onInviteFriends()
     }
 
-    fileprivate func showDiscoverScreen(_ vc: ElloTabBarController) {
-        guard
-            let navVC = vc.selectedViewController as? ElloNavigationController, !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
-        else { return }
-
-        let vc = DiscoverAllCategoriesViewController()
-        vc.currentUser = currentUser
-        pushDeepLinkViewController(vc)
+    fileprivate func showDiscoverScreen() {
+        if
+            let vc = self.visibleViewController as? ElloTabBarController,
+            let navVC = vc.selectedViewController as? ElloNavigationController,
+            !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
+        {
+            let vc = DiscoverAllCategoriesViewController()
+            vc.currentUser = currentUser
+            pushDeepLinkViewController(vc)
+        }
+        else if
+            let nav = self.visibleViewController as? UINavigationController,
+            nav.viewControllers.first is LoggedOutViewController
+        {
+            nav.popToRootViewController(animated: true)
+        }
     }
 
-    fileprivate func showCategoryScreen(_ vc: ElloTabBarController, slug: String) {
-        guard
+    fileprivate func showCategoryScreen(slug: String) {
+        if
+            let vc = self.visibleViewController as? ElloTabBarController,
             let navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
-        else { return }
-
-        Tracker.shared.categoryOpened(slug)
-        let vc = CategoryViewController(slug: slug)
-        vc.currentUser = currentUser
-        pushDeepLinkViewController(vc)
+        {
+            Tracker.shared.categoryOpened(slug)
+            let vc = CategoryViewController(slug: slug)
+            vc.currentUser = currentUser
+            pushDeepLinkViewController(vc)
+        }
+        else if
+            let topNav = self.visibleViewController as? UINavigationController,
+            let loggedOutController = topNav.viewControllers.first as? LoggedOutViewController,
+            let childNav = loggedOutController.childViewControllers.first as? UINavigationController,
+            let categoryViewController = childNav.viewControllers.first as? CategoryViewController
+        {
+            childNav.popToRootViewController(animated: true)
+            categoryViewController.selectCategoryFor(slug: slug)
+        }
     }
 
 
-    fileprivate func showStreamContainerScreen(vc: ElloTabBarController, type: ElloURI) {
+    fileprivate func showStreamContainerScreen(type: ElloURI) {
+        guard
+            let vc = self.visibleViewController as? ElloTabBarController
+        else { return }
+
         vc.selectedTab = .stream
 
         guard
@@ -609,8 +627,13 @@ extension AppViewController {
         }
     }
 
-    fileprivate func showNotificationsScreen(_ vc: ElloTabBarController, category: String) {
+    fileprivate func showNotificationsScreen(category: String) {
+        guard
+            let vc = self.visibleViewController as? ElloTabBarController
+        else { return }
+
         vc.selectedTab = .notifications
+
         guard
             let navVC = vc.selectedViewController as? ElloNavigationController,
             let notificationsVC = navVC.visibleViewController as? NotificationsViewController
@@ -702,24 +725,32 @@ extension AppViewController {
     }
 
     fileprivate func showSettingsScreen() {
-        if let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController {
-            settings.currentUser = currentUser
-            pushDeepLinkViewController(settings)
-        }
+        guard
+            let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController
+        else { return }
+
+        settings.currentUser = currentUser
+        pushDeepLinkViewController(settings)
     }
 
     fileprivate func pushDeepLinkViewController(_ vc: UIViewController) {
-        guard
-            let tabController = self.visibleViewController as? ElloTabBarController,
-            let navController = tabController.selectedViewController as? UINavigationController
-        else { return }
+        var navController: UINavigationController?
 
-        if let topNavVC = topViewController(self)?.navigationController {
-            topNavVC.pushViewController(vc, animated: true)
+        if
+            let tabController = self.visibleViewController as? ElloTabBarController,
+            let tabNavController = tabController.selectedViewController as? UINavigationController
+        {
+            let topNavVC = topViewController(self)?.navigationController
+            navController = topNavVC ?? tabNavController
         }
-        else {
-            navController.pushViewController(vc, animated: true)
+        else if
+            let nav = self.visibleViewController as? UINavigationController,
+            nav.viewControllers.first is LoggedOutViewController
+        {
+            navController = nav
         }
+
+        navController?.pushViewController(vc, animated: true)
     }
 
     fileprivate func selectTab(_ tab: ElloTab) {

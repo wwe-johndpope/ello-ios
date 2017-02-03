@@ -9,6 +9,10 @@ import SSPullToRefresh
 
 
 class StreamViewControllerSpec: QuickSpec {
+    class MockHasAppViewController: UINavigationController, HasAppController {
+        let appViewController: AppViewController? = AppViewController()
+    }
+
     override func spec() {
 
         var controller: StreamViewController!
@@ -159,23 +163,34 @@ class StreamViewControllerSpec: QuickSpec {
                 }
 
                 describe("webLinkTapped(_:data:)") {
+                    var hasAppVC: MockHasAppViewController!
 
-                    it("posts a notification if type .External") {
-
-                        var link = ""
-                        externalWebObserver = NotificationObserver(notification: ExternalWebNotification) { url in
-                            link = url
-                        }
-
-                        controller.webLinkTapped(type: ElloURI.external, data: "http://www.example.com")
-                        expect(link) == "http://www.example.com"
+                    beforeEach {
+                        // wire up the StreamViewController's hierarchy
+                        // the parent controller needs to be a `HasAppController`
+                        // but it doesn't need to be wired into an `AppViewController`,
+                        // it just needs to return it via the protocol
+                        hasAppVC = MockHasAppViewController(rootViewController: controller)
+                        showController(hasAppVC.appViewController!)
                     }
 
-                    xit("presents a profile if type .Profile") {
+                    it("opens external browser if type .external") {
+                        controller.webLinkTapped(path: "http://www.example.com", type: ElloURI.external, data: "http://www.example.com")
+                        let presented = hasAppVC.appViewController!.presentedViewController
+                        expect(presented).notTo(beNil())
+                        if let browser = (presented as! UINavigationController).viewControllers.first {
+                            expect(browser).to(beAKindOf(ElloWebBrowserViewController.self))
+                        }
+                        else {
+                            fail("did not present ElloWebBrowserViewController")
+                        }
+                    }
+
+                    xit("presents a profile if type .profile") {
                         // not yet implemented
                     }
 
-                    xit("shows a post detail if type .Post") {
+                    xit("shows a post detail if type .post") {
                         // not yet implemented
                     }
 

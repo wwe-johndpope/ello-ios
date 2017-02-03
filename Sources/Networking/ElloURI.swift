@@ -56,6 +56,7 @@ enum ElloURI: String {
     case requestInvitations = "request_invitations"
     case resetMyPassword = "reset-my-password"
     case root = "?$"
+    case signup = "signup"
     case subdomain = "\\/\\/.+(?<!(w{3}|staging))\\."
     case starred = "starred"
     case unblock = "unblock"
@@ -82,6 +83,16 @@ enum ElloURI: String {
              .settings:
             return false
         default: return true
+        }
+    }
+
+    var requiresLogin: Bool {
+        switch self {
+        case .settings, .notifications, .following, .starred, .friends, .noise,
+             .invitations, .onboarding, .unblock:
+            return true
+        default:
+            return false
         }
     }
 
@@ -262,6 +273,7 @@ enum ElloURI: String {
         invitations,
         invite,
         join,
+        signup,
         login,
         manifesto,
         nativeRedirect,

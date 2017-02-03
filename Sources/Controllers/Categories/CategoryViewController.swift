@@ -237,7 +237,7 @@ extension CategoryViewController: CategoryScreenDelegate {
     }
 
     func select(category: Category) {
-		Tracker.shared.categoryOpened(category.slug)
+        Tracker.shared.categoryOpened(category.slug)
 
         var kind: StreamKind?
         switch category.level {
@@ -251,7 +251,6 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         guard let streamKind = kind else { return }
 
-
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
@@ -260,6 +259,11 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.slug = category.slug
         self.title = category.name
         loadCategory()
+
+        if let index = allCategories.index(where: { $0.slug == category.slug }) {
+            screen.scrollToCategory(index: index)
+            screen.selectCategory(index: index)
+        }
         Tracker.shared.screenAppeared(self)
     }
 }

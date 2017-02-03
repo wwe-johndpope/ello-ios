@@ -23,7 +23,7 @@ struct ElloWebViewHelper {
             }
             else {
                 if fromWebView && type.loadsInWebViewFromWebView { return true }
-                webLinkDelegate?.webLinkTapped(type: type, data: data)
+                webLinkDelegate?.webLinkTapped(path: requestUrlString, type: type, data: data)
                 return false
             }
         }

@@ -14,8 +14,7 @@ protocol BottomBarController: class {
 }
 
 
-class LoggedOutViewController: UIViewController, HasAppController, BottomBarController {
-    var parentAppController: AppViewController?
+class LoggedOutViewController: BaseElloViewController, BottomBarController {
     var navigationBarsVisible: Bool = true
     let bottomBarVisible: Bool = true
     var bottomBarHeight: CGFloat { return screen.bottomBarHeight }
@@ -42,10 +41,10 @@ class LoggedOutViewController: UIViewController, HasAppController, BottomBarCont
 
 extension LoggedOutViewController: LoggedOutProtocol {
     func showLoginScreen() {
-        parentAppController?.showLoginScreen(animated: true)
+        appViewController?.showLoginScreen()
     }
 
     func showJoinScreen() {
-        parentAppController?.showJoinScreen(animated: true)
+        appViewController?.showJoinScreen()
     }
 }

@@ -5,7 +5,7 @@
 import PINRemoteImage
 
 
-class OnboardingViewController: BaseElloViewController, HasAppController {
+class OnboardingViewController: BaseElloViewController {
     fileprivate enum OnboardingDirection: CGFloat {
         case left = -1
         case right = 1
@@ -19,7 +19,6 @@ class OnboardingViewController: BaseElloViewController, HasAppController {
     var mockScreen: OnboardingScreenProtocol?
     var screen: OnboardingScreenProtocol { return mockScreen ?? (self.view as! OnboardingScreenProtocol) }
 
-    var parentAppController: AppViewController?
     var inviteFriendsController: InviteFriendsViewController? {
         willSet {
             guard inviteFriendsController == nil else {
@@ -126,13 +125,11 @@ private extension OnboardingViewController {
 
     func setupOnboardingControllers() {
         let categoriesController = CategoriesSelectionViewController()
-        categoriesController.parentAppController = parentAppController
         categoriesController.onboardingViewController = self
         categoriesController.currentUser = currentUser
         addOnboardingViewController(categoriesController)
 
         let createProfileController = CreateProfileViewController()
-        createProfileController.parentAppController = parentAppController
         createProfileController.onboardingViewController = self
         createProfileController.currentUser = currentUser
         addOnboardingViewController(createProfileController)
@@ -253,7 +250,7 @@ extension OnboardingViewController {
     }
 
     fileprivate func doneOnboarding() {
-        parentAppController?.doneOnboarding()
+        appViewController?.doneOnboarding()
     }
 
     func goToController(_ viewController: UIViewController) {

@@ -6,7 +6,6 @@ class InviteFriendsViewController: StreamableViewController {
     let addressBook: AddressBookProtocol
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
-    var parentAppController: AppViewController?
     var searchString = SearchString(text: "")
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!
