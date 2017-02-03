@@ -167,7 +167,7 @@ class StreamViewControllerSpec: QuickSpec {
                             link = url
                         }
 
-                        controller.webLinkTapped(type: ElloURI.external, data: "http://www.example.com")
+                        controller.webLinkTapped(path: "http://www.example.com", type: ElloURI.external, data: "http://www.example.com")
                         expect(link) == "http://www.example.com"
                     }
 
