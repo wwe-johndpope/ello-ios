@@ -38,7 +38,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     let imageSizeCalculator: StreamImageCellSizeCalculator
 
-    weak var createPostDelegate: CreatePostDelegate?
     weak var webLinkDelegate: WebLinkDelegate?
     weak var categoryDelegate: CategoryDelegate?
     weak var userDelegate: UserDelegate?

@@ -13,7 +13,8 @@ protocol UserTappedDelegate: class {
     func userParamTapped(_ param: String, username: String?)
 }
 
-protocol CreatePostDelegate: class {
+@objc
+protocol CreatePostResponder: class {
     func createPost(text: String?, fromController: UIViewController)
     func createComment(_ postId: String, text: String?, fromController: UIViewController)
     func editComment(_ comment: ElloComment, fromController: UIViewController)
@@ -36,7 +37,6 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         streamViewController.streamViewDelegate = self
         streamViewController.userTappedDelegate = self
         streamViewController.postTappedDelegate = self
-        streamViewController.createPostDelegate = self
 
         streamViewController.willMove(toParentViewController: self)
         let containerForStream = viewForStream()
@@ -197,8 +197,8 @@ extension StreamableViewController: UserTappedDelegate {
     }
 }
 
-// MARK: CreatePostDelegate
-extension StreamableViewController: CreatePostDelegate {
+// MARK: CreatePostResponder
+extension StreamableViewController: CreatePostResponder {
     func createPost(text: String?, fromController: UIViewController) {
         let vc = OmnibarViewController(defaultText: text)
         vc.currentUser = self.currentUser
