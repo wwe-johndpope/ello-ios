@@ -752,9 +752,7 @@ extension AppViewController {
             navController = nav
         }
 
-        if let navController = navController {
-            navController.pushViewController(vc, animated: true)
-        }
+        navController?.pushViewController(vc, animated: true)
     }
 
     fileprivate func selectTab(_ tab: ElloTab) {
