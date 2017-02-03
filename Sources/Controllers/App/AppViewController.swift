@@ -674,7 +674,7 @@ extension AppViewController {
             noResultsBody = InterfaceString.Followers.NoResultsBody
         }
         let followersVC = SimpleStreamViewController(endpoint: endpoint, title: "@" + username + "'s " + InterfaceString.Followers.Title)
-        followersVC.streamViewController.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
+        followersVC.streamViewController.noResultsMessages = NoResultsMessages(title: noResultsTitle, body: noResultsBody)
         followersVC.currentUser = currentUser
         pushDeepLinkViewController(followersVC)
     }
@@ -692,7 +692,7 @@ extension AppViewController {
             noResultsBody = InterfaceString.Following.NoResultsBody
         }
         let vc = SimpleStreamViewController(endpoint: endpoint, title: "@" + username + "'s " + InterfaceString.Following.Title)
-        vc.streamViewController.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
+        vc.streamViewController.noResultsMessages = NoResultsMessages(title: noResultsTitle, body: noResultsBody)
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)
     }
@@ -710,7 +710,7 @@ extension AppViewController {
             noResultsBody = InterfaceString.Loves.NoResultsBody
         }
         let vc = SimpleStreamViewController(endpoint: endpoint, title: "@" + username + "'s " + InterfaceString.Loves.Title)
-        vc.streamViewController.noResultsMessages = (title: noResultsTitle, body: noResultsBody)
+        vc.streamViewController.noResultsMessages = NoResultsMessages(title: noResultsTitle, body: noResultsBody)
         vc.currentUser = currentUser
         pushDeepLinkViewController(vc)
     }
