@@ -24,7 +24,12 @@ class SearchScreenSpec: QuickSpec {
             var subject: SearchScreen!
 
             beforeEach {
-                subject = SearchScreen(frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 568)), isSearchView: true, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
+                subject = SearchScreen(
+                    frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 568)),
+                    hasCurrentUser: true,
+                    isSearchView: true,
+                    navBarTitle: "Test",
+                    fieldPlaceholderText: "placeholder test")
             }
 
             context("searching for people") {
@@ -120,7 +125,7 @@ class SearchScreenSpec: QuickSpec {
                     context("is search view") {
 
                         beforeEach {
-                            subject = SearchScreen(frame: .zero, isSearchView: true, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
+                            subject = SearchScreen(frame: .zero, hasCurrentUser: true, isSearchView: true, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
                         }
 
                         it("hides find friends text") {
@@ -133,7 +138,7 @@ class SearchScreenSpec: QuickSpec {
                     context("is NOT search view") {
 
                         beforeEach {
-                            subject = SearchScreen(frame: .zero, isSearchView: false, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
+                            subject = SearchScreen(frame: .zero, hasCurrentUser: true, isSearchView: false, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
                         }
 
                         it("shows find friends text") {
