@@ -237,7 +237,7 @@ extension CategoryViewController: CategoryScreenDelegate {
     }
 
     func select(category: Category) {
-		Tracker.shared.categoryOpened(category.slug)
+        Tracker.shared.categoryOpened(category.slug)
 
         var kind: StreamKind?
         switch category.level {
@@ -250,7 +250,6 @@ extension CategoryViewController: CategoryScreenDelegate {
         }
 
         guard let streamKind = kind else { return }
-
 
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind

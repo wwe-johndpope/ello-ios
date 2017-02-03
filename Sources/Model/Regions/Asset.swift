@@ -72,7 +72,7 @@ final class Asset: JSONAble {
         return false
     }
 
-	var oneColumnAttachment: Attachment? {
+    var oneColumnAttachment: Attachment? {
         return self.hdpi
     }
 
