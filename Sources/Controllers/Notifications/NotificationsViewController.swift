@@ -104,7 +104,6 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         }
 
         generator?.load(reload: true)
-        Tracker.shared.screenAppeared(self)
     }
 
     func reloadAnnouncements() {
