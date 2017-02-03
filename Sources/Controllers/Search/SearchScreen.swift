@@ -77,7 +77,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
         self.navBarTitle = navBarTitle
         self.fieldPlaceholderText = fieldPlaceholderText
         self.isSearchView = isSearchView
-        showsFindFriends = hasCurrentUser && !isSearchView
+        showsFindFriends = hasCurrentUser && isSearchView
 
         super.init(frame: frame)
 
