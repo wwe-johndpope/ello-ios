@@ -790,6 +790,9 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
     func pull(_ view: SSPullToRefreshView, didTransitionTo toState: SSPullToRefreshViewState, from fromState: SSPullToRefreshViewState, animated: Bool) {
         if toState == .loading {
             if pullToRefreshEnabled {
+                if let controller = parent as? BaseElloViewController {
+                    Tracker.shared.screenAppeared(controller)
+                }
                 self.loadInitialPage(reload: true)
             }
             else {
