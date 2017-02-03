@@ -215,8 +215,11 @@ extension ElloAPI {
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
              .postComments, .postLovers, .postReposters, .postDetail,
-             .join, .deleteSubscriptions:
+             .join, .deleteSubscriptions, .userStream:
             return true
+        case let .infiniteScroll(_, elloApi):
+            let api = elloApi()
+            return api.supportsAnonymousToken
         default:
             return false
         }

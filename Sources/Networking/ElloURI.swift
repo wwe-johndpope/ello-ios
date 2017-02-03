@@ -86,6 +86,16 @@ enum ElloURI: String {
         }
     }
 
+    var requiresLogin: Bool {
+        switch self {
+        case .settings, .notifications, .following, .starred, .friends, .noise,
+             .invitations, .onboarding, .unblock:
+            return true
+        default:
+            return false
+        }
+    }
+
     var shouldLoadInApp: Bool {
         switch self {
         case .confirm,

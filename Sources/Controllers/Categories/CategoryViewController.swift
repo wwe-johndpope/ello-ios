@@ -260,6 +260,11 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.slug = category.slug
         self.title = category.name
         loadCategory()
+
+        if let index = allCategories.index(where: { $0.slug == category.slug }) {
+            screen.scrollToCategory(index: index)
+            screen.selectCategory(index: index)
+        }
         Tracker.shared.screenAppeared(self)
     }
 }

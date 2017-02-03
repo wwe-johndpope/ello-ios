@@ -22,7 +22,7 @@ class JoinViewController: BaseElloViewController {
     }
 
     fileprivate func showLoginScreen(_ email: String, _ password: String) {
-        appViewController?.showLoginScreen(animated: true)
+        appViewController?.showLoginScreen()
     }
 }
 

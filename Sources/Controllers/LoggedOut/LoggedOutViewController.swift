@@ -41,10 +41,10 @@ class LoggedOutViewController: BaseElloViewController, BottomBarController {
 
 extension LoggedOutViewController: LoggedOutProtocol {
     func showLoginScreen() {
-        appViewController?.showLoginScreen(animated: true)
+        appViewController?.showLoginScreen()
     }
 
     func showJoinScreen() {
-        appViewController?.showJoinScreen(animated: true)
+        appViewController?.showJoinScreen()
     }
 }
