@@ -442,9 +442,7 @@ extension AppViewController {
 
     func navigateToURI(path: String, type: ElloURI, data: String) {
         guard type.shouldLoadInApp else {
-            if let pathURL = URL(string: path) {
-                UIApplication.shared.openURL(pathURL)
-            }
+            showExternalWebView(path)
             return
         }
 
