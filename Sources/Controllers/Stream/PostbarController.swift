@@ -158,15 +158,13 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func editCommentButtonTapped(_ indexPath: IndexPath) {
-        // This is a bit dirty, we should not call a method on a compositionally held
-        // controller's createPostDelegate. Can this use the responder chain when we have
-        // parameters to pass?
         guard
             let comment = self.commentForIndexPath(indexPath),
             let presentingController = presentingController
         else { return }
 
-        presentingController.createPostDelegate?.editComment(comment, fromController: presentingController)
+        let responder = target(forAction: #selector(CreatePostResponder.editComment(_:fromController:)), withSender: self) as? CreatePostResponder
+        responder?.editComment(comment, fromController: presentingController)
     }
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
@@ -335,29 +333,27 @@ class PostbarController: UIResponder, PostbarResponder {
             let atName = comment.author?.atName
         else { return }
 
-        // This is a bit dirty, we should not call a method on a compositionally held
-        // controller's createPostDelegate. Can this use the responder chain when we have
-        // parameters to pass?
 
         let postId = comment.loadedFromPostId
-        presentingController.createPostDelegate?.createComment(postId, text: "\(atName) ", fromController: presentingController)
+
+        let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+        responder?.createComment(postId, text: "\(atName) ", fromController: presentingController)
     }
 
     func replyToAllButtonTapped(_ indexPath: IndexPath) {
-        // This is a bit dirty, we should not call a method on a compositionally held
-        // controller's createPostDelegate. Can this use the responder chain when we have
-        // parameters to pass?
         guard
             let comment = commentForIndexPath(indexPath),
             let presentingController = presentingController
         else { return }
 
         let postId = comment.loadedFromPostId
-        PostService().loadReplyAll(postId, success: { usernames in
+        PostService().loadReplyAll(postId, success: {[weak self] usernames in
+            guard let `self` = self else { return }
             let usernamesText = usernames.reduce("") { memo, username in
                 return memo + "@\(username) "
             }
-            presentingController.createPostDelegate?.createComment(postId, text: usernamesText, fromController: presentingController)
+            let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.createComment(postId, text: usernamesText, fromController: presentingController)
         }, failure: {
             presentingController.createCommentTapped(postId)
         })

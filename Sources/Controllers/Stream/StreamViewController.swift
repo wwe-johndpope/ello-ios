@@ -177,7 +177,6 @@ final class StreamViewController: BaseElloViewController {
     var settingChangedNotification: NotificationObserver?
     var currentUserChangedNotification: NotificationObserver?
 
-    weak var createPostDelegate: CreatePostDelegate?
     weak var postTappedDelegate: PostTappedDelegate?
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
@@ -852,12 +851,14 @@ extension StreamViewController: StreamEditingResponder {
         if let post = dataSource.postForIndexPath(indexPath),
             currentUser.isOwn(post: post)
         {
-            createPostDelegate?.editPost(post, fromController: self)
+            let responder = target(forAction: #selector(CreatePostResponder.editPost(_:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.editPost(post, fromController: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath),
             currentUser.isOwn(comment: comment)
         {
-            createPostDelegate?.editComment(comment, fromController: self)
+            let responder = target(forAction: #selector(CreatePostResponder.editComment(_:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.editComment(comment, fromController: self)
         }
     }
 }
@@ -888,7 +889,8 @@ extension StreamViewController: StreamImageCellResponder {
 extension StreamViewController {
 
     func createCommentTapped(_ postId: String) {
-        createPostDelegate?.createComment(postId, text: nil, fromController: self)
+        let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+        responder?.createComment(postId, text: nil, fromController: self)
     }
 }
 
