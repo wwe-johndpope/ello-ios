@@ -40,7 +40,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     weak var webLinkDelegate: WebLinkDelegate?
     weak var categoryDelegate: CategoryDelegate?
-    weak var userDelegate: UserDelegate?
     weak var relationshipDelegate: RelationshipDelegate?
     weak var searchStreamDelegate: SearchStreamDelegate?
     weak var categoryListCellDelegate: CategoryListCellDelegate?
@@ -335,31 +334,24 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .categoryPromotionalHeader,
              .pagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
-            (cell as! CategoryHeaderCell).userDelegate = userDelegate
         case .categoryList:
             (cell as! CategoryListCell).delegate = categoryListCellDelegate
         case .header, .commentHeader:
             (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
             (cell as! StreamHeaderCell).categoryDelegate = categoryDelegate
-            (cell as! StreamHeaderCell).userDelegate = userDelegate
         case .inviteFriends, .onboardingInviteFriends:
             (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
         case .notification:
             (cell as! NotificationCell).relationshipControl.relationshipDelegate = relationshipDelegate
             (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
-            (cell as! NotificationCell).userDelegate = userDelegate
         case .profileHeader:
             (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
         case .search:
             (cell as! SearchStreamCell).delegate = searchStreamDelegate
         case .text:
             (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
-            (cell as! StreamTextCell).userDelegate = userDelegate
-        case .userAvatars:
-            (cell as! UserAvatarsCell).userDelegate = userDelegate
         case .userListItem:
             (cell as! UserListItemCell).relationshipControl.relationshipDelegate = relationshipDelegate
-            (cell as! UserListItemCell).userDelegate = userDelegate
         default:
             break
         }

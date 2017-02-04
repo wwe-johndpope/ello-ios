@@ -67,7 +67,6 @@ class StreamHeaderCell: UICollectionViewCell {
         set { relationshipControl.relationshipDelegate = newValue }
     }
 
-    weak var userDelegate: UserDelegate?
     weak var categoryDelegate: CategoryDelegate?
 
     var avatarHeight: CGFloat = 60.0 {
@@ -418,11 +417,13 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func userTapped(_ sender: AvatarButton) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
     @IBAction func usernameTapped(_ sender: UIButton) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
     @IBAction func categoryTapped(_ sender: UIButton) {
@@ -430,7 +431,8 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func reposterTapped(_ sender: UIButton) {
-        userDelegate?.userTappedReposter(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedReposter(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedReposter(cell: self)
     }
 
     @IBAction func flagButtonTapped(_ sender: StreamFooterButton) {
@@ -508,7 +510,8 @@ extension StreamHeaderCell {
 
 extension StreamHeaderCell: ElloTextViewDelegate {
     func textViewTapped(_ link: String, object: ElloAttributedObject) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
     func textViewTappedDefault() {}
 }

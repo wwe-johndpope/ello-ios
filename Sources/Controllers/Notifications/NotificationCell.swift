@@ -55,7 +55,6 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     typealias WebContentReady = (_ webView: UIWebView) -> Void
 
     weak var webLinkDelegate: WebLinkDelegate?
-    weak var userDelegate: UserDelegate?
     var webContentReady: WebContentReady?
     var onHeightMismatch: OnHeightMismatch?
 
@@ -316,7 +315,9 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default"
         {
-            userDelegate?.userTappedText(cell: self)
+            let responder = target(forAction: #selector(UserResponder.userTappedText(cell:)), withSender: self) as? UserResponder
+            responder?.userTappedText(cell: self)
+
             return false
         }
         else {
@@ -356,7 +357,8 @@ extension NotificationCell: ElloTextViewDelegate {
     }
 
     func textViewTappedDefault() {
-        userDelegate?.userTappedText(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedText(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedText(cell: self)
     }
 }
 
@@ -374,7 +376,8 @@ extension NotificationCell {
     }
 
     func avatarTapped() {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
 }

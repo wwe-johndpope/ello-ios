@@ -44,11 +44,11 @@ protocol SelectedCategoryDelegate: class {
     func categoriesSelectionChanged(selection: [Category])
 }
 
-protocol UserDelegate: class {
+@objc
+protocol UserResponder: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
     func userTappedText(cell: UICollectionViewCell)
-    func userTappedFeaturedCategories(cell: UICollectionViewCell)
     func userTapped(user: User)
 }
 
@@ -626,7 +626,6 @@ final class StreamViewController: BaseElloViewController {
 
         // set delegates
         dataSource.categoryDelegate = self
-        dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.categoryListCellDelegate = self
         dataSource.announcementCellDelegate = self
@@ -924,8 +923,8 @@ extension StreamViewController: CategoryDelegate {
 }
 
 
-// MARK: StreamViewController: UserDelegate
-extension StreamViewController: UserDelegate {
+// MARK: StreamViewController: UserResponder
+extension StreamViewController: UserResponder {
 
     func userTappedText(cell: UICollectionViewCell) {
         guard streamKind.tappingTextOpensDetail,
@@ -960,16 +959,6 @@ extension StreamViewController: UserDelegate {
     func userTappedUser(_ user: User) {
         userTapped(user: user)
     }
-
-    func userTappedFeaturedCategories(cell: UICollectionViewCell) {
-        guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let user = dataSource.userForIndexPath(indexPath)
-        else { return }
-
-        print("\(user.atName) userTappedFeaturedCategories()")
-    }
-
 }
 
 // MARK: StreamViewController: WebLinkDelegate

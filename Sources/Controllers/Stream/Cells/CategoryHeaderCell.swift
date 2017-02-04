@@ -50,7 +50,6 @@ class CategoryHeaderCell: UICollectionViewCell {
     }
 
     weak var webLinkDelegate: WebLinkDelegate?
-    weak var userDelegate: UserDelegate?
 
     let imageView = FLAnimatedImageView()
     let imageOverlay = UIView()
@@ -170,12 +169,13 @@ class CategoryHeaderCell: UICollectionViewCell {
         let config = Config(style: .category)
         self.config = config
         webLinkDelegate = nil
-        userDelegate = nil
     }
 
     func postedByTapped() {
         Tracker.shared.categoryHeaderPostedBy(config.tracking)
-        userDelegate?.userTappedAuthor(cell: self)
+
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
     func callToActionTapped() {
