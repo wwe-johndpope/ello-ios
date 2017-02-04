@@ -348,10 +348,11 @@ class PostbarController: UIResponder, PostbarResponder {
 
         let postId = comment.loadedFromPostId
         PostService().loadReplyAll(postId, success: {[weak self] usernames in
+            guard let `self` = self else { return }
             let usernamesText = usernames.reduce("") { memo, username in
                 return memo + "@\(username) "
             }
-            let responder = self?.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+            let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
             responder?.createComment(postId, text: usernamesText, fromController: presentingController)
         }, failure: {
             presentingController.createCommentTapped(postId)
