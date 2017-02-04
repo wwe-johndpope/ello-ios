@@ -32,11 +32,13 @@ func showController(_ viewController: UIViewController, window: UIWindow = UIWin
     prevController = parentController
 }
 
-func showView(_ view: UIView) {
+func showView(_ view: UIView, container: UIView = UIView()) {
     let controller = UIViewController()
     controller.view.frame.size = view.frame.size
     view.frame.origin = .zero
-    controller.view.addSubview(view)
+    container.addSubview(view)
+    controller.view.addSubview(container)
+
     showController(controller)
 }
 
