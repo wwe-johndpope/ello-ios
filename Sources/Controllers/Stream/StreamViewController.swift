@@ -36,11 +36,13 @@ protocol StreamViewDelegate: class {
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
 }
 
-protocol CategoryDelegate: class {
+@objc
+protocol CategoryResponder: class {
     func categoryCellTapped(cell: UICollectionViewCell)
 }
 
-protocol SelectedCategoryDelegate: class {
+@objc
+protocol SelectedCategoryResponder: class {
     func categoriesSelectionChanged(selection: [Category])
 }
 
@@ -182,7 +184,6 @@ final class StreamViewController: BaseElloViewController {
     weak var postTappedDelegate: PostTappedDelegate?
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
-    weak var selectedCategoryDelegate: SelectedCategoryDelegate?
     var searchStreamDelegate: SearchStreamDelegate? {
         get { return dataSource.searchStreamDelegate }
         set { dataSource.searchStreamDelegate = newValue }
@@ -626,7 +627,6 @@ final class StreamViewController: BaseElloViewController {
         self.relationshipController = relationshipController
 
         // set delegates
-        dataSource.categoryDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.categoryListCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
@@ -908,8 +908,8 @@ extension StreamViewController {
     }
 }
 
-// MARK: StreamViewController: CategoryDelegate
-extension StreamViewController: CategoryDelegate {
+// MARK: StreamViewController: CategoryResponder
+extension StreamViewController: CategoryResponder {
 
     func categoryCellTapped(cell: UICollectionViewCell) {
         guard
@@ -1001,15 +1001,17 @@ extension StreamViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let tappedCell = collectionView.cellForItem(at: indexPath)
-
-        if let item = dataSource.visibleStreamCellItem(at: indexPath),
+        guard
+            let tappedCell = collectionView.cellForItem(at: indexPath),
+            let item = dataSource.visibleStreamCellItem(at: indexPath),
             let paths = collectionView.indexPathsForSelectedItems,
             tappedCell is CategoryCardCell && item.type == .selectableCategoryCard
-        {
-            let selection = paths.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
-            selectedCategoryDelegate?.categoriesSelectionChanged(selection: selection)
-        }
+        else { return }
+
+        let selection = paths.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
+
+        let responder = target(forAction: #selector(SelectedCategoryResponder.categoriesSelectionChanged(selection:)), withSender: self) as? SelectedCategoryResponder
+        responder?.categoriesSelectionChanged(selection: selection)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -1062,7 +1064,9 @@ extension StreamViewController: UICollectionViewDelegate {
                 keepSelected = true
                 let paths = collectionView.indexPathsForSelectedItems
                 let selection = paths?.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
-                selectedCategoryDelegate?.categoriesSelectionChanged(selection: selection ?? [Category]())
+
+                let responder = target(forAction: #selector(SelectedCategoryResponder.categoriesSelectionChanged(selection:)), withSender: self) as? SelectedCategoryResponder
+                responder?.categoriesSelectionChanged(selection: selection ?? [Category]())
             }
             else {
                 showCategoryViewController(slug: category.slug, name: category.name)
