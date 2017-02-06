@@ -301,7 +301,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 it("should not show ellipses button in navigation") {
                     let elloNavigationItem = subject.elloNavigationItem
                     let leftButtons = elloNavigationItem.leftBarButtonItems
-                    expect(leftButtons.count) == 1
+                    expect(leftButtons?.count) == 3
                 }
             }
         }
