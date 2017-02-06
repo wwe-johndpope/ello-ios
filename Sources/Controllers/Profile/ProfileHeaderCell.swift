@@ -47,8 +47,6 @@ class ProfileHeaderCell: UICollectionViewCell {
         get { return bioView.webLinkDelegate }
     }
 
-    weak var userDelegate: UserDelegate?
-
     var user: User?
     var currentUser: User?
 

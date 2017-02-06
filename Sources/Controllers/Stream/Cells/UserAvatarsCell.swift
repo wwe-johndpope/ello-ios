@@ -24,8 +24,7 @@ class UserAvatarsCell: UICollectionViewCell {
             }
         }
     }
-    weak var userDelegate: UserDelegate?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         style()
@@ -79,6 +78,7 @@ class UserAvatarsCell: UICollectionViewCell {
         else { return }
 
         let user = users[index]
-        userDelegate?.userTapped(user: user)
+        let responder = target(forAction: #selector(UserResponder.userTapped(user:)), withSender: self) as? UserResponder
+        responder?.userTapped(user: user)
     }
 }

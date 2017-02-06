@@ -13,7 +13,6 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     weak var webLinkDelegate: WebLinkDelegate?
-    weak var userDelegate: UserDelegate?
     var webContentReady: WebContentReady?
 
     override func awakeFromNib() {
@@ -66,7 +65,8 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default"
         {
-            userDelegate?.userTappedText(cell: self)
+            let responder = target(forAction: #selector(UserResponder.userTappedText(cell:)), withSender: self) as? UserResponder
+            responder?.userTappedText(cell: self)
             return false
         }
         else {

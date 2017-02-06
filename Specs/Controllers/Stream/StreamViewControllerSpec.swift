@@ -215,7 +215,7 @@ class StreamViewControllerSpec: QuickSpec {
                 }
             }
 
-            context("UserDelegate") {
+            context("UserResponder") {
 
                 beforeEach {
                     let service = StreamService()
@@ -226,8 +226,8 @@ class StreamViewControllerSpec: QuickSpec {
                     }, failure: { _ in })
                 }
 
-                it("is a UserDelegate") {
-                    expect(controller as UserDelegate).notTo(beNil())
+                it("is a UserResponder") {
+                    expect(controller as UserResponder).notTo(beNil())
                 }
 
                 describe("userTappedAuthor(_:)") {
