@@ -15,7 +15,7 @@ class CategoryListCellPresenterSpec: QuickSpec {
                 let cell: CategoryListCell = CategoryListCell()
                 let item: StreamCellItem = StreamCellItem(jsonable: categoryList, type: .categoryList)
 
-                CategoryListCellPresenter.configure(cell, streamCellItem: item, streamKind: .categoryPosts(slug: "art"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                CategoryListCellPresenter.configure(cell, streamCellItem: item, streamKind: .category(slug: "art"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                 expect(cell.categoriesInfo.count) == categoryList.categories.count
 

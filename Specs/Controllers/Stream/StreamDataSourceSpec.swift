@@ -656,7 +656,7 @@ class StreamDataSourceSpec: QuickSpec {
                 let two = IndexPath(item: 2, section: 0)
                 let tests: [(IndexPath?, StreamKind)] = [
                     (nil, .discover(type: .featured)),
-                    (nil, .categoryPosts(slug: "art")),
+                    (nil, .category(slug: "art")),
                     (zero, .following),
                     (nil, .starred),
                     (nil, .simpleStream(endpoint: ElloAPI.loves(userId: "12345"), title: "NA")),
@@ -689,7 +689,7 @@ class StreamDataSourceSpec: QuickSpec {
                 let one = IndexPath(item: 1, section: 0)
                 let tests: [(IndexPath?, StreamKind)] = [
                     (nil, .discover(type: .featured)),
-                    (nil, .categoryPosts(slug: "art")),
+                    (nil, .category(slug: "art")),
                     (nil, .following),
                     (nil, .starred),
                     (one, .simpleStream(endpoint: ElloAPI.loves(userId: "12345"), title: "NA")),
