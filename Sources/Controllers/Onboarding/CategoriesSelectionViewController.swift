@@ -28,7 +28,6 @@ class CategoriesSelectionViewController: StreamableViewController {
         super.viewDidLoad()
 
         streamViewController.pullToRefreshEnabled = false
-        streamViewController.selectedCategoryDelegate = self
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }
@@ -88,7 +87,7 @@ extension CategoriesSelectionViewController: OnboardingStepController {
     }
 }
 
-extension CategoriesSelectionViewController: SelectedCategoryDelegate {
+extension CategoriesSelectionViewController: SelectedCategoryResponder {
     func categoriesSelectionChanged(selection: [Category]) {
         let selectionCount = selection.count
         let prompt: String?

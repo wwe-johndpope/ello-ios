@@ -67,7 +67,6 @@ class StreamHeaderCell: UICollectionViewCell {
         set { relationshipControl.relationshipDelegate = newValue }
     }
 
-    weak var categoryDelegate: CategoryDelegate?
 
     var avatarHeight: CGFloat = 60.0 {
         didSet { setNeedsDisplay() }
@@ -427,7 +426,8 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func categoryTapped(_ sender: UIButton) {
-        categoryDelegate?.categoryCellTapped(cell: self)
+        let responder = target(forAction: #selector(CategoryResponder.categoryCellTapped(cell:)), withSender: self) as? CategoryResponder
+        responder?.categoryCellTapped(cell: self)
     }
 
     @IBAction func reposterTapped(_ sender: UIButton) {
