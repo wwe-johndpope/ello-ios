@@ -63,7 +63,8 @@ protocol GridListToggleDelegate: class {
     func gridListToggled(_ sender: UIButton)
 }
 
-protocol CategoryListCellDelegate: class {
+@objc
+protocol CategoryListCellResponder: class {
     func categoryListCellTapped(slug: String, name: String)
 }
 
@@ -628,7 +629,6 @@ final class StreamViewController: BaseElloViewController {
 
         // set delegates
         dataSource.webLinkDelegate = self
-        dataSource.categoryListCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
@@ -736,8 +736,8 @@ extension StreamViewController: GridListToggleDelegate {
     }
 }
 
-// MARK: StreamViewController: CategoryListCellDelegate
-extension StreamViewController: CategoryListCellDelegate {
+// MARK: StreamViewController: CategoryListCellResponder
+extension StreamViewController: CategoryListCellResponder {
 
     func categoryListCellTapped(slug: String, name: String) {
         showCategoryViewController(slug: slug, name: name)

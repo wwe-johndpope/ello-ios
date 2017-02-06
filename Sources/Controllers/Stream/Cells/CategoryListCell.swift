@@ -6,7 +6,6 @@ import SnapKit
 
 class CategoryListCell: UICollectionViewCell {
     static let reuseIdentifier = "CategoryListCell"
-    weak var delegate: CategoryListCellDelegate?
 
     struct Size {
         static let height: CGFloat = 45
@@ -66,7 +65,9 @@ class CategoryListCell: UICollectionViewCell {
     @objc
     func categoryButtonTapped(_ button: UIButton) {
         guard let categoryInfo = buttonCategoryLookup[button] else { return }
-        delegate?.categoryListCellTapped(slug: categoryInfo.slug, name: categoryInfo.title)
+
+        let responder = target(forAction: #selector(CategoryListCellResponder.categoryListCellTapped(slug:name:)), withSender: self) as? CategoryListCellResponder
+        responder?.categoryListCellTapped(slug: categoryInfo.slug, name: categoryInfo.title)
     }
 
     fileprivate func updateCategoryViews() {

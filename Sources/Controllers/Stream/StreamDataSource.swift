@@ -41,7 +41,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak var webLinkDelegate: WebLinkDelegate?
     weak var relationshipDelegate: RelationshipDelegate?
     weak var searchStreamDelegate: SearchStreamDelegate?
-    weak var categoryListCellDelegate: CategoryListCellDelegate?
     var inviteCache = InviteCache()
 
     init(
@@ -330,8 +329,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .categoryPromotionalHeader,
              .pagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
-        case .categoryList:
-            (cell as! CategoryListCell).delegate = categoryListCellDelegate
         case .header, .commentHeader:
             (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
         case .inviteFriends, .onboardingInviteFriends:

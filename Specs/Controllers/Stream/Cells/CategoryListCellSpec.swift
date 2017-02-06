@@ -9,7 +9,8 @@ import Nimble_Snapshots
 
 
 class CategoryListCellSpec: QuickSpec {
-    class Delegate: CategoryListCellDelegate {
+
+    class FakeCategoryListCellResponder: UIView, CategoryListCellResponder {
         var categoryTapped = false
         var slug: String?
         var name: String?
@@ -24,14 +25,13 @@ class CategoryListCellSpec: QuickSpec {
     override func spec() {
         describe("CategoryListCell") {
             var subject: CategoryListCell!
-            var delegate: Delegate!
+            var responder: FakeCategoryListCellResponder!
 
             beforeEach {
-                delegate = Delegate()
+                responder = FakeCategoryListCellResponder()
                 let frame = CGRect(origin: .zero, size: CGSize(width: 320, height: CategoryListCell.Size.height))
                 subject = CategoryListCell(frame: frame)
-                subject.delegate = delegate
-                showView(subject)
+                showView(subject, container: responder)
             }
 
             describe("actions") {
@@ -45,8 +45,8 @@ class CategoryListCellSpec: QuickSpec {
                         (view as? UIButton)?.currentAttributedTitle?.string == "Featured"
                     }
                     categoryButton?.sendActions(for: .touchUpInside)
-                    expect(delegate.categoryTapped) == true
-                    expect(delegate.slug) == "featured"
+                    expect(responder.categoryTapped) == true
+                    expect(responder.slug) == "featured"
                 }
             }
 
