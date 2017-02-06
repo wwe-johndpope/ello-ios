@@ -44,7 +44,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     weak var relationshipDelegate: RelationshipDelegate?
     weak var searchStreamDelegate: SearchStreamDelegate?
     weak var categoryListCellDelegate: CategoryListCellDelegate?
-    weak var announcementCellDelegate: AnnouncementCellDelegate?
     var inviteCache = InviteCache()
 
     init(
@@ -330,8 +329,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: streamCellItem.type.name, for: indexPath)
 
         switch streamCellItem.type {
-        case .announcement:
-            (cell as! AnnouncementCell).delegate = announcementCellDelegate
         case .categoryPromotionalHeader,
              .pagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate

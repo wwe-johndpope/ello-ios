@@ -115,7 +115,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
         super.setupStreamController()
 
         streamViewController.streamKind = categoryStreamKind
-        streamViewController.announcementDelegate = self
         streamViewController.initialLoadClosure = { [weak self] in self?.initialLoad() }
         streamViewController.reloadClosure = { [weak self] in self?.reload(showSpinner: false) }
     }
@@ -266,8 +265,8 @@ extension NotificationsViewController: StreamDestination {
     }
 }
 
-// MARK: NotificationsViewController: AnnouncementDelegate
-extension NotificationsViewController: AnnouncementDelegate {
+// MARK: NotificationsViewController: AnnouncementResponder
+extension NotificationsViewController: AnnouncementResponder {
     func markAnnouncementAsRead(announcement: Announcement) {
         Tracker.shared.announcementDismissed(announcement)
         generator?.markAnnouncementAsRead(announcement)

@@ -69,11 +69,13 @@ protocol SearchStreamDelegate: class {
     func searchFieldChanged(text: String)
 }
 
-protocol AnnouncementCellDelegate: class {
+@objc
+protocol AnnouncementCellResponder: class {
     func markAnnouncementAsRead(cell: UICollectionViewCell)
 }
 
-protocol AnnouncementDelegate: class {
+@objc
+protocol AnnouncementResponder: class {
     func markAnnouncementAsRead(announcement: Announcement)
 }
 
@@ -181,7 +183,6 @@ final class StreamViewController: BaseElloViewController {
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
     weak var selectedCategoryDelegate: SelectedCategoryDelegate?
-    weak var announcementDelegate: AnnouncementDelegate?
     var searchStreamDelegate: SearchStreamDelegate? {
         get { return dataSource.searchStreamDelegate }
         set { dataSource.searchStreamDelegate = newValue }
@@ -629,7 +630,6 @@ final class StreamViewController: BaseElloViewController {
         dataSource.userDelegate = self
         dataSource.webLinkDelegate = self
         dataSource.categoryListCellDelegate = self
-        dataSource.announcementCellDelegate = self
         dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
@@ -989,15 +989,16 @@ extension StreamViewController: WebLinkDelegate {
     }
 }
 
-// MARK: StreamViewController: AnnouncementCellDelegate
-extension StreamViewController: AnnouncementCellDelegate {
+// MARK: StreamViewController: AnnouncementCellResponder
+extension StreamViewController: AnnouncementCellResponder {
     func markAnnouncementAsRead(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement
         else { return }
 
-        announcementDelegate?.markAnnouncementAsRead(announcement: announcement)
+        let responder = target(forAction: #selector(AnnouncementResponder.markAnnouncementAsRead(announcement:) ), withSender: self) as? AnnouncementResponder
+        responder?.markAnnouncementAsRead(announcement: announcement)
     }
 }
 
