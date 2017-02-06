@@ -206,26 +206,26 @@ final class ProfileViewController: StreamableViewController {
             elloNavigationItem.leftBarButtonItems = leftBarButtonItems
         }
 
-        guard !isCurrentUser else {
+        if isCurrentUser {
             elloNavigationItem.rightBarButtonItems = [shareItem, gridListItem]
-            return
         }
-
-        guard
+        else if
             let user = user,
-            let currentUser = currentUser, user.id != currentUser.id else {
+            let currentUser = currentUser,
+            user.id != currentUser.id
+        {
+            var rightBarButtonItems: [UIBarButtonItem] = []
+            if user.hasSharingEnabled {
+                rightBarButtonItems.append(shareItem)
+            }
+            rightBarButtonItems.append(gridListItem)
+
+            if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
+                elloNavigationItem.rightBarButtonItems = rightBarButtonItems
+            }
+        }
+        else {
             elloNavigationItem.rightBarButtonItems = []
-            return
-        }
-
-        var rightBarButtonItems: [UIBarButtonItem] = []
-        if user.hasSharingEnabled {
-            rightBarButtonItems.append(shareItem)
-        }
-        rightBarButtonItems.append(gridListItem)
-
-        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
         }
     }
 
