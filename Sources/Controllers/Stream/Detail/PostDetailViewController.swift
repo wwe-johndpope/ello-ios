@@ -130,8 +130,11 @@ final class PostDetailViewController: StreamableViewController {
         else {
             rightBarButtonItems = [
                 UIBarButtonItem(image: .search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
-                UIBarButtonItem(image: .dots, target: self, action: #selector(PostDetailViewController.flagPost)),
             ]
+
+            if currentUser != nil {
+                rightBarButtonItems.append(UIBarButtonItem(image: .dots, target: self, action: #selector(PostDetailViewController.flagPost)))
+            }
         }
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {

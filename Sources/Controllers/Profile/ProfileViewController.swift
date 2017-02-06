@@ -199,7 +199,9 @@ final class ProfileViewController: StreamableViewController {
             leftBarButtonItems.append(backItem)
             if !isCurrentUser {
                 leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
-                leftBarButtonItems.append(moreActionsItem)
+                if currentUser != nil {
+                    leftBarButtonItems.append(moreActionsItem)
+                }
             }
             elloNavigationItem.leftBarButtonItems = leftBarButtonItems
         }

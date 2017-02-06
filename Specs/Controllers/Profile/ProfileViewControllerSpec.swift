@@ -287,25 +287,22 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
             }
 
-            xcontext("snapshots") {
+            context("logged out view") {
+                var user: User!
                 var subject: ProfileViewController!
+
                 beforeEach {
                     subject = ProfileViewController(userParam: "42")
-                    subject.currentUser = currentUser
-                }
-                validateAllSnapshots { return subject }
-            }
-
-            xcontext("snapshots - currentUser") {
-                let user: User = stub([:])
-                var subject: ProfileViewController!
-                beforeEach {
-                    subject = ProfileViewController(user: user)
+                    subject.currentUser = nil
                     showController(subject)
-                    subject.currentUser = user
-                    subject.updateUser(user)
+                    user = subject.user!
                 }
-                validateAllSnapshots { return subject }
+
+                it("should not show ellipses button in navigation") {
+                    let elloNavigationItem = subject.elloNavigationItem
+                    let leftButtons = elloNavigationItem.leftBarButtonItems
+                    expect(leftButtons.count) == 1
+                }
             }
         }
     }
