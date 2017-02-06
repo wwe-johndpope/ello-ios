@@ -615,6 +615,10 @@ final class StreamViewController: BaseElloViewController {
     }
 
     var nextAfterPostbar: UIResponder? {
+        return relationshipController
+    }
+
+    var nextAfterRelationshipController: UIResponder? {
         return super.next
     }
 

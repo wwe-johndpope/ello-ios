@@ -5,14 +5,20 @@
 typealias RelationshipChangeClosure = (_ relationshipPriority: RelationshipPriority) -> Void
 typealias RelationshipChangeCompletion = (_ status: RelationshipRequestStatus, _ relationship: Relationship?, _ isFinalValue: Bool) -> Void
 
+class RelationshipRequestStatusWrapper: NSObject {
+    let status: RelationshipRequestStatus
+    init(status: RelationshipRequestStatus) { self.status = status }
+}
+
 enum RelationshipRequestStatus: String {
     case success = "success"
     case failure = "failure"
 }
 
-protocol RelationshipControllerDelegate: class {
-    func shouldSubmitRelationship(_ userId: String, relationshipPriority: RelationshipPriority) -> Bool
-    func relationshipChanged(_ userId: String, status: RelationshipRequestStatus, relationship: Relationship?)
+@objc
+protocol RelationshipControllerResponder: class {
+    func shouldSubmitRelationship(_ userId: String, relationshipPriority: RelationshipPriorityWrapper) -> Bool
+    func relationshipChanged(_ userId: String, status: RelationshipRequestStatusWrapper, relationship: Relationship?)
 }
 
 protocol RelationshipDelegate: class {
@@ -21,13 +27,20 @@ protocol RelationshipDelegate: class {
     func updateRelationship(_ currentUserId: String, userId: String, prev prevRelationshipPriority: RelationshipPriority, relationshipPriority: RelationshipPriority, complete: @escaping RelationshipChangeCompletion)
 }
 
-class RelationshipController {
+class RelationshipController: UIResponder {
     var currentUser: User?
-    weak var delegate: RelationshipControllerDelegate?
-    weak var presentingController: UIViewController?
+    weak var presentingController: StreamViewController?
 
-    required init(presentingController: UIViewController) {
+    required init(presentingController: StreamViewController) {
         self.presentingController = presentingController
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override var next: UIResponder? {
+        return presentingController?.nextAfterRelationshipController
     }
 
 }
@@ -36,7 +49,8 @@ class RelationshipController {
 extension RelationshipController: RelationshipDelegate {
     func relationshipTapped(_ userId: String, prev prevRelationshipPriority: RelationshipPriority, relationshipPriority: RelationshipPriority, complete: @escaping RelationshipChangeCompletion) {
         Tracker.shared.relationshipButtonTapped(relationshipPriority, userId: userId)
-        if let shouldSubmit = delegate?.shouldSubmitRelationship(userId, relationshipPriority: relationshipPriority), !shouldSubmit {
+        let responder = self.target(forAction: #selector(RelationshipControllerResponder.shouldSubmitRelationship(_:relationshipPriority:)), withSender: self) as? RelationshipControllerResponder
+        if let shouldSubmit = responder?.shouldSubmitRelationship(userId, relationshipPriority: RelationshipPriorityWrapper(priority: relationshipPriority)), !shouldSubmit {
             let relationship = Relationship(id: UUID().uuidString, createdAt: Date(), ownerId: "", subjectId: userId)
             complete(.success, relationship, true)
             return
@@ -57,11 +71,13 @@ extension RelationshipController: RelationshipDelegate {
     func updateRelationship(_ currentUserId: String, userId: String, prev prevPriority: RelationshipPriority, relationshipPriority newRelationshipPriority: RelationshipPriority, complete: @escaping RelationshipChangeCompletion) {
         var prevRelationshipPriority = prevPriority
         RelationshipService().updateRelationship(currentUserId: currentUserId, userId: userId, relationshipPriority: newRelationshipPriority,
-            success: { (data, responseConfig) in
+            success: {[weak self] (data, responseConfig) in
+                guard let `self` = self else { return }
                 if let relationship = data as? Relationship {
                     complete(.success, relationship, responseConfig.isFinalValue)
 
-                    self.delegate?.relationshipChanged(userId, status: .success, relationship: relationship)
+                    let responder = self.target(forAction: #selector(RelationshipControllerResponder.relationshipChanged(_:status:relationship:)), withSender: self) as? RelationshipControllerResponder
+                    responder?.relationshipChanged(userId, status: RelationshipRequestStatusWrapper(status: .success), relationship: relationship)
                     if responseConfig.isFinalValue {
                         if let owner = relationship.owner {
                             postNotification(RelationshipChangedNotification, value: owner)
@@ -73,8 +89,9 @@ extension RelationshipController: RelationshipDelegate {
                 }
                 else {
                     complete(.success, nil, responseConfig.isFinalValue)
+                    let responder = self.target(forAction: #selector(RelationshipControllerResponder.relationshipChanged(_:status:relationship:)), withSender: self) as? RelationshipControllerResponder
+                    responder?.relationshipChanged(userId, status: RelationshipRequestStatusWrapper(status: .success), relationship: nil)
 
-                    self.delegate?.relationshipChanged(userId, status: .success, relationship: nil)
                 }
 
                 if prevRelationshipPriority != newRelationshipPriority {
@@ -95,10 +112,11 @@ extension RelationshipController: RelationshipDelegate {
                     prevRelationshipPriority = newRelationshipPriority
                 }
             },
-            failure: { (error, statusCode) in
+            failure: {[weak self] (error, statusCode) in
+                guard let `self` = self else { return }
                 complete(.failure, nil, true)
-
-                self.delegate?.relationshipChanged(userId, status: .failure, relationship: nil)
+                let responder = self.target(forAction: #selector(RelationshipControllerResponder.relationshipChanged(_:status:relationship:)), withSender: self) as? RelationshipControllerResponder
+                responder?.relationshipChanged(userId, status: RelationshipRequestStatusWrapper(status: .failure), relationship: nil)
             })
     }
 }
