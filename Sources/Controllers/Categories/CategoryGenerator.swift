@@ -172,6 +172,9 @@ private extension CategoryGenerator {
                     self.pagePromotional = pagePromotional
                     self.destination?.setPrimary(jsonable: pagePromotional)
                 }
+                else {
+                    self.destination?.primaryJSONAbleNotFound()
+                }
                 self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
                 doneOperation.run()
             }
