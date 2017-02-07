@@ -261,8 +261,7 @@ class PostbarController: UIResponder, PostbarResponder {
         presentingController?.present(alertController, animated: true, completion: .none)
     }
 
-    fileprivate func createRepost(_ post: Post, alertController: AlertViewController)
-    {
+    fileprivate func createRepost(_ post: Post, alertController: AlertViewController) {
         alertController.resetActions()
         alertController.dismissable = false
 
