@@ -64,8 +64,8 @@ extension SearchStreamCell: UITextFieldDelegate {
             clearSearch()
         }
         else {
-            debounced { [unowned self] in
-                self.searchForText()
+            debounced { [weak self] in
+                self?.searchForText()
             }
         }
     }
