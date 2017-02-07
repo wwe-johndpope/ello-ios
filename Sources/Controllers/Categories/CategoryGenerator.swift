@@ -171,7 +171,7 @@ private extension CategoryGenerator {
         PagePromotionalService().loadPagePromotionals()
             .onSuccess { [weak self] promotionals in
                 guard
-                    let `self` = self
+                    let `self` = self,
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
                 else { return }
 
@@ -222,7 +222,7 @@ private extension CategoryGenerator {
             streamKind: streamKind,
             success: { [weak self] (jsonables, responseConfig) in
                 guard
-                    let `self` = self
+                    let `self` = self,
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
                 else { return }
 
