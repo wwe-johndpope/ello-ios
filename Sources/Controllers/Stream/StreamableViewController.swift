@@ -280,6 +280,11 @@ extension StreamableViewController: StreamViewDelegate {
 // MARK: InviteResponder
 extension StreamableViewController: InviteResponder {
     func onInviteFriends() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
+
         Tracker.shared.inviteFriendsTapped()
         AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
             switch result {

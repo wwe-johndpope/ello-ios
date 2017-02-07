@@ -35,6 +35,12 @@ class RelationshipController {
 // MARK: RelationshipController: RelationshipDelegate
 extension RelationshipController: RelationshipDelegate {
     func relationshipTapped(_ userId: String, prev prevRelationshipPriority: RelationshipPriority, relationshipPriority: RelationshipPriority, complete: @escaping RelationshipChangeCompletion) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            complete(.success, .none, true)
+            return
+        }
+
         Tracker.shared.relationshipButtonTapped(relationshipPriority, userId: userId)
         if let shouldSubmit = delegate?.shouldSubmitRelationship(userId, relationshipPriority: relationshipPriority), !shouldSubmit {
             let relationship = Relationship(id: UUID().uuidString, createdAt: Date(), ownerId: "", subjectId: userId)

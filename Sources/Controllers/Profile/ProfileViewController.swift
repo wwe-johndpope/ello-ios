@@ -228,6 +228,10 @@ final class ProfileViewController: StreamableViewController {
     }
 
     func moreButtonTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         let userId = user.id
@@ -267,12 +271,20 @@ final class ProfileViewController: StreamableViewController {
 
 extension ProfileViewController: ProfileScreenDelegate {
     func mentionTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         createPost(text: "\(user.atName) ", fromController: self)
     }
 
     func hireTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         Tracker.shared.tappedHire(user)
@@ -281,6 +293,10 @@ extension ProfileViewController: ProfileScreenDelegate {
     }
 
     func editTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         onEditProfile()
     }
 
@@ -289,6 +305,10 @@ extension ProfileViewController: ProfileScreenDelegate {
     }
 
     func collaborateTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         Tracker.shared.tappedCollaborate(user)
@@ -439,6 +459,11 @@ extension ProfileViewController: ProfileHeaderResponder {
 extension ProfileViewController: EditProfileResponder {
 
     func onEditProfile() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
+
         guard let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController else { return }
         settings.currentUser = currentUser
         navigationController?.pushViewController(settings, animated: true)
