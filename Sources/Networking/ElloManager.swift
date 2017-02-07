@@ -23,8 +23,8 @@ struct ElloManager {
     static var manager: SessionManager {
         let config = URLSessionConfiguration.default
         config.sharedContainerIdentifier = ElloGroupName
-        config.timeoutIntervalForRequest = 10
-        config.timeoutIntervalForResource = 10
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 30
         return SessionManager(
             configuration: config,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: ElloManager.serverTrustPolicies)
