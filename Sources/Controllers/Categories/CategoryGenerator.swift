@@ -141,13 +141,18 @@ private extension CategoryGenerator {
     }
 
     func loadCategory(_ doneOperation: AsyncOperation, reload: Bool = false) {
-        guard !doneOperation.isFinished || reload else { return }
-        guard !usesPagePromo() else { return }
+        guard
+            !doneOperation.isFinished || reload,
+            !usesPagePromo()
+        else { return }
 
         CategoryService().loadCategory(slug)
             .onSuccess { [weak self] category in
-                guard let `self` = self else { return }
-                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                guard
+                    let `self` = self,
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
+                else { return }
+
                 self.category = category
                 self.destination?.setPrimary(jsonable: category)
                 self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
@@ -165,8 +170,10 @@ private extension CategoryGenerator {
 
         PagePromotionalService().loadPagePromotionals()
             .onSuccess { [weak self] promotionals in
-                guard let `self` = self else { return }
-                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                guard
+                    let `self` = self
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
+                else { return }
 
                 if let pagePromotional = promotionals?.randomItem() {
                     self.pagePromotional = pagePromotional
@@ -214,8 +221,10 @@ private extension CategoryGenerator {
             endpoint: endpoint,
             streamKind: streamKind,
             success: { [weak self] (jsonables, responseConfig) in
-                guard let `self` = self else { return }
-                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                guard
+                    let `self` = self
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
+                else { return }
 
                 self.destination?.setPagingConfig(responseConfig: responseConfig)
                 self.posts = jsonables as? [Post]

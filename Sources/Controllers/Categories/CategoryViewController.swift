@@ -230,7 +230,8 @@ extension CategoryViewController: CategoryScreenDelegate {
 
     func categorySelected(index: Int) {
         guard
-            let category = allCategories.safeValue(index), category.id != self.category?.id
+            let category = allCategories.safeValue(index),
+            category.id != self.category?.id
         else { return }
         screen.selectCategory(index: index)
         select(category: category)
