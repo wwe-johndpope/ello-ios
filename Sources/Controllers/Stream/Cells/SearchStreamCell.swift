@@ -8,7 +8,7 @@ class SearchStreamCell: UICollectionViewCell {
         static let insets: CGFloat = 10
     }
 
-    fileprivate var debounced: ThrottledBlock = debounce(0.8)
+    fileprivate var debounced = debounce(0.8)
     fileprivate let searchField = SearchTextField()
     weak var delegate: SearchStreamDelegate?
 
