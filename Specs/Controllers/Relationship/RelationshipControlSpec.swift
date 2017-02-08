@@ -27,7 +27,6 @@ class RelationshipControlSpec: QuickSpec {
                 subject = RelationshipControl()
                 presentingController = StreamableViewController()
                 presentingController.viewContainer = viewContainer
-                presentingController.viewDidLoad()
                 presentingController.view.addSubview(subject) // <-- super ghetto
                 relationshipController = presentingController.relationshipController
                 showController(presentingController)
