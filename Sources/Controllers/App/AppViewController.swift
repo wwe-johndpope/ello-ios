@@ -14,6 +14,10 @@ struct StatusBarNotifications {
     static let statusBarShouldHide = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarShouldHide")
 }
 
+struct LoggedOutNotifications {
+    static let userActionAttempted = TypedNotification<()>(name: "co.ello.LoggedOutNotifications.userActionAttempted")
+}
+
 
 @objc
 protocol HasAppController {

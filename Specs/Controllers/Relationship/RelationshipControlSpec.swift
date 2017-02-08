@@ -65,6 +65,9 @@ class RelationshipControlSpec: QuickSpec {
             }
 
             describe("button targets") {
+                beforeEach {
+                    relationshipController.currentUser = User.stub([:])
+                }
 
                 context("not muted") {
 
