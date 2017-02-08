@@ -38,7 +38,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     let imageSizeCalculator: StreamImageCellSizeCalculator
 
-    weak var webLinkDelegate: WebLinkDelegate?
     var inviteCache = InviteCache()
 
     init(
@@ -325,17 +324,8 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: streamCellItem.type.name, for: indexPath)
 
         switch streamCellItem.type {
-        case .categoryPromotionalHeader,
-             .pagePromotionalHeader:
-            (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
         case .inviteFriends, .onboardingInviteFriends:
             (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
-        case .notification:
-            (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
-        case .profileHeader:
-            (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
-        case .text:
-            (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
         default:
             break
         }

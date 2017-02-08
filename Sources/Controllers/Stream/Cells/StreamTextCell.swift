@@ -12,7 +12,6 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
 
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    weak var webLinkDelegate: WebLinkDelegate?
     var webContentReady: WebContentReady?
 
     override func awakeFromNib() {
@@ -70,7 +69,7 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
             return false
         }
         else {
-            return ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
+            return ElloWebViewHelper.handle(request: request, origin: self)
         }
     }
 

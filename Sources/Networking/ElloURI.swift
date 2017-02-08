@@ -5,6 +5,11 @@
 import Foundation
 import Keys
 
+class ElloURIWrapper: NSObject {
+    let uri: ElloURI
+    init(uri: ElloURI) { self.uri = uri }
+}
+
 enum ElloURI: String {
     // matching stream or page in app
     case discover = "discover(/featured|/recommended)?/?$"
