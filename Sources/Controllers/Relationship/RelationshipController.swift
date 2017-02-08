@@ -49,7 +49,7 @@ extension RelationshipController: RelationshipResponder {
     {
 		guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: ())
-            complete(.success, .none, true)
+            complete(RelationshipRequestStatusWrapper(status: .success), .none, true)
             return
         }
         Tracker.shared.relationshipButtonTapped(relationshipPriority.priority, userId: userId)
