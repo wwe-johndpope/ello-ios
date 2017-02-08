@@ -47,6 +47,11 @@ extension RelationshipController: RelationshipResponder {
         relationshipPriority: RelationshipPriorityWrapper,
         complete: @escaping RelationshipChangeCompletion)
     {
+		guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            complete(.success, .none, true)
+            return
+        }
         Tracker.shared.relationshipButtonTapped(relationshipPriority.priority, userId: userId)
         let responder = self.target(forAction: #selector(RelationshipControllerResponder.shouldSubmitRelationship(_:relationshipPriority:)), withSender: self) as? RelationshipControllerResponder
         if let shouldSubmit = responder?.shouldSubmitRelationship(userId, relationshipPriority: relationshipPriority), !shouldSubmit {

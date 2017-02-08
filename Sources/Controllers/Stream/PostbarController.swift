@@ -130,6 +130,11 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func deleteCommentButtonTapped(_ indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
+
         let message = InterfaceString.Post.DeleteCommentConfirm
         let alertController = AlertViewController(message: message)
 
@@ -160,6 +165,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func editCommentButtonTapped(_ indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller
@@ -170,6 +179,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let post = self.postForIndexPath(indexPath) else { return }
         cell?.lovesControl.isUserInteractionEnabled = false
 
@@ -224,6 +237,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func repostButtonTapped(_ indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let post = self.postForIndexPath(indexPath) else { return }
 
         Tracker.shared.postReposted(post)
@@ -245,8 +262,7 @@ class PostbarController: UIResponder, PostbarResponder {
         responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
-    fileprivate func createRepost(_ post: Post, alertController: AlertViewController)
-    {
+    fileprivate func createRepost(_ post: Post, alertController: AlertViewController) {
         alertController.resetActions()
         alertController.dismissable = false
 
@@ -312,6 +328,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func flagCommentButtonTapped(_ indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller
@@ -328,6 +348,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func replyToCommentButtonTapped(_ indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller,
@@ -342,6 +366,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func replyToAllButtonTapped(_ indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller
@@ -364,6 +392,10 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard
             let comment = dataSource.commentForIndexPath(indexPath),
             let post = comment.parentPost
@@ -419,7 +451,7 @@ class PostbarController: UIResponder, PostbarResponder {
                 cell.commentsControl.isEnabled = true
 
                 if let controller = self.responderChainable?.controller,
-                    indexPaths.count == 1, jsonables.count == 0
+                    indexPaths.count == 1, jsonables.count == 0, self.currentUser != nil
                 {
                     let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
                     responder?.createComment(post.id, text: nil, fromController: controller)

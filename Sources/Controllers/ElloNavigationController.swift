@@ -143,7 +143,6 @@ extension ElloNavigationController: UIGestureRecognizerDelegate {
 
 }
 
-private let throttledTracker = debounce(0.1)
 extension ElloNavigationController: UINavigationControllerDelegate {
 
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {

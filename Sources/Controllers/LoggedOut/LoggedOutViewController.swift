@@ -23,6 +23,8 @@ class LoggedOutViewController: BaseElloViewController, BottomBarController {
     var mockScreen: LoggedOutScreenProtocol?
     var screen: LoggedOutScreenProtocol { return mockScreen ?? (self.view as! LoggedOutScreenProtocol) }
 
+    fileprivate var userActionAttemptedObserver: NotificationObserver?
+
     func setNavigationBarsVisible(_ visible: Bool, animated: Bool) {
         navigationBarsVisible = visible
     }
@@ -37,6 +39,30 @@ class LoggedOutViewController: BaseElloViewController, BottomBarController {
         screen.delegate = self
         self.view = screen
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNotificationObservers()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeNotificationObservers()
+    }
+}
+
+extension LoggedOutViewController {
+
+    func setupNotificationObservers() {
+        userActionAttemptedObserver = NotificationObserver(notification: LoggedOutNotifications.userActionAttempted) { [weak self] _ in
+            self?.screen.showJoinText()
+        }
+    }
+
+    func removeNotificationObservers() {
+        userActionAttemptedObserver?.removeObserver()
+    }
+
 }
 
 extension LoggedOutViewController: LoggedOutProtocol {
