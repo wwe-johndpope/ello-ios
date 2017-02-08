@@ -10,7 +10,6 @@ class SearchStreamCell: UICollectionViewCell {
 
     fileprivate var debounced = debounce(0.8)
     fileprivate let searchField = SearchTextField()
-    weak var delegate: SearchStreamDelegate?
 
     var placeholder: String? {
         get { return searchField.placeholder }
@@ -88,11 +87,13 @@ extension SearchStreamCell: UITextFieldDelegate {
             text.characters.count > 0
         else { return }
 
-        self.delegate?.searchFieldChanged(text: text)
+        let responder = target(forAction: #selector(SearchStreamResponder.searchFieldChanged(text:)), withSender: self) as? SearchStreamResponder
+        responder?.searchFieldChanged(text: text)
     }
 
     fileprivate func clearSearch() {
-        delegate?.searchFieldChanged(text: "")
+        let responder = target(forAction: #selector(SearchStreamResponder.searchFieldChanged(text:)), withSender: self) as? SearchStreamResponder
+        responder?.searchFieldChanged(text: "")
         debounced {}
     }
 }

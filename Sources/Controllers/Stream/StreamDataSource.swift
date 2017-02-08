@@ -39,7 +39,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     let imageSizeCalculator: StreamImageCellSizeCalculator
 
     weak var webLinkDelegate: WebLinkDelegate?
-    weak var searchStreamDelegate: SearchStreamDelegate?
     var inviteCache = InviteCache()
 
     init(
@@ -335,8 +334,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
         case .profileHeader:
             (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
-        case .search:
-            (cell as! SearchStreamCell).delegate = searchStreamDelegate
         case .text:
             (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
         default:

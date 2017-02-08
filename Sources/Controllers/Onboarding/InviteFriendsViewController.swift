@@ -18,7 +18,6 @@ class InviteFriendsViewController: StreamableViewController {
         streamViewController.pullToRefreshEnabled = false
     }
 
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,7 +31,6 @@ class InviteFriendsViewController: StreamableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        streamViewController.searchStreamDelegate = self
         streamViewController.loadInitialPage()
     }
 
@@ -79,6 +77,7 @@ extension InviteFriendsViewController {
 }
 
 extension InviteFriendsViewController: OnboardingStepController {
+
     func onboardingStepBegin() {
         onboardingViewController?.hasAbortButton = false
         onboardingViewController?.canGoNext = true
@@ -89,7 +88,8 @@ extension InviteFriendsViewController: OnboardingStepController {
     }
 }
 
-extension InviteFriendsViewController: SearchStreamDelegate {
+extension InviteFriendsViewController: SearchStreamResponder {
+
     func searchFieldChanged(text: String) {
         searchString.text = text
         streamViewController.batchUpdateFilter(AddressBookHelpers.searchFilter(text))
