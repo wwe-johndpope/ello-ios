@@ -32,10 +32,6 @@ class RelationshipController: UIResponder {
     var currentUser: User?
     var responderChainable: ResponderChainableController?
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
     override var next: UIResponder? {
         return responderChainable?.next()
     }
