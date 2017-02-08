@@ -146,16 +146,10 @@ class StreamViewControllerSpec: QuickSpec {
 
         context("protocol conformance") {
 
-            var externalWebObserver: NotificationObserver?
+            context("WebLinkResponder") {
 
-            afterEach {
-                externalWebObserver?.removeObserver()
-            }
-
-            context("WebLinkDelegate") {
-
-                it("is a weblinkdelegate") {
-                    expect(controller as WebLinkDelegate).notTo(beNil())
+                it("is a WebLinkResponder") {
+                    expect(controller as WebLinkResponder).notTo(beNil())
                 }
 
                 describe("webLinkTapped(_:data:)") {
@@ -171,7 +165,7 @@ class StreamViewControllerSpec: QuickSpec {
                     }
 
                     it("opens external browser if type .external") {
-                        controller.webLinkTapped(path: "http://www.example.com", type: ElloURI.external, data: "http://www.example.com")
+                        controller.webLinkTapped(path: "http://www.example.com", type: ElloURIWrapper(uri: .external), data: "http://www.example.com")
                         let presented = hasAppVC.appViewController!.presentedViewController
                         expect(presented).notTo(beNil())
                         if let browser = (presented as! UINavigationController).viewControllers.first {

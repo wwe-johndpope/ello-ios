@@ -22,8 +22,6 @@ class ProfileBioView: ProfileBaseView {
         set { grayLine.isHidden = !newValue }
     }
 
-    weak var webLinkDelegate: WebLinkDelegate?
-
     var onHeightMismatch: OnHeightMismatch?
 }
 
@@ -62,7 +60,6 @@ extension ProfileBioView {
     func prepareForReuse() {
         self.bio = ""
         grayLine.isHidden = false
-        webLinkDelegate = nil
     }
 }
 
@@ -83,7 +80,7 @@ extension ProfileBioView: UIWebViewDelegate {
     }
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        return ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
+        return ElloWebViewHelper.handle(request: request, origin: self)
     }
 }
 
