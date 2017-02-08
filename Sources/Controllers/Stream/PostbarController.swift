@@ -419,7 +419,7 @@ class PostbarController: UIResponder, PostbarResponder {
                 cell.commentsControl.isEnabled = true
 
                 if let controller = self.responderChainable?.controller,
-                    indexPaths.count == 1 && jsonables.count == 0
+                    indexPaths.count == 1, jsonables.count == 0
                 {
                     let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
                     responder?.createComment(post.id, text: nil, fromController: controller)
