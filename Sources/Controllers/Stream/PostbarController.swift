@@ -102,7 +102,7 @@ class PostbarController: UIResponder, PostbarResponder {
             streamService.loadMoreCommentsForPost(
                 post.id,
                 streamKind: dataSource.streamKind,
-                success: {[weak self] (comments, responseConfig) in
+                success: { [weak self] (comments, responseConfig) in
                     guard let `self` = self else { return }
                     if let updatedIndexPath = self.dataSource.indexPathForItem(item) {
                         item.state = .expanded
@@ -413,7 +413,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
         self.dataSource.insertUnsizedCellItems(items,
             withWidth: self.collectionView.frame.width,
-            startingIndexPath: commentsStartingIndexPath) {[weak self] (indexPaths) in
+            startingIndexPath: commentsStartingIndexPath) { [weak self] (indexPaths) in
                 guard let `self` = self else { return }
                 self.collectionView.reloadData() // insertItemsAtIndexPaths(indexPaths)
                 cell.commentsControl.isEnabled = true

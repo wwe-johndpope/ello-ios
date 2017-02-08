@@ -78,7 +78,7 @@ extension RelationshipController: RelationshipResponder {
             currentUserId: currentUserId,
             userId: userId,
             relationshipPriority: newRelationshipPriority.priority,
-            success: {[weak self] (data, responseConfig) in
+            success: { [weak self] (data, responseConfig) in
                 guard let `self` = self else { return }
                 if let relationship = data as? Relationship {
                     complete(RelationshipRequestStatusWrapper(status: .success), relationship, responseConfig.isFinalValue)
@@ -119,7 +119,7 @@ extension RelationshipController: RelationshipResponder {
                     prevRelationshipPriority = newRelationshipPriority
                 }
             },
-            failure: {[weak self] (error, statusCode) in
+            failure: { [weak self] (error, statusCode) in
                 guard let `self` = self else { return }
                 complete(RelationshipRequestStatusWrapper(status: .failure), nil, true)
                 let responder = self.target(forAction: #selector(RelationshipControllerResponder.relationshipChanged(_:status:relationship:)), withSender: self) as? RelationshipControllerResponder
