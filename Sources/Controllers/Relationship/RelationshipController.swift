@@ -41,7 +41,12 @@ class RelationshipController: UIResponder {
 // MARK: RelationshipController: RelationshipResponder
 extension RelationshipController: RelationshipResponder {
 
-    func relationshipTapped(_ userId: String, prev prevRelationshipPriority: RelationshipPriorityWrapper, relationshipPriority: RelationshipPriorityWrapper, complete: @escaping RelationshipChangeCompletion) {
+    func relationshipTapped(
+        _ userId: String,
+        prev prevRelationshipPriority: RelationshipPriorityWrapper,
+        relationshipPriority: RelationshipPriorityWrapper,
+        complete: @escaping RelationshipChangeCompletion)
+    {
         Tracker.shared.relationshipButtonTapped(relationshipPriority.priority, userId: userId)
         let responder = self.target(forAction: #selector(RelationshipControllerResponder.shouldSubmitRelationship(_:relationshipPriority:)), withSender: self) as? RelationshipControllerResponder
         if let shouldSubmit = responder?.shouldSubmitRelationship(userId, relationshipPriority: relationshipPriority), !shouldSubmit {
