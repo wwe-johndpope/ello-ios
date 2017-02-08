@@ -155,8 +155,8 @@ class PostbarController: UIResponder, PostbarResponder {
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        logPresentingAlert(responderChainable?.controller.readableClassName() ?? "PostbarController")
-        responderChainable?.controller.present(alertController, animated: true, completion: .none)
+        logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
+        responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
     func editCommentButtonTapped(_ indexPath: IndexPath) {
@@ -241,8 +241,8 @@ class PostbarController: UIResponder, PostbarResponder {
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        logPresentingAlert(responderChainable?.controller.readableClassName() ?? "PostbarController")
-        responderChainable?.controller.present(alertController, animated: true, completion: .none)
+        logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
+        responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
     fileprivate func createRepost(_ post: Post, alertController: AlertViewController)
@@ -300,14 +300,14 @@ class PostbarController: UIResponder, PostbarResponder {
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
-            logPresentingAlert(responderChainable?.controller.readableClassName() ?? "PostbarController")
-            responderChainable?.controller.present(activityVC, animated: true) { }
+            logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
+            responderChainable?.controller?.present(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .popover
             activityVC.popoverPresentationController?.sourceView = sourceView
-            logPresentingAlert(responderChainable?.controller.readableClassName() ?? "PostbarController")
-            responderChainable?.controller.present(activityVC, animated: true) { }
+            logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
+            responderChainable?.controller?.present(activityVC, animated: true) { }
         }
     }
 

@@ -28,11 +28,6 @@ protocol InviteResponder: class {
     func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion)
 }
 
-struct ResponderChainableController {
-    let controller: UIViewController
-    var next: () -> UIResponder?
-}
-
 class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false

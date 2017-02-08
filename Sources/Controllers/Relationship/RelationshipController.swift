@@ -67,7 +67,7 @@ extension RelationshipController: RelationshipResponder {
     {
         let vc = BlockUserModalViewController(config: BlockUserModalConfig(userId: userId, userAtName: userAtName, relationshipPriority: relationshipPriority.priority, changeClosure: changeClosure))
         vc.currentUser = currentUser
-        responderChainable?.controller.present(vc, animated: true, completion: nil)
+        responderChainable?.controller?.present(vc, animated: true, completion: nil)
     }
 
     func updateRelationship(
