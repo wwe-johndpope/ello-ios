@@ -39,14 +39,6 @@ class ProfileHeaderCell: UICollectionViewCell {
     var locationView: ProfileLocationView { get { return headerView.locationView } }
     var linksView: ProfileLinksView { get { return headerView.linksView } }
 
-    weak var webLinkDelegate: WebLinkDelegate? {
-        set {
-            bioView.webLinkDelegate = newValue
-            linksView.webLinkDelegate = newValue
-        }
-        get { return bioView.webLinkDelegate }
-    }
-
     var user: User?
     var currentUser: User?
 

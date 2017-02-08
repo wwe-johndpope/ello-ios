@@ -54,8 +54,9 @@ protocol UserResponder: class {
     func userTapped(user: User)
 }
 
-protocol WebLinkDelegate: class {
-    func webLinkTapped(path: String, type: ElloURI, data: String)
+@objc
+protocol WebLinkResponder: class {
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String)
 }
 
 @objc
@@ -629,10 +630,6 @@ final class StreamViewController: BaseElloViewController {
         postbarController.responderChainable = chainableController
         self.postbarController = postbarController
 
-
-        // set delegates
-        dataSource.webLinkDelegate = self
-
         collectionView.dataSource = dataSource
         collectionView.delegate = self
         automaticallyAdjustsScrollViewInsets = false
@@ -955,16 +952,16 @@ extension StreamViewController: UserResponder {
     }
 }
 
-// MARK: StreamViewController: WebLinkDelegate
-extension StreamViewController: WebLinkDelegate {
+// MARK: StreamViewController: WebLinkResponder
+extension StreamViewController: WebLinkResponder {
 
-    func webLinkTapped(path: String, type: ElloURI, data: String) {
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
         guard
             let parentController = parent as? HasAppController,
             let appViewController = parentController.appViewController
         else { return }
 
-        appViewController.navigateToURI(path: path, type: type, data: data)
+        appViewController.navigateToURI(path: path, type: type.uri, data: data)
     }
 
     fileprivate func selectTab(_ tab: ElloTab) {
@@ -974,6 +971,7 @@ extension StreamViewController: WebLinkDelegate {
 
 // MARK: StreamViewController: AnnouncementCellResponder
 extension StreamViewController: AnnouncementCellResponder {
+
     func markAnnouncementAsRead(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
@@ -1049,7 +1047,7 @@ extension StreamViewController: UICollectionViewDelegate {
         {
             Tracker.shared.announcementOpened(announcement)
             let request = URLRequest(url: callToAction)
-            ElloWebViewHelper.handle(request: request, webLinkDelegate: self)
+            ElloWebViewHelper.handle(request: request, origin: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath) {
             let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder

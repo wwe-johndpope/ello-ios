@@ -54,7 +54,6 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     typealias WebContentReady = (_ webView: UIWebView) -> Void
 
-    weak var webLinkDelegate: WebLinkDelegate?
     var webContentReady: WebContentReady?
     var onHeightMismatch: OnHeightMismatch?
 
@@ -321,7 +320,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
             return false
         }
         else {
-            return ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
+            return ElloWebViewHelper.handle(request: request, origin: self)
         }
     }
 

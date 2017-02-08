@@ -138,12 +138,14 @@ class AnnouncementCell: UICollectionViewCell {
 }
 
 extension AnnouncementCell {
+
     override func prepareForReuse() {
         config = Config()
     }
 }
 
 extension AnnouncementCell {
+
     func markAsRead() {
         let responder = target(forAction: #selector(AnnouncementCellResponder.markAnnouncementAsRead(cell:)), withSender: self) as? AnnouncementCellResponder
         responder?.markAnnouncementAsRead(cell: self)

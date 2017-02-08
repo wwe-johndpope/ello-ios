@@ -86,7 +86,7 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
     func webBrowser(_ webBrowser: KINWebBrowserViewController!, shouldStartLoadWith request: URLRequest!) -> Bool {
         prevRequestURL = request.url
-        return ElloWebViewHelper.handle(request: request, webLinkDelegate: self, fromWebView: true)
+        return ElloWebViewHelper.handle(request: request, origin: self, fromWebView: true)
     }
 
     func willDismissWebBrowser(_ webView: KINWebBrowserViewController) {
@@ -95,10 +95,11 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
 }
 
-// MARK: ElloWebBrowserViewController : WebLinkDelegate
-extension ElloWebBrowserViewController : WebLinkDelegate {
-    func webLinkTapped(path: String, type: ElloURI, data: String) {
-        switch type {
+// MARK: ElloWebBrowserViewController : WebLinkResponder
+extension ElloWebBrowserViewController : WebLinkResponder {
+
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
+        switch type.uri {
         case .confirm,
              .downloads,
              .email,
