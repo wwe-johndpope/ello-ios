@@ -49,8 +49,6 @@ class StreamableViewController: BaseElloViewController {
 
     var scrollLogic: ElloScrollLogic!
 
-
-
     func viewForStream() -> UIView {
         return viewContainer
     }
