@@ -7,15 +7,14 @@ import Foundation
 import ElloUIFonts
 import CoreGraphics
 
-protocol AlertCellDelegate: class {
+@objc
+protocol AlertCellResponder: class {
     func tappedOkButton()
     func tappedCancelButton()
 }
 
 class AlertCell: UITableViewCell {
     static let reuseIdentifier = "AlertCell"
-
-    weak var delegate: AlertCellDelegate?
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var input: ElloTextField!
@@ -62,16 +61,19 @@ class AlertCell: UITableViewCell {
 }
 
 extension AlertCell {
+
     @IBAction func didUpdateInput() {
         onInputChanged?(input.text ?? "")
     }
 
     @IBAction func didTapOkButton() {
-        delegate?.tappedOkButton()
+        let responder = target(forAction: #selector(AlertCellResponder.tappedOkButton), withSender: self) as? AlertCellResponder
+        responder?.tappedOkButton()
     }
 
     @IBAction func didTapCancelButton() {
-        delegate?.tappedCancelButton()
+        let responder = target(forAction: #selector(AlertCellResponder.tappedCancelButton), withSender: self) as? AlertCellResponder
+        responder?.tappedCancelButton()
     }
 
 }
