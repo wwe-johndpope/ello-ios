@@ -21,11 +21,6 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         static let editButtonMargin: CGFloat = 10
     }
 
-    weak var relationshipDelegate: RelationshipDelegate? {
-        get { return self.relationshipControl.relationshipDelegate }
-        set { self.relationshipControl.relationshipDelegate = newValue }
-    }
-
     var coverImage: UIImage? {
         get { return coverImageView.image }
         set { coverImageView.image = newValue }

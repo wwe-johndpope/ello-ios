@@ -82,6 +82,7 @@ protocol AnnouncementResponder: class {
     func markAnnouncementAsRead(announcement: Announcement)
 }
 
+
 // MARK: StreamNotification
 struct StreamNotification {
     static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
@@ -140,7 +141,6 @@ final class StreamViewController: BaseElloViewController {
 
     var dataSource: StreamDataSource!
     var postbarController: PostbarController?
-    var relationshipController: RelationshipController?
     var responseConfig: ResponseConfig?
     var pagingEnabled = false
     fileprivate var scrollToPaginateGuard = false
@@ -182,7 +182,6 @@ final class StreamViewController: BaseElloViewController {
     var settingChangedNotification: NotificationObserver?
     var currentUserChangedNotification: NotificationObserver?
 
-    weak var postTappedDelegate: PostTappedDelegate?
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
     var searchStreamDelegate: SearchStreamDelegate? {
@@ -236,7 +235,6 @@ final class StreamViewController: BaseElloViewController {
 
     override func didSetCurrentUser() {
         dataSource.currentUser = currentUser
-        relationshipController?.currentUser = currentUser
         postbarController?.currentUser = currentUser
         super.didSetCurrentUser()
     }
@@ -614,22 +612,26 @@ final class StreamViewController: BaseElloViewController {
         return postbarController
     }
 
-    var nextAfterPostbar: UIResponder? {
-        return super.next
-    }
-
     fileprivate func setupCollectionView() {
-        let postbarController = PostbarController(collectionView: collectionView, dataSource: dataSource, presentingController: self)
+        let postbarController = PostbarController(collectionView: collectionView, dataSource: dataSource)
         postbarController.currentUser = currentUser
+
+        // next is a closure due to the need
+        // to lazily evaluate it at runtime. `super.next` is not available
+        // at assignment but is present when the responder is used later on
+        let chainableController = ResponderChainableController(
+            controller: self,
+            next: { [weak self] in
+                return self?.superNext
+            }
+        )
+
+        postbarController.responderChainable = chainableController
         self.postbarController = postbarController
 
-        let relationshipController = RelationshipController(presentingController: self)
-        relationshipController.currentUser = self.currentUser
-        self.relationshipController = relationshipController
 
         // set delegates
         dataSource.webLinkDelegate = self
-        dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -685,7 +687,7 @@ final class StreamViewController: BaseElloViewController {
 
 }
 
-// MARK: DELEGATE EXTENSIONS
+// MARK: DELEGATE & RESPONDER EXTENSIONS
 
 
 // MARK: StreamViewController: GridListToggleDelegate
@@ -871,7 +873,8 @@ extension StreamViewController: StreamImageCellResponder {
 
         if streamKind.isGridView || cell.isGif {
             if let post = post {
-                postTappedDelegate?.postTapped(post)
+                let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
+                responder?.postTapped(post)
             }
         }
         else if let imageViewer = imageViewer {
@@ -881,15 +884,6 @@ extension StreamViewController: StreamImageCellResponder {
                 Tracker.shared.viewedImage(asset, post: post)
             }
         }
-    }
-}
-
-// MARK: StreamViewController: Commenting
-extension StreamViewController {
-
-    func createCommentTapped(_ postId: String) {
-        let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
-        responder?.createComment(postId, text: nil, fromController: self)
     }
 }
 
@@ -1031,16 +1025,19 @@ extension StreamViewController: UICollectionViewDelegate {
             if let lastComment = dataSource.commentForIndexPath(indexPath),
                 let post = lastComment.loadedFromPost
             {
-                postTappedDelegate?.postTapped(post, scrollToComment: lastComment)
+                let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:scrollToComment:)), withSender: self) as? PostTappedResponder
+                responder?.postTapped(post, scrollToComment: lastComment)
             }
         }
         else if let post = dataSource.postForIndexPath(indexPath) {
-            postTappedDelegate?.postTapped(post)
+            let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
+            responder?.postTapped(post)
         }
         else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             let postId = notification.postId
         {
-            postTappedDelegate?.postTapped(postId: postId)
+            let responder = target(forAction: #selector(PostTappedResponder.postTapped(postId:)), withSender: self) as? PostTappedResponder
+            responder?.postTapped(postId: postId)
         }
         else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             let user = notification.subject as? User
@@ -1055,7 +1052,8 @@ extension StreamViewController: UICollectionViewDelegate {
             ElloWebViewHelper.handle(request: request, webLinkDelegate: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath) {
-            createCommentTapped(comment.loadedFromPostId)
+            let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.createComment(comment.loadedFromPostId, text: nil, fromController: self)
         }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
             let category = dataSource.jsonableForIndexPath(indexPath) as? Category

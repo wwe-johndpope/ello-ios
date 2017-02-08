@@ -2,7 +2,8 @@
 ///  StreamableViewController.swift
 //
 
-protocol PostTappedDelegate: class {
+@objc
+protocol PostTappedResponder: class {
     func postTapped(_ post: Post)
     func postTapped(_ post: Post, scrollToComment: ElloComment?)
     func postTapped(postId: String)
@@ -27,7 +28,7 @@ protocol InviteResponder: class {
     func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion)
 }
 
-class StreamableViewController: BaseElloViewController, PostTappedDelegate {
+class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false
     let streamViewController = StreamViewController.instantiateFromStoryboard()
@@ -36,7 +37,6 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         streamViewController.currentUser = currentUser
         streamViewController.streamViewDelegate = self
         streamViewController.userTappedDelegate = self
-        streamViewController.postTappedDelegate = self
 
         streamViewController.willMove(toParentViewController: self)
         let containerForStream = viewForStream()
@@ -142,8 +142,10 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
             bottomBarController.setNavigationBarsVisible(false, animated: true)
         }
     }
+}
 
-// MARK: PostTappedDelegate
+// MARK: PostTappedResponder
+extension StreamableViewController: PostTappedResponder {
 
     func postTapped(_ post: Post) {
         self.postTapped(postId: post.id, scrollToComment: nil)
@@ -279,6 +281,7 @@ extension StreamableViewController: StreamViewDelegate {
 
 // MARK: InviteResponder
 extension StreamableViewController: InviteResponder {
+
     func onInviteFriends() {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: ())

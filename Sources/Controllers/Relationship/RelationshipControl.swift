@@ -50,7 +50,6 @@ class RelationshipControl: UIView {
     var userId: String
     var userAtName: String
 
-    weak var relationshipDelegate: RelationshipDelegate?
     var relationshipPriority: RelationshipPriority = .none {
         didSet { updateRelationshipPriority() }
     }
@@ -133,32 +132,40 @@ class RelationshipControl: UIView {
             return
         }
 
-        guard let relationshipDelegate = relationshipDelegate else {
-            return
-        }
+        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: self.relationshipPriority)
 
-        let prevRelationshipPriority = self.relationshipPriority
-        relationshipDelegate.launchBlockModal(userId, userAtName: userAtName, relationshipPriority: prevRelationshipPriority) { newRelationshipPriority in
-            self.relationshipPriority = newRelationshipPriority
+        let responder = target(forAction: #selector(RelationshipResponder.launchBlockModal(_:userAtName:relationshipPriority:changeClosure:)), withSender: self) as? RelationshipResponder
+
+        responder?.launchBlockModal(
+            userId,
+            userAtName: userAtName,
+            relationshipPriority: prevRelationshipPriority
+        ) { [weak self] newRelationshipPriority in
+            guard let `self` = self else { return }
+            self.relationshipPriority = newRelationshipPriority.priority
         }
     }
 
     fileprivate func handleRelationship(_ newRelationshipPriority: RelationshipPriority) {
-        guard let relationshipDelegate = relationshipDelegate else {
-            return
-        }
-
         self.isUserInteractionEnabled = false
-        let prevRelationshipPriority = self.relationshipPriority
+        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: self.relationshipPriority)
         self.relationshipPriority = newRelationshipPriority
-        relationshipDelegate.relationshipTapped(self.userId, prev: prevRelationshipPriority, relationshipPriority: newRelationshipPriority) { (status, relationship, isFinalValue) in
+
+        let responder = target(forAction: #selector(RelationshipResponder.relationshipTapped(_:prev:relationshipPriority:complete:)), withSender: self) as? RelationshipResponder
+
+        responder?.relationshipTapped(
+            self.userId,
+            prev: prevRelationshipPriority,
+            relationshipPriority: RelationshipPriorityWrapper(priority: newRelationshipPriority)
+        ) { [weak self] (status, relationship, isFinalValue) in
+            guard let `self` = self else { return }
             self.isUserInteractionEnabled = isFinalValue
 
             if let newRelationshipPriority = relationship?.subject?.relationshipPriority {
                 self.relationshipPriority = newRelationshipPriority
             }
             else {
-                self.relationshipPriority = prevRelationshipPriority
+                self.relationshipPriority = prevRelationshipPriority.priority
             }
         }
     }

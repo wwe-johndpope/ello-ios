@@ -2,6 +2,12 @@
 ///  RelationshipPriority.swift
 //
 
+class RelationshipPriorityWrapper: NSObject {
+    let priority: RelationshipPriority
+    init(priority: RelationshipPriority) {
+        self.priority = priority
+    }
+}
 
 enum RelationshipPriority: String {
     case following = "friend"

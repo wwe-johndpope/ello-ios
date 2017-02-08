@@ -39,7 +39,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     let imageSizeCalculator: StreamImageCellSizeCalculator
 
     weak var webLinkDelegate: WebLinkDelegate?
-    weak var relationshipDelegate: RelationshipDelegate?
     weak var searchStreamDelegate: SearchStreamDelegate?
     var inviteCache = InviteCache()
 
@@ -239,6 +238,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
+    @discardableResult
     func removeCommentsFor(post: Post) -> [IndexPath] {
         let indexPaths = self.commentIndexPathsForPost(post)
         temporarilyUnfilter() {
@@ -329,12 +329,9 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .categoryPromotionalHeader,
              .pagePromotionalHeader:
             (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
-        case .header, .commentHeader:
-            (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
         case .inviteFriends, .onboardingInviteFriends:
             (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
         case .notification:
-            (cell as! NotificationCell).relationshipControl.relationshipDelegate = relationshipDelegate
             (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
         case .profileHeader:
             (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
@@ -342,8 +339,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             (cell as! SearchStreamCell).delegate = searchStreamDelegate
         case .text:
             (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
-        case .userListItem:
-            (cell as! UserListItemCell).relationshipControl.relationshipDelegate = relationshipDelegate
         default:
             break
         }

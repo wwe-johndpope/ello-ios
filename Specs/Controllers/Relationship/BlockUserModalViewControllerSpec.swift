@@ -13,8 +13,17 @@ class BlockUserModalViewControllerSpec: QuickSpec {
         describe("BlockUserModalViewController") {
             let currentUser: User = stub([:])
             var subject: BlockUserModalViewController!
-            let relationshipController = RelationshipController(presentingController: UIViewController())
+            let controller = UIViewController()
+            let chainable = ResponderChainableController(
+                controller: controller,
+                next: {
+                    return controller.next
+                }
+            )
+
+            let relationshipController = RelationshipController()
             relationshipController.currentUser = currentUser
+            relationshipController.responderChainable = chainable
 
             describe("initialization") {
 

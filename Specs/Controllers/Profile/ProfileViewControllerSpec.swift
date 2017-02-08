@@ -177,6 +177,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 var user: User!
                 var subject: ProfileViewController!
 
+
                 beforeEach {
                     user = User.stub(["id": "42"])
                     subject = ProfileViewController(userParam: user.id)

@@ -111,7 +111,6 @@ final class ProfileViewController: StreamableViewController {
         setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
-        screen.relationshipDelegate = streamViewController.dataSource.relationshipDelegate
 
         if let user = user {
             updateUser(user)
@@ -236,9 +235,16 @@ final class ProfileViewController: StreamableViewController {
 
         let userId = user.id
         let userAtName = user.atName
-        let prevRelationshipPriority = user.relationshipPriority
-        streamViewController.relationshipController?.launchBlockModal(userId, userAtName: userAtName, relationshipPriority: prevRelationshipPriority) { newRelationshipPriority in
-            user.relationshipPriority = newRelationshipPriority
+        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: user.relationshipPriority)
+
+        let responder = target(forAction: #selector(RelationshipResponder.launchBlockModal(_:userAtName:relationshipPriority:changeClosure:)), withSender: self) as? RelationshipResponder
+
+        responder?.launchBlockModal(
+            userId,
+            userAtName: userAtName,
+            relationshipPriority: prevRelationshipPriority
+        ) { newRelationshipPriority in
+            user.relationshipPriority = newRelationshipPriority.priority
         }
     }
 
