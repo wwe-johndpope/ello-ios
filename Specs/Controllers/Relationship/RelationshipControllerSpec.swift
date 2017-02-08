@@ -10,17 +10,24 @@ import Moya
 
 
 class RelationshipControllerSpec: QuickSpec {
+
     override func spec() {
-        var subject = RelationshipController(presentingController: UIViewController())
+
+        var subject: RelationshipController!
 
         beforeEach({
             let presentingController = UIViewController()
+            let chainable = ResponderChainableController(
+                controller: presentingController,
+                next: { return presentingController.next }
+            )
             showController(presentingController)
-            subject = RelationshipController(presentingController: presentingController)
+            subject = RelationshipController()
+            subject.responderChainable = chainable
 
         })
 
-        context("RelationshipDelegate") {
+        context("RelationshipResponder") {
 
             describe("-relationshipTapped:relationship:complete:") {
                 // extensively tested in RelationshipControlSpec
@@ -31,9 +38,9 @@ class RelationshipControllerSpec: QuickSpec {
                 it("succeeds") {
                     var expectedStatus = RelationshipRequestStatus.failure
 
-                    subject.updateRelationship("", userId: "test-user-id", prev: .none, relationshipPriority: RelationshipPriority.following) {
-                        (status, _, _) in
-                        expectedStatus = status
+                    subject.updateRelationship("", userId: "test-user-id", prev: RelationshipPriorityWrapper(priority: .none), relationshipPriority: RelationshipPriorityWrapper(priority: .following)) {
+                        (statusWrapper, _, _) in
+                        expectedStatus = statusWrapper.status
                     }
                     expect(expectedStatus).to(equal(RelationshipRequestStatus.success))
                 }
@@ -43,9 +50,9 @@ class RelationshipControllerSpec: QuickSpec {
 
                     var expectedStatus = RelationshipRequestStatus.success
 
-                    subject.updateRelationship("", userId: "test-user-id", prev: .none, relationshipPriority: RelationshipPriority.following) {
-                        (status, _, _) in
-                        expectedStatus = status
+                    subject.updateRelationship("", userId: "test-user-id", prev: RelationshipPriorityWrapper(priority: .none), relationshipPriority: RelationshipPriorityWrapper(priority: .following)) {
+                        (statusWrapper, _, _) in
+                        expectedStatus = statusWrapper.status
                     }
                     expect(expectedStatus).to(equal(RelationshipRequestStatus.failure))
                 }
@@ -54,12 +61,10 @@ class RelationshipControllerSpec: QuickSpec {
             describe("-launchBlockModal:userAtName:relationship:changeClosure:") {
 
                 it("launches the block user modal view controller") {
-                    subject.launchBlockModal("user-id", userAtName: "@666", relationshipPriority: RelationshipPriority.following) {
+                    subject.launchBlockModal("user-id", userAtName: "@666", relationshipPriority: RelationshipPriorityWrapper(priority: .following)) {
                         _ in
                     }
-                    let presentedVC = subject.presentingController?.presentedViewController as? BlockUserModalViewController
-                    // TODO: figure this out
-//                    expect(presentedVC.relationshipDelegate).to(beIdenticalTo(subject))
+                    let presentedVC = subject.responderChainable?.controller.presentedViewController as? BlockUserModalViewController
                     expect(presentedVC).to(beAKindOf(BlockUserModalViewController.self))
                 }
 

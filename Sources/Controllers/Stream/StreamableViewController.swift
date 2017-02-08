@@ -2,7 +2,8 @@
 ///  StreamableViewController.swift
 //
 
-protocol PostTappedDelegate: class {
+@objc
+protocol PostTappedResponder: class {
     func postTapped(_ post: Post)
     func postTapped(_ post: Post, scrollToComment: ElloComment?)
     func postTapped(postId: String)
@@ -27,7 +28,12 @@ protocol InviteResponder: class {
     func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion)
 }
 
-class StreamableViewController: BaseElloViewController, PostTappedDelegate {
+struct ResponderChainableController {
+    let controller: UIViewController
+    var next: () -> UIResponder?
+}
+
+class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false
     let streamViewController = StreamViewController.instantiateFromStoryboard()
@@ -36,7 +42,6 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
         streamViewController.currentUser = currentUser
         streamViewController.streamViewDelegate = self
         streamViewController.userTappedDelegate = self
-        streamViewController.postTappedDelegate = self
 
         streamViewController.willMove(toParentViewController: self)
         let containerForStream = viewForStream()
@@ -48,6 +53,8 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     }
 
     var scrollLogic: ElloScrollLogic!
+
+
 
     func viewForStream() -> UIView {
         return viewContainer
@@ -142,8 +149,10 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
             bottomBarController.setNavigationBarsVisible(false, animated: true)
         }
     }
+}
 
-// MARK: PostTappedDelegate
+// MARK: PostTappedResponder
+extension StreamableViewController: PostTappedResponder {
 
     func postTapped(_ post: Post) {
         self.postTapped(postId: post.id, scrollToComment: nil)
@@ -279,6 +288,7 @@ extension StreamableViewController: StreamViewDelegate {
 
 // MARK: InviteResponder
 extension StreamableViewController: InviteResponder {
+
     func onInviteFriends() {
         Tracker.shared.inviteFriendsTapped()
         AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in

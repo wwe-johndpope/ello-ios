@@ -8,19 +8,29 @@ import Nimble
 import Moya
 import Nimble_Snapshots
 
+class FakeResponder: UIWindow {
+    var relationshipController: RelationshipController?
+    override var next: UIResponder? {
+        return relationshipController
+    }
+}
 
 class RelationshipControlSpec: QuickSpec {
     override func spec() {
         describe("RelationshipControl") {
             var subject: RelationshipControl!
-            var presentingController: UIViewController!
+            var presentingController: StreamableViewController!
             var relationshipController: RelationshipController!
+            let viewContainer = UIView()
+
             beforeEach {
                 subject = RelationshipControl()
-                presentingController = UIViewController()
+                presentingController = StreamableViewController()
+                presentingController.viewContainer = viewContainer
+                presentingController.viewDidLoad()
+                presentingController.view.addSubview(subject) // <-- super ghetto
+                relationshipController = presentingController.relationshipController
                 showController(presentingController)
-                relationshipController = RelationshipController(presentingController: presentingController)
-                subject.relationshipDelegate = relationshipController
             }
 
             describe("snapshots") {
@@ -140,7 +150,7 @@ class RelationshipControlSpec: QuickSpec {
                         it("launches the block modal") {
                             subject.relationshipPriority = .mute
                             subject.followingButton.sendActions(for: .touchUpInside)
-                            let presentedVC = relationshipController.presentingController?.presentedViewController as? BlockUserModalViewController
+                            let presentedVC = relationshipController.responderChainable?.controller.presentedViewController as? BlockUserModalViewController
                             expect(presentedVC).notTo(beNil())
                         }
                     }

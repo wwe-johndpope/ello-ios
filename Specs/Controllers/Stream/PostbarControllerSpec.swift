@@ -62,9 +62,13 @@ class PostbarControllerSpec: QuickSpec {
             controller.dataSource = dataSource
             controller.collectionView.dataSource = dataSource
 
-            subject = PostbarController(collectionView: controller.collectionView, dataSource: dataSource, presentingController: controller)
+            subject = PostbarController(collectionView: controller.collectionView, dataSource: dataSource)
             subject.currentUser = currentUser
             responder = ReplyAllCreatePostResponder()
+            subject.responderChainable = ResponderChainableController(
+                controller: controller,
+                next: { return responder }
+            )
             showController(controller, window: responder)
         }
 

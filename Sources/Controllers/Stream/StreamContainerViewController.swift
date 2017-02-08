@@ -179,7 +179,6 @@ class StreamContainerViewController: StreamableViewController {
             let vc = StreamViewController.instantiateFromStoryboard()
             vc.currentUser = currentUser
             vc.streamKind = kind
-            vc.postTappedDelegate = self
             vc.userTappedDelegate = self
             vc.streamViewDelegate = self
             vc.collectionView.scrollsToTop = false

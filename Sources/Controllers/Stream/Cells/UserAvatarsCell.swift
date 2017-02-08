@@ -24,7 +24,7 @@ class UserAvatarsCell: UICollectionViewCell {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         style()

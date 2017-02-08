@@ -62,12 +62,6 @@ class StreamHeaderCell: UICollectionViewCell {
         }
     }
 
-    weak var relationshipDelegate: RelationshipDelegate? {
-        get { return relationshipControl.relationshipDelegate }
-        set { relationshipControl.relationshipDelegate = newValue }
-    }
-
-
     var avatarHeight: CGFloat = 60.0 {
         didSet { setNeedsDisplay() }
     }
