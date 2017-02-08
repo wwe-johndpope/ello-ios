@@ -69,7 +69,8 @@ protocol CategoryListCellResponder: class {
     func categoryListCellTapped(slug: String, name: String)
 }
 
-protocol SearchStreamDelegate: class {
+@objc
+protocol SearchStreamResponder: class {
     func searchFieldChanged(text: String)
 }
 
@@ -185,10 +186,6 @@ final class StreamViewController: BaseElloViewController {
 
     weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
-    var searchStreamDelegate: SearchStreamDelegate? {
-        get { return dataSource.searchStreamDelegate }
-        set { dataSource.searchStreamDelegate = newValue }
-    }
 
     var streamFilter: StreamDataSource.StreamFilter {
         get { return dataSource.streamFilter }

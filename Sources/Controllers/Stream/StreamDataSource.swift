@@ -38,7 +38,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     let imageSizeCalculator: StreamImageCellSizeCalculator
 
-    weak var searchStreamDelegate: SearchStreamDelegate?
     var inviteCache = InviteCache()
 
     init(
@@ -327,8 +326,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         switch streamCellItem.type {
         case .inviteFriends, .onboardingInviteFriends:
             (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
-        case .search:
-            (cell as! SearchStreamCell).delegate = searchStreamDelegate
         default:
             break
         }
