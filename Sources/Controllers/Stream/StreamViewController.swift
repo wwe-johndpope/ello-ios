@@ -184,7 +184,6 @@ final class StreamViewController: BaseElloViewController {
     var settingChangedNotification: NotificationObserver?
     var currentUserChangedNotification: NotificationObserver?
 
-    weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
 
     var streamFilter: StreamDataSource.StreamFilter {
@@ -923,7 +922,8 @@ extension StreamViewController: UserResponder {
     }
 
     func userTapped(user: User) {
-        userTappedDelegate?.userTapped(user)
+        let responder = target(forAction: #selector(UserTappedResponder.userTapped(_:)), withSender: self) as? UserTappedResponder
+        responder?.userTapped(user)
     }
 
     func userTappedAuthor(cell: UICollectionViewCell) {
@@ -942,10 +942,6 @@ extension StreamViewController: UserResponder {
         else { return }
 
         userTapped(user: reposter)
-    }
-
-    func userTappedUser(_ user: User) {
-        userTapped(user: user)
     }
 }
 

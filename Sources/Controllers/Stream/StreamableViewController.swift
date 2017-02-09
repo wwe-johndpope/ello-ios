@@ -9,7 +9,8 @@ protocol PostTappedResponder: class {
     func postTapped(postId: String)
 }
 
-protocol UserTappedDelegate: class {
+@objc
+protocol UserTappedResponder: class {
     func userTapped(_ user: User)
     func userParamTapped(_ param: String, username: String?)
 }
@@ -36,7 +37,6 @@ class StreamableViewController: BaseElloViewController {
     func setupStreamController() {
         streamViewController.currentUser = currentUser
         streamViewController.streamViewDelegate = self
-        streamViewController.userTappedDelegate = self
 
         streamViewController.willMove(toParentViewController: self)
         let containerForStream = viewForStream()
@@ -167,8 +167,9 @@ extension StreamableViewController: PostTappedResponder {
     }
 }
 
-// MARK: UserTappedDelegate
-extension StreamableViewController: UserTappedDelegate {
+// MARK: UserTappedResponder
+extension StreamableViewController: UserTappedResponder {
+    
     func userTapped(_ user: User) {
         guard user.relationshipPriority != .block else { return }
         userParamTapped(user.id, username: user.username)
