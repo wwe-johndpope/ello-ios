@@ -3,7 +3,7 @@
 //
 
 
-class NotificationsViewController: StreamableViewController, NotificationDelegate, NotificationsScreenDelegate {
+class NotificationsViewController: StreamableViewController, NotificationsScreenDelegate {
     override func trackerName() -> String? { return "Notifications" }
     override func trackerProps() -> [String: AnyObject]? {
         if let category = categoryFilterType.category {
@@ -114,8 +114,6 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         super.setupStreamController()
 
         streamViewController.streamKind = categoryStreamKind
-        streamViewController.announcementDelegate = self
-        streamViewController.notificationDelegate = self
         streamViewController.initialLoadClosure = { [weak self] in self?.initialLoad() }
         streamViewController.reloadClosure = { [weak self] in self?.reload(showSpinner: false) }
     }
@@ -158,15 +156,6 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         Tracker.shared.screenAppeared(self)
     }
 
-    func commentTapped(_ comment: ElloComment) {
-        if let post = comment.loadedFromPost {
-            postTapped(post)
-        }
-        else {
-            postTapped(postId: comment.postId)
-        }
-    }
-
     func respondToNotification(_ components: [String]) {
         var popToRoot: Bool = true
         if let path = components.safeValue(0) {
@@ -193,6 +182,20 @@ class NotificationsViewController: StreamableViewController, NotificationDelegat
         reload(showSpinner: true)
     }
 
+}
+
+extension NotificationsViewController: NotificationResponder {
+    func commentTapped(_ comment: ElloComment) {
+        if let post = comment.loadedFromPost {
+            postTapped(post)
+        }
+        else {
+            postTapped(postId: comment.postId)
+        }
+    }
+
+    // userTapped(_ user: _) defined in StreamableViewController
+    // postTapped(_ post: _) defined in StreamableViewController
 }
 
 private extension NotificationsViewController {
@@ -261,8 +264,8 @@ extension NotificationsViewController: StreamDestination {
     }
 }
 
-// MARK: NotificationsViewController: AnnouncementDelegate
-extension NotificationsViewController: AnnouncementDelegate {
+// MARK: NotificationsViewController: AnnouncementResponder
+extension NotificationsViewController: AnnouncementResponder {
     func markAnnouncementAsRead(announcement: Announcement) {
         Tracker.shared.announcementDismissed(announcement)
         generator?.markAnnouncementAsRead(announcement)

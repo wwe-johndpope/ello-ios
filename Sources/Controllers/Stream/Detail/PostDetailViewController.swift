@@ -190,9 +190,6 @@ final class PostDetailViewController: StreamableViewController {
             return
         }
 
-        // This is a bit dirty, we should not call a method on a compositionally held
-        // controller's createPostDelegate. Can this use the responder chain when we have
-        // parameters to pass?
         editPost(post, fromController: self)
     }
 

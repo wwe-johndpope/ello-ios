@@ -15,7 +15,6 @@ protocol ProfileScreenProtocol: StreamableScreenProtocol {
     func updateHeaderHeightConstraints(max: CGFloat, scrollAdjusted: CGFloat)
     func updateRelationshipControl(user: User)
     func updateRelationshipPriority(_ relationshipPriority: RelationshipPriority)
-    var relationshipDelegate: RelationshipDelegate? { get set }
     var topInsetView: UIView { get }
     var coverImage: UIImage? { get set }
     var coverImageURL: URL? { get set }

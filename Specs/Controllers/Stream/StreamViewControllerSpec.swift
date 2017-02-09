@@ -104,10 +104,6 @@ class StreamViewControllerSpec: QuickSpec {
 
             it("sets up a postbar controller and assigns it to the datasource") {
                 expect(controller.postbarController).notTo(beNil())
-                expect(controller.dataSource.postbarDelegate).notTo(beNil())
-
-                let delegate = controller.dataSource.postbarDelegate! as! PostbarController
-                expect(delegate) === controller.postbarController
             }
 
             it("configures collectionView") {
@@ -150,16 +146,10 @@ class StreamViewControllerSpec: QuickSpec {
 
         context("protocol conformance") {
 
-            var externalWebObserver: NotificationObserver?
+            context("WebLinkResponder") {
 
-            afterEach {
-                externalWebObserver?.removeObserver()
-            }
-
-            context("WebLinkDelegate") {
-
-                it("is a weblinkdelegate") {
-                    expect(controller as WebLinkDelegate).notTo(beNil())
+                it("is a WebLinkResponder") {
+                    expect(controller as WebLinkResponder).notTo(beNil())
                 }
 
                 describe("webLinkTapped(_:data:)") {
@@ -175,7 +165,7 @@ class StreamViewControllerSpec: QuickSpec {
                     }
 
                     it("opens external browser if type .external") {
-                        controller.webLinkTapped(path: "http://www.example.com", type: ElloURI.external, data: "http://www.example.com")
+                        controller.webLinkTapped(path: "http://www.example.com", type: ElloURIWrapper(uri: .external), data: "http://www.example.com")
                         let presented = hasAppVC.appViewController!.presentedViewController
                         expect(presented).notTo(beNil())
                         if let browser = (presented as! UINavigationController).viewControllers.first {
@@ -219,7 +209,7 @@ class StreamViewControllerSpec: QuickSpec {
                 }
             }
 
-            context("UserDelegate") {
+            context("UserResponder") {
 
                 beforeEach {
                     let service = StreamService()
@@ -230,8 +220,8 @@ class StreamViewControllerSpec: QuickSpec {
                     }, failure: { _ in })
                 }
 
-                it("is a UserDelegate") {
-                    expect(controller as UserDelegate).notTo(beNil())
+                it("is a UserResponder") {
+                    expect(controller as UserResponder).notTo(beNil())
                 }
 
                 describe("userTappedAuthor(_:)") {
@@ -499,6 +489,12 @@ class StreamViewControllerSpec: QuickSpec {
                     xit("shows the tab bar when scrolling down") {
 
                     }
+                }
+            }
+
+            context("responder chain") {
+                it("reassigns next responder to PostbarController") {
+                    expect(controller.next) === controller.postbarController
                 }
             }
         }

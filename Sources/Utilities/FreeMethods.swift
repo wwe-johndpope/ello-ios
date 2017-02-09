@@ -254,35 +254,3 @@ func debounce(_ timeout: TimeInterval) -> ThrottledBlock {
         timer = Timer.scheduledTimer(timeInterval: timeout, target: proc, selector: #selector(Proc.run), userInfo: nil, repeats: false)
     }
 }
-
-func throttle(_ interval: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
-    var timer: Timer? = nil
-    let proc = Proc() {
-        timer = nil
-        block()
-    }
-
-    return {
-        if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: interval, target: proc, selector: #selector(Proc.run), userInfo: nil, repeats: false)
-        }
-    }
-}
-
-func throttle(_ interval: TimeInterval) -> ThrottledBlock {
-    var timer: Timer? = nil
-    var lastBlock: BasicBlock?
-
-    return { block in
-        lastBlock = block
-
-        if timer == nil {
-            let proc = Proc() {
-                timer = nil
-                lastBlock?()
-            }
-
-            timer = Timer.scheduledTimer(timeInterval: interval, target: proc, selector: #selector(Proc.run), userInfo: nil, repeats: false)
-        }
-    }
-}

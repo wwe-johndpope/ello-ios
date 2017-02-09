@@ -33,9 +33,36 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         return findViewController { vc in vc is BottomBarController } as? BottomBarController
     }
 
+    // This is an odd one, `super.next` is not accessible in a closure that
+    // captures self so we stuff it in a computed variable
+    var superNext: UIResponder? {
+        return super.next
+    }
+
+    var relationshipController: RelationshipController?
+
+    override var next: UIResponder? {
+        return relationshipController
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.fixNavBarItemPadding()
+        setupRelationshipController()
+    }
+
+    private func setupRelationshipController() {
+        let chainableController = ResponderChainableController(
+            controller: self,
+            next: { [weak self] in
+                return self?.superNext
+            }
+        )
+
+        let relationshipController = RelationshipController()
+        relationshipController.responderChainable = chainableController
+        relationshipController.currentUser = self.currentUser
+        self.relationshipController = relationshipController
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -48,7 +75,9 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         UIApplication.shared.statusBarStyle = .lightContent
     }
 
-    func didSetCurrentUser() {}
+    func didSetCurrentUser() {
+        relationshipController?.currentUser = currentUser
+    }
 
     @IBAction
     func backTapped() {

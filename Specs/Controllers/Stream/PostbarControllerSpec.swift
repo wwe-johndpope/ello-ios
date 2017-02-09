@@ -9,7 +9,7 @@ import Moya
 
 
 class PostbarControllerSpec: QuickSpec {
-    class ReplyAllCreatePostDelegate: CreatePostDelegate {
+    class ReplyAllCreatePostResponder: UIWindow, CreatePostResponder {
         var postId: String?
         var post: Post?
         var comment: ElloComment?
@@ -32,6 +32,7 @@ class PostbarControllerSpec: QuickSpec {
 
     override func spec() {
         var subject: PostbarController!
+        var responder: ReplyAllCreatePostResponder!
         let currentUser: User = User.stub([
             "id": "user500",
             "lovesCount": 5,
@@ -61,16 +62,19 @@ class PostbarControllerSpec: QuickSpec {
             controller.dataSource = dataSource
             controller.collectionView.dataSource = dataSource
 
-            subject = PostbarController(collectionView: controller.collectionView, dataSource: dataSource, presentingController: controller)
+            subject = PostbarController(collectionView: controller.collectionView, dataSource: dataSource)
             subject.currentUser = currentUser
-            dataSource.postbarDelegate = subject
-
-            showController(controller)
+            responder = ReplyAllCreatePostResponder()
+            subject.responderChainable = ResponderChainableController(
+                controller: controller,
+                next: { return responder }
+            )
+            showController(controller, window: responder)
         }
 
         describe("PostbarController") {
             describe("replyToAllButtonTapped(_:)") {
-                var delegate: ReplyAllCreatePostDelegate!
+
                 var indexPath: IndexPath!
 
                 beforeEach {
@@ -83,8 +87,6 @@ class PostbarControllerSpec: QuickSpec {
                     let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
                     postCellItems += [StreamCellItem(jsonable: newComment, type: .createComment)]
                     indexPath = IndexPath(item: postCellItems.count - 1, section: 0)
-                    delegate = ReplyAllCreatePostDelegate()
-                    controller.createPostDelegate = delegate
                     controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
                         controller.collectionView.reloadData()
                     }
@@ -92,7 +94,7 @@ class PostbarControllerSpec: QuickSpec {
                 context("tapping replyToAll") {
                     it("opens an OmnibarViewController with usernames set") {
                         subject.replyToAllButtonTapped(indexPath)
-                        expect(delegate.text) == "@user1 @user2 "
+                        expect(responder.text) == "@user1 @user2 "
                     }
                 }
             }
@@ -243,6 +245,12 @@ class PostbarControllerSpec: QuickSpec {
 
                         expect(lovesCount) == prevLovesCount - 1
                     }
+                }
+            }
+
+            context("responder chain") {
+                it("reassigns next responder to StreamViewController's super.next") {
+                    expect(subject.next).to(beAKindOf(UIView.self))
                 }
             }
         }

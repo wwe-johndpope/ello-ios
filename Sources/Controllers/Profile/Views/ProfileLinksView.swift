@@ -23,8 +23,6 @@ class ProfileLinksView: ProfileBaseView {
         }
     }
 
-    weak var webLinkDelegate: WebLinkDelegate?
-
     fileprivate var linksBox = UIView()
     fileprivate var iconsBox = UIView()
     fileprivate var linkButtons: [UIButton] = []
@@ -64,9 +62,9 @@ extension ProfileLinksView {
 }
 
 extension ProfileLinksView {
+
     func prepareForReuse() {
         externalLinks = []
-        webLinkDelegate = nil
     }
 }
 
@@ -197,7 +195,7 @@ extension ProfileLinksView {
             else { return }
 
         let request = URLRequest(url: externalLink.url as URL)
-        ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
+        ElloWebViewHelper.handle(request: request, origin: self)
     }
 }
 

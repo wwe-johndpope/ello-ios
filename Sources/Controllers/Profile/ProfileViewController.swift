@@ -111,7 +111,6 @@ final class ProfileViewController: StreamableViewController {
         setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
-        screen.relationshipDelegate = streamViewController.dataSource.relationshipDelegate
 
         if let user = user {
             updateUser(user)
@@ -230,13 +229,24 @@ final class ProfileViewController: StreamableViewController {
     }
 
     func moreButtonTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         let userId = user.id
         let userAtName = user.atName
-        let prevRelationshipPriority = user.relationshipPriority
-        streamViewController.relationshipController?.launchBlockModal(userId, userAtName: userAtName, relationshipPriority: prevRelationshipPriority) { newRelationshipPriority in
-            user.relationshipPriority = newRelationshipPriority
+        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: user.relationshipPriority)
+
+        let responder = target(forAction: #selector(RelationshipResponder.launchBlockModal(_:userAtName:relationshipPriority:changeClosure:)), withSender: self) as? RelationshipResponder
+
+        responder?.launchBlockModal(
+            userId,
+            userAtName: userAtName,
+            relationshipPriority: prevRelationshipPriority
+        ) { newRelationshipPriority in
+            user.relationshipPriority = newRelationshipPriority.priority
         }
     }
 
@@ -269,12 +279,20 @@ final class ProfileViewController: StreamableViewController {
 
 extension ProfileViewController: ProfileScreenDelegate {
     func mentionTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         createPost(text: "\(user.atName) ", fromController: self)
     }
 
     func hireTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         Tracker.shared.tappedHire(user)
@@ -283,6 +301,10 @@ extension ProfileViewController: ProfileScreenDelegate {
     }
 
     func editTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         onEditProfile()
     }
 
@@ -291,6 +313,10 @@ extension ProfileViewController: ProfileScreenDelegate {
     }
 
     func collaborateTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
         guard let user = user else { return }
 
         Tracker.shared.tappedCollaborate(user)
@@ -386,7 +412,12 @@ extension ProfileViewController: ProfileHeaderResponder {
             noResultsTitle = InterfaceString.Loves.NoResultsTitle
             noResultsBody = InterfaceString.Loves.NoResultsBody
         }
-        streamViewController.showSimpleStream(endpoint: .loves(userId: user.id), title: InterfaceString.Loves.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+
+        streamViewController.showSimpleStream(
+            boxedEndpoint: BoxedElloAPI(endpoint: .loves(userId: user.id)),
+            title: InterfaceString.Loves.Title,
+            noResultsMessages: NoResultsMessages(title: noResultsTitle, body: noResultsBody)
+        )
     }
 
     func onFollowersTapped(_ cell: UICollectionViewCell) {
@@ -402,7 +433,12 @@ extension ProfileViewController: ProfileHeaderResponder {
             noResultsTitle = InterfaceString.Followers.NoResultsTitle
             noResultsBody = InterfaceString.Followers.NoResultsBody
         }
-        streamViewController.showSimpleStream(endpoint: .userStreamFollowers(userId: user.id), title: InterfaceString.Followers.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+
+        streamViewController.showSimpleStream(
+            boxedEndpoint: BoxedElloAPI(endpoint: .userStreamFollowers(userId: user.id)),
+            title: InterfaceString.Followers.Title,
+            noResultsMessages: NoResultsMessages(title: noResultsTitle, body: noResultsBody)
+        )
     }
 
     func onFollowingTapped(_ cell: UICollectionViewCell) {
@@ -418,7 +454,12 @@ extension ProfileViewController: ProfileHeaderResponder {
             noResultsTitle = InterfaceString.Following.NoResultsTitle
             noResultsBody = InterfaceString.Following.NoResultsBody
         }
-        streamViewController.showSimpleStream(endpoint: .userStreamFollowing(userId: user.id), title: InterfaceString.Following.Title, noResultsMessages: (title: noResultsTitle, body: noResultsBody))
+
+        streamViewController.showSimpleStream(
+            boxedEndpoint: BoxedElloAPI(endpoint: .userStreamFollowing(userId: user.id)),
+            title: InterfaceString.Following.Title,
+            noResultsMessages: NoResultsMessages(title: noResultsTitle, body: noResultsBody)
+        )
     }}
 
 
@@ -426,6 +467,11 @@ extension ProfileViewController: ProfileHeaderResponder {
 extension ProfileViewController: EditProfileResponder {
 
     func onEditProfile() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
+
         guard let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController else { return }
         settings.currentUser = currentUser
         navigationController?.pushViewController(settings, animated: true)

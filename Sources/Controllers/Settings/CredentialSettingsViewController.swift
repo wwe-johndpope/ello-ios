@@ -6,7 +6,8 @@ import Foundation
 
 private let CredentialSettingsSubmitViewHeight: CGFloat = 128
 
-protocol CredentialSettingsDelegate: class {
+@objc
+protocol CredentialSettingsResponder: class {
     func credentialSettingsUserChanged(_ user: User)
     func credentialSettingsDidUpdate()
 }
@@ -34,7 +35,7 @@ class CredentialSettingsViewController: UITableViewController {
             }
         }
     }
-    weak var delegate: CredentialSettingsDelegate?
+
     var validationCancel: BasicBlock?
 
     var isUpdatable: Bool {
@@ -177,7 +178,8 @@ class CredentialSettingsViewController: UITableViewController {
     }
 
     func valueChanged() {
-        delegate?.credentialSettingsDidUpdate()
+        let responder = target(forAction: #selector(CredentialSettingsResponder.credentialSettingsDidUpdate), withSender: self) as? CredentialSettingsResponder
+        responder?.credentialSettingsDidUpdate()
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -211,10 +213,13 @@ class CredentialSettingsViewController: UITableViewController {
             content["password_confirmation"] = password as AnyObject?
         }
 
-        ProfileService().updateUserProfile(content, success: { user in
-            self.delegate?.credentialSettingsUserChanged(user)
+        ProfileService().updateUserProfile(content, success: { [weak self] user in
+            guard let `self` = self else { return }
+            let responder = self.target(forAction: #selector(CredentialSettingsResponder.credentialSettingsUserChanged(_:)), withSender: self) as? CredentialSettingsResponder
+            responder?.credentialSettingsUserChanged(user)
             self.resetViews()
-        }, failure: { error, _ in
+        }, failure: { [weak self] error, _ in
+            guard let `self` = self else { return }
             self.currentPasswordField.text = ""
             self.passwordView.textField.text = ""
 

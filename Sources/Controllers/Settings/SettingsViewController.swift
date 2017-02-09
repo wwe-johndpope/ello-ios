@@ -194,7 +194,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             hideHud()
         }
 
-        ProfileService().loadCurrentUser(success: { user in
+        ProfileService().loadCurrentUser(success: { [weak self] user in
+            guard let `self` = self else { return }
             self.updateCurrentUser(user)
             hideHud()
         }, failure: { error in
@@ -419,7 +420,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         case "CredentialSettingsSegue":
             credentialSettingsViewController = segue.destination as? CredentialSettingsViewController
             credentialSettingsViewController?.currentUser = currentUser
-            credentialSettingsViewController?.delegate = self
 
         case "DynamicSettingsSegue":
             dynamicSettingsViewController = segue.destination as? DynamicSettingsViewController
@@ -510,7 +510,7 @@ extension SettingsViewController {
     }
 }
 
-extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDelegate {
+extension SettingsViewController: CredentialSettingsResponder, DynamicSettingsDelegate {
     func dynamicSettingsUserChanged(_ user: User) {
         updateCurrentUser(user)
     }

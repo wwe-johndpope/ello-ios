@@ -11,6 +11,7 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
         static let buttonInset: CGFloat = 10
         static let loginButtonWidth: CGFloat = 75
         static let closeButtonOffset = CGPoint(x: 6, y: -5)
+        static let textMargin: CGFloat = 20
     }
 
     let controllerView = UIView()
@@ -21,6 +22,7 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
     let joinLabel = StyledLabel(style: .Large)
     let tagLabel = StyledLabel(style: .Black)
     weak var delegate: LoggedOutProtocol?
+    fileprivate let debouncedHideText = debounce(5)
 
     var bottomBarCollapsedConstraint: Constraint!
     var bottomBarExpandedConstraint: Constraint!
@@ -78,18 +80,18 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
         bottomBarView.snp.makeConstraints { make in
             make.trailing.leading.bottom.equalTo(self)
             bottomBarCollapsedConstraint = make.height.equalTo(Size.bottomBarHeight).constraint
-            bottomBarExpandedConstraint = make.top.equalTo(joinLabel.snp.top).offset(-20).constraint
+            bottomBarExpandedConstraint = make.top.equalTo(joinLabel.snp.top).offset(-Size.textMargin).constraint
         }
         bottomBarExpandedConstraint.deactivate()
 
         tagLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(bottomBarView).inset(Size.buttonInset)
-            make.bottom.equalTo(joinButton.snp.top).offset(-20)
+            make.bottom.equalTo(joinButton.snp.top).offset(-Size.textMargin)
         }
 
         joinLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(bottomBarView).inset(Size.buttonInset)
-            make.bottom.equalTo(tagLabel.snp.top).offset(-20)
+            make.bottom.equalTo(tagLabel.snp.top).offset(-Size.textMargin)
         }
 
         joinButton.snp.makeConstraints { make in
@@ -122,9 +124,16 @@ extension LoggedOutScreen {
     func showJoinText() {
         bottomBarCollapsedConstraint.deactivate()
         bottomBarExpandedConstraint.activate()
+        let height = Size.textMargin + joinLabel.frame.height + Size.textMargin + tagLabel.frame.height + Size.textMargin + joinButton.frame.height + Size.buttonInset
         animate {
-            self.layoutIfNeeded()
+            self.bottomBarView.frame = self.bounds.fromBottom().grow(up: height)
+            self.joinLabel.frame.origin.y = Size.textMargin
+            self.tagLabel.frame.origin.y = self.joinLabel.frame.maxY + Size.textMargin
+            self.joinButton.frame.origin.y = self.tagLabel.frame.maxY + Size.textMargin
+            self.loginButton.frame.origin.y = self.tagLabel.frame.maxY + Size.textMargin
+            self.closeButton.frame.origin.y = self.joinLabel.frame.y + Size.closeButtonOffset.y
         }
+        debouncedHideText { [weak self] in self?.hideJoinText() }
     }
 
     @objc

@@ -28,7 +28,6 @@ class CategoriesSelectionViewController: StreamableViewController {
         super.viewDidLoad()
 
         streamViewController.pullToRefreshEnabled = false
-        streamViewController.selectedCategoryDelegate = self
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }
@@ -53,6 +52,7 @@ class CategoriesSelectionViewController: StreamableViewController {
 }
 
 extension CategoriesSelectionViewController: OnboardingStepController {
+
     func onboardingStepBegin() {
         let prompt = NSString(format: InterfaceString.Onboard.PickTemplate as NSString, 3) as String
         onboardingViewController?.hasAbortButton = false
@@ -88,7 +88,8 @@ extension CategoriesSelectionViewController: OnboardingStepController {
     }
 }
 
-extension CategoriesSelectionViewController: SelectedCategoryDelegate {
+extension CategoriesSelectionViewController: SelectedCategoryResponder {
+
     func categoriesSelectionChanged(selection: [Category]) {
         let selectionCount = selection.count
         let prompt: String?

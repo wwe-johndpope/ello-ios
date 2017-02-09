@@ -9,20 +9,20 @@ import SwiftyUserDefaults
 import DeltaCalculator
 
 
-// MARK: Delegate Implementations
-protocol InviteDelegate: class {
-    func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion)
+// MARK: Responder Implementations
+
+@objc
+protocol SimpleStreamResponder: class {
+    func showSimpleStream(boxedEndpoint: BoxedElloAPI, title: String, noResultsMessages: NoResultsMessages?)
 }
 
-protocol SimpleStreamDelegate: class {
-    func showSimpleStream(endpoint: ElloAPI, title: String, noResultsMessages: (title: String, body: String)?)
-}
-
-protocol StreamImageCellDelegate: class {
+@objc
+protocol StreamImageCellResponder: class {
     func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell)
 }
 
-protocol StreamEditingDelegate: class {
+@objc
+protocol StreamEditingResponder: class {
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint)
     func cellLongPressed(cell: UICollectionViewCell)
 }
@@ -36,24 +36,27 @@ protocol StreamViewDelegate: class {
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
 }
 
-protocol CategoryDelegate: class {
+@objc
+protocol CategoryResponder: class {
     func categoryCellTapped(cell: UICollectionViewCell)
 }
 
-protocol SelectedCategoryDelegate: class {
+@objc
+protocol SelectedCategoryResponder: class {
     func categoriesSelectionChanged(selection: [Category])
 }
 
-protocol UserDelegate: class {
+@objc
+protocol UserResponder: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
     func userTappedText(cell: UICollectionViewCell)
-    func userTappedFeaturedCategories(cell: UICollectionViewCell)
     func userTapped(user: User)
 }
 
-protocol WebLinkDelegate: class {
-    func webLinkTapped(path: String, type: ElloURI, data: String)
+@objc
+protocol WebLinkResponder: class {
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String)
 }
 
 @objc
@@ -61,26 +64,42 @@ protocol GridListToggleDelegate: class {
     func gridListToggled(_ sender: UIButton)
 }
 
-protocol CategoryListCellDelegate: class {
+@objc
+protocol CategoryListCellResponder: class {
     func categoryListCellTapped(slug: String, name: String)
 }
 
-protocol SearchStreamDelegate: class {
+@objc
+protocol SearchStreamResponder: class {
     func searchFieldChanged(text: String)
 }
 
-protocol AnnouncementCellDelegate: class {
+@objc
+protocol AnnouncementCellResponder: class {
     func markAnnouncementAsRead(cell: UICollectionViewCell)
 }
 
-protocol AnnouncementDelegate: class {
+@objc
+protocol AnnouncementResponder: class {
     func markAnnouncementAsRead(announcement: Announcement)
 }
+
 
 // MARK: StreamNotification
 struct StreamNotification {
     static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
     static let UpdateCellHeightNotification = TypedNotification<UICollectionViewCell>(name: "UpdateCellHeightNotification")
+}
+
+// This is an NSObject in order to pass it as an
+// objective-c argument to a responder chain call
+class NoResultsMessages: NSObject {
+    let title: String
+    let body: String
+    init(title: String, body: String) {
+        self.title = title
+        self.body = body
+    }
 }
 
 // MARK: StreamViewController
@@ -94,7 +113,7 @@ final class StreamViewController: BaseElloViewController {
 
     var currentJSONables = [JSONAble]()
 
-    var noResultsMessages = (title: "", body: "") {
+    var noResultsMessages: NoResultsMessages = NoResultsMessages(title: "", body: "") {
         didSet {
             let titleParagraphStyle = NSMutableParagraphStyle()
             titleParagraphStyle.lineSpacing = 17
@@ -124,7 +143,6 @@ final class StreamViewController: BaseElloViewController {
 
     var dataSource: StreamDataSource!
     var postbarController: PostbarController?
-    var relationshipController: RelationshipController?
     var responseConfig: ResponseConfig?
     var pagingEnabled = false
     fileprivate var scrollToPaginateGuard = false
@@ -166,20 +184,7 @@ final class StreamViewController: BaseElloViewController {
     var settingChangedNotification: NotificationObserver?
     var currentUserChangedNotification: NotificationObserver?
 
-    weak var createPostDelegate: CreatePostDelegate?
-    weak var postTappedDelegate: PostTappedDelegate?
-    weak var userTappedDelegate: UserTappedDelegate?
     weak var streamViewDelegate: StreamViewDelegate?
-    weak var selectedCategoryDelegate: SelectedCategoryDelegate?
-    weak var announcementDelegate: AnnouncementDelegate?
-    var searchStreamDelegate: SearchStreamDelegate? {
-        get { return dataSource.searchStreamDelegate }
-        set { dataSource.searchStreamDelegate = newValue }
-    }
-    var notificationDelegate: NotificationDelegate? {
-        get { return dataSource.notificationDelegate }
-        set { dataSource.notificationDelegate = newValue }
-    }
 
     var streamFilter: StreamDataSource.StreamFilter {
         get { return dataSource.streamFilter }
@@ -227,7 +232,6 @@ final class StreamViewController: BaseElloViewController {
 
     override func didSetCurrentUser() {
         dataSource.currentUser = currentUser
-        relationshipController?.currentUser = currentUser
         postbarController?.currentUser = currentUser
         super.didSetCurrentUser()
     }
@@ -601,27 +605,26 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
+    override var next: UIResponder? {
+        return postbarController
+    }
+
     fileprivate func setupCollectionView() {
-        let postbarController = PostbarController(collectionView: collectionView, dataSource: dataSource, presentingController: self)
+        let postbarController = PostbarController(collectionView: collectionView, dataSource: dataSource)
         postbarController.currentUser = currentUser
-        dataSource.postbarDelegate = postbarController
+
+        // next is a closure due to the need
+        // to lazily evaluate it at runtime. `super.next` is not available
+        // at assignment but is present when the responder is used later on
+        let chainableController = ResponderChainableController(
+            controller: self,
+            next: { [weak self] in
+                return self?.superNext
+            }
+        )
+
+        postbarController.responderChainable = chainableController
         self.postbarController = postbarController
-
-        let relationshipController = RelationshipController(presentingController: self)
-        relationshipController.currentUser = self.currentUser
-        self.relationshipController = relationshipController
-
-        // set delegates
-        dataSource.imageDelegate = self
-        dataSource.editingDelegate = self
-        dataSource.inviteDelegate = self
-        dataSource.simpleStreamDelegate = self
-        dataSource.categoryDelegate = self
-        dataSource.userDelegate = self
-        dataSource.webLinkDelegate = self
-        dataSource.categoryListCellDelegate = self
-        dataSource.announcementCellDelegate = self
-        dataSource.relationshipDelegate = relationshipController
 
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -677,32 +680,8 @@ final class StreamViewController: BaseElloViewController {
 
 }
 
-// MARK: DELEGATE EXTENSIONS
+// MARK: DELEGATE & RESPONDER EXTENSIONS
 
-// MARK: StreamViewController: InviteDelegate
-extension StreamViewController: InviteDelegate {
-
-    func sendInvite(person: LocalPerson, isOnboarding: Bool, didUpdate: @escaping ElloEmptyCompletion) {
-        guard let email = person.emails.first else { return }
-
-        if isOnboarding {
-            Tracker.shared.onboardingFriendInvited()
-        }
-        else {
-            Tracker.shared.friendInvited()
-        }
-        ElloHUD.showLoadingHudInView(view)
-        InviteService().invite(email,
-            success: {
-                ElloHUD.hideLoadingHudInView(self.view)
-                didUpdate()
-            },
-            failure: { _ in
-                ElloHUD.hideLoadingHudInView(self.view)
-                didUpdate()
-            })
-    }
-}
 
 // MARK: StreamViewController: GridListToggleDelegate
 extension StreamViewController: GridListToggleDelegate {
@@ -752,8 +731,8 @@ extension StreamViewController: GridListToggleDelegate {
     }
 }
 
-// MARK: StreamViewController: CategoryListCellDelegate
-extension StreamViewController: CategoryListCellDelegate {
+// MARK: StreamViewController: CategoryListCellResponder
+extension StreamViewController: CategoryListCellResponder {
 
     func categoryListCellTapped(slug: String, name: String) {
         showCategoryViewController(slug: slug, name: name)
@@ -761,10 +740,11 @@ extension StreamViewController: CategoryListCellDelegate {
 
 }
 
-// MARK: StreamViewController: SimpleStreamDelegate
-extension StreamViewController: SimpleStreamDelegate {
-    func showSimpleStream(endpoint: ElloAPI, title: String, noResultsMessages: (title: String, body: String)? = nil ) {
-        let vc = SimpleStreamViewController(endpoint: endpoint, title: title)
+// MARK: StreamViewController: SimpleStreamResponder
+extension StreamViewController: SimpleStreamResponder {
+
+    func showSimpleStream(boxedEndpoint: BoxedElloAPI, title: String, noResultsMessages: NoResultsMessages? = nil) {
+        let vc = SimpleStreamViewController(endpoint: boxedEndpoint.endpoint, title: title)
         vc.currentUser = currentUser
         if let messages = noResultsMessages {
             vc.streamViewController.noResultsMessages = messages
@@ -775,6 +755,7 @@ extension StreamViewController: SimpleStreamDelegate {
 
 // MARK: StreamViewController: SSPullToRefreshViewDelegate
 extension StreamViewController: SSPullToRefreshViewDelegate {
+
     func pull(toRefreshViewShouldStartLoading view: SSPullToRefreshView!) -> Bool {
         return pullToRefreshEnabled
     }
@@ -824,59 +805,63 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     }
 }
 
-// MARK: StreamViewController: StreamEditingDelegate
-extension StreamViewController: StreamEditingDelegate {
+// MARK: StreamViewController: StreamEditingResponder
+extension StreamViewController: StreamEditingResponder {
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint) {
-        if let path = collectionView.indexPath(for: cell),
+        guard let path = collectionView.indexPath(for: cell),
             let post = dataSource.postForIndexPath(path),
-            let footerPath = dataSource.footerIndexPathForPost(post)
-        {
-            guard post.author?.hasLovesEnabled == true else { return }
+            let footerPath = dataSource.footerIndexPathForPost(post),
+            post.author?.hasLovesEnabled == true
+        else { return }
 
-            if let window = cell.window {
-                let fullDuration: TimeInterval = 0.4
-                let halfDuration: TimeInterval = fullDuration / 2
+        if let window = cell.window {
+            let fullDuration: TimeInterval = 0.4
+            let halfDuration: TimeInterval = fullDuration / 2
 
-                let imageView = UIImageView(image: InterfaceImage.giantHeart.normalImage)
-                imageView.contentMode = .scaleAspectFit
-                imageView.frame = window.bounds
-                imageView.center = location
-                imageView.alpha = 0
-                imageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-                let grow: () -> Void = { imageView.transform = CGAffineTransform(scaleX: 1, y: 1) }
-                let remove: (Bool) -> Void = { _ in imageView.removeFromSuperview() }
-                let fadeIn: () -> Void = { imageView.alpha = 0.5 }
-                let fadeOut: (Bool) -> Void = { _ in animate(duration: halfDuration, completion: remove) { imageView.alpha = 0 } }
-                animate(duration: halfDuration, completion: fadeOut, animations: fadeIn)
-                animate(duration: fullDuration, completion: remove, animations: grow)
-                window.addSubview(imageView)
-            }
+            let imageView = UIImageView(image: InterfaceImage.giantHeart.normalImage)
+            imageView.contentMode = .scaleAspectFit
+            imageView.frame = window.bounds
+            imageView.center = location
+            imageView.alpha = 0
+            imageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            let grow: () -> Void = { imageView.transform = CGAffineTransform(scaleX: 1, y: 1) }
+            let remove: (Bool) -> Void = { _ in imageView.removeFromSuperview() }
+            let fadeIn: () -> Void = { imageView.alpha = 0.5 }
+            let fadeOut: (Bool) -> Void = { _ in animate(duration: halfDuration, completion: remove) { imageView.alpha = 0 } }
+            animate(duration: halfDuration, completion: fadeOut, animations: fadeIn)
+            animate(duration: fullDuration, completion: remove, animations: grow)
+            window.addSubview(imageView)
+        }
 
-            if !post.loved {
-                let footerCell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
-                postbarController?.lovesButtonTapped(footerCell, indexPath: footerPath)
-            }
+        if !post.loved {
+            let footerCell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
+            postbarController?.lovesButtonTapped(footerCell, indexPath: footerPath)
         }
     }
 
     func cellLongPressed(cell: UICollectionViewCell) {
-        if let indexPath = collectionView.indexPath(for: cell),
-            let post = dataSource.postForIndexPath(indexPath),
-            let currentUser = currentUser, currentUser.isOwn(post: post)
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let currentUser = currentUser
+        else { return }
+
+        if let post = dataSource.postForIndexPath(indexPath),
+            currentUser.isOwn(post: post)
         {
-            createPostDelegate?.editPost(post, fromController: self)
+            let responder = target(forAction: #selector(CreatePostResponder.editPost(_:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.editPost(post, fromController: self)
         }
-        else if let indexPath = collectionView.indexPath(for: cell),
-            let comment = dataSource.commentForIndexPath(indexPath),
-            let currentUser = currentUser, currentUser.isOwn(comment: comment)
+        else if let comment = dataSource.commentForIndexPath(indexPath),
+            currentUser.isOwn(comment: comment)
         {
-            createPostDelegate?.editComment(comment, fromController: self)
+            let responder = target(forAction: #selector(CreatePostResponder.editComment(_:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.editComment(comment, fromController: self)
         }
     }
 }
 
-// MARK: StreamViewController: StreamImageCellDelegate
-extension StreamViewController: StreamImageCellDelegate {
+// MARK: StreamViewController: StreamImageCellResponder
+extension StreamViewController: StreamImageCellResponder {
     func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell) {
         let indexPath = collectionView.indexPath(for: cell)
         let post = indexPath.flatMap(dataSource.postForIndexPath)
@@ -884,7 +869,8 @@ extension StreamViewController: StreamImageCellDelegate {
 
         if streamKind.isGridView || cell.isGif {
             if let post = post {
-                postTappedDelegate?.postTapped(post)
+                let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
+                responder?.postTapped(post)
             }
         }
         else if let imageViewer = imageViewer {
@@ -894,14 +880,6 @@ extension StreamViewController: StreamImageCellDelegate {
                 Tracker.shared.viewedImage(asset, post: post)
             }
         }
-    }
-}
-
-// MARK: StreamViewController: Commenting
-extension StreamViewController {
-
-    func createCommentTapped(_ postId: String) {
-        createPostDelegate?.createComment(postId, text: nil, fromController: self)
     }
 }
 
@@ -920,8 +898,8 @@ extension StreamViewController {
     }
 }
 
-// MARK: StreamViewController: CategoryDelegate
-extension StreamViewController: CategoryDelegate {
+// MARK: StreamViewController: CategoryResponder
+extension StreamViewController: CategoryResponder {
 
     func categoryCellTapped(cell: UICollectionViewCell) {
         guard
@@ -935,8 +913,8 @@ extension StreamViewController: CategoryDelegate {
 }
 
 
-// MARK: StreamViewController: UserDelegate
-extension StreamViewController: UserDelegate {
+// MARK: StreamViewController: UserResponder
+extension StreamViewController: UserResponder {
 
     func userTappedText(cell: UICollectionViewCell) {
         guard streamKind.tappingTextOpensDetail,
@@ -947,7 +925,8 @@ extension StreamViewController: UserDelegate {
     }
 
     func userTapped(user: User) {
-        userTappedDelegate?.userTapped(user)
+        let responder = target(forAction: #selector(UserTappedResponder.userTapped(_:)), withSender: self) as? UserTappedResponder
+        responder?.userTapped(user)
     }
 
     func userTappedAuthor(cell: UICollectionViewCell) {
@@ -967,32 +946,18 @@ extension StreamViewController: UserDelegate {
 
         userTapped(user: reposter)
     }
-
-    func userTappedUser(_ user: User) {
-        userTapped(user: user)
-    }
-
-    func userTappedFeaturedCategories(cell: UICollectionViewCell) {
-        guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let user = dataSource.userForIndexPath(indexPath)
-        else { return }
-
-        print("\(user.atName) userTappedFeaturedCategories()")
-    }
-
 }
 
-// MARK: StreamViewController: WebLinkDelegate
-extension StreamViewController: WebLinkDelegate {
+// MARK: StreamViewController: WebLinkResponder
+extension StreamViewController: WebLinkResponder {
 
-    func webLinkTapped(path: String, type: ElloURI, data: String) {
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
         guard
             let parentController = parent as? HasAppController,
             let appViewController = parentController.appViewController
         else { return }
 
-        appViewController.navigateToURI(path: path, type: type, data: data)
+        appViewController.navigateToURI(path: path, type: type.uri, data: data)
     }
 
     fileprivate func selectTab(_ tab: ElloTab) {
@@ -1000,15 +965,17 @@ extension StreamViewController: WebLinkDelegate {
     }
 }
 
-// MARK: StreamViewController: AnnouncementCellDelegate
-extension StreamViewController: AnnouncementCellDelegate {
+// MARK: StreamViewController: AnnouncementCellResponder
+extension StreamViewController: AnnouncementCellResponder {
+
     func markAnnouncementAsRead(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement
         else { return }
 
-        announcementDelegate?.markAnnouncementAsRead(announcement: announcement)
+        let responder = target(forAction: #selector(AnnouncementResponder.markAnnouncementAsRead(announcement:) ), withSender: self) as? AnnouncementResponder
+        responder?.markAnnouncementAsRead(announcement: announcement)
     }
 }
 
@@ -1022,15 +989,17 @@ extension StreamViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let tappedCell = collectionView.cellForItem(at: indexPath)
-
-        if let item = dataSource.visibleStreamCellItem(at: indexPath),
+        guard
+            let tappedCell = collectionView.cellForItem(at: indexPath),
+            let item = dataSource.visibleStreamCellItem(at: indexPath),
             let paths = collectionView.indexPathsForSelectedItems,
             tappedCell is CategoryCardCell && item.type == .selectableCategoryCard
-        {
-            let selection = paths.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
-            selectedCategoryDelegate?.categoriesSelectionChanged(selection: selection)
-        }
+        else { return }
+
+        let selection = paths.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
+
+        let responder = target(forAction: #selector(SelectedCategoryResponder.categoriesSelectionChanged(selection:)), withSender: self) as? SelectedCategoryResponder
+        responder?.categoriesSelectionChanged(selection: selection)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -1050,16 +1019,19 @@ extension StreamViewController: UICollectionViewDelegate {
             if let lastComment = dataSource.commentForIndexPath(indexPath),
                 let post = lastComment.loadedFromPost
             {
-                postTappedDelegate?.postTapped(post, scrollToComment: lastComment)
+                let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:scrollToComment:)), withSender: self) as? PostTappedResponder
+                responder?.postTapped(post, scrollToComment: lastComment)
             }
         }
         else if let post = dataSource.postForIndexPath(indexPath) {
-            postTappedDelegate?.postTapped(post)
+            let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
+            responder?.postTapped(post)
         }
         else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             let postId = notification.postId
         {
-            postTappedDelegate?.postTapped(postId: postId)
+            let responder = target(forAction: #selector(PostTappedResponder.postTapped(postId:)), withSender: self) as? PostTappedResponder
+            responder?.postTapped(postId: postId)
         }
         else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             let user = notification.subject as? User
@@ -1071,10 +1043,11 @@ extension StreamViewController: UICollectionViewDelegate {
         {
             Tracker.shared.announcementOpened(announcement)
             let request = URLRequest(url: callToAction)
-            ElloWebViewHelper.handle(request: request, webLinkDelegate: self)
+            ElloWebViewHelper.handle(request: request, origin: self)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath) {
-            createCommentTapped(comment.loadedFromPostId)
+            let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+            responder?.createComment(comment.loadedFromPostId, text: nil, fromController: self)
         }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
             let category = dataSource.jsonableForIndexPath(indexPath) as? Category
@@ -1083,7 +1056,9 @@ extension StreamViewController: UICollectionViewDelegate {
                 keepSelected = true
                 let paths = collectionView.indexPathsForSelectedItems
                 let selection = paths?.flatMap { dataSource.jsonableForIndexPath($0) as? Category }
-                selectedCategoryDelegate?.categoriesSelectionChanged(selection: selection ?? [Category]())
+
+                let responder = target(forAction: #selector(SelectedCategoryResponder.categoriesSelectionChanged(selection:)), withSender: self) as? SelectedCategoryResponder
+                responder?.categoriesSelectionChanged(selection: selection ?? [Category]())
             }
             else {
                 showCategoryViewController(slug: category.slug, name: category.name)

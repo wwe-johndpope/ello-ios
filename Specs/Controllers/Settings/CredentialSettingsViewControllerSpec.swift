@@ -110,27 +110,24 @@ class CredentialSettingsViewControllerSpec: QuickSpec {
 
             describe("valueChanged") {
                 it("calls the delegate function when email is set") {
-                    showController(subject)
-                    let fake = FakeCredentialSettingsDelegate()
-                    subject.delegate = fake
+                    let fake = FakeCredentialSettingsResponder()
+                    showController(subject, window: fake)
                     subject.emailView.textField.text = "email@example.com"
                     subject.emailView.textField.sendActions(for: .editingChanged)
                     expect(fake.didCall).to(beTrue())
                 }
 
                 it("calls the delegate function when username is set") {
-                    showController(subject)
-                    let fake = FakeCredentialSettingsDelegate()
-                    subject.delegate = fake
+                    let fake = FakeCredentialSettingsResponder()
+                    showController(subject, window: fake)
                     subject.usernameView.textField.text = "username"
                     subject.usernameView.textField.sendActions(for: .editingChanged)
                     expect(fake.didCall).to(beTrue())
                 }
 
                 it("calls the delegate function when password is set") {
-                    showController(subject)
-                    let fake = FakeCredentialSettingsDelegate()
-                    subject.delegate = fake
+                    let fake = FakeCredentialSettingsResponder()
+                    showController(subject, window: fake)
                     subject.passwordView.textField.text = "pa$$w0rd"
                     subject.passwordView.textField.sendActions(for: .editingChanged)
                     expect(fake.didCall).to(beTrue())
@@ -175,7 +172,7 @@ class CredentialSettingsViewControllerSpec: QuickSpec {
     }
 }
 
-class FakeCredentialSettingsDelegate: CredentialSettingsDelegate {
+class FakeCredentialSettingsResponder: UIWindow, CredentialSettingsResponder {
     var didCall = false
     var didSetUser = false
 

@@ -11,7 +11,6 @@ class UserListItemCell: UICollectionViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     weak var relationshipControl: RelationshipControl!
-    weak var userDelegate: UserDelegate?
     var bottomBorder = CALayer()
 
     override func awakeFromNib() {
@@ -50,6 +49,7 @@ class UserListItemCell: UICollectionViewCell {
     }
 
     @IBAction func userTapped(_ sender: AvatarButton) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 }

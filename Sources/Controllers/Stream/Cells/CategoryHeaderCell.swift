@@ -49,9 +49,6 @@ class CategoryHeaderCell: UICollectionViewCell {
         static let failImageHeight: CGFloat = 160
     }
 
-    weak var webLinkDelegate: WebLinkDelegate?
-    weak var userDelegate: UserDelegate?
-
     let imageView = FLAnimatedImageView()
     let imageOverlay = UIView()
     let titleLabel = UILabel()
@@ -169,20 +166,20 @@ class CategoryHeaderCell: UICollectionViewCell {
         super.prepareForReuse()
         let config = Config(style: .category)
         self.config = config
-        webLinkDelegate = nil
-        userDelegate = nil
     }
 
     func postedByTapped() {
         Tracker.shared.categoryHeaderPostedBy(config.tracking)
-        userDelegate?.userTappedAuthor(cell: self)
+
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
     func callToActionTapped() {
         guard let url = callToActionURL else { return }
         Tracker.shared.categoryHeaderCallToAction(config.tracking)
         let request = URLRequest(url: url)
-        ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
+        ElloWebViewHelper.handle(request: request, origin: self)
     }
 }
 

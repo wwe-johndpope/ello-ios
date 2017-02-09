@@ -2,18 +2,21 @@
 ///  StreamableViewController.swift
 //
 
-protocol PostTappedDelegate: class {
+@objc
+protocol PostTappedResponder: class {
     func postTapped(_ post: Post)
     func postTapped(_ post: Post, scrollToComment: ElloComment?)
     func postTapped(postId: String)
 }
 
-protocol UserTappedDelegate: class {
+@objc
+protocol UserTappedResponder: class {
     func userTapped(_ user: User)
     func userParamTapped(_ param: String, username: String?)
 }
 
-protocol CreatePostDelegate: class {
+@objc
+protocol CreatePostResponder: class {
     func createPost(text: String?, fromController: UIViewController)
     func createComment(_ postId: String, text: String?, fromController: UIViewController)
     func editComment(_ comment: ElloComment, fromController: UIViewController)
@@ -21,11 +24,12 @@ protocol CreatePostDelegate: class {
 }
 
 @objc
-protocol InviteResponder: NSObjectProtocol {
+protocol InviteResponder: class {
     func onInviteFriends()
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion)
 }
 
-class StreamableViewController: BaseElloViewController, PostTappedDelegate {
+class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false
     let streamViewController = StreamViewController.instantiateFromStoryboard()
@@ -33,9 +37,6 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     func setupStreamController() {
         streamViewController.currentUser = currentUser
         streamViewController.streamViewDelegate = self
-        streamViewController.userTappedDelegate = self
-        streamViewController.postTappedDelegate = self
-        streamViewController.createPostDelegate = self
 
         streamViewController.willMove(toParentViewController: self)
         let containerForStream = viewForStream()
@@ -141,8 +142,10 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
             bottomBarController.setNavigationBarsVisible(false, animated: true)
         }
     }
+}
 
-// MARK: PostTappedDelegate
+// MARK: PostTappedResponder
+extension StreamableViewController: PostTappedResponder {
 
     func postTapped(_ post: Post) {
         self.postTapped(postId: post.id, scrollToComment: nil)
@@ -164,8 +167,9 @@ class StreamableViewController: BaseElloViewController, PostTappedDelegate {
     }
 }
 
-// MARK: UserTappedDelegate
-extension StreamableViewController: UserTappedDelegate {
+// MARK: UserTappedResponder
+extension StreamableViewController: UserTappedResponder {
+    
     func userTapped(_ user: User) {
         guard user.relationshipPriority != .block else { return }
         userParamTapped(user.id, username: user.username)
@@ -196,8 +200,8 @@ extension StreamableViewController: UserTappedDelegate {
     }
 }
 
-// MARK: CreatePostDelegate
-extension StreamableViewController: CreatePostDelegate {
+// MARK: CreatePostResponder
+extension StreamableViewController: CreatePostResponder {
     func createPost(text: String?, fromController: UIViewController) {
         let vc = OmnibarViewController(defaultText: text)
         vc.currentUser = self.currentUser
@@ -278,7 +282,13 @@ extension StreamableViewController: StreamViewDelegate {
 
 // MARK: InviteResponder
 extension StreamableViewController: InviteResponder {
+
     func onInviteFriends() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            return
+        }
+
         Tracker.shared.inviteFriendsTapped()
         AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
             switch result {
@@ -309,4 +319,26 @@ extension StreamableViewController: InviteResponder {
         })
     }
 
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion) {
+        guard let email = person.emails.first else { return }
+
+        if isOnboarding {
+            Tracker.shared.onboardingFriendInvited()
+        }
+        else {
+            Tracker.shared.friendInvited()
+        }
+        ElloHUD.showLoadingHudInView(view)
+        InviteService().invite(email,
+            success: { [weak self] in
+                guard let `self` = self else { return }
+                ElloHUD.hideLoadingHudInView(self.view)
+                completion()
+            },
+            failure: { [weak self] _ in
+                guard let `self` = self else { return }
+                ElloHUD.hideLoadingHudInView(self.view)
+                completion()
+            })
+    }
 }
