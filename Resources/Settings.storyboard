@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Eqr-kF-k9D">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Eqr-kF-k9D">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,7 +20,7 @@
         <!--Settings Container-->
         <scene sceneID="zFX-gj-OJB">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Eqr-kF-k9D" userLabel="Settings Container" customClass="SettingsContainerViewController" customModule="Ello" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Eqr-kF-k9D" userLabel="Settings Container" customClass="SettingsContainerViewController" customModule="Ello" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j0s-TZ-Xwb"/>
                         <viewControllerLayoutGuide type="bottom" id="AHE-0k-TpT"/>
@@ -30,7 +30,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aiC-5l-KQt">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <connections>
                                     <segue destination="co9-Rd-OXG" kind="embed" identifier="SettingsContainerSegue" id="1q7-lL-eUh"/>
                                 </connections>
@@ -46,10 +46,10 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="aiC-5l-KQt" secondAttribute="centerX" id="04f-eX-Pq7"/>
+                            <constraint firstItem="aiC-5l-KQt" firstAttribute="top" secondItem="g32-5c-X1W" secondAttribute="top" id="0Se-xL-rwa"/>
                             <constraint firstAttribute="centerX" secondItem="RTz-hl-55m" secondAttribute="centerX" id="TNQ-UU-lfX"/>
                             <constraint firstItem="AHE-0k-TpT" firstAttribute="top" secondItem="aiC-5l-KQt" secondAttribute="bottom" id="VK2-qX-zjE"/>
                             <constraint firstItem="RTz-hl-55m" firstAttribute="top" secondItem="g32-5c-X1W" secondAttribute="top" id="Y8q-CX-nAW"/>
-                            <constraint firstItem="aiC-5l-KQt" firstAttribute="top" secondItem="RTz-hl-55m" secondAttribute="bottom" id="gXL-uA-ZGL"/>
                             <constraint firstAttribute="width" secondItem="RTz-hl-55m" secondAttribute="width" id="jEe-sK-OR6"/>
                             <constraint firstAttribute="width" secondItem="aiC-5l-KQt" secondAttribute="width" id="kTf-tw-q2C"/>
                         </constraints>
@@ -69,7 +69,7 @@
         <!--Settings-->
         <scene sceneID="hG7-9w-XAH">
             <objects>
-                <tableViewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="co9-Rd-OXG" customClass="SettingsViewController" customModule="Ello" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="co9-Rd-OXG" customClass="SettingsViewController" customModule="Ello" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="bSl-xt-2XL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,7 +140,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="200" height="195"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(tap to edit)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spU-yZ-sOq">
-                                                                    <rect key="frame" x="61.5" y="91.5" width="78" height="14"/>
+                                                                    <rect key="frame" x="61.5" y="90.5" width="78" height="14"/>
                                                                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -275,7 +275,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-mg-wdp" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
-                                                    <rect key="frame" x="15" y="8" width="23" height="14"/>
+                                                    <rect key="frame" x="15" y="8" width="22.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                                                     <color key="textColor" red="0.60271793603897095" green="0.602699875831604" blue="0.60271012783050537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -290,7 +290,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ws-k3-vsf" customClass="StyledLabel" customModule="Ello" customModuleProvider="target">
-                                                    <rect key="frame" x="46" y="8" width="539" height="14"/>
+                                                    <rect key="frame" x="45.5" y="8" width="539.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
