@@ -4,8 +4,7 @@
 
 private let DynamicSettingsCellHeight: CGFloat = 50
 
-@objc
-protocol DynamicSettingsResponder: class {
+protocol DynamicSettingsDelegate: class {
     func dynamicSettingsUserChanged(_ user: User)
 }
 
@@ -37,6 +36,7 @@ class DynamicSettingsViewController: UITableViewController {
 
     var dynamicCategories: [DynamicSettingCategory] = []
     var currentUser: User?
+    weak var delegate: DynamicSettingsDelegate?
     var hideLoadingHud: BasicBlock = ElloHUD.hideLoadingHud
 
     var height: CGFloat {
@@ -175,6 +175,7 @@ class DynamicSettingsViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DynamicSettingCategorySegue" {
             let controller = segue.destination as! DynamicSettingCategoryViewController
+            controller.delegate = delegate
             let selectedIndexPath = tableView.indexPathForSelectedRow
 
             switch DynamicSettingsSection(rawValue: selectedIndexPath?.section ?? 0) ?? .unknown {
