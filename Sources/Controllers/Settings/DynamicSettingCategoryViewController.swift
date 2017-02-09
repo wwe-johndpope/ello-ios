@@ -48,7 +48,6 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
         {
             DynamicSettingCellPresenter.configure(cell, setting: setting, currentUser: user)
             cell.setting = setting
-            cell.delegate = self
         }
         return cell
     }
@@ -71,7 +70,7 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     }
 }
 
-extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
+extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
 
     typealias SettingConfig = (setting: DynamicSetting, indexPath: IndexPath, value: Bool, isVisible: Bool)
 
