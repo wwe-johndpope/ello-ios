@@ -5,7 +5,6 @@
 class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ControllerThatMightHaveTheCurrentUser {
     var category: DynamicSettingCategory?
     var currentUser: User?
-    weak var delegate: DynamicSettingsDelegate?
     @IBOutlet weak var tableView: UITableView!
     weak var navBar: ElloNavigationBar!
 
@@ -100,8 +99,11 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
         }
 
         ProfileService().updateUserProfile(updatedValues,
-            success: { user in
-                self.delegate?.dynamicSettingsUserChanged(user)
+            success: { [weak self] user in
+                guard let `self` = self else { return }
+                let responder = self.target(forAction: #selector(DynamicSettingsResponder.dynamicSettingsUserChanged(_:)), withSender: self) as? DynamicSettingsResponder
+
+                responder?.dynamicSettingsUserChanged(user)
 
                 let changedPaths = visibility.filter { config in
                     return self.settingChanged(config, user: user)

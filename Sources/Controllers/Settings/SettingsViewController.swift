@@ -424,7 +424,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         case "DynamicSettingsSegue":
             dynamicSettingsViewController = segue.destination as? DynamicSettingsViewController
             dynamicSettingsViewController?.currentUser = currentUser
-            dynamicSettingsViewController?.delegate = self
 
         default: break
         }
@@ -510,7 +509,7 @@ extension SettingsViewController {
     }
 }
 
-extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsDelegate {
+extension SettingsViewController: CredentialSettingsDelegate, DynamicSettingsResponder {
     func dynamicSettingsUserChanged(_ user: User) {
         updateCurrentUser(user)
     }
