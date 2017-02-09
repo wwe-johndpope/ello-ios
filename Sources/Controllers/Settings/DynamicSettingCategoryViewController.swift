@@ -113,7 +113,8 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
 
                 self.tableView.reloadRows(at: changedPaths, with: .automatic)
             },
-            failure: { (_, _) in
+            failure: { [weak self] (_, _) in
+                guard let `self` = self else { return }
                 self.tableView.reloadData()
             })
     }

@@ -194,7 +194,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             hideHud()
         }
 
-        ProfileService().loadCurrentUser(success: { user in
+        ProfileService().loadCurrentUser(success: { [weak self] user in
+            guard let `self` = self else { return }
             self.updateCurrentUser(user)
             hideHud()
         }, failure: { error in
