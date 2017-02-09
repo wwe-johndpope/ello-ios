@@ -14,8 +14,13 @@ struct StatusBarNotifications {
     static let statusBarShouldHide = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarShouldHide")
 }
 
+enum LoggedOutAction {
+    case relationshipChange
+    case postTool
+}
+
 struct LoggedOutNotifications {
-    static let userActionAttempted = TypedNotification<()>(name: "co.ello.LoggedOutNotifications.userActionAttempted")
+    static let userActionAttempted = TypedNotification<LoggedOutAction>(name: "co.ello.LoggedOutNotifications.userActionAttempted")
 }
 
 
