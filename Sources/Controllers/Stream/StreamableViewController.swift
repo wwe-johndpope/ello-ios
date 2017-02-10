@@ -285,7 +285,7 @@ extension StreamableViewController: InviteResponder {
 
     func onInviteFriends() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
 

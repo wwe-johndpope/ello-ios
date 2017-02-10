@@ -230,7 +230,7 @@ final class ProfileViewController: StreamableViewController {
 
     func moreButtonTapped() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard let user = user else { return }
@@ -280,7 +280,7 @@ final class ProfileViewController: StreamableViewController {
 extension ProfileViewController: ProfileScreenDelegate {
     func mentionTapped() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard let user = user else { return }
@@ -290,7 +290,7 @@ extension ProfileViewController: ProfileScreenDelegate {
 
     func hireTapped() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard let user = user else { return }
@@ -302,7 +302,7 @@ extension ProfileViewController: ProfileScreenDelegate {
 
     func editTapped() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         onEditProfile()
@@ -314,7 +314,7 @@ extension ProfileViewController: ProfileScreenDelegate {
 
     func collaborateTapped() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard let user = user else { return }
@@ -468,7 +468,7 @@ extension ProfileViewController: EditProfileResponder {
 
     func onEditProfile() {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
 

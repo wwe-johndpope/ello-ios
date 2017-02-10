@@ -583,3 +583,14 @@ extension Tracker {
     }
 
 }
+
+// MARK: LoggedOut
+extension Tracker {
+    func loggedOutRelationshipAction() {
+        agent.track("logged out follow button")
+    }
+
+    func loggedOutPostTool() {
+        agent.track("logged out post tool")
+    }
+}

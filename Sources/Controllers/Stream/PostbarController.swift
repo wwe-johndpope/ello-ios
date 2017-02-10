@@ -131,7 +131,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func deleteCommentButtonTapped(_ indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
 
@@ -166,7 +166,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func editCommentButtonTapped(_ indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
@@ -180,7 +180,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard let post = self.postForIndexPath(indexPath) else { return }
@@ -238,7 +238,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func repostButtonTapped(_ indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard let post = self.postForIndexPath(indexPath) else { return }
@@ -329,7 +329,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func flagCommentButtonTapped(_ indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
@@ -349,7 +349,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func replyToCommentButtonTapped(_ indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
@@ -367,7 +367,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func replyToAllButtonTapped(_ indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
@@ -393,7 +393,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard

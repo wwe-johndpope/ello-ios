@@ -48,7 +48,7 @@ extension RelationshipController: RelationshipResponder {
         complete: @escaping RelationshipChangeCompletion)
     {
         guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: ())
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .relationshipChange)
             complete(RelationshipRequestStatusWrapper(status: .success), .none, true)
             return
         }
