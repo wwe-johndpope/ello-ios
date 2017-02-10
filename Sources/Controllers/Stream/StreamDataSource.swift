@@ -600,7 +600,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                     indexPaths.append(IndexPath(item: index, section: 0))
                     items.append(item)
                 }
-                else if change == .delete || change == .replaced {
+                else if change == .delete {
                     if let itemComment = item.jsonable as? ElloComment, itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
                         indexPaths.append(IndexPath(item: index, section: 0))
                         items.append(item)
