@@ -55,6 +55,7 @@ class StreamableViewController: BaseElloViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AppDelegate.restrictRotation = true
         showing = true
         willPresentStreamable(navigationBarsVisible())
     }
