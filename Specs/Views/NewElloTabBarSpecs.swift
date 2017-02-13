@@ -59,7 +59,6 @@ class NewElloTabBarSpecs: QuickSpec {
                     subject = NewElloTabBar()
                     subject.items = [
                         NewElloTabBar.Item(alignment: .Left, display: .Title(InterfaceString.FollowingStream.Title), redDotHidden: true),
-                        NewElloTabBar.Item(alignment: .Left, display: .Title(InterfaceString.StarredStream.Title), redDotHidden: false),
                         NewElloTabBar.Item(alignment: .Left, display: .Title(InterfaceString.Discover.Title), redDotHidden: true),
                         NewElloTabBar.Item(alignment: .Right, display: .Image(.Bolt), redDotHidden: false),
                         NewElloTabBar.Item(alignment: .Right, display: .Image(.Search), redDotHidden: true),
@@ -80,7 +79,6 @@ class NewElloTabBarSpecs: QuickSpec {
 
                     let selections: [String: Int] = [
                         "following": 0,
-                        "starred": 1,
                         "notifications": 2,
                         "search": 3,
                     ]

@@ -18,7 +18,7 @@ class ProfileScreenSpec: QuickSpec {
     }
 
     override func spec() {
-        describe("ProfileScreen") {
+        fdescribe("ProfileScreen") {
             var subject: ProfileScreen!
             var delegate: MockDelegate!
 

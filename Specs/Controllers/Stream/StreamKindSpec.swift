@@ -21,7 +21,6 @@ class StreamKindSpec: QuickSpec {
                 it("is correct for all cases") {
                     expect(StreamKind.discover(type: .featured).name) == "Discover"
                     expect(StreamKind.following.name) == "Following"
-                    expect(StreamKind.starred.name) == "Starred"
                     expect(StreamKind.notifications(category: "").name) == "Notifications"
                     expect(StreamKind.postDetail(postParam: "param").name) == ""
                     expect(StreamKind.currentUserStream.name) == "Profile"
@@ -37,7 +36,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).cacheKey) == "CategoryPosts"
                     expect(StreamKind.category(slug: "art").cacheKey) == "CategoryPosts"
                     expect(StreamKind.following.cacheKey) == "Following"
-                    expect(StreamKind.starred.cacheKey) == "Starred"
                     expect(StreamKind.notifications(category: "").cacheKey) == "Notifications"
                     expect(StreamKind.postDetail(postParam: "param").cacheKey) == "PostDetail"
                     expect(StreamKind.currentUserStream.cacheKey) == "Profile"
@@ -54,7 +52,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).lastViewedCreatedAtKey) == "CategoryPosts_createdAt"
                     expect(StreamKind.category(slug: "art").lastViewedCreatedAtKey) == "CategoryPosts_createdAt"
                     expect(StreamKind.following.lastViewedCreatedAtKey) == "Following_createdAt"
-                    expect(StreamKind.starred.lastViewedCreatedAtKey) == "Starred_createdAt"
                     expect(StreamKind.notifications(category: "").lastViewedCreatedAtKey) == "Notifications_createdAt"
                     expect(StreamKind.postDetail(postParam: "param").lastViewedCreatedAtKey) == "PostDetail_createdAt"
                     expect(StreamKind.currentUserStream.lastViewedCreatedAtKey) == "Profile_createdAt"
@@ -71,7 +68,6 @@ class StreamKindSpec: QuickSpec {
                     StreamKind.discover(type: .featured).setIsGridView(false)
                     StreamKind.category(slug: "art").setIsGridView(false)
                     StreamKind.following.setIsGridView(false)
-                    StreamKind.starred.setIsGridView(false)
                     StreamKind.notifications(category: "").setIsGridView(false)
                     StreamKind.postDetail(postParam: "param").setIsGridView(false)
                     StreamKind.currentUserStream.setIsGridView(false)
@@ -100,12 +96,6 @@ class StreamKindSpec: QuickSpec {
                     StreamKind.following.setIsGridView(true)
                     expect(StreamKind.following.columnCount) == 2
 
-                    StreamKind.starred.setIsGridView(true)
-                    expect(StreamKind.starred.columnCount) == 2
-
-                    StreamKind.starred.setIsGridView(false)
-                    expect(StreamKind.starred.columnCount) == 1
-
                     expect(StreamKind.notifications(category: "").columnCount) == 1
                     expect(StreamKind.postDetail(postParam: "param").columnCount) == 1
                     expect(StreamKind.currentUserStream.columnCount) == 1
@@ -130,7 +120,6 @@ class StreamKindSpec: QuickSpec {
                     (.discover(type: .recent), false),
                     (.category(slug: "art"), false),
                     (.following, false),
-                    (.starred, false),
                     (.notifications(category: nil), false),
                     (.notifications(category: "comments"), false),
                     (.postDetail(postParam: "postId"), false),
@@ -149,7 +138,6 @@ class StreamKindSpec: QuickSpec {
                     (.discover(type: .featured), true),
                     (.category(slug: "art"), true),
                     (.following, true),
-                    (.starred, true),
                     (.notifications(category: ""), true),
                     (.postDetail(postParam: "param"), false),
                     (.currentUserStream, true),
@@ -172,7 +160,6 @@ class StreamKindSpec: QuickSpec {
                     (.discover(type: .featured), false),
                     (.category(slug: "art"), false),
                     (.following, false),
-                    (.starred, false),
                     (.notifications(category: ""), false),
                     (.postDetail(postParam: "param"), false),
                     (.currentUserStream, true),
@@ -193,7 +180,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).endpoint.path) == "/api/\(ElloAPI.apiVersion)/categories/posts/recent"
                     expect(StreamKind.category(slug: "art").endpoint.path) == "/api/\(ElloAPI.apiVersion)/categories/art"
                     expect(StreamKind.following.endpoint.path) == "/api/\(ElloAPI.apiVersion)/streams/friend"
-                    expect(StreamKind.starred.endpoint.path) == "/api/\(ElloAPI.apiVersion)/streams/noise"
                     expect(StreamKind.notifications(category: "").endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"
                     expect(StreamKind.postDetail(postParam: "param").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts/param"
                     expect(StreamKind.postDetail(postParam: "param").endpoint.parameters!["comment_count"] as? Int) == 10
@@ -211,7 +197,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).relationship) == RelationshipPriority.null
                     expect(StreamKind.category(slug: "art").relationship) == RelationshipPriority.null
                     expect(StreamKind.following.relationship) == RelationshipPriority.following
-                    expect(StreamKind.starred.relationship) == RelationshipPriority.starred
                     expect(StreamKind.notifications(category: "").relationship) == RelationshipPriority.null
                     expect(StreamKind.postDetail(postParam: "param").relationship) == RelationshipPriority.null
                     expect(StreamKind.currentUserStream.relationship) == RelationshipPriority.null
@@ -301,35 +286,12 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
-            describe("showStarButton") {
-
-                let tests: [(Bool, StreamKind)] = [
-                    (true, StreamKind.discover(type: .featured)),
-                    (true, StreamKind.category(slug: "art")),
-                    (true, StreamKind.following),
-                    (true, StreamKind.starred),
-                    (false, StreamKind.notifications(category: "")),
-                    (true, StreamKind.postDetail(postParam: "param")),
-                    (true, StreamKind.currentUserStream),
-                    (true, StreamKind.unknown),
-                    (true, StreamKind.userStream(userParam: "NA")),
-                    (true, StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat")),
-                    (true, StreamKind.simpleStream(endpoint: ElloAPI.userStreamFollowers(userId: "12345"), title: "")),
-                ]
-                for (shouldStar, streamKind) in tests {
-                    it("is \(shouldStar) for \(streamKind)") {
-                        expect(streamKind.showStarButton) == shouldStar
-                    }
-                }
-            }
-
             describe("isGridView") {
 
                 beforeEach {
                     StreamKind.discover(type: .featured).setIsGridView(false)
                     StreamKind.category(slug: "art").setIsGridView(false)
                     StreamKind.following.setIsGridView(false)
-                    StreamKind.starred.setIsGridView(false)
                     StreamKind.notifications(category: "").setIsGridView(false)
                     StreamKind.postDetail(postParam: "param").setIsGridView(false)
                     StreamKind.currentUserStream.setIsGridView(false)
@@ -360,12 +322,6 @@ class StreamKindSpec: QuickSpec {
                     StreamKind.following.setIsGridView(true)
                     expect(StreamKind.following.isGridView) == true
 
-                    StreamKind.starred.setIsGridView(true)
-                    expect(StreamKind.starred.isGridView) == true
-
-                    StreamKind.starred.setIsGridView(false)
-                    expect(StreamKind.starred.isGridView) == false
-
                     expect(StreamKind.notifications(category: "").isGridView) == false
                     expect(StreamKind.postDetail(postParam: "param").isGridView) == false
                     expect(StreamKind.currentUserStream.isGridView) == false
@@ -394,7 +350,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).hasGridViewToggle) == true
                     expect(StreamKind.category(slug: "art").hasGridViewToggle) == true
                     expect(StreamKind.following.hasGridViewToggle) == true
-                    expect(StreamKind.starred.hasGridViewToggle) == true
                     expect(StreamKind.notifications(category: "").hasGridViewToggle) == false
                     expect(StreamKind.postDetail(postParam: "param").hasGridViewToggle) == false
                     expect(StreamKind.currentUserStream.hasGridViewToggle) == false
@@ -448,7 +403,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).isDetail) == false
                     expect(StreamKind.category(slug: "art").isDetail) == false
                     expect(StreamKind.following.isDetail) == false
-                    expect(StreamKind.starred.isDetail) == false
                     expect(StreamKind.notifications(category: "").isDetail) == false
                     expect(StreamKind.postDetail(postParam: "param").isDetail) == true
                     expect(StreamKind.currentUserStream.isDetail) == false
@@ -465,7 +419,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.discover(type: .featured).supportsLargeImages) == false
                     expect(StreamKind.category(slug: "art").supportsLargeImages) == false
                     expect(StreamKind.following.supportsLargeImages) == false
-                    expect(StreamKind.starred.supportsLargeImages) == false
                     expect(StreamKind.notifications(category: "").supportsLargeImages) == false
                     expect(StreamKind.postDetail(postParam: "param").supportsLargeImages) == true
                     expect(StreamKind.currentUserStream.supportsLargeImages) == false

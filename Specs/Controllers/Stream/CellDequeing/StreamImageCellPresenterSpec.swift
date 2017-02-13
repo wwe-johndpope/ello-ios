@@ -11,7 +11,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
 
         beforeEach {
             StreamKind.following.setIsGridView(false)
-            StreamKind.starred.setIsGridView(true)
         }
 
         describe("configure") {
@@ -34,7 +33,8 @@ class StreamImageCellPresenterSpec: QuickSpec {
                 context("multiple columns") {
 
                     it("configures fail constraints correctly") {
-                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .starred, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                        StreamKind.following.setIsGridView(true)
+                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                         expect(cell.isGridView) == true
                     }
@@ -256,6 +256,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                     }
 
                     it("sets buy button width to 30 in grid") {
+                        StreamKind.following.setIsGridView(true)
                         let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
@@ -265,7 +266,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
                         let item: StreamCellItem = StreamCellItem(jsonable: post, type: .image(data: imageRegion))
 
-                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .starred, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                        StreamImageCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                         cell.layoutIfNeeded()
                         expect(cell.buyButtonGreen?.frame.size.width) == 30
                         expect(cell.buyButtonGreen?.frame.size.height) == 30

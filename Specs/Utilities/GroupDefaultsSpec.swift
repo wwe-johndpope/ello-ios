@@ -12,7 +12,6 @@ class GroupDefaultsSpec: QuickSpec {
         describe("GroupDefaults") {
             context("resetOnLogout") {
                 beforeEach {
-                    GroupDefaults[CurrentStreamKey] = 0
                     GroupDefaults["ElloImageUploadQuality"] = 0.25
                     GroupDefaults[StreamKind.notifications(category: nil).lastViewedCreatedAtKey] = Date()
                     GroupDefaults[StreamKind.announcements.lastViewedCreatedAtKey] = Date()
@@ -22,7 +21,6 @@ class GroupDefaultsSpec: QuickSpec {
                 }
 
                 let expectations: [(String, Bool)] = [
-                    (CurrentStreamKey, true),
                     ("ElloImageUploadQuality", true),
                     (StreamKind.notifications(category: nil).lastViewedCreatedAtKey, true),
                     (StreamKind.announcements.lastViewedCreatedAtKey, true),

@@ -17,7 +17,7 @@ class FakeResponder: UIWindow {
 
 class RelationshipControlSpec: QuickSpec {
     override func spec() {
-        describe("RelationshipControl") {
+        fdescribe("RelationshipControl") {
             var subject: RelationshipControl!
             var presentingController: StreamableViewController!
             var relationshipController: RelationshipController!
@@ -35,11 +35,9 @@ class RelationshipControlSpec: QuickSpec {
             describe("snapshots") {
                 let relationships: [(RelationshipControlStyle, RelationshipPriority)] = [
                     (.default, .following),
-                    (.default, .starred),
                     (.default, .mute),
                     (.default, .none),
                     (.profileView, .following),
-                    (.profileView, .starred),
                     (.profileView, .mute),
                     (.profileView, .none),
                 ]
@@ -53,22 +51,11 @@ class RelationshipControlSpec: QuickSpec {
             }
 
             describe("intrinsicContentSize()") {
-                it("should calculate when showStarButton=false") {
-                    subject.showStarButton = false
+                it("should calculate correctly") {
                     let expectedSize = CGSize(width: 105, height: 30)
                     expect(subject.intrinsicContentSize) == expectedSize
                     subject.frame = CGRect(origin: .zero, size: expectedSize)
                     subject.layoutIfNeeded()
-                    expect(subject.starButton.frame) == CGRect.zero
-                    expect(subject.followingButton.frame) == CGRect(x: 0, y: 0, width: 105, height: 30)
-                }
-                it("should calculate when showStarButton=true") {
-                    subject.showStarButton = true
-                    let expectedSize = CGSize(width: 142, height: 30)
-                    expect(subject.intrinsicContentSize) == expectedSize
-                    subject.frame = CGRect(origin: .zero, size: expectedSize)
-                    subject.layoutIfNeeded()
-                    expect(subject.starButton.frame) == CGRect(x: 112, y: 0, width: 30, height: 30)
                     expect(subject.followingButton.frame) == CGRect(x: 0, y: 0, width: 105, height: 30)
                 }
             }
@@ -101,48 +88,8 @@ class RelationshipControlSpec: QuickSpec {
                                 expect(subject.relationshipPriority) == RelationshipPriority.inactive
                             }
                         }
-
-                        context("RelationshipPriority.starred") {
-
-                            it("unstars the user") {
-                                subject.relationshipPriority = .starred
-                                subject.followingButton.sendActions(for: .touchUpInside)
-                                expect(subject.relationshipPriority) == RelationshipPriority.following
-                            }
-                        }
                     }
 
-                    describe("tapping the starred button") {
-
-                        for relationshipPriority in [RelationshipPriority.inactive, RelationshipPriority.none, RelationshipPriority.null] {
-                            context("RelationshipPriority.\(relationshipPriority)") {
-
-                                it("stars the user") {
-                                    subject.relationshipPriority = relationshipPriority
-                                    subject.starButton.sendActions(for: .touchUpInside)
-                                    expect(subject.relationshipPriority) == RelationshipPriority.starred
-                                }
-                            }
-                        }
-
-                        context("RelationshipPriority.following") {
-
-                            it("stars the user") {
-                                subject.relationshipPriority = .following
-                                subject.starButton.sendActions(for: .touchUpInside)
-                                expect(subject.relationshipPriority) == RelationshipPriority.starred
-                            }
-                        }
-
-                        context("RelationshipPriority.starred") {
-
-                            it("unstars the user") {
-                                subject.relationshipPriority = .starred
-                                subject.starButton.sendActions(for: .touchUpInside)
-                                expect(subject.relationshipPriority) == RelationshipPriority.following
-                            }
-                        }
-                    }
                 }
 
                 context("muted") {

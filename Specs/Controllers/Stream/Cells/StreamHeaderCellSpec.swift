@@ -24,7 +24,7 @@ class StreamHeaderCellSpec: QuickSpec {
         case detail
     }
     override func spec() {
-        describe("StreamHeaderCell") {
+        fdescribe("StreamHeaderCell") {
             describe("snapshots") {
                 let me: User = stub(["username": "me"])
                 let other: User = stub(["username": "other"])

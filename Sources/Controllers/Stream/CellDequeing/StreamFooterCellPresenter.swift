@@ -27,13 +27,14 @@ struct StreamFooterCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? StreamFooterCell,
+        guard
+            let cell = cell as? StreamFooterCell,
             let post = streamCellItem.jsonable as? Post
-        {
-            configureDisplayCounts(cell, post: post, streamKind: streamKind)
-            configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
-            configureCommentControl(cell, streamCellItem: streamCellItem, streamKind: streamKind)
-        }
+        else { return }
+
+        configureDisplayCounts(cell, post: post, streamKind: streamKind)
+        configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
+        configureCommentControl(cell, streamCellItem: streamCellItem, streamKind: streamKind)
     }
 
     fileprivate static func configureToolBarItems(
