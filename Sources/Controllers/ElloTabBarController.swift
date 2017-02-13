@@ -18,7 +18,7 @@ enum ElloTab: Int {
         switch self {
         case .discover:      return "\(defaultPrefix)Discover"
         case .notifications: return "\(defaultPrefix)Notifications"
-        case .following:        return "\(defaultPrefix)Stream"
+        case .following:     return "\(defaultPrefix)Stream"
         case .profile:       return "\(defaultPrefix)Profile"
         case .omnibar:       return "\(defaultPrefix)Omnibar"
         }
