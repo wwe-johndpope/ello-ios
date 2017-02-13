@@ -120,7 +120,7 @@ enum StreamKind {
         case .announcements: return .announcements
         case let .category(slug): return .category(slug: slug)
         case let .discover(type): return .discover(type: type)
-        case .following: return .friendStream
+        case .following: return .following
         case let .notifications(category): return .notificationsStream(category: category)
         case let .postDetail(postParam): return .postDetail(postParam: postParam, commentCount: 10)
         case let .simpleStream(endpoint, _): return endpoint
@@ -184,15 +184,7 @@ enum StreamKind {
                 return []
             }
         default:
-            if let activities = jsonables as? [Activity] {
-                return activities.reduce([]) { accum, activity in
-                    if let post = activity.subject as? Post {
-                        return accum + [post]
-                    }
-                    return accum
-                }
-            }
-            else if let jsonables = jsonables as? [ElloComment] {
+            if let jsonables = jsonables as? [ElloComment] {
                 return jsonables
             }
             else if let jsonables = jsonables as? [Post] {
