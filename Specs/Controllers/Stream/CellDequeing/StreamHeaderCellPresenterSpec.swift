@@ -86,7 +86,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     expect(cell.repostIconView.isHidden) == true
                 }
 
-                fcontext("gridLayout streamKind") {
+                context("gridLayout streamKind") {
 
                     beforeEach {
                         StreamKind.following.setIsGridView(true)

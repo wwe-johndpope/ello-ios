@@ -17,7 +17,7 @@ class FakeResponder: UIWindow {
 
 class RelationshipControlSpec: QuickSpec {
     override func spec() {
-        fdescribe("RelationshipControl") {
+        describe("RelationshipControl") {
             var subject: RelationshipControl!
             var presentingController: StreamableViewController!
             var relationshipController: RelationshipController!
