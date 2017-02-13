@@ -5,7 +5,8 @@
 import SwiftyUserDefaults
 
 class FollowingViewController: StreamableViewController {
-    override func trackerName() -> String? { return "Following" }
+    override func trackerName() -> String? { return "Stream" }
+    override func trackerProps() -> [String: AnyObject]? { return ["kind": "Following"]}
 
     var navigationBar: ElloNavigationBar!
     fileprivate var loggedPromptEventForThisSession = false
