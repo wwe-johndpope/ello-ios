@@ -6,20 +6,6 @@
 enum RelationshipControlStyle {
     case `default`
     case profileView
-
-    var starButtonMargin: CGFloat {
-        switch self {
-            case .profileView: return 10
-            default: return 7
-        }
-    }
-
-    var starButtonWidth: CGFloat {
-        switch self {
-            case .profileView: return 20
-            default: return 30
-        }
-    }
 }
 
 
@@ -30,11 +16,10 @@ class RelationshipControl: UIView {
     }
 
     let followingButton = FollowButton()
-    let starButton = StarButton()
+
     var style: RelationshipControlStyle = .default {
         didSet {
             followingButton.relationshipStyle = style
-            starButton.relationshipStyle = style
             setNeedsLayout()
             invalidateIntrinsicContentSize()
         }
@@ -43,7 +28,6 @@ class RelationshipControl: UIView {
     var enabled: Bool {
         set {
             followingButton.isEnabled = newValue
-            starButton.isEnabled = newValue
         }
         get { return followingButton.isEnabled }
     }
@@ -52,14 +36,6 @@ class RelationshipControl: UIView {
 
     var relationshipPriority: RelationshipPriority = .none {
         didSet { updateRelationshipPriority() }
-    }
-
-    var showStarButton = true {
-        didSet {
-            starButton.isHidden = !showStarButton
-            setNeedsLayout()
-            invalidateIntrinsicContentSize()
-        }
     }
 
     required override init(frame: CGRect) {
@@ -79,7 +55,6 @@ class RelationshipControl: UIView {
     fileprivate func setup() {
         arrange()
         bindActions()
-        starButton.isHidden = !showStarButton
         updateRelationshipPriority()
         backgroundColor = .clear
     }
@@ -94,25 +69,10 @@ class RelationshipControl: UIView {
             totalSize.width += Size.minViewWidth
         }
 
-        if showStarButton {
-            totalSize.width += style.starButtonWidth + style.starButtonMargin
-        }
-
         return totalSize
     }
 
     // MARK: IBActions
-
-    @IBAction func starButtonTapped(_ sender: UIButton) {
-        switch relationshipPriority {
-        case .mute, .block:
-            launchUnmuteModal()
-        case .starred:
-            handleUnstar()
-        default:
-            handleStar()
-        }
-    }
 
     @IBAction func followingButtonTapped(_ sender: UIButton) {
         switch relationshipPriority {
@@ -120,8 +80,6 @@ class RelationshipControl: UIView {
             launchUnmuteModal()
         case .following:
             handleUnfollow()
-        case .starred:
-            handleUnstar()
         default:
             handleFollow()
         }
@@ -174,14 +132,6 @@ class RelationshipControl: UIView {
         handleRelationship(.following)
     }
 
-    fileprivate func handleStar() {
-        handleRelationship(.starred)
-    }
-
-    fileprivate func handleUnstar() {
-        handleRelationship(.following)
-    }
-
     fileprivate func handleUnfollow() {
         handleRelationship(.inactive)
     }
@@ -189,28 +139,23 @@ class RelationshipControl: UIView {
     // MARK: Private
 
     fileprivate func arrange() {
-        addSubview(starButton)
         addSubview(followingButton)
     }
 
     fileprivate func bindActions() {
         followingButton.addTarget(self, action: #selector(RelationshipControl.followingButtonTapped(_:)), for: .touchUpInside)
-        starButton.addTarget(self, action: #selector(RelationshipControl.starButtonTapped(_:)), for: .touchUpInside)
     }
 
     fileprivate func updateRelationshipPriority() {
         let config: Config
         switch relationshipPriority {
         case .following: config = .following
-        case .starred: config = .starred
         case .mute: config = .muted
         case .block: config = .blocked
         default: config = .none
         }
 
         followingButton.config = config
-        starButton.config = config
-        starButton.isHidden = relationshipPriority.isMutedOrBlocked || !showStarButton
 
         setNeedsLayout()
         invalidateIntrinsicContentSize()
@@ -219,21 +164,10 @@ class RelationshipControl: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let starButtonWidth: CGFloat
-        if !relationshipPriority.isMutedOrBlocked && showStarButton {
-            starButton.frame = CGRect(x: frame.width - style.starButtonWidth, y: 0, width: style.starButtonWidth, height: Size.viewHeight)
-            starButtonWidth = style.starButtonWidth + style.starButtonMargin
-        }
-        else {
-            starButton.frame = .zero
-            starButtonWidth = 0
-        }
-
-        followingButton.frame = bounds.inset(top: 0, left: 0, bottom: 0, right: starButtonWidth)
+        followingButton.frame = bounds.inset(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     fileprivate enum Config {
-        case starred
         case following
         case muted
         case blocked
@@ -243,27 +177,23 @@ class RelationshipControl: UIView {
             switch self {
             case .none: return InterfaceString.Relationship.Follow
             case .following: return InterfaceString.Relationship.Following
-            case .starred: return InterfaceString.Relationship.Starred
             case .muted: return InterfaceString.Relationship.Muted
             case .blocked: return InterfaceString.Relationship.Blocked
             }
         }
 
-        var starred: Bool {
-            return self == .starred
-        }
 
         var image: UIImage? {
             switch self {
             case .muted, .blocked: return nil
-            case .starred, .following: return InterfaceImage.checkSmall.whiteImage
+            case .following: return InterfaceImage.checkSmall.whiteImage
             default: return InterfaceImage.plusSmall.selectedImage
             }
         }
 
         var highlightedImage: UIImage? {
             switch self {
-            case .muted, .blocked, .starred, .following: return self.image
+            case .muted, .blocked, .following: return self.image
             default: return InterfaceImage.plusSmall.whiteImage
             }
         }
@@ -282,7 +212,7 @@ class RelationshipControl: UIView {
             var image: UIImage? = nil
             var highlightedImage: UIImage? = nil
 
-            if config == .following || config == .starred {
+            if config == .following {
                 if relationshipStyle == .profileView {
                     style = .GrayPill
                 }
@@ -317,51 +247,6 @@ class RelationshipControl: UIView {
             super.sharedSetup()
             contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 10)
             adjustsImageWhenDisabled = false
-            recalculateStyle()
-        }
-    }
-
-    class StarButton: StyledButton {
-        var relationshipStyle: RelationshipControlStyle = .default {
-            didSet { recalculateStyle() }
-        }
-        fileprivate var config: Config = .none {
-            didSet { recalculateStyle() }
-        }
-
-        fileprivate func recalculateStyle() {
-            var image: UIImage? = nil
-            var highlightedImage: UIImage? = nil
-
-            if config == .starred {
-                if relationshipStyle == .profileView {
-                    image = InterfaceImage.whiteStar.selectedImage
-                }
-                else {
-                    image = InterfaceImage.blackStar.selectedImage
-                }
-                highlightedImage = image
-            }
-            else if relationshipStyle == .profileView {
-                image = InterfaceImage.whiteStar.normalImage
-                highlightedImage = InterfaceImage.whiteStar.selectedImage
-            }
-            else {
-                image = InterfaceImage.blackStar.normalImage
-                highlightedImage = InterfaceImage.blackStar.selectedImage
-            }
-
-            setImage(image, for: .normal)
-            setImage(highlightedImage, for: .highlighted)
-            setImage(UIImage(), for: .disabled)
-        }
-
-        override func sharedSetup() {
-            super.sharedSetup()
-
-            adjustsImageWhenDisabled = false
-            config = .none
-            style = .ClearWhite
             recalculateStyle()
         }
     }

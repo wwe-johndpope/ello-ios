@@ -176,7 +176,6 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         replyButton.addTarget(self, action: #selector(replyTapped), for: .touchUpInside)
 
         relationshipControl.isHidden = true
-        relationshipControl.showStarButton = false
 
         notificationImageView.contentMode = .scaleAspectFit
         messageWebView.isOpaque = false

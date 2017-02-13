@@ -540,8 +540,6 @@ extension ElloAPI: Moya.TargetType {
             switch RelationshipPriority(rawValue: relationship)! {
             case .following:
                 return stubbedData("relationship_following")
-            case .starred:
-                return stubbedData("relationship_starred")
             default:
                 return stubbedData("relationship_inactive")
             }

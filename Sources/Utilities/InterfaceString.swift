@@ -46,10 +46,6 @@ struct InterfaceString {
         static let Title: String = NSLocalizedString("Following", comment: "Following title")
     }
 
-    struct StarredStream {
-        static let Title: String = NSLocalizedString("Starred", comment: "Starred title")
-    }
-
     struct Notifications {
         static let Title: String = NSLocalizedString("Notifications", comment: "Notifications title")
         static let Reply: String = NSLocalizedString("Reply", comment: "Reply button title")
@@ -193,7 +189,6 @@ struct InterfaceString {
     struct Relationship {
         static let Follow: String = NSLocalizedString("Follow", comment: "Follow relationship")
         static let Following: String = NSLocalizedString("Following", comment: "Following relationship")
-        static let Starred: String = NSLocalizedString("Starred", comment: "Starred relationship")
         static let Muted: String = NSLocalizedString("Muted", comment: "Muted relationship")
         static let Blocked: String = NSLocalizedString("Blocked", comment: "Blocked relationship")
 

@@ -11,7 +11,6 @@ class DebugViewsController: UIViewController {
         let relationships: [RelationshipPriority] = [
             .none,
             .following,
-            .starred,
             .mute,
         ]
         let controls: [RelationshipControl] = relationships.map { priority in

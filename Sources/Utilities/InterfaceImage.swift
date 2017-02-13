@@ -75,10 +75,6 @@ enum InterfaceImage: String {
     case bubbleBody = "bubble_body"
     case bubbleTail = "bubble_tail"
 
-    // Relationship
-    case whiteStar = "white_star"
-    case blackStar = "black_star"
-
     // Hire me mail button
     case mail = "mail"
 
