@@ -95,7 +95,7 @@
 		121700B91A7891B300EBACA5 /* StreamImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121700B81A7891B300EBACA5 /* StreamImageViewer.swift */; };
 		121D75A21AD84C800008F084 /* PostServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121D75A11AD84C800008F084 /* PostServiceSpec.swift */; };
 		121D92591A5CACEA004F0455 /* JoinViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */; };
-		121E46BD1A6B2798004AEAB7 /* StreamContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121E46BC1A6B2798004AEAB7 /* StreamContainerViewController.swift */; };
+		121E46BD1A6B2798004AEAB7 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */; };
 		122034741DE66A4A0059E633 /* ello_logo_grey.svg in Resources */ = {isa = PBXBuildFile; fileRef = 122034731DE66A4A0059E633 /* ello_logo_grey.svg */; };
 		122034751DE66A4A0059E633 /* ello_logo_grey.svg in Resources */ = {isa = PBXBuildFile; fileRef = 122034731DE66A4A0059E633 /* ello_logo_grey.svg */; };
 		122034771DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122034761DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift */; };
@@ -1174,7 +1174,7 @@
 		1219BA7B1C48417C0057A7D3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		121D75A11AD84C800008F084 /* PostServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServiceSpec.swift; sourceTree = "<group>"; };
 		121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewControllerSpec.swift; sourceTree = "<group>"; };
-		121E46BC1A6B2798004AEAB7 /* StreamContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamContainerViewController.swift; sourceTree = "<group>"; };
+		121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		122034731DE66A4A0059E633 /* ello_logo_grey.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_logo_grey.svg; sourceTree = "<group>"; };
 		122034761DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCellPresenterSpec.swift; sourceTree = "<group>"; };
 		122034781DEC8B8A0059E633 /* EmptyStreamCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCellSpec.swift; sourceTree = "<group>"; };
@@ -2576,7 +2576,7 @@
 				1217008B1A7841C400EBACA5 /* StreamCellItem.swift */,
 				1217008C1A7841C400EBACA5 /* StreamCellItemParser.swift */,
 				121700B51A78428D00EBACA5 /* StreamCollectionViewLayout.swift */,
-				121E46BC1A6B2798004AEAB7 /* StreamContainerViewController.swift */,
+				121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */,
 				1217008F1A7841C400EBACA5 /* StreamDataSource.swift */,
 				1245ED371D1C772400929DD4 /* StreamGenerator.swift */,
 				121700B81A7891B300EBACA5 /* StreamImageViewer.swift */,
@@ -5043,7 +5043,7 @@
 				1D2B50BB1D272A6400F6CE90 /* BlackBar.swift in Sources */,
 				1D98563B1C6D7D3300C1BF78 /* DrawerAnimators.swift in Sources */,
 				EAF43D8E1AB0B5AC0016E110 /* InviteCache.swift in Sources */,
-				121E46BD1A6B2798004AEAB7 /* StreamContainerViewController.swift in Sources */,
+				121E46BD1A6B2798004AEAB7 /* FollowingViewController.swift in Sources */,
 				12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */,
 				1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */,
 				7659FB831B29F15200DEB6F4 /* StreamInviteFriendsCellPresenter.swift in Sources */,

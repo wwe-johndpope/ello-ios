@@ -499,7 +499,7 @@ extension AppViewController {
              .following,
              .noise,
              .starred:
-            showStreamContainerScreen(type: type)
+            showFollowingScreen()
         case .notifications:
             showNotificationsScreen(category: data)
         case .onboarding:
@@ -615,25 +615,19 @@ extension AppViewController {
     }
 
 
-    fileprivate func showStreamContainerScreen(type: ElloURI) {
+    fileprivate func showFollowingScreen() {
         guard
             let vc = self.visibleViewController as? ElloTabBarController
         else { return }
 
-        vc.selectedTab = .stream
+        vc.selectedTab = .following
 
         guard
             let navVC = vc.selectedViewController as? ElloNavigationController,
-            let streamVC = navVC.visibleViewController as? StreamContainerViewController
+            let streamVC = navVC.visibleViewController as? FollowingViewController
         else { return }
 
         streamVC.currentUser = currentUser
-
-        switch type {
-        case .noise, .starred: streamVC.showNoise()
-        case .friends, .following: streamVC.showFriends()
-        default: break
-        }
     }
 
     fileprivate func showNotificationsScreen(category: String) {

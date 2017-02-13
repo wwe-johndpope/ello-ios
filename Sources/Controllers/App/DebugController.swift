@@ -108,7 +108,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addAction(name: "Reset Tab bar Tooltips") {
             GroupDefaults[ElloTab.discover.narrationDefaultKey] = nil
             GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
-            GroupDefaults[ElloTab.stream.narrationDefaultKey] = nil
+            GroupDefaults[ElloTab.following.narrationDefaultKey] = nil
             GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
             GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
         }

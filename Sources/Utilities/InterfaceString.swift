@@ -12,7 +12,7 @@ struct InterfaceString {
         struct PopupTitle {
             static let Discover: String = NSLocalizedString("Discover", comment: "Discover pop up title")
             static let Notifications: String = NSLocalizedString("Notifications", comment: "Notifications pop up title")
-            static let Stream: String = NSLocalizedString("Streams", comment: "Stream pop up title")
+            static let Following: String = NSLocalizedString("Following", comment: "Stream pop up title")
             static let Profile: String = NSLocalizedString("Your Profile", comment: "Profile pop up title")
             static let Omnibar: String = NSLocalizedString("Post (Omnibar)", comment: "Omnibar pop up title")
         }
@@ -20,7 +20,7 @@ struct InterfaceString {
         struct PopupText {
             static let Discover: String = NSLocalizedString("Explore creators, curated categories & communities.", comment: "Discover pop up text")
             static let Notifications: String = NSLocalizedString("Keep it fresh with real-time alerts.", comment: "Notifications pop up text")
-            static let Stream: String = NSLocalizedString("Two streams: Following & Starred.\nUse them however you like.", comment: "Stream pop up text")
+            static let Following: String = NSLocalizedString("Two streams: Following & Starred.\nUse them however you like.", comment: "Stream pop up text")
             static let Profile: String = NSLocalizedString("Everything you create in one place.\nSettings too.", comment: "Profile pop up text")
             static let Omnibar: String = NSLocalizedString("Share text, links, images, GIFs and more.", comment: "Omnibar pop up text")
         }

@@ -24,12 +24,14 @@ class ElloNavigationController: UINavigationController, ControllerThatMightHaveT
     enum RootViewControllers: String {
         case notifications = "NotificationsViewController"
         case profile = "ProfileViewController"
+        case following = "FollowingViewController"
         case omnibar = "OmnibarViewController"
         case discover = "DiscoverAllCategoriesViewController"
 
         func controllerInstance(_ user: User) -> BaseElloViewController {
             switch self {
             case .notifications: return NotificationsViewController()
+            case .following: return FollowingViewController()
             case .profile: return ProfileViewController(user: user)
             case .omnibar:
                 let vc = OmnibarViewController()

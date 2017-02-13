@@ -133,15 +133,11 @@ class StreamableViewController: BaseElloViewController {
     }
 
     func showNavBars() {
-        if let bottomBarController = bottomBarController {
-            bottomBarController.setNavigationBarsVisible(true, animated: true)
-        }
+        bottomBarController?.setNavigationBarsVisible(true, animated: true)
     }
 
     func hideNavBars() {
-        if let bottomBarController = bottomBarController {
-            bottomBarController.setNavigationBarsVisible(false, animated: true)
-        }
+        bottomBarController?.setNavigationBarsVisible(false, animated: true)
     }
 }
 
@@ -170,7 +166,7 @@ extension StreamableViewController: PostTappedResponder {
 
 // MARK: UserTappedResponder
 extension StreamableViewController: UserTappedResponder {
-    
+
     func userTapped(_ user: User) {
         guard user.relationshipPriority != .block else { return }
         userParamTapped(user.id, username: user.username)
