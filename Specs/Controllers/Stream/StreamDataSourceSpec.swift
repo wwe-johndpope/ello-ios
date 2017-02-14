@@ -50,7 +50,7 @@ class StreamDataSourceSpec: QuickSpec {
                 let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
 
                 StreamKind.following.setIsGridView(true)
-                vc = StreamViewController.instantiateFromStoryboard()
+                vc = StreamViewController()
                 vc.streamKind = StreamKind.following
                 subject = StreamDataSource(streamKind: .following,
                                            textSizeCalculator: textSizeCalculator,

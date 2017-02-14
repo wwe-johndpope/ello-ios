@@ -43,26 +43,11 @@ class ElloTabBarControllerSpec: QuickSpec {
         tabBarItem.image = UIImage.imageWithColor(.black)
         tabBarItem.selectedImage = UIImage.imageWithColor(.black)
 
-        describe("initialization") {
-
-            beforeEach {
-                subject = ElloTabBarController.instantiateFromStoryboard()
-            }
-
-            it("can be instantiated from storyboard") {
-                expect(subject).notTo(beNil())
-            }
-
-            it("is a ElloTabBarController") {
-                expect(subject).to(beAKindOf(ElloTabBarController.self))
-            }
-
-        }
-
         describe("-viewDidLoad") {
 
             beforeEach {
-                subject = ElloTabBarController.instantiateFromStoryboard()
+                subject = ElloTabBarController()
+                subject.currentUser = User.stub(["username": "foo"])
                 _ = subject.view
             }
 
@@ -86,7 +71,8 @@ class ElloTabBarControllerSpec: QuickSpec {
         context("selecting tab bar items") {
 
             beforeEach {
-                subject = ElloTabBarController.instantiateFromStoryboard()
+                subject = ElloTabBarController()
+                subject.currentUser = User.stub(["username": "foo"])
                 let children = subject.childViewControllers
                 for child in children {
                     child.removeFromParentViewController()
@@ -187,7 +173,8 @@ class ElloTabBarControllerSpec: QuickSpec {
                     responder = NotificationObserver(notification: NewContentNotifications.reloadNotifications) { _ in
                         responded = true
                     }
-                    subject = ElloTabBarController.instantiateFromStoryboard()
+                    subject = ElloTabBarController()
+                    subject.currentUser = User.stub(["username": "foo"])
                     let children = subject.childViewControllers
                     for child in children {
                         child.removeFromParentViewController()
@@ -233,7 +220,8 @@ class ElloTabBarControllerSpec: QuickSpec {
                     ElloTab.omnibar: GroupDefaults[ElloTab.omnibar.narrationDefaultKey].bool
                 ]
 
-                subject = ElloTabBarController.instantiateFromStoryboard()
+                subject = ElloTabBarController()
+                subject.currentUser = User.stub(["username": "foo"])
                 let children = subject.childViewControllers
                 for child in children {
                     child.removeFromParentViewController()

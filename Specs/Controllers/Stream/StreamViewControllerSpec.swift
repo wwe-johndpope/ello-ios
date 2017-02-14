@@ -17,7 +17,7 @@ class StreamViewControllerSpec: QuickSpec {
 
         var controller: StreamViewController!
         beforeEach {
-            controller = StreamViewController.instantiateFromStoryboard()
+            controller = StreamViewController()
             showController(controller)
         }
 
