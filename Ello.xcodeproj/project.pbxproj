@@ -448,8 +448,6 @@
 		12F6AE301A43390900493660 /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE291A43390900493660 /* Optionals.swift */; };
 		12F6AE311A43390900493660 /* ScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2A1A43390900493660 /* ScreenExtensions.swift */; };
 		12F6AE321A43390900493660 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2B1A43390900493660 /* StringExtensions.swift */; };
-		12F6AE331A43390900493660 /* UIStoryboardExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2C1A43390900493660 /* UIStoryboardExtensions.swift */; };
-		12F6AE411A43395600493660 /* StoryboardIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE401A43395600493660 /* StoryboardIdentifiers.swift */; };
 		12F6AE451A43397400493660 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE431A43397400493660 /* Colors.swift */; };
 		12F6AE631A4339C600493660 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE611A4339C600493660 /* Validator.swift */; };
 		12F6AE6B1A4339EF00493660 /* ElloHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE661A4339EF00493660 /* ElloHUD.swift */; };
@@ -1426,13 +1424,11 @@
 		12F6AE291A43390900493660 /* Optionals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
 		12F6AE2A1A43390900493660 /* ScreenExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenExtensions.swift; sourceTree = "<group>"; };
 		12F6AE2B1A43390900493660 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		12F6AE2C1A43390900493660 /* UIStoryboardExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtensions.swift; sourceTree = "<group>"; };
 		12F6AE351A43392D00493660 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		12F6AE361A43392D00493660 /* ElloNetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNetworkError.swift; sourceTree = "<group>"; };
 		12F6AE371A43392D00493660 /* JSONAble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONAble.swift; sourceTree = "<group>"; };
 		12F6AE381A43392D00493660 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		12F6AE391A43392D00493660 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		12F6AE401A43395600493660 /* StoryboardIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiers.swift; sourceTree = "<group>"; };
 		12F6AE431A43397400493660 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		12F6AE611A4339C600493660 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		12F6AE661A4339EF00493660 /* ElloHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloHUD.swift; sourceTree = "<group>"; };
@@ -2972,7 +2968,6 @@
 				1DE261341B0D38A400475325 /* UIImageViewExtensions.swift */,
 				1D7751001ABCE78800D92191 /* UINavigationItem.swift */,
 				F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */,
-				12F6AE2C1A43390900493660 /* UIStoryboardExtensions.swift */,
 				1DF4040B1B151BE70073460B /* UITabBarExtensions.swift */,
 				12DD85C51B015A76004D3EEF /* UITabBarItem.swift */,
 				1D9D17101AE72394009841A4 /* UIViewController.swift */,
@@ -3032,7 +3027,6 @@
 		12F6AE3F1A43394600493660 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				12F6AE401A43395600493660 /* StoryboardIdentifiers.swift */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -4891,7 +4885,6 @@
 				1D1AF6231A83ED7F00E06C93 /* PostDetailViewController.swift in Sources */,
 				127128261A77373300695F15 /* TypedNotifications.swift in Sources */,
 				F8006EE51AB9FE670008BB42 /* Animators.swift in Sources */,
-				12F6AE411A43395600493660 /* StoryboardIdentifiers.swift in Sources */,
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
@@ -4933,7 +4926,6 @@
 				769865C11A8D3E3F009B6292 /* ProfileHeaderCell.swift in Sources */,
 				12EC00001DDB7EA4007F22C5 /* DeepLinking.swift in Sources */,
 				1DE176FC1B82626E00272145 /* OmnibarScreen.swift in Sources */,
-				12F6AE331A43390900493660 /* UIStoryboardExtensions.swift in Sources */,
 				12F717581A800D7C00A12A00 /* PulsingCircle.swift in Sources */,
 				123375951DA6F1610019CFAD /* ProfileTotalCountSizeCalculator.swift in Sources */,
 				1D70DE671DF730C1008AF216 /* StreamImageCellSizeCalculator.swift in Sources */,
