@@ -21,45 +21,10 @@ class ElloNavigationController: UINavigationController, ControllerThatMightHaveT
         set { self.tabBarItem = newValue }
     }
 
-    enum RootViewControllers: String {
-        case notifications = "NotificationsViewController"
-        case profile = "ProfileViewController"
-        case following = "FollowingViewController"
-        case omnibar = "OmnibarViewController"
-        case discover = "DiscoverAllCategoriesViewController"
-
-        func controllerInstance(_ user: User) -> BaseElloViewController {
-            switch self {
-            case .notifications: return NotificationsViewController()
-            case .following: return FollowingViewController()
-            case .profile: return ProfileViewController(user: user)
-            case .omnibar:
-                let vc = OmnibarViewController()
-                vc.canGoBack = false
-                return vc
-            case .discover: return DiscoverAllCategoriesViewController()
-            }
-        }
-    }
-
     func didSetCurrentUser() {
-        if self.viewControllers.count == 0 {
-            if
-                let rootViewControllerName = rootViewControllerName,
-                let currentUser = currentUser
-            {
-                if let controller = RootViewControllers(rawValue:rootViewControllerName)?.controllerInstance(currentUser) {
-                    controller.currentUser = currentUser
-                    self.viewControllers = [controller]
-                }
-            }
-        }
-        else {
-            for controller in self.viewControllers {
-                if let controller = controller as? ControllerThatMightHaveTheCurrentUser {
-                    controller.currentUser = currentUser
-                }
-            }
+        for controller in self.viewControllers {
+            guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { return }
+            controller.currentUser = currentUser
         }
     }
 

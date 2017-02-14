@@ -32,7 +32,7 @@ protocol InviteResponder: class {
 class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false
-    let streamViewController = StreamViewController.instantiateFromStoryboard()
+    let streamViewController = StreamViewController()
 
     func setupStreamController() {
         streamViewController.currentUser = currentUser

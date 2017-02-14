@@ -47,6 +47,7 @@ enum ElloTab: Int {
 }
 
 class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser, BottomBarController {
+
     let tabBar = ElloTabBar()
     fileprivate var systemLoggedOutObserver: NotificationObserver?
     fileprivate var streamLoadedObserver: NotificationObserver?
@@ -117,6 +118,14 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
         get { return !ElloTabBarController.didShowNarration(selectedTab) }
         set { ElloTabBarController.didShowNarration(selectedTab, !newValue) }
     }
+
+    required init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension ElloTabBarController {
@@ -131,16 +140,11 @@ extension ElloTabBarController {
 
 }
 
-extension ElloTabBarController {
-    class func instantiateFromStoryboard() -> ElloTabBarController {
-        return UIStoryboard.storyboardWithId(.elloTabBar) as! ElloTabBarController
-    }
-}
-
 // MARK: View Lifecycle
 extension ElloTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupControllers()
         view.isOpaque = true
         view.addSubview(tabBar)
         tabBar.delegate = self
@@ -181,6 +185,27 @@ extension ElloTabBarController {
         animate(animated: animated) {
             self.positionTabBar()
         }
+    }
+
+    func setupControllers() {
+        let discover = DiscoverAllCategoriesViewController()
+        let notifications = NotificationsViewController()
+        let following = FollowingViewController()
+        let profile = ProfileViewController(user: currentUser!)
+        let omnibar = OmnibarViewController()
+        omnibar.canGoBack = false
+
+        self.addChildViewController(embed(discover))
+        self.addChildViewController(embed(notifications))
+        self.addChildViewController(embed(following))
+        self.addChildViewController(embed(profile))
+        self.addChildViewController(embed(omnibar))
+    }
+
+    func embed(_ controller: UIViewController) -> UIViewController {
+        let nav = ElloNavigationController(rootViewController: controller)
+        nav.currentUser = currentUser
+        return nav
     }
 }
 
@@ -244,9 +269,8 @@ extension ElloTabBarController {
 extension ElloTabBarController {
     func didSetCurrentUser() {
         for controller in childViewControllers {
-            if let controller = controller as? ControllerThatMightHaveTheCurrentUser {
-                controller.currentUser = currentUser
-            }
+            guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { return }
+            controller.currentUser = currentUser
         }
     }
 

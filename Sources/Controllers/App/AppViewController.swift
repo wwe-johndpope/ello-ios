@@ -250,7 +250,7 @@ extension AppViewController {
     func showMainScreen(_ user: User) {
         Tracker.shared.identify(user: user)
 
-        let vc = ElloTabBarController.instantiateFromStoryboard()
+        let vc = ElloTabBarController()
         ElloWebBrowserViewController.elloTabBarController = vc
         vc.currentUser = user
 
