@@ -11,50 +11,50 @@ class ActivitySpec: QuickSpec {
     override func spec() {
         describe("+fromJSON:") {
 
-            context("friend stream") {
-                it("parses own post correctly") {
-                    let parsedActivities = stubbedJSONDataArray("activity_streams_friend_stream", "activities")
+            context("notifications stream") {
+                it("parses repost_notification") {
+                    let parsedActivities = stubbedJSONDataArray("activity_streams_notifications", "activities")
                     let activity = Activity.fromJSON(parsedActivities[0]) as! Activity
-                    let createdAtStr = "2014-06-03T00:00:00.000Z"
+                    let createdAtStr = "2014-06-15T00:00:00.000Z"
                     let createdAt = createdAtStr.toDate()!
                     // active record
                     expect(activity.id) == createdAtStr
                     expect(activity.createdAt) == createdAt
                     // required
-                    expect(activity.kind) == Activity.Kind.ownPost
+                    expect(activity.kind) == Activity.Kind.repostNotification
                     expect(activity.subjectType) == Activity.SubjectType.post
                     // links
                     expect(activity.subject).to(beAKindOf(Post.self))
                 }
 
-                it("parses friend post correctly") {
-                    let parsedActivities = stubbedJSONDataArray("activity_streams_friend_stream", "activities")
+                it("parses new_follower_post") {
+                    let parsedActivities = stubbedJSONDataArray("activity_streams_notifications", "activities")
                     let activity = Activity.fromJSON(parsedActivities[1]) as! Activity
-                    let createdAtStr = "2014-06-02T00:00:00.000Z"
+                    let createdAtStr = "2014-06-14T00:00:00.000Z"
                     let createdAt = createdAtStr.toDate()!
                     // active record
                     expect(activity.id) == createdAtStr
                     expect(activity.createdAt) == createdAt
                     // required
-                    expect(activity.kind) == Activity.Kind.friendPost
-                    expect(activity.subjectType) == Activity.SubjectType.post
-                    // links
-                    expect(activity.subject).to(beAKindOf(Post.self))
-                }
-
-                it("parses welcome post correctly") {
-                    let parsedActivities = stubbedJSONDataArray("activity_streams_friend_stream", "activities")
-                    let activity = Activity.fromJSON(parsedActivities[2]) as! Activity
-                    let createdAtStr = "2014-06-01T00:00:00.000Z"
-                    let createdAt = createdAtStr.toDate()!
-                    // active record
-                    expect(activity.id) == createdAtStr
-                    expect(activity.createdAt) == createdAt
-                    // required
-                    expect(activity.kind) == Activity.Kind.welcomePost
+                    expect(activity.kind) == Activity.Kind.newFollowerPost
                     expect(activity.subjectType) == Activity.SubjectType.user
                     // links
                     expect(activity.subject).to(beAKindOf(User.self))
+                }
+
+                it("parses love_on_original_post_notification") {
+                    let parsedActivities = stubbedJSONDataArray("activity_streams_notifications", "activities")
+                    let activity = Activity.fromJSON(parsedActivities[2]) as! Activity
+                    let createdAtStr = "2014-06-13T00:00:00.000Z"
+                    let createdAt = createdAtStr.toDate()!
+                    // active record
+                    expect(activity.id) == createdAtStr
+                    expect(activity.createdAt) == createdAt
+                    // required
+                    expect(activity.kind) == Activity.Kind.loveOnOriginalPostNotification
+                    expect(activity.subjectType) == Activity.SubjectType.unknown
+                    // links
+                    expect(activity.subject).to(beAKindOf(Love.self))
                 }
             }
         }

@@ -60,16 +60,14 @@ class ElloAPISpec: QuickSpec {
                         (.flagComment(postId: "555", commentId: "666", kind: "some-string"), "/api/v2/posts/555/comments/666/flag/some-string"),
                         (.flagPost(postId: "456", kind: "another-kind"), "/api/v2/posts/456/flag/another-kind"),
                         (.flagUser(userId: "666", kind: "any"), "/api/v2/users/666/flag/any"),
-                        (.friendNewContent(createdAt: nil), "/api/v2/streams/friend"),
-                        (.friendStream, "/api/v2/streams/friend"),
+                        (.followingNewContent(createdAt: nil), "/api/v2/following/posts/recent"),
+                        (.following, "/api/v2/following/posts/recent"),
                         (.hire(userId: "666", body: "foo"), "/api/v2/users/666/hire_me"),
-                        (ElloAPI.infiniteScroll(queryItems: []) { return ElloAPI.friendStream }, "/api/v2/streams/friend"),
+                        (ElloAPI.infiniteScroll(queryItems: []) { return ElloAPI.following }, "/api/v2/following/posts/recent"),
                         (.inviteFriends(contact: "someContact"), "/api/v2/invitations"),
                         (.join(email: "", username: "", password: "", invitationCode: nil), "/api/v2/join"),
                         (.locationAutoComplete(terms: ""), "/api/v2/profile/location_autocomplete"),
                         (.loves(userId: "666"), "/api/v2/users/666/loves"),
-                        (.noiseNewContent(createdAt: nil), "/api/v2/streams/noise"),
-                        (.noiseStream, "/api/v2/streams/noise"),
                         (.notificationsNewContent(createdAt: nil), "/api/v2/notifications"),
                         (.markAnnouncementAsRead, "/api/v2/most_recent_announcements/mark_last_read_announcement"),
                         (.notificationsStream(category: nil), "/api/v2/notifications"),
@@ -134,15 +132,13 @@ class ElloAPISpec: QuickSpec {
                     (.findFriends(contacts: ["": [""]]), .usersType),
                     (.flagComment(postId: "", commentId: "", kind: ""), .noContentType),
                     (.flagPost(postId: "", kind: ""), .noContentType),
-                    (.friendStream, .activitiesType),
-                    (.friendNewContent(createdAt: nil), .noContentType),
+                    (.following, .postsType),
+                    (.followingNewContent(createdAt: nil), .noContentType),
                     (.infiniteScroll(queryItems: ["" as AnyObject], elloApi: { return ElloAPI.amazonCredentials }), .amazonCredentialsType),
                     (.inviteFriends(contact: ""), .noContentType),
                     (.join(email: "", username: "", password: "", invitationCode: ""), .usersType),
                     (.loves(userId: ""), .lovesType),
                     (.loves(userId: currentUserId), .lovesType),
-                    (.noiseStream, .activitiesType),
-                    (.noiseNewContent(createdAt: nil), .noContentType),
                     (.notificationsNewContent(createdAt: nil), .noContentType),
                     (.notificationsStream(category: ""), .activitiesType),
                     (.postComments(postId: ""), .commentsType),
@@ -213,19 +209,17 @@ class ElloAPISpec: QuickSpec {
                         .findFriends(contacts: [:]),
                         .flagComment(postId: "", commentId: "", kind: ""),
                         .flagPost(postId: "", kind: ""),
-                        .friendNewContent(createdAt: nil),
-                        .friendStream,
+                        .followingNewContent(createdAt: nil),
+                        .following,
                         .infiniteScroll(queryItems: ["" as AnyObject], elloApi: { () -> ElloAPI in
                             return ElloAPI.auth(email: "", password: "")
                         }),
                         .infiniteScroll(queryItems: ["" as AnyObject], elloApi: { () -> ElloAPI in
-                            return ElloAPI.friendStream
+                            return ElloAPI.following
                         }),
                         .inviteFriends(contact: ""),
                         .join(email: "", username: "", password: "", invitationCode: ""),
                         .loves(userId: ""),
-                        .noiseNewContent(createdAt: nil),
-                        .noiseStream,
                         .notificationsNewContent(createdAt: nil),
                         .notificationsStream(category: ""),
                         .postComments(postId: ""),
@@ -261,8 +255,7 @@ class ElloAPISpec: QuickSpec {
                 context("If-Modified-Since endpoints") {
                     let date = Date()
                     let endpoints: [ElloAPI] = [
-                        .friendNewContent(createdAt: date),
-                        .noiseNewContent(createdAt: date),
+                        .followingNewContent(createdAt: date),
                         .notificationsNewContent(createdAt: date)
                     ]
                     for endpoint in endpoints {
@@ -298,14 +291,13 @@ class ElloAPISpec: QuickSpec {
                         .findFriends(contacts: ["" : [""]]),
                         .flagComment(postId: "", commentId: "", kind: ""),
                         .flagPost(postId: "", kind: ""),
-                        .friendStream,
+                        .following,
                         .infiniteScroll(queryItems: ["" as AnyObject], elloApi: { () -> ElloAPI in
-                            return ElloAPI.friendStream
+                            return ElloAPI.following
                         }),
                         .inviteFriends(contact: ""),
                         .join(email: "", username: "", password: "", invitationCode: ""),
                         .loves(userId: ""),
-                        .noiseStream,
                         .notificationsStream(category: ""),
                         .postComments(postId: ""),
                         .postDetail(postParam: "", commentCount: 10),
@@ -384,8 +376,8 @@ class ElloAPISpec: QuickSpec {
 
                 }
 
-                it("FriendStream") {
-                    let params = ElloAPI.friendStream.parameters!
+                it("Following") {
+                    let params = ElloAPI.following.parameters!
                     expect(params["per_page"] as? Int) == 10
                 }
 
@@ -422,10 +414,6 @@ class ElloAPISpec: QuickSpec {
                     }
                 }
 
-                it("NoiseStream") {
-                    let params = ElloAPI.noiseStream.parameters!
-                    expect(params["per_page"] as? Int) == 10
-                }
 
                 describe("NotificationsStream") {
 
@@ -528,10 +516,10 @@ class ElloAPISpec: QuickSpec {
                             expect(message) == String(data: sampleData, encoding: String.Encoding.utf8)
                         }
 
-                        it("returns stubbed data for friends stream request") {
+                        it("returns stubbed data for following request") {
                             var message: String?
 
-                            let target: ElloAPI = .friendStream
+                            let target: ElloAPI = .following
                             provider.request(target, completion: { (result) in
                                 switch result {
                                 case let .success(moyaResponse):

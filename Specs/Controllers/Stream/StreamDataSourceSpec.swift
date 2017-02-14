@@ -934,7 +934,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                     context("blocked user is the post author") {
                         it("removes blocked user, their post and all comments on that post") {
-                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
                             subject.modifyUserRelationshipItems(User.stub(["id": "user1", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 0
@@ -943,7 +943,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                     context("blocked user is not the post author") {
                         it("removes blocked user's comments") {
-                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
                             subject.modifyUserRelationshipItems(User.stub(["id": "user2", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 7
@@ -951,7 +951,7 @@ class StreamDataSourceSpec: QuickSpec {
                     }
 
                     it("does not remove cells tied to other users") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
                         subject.modifyUserRelationshipItems(User.stub(["id": "unrelated-user", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
                         expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
@@ -962,7 +962,7 @@ class StreamDataSourceSpec: QuickSpec {
                 describe("friending/noising/inactivating a user") {
 
                     it("updates posts from that user") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         var user1 = subject.userForIndexPath(indexPath0)!
                         expect(user1.followersCount) == "stub-user-followers-count"
                         expect(user1.relationshipPriority.rawValue) == RelationshipPriority.none.rawValue
@@ -1024,7 +1024,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                 context("modifies a user when it is the currentUser") {
                     it("removes blocked user, their post and all comments on that post") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         expect(subject.userForIndexPath(indexPath0)!.username) == "sweet"
                         subject.modifyUserSettingsItems(User.stub(["id": "user1", "username": "sweetness"]), collectionView: fakeCollectionView)
                         expect(subject.userForIndexPath(indexPath0)!.username) == "sweetness"
