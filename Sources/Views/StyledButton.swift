@@ -205,6 +205,9 @@ extension StyledButton.Style {
     static let ClearBlack = StyledButton.Style(
         titleColor: .black, disabledTitleColor: .greyC()
         )
+    static let ClearGray = StyledButton.Style(
+        titleColor: .greyA(), highlightedTitleColor: .black, disabledTitleColor: .greyC()
+        )
     static let LightGray = StyledButton.Style(
         backgroundColor: .greyE5(), disabledBackgroundColor: .greyF1(),
         titleColor: .grey6(), highlightedTitleColor: .black, disabledTitleColor: .greyC()
