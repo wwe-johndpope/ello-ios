@@ -261,6 +261,7 @@
 		12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */; };
 		123971521E4B626400481CB3 /* ResponderChainableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123971511E4B626400481CB3 /* ResponderChainableController.swift */; };
 		123B7C331DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123B7C321DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift */; };
+		123D36171E53BF9000274B9D /* StoryboardIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123D36161E53BF9000274B9D /* StoryboardIdentifiers.swift */; };
 		123DEBE91D3D4087007B5F86 /* PostDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */; };
 		123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */; };
 		123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */; };
@@ -382,7 +383,7 @@
 		12A3A46F1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */; };
 		12A3A4721AB3556F00D2AFB0 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		12AF0AFB1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AF0AFA1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift */; };
-		12B093661A6D87C000BF104E /* StreamContainerViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093651A6D87C000BF104E /* StreamContainerViewControllerSpec.swift */; };
+		12B093661A6D87C000BF104E /* FollowingViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */; };
 		12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093671A6E146C00BF104E /* UIBarButtonItem.swift */; };
 		12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */; };
 		12B291381DDF5E9F0056C52E /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B291371DDF5E9F0056C52E /* CategoryCardView.swift */; };
@@ -1232,6 +1233,7 @@
 		12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensionsSpec.swift; sourceTree = "<group>"; };
 		123971511E4B626400481CB3 /* ResponderChainableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderChainableController.swift; sourceTree = "<group>"; };
 		123B7C321DB5100F00BBD032 /* ProfileCategoriesPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesPresentationController.swift; sourceTree = "<group>"; };
+		123D36161E53BF9000274B9D /* StoryboardIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiers.swift; sourceTree = "<group>"; };
 		123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGenerator.swift; sourceTree = "<group>"; };
 		123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGenerator.swift; sourceTree = "<group>"; };
 		123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGeneratorSpec.swift; sourceTree = "<group>"; };
@@ -1352,7 +1354,7 @@
 		12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloPullToRefreshView.swift; sourceTree = "<group>"; };
 		12A3A4711AB3556F00D2AFB0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		12AF0AFA1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStreamTextCellSizeCalculator.swift; sourceTree = "<group>"; };
-		12B093651A6D87C000BF104E /* StreamContainerViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = StreamContainerViewControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FollowingViewControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12B093671A6E146C00BF104E /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationController.swift; sourceTree = "<group>"; };
 		12B291371DDF5E9F0056C52E /* CategoryCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CategoryCardView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2166,7 +2168,7 @@
 				12A1D8341DAD766A00A327D6 /* ProfileTotalCountSizeCalculatorSpec.swift */,
 				76CCEEDC1ACC8D4B00978663 /* StreamableViewControllerSpec.swift */,
 				127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */,
-				12B093651A6D87C000BF104E /* StreamContainerViewControllerSpec.swift */,
+				12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */,
 				76B2ADDA1A7C43F700D5CAD7 /* StreamDataSourceSpec.swift */,
 				12CDC0BD1B629E8D003B287E /* StreamImageViewerSpec.swift */,
 				12916A411B7AA88D005B9CCF /* StreamKindSpec.swift */,
@@ -2184,8 +2186,8 @@
 				1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */,
 				12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */,
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
-				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */,
+				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				12B291391DE4ED090056C52E /* EmptyStreamCell.swift */,
 				1D7152951D6CBE0E005998FE /* NoPostsCell.swift */,
 				1D7152971D6CBE24005998FE /* NoPostsCell.xib */,
@@ -2652,6 +2654,7 @@
 				12687A151BBED25A0055D0BA /* SpecsTrackingAgent.swift */,
 				1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */,
 				766CAEF11AAA5E2D009E9266 /* Stubs.swift */,
+				123D36161E53BF9000274B9D /* StoryboardIdentifiers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4706,7 +4709,7 @@
 				1DF50C8D1C61452D00C62D89 /* UIImagePickerControllerSpec.swift in Sources */,
 				1D06D6CE1E43BC50004FA878 /* RegionKindStreamCellTypeAdditionSpec.swift in Sources */,
 				12DB1CA71D9C6B9E007E3E4C /* UINavigationItemSpec.swift in Sources */,
-				12B093661A6D87C000BF104E /* StreamContainerViewControllerSpec.swift in Sources */,
+				12B093661A6D87C000BF104E /* FollowingViewControllerSpec.swift in Sources */,
 				1DA18DFE1DAC3B64000231CC /* ProfileStatsViewSpec.swift in Sources */,
 				12D14C721A43762400C6F8E8 /* PostSpec.swift in Sources */,
 				1DA18E0A1DAD969F000231CC /* ProfileBioViewSpec.swift in Sources */,
@@ -4783,6 +4786,7 @@
 				1DF942351A9FC92D00838E9C /* NotificationsFilterBarSpec.swift in Sources */,
 				1D2C12AA1D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift in Sources */,
 				1D066FF31B8BA19E002B303D /* ArraySpec.swift in Sources */,
+				123D36171E53BF9000274B9D /* StoryboardIdentifiers.swift in Sources */,
 				12A1D8331DAD747500A327D6 /* ProfileTotalCountViewSpec.swift in Sources */,
 				1DADA1691A96F4C60000DDA1 /* ColorsSpec.swift in Sources */,
 			);
