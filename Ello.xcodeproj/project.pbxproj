@@ -320,6 +320,7 @@
 		1267C7391BA232530000D809 /* MutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7361BA232530000D809 /* MutableBox.swift */; };
 		12687A161BBED25A0055D0BA /* SpecsTrackingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12687A151BBED25A0055D0BA /* SpecsTrackingAgent.swift */; };
 		12687A181BBF295E0055D0BA /* RateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12687A171BBF295E0055D0BA /* RateSpec.swift */; };
+		126910C71E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126910C61E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift */; };
 		126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1269484F1AEC0D1800A7EFCC /* Preloader.swift */; };
 		126E052F1B152CF00036DFA6 /* AlertHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */; };
 		126E05311B152DD70036DFA6 /* AlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126E05301B152DD70036DFA6 /* AlertHeaderView.swift */; };
@@ -1307,6 +1308,7 @@
 		1267C7361BA232530000D809 /* MutableBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableBox.swift; sourceTree = "<group>"; };
 		12687A151BBED25A0055D0BA /* SpecsTrackingAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecsTrackingAgent.swift; sourceTree = "<group>"; };
 		12687A171BBF295E0055D0BA /* RateSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateSpec.swift; sourceTree = "<group>"; };
+		126910C61E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesViewControllerSpec.swift; sourceTree = "<group>"; };
 		1269484F1AEC0D1800A7EFCC /* Preloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preloader.swift; sourceTree = "<group>"; };
 		126DF2351C595C53003AB563 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AlertHeaderView.xib; path = Sources/Controllers/Alerts/AlertHeaderView.xib; sourceTree = SOURCE_ROOT; };
@@ -2482,6 +2484,14 @@
 			path = Box;
 			sourceTree = "<group>";
 		};
+		126910C51E56402800E4DA4F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				126910C61E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		128D36A81A95192300622833 /* CellDequeing */ = {
 			isa = PBXGroup;
 			children = (
@@ -3602,6 +3612,7 @@
 		768043741AC202D3004FEE09 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				126910C51E56402800E4DA4F /* Categories */,
 				124B48681DB001310058D3F5 /* ProfileCategoriesScreenSpec.swift */,
 				123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */,
 				12F9EB421DEF79B800E127AE /* ProfileHeaderCompactViewSpec.swift */,
@@ -4601,6 +4612,7 @@
 				1292C0BF1AA6B41500803B1A /* FakeStreamNotificationCellSizeCalculator.swift in Sources */,
 				EAB484271AC2112200CE6A81 /* CredentialSettingsViewControllerSpec.swift in Sources */,
 				1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */,
+				126910C71E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift in Sources */,
 				1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */,
 				1D06D6C81E3C0B6A004FA878 /* LoggedOutScreenSpec.swift in Sources */,
 				768043781AC20382004FEE09 /* FakeProfileHeaderCellSizeCalculator.swift in Sources */,

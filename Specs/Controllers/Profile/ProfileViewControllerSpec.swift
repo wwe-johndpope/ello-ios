@@ -289,14 +289,12 @@ class ProfileViewControllerSpec: QuickSpec {
             }
 
             context("logged out view") {
-                var user: User!
                 var subject: ProfileViewController!
 
                 beforeEach {
                     subject = ProfileViewController(userParam: "42")
                     subject.currentUser = nil
                     showController(subject)
-                    user = subject.user!
                 }
 
                 it("should not show ellipses button in navigation") {
