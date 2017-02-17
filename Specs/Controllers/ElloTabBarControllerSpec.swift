@@ -43,34 +43,19 @@ class ElloTabBarControllerSpec: QuickSpec {
         tabBarItem.image = UIImage.imageWithColor(.black)
         tabBarItem.selectedImage = UIImage.imageWithColor(.black)
 
-        describe("initialization") {
-
-            beforeEach {
-                subject = ElloTabBarController.instantiateFromStoryboard()
-            }
-
-            it("can be instantiated from storyboard") {
-                expect(subject).notTo(beNil())
-            }
-
-            it("is a ElloTabBarController") {
-                expect(subject).to(beAKindOf(ElloTabBarController.self))
-            }
-
-        }
-
         describe("-viewDidLoad") {
 
             beforeEach {
-                subject = ElloTabBarController.instantiateFromStoryboard()
+                subject = ElloTabBarController()
+                subject.currentUser = User.stub(["username": "foo"])
                 _ = subject.view
             }
 
-            it("sets friends as the selected tab") {
+            it("sets following as the selected tab") {
                 if let navigationController = subject.selectedViewController as? ElloNavigationController {
                     navigationController.currentUser = User.stub(["username": "foo"])
                     if let firstController = navigationController.topViewController as? BaseElloViewController {
-                        expect(firstController).to(beAKindOf(StreamContainerViewController.self))
+                        expect(firstController).to(beAKindOf(FollowingViewController.self))
                     }
                     else {
                         fail("navigation controller doesn't have a topViewController, or it isn't a BaseElloViewController")
@@ -86,7 +71,8 @@ class ElloTabBarControllerSpec: QuickSpec {
         context("selecting tab bar items") {
 
             beforeEach {
-                subject = ElloTabBarController.instantiateFromStoryboard()
+                subject = ElloTabBarController()
+                subject.currentUser = User.stub(["username": "foo"])
                 let children = subject.childViewControllers
                 for child in children {
                     child.removeFromParentViewController()
@@ -187,7 +173,8 @@ class ElloTabBarControllerSpec: QuickSpec {
                     responder = NotificationObserver(notification: NewContentNotifications.reloadNotifications) { _ in
                         responded = true
                     }
-                    subject = ElloTabBarController.instantiateFromStoryboard()
+                    subject = ElloTabBarController()
+                    subject.currentUser = User.stub(["username": "foo"])
                     let children = subject.childViewControllers
                     for child in children {
                         child.removeFromParentViewController()
@@ -228,12 +215,13 @@ class ElloTabBarControllerSpec: QuickSpec {
                 prevTabValues = [
                     ElloTab.discover: GroupDefaults[ElloTab.discover.narrationDefaultKey].bool,
                     ElloTab.notifications: GroupDefaults[ElloTab.notifications.narrationDefaultKey].bool,
-                    ElloTab.stream: GroupDefaults[ElloTab.stream.narrationDefaultKey].bool,
+                    ElloTab.following: GroupDefaults[ElloTab.following.narrationDefaultKey].bool,
                     ElloTab.profile: GroupDefaults[ElloTab.profile.narrationDefaultKey].bool,
                     ElloTab.omnibar: GroupDefaults[ElloTab.omnibar.narrationDefaultKey].bool
                 ]
 
-                subject = ElloTabBarController.instantiateFromStoryboard()
+                subject = ElloTabBarController()
+                subject.currentUser = User.stub(["username": "foo"])
                 let children = subject.childViewControllers
                 for child in children {
                     child.removeFromParentViewController()
@@ -254,20 +242,20 @@ class ElloTabBarControllerSpec: QuickSpec {
             it("should never change the key") {
                 expect(ElloTab.discover.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationDiscover"
                 expect(ElloTab.notifications.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationNotifications"
-                expect(ElloTab.stream.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationStream"
+                expect(ElloTab.following.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationStream"
                 expect(ElloTab.profile.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationProfile"
                 expect(ElloTab.omnibar.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationOmnibar"
             }
 
             it("should set the narration values") {
-                let tab = ElloTab.stream
+                let tab = ElloTab.following
                 ElloTabBarController.didShowNarration(tab, false)
                 expect(GroupDefaults[tab.narrationDefaultKey].bool).to(beFalse())
                 ElloTabBarController.didShowNarration(tab, true)
                 expect(GroupDefaults[tab.narrationDefaultKey].bool).to(beTrue())
             }
             it("should get the narration values") {
-                let tab = ElloTab.stream
+                let tab = ElloTab.following
                 GroupDefaults[tab.narrationDefaultKey] = false
                 expect(ElloTabBarController.didShowNarration(tab)).to(beFalse())
                 GroupDefaults[tab.narrationDefaultKey] = true
@@ -276,7 +264,7 @@ class ElloTabBarControllerSpec: QuickSpec {
             it("should NOT show the narrationView when changing to a tab that has already shown the narrationView") {
                 ElloTabBarController.didShowNarration(.discover, true)
                 ElloTabBarController.didShowNarration(.notifications, true)
-                ElloTabBarController.didShowNarration(.stream, true)
+                ElloTabBarController.didShowNarration(.following, true)
                 ElloTabBarController.didShowNarration(.profile, true)
                 ElloTabBarController.didShowNarration(.omnibar, true)
 
@@ -288,7 +276,7 @@ class ElloTabBarControllerSpec: QuickSpec {
             it("should show the narrationView when changing to a tab that hasn't shown the narrationView yet") {
                 ElloTabBarController.didShowNarration(.discover, false)
                 ElloTabBarController.didShowNarration(.notifications, false)
-                ElloTabBarController.didShowNarration(.stream, false)
+                ElloTabBarController.didShowNarration(.following, false)
                 ElloTabBarController.didShowNarration(.profile, false)
                 ElloTabBarController.didShowNarration(.omnibar, false)
 

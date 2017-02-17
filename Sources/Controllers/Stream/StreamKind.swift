@@ -11,7 +11,6 @@ enum StreamKind {
     case announcements
     case discover(type: DiscoverType)
     case following
-    case starred
     case notifications(category: String?)
     case postDetail(postParam: String)
     case simpleStream(endpoint: ElloAPI, title: String)
@@ -26,7 +25,6 @@ enum StreamKind {
         case .announcements: return ""
         case .discover: return InterfaceString.Discover.Title
         case .following: return InterfaceString.FollowingStream.Title
-        case .starred: return InterfaceString.StarredStream.Title
         case .notifications: return InterfaceString.Notifications.Title
         case .category: return ""
         case .postDetail: return ""
@@ -43,7 +41,6 @@ enum StreamKind {
         case .announcements: return "Announcements"
         case .discover, .category: return "CategoryPosts"
         case .following: return "Following"
-        case .starred: return "Starred"
         case .notifications: return "Notifications"
         case .postDetail: return "PostDetail"
         case .unknown: return "unknown"
@@ -123,8 +120,7 @@ enum StreamKind {
         case .announcements: return .announcements
         case let .category(slug): return .category(slug: slug)
         case let .discover(type): return .discover(type: type)
-        case .following: return .friendStream
-        case .starred: return .noiseStream
+        case .following: return .following
         case let .notifications(category): return .notificationsStream(category: category)
         case let .postDetail(postParam): return .postDetail(postParam: postParam, commentCount: 10)
         case let .simpleStream(endpoint, _): return endpoint
@@ -136,7 +132,6 @@ enum StreamKind {
     var relationship: RelationshipPriority {
         switch self {
         case .following: return .following
-        case .starred: return .starred
         default: return .null
         }
     }
@@ -189,15 +184,7 @@ enum StreamKind {
                 return []
             }
         default:
-            if let activities = jsonables as? [Activity] {
-                return activities.reduce([]) { accum, activity in
-                    if let post = activity.subject as? Post {
-                        return accum + [post]
-                    }
-                    return accum
-                }
-            }
-            else if let jsonables = jsonables as? [ElloComment] {
+            if let jsonables = jsonables as? [ElloComment] {
                 return jsonables
             }
             else if let jsonables = jsonables as? [Post] {
@@ -234,7 +221,7 @@ enum StreamKind {
 
     var hasGridViewToggle: Bool {
         switch self {
-        case .following, .starred, .discover, .category: return true
+        case .following, .discover, .category: return true
         case let .simpleStream(endpoint, _):
             switch endpoint {
             case .searchForPosts, .loves, .categoryPosts:
@@ -244,16 +231,6 @@ enum StreamKind {
             }
         default: return false
         }
-    }
-
-    var showStarButton: Bool {
-        switch self {
-        case .notifications:
-            return false
-        default:
-            break
-        }
-        return true
     }
 
     var isDetail: Bool {

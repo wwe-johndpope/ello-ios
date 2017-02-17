@@ -57,7 +57,7 @@ class PostbarControllerSpec: QuickSpec {
                 categoryHeaderSizeCalculator: categoryHeaderSizeCalculator
             )
 
-            controller = StreamViewController.instantiateFromStoryboard()
+            controller = StreamViewController()
             controller.streamKind = streamKind
             controller.dataSource = dataSource
             controller.collectionView.dataSource = dataSource

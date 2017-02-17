@@ -14,7 +14,7 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                 var subject: DynamicSettingsViewController!
 
                 beforeEach {
-                    subject = UIStoryboard.storyboardWithId(.dynamicSettings, storyboardName: "Settings") as! DynamicSettingsViewController
+                    subject = UIStoryboard.storyboardWithId(StoryboardIdentifier.dynamicSettings.rawValue, storyboardName: "Settings") as! DynamicSettingsViewController
                 }
                 describe("when mutedCount is 0") {
                     beforeEach {

@@ -18,7 +18,6 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
             var item: StreamCellItem!
 
             beforeEach {
-                StreamKind.starred.setIsGridView(true)
                 StreamKind.following.setIsGridView(false)
             }
 
@@ -88,15 +87,20 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
 
                 context("gridLayout streamKind") {
+
+                    beforeEach {
+                        StreamKind.following.setIsGridView(true)
+                    }
+
                     it("sets isGridLayout") {
                         cell.isGridLayout = false
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .starred, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                         expect(cell.isGridLayout) == true
                     }
 
                     it("sets avatarHeight") {
                         cell.avatarHeight = 0
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .starred, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                         expect(cell.avatarHeight) == 30.0
                     }
                 }
@@ -121,7 +125,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     let repostAuthor: User = stub([
                         "id": "reposterId",
                         "username": "reposter",
-                        "relationshipPriority": RelationshipPriority.starred.rawValue,
+                        "relationshipPriority": RelationshipPriority.following.rawValue,
                     ])
                     let post: Post = stub([
                         "id" : "768",
@@ -143,7 +147,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                     expect(cell.relationshipControl.userId) == "reposterId"
                     expect(cell.relationshipControl.userAtName) == "@reposter"
-                    expect(cell.relationshipControl.relationshipPriority) == RelationshipPriority.starred
+                    expect(cell.relationshipControl.relationshipPriority) == RelationshipPriority.following
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = true
@@ -153,7 +157,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
 
                 context("gridLayout streamKind") {
                     it("shows reposter and author") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .starred, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                         expect(cell.repostedByButton.isHidden) == false
                         expect(cell.repostIconView.isHidden) == false
                     }
@@ -203,7 +207,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     let repostAuthor: User = stub([
                         "id": "reposterId",
                         "username": "reposter",
-                        "relationshipPriority": RelationshipPriority.starred.rawValue,
+                        "relationshipPriority": RelationshipPriority.following.rawValue,
                     ])
                     let post: Post = stub([
                         "id" : "768",
@@ -224,7 +228,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     expect(cell.followButtonVisible) == true
                     expect(cell.relationshipControl.userId) == "reposterId"
                     expect(cell.relationshipControl.userAtName) == "@reposter"
-                    expect(cell.relationshipControl.relationshipPriority) == RelationshipPriority.starred
+                    expect(cell.relationshipControl.relationshipPriority) == RelationshipPriority.following
                 }
             }
 

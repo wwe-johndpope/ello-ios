@@ -22,7 +22,7 @@ class ProfileViewControllerSpec: QuickSpec {
                     showController(subject)
                 }
 
-                it("does updates the top inset") {
+                it("does update the top inset") {
                     expect(subject.streamViewController.contentInset.top) == 64
                 }
             }
@@ -289,14 +289,12 @@ class ProfileViewControllerSpec: QuickSpec {
             }
 
             context("logged out view") {
-                var user: User!
                 var subject: ProfileViewController!
 
                 beforeEach {
                     subject = ProfileViewController(userParam: "42")
                     subject.currentUser = nil
                     showController(subject)
-                    user = subject.user!
                 }
 
                 it("should not show ellipses button in navigation") {

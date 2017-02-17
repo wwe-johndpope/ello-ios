@@ -13,7 +13,7 @@ class AuthStateSpec: QuickSpec {
             describe("supports(AuthState)") {
                 let noTokenReqd: [ElloAPI] = [.auth(email: "", password: ""), .reAuth(token: ""), .anonymousCredentials]
                 let anonymous: [ElloAPI] = [.availability(content: [:]), .join(email: "", username: "", password: "", invitationCode: nil)]
-                let authdOnly: [ElloAPI] = [.amazonCredentials, .noiseStream, .currentUserStream, .currentUserStream]
+                let authdOnly: [ElloAPI] = [.amazonCredentials, .currentUserStream, .currentUserStream]
                 let expectations: [(AuthState, supported: [ElloAPI], unsupported: [ElloAPI])] = [
                     (.noToken, supported: noTokenReqd, unsupported: authdOnly),
                     (.anonymous, supported: noTokenReqd + anonymous, unsupported: authdOnly),

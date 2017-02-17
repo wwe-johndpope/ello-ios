@@ -18,7 +18,7 @@ class StreamImageViewerSpec: QuickSpec {
             var presentingVC: StreamViewController!
             var subject: StreamImageViewer!
             beforeEach {
-                presentingVC = .instantiateFromStoryboard()
+                presentingVC = StreamViewController()
                 subject = StreamImageViewer(presentingController: presentingVC)
             }
 

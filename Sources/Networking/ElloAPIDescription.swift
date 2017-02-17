@@ -58,8 +58,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "flagPost(postId: \(postId), kind: \(kind))"
         case let .flagUser(userId, kind):
             return "flagUser(userId: \(userId), kind: \(kind))"
-        case let .friendNewContent(createdAt):
-            return "friendNewContent(createdAt: \(createdAt))"
+        case let .followingNewContent(createdAt):
+            return "followingNewContent(createdAt: \(createdAt))"
         case let .hire(userId, body):
             return "hire(userId: \(userId), body: \(body.characters.count))"
         case let .collaborate(userId, body):
@@ -70,8 +70,6 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "loves(userId: \(userId))"
         case let .locationAutoComplete(terms):
             return "locationAutoComplete(terms: \(terms))"
-        case let .noiseNewContent(createdAt):
-            return "noiseNewContent(createdAt: \(createdAt))"
         case let .notificationsNewContent(createdAt):
             return "notificationsNewContent(createdAt: \(createdAt))"
         case let .postComments(postId):
@@ -172,10 +170,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "flagPost"
         case .flagUser:
             return "flagUser"
-        case .friendNewContent:
-            return "friendNewContent"
-        case .friendStream:
-            return "friendStream"
+        case .followingNewContent:
+            return "followingNewContent"
+        case .following:
+            return "following"
         case .hire:
             return "hire"
         case .collaborate:
@@ -192,10 +190,6 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "locationAutoComplete"
         case .markAnnouncementAsRead:
             return "markAnnouncementAsRead"
-        case .noiseNewContent:
-            return "noiseNewContent"
-        case .noiseStream:
-            return "noiseStream"
         case .notificationsNewContent:
             return "notificationsNewContent"
         case .notificationsStream:
