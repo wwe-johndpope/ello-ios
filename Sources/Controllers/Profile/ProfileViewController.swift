@@ -392,11 +392,11 @@ extension ProfileViewController: ProfileHeaderResponder {
 
         let vc = ProfileCategoriesViewController(categories: categories)
         vc.currentUser = currentUser
-        let navVC = ElloNavigationController(rootViewController: vc)
-        navVC.modalTransitionStyle = .crossDissolve
-        navVC.modalPresentationStyle = .custom
-        navVC.transitioningDelegate = vc
-        present(navVC, animated: true, completion: nil)
+        vc.presentingVC = self
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        present(vc, animated: true, completion: nil)
     }
 
     func onLovesTapped(_ cell: UICollectionViewCell) {
