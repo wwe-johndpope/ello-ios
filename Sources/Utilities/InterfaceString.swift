@@ -14,15 +14,15 @@ struct InterfaceString {
             static let Notifications: String = NSLocalizedString("Notifications", comment: "Notifications pop up title")
             static let Following: String = NSLocalizedString("Following", comment: "Stream pop up title")
             static let Profile: String = NSLocalizedString("Your Profile", comment: "Profile pop up title")
-            static let Omnibar: String = NSLocalizedString("Post (Omnibar)", comment: "Omnibar pop up title")
+            static let Omnibar: String = NSLocalizedString("Post", comment: "Omnibar pop up title")
         }
 
         struct PopupText {
-            static let Discover: String = NSLocalizedString("Explore creators, curated categories & communities.", comment: "Discover pop up text")
-            static let Notifications: String = NSLocalizedString("Keep it fresh with real-time alerts.", comment: "Notifications pop up text")
-            static let Following: String = NSLocalizedString("Two streams: Following & Starred.\nUse them however you like.", comment: "Stream pop up text")
-            static let Profile: String = NSLocalizedString("Everything you create in one place.\nSettings too.", comment: "Profile pop up text")
-            static let Omnibar: String = NSLocalizedString("Share text, links, images, GIFs and more.", comment: "Omnibar pop up text")
+            static let Discover: String = NSLocalizedString("What's next in art, design, fashion, web culture & more.", comment: "Discover pop up text")
+            static let Notifications: String = NSLocalizedString("Stay hyped with real-time alerts.", comment: "Notifications pop up text")
+            static let Following: String = NSLocalizedString("Follow the people, work & ideas that you think are most rad.", comment: "Stream pop up text")
+            static let Profile: String = NSLocalizedString("Your deets & posts in one place. All your settings too.", comment: "Profile pop up text")
+            static let Omnibar: String = NSLocalizedString("Publish images, GIFs, text, links and more.", comment: "Omnibar pop up text")
         }
     }
 
