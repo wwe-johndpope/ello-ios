@@ -31,6 +31,8 @@ protocol HasAppController {
 
 
 class AppViewController: BaseElloViewController {
+    override func trackerName() -> String? { return nil }
+
     var mockScreen: AppScreenProtocol?
     var screen: AppScreenProtocol { return mockScreen ?? (self.view as! AppScreenProtocol) }
 
