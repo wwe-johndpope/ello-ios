@@ -170,7 +170,7 @@ extension StreamableViewController: PostTappedResponder {
 
 // MARK: UserTappedResponder
 extension StreamableViewController: UserTappedResponder {
-    
+
     func userTapped(_ user: User) {
         guard user.relationshipPriority != .block else { return }
         userParamTapped(user.id, username: user.username)
