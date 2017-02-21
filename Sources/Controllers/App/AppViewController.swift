@@ -756,9 +756,10 @@ extension AppViewController {
         }
         else if
             let nav = self.visibleViewController as? UINavigationController,
-            nav.viewControllers.first is LoggedOutViewController
+            let loggedOutVC = nav.viewControllers.first as? LoggedOutViewController,
+            let childNav = loggedOutVC.childViewControllers.first as? UINavigationController
         {
-            navController = nav
+            navController = childNav
         }
 
         navController?.pushViewController(vc, animated: true)
