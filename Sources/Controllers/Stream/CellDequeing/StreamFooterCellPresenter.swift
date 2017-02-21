@@ -79,10 +79,10 @@ struct StreamFooterCellPresenter {
         currentUser: User?)
     {
         if streamKind.isDetail && currentUser == nil {
-            if let count = post.commentsCount, count > 0 {
-                cell.commentsOpened = true
-                cell.commentsControl.isSelected = true
-            }
+            let count = post.commentsCount ?? 0
+            let open = count > 0
+            cell.commentsOpened = open
+            cell.commentsControl.isSelected = open
         }
         else if streamKind.isDetail {
             cell.commentsOpened = true
