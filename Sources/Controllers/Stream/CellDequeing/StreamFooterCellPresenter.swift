@@ -34,7 +34,7 @@ struct StreamFooterCellPresenter {
 
         configureDisplayCounts(cell, post: post, streamKind: streamKind)
         configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
-        configureCommentControl(cell, streamCellItem: streamCellItem, streamKind: streamKind)
+        configureCommentControl(cell, post: post, streamCellItem: streamCellItem, streamKind: streamKind, currentUser: currentUser)
     }
 
     fileprivate static func configureToolBarItems(
@@ -73,10 +73,18 @@ struct StreamFooterCellPresenter {
 
     fileprivate static func configureCommentControl(
         _ cell: StreamFooterCell,
+        post: Post,
         streamCellItem: StreamCellItem,
-        streamKind: StreamKind )
+        streamKind: StreamKind,
+        currentUser: User?)
     {
-        if streamKind.isDetail {
+        if streamKind.isDetail && currentUser == nil {
+            if let count = post.commentsCount, count > 0 {
+                cell.commentsOpened = true
+                cell.commentsControl.isSelected = true
+            }
+        }
+        else if streamKind.isDetail {
             cell.commentsOpened = true
             cell.commentsControl.isSelected = true
         }
