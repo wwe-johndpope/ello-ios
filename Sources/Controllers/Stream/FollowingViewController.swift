@@ -17,7 +17,7 @@ class FollowingViewController: StreamableViewController {
     fileprivate var appForegroundObserver: NotificationObserver?
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.circBig) }
+        get { return UITabBarItem.item(.following) }
         set { self.tabBarItem = newValue }
     }
 

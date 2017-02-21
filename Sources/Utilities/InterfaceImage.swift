@@ -47,7 +47,7 @@ enum InterfaceImage: String {
     case bolt = "bolt"
     case omni = "omni"
     case person = "person"
-    case circBig = "circbig"
+    case following = "following"
     case narrationPointer = "narration_pointer"
 
     // Validation States

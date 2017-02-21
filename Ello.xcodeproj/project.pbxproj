@@ -430,6 +430,9 @@
 		12DEB2501C5BFB3100D4CDCE /* CryptoStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */; };
 		12DEB2511C5BFB6F00D4CDCE /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2B1A43390900493660 /* StringExtensions.swift */; };
 		12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */; };
+		12E2A5A31E5CD357000EFFBA /* following_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12E2A5A11E5CD357000EFFBA /* following_normal.svg */; };
+		12E2A5A41E5CD357000EFFBA /* following_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12E2A5A21E5CD357000EFFBA /* following_selected.svg */; };
+		12E2A5A61E5CD386000EFFBA /* create_post_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */; };
 		12E3A2751DBE811900D42599 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
 		12E810C21DCB91C4007094C1 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */; };
 		12EC00001DDB7EA4007F22C5 /* DeepLinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ECFFFF1DDB7EA4007F22C5 /* DeepLinking.swift */; };
@@ -1406,6 +1409,9 @@
 		12DEB24D1C5BFA9200D4CDCE /* libcommonCrypto.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcommonCrypto.tbd; path = usr/lib/system/libcommonCrypto.tbd; sourceTree = SDKROOT; };
 		12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoStringExtensions.swift; sourceTree = "<group>"; };
 		12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameSpec.swift; sourceTree = "<group>"; };
+		12E2A5A11E5CD357000EFFBA /* following_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = following_normal.svg; sourceTree = "<group>"; };
+		12E2A5A21E5CD357000EFFBA /* following_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = following_selected.svg; sourceTree = "<group>"; };
+		12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = create_post_normal.svg; sourceTree = "<group>"; };
 		12E3A2741DBE811900D42599 /* Promotional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotional.swift; sourceTree = "<group>"; };
 		12E83D9E1ADF12120074ECF6 /* ExperienceUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceUpdate.swift; sourceTree = "<group>"; };
 		12EC00011DDBD027007F22C5 /* DeepLinkingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingSpec.swift; sourceTree = "<group>"; };
@@ -3536,12 +3542,15 @@
 				1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */,
 				1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */,
 				1DF741681BFA61B1000F5349 /* camera_white.svg */,
+				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
 				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
 				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
-				769051001AFD2A720011B09A /* ello_logo.svg */,
 				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
+				769051001AFD2A720011B09A /* ello_logo.svg */,
 				1D472C211C1F2E0400B61E55 /* embetter_audio_play.svg */,
 				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
+				12E2A5A11E5CD357000EFFBA /* following_normal.svg */,
+				12E2A5A21E5CD357000EFFBA /* following_selected.svg */,
 				1D242D611DDBCD87000A424C /* grid_view_normal.svg */,
 				1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */,
 				1DF7416C1BFA65F0000F5349 /* link_normal.svg */,
@@ -4051,6 +4060,7 @@
 				1DF7416E1BFA65F0000F5349 /* link_normal.svg in Resources */,
 				12ECFFFE1DDA146A007F22C5 /* category.json in Resources */,
 				76F8DEAD1B6C0BC4009BCF61 /* abracket_selected.svg in Resources */,
+				12E2A5A61E5CD386000EFFBA /* create_post_normal.svg in Resources */,
 				1D405D9C1C47166D0059DAFD /* repost_disabled.svg in Resources */,
 				76F8DF061B6C0BC4009BCF61 /* xpmcirc_normal.svg in Resources */,
 				76F8DEB11B6C0BC4009BCF61 /* arrow_white.svg in Resources */,
@@ -4063,6 +4073,7 @@
 				EA8990141ABA180100339CBE /* Settings.storyboard in Resources */,
 				76F8DEBD1B6C0BC4009BCF61 /* check_green.svg in Resources */,
 				76F8DEBB1B6C0BC4009BCF61 /* camera_normal.svg in Resources */,
+				12E2A5A41E5CD357000EFFBA /* following_selected.svg in Resources */,
 				76F8DEFA1B6C0BC4009BCF61 /* sparkles_selected.svg in Resources */,
 				EA34DAC21AD84184002F566D /* dynamic_settings.json in Resources */,
 				7689B4EA1AD4ED3B00E4A4A3 /* discovery_listing_related_users.json in Resources */,
@@ -4186,6 +4197,7 @@
 				12F6AEA11A433F3D00493660 /* www in Resources */,
 				76F8DEDE1B6C0BC4009BCF61 /* omni_selected.svg in Resources */,
 				76E0CC8F1B064A9D00391186 /* posts_searching_for_posts.json in Resources */,
+				12E2A5A31E5CD357000EFFBA /* following_normal.svg in Resources */,
 				76F8DEB21B6C0BC4009BCF61 /* bolt_normal.svg in Resources */,
 				76C050AD1AA8C9570094E69A /* UserListItemCell.xib in Resources */,
 				1D9B74D51BB1E62500ACD028 /* bubble_tail.svg in Resources */,
