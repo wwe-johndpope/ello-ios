@@ -5,11 +5,12 @@
 import SwiftyUserDefaults
 
 enum ElloTab: Int {
-    case discover
-    case notifications
     case following
-    case profile
+    case discover
     case omnibar
+    case notifications
+    case profile
+
 
     static let DefaultTab: ElloTab = .following
 
@@ -189,18 +190,18 @@ extension ElloTabBarController {
     }
 
     func setupControllers() {
-        let discover = DiscoverAllCategoriesViewController()
-        let notifications = NotificationsViewController()
         let following = FollowingViewController()
-        let profile = ProfileViewController(user: currentUser!)
+        let discover = DiscoverAllCategoriesViewController()
         let omnibar = OmnibarViewController()
+        let notifications = NotificationsViewController()
+        let profile = ProfileViewController(user: currentUser!)
         omnibar.canGoBack = false
 
-        self.addChildViewController(embed(discover))
-        self.addChildViewController(embed(notifications))
         self.addChildViewController(embed(following))
-        self.addChildViewController(embed(profile))
+        self.addChildViewController(embed(discover))
         self.addChildViewController(embed(omnibar))
+        self.addChildViewController(embed(notifications))
+        self.addChildViewController(embed(profile))
     }
 
     func embed(_ controller: UIViewController) -> UIViewController {
