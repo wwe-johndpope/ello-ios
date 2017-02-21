@@ -27,7 +27,7 @@ install:
 before_script:
 - export LANG=en_US.UTF-8
 script:
-- gem install danger --no-ri --no-rdoc && danger
+- gem install danger -v 2.0.1 --no-ri --no-rdoc && danger
 - set -o pipefail && travis_retry xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
   Debug -destination "id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12" clean test | xcpretty -f `xcpretty-travis-formatter`
 notifications:
