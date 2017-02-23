@@ -47,6 +47,7 @@ enum ElloTab: Int {
 }
 
 class ElloTabBarController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser, BottomBarController {
+    override func trackerName() -> String? { return nil }
 
     let tabBar = ElloTabBar()
     fileprivate var systemLoggedOutObserver: NotificationObserver?

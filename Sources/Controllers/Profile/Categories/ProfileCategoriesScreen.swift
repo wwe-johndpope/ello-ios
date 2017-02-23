@@ -33,7 +33,7 @@ class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
 
     override func style() {
         backgroundColor = .clear
-        background.backgroundColor = .modalBackground()
+        background.backgroundColor = .clear
         textView.backgroundColor = .clear
         textView.isEditable = false
         textView.allowsEditingTextAttributes = false

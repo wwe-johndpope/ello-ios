@@ -4,6 +4,7 @@
 
 final class ProfileCategoriesViewController: BaseElloViewController {
 
+    var presentingVC: UIViewController?
     var categories = [Category]()
     init(categories: [Category]) {
         super.init(nibName: nil, bundle: nil)
@@ -45,7 +46,10 @@ extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
         let vc = CategoryViewController(slug: category.slug, name: category.name)
         vc.currentUser = currentUser
 
-        navigationController?.pushViewController(vc, animated: true)
+        let presentingVC = self.presentingVC
+        self.dismiss(animated: true) {
+            presentingVC?.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     func dismiss() {

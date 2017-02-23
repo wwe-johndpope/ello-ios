@@ -17,7 +17,7 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
     let controllerView = UIView()
     let bottomBarView = UIView()
     let joinButton = StyledButton(style: .Green)
-    let loginButton = StyledButton(style: .LightGray)
+    let loginButton = StyledButton(style: .ClearGray)
     let closeButton = UIButton()
     let joinLabel = StyledLabel(style: .Large)
     let tagLabel = StyledLabel(style: .Black)
