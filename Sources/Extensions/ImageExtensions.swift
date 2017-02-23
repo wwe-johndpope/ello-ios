@@ -93,6 +93,24 @@ extension UIImage {
         return newImage
     }
 
+    func circleOutline(color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        self.draw(in: rect)
+        let ctx = UIGraphicsGetCurrentContext()
+        ctx?.saveGState()
+        ctx?.setStrokeColor(UIColor.white.cgColor)
+        ctx?.setLineWidth(3)
+        ctx?.strokeEllipse(in: rect.insetBy(dx: 1, dy: 1))
+
+        ctx?.setStrokeColor(color.cgColor)
+        ctx?.setLineWidth(1)
+        ctx?.strokeEllipse(in: rect.insetBy(dx: 1, dy: 1))
+        ctx?.restoreGState()
+        let img = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return img
+    }
     func copyWithCorrectOrientationAndSize(_ completion:@escaping (_ image: UIImage?) -> Void) {
         inBackground {
             var sourceImage: UIImage?

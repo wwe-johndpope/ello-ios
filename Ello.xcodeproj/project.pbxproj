@@ -384,6 +384,7 @@
 		12A3A46F1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */; };
 		12A3A4721AB3556F00D2AFB0 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		12AF0AFB1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AF0AFA1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift */; };
+		12B052C01E5F43B100898967 /* AvatarBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B052BF1E5F43B100898967 /* AvatarBarItem.swift */; };
 		12B093661A6D87C000BF104E /* FollowingViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */; };
 		12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093671A6E146C00BF104E /* UIBarButtonItem.swift */; };
 		12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */; };
@@ -1359,6 +1360,7 @@
 		12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloPullToRefreshView.swift; sourceTree = "<group>"; };
 		12A3A4711AB3556F00D2AFB0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		12AF0AFA1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStreamTextCellSizeCalculator.swift; sourceTree = "<group>"; };
+		12B052BF1E5F43B100898967 /* AvatarBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarBarItem.swift; sourceTree = "<group>"; };
 		12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FollowingViewControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12B093671A6E146C00BF104E /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationController.swift; sourceTree = "<group>"; };
@@ -3137,6 +3139,7 @@
 				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D70DE571DF23862008AF216 /* StyledLabel.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
+				12B052BF1E5F43B100898967 /* AvatarBarItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5215,6 +5218,7 @@
 				1DA18E121DB187DF000231CC /* CalculatedCellHeights.swift in Sources */,
 				1D5933751D10BC8100EAF03D /* CategoryLevel.swift in Sources */,
 				125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */,
+				12B052C01E5F43B100898967 /* AvatarBarItem.swift in Sources */,
 				122B30C71C6A3FBC00C1B9D8 /* AmazonCredentials.swift in Sources */,
 				F8158C4D1ACDD52D008C15A1 /* AlertPresentationController.swift in Sources */,
 				1D9B74CA1BB1E3EF00ACD028 /* CommentsIcon.swift in Sources */,
