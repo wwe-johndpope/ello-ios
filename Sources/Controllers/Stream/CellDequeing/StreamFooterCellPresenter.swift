@@ -111,7 +111,7 @@ struct StreamFooterCellPresenter {
         post: Post,
         streamKind: StreamKind)
     {
-        let rounding = streamKind.isGridView ? 0 : 2
+        let rounding = streamKind.isGridView ? 0 : 1
         if cell.frame.width < 155 {
             cell.views = ""
             cell.reposts = ""

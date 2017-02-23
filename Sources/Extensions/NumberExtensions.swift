@@ -10,7 +10,7 @@ let thousand = 1_000.0
 
 extension Int {
 
-    func numberToHuman(rounding: Int = 2, showZero: Bool = false) -> String {
+    func numberToHuman(rounding: Int = 1, showZero: Bool = false) -> String {
         if self == 0 && !showZero { return "" }
 
         let roundingFactor: Double = pow(10, Double(rounding))
