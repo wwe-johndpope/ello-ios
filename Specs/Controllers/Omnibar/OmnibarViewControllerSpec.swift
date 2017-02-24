@@ -14,9 +14,7 @@ class OmnibarMockScreen: OmnibarScreenProtocol {
     var interactionEnabled: Bool = true
     var title: String = ""
     var submitTitle: String = ""
-    var avatarURL: URL?
     var buyButtonURL: URL?
-    var avatarImage: UIImage?
     var currentUser: User?
     var regions = [OmnibarRegion]()
 

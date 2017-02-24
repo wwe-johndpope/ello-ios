@@ -9,13 +9,13 @@ import PINRemoteImage
 
 class OmnibarScreen: UIView, OmnibarScreenProtocol {
     struct Size {
-        static let margins = UIEdgeInsets(top: 17, left: 15, bottom: 10, right: 21)
-        static let toolbarMargin = CGFloat(10)
-        static let tableTopInset = CGFloat(22.5)
-        static let bottomTextMargin = CGFloat(1)
-        static let avatarSize = CGFloat(30)
+        static let margins = UIEdgeInsets(top: 8, left: 2, bottom: 10, right: 5)
+        static let toolbarMargin: CGFloat = 10
+        static let toolbarRightPadding: CGFloat = 20
+        static let tableTopInset: CGFloat = 22.5
+        static let bottomTextMargin: CGFloat = 1
         static let keyboardButtonSize = CGSize(width: 54, height: 44)
-        static let keyboardButtonMargin = CGFloat(1)
+        static let keyboardButtonMargin: CGFloat = 1
     }
 
     class func canEditRegions(_ regions: [Regionable]?) -> Bool {
@@ -95,34 +95,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     let navigationItem = UINavigationItem()
 
-    var avatarURL: URL? {
-        willSet(newValue) {
-            if avatarURL != newValue {
-                if let avatarURL = newValue {
-                    avatarButton.pin_setImage(from: avatarURL)
-                }
-                else {
-                    avatarButton.pin_cancelImageDownload()
-                    avatarButton.setImage(nil, for: .normal)
-                }
-            }
-        }
-    }
-
-    var avatarImage: UIImage? {
-        willSet(newValue) {
-            if avatarImage != newValue {
-                avatarButton.pin_cancelImageDownload()
-                if let avatarImage = newValue {
-                    avatarButton.setImage(avatarImage, for: .normal)
-                }
-                else {
-                    avatarButton.setImage(nil, for: .normal)
-                }
-            }
-        }
-    }
-
     var canGoBack: Bool = false {
         didSet { setNeedsLayout() }
     }
@@ -138,7 +110,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
 // MARK: toolbar buttons
     var toolbarButtonViews: [UIView]!
-    let avatarButton = UIButton()
     let buyButton = UIButton()
     let cancelButton = UIButton()
     let reorderButton = UIButton()
@@ -175,7 +146,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         editableRegions = generateEditableRegions(submitableRegions)
         setupAutoComplete()
-        setupAvatarView()
         setupNavigationBar()
         setupToolbarButtons()
         setupTableViews()
@@ -224,14 +194,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         autoCompleteVC.view.frame = autoCompleteContainer.frame
         autoCompleteVC.delegate = self
         autoCompleteContainer.addSubview(autoCompleteVC.view)
-    }
-
-    // Avatar view (in the upper right corner) just needs to round its corners,
-    // which is done in layoutSubviews.
-    fileprivate func setupAvatarView() {
-        avatarButton.backgroundColor = UIColor.black
-        avatarButton.clipsToBounds = true
-        avatarButton.addTarget(self, action: #selector(profileImageTapped), for: .touchUpInside)
     }
 
     // TODO: use elloNavigationItem, move into OmnibarViewController.loadView
@@ -370,7 +332,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             regionsTableView,
             textScrollView,
             navigationBar,
-            avatarButton,
+            cancelButton,
         ]
         for view in views as [UIView] {
             self.addSubview(view)
@@ -378,7 +340,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         toolbarButtonViews = [
             buyButton,
-            cancelButton,
             reorderButton,
             cameraButton,
         ]
@@ -419,14 +380,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     func resetAfterSuccessfulPost() {
         resetEditor()
-    }
-
-    func profileImageTapped() {
-        guard let currentUser = currentUser else { return }
-
-        let profileVC = ProfileViewController(user: currentUser)
-        profileVC.currentUser = currentUser
-        self.delegate?.omnibarPushController(profileVC)
     }
 
     // called on a user action that should resign the keyboard
@@ -631,19 +584,17 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
 
         let toolbarTop = screenTop + Size.margins.top
-        var buttonX = frame.width - Size.margins.right
+        var buttonX = frame.width - Size.margins.right + Size.toolbarRightPadding
         for view in toolbarButtonViews.reversed() {
             view.frame.size = view.intrinsicContentSize
-            buttonX -= view.frame.size.width
+            buttonX -= view.frame.size.width + Size.toolbarRightPadding
             view.frame.origin = CGPoint(x: buttonX, y: toolbarTop)
         }
 
-        let avatarViewLeft = Size.margins.left
-        let avatarViewTop = toolbarTop
-        avatarButton.frame = CGRect(x: avatarViewLeft, y: avatarViewTop, width: Size.avatarSize, height: Size.avatarSize)
-        avatarButton.layer.cornerRadius = avatarButton.frame.size.height / CGFloat(2)
+        let cancelButtonSize = cancelButton.intrinsicContentSize
+        cancelButton.frame = CGRect(x: Size.margins.left, y: toolbarTop, width: cancelButtonSize.width, height: cancelButtonSize.height)
 
-        regionsTableView.frame = CGRect(x: 0, y: avatarButton.frame.maxY + Size.toolbarMargin, right: bounds.size.width, bottom: bounds.size.height)
+        regionsTableView.frame = CGRect(x: 0, y: cancelButton.frame.maxY + Size.toolbarMargin, right: bounds.size.width, bottom: bounds.size.height)
         textScrollView.frame = regionsTableView.frame
 
         var bottomInset = Keyboard.shared.keyboardBottomInset(inView: self)

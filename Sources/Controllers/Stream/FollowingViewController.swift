@@ -23,7 +23,7 @@ class FollowingViewController: StreamableViewController {
 
     required init() {
         super.init(nibName: nil, bundle: nil)
-        self.title = InterfaceString.Following.Title
+        self.title = ""
     }
 
     required init?(coder aDecoder: NSCoder) {
