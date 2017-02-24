@@ -34,7 +34,7 @@ class AvatarBarItem: UITabBarItem {
         _ = manager?.downloadImage(with: url, options: [])  { [weak self] result in
             guard
                 let `self` = self,
-                let image = result?.image.squareImage()?.resizeToSize(CGSize(width: 30, height: 30))?.roundCorners(),
+                let image = result?.image.squareImage()?.resizeToSize(CGSize(width: 36, height: 36), padding: 3)?.roundCorners(padding: 3),
                 let selectedImage = image.circleOutline(color: .black)
             else { return }
             nextTick {

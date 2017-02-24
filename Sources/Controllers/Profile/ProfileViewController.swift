@@ -16,7 +16,7 @@ final class ProfileViewController: StreamableViewController {
 
     override var tabBarItem: UITabBarItem? {
         get {
-            guard let imageURL = currentUser?.avatar?.small?.url else {
+            guard let imageURL = currentUser?.avatar?.large?.url else {
                 return UITabBarItem.item(.person)
             }
             let item = AvatarBarItem()
