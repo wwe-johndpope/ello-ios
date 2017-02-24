@@ -201,7 +201,12 @@ extension AppViewController {
         loggedOutController.addChildViewController(childNavController)
         childNavController.didMove(toParentViewController: loggedOutController)
 
-        swapViewController(parentNavController) {}
+        swapViewController(parentNavController) {
+            if let deepLinkPath = self.deepLinkPath {
+                self.navigateToDeepLink(deepLinkPath)
+                self.deepLinkPath = .none
+            }
+        }
     }
 
     func showJoinScreen(invitationCode: String? = nil) {
@@ -457,7 +462,7 @@ extension AppViewController {
             return
         }
 
-        guard !stillLoggingIn() else {
+        guard !stillLoggingIn() && !stillSettingUpLoggedOut() else {
             self.deepLinkPath = path
             return
         }
@@ -541,6 +546,15 @@ extension AppViewController {
     fileprivate func stillLoggingIn() -> Bool {
         let authToken = AuthToken()
         return !isLoggedIn() && authToken.isPasswordBased
+    }
+
+    fileprivate func stillSettingUpLoggedOut() -> Bool {
+        let authToken = AuthToken()
+        let isLoggedOut = !isLoggedIn() && authToken.isAnonymous
+        let nav = self.visibleViewController as? UINavigationController
+        let loggedOutVC = nav?.viewControllers.first as? LoggedOutViewController
+        let childNav = loggedOutVC?.childViewControllers.first as? UINavigationController
+        return childNav == nil && isLoggedOut
     }
 
     fileprivate func presentLoginOrSafariAlert(_ path: String) {
