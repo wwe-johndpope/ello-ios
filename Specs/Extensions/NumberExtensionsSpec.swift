@@ -11,10 +11,10 @@ class NumberExtensionsSpec: QuickSpec {
         describe("NumberExtensions") {
             let expectations: [(Int, String)] = [
                 (123, "123"),
-                (1234, "1.23K"),
-                (12345, "12.35K"),
-                (1234567, "1.23M"),
-                (1234567890, "1.23B"),
+                (1234, "1.2K"),
+                (12345, "12.3K"),
+                (1234567, "1.2M"),
+                (1234567890, "1.2B"),
             ]
 
             for (number, expected) in expectations {
