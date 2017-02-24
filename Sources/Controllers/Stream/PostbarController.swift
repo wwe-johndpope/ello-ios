@@ -65,10 +65,6 @@ class PostbarController: UIResponder, PostbarResponder {
             return
         }
 
-        guard !dataSource.streamKind.isDetail else {
-            return
-        }
-
         guard toggleableComments else {
             cell.cancelCommentLoading()
             return
@@ -80,6 +76,15 @@ class PostbarController: UIResponder, PostbarResponder {
             let post = item.jsonable as? Post
         else {
             cell.cancelCommentLoading()
+            return
+        }
+
+        if let commentCount = post.commentsCount, commentCount == 0, currentUser == nil {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
+            return
+        }
+
+        guard !dataSource.streamKind.isDetail else {
             return
         }
 
