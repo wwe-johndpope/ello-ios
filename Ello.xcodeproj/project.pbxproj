@@ -104,6 +104,7 @@
 		1220347D1DECCDD80059E633 /* marker.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1220347C1DECCDD80059E633 /* marker.svg */; };
 		1220347F1DECCE890059E633 /* ProfileLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1220347E1DECCE890059E633 /* ProfileLocationView.swift */; };
 		12224E581A72CEC300D087EC /* PostbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12224E571A72CEC300D087EC /* PostbarController.swift */; };
+		12241CEF1E60CAC700100C41 /* create_post_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12241CEE1E60CAC700100C41 /* create_post_selected.svg */; };
 		122454AE1D9F1BC700D930E0 /* ElloCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */; };
 		122943271C6BF465003FCD20 /* ShareViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291CE2D1C6A91C600EB5A55 /* ShareViewControllerSpec.swift */; };
 		122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CFB991C5976E500727D11 /* ShareViewController.swift */; };
@@ -1179,6 +1180,7 @@
 		1220347C1DECCDD80059E633 /* marker.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker.svg; sourceTree = "<group>"; };
 		1220347E1DECCE890059E633 /* ProfileLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLocationView.swift; sourceTree = "<group>"; };
 		12224E571A72CEC300D087EC /* PostbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarController.swift; sourceTree = "<group>"; };
+		12241CEE1E60CAC700100C41 /* create_post_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = create_post_selected.svg; sourceTree = "<group>"; };
 		122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloCollectionView.swift; sourceTree = "<group>"; };
 		1229432D1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionItemPreviewSpec.swift; sourceTree = "<group>"; };
 		1229432F1C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSItemProviderExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -3546,6 +3548,7 @@
 				1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */,
 				1DF741681BFA61B1000F5349 /* camera_white.svg */,
 				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
+				12241CEE1E60CAC700100C41 /* create_post_selected.svg */,
 				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
 				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
 				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
@@ -4007,6 +4010,7 @@
 				76B0B1911B41B1D0004C2D7B /* UserAvatarsCell.xib in Resources */,
 				76F8DED61B6C0BC4009BCF61 /* hearts_normal.svg in Resources */,
 				7689B50E1AD4ED3B00E4A4A3 /* users_user_details.json in Resources */,
+				12241CEF1E60CAC700100C41 /* create_post_selected.svg in Resources */,
 				7689B50A1AD4ED3B00E4A4A3 /* users_loading_more_user_posts.json in Resources */,
 				76F8DEEA1B6C0BC4009BCF61 /* question_normal.svg in Resources */,
 				7689B5071AD4ED3B00E4A4A3 /* users_getting_a_list_for_autocompleted_usernames.json in Resources */,

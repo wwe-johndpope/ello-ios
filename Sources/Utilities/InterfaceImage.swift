@@ -45,7 +45,7 @@ enum InterfaceImage: String {
     // TabBar Icons
     case sparkles = "sparkles"
     case bolt = "bolt"
-    case omni = "omni"
+    case omni = "create_post"
     case person = "person"
     case following = "following"
     case narrationPointer = "narration_pointer"
