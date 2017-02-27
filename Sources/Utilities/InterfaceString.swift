@@ -245,7 +245,7 @@ struct InterfaceString {
         static let Camera: String = NSLocalizedString("Camera", comment: "camera button")
         static let Library: String = NSLocalizedString("Library", comment: "library button")
         static let NoSourceAvailable: String = NSLocalizedString("Sorry, but your device doesn’t have a photo library!", comment: "device doesn't support photo library")
-        static let TakePhoto: String = NSLocalizedString("Take Photo Or Video", comment: "Camera button")
+        static let TakePhoto: String = NSLocalizedString("Take Photo", comment: "Camera button")
         static let PhotoLibrary: String = NSLocalizedString("Photo Library", comment: "Library button")
         static let AddImagesTemplate: String = NSLocalizedString("Add %lu Image(s)", comment: "Add Images")
         static let ChooseImage: String = NSLocalizedString("Choose Image", comment: "Choose Image")
@@ -258,6 +258,8 @@ struct InterfaceString {
     struct Startup {
         static let SignUp: String = NSLocalizedString("Sign Up", comment: "sign up button")
         static let Login: String = NSLocalizedString("Login", comment: "login button")
+        static let Join: String = NSLocalizedString("Join The Creators Network.", comment: "Join the creators network label")
+        static let Tagline: String = NSLocalizedString("Be part of what’s next in art, design, fashion, web culture & more.", comment: "Be part of what's next tag line label")
     }
 
     struct Login {

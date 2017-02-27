@@ -289,13 +289,13 @@ extension AlertViewController: UITableViewDataSource {
             }
         }
 
-        cell.delegate = self
         cell.backgroundColor = type.cellColor
         return cell
     }
 }
 
-extension AlertViewController: AlertCellDelegate {
+extension AlertViewController: AlertCellResponder {
+
     func tappedOkButton() {
         dismiss()
 

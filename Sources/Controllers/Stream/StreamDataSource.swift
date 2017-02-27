@@ -38,20 +38,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
     let imageSizeCalculator: StreamImageCellSizeCalculator
 
-    weak var postbarDelegate: PostbarDelegate?
-    weak var createPostDelegate: CreatePostDelegate?
-    weak var notificationDelegate: NotificationDelegate?
-    weak var webLinkDelegate: WebLinkDelegate?
-    weak var imageDelegate: StreamImageCellDelegate?
-    weak var editingDelegate: StreamEditingDelegate?
-    weak var categoryDelegate: CategoryDelegate?
-    weak var userDelegate: UserDelegate?
-    weak var relationshipDelegate: RelationshipDelegate?
-    weak var simpleStreamDelegate: SimpleStreamDelegate?
-    weak var searchStreamDelegate: SearchStreamDelegate?
-    weak var inviteDelegate: InviteDelegate?
-    weak var categoryListCellDelegate: CategoryListCellDelegate?
-    weak var announcementCellDelegate: AnnouncementCellDelegate?
     var inviteCache = InviteCache()
 
     init(
@@ -250,6 +236,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
+    @discardableResult
     func removeCommentsFor(post: Post) -> [IndexPath] {
         let indexPaths = self.commentIndexPathsForPost(post)
         temporarilyUnfilter() {
@@ -337,50 +324,8 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: streamCellItem.type.name, for: indexPath)
 
         switch streamCellItem.type {
-        case .announcement:
-            (cell as! AnnouncementCell).delegate = announcementCellDelegate
-        case .categoryPromotionalHeader,
-             .pagePromotionalHeader:
-            (cell as! CategoryHeaderCell).webLinkDelegate = webLinkDelegate
-            (cell as! CategoryHeaderCell).userDelegate = userDelegate
-        case .categoryList:
-            (cell as! CategoryListCell).delegate = categoryListCellDelegate
-        case .footer:
-            (cell as! StreamFooterCell).delegate = postbarDelegate
-            (cell as! StreamFooterCell).streamEditingDelegate = editingDelegate
-        case .createComment:
-            (cell as! StreamCreateCommentCell).delegate = postbarDelegate
-        case .header, .commentHeader:
-            (cell as! StreamHeaderCell).relationshipDelegate = relationshipDelegate
-            (cell as! StreamHeaderCell).postbarDelegate = postbarDelegate
-            (cell as! StreamHeaderCell).categoryDelegate = categoryDelegate
-            (cell as! StreamHeaderCell).userDelegate = userDelegate
-            (cell as! StreamHeaderCell).streamEditingDelegate = editingDelegate
-        case .image:
-            (cell as! StreamImageCell).streamImageCellDelegate = imageDelegate
-            (cell as! StreamImageCell).streamEditingDelegate = editingDelegate
         case .inviteFriends, .onboardingInviteFriends:
-            (cell as! StreamInviteFriendsCell).inviteDelegate = inviteDelegate
             (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
-        case .notification:
-            (cell as! NotificationCell).relationshipControl.relationshipDelegate = relationshipDelegate
-            (cell as! NotificationCell).webLinkDelegate = webLinkDelegate
-            (cell as! NotificationCell).userDelegate = userDelegate
-            (cell as! NotificationCell).delegate = notificationDelegate
-        case .profileHeader:
-            (cell as! ProfileHeaderCell).webLinkDelegate = webLinkDelegate
-        case .search:
-            (cell as! SearchStreamCell).delegate = searchStreamDelegate
-        case .text:
-            (cell as! StreamTextCell).webLinkDelegate = webLinkDelegate
-            (cell as! StreamTextCell).userDelegate = userDelegate
-            (cell as! StreamTextCell).streamEditingDelegate = editingDelegate
-        case .userAvatars:
-            (cell as! UserAvatarsCell).simpleStreamDelegate = simpleStreamDelegate
-            (cell as! UserAvatarsCell).userDelegate = userDelegate
-        case .userListItem:
-            (cell as! UserListItemCell).relationshipControl.relationshipDelegate = relationshipDelegate
-            (cell as! UserListItemCell).userDelegate = userDelegate
         default:
             break
         }
@@ -655,7 +600,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                     indexPaths.append(IndexPath(item: index, section: 0))
                     items.append(item)
                 }
-                else if change == .delete || change == .replaced {
+                else if change == .delete {
                     if let itemComment = item.jsonable as? ElloComment, itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
                         indexPaths.append(IndexPath(item: index, section: 0))
                         items.append(item)

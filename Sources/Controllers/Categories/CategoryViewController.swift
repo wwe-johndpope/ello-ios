@@ -76,7 +76,7 @@ final class CategoryViewController: StreamableViewController {
 
         if !userDidScroll && screen.categoryCardsVisible {
             var offset: CGFloat = CategoryCardListView.Size.height
-            if tabBarVisible() {
+            if screen.navigationBar.frame.maxY > 0 {
                 offset += ElloNavigationBar.Size.height
             }
             streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
@@ -110,9 +110,13 @@ final class CategoryViewController: StreamableViewController {
 private extension CategoryViewController {
 
     func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [backItem]
-        elloNavigationItem.fixNavBarItemPadding()
+        if let navigationController = navigationController,
+            navigationController.viewControllers.first != self
+        {
+            let backItem = UIBarButtonItem.backChevron(withController: self)
+            elloNavigationItem.leftBarButtonItems = [backItem]
+            elloNavigationItem.fixNavBarItemPadding()
+        }
 
         let searchItem = UIBarButtonItem.searchItem(controller: self)
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
@@ -226,14 +230,15 @@ extension CategoryViewController: CategoryScreenDelegate {
 
     func categorySelected(index: Int) {
         guard
-            let category = allCategories.safeValue(index), category.id != self.category?.id
+            let category = allCategories.safeValue(index),
+            category.id != self.category?.id
         else { return }
         screen.selectCategory(index: index)
         select(category: category)
     }
 
     func select(category: Category) {
-		Tracker.shared.categoryOpened(category.slug)
+        Tracker.shared.categoryOpened(category.slug)
 
         var kind: StreamKind?
         switch category.level {
@@ -247,7 +252,6 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         guard let streamKind = kind else { return }
 
-
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         gridListItem?.setImage(isGridView: streamKind.isGridView)
@@ -256,6 +260,11 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.slug = category.slug
         self.title = category.name
         loadCategory()
+
+        if let index = allCategories.index(where: { $0.slug == category.slug }) {
+            screen.scrollToCategory(index: index)
+            screen.selectCategory(index: index)
+        }
         Tracker.shared.screenAppeared(self)
     }
 }

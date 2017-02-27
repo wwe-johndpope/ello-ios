@@ -18,7 +18,7 @@ class ProfileStatsViewSpec: QuickSpec {
                 subject.postsCount = "123"
                 subject.followingCount = "4.5K"
                 subject.followersCount = "∞"
-                subject.lovesCount = "6.78M"
+                subject.lovesCount = "6.8M"
                 expectValidSnapshot(subject, named: "ProfileStatsView", device: .custom(subject.frame.size))
             }
 
@@ -30,7 +30,7 @@ class ProfileStatsViewSpec: QuickSpec {
                 subject.postsCount = "123"
                 subject.followingCount = "4.5K"
                 subject.followersCount = "∞"
-                subject.lovesCount = "6.78M"
+                subject.lovesCount = "6.8M"
                 let button: UIButton! = subviewThatMatches(subject) { view in
                     return view is UIButton
                 }

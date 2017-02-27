@@ -26,6 +26,7 @@ class AddFriendsViewController: StreamableViewController {
 
     override func loadView() {
         searchScreen = SearchScreen(frame: UIScreen.main.bounds,
+            hasCurrentUser: currentUser != nil,
             isSearchView: false,
             navBarTitle: InterfaceString.Friends.FindAndInvite,
             fieldPlaceholderText: InterfaceString.Friends.SearchPrompt)
@@ -72,7 +73,7 @@ class AddFriendsViewController: StreamableViewController {
 
     fileprivate func updateInsets() {
         if let ss = self.view as? SearchScreen {
-            updateInsets(navBar: ss.navigationBar, streamController: streamViewController, tabBarVisible: false)
+            updateInsets(navBar: ss.navigationBar, streamController: streamViewController, navigationBarsVisible: false)
         }
     }
 

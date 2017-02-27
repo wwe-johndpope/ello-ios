@@ -27,8 +27,6 @@ class AnnouncementCell: UICollectionViewCell {
         init() {}
     }
 
-    weak var delegate: AnnouncementCellDelegate?
-
     var config = Config() {
         didSet {
             titleLabel.text = config.title
@@ -140,13 +138,16 @@ class AnnouncementCell: UICollectionViewCell {
 }
 
 extension AnnouncementCell {
+
     override func prepareForReuse() {
         config = Config()
     }
 }
 
 extension AnnouncementCell {
+
     func markAsRead() {
-        delegate?.markAnnouncementAsRead(cell: self)
+        let responder = target(forAction: #selector(AnnouncementCellResponder.markAnnouncementAsRead(cell:)), withSender: self) as? AnnouncementCellResponder
+        responder?.markAnnouncementAsRead(cell: self)
     }
 }

@@ -56,7 +56,7 @@ PODS:
   - PINRemoteImage/FLAnimatedImage (1.2.3):
     - FLAnimatedImage (>= 1.0)
     - PINRemoteImage/Core
-  - Quick (1.0.0)
+  - Quick (1.1.0)
   - Result (3.1.0)
   - SnapKit (3.1.2)
   - SSPullToRefresh (1.2.4)
@@ -136,7 +136,7 @@ DEPENDENCIES:
   - Nimble (= 5.1.1)
   - Nimble-Snapshots (~> 4.4)
   - PINRemoteImage (from `https://github.com/pinterest/PINRemoteImage.git`, commit `af312667f0ce830264198366f481f1b222675a31`)
-  - Quick (~> 1.0)
+  - Quick (= 1.1.0)
   - SnapKit (from `https://github.com/ello/SnapKit`)
   - SSPullToRefresh (~> 1.2)
   - SVGKit (from `https://github.com/ello/SVGKit`)
@@ -252,7 +252,7 @@ SPEC CHECKSUMS:
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
   PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
   PINRemoteImage: 77a7f7bfacd2b4040786a0e31192a81003fdd41f
-  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   SnapKit: 66bf0e9c5e02fdb6d2a549adb845ab4440d3ccfe
   SSPullToRefresh: 369e862c1d6528c7a354fc85cd4763d4e670e9af
@@ -264,6 +264,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: cb5cc74e76f9a8b541df4e98a5c03b0740984e24
+PODFILE CHECKSUM: 2b9be9b92526212cb89b43308d09b72403aaee8f
 
 COCOAPODS: 1.1.1

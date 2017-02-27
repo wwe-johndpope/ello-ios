@@ -58,7 +58,7 @@ final class User: JSONAble {
         if count < 1000 {
             return "<1K"
         }
-        return count.numberToHuman(rounding: 2, showZero: true)
+        return count.numberToHuman(rounding: 1, showZero: true)
     }
     var location: String?
 

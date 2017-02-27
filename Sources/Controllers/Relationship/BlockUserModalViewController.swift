@@ -7,7 +7,6 @@ import SnapKit
 
 
 class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelegate {
-    weak var relationshipDelegate: RelationshipDelegate?
 
     let config: BlockUserModalConfig
     var relationshipPriority: RelationshipPriority { return config.relationshipPriority }
@@ -60,29 +59,38 @@ class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelega
             default: break
         }
 
-        relationshipDelegate?.updateRelationship(currentUserId, userId: userId, prev: relationshipPriority, relationshipPriority: newRelationship) {
-            (status, relationship, isFinalValue) in
-            switch status {
+        let responder = target(forAction: #selector(RelationshipResponder.updateRelationship(_:userId:prev:relationshipPriority:complete:)), withSender: self) as? RelationshipResponder
+
+        responder?.updateRelationship(
+            currentUserId,
+            userId: userId,
+            prev: RelationshipPriorityWrapper(priority: relationshipPriority),
+            relationshipPriority: RelationshipPriorityWrapper(priority: newRelationship))
+        { [weak self] (statusWrapper, relationship, isFinalValue) in
+            guard let `self` = self else { return }
+            switch statusWrapper.status {
             case .success:
-                self.changeClosure(newRelationship)
+                self.changeClosure(RelationshipPriorityWrapper(priority: newRelationship))
                 self.closeModal()
             case .failure:
-                self.changeClosure(self.relationshipPriority)
+                self.changeClosure(RelationshipPriorityWrapper(priority: self.relationshipPriority))
             }
         }
     }
 
     func flagTapped() {
-        if let presentingViewController = presentingViewController {
-            let flagger = ContentFlagger(
-                presentingController: presentingViewController,
-                flaggableId: userId,
-                contentType: .user
-            )
+        guard
+            let presentingViewController = presentingViewController
+        else { return }
 
-            closeModalAndThen {
-                flagger.displayFlaggingSheet()
-            }
+        let flagger = ContentFlagger(
+            presentingController: presentingViewController,
+            flaggableId: userId,
+            contentType: .user
+        )
+
+        closeModalAndThen {
+            flagger.displayFlaggingSheet()
         }
     }
 

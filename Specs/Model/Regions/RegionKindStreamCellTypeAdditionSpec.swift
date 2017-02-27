@@ -9,7 +9,7 @@ import Nimble
 
 class RegionKindStreamCellTypeAdditionSpec: QuickSpec {
     override func spec() {
-        fdescribe("RegionKind.streamCellTypes") {
+        describe("RegionKind.streamCellTypes") {
             it("should return images") {
                 let kind = RegionKind.image
                 let region = ImageRegion.stub([:])

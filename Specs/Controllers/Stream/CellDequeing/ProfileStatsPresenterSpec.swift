@@ -20,7 +20,7 @@ class ProfileStatsPresenterSpec: QuickSpec {
                 let user = User.stub(["postsCount": 1_234])
                 let view = ProfileStatsView()
                 ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
-                expect(view.postsCount) == "1.23K"
+                expect(view.postsCount) == "1.2K"
             }
 
             it("should assign followers count") {
@@ -46,7 +46,7 @@ class ProfileStatsPresenterSpec: QuickSpec {
                 let user = User.stub(["followingCount": 1_234_000])
                 let view = ProfileStatsView()
                 ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
-                expect(view.followingCount) == "1.23M"
+                expect(view.followingCount) == "1.2M"
             }
 
             it("should assign loves count") {
@@ -59,7 +59,7 @@ class ProfileStatsPresenterSpec: QuickSpec {
                 let user = User.stub(["lovesCount": 1_567_000_000])
                 let view = ProfileStatsView()
                 ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
-                expect(view.lovesCount) == "1.57B"
+                expect(view.lovesCount) == "1.6B"
             }
         }
     }

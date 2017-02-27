@@ -145,7 +145,7 @@ class UserSpec: QuickSpec {
 
                 it("returns proper value if totalViewsCount is greater than 999") {
                     let subject: User = stub(["totalViewsCount": 23_450_123])
-                    expect(subject.formattedTotalCount!) == "23.45M"
+                    expect(subject.formattedTotalCount!) == "23.5M"
                 }
             }
 

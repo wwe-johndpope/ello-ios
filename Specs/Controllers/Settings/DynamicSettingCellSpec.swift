@@ -31,9 +31,11 @@ class DynamicSettingCellSpec: QuickSpec {
             }
 
             it("calls the delegate function") {
+
                 let fake = FakeDelegate()
                 let setting = DynamicSetting(label: "", key: "")
-                subject.delegate = fake
+                fake.addSubview(subject)
+                showView(fake)
                 subject.setting = setting
                 subject.toggleButtonTapped()
                 expect(fake.didCall).to(beTrue())
@@ -42,7 +44,8 @@ class DynamicSettingCellSpec: QuickSpec {
             it("hands the setting and value to the delegate function") {
                 let fake = FakeDelegate()
                 let setting = DynamicSetting(label: "test", key: "")
-                subject.delegate = fake
+                fake.addSubview(subject)
+                showView(fake)
                 subject.setting = setting
                 subject.toggleButtonTapped()
                 expect(fake.setting?.label) == setting.label
@@ -57,7 +60,8 @@ class DynamicSettingCellSpec: QuickSpec {
 
             it("calls the delegate function") {
                 let fake = FakeDelegate()
-                subject.delegate = fake
+                fake.addSubview(subject)
+                showView(fake)
                 subject.deleteButtonTapped()
                 expect(fake.didCall).to(beTrue())
             }
@@ -65,7 +69,7 @@ class DynamicSettingCellSpec: QuickSpec {
     }
 }
 
-private class FakeDelegate: DynamicSettingCellDelegate {
+private class FakeDelegate: UIView, DynamicSettingCellResponder {
     var didCall = false
     var setting: DynamicSetting?
     var value: Bool?

@@ -5,6 +5,17 @@
 import KINWebBrowser
 import Crashlytics
 
+class BottomBarNavController: ElloNavigationController, BottomBarController {
+    var bottomBarView = UIView()
+    var navigationBarsVisible: Bool = true
+    let bottomBarVisible: Bool = true
+    var bottomBarHeight: CGFloat { return 0 }
+
+    func setNavigationBarsVisible(_ visible: Bool, animated: Bool) {
+        navigationBarsVisible = visible
+    }
+}
+
 class ElloWebBrowserViewController: KINWebBrowserViewController {
     var toolbarHidden = false
     var prevRequestURL: URL?
@@ -20,8 +31,7 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
         webBrowser.navigationItem.leftBarButtonItem = xButton
         webBrowser.navigationItem.rightBarButtonItem = shareButton
         webBrowser.actionButtonHidden = true
-
-        return ElloNavigationController(rootViewController: webBrowser)
+        return BottomBarNavController(rootViewController: webBrowser)
     }
 
     override class func navigationControllerWithWebBrowser() -> ElloNavigationController {
@@ -31,19 +41,14 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AppDelegate.restrictRotation = false
         self.navigationController?.setToolbarHidden(toolbarHidden, animated: false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.shared.statusBarStyle = .default
         Crashlytics.sharedInstance().setObjectValue("ElloWebBrowser", forKey: CrashlyticsKey.streamName.rawValue)
         delegate = self
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     func shareButtonPressed(_ barButtonItem: UIBarButtonItem) {
@@ -86,7 +91,7 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
     func webBrowser(_ webBrowser: KINWebBrowserViewController!, shouldStartLoadWith request: URLRequest!) -> Bool {
         prevRequestURL = request.url
-        return ElloWebViewHelper.handle(request: request, webLinkDelegate: self, fromWebView: true)
+        return ElloWebViewHelper.handle(request: request, origin: self, fromWebView: true)
     }
 
     func willDismissWebBrowser(_ webView: KINWebBrowserViewController) {
@@ -95,10 +100,11 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
 }
 
-// MARK: ElloWebBrowserViewController : WebLinkDelegate
-extension ElloWebBrowserViewController : WebLinkDelegate {
-    func webLinkTapped(type: ElloURI, data: String) {
-        switch type {
+// MARK: ElloWebBrowserViewController : WebLinkResponder
+extension ElloWebBrowserViewController : WebLinkResponder {
+
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
+        switch type.uri {
         case .confirm,
              .downloads,
              .email,
@@ -109,6 +115,7 @@ extension ElloWebBrowserViewController : WebLinkDelegate {
              .invitations,
              .invite,
              .join,
+             .signup,
              .login,
              .manifesto,
              .nativeRedirect,

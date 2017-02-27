@@ -10,7 +10,6 @@ enum StreamKind {
     case allCategories
     case announcements
     case discover(type: DiscoverType)
-    case categoryPosts(slug: String)
     case following
     case starred
     case notifications(category: String?)
@@ -25,7 +24,6 @@ enum StreamKind {
         case .currentUserStream: return InterfaceString.Profile.Title
         case .allCategories: return InterfaceString.Discover.AllCategories
         case .announcements: return ""
-        case .categoryPosts: return InterfaceString.Discover.Categories
         case .discover: return InterfaceString.Discover.Title
         case .following: return InterfaceString.FollowingStream.Title
         case .starred: return InterfaceString.StarredStream.Title
@@ -43,8 +41,7 @@ enum StreamKind {
         case .currentUserStream: return "Profile"
         case .allCategories: return "AllCategories"
         case .announcements: return "Announcements"
-        case .category: return "Category"
-        case .discover, .categoryPosts: return "CategoryPosts"
+        case .discover, .category: return "CategoryPosts"
         case .following: return "Following"
         case .starred: return "Starred"
         case .notifications: return "Notifications"
@@ -125,7 +122,6 @@ enum StreamKind {
         case .allCategories: return .categories
         case .announcements: return .announcements
         case let .category(slug): return .category(slug: slug)
-        case let .categoryPosts(slug): return .categoryPosts(slug: slug)
         case let .discover(type): return .discover(type: type)
         case .following: return .friendStream
         case .starred: return .noiseStream
@@ -164,7 +160,7 @@ enum StreamKind {
             default:
                 return jsonables
             }
-        case .categoryPosts, .announcements:
+        case .announcements:
             return jsonables
         case .discover, .category:
             if let users = jsonables as? [User] {
@@ -238,7 +234,7 @@ enum StreamKind {
 
     var hasGridViewToggle: Bool {
         switch self {
-        case .following, .starred, .discover, .categoryPosts, .category: return true
+        case .following, .starred, .discover, .category: return true
         case let .simpleStream(endpoint, _):
             switch endpoint {
             case .searchForPosts, .loves, .categoryPosts:

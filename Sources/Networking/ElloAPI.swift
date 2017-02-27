@@ -8,6 +8,13 @@ import Result
 
 typealias MoyaResult = Result<Moya.Response, Moya.Error>
 
+// 😭 I'm as sad as you are about this. We want the responder chain
+// and we want to pass ElloAPI arguments. So we box it.
+class BoxedElloAPI: NSObject {
+    let endpoint: ElloAPI
+    init(endpoint: ElloAPI) { self.endpoint = endpoint }
+}
+
 enum ElloAPI {
     case amazonCredentials
     case announcements
@@ -211,8 +218,15 @@ extension ElloAPI {
     var supportsAnonymousToken: Bool {
         switch self {
         case .availability,
-             .join, .deleteSubscriptions:
+             .categories, .category, .categoryPosts, .discover, .pagePromotionals,
+             .searchForPosts, .searchForUsers,
+             .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
+             .postComments, .postLovers, .postReposters, .postDetail,
+             .join, .deleteSubscriptions, .userStream:
             return true
+        case let .infiniteScroll(_, elloApi):
+            let api = elloApi()
+            return api.supportsAnonymousToken
         default:
             return false
         }

@@ -43,6 +43,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
     fileprivate var navBarTitle: String = ""
     fileprivate var fieldPlaceholderText: String = ""
     fileprivate var isSearchView: Bool
+    fileprivate var showsFindFriends: Bool
     var hasBackButton: Bool = true {
         didSet {
             setupNavigationItems()
@@ -70,21 +71,26 @@ class SearchScreen: UIView, SearchScreenProtocol {
 
 // MARK: init
 
-    init(frame: CGRect, isSearchView: Bool, navBarTitle: String = InterfaceString.Search.Title, fieldPlaceholderText: String = InterfaceString.Search.Prompt) {
+    init(frame: CGRect, hasCurrentUser: Bool, isSearchView: Bool, navBarTitle: String = InterfaceString.Search.Title, fieldPlaceholderText: String = InterfaceString.Search.Prompt) {
         debounced = debounce(0.8)
         bottomInset = 0
         self.navBarTitle = navBarTitle
         self.fieldPlaceholderText = fieldPlaceholderText
         self.isSearchView = isSearchView
+        showsFindFriends = hasCurrentUser && isSearchView
+
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+
+        backgroundColor = UIColor.white
+
         setupStreamView()
         setupSearchContainer()
         setupNavigationBar()
         setupSearchField()
-        if self.isSearchView { setupToggleButtons() }
+        if self.isSearchView {
+            setupToggleButtons()
+        }
         setupFindFriendsButton()
-        findFriendsContainer.isHidden = !self.isSearchView
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -233,6 +239,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
         findFriendsContainer = UIView(frame: containerFrame)
         findFriendsContainer.backgroundColor = .black
         findFriendsContainer.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        findFriendsContainer.isHidden = !showsFindFriends
 
         let margins = UIEdgeInsets(top: 20, left: 15, bottom: 26, right: 15)
         let buttonHeight = CGFloat(50)
@@ -338,7 +345,7 @@ extension SearchScreen: UITextFieldDelegate {
 extension SearchScreen {
 
     fileprivate func showFindFriends() {
-        findFriendsContainer.isHidden = !isSearchView
+        findFriendsContainer.isHidden = !showsFindFriends
     }
 
     fileprivate func hideFindFriends() {

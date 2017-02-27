@@ -130,8 +130,11 @@ final class PostDetailViewController: StreamableViewController {
         else {
             rightBarButtonItems = [
                 UIBarButtonItem(image: .search, target: self, action: #selector(BaseElloViewController.searchButtonTapped)),
-                UIBarButtonItem(image: .dots, target: self, action: #selector(PostDetailViewController.flagPost)),
             ]
+
+            if currentUser != nil {
+                rightBarButtonItems.append(UIBarButtonItem(image: .dots, target: self, action: #selector(PostDetailViewController.flagPost)))
+            }
         }
 
         if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
@@ -187,9 +190,6 @@ final class PostDetailViewController: StreamableViewController {
             return
         }
 
-        // This is a bit dirty, we should not call a method on a compositionally held
-        // controller's createPostDelegate. Can this use the responder chain when we have
-        // parameters to pass?
         editPost(post, fromController: self)
     }
 

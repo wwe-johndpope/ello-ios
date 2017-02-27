@@ -27,13 +27,14 @@ struct StreamFooterCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? StreamFooterCell,
+        guard
+            let cell = cell as? StreamFooterCell,
             let post = streamCellItem.jsonable as? Post
-        {
-            configureDisplayCounts(cell, post: post, streamKind: streamKind)
-            configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
-            configureCommentControl(cell, streamCellItem: streamCellItem, streamKind: streamKind)
-        }
+        else { return }
+
+        configureDisplayCounts(cell, post: post, streamKind: streamKind)
+        configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
+        configureCommentControl(cell, post: post, streamCellItem: streamCellItem, streamKind: streamKind, currentUser: currentUser)
     }
 
     fileprivate static func configureToolBarItems(
@@ -72,10 +73,18 @@ struct StreamFooterCellPresenter {
 
     fileprivate static func configureCommentControl(
         _ cell: StreamFooterCell,
+        post: Post,
         streamCellItem: StreamCellItem,
-        streamKind: StreamKind )
+        streamKind: StreamKind,
+        currentUser: User?)
     {
-        if streamKind.isDetail {
+        if streamKind.isDetail && currentUser == nil {
+            let count = post.commentsCount ?? 0
+            let open = count > 0
+            cell.commentsOpened = open
+            cell.commentsControl.isSelected = open
+        }
+        else if streamKind.isDetail {
             cell.commentsOpened = true
             cell.commentsControl.isSelected = true
         }
@@ -111,7 +120,7 @@ struct StreamFooterCellPresenter {
         post: Post,
         streamKind: StreamKind)
     {
-        let rounding = streamKind.isGridView ? 0 : 2
+        let rounding = streamKind.isGridView ? 0 : 1
         if cell.frame.width < 155 {
             cell.views = ""
             cell.reposts = ""

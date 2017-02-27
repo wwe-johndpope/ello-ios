@@ -6,7 +6,8 @@ import FLAnimatedImage
 import TimeAgoInWords
 
 
-protocol NotificationDelegate: class {
+@objc
+protocol NotificationResponder: class {
     func userTapped(_ user: User)
     func commentTapped(_ comment: ElloComment)
     func postTapped(_ post: Post)
@@ -53,9 +54,6 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     typealias WebContentReady = (_ webView: UIWebView) -> Void
 
-    weak var webLinkDelegate: WebLinkDelegate?
-    weak var userDelegate: UserDelegate?
-    weak var delegate: NotificationDelegate?
     var webContentReady: WebContentReady?
     var onHeightMismatch: OnHeightMismatch?
 
@@ -316,11 +314,13 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default"
         {
-            userDelegate?.userTappedText(cell: self)
+            let responder = target(forAction: #selector(UserResponder.userTappedText(cell:)), withSender: self) as? UserResponder
+            responder?.userTappedText(cell: self)
+
             return false
         }
         else {
-            return ElloWebViewHelper.handle(request: request, webLinkDelegate: webLinkDelegate)
+            return ElloWebViewHelper.handle(request: request, origin: self)
         }
     }
 
@@ -343,17 +343,21 @@ extension NotificationCell: ElloTextViewDelegate {
     func textViewTapped(_ link: String, object: ElloAttributedObject) {
         switch object {
         case let .attributedPost(post):
-            delegate?.postTapped(post)
+            let responder = target(forAction: #selector(NotificationResponder.postTapped(_:)), withSender: self) as? NotificationResponder
+            responder?.postTapped(post)
         case let .attributedComment(comment):
-            delegate?.commentTapped(comment)
+            let responder = target(forAction: #selector(NotificationResponder.commentTapped(_:)), withSender: self) as? NotificationResponder
+            responder?.commentTapped(comment)
         case let .attributedUser(user):
-            delegate?.userTapped(user)
+            let responder = target(forAction: #selector(NotificationResponder.userTapped(_:)), withSender: self) as? NotificationResponder
+            responder?.userTapped(user)
         default: break
         }
     }
 
     func textViewTappedDefault() {
-        userDelegate?.userTappedText(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedText(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedText(cell: self)
     }
 }
 
@@ -361,15 +365,18 @@ extension NotificationCell {
 
     func replyTapped() {
         if let post = post {
-            delegate?.postTapped(post)
+            let responder = target(forAction: #selector(NotificationResponder.postTapped(_:)), withSender: self) as? NotificationResponder
+            responder?.postTapped(post)
         }
         else if let comment = comment {
-            delegate?.commentTapped(comment)
+            let responder = target(forAction: #selector(NotificationResponder.commentTapped(_:)), withSender: self) as? NotificationResponder
+            responder?.commentTapped(comment)
         }
     }
 
     func avatarTapped() {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
 }

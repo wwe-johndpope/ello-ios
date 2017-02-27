@@ -9,7 +9,7 @@ import Nimble_Snapshots
 
 
 var prevController: UITabBarController?
-func showController(_ viewController: UIViewController) {
+func showController(_ viewController: UIViewController, window: UIWindow = UIWindow()) {
     let frame: CGRect
     let view: UIView = viewController.view
     if view.frame.size.width > 0 && view.frame.size.height > 0 {
@@ -22,7 +22,6 @@ func showController(_ viewController: UIViewController) {
     viewController.loadViewIfNeeded()
 
     prevController?.viewControllers = []
-    let window = UIWindow()
     let parentController = UITabBarController()
     parentController.tabBar.isHidden = true
     parentController.viewControllers = [viewController]
@@ -33,11 +32,13 @@ func showController(_ viewController: UIViewController) {
     prevController = parentController
 }
 
-func showView(_ view: UIView) {
+func showView(_ view: UIView, container: UIView = UIView()) {
     let controller = UIViewController()
     controller.view.frame.size = view.frame.size
     view.frame.origin = .zero
-    controller.view.addSubview(view)
+    container.addSubview(view)
+    controller.view.addSubview(container)
+
     showController(controller)
 }
 

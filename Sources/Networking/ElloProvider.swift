@@ -85,6 +85,9 @@ class ElloProvider {
             waitList.append(request)
         }
         else {
+            if !authState.supports(target) {
+                print("cannot send: \(target)")
+            }
             let canMakeRequest = authState.supports(target)
             if canMakeRequest {
                 Crashlytics.sharedInstance().setObjectValue(target.path, forKey: CrashlyticsKey.requestPath.rawValue)

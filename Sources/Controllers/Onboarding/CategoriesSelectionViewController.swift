@@ -2,10 +2,9 @@
 ///  CategoriesSelectionViewController.swift
 //
 
-class CategoriesSelectionViewController: StreamableViewController, HasAppController {
+class CategoriesSelectionViewController: StreamableViewController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
-    var parentAppController: AppViewController?
     var selectedCategories: [Category] = []
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!
@@ -29,7 +28,6 @@ class CategoriesSelectionViewController: StreamableViewController, HasAppControl
         super.viewDidLoad()
 
         streamViewController.pullToRefreshEnabled = false
-        streamViewController.selectedCategoryDelegate = self
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }
@@ -54,6 +52,7 @@ class CategoriesSelectionViewController: StreamableViewController, HasAppControl
 }
 
 extension CategoriesSelectionViewController: OnboardingStepController {
+
     func onboardingStepBegin() {
         let prompt = NSString(format: InterfaceString.Onboard.PickTemplate as NSString, 3) as String
         onboardingViewController?.hasAbortButton = false
@@ -70,22 +69,27 @@ extension CategoriesSelectionViewController: OnboardingStepController {
         }
 
         UserService().setUser(categories: categories)
-            .onSuccess { _ in
+            .onSuccess { [weak self] _ in
+                guard let `self` = self else { return }
+
                 // onboarding can be considered "done", even if they abort the app
                 Onboarding.shared().updateVersionToLatest()
 
                 self.onboardingData.categories = categories
                 proceedClosure(.continue)
             }
-            .onFail { _ in
+            .onFail { [weak self] _ in
+                guard let `self` = self else { return }
+
                 let alertController = AlertViewController(error: InterfaceString.GenericError)
-                self.parentAppController?.present(alertController, animated: true, completion: nil)
+                self.appViewController?.present(alertController, animated: true, completion: nil)
                 proceedClosure(.error)
             }
     }
 }
 
-extension CategoriesSelectionViewController: SelectedCategoryDelegate {
+extension CategoriesSelectionViewController: SelectedCategoryResponder {
+
     func categoriesSelectionChanged(selection: [Category]) {
         let selectionCount = selection.count
         let prompt: String?

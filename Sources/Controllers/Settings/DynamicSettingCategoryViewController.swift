@@ -48,7 +48,6 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
         {
             DynamicSettingCellPresenter.configure(cell, setting: setting, currentUser: user)
             cell.setting = setting
-            cell.delegate = self
         }
         return cell
     }
@@ -71,7 +70,7 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     }
 }
 
-extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
+extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
 
     typealias SettingConfig = (setting: DynamicSetting, indexPath: IndexPath, value: Bool, isVisible: Bool)
 
@@ -101,7 +100,8 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
         }
 
         ProfileService().updateUserProfile(updatedValues,
-            success: { user in
+            success: { [weak self] user in
+                guard let `self` = self else { return }
                 self.delegate?.dynamicSettingsUserChanged(user)
 
                 let changedPaths = visibility.filter { config in
@@ -112,7 +112,8 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellDelegate {
 
                 self.tableView.reloadRows(at: changedPaths, with: .automatic)
             },
-            failure: { (_, _) in
+            failure: { [weak self] (_, _) in
+                guard let `self` = self else { return }
                 self.tableView.reloadData()
             })
     }

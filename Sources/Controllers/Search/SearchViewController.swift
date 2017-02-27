@@ -24,7 +24,10 @@ class SearchViewController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = SearchScreen(frame: UIScreen.main.bounds, isSearchView: true)
+        let screen = SearchScreen(
+            frame: UIScreen.main.bounds,
+            hasCurrentUser: currentUser != nil,
+            isSearchView: true)
         self.view = screen
         screen.delegate = self
     }
@@ -77,7 +80,7 @@ extension SearchViewController: SearchScreenDelegate {
         searchText = ""
         streamViewController.removeAllCellItems()
         streamViewController.loadingToken.cancelInitialPage()
-        streamViewController.noResultsMessages = (title: "", body: "")
+        streamViewController.noResultsMessages = NoResultsMessages(title: "", body: "")
         screen.hasGridViewToggle = false
     }
 
@@ -109,7 +112,7 @@ extension SearchViewController: SearchScreenDelegate {
         streamViewController.hideNoResults()
         searchText = text
         let endpoint = isPostSearch ? ElloAPI.searchForPosts(terms: text) : ElloAPI.searchForUsers(terms: text)
-        streamViewController.noResultsMessages = (title: InterfaceString.Search.NoMatches, body: InterfaceString.Search.TryAgain)
+        streamViewController.noResultsMessages = NoResultsMessages(title: InterfaceString.Search.NoMatches, body: InterfaceString.Search.TryAgain)
         let streamKind = StreamKind.simpleStream(endpoint: endpoint, title: "")
         screen.hasGridViewToggle = streamKind.hasGridViewToggle
         streamViewController.streamKind = streamKind

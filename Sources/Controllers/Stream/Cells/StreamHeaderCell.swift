@@ -62,15 +62,6 @@ class StreamHeaderCell: UICollectionViewCell {
         }
     }
 
-    weak var relationshipDelegate: RelationshipDelegate? {
-        get { return relationshipControl.relationshipDelegate }
-        set { relationshipControl.relationshipDelegate = newValue }
-    }
-    weak var postbarDelegate: PostbarDelegate?
-    weak var userDelegate: UserDelegate?
-    weak var categoryDelegate: CategoryDelegate?
-    weak var streamEditingDelegate: StreamEditingDelegate?
-
     var avatarHeight: CGFloat = 60.0 {
         didSet { setNeedsDisplay() }
     }
@@ -356,7 +347,7 @@ class StreamHeaderCell: UICollectionViewCell {
             y: secondaryLabelY,
             width: categoryWidth,
             height: usernameButtonHeight
-            )
+        )
     }
 
     fileprivate func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
@@ -413,43 +404,57 @@ class StreamHeaderCell: UICollectionViewCell {
 
     func postTapped(_ recognizer: UITapGestureRecognizer) {
         guard let indexPath = indexPath else { return }
-        postbarDelegate?.viewsButtonTapped(indexPath)
+
+        let responder = target(forAction: #selector(PostbarResponder.viewsButtonTapped(_:)), withSender: self) as? PostbarResponder
+        responder?.viewsButtonTapped(indexPath)
     }
 
     @IBAction func userTapped(_ sender: AvatarButton) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
     @IBAction func usernameTapped(_ sender: UIButton) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
 
     @IBAction func categoryTapped(_ sender: UIButton) {
-        categoryDelegate?.categoryCellTapped(cell: self)
+        let responder = target(forAction: #selector(CategoryResponder.categoryCellTapped(cell:)), withSender: self) as? CategoryResponder
+        responder?.categoryCellTapped(cell: self)
     }
 
     @IBAction func reposterTapped(_ sender: UIButton) {
-        userDelegate?.userTappedReposter(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedReposter(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedReposter(cell: self)
     }
 
     @IBAction func flagButtonTapped(_ sender: StreamFooterButton) {
         guard let indexPath = indexPath else { return }
-        postbarDelegate?.flagCommentButtonTapped(indexPath)
+
+        let responder = target(forAction: #selector(PostbarResponder.flagCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
+        responder?.flagCommentButtonTapped(indexPath)
     }
 
     @IBAction func replyButtonTapped(_ sender: StreamFooterButton) {
         guard let indexPath = indexPath else { return }
-        postbarDelegate?.replyToCommentButtonTapped(indexPath)
+
+        let responder = target(forAction: #selector(PostbarResponder.replyToCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
+        responder?.replyToCommentButtonTapped(indexPath)
     }
 
     @IBAction func deleteButtonTapped(_ sender: StreamFooterButton) {
         guard let indexPath = indexPath else { return }
-        postbarDelegate?.deleteCommentButtonTapped(indexPath)
+
+        let responder = target(forAction: #selector(PostbarResponder.deleteCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
+        responder?.deleteCommentButtonTapped(indexPath)
     }
 
     @IBAction func editButtonTapped(_ sender: StreamFooterButton) {
         guard let indexPath = indexPath else { return }
-        postbarDelegate?.editCommentButtonTapped(indexPath)
+
+        let responder = target(forAction: #selector(PostbarResponder.editCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
+        responder?.editCommentButtonTapped(indexPath)
     }
 
     @IBAction func chevronButtonTapped(_ sender: StreamFooterButton) {
@@ -462,9 +467,10 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func longPressed(_ gesture: UIGestureRecognizer) {
-        if gesture.state == .began {
-            streamEditingDelegate?.cellLongPressed(cell: self)
-        }
+        guard gesture.state == .began else { return }
+
+        let responder = target(forAction: #selector(StreamEditingResponder.cellLongPressed(cell:)), withSender: self) as? StreamEditingResponder
+        responder?.cellLongPressed(cell: self)
     }
 }
 
@@ -498,7 +504,8 @@ extension StreamHeaderCell {
 
 extension StreamHeaderCell: ElloTextViewDelegate {
     func textViewTapped(_ link: String, object: ElloAttributedObject) {
-        userDelegate?.userTappedAuthor(cell: self)
+        let responder = target(forAction: #selector(UserResponder.userTappedAuthor(cell:)), withSender: self) as? UserResponder
+        responder?.userTappedAuthor(cell: self)
     }
     func textViewTappedDefault() {}
 }

@@ -10,6 +10,8 @@ class CredentialsScreen: EmptyScreen {
         static let backTopInset: CGFloat = 10
         static let titleTop: CGFloat = 110
         static let inset: CGFloat = 10
+        static let buttonHeight: CGFloat = 50
+        static let buttonInset: CGFloat = 10
     }
 
     let scrollView = UIScrollView()
@@ -17,6 +19,8 @@ class CredentialsScreen: EmptyScreen {
     let backButton = UIButton()
     let titleLabel = StyledLabel(style: .LargeWhite)
     let gradientLayer = StartupGradientLayer()
+    let continueButton = StyledButton(style: .RoundedGray)
+    let continueBackground = UIView()
 
     override func updateConstraints() {
         super.updateConstraints()
@@ -48,8 +52,11 @@ class CredentialsScreen: EmptyScreen {
         super.arrange()
 
         addSubview(scrollView)
+        addSubview(continueBackground)
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(backButton)
+
+        continueBackground.addSubview(continueButton)
 
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(scrollView).offset(Size.titleTop)
@@ -61,8 +68,28 @@ class CredentialsScreen: EmptyScreen {
             make.leading.equalTo(scrollView)
             make.size.equalTo(CGSize.minButton)
         }
+
+        continueButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self).inset(Size.buttonInset)
+            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.buttonInset)
+            make.height.equalTo(Size.buttonHeight)
+        }
+
+        continueBackground.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self)
+            make.top.equalTo(continueButton).offset(-Size.buttonInset)
+        }
     }
 
     func backAction() {
+    }
+
+    func styleContinueButton(allValid: Bool) {
+        if allValid {
+            continueButton.style = .Green
+        }
+        else {
+            continueButton.style = .RoundedGray
+        }
     }
 }
