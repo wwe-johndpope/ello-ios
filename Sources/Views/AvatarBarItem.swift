@@ -20,9 +20,10 @@ class AvatarBarItem: UITabBarItem {
         fatalError("This isn't implemented")
     }
 
-    func setUserAvatar(_ image: UIImage) {
+    func setUserAvatar(_ avatar: UIImage) {
         imageURL = nil
-        self.image = image
+        self.image = regularImage(avatar)
+        self.selectedImage = selectedImage(image)
     }
 
     func setUserAvatarURL(_ url: URL?) {
@@ -34,14 +35,22 @@ class AvatarBarItem: UITabBarItem {
         _ = manager?.downloadImage(with: url, options: [])  { [weak self] result in
             guard
                 let `self` = self,
-                let image = result?.image.squareImage()?.resizeToSize(CGSize(width: 36, height: 36), padding: 3)?.roundCorners(padding: 3),
-                let selectedImage = image.circleOutline(color: .black)
+                let image = self.regularImage(result?.image),
+                let selectedImage = self.selectedImage(image)
             else { return }
             nextTick {
-                self.image = image.withRenderingMode(.alwaysOriginal)
-                self.selectedImage = selectedImage.withRenderingMode(.alwaysOriginal)
+                self.image = image
+                self.selectedImage = selectedImage
             }
         }
+    }
+
+    func regularImage(_ image: UIImage?) -> UIImage? {
+        return image?.squareImage()?.resizeToSize(CGSize(width: 36, height: 36), padding: 3)?.roundCorners(padding: 3)?.withRenderingMode(.alwaysOriginal)
+    }
+
+    func selectedImage(_ image: UIImage?) -> UIImage? {
+        return image?.circleOutline(color: .black)?.withRenderingMode(.alwaysOriginal)
     }
 
     func setDefaultImage() {
