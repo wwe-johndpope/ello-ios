@@ -354,7 +354,7 @@ extension ProfileViewController {
         {
             item.setUserAvatar(cachedAvatar)
         }
-        
+
         if let cachedCoverImage = cachedImage(.coverImage) {
             screen.coverImage = cachedCoverImage
         }
