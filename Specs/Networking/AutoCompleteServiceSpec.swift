@@ -67,8 +67,8 @@ class AutoCompleteServiceSpec: QuickSpec {
 
                     context("success") {
                         let expectations: [(String, [String])] = [
-                            ("met", ["metal", "metro"]),
-                            (":met", ["metal", "metro"]),
+                            ("met", ["metal", "comet", "face_with_thermometer", "metro", "rescue_worker_helmet", "thermometer"]),
+                            (":met", ["metal", "comet", "face_with_thermometer", "metro", "rescue_worker_helmet", "thermometer"]),
                             ("meta", ["metal"]),
                             (":meta", ["metal"]),
                             ("etal", ["metal"]),
