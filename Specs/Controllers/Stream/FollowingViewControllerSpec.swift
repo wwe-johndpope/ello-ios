@@ -20,7 +20,7 @@ class FollowingViewControllerSpec: QuickSpec {
             }
 
             it("has the correct title") {
-                expect(subject.title) == "Following"
+                expect(subject.title) == ""
             }
 
             it("has a streamKind of .following") {

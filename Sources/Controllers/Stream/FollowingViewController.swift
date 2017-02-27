@@ -17,13 +17,13 @@ class FollowingViewController: StreamableViewController {
     fileprivate var appForegroundObserver: NotificationObserver?
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.circBig) }
+        get { return UITabBarItem.item(.following) }
         set { self.tabBarItem = newValue }
     }
 
     required init() {
         super.init(nibName: nil, bundle: nil)
-        self.title = InterfaceString.Following.Title
+        self.title = ""
     }
 
     required init?(coder aDecoder: NSCoder) {

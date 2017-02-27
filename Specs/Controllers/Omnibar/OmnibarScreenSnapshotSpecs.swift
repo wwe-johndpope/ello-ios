@@ -15,7 +15,6 @@ class OmnibarScreenSnapshotSpecs: QuickSpec {
         var subject: OmnibarScreen!
         beforeEach {
             subject = OmnibarScreen()
-            subject.avatarImage = smallImage
         }
 
         describe("OmnibarScreenSnapshots") {

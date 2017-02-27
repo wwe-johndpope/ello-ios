@@ -5,42 +5,43 @@
 import SwiftyUserDefaults
 
 enum ElloTab: Int {
-    case discover
-    case notifications
     case following
-    case profile
+    case discover
     case omnibar
+    case notifications
+    case profile
+
 
     static let DefaultTab: ElloTab = .following
 
     var narrationDefaultKey: String {
         let defaultPrefix = "ElloTabBarControllerDidShowNarration"
         switch self {
-        case .discover:      return "\(defaultPrefix)Discover"
-        case .notifications: return "\(defaultPrefix)Notifications"
-        case .following:     return "\(defaultPrefix)Stream"
-        case .profile:       return "\(defaultPrefix)Profile"
-        case .omnibar:       return "\(defaultPrefix)Omnibar"
+            case .following:     return "\(defaultPrefix)Stream"
+            case .discover:      return "\(defaultPrefix)Discover"
+            case .omnibar:       return "\(defaultPrefix)Omnibar"
+            case .notifications: return "\(defaultPrefix)Notifications"
+            case .profile:       return "\(defaultPrefix)Profile"
         }
     }
 
     var narrationTitle: String {
         switch self {
-            case .discover:      return InterfaceString.Tab.PopupTitle.Discover
-            case .notifications: return InterfaceString.Tab.PopupTitle.Notifications
             case .following:     return InterfaceString.Tab.PopupTitle.Following
-            case .profile:       return InterfaceString.Tab.PopupTitle.Profile
+            case .discover:      return InterfaceString.Tab.PopupTitle.Discover
             case .omnibar:       return InterfaceString.Tab.PopupTitle.Omnibar
+            case .notifications: return InterfaceString.Tab.PopupTitle.Notifications
+            case .profile:       return InterfaceString.Tab.PopupTitle.Profile
         }
     }
 
     var narrationText: String {
         switch self {
-            case .discover:      return InterfaceString.Tab.PopupText.Discover
-            case .notifications: return InterfaceString.Tab.PopupText.Notifications
             case .following:     return InterfaceString.Tab.PopupText.Following
-            case .profile:       return InterfaceString.Tab.PopupText.Profile
+            case .discover:      return InterfaceString.Tab.PopupText.Discover
             case .omnibar:       return InterfaceString.Tab.PopupText.Omnibar
+            case .notifications: return InterfaceString.Tab.PopupText.Notifications
+            case .profile:       return InterfaceString.Tab.PopupText.Profile
         }
     }
 
@@ -189,18 +190,18 @@ extension ElloTabBarController {
     }
 
     func setupControllers() {
-        let discover = DiscoverAllCategoriesViewController()
-        let notifications = NotificationsViewController()
         let following = FollowingViewController()
-        let profile = ProfileViewController(user: currentUser!)
+        let discover = DiscoverAllCategoriesViewController()
         let omnibar = OmnibarViewController()
+        let notifications = NotificationsViewController()
+        let profile = ProfileViewController(user: currentUser!)
         omnibar.canGoBack = false
 
-        self.addChildViewController(embed(discover))
-        self.addChildViewController(embed(notifications))
         self.addChildViewController(embed(following))
-        self.addChildViewController(embed(profile))
+        self.addChildViewController(embed(discover))
         self.addChildViewController(embed(omnibar))
+        self.addChildViewController(embed(notifications))
+        self.addChildViewController(embed(profile))
     }
 
     func embed(_ controller: UIViewController) -> UIViewController {

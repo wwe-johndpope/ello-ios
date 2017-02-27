@@ -213,11 +213,11 @@ class ElloTabBarControllerSpec: QuickSpec {
 
             beforeEach {
                 prevTabValues = [
-                    ElloTab.discover: GroupDefaults[ElloTab.discover.narrationDefaultKey].bool,
-                    ElloTab.notifications: GroupDefaults[ElloTab.notifications.narrationDefaultKey].bool,
                     ElloTab.following: GroupDefaults[ElloTab.following.narrationDefaultKey].bool,
-                    ElloTab.profile: GroupDefaults[ElloTab.profile.narrationDefaultKey].bool,
-                    ElloTab.omnibar: GroupDefaults[ElloTab.omnibar.narrationDefaultKey].bool
+                    ElloTab.discover: GroupDefaults[ElloTab.discover.narrationDefaultKey].bool,
+                    ElloTab.omnibar: GroupDefaults[ElloTab.omnibar.narrationDefaultKey].bool,
+                    ElloTab.notifications: GroupDefaults[ElloTab.notifications.narrationDefaultKey].bool,
+                    ElloTab.profile: GroupDefaults[ElloTab.profile.narrationDefaultKey].bool
                 ]
 
                 subject = ElloTabBarController()
@@ -240,11 +240,11 @@ class ElloTabBarControllerSpec: QuickSpec {
             }
 
             it("should never change the key") {
-                expect(ElloTab.discover.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationDiscover"
-                expect(ElloTab.notifications.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationNotifications"
                 expect(ElloTab.following.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationStream"
-                expect(ElloTab.profile.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationProfile"
+                expect(ElloTab.discover.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationDiscover"
                 expect(ElloTab.omnibar.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationOmnibar"
+                expect(ElloTab.notifications.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationNotifications"
+                expect(ElloTab.profile.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationProfile"
             }
 
             it("should set the narration values") {
@@ -262,23 +262,23 @@ class ElloTabBarControllerSpec: QuickSpec {
                 expect(ElloTabBarController.didShowNarration(tab)).to(beTrue())
             }
             it("should NOT show the narrationView when changing to a tab that has already shown the narrationView") {
-                ElloTabBarController.didShowNarration(.discover, true)
-                ElloTabBarController.didShowNarration(.notifications, true)
                 ElloTabBarController.didShowNarration(.following, true)
-                ElloTabBarController.didShowNarration(.profile, true)
+                ElloTabBarController.didShowNarration(.discover, true)
                 ElloTabBarController.didShowNarration(.omnibar, true)
+                ElloTabBarController.didShowNarration(.notifications, true)
+                ElloTabBarController.didShowNarration(.profile, true)
 
-                subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
-                expect(subject.selectedViewController).to(equal(child1))
+                subject.tabBar(subject.tabBar, didSelect: child2.tabBarItem)
+                expect(subject.selectedViewController).to(equal(child2))
                 expect(subject.shouldShowNarration).to(beFalse())
                 expect(subject.isShowingNarration).to(beFalse())
             }
             it("should show the narrationView when changing to a tab that hasn't shown the narrationView yet") {
-                ElloTabBarController.didShowNarration(.discover, false)
-                ElloTabBarController.didShowNarration(.notifications, false)
                 ElloTabBarController.didShowNarration(.following, false)
-                ElloTabBarController.didShowNarration(.profile, false)
+                ElloTabBarController.didShowNarration(.discover, false)
                 ElloTabBarController.didShowNarration(.omnibar, false)
+                ElloTabBarController.didShowNarration(.notifications, false)
+                ElloTabBarController.didShowNarration(.profile, false)
 
                 subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
                 expect(subject.selectedViewController).to(equal(child1), description: "selectedViewController")

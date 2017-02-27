@@ -104,6 +104,7 @@
 		1220347D1DECCDD80059E633 /* marker.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1220347C1DECCDD80059E633 /* marker.svg */; };
 		1220347F1DECCE890059E633 /* ProfileLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1220347E1DECCE890059E633 /* ProfileLocationView.swift */; };
 		12224E581A72CEC300D087EC /* PostbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12224E571A72CEC300D087EC /* PostbarController.swift */; };
+		12241CEF1E60CAC700100C41 /* create_post_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12241CEE1E60CAC700100C41 /* create_post_selected.svg */; };
 		122454AE1D9F1BC700D930E0 /* ElloCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */; };
 		122943271C6BF465003FCD20 /* ShareViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291CE2D1C6A91C600EB5A55 /* ShareViewControllerSpec.swift */; };
 		122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124CFB991C5976E500727D11 /* ShareViewController.swift */; };
@@ -384,6 +385,7 @@
 		12A3A46F1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */; };
 		12A3A4721AB3556F00D2AFB0 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		12AF0AFB1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AF0AFA1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift */; };
+		12B052C01E5F43B100898967 /* AvatarBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B052BF1E5F43B100898967 /* AvatarBarItem.swift */; };
 		12B093661A6D87C000BF104E /* FollowingViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */; };
 		12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093671A6E146C00BF104E /* UIBarButtonItem.swift */; };
 		12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */; };
@@ -430,6 +432,9 @@
 		12DEB2501C5BFB3100D4CDCE /* CryptoStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */; };
 		12DEB2511C5BFB6F00D4CDCE /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2B1A43390900493660 /* StringExtensions.swift */; };
 		12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */; };
+		12E2A5A31E5CD357000EFFBA /* following_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12E2A5A11E5CD357000EFFBA /* following_normal.svg */; };
+		12E2A5A41E5CD357000EFFBA /* following_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12E2A5A21E5CD357000EFFBA /* following_selected.svg */; };
+		12E2A5A61E5CD386000EFFBA /* create_post_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */; };
 		12E3A2751DBE811900D42599 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
 		12E810C21DCB91C4007094C1 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */; };
 		12EC00001DDB7EA4007F22C5 /* DeepLinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ECFFFF1DDB7EA4007F22C5 /* DeepLinking.swift */; };
@@ -1175,6 +1180,7 @@
 		1220347C1DECCDD80059E633 /* marker.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker.svg; sourceTree = "<group>"; };
 		1220347E1DECCE890059E633 /* ProfileLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLocationView.swift; sourceTree = "<group>"; };
 		12224E571A72CEC300D087EC /* PostbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarController.swift; sourceTree = "<group>"; };
+		12241CEE1E60CAC700100C41 /* create_post_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = create_post_selected.svg; sourceTree = "<group>"; };
 		122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloCollectionView.swift; sourceTree = "<group>"; };
 		1229432D1C6C101E003FCD20 /* ExtensionItemPreviewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionItemPreviewSpec.swift; sourceTree = "<group>"; };
 		1229432F1C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSItemProviderExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -1356,6 +1362,7 @@
 		12A3A46E1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloPullToRefreshView.swift; sourceTree = "<group>"; };
 		12A3A4711AB3556F00D2AFB0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		12AF0AFA1AA7DC6100BADC6D /* FakeStreamTextCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeStreamTextCellSizeCalculator.swift; sourceTree = "<group>"; };
+		12B052BF1E5F43B100898967 /* AvatarBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarBarItem.swift; sourceTree = "<group>"; };
 		12B093651A6D87C000BF104E /* FollowingViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FollowingViewControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12B093671A6E146C00BF104E /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationController.swift; sourceTree = "<group>"; };
@@ -1406,6 +1413,9 @@
 		12DEB24D1C5BFA9200D4CDCE /* libcommonCrypto.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcommonCrypto.tbd; path = usr/lib/system/libcommonCrypto.tbd; sourceTree = SDKROOT; };
 		12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoStringExtensions.swift; sourceTree = "<group>"; };
 		12E06F3E1CE24AF00066E247 /* UsernameSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameSpec.swift; sourceTree = "<group>"; };
+		12E2A5A11E5CD357000EFFBA /* following_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = following_normal.svg; sourceTree = "<group>"; };
+		12E2A5A21E5CD357000EFFBA /* following_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = following_selected.svg; sourceTree = "<group>"; };
+		12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = create_post_normal.svg; sourceTree = "<group>"; };
 		12E3A2741DBE811900D42599 /* Promotional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotional.swift; sourceTree = "<group>"; };
 		12E83D9E1ADF12120074ECF6 /* ExperienceUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceUpdate.swift; sourceTree = "<group>"; };
 		12EC00011DDBD027007F22C5 /* DeepLinkingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingSpec.swift; sourceTree = "<group>"; };
@@ -3131,6 +3141,7 @@
 				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D70DE571DF23862008AF216 /* StyledLabel.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
+				12B052BF1E5F43B100898967 /* AvatarBarItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3536,12 +3547,16 @@
 				1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */,
 				1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */,
 				1DF741681BFA61B1000F5349 /* camera_white.svg */,
+				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
+				12241CEE1E60CAC700100C41 /* create_post_selected.svg */,
 				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
 				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
-				769051001AFD2A720011B09A /* ello_logo.svg */,
 				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
+				769051001AFD2A720011B09A /* ello_logo.svg */,
 				1D472C211C1F2E0400B61E55 /* embetter_audio_play.svg */,
 				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
+				12E2A5A11E5CD357000EFFBA /* following_normal.svg */,
+				12E2A5A21E5CD357000EFFBA /* following_selected.svg */,
 				1D242D611DDBCD87000A424C /* grid_view_normal.svg */,
 				1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */,
 				1DF7416C1BFA65F0000F5349 /* link_normal.svg */,
@@ -3995,6 +4010,7 @@
 				76B0B1911B41B1D0004C2D7B /* UserAvatarsCell.xib in Resources */,
 				76F8DED61B6C0BC4009BCF61 /* hearts_normal.svg in Resources */,
 				7689B50E1AD4ED3B00E4A4A3 /* users_user_details.json in Resources */,
+				12241CEF1E60CAC700100C41 /* create_post_selected.svg in Resources */,
 				7689B50A1AD4ED3B00E4A4A3 /* users_loading_more_user_posts.json in Resources */,
 				76F8DEEA1B6C0BC4009BCF61 /* question_normal.svg in Resources */,
 				7689B5071AD4ED3B00E4A4A3 /* users_getting_a_list_for_autocompleted_usernames.json in Resources */,
@@ -4051,6 +4067,7 @@
 				1DF7416E1BFA65F0000F5349 /* link_normal.svg in Resources */,
 				12ECFFFE1DDA146A007F22C5 /* category.json in Resources */,
 				76F8DEAD1B6C0BC4009BCF61 /* abracket_selected.svg in Resources */,
+				12E2A5A61E5CD386000EFFBA /* create_post_normal.svg in Resources */,
 				1D405D9C1C47166D0059DAFD /* repost_disabled.svg in Resources */,
 				76F8DF061B6C0BC4009BCF61 /* xpmcirc_normal.svg in Resources */,
 				76F8DEB11B6C0BC4009BCF61 /* arrow_white.svg in Resources */,
@@ -4063,6 +4080,7 @@
 				EA8990141ABA180100339CBE /* Settings.storyboard in Resources */,
 				76F8DEBD1B6C0BC4009BCF61 /* check_green.svg in Resources */,
 				76F8DEBB1B6C0BC4009BCF61 /* camera_normal.svg in Resources */,
+				12E2A5A41E5CD357000EFFBA /* following_selected.svg in Resources */,
 				76F8DEFA1B6C0BC4009BCF61 /* sparkles_selected.svg in Resources */,
 				EA34DAC21AD84184002F566D /* dynamic_settings.json in Resources */,
 				7689B4EA1AD4ED3B00E4A4A3 /* discovery_listing_related_users.json in Resources */,
@@ -4186,6 +4204,7 @@
 				12F6AEA11A433F3D00493660 /* www in Resources */,
 				76F8DEDE1B6C0BC4009BCF61 /* omni_selected.svg in Resources */,
 				76E0CC8F1B064A9D00391186 /* posts_searching_for_posts.json in Resources */,
+				12E2A5A31E5CD357000EFFBA /* following_normal.svg in Resources */,
 				76F8DEB21B6C0BC4009BCF61 /* bolt_normal.svg in Resources */,
 				76C050AD1AA8C9570094E69A /* UserListItemCell.xib in Resources */,
 				1D9B74D51BB1E62500ACD028 /* bubble_tail.svg in Resources */,
@@ -5203,6 +5222,7 @@
 				1DA18E121DB187DF000231CC /* CalculatedCellHeights.swift in Sources */,
 				1D5933751D10BC8100EAF03D /* CategoryLevel.swift in Sources */,
 				125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */,
+				12B052C01E5F43B100898967 /* AvatarBarItem.swift in Sources */,
 				122B30C71C6A3FBC00C1B9D8 /* AmazonCredentials.swift in Sources */,
 				F8158C4D1ACDD52D008C15A1 /* AlertPresentationController.swift in Sources */,
 				1D9B74CA1BB1E3EF00ACD028 /* CommentsIcon.swift in Sources */,
