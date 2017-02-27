@@ -123,20 +123,6 @@ class OmnibarViewControllerSpec: QuickSpec {
                     showController(subject)
                 }
 
-                it("assigns the currentUser.avatarURL to the screen") {
-                    let attachment = Attachment.stub([
-                        "url": "http://ello.co/avatar.png",
-                        "height": 0,
-                        "width": 0,
-                        "type": "png",
-                        "size": 0]
-                        )
-                    let asset = Asset.stub(["attachment": attachment])
-                    let user: User = stub(["avatar": asset])
-                    subject.currentUser = user
-                    expect(screen.avatarURL?.absoluteString).to(equal("http://ello.co/avatar.png"))
-                }
-
                 it("has the correct title") {
                     expect(subject.screen.title) == ""
                 }

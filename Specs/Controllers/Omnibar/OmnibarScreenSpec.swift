@@ -75,14 +75,6 @@ class OmnibarScreenSpec: QuickSpec {
                 expect(subject.textView.keyboardType) == UIKeyboardType.twitter
             }
 
-            describe("tapping the avatar") {
-                it("should push the profile VC on to the navigation controller") {
-                    subject.currentUser = User.stub(["id": "1"])
-                    subject.profileImageTapped()
-                    expect(delegate.didPushController) == true
-                }
-            }
-
             describe("pressing add image") {
                 beforeEach {
                     subject.addImageAction()
@@ -130,22 +122,7 @@ class OmnibarScreenSpec: QuickSpec {
                         }
                     }
                 }
-                context("var avatarURL: URL?") {
-                    it("should set the button image (to nil)") {
-                        let image = UIImage()
-                        subject.avatarButton.setImage(image, for: .normal)
-                        subject.avatarURL = URL(string: "http://www.example1.com")! as URL
-                        subject.avatarURL = nil  // value needs to *change* for this to work
-                        expect(subject.avatarButton.image(for: .normal)).to(beNil())
-                    }
-                }
-                context("var avatarImage: UIImage?") {
-                    it("should set the button image") {
-                        let image = UIImage()
-                        subject.avatarImage = image
-                        expect(subject.avatarButton.image(for: .normal)) == image
-                    }
-                }
+
                 context("var currentUser: User?") {
                     it("should set the user") {
                         subject.currentUser = User.stub(["id": "12345"])
@@ -159,15 +136,14 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.layoutIfNeeded()
                             expect(subject.navigationBar.frame.height) > 0
                         }
-                        it("should position the avatarButton and toolbarButtonViews") {
+                        it("should position the toolbarButtonViews") {
                             subject.canGoBack = false
                             subject.layoutIfNeeded()
                             let toolbarY = subject.toolbarButtonViews[0].frame.minY
-                            let avatarY = subject.avatarButton.frame.minY
 
                             subject.canGoBack = true
                             subject.layoutIfNeeded()
-                            expect(subject.avatarButton.frame.minY) > avatarY
+
                             for button in subject.toolbarButtonViews {
                                 expect(button.frame.minY) > toolbarY
                             }
@@ -179,15 +155,14 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.layoutIfNeeded()
                             expect(subject.navigationBar.frame.height) <= 0
                         }
-                        it("should position the avatarButton and toolbarButtonViews") {
+                        it("should position the toolbarButtonViews") {
                             subject.canGoBack = true
                             subject.layoutIfNeeded()
                             let toolbarY = subject.toolbarButtonViews[0].frame.minY
-                            let avatarY = subject.avatarButton.frame.minY
 
                             subject.canGoBack = false
                             subject.layoutIfNeeded()
-                            expect(subject.avatarButton.frame.minY) < avatarY
+
                             for button in subject.toolbarButtonViews {
                                 expect(button.frame.minY) < toolbarY
                             }
