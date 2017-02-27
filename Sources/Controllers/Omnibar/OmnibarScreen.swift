@@ -12,6 +12,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         static let margins = UIEdgeInsets(top: 8, left: 2, bottom: 10, right: 5)
         static let toolbarMargin: CGFloat = 10
         static let toolbarRightPadding: CGFloat = 20
+        static let additionalBuyPadding: CGFloat = 5
         static let tableTopInset: CGFloat = 22.5
         static let bottomTextMargin: CGFloat = 1
         static let keyboardButtonSize = CGSize(width: 54, height: 44)
@@ -590,6 +591,8 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             buttonX -= view.frame.size.width + Size.toolbarRightPadding
             view.frame.origin = CGPoint(x: buttonX, y: toolbarTop)
         }
+
+        buyButton.frame = buyButton.frame.shift(left: Size.additionalBuyPadding)
 
         let cancelButtonSize = cancelButton.intrinsicContentSize
         cancelButton.frame = CGRect(x: Size.margins.left, y: toolbarTop, width: cancelButtonSize.width, height: cancelButtonSize.height)
