@@ -415,7 +415,7 @@ private extension ElloTabBarController {
 extension ElloTabBarController {
 
     fileprivate func addDots() {
-        notificationsDot = tabBar.addRedDotAtIndex(3)
+        notificationsDot = tabBar.addRedDotAtIndex(3, margins: CGPoint(x: 8, y: 10))
         followingDot = tabBar.addRedDotAtIndex(0)
     }
 
