@@ -28,15 +28,18 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         let appController = UIApplication.shared.keyWindow!.rootViewController as! AppViewController
+
         addAction(name: "Logout") {
             appController.closeTodoController() {
                 appController.userLoggedOut()
             }
         }
+
         addAction(name: "Adjust Image Quality") {
             let controller = DebugImageUploadController()
             self.navigationController?.pushViewController(controller, animated: true)
         }
+
         addAction(name: "Debug Tracking") {
             if Tracker.shared.overrideAgent is DebugAgent {
                 let vc = DebugTrackingController()
@@ -50,6 +53,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 }
             }
         }
+
         addAction(name: "Deep Linking") {
             appController.closeTodoController() {
                 let alertController = AlertViewController()
@@ -69,6 +73,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 appController.present(alertController, animated: true, completion: nil)
             }
         }
+
         addAction(name: "ImagePickerSheetController") {
             let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
             controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.TakePhoto, handler: { _ in }))
@@ -77,6 +82,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
             self.present(controller, animated: true, completion: nil)
         }
+
         addAction(name: "Invalidate refresh token (use user credentials)") {
             var token = AuthToken()
             token.token = "nil"
@@ -90,6 +96,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 profileService.loadCurrentUser(success: { _ in }, failure: { _ in })
             }
         }
+
         addAction(name: "Invalidate token completely (logout)") {
             var token = AuthToken()
             token.token = "nil"
@@ -105,6 +112,17 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 profileService.loadCurrentUser(success: { _ in print("success 3") }, failure: { _ in print("failure 3") })
             }
         }
+
+        addAction(name: "Show Following Dot") {
+            postNotification(NewContentNotifications.newStreamContent, value: nil)
+            appController.closeTodoController()
+        }
+
+        addAction(name: "Show Notification Dot") {
+            postNotification(NewContentNotifications.newNotifications, value: nil)
+            appController.closeTodoController()
+        }
+
         addAction(name: "Reset Tab bar Tooltips") {
             GroupDefaults[ElloTab.discover.narrationDefaultKey] = nil
             GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
@@ -112,6 +130,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
             GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
         }
+
         addAction(name: "Crash the app") {
             Crashlytics.sharedInstance().crash()
         }

@@ -37,7 +37,6 @@ class FollowingViewController: StreamableViewController {
         setupNavigationBar()
         setupNavigationItems(streamKind: .following)
 
-        scrollLogic.navBarHeight = 44
         streamViewController.streamKind = .following
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
