@@ -69,8 +69,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
         title = InterfaceString.Notifications.Title
         elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
 
-        scrollLogic.navBarHeight = 44
-
         initialLoad()
     }
 
