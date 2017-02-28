@@ -65,7 +65,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
         return findViewController { vc in vc is AppViewController } as? AppViewController
     }
 
-    fileprivate var notificationsDot: UIView?
+    fileprivate(set) var notificationsDot: UIView?
     var newNotificationsAvailable: Bool {
         set { notificationsDot?.isHidden = !newValue }
         get {
@@ -75,7 +75,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
             return false
         }
     }
-    fileprivate(set) var streamsDot: UIView?
+    fileprivate(set) var followingDot: UIView?
 
     // MARK: BottomBarController
     fileprivate var _bottomBarVisible = true
@@ -234,7 +234,7 @@ extension ElloTabBarController {
             case .notifications(category: nil):
                 self?.newNotificationsAvailable = false
             case .following:
-                self?.streamsDot?.isHidden = true
+                self?.followingDot?.isHidden = true
             default: break
             }
         }
@@ -252,7 +252,7 @@ extension ElloTabBarController {
         }
 
         newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newStreamContent) { [weak self] _ in
-            self?.streamsDot?.isHidden = false
+            self?.followingDot?.isHidden = false
         }
 
     }
@@ -295,7 +295,7 @@ extension ElloTabBarController: UITabBarDelegate {
                         scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
                     }
 
-                    if shouldReloadFriendStream() {
+                    if shouldReloadFollowingStream() {
                         postNotification(NewContentNotifications.reloadStreamContent, value: nil)
                     }
                     else if shouldReloadNotificationsStream() {
@@ -342,8 +342,8 @@ extension ElloTabBarController {
 
 private extension ElloTabBarController {
 
-    func shouldReloadFriendStream() -> Bool {
-        return selectedTab.rawValue == 2 && streamsDot?.isHidden == false
+    func shouldReloadFollowingStream() -> Bool {
+        return selectedTab.rawValue == 2 && followingDot?.isHidden == false
     }
 
     func shouldReloadNotificationsStream() -> Bool {
@@ -411,8 +411,8 @@ private extension ElloTabBarController {
 extension ElloTabBarController {
 
     fileprivate func addDots() {
-        notificationsDot = tabBar.addRedDotAtIndex(1)
-        streamsDot = tabBar.addRedDotAtIndex(2)
+        notificationsDot = tabBar.addRedDotAtIndex(3)
+        followingDot = tabBar.addRedDotAtIndex(0)
     }
 
     fileprivate func prepareNarration() {
