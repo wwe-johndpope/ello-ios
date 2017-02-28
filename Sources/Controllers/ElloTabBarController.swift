@@ -283,36 +283,40 @@ extension ElloTabBarController {
 
 // UITabBarDelegate
 extension ElloTabBarController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if let items = tabBar.items, let index = items.index(of: item) {
-            if index == selectedTab.rawValue {
-                if let navigationViewController = selectedViewController as? UINavigationController, navigationViewController.childViewControllers.count > 1
-                {
-                    _ = navigationViewController.popToRootViewController(animated: true)
-                }
-                else {
-                    if let scrollView = findScrollView(selectedViewController.view) {
-                        scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
-                    }
 
-                    if shouldReloadFollowingStream() {
-                        postNotification(NewContentNotifications.reloadStreamContent, value: nil)
-                    }
-                    else if shouldReloadNotificationsStream() {
-                        postNotification(NewContentNotifications.reloadNotifications, value: nil)
-                        self.newNotificationsAvailable = false
-                    }
-                }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard
+            let items = tabBar.items,
+            let index = items.index(of: item)
+        else { return }
+
+        if index == selectedTab.rawValue {
+            if let navigationViewController = selectedViewController as? UINavigationController, navigationViewController.childViewControllers.count > 1
+            {
+                _ = navigationViewController.popToRootViewController(animated: true)
             }
             else {
-                selectedTab = ElloTab(rawValue:index) ?? .following
-            }
-
-            if selectedTab == .notifications {
-                if let navigationViewController = selectedViewController as? UINavigationController,
-                    let notificationsViewController = navigationViewController.childViewControllers[0] as? NotificationsViewController {
-                    notificationsViewController.fromTabBar = true
+                if let scrollView = findScrollView(selectedViewController.view) {
+                    scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
                 }
+
+                if shouldReloadFollowingStream() {
+                    postNotification(NewContentNotifications.reloadStreamContent, value: nil)
+                }
+                else if shouldReloadNotificationsStream() {
+                    postNotification(NewContentNotifications.reloadNotifications, value: nil)
+                    self.newNotificationsAvailable = false
+                }
+            }
+        }
+        else {
+            selectedTab = ElloTab(rawValue:index) ?? .following
+        }
+
+        if selectedTab == .notifications {
+            if let navigationViewController = selectedViewController as? UINavigationController,
+                let notificationsViewController = navigationViewController.childViewControllers[0] as? NotificationsViewController {
+                notificationsViewController.fromTabBar = true
             }
         }
     }
