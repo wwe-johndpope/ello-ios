@@ -46,7 +46,7 @@ class AvatarBarItem: UITabBarItem {
     }
 
     func regularImage(_ image: UIImage?) -> UIImage? {
-        return image?.squareImage()?.resizeToSize(CGSize(width: 36, height: 36), padding: 3)?.roundCorners(padding: 3)?.withRenderingMode(.alwaysOriginal)
+        return image?.squareImage()?.resizeToSize(CGSize(width: 38, height: 38), padding: 4)?.roundCorners(padding: 4)?.withRenderingMode(.alwaysOriginal)
     }
 
     func selectedImage(_ image: UIImage?) -> UIImage? {
