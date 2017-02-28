@@ -347,7 +347,7 @@ extension ElloTabBarController {
 private extension ElloTabBarController {
 
     func shouldReloadFollowingStream() -> Bool {
-        return selectedTab.rawValue == 2 && followingDot?.isHidden == false
+        return selectedTab == .following && followingDot?.isHidden == false
     }
 
     func shouldReloadNotificationsStream() -> Bool {
