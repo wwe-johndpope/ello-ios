@@ -1710,8 +1710,6 @@
 		1DADA1681A96F4C60000DDA1 /* ColorsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsSpec.swift; sourceTree = "<group>"; };
 		1DADC5791AF449B3000DAC88 /* ElloWebBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewController.swift; sourceTree = "<group>"; };
 		1DB17B961AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartRequestBuilderSpec.swift; sourceTree = "<group>"; };
-		1DB22FF81BE7E3420016055E /* NewElloTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewElloTabBar.swift; sourceTree = "<group>"; };
-		1DB22FFA1BE7F0B60016055E /* NewElloTabBarSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewElloTabBarSpecs.swift; sourceTree = "<group>"; };
 		1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarErrorCell.swift; sourceTree = "<group>"; };
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -3131,7 +3129,6 @@
 				1289F3911AF1468B008A938C /* ImageLabelControl.swift */,
 				1D59EF841D5CFC480029C106 /* InterpolatedLoadingView.swift */,
 				1DF404091B150DB40073460B /* NarrationView.swift */,
-				1DB22FF81BE7E3420016055E /* NewElloTabBar.swift */,
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
 				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
@@ -3405,7 +3402,6 @@
 				1D22C8271AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift */,
 				1D652F5D1BC2FDCD00AF3B06 /* ElloTabBarSpec.swift */,
 				1D3DED7B1AE1C07800F1D514 /* ElloTextFieldViewSpec.swift */,
-				1DB22FFA1BE7F0B60016055E /* NewElloTabBarSpecs.swift */,
 				1DF942331A9FC92D00838E9C /* NotificationsFilterBarSpec.swift */,
 			);
 			name = Views;
