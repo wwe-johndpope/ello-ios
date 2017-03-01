@@ -121,7 +121,10 @@ private extension FollowingViewController {
 
     func addTemporaryNotificationObservers() {
         reloadStreamContentObserver = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) { [weak self] _ in
-            self?.streamViewController.loadInitialPage(reload: true)
+            guard let `self` = self else { return }
+
+            ElloHUD.showLoadingHudInView(self.streamViewController.view)
+            self.streamViewController.loadInitialPage(reload: true)
         }
     }
 
