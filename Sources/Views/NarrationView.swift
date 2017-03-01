@@ -88,7 +88,7 @@ class NarrationView: UIView {
         super.layoutSubviews()
 
         pointer.frame.size = Size.pointer
-        pointer.frame.origin.y = bounds.height - pointer.frame.height
+        pointer.frame.origin.y = bounds.height - pointer.frame.height - 2
 
         closeButton.frame.origin = CGPoint(
             x: bounds.width - Size.margins - closeButton.frame.width,

@@ -124,11 +124,13 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Reset Tab bar Tooltips") {
-            GroupDefaults[ElloTab.discover.narrationDefaultKey] = nil
-            GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
-            GroupDefaults[ElloTab.following.narrationDefaultKey] = nil
-            GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
-            GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
+            ElloTab.resetToolTips()
+            appController.closeTodoController()
+        }
+
+        addAction(name: "Reset Tooltips for 2.0") {
+            GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey] = nil
+            appController.closeTodoController()
         }
 
         addAction(name: "Crash the app") {

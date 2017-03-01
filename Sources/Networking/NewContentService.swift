@@ -52,7 +52,6 @@ extension NewContentService {
     }
 }
 
-
 private extension NewContentService {
 
     func newestDate(_ jsonables: [JSONAble]) -> Date {
