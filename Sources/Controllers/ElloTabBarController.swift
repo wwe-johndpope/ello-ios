@@ -13,6 +13,16 @@ enum ElloTab: Int {
 
 
     static let DefaultTab: ElloTab = .following
+    static let ToolTipsResetForTwoPointOhKey = "ToolTipsResetForTwoPointOhKey"
+
+    static func resetToolTips() {
+        GroupDefaults[ElloTab.following.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.discover.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
+        GroupDefaults.synchronize()
+    }
 
     var narrationDefaultKey: String {
         let defaultPrefix = "ElloTabBarControllerDidShowNarration"
@@ -61,6 +71,12 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     fileprivate var newStreamContentObserver: NotificationObserver?
 
     fileprivate var visibleViewController = UIViewController()
+
+    // due to the async nature of UserDefaults we're unable to rely
+    // on UserDefaults values set within a short time of needing to read
+    // them. As a backup we set a temp variable here.
+    fileprivate var shouldShowToolTipsTwoPointOh = false
+
     var appViewController: AppViewController? {
         return findViewController { vc in vc is AppViewController } as? AppViewController
     }
@@ -117,7 +133,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     var narrationView = NarrationView()
     var isShowingNarration = false
     var shouldShowNarration: Bool {
-        get { return !ElloTabBarController.didShowNarration(selectedTab) }
+        get { return shouldShowToolTipsTwoPointOh || !ElloTabBarController.didShowNarration(selectedTab) }
         set { ElloTabBarController.didShowNarration(selectedTab, !newValue) }
     }
 
@@ -144,8 +160,10 @@ extension ElloTabBarController {
 
 // MARK: View Lifecycle
 extension ElloTabBarController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        resetToolTipsForTwoPointOh()
         setupControllers()
         view.isOpaque = true
         view.addSubview(tabBar)
@@ -213,6 +231,7 @@ extension ElloTabBarController {
 
 // listen for system logged out event
 extension ElloTabBarController {
+
     func activateTabBar() {
         setupNotificationObservers()
         newContentService.startPolling()
@@ -269,6 +288,7 @@ extension ElloTabBarController {
 }
 
 extension ElloTabBarController {
+
     func didSetCurrentUser() {
         for controller in childViewControllers {
             guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { return }
@@ -339,12 +359,20 @@ extension ElloTabBarController: UITabBarDelegate {
 
 // MARK: Child View Controller handling
 extension ElloTabBarController {
+
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize size: CGSize) -> CGSize {
         return view.frame.size
     }
 }
 
 private extension ElloTabBarController {
+
+    func resetToolTipsForTwoPointOh() {
+        guard GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey].bool == nil else { return }
+        GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey] = true
+        ElloTab.resetToolTips()
+        shouldShowToolTipsTwoPointOh = true
+    }
 
     func shouldReloadFollowingStream() -> Bool {
         return selectedTab == .following && followingDot?.isHidden == false
