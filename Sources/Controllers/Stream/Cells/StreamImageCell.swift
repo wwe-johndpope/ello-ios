@@ -172,7 +172,7 @@ class StreamImageCell: StreamRegionableCell {
         super.layoutSubviews()
 
         if let aspectRatio = aspectRatio, let imageSize = imageSize {
-            let width = min(imageSize.width, self.frame.width)
+            let width = min(imageSize.width, self.frame.width - margin)
             let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
             if actualHeight != frame.height {
                 self.onHeightMismatch?(actualHeight)
