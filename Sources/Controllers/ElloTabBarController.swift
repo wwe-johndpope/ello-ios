@@ -24,6 +24,29 @@ enum ElloTab: Int {
         GroupDefaults.synchronize()
     }
 
+    var pointerXoffset: CGFloat {
+        switch self {
+            case .discover:      return -8
+            case .notifications: return 8
+            default: return 0
+        }
+    }
+
+    var insets: UIEdgeInsets {
+        switch self {
+            case .discover:      return UIEdgeInsets(top: 6, left: -8, bottom: -6, right: 8)
+            case .notifications: return UIEdgeInsets(top: 5, left: 8, bottom: -5, right: -8)
+            default:             return UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        }
+    }
+
+    var redDotMargins: CGPoint {
+        switch self {
+        case .notifications: return CGPoint(x: 8, y: 9)
+        default:             return CGPoint(x: 0, y: 9)
+        }
+    }
+
     var narrationDefaultKey: String {
         let defaultPrefix = "ElloTabBarControllerDidShowNarration"
         switch self {
@@ -443,8 +466,8 @@ private extension ElloTabBarController {
 extension ElloTabBarController {
 
     fileprivate func addDots() {
-        notificationsDot = tabBar.addRedDotAtIndex(3, margins: CGPoint(x: 8, y: 9))
-        followingDot = tabBar.addRedDotAtIndex(0)
+        notificationsDot = tabBar.addRedDotFor(tab: .notifications)
+        followingDot = tabBar.addRedDotFor(tab: .following)
     }
 
     fileprivate func prepareNarration() {
@@ -467,7 +490,7 @@ extension ElloTabBarController {
     fileprivate func updateNarrationTitle(_ animated: Bool = true) {
         animate(options: [.curveEaseOut, .beginFromCurrentState], animated: animated) {
             if let rect = self.tabBar.itemPositionsIn(self.narrationView).safeValue(self.selectedTab.rawValue) {
-                self.narrationView.pointerX = rect.midX
+                self.narrationView.pointerX = rect.midX + self.selectedTab.pointerXoffset
             }
         }
         narrationView.title = selectedTab.narrationTitle
