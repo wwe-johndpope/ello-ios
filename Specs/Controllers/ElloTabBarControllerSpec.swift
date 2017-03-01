@@ -145,7 +145,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                         it("posts a NewContentNotifications.reloadStreamContent"){
                             showController(subject)
                             var reloadPosted = false
-                            subject.streamsDot?.isHidden = false
+                            subject.followingDot?.isHidden = false
                             _ = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) {
                                 _ in
                                 reloadPosted = true

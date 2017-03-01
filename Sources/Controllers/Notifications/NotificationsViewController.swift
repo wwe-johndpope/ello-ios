@@ -21,7 +21,7 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
     var categoryStreamKind: StreamKind { return .notifications(category: categoryFilterType.category) }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.bolt, insets: UIEdgeInsets(top: 7, left: 8, bottom: -7, right: -8)) }
+        get { return UITabBarItem.item(.bolt, insets: UIEdgeInsets(top: 5, left: 8, bottom: -5, right: -8)) }
         set { self.tabBarItem = newValue }
     }
 
