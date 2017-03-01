@@ -13,7 +13,7 @@ class AvatarBarItem: UITabBarItem {
 
     override init() {
         super.init()
-        self.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        self.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
     }
 
     required init(coder aDecoder: NSCoder) {

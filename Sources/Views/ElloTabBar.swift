@@ -34,7 +34,7 @@ class ElloTabBar: UITabBar {
         self.shadowImage = UIImage.imageWithColor(UIColor.white)
     }
 
-    func addRedDotAtIndex(_ index: Int, margins: CGPoint = CGPoint(x: 0, y: 10)) -> UIView {
+    func addRedDotAtIndex(_ index: Int, margins: CGPoint = CGPoint(x: 0, y: 9)) -> UIView {
         let redDot: UIView
         if let entryIndex = (redDotViews.index { $0.0 == index }) {
             redDot = redDotViews[entryIndex].1
@@ -48,7 +48,7 @@ class ElloTabBar: UITabBar {
             addSubview(redDot)
         }
 
-        positionRedDot(redDot, atIndex: index)
+        positionRedDot(redDot, atIndex: index, margins: margins)
         return redDot
     }
 
@@ -61,7 +61,7 @@ class ElloTabBar: UITabBar {
         return tabBarButtons.safeValue(index)?.frame ?? .zero
     }
 
-    fileprivate func positionRedDot(_ redDot: UIView, atIndex index: Int, margins: CGPoint = CGPoint(x: 0, y: 10)) {
+    fileprivate func positionRedDot(_ redDot: UIView, atIndex index: Int, margins: CGPoint = CGPoint(x: 0, y: 9)) {
         let radius: CGFloat = 3
         let diameter = radius * 2
         let tabBarItemFrame = tabBarFrameAtIndex(index)
