@@ -21,7 +21,6 @@ enum ElloTab: Int {
         GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
         GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
         GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
-        GroupDefaults.synchronize()
     }
 
     var pointerXoffset: CGFloat {
@@ -95,11 +94,6 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
 
     fileprivate var visibleViewController = UIViewController()
 
-    // due to the async nature of UserDefaults we're unable to rely
-    // on UserDefaults values set within a short time of needing to read
-    // them. As a backup we set a temp variable here.
-    fileprivate var shouldShowToolTipsTwoPointOh = false
-
     var appViewController: AppViewController? {
         return findViewController { vc in vc is AppViewController } as? AppViewController
     }
@@ -156,7 +150,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     var narrationView = NarrationView()
     var isShowingNarration = false
     var shouldShowNarration: Bool {
-        get { return shouldShowToolTipsTwoPointOh || !ElloTabBarController.didShowNarration(selectedTab) }
+        get { return !ElloTabBarController.didShowNarration(selectedTab) }
         set { ElloTabBarController.didShowNarration(selectedTab, !newValue) }
     }
 
@@ -393,8 +387,8 @@ private extension ElloTabBarController {
     func resetToolTipsForTwoPointOh() {
         guard GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey].bool == nil else { return }
         GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey] = true
+
         ElloTab.resetToolTips()
-        shouldShowToolTipsTwoPointOh = true
     }
 
     func shouldReloadFollowingStream() -> Bool {
