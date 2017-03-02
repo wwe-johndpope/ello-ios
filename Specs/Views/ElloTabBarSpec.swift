@@ -18,15 +18,15 @@ class ElloTabBarSpec: QuickSpec {
 
             beforeEach {
                 let items = [
-                    UITabBarItem.item(.following),
-                    UITabBarItem.item(.sparkles),
-                    UITabBarItem.item(.omni),
-                    UITabBarItem.item(.bolt),
-                    UITabBarItem.item(.person),
+                    UITabBarItem.item(.following, insets: ElloTab.following.insets),
+                    UITabBarItem.item(.sparkles, insets: ElloTab.discover.insets),
+                    UITabBarItem.item(.omni, insets: ElloTab.omnibar.insets),
+                    UITabBarItem.item(.bolt, insets: ElloTab.notifications.insets),
+                    UITabBarItem.item(.person, insets: ElloTab.profile.insets),
                 ]
                 subject = ElloTabBar()
                 subject.items = items
-                redDot = subject.addRedDotAtIndex(3)
+                redDot = subject.addRedDotFor(tab: ElloTab.notifications)
                 redDot.isHidden = false
             }
 

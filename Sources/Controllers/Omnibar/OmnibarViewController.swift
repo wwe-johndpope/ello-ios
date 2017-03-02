@@ -23,7 +23,7 @@ class OmnibarViewController: BaseElloViewController {
     }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.omni) }
+        get { return UITabBarItem.item(.omni, insets: ElloTab.omnibar.insets) }
         set { self.tabBarItem = newValue }
     }
 

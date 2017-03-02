@@ -22,7 +22,7 @@ final class ProfileViewController: StreamableViewController {
             }
 
             guard let imageURL = currentUser?.avatar?.large?.url else {
-                return UITabBarItem.item(.person)
+                return UITabBarItem.item(.person, insets: ElloTab.profile.insets)
             }
             let item = AvatarBarItem()
             item.setUserAvatarURL(imageURL)
