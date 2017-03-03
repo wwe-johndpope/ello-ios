@@ -6,7 +6,7 @@ import Foundation
 import SwiftyJSON
 
 
-let AssetVersion = 1
+let AssetVersion = 2
 
 @objc(Asset)
 final class Asset: JSONAble {
@@ -21,6 +21,7 @@ final class Asset: JSONAble {
         case large
         case regular
         case small
+        case video
     }
 
     // active record
@@ -33,6 +34,7 @@ final class Asset: JSONAble {
     var hdpi: Attachment?
     var xhdpi: Attachment?
     var original: Attachment?
+    var video: Attachment?
     // optional avatar
     var largeOrBest: Attachment? {
         // we originally had this expressed via
@@ -52,7 +54,19 @@ final class Asset: JSONAble {
     var regular: Attachment?
     var small: Attachment?
     var allAttachments: [(AttachmentType, Attachment)] {
-        let possibles: [(AttachmentType, Attachment?)] = [(.optimized, optimized), (.smallScreen, smallScreen), (.ldpi, ldpi), (.mdpi, mdpi), (.hdpi, hdpi), (.xhdpi, xhdpi), (.original, original), (.large, large), (.regular, regular), (.small, small)]
+        let possibles: [(AttachmentType, Attachment?)] = [
+            (.optimized, optimized),
+            (.smallScreen, smallScreen),
+            (.ldpi, ldpi),
+            (.mdpi, mdpi),
+            (.hdpi, hdpi),
+            (.xhdpi, xhdpi),
+            (.original, original),
+            (.large, large),
+            (.regular, regular),
+            (.small, small),
+            (.video, video)
+        ]
         return possibles.flatMap() { type, attachment in
             guard  let attachment = attachment else { return nil }
             return (type, attachment)
@@ -102,6 +116,7 @@ final class Asset: JSONAble {
         self.large = attachment
         self.regular = attachment
         self.small = attachment
+        self.video = attachment
     }
 
     convenience init(url: URL, gifData: Data, posterImage: UIImage) {
@@ -152,6 +167,7 @@ final class Asset: JSONAble {
         self.hdpi = decoder.decodeOptionalKey("hdpi")
         self.xhdpi = decoder.decodeOptionalKey("xhdpi")
         self.original = decoder.decodeOptionalKey("original")
+        self.video = decoder.decodeOptionalKey("video")
         // optional avatar
         self.large = decoder.decodeOptionalKey("large")
         self.regular = decoder.decodeOptionalKey("regular")
@@ -171,6 +187,7 @@ final class Asset: JSONAble {
         coder.encodeObject(hdpi, forKey: "hdpi")
         coder.encodeObject(xhdpi, forKey: "xhdpi")
         coder.encodeObject(original, forKey: "original")
+        coder.encodeObject(video, forKey: "video")
         // optional avatar
         coder.encodeObject(large, forKey: "large")
         coder.encodeObject(regular, forKey: "regular")
@@ -209,6 +226,9 @@ final class Asset: JSONAble {
         if let original = node?["original"] as? [String: AnyObject] {
             asset.original = Attachment.fromJSON(original) as? Attachment
         }
+        if let video = node?["video"] as? [String: AnyObject] {
+            asset.video = Attachment.fromJSON(video) as? Attachment
+        }
         // optional avatar
         if let large = node?["large"] as? [String: AnyObject] {
             asset.large = Attachment.fromJSON(large) as? Attachment
@@ -226,26 +246,17 @@ final class Asset: JSONAble {
 extension Asset {
     func replace(attachmentType: AttachmentType, with attachment: Attachment?) {
         switch attachmentType {
-        case .optimized:
-            optimized = attachment
-        case .smallScreen:
-            smallScreen = attachment
-        case .ldpi:
-            ldpi = attachment
-        case .mdpi:
-            mdpi = attachment
-        case .hdpi:
-            hdpi = attachment
-        case .xhdpi:
-            xhdpi = attachment
-        case .original:
-            original = attachment
-        case .large:
-            large = attachment
-        case .regular:
-            regular = attachment
-        case .small:
-            small = attachment
+        case .optimized:    optimized = attachment
+        case .smallScreen:  smallScreen = attachment
+        case .ldpi:         ldpi = attachment
+        case .mdpi:         mdpi = attachment
+        case .hdpi:         hdpi = attachment
+        case .xhdpi:        xhdpi = attachment
+        case .original:     original = attachment
+        case .large:        large = attachment
+        case .regular:      regular = attachment
+        case .small:        small = attachment
+        case .video:        video = attachment
         }
     }
 }
