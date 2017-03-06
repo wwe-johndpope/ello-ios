@@ -714,7 +714,7 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .postView(postId, postToken, email):
             return [
-                "email": email ?? "nil",
+                "email": email,
                 "posts": postToken,
                 "id": postId,
                 "kind": "post",

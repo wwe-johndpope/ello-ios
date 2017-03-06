@@ -74,7 +74,7 @@ class ElloAPISpec: QuickSpec {
                         (.pagePromotionals, "/api/v2/page_promotionals"),
                         (.postComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),
                         (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
-                        (.postView(id: "", token: "", currentUserEmail: ""), "/api/v2/post_views"),
+                        (.postView(postId: "", postToken: "", currentUserEmail: ""), "/api/v2/post_views"),
                         (.postLovers(postId: "1"), "/api/v2/posts/1/lovers"),
                         (.postReplyAll(postId: "1"), "/api/v2/posts/1/commenters_usernames"),
                         (.postReposters(postId: "1"), "/api/v2/posts/1/reposters"),
@@ -438,15 +438,15 @@ class ElloAPISpec: QuickSpec {
 
                 describe("PostView") {
                     it("with email") {
-                        let params = ElloAPI.postView(id: "123", "token": "abcdef", currentUserEmail: "email").parameters!
+                        let params = ElloAPI.postView(postId: "123", postToken: "abcdef", currentUserEmail: "email").parameters!
                         expect(params["posts"] as? String) == "abcdef"
                         expect(params["email"] as? String) == "email"
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
                     }
                     it("anonymous") {
-                        let params = ElloAPI.postView(id: "123", "token": "abcdef", currentUserEmail: nil).parameters!
-                        expect(params["posts"] as? String) == "123"
+                        let params = ElloAPI.postView(postId: "123", postToken: "abcdef", currentUserEmail: nil).parameters!
+                        expect(params["posts"] as? String) == "abcdef"
                         expect(params["email"] as? String).to(beNil())
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
