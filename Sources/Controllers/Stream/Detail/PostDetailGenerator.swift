@@ -43,6 +43,7 @@ final class PostDetailGenerator: StreamGenerator {
             setPlaceHolders()
         }
         setInitialPost(doneOperation)
+        sendPostView(doneOperation, reload: reload)
         loadPost(doneOperation, reload: reload)
         displayCommentBar(doneOperation)
         loadPostComments(doneOperation)
@@ -74,6 +75,12 @@ private extension PostDetailGenerator {
             destination?.replacePlaceholder(type: .postHeader, items: postItems) {}
             doneOperation.run()
         }
+    }
+
+    func sendPostView(_ doneOperation: AsyncOperation, reload: Bool = false) {
+        guard let post = post, doneOperation.isFinished && !reload else { return }
+
+        PostService().sendPostView(id: post.id, token: post.token, email: currentUser?.profile?.email)
     }
 
     func loadPost(_ doneOperation: AsyncOperation, reload: Bool = false) {

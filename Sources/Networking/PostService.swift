@@ -41,6 +41,17 @@ struct PostService {
         return promise.future
     }
 
+    func sendPostView(
+        id postId: String,
+        token postToken: String,
+        email: String?)
+    {
+        ElloProvider.shared.elloRequest(
+            ElloAPI.postView(postId: postId, postToken: postToken, currentUserEmail: email),
+            success: { _ in },
+            failure: { _ in })
+    }
+
     func loadPostComments(
         _ postId: String,
         success: @escaping PostCommentsSuccessCompletion,

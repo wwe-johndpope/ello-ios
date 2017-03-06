@@ -76,6 +76,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
             return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
+        case let .postView(postId, postToken, currentUserEmail):
+            return "postView(postId: \(postId), postToken: \(postToken), currentUserEmail: \(currentUserEmail))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
         case let .postReplyAll(postId):
@@ -200,6 +202,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postComments"
         case .postDetail:
             return "postDetail"
+        case .postView:
+            return "postView"
         case .postLovers:
             return "postLovers"
         case .postReplyAll:
