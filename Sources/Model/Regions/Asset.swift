@@ -87,17 +87,17 @@ final class Asset: JSONAble {
     }
 
     var oneColumnAttachment: Attachment? {
-        return self.hdpi
+        if video != nil { return video }
+        return hdpi
     }
 
     var gridLayoutAttachment: Attachment? {
-        let isWide = Window.isWide(Window.width)
-        if isWide {
-            return self.hdpi
-        }
-        else {
-            return self.mdpi
-        }
+        if video != nil { return video }
+        return Window.isWide(Window.width) ? hdpi : mdpi
+    }
+
+    var hasVideo: Bool {
+        return video != nil
     }
 
 // MARK: Initialization

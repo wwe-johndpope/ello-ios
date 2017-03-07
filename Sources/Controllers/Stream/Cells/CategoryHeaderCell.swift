@@ -284,34 +284,36 @@ private extension CategoryHeaderCell {
             }
             return
         }
-        self.imageView.pin_setImage(from: url) { result in
-            let success = result?.image != nil || result?.animatedImage != nil
-            let isAnimated = result?.animatedImage != nil
-            if success {
-                let imageSize = isAnimated ? result?.animatedImage.size : result?.image.size
-                self.imageSize = imageSize
 
-                if result?.resultType != .memoryCache {
-                    self.imageView.alpha = 0
-                    UIView.animate(withDuration: 0.3,
-                                               delay:0.0,
-                                               options:UIViewAnimationOptions.curveLinear,
-                                               animations: {
-                                                self.imageView.alpha = 1.0
-                        }, completion: { _ in
-                            self.circle.stopPulse()
-                    })
-                }
-                else {
-                    self.imageView.alpha = 1.0
-                    self.circle.stopPulse()
-                }
+        self.imageView.pin_setImage(from: url) { [weak self] result in
+            guard let `self` = self else { return }
 
-                self.layoutIfNeeded()
+            guard result.hasImage == true else {
+                self.imageLoadFailed()
+                return
+            }
+
+            self.imageSize = result.imageSize
+
+            if result.resultType != .memoryCache {
+                self.imageView.alpha = 0
+                UIView.animate(
+                    withDuration: 0.3,
+                    delay:0.0,
+                    options:UIViewAnimationOptions.curveLinear,
+                    animations: {
+                        self.imageView.alpha = 1.0
+                    }, completion: { _ in
+                        self.circle.stopPulse()
+                })
             }
             else {
-                self.imageLoadFailed()
+                self.imageView.alpha = 1.0
+                self.circle.stopPulse()
             }
+
+            self.layoutIfNeeded()
+
         }
     }
 

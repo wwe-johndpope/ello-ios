@@ -113,16 +113,18 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     var imageURL: URL? {
         didSet {
-            self.notificationImageView.pin_setImage(from: imageURL) { result in
-                let success = result?.image != nil || result?.animatedImage != nil
-                let isAnimated = result?.animatedImage != nil
-                if success {
-                    let imageSize = isAnimated ? result?.animatedImage.size : result?.image.size
-                    self.aspectRatio = (imageSize?.width)! / (imageSize?.height)!
-                    let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
-                    if currentRatio != self.aspectRatio {
-                        self.setNeedsLayout()
-                    }
+            self.notificationImageView.pin_setImage(from: imageURL) { [weak self] result in
+                guard
+                    let `self` = self,
+                    result.hasImage
+                else { return }
+
+                if let imageSize = result.imageSize {
+                    self.aspectRatio = imageSize.width / imageSize.height
+                }
+                let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
+                if currentRatio != self.aspectRatio {
+                    self.setNeedsLayout()
                 }
             }
             self.setNeedsLayout()

@@ -125,7 +125,7 @@ struct Preloader {
 
     fileprivate func preloadUrl(_ url: URL) {
         if !url.hasGifExtension {
-            manager?.prefetchImage(with: url, options: PINRemoteImageManagerDownloadOptions())
+            manager.prefetchImage(with: url, options: PINRemoteImageManagerDownloadOptions())
         }
     }
 }

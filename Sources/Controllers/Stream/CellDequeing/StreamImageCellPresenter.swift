@@ -43,9 +43,7 @@ struct StreamImageCellPresenter {
         guard
             let cell = cell as? StreamImageCell,
             let imageRegion = streamCellItem.type.data as? ImageRegion
-        else {
-            return
-        }
+        else { return }
 
         var attachmentToLoad: Attachment?
         var imageToLoad: URL?
@@ -89,6 +87,10 @@ struct StreamImageCellPresenter {
             postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
         }
 
+        if let url = imageRegion.asset?.video?.url {
+            cell.setVideoURL(url)
+        }
+        else
         if let image = imageToShow, !showGifInThisCell {
             cell.setImage(image)
         }
