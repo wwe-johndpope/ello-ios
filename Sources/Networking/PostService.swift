@@ -15,8 +15,6 @@ typealias DeletePostSuccessCompletion = () -> Void
 
 struct PostService {
 
-    init(){}
-
     func loadPost(
         _ postParam: String,
         needsComments: Bool) -> Future<Post>
