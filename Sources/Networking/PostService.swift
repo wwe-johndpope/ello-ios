@@ -41,15 +41,26 @@ struct PostService {
         return promise.future
     }
 
-    func sendPostView(
+    func sendPostDetailView(
         id postId: String,
-        token postToken: String,
         email: String?)
     {
         ElloProvider.shared.elloRequest(
-            ElloAPI.postView(postId: postId, postToken: postToken, currentUserEmail: email),
-            success: { _ in },
-            failure: { _ in })
+            ElloAPI.postViews(streamId: postId, streamKind: "post", postIds: [postId], currentUserEmail: email),
+            success: { _ in })
+    }
+
+    func sendPostViews(
+        posts: [Post],
+        streamId: String?,
+        streamKind: String,
+        email: String?)
+    {
+        guard posts.count > 0 else { return }
+
+        ElloProvider.shared.elloRequest(
+            ElloAPI.postViews(streamId: streamId, streamKind: streamKind, postIds: posts.map { $0.id }, currentUserEmail: email),
+            success: { _ in })
     }
 
     func loadPostComments(

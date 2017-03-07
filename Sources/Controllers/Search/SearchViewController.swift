@@ -13,6 +13,9 @@ class SearchViewController: StreamableViewController {
         }
         return "Search for \(searchFor)"
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        return ("search", nil)
+    }
 
     var searchText: String?
     var isPostSearch = true
@@ -126,7 +129,7 @@ extension SearchViewController: SearchScreenDelegate {
     func trackSearch() {
         guard let text = searchText else { return }
 
-        Tracker.shared.screenAppeared(self)
+        trackScreenAppeared()
 
         if isPostSearch {
             if text.hasPrefix("#") {

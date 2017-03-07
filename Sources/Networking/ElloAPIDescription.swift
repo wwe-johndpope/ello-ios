@@ -23,6 +23,22 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return nil
         }
     }
+    var trackerStreamKind: String? {
+        switch self {
+        case .loves:
+            return "love"
+        default:
+            return nil
+        }
+    }
+    var trackerStreamId: String? {
+        switch self {
+        case let .loves(userId):
+            return userId
+        default:
+            return nil
+        }
+    }
 
     var debugDescription: String {
         switch self {
@@ -76,8 +92,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
             return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
-        case let .postView(postId, postToken, currentUserEmail):
-            return "postView(postId: \(postId), postToken: \(postToken), currentUserEmail: \(currentUserEmail))"
+        case let .postViews(streamId, streamKind, postTokens, currentUserEmail):
+            return "postViews(streamId: \(streamId), streamKind: \(streamKind), postTokens: \(postTokens), currentUserEmail: \(currentUserEmail))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
         case let .postReplyAll(postId):
@@ -202,8 +218,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postComments"
         case .postDetail:
             return "postDetail"
-        case .postView:
-            return "postView"
+        case .postViews:
+            return "postViews"
         case .postLovers:
             return "postLovers"
         case .postReplyAll:

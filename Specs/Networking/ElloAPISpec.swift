@@ -74,7 +74,7 @@ class ElloAPISpec: QuickSpec {
                         (.pagePromotionals, "/api/v2/page_promotionals"),
                         (.postComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),
                         (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
-                        (.postView(postId: "", postToken: "", currentUserEmail: ""), "/api/v2/post_views"),
+                        (.postViews(streamId: "", streamKind: "", postIds: [""], currentUserEmail: ""), "/api/v2/post_views"),
                         (.postLovers(postId: "1"), "/api/v2/posts/1/lovers"),
                         (.postReplyAll(postId: "1"), "/api/v2/posts/1/commenters_usernames"),
                         (.postReposters(postId: "1"), "/api/v2/posts/1/reposters"),
@@ -436,17 +436,31 @@ class ElloAPISpec: QuickSpec {
                     expect(params["per_page"] as? Int) == 10
                 }
 
-                describe("PostView") {
+                describe("postViews endpoint") {
                     it("with email") {
-                        let params = ElloAPI.postView(postId: "123", postToken: "abcdef", currentUserEmail: "email").parameters!
-                        expect(params["posts"] as? String) == "abcdef"
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: ["666"], currentUserEmail: "email").parameters!
+                        expect(params["post_ids"] as? String) == "666"
+                        expect(params["email"] as? String) == "email"
+                        expect(params["kind"] as? String) == "post"
+                        expect(params["id"] as? String) == "123"
+                    }
+                    it("with no streamId") {
+                        let params = ElloAPI.postViews(streamId: nil, streamKind: "post", postIds: ["666"], currentUserEmail: "email").parameters!
+                        expect(params["post_ids"] as? String) == "666"
+                        expect(params["email"] as? String) == "email"
+                        expect(params["kind"] as? String) == "post"
+                        expect(params["id"]).to(beNil())
+                    }
+                    it("with many posts") {
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: ["666", "777"], currentUserEmail: "email").parameters!
+                        expect(params["post_ids"] as? String) == "666,777"
                         expect(params["email"] as? String) == "email"
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
                     }
                     it("anonymous") {
-                        let params = ElloAPI.postView(postId: "123", postToken: "abcdef", currentUserEmail: nil).parameters!
-                        expect(params["posts"] as? String) == "abcdef"
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: ["666"], currentUserEmail: nil).parameters!
+                        expect(params["post_ids"] as? String) == "666"
                         expect(params["email"] as? String).to(beNil())
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"

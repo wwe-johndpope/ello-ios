@@ -782,7 +782,7 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
         if toState == .loading {
             if pullToRefreshEnabled {
                 if let controller = parent as? BaseElloViewController {
-                    Tracker.shared.screenAppeared(controller)
+                    controller.trackScreenAppeared()
                 }
                 self.loadInitialPage(reload: true)
             }
@@ -1176,7 +1176,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
         if jsonables.count > 0 {
             if let controller = parent as? BaseElloViewController {
-                Tracker.shared.screenAppeared(controller)
+                controller.trackScreenAppeared()
             }
 
             let items = StreamCellItemParser().parse(jsonables, streamKind: streamKind, currentUser: currentUser)

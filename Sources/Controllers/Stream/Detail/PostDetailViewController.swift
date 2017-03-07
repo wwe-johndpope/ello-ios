@@ -11,6 +11,10 @@ final class PostDetailViewController: StreamableViewController {
         }
         return ["id": postParam as AnyObject]
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        guard let streamId = post?.id else { return nil }
+        return ("post", streamId)
+    }
 
     var post: Post?
     var postParam: String
