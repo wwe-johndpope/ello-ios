@@ -74,7 +74,7 @@ class ElloAPISpec: QuickSpec {
                         (.pagePromotionals, "/api/v2/page_promotionals"),
                         (.postComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),
                         (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
-                        (.postViews(streamId: "", streamKind: "", postIds: [""], currentUserEmail: ""), "/api/v2/post_views"),
+                        (.postViews(streamId: "", streamKind: "", postIds: Set<String>(), currentUserId: ""), "/api/v2/post_views"),
                         (.postLovers(postId: "1"), "/api/v2/posts/1/lovers"),
                         (.postReplyAll(postId: "1"), "/api/v2/posts/1/commenters_usernames"),
                         (.postReposters(postId: "1"), "/api/v2/posts/1/reposters"),
@@ -438,30 +438,30 @@ class ElloAPISpec: QuickSpec {
 
                 describe("postViews endpoint") {
                     it("with email") {
-                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: ["666"], currentUserEmail: "email").parameters!
-                        expect(params["post_ids"] as? String) == "666"
-                        expect(params["email"] as? String) == "email"
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: Set(["555"]), currentUserId: "666").parameters!
+                        expect(params["post_ids"] as? String) == "555"
+                        expect(params["user_id"] as? String) == "666"
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
                     }
                     it("with no streamId") {
-                        let params = ElloAPI.postViews(streamId: nil, streamKind: "post", postIds: ["666"], currentUserEmail: "email").parameters!
-                        expect(params["post_ids"] as? String) == "666"
-                        expect(params["email"] as? String) == "email"
+                        let params = ElloAPI.postViews(streamId: nil, streamKind: "post", postIds: Set(["555"]), currentUserId: "666").parameters!
+                        expect(params["post_ids"] as? String) == "555"
+                        expect(params["user_id"] as? String) == "666"
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"]).to(beNil())
                     }
                     it("with many posts") {
-                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: ["666", "777"], currentUserEmail: "email").parameters!
-                        expect(params["post_ids"] as? String) == "666,777"
-                        expect(params["email"] as? String) == "email"
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: Set(["555", "777"]), currentUserId: "666").parameters!
+                        expect(params["post_ids"] as? String).to(satisfyAnyOf(equal("555,777"), equal("777,555")))
+                        expect(params["user_id"] as? String) == "666"
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
                     }
                     it("anonymous") {
-                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: ["666"], currentUserEmail: nil).parameters!
-                        expect(params["post_ids"] as? String) == "666"
-                        expect(params["email"] as? String).to(beNil())
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: Set(["555"]), currentUserId: nil).parameters!
+                        expect(params["post_ids"] as? String) == "555"
+                        expect(params["user_id"] as? String).to(beNil())
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
                     }

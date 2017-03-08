@@ -80,7 +80,7 @@ private extension PostDetailGenerator {
     func sendPostView(_ doneOperation: AsyncOperation, reload: Bool = false) {
         guard let post = post, doneOperation.isFinished && !reload else { return }
 
-        PostService().sendPostDetailView(id: post.id, email: currentUser?.profile?.email)
+        PostService().sendPostDetailView(id: post.id, userId: currentUser?.id)
     }
 
     func loadPost(_ doneOperation: AsyncOperation, reload: Bool = false) {

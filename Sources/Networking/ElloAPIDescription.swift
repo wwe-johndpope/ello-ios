@@ -92,8 +92,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
             return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
-        case let .postViews(streamId, streamKind, postTokens, currentUserEmail):
-            return "postViews(streamId: \(streamId), streamKind: \(streamKind), postTokens: \(postTokens), currentUserEmail: \(currentUserEmail))"
+        case let .postViews(streamId, streamKind, postTokens, currentUserId):
+            return "postViews(streamId: \(streamId), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(currentUserId))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
         case let .postReplyAll(postId):

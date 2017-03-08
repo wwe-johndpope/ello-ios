@@ -41,10 +41,10 @@ struct PostService {
 
     func sendPostDetailView(
         id postId: String,
-        email: String?)
+        userId: String?)
     {
         ElloProvider.shared.elloRequest(
-            ElloAPI.postViews(streamId: postId, streamKind: "post", postIds: [postId], currentUserEmail: email),
+            ElloAPI.postViews(streamId: postId, streamKind: "post", postIds: [postId], currentUserId: userId),
             success: { _ in })
     }
 
@@ -52,12 +52,13 @@ struct PostService {
         posts: [Post],
         streamId: String?,
         streamKind: String,
-        email: String?)
+        userId: String?)
     {
         guard posts.count > 0 else { return }
 
+        let postIds = Set(posts.map { $0.id })
         ElloProvider.shared.elloRequest(
-            ElloAPI.postViews(streamId: streamId, streamKind: streamKind, postIds: posts.map { $0.id }, currentUserEmail: email),
+            ElloAPI.postViews(streamId: streamId, streamKind: streamKind, postIds: postIds, currentUserId: userId),
             success: { _ in })
     }
 

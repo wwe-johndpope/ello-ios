@@ -56,7 +56,7 @@ enum ElloAPI {
     case pagePromotionals
     case postComments(postId: String)
     case postDetail(postParam: String, commentCount: Int)
-    case postViews(streamId: String?, streamKind: String, postIds: [String], currentUserEmail: String?)
+    case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
     case postReposters(postId: String)
@@ -712,16 +712,16 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "comment_count": commentCount as AnyObject
             ]
-        case let .postViews(streamId, streamKind, postIds, email):
+        case let .postViews(streamId, streamKind, postIds, userId):
             let streamIdDict: [String: String] = streamId.map { streamId in return ["id": streamId]} ?? [:]
-            let emailDict: [String: String] = email.map { email in return ["email": email]} ?? [:]
+            let userIdDict: [String: String] = userId.map { userId in return ["user_id": userId]} ?? [:]
             return [
                 "post_ids": postIds.reduce("") { memo, id in
                     if memo == "" { return id }
-                    else { return ",\(id)" }
+                    else { return "\(memo),\(id)" }
                 },
                 "kind": streamKind,
-            ] + streamIdDict + emailDict
+            ] + streamIdDict + userIdDict
         case .currentUserStream:
             return [
                 "post_count": 10 as AnyObject

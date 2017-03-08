@@ -91,7 +91,7 @@ class StreamableViewController: BaseElloViewController {
         let posts = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem in
             return streamCellItem.jsonable as? Post
         }
-        PostService().sendPostViews(posts: posts, streamId: streamId, streamKind: streamKind, email: currentUser?.profile?.email)
+        PostService().sendPostViews(posts: posts, streamId: streamId, streamKind: streamKind, userId: currentUser?.id)
     }
 
     fileprivate func willPresentStreamable(_ navBarsVisible: Bool) {
