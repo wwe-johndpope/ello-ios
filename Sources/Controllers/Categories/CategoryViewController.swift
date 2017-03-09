@@ -8,8 +8,15 @@ final class CategoryViewController: StreamableViewController {
         return ["category": slug as AnyObject]
     }
     override func trackerStreamInfo() -> (String, String?)? {
-        guard let streamId = category?.id else { return nil }
-        return ("category", streamId)
+        if let streamId = category?.id {
+            return ("category", streamId)
+        }
+        else if DiscoverType.fromURL(slug) != nil {
+            return (slug, nil)
+        }
+        else {
+            return nil
+        }
     }
 
     var mockScreen: CategoryScreenProtocol?

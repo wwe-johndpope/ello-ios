@@ -742,6 +742,9 @@ extension StreamViewController: GridListToggleDelegate {
 
         self.appendUnsizedCellItems(items) { indexPaths in
             animate {
+                if let streamableViewController = self.parent as? StreamableViewController {
+                    streamableViewController.trackScreenAppeared()
+                }
                 self.collectionView.alpha = 1
             }
         }
