@@ -50,8 +50,8 @@ class Tracker {
     }
 
     init() {
-        let configuration = SEGAnalyticsConfiguration(writeKey: ElloKeys().segmentKey())
-         SEGAnalytics.setup(with: configuration)
+        let configuration = SEGAnalyticsConfiguration(writeKey: APIKeys.shared.segmentKey)
+        SEGAnalytics.setup(with: configuration)
 
         settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { user in
             self.shouldTrackUser = user.profile?.allowsAnalytics ?? true
