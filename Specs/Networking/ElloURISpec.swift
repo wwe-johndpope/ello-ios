@@ -29,7 +29,8 @@ class ElloURISpec: QuickSpec {
                 it("can be constructed with ello.co and https") {
                     let testingKeys = APIKeys(
                         key: "", secret: "", segmentKey: "",
-                        domain: "https://ello.co"
+                        httpProtocol: "https",
+                        domain: "ello.co"
                         )
                     APIKeys.shared = testingKeys
                     expect(ElloURI.baseURL).to(equal("https://ello.co"))
@@ -78,7 +79,8 @@ class ElloURISpec: QuickSpec {
                 beforeEach {
                     let testingKeys = APIKeys(
                         key: "", secret: "", segmentKey: "",
-                        domain: "https://ello-staging.herokuapp.com"
+                        httpProtocol: "https",
+                        domain: "ello-staging.herokuapp.com"
                         )
                     APIKeys.shared = testingKeys
                 }
