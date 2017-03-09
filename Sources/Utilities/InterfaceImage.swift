@@ -45,9 +45,9 @@ enum InterfaceImage: String {
     // TabBar Icons
     case sparkles = "sparkles"
     case bolt = "bolt"
-    case omni = "omni"
+    case omni = "create_post"
     case person = "person"
-    case circBig = "circbig"
+    case following = "following"
     case narrationPointer = "narration_pointer"
 
     // Validation States
@@ -74,10 +74,6 @@ enum InterfaceImage: String {
     case replyAll = "replyall"
     case bubbleBody = "bubble_body"
     case bubbleTail = "bubble_tail"
-
-    // Relationship
-    case whiteStar = "white_star"
-    case blackStar = "black_star"
 
     // Hire me mail button
     case mail = "mail"
@@ -117,7 +113,7 @@ enum InterfaceImage: String {
     }
 
     fileprivate func svgNamed(_ name: String) -> UIImage {
-        return SVGKImage(named: "\(name).svg").uiImage
+        return SVGKImage(named: "\(name).svg").uiImage.withRenderingMode(.alwaysOriginal)
     }
 
     var normalImage: UIImage! {

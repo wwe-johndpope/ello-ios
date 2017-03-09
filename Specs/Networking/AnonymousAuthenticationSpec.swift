@@ -51,7 +51,7 @@ class AnonymousAuthenticationSpec: QuickSpec {
 
                 var succeeded = false
                 var failed = false
-                ElloProvider.shared.elloRequest(.friendStream, success: { _ in
+                ElloProvider.shared.elloRequest(.following, success: { _ in
                     succeeded = true
                 }, failure: { _ in
                     failed = true

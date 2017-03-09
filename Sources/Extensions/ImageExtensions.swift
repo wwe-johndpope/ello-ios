@@ -68,7 +68,7 @@ extension UIImage {
         return nil
     }
 
-    func resizeToSize(_ targetSize: CGSize) -> UIImage? {
+    func resizeToSize(_ targetSize: CGSize, padding: CGFloat = 0) -> UIImage? {
         let newSize = self.size.scaledSize(targetSize)
 
         // This is the rect that we've calculated out and this is what is actually used below
@@ -76,23 +76,42 @@ extension UIImage {
 
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
-        self.draw(in: rect)
+        self.draw(in: rect.insetBy(dx: padding, dy: padding))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
         return newImage
     }
 
-    func roundCorners() -> UIImage? {
+    func roundCorners(padding: CGFloat = 0) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         let rect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
-        UIBezierPath(roundedRect: rect, cornerRadius: size.width / 2.0).addClip()
+        let rectWithPadding = rect.insetBy(dx: padding, dy: padding)
+        UIBezierPath(roundedRect: rectWithPadding, cornerRadius: size.width - padding * 2 / 2.0).addClip()
         self.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
     }
 
+    func circleOutline(color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        self.draw(in: rect)
+        let ctx = UIGraphicsGetCurrentContext()
+        ctx?.saveGState()
+        ctx?.setStrokeColor(UIColor.white.cgColor)
+        ctx?.setLineWidth(3)
+        ctx?.strokeEllipse(in: rect.insetBy(dx: 1, dy: 1))
+
+        ctx?.setStrokeColor(color.cgColor)
+        ctx?.setLineWidth(1)
+        ctx?.strokeEllipse(in: rect.insetBy(dx: 1, dy: 1))
+        ctx?.restoreGState()
+        let img = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return img
+    }
     func copyWithCorrectOrientationAndSize(_ completion:@escaping (_ image: UIImage?) -> Void) {
         inBackground {
             var sourceImage: UIImage?

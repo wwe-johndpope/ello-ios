@@ -157,7 +157,7 @@ extension ElloWebBrowserViewController : WebLinkResponder {
              .following,
              .noise,
              .starred:
-            self.selectTab(.stream)
+            self.selectTab(.following)
         case .notifications: self.selectTab(.notifications)
         case .post,
              .pushNotificationPost,

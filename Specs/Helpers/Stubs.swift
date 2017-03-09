@@ -31,9 +31,8 @@ protocol Stubbable: NSObjectProtocol {
 extension User: Stubbable {
     class func stub(_ values: [String: Any]) -> User {
         let relationshipPriority: RelationshipPriority
-        if let priorityName = values["relationshipPriority"] as? String,
-            let priority = RelationshipPriority(rawValue: priorityName) {
-            relationshipPriority = priority
+        if let priorityName = values["relationshipPriority"] as? String {
+            relationshipPriority = RelationshipPriority(stringValue: priorityName)
         }
         else {
             relationshipPriority = RelationshipPriority.none

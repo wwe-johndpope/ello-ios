@@ -30,22 +30,22 @@ class AvatarButton: UIButton {
         imageURL = url
         setDefaultImage()
 
-        if let url = url {
-            pin_setImage(from: url) { result in
-                if result?.image != nil {
-                    if result?.resultType != .memoryCache {
-                        self.alpha = 0
-                        UIView.animate(withDuration: 0.3,
-                            delay:0.0,
-                            options:UIViewAnimationOptions.curveLinear,
-                            animations: {
-                                self.alpha = 1.0
-                            }, completion: nil)
-                    }
-                    else {
+        guard let url = url else { return }
+
+        pin_setImage(from: url) { result in
+            guard result?.image != nil else { return }
+
+            if result?.resultType != .memoryCache {
+                self.alpha = 0
+                UIView.animate(withDuration: 0.3,
+                    delay:0.0,
+                    options:UIViewAnimationOptions.curveLinear,
+                    animations: {
                         self.alpha = 1.0
-                    }
-                }
+                    }, completion: nil)
+            }
+            else {
+                self.alpha = 1.0
             }
         }
     }

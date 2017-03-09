@@ -9,7 +9,7 @@ class DiscoverAllCategoriesViewController: StreamableViewController {
     }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.sparkles, insets: UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)) }
+        get { return UITabBarItem.item(.sparkles, insets: ElloTab.discover.insets) }
         set { self.tabBarItem = newValue }
     }
 

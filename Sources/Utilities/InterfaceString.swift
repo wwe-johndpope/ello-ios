@@ -12,17 +12,17 @@ struct InterfaceString {
         struct PopupTitle {
             static let Discover: String = NSLocalizedString("Discover", comment: "Discover pop up title")
             static let Notifications: String = NSLocalizedString("Notifications", comment: "Notifications pop up title")
-            static let Stream: String = NSLocalizedString("Streams", comment: "Stream pop up title")
+            static let Following: String = NSLocalizedString("Following", comment: "Stream pop up title")
             static let Profile: String = NSLocalizedString("Your Profile", comment: "Profile pop up title")
-            static let Omnibar: String = NSLocalizedString("Post (Omnibar)", comment: "Omnibar pop up title")
+            static let Omnibar: String = NSLocalizedString("Post", comment: "Omnibar pop up title")
         }
 
         struct PopupText {
-            static let Discover: String = NSLocalizedString("Explore creators, curated categories & communities.", comment: "Discover pop up text")
-            static let Notifications: String = NSLocalizedString("Keep it fresh with real-time alerts.", comment: "Notifications pop up text")
-            static let Stream: String = NSLocalizedString("Two streams: Following & Starred.\nUse them however you like.", comment: "Stream pop up text")
-            static let Profile: String = NSLocalizedString("Everything you create in one place.\nSettings too.", comment: "Profile pop up text")
-            static let Omnibar: String = NSLocalizedString("Share text, links, images, GIFs and more.", comment: "Omnibar pop up text")
+            static let Discover: String = NSLocalizedString("What's next in art, design, fashion, web culture & more.", comment: "Discover pop up text")
+            static let Notifications: String = NSLocalizedString("Stay hyped with real-time alerts.", comment: "Notifications pop up text")
+            static let Following: String = NSLocalizedString("Follow the people, work & ideas that you think are most rad.", comment: "Stream pop up text")
+            static let Profile: String = NSLocalizedString("Your deets & posts in one place. All your settings too.", comment: "Profile pop up text")
+            static let Omnibar: String = NSLocalizedString("Publish images, GIFs, text, links and more.", comment: "Omnibar pop up text")
         }
     }
 
@@ -44,10 +44,6 @@ struct InterfaceString {
 
     struct FollowingStream {
         static let Title: String = NSLocalizedString("Following", comment: "Following title")
-    }
-
-    struct StarredStream {
-        static let Title: String = NSLocalizedString("Starred", comment: "Starred title")
     }
 
     struct Notifications {
@@ -193,7 +189,6 @@ struct InterfaceString {
     struct Relationship {
         static let Follow: String = NSLocalizedString("Follow", comment: "Follow relationship")
         static let Following: String = NSLocalizedString("Following", comment: "Following relationship")
-        static let Starred: String = NSLocalizedString("Starred", comment: "Starred relationship")
         static let Muted: String = NSLocalizedString("Muted", comment: "Muted relationship")
         static let Blocked: String = NSLocalizedString("Blocked", comment: "Blocked relationship")
 

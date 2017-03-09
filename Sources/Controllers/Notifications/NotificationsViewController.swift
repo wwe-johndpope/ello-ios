@@ -21,7 +21,7 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
     var categoryStreamKind: StreamKind { return .notifications(category: categoryFilterType.category) }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.bolt) }
+        get { return UITabBarItem.item(.bolt, insets: ElloTab.notifications.insets) }
         set { self.tabBarItem = newValue }
     }
 
@@ -68,8 +68,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
         screen.delegate = self
         title = InterfaceString.Notifications.Title
         elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
-
-        scrollLogic.navBarHeight = 44
 
         initialLoad()
     }

@@ -7,6 +7,7 @@ import FLAnimatedImage
 import Crashlytics
 import SwiftyUserDefaults
 import DeltaCalculator
+import SnapKit
 
 
 // MARK: Responder Implementations
@@ -106,9 +107,9 @@ class NoResultsMessages: NSObject {
 final class StreamViewController: BaseElloViewController {
     override func trackerName() -> String? { return nil }
 
-    @IBOutlet weak var collectionView: ElloCollectionView!
-    @IBOutlet weak var noResultsLabel: UILabel!
-    @IBOutlet weak var noResultsTopConstraint: NSLayoutConstraint!
+    let collectionView = ElloCollectionView(frame: .zero, collectionViewLayout: StreamCollectionViewLayout())
+    let noResultsLabel = UILabel()
+    var noResultsTopConstraint: NSLayoutConstraint!
     fileprivate let defaultNoResultsTopConstant: CGFloat = 113
 
     var currentJSONables = [JSONAble]()
@@ -197,9 +198,8 @@ final class StreamViewController: BaseElloViewController {
 
     func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
         let delta = dataSource.updateFilter(filter)
-        let collectionView = self.collectionView
-        collectionView?.performBatchUpdates({
-            delta.applyUpdatesToCollectionView(collectionView!, inSection: 0)
+        collectionView.performBatchUpdates({
+            delta.applyUpdatesToCollectionView(self.collectionView, inSection: 0)
         }, completion: nil)
     }
 
@@ -215,7 +215,7 @@ final class StreamViewController: BaseElloViewController {
         }
     }
     var columnCount: Int {
-        guard let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout else {
+        guard let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout else {
             return 1
         }
         return layout.columnCount
@@ -225,9 +225,13 @@ final class StreamViewController: BaseElloViewController {
         didSet { pullToRefreshView?.isHidden = !pullToRefreshEnabled }
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    required init() {
+        super.init(nibName: nil, bundle: nil)
         initialSetup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func didSetCurrentUser() {
@@ -260,13 +264,26 @@ final class StreamViewController: BaseElloViewController {
         addNotificationObservers()
     }
 
+    override func loadView() {
+        super.loadView()
+        view.addSubview(collectionView)
+        view.addSubview(noResultsLabel)
+
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view)
+        }
+
+        noResultsLabel.snp.makeConstraints { make in
+            let c = make.top.equalTo(self.view).constraint
+            self.noResultsTopConstraint = c.layoutConstraints.first!
+            make.leading.trailing.equalTo(self.view).inset(15)
+        }
+        view.layoutIfNeeded()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Crashlytics.sharedInstance().setObjectValue(streamKind.name, forKey: CrashlyticsKey.streamName.rawValue)
-    }
-
-    class func instantiateFromStoryboard() -> StreamViewController {
-        return UIStoryboard.storyboardWithId(.stream) as! StreamViewController
     }
 
 // MARK: Public Functions
@@ -418,7 +435,7 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate func updateNoResultsLabel() {
-        let shouldShowNoResults = noResultsLabel != nil && dataSource.visibleCellItems.count == 0
+        let shouldShowNoResults = dataSource.visibleCellItems.count == 0
         if shouldShowNoResults {
             delay(0.666) {
                 self.showNoResults()
@@ -635,6 +652,7 @@ final class StreamViewController: BaseElloViewController {
         collectionView.keyboardDismissMode = .onDrag
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = true
+        collectionView.backgroundColor = .clear
 
         StreamCellType.registerAll(collectionView)
         setupCollectionViewLayout()
@@ -642,7 +660,7 @@ final class StreamViewController: BaseElloViewController {
 
     // this gets reset whenever the streamKind changes
     fileprivate func setupCollectionViewLayout() {
-        guard let layout = collectionView?.collectionViewLayout as? StreamCollectionViewLayout else { return }
+        guard let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout else { return }
         layout.columnCount = streamKind.columnCountFor(width: view.frame.width)
         layout.sectionInset = UIEdgeInsets.zero
         layout.minimumColumnSpacing = streamKind.columnSpacing

@@ -50,8 +50,7 @@ class StreamDataSourceSpec: QuickSpec {
                 let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
 
                 StreamKind.following.setIsGridView(true)
-                StreamKind.starred.setIsGridView(false)
-                vc = StreamViewController.instantiateFromStoryboard()
+                vc = StreamViewController()
                 vc.streamKind = StreamKind.following
                 subject = StreamDataSource(streamKind: .following,
                                            textSizeCalculator: textSizeCalculator,
@@ -236,20 +235,6 @@ class StreamDataSourceSpec: QuickSpec {
                         }
                     }
 
-                    context("Starred stream") {
-                        beforeEach {
-                            let cellItems = StreamCellItemParser().parse(posts, streamKind: .starred)
-                            subject.appendUnsizedCellItems(cellItems, withWidth: webWidth) { cellCount in
-                                vc.collectionView.reloadData()
-                            }
-                        }
-
-                        it("returns the correct number of rows") {
-                            // there should be 10 reposts
-                            // 10 * 7(number of cells for a repost w/ 2 regions) = 70
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 70
-                        }
-                    }
                 }
 
 
@@ -269,7 +254,7 @@ class StreamDataSourceSpec: QuickSpec {
                                 ])
                             )
                         }
-                        let cellItems = StreamCellItemParser().parse(posts, streamKind: .starred)
+                        let cellItems = StreamCellItemParser().parse(posts, streamKind: .following)
                         subject.appendUnsizedCellItems(cellItems, withWidth: webWidth) { cellCount in
                             vc.collectionView.reloadData()
                         }
@@ -658,7 +643,6 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .discover(type: .featured)),
                     (nil, .category(slug: "art")),
                     (zero, .following),
-                    (nil, .starred),
                     (nil, .simpleStream(endpoint: ElloAPI.loves(userId: "12345"), title: "NA")),
                     (nil, .notifications(category: "")),
                     (nil, .postDetail(postParam: "param")),
@@ -691,7 +675,6 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .discover(type: .featured)),
                     (nil, .category(slug: "art")),
                     (nil, .following),
-                    (nil, .starred),
                     (one, .simpleStream(endpoint: ElloAPI.loves(userId: "12345"), title: "NA")),
                     (nil, .notifications(category: "")),
                     (nil, .postDetail(postParam: "param")),
@@ -848,19 +831,6 @@ class StreamDataSourceSpec: QuickSpec {
                             }
                         }
 
-                        context("StreamKind.starred") {
-
-                            it("does not insert a post") {
-                                subject.streamKind = .starred
-
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-
-                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, collectionView: fakeCollectionView)
-
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-                            }
-                        }
-
                         context("StreamKind.loves") {
 
                             it("adds the newly loved post") {
@@ -964,7 +934,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                     context("blocked user is the post author") {
                         it("removes blocked user, their post and all comments on that post") {
-                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
                             subject.modifyUserRelationshipItems(User.stub(["id": "user1", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 0
@@ -973,7 +943,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                     context("blocked user is not the post author") {
                         it("removes blocked user's comments") {
-                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                            stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
                             subject.modifyUserRelationshipItems(User.stub(["id": "user2", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
                             expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 7
@@ -981,7 +951,7 @@ class StreamDataSourceSpec: QuickSpec {
                     }
 
                     it("does not remove cells tied to other users") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
                         subject.modifyUserRelationshipItems(User.stub(["id": "unrelated-user", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
                         expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
@@ -992,7 +962,7 @@ class StreamDataSourceSpec: QuickSpec {
                 describe("friending/noising/inactivating a user") {
 
                     it("updates posts from that user") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         var user1 = subject.userForIndexPath(indexPath0)!
                         expect(user1.followersCount) == "stub-user-followers-count"
                         expect(user1.relationshipPriority.rawValue) == RelationshipPriority.none.rawValue
@@ -1000,15 +970,6 @@ class StreamDataSourceSpec: QuickSpec {
                         user1 = subject.userForIndexPath(indexPath0)!
                         expect(user1.followersCount) == "2"
                         expect(user1.relationshipPriority.rawValue) == RelationshipPriority.following.rawValue
-                    }
-
-                    it("shows the star on the avatarButton") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
-                        subject.modifyUserRelationshipItems(User.stub(["id": "user1", "followersCount": "2", "followingCount": 2, "relationshipPriority": RelationshipPriority.starred.rawValue]), collectionView: fakeCollectionView)
-                        let indexPath = IndexPath(item: 1, section: 0)
-                        let headerCellItem = subject.visibleStreamCellItem(at: indexPath)!
-                        let post = headerCellItem.jsonable as? Post
-                        expect(post?.author?.relationshipPriority) == .starred
                     }
 
                     xit("updates comments from that user") {
@@ -1063,7 +1024,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                 context("modifies a user when it is the currentUser") {
                     it("removes blocked user, their post and all comments on that post") {
-                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.friendStream, title: "some title"))
+                        stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         expect(subject.userForIndexPath(indexPath0)!.username) == "sweet"
                         subject.modifyUserSettingsItems(User.stub(["id": "user1", "username": "sweetness"]), collectionView: fakeCollectionView)
                         expect(subject.userForIndexPath(indexPath0)!.username) == "sweetness"

@@ -201,7 +201,12 @@ extension AppViewController {
         loggedOutController.addChildViewController(childNavController)
         childNavController.didMove(toParentViewController: loggedOutController)
 
-        swapViewController(parentNavController) {}
+        swapViewController(parentNavController) {
+            if let deepLinkPath = self.deepLinkPath {
+                self.navigateToDeepLink(deepLinkPath)
+                self.deepLinkPath = .none
+            }
+        }
     }
 
     func showJoinScreen(invitationCode: String? = nil) {
@@ -252,7 +257,7 @@ extension AppViewController {
     func showMainScreen(_ user: User) {
         Tracker.shared.identify(user: user)
 
-        let vc = ElloTabBarController.instantiateFromStoryboard()
+        let vc = ElloTabBarController()
         ElloWebBrowserViewController.elloTabBarController = vc
         vc.currentUser = user
 
@@ -457,7 +462,7 @@ extension AppViewController {
             return
         }
 
-        guard !stillLoggingIn() else {
+        guard !stillLoggingIn() && !stillSettingUpLoggedOut() else {
             self.deepLinkPath = path
             return
         }
@@ -501,7 +506,7 @@ extension AppViewController {
              .following,
              .noise,
              .starred:
-            showStreamContainerScreen(type: type)
+            showFollowingScreen()
         case .notifications:
             showNotificationsScreen(category: data)
         case .onboarding:
@@ -541,6 +546,15 @@ extension AppViewController {
     fileprivate func stillLoggingIn() -> Bool {
         let authToken = AuthToken()
         return !isLoggedIn() && authToken.isPasswordBased
+    }
+
+    fileprivate func stillSettingUpLoggedOut() -> Bool {
+        let authToken = AuthToken()
+        let isLoggedOut = !isLoggedIn() && authToken.isAnonymous
+        let nav = self.visibleViewController as? UINavigationController
+        let loggedOutVC = nav?.viewControllers.first as? LoggedOutViewController
+        let childNav = loggedOutVC?.childViewControllers.first as? UINavigationController
+        return childNav == nil && isLoggedOut
     }
 
     fileprivate func presentLoginOrSafariAlert(_ path: String) {
@@ -617,25 +631,19 @@ extension AppViewController {
     }
 
 
-    fileprivate func showStreamContainerScreen(type: ElloURI) {
+    fileprivate func showFollowingScreen() {
         guard
             let vc = self.visibleViewController as? ElloTabBarController
         else { return }
 
-        vc.selectedTab = .stream
+        vc.selectedTab = .following
 
         guard
             let navVC = vc.selectedViewController as? ElloNavigationController,
-            let streamVC = navVC.visibleViewController as? StreamContainerViewController
+            let streamVC = navVC.visibleViewController as? FollowingViewController
         else { return }
 
         streamVC.currentUser = currentUser
-
-        switch type {
-        case .noise, .starred: streamVC.showNoise()
-        case .friends, .following: streamVC.showFriends()
-        default: break
-        }
     }
 
     fileprivate func showNotificationsScreen(category: String) {

@@ -14,9 +14,22 @@ final class ProfileViewController: StreamableViewController {
         return nil
     }
 
+    var _tabBarItem: UITabBarItem?
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.person) }
-        set { self.tabBarItem = newValue }
+        get {
+            if _tabBarItem != nil {
+                return _tabBarItem
+            }
+
+            guard let imageURL = currentUser?.avatar?.large?.url else {
+                return UITabBarItem.item(.person, insets: ElloTab.profile.insets)
+            }
+            let item = AvatarBarItem()
+            item.setUserAvatarURL(imageURL)
+            _tabBarItem = item
+            return _tabBarItem
+        }
+        set { _tabBarItem = newValue }
     }
 
     var _mockScreen: ProfileScreenProtocol?
@@ -70,8 +83,8 @@ final class ProfileViewController: StreamableViewController {
         super.init(nibName: nil, bundle: nil)
 
         sharedInit()
-        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [unowned self] _ in
-            self.updateCachedImages()
+        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] _ in
+            self?.updateCachedImages()
         }
     }
 
@@ -335,11 +348,16 @@ extension ProfileViewController {
     }
 
     func updateCachedImages() {
-        guard let cachedImage = cachedImage(.coverImage) else {
-            return
+        if
+            let cachedAvatar = cachedImage(.avatar),
+            let item = tabBarItem as? AvatarBarItem
+        {
+            item.setUserAvatar(cachedAvatar)
         }
 
-        screen.coverImage = cachedImage
+        if let cachedCoverImage = cachedImage(.coverImage) {
+            screen.coverImage = cachedCoverImage
+        }
     }
 
     func updateUser(_ user: User) {

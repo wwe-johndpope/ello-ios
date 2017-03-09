@@ -176,7 +176,6 @@ class PreloaderSpec: QuickSpec {
             }
 
             it("loads hpdi for grid layout StreamKinds") {
-                StreamKind.starred.setIsGridView(true)
                 subject.preloadImages([imagePostWithSummary])
 
                 // grab the second image, first is the avatar of post's author

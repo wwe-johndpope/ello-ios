@@ -7,7 +7,7 @@ class ElloTabBar: UITabBar {
         static let height = CGFloat(49)
     }
 
-    fileprivate var redDotViews = [(Int, UIView)]()
+    fileprivate var redDotViews = [(ElloTab, UIView)]()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -34,21 +34,21 @@ class ElloTabBar: UITabBar {
         self.shadowImage = UIImage.imageWithColor(UIColor.white)
     }
 
-    func addRedDotAtIndex(_ index: Int) -> UIView {
+    func addRedDotFor(tab: ElloTab) -> UIView {
         let redDot: UIView
-        if let entryIndex = (redDotViews.index { $0.0 == index }) {
+        if let entryIndex = (redDotViews.index { $0.0 == tab }) {
             redDot = redDotViews[entryIndex].1
         }
         else {
             redDot = UIView()
             redDot.backgroundColor = UIColor.red
             redDot.isHidden = true
-            let redDotEntry = (index, redDot)
+            let redDotEntry = (tab, redDot)
             redDotViews.append(redDotEntry)
             addSubview(redDot)
         }
 
-        positionRedDot(redDot, atIndex: index)
+        positionRedDot(redDot, forTab: tab)
         return redDot
     }
 
@@ -61,15 +61,14 @@ class ElloTabBar: UITabBar {
         return tabBarButtons.safeValue(index)?.frame ?? .zero
     }
 
-    fileprivate func positionRedDot(_ redDot: UIView, atIndex index: Int) {
+    fileprivate func positionRedDot(_ redDot: UIView, forTab tab: ElloTab) {
         let radius: CGFloat = 3
         let diameter = radius * 2
-        let margins = CGPoint(x: 0, y: 10)
-        let tabBarItemFrame = tabBarFrameAtIndex(index)
-        let item = items?[index]
+        let tabBarItemFrame = tabBarFrameAtIndex(tab.rawValue)
+        let item = items?[tab.rawValue]
         let imageHalfWidth: CGFloat = (item?.selectedImage?.size.width ?? 0) / 2
-        let x = tabBarItemFrame.midX + imageHalfWidth + margins.x
-        let frame = CGRect(x: x, y: margins.y, width: diameter, height: diameter)
+        let x = tabBarItemFrame.midX + imageHalfWidth + tab.redDotMargins.x
+        let frame = CGRect(x: x, y: tab.redDotMargins.y, width: diameter, height: diameter)
 
         redDot.layer.cornerRadius = radius
         redDot.frame = frame
@@ -77,8 +76,8 @@ class ElloTabBar: UITabBar {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        for (index, redDot) in redDotViews {
-            positionRedDot(redDot, atIndex: index)
+        for (tab, redDot) in redDotViews {
+            positionRedDot(redDot, forTab: tab)
         }
     }
 

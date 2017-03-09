@@ -23,7 +23,7 @@ class OmnibarViewController: BaseElloViewController {
     }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.omni) }
+        get { return UITabBarItem.item(.omni, insets: ElloTab.omnibar.insets) }
         set { self.tabBarItem = newValue }
     }
 
@@ -94,18 +94,6 @@ class OmnibarViewController: BaseElloViewController {
     convenience init(defaultText: String?) {
         self.init(nibName: nil, bundle: nil)
         self.defaultText = defaultText
-    }
-
-    override func didSetCurrentUser() {
-        super.didSetCurrentUser()
-        if isViewLoaded {
-            if let cachedImage = TemporaryCache.load(.avatar) {
-                screen.avatarImage = cachedImage
-            }
-            else {
-                screen.avatarURL = currentUser?.avatarURL()
-            }
-        }
     }
 
     func onCommentSuccess(_ listener: @escaping CommentSuccessListener) {
@@ -181,13 +169,6 @@ class OmnibarViewController: BaseElloViewController {
 
         if let previousTab = elloTabBarController?.previousTab {
             self.previousTab = previousTab
-        }
-
-        if let cachedImage = TemporaryCache.load(.avatar) {
-            screen.avatarImage = cachedImage
-        }
-        else {
-            screen.avatarURL = currentUser?.avatarURL()
         }
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)

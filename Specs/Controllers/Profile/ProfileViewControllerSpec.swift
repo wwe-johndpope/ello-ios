@@ -22,7 +22,7 @@ class ProfileViewControllerSpec: QuickSpec {
                     showController(subject)
                 }
 
-                it("does updates the top inset") {
+                it("does update the top inset") {
                     expect(subject.streamViewController.contentInset.top) == 64
                 }
             }

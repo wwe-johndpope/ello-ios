@@ -5,42 +5,75 @@
 import SwiftyUserDefaults
 
 enum ElloTab: Int {
+    case following
     case discover
-    case notifications
-    case stream
-    case profile
     case omnibar
+    case notifications
+    case profile
 
-    static let DefaultTab = ElloTab.stream
+
+    static let DefaultTab: ElloTab = .following
+    static let ToolTipsResetForTwoPointOhKey = "ToolTipsResetForTwoPointOhKey"
+
+    static func resetToolTips() {
+        GroupDefaults[ElloTab.following.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.discover.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.omnibar.narrationDefaultKey] = nil
+    }
+
+    var pointerXoffset: CGFloat {
+        switch self {
+            case .discover:      return -8
+            case .notifications: return 8
+            default: return 0
+        }
+    }
+
+    var insets: UIEdgeInsets {
+        switch self {
+            case .discover:      return UIEdgeInsets(top: 6, left: -8, bottom: -6, right: 8)
+            case .notifications: return UIEdgeInsets(top: 5, left: 8, bottom: -5, right: -8)
+            default:             return UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        }
+    }
+
+    var redDotMargins: CGPoint {
+        switch self {
+        case .notifications: return CGPoint(x: 8, y: 9)
+        default:             return CGPoint(x: 0, y: 9)
+        }
+    }
 
     var narrationDefaultKey: String {
         let defaultPrefix = "ElloTabBarControllerDidShowNarration"
         switch self {
-        case .discover:      return "\(defaultPrefix)Discover"
-        case .notifications: return "\(defaultPrefix)Notifications"
-        case .stream:        return "\(defaultPrefix)Stream"
-        case .profile:       return "\(defaultPrefix)Profile"
-        case .omnibar:       return "\(defaultPrefix)Omnibar"
+            case .following:     return "\(defaultPrefix)Stream"
+            case .discover:      return "\(defaultPrefix)Discover"
+            case .omnibar:       return "\(defaultPrefix)Omnibar"
+            case .notifications: return "\(defaultPrefix)Notifications"
+            case .profile:       return "\(defaultPrefix)Profile"
         }
     }
 
     var narrationTitle: String {
         switch self {
+            case .following:     return InterfaceString.Tab.PopupTitle.Following
             case .discover:      return InterfaceString.Tab.PopupTitle.Discover
-            case .notifications: return InterfaceString.Tab.PopupTitle.Notifications
-            case .stream:        return InterfaceString.Tab.PopupTitle.Stream
-            case .profile:       return InterfaceString.Tab.PopupTitle.Profile
             case .omnibar:       return InterfaceString.Tab.PopupTitle.Omnibar
+            case .notifications: return InterfaceString.Tab.PopupTitle.Notifications
+            case .profile:       return InterfaceString.Tab.PopupTitle.Profile
         }
     }
 
     var narrationText: String {
         switch self {
+            case .following:     return InterfaceString.Tab.PopupText.Following
             case .discover:      return InterfaceString.Tab.PopupText.Discover
-            case .notifications: return InterfaceString.Tab.PopupText.Notifications
-            case .stream:        return InterfaceString.Tab.PopupText.Stream
-            case .profile:       return InterfaceString.Tab.PopupText.Profile
             case .omnibar:       return InterfaceString.Tab.PopupText.Omnibar
+            case .notifications: return InterfaceString.Tab.PopupText.Notifications
+            case .profile:       return InterfaceString.Tab.PopupText.Profile
         }
     }
 
@@ -60,11 +93,12 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     fileprivate var newStreamContentObserver: NotificationObserver?
 
     fileprivate var visibleViewController = UIViewController()
+
     var appViewController: AppViewController? {
         return findViewController { vc in vc is AppViewController } as? AppViewController
     }
 
-    fileprivate var notificationsDot: UIView?
+    fileprivate(set) var notificationsDot: UIView?
     var newNotificationsAvailable: Bool {
         set { notificationsDot?.isHidden = !newValue }
         get {
@@ -74,7 +108,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
             return false
         }
     }
-    fileprivate(set) var streamsDot: UIView?
+    fileprivate(set) var followingDot: UIView?
 
     // MARK: BottomBarController
     fileprivate var _bottomBarVisible = true
@@ -119,6 +153,14 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
         get { return !ElloTabBarController.didShowNarration(selectedTab) }
         set { ElloTabBarController.didShowNarration(selectedTab, !newValue) }
     }
+
+    required init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension ElloTabBarController {
@@ -133,16 +175,13 @@ extension ElloTabBarController {
 
 }
 
-extension ElloTabBarController {
-    class func instantiateFromStoryboard() -> ElloTabBarController {
-        return UIStoryboard.storyboardWithId(.elloTabBar) as! ElloTabBarController
-    }
-}
-
 // MARK: View Lifecycle
 extension ElloTabBarController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        resetToolTipsForTwoPointOh()
+        setupControllers()
         view.isOpaque = true
         view.addSubview(tabBar)
         tabBar.delegate = self
@@ -184,10 +223,32 @@ extension ElloTabBarController {
             self.positionTabBar()
         }
     }
+
+    func setupControllers() {
+        let following = FollowingViewController()
+        let discover = DiscoverAllCategoriesViewController()
+        let omnibar = OmnibarViewController()
+        let notifications = NotificationsViewController()
+        let profile = ProfileViewController(user: currentUser!)
+        omnibar.canGoBack = false
+
+        self.addChildViewController(embed(following))
+        self.addChildViewController(embed(discover))
+        self.addChildViewController(embed(omnibar))
+        self.addChildViewController(embed(notifications))
+        self.addChildViewController(embed(profile))
+    }
+
+    func embed(_ controller: UIViewController) -> UIViewController {
+        let nav = ElloNavigationController(rootViewController: controller)
+        nav.currentUser = currentUser
+        return nav
+    }
 }
 
 // listen for system logged out event
 extension ElloTabBarController {
+
     func activateTabBar() {
         setupNotificationObservers()
         newContentService.startPolling()
@@ -204,35 +265,30 @@ extension ElloTabBarController {
 
         systemLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.invalidToken, block: systemLoggedOut)
 
-        streamLoadedObserver = NotificationObserver(notification: StreamLoadedNotifications.streamLoaded) {
-            [unowned self] streamKind in
+        streamLoadedObserver = NotificationObserver(notification: StreamLoadedNotifications.streamLoaded) { [weak self] streamKind in
             switch streamKind {
             case .notifications(category: nil):
-                self.newNotificationsAvailable = false
+                self?.newNotificationsAvailable = false
             case .following:
-                self.streamsDot?.isHidden = true
+                self?.followingDot?.isHidden = true
             default: break
             }
         }
 
-        foregroundObserver = NotificationObserver(notification: Application.Notifications.WillEnterForeground) {
-            [unowned self] _ in
-            self.newContentService.startPolling()
+        foregroundObserver = NotificationObserver(notification: Application.Notifications.WillEnterForeground) { [weak self] _ in
+            self?.newContentService.startPolling()
         }
 
-        backgroundObserver = NotificationObserver(notification: Application.Notifications.DidEnterBackground) {
-            [unowned self] _ in
-            self.newContentService.stopPolling()
+        backgroundObserver = NotificationObserver(notification: Application.Notifications.DidEnterBackground) { [weak self] _ in
+            self?.newContentService.stopPolling()
         }
 
-        newNotificationsObserver = NotificationObserver(notification: NewContentNotifications.newNotifications) {
-            [unowned self] _ in
-            self.newNotificationsAvailable = true
+        newNotificationsObserver = NotificationObserver(notification: NewContentNotifications.newNotifications) { [weak self] _ in
+            self?.newNotificationsAvailable = true
         }
 
-        newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newStreamContent) {
-            [unowned self] _ in
-            self.streamsDot?.isHidden = false
+        newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newStreamContent) { [weak self] _ in
+            self?.followingDot?.isHidden = false
         }
 
     }
@@ -249,11 +305,11 @@ extension ElloTabBarController {
 }
 
 extension ElloTabBarController {
+
     func didSetCurrentUser() {
         for controller in childViewControllers {
-            if let controller = controller as? ControllerThatMightHaveTheCurrentUser {
-                controller.currentUser = currentUser
-            }
+            guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { return }
+            controller.currentUser = currentUser
         }
     }
 
@@ -264,36 +320,40 @@ extension ElloTabBarController {
 
 // UITabBarDelegate
 extension ElloTabBarController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if let items = tabBar.items, let index = items.index(of: item) {
-            if index == selectedTab.rawValue {
-                if let navigationViewController = selectedViewController as? UINavigationController, navigationViewController.childViewControllers.count > 1
-                {
-                    _ = navigationViewController.popToRootViewController(animated: true)
-                }
-                else {
-                    if let scrollView = findScrollView(selectedViewController.view) {
-                        scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
-                    }
 
-                    if shouldReloadFriendStream() {
-                        postNotification(NewContentNotifications.reloadStreamContent, value: nil)
-                    }
-                    else if shouldReloadNotificationsStream() {
-                        postNotification(NewContentNotifications.reloadNotifications, value: nil)
-                        self.newNotificationsAvailable = false
-                    }
-                }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard
+            let items = tabBar.items,
+            let index = items.index(of: item)
+        else { return }
+
+        if index == selectedTab.rawValue {
+            if let navigationViewController = selectedViewController as? UINavigationController, navigationViewController.childViewControllers.count > 1
+            {
+                _ = navigationViewController.popToRootViewController(animated: true)
             }
             else {
-                selectedTab = ElloTab(rawValue:index) ?? .stream
-            }
-
-            if selectedTab == .notifications {
-                if let navigationViewController = selectedViewController as? UINavigationController,
-                    let notificationsViewController = navigationViewController.childViewControllers[0] as? NotificationsViewController {
-                    notificationsViewController.fromTabBar = true
+                if let scrollView = findScrollView(selectedViewController.view) {
+                    scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
                 }
+
+                if shouldReloadFollowingStream() {
+                    postNotification(NewContentNotifications.reloadStreamContent, value: nil)
+                }
+                else if shouldReloadNotificationsStream() {
+                    postNotification(NewContentNotifications.reloadNotifications, value: nil)
+                    self.newNotificationsAvailable = false
+                }
+            }
+        }
+        else {
+            selectedTab = ElloTab(rawValue:index) ?? .following
+        }
+
+        if selectedTab == .notifications {
+            if let navigationViewController = selectedViewController as? UINavigationController,
+                let notificationsViewController = navigationViewController.childViewControllers[0] as? NotificationsViewController {
+                notificationsViewController.fromTabBar = true
             }
         }
     }
@@ -316,6 +376,7 @@ extension ElloTabBarController: UITabBarDelegate {
 
 // MARK: Child View Controller handling
 extension ElloTabBarController {
+
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize size: CGSize) -> CGSize {
         return view.frame.size
     }
@@ -323,8 +384,15 @@ extension ElloTabBarController {
 
 private extension ElloTabBarController {
 
-    func shouldReloadFriendStream() -> Bool {
-        return selectedTab.rawValue == 2 && streamsDot?.isHidden == false
+    func resetToolTipsForTwoPointOh() {
+        guard GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey].bool == nil else { return }
+        GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey] = true
+
+        ElloTab.resetToolTips()
+    }
+
+    func shouldReloadFollowingStream() -> Bool {
+        return selectedTab == .following && followingDot?.isHidden == false
     }
 
     func shouldReloadNotificationsStream() -> Bool {
@@ -392,8 +460,8 @@ private extension ElloTabBarController {
 extension ElloTabBarController {
 
     fileprivate func addDots() {
-        notificationsDot = tabBar.addRedDotAtIndex(1)
-        streamsDot = tabBar.addRedDotAtIndex(2)
+        notificationsDot = tabBar.addRedDotFor(tab: .notifications)
+        followingDot = tabBar.addRedDotFor(tab: .following)
     }
 
     fileprivate func prepareNarration() {
@@ -416,7 +484,7 @@ extension ElloTabBarController {
     fileprivate func updateNarrationTitle(_ animated: Bool = true) {
         animate(options: [.curveEaseOut, .beginFromCurrentState], animated: animated) {
             if let rect = self.tabBar.itemPositionsIn(self.narrationView).safeValue(self.selectedTab.rawValue) {
-                self.narrationView.pointerX = rect.midX
+                self.narrationView.pointerX = rect.midX + self.selectedTab.pointerXoffset
             }
         }
         narrationView.title = selectedTab.narrationTitle

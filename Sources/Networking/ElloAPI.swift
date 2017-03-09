@@ -42,8 +42,8 @@ enum ElloAPI {
     case flagComment(postId: String, commentId: String, kind: String)
     case flagPost(postId: String, kind: String)
     case flagUser(userId: String, kind: String)
-    case friendStream
-    case friendNewContent(createdAt: Date?)
+    case following
+    case followingNewContent(createdAt: Date?)
     case hire(userId: String, body: String)
     case collaborate(userId: String, body: String)
     case infiniteScroll(queryItems: [AnyObject], elloApi: () -> ElloAPI)
@@ -51,8 +51,6 @@ enum ElloAPI {
     case join(email: String, username: String, password: String, invitationCode: String?)
     case loves(userId: String)
     case locationAutoComplete(terms: String)
-    case noiseStream
-    case noiseNewContent(createdAt: Date?)
     case notificationsNewContent(createdAt: Date?)
     case notificationsStream(category: String?)
     case pagePromotionals
@@ -163,6 +161,7 @@ enum ElloAPI {
             return .lovesType
         case .categoryPosts,
              .createPost,
+             .following,
              .postDetail,
              .rePost,
              .searchForPosts,
@@ -185,20 +184,17 @@ enum ElloAPI {
              .flagComment,
              .flagPost,
              .flagUser,
-             .friendNewContent,
+             .followingNewContent,
              .hire,
              .inviteFriends,
              .markAnnouncementAsRead,
-             .noiseNewContent,
              .notificationsNewContent,
              .profileDelete,
              .pushSubscriptions,
              .relationshipBatch,
              .userCategories:
             return .noContentType
-        case .friendStream,
-             .noiseStream,
-             .notificationsStream:
+        case .notificationsStream:
             return .activitiesType
         case let .infiniteScroll(_, elloApi):
             let api = elloApi()
@@ -282,8 +278,7 @@ extension ElloAPI: Moya.TargetType {
              .profileDelete,
              .deleteWatchPost:
             return .delete
-        case .friendNewContent,
-             .noiseNewContent,
+        case .followingNewContent,
              .announcementsNewContent,
              .notificationsNewContent:
             return .head
@@ -360,9 +355,9 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/flag/\(kind)"
         case let .flagUser(userId, kind):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/flag/\(kind)"
-        case .friendNewContent,
-             .friendStream:
-            return "/api/\(ElloAPI.apiVersion)/streams/friend"
+        case .followingNewContent,
+             .following:
+            return "/api/\(ElloAPI.apiVersion)/following/posts/recent"
         case let .hire(userId, _):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/hire_me"
         case let .collaborate(userId, _):
@@ -381,9 +376,6 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/loves"
         case .locationAutoComplete(_):
             return "/api/\(ElloAPI.apiVersion)/profile/location_autocomplete"
-        case .noiseNewContent,
-             .noiseStream:
-            return "/api/\(ElloAPI.apiVersion)/streams/noise"
         case .notificationsNewContent,
              .notificationsStream:
             return "/api/\(ElloAPI.apiVersion)/notifications"
@@ -471,11 +463,10 @@ extension ElloAPI: Moya.TargetType {
              .deletePost,
              .deleteSubscriptions,
              .deleteWatchPost,
-             .friendNewContent,
+             .followingNewContent,
              .hire,
              .collaborate,
              .inviteFriends,
-             .noiseNewContent,
              .notificationsNewContent,
              .profileDelete,
              .pushSubscriptions,
@@ -492,7 +483,7 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("users_getting_a_list_for_autocompleted_usernames")
         case .findFriends:
             return stubbedData("find-friends")
-        case .friendStream,
+        case .following,
              .infiniteScroll:
             return stubbedData("activity_streams_friend_stream")
         case .join:
@@ -501,8 +492,6 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("loves_listing_loves_for_a_user")
         case .locationAutoComplete:
             return stubbedData("users_getting_a_list_for_autocompleted_locations")
-        case .noiseStream:
-            return stubbedData("activity_streams_noise_stream")
         case .notificationsStream:
             return stubbedData("activity_streams_notifications")
         case .pagePromotionals:
@@ -540,8 +529,6 @@ extension ElloAPI: Moya.TargetType {
             switch RelationshipPriority(rawValue: relationship)! {
             case .following:
                 return stubbedData("relationship_following")
-            case .starred:
-                return stubbedData("relationship_starred")
             default:
                 return stubbedData("relationship_inactive")
             }
@@ -605,9 +592,7 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case let .announcementsNewContent(createdAt):
             createdAtHeader = createdAt?.toHTTPDateString()
-        case let .friendNewContent(createdAt):
-            createdAtHeader = createdAt?.toHTTPDateString()
-        case let .noiseNewContent(createdAt):
+        case let .followingNewContent(createdAt):
             createdAtHeader = createdAt?.toHTTPDateString()
         case let .notificationsNewContent(createdAt):
             createdAtHeader = createdAt?.toHTTPDateString()
@@ -653,7 +638,10 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "meta": true as AnyObject,
             ]
-        case .categoryPosts:
+        case .categoryPosts,
+             .following,
+             .postComments,
+             .userStreamPosts:
             return [
                 "per_page": 10 as AnyObject,
             ]
@@ -674,10 +662,6 @@ extension ElloAPI: Moya.TargetType {
                 }
             }
             return ["contacts": hashedContacts as AnyObject]
-        case .friendStream:
-            return [
-                "per_page": 10 as AnyObject
-            ]
         case let .hire(_, body):
             return [
                 "body": body as AnyObject
@@ -713,20 +697,12 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "location": terms as AnyObject
             ]
-        case .noiseStream:
-            return [
-                "per_page": 10 as AnyObject
-            ]
         case let .notificationsStream(category):
             var params: [String: AnyObject] = ["per_page": 10 as AnyObject]
             if let category = category {
                 params["category"] = category as AnyObject?
             }
             return params
-        case .postComments:
-            return [
-                "per_page": 10 as AnyObject
-            ]
         case let .postDetail(_, commentCount):
             return [
                 "comment_count": commentCount as AnyObject
@@ -799,10 +775,6 @@ extension ElloAPI: Moya.TargetType {
         case .userStream:
             return [
                 "post_count": "false" as AnyObject
-            ]
-        case .userStreamPosts:
-            return [
-                "per_page": 10 as AnyObject
             ]
         default:
             return nil

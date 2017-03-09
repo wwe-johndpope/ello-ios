@@ -52,7 +52,6 @@ extension NewContentService {
     }
 }
 
-
 private extension NewContentService {
 
     func newestDate(_ jsonables: [JSONAble]) -> Date {
@@ -109,7 +108,7 @@ private extension NewContentService {
         let storedDate = GroupDefaults[storedKey].date
 
         ElloProvider.shared.elloRequest(
-            ElloAPI.friendNewContent(createdAt: storedDate),
+            ElloAPI.followingNewContent(createdAt: storedDate),
             success: { (_, responseConfig) in
                 if let lastModified = responseConfig.lastModified {
                     GroupDefaults[StreamKind.following.lastViewedCreatedAtKey] = lastModified.toDate(HTTPDateFormatter)
