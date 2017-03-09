@@ -6,6 +6,11 @@ import SwiftyUserDefaults
 import Crashlytics
 import ImagePickerSheetController
 
+
+struct DebugSettings {
+    static let useStaging = "UseStaging"
+}
+
 class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let tableView = UITableView()
@@ -28,6 +33,20 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         let appController = UIApplication.shared.keyWindow!.rootViewController as! AppViewController
+        let isOnStaging = GroupDefaults[DebugSettings.useStaging].bool ?? false
+
+        addAction(name: "Use \(isOnStaging ? "Production" : "Staging")") {
+            GroupDefaults[DebugSettings.useStaging] = !isOnStaging
+            let alertController = AlertViewController(message: "Now you gotta restart.")
+
+            let okCancelAction = AlertAction(title: "Restart", style: .dark) { _ in
+                postNotification(AuthenticationNotifications.userLoggedOut, value: ())
+                Crashlytics.sharedInstance().crash()
+            }
+            alertController.addAction(okCancelAction)
+
+            appController.present(alertController, animated: true, completion: nil)
+        }
 
         addAction(name: "Logout") {
             appController.closeTodoController() {

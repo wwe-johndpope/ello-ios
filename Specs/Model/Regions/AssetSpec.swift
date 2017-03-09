@@ -35,7 +35,15 @@ class AssetSpec: QuickSpec {
         describe("+fromJSON:") {
 
             beforeEach {
-                ElloURI.httpProtocol = "https"
+                let testingKeys = APIKeys(
+                    key: "", secret: "", segmentKey: "",
+                    httpProtocol: "https",
+                    domain: "ello.co"
+                    )
+                APIKeys.shared = testingKeys
+            }
+            afterEach {
+                APIKeys.shared = APIKeys.default
             }
 
             it("parses correctly") {

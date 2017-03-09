@@ -617,14 +617,14 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .anonymousCredentials:
             return [
-                "client_id": APIKeys.sharedKeys.key as AnyObject,
-                "client_secret": APIKeys.sharedKeys.secret as AnyObject,
+                "client_id": APIKeys.shared.key as AnyObject,
+                "client_secret": APIKeys.shared.secret as AnyObject,
                 "grant_type": "client_credentials" as AnyObject
             ]
         case let .auth(email, password):
             return [
-                "client_id": APIKeys.sharedKeys.key as AnyObject,
-                "client_secret": APIKeys.sharedKeys.secret as AnyObject,
+                "client_id": APIKeys.shared.key as AnyObject,
+                "client_secret": APIKeys.shared.secret as AnyObject,
                 "email": email as AnyObject,
                 "password":  password as AnyObject,
                 "grant_type": "password" as AnyObject
@@ -753,8 +753,8 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .reAuth(refreshToken):
             return [
-                "client_id": APIKeys.sharedKeys.key as AnyObject,
-                "client_secret": APIKeys.sharedKeys.secret as AnyObject,
+                "client_id": APIKeys.shared.key as AnyObject,
+                "client_secret": APIKeys.shared.secret as AnyObject,
                 "grant_type": "refresh_token" as AnyObject,
                 "refresh_token": refreshToken as AnyObject
             ]

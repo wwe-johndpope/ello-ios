@@ -13,16 +13,27 @@ class ElloURISpec: QuickSpec {
         describe("ElloURI") {
 
             describe("baseURL") {
+                afterEach {
+                    APIKeys.shared = APIKeys.default
+                }
 
                 it("can be constructed with ello-staging and http") {
-                    ElloURI.domain = "ello-staging.herokuapp.com"
-                    ElloURI.httpProtocol = "http"
+                    let testingKeys = APIKeys(
+                        key: "", secret: "", segmentKey: "",
+                        httpProtocol: "http",
+                        domain: "ello-staging.herokuapp.com"
+                        )
+                    APIKeys.shared = testingKeys
                     expect(ElloURI.baseURL).to(equal("http://ello-staging.herokuapp.com"))
                 }
 
                 it("can be constructed with ello.co and https") {
-                    ElloURI.domain = "ello.co"
-                    ElloURI.httpProtocol = "https"
+                    let testingKeys = APIKeys(
+                        key: "", secret: "", segmentKey: "",
+                        httpProtocol: "https",
+                        domain: "ello.co"
+                        )
+                    APIKeys.shared = testingKeys
                     expect(ElloURI.baseURL).to(equal("https://ello.co"))
                 }
 
@@ -67,8 +78,15 @@ class ElloURISpec: QuickSpec {
                 ]
 
                 beforeEach {
-                    ElloURI.domain = "ello-staging.herokuapp.com"
-                    ElloURI.httpProtocol = "https"
+                    let testingKeys = APIKeys(
+                        key: "", secret: "", segmentKey: "",
+                        httpProtocol: "https",
+                        domain: "ello-staging.herokuapp.com"
+                        )
+                    APIKeys.shared = testingKeys
+                }
+                afterEach {
+                    APIKeys.shared = APIKeys.default
                 }
 
                 describe("root urls") {

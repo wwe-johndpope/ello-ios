@@ -11,8 +11,15 @@ class PostSpec: QuickSpec {
     override func spec() {
 
         beforeEach {
-            ElloURI.domain = "ello.co"
-            ElloURI.httpProtocol = "https"
+            let testingKeys = APIKeys(
+                key: "", secret: "", segmentKey: "",
+                httpProtocol: "https",
+                domain: "ello.co"
+                )
+            APIKeys.shared = testingKeys
+        }
+        afterEach {
+            APIKeys.shared = APIKeys.default
         }
 
         describe("+fromJSON:") {
