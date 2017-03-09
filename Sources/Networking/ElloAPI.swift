@@ -56,6 +56,7 @@ enum ElloAPI {
     case pagePromotionals
     case postComments(postId: String)
     case postDetail(postParam: String, commentCount: Int)
+    case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
     case postReposters(postId: String)
@@ -115,7 +116,8 @@ enum ElloAPI {
         switch self {
         case .anonymousCredentials,
              .auth,
-             .reAuth:
+             .reAuth,
+             .postViews:
             return .noContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
         case .announcements:
             return .announcementsType
@@ -217,7 +219,7 @@ extension ElloAPI {
              .categories, .category, .categoryPosts, .discover, .pagePromotionals,
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
-             .postComments, .postLovers, .postReposters, .postDetail,
+             .postComments, .postLovers, .postReposters, .postDetail, .postViews,
              .join, .deleteSubscriptions, .userStream:
             return true
         case let .infiniteScroll(_, elloApi):
@@ -385,6 +387,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
         case let .postDetail(postParam, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postParam)"
+        case .postViews:
+            return "/api/\(ElloAPI.apiVersion)/post_views"
         case let .postLovers(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/lovers"
         case let .postReplyAll(postId):
@@ -469,6 +473,7 @@ extension ElloAPI: Moya.TargetType {
              .inviteFriends,
              .notificationsNewContent,
              .profileDelete,
+             .postViews,
              .pushSubscriptions,
              .flagComment,
              .flagPost,
@@ -707,6 +712,16 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "comment_count": commentCount as AnyObject
             ]
+        case let .postViews(streamId, streamKind, postIds, userId):
+            let streamIdDict: [String: String] = streamId.map { streamId in return ["id": streamId]} ?? [:]
+            let userIdDict: [String: String] = userId.map { userId in return ["user_id": userId]} ?? [:]
+            return [
+                "post_ids": postIds.reduce("") { memo, id in
+                    if memo == "" { return id }
+                    else { return "\(memo),\(id)" }
+                },
+                "kind": streamKind,
+            ] + streamIdDict + userIdDict
         case .currentUserStream:
             return [
                 "post_count": 10 as AnyObject
@@ -805,17 +820,3 @@ func += <KeyType, ValueType> (left: inout Dictionary<KeyType, ValueType>, right:
         left.updateValue(v, forKey: k)
     }
 }
-
-//extension Moya.ParameterEncoding: Equatable {}
-//
-//func == (lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
-//    switch (lhs, rhs) {
-//    case (.url, .url),
-//         (.json, .json),
-//         (.PropertyList, .PropertyList),
-//         (.Custom, .Custom):
-//        return true
-//    default:
-//        return false
-//    }
-//}

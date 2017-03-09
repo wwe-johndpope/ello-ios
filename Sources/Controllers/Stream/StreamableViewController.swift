@@ -80,6 +80,20 @@ class StreamableViewController: BaseElloViewController {
         )
     }
 
+    func trackerStreamInfo() -> (String, String?)? {
+        return nil
+    }
+
+    override func trackScreenAppeared() {
+        super.trackScreenAppeared()
+
+        guard let (streamKind, streamId) = trackerStreamInfo() else { return }
+        let posts = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem in
+            return streamCellItem.jsonable as? Post
+        }
+        PostService().sendPostViews(posts: posts, streamId: streamId, streamKind: streamKind, userId: currentUser?.id)
+    }
+
     fileprivate func willPresentStreamable(_ navBarsVisible: Bool) {
         postNotification(StatusBarNotifications.statusBarShouldHide, value: !navBarsVisible)
         UIView.setAnimationsEnabled(false)

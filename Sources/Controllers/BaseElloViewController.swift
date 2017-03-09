@@ -67,7 +67,7 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Tracker.shared.screenAppeared(self)
+        trackScreenAppeared()
     }
 
     override func viewWillAppear(_ animated: Bool) {
