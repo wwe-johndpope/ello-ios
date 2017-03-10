@@ -320,11 +320,12 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func imageCellHeightUpdated(_ cell: StreamImageCell) {
-        if let indexPath = collectionView.indexPath(for: cell),
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
             let calculatedHeight = cell.calculatedHeight
-        {
-            updateCellHeight(indexPath, height: calculatedHeight)
-        }
+        else { return }
+
+        updateCellHeight(indexPath, height: calculatedHeight)
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
@@ -893,8 +894,7 @@ extension StreamViewController: StreamImageCellResponder {
         }
         else if let imageViewer = imageViewer {
             imageViewer.imageTapped(imageView, imageURL: cell.presentedImageUrl)
-            if let post = post,
-                    let asset = imageAsset {
+            if let post = post, let asset = imageAsset {
                 Tracker.shared.viewedImage(asset, post: post)
             }
         }
@@ -1001,9 +1001,13 @@ extension StreamViewController: AnnouncementCellResponder {
 extension StreamViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? DismissableCell {
-            cell.didEndDisplay()
-        }
+        guard let cell = cell as? DismissableCell else { return }
+        cell.didEndDisplay()
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? DismissableCell else { return }
+        cell.willDisplay()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

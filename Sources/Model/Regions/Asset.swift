@@ -77,6 +77,7 @@ final class Asset: JSONAble {
     var isGif: Bool {
         return self.optimized?.type == "image/gif"
     }
+
     var isLargeGif: Bool {
         if isGif {
             if let size = self.optimized?.size {
@@ -91,13 +92,49 @@ final class Asset: JSONAble {
         return hdpi
     }
 
+    var oneColumnPreviewAttachment: Attachment? {
+        return hdpi
+    }
+
     var gridLayoutAttachment: Attachment? {
         if video != nil { return video }
         return Window.isWide(Window.width) ? hdpi : mdpi
     }
 
+    var gridLayoutPreviewAttachment: Attachment? {
+        return Window.isWide(Window.width) ? hdpi : mdpi
+    }
+
     var hasVideo: Bool {
         return video != nil
+    }
+
+    var isLargeVideo: Bool {
+        if hasVideo {
+            if let size = self.video?.size {
+                return size >= 3_145_728
+            }
+        }
+        return false
+    }
+
+    var aspectRatio: CGFloat {
+        var attachment: Attachment?
+
+        if let tryAttachment = oneColumnAttachment {
+            attachment = tryAttachment
+        }
+        else if let tryAttachment = optimized {
+            attachment = tryAttachment
+        }
+
+        if  let attachment = attachment,
+            let width = attachment.width,
+            let height = attachment.height
+        {
+            return CGFloat(width)/CGFloat(height)
+        }
+        return 4.0/3.0
     }
 
 // MARK: Initialization

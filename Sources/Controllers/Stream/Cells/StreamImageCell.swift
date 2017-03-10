@@ -38,6 +38,7 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failWidthConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failHeightConstraint: NSLayoutConstraint!
+    fileprivate var foregroundObserver: NotificationObserver?
 
     // not used in StreamEmbedCell
     @IBOutlet weak var largeImagePlayButton: UIImageView?
@@ -48,6 +49,7 @@ class StreamImageCell: StreamRegionableCell {
     }
 
     fileprivate var playerLayer: AVPlayerLayer?
+    var videoObserver: NSObjectProtocol?
 
     var isGif = false
     var onHeightMismatch: OnHeightMismatch?
@@ -130,6 +132,7 @@ class StreamImageCell: StreamRegionableCell {
         if let playButton = largeImagePlayButton {
             playButton.image = InterfaceImage.videoPlay.normalImage
         }
+
         if let buyButton = buyButton, let buyButtonGreen = buyButtonGreen {
             buyButton.isHidden = true
             buyButtonGreen.isHidden = true
@@ -158,7 +161,8 @@ class StreamImageCell: StreamRegionableCell {
         imageButton.addGestureRecognizer(longPressGesture)
     }
 
-    func setVideoURL(_ url: URL) {
+    func setVideoURL(_ url: URL, withSize size: CGSize) {
+        imageSize = size
         imageView.image = nil
         imageView.alpha = 1
         failImage.isHidden = true
@@ -168,7 +172,6 @@ class StreamImageCell: StreamRegionableCell {
     }
 
     func loadVideo(_ url: URL) {
-        print(url.absoluteString)
         let asset = AVURLAsset(url: url)
         let item = AVPlayerItem(asset: asset)
         player.actionAtItemEnd = .none
@@ -182,13 +185,6 @@ class StreamImageCell: StreamRegionableCell {
         }
         player.seek(to: kCMTimeZero)
         player.play()
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil, using: { [weak player] _ in
-            guard let player = player else { return }
-            DispatchQueue.main.async {
-                player.seek(to: kCMTimeZero)
-                player.play()
-            }
-        })
     }
 
     func setImageURL(_ url: URL) {
@@ -217,7 +213,7 @@ class StreamImageCell: StreamRegionableCell {
         if let aspectRatio = aspectRatio, let imageSize = imageSize {
             let width = min(imageSize.width, self.frame.width - margin)
             let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
-            if actualHeight != frame.height {
+            if ceil(actualHeight) != ceil(frame.height) {
                 self.onHeightMismatch?(actualHeight)
             }
         }
@@ -271,6 +267,26 @@ class StreamImageCell: StreamRegionableCell {
         }
     }
 
+    func addVideoObserver() {
+        videoObserver = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { [weak player] _ in
+            guard let player = player else { return }
+            nextTick {
+                player.seek(to: kCMTimeZero)
+                player.play()
+            }
+        }
+    }
+
+    func addForegroundObserver() {
+        foregroundObserver = NotificationObserver(notification: Application.Notifications.WillEnterForeground) { [weak player] _ in
+            guard let player = player else { return }
+            nextTick {
+                player.seek(to: kCMTimeZero)
+                player.play()
+            }
+        }
+    }
+
     fileprivate func imageLoadFailed() {
         buyButton?.isHidden = true
         buyButtonGreen?.isHidden = true
@@ -292,6 +308,7 @@ class StreamImageCell: StreamRegionableCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
+        player.replaceCurrentItem(with: nil)
         marginType = .post
         imageButton.isUserInteractionEnabled = true
         onHeightMismatch = nil
@@ -338,5 +355,22 @@ class StreamImageCell: StreamRegionableCell {
 
         let responder = target(forAction: #selector(StreamEditingResponder.cellLongPressed(cell:)), withSender: self) as? StreamEditingResponder
         responder?.cellLongPressed(cell: self)
+    }
+}
+
+extension StreamImageCell: DismissableCell {
+
+    func didEndDisplay() {
+        player.pause()
+        foregroundObserver?.removeObserver()
+        if let observer = videoObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
+    func willDisplay() {
+        addVideoObserver()
+        addForegroundObserver()
+        player.play()
     }
 }

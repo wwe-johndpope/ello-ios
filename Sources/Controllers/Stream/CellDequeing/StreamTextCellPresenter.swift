@@ -17,7 +17,10 @@ struct StreamTextCellPresenter {
         guard let cell = cell as? StreamTextCell else { return }
 
         cell.onWebContentReady { webView in
-            if let actualHeight = webView.windowContentSize()?.height, actualHeight != streamCellItem.calculatedCellHeights.webContent {
+            if let actualHeight = webView.windowContentSize()?.height,
+                let webContent = streamCellItem.calculatedCellHeights.webContent,
+                ceil(actualHeight) != ceil(webContent)
+            {
                 streamCellItem.calculatedCellHeights.webContent = actualHeight
                 streamCellItem.calculatedCellHeights.oneColumn = actualHeight
                 streamCellItem.calculatedCellHeights.multiColumn = actualHeight

@@ -292,7 +292,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         // don't update the height if
         // - imageURL is set, but hasn't finished loading, OR
         // - messageHTML is set, but hasn't finished loading
-        if actualHeight != frame.size.height && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
+        if actualHeight != ceil(frame.size.height) && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
             self.onHeightMismatch?(actualHeight)
         }
     }
