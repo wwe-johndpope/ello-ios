@@ -28,7 +28,7 @@ extension UIWindow {
 
 class Window {
     static func isWide(_ width: CGFloat) -> Bool {
-        return width > 1000
+        return width >= 768
     }
 
     fileprivate static var _width: CGFloat?
