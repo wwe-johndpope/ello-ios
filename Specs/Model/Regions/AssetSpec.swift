@@ -159,11 +159,11 @@ class AssetSpec: QuickSpec {
 
                 beforeEach {
                     let testingKeys = APIKeys(
-                    key: "", secret: "", segmentKey: "",
-                    httpProtocol: "https",
-                    domain: "ello.co"
+                        key: "", secret: "", segmentKey: "",
+                        httpProtocol: "https",
+                        domain: "ello.co"
                     )
-                APIKeys.shared = testingKeys
+                    APIKeys.shared = testingKeys
                 }
 
                 it("parses correctly") {
