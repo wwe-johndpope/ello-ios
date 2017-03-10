@@ -5,13 +5,6 @@ PODS:
     - TRVSDictionaryWithCaseInsensitivity (= 0.0.2)
   - Analytics/Segmentio (2.0.17):
     - Analytics/Core-iOS
-  - AsyncDisplayKit (2.2):
-    - AsyncDisplayKit/PINRemoteImage (= 2.2)
-  - AsyncDisplayKit/Core (2.2)
-  - AsyncDisplayKit/PINRemoteImage (2.2):
-    - AsyncDisplayKit/Core
-    - PINRemoteImage/iOS (= 3.0.0-beta.8)
-    - PINRemoteImage/PINCache
   - CocoaLumberjack (2.4.0):
     - CocoaLumberjack/Default (= 2.4.0)
     - CocoaLumberjack/Extensions (= 2.4.0)
@@ -69,8 +62,6 @@ PODS:
   - PINRemoteImage/Core (3.0.0-beta.8)
   - PINRemoteImage/FLAnimatedImage (3.0.0-beta.8):
     - FLAnimatedImage (>= 1.0)
-    - PINRemoteImage/Core
-  - PINRemoteImage/iOS (3.0.0-beta.8):
     - PINRemoteImage/Core
   - PINRemoteImage/PINCache (3.0.0-beta.8):
     - PINCache (= 3.0.1-beta.4)
@@ -134,7 +125,6 @@ DEPENDENCIES:
   - 1PasswordExtension (from `https://github.com/ello/onepassword-app-extension`)
   - Alamofire (~> 4.0)
   - Analytics/Segmentio
-  - AsyncDisplayKit (= 2.2)
   - Crashlytics (~> 3.4)
   - CRToast (from `https://github.com/ello/CRToast`)
   - DeltaCalculator (from `https://github.com/ello/DeltaCalculator`)
@@ -243,7 +233,6 @@ SPEC CHECKSUMS:
   1PasswordExtension: faed6b7ab3f1e26551b08fef580c88bff0d0f247
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   Analytics: 51d6163cb568c8ede69f2b92ef4779d91e1524e2
-  AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   CocoaLumberjack: aa9dcab71bdf9eaf2a63bbd9ddc87863efe45457
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
@@ -280,6 +269,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 2af319b2617b58f2d4f601bde336d70a83c47533
+PODFILE CHECKSUM: affcf63a5305ce73834a187c383f270f8e5d1ec5
 
 COCOAPODS: 1.1.1

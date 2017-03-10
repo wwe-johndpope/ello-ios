@@ -24,7 +24,6 @@ def ello_app_pods
   pod 'SSPullToRefresh', '~> 1.2'
   pod 'ImagePickerSheetController', git: 'https://github.com/ello/ImagePickerSheetController', branch: 'swift3'
   pod 'iRate', '~> 1.11'
-  pod 'AsyncDisplayKit', '2.2'
   # swift pods
   pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
   pod 'WebLinking', git: 'https://github.com/kylef/WebLinking.swift'
