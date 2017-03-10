@@ -19,7 +19,6 @@ namespace :generate do
       ['StagingOauthSecret', 'STAGING_CLIENT_SECRET'],
       ['StagingDomain', 'STAGING_DOMAIN'],
       ['StagingHttpProtocol', 'STAGING_HTTP_PROTOCOL'],
-      ['StagingCrashlyticsKey', 'CRASHLYTICS_KEY'],
       ['StagingSegmentKey', 'STAGING_SEGMENT_KEY'],
       ['OauthKey', 'PROD_CLIENT_KEY'],
       ['OauthSecret', 'PROD_CLIENT_SECRET'],

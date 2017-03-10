@@ -458,7 +458,8 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("does not return cell items for other posts") {
-                    let post = subject.postForIndexPath(IndexPath(item: 9, section: 0))!
+                    let lastItem = subject.visibleCellItems.count - 1
+                    let post = subject.postForIndexPath(IndexPath(item: lastItem, section: 0))!
                     let items = subject.cellItemsForPost(post)
                     expect(post.id) == "777"
                     expect(items.count) == 4
