@@ -10,26 +10,145 @@ import Nimble
 class AssetSpec: QuickSpec {
     override func spec() {
         describe("Asset") {
+
+            describe("aspectRatio") {
+
+                it("returns correct aspect ratio for video") {
+                    let attachment: Attachment = stub(["width": 10, "height": 5, "type": "video/mp4"])
+                    let asset: Asset = stub(["video": attachment])
+                    expect(asset.aspectRatio) == 2.0
+                }
+
+                it("returns correct aspect ratio when hdpi present") {
+                    let attachment: Attachment = stub(["width": 15, "height": 5])
+                    let asset: Asset = stub(["hdpi": attachment])
+                    expect(asset.aspectRatio) == 3.0
+                }
+
+                it("returns correct aspect ratio when only optimized present") {
+                    let attachment: Attachment = stub(["width": 5, "height": 5])
+                    let asset: Asset = stub(["optimized": attachment])
+                    expect(asset.aspectRatio) == 1.0
+                }
+
+                it("returns correct aspect ratio when no attachments available") {
+                    let asset: Asset = stub([:])
+                    expect(asset.aspectRatio) == 4.0/3.0
+                }
+            }
+
+            describe("oneColumnAttachment") {
+
+                it("returns video if present") {
+                    let video: Attachment = stub(["type": "video/mp4"])
+                    let asset: Asset = stub(["video": video])
+                    expect(asset.oneColumnAttachment) == video
+                }
+
+                it("defaults to hdpi") {
+                    let hdpi: Attachment = stub([:])
+                    let asset: Asset = stub(["hdpi": hdpi])
+                    expect(asset.oneColumnAttachment) == hdpi
+                }
+            }
+
+            describe("oneColumnPreviewAttachment") {
+
+                it("returns hdpi") {
+                    let hdpi: Attachment = stub([:])
+                    let asset: Asset = stub(["hdpi": hdpi])
+                    expect(asset.oneColumnPreviewAttachment) == hdpi
+                }
+            }
+
+            describe("gridLayoutAttachment") {
+
+                it("returns video if present") {
+                    let video: Attachment = stub(["type": "video/mp4"])
+                    let asset: Asset = stub(["video": video])
+                    expect(asset.gridLayoutAttachment) == video
+                }
+
+                it("defaults to hdpi when wide") {
+                    let tmp = Window.width
+                    Window.width = 2000
+                    let hdpi: Attachment = stub([:])
+                    let mdpi: Attachment = stub([:])
+                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi])
+                    expect(asset.gridLayoutAttachment) == hdpi
+                    Window.width = tmp
+                }
+
+                it("defaults to mdpi when not wide") {
+                    let hdpi: Attachment = stub([:])
+                    let mdpi: Attachment = stub([:])
+                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi])
+                    expect(asset.gridLayoutAttachment) == mdpi
+                }
+            }
+
+            describe("gridLayoutPreviewAttachment") {
+
+                it("returns hdpi when wide") {
+                    let tmp = Window.width
+                    Window.width = 2000
+                    let video: Attachment = stub(["type": "video/mp4"])
+                    let hdpi: Attachment = stub([:])
+                    let mdpi: Attachment = stub([:])
+                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi, "video": video])
+                    expect(asset.gridLayoutPreviewAttachment) == hdpi
+                    Window.width = tmp
+                }
+
+                it("returns mdpi when NOT wide") {
+                    let video: Attachment = stub(["type": "video/mp4"])
+                    let hdpi: Attachment = stub([:])
+                    let mdpi: Attachment = stub([:])
+                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi, "video": video])
+                    expect(asset.gridLayoutPreviewAttachment) == mdpi
+                }
+            }
+
+            context("videos") {
+
+                it("returns 'true' for 'hasVideo'") {
+                    let attachment: Attachment = stub(["type": "video/mp4"])
+                    let asset: Asset = stub(["video": attachment])
+                    expect(asset.hasVideo) == true
+                }
+
+                it("returns 'true' for 'isLargeVideo'") {
+                    let attachment: Attachment = stub(["size": 4_100_000, "type": "video/mp4"])
+                    let asset: Asset = stub(["video": attachment])
+                    expect(asset.isLargeVideo) == true
+                }
+
+                it("returns 'false' for 'isLargeVideo'") {
+                    let attachment: Attachment = stub(["size": 2_000_000, "type": "video/mp4"])
+                    let asset: Asset = stub(["video": attachment])
+                    expect(asset.isLargeVideo) == false
+                }
+            }
+
             context("gifs") {
-                it("should return 'true' for 'isGif'") {
+
+                it("returns 'true' for 'isGif'") {
                     let attachment: Attachment = stub(["type": "image/gif"])
                     let asset: Asset = stub(["optimized": attachment])
-                    expect(asset.isGif).to(beTrue())
+                    expect(asset.isGif) == true
                 }
-            }
-            context("large gifs") {
-                it("should return 'true' for 'isLargeGif'") {
+
+                it("returns 'true' for 'isLargeGif'") {
                     let attachment: Attachment = stub(["size": 4_100_000, "type": "image/gif"])
                     let asset: Asset = stub(["optimized": attachment])
-                    expect(asset.isLargeGif).to(beTrue())
+                    expect(asset.isLargeGif) == true
                 }
-            }
-            context("small gifs") {
-                it("should return 'false' for 'isLargeGif'") {
+
+                it("returns 'false' for 'isLargeGif'") {
                     let attachment: Attachment = stub(["size": 2_000_000, "type": "image/gif"])
                     let asset: Asset = stub(["optimized": attachment])
-                    expect(asset.isGif).to(beTrue())
-                    expect(asset.isLargeGif).to(beFalse())
+                    expect(asset.isGif) == true
+                    expect(asset.isLargeGif) == false
                 }
             }
 
