@@ -92,6 +92,14 @@ class StreamableViewController: BaseElloViewController {
             return streamCellItem.jsonable as? Post
         }
         PostService().sendPostViews(posts: posts, streamId: streamId, streamKind: streamKind, userId: currentUser?.id)
+
+        let comments = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem -> ElloComment? in
+            guard streamCellItem.type != .createComment else { return nil }
+            return streamCellItem.jsonable as? ElloComment
+        }
+        if let post = posts.first, streamKind == "post", comments.count > 0 {
+            PostService().sendPostViews(comments: comments, streamId: post.id, streamKind: "comment", userId: currentUser?.id)
+        }
     }
 
     fileprivate func willPresentStreamable(_ navBarsVisible: Bool) {
