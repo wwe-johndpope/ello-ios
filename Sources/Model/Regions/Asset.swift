@@ -6,7 +6,7 @@ import Foundation
 import SwiftyJSON
 
 
-let AssetVersion = 2
+let AssetVersion = 1
 
 @objc(Asset)
 final class Asset: JSONAble {
