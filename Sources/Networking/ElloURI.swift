@@ -127,30 +127,7 @@ enum ElloURI: String {
         }
     }
 
-    // get the proper domain
-    fileprivate static var _httpProtocol: String?
-    static var httpProtocol: String {
-        get {
-            return ElloURI._httpProtocol ?? ElloKeys().httpProtocol()
-        }
-        set {
-            if AppSetup.sharedState.isTesting {
-                ElloURI._httpProtocol = newValue
-            }
-        }
-    }
-    fileprivate static var _domain: String?
-    static var domain: String {
-        get {
-        return ElloURI._domain ?? ElloKeys().domain()
-        }
-        set {
-            if AppSetup.sharedState.isTesting {
-                ElloURI._domain = newValue
-            }
-        }
-    }
-    static var baseURL: String { return "\(ElloURI.httpProtocol)://\(ElloURI.domain)" }
+    static var baseURL: String { return "\(APIKeys.shared.httpProtocol)://\(APIKeys.shared.domain)" }
 
     // this is taken directly from app/models/user.rb
     static let usernameRegex = "([\\w\\-]+)"

@@ -9,6 +9,9 @@ class FollowingViewController: StreamableViewController {
     override func trackerProps() -> [String: AnyObject]? {
         return ["kind": "Following" as AnyObject]
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        return ("following", nil)
+    }
 
     var navigationBar: ElloNavigationBar!
     fileprivate var loggedPromptEventForThisSession = false

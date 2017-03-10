@@ -13,6 +13,10 @@ final class ProfileViewController: StreamableViewController {
         }
         return nil
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        guard let streamId = user?.id else { return nil }
+        return ("user", streamId)
+    }
 
     var _tabBarItem: UITabBarItem?
     override var tabBarItem: UITabBarItem? {

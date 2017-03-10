@@ -60,6 +60,9 @@ class AssetSpec: QuickSpec {
                     expect(asset.oneColumnPreviewAttachment) == hdpi
                 }
             }
+            afterEach {
+                APIKeys.shared = APIKeys.default
+            }
 
             describe("gridLayoutAttachment") {
 
@@ -155,7 +158,12 @@ class AssetSpec: QuickSpec {
             describe("+fromJSON:") {
 
                 beforeEach {
-                    ElloURI.httpProtocol = "https"
+                    let testingKeys = APIKeys(
+                    key: "", secret: "", segmentKey: "",
+                    httpProtocol: "https",
+                    domain: "ello.co"
+                    )
+                APIKeys.shared = testingKeys
                 }
 
                 it("parses correctly") {

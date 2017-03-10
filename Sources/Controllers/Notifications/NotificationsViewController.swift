@@ -151,7 +151,7 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
         streamViewController.removeAllCellItems()
         streamViewController.loadInitialPage()
 
-        Tracker.shared.screenAppeared(self)
+        trackScreenAppeared()
     }
 
     func respondToNotification(_ components: [String]) {

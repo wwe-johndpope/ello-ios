@@ -50,8 +50,8 @@ class Tracker {
     }
 
     init() {
-        let configuration = SEGAnalyticsConfiguration(writeKey: ElloKeys().segmentKey())
-         SEGAnalytics.setup(with: configuration)
+        let configuration = SEGAnalyticsConfiguration(writeKey: APIKeys.shared.segmentKey)
+        SEGAnalytics.setup(with: configuration)
 
         settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { user in
             self.shouldTrackUser = user.profile?.allowsAnalytics ?? true
@@ -296,6 +296,10 @@ extension UIViewController {
     // return 'nil' to disable tracking, e.g. in StreamViewController
     func trackerName() -> String? { return readableClassName() }
     func trackerProps() -> [String: AnyObject]? { return nil }
+
+    func trackScreenAppeared() {
+        Tracker.shared.screenAppeared(self)
+    }
 }
 
 // MARK: View Appearance

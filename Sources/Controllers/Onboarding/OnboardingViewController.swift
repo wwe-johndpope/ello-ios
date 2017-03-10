@@ -200,7 +200,7 @@ extension OnboardingViewController {
     }
 
     fileprivate func showFirstViewController(_ viewController: UIViewController) {
-        Tracker.shared.screenAppeared(viewController)
+        viewController.trackScreenAppeared()
 
         prepareOnboardingController(viewController)
 
@@ -279,7 +279,7 @@ extension OnboardingViewController {
             return
         }
 
-        Tracker.shared.screenAppeared(nextViewController)
+        nextViewController.trackScreenAppeared()
 
         visibleViewController.willMove(toParentViewController: nil)
         addChildViewController(nextViewController)

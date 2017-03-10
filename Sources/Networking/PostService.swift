@@ -15,8 +15,6 @@ typealias DeletePostSuccessCompletion = () -> Void
 
 struct PostService {
 
-    init(){}
-
     func loadPost(
         _ postParam: String,
         needsComments: Bool) -> Future<Post>
@@ -39,6 +37,21 @@ struct PostService {
                 promise.completeWithFail(error)
             })
         return promise.future
+    }
+
+    func sendPostViews(
+        posts: [Post] = [],
+        comments: [ElloComment] = [],
+        streamId: String?,
+        streamKind: String,
+        userId: String?)
+    {
+        guard posts.count + comments.count > 0 else { return }
+
+        let postIds = Set(posts.map { $0.id } + comments.map { $0.id })
+        ElloProvider.shared.elloRequest(
+            ElloAPI.postViews(streamId: streamId, streamKind: streamKind, postIds: postIds, currentUserId: userId),
+            success: { _ in })
     }
 
     func loadPostComments(
