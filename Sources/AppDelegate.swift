@@ -100,9 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let manager = PINRemoteImageManager.shared()
         let twoWeeks: TimeInterval = 1209600
         let twoHundredFiftyMegaBytes: UInt = 250000000
-        manager?.cache.diskCache.byteLimit = twoHundredFiftyMegaBytes
-        manager?.cache.diskCache.ageLimit = twoWeeks
-
+        manager.pinCache?.diskCache.byteLimit = twoHundredFiftyMegaBytes
+        manager.pinCache?.diskCache.ageLimit = twoWeeks
         _ = CategoryService().loadCategories()
     }
 

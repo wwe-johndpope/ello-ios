@@ -33,9 +33,9 @@ class AvatarButton: UIButton {
         guard let url = url else { return }
 
         pin_setImage(from: url) { result in
-            guard result?.image != nil else { return }
+            guard result.image != nil else { return }
 
-            if result?.resultType != .memoryCache {
+            if result.resultType != .memoryCache {
                 self.alpha = 0
                 UIView.animate(withDuration: 0.3,
                     delay:0.0,

@@ -52,6 +52,9 @@ extension SearchStreamCell: DismissableCell {
     func didEndDisplay() {
         _ = searchField.resignFirstResponder()
     }
+    func willDisplay() {
+        // no op
+    }
 }
 
 extension SearchStreamCell: UITextFieldDelegate {

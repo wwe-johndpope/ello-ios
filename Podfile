@@ -20,7 +20,7 @@ def ello_app_pods
   pod 'Analytics/Segmentio'
   pod 'JTSImageViewController', git: 'https://github.com/ello/JTSImageViewController'
   pod 'KINWebBrowser', git: 'https://github.com/ello/KINWebBrowser'
-  pod 'PINRemoteImage', git: 'https://github.com/pinterest/PINRemoteImage.git', commit: 'af312667f0ce830264198366f481f1b222675a31'
+  pod 'PINRemoteImage', '3.0.0-beta.8'
   pod 'SSPullToRefresh', '~> 1.2'
   pod 'ImagePickerSheetController', git: 'https://github.com/ello/ImagePickerSheetController', branch: 'swift3'
   pod 'iRate', '~> 1.11'

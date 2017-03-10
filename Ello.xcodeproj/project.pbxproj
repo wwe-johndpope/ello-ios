@@ -312,6 +312,7 @@
 		125F28861B1D0D8600BA501E /* DrawerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 125F28851B1D0D8600BA501E /* DrawerCell.xib */; };
 		125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F28871B1D165700BA501E /* DrawerCellPresenter.swift */; };
 		125F288A1B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F28891B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift */; };
+		12614C581E705940006FB0E5 /* PINRemoteImageManagerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12614C571E705940006FB0E5 /* PINRemoteImageManagerResult.swift */; };
 		1264A7D71B7145E700733179 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264A7D61B7145E700733179 /* Application.swift */; };
 		1264FEFA1B0E4C3D0011B646 /* StreamImageCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264FEF91B0E4C3D0011B646 /* StreamImageCellPresenterSpec.swift */; };
 		1266E50D1A9E2B9E00270E1C /* ContentFlagger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1266E50C1A9E2B9E00270E1C /* ContentFlagger.swift */; };
@@ -1297,6 +1298,7 @@
 		125F28851B1D0D8600BA501E /* DrawerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DrawerCell.xib; path = Sources/Controllers/Drawer/DrawerCell.xib; sourceTree = SOURCE_ROOT; };
 		125F28871B1D165700BA501E /* DrawerCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerCellPresenter.swift; sourceTree = "<group>"; };
 		125F28891B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCellPresenterSpec.swift; sourceTree = "<group>"; };
+		12614C571E705940006FB0E5 /* PINRemoteImageManagerResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINRemoteImageManagerResult.swift; sourceTree = "<group>"; };
 		1264A7D61B7145E700733179 /* Application.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		1264FEF91B0E4C3D0011B646 /* StreamImageCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageCellPresenterSpec.swift; sourceTree = "<group>"; };
 		1266E50C1A9E2B9E00270E1C /* ContentFlagger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentFlagger.swift; sourceTree = "<group>"; };
@@ -2966,18 +2968,18 @@
 				1DCB12491B5EB0E60023664C /* CGSizeExtensions.swift */,
 				1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */,
 				12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */,
+				1275351C1B73D155006B9A0F /* Date.swift */,
 				1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */,
+				122DEA1F1AB0A024005DF1F1 /* FileManagerExtensions.swift */,
 				12F6AE271A43390900493660 /* ImageExtensions.swift */,
 				1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */,
 				1289F3931AF1474B008A938C /* NSAttributedStringExtensions.swift */,
-				1275351C1B73D155006B9A0F /* Date.swift */,
 				1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */,
-				122DEA1F1AB0A024005DF1F1 /* FileManagerExtensions.swift */,
 				EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */,
 				1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */,
-				123297B21B0BB9FA00A6E590 /* URLExtensions.swift */,
 				12F6AE281A43390900493660 /* NumberExtensions.swift */,
 				12F6AE291A43390900493660 /* Optionals.swift */,
+				12614C571E705940006FB0E5 /* PINRemoteImageManagerResult.swift */,
 				1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */,
 				12F6AE2A1A43390900493660 /* ScreenExtensions.swift */,
 				12F6AE2B1A43390900493660 /* StringExtensions.swift */,
@@ -2995,6 +2997,7 @@
 				12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */,
 				EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */,
 				1D2D18641AC322070078AA05 /* UIWebView.swift */,
+				123297B21B0BB9FA00A6E590 /* URLExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5142,6 +5145,7 @@
 				1D59336D1D10ADA600EAF03D /* CategoryList.swift in Sources */,
 				122B30D11C6A3FBC00C1B9D8 /* ExperienceUpdate.swift in Sources */,
 				1D70DE691DF730C1008AF216 /* StreamTextCellSizeCalculator.swift in Sources */,
+				12614C581E705940006FB0E5 /* PINRemoteImageManagerResult.swift in Sources */,
 				12F0E3B71A4333EC0012CEA2 /* AppSetup.swift in Sources */,
 				122B30D21C6A3FBC00C1B9D8 /* JSONAble.swift in Sources */,
 				1D8AFAD01A9691F90034DDAD /* DictionaryExtensions.swift in Sources */,

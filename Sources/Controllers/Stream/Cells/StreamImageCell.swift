@@ -5,6 +5,7 @@
 import FLAnimatedImage
 import PINRemoteImage
 import Alamofire
+import AVFoundation
 
 class StreamImageCell: StreamRegionableCell {
     static let reuseIdentifier = "StreamImageCell"
@@ -37,10 +38,18 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failWidthConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failHeightConstraint: NSLayoutConstraint!
+    fileprivate var foregroundObserver: NotificationObserver?
 
     // not used in StreamEmbedCell
     @IBOutlet weak var largeImagePlayButton: UIImageView?
     @IBOutlet weak var imageRightConstraint: NSLayoutConstraint!
+    fileprivate lazy var player: AVPlayer = self.createPlayer()
+    fileprivate func createPlayer() -> AVPlayer {
+        return AVPlayer()
+    }
+
+    fileprivate var playerLayer: AVPlayerLayer?
+    var videoObserver: NSObjectProtocol?
 
     var isGif = false
     var onHeightMismatch: OnHeightMismatch?
@@ -81,6 +90,7 @@ class StreamImageCell: StreamRegionableCell {
         case comment
         case repost
     }
+
     var margin: CGFloat {
         switch marginType {
         case .post:
@@ -91,6 +101,7 @@ class StreamImageCell: StreamRegionableCell {
             return StreamTextCellPresenter.repostMargin
         }
     }
+
     var marginType: StreamImageMargin = .post {
         didSet {
             leadingConstraint.constant = margin
@@ -121,6 +132,7 @@ class StreamImageCell: StreamRegionableCell {
         if let playButton = largeImagePlayButton {
             playButton.image = InterfaceImage.videoPlay.normalImage
         }
+
         if let buyButton = buyButton, let buyButtonGreen = buyButtonGreen {
             buyButton.isHidden = true
             buyButtonGreen.isHidden = true
@@ -149,8 +161,35 @@ class StreamImageCell: StreamRegionableCell {
         imageButton.addGestureRecognizer(longPressGesture)
     }
 
+    func setVideoURL(_ url: URL, withSize size: CGSize) {
+        imageSize = size
+        imageView.image = nil
+        imageView.alpha = 1
+        failImage.isHidden = true
+        failImage.alpha = 0
+        imageView.backgroundColor = UIColor.white
+        loadVideo(url)
+    }
+
+    func loadVideo(_ url: URL) {
+        let asset = AVURLAsset(url: url)
+        let item = AVPlayerItem(asset: asset)
+        player.actionAtItemEnd = .none
+        player.replaceCurrentItem(with: item)
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.frame = imageView.frame
+        playerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        if let layer = playerLayer {
+            imageView.layer.insertSublayer(layer, at: 0)
+        }
+        player.seek(to: kCMTimeZero)
+        player.play()
+    }
+
     func setImageURL(_ url: URL) {
         imageView.image = nil
+        player.pause()
         imageView.alpha = 0
         circle.pulse()
         failImage.isHidden = true
@@ -170,11 +209,11 @@ class StreamImageCell: StreamRegionableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        playerLayer?.frame = imageView.frame
         if let aspectRatio = aspectRatio, let imageSize = imageSize {
             let width = min(imageSize.width, self.frame.width - margin)
             let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
-            if actualHeight != frame.height {
+            if ceil(actualHeight) != ceil(frame.height) {
                 self.onHeightMismatch?(actualHeight)
             }
         }
@@ -197,22 +236,18 @@ class StreamImageCell: StreamRegionableCell {
         self.imageView.pin_setImage(from: url) { [weak self] result in
             guard let `self` = self else { return }
 
-            let success = result?.image != nil || result?.animatedImage != nil
-            guard success == true else {
+            guard result.hasImage else {
                 self.imageLoadFailed()
                 return
             }
 
-            let isAnimated = result?.animatedImage != nil
-
-            let imageSize = isAnimated ? result?.animatedImage.size : result?.image.size
-            self.imageSize = imageSize
+            self.imageSize = result.imageSize
 
             if self.serverProvidedAspectRatio == nil {
                 postNotification(StreamNotification.AnimateCellHeightNotification, value: self)
             }
 
-            if result?.resultType != .memoryCache {
+            if result.resultType != .memoryCache {
                 self.imageView.alpha = 0
                 UIView.animate(withDuration: 0.3,
                     delay:0.0,
@@ -229,6 +264,38 @@ class StreamImageCell: StreamRegionableCell {
             }
 
             self.layoutIfNeeded()
+        }
+    }
+
+    func addVideoObserver() {
+        videoObserver = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { [weak player] _ in
+            guard let player = player else { return }
+            nextTick {
+                player.seek(to: kCMTimeZero)
+                player.play()
+            }
+        }
+    }
+
+    func addForegroundObserver() {
+        foregroundObserver = NotificationObserver(notification: Application.Notifications.WillEnterForeground) { [weak player] _ in
+            guard let player = player else { return }
+            nextTick {
+                player.seek(to: kCMTimeZero)
+                player.play()
+            }
+        }
+    }
+
+    func addObservers() {
+        addVideoObserver()
+        addForegroundObserver()
+    }
+
+    func removeObservers() {
+        foregroundObserver?.removeObserver()
+        if let observer = videoObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
 
@@ -252,7 +319,8 @@ class StreamImageCell: StreamRegionableCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
+        removeObservers()
+        player.replaceCurrentItem(with: nil)
         marginType = .post
         imageButton.isUserInteractionEnabled = true
         onHeightMismatch = nil
@@ -299,5 +367,18 @@ class StreamImageCell: StreamRegionableCell {
 
         let responder = target(forAction: #selector(StreamEditingResponder.cellLongPressed(cell:)), withSender: self) as? StreamEditingResponder
         responder?.cellLongPressed(cell: self)
+    }
+}
+
+extension StreamImageCell: DismissableCell {
+
+    func didEndDisplay() {
+        player.pause()
+        removeObservers()
+    }
+
+    func willDisplay() {
+        addObservers()
+        player.play()
     }
 }

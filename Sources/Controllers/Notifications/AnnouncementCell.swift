@@ -36,7 +36,7 @@ class AnnouncementCell: UICollectionViewCell {
             if let url = config.imageURL {
                 imageView.pin_setImage(from: url) { result in
                     let height: CGFloat
-                    if let image = result?.image {
+                    if let image = result.image {
                         let size = image.size
                         height = size.height * Size.imageSize / size.width
                     }

@@ -32,10 +32,10 @@ class AvatarBarItem: UITabBarItem {
 
         guard let url = url else { return }
 
-        _ = manager?.downloadImage(with: url, options: [])  { [weak self] result in
+        _ = manager.downloadImage(with: url, options: [])  { [weak self] result in
             guard
                 let `self` = self,
-                let image = self.regularImage(result?.image),
+                let image = self.regularImage(result.image),
                 let selectedImage = self.selectedImage(image)
             else { return }
             nextTick {

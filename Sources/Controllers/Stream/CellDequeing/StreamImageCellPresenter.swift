@@ -43,20 +43,44 @@ struct StreamImageCellPresenter {
         guard
             let cell = cell as? StreamImageCell,
             let imageRegion = streamCellItem.type.data as? ImageRegion
-        else {
-            return
-        }
+        else { return }
 
         var attachmentToLoad: Attachment?
         var imageToLoad: URL?
         var showGifInThisCell = false
-        if let asset = imageRegion.asset, asset.isGif {
-            if streamKind.supportsLargeImages || !asset.isLargeGif {
-                attachmentToLoad = asset.optimized
+        var showVideoInThisCell = false
+
+        // video first because it is a smaller size than gifs
+        if let asset = imageRegion.asset, asset.hasVideo {
+            if streamKind.supportsLargeImages || !asset.isLargeVideo {
+                showVideoInThisCell = true
+            }
+
+            if showVideoInThisCell {
+                attachmentToLoad = asset.video
                 imageToLoad = asset.optimized?.url as URL?
-                showGifInThisCell = true
             }
             else {
+                cell.presentedImageUrl = asset.optimized?.url
+                cell.isLargeImage = true
+                attachmentToLoad = streamKind.isGridView ?
+                    asset.gridLayoutPreviewAttachment : asset.oneColumnPreviewAttachment
+            }
+            cell.isGif = true
+        }
+        // gifs next
+        else if let asset = imageRegion.asset, asset.isGif {
+            if streamKind.supportsLargeImages || !asset.isLargeGif {
+                showGifInThisCell = true
+            }
+
+            if showGifInThisCell {
+                attachmentToLoad = asset.optimized
+                imageToLoad = asset.optimized?.url as URL?
+            }
+            else {
+                attachmentToLoad = streamKind.isGridView ?
+                    asset.gridLayoutPreviewAttachment : asset.oneColumnPreviewAttachment
                 cell.presentedImageUrl = asset.optimized?.url
                 cell.isLargeImage = true
             }
@@ -89,7 +113,14 @@ struct StreamImageCellPresenter {
             postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
         }
 
-        if let image = imageToShow, !showGifInThisCell {
+        if let url = imageRegion.asset?.video?.url,
+            let width = imageRegion.asset?.video?.width,
+            let height = imageRegion.asset?.video?.height,
+            showVideoInThisCell {
+            cell.serverProvidedAspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
+            cell.setVideoURL(url, withSize: CGSize(width: width, height: height))
+        }
+        else if let image = imageToShow, !showGifInThisCell {
             cell.setImage(image)
         }
         else if let imageURL = imageToLoad {
@@ -97,8 +128,8 @@ struct StreamImageCellPresenter {
             cell.setImageURL(imageURL)
         }
         else if let imageURL = imageRegion.url {
-            cell.isGif = imageURL.hasGifExtension
             cell.setImageURL(imageURL)
+            cell.isGif = imageURL.hasGifExtension
         }
 
         cell.buyButtonURL = imageRegion.buyButtonURL
