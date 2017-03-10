@@ -11,6 +11,13 @@ class AssetSpec: QuickSpec {
     override func spec() {
         describe("Asset") {
 
+            let video: Attachment = stub(["type": "video/mp4"])
+            let mdpi: Attachment = stub([:])
+            let hdpi: Attachment = stub([:])
+            let xhdpi: Attachment = stub([:])
+            let videoAsset: Asset = stub(["video": video, "hdpi": hdpi, "xhdpi": xhdpi, "mdpi": mdpi])
+            let noVideoAsset: Asset = stub(["hdpi": hdpi, "xhdpi": xhdpi, "mdpi": mdpi])
+
             describe("aspectRatio") {
 
                 it("returns correct aspect ratio for video") {
@@ -40,53 +47,50 @@ class AssetSpec: QuickSpec {
             describe("oneColumnAttachment") {
 
                 it("returns video if present") {
-                    let video: Attachment = stub(["type": "video/mp4"])
-                    let asset: Asset = stub(["video": video])
-                    expect(asset.oneColumnAttachment) == video
+                    expect(videoAsset.oneColumnAttachment) == video
                 }
 
-                it("defaults to hdpi") {
-                    let hdpi: Attachment = stub([:])
-                    let asset: Asset = stub(["hdpi": hdpi])
-                    expect(asset.oneColumnAttachment) == hdpi
+                it("defaults to hdpi when narrow") {
+                    expect(noVideoAsset.oneColumnAttachment) == hdpi
+                }
+
+                it("defaults to xhdpi when wide") {
+                    let tmp = Window.width
+                    Window.width = 2000
+                    expect(noVideoAsset.oneColumnAttachment) == xhdpi
+                    Window.width = tmp
                 }
             }
 
             describe("oneColumnPreviewAttachment") {
 
-                it("returns hdpi") {
-                    let hdpi: Attachment = stub([:])
-                    let asset: Asset = stub(["hdpi": hdpi])
-                    expect(asset.oneColumnPreviewAttachment) == hdpi
+                it("returns hdpi when narrow") {
+                    expect(videoAsset.oneColumnPreviewAttachment) == hdpi
                 }
-            }
-            afterEach {
-                APIKeys.shared = APIKeys.default
+
+                it("defaults to xhdpi when wide") {
+                    let tmp = Window.width
+                    Window.width = 2000
+                    expect(videoAsset.oneColumnPreviewAttachment) == xhdpi
+                    Window.width = tmp
+                }
             }
 
             describe("gridLayoutAttachment") {
 
                 it("returns video if present") {
-                    let video: Attachment = stub(["type": "video/mp4"])
-                    let asset: Asset = stub(["video": video])
-                    expect(asset.gridLayoutAttachment) == video
+                    expect(videoAsset.gridLayoutAttachment) == video
                 }
 
                 it("defaults to hdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
-                    let hdpi: Attachment = stub([:])
-                    let mdpi: Attachment = stub([:])
-                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi])
-                    expect(asset.gridLayoutAttachment) == hdpi
+                    expect(noVideoAsset.gridLayoutAttachment) == hdpi
                     Window.width = tmp
                 }
 
                 it("defaults to mdpi when not wide") {
-                    let hdpi: Attachment = stub([:])
-                    let mdpi: Attachment = stub([:])
-                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi])
-                    expect(asset.gridLayoutAttachment) == mdpi
+                    expect(noVideoAsset.gridLayoutAttachment) == mdpi
                 }
             }
 
@@ -95,29 +99,19 @@ class AssetSpec: QuickSpec {
                 it("returns hdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
-                    let video: Attachment = stub(["type": "video/mp4"])
-                    let hdpi: Attachment = stub([:])
-                    let mdpi: Attachment = stub([:])
-                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi, "video": video])
-                    expect(asset.gridLayoutPreviewAttachment) == hdpi
+                    expect(videoAsset.gridLayoutPreviewAttachment) == hdpi
                     Window.width = tmp
                 }
 
                 it("returns mdpi when NOT wide") {
-                    let video: Attachment = stub(["type": "video/mp4"])
-                    let hdpi: Attachment = stub([:])
-                    let mdpi: Attachment = stub([:])
-                    let asset: Asset = stub(["hdpi": hdpi, "mdpi": mdpi, "video": video])
-                    expect(asset.gridLayoutPreviewAttachment) == mdpi
+                    expect(videoAsset.gridLayoutPreviewAttachment) == mdpi
                 }
             }
 
             context("videos") {
 
                 it("returns 'true' for 'hasVideo'") {
-                    let attachment: Attachment = stub(["type": "video/mp4"])
-                    let asset: Asset = stub(["video": attachment])
-                    expect(asset.hasVideo) == true
+                    expect(videoAsset.hasVideo) == true
                 }
 
                 it("returns 'true' for 'isLargeVideo'") {
@@ -164,6 +158,10 @@ class AssetSpec: QuickSpec {
                         domain: "ello.co"
                     )
                     APIKeys.shared = testingKeys
+                }
+
+                afterEach {
+                    APIKeys.shared = APIKeys.default
                 }
 
                 it("parses correctly") {
