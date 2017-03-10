@@ -236,7 +236,7 @@ class StreamImageCell: StreamRegionableCell {
         self.imageView.pin_setImage(from: url) { [weak self] result in
             guard let `self` = self else { return }
 
-            guard result.hasImage == true else {
+            guard result.hasImage else {
                 self.imageLoadFailed()
                 return
             }
@@ -287,6 +287,18 @@ class StreamImageCell: StreamRegionableCell {
         }
     }
 
+    func addObservers() {
+        addVideoObserver()
+        addForegroundObserver()
+    }
+
+    func removeObservers() {
+        foregroundObserver?.removeObserver()
+        if let observer = videoObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
     fileprivate func imageLoadFailed() {
         buyButton?.isHidden = true
         buyButtonGreen?.isHidden = true
@@ -307,7 +319,7 @@ class StreamImageCell: StreamRegionableCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
+        removeObservers()
         player.replaceCurrentItem(with: nil)
         marginType = .post
         imageButton.isUserInteractionEnabled = true
@@ -362,15 +374,11 @@ extension StreamImageCell: DismissableCell {
 
     func didEndDisplay() {
         player.pause()
-        foregroundObserver?.removeObserver()
-        if let observer = videoObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
+        removeObservers()
     }
 
     func willDisplay() {
-        addVideoObserver()
-        addForegroundObserver()
+        addObservers()
         player.play()
     }
 }

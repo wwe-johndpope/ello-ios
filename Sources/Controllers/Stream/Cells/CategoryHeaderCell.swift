@@ -288,7 +288,7 @@ private extension CategoryHeaderCell {
         self.imageView.pin_setImage(from: url) { [weak self] result in
             guard let `self` = self else { return }
 
-            guard result.hasImage == true else {
+            guard result.hasImage else {
                 self.imageLoadFailed()
                 return
             }
