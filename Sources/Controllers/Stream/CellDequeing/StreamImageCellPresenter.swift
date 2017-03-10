@@ -129,6 +129,7 @@ struct StreamImageCellPresenter {
         }
         else if let imageURL = imageRegion.url {
             cell.setImageURL(imageURL)
+            cell.isGif = imageURL.hasGifExtension
         }
 
         cell.buyButtonURL = imageRegion.buyButtonURL

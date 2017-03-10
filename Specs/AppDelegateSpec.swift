@@ -19,11 +19,11 @@ class AppDelegateSpec: QuickSpec {
                 describe("PINDiskCache") {
 
                     it("limits the size to 250 MB") {
-                        expect(PINRemoteImageManager.shared().cache.diskCache.byteLimit) == 250000000
+                        expect(PINRemoteImageManager.shared().pinCache?.diskCache.byteLimit) == 250000000
                     }
 
                     it("has an object age of 2 weeks") {
-                        expect(PINRemoteImageManager.shared().cache.diskCache.ageLimit) == 1209600
+                        expect(PINRemoteImageManager.shared().pinCache?.diskCache.ageLimit) == 1209600
                     }
                 }
             }
