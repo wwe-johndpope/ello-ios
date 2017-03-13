@@ -232,7 +232,7 @@ class OmnibarViewController: BaseElloViewController {
                 if let imageRegionURL = region.buyButtonURL {
                     buyButtonURL = imageRegionURL as URL
                 }
-                downloads.append((index, url as URL))
+                downloads.append((index, url))
                 regions.append(.imageURL(url))
             }
         }
@@ -246,7 +246,10 @@ class OmnibarViewController: BaseElloViewController {
 
         for (index, imageURL) in downloads {
             PINRemoteImageManager.shared().downloadImage(with: imageURL, options: []) { result in
-                if let image = result.image {
+                if let animatedImage = result.animatedImage {
+                    regions[index] = .imageData(animatedImage.posterImage, animatedImage.data, "image/gif")
+                }
+                else if let image = result.image {
                     regions[index] = .image(image)
                 }
                 else {
