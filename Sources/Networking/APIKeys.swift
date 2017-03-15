@@ -11,7 +11,6 @@ struct APIKeys {
     let key: String
     let secret: String
     let segmentKey: String
-    let httpProtocol: String
     let domain: String
 
     // MARK: Shared Keys
@@ -21,17 +20,31 @@ struct APIKeys {
             key: ElloKeys().oauthKey(),
             secret: ElloKeys().oauthSecret(),
             segmentKey: ElloKeys().segmentKey(),
-            httpProtocol: ElloKeys().httpProtocol(),
             domain: ElloKeys().domain()
             )
     }()
-    static let staging: APIKeys = {
+    static let ninja: APIKeys = {
         return APIKeys(
-            key: ElloKeys().stagingOauthKey(),
-            secret: ElloKeys().stagingOauthSecret(),
+            key: ElloKeys().ninjaOauthKey(),
+            secret: ElloKeys().ninjaOauthSecret(),
             segmentKey: ElloKeys().stagingSegmentKey(),
-            httpProtocol: ElloKeys().stagingHttpProtocol(),
-            domain: ElloKeys().stagingDomain()
+            domain: ElloKeys().ninjaDomain()
+            )
+    }()
+    static let stage1: APIKeys = {
+        return APIKeys(
+            key: ElloKeys().stage1OauthKey(),
+            secret: ElloKeys().stage1OauthSecret(),
+            segmentKey: ElloKeys().stagingSegmentKey(),
+            domain: ElloKeys().stage1Domain()
+            )
+    }()
+    static let stage2: APIKeys = {
+        return APIKeys(
+            key: ElloKeys().stage2OauthKey(),
+            secret: ElloKeys().stage2OauthSecret(),
+            segmentKey: ElloKeys().stagingSegmentKey(),
+            domain: ElloKeys().stage2Domain()
             )
     }()
 
@@ -39,11 +52,10 @@ struct APIKeys {
 
     // MARK: Initializers
 
-    init(key: String, secret: String, segmentKey: String, httpProtocol: String, domain: String) {
+    init(key: String, secret: String, segmentKey: String, domain: String) {
         self.key = key
         self.secret = secret
         self.segmentKey = segmentKey
-        self.httpProtocol = httpProtocol
         self.domain = domain
     }
 }
