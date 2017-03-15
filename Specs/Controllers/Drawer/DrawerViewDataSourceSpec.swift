@@ -24,8 +24,9 @@ class DrawerViewDataSourceSpec: QuickSpec {
 
                 describe("has the correct items") {
                     let expectations: [DrawerItem] = [
-                        DrawerItem(name: InterfaceString.Drawer.Store, type: .external("http://ello.threadless.com/")),
                         DrawerItem(name: InterfaceString.Drawer.Invite, type: .invite),
+                        DrawerItem(name: InterfaceString.Drawer.Magazine, type: .external("https://notforprint.co/")),
+                        DrawerItem(name: InterfaceString.Drawer.Store, type: .external("http://ello.threadless.com/")),
                         DrawerItem(name: InterfaceString.Drawer.Help, type: .external("https://ello.co/wtf/")),
                         DrawerItem(name: InterfaceString.Drawer.Logout, type: .logout),
                         DrawerItem(name: InterfaceString.Drawer.Version, type: .version),
