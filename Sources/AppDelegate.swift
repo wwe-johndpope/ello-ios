@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if GroupDefaults[DebugSettings.useStaging].bool == true {
-            APIKeys.shared = APIKeys.staging
+        if let debugServer = DebugServer.fromDefaults {
+            APIKeys.shared = debugServer.apiKeys
         }
 
         Keyboard.setup()

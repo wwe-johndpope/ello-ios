@@ -11,6 +11,28 @@ struct DebugSettings {
     static let useStaging = "UseStaging"
 }
 
+enum DebugServer: String {
+    static var fromDefaults: DebugServer? {
+        guard
+            let name = GroupDefaults[DebugSettings.useStaging].string,
+            let server = DebugServer(rawValue: name)
+        else { return nil }
+        return server
+    }
+
+    case ninja = "Ninja"
+    case stage1 = "Stage 1"
+    case stage2 = "Stage 2"
+
+    var apiKeys: APIKeys {
+        switch self {
+        case .ninja: return APIKeys.ninja
+        case .stage1: return APIKeys.stage1
+        case .stage2: return APIKeys.stage2
+        }
+    }
+}
+
 class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let tableView = UITableView()
@@ -33,17 +55,27 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         let appController = UIApplication.shared.keyWindow!.rootViewController as! AppViewController
-        let isOnStaging = GroupDefaults[DebugSettings.useStaging].bool ?? false
+        let debugServer = DebugServer.fromDefaults
 
-        addAction(name: "Use \(isOnStaging ? "Production" : "Staging")") {
-            GroupDefaults[DebugSettings.useStaging] = !isOnStaging
-            let alertController = AlertViewController(message: "Now you gotta restart.")
+        addAction(name: "Server: using \(debugServer?.rawValue ?? "Production")") {
+            let alertController = AlertViewController(message: "What server do you want to use:")
 
-            let okCancelAction = AlertAction(title: "Restart", style: .dark) { _ in
+            let option = AlertAction(title: "Production", style: .dark) { _ in
+                GroupDefaults[DebugSettings.useStaging] = nil
                 postNotification(AuthenticationNotifications.userLoggedOut, value: ())
                 Crashlytics.sharedInstance().crash()
             }
-            alertController.addAction(okCancelAction)
+            alertController.addAction(option)
+
+            let options: [DebugServer] = [.ninja, .stage1, .stage2]
+            for option in options {
+                let action = AlertAction(title: option.rawValue, style: .dark) { _ in
+                    GroupDefaults[DebugSettings.useStaging] = option.rawValue
+                    postNotification(AuthenticationNotifications.userLoggedOut, value: ())
+                    Crashlytics.sharedInstance().crash()
+                }
+                alertController.addAction(action)
+            }
 
             appController.present(alertController, animated: true, completion: nil)
         }
