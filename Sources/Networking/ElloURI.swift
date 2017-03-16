@@ -127,7 +127,7 @@ enum ElloURI: String {
         }
     }
 
-    static var baseURL: String { return "\(APIKeys.shared.httpProtocol)://\(APIKeys.shared.domain)" }
+    static var baseURL: String { return APIKeys.shared.domain }
 
     // this is taken directly from app/models/user.rb
     static let usernameRegex = "([\\w\\-]+)"

@@ -811,7 +811,7 @@ extension AppViewController {
         #if DEBUG
             return true
         #else
-            return AuthToken().isStaff
+            return AuthToken().isStaff || DebugServer.fromDefaults != nil
         #endif
     }
 

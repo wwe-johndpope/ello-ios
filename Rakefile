@@ -15,19 +15,28 @@ namespace :generate do
   task :keys do
     has_all_keys = true
     keys = [
-      ['StagingOauthKey', 'STAGING_CLIENT_KEY'],
-      ['StagingOauthSecret', 'STAGING_CLIENT_SECRET'],
-      ['StagingDomain', 'STAGING_DOMAIN'],
-      ['StagingHttpProtocol', 'STAGING_HTTP_PROTOCOL'],
-      ['StagingSegmentKey', 'STAGING_SEGMENT_KEY'],
       ['OauthKey', 'PROD_CLIENT_KEY'],
       ['OauthSecret', 'PROD_CLIENT_SECRET'],
-      ['TeamId', 'ELLO_TEAM_ID'],
       ['Domain', 'PROD_DOMAIN'],
-      ['HttpProtocol', 'PROD_HTTP_PROTOCOL'],
+      ['SegmentKey', 'PROD_SEGMENT_KEY'],
+
+      ['NinjaOauthKey', 'NINJA_CLIENT_KEY'],
+      ['NinjaOauthSecret', 'NINJA_CLIENT_SECRET'],
+      ['NinjaDomain', 'NINJA_DOMAIN'],
+
+      ['Stage1OauthKey', 'STAGE1_CLIENT_KEY'],
+      ['Stage1OauthSecret', 'STAGE1_CLIENT_SECRET'],
+      ['Stage1Domain', 'STAGE1_DOMAIN'],
+
+      ['Stage2OauthKey', 'STAGE2_CLIENT_KEY'],
+      ['Stage2OauthSecret', 'STAGE2_CLIENT_SECRET'],
+      ['Stage2Domain', 'STAGE2_DOMAIN'],
+
+      ['StagingSegmentKey', 'STAGING_SEGMENT_KEY'],
+
+      ['TeamId', 'ELLO_TEAM_ID'],
       ['SodiumChloride', 'INVITE_FRIENDS_SALT'],
       ['CrashlyticsKey', 'CRASHLYTICS_KEY'],
-      ['SegmentKey', 'PROD_SEGMENT_KEY'],
     ]
     keys.each do |name, env_name|
       has_all_keys = has_all_keys && check_env(env_name)
