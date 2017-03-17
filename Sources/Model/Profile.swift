@@ -9,7 +9,8 @@ import SwiftyJSON
 // version 1: initial
 // version 2: added hasAutoWatchEnabled and moved in notifyOfWatch* settings
 // version 3: added notifyOfAnnouncementsViaPush
-let ProfileVersion: Int = 3
+// version 4: added hasAnnouncementsEnabled
+let ProfileVersion: Int = 4
 
 @objc(Profile)
 final class Profile: JSONAble {
@@ -49,6 +50,7 @@ final class Profile: JSONAble {
     var notifyOfWatchesViaEmail: Bool
     var notifyOfCommentsOnPostWatchViaPush: Bool
     var notifyOfCommentsOnPostWatchViaEmail: Bool
+    var hasAnnouncementsEnabled: Bool
     let discoverable: Bool
     // optional
     var gaUniqueId: String?
@@ -87,6 +89,7 @@ final class Profile: JSONAble {
         notifyOfWatchesViaEmail: Bool,
         notifyOfCommentsOnPostWatchViaPush: Bool,
         notifyOfCommentsOnPostWatchViaEmail: Bool,
+        hasAnnouncementsEnabled: Bool,
         discoverable: Bool)
     {
         self.id = id
@@ -122,6 +125,7 @@ final class Profile: JSONAble {
         self.notifyOfWatchesViaEmail = notifyOfWatchesViaEmail
         self.notifyOfCommentsOnPostWatchViaPush = notifyOfCommentsOnPostWatchViaPush
         self.notifyOfCommentsOnPostWatchViaEmail = notifyOfCommentsOnPostWatchViaEmail
+        self.hasAnnouncementsEnabled = hasAnnouncementsEnabled
         self.discoverable = discoverable
         super.init(version: ProfileVersion)
     }
@@ -143,6 +147,13 @@ final class Profile: JSONAble {
         self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
         self.hasAdNotificationsEnabled = decoder.decodeKey("hasAdNotificationsEnabled")
         let version: Int = decoder.decodeKey("version")
+
+        if version < 4 {
+            self.hasAnnouncementsEnabled = true
+        }
+        else {
+            self.hasAnnouncementsEnabled = decoder.decodeKey("hasAnnouncementsEnabled")
+        }
 
         if version < 3 {
             self.notifyOfAnnouncementsViaPush = true
@@ -223,6 +234,7 @@ final class Profile: JSONAble {
         coder.encodeObject(notifyOfWatchesViaEmail, forKey: "notifyOfWatchesViaEmail")
         coder.encodeObject(notifyOfCommentsOnPostWatchViaPush, forKey: "notifyOfCommentsOnPostWatchViaPush")
         coder.encodeObject(notifyOfCommentsOnPostWatchViaEmail, forKey: "notifyOfCommentsOnPostWatchViaEmail")
+        coder.encodeObject(hasAnnouncementsEnabled, forKey: "hasAnnouncementsEnabled")
         coder.encodeObject(discoverable, forKey: "discoverable")
         super.encode(with: coder.coder)
     }
@@ -266,6 +278,7 @@ final class Profile: JSONAble {
             notifyOfWatchesViaEmail: json["notify_of_watches_via_email"].boolValue,
             notifyOfCommentsOnPostWatchViaPush: json["notify_of_comments_on_post_watch_via_push"].boolValue,
             notifyOfCommentsOnPostWatchViaEmail: json["notify_of_comments_on_post_watch_via_email"].boolValue,
+            hasAnnouncementsEnabled: json["has_announcements_enabled"].boolValue,
             discoverable: json["discoverable"].boolValue
         )
         profile.gaUniqueId = json["ga_unique_id"].string
