@@ -281,7 +281,7 @@ class ElloURISpec: QuickSpec {
                         "with Explore Recommended urls": (input: "explore/recommended", output: .exploreRecommended),
                         "with Exit urls": (input: "exit", output: .exit),
                         "with FaceMaker urls": (input: "facemaker", output: .faceMaker),
-                        "with ForgotMyPassword urls": (input: "forgot-my-password", output: .forgotMyPassword),
+                        "with ForgotMyPassword urls": (input: "forgot-password", output: .forgotMyPassword),
                         "with Friends urls": (input: "friends", output: .friends),
                         "with FreedomOfSpeech urls": (input: "freedom-of-speech", output: .freedomOfSpeech),
                         "with Invitations urls": (input: "invitations", output: .invitations),
