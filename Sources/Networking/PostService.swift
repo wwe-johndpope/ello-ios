@@ -5,13 +5,6 @@
 import Foundation
 import FutureKit
 
-typealias PostSuccessCompletion = (_ post: Post, _ responseConfig: ResponseConfig) -> Void
-typealias PostCommentsSuccessCompletion = (_ comments: [ElloComment], _ responseConfig: ResponseConfig) -> Void
-typealias PostLoversSuccessCompletion = (_ users: [User], _ responseConfig: ResponseConfig) -> Void
-typealias PostRepostersSuccessCompletion = (_ users: [User], _ responseConfig: ResponseConfig) -> Void
-typealias UsernamesSuccessCompletion = (_ usernames: [String]) -> Void
-typealias CommentSuccessCompletion = (_ comment: ElloComment, _ responseConfig: ResponseConfig) -> Void
-typealias DeletePostSuccessCompletion = () -> Void
 
 struct PostService {
 
@@ -54,7 +47,7 @@ struct PostService {
             success: { _ in })
     }
 
-    func loadPostComments(_ postId: String)  -> Future<([ElloComment], ResponseConfig)> {
+    func loadPostComments(_ postId: String) -> Future<([ElloComment], ResponseConfig)> {
         let promise = Promise<([ElloComment], ResponseConfig)>()
         ElloProvider.shared.elloRequest(
             ElloAPI.postComments(postId: postId),
@@ -65,6 +58,9 @@ struct PostService {
                         comment.loadedFromPostId = postId
                     }
                     promise.completeWithSuccess((comments, responseConfig))
+                }
+                else if data as? String == "" {
+                    promise.completeWithSuccess(([], responseConfig))
                 }
                 else {
                     let error = NSError.uncastableJSONAble()
@@ -77,46 +73,50 @@ struct PostService {
         return promise.future
     }
 
-    func loadPostLovers(
-        _ postId: String,
-        success: @escaping PostLoversSuccessCompletion,
-        failure: @escaping ElloFailureCompletion = { _ in })
-    {
+    func loadPostLovers(_ postId: String) -> Future<[User]> {
+        let promise = Promise<[User]>()
         ElloProvider.shared.elloRequest(
             ElloAPI.postLovers(postId: postId),
             success: { (data, responseConfig) in
                 if let users = data as? [User] {
                     Preloader().preloadImages(users)
-                    success(users, responseConfig)
+                    promise.completeWithSuccess(users)
+                }
+                else if data as? String == "" {
+                    promise.completeWithSuccess([])
                 }
                 else {
-                    ElloProvider.unCastableJSONAble(failure)
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
                 }
             },
             failure: { (error, statusCode) in
-                failure(error, statusCode)
+                promise.completeWithFail(error)
             })
+        return promise.future
     }
 
-    func loadPostReposters(
-        _ postId: String,
-        success: @escaping PostRepostersSuccessCompletion,
-        failure: @escaping ElloFailureCompletion = { _ in })
-    {
+    func loadPostReposters(_ postId: String) -> Future<[User]> {
+        let promise = Promise<[User]>()
         ElloProvider.shared.elloRequest(
             ElloAPI.postReposters(postId: postId),
             success: { (data, responseConfig) in
                 if let users = data as? [User] {
                     Preloader().preloadImages(users)
-                    success(users, responseConfig)
+                    promise.completeWithSuccess(users)
+                }
+                else if data as? String == "" {
+                    promise.completeWithSuccess([])
                 }
                 else {
-                    ElloProvider.unCastableJSONAble(failure)
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
                 }
             },
             failure: { (error, statusCode) in
-                failure(error, statusCode)
+                promise.completeWithFail(error)
         })
+        return promise.future
     }
 
     func loadRelatedPosts(_ postId: String)  -> Future<[Post]> {
@@ -139,33 +139,28 @@ struct PostService {
         return promise.future
     }
 
-    func loadComment(
-        _ postId: String,
-        commentId: String,
-        success: @escaping CommentSuccessCompletion,
-        failure: @escaping ElloFailureCompletion = { _ in })
-    {
+    func loadComment(_ postId: String, commentId: String) -> Future<ElloComment> {
+        let promise = Promise<ElloComment>()
         ElloProvider.shared.elloRequest(
             ElloAPI.commentDetail(postId: postId, commentId: commentId),
             success: { (data, responseConfig) in
                 if let comment = data as? ElloComment {
                     comment.loadedFromPostId = postId
-                    success(comment, responseConfig)
+                    promise.completeWithSuccess(comment)
                 }
                 else {
-                    ElloProvider.unCastableJSONAble(failure) // FIXME - These were optional pre Swift 3, are we preared for this fire?
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
                 }
             },
             failure: { (error, statusCode) in
-                failure(error, statusCode)
+                promise.completeWithFail(error)
             })
+        return promise.future
     }
 
-    func loadReplyAll(
-        _ postId: String,
-        success: @escaping UsernamesSuccessCompletion,
-        failure: @escaping ElloEmptyCompletion)
-    {
+    func loadReplyAll(_ postId: String) -> Future<[String]> {
+        let promise = Promise<[String]>()
         ElloProvider.shared.elloRequest(
             ElloAPI.postReplyAll(postId: postId),
             success: { (usernames, _) in
@@ -173,33 +168,41 @@ struct PostService {
                     let strings = usernames
                         .map { $0.username }
                     let uniq = strings.unique()
-                    success(uniq)
+                    promise.completeWithSuccess(uniq)
                 }
                 else {
-                    failure()
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
                 }
-            }, failure: { _ in failure() })
+            }, failure: { (error, _) in
+                promise.completeWithFail(error)
+            })
+        return promise.future
     }
 
-    func deletePost(
-        _ postId: String,
-        success: @escaping ElloEmptyCompletion,
-        failure: @escaping ElloFailureCompletion)
-    {
+    func deletePost(_ postId: String) -> Future<()> {
+        let promise = Promise<()>()
         ElloProvider.shared.elloRequest(ElloAPI.deletePost(postId: postId),
             success: { (_, _) in
                 URLCache.shared.removeAllCachedResponses()
-                success()
-            }, failure: failure
+                promise.completeWithSuccess(())
+            }, failure: { (error, _) in
+                promise.completeWithFail(error)
+            }
         )
+        return promise.future
     }
 
-    func deleteComment(_ postId: String, commentId: String, success: @escaping ElloEmptyCompletion, failure: @escaping ElloFailureCompletion) {
+    func deleteComment(_ postId: String, commentId: String) -> Future<()> {
+        let promise = Promise<()>()
         ElloProvider.shared.elloRequest(ElloAPI.deleteComment(postId: postId, commentId: commentId),
             success: { (_, _) in
-                success()
-            }, failure: failure
+                promise.completeWithSuccess(())
+            }, failure: { (error, _) in
+                promise.completeWithFail(error)
+            }
         )
+        return promise.future
     }
 
     func toggleWatchPost(_ post: Post, watching: Bool) -> Future<Post> {

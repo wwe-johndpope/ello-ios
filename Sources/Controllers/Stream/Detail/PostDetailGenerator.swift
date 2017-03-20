@@ -163,9 +163,8 @@ private extension PostDetailGenerator {
         displayLoversOperation.addDependency(doneOperation)
         queue.addOperation(displayLoversOperation)
 
-        PostService().loadPostLovers(
-            postParam,
-            success: { [weak self] (users, _) in
+        PostService().loadPostLovers(postParam)
+            .onSuccess { [weak self] users in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -181,10 +180,10 @@ private extension PostDetailGenerator {
                         self.destination?.replacePlaceholder(type: .postLovers, items: loversItems) {}
                     }
                 }
-            },
-            failure: { _ in
+            }
+            .onFail { _ in
                 print("failed load post lovers")
-        })
+            }
     }
 
     func loadPostReposters(_ doneOperation: AsyncOperation) {
@@ -194,9 +193,8 @@ private extension PostDetailGenerator {
         displayRepostersOperation.addDependency(doneOperation)
         queue.addOperation(displayRepostersOperation)
 
-        PostService().loadPostReposters(
-            postParam,
-            success: { [weak self] (users, _) in
+        PostService().loadPostReposters(postParam)
+            .onSuccess { [weak self] users in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -212,10 +210,10 @@ private extension PostDetailGenerator {
                         self.destination?.replacePlaceholder(type: .postReposters, items: repostersItems) {}
                     }
                 }
-            },
-            failure: { _ in
+            }
+            .onFail { _ in
                 print("failed load post reposters")
-        })
+            }
     }
 
     func loadRelatedPosts(_ doneOperation: AsyncOperation) {
@@ -231,7 +229,7 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard relatedPosts.count > 0 else { return }
 
-                let relatedPostItems = self.parse(jsonables: posts)
+                let relatedPostItems = self.parse(jsonables: relatedPosts)
                 displayRelatedPostsOperation.run {
                     inForeground {
                         self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems) {}

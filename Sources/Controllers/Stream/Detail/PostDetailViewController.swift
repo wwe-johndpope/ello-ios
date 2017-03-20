@@ -212,14 +212,14 @@ final class PostDetailViewController: StreamableViewController {
             }
 
             postNotification(PostChangedNotification, value: (post, .delete))
-            PostService().deletePost(post.id,
-                success: {
+            PostService().deletePost(post.id)
+                .onSuccess {
                     Tracker.shared.postDeleted(post)
-                },
-                failure: { (error, statusCode)  in
+                }
+                .onFail { error in
                     // TODO: add error handling
-                    print("failed to delete post, error: \(error.elloErrorMessage ?? error.localizedDescription)")
-                })
+                    print("failed to delete post, error: \(error)")
+                }
         }
         let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
 
