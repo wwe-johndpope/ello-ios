@@ -59,6 +59,7 @@ enum ElloAPI {
     case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
+    case postRelatedPosts(postId: String)
     case postReposters(postId: String)
     case currentUserBlockedList
     case currentUserMutedList
@@ -165,6 +166,7 @@ enum ElloAPI {
              .createPost,
              .following,
              .postDetail,
+             .postRelatedPosts,
              .rePost,
              .searchForPosts,
              .updatePost,
@@ -219,7 +221,7 @@ extension ElloAPI {
              .categories, .category, .categoryPosts, .discover, .pagePromotionals,
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
-             .postComments, .postLovers, .postReposters, .postDetail, .postViews,
+             .postComments, .postDetail, .postLovers, .postRelatedPosts,  .postReposters, .postViews,
              .join, .deleteSubscriptions, .userStream:
             return true
         case let .infiniteScroll(_, elloApi):
@@ -393,6 +395,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/lovers"
         case let .postReplyAll(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/commenters_usernames"
+        case let .postRelatedPosts(postId):
+            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/related_posts"
         case let .postReposters(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/reposters"
         case .currentUserProfile,
@@ -519,6 +523,8 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("posts_listing_users_who_have_reposted_a_post")
         case .postReplyAll:
             return stubbedData("usernames")
+        case .postRelatedPosts:
+            return stubbedData("posts_searching_for_posts")
         case .currentUserBlockedList:
             return stubbedData("profile_listing_blocked_users")
         case .currentUserMutedList:
