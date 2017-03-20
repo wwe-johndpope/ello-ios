@@ -151,7 +151,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .onFail { [weak self] _ in
+            .onFail { _ in
                 print("failed load post comments")
             }
     }

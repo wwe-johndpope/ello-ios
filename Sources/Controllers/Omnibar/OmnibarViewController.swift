@@ -73,6 +73,9 @@ class OmnibarViewController: BaseElloViewController {
                     self.prepareScreenForEditing(body, isComment: true)
                 }
             }
+            .onFail { error in
+                print("could not edit comment: \(error)")
+            }
     }
 
     convenience init(editPost post: Post) {
