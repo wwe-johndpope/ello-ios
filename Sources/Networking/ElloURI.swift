@@ -45,7 +45,7 @@ enum ElloURI: String {
     case exploreRecent = "explore/recent"
     case exploreTrending = "explore/trending"
     case faceMaker = "facemaker"
-    case forgotMyPassword = "forgot-my-password"
+    case forgotMyPassword = "forgot-password"
     case freedomOfSpeech = "freedom-of-speech"
     case invitations = "invitations"
     case invite = "join/([^\\/]+)/?$"

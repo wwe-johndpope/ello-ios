@@ -46,7 +46,7 @@ extension LoginViewController: LoginDelegate {
         browser.title = InterfaceString.Login.ForgotPassword
         browser.toolbarHidden = true
 
-        present(nav, animated: true, completion: nil)
+        present(nav, animated: true)
     }
 
     func onePasswordAction(_ sender: UIView) {
