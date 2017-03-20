@@ -130,25 +130,30 @@ private extension PostDetailGenerator {
         displayCommentsOperation.addDependency(doneOperation)
         queue.addOperation(displayCommentsOperation)
 
-        PostService().loadPostComments(
-            postParam,
-            success: { [weak self] (comments, responseConfig) in
+        PostService().loadPostComments(postParam)
+            .onSuccess { [weak self] (comments, responseConfig) in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                let commentItems = self.parse(jsonables: comments)
+                let loadMoreComments: [StreamCellItem]
+                if let post = self.post, let currentUser = self.currentUser {
+                    loadMoreComments = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .loadMoreComments)]
+                }
+                else {
+                    loadMoreComments = []
+                }
+
+                let commentItems = self.parse(jsonables: comments) + loadMoreComments
                 displayCommentsOperation.run {
                     self.destination?.setPagingConfig(responseConfig: responseConfig)
                     inForeground {
-                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {
-                            self.destination?.pagingEnabled = true
-                        }
+                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {}
                     }
                 }
-            },
-            failure: { _ in
+            }
+            .onFail { [weak self] _ in
                 print("failed load post comments")
-        })
+            }
     }
 
     func loadPostLovers(_ doneOperation: AsyncOperation) {

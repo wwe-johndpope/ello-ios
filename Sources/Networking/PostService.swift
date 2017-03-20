@@ -54,11 +54,8 @@ struct PostService {
             success: { _ in })
     }
 
-    func loadPostComments(
-        _ postId: String,
-        success: @escaping PostCommentsSuccessCompletion,
-        failure: @escaping ElloFailureCompletion = { _ in })
-    {
+    func loadPostComments(_ postId: String)  -> Future<([ElloComment], ResponseConfig)> {
+        let promise = Promise<([ElloComment], ResponseConfig)>()
         ElloProvider.shared.elloRequest(
             ElloAPI.postComments(postId: postId),
             success: { (data, responseConfig) in
@@ -67,15 +64,17 @@ struct PostService {
                     for comment in comments {
                         comment.loadedFromPostId = postId
                     }
-                    success(comments, responseConfig)
+                    promise.completeWithSuccess((comments, responseConfig))
                 }
                 else {
-                    ElloProvider.unCastableJSONAble(failure)
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
                 }
             },
             failure: { (error, statusCode) in
-                failure(error, statusCode)
+                promise.completeWithFail(error)
         })
+        return promise.future
     }
 
     func loadPostLovers(
