@@ -31,6 +31,7 @@ enum StreamCellType: Equatable {
     case inviteFriends
     case onboardingInviteFriends
     case emptyStream(height: CGFloat)
+    case loadMoreComments
     case noPosts
     case notification
     case pagePromotionalHeader
@@ -68,6 +69,7 @@ enum StreamCellType: Equatable {
         case postLovers
         case postReposters
         case postSocialPadding
+        case postRelatedPosts
 
         case cellNotFound
     }
@@ -86,6 +88,7 @@ enum StreamCellType: Equatable {
         image(data: nil),
         inviteFriends,
         onboardingInviteFriends,
+        loadMoreComments,
         noPosts,
         notification,
         pagePromotionalHeader,
@@ -134,6 +137,8 @@ enum StreamCellType: Equatable {
         case .footer: return StreamFooterCell.reuseIdentifier
         case .image: return StreamImageCell.reuseIdentifier
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.reuseIdentifier
+        // case .loadMoreComments: return LoadMoreCommentsCell.reuseIdentifier
+        case .loadMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
         case .noPosts: return NoPostsCell.reuseIdentifier
         case .notification: return NotificationCell.reuseIdentifier
         case .placeholder: return "Placeholder"
@@ -185,6 +190,7 @@ enum StreamCellType: Equatable {
         case .footer: return StreamFooterCellPresenter.configure
         case .image: return StreamImageCellPresenter.configure
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCellPresenter.configure
+        // case .loadMoreComments: return LoadMoreCommentsCellPresenter.configure
         case .noPosts: return NoPostsCellPresenter.configure
         case .notification: return NotificationCellPresenter.configure
         case .pagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
@@ -216,6 +222,8 @@ enum StreamCellType: Equatable {
         case .footer: return StreamFooterCell.self
         case .image: return StreamImageCell.self
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.self
+        // case .loadMoreComments: return LoadMoreCommentsCell.self
+        case .loadMoreComments: return StreamSeeMoreCommentsCell.self
         case .noPosts: return NoPostsCell.self
         case .notification: return NotificationCell.self
         case .placeholder: return UICollectionViewCell.self
@@ -255,6 +263,8 @@ enum StreamCellType: Equatable {
             return 44
         case .header:
             return 70
+        case .loadMoreComments:
+            return 60
         case .noPosts:
             return 215
         case .notification:
@@ -299,6 +309,7 @@ enum StreamCellType: Equatable {
              .inviteFriends,
              .onboardingInviteFriends,
              .emptyStream,
+             .loadMoreComments,
              .noPosts,
              .notification,
              .pagePromotionalHeader,

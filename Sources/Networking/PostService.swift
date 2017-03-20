@@ -120,6 +120,26 @@ struct PostService {
         })
     }
 
+    func loadRelatedPosts(_ postId: String)  -> Future<[Post]> {
+        let promise = Promise<[Post]>()
+//        ElloProvider.shared.elloRequest(
+//            ElloAPI.relatedPosts(postId: postId),
+//            success: { (data, _) in
+//                if let posts = data as? [Post] {
+//                    Preloader().preloadImages(posts)
+//                    promise.completeWithSuccess(posts)
+//                }
+//                else {
+//                    let error = NSError.uncastableJSONAble()
+//                    promise.completeWithFail(error)
+//                }
+//        },
+//            failure: { (error, statusCode) in
+//                promise.completeWithFail(error)
+//        })
+        return promise.future
+    }
+
     func loadComment(
         _ postId: String,
         commentId: String,

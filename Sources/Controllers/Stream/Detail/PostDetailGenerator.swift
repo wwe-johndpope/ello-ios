@@ -48,6 +48,7 @@ final class PostDetailGenerator: StreamGenerator {
         loadPostComments(doneOperation)
         loadPostLovers(doneOperation)
         loadPostReposters(doneOperation)
+        loadRelatedPosts(doneOperation)
     }
 
 }
@@ -61,7 +62,8 @@ private extension PostDetailGenerator {
             StreamCellItem(type: .placeholder, placeholderType: .postReposters),
             StreamCellItem(type: .placeholder, placeholderType: .postSocialPadding),
             StreamCellItem(type: .placeholder, placeholderType: .postCommentBar),
-            StreamCellItem(type: .placeholder, placeholderType: .postComments)
+            StreamCellItem(type: .placeholder, placeholderType: .postComments),
+            StreamCellItem(type: .placeholder, placeholderType: .postRelatedPosts),
         ])
     }
 
@@ -209,6 +211,31 @@ private extension PostDetailGenerator {
             failure: { _ in
                 print("failed load post reposters")
         })
+    }
+
+    func loadRelatedPosts(_ doneOperation: AsyncOperation) {
+        guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
+
+        let displayRelatedPostsOperation = AsyncOperation()
+        displayRelatedPostsOperation.addDependency(doneOperation)
+        queue.addOperation(displayRelatedPostsOperation)
+
+        PostService().loadRelatedPosts(postParam)
+            .onSuccess { [weak self] relatedPosts in
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                guard relatedPosts.count > 0 else { return }
+
+                let relatedPostItems = self.parse(jsonables: posts)
+                displayRelatedPostsOperation.run {
+                    inForeground {
+                        self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems) {}
+                    }
+                }
+            }
+            .onFail { _ in
+                print("failed load post reposters")
+            }
     }
 
     func userAvatarCellItems(
