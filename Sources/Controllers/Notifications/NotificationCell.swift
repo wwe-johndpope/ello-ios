@@ -4,6 +4,7 @@
 
 import FLAnimatedImage
 import TimeAgoInWords
+import AVFoundation
 
 
 @objc
@@ -13,9 +14,22 @@ protocol NotificationResponder: class {
     func postTapped(_ post: Post)
 }
 
+enum NotificationCellMode {
+    case image
+    case video
+    case normal
+
+    var hasImageOrVideo: Bool {
+        switch self {
+        case .normal: return false
+        default: return true
+        }
+    }
+}
 
 class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
+    var mode: NotificationCellMode = .normal
 
     struct Size {
         static let BuyButtonSize: CGFloat = 15
@@ -109,6 +123,44 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
                 messageVisible = false
             }
         }
+    }
+
+    fileprivate lazy var player: AVPlayer = self.createPlayer()
+    fileprivate func createPlayer() -> AVPlayer {
+        return AVPlayer()
+    }
+    fileprivate var playerLayer: AVPlayerLayer?
+    fileprivate var foregroundObserver: NotificationObserver?
+    var videoObserver: NSObjectProtocol?
+
+    func setVideoURL(_ url: URL, withSize size: CGSize) {
+        self.aspectRatio = size.width / size.height
+        let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
+        if currentRatio != self.aspectRatio {
+            self.setNeedsLayout()
+        }
+
+        notificationImageView.image = nil
+        notificationImageView.alpha = 1
+        notificationImageView.backgroundColor = UIColor.white
+        loadVideo(url)
+    }
+
+    func loadVideo(_ url: URL) {
+        let asset = AVURLAsset(url: url)
+        let item = AVPlayerItem(asset: asset)
+        player.actionAtItemEnd = .none
+        player.replaceCurrentItem(with: item)
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = AVPlayerLayer(player: player)
+
+        playerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        if let layer = playerLayer {
+            notificationImageView.layer.insertSublayer(layer, at: 0)
+        }
+        playerLayer?.frame = notificationImageView.frame
+        player.seek(to: kCMTimeZero)
+        player.play()
     }
 
     var imageURL: URL? {
@@ -223,24 +275,23 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
         let outerFrame = contentView.bounds.inset(all: Size.SideMargins)
-        let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: imageURL != nil)
+        let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: mode.hasImageOrVideo)
         separator.frame = contentView.bounds.fromBottom().grow(up: 1)
 
         avatarButton.frame = outerFrame.with(size: CGSize(width: Size.AvatarSize, height: Size.AvatarSize))
 
-        if imageURL == nil {
-            notificationImageView.frame = .zero
-        }
-        else {
+        if mode.hasImageOrVideo {
             notificationImageView.frame = outerFrame.fromRight()
                 .grow(left: Size.ImageWidth)
                 .with(height: Size.ImageWidth / aspectRatio)
             buyButtonImage.frame.origin = CGPoint(
                 x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
                 y: notificationImageView.frame.minY + Size.BuyButtonMargin
-                )
+            )
+        }
+        else {
+            notificationImageView.frame = .zero
         }
 
         titleTextView.frame = avatarButton.frame.fromRight()
@@ -295,10 +346,46 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         if actualHeight != ceil(frame.size.height) && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
             self.onHeightMismatch?(actualHeight)
         }
+        playerLayer?.frame = notificationImageView.bounds
+    }
+
+    func addVideoObserver() {
+        videoObserver = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { [weak player] _ in
+            guard let player = player else { return }
+            nextTick {
+                player.seek(to: kCMTimeZero)
+                player.play()
+            }
+        }
+    }
+
+    func addForegroundObserver() {
+        foregroundObserver = NotificationObserver(notification: Application.Notifications.WillEnterForeground) { [weak player] _ in
+            guard let player = player else { return }
+            nextTick {
+                player.seek(to: kCMTimeZero)
+                player.play()
+            }
+        }
+    }
+
+    func addObservers() {
+        addVideoObserver()
+        addForegroundObserver()
+    }
+
+    func removeObservers() {
+        foregroundObserver?.removeObserver()
+        if let observer = videoObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        removeObservers()
+        mode = .normal
+        player.replaceCurrentItem(with: nil)
         messageWebView.stopLoading()
         messageWebView.isHidden = true
         avatarButton.pin_cancelImageDownload()
@@ -380,4 +467,17 @@ extension NotificationCell {
         responder?.userTappedAuthor(cell: self)
     }
 
+}
+
+extension NotificationCell: DismissableCell {
+
+    func didEndDisplay() {
+        player.pause()
+        removeObservers()
+    }
+
+    func willDisplay() {
+        addObservers()
+        player.play()
+    }
 }

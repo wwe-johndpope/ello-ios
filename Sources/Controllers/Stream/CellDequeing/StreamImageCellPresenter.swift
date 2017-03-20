@@ -52,6 +52,7 @@ struct StreamImageCellPresenter {
 
         // video first because it is a smaller size than gifs
         if let asset = imageRegion.asset, asset.hasVideo {
+            cell.mode = .video
             if streamKind.supportsLargeImages || !asset.isLargeVideo {
                 showVideoInThisCell = true
             }
@@ -70,6 +71,7 @@ struct StreamImageCellPresenter {
         }
         // gifs next
         else if let asset = imageRegion.asset, asset.isGif {
+            cell.mode = .gif
             if streamKind.supportsLargeImages || !asset.isLargeGif {
                 showGifInThisCell = true
             }
@@ -116,9 +118,10 @@ struct StreamImageCellPresenter {
         if let url = imageRegion.asset?.video?.url,
             let width = imageRegion.asset?.video?.width,
             let height = imageRegion.asset?.video?.height,
+            let cost = imageRegion.asset?.video?.size,
             showVideoInThisCell {
             cell.serverProvidedAspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
-            cell.setVideoURL(url, withSize: CGSize(width: width, height: height))
+            cell.setVideoURL(url, size: CGSize(width: width, height: height), cost: cost)
         }
         else if let image = imageToShow, !showGifInThisCell {
             cell.setImage(image)
