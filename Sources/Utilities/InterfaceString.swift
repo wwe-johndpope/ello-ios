@@ -74,7 +74,7 @@ struct InterfaceString {
 
     struct Drawer {
         static let Invite: String = NSLocalizedString("Invite", comment: "Invite")
-        static let Invite: String = NSLocalizedString("Magazine", comment: "Magazine")
+        static let Magazine: String = NSLocalizedString("Magazine", comment: "Magazine")
         static let Store: String = NSLocalizedString("Store", comment: "Store")
         static let Help: String = NSLocalizedString("Help", comment: "Help")
         static let Resources: String = NSLocalizedString("Resources", comment: "Resources")
