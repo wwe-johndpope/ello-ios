@@ -32,16 +32,36 @@ struct StreamFooterCellPresenter {
             let post = streamCellItem.jsonable as? Post
         else { return }
 
-        configureDisplayCounts(cell, post: post, streamKind: streamKind)
-        configureToolBarItems(cell, post: post, currentUser: currentUser, streamKind: streamKind)
+        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
+        configureDisplayCounts(cell, post: post, isGridView: isGridView)
+        configureToolBarItems(cell, post: post, currentUser: currentUser, isGridView: isGridView)
         configureCommentControl(cell, post: post, streamCellItem: streamCellItem, streamKind: streamKind, currentUser: currentUser)
+    }
+
+    fileprivate static func configureDisplayCounts(
+        _ cell: StreamFooterCell,
+        post: Post,
+        isGridView: Bool)
+    {
+        let rounding = isGridView ? 0 : 1
+        if cell.frame.width < 155 {
+            cell.views = ""
+            cell.reposts = ""
+            cell.loves = ""
+        }
+        else {
+            cell.views = post.viewsCount?.numberToHuman(rounding: rounding)
+            cell.reposts = post.repostsCount?.numberToHuman(rounding: rounding)
+            cell.loves = post.lovesCount?.numberToHuman(rounding: rounding)
+        }
+        cell.comments = post.commentsCount?.numberToHuman(rounding: rounding)
     }
 
     fileprivate static func configureToolBarItems(
         _ cell: StreamFooterCell,
         post: Post,
         currentUser: User?,
-        streamKind: StreamKind)
+        isGridView: Bool)
     {
         let ownPost = (currentUser?.id == post.authorId || (post.repostAuthor?.id != nil && currentUser?.id == post.repostAuthor?.id))
 
@@ -63,7 +83,7 @@ struct StreamFooterCellPresenter {
         if !lovingEnabled { loveVisibility = .hidden }
 
         cell.updateToolbarItems(
-            streamKind: streamKind,
+            isGridView: isGridView,
             repostVisibility: repostVisibility,
             commentVisibility: commentVisibility,
             shareVisibility: shareVisibility,
@@ -78,13 +98,13 @@ struct StreamFooterCellPresenter {
         streamKind: StreamKind,
         currentUser: User?)
     {
-        if streamKind.isDetail && currentUser == nil {
+        if streamKind.isDetail(post: post) && currentUser == nil {
             let count = post.commentsCount ?? 0
             let open = count > 0
             cell.commentsOpened = open
             cell.commentsControl.isSelected = open
         }
-        else if streamKind.isDetail {
+        else if streamKind.isDetail(post: post) {
             cell.commentsOpened = true
             cell.commentsControl.isSelected = true
         }
@@ -113,24 +133,5 @@ struct StreamFooterCellPresenter {
                 }
             }
         }
-    }
-
-    fileprivate static func configureDisplayCounts(
-        _ cell: StreamFooterCell,
-        post: Post,
-        streamKind: StreamKind)
-    {
-        let rounding = streamKind.isGridView ? 0 : 1
-        if cell.frame.width < 155 {
-            cell.views = ""
-            cell.reposts = ""
-            cell.loves = ""
-        }
-        else {
-            cell.views = post.viewsCount?.numberToHuman(rounding: rounding)
-            cell.reposts = post.repostsCount?.numberToHuman(rounding: rounding)
-            cell.loves = post.lovesCount?.numberToHuman(rounding: rounding)
-        }
-        cell.comments = post.commentsCount?.numberToHuman(rounding: rounding)
     }
 }

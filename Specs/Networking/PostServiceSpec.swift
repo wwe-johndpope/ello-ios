@@ -64,14 +64,13 @@ class PostServiceSpec: QuickSpec {
                     it("succeeds") {
                         var successCalled = false
                         var failedCalled = false
-                        subject.deletePost("fake-post-id",
-                            success: {
+                        subject.deletePost("fake-post-id")
+                            .onSuccess {
                                 successCalled = true
-                            }, failure: {
-                                (_, _) in
+                            }
+                            .onFail { _ in
                                 failedCalled = true
                             }
-                        )
 
                         expect(successCalled).to(beTrue())
                         expect(failedCalled).to(beFalse())
@@ -87,14 +86,13 @@ class PostServiceSpec: QuickSpec {
                     it("fails") {
                         var successCalled = false
                         var failedCalled = false
-                        subject.deletePost("fake-post-id",
-                            success: {
+                        subject.deletePost("fake-post-id")
+                            .onSuccess {
                                 successCalled = true
-                            }, failure: {
-                                (_, _) in
+                            }
+                            .onFail { _ in
                                 failedCalled = true
                             }
-                        )
 
                         expect(successCalled).to(beFalse())
                         expect(failedCalled).to(beTrue())
@@ -110,13 +108,13 @@ class PostServiceSpec: QuickSpec {
                         var successCalled = false
                         var failedCalled = false
                         subject.deleteComment("fake-post-id",
-                            commentId: "fake-comment-id",
-                            success: {
+                            commentId: "fake-comment-id")
+                            .onSuccess {
                                 successCalled = true
-                            }, failure: { (_, _) in
+                            }
+                            .onFail{ _ in
                                 failedCalled = true
                             }
-                        )
 
                         expect(successCalled).to(beTrue())
                         expect(failedCalled).to(beFalse())
@@ -133,13 +131,13 @@ class PostServiceSpec: QuickSpec {
                         var successCalled = false
                         var failedCalled = false
                         subject.deleteComment("fake-post-id",
-                            commentId: "fake-comment-id",
-                            success: {
+                            commentId: "fake-comment-id")
+                            .onSuccess {
                                 successCalled = true
-                            }, failure: { (_, _) in
+                            }
+                            .onFail { _ in
                                 failedCalled = true
                             }
-                        )
 
                         expect(successCalled).to(beFalse())
                         expect(failedCalled).to(beTrue())

@@ -237,7 +237,7 @@ private extension PostDetailGenerator {
                 if relatedPosts.count > 0 {
                     let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .LargeGrayHeader)
                     let headerCellItem = StreamCellItem(type: .textHeader(header))
-                    let postItems = self.parse(jsonables: relatedPosts)
+                    let postItems = self.parse(jsonables: relatedPosts, forceGrid: true)
                     relatedPostItems = [headerCellItem] + postItems
                 }
                 else {

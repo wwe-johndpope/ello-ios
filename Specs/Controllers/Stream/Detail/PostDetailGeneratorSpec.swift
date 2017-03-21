@@ -36,7 +36,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                 }
 
                 it("sets placeholders") {
-                    expect(destination.placeholderItems.count) == 6
+                    expect(destination.placeholderItems.count) == 7
                 }
 
                 it("replaces the appropriate placeholders") {
@@ -46,6 +46,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                     expect(destination.postCommentItems.count) > 0
                     expect(destination.postSocialPaddingItems.count) > 0
                     expect(destination.postCommentBarItems.count) > 0
+                    expect(destination.postRelatedPostsItems.count) > 0
                     expect(destination.otherPlaceHolderLoaded) == false
                 }
 
@@ -71,23 +72,11 @@ class PostDetailDestination: StreamDestination {
     var postCommentItems: [StreamCellItem] = []
     var postSocialPaddingItems: [StreamCellItem] = []
     var postCommentBarItems: [StreamCellItem] = []
+    var postRelatedPostsItems: [StreamCellItem] = []
     var otherPlaceHolderLoaded = false
     var post: Post?
     var responseConfig: ResponseConfig?
     var pagingEnabled: Bool = false
-
-    func reset() {
-        placeholderItems = []
-        headerItems = []
-        postLoverItems = []
-        postReposterItems = []
-        postCommentItems = []
-        postSocialPaddingItems = []
-        postCommentBarItems = []
-        otherPlaceHolderLoaded = false
-        post = nil
-        responseConfig = nil
-    }
 
     func setPlaceholders(items: [StreamCellItem]) {
         placeholderItems = items
@@ -107,6 +96,8 @@ class PostDetailDestination: StreamDestination {
             postSocialPaddingItems = items
         case .postCommentBar:
             postCommentBarItems = items
+        case .postRelatedPosts:
+            postRelatedPostsItems = items
         default:
             otherPlaceHolderLoaded = true
         }

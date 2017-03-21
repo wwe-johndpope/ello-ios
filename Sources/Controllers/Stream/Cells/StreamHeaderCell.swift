@@ -4,6 +4,14 @@
 
 class StreamHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamHeaderCell"
+    struct Size {
+        static let gridAvatarHeight: CGFloat = 30
+        static let listAvatarHeight: CGFloat = 40
+    }
+
+    static func avatarHeight(isGridView: Bool) -> CGFloat {
+        return isGridView ? Size.gridAvatarHeight : Size.listAvatarHeight
+    }
 
     var ownPost = false {
         didSet {

@@ -57,7 +57,14 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
-        guard !dataSource.streamKind.isGridView else {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let item = dataSource.visibleStreamCellItem(at: indexPath)
+        else { return }
+
+        guard
+            dataSource.isFullWidthAtIndexPath(indexPath)
+        else {
             cell.cancelCommentLoading()
             if let indexPath = collectionView.indexPath(for: cell) {
                 self.viewsButtonTapped(indexPath)
@@ -71,8 +78,6 @@ class PostbarController: UIResponder, PostbarResponder {
         }
 
         guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let item = dataSource.visibleStreamCellItem(at: indexPath),
             let post = item.jsonable as? Post
         else {
             cell.cancelCommentLoading()
@@ -84,7 +89,7 @@ class PostbarController: UIResponder, PostbarResponder {
             return
         }
 
-        guard !dataSource.streamKind.isDetail else {
+        guard !dataSource.streamKind.isDetail(post: post) else {
             return
         }
 

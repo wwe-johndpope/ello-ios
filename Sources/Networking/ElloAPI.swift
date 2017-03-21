@@ -396,7 +396,7 @@ extension ElloAPI: Moya.TargetType {
         case let .postReplyAll(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/commenters_usernames"
         case let .postRelatedPosts(postId):
-            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/related_posts"
+            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/related"
         case let .postReposters(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/reposters"
         case .currentUserProfile,
@@ -717,6 +717,10 @@ extension ElloAPI: Moya.TargetType {
         case let .postDetail(_, commentCount):
             return [
                 "comment_count": commentCount as AnyObject
+            ]
+        case .postRelatedPosts:
+            return [
+                "per_page": 3,
             ]
         case let .postViews(streamId, streamKind, postIds, userId):
             let streamIdDict: [String: String] = streamId.map { streamId in return ["id": streamId]} ?? [:]
