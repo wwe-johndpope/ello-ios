@@ -233,7 +233,16 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard relatedPosts.count > 0 else { return }
 
-                let relatedPostItems = self.parse(jsonables: relatedPosts)
+                let relatedPostItems: [StreamCellItem]
+                if relatedPosts.count > 0 {
+                    let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .LargeGrayHeader)
+                    let headerCellItem = StreamCellItem(type: .textHeader(header))
+                    let postItems = self.parse(jsonables: relatedPosts)
+                    relatedPostItems = [headerCellItem] + postItems
+                }
+                else {
+                    relatedPostItems = []
+                }
                 displayRelatedPostsOperation.run {
                     inForeground {
                         self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems) {}
