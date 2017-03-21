@@ -136,7 +136,11 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
                 let loadMoreComments: [StreamCellItem]
-                if let post = self.post, let currentUser = self.currentUser {
+                if let totalPagesRemaining = responseConfig.totalPagesRemaining.flatMap({ Int($0) }),
+                    totalPagesRemaining > 0,
+                    let post = self.post,
+                    let currentUser = self.currentUser
+                {
                     loadMoreComments = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .loadMoreComments)]
                 }
                 else {
