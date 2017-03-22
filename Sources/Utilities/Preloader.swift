@@ -124,7 +124,7 @@ struct Preloader {
     }
 
     fileprivate func preloadUrl(_ url: URL) {
-        if !url.hasGifExtension {
+        if !url.hasGifExtension && !url.hasMP4Extension {
             manager.prefetchImage(with: url, options: PINRemoteImageManagerDownloadOptions())
         }
     }
