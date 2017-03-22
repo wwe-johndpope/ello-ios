@@ -118,10 +118,9 @@ struct StreamImageCellPresenter {
         if let url = imageRegion.asset?.video?.url,
             let width = imageRegion.asset?.video?.width,
             let height = imageRegion.asset?.video?.height,
-            let cost = imageRegion.asset?.video?.size,
             showVideoInThisCell {
             cell.serverProvidedAspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
-            cell.setVideoURL(url, size: CGSize(width: width, height: height), cost: cost)
+            cell.setVideoURL(url, size: CGSize(width: width, height: height))
         }
         else if let image = imageToShow, !showGifInThisCell {
             cell.setImage(image)

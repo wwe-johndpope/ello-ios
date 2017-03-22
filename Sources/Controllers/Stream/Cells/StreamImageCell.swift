@@ -163,9 +163,10 @@ class StreamImageCell: StreamRegionableCell {
         longPressGesture.addTarget(self, action: #selector(imageLongPressed(_:)))
         imageButton.addGestureRecognizer(longPressGesture)
         contentView.insertSubview(videoView, aboveSubview: imageView)
+        videoView.frame = imageView.bounds
     }
 
-    func setVideoURL(_ url: URL, size: CGSize, cost: Int) {
+    func setVideoURL(_ url: URL, size: CGSize) {
         imageSize = size
         imageView.image = nil
         failImage.isHidden = true
@@ -173,15 +174,31 @@ class StreamImageCell: StreamRegionableCell {
         imageView.alpha = 0
         circle.pulse()
         imageView.backgroundColor = UIColor.white
-        loadVideo(url, withCost: cost)
+        loadVideo(url)
     }
 
-    func loadVideo(_ url: URL, withCost cost: Int) {
-        videoView.loadVideo(url: url, withCost: cost)
-            .onSuccess { [weak self] in
+    func loadVideo(_ url: URL) {
+        videoView.loadVideo(url: url)
+            .onSuccess { [weak self] type in
                 guard let `self` = self else { return }
-                self.videoView.alpha = 1.0
-                self.circle.stopPulse()
+                self.videoView.frame = self.imageView.frame
+                self.videoView.layoutIfNeeded()
+                switch type {
+                case .cache:
+                    self.videoView.alpha = 1.0
+                    self.circle.stopPulse()
+                default:
+                    self.videoView.alpha = 0.0
+                    UIView.animate(withDuration: 0.3,
+                       delay:0.0,
+                       options:UIViewAnimationOptions.curveLinear,
+                       animations: {
+                        self.videoView.alpha = 1.0
+                    }, completion: { _ in
+                        self.circle.stopPulse()
+                    })
+                }
+
             }
             .onFail { [weak self] _ in
                 guard let `self` = self else { return }
@@ -225,6 +242,8 @@ class StreamImageCell: StreamRegionableCell {
         }
 
         videoView.frame = imageView.bounds
+        imageView.setNeedsLayout()
+        videoView.setNeedsLayout()
     }
 
     fileprivate func loadImage(_ url: URL) {
@@ -289,8 +308,8 @@ class StreamImageCell: StreamRegionableCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         mode = .image
-        videoView.reset()
         marginType = .post
+        videoView.reset()
         imageButton.isUserInteractionEnabled = true
         onHeightMismatch = nil
         imageView.image = nil
