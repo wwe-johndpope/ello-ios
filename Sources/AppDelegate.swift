@@ -98,36 +98,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setupCaches() {
         let manager = PINRemoteImageManager.shared()
-//        let thirtySeconds: TimeInterval = 30
         let twoWeeks: TimeInterval = 1_209_600
-        let fifteenMegaBytes: UInt = 15_000_000
-//        let twoHundredFiftyMegaBytes: UInt = 250_000_000
-        manager.pinCache?.diskCache.byteLimit = fifteenMegaBytes
+        let twoHundredFiftyMegaBytes: UInt = 250_000_000
         manager.pinCache?.diskCache.ageLimit = twoWeeks
-        manager.pinCache?.memoryCache.willRemoveObjectBlock = { (cache, key, object) in
-            print("-------------------> will remove MEMORY object <-------------------")
-            print("cache \(cache)")
-            print("key \(key)")
-            print("object \(object)")
-//            let path = cache.fileURL(forKey: key)
-//            print("path \(path)")
-            if key.hasSuffix(".mp4") {
-
-            }
-        }
-        manager.pinCache?.diskCache.willRemoveObjectBlock = { (cache, key, object) in
-            print("-------------------> will remove DISK object <-------------------")
-            print("cache \(cache)")
-            print("key \(key)")
-            print("object \(object)")
-            cache.fileURL(forKeyAsync: key) { (key, url) in
-                print("key \(key)")
-                print("url \(url)")
-            }
-            if key.hasSuffix(".mp4") {
-                
-            }
-        }
+        manager.pinCache?.diskCache.byteLimit = twoHundredFiftyMegaBytes
         _ = CategoryService().loadCategories()
     }
 
