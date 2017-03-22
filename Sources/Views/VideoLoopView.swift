@@ -14,7 +14,8 @@ public class VideoLoopView: UIView {
 
     private var isObserving = false
     private var shouldPlay = true
-    private var promise = Promise<Void>()
+    private var promise = Promise<VideoCacheType>()
+    private var cacheType: VideoCacheType!
     private var videoObserver: NSObjectProtocol?
     private var foregroundObserver: NotificationObserver?
     private var backgroundObserver: NotificationObserver?
@@ -85,15 +86,13 @@ public class VideoLoopView: UIView {
         removeObservers()
     }
 
-    public func loadVideo(url: URL, withCost cost: Int) -> Future<Void>  {
+    public func loadVideo(url: URL) -> Future<VideoCacheType>  {
         let cache = VideoCache()
-        cache.loadVideo(url: url, withCost: cost)
+        cache.loadVideo(url: url)
         .onSuccess { [weak self] (url, type) in
             guard let `self` = self else { return }
-            switch type {
-            case .cache: self.playerItem = AVPlayerItem(url: url)
-            case .network: self.playerItem = AVPlayerItem(url: url)
-            }
+            self.cacheType = type
+            self.playerItem = AVPlayerItem(url: url)
         }
         .onFail { _ in
             self.promise.completeWithFail("Unable to Load")
@@ -119,7 +118,7 @@ public class VideoLoopView: UIView {
 
         switch status {
         case .readyToPlay:
-            promise.completeWithSuccess(Void())
+            promise.completeWithSuccess(cacheType)
         case .failed:
             promise.completeWithFail("Failed To Load")
         case .unknown:
