@@ -241,7 +241,7 @@ class StreamImageCell: StreamRegionableCell {
             buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
         }
 
-        videoView.frame = imageView.bounds
+        videoView.frame = imageView.frame
         imageView.setNeedsLayout()
         videoView.setNeedsLayout()
     }

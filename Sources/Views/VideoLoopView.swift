@@ -64,7 +64,8 @@ public class VideoLoopView: UIView {
             }
 
             play()
-            self.layoutSubviews()
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
 
@@ -139,13 +140,14 @@ public class VideoLoopView: UIView {
     }
 
     public func pauseVideo() {
-        shouldPlay = true
+        shouldPlay = false
         player?.pause()
     }
 
     private func setup() {
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayer.backgroundColor = UIColor.clear.cgColor
+        playerLayer.frame = bounds
         layer.addSublayer(playerLayer)
     }
 
