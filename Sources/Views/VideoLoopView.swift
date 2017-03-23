@@ -79,7 +79,10 @@ public class VideoLoopView: UIView {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         playerLayer.frame = bounds
+        CATransaction.commit()
     }
 
     deinit {
