@@ -217,7 +217,6 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         relationshipControl.isHidden = true
 
         notificationImageView.contentMode = .scaleAspectFit
-        videoView.contentMode = .scaleAspectFill
         messageWebView.isOpaque = false
         messageWebView.backgroundColor = .clear
         messageWebView.scrollView.isScrollEnabled = false
@@ -270,8 +269,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         notificationImageView.frame = outerFrame.fromRight()
             .grow(left: Size.ImageWidth)
             .with(height: Size.ImageWidth / aspectRatio)
-        videoView.frame = notificationImageView.frame
-        videoView.setNeedsLayout()
+
         buyButtonImage.frame.origin = CGPoint(
             x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
             y: notificationImageView.frame.minY + Size.BuyButtonMargin
@@ -329,6 +327,8 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         if actualHeight != ceil(frame.size.height) && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
             self.onHeightMismatch?(actualHeight)
         }
+
+        videoView.frame = notificationImageView.frame
     }
 
 
