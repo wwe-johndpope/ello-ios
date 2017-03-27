@@ -36,7 +36,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                 }
 
                 it("sets placeholders") {
-                    expect(destination.placeholderItems.count) == 7
+                    expect(destination.placeholderItems.count) == 8
                 }
 
                 it("replaces the appropriate placeholders") {
@@ -44,6 +44,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                     expect(destination.postLoverItems.count) > 0
                     expect(destination.postReposterItems.count) > 0
                     expect(destination.postCommentItems.count) > 0
+                    expect(destination.postLoadCommentItems.count) > 0
                     expect(destination.postSocialPaddingItems.count) > 0
                     expect(destination.postCommentBarItems.count) > 0
                     expect(destination.postRelatedPostsItems.count) > 0
@@ -63,13 +64,14 @@ class PostDetailGeneratorSpec: QuickSpec {
     }
 }
 
-class PostDetailDestination: StreamDestination {
+class PostDetailDestination: PostDetailStreamDestination {
 
     var placeholderItems: [StreamCellItem] = []
     var headerItems: [StreamCellItem] = []
     var postLoverItems: [StreamCellItem] = []
     var postReposterItems: [StreamCellItem] = []
     var postCommentItems: [StreamCellItem] = []
+    var postLoadCommentItems: [StreamCellItem] = []
     var postSocialPaddingItems: [StreamCellItem] = []
     var postCommentBarItems: [StreamCellItem] = []
     var postRelatedPostsItems: [StreamCellItem] = []
@@ -92,6 +94,8 @@ class PostDetailDestination: StreamDestination {
             postReposterItems = items
         case .postComments:
             postCommentItems = items
+        case .postLoadingComments:
+            postLoadCommentItems = items
         case .postSocialPadding:
             postSocialPaddingItems = items
         case .postCommentBar:
@@ -113,5 +117,8 @@ class PostDetailDestination: StreamDestination {
 
     func setPagingConfig(responseConfig: ResponseConfig) {
         self.responseConfig = responseConfig
+    }
+
+    func appendComments(_ items: [StreamCellItem]) {
     }
 }
