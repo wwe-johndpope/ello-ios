@@ -16,11 +16,11 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
 
     let controllerView = UIView()
     let bottomBarView = UIView()
-    let joinButton = StyledButton(style: .Green)
-    let loginButton = StyledButton(style: .ClearGray)
+    let joinButton = StyledButton(style: .green)
+    let loginButton = StyledButton(style: .clearGray)
     let closeButton = UIButton()
-    let joinLabel = StyledLabel(style: .Large)
-    let tagLabel = StyledLabel(style: .Black)
+    let joinLabel = StyledLabel(style: .large)
+    let tagLabel = StyledLabel(style: .black)
     weak var delegate: LoggedOutProtocol?
     fileprivate let debouncedHideText = debounce(5)
 

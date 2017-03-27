@@ -51,7 +51,7 @@ class LoginScreen: CredentialsScreen {
     fileprivate let activateUsernameButton = UIButton()
     let passwordField = ClearTextField()
     fileprivate let activatePasswordButton = UIButton()
-    fileprivate let errorLabel = StyledLabel(style: .SmallWhite)
+    fileprivate let errorLabel = StyledLabel(style: .smallWhite)
 
     fileprivate let forgotPasswordButton = UIButton()
 

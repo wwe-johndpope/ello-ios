@@ -279,7 +279,7 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard relatedPosts.count > 0 else { return }
 
-                let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .LargeGrayHeader)
+                let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .largeGrayHeader)
                 let headerCellItem = StreamCellItem(type: .textHeader(header))
                 let postItems = self.parse(jsonables: relatedPosts, forceGrid: true)
                 let relatedPostItems = [headerCellItem] + postItems

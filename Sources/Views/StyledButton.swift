@@ -71,10 +71,10 @@ class StyledButton: UIButton {
         }
     }
 
-    var style: Style = .Default {
+    var style: Style = .default {
         didSet { updateStyle() }
     }
-    var styleName: String = "Default" {
+    var styleName: String = "default" {
         didSet { style = Style.byName(styleName) }
     }
 
@@ -195,91 +195,91 @@ extension StyledButton {
 }
 
 extension StyledButton.Style {
-    static let Default = StyledButton.Style(
+    static let `default` = StyledButton.Style(
         backgroundColor: .black, disabledBackgroundColor: .grey231F20(),
         titleColor: .white, disabledTitleColor: .greyA()
         )
-    static let ClearWhite = StyledButton.Style(
+    static let clearWhite = StyledButton.Style(
         titleColor: .white, disabledTitleColor: .greyA()
         )
-    static let ClearBlack = StyledButton.Style(
+    static let clearBlack = StyledButton.Style(
         titleColor: .black, disabledTitleColor: .greyC()
         )
-    static let ClearGray = StyledButton.Style(
+    static let clearGray = StyledButton.Style(
         titleColor: .greyA(), highlightedTitleColor: .black, disabledTitleColor: .greyC()
         )
-    static let LightGray = StyledButton.Style(
+    static let lightGray = StyledButton.Style(
         backgroundColor: .greyE5(), disabledBackgroundColor: .greyF1(),
         titleColor: .grey6(), highlightedTitleColor: .black, disabledTitleColor: .greyC()
         )
-    static let White = StyledButton.Style(
+    static let white = StyledButton.Style(
         backgroundColor: .white, disabledBackgroundColor: .greyA(),
         titleColor: .black, highlightedTitleColor: .grey6(), disabledTitleColor: .greyC()
         )
-    static let WhiteUnderlined = StyledButton.Style(
+    static let whiteUnderlined = StyledButton.Style(
         backgroundColor: .clear,
         titleColor: .white,
         underline: true
         )
-    static let SquareBlack = StyledButton.Style(
+    static let squareBlack = StyledButton.Style(
         backgroundColor: .white, selectedBackgroundColor: .black, disabledBackgroundColor: .greyA(),
         titleColor: .black, highlightedTitleColor: .grey6(), selectedTitleColor: .white, disabledTitleColor: .greyC(),
         borderColor: .black, highlightedBorderColor: .greyE5()
         )
-    static let BlackPill = StyledButton.Style(
+    static let blackPill = StyledButton.Style(
         backgroundColor: .black, disabledBackgroundColor: .greyF2(),
         titleColor: .white, highlightedTitleColor: .grey6(), disabledTitleColor: .greyC(),
         cornerRadius: nil
         )
-    static let BlackPillOutline = StyledButton.Style(
+    static let blackPillOutline = StyledButton.Style(
         titleColor: .black, highlightedTitleColor: .grey6(), disabledTitleColor: .greyF2(),
         borderColor: .black, disabledBorderColor: .greyF2(),
         cornerRadius: nil
         )
-    static let RoundedGrayOutline = StyledButton.Style(
+    static let roundedGrayOutline = StyledButton.Style(
         backgroundColor: .clear,
         titleColor: .greyA(), highlightedTitleColor: .black,
         borderColor: .greyA(),
         cornerRadius: 5
         )
-    static let RoundedGray = StyledButton.Style(
+    static let roundedGray = StyledButton.Style(
         backgroundColor: .greyA(),
         titleColor: .white,
         cornerRadius: 5
         )
-    static let InviteFriend = StyledButton.Style(
+    static let inviteFriend = StyledButton.Style(
         backgroundColor: .greyA(),
         titleColor: .white,
         cornerRadius: nil
         )
-    static let Invited = StyledButton.Style(
+    static let invited = StyledButton.Style(
         backgroundColor: .greyE5(),
         titleColor: .grey6(),
         cornerRadius: nil
         )
-    static let BlockUserModal = StyledButton.Style(
+    static let blockUserModal = StyledButton.Style(
         backgroundColor: .white, selectedBackgroundColor: .black, disabledBackgroundColor: .greyA(),
         titleColor: .black, highlightedTitleColor: .grey6(), selectedTitleColor: .white, disabledTitleColor: .greyC()
         )
-    static let GrayText = StyledButton.Style(
+    static let grayText = StyledButton.Style(
         titleColor: .greyA()
         )
-    static let Green = StyledButton.Style(
+    static let green = StyledButton.Style(
         backgroundColor: .greenD1(), disabledBackgroundColor: .grey6(),
         titleColor: .white, highlightedTitleColor: .greyA(), disabledTitleColor: .white,
         cornerRadius: 5
         )
-    static let GreenPill = StyledButton.Style(
+    static let greenPill = StyledButton.Style(
         backgroundColor: .greenD1(), disabledBackgroundColor: .grey6(),
         titleColor: .white, highlightedTitleColor: .greyA(), disabledTitleColor: .white,
         cornerRadius: nil
         )
-    static let RedPill = StyledButton.Style(
+    static let redPill = StyledButton.Style(
         backgroundColor: .red, disabledBackgroundColor: .grey6(),
         titleColor: .white, highlightedTitleColor: .greyA(), disabledTitleColor: .white,
         cornerRadius: nil
         )
-    static let GrayPill = StyledButton.Style(
+    static let grayPill = StyledButton.Style(
         backgroundColor: .greyA(),
         titleColor: .white,
         cornerRadius: nil
@@ -287,18 +287,9 @@ extension StyledButton.Style {
 
     static func byName(_ name: String) -> StyledButton.Style {
         switch name {
-        case "LightGray": return .LightGray
-        case "White": return .White
-        case "WhiteUnderlined": return .WhiteUnderlined
-        case "SquareBlack": return .SquareBlack
-        case "BlackPill": return .BlackPill
-        case "RoundedGray": return .RoundedGray
-        case "InviteFriend": return .InviteFriend
-        case "Invited": return .Invited
-        case "BlockUserModal": return .BlockUserModal
-        case "GrayText": return .GrayText
-        case "Green": return .Green
-        default: return .Default
+        case "lightGray": return .lightGray
+        case "inviteFriend": return .inviteFriend
+        default: return .default
         }
     }
 }

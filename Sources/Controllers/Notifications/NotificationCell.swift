@@ -72,7 +72,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     let avatarButton = AvatarButton()
     let buyButtonImage = UIImageView()
-    let replyButton = StyledButton(style: .BlackPillOutline)
+    let replyButton = StyledButton(style: .blackPillOutline)
     let relationshipControl = RelationshipControl()
     let titleTextView = ElloTextView()
     let createdAtLabel = UILabel()

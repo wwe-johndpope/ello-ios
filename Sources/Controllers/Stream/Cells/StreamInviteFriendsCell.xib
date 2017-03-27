@@ -28,7 +28,7 @@
                         </constraints>
                         <state key="normal" title="Invite"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="InviteFriend"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="inviteFriend"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="invite" destination="Yy5-O2-Nu8" eventType="touchUpInside" id="4Ol-a4-Jfs"/>

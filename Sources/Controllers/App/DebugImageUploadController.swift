@@ -15,7 +15,7 @@ class DebugImageUploadController: UIViewController {
         static let margin: CGFloat = 20
     }
 
-    let valueLabel = StyledLabel(style: .Black)
+    let valueLabel = StyledLabel(style: .black)
     let slider = UISlider()
 
     override func loadView() {

@@ -13,7 +13,7 @@ class StreamLoadMoreCommentsCell: UICollectionViewCell {
         static let margin: CGFloat = 15
     }
 
-    let button = StyledButton(style: .RoundedGray)
+    let button = StyledButton(style: .roundedGray)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

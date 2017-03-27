@@ -214,24 +214,24 @@ class RelationshipControl: UIView {
 
             if config == .following {
                 if relationshipStyle == .profileView {
-                    style = .GrayPill
+                    style = .grayPill
                 }
                 else {
-                    style = .BlackPill
+                    style = .blackPill
                 }
                 image = InterfaceImage.checkSmall.whiteImage
                 highlightedImage = image
             }
             else if config == .muted || config == .blocked {
-                style = .RedPill
+                style = .redPill
             }
             else if relationshipStyle == .profileView && config == .none {
-                style = .GreenPill
+                style = .greenPill
                 image = InterfaceImage.plusSmall.whiteImage
                 highlightedImage = image
             }
             else {
-                style = .BlackPillOutline
+                style = .blackPillOutline
                 image = InterfaceImage.plusSmall.selectedImage
                 highlightedImage = InterfaceImage.plusSmall.whiteImage
             }
