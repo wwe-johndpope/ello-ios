@@ -13,6 +13,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     var streamKind: StreamKind
     var currentUser: User?
+    var columnCount = 1
 
     // these are the items assigned from the parent controller
     var streamCellItems: [StreamCellItem] = []
@@ -183,7 +184,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func visibleStreamCellItem(at indexPath: IndexPath) -> StreamCellItem? {
-        if !isValidIndexPath(indexPath) { return nil }
+        guard indexPath.section == 0 else { return nil }
         return visibleCellItems.safeValue(indexPath.item)
     }
 
@@ -278,36 +279,40 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func heightForIndexPath(_ indexPath: IndexPath, numberOfColumns: NSInteger) -> CGFloat {
-        if !isValidIndexPath(indexPath) { return 0 }
+        guard let item = visibleStreamCellItem(at: indexPath) else { return 0 }
 
         // always try to return a calculated value before the default
         if numberOfColumns == 1 {
-            if let height = visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn {
+            if let height = item.calculatedCellHeights.oneColumn {
                 return height
             }
             else {
-                return visibleCellItems[indexPath.item].type.oneColumnHeight
+                return item.type.oneColumnHeight
             }
         }
         else {
-            if let height = visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn {
+            if let height = item.calculatedCellHeights.multiColumn {
                 return height
             }
             else {
-                return visibleCellItems[indexPath.item].type.multiColumnHeight
+                return item.type.multiColumnHeight
             }
         }
     }
 
     func isFullWidthAtIndexPath(_ indexPath: IndexPath) -> Bool {
-        if !isValidIndexPath(indexPath) { return true }
-        return visibleCellItems[indexPath.item].type.isFullWidth
+        guard let item = visibleStreamCellItem(at: indexPath) else { return true }
+
+        if item.type.isFullWidth {
+            return true
+        }
+        return !item.isGridView(streamKind: streamKind)
     }
 
     func groupForIndexPath(_ indexPath: IndexPath) -> String? {
-        if !isValidIndexPath(indexPath) { return nil }
+        guard let item = visibleStreamCellItem(at: indexPath) else { return nil }
 
-        return (visibleCellItems[indexPath.item].jsonable as? Groupable)?.groupId
+        return (item.jsonable as? Groupable)?.groupId
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -762,14 +767,14 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let (afterAll, done) = afterN(completion)
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCellPresenter.postMargin * 2)
-        textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: columnCount, completion: afterAll())
         // extra -30.0 acounts for the left indent on a repost with the black line
         let repostLeftRightConstraintWidth = textLeftRightConstraintWidth + StreamTextCellPresenter.repostMargin
-        textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - repostLeftRightConstraintWidth, columnCount: streamKind.columnCount, completion: afterAll())
-        imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - repostLeftRightConstraintWidth, columnCount: columnCount, completion: afterAll())
+        imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, completion: afterAll())
         announcementSizeCalculator.processCells(announcementElements, withWidth: withWidth, completion: afterAll())
-        profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll())
+        profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
         done()
     }

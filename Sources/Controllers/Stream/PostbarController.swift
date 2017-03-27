@@ -57,7 +57,14 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
-        guard !dataSource.streamKind.isGridView else {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let item = dataSource.visibleStreamCellItem(at: indexPath)
+        else { return }
+
+        guard
+            dataSource.isFullWidthAtIndexPath(indexPath)
+        else {
             cell.cancelCommentLoading()
             if let indexPath = collectionView.indexPath(for: cell) {
                 self.viewsButtonTapped(indexPath)
@@ -71,8 +78,6 @@ class PostbarController: UIResponder, PostbarResponder {
         }
 
         guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let item = dataSource.visibleStreamCellItem(at: indexPath),
             let post = item.jsonable as? Post
         else {
             cell.cancelCommentLoading()
@@ -84,7 +89,7 @@ class PostbarController: UIResponder, PostbarResponder {
             return
         }
 
-        guard !dataSource.streamKind.isDetail else {
+        guard !dataSource.streamKind.isDetail(post: post) else {
             return
         }
 
@@ -150,14 +155,14 @@ class PostbarController: UIResponder, PostbarResponder {
                 postNotification(CommentChangedNotification, value: (comment, .delete))
                 // post comment count updated
                 ContentChange.updateCommentCount(comment, delta: -1)
-                PostService().deleteComment(comment.postId, commentId: comment.id,
-                    success: {
+                PostService().deleteComment(comment.postId, commentId: comment.id)
+                    .onSuccess {
                         Tracker.shared.commentDeleted(comment)
-                    },
-                    failure: { (error, statusCode)  in
+                    }
+                    .onFail { error in
                         // TODO: add error handling
-                        print("failed to delete comment, error: \(error.elloErrorMessage ?? error.localizedDescription)")
-                    })
+                        print("failed to delete comment, error: \(error)")
+                    }
             }
         }
         let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
@@ -381,19 +386,21 @@ class PostbarController: UIResponder, PostbarResponder {
         else { return }
 
         let postId = comment.loadedFromPostId
-        PostService().loadReplyAll(postId, success: { [weak self] usernames in
-            guard let `self` = self else { return }
-            let usernamesText = usernames.reduce("") { memo, username in
-                return memo + "@\(username) "
+        PostService().loadReplyAll(postId)
+            .onSuccess { [weak self] usernames in
+                guard let `self` = self else { return }
+                let usernamesText = usernames.reduce("") { memo, username in
+                    return memo + "@\(username) "
+                }
+                let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                responder?.createComment(postId, text: usernamesText, fromController: presentingController)
             }
-            let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
-            responder?.createComment(postId, text: usernamesText, fromController: presentingController)
-        }, failure: { [weak self] in
-            guard let `self` = self else { return }
-            guard let controller = self.responderChainable?.controller else { return }
-            let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
-            responder?.createComment(postId, text: nil, fromController: controller)
-        })
+            .onFail { [weak self] error in
+                guard let `self` = self else { return }
+                guard let controller = self.responderChainable?.controller else { return }
+                let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                responder?.createComment(postId, text: nil, fromController: controller)
+            }
     }
 
     func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
@@ -435,17 +442,15 @@ class PostbarController: UIResponder, PostbarResponder {
 
         var items = StreamCellItemParser().parse(jsonables, streamKind: StreamKind.following, currentUser: currentUser)
 
-        if let currentUser = currentUser {
-            let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
-            if let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
-                let postCommentCount = post.commentsCount,
-                postCommentCount > maxCount
-            {
-                items.append(StreamCellItem(jsonable: jsonables.last ?? newComment, type: .seeMoreComments))
-            }
-            else {
-                items.append(StreamCellItem(jsonable: newComment, type: .spacer(height: 10.0)))
-            }
+        if let lastComment = jsonables.last,
+            let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
+            let postCommentCount = post.commentsCount,
+            postCommentCount > maxCount
+        {
+            items.append(StreamCellItem(jsonable: lastComment, type: .seeMoreComments))
+        }
+        else {
+            items.append(StreamCellItem(type: .spacer(height: 10.0)))
         }
 
         self.dataSource.insertUnsizedCellItems(items,

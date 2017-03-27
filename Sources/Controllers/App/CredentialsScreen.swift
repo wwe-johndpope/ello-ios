@@ -19,7 +19,7 @@ class CredentialsScreen: EmptyScreen {
     let backButton = UIButton()
     let titleLabel = StyledLabel(style: .LargeWhite)
     let gradientLayer = StartupGradientLayer()
-    let continueButton = StyledButton(style: .RoundedGray)
+    let continueButton = StyledButton(style: .RoundedGrayOutline)
     let continueBackground = UIView()
 
     override func updateConstraints() {
@@ -89,7 +89,7 @@ class CredentialsScreen: EmptyScreen {
             continueButton.style = .Green
         }
         else {
-            continueButton.style = .RoundedGray
+            continueButton.style = .RoundedGrayOutline
         }
     }
 }

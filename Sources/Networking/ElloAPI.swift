@@ -59,6 +59,7 @@ enum ElloAPI {
     case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
+    case postRelatedPosts(postId: String)
     case postReposters(postId: String)
     case currentUserBlockedList
     case currentUserMutedList
@@ -165,6 +166,7 @@ enum ElloAPI {
              .createPost,
              .following,
              .postDetail,
+             .postRelatedPosts,
              .rePost,
              .searchForPosts,
              .updatePost,
@@ -219,7 +221,7 @@ extension ElloAPI {
              .categories, .category, .categoryPosts, .discover, .pagePromotionals,
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
-             .postComments, .postLovers, .postReposters, .postDetail, .postViews,
+             .postComments, .postDetail, .postLovers, .postRelatedPosts,  .postReposters, .postViews,
              .join, .deleteSubscriptions, .userStream:
             return true
         case let .infiniteScroll(_, elloApi):
@@ -240,10 +242,6 @@ extension ElloAPI {
             return true
         }
     }
-}
-
-protocol ElloTarget: Moya.TargetType {
-    var sampleResponse: HTTPURLResponse { get }
 }
 
 extension ElloAPI: Moya.TargetType {
@@ -393,6 +391,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/lovers"
         case let .postReplyAll(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/commenters_usernames"
+        case let .postRelatedPosts(postId):
+            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/related"
         case let .postReposters(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/reposters"
         case .currentUserProfile,
@@ -432,6 +432,19 @@ extension ElloAPI: Moya.TargetType {
             return "\(ElloAPI.userStream(userParam: userId).path)/posts"
         case .userNameAutoComplete(_):
             return "/api/\(ElloAPI.apiVersion)/users/autocomplete"
+        }
+    }
+
+    var stubbedNetworkResponse: EndpointSampleResponse {
+        switch self {
+        case .postComments:
+            let target = URL(string: url(self))!
+            let response = HTTPURLResponse(url: target, statusCode: 200, httpVersion: "1.1", headerFields: [
+                "Link": "<\(target)?before=2014-06-03T00%3A00%3A00.000000000%2B0000>; rel=\"next\""
+                ])!
+            return .response(response, sampleData)
+        default:
+            return .networkResponse(200, sampleData)
         }
     }
 
@@ -519,6 +532,8 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("posts_listing_users_who_have_reposted_a_post")
         case .postReplyAll:
             return stubbedData("usernames")
+        case .postRelatedPosts:
+            return stubbedData("posts_searching_for_posts")
         case .currentUserBlockedList:
             return stubbedData("profile_listing_blocked_users")
         case .currentUserMutedList:
@@ -711,6 +726,10 @@ extension ElloAPI: Moya.TargetType {
         case let .postDetail(_, commentCount):
             return [
                 "comment_count": commentCount as AnyObject
+            ]
+        case .postRelatedPosts:
+            return [
+                "per_page": 3,
             ]
         case let .postViews(streamId, streamKind, postIds, userId):
             let streamIdDict: [String: String] = streamId.map { streamId in return ["id": streamId]} ?? [:]

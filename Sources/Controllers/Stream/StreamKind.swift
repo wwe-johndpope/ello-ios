@@ -67,43 +67,11 @@ enum StreamKind {
         }
     }
 
-    var columnCount: Int {
-        return columnCountFor(width: Window.width)
-    }
-
-    func columnCountFor(width: CGFloat) -> Int {
-        let gridColumns: Int
-        if Window.isWide(width) {
-            gridColumns = 3
-        }
-        else {
-            gridColumns = 2
-        }
-
-        if self.isGridView {
-            return gridColumns
-        }
-        else {
-            return 1
-        }
-    }
-
     var showsCategory: Bool {
         if case let .discover(type) = self, type == .featured {
             return true
         }
         return false
-    }
-
-    var tappingTextOpensDetail: Bool {
-        switch self {
-        case .postDetail:
-            return false
-        case .notifications:
-            return true
-        default:
-            return isGridView
-        }
     }
 
     var isProfileStream: Bool {
@@ -197,14 +165,6 @@ enum StreamKind {
         return []
     }
 
-    var avatarHeight: CGFloat {
-        return self.isGridView ? 30 : 40
-    }
-
-    func contentForPost(_ post: Post) -> [Regionable]? {
-        return self.isGridView ? post.summary : post.content
-    }
-
     func setIsGridView(_ isGridView: Bool) {
         GroupDefaults["\(cacheKey)GridViewPreferenceSet"] = true
         GroupDefaults["\(cacheKey)IsGridView"] = isGridView
@@ -233,9 +193,9 @@ enum StreamKind {
         }
     }
 
-    var isDetail: Bool {
+    func isDetail(post: Post) -> Bool {
         switch self {
-        case .postDetail: return true
+        case let .postDetail(postParam): return postParam == post.id || postParam == post.token
         default: return false
         }
     }

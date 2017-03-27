@@ -49,6 +49,7 @@ struct StreamImageCellPresenter {
         var imageToLoad: URL?
         var showGifInThisCell = false
         var showVideoInThisCell = false
+        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
 
         // video first because it is a smaller size than gifs
         if let asset = imageRegion.asset, asset.hasVideo {
@@ -63,7 +64,7 @@ struct StreamImageCellPresenter {
             else {
                 cell.presentedImageUrl = asset.optimized?.url
                 cell.isLargeImage = true
-                attachmentToLoad = streamKind.isGridView ?
+                attachmentToLoad = isGridView ?
                     asset.gridLayoutPreviewAttachment : asset.oneColumnPreviewAttachment
             }
             cell.isGif = true
@@ -79,7 +80,7 @@ struct StreamImageCellPresenter {
                 imageToLoad = asset.optimized?.url as URL?
             }
             else {
-                attachmentToLoad = streamKind.isGridView ?
+                attachmentToLoad = isGridView ?
                     asset.gridLayoutPreviewAttachment : asset.oneColumnPreviewAttachment
                 cell.presentedImageUrl = asset.optimized?.url
                 cell.isLargeImage = true
@@ -87,8 +88,8 @@ struct StreamImageCellPresenter {
             cell.isGif = true
         }
 
-        cell.isGridView = streamKind.isGridView
-        if streamKind.isGridView {
+        cell.isGridView = isGridView
+        if isGridView {
             attachmentToLoad = attachmentToLoad ?? imageRegion.asset?.gridLayoutAttachment
         }
         else {
@@ -102,7 +103,7 @@ struct StreamImageCellPresenter {
         cell.marginType = cellMargin
 
         if let attachmentWidth = attachmentToLoad?.width {
-            let columnWidth: CGFloat = calculateColumnWidth(frameWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCountFor(width: cell.frame.width))
+            let columnWidth: CGFloat = cell.frame.width
             preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: cell.margin)
         }
 

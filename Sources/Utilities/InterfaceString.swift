@@ -74,7 +74,7 @@ struct InterfaceString {
 
     struct Drawer {
         static let Invite: String = NSLocalizedString("Invite", comment: "Invite")
-        static let Invite: String = NSLocalizedString("Magazine", comment: "Magazine")
+        static let Magazine: String = NSLocalizedString("Magazine", comment: "Magazine")
         static let Store: String = NSLocalizedString("Store", comment: "Store")
         static let Help: String = NSLocalizedString("Help", comment: "Help")
         static let Resources: String = NSLocalizedString("Resources", comment: "Resources")
@@ -141,6 +141,8 @@ struct InterfaceString {
         static let DefaultTitle: String = NSLocalizedString("Post Detail", comment: "Default post title")
         static let LovedByList: String = NSLocalizedString("Loved by", comment: "Loved by list title")
         static let RepostedByList: String = NSLocalizedString("Reposted by", comment: "Reposted by list title")
+        static let RelatedPosts: String = NSLocalizedString("Related Posts", comment: "Related posts title")
+        static let LoadMoreComments: String = NSLocalizedString("Load More", comment: "Load More Comments title")
 
         static let Edit: String = NSLocalizedString("Edit", comment: "Edit Post Button Title")
         static let CreateComment: String = NSLocalizedString("Comment...", comment: "Create Comment Button Prompt")

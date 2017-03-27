@@ -85,6 +85,11 @@ protocol AnnouncementResponder: class {
     func markAnnouncementAsRead(announcement: Announcement)
 }
 
+@objc
+protocol PostCommentsResponder: class {
+    func loadCommentsTapped()
+}
+
 
 // MARK: StreamNotification
 struct StreamNotification {
@@ -380,6 +385,23 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
+    func appendPlaceholder(
+        _ placeholderType: StreamCellType.PlaceholderType,
+        with streamCellItems: [StreamCellItem],
+        completion: @escaping ElloEmptyCompletion = {}
+        )
+    {
+        guard let lastIndexPath = self.dataSource.indexPathsForPlaceholderType(placeholderType).last else { return }
+        guard streamCellItems.count > 0 else { return }
+
+        for item in streamCellItems {
+            item.placeholderType = placeholderType
+        }
+
+        let nextIndexPath = IndexPath(item: lastIndexPath.item + 1, section: lastIndexPath.section)
+        insertUnsizedCellItems(streamCellItems, startingIndexPath: nextIndexPath, completion: completion)
+    }
+
     func loadInitialPage(reload: Bool = false) {
         if let reloadClosure = reloadClosure, reload {
             responseConfig = nil
@@ -517,10 +539,12 @@ final class StreamViewController: BaseElloViewController {
         sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [weak self] size in
             guard let `self` = self else { return }
 
+            let columnCount = self.columnCountFor(width: size.width)
             if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
-                layout.columnCount = self.streamKind.columnCountFor(width: size.width)
+                layout.columnCount = columnCount
                 layout.invalidateLayout()
             }
+            self.dataSource.columnCount = columnCount
             self.reloadCells()
         }
 
@@ -599,6 +623,18 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
+    fileprivate func columnCountFor(width: CGFloat) -> Int {
+        let gridColumns: Int
+        if Window.isWide(width) {
+            gridColumns = 3
+        }
+        else {
+            gridColumns = 2
+        }
+
+        return gridColumns
+    }
+
     fileprivate func removeNotificationObservers() {
         updatedStreamImageCellHeightNotification?.removeObserver()
         updateCellHeightNotification?.removeObserver()
@@ -662,7 +698,9 @@ final class StreamViewController: BaseElloViewController {
     // this gets reset whenever the streamKind changes
     fileprivate func setupCollectionViewLayout() {
         guard let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout else { return }
-        layout.columnCount = streamKind.columnCountFor(width: view.frame.width)
+        let columnCount = columnCountFor(width: view.frame.width)
+        layout.columnCount = columnCount
+        dataSource.columnCount = columnCount
         layout.sectionInset = UIEdgeInsets.zero
         layout.minimumColumnSpacing = streamKind.columnSpacing
         layout.minimumInteritemSpacing = 0
@@ -822,8 +860,9 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     }
 
     func collectionView (_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-        isFullWidthAtIndexPath indexPath: IndexPath) -> Bool {
-            return dataSource.isFullWidthAtIndexPath(indexPath)
+        isFullWidthAtIndexPath indexPath: IndexPath) -> Bool
+    {
+        return dataSource.isFullWidthAtIndexPath(indexPath)
     }
 }
 
@@ -938,8 +977,9 @@ extension StreamViewController: CategoryResponder {
 extension StreamViewController: UserResponder {
 
     func userTappedText(cell: UICollectionViewCell) {
-        guard streamKind.tappingTextOpensDetail,
-            let indexPath = collectionView.indexPath(for: cell)
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            !dataSource.isFullWidthAtIndexPath(indexPath)
         else { return }
 
         collectionView(collectionView, didSelectItemAt: indexPath)
@@ -1047,6 +1087,10 @@ extension StreamViewController: UICollectionViewDelegate {
                 let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:scrollToComment:)), withSender: self) as? PostTappedResponder
                 responder?.postTapped(post, scrollToComment: lastComment)
             }
+        }
+        else if tappedCell is StreamLoadMoreCommentsCell {
+            let responder = target(forAction: #selector(PostCommentsResponder.loadCommentsTapped), withSender: self) as? PostCommentsResponder
+            responder?.loadCommentsTapped()
         }
         else if let post = dataSource.postForIndexPath(indexPath) {
             let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder

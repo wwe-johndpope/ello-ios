@@ -50,7 +50,7 @@ class StreamFooterCell: UICollectionViewCell {
     }
 
     func updateToolbarItems(
-        streamKind: StreamKind,
+        isGridView: Bool,
         repostVisibility: InteractionVisibility,
         commentVisibility: InteractionVisibility,
         shareVisibility: InteractionVisibility,
@@ -62,7 +62,7 @@ class StreamFooterCell: UICollectionViewCell {
         var toolbarItems: [UIBarButtonItem] = []
 
         let desiredCount: Int
-        if streamKind.isGridView {
+        if isGridView {
             desiredCount = 3
 
             if commentVisibility.isVisible {
