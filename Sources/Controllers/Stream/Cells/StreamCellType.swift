@@ -65,6 +65,7 @@ enum StreamCellType: Equatable {
 
         case postCommentBar
         case postComments
+        case postLoadingComments
         case postHeader
         case postLovers
         case postReposters
@@ -160,15 +161,16 @@ enum StreamCellType: Equatable {
 
     var selectable: Bool {
         switch self {
-        case .categoryCard,
-             .selectableCategoryCard,
+        case .announcement,
+             .categoryCard,
              .createComment,
              .header,
              .inviteFriends,
-             .onboardingInviteFriends,
+             .loadMoreComments,
              .notification,
-             .announcement,
+             .onboardingInviteFriends,
              .seeMoreComments,
+             .selectableCategoryCard,
              .toggle,
              .userListItem:
             return true

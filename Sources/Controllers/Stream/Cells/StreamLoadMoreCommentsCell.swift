@@ -28,6 +28,7 @@ class StreamLoadMoreCommentsCell: UICollectionViewCell {
 
     fileprivate func style() {
         button.setTitle(InterfaceString.Post.LoadMoreComments, for: .normal)
+        button.isUserInteractionEnabled = false  // let StreamViewController handle taps
     }
 
     fileprivate func arrange() {

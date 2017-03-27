@@ -85,6 +85,11 @@ protocol AnnouncementResponder: class {
     func markAnnouncementAsRead(announcement: Announcement)
 }
 
+@objc
+protocol PostCommentsResponder: class {
+    func loadCommentsTapped()
+}
+
 
 // MARK: StreamNotification
 struct StreamNotification {
@@ -378,6 +383,23 @@ final class StreamViewController: BaseElloViewController {
             self.reloadCells()
             completion()
         }
+    }
+
+    func appendPlaceholder(
+        _ placeholderType: StreamCellType.PlaceholderType,
+        with streamCellItems: [StreamCellItem],
+        completion: @escaping ElloEmptyCompletion = {}
+        )
+    {
+        guard let lastIndexPath = self.dataSource.indexPathsForPlaceholderType(placeholderType).last else { return }
+        guard streamCellItems.count > 0 else { return }
+
+        for item in streamCellItems {
+            item.placeholderType = placeholderType
+        }
+
+        let nextIndexPath = IndexPath(item: lastIndexPath.item + 1, section: lastIndexPath.section)
+        insertUnsizedCellItems(streamCellItems, startingIndexPath: nextIndexPath, completion: completion)
     }
 
     func loadInitialPage(reload: Bool = false) {
@@ -1065,6 +1087,10 @@ extension StreamViewController: UICollectionViewDelegate {
                 let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:scrollToComment:)), withSender: self) as? PostTappedResponder
                 responder?.postTapped(post, scrollToComment: lastComment)
             }
+        }
+        else if tappedCell is StreamLoadMoreCommentsCell {
+            let responder = target(forAction: #selector(PostCommentsResponder.loadCommentsTapped), withSender: self) as? PostCommentsResponder
+            responder?.loadCommentsTapped()
         }
         else if let post = dataSource.postForIndexPath(indexPath) {
             let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder

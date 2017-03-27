@@ -232,8 +232,18 @@ final class PostDetailViewController: StreamableViewController {
 
 }
 
-// MARK: PostDetailViewController: StreamDestination
-extension PostDetailViewController: StreamDestination {
+extension PostDetailViewController: PostCommentsResponder {
+    func loadCommentsTapped() {
+        guard
+            let nextQueryItems = streamViewController.responseConfig?.nextQueryItems
+        else { return }
+
+        loadMoreComments(nextQueryItems: nextQueryItems)
+    }
+}
+
+// MARK: PostDetailViewController: PostDetailStreamDestination
+extension PostDetailViewController: PostDetailStreamDestination {
 
     var pagingEnabled: Bool {
         get { return streamViewController.pagingEnabled }
@@ -287,6 +297,10 @@ extension PostDetailViewController: StreamDestination {
 
     func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
+    }
+
+    func appendComments(_ commentItems: [StreamCellItem]) {
+        streamViewController.appendPlaceholder(.postComments, with: commentItems)
     }
 
     func primaryJSONAbleNotFound() {

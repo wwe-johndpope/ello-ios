@@ -2,11 +2,24 @@
 ///  PostDetailGenerator.swift
 //
 
+
+protocol PostDetailStreamDestination: StreamDestination {
+    func appendComments(_: [StreamCellItem])
+}
+
+
 final class PostDetailGenerator: StreamGenerator {
 
     var currentUser: User?
     var streamKind: StreamKind
-    weak var destination: StreamDestination?
+    weak fileprivate var postDetailStreamDestination: PostDetailStreamDestination?
+    weak var destination: StreamDestination? {
+        get { return postDetailStreamDestination }
+        set {
+            if !(newValue is PostDetailStreamDestination) { fatalError("CategoryGenerator.destination must conform to PostDetailStreamDestination") }
+            postDetailStreamDestination = newValue as? PostDetailStreamDestination
+        }
+    }
 
     fileprivate var post: Post?
     fileprivate let postParam: String
@@ -63,6 +76,7 @@ private extension PostDetailGenerator {
             StreamCellItem(type: .placeholder, placeholderType: .postSocialPadding),
             StreamCellItem(type: .placeholder, placeholderType: .postCommentBar),
             StreamCellItem(type: .placeholder, placeholderType: .postComments),
+            StreamCellItem(type: .placeholder, placeholderType: .postLoadingComments),
             StreamCellItem(type: .placeholder, placeholderType: .postRelatedPosts),
         ])
     }
@@ -123,6 +137,46 @@ private extension PostDetailGenerator {
         destination?.replacePlaceholder(type: .postSocialPadding, items: padding) {}
     }
 
+    private func loadMoreCommentItems(lastComment: ElloComment?, responseConfig: ResponseConfig) -> [StreamCellItem] {
+        if responseConfig.nextQueryItems != nil,
+            let lastComment = lastComment
+        {
+            return [StreamCellItem(jsonable: lastComment, type: .loadMoreComments)]
+        }
+        else {
+            return []
+        }
+    }
+
+    func loadMoreComments(nextQueryItems: [AnyObject]) {
+        guard let postId = self.post?.id else { return }
+
+        let loadingComments = [StreamCellItem(type: .streamLoading)]
+        self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments) {}
+
+        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return ElloAPI.postComments(postId: postId) }
+        StreamService().loadStream(
+            endpoint: scrollAPI,
+            streamKind: .postDetail(postParam: postId),
+            success: { [weak self] (jsonables, responseConfig) in
+                guard let `self` = self else { return }
+
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
+
+                let commentItems = self.parse(jsonables: jsonables)
+                self.postDetailStreamDestination?.appendComments(commentItems)
+
+                let loadMoreComments = self.loadMoreCommentItems(lastComment: jsonables.last as? ElloComment, responseConfig: responseConfig)
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
+            },
+            failure: { _ in
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+            },
+            noContent: {
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+            })
+    }
+
     func loadPostComments(_ doneOperation: AsyncOperation) {
         guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
 
@@ -135,21 +189,15 @@ private extension PostDetailGenerator {
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
-                let loadMoreComments: [StreamCellItem]
-                if responseConfig.nextQueryItems != nil,
-                    let lastComment = comments.last
-                {
-                    loadMoreComments = [StreamCellItem(jsonable: lastComment, type: .loadMoreComments)]
-                }
-                else {
-                    loadMoreComments = []
-                }
-
-                let commentItems = self.parse(jsonables: comments) + loadMoreComments
+                let commentItems = self.parse(jsonables: comments)
                 displayCommentsOperation.run {
                     self.destination?.setPagingConfig(responseConfig: responseConfig)
                     inForeground {
                         self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {}
+                        if let lastComment = comments.last {
+                            let loadMoreComments = self.loadMoreCommentItems(lastComment: lastComment, responseConfig: responseConfig)
+                            self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
+                        }
                     }
                 }
             }
