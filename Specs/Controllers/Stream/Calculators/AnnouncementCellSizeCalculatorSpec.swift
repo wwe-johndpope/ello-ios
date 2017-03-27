@@ -13,7 +13,7 @@ class AnnouncementCellSizeCalculatorSpec: QuickSpec {
             it("calculates a reasonable height") {
                 let announcement: Announcement = stub([:])
                 let height = AnnouncementCellSizeCalculator.calculateAnnouncementHeight(announcement, cellWidth: 414)
-                expect(height) == 171
+                expect(height) == 165
             }
         }
     }

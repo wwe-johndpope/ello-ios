@@ -171,41 +171,78 @@ extension Watch: Stubbable {
 
 extension Profile: Stubbable {
     class func stub(_ values: [String: Any]) -> Profile {
+        let id: String = (values["id"] as? String) ?? UUID().uuidString
+        let createdAt: Date = (values["createdAt"] as? Date) ?? Date()
+        let shortBio: String = (values["shortBio"] as? String) ?? "shortBio"
+        let email: String = (values["email"] as? String) ?? "email@example.com"
+        let confirmedAt: Date = (values["confirmedAt"] as? Date) ?? Date()
+        let isPublic: Bool = (values["isPublic"] as? Bool) ?? true
+        let mutedCount: Int = (values["mutedCount"] as? Int) ?? 0
+        let blockedCount: Int = (values["blockedCount"] as? Int) ?? 0
+        let hasSharingEnabled: Bool = (values["hasSharingEnabled"] as? Bool) ?? true
+        let hasAdNotificationsEnabled: Bool = (values["hasAdNotificationsEnabled"] as? Bool) ?? true
+        let hasAutoWatchEnabled: Bool = (values["hasAutoWatchEnabled"] as? Bool) ?? true
+        let allowsAnalytics: Bool = (values["allowsAnalytics"] as? Bool) ?? true
+        let notifyOfCommentsViaEmail: Bool = (values["notifyOfCommentsViaEmail"] as? Bool) ?? true
+        let notifyOfLovesViaEmail: Bool = (values["notifyOfLovesViaEmail"] as? Bool) ?? true
+        let notifyOfInvitationAcceptancesViaEmail: Bool = (values["notifyOfInvitationAcceptancesViaEmail"] as? Bool) ?? true
+        let notifyOfMentionsViaEmail: Bool = (values["notifyOfMentionsViaEmail"] as? Bool) ?? true
+        let notifyOfNewFollowersViaEmail: Bool = (values["notifyOfNewFollowersViaEmail"] as? Bool) ?? true
+        let notifyOfRepostsViaEmail: Bool = (values["notifyOfRepostsViaEmail"] as? Bool) ?? true
+        let subscribeToUsersEmailList: Bool = (values["subscribeToUsersEmailList"] as? Bool) ?? true
+        let subscribeToDailyEllo: Bool = (values["subscribeToDailyEllo"] as? Bool) ?? true
+        let subscribeToWeeklyEllo: Bool = (values["subscribeToWeeklyEllo"] as? Bool) ?? true
+        let subscribeToOnboardingDrip: Bool = (values["subscribeToOnboardingDrip"] as? Bool) ?? true
+        let notifyOfAnnouncementsViaPush: Bool = (values["notifyOfAnnouncementsViaPush"] as? Bool) ?? true
+        let notifyOfCommentsViaPush: Bool = (values["notifyOfCommentsViaPush"] as? Bool) ?? true
+        let notifyOfLovesViaPush: Bool  = (values["notifyOfLovesViaPush"] as? Bool) ?? true
+        let notifyOfMentionsViaPush: Bool = (values["notifyOfMentionsViaPush"] as? Bool) ?? true
+        let notifyOfRepostsViaPush: Bool = (values["notifyOfRepostsViaPush"] as? Bool) ?? true
+        let notifyOfNewFollowersViaPush: Bool = (values["notifyOfNewFollowersViaPush"] as? Bool) ?? true
+        let notifyOfInvitationAcceptancesViaPush: Bool = (values["notifyOfInvitationAcceptancesViaPush"] as? Bool) ?? true
+        let notifyOfWatchesViaPush: Bool = (values["notifyOfWatchesViaPush"] as? Bool) ?? true
+        let notifyOfWatchesViaEmail: Bool = (values["notifyOfWatchesViaEmail"] as? Bool) ?? true
+        let notifyOfCommentsOnPostWatchViaPush: Bool = (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? true
+        let notifyOfCommentsOnPostWatchViaEmail: Bool = (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? true
+        let hasAnnouncementsEnabled: Bool = (values["hasAnnouncementsEnabled"] as? Bool) ?? true
+        let discoverable: Bool = (values["discoverable"] as? Bool) ?? true
+
         let profile = Profile(
-            id: (values["id"] as? String) ?? UUID().uuidString,
-            createdAt: (values["createdAt"] as? Date) ?? Date(),
-            shortBio: (values["shortBio"] as? String) ?? "shortBio",
-            email: (values["email"] as? String) ?? "email@example.com",
-            confirmedAt: (values["confirmedAt"] as? Date) ?? Date(),
-            isPublic: (values["isPublic"] as? Bool) ?? true,
-            mutedCount: (values["mutedCount"] as? Int) ?? 0,
-            blockedCount: (values["blockedCount"] as? Int) ?? 0,
-            hasSharingEnabled: (values["hasSharingEnabled"] as? Bool) ?? true,
-            hasAdNotificationsEnabled: (values["hasAdNotificationsEnabled"] as? Bool) ?? true,
-            hasAutoWatchEnabled: (values["hasAutoWatchEnabled"] as? Bool) ?? true,
-            allowsAnalytics: (values["allowsAnalytics"] as? Bool) ?? true,
-            notifyOfCommentsViaEmail: (values["notifyOfCommentsViaEmail"] as? Bool) ?? true,
-            notifyOfLovesViaEmail: (values["notifyOfLovesViaEmail"] as? Bool) ?? true,
-            notifyOfInvitationAcceptancesViaEmail: (values["notifyOfInvitationAcceptancesViaEmail"] as? Bool) ?? true,
-            notifyOfMentionsViaEmail: (values["notifyOfMentionsViaEmail"] as? Bool) ?? true,
-            notifyOfNewFollowersViaEmail: (values["notifyOfNewFollowersViaEmail"] as? Bool) ?? true,
-            notifyOfRepostsViaEmail: (values["notifyOfRepostsViaEmail"] as? Bool) ?? true,
-            subscribeToUsersEmailList: (values["subscribeToUsersEmailList"] as? Bool) ?? true,
-            subscribeToDailyEllo: (values["subscribeToDailyEllo"] as? Bool) ?? true,
-            subscribeToWeeklyEllo: (values["subscribeToWeeklyEllo"] as? Bool) ?? true,
-            subscribeToOnboardingDrip: (values["subscribeToOnboardingDrip"] as? Bool) ?? true,
-            notifyOfAnnouncementsViaPush: (values["notifyOfAnnouncementsViaPush"] as? Bool) ?? true,
-            notifyOfCommentsViaPush: (values["notifyOfCommentsViaPush"] as? Bool) ?? true,
-            notifyOfLovesViaPush : (values["notifyOfLovesViaPush"] as? Bool) ?? true,
-            notifyOfMentionsViaPush: (values["notifyOfMentionsViaPush"] as? Bool) ?? true,
-            notifyOfRepostsViaPush: (values["notifyOfRepostsViaPush"] as? Bool) ?? true,
-            notifyOfNewFollowersViaPush: (values["notifyOfNewFollowersViaPush"] as? Bool) ?? true,
-            notifyOfInvitationAcceptancesViaPush: (values["notifyOfInvitationAcceptancesViaPush"] as? Bool) ?? true,
-            notifyOfWatchesViaPush: (values["notifyOfWatchesViaPush"] as? Bool) ?? true,
-            notifyOfWatchesViaEmail: (values["notifyOfWatchesViaEmail"] as? Bool) ?? true,
-            notifyOfCommentsOnPostWatchViaPush: (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? true,
-            notifyOfCommentsOnPostWatchViaEmail: (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? true,
-            discoverable: (values["discoverable"] as? Bool) ?? true
+            id: id,
+            createdAt: createdAt,
+            shortBio: shortBio,
+            email: email,
+            confirmedAt: confirmedAt,
+            isPublic: isPublic,
+            mutedCount: mutedCount,
+            blockedCount: blockedCount,
+            hasSharingEnabled: hasSharingEnabled,
+            hasAdNotificationsEnabled: hasAdNotificationsEnabled,
+            hasAutoWatchEnabled: hasAutoWatchEnabled,
+            allowsAnalytics: allowsAnalytics,
+            notifyOfCommentsViaEmail: notifyOfCommentsViaEmail,
+            notifyOfLovesViaEmail: notifyOfLovesViaEmail,
+            notifyOfInvitationAcceptancesViaEmail: notifyOfInvitationAcceptancesViaEmail,
+            notifyOfMentionsViaEmail: notifyOfMentionsViaEmail,
+            notifyOfNewFollowersViaEmail: notifyOfNewFollowersViaEmail,
+            notifyOfRepostsViaEmail: notifyOfRepostsViaEmail,
+            subscribeToUsersEmailList: subscribeToUsersEmailList,
+            subscribeToDailyEllo: subscribeToDailyEllo,
+            subscribeToWeeklyEllo: subscribeToWeeklyEllo,
+            subscribeToOnboardingDrip: subscribeToOnboardingDrip,
+            notifyOfAnnouncementsViaPush: notifyOfAnnouncementsViaPush,
+            notifyOfCommentsViaPush: notifyOfCommentsViaPush,
+            notifyOfLovesViaPush: notifyOfLovesViaPush,
+            notifyOfMentionsViaPush: notifyOfMentionsViaPush,
+            notifyOfRepostsViaPush: notifyOfRepostsViaPush,
+            notifyOfNewFollowersViaPush: notifyOfNewFollowersViaPush,
+            notifyOfInvitationAcceptancesViaPush: notifyOfInvitationAcceptancesViaPush,
+            notifyOfWatchesViaPush: notifyOfWatchesViaPush,
+            notifyOfWatchesViaEmail: notifyOfWatchesViaEmail,
+            notifyOfCommentsOnPostWatchViaPush: notifyOfCommentsOnPostWatchViaPush,
+            notifyOfCommentsOnPostWatchViaEmail: notifyOfCommentsOnPostWatchViaEmail,
+            hasAnnouncementsEnabled: hasAnnouncementsEnabled,
+            discoverable: discoverable
         )
         return profile
     }

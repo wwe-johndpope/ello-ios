@@ -5484,7 +5484,7 @@
 				);
 				INFOPLIST_FILE = Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\" -Xfrontend -debug-time-function-bodies";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\" -Xfrontend -debug-time-function-bodies -enable-bridging-pch";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev;
 				PRODUCT_NAME = Ello;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Ello-Bridging-Header.h";
