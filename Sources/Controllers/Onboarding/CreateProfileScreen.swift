@@ -325,11 +325,11 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         switch uploading {
         case .coverImage:
             imageView = coverImageView
-            uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGray
+            uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGrayOutline
             if let imageRegion = imageRegion, updateDelegate { delegate?.assign(coverImage: imageRegion) }
         case .avatar:
             imageView = avatarImageView
-            uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGray
+            uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGrayOutline
             if let imageRegion = imageRegion, updateDelegate  { delegate?.assign(avatarImage: imageRegion) }
         }
 

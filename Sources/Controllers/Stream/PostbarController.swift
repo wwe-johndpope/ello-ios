@@ -442,17 +442,15 @@ class PostbarController: UIResponder, PostbarResponder {
 
         var items = StreamCellItemParser().parse(jsonables, streamKind: StreamKind.following, currentUser: currentUser)
 
-        if let currentUser = currentUser {
-            let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
-            if let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
-                let postCommentCount = post.commentsCount,
-                postCommentCount > maxCount
-            {
-                items.append(StreamCellItem(jsonable: jsonables.last ?? newComment, type: .seeMoreComments))
-            }
-            else {
-                items.append(StreamCellItem(jsonable: newComment, type: .spacer(height: 10.0)))
-            }
+        if let lastComment = jsonables.last,
+            let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
+            let postCommentCount = post.commentsCount,
+            postCommentCount > maxCount
+        {
+            items.append(StreamCellItem(jsonable: lastComment, type: .seeMoreComments))
+        }
+        else {
+            items.append(StreamCellItem(type: .spacer(height: 10.0)))
         }
 
         self.dataSource.insertUnsizedCellItems(items,

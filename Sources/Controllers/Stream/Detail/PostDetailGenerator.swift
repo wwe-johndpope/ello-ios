@@ -136,12 +136,10 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
                 let loadMoreComments: [StreamCellItem]
-                if let totalPagesRemaining = responseConfig.totalPagesRemaining.flatMap({ Int($0) }),
-                    totalPagesRemaining > 0,
-                    let post = self.post,
-                    let currentUser = self.currentUser
+                if responseConfig.nextQueryItems != nil,
+                    let lastComment = comments.last
                 {
-                    loadMoreComments = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .loadMoreComments)]
+                    loadMoreComments = [StreamCellItem(jsonable: lastComment, type: .loadMoreComments)]
                 }
                 else {
                     loadMoreComments = []
@@ -233,16 +231,11 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard relatedPosts.count > 0 else { return }
 
-                let relatedPostItems: [StreamCellItem]
-                if relatedPosts.count > 0 {
-                    let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .LargeGrayHeader)
-                    let headerCellItem = StreamCellItem(type: .textHeader(header))
-                    let postItems = self.parse(jsonables: relatedPosts, forceGrid: true)
-                    relatedPostItems = [headerCellItem] + postItems
-                }
-                else {
-                    relatedPostItems = []
-                }
+                let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .LargeGrayHeader)
+                let headerCellItem = StreamCellItem(type: .textHeader(header))
+                let postItems = self.parse(jsonables: relatedPosts, forceGrid: true)
+                let relatedPostItems = [headerCellItem] + postItems
+
                 displayRelatedPostsOperation.run {
                     inForeground {
                         self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems) {}
