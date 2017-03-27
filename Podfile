@@ -85,15 +85,20 @@ plugin 'cocoapods-keys', {
     'OauthSecret',
     'CrashlyticsKey',
     'Domain',
-    'HttpProtocol',
     'SodiumChloride',
     'SegmentKey',
-
-    'StagingOauthKey',
-    'StagingOauthSecret',
-    'StagingDomain',
-    'StagingHttpProtocol',
     'StagingSegmentKey',
+    'TeamId',
+
+    'NinjaOauthKey',
+    'NinjaOauthSecret',
+    'NinjaDomain',
+    'Stage1OauthKey',
+    'Stage1OauthSecret',
+    'Stage1Domain',
+    'Stage2OauthKey',
+    'Stage2OauthSecret',
+    'Stage2Domain',
   ]
 }
 
