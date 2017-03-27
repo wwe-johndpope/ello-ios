@@ -4,7 +4,6 @@
 
 import FLAnimatedImage
 import TimeAgoInWords
-import AVFoundation
 
 
 @objc

@@ -24,7 +24,8 @@ def ello_app_pods
   pod 'PINCache', git: 'https://github.com/ello/PINCache', commit: '78c3461'
   pod 'SSPullToRefresh', '~> 1.2'
   pod 'ImagePickerSheetController', git: 'https://github.com/ello/ImagePickerSheetController', branch: 'swift3'
-  pod 'iRate', '~> 1.11' # swift pods
+  pod 'iRate', '~> 1.11'
+  # swift pods
   pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
   pod 'WebLinking', git: 'https://github.com/kylef/WebLinking.swift'
   pod 'SnapKit', git: 'https://github.com/ello/SnapKit'
@@ -59,7 +60,7 @@ end
 def spec_pods
   pod 'FBSnapshotTestCase'
   pod 'Quick', '1.1.0'
-  pod 'Nimble', '5.1.1'
+  pod 'Nimble', '6.0.1'
   pod 'Nimble-Snapshots', '~> 4.4'
 end
 

@@ -273,6 +273,7 @@
 		123DEBF81D3D645A007B5F86 /* PostDetailGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBF71D3D645A007B5F86 /* PostDetailGeneratorSpec.swift */; };
 		123E93671DD283DB00D71A5A /* CategoryGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E93661DD283DB00D71A5A /* CategoryGeneratorSpec.swift */; };
 		1241EDB41DD3D07900426A17 /* page_promotionals.json in Resources */ = {isa = PBXBuildFile; fileRef = 1241EDB31DD3D07900426A17 /* page_promotionals.json */; };
+		12426A971E8984D000F1C761 /* ColorsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADA1681A96F4C60000DDA1 /* ColorsSpec.swift */; };
 		12431FF21DBAA6D3006808D4 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FF11DBAA6D3006808D4 /* CategoryViewController.swift */; };
 		12431FF41DBAA6E4006808D4 /* CategoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FF31DBAA6E4006808D4 /* CategoryScreen.swift */; };
 		12431FF61DBAA7B2006808D4 /* CategoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431FF51DBAA7B2006808D4 /* CategoryProtocols.swift */; };
@@ -728,7 +729,6 @@
 		1DA9AA7C1C694F32000562E4 /* profile__no_sharing.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DA9AA7B1C694F32000562E4 /* profile__no_sharing.json */; };
 		1DA9AA7E1C6A81AB000562E4 /* emojis.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DA9AA7D1C6A81AB000562E4 /* emojis.json */; };
 		1DADA1661A96DC130000DDA1 /* NotificationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADA1651A96DC130000DDA1 /* NotificationsScreen.swift */; };
-		1DADA1691A96F4C60000DDA1 /* ColorsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADA1681A96F4C60000DDA1 /* ColorsSpec.swift */; };
 		1DADC57A1AF449B3000DAC88 /* ElloWebBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADC5791AF449B3000DAC88 /* ElloWebBrowserViewController.swift */; };
 		1DB17B981AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB17B961AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift */; };
 		1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */; };
@@ -4614,6 +4614,7 @@
 				1DF984061D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift in Sources */,
 				127535211B73F7B2006B9A0F /* DateSpecs.swift in Sources */,
 				1D9225541C3B23E000553BAE /* ExperienceUpdateSpec.swift in Sources */,
+				12426A971E8984D000F1C761 /* ColorsSpec.swift in Sources */,
 				122943271C6BF465003FCD20 /* ShareViewControllerSpec.swift in Sources */,
 				1DBFD9F01DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift in Sources */,
 				1D3DED7C1AE1C07800F1D514 /* ElloTextFieldViewSpec.swift in Sources */,
@@ -4824,7 +4825,6 @@
 				1D066FF31B8BA19E002B303D /* ArraySpec.swift in Sources */,
 				123D36171E53BF9000274B9D /* StoryboardIdentifiers.swift in Sources */,
 				12A1D8331DAD747500A327D6 /* ProfileTotalCountViewSpec.swift in Sources */,
-				1DADA1691A96F4C60000DDA1 /* ColorsSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
