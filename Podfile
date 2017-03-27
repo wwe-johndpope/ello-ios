@@ -21,6 +21,7 @@ def ello_app_pods
   pod 'JTSImageViewController', git: 'https://github.com/ello/JTSImageViewController'
   pod 'KINWebBrowser', git: 'https://github.com/ello/KINWebBrowser'
   pod 'PINRemoteImage', '3.0.0-beta.8'
+  pod 'PINCache', git: 'https://github.com/ello/PINCache', commit: '78c3461'
   pod 'SSPullToRefresh', '~> 1.2'
   pod 'ImagePickerSheetController', git: 'https://github.com/ello/ImagePickerSheetController', branch: 'swift3'
   pod 'iRate', '~> 1.11'

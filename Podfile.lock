@@ -145,6 +145,7 @@ DEPENDENCIES:
   - Moya (~> 8.0.0-beta.6)
   - Nimble (= 5.1.1)
   - Nimble-Snapshots (~> 4.4)
+  - PINCache (from `https://github.com/ello/PINCache`, commit `78c3461`)
   - PINRemoteImage (= 3.0.0-beta.8)
   - Quick (= 1.1.0)
   - SnapKit (from `https://github.com/ello/SnapKit`)
@@ -179,6 +180,9 @@ EXTERNAL SOURCES:
     :path: Pods/CocoaPodsKeys
   KINWebBrowser:
     :git: https://github.com/ello/KINWebBrowser
+  PINCache:
+    :commit: 78c3461
+    :git: https://github.com/ello/PINCache
   SnapKit:
     :git: https://github.com/ello/SnapKit
   SVGKit:
@@ -216,6 +220,9 @@ CHECKOUT OPTIONS:
   KINWebBrowser:
     :commit: bcf29fd0beb6afb1c28a236306ad0fa1b8677bf3
     :git: https://github.com/ello/KINWebBrowser
+  PINCache:
+    :commit: 78c3461
+    :git: https://github.com/ello/PINCache
   SnapKit:
     :commit: ab6c1fd91f2f598f34e29fcf8dd2eea5500daac9
     :git: https://github.com/ello/SnapKit
@@ -269,6 +276,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 76f5407a177ab035f6110a0535851b7829ba58ab
+PODFILE CHECKSUM: 765da3956d7b4c6a2e7c55d97972744eaaa97d31
 
 COCOAPODS: 1.1.1
