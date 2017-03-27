@@ -244,10 +244,6 @@ extension ElloAPI {
     }
 }
 
-protocol ElloTarget: Moya.TargetType {
-    var sampleResponse: HTTPURLResponse { get }
-}
-
 extension ElloAPI: Moya.TargetType {
     var baseURL: URL { return URL(string: ElloURI.baseURL)! }
     var method: Moya.Method {
@@ -436,6 +432,19 @@ extension ElloAPI: Moya.TargetType {
             return "\(ElloAPI.userStream(userParam: userId).path)/posts"
         case .userNameAutoComplete(_):
             return "/api/\(ElloAPI.apiVersion)/users/autocomplete"
+        }
+    }
+
+    var stubbedNetworkResponse: EndpointSampleResponse {
+        switch self {
+        case .postComments:
+            let target = URL(string: url(self))!
+            let response = HTTPURLResponse(url: target, statusCode: 200, httpVersion: "1.1", headerFields: [
+                "Link": "<\(target)?before=2014-06-03T00%3A00%3A00.000000000%2B0000>; rel=\"next\""
+                ])!
+            return .response(response, sampleData)
+        default:
+            return .networkResponse(200, sampleData)
         }
     }
 
