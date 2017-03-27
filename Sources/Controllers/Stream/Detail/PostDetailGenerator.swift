@@ -64,6 +64,35 @@ final class PostDetailGenerator: StreamGenerator {
         loadRelatedPosts(doneOperation)
     }
 
+    func loadMoreComments(nextQueryItems: [AnyObject]) {
+        guard let postId = self.post?.id else { return }
+
+        let loadingComments = [StreamCellItem(type: .streamLoading)]
+        self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments) {}
+
+        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return ElloAPI.postComments(postId: postId) }
+        StreamService().loadStream(
+            endpoint: scrollAPI,
+            streamKind: .postDetail(postParam: postId),
+            success: { [weak self] (jsonables, responseConfig) in
+                guard let `self` = self else { return }
+
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
+
+                let commentItems = self.parse(jsonables: jsonables)
+                self.postDetailStreamDestination?.appendComments(commentItems)
+
+                let loadMoreComments = self.loadMoreCommentItems(lastComment: jsonables.last as? ElloComment, responseConfig: responseConfig)
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
+            },
+            failure: { _ in
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+        },
+            noContent: {
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+        })
+    }
+
 }
 
 private extension PostDetailGenerator {
@@ -137,7 +166,7 @@ private extension PostDetailGenerator {
         destination?.replacePlaceholder(type: .postSocialPadding, items: padding) {}
     }
 
-    private func loadMoreCommentItems(lastComment: ElloComment?, responseConfig: ResponseConfig) -> [StreamCellItem] {
+    func loadMoreCommentItems(lastComment: ElloComment?, responseConfig: ResponseConfig) -> [StreamCellItem] {
         if responseConfig.nextQueryItems != nil,
             let lastComment = lastComment
         {
@@ -146,35 +175,6 @@ private extension PostDetailGenerator {
         else {
             return []
         }
-    }
-
-    func loadMoreComments(nextQueryItems: [AnyObject]) {
-        guard let postId = self.post?.id else { return }
-
-        let loadingComments = [StreamCellItem(type: .streamLoading)]
-        self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments) {}
-
-        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return ElloAPI.postComments(postId: postId) }
-        StreamService().loadStream(
-            endpoint: scrollAPI,
-            streamKind: .postDetail(postParam: postId),
-            success: { [weak self] (jsonables, responseConfig) in
-                guard let `self` = self else { return }
-
-                self.destination?.setPagingConfig(responseConfig: responseConfig)
-
-                let commentItems = self.parse(jsonables: jsonables)
-                self.postDetailStreamDestination?.appendComments(commentItems)
-
-                let loadMoreComments = self.loadMoreCommentItems(lastComment: jsonables.last as? ElloComment, responseConfig: responseConfig)
-                self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
-            },
-            failure: { _ in
-                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
-            },
-            noContent: {
-                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
-            })
     }
 
     func loadPostComments(_ doneOperation: AsyncOperation) {

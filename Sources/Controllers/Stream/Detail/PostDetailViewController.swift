@@ -238,7 +238,7 @@ extension PostDetailViewController: PostCommentsResponder {
             let nextQueryItems = streamViewController.responseConfig?.nextQueryItems
         else { return }
 
-        loadMoreComments(nextQueryItems: nextQueryItems)
+        generator?.loadMoreComments(nextQueryItems: nextQueryItems)
     }
 }
 
