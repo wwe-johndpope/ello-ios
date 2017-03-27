@@ -65,7 +65,6 @@ final class User: JSONAble {
     // links
     var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     var categories: [Category]? { return getLinkArray("categories") as? [Category] }
-    var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
 
     // computed
     var atName: String { return "@\(username)"}

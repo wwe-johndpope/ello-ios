@@ -126,15 +126,7 @@ enum StreamKind {
         case .announcements:
             return jsonables
         case .discover, .category:
-            if let users = jsonables as? [User] {
-                return users.reduce([]) { accum, user in
-                    if let post = user.mostRecentPost {
-                        return accum + [post]
-                    }
-                    return accum
-                }
-            }
-            else if let comments = jsonables as? [ElloComment]  {
+            if let comments = jsonables as? [ElloComment]  {
                 return comments
             }
             else if let posts = jsonables as? [Post]  {

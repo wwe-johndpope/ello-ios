@@ -197,10 +197,6 @@ class UserSpec: QuickSpec {
                     expect(user.coverImage).to(beAKindOf(Asset.self))
                     expect(user.backgroundPosition) == ""
                     expect(user.isCurrentUser) == false
-
-    //                expect(user.mostRecentPost).toNot(beNil())
-    //                expect(user.mostRecentPost?.id) == "4721"
-    //                expect(user.mostRecentPost?.author) == user
                 }
             }
 
@@ -235,7 +231,6 @@ class UserSpec: QuickSpec {
 
                     it("decodes successfully") {
                         let post: Post = stub(["id" : "sample-post-id"])
-                        let stubbedMostRecentPost: Post = stub(["id" : "another-sample-post-id", "authorId" : "sample-userId"])
                         let attachment: Attachment = stub(["url": URL(string: "http://www.example.com")!, "height": 0, "width": 0, "type": "png", "size": 0 ])
                         let asset: Asset = stub(["regular" : attachment])
                         let coverAttachment: Attachment = stub(["url": URL(string: "http://www.example2.com")!, "height": 0, "width": 0, "type": "png", "size": 0 ])
@@ -251,7 +246,6 @@ class UserSpec: QuickSpec {
                             "name" : "sample-name",
                             "posts" : [post],
                             "postsCount" : 9,
-                            "mostRecentPost" : stubbedMostRecentPost,
                             "relationshipPriority" : "self",
                             "id" : "sample-userId",
                             "username" : "sample-username",
@@ -292,10 +286,6 @@ class UserSpec: QuickSpec {
                         expect(unArchivedUser.formattedShortBio) == "sample-short-bio"
     //                    expect(unArchivedUser.externalLinks) == "sample-external-links"
                         expect(unArchivedUser.isCurrentUser).to(beTrue())
-
-                        expect(unArchivedUser.mostRecentPost).toNot(beNil())
-                        expect(unArchivedUser.mostRecentPost?.id) == "another-sample-post-id"
-                        expect(unArchivedUser.mostRecentPost?.author!.id) == unArchivedUser.id
                     }
                 }
             }

@@ -140,20 +140,13 @@ class StreamKindSpec: QuickSpec {
                 context("Discover") {
 
                     var postJsonables: [JSONAble] = []
-                    var userJsonables: [JSONAble] = []
 
-                    // trending is users, everything else are posts
                     beforeEach {
                         let post1 = Post.stub(["id": "post1", "isAdultContent" : true])
                         let post2 = Post.stub(["id": "post2"])
                         let post3 = Post.stub(["id": "post3"])
 
-                        let user1 = User.stub(["mostRecentPost": post1])
-                        let user2 = User.stub(["mostRecentPost": post2])
-                        let user3 = User.stub(["mostRecentPost": post3])
-
                         postJsonables = [post1, post2, post3]
-                        userJsonables = [user1, user2, user3]
                     }
 
                     context("Discover(recommended)") {
@@ -178,14 +171,14 @@ class StreamKindSpec: QuickSpec {
                     context("Discover(trending)") {
                         it("returns the correct posts regardless of views adult content") {
                             let kind = StreamKind.discover(type: .trending)
-                            var filtered = kind.filter(userJsonables, viewsAdultContent: false) as! [Post]
+                            var filtered = kind.filter(postJsonables, viewsAdultContent: false) as! [Post]
 
                             expect(filtered.count) == 3
                             expect(filtered[0].id) == "post1"
                             expect(filtered[1].id) == "post2"
                             expect(filtered[2].id) == "post3"
 
-                            filtered = kind.filter(userJsonables, viewsAdultContent: true) as! [Post]
+                            filtered = kind.filter(postJsonables, viewsAdultContent: true) as! [Post]
 
                             expect(filtered.count) == 3
                             expect(filtered[0].id) == "post1"

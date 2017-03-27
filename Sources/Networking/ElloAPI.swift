@@ -148,12 +148,7 @@ enum ElloAPI {
              .userStreamFollowing:
             return .usersType
         case let .discover(type):
-            switch type {
-            case .trending:
-                return .usersType
-            default:
-                return .postsType
-            }
+            return .postsType
         case .commentDetail,
              .createComment,
              .postComments,
@@ -338,8 +333,6 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watch"
         case let .discover(type):
             switch type {
-            case .trending:
-                return "/api/\(ElloAPI.apiVersion)/discover/users/trending"
             case .featured:
                 return "/api/\(ElloAPI.apiVersion)/categories/posts/recent"
             default:
@@ -668,7 +661,6 @@ extension ElloAPI: Moya.TargetType {
         case .discover:
             return [
                 "per_page": 10 as AnyObject,
-                "include_recent_posts": true as AnyObject,
                 "seed": ElloAPI.generateSeed() as AnyObject
             ]
         case let .findFriends(contacts):
