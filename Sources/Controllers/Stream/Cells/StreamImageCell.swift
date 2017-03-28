@@ -14,7 +14,6 @@ enum StreamImageCellMode {
 }
 
 class StreamImageCell: StreamRegionableCell {
-    var loopCount = 0
     static let reuseIdentifier = "StreamImageCell"
     var mode: StreamImageCellMode = .image
 
