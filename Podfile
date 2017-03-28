@@ -60,7 +60,7 @@ end
 def spec_pods
   pod 'FBSnapshotTestCase'
   pod 'Quick', '1.1.0'
-  pod 'Nimble', '5.1.1'
+  pod 'Nimble', '6.0.1'
   pod 'Nimble-Snapshots', '~> 4.4'
 end
 
