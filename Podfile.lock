@@ -36,12 +36,12 @@ PODS:
   - Keys (1.0.0)
   - KINWebBrowser (1.1.0)
   - MBProgressHUD (0.9.2)
-  - Moya (8.0.0):
-    - Moya/Core (= 8.0.0)
-  - Moya/Core (8.0.0):
-    - Alamofire (~> 4.2.0)
-    - Result (~> 3.1.0)
-  - Nimble (5.1.1)
+  - Moya (8.0.3):
+    - Moya/Core (= 8.0.3)
+  - Moya/Core (8.0.3):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
+  - Nimble (6.0.1)
   - Nimble-Snapshots (4.4.0):
     - Nimble-Snapshots/Core (= 4.4.0)
   - Nimble-Snapshots/Core (4.4.0):
@@ -67,7 +67,7 @@ PODS:
     - PINCache (= 3.0.1-beta.4)
     - PINRemoteImage/Core
   - Quick (1.1.0)
-  - Result (3.1.0)
+  - Result (3.2.1)
   - SnapKit (3.1.2)
   - SSPullToRefresh (1.2.4)
   - SVGKit (2.0.1):
@@ -142,9 +142,10 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - KINWebBrowser (from `https://github.com/ello/KINWebBrowser`)
   - MBProgressHUD (~> 0.9.0)
-  - Moya (~> 8.0.0-beta.6)
-  - Nimble (= 5.1.1)
+  - Moya (= 8.0.3)
+  - Nimble (= 6.0.1)
   - Nimble-Snapshots (~> 4.4)
+  - PINCache (from `https://github.com/ello/PINCache`, commit `78c3461`)
   - PINRemoteImage (= 3.0.0-beta.8)
   - Quick (= 1.1.0)
   - SnapKit (from `https://github.com/ello/SnapKit`)
@@ -179,6 +180,9 @@ EXTERNAL SOURCES:
     :path: Pods/CocoaPodsKeys
   KINWebBrowser:
     :git: https://github.com/ello/KINWebBrowser
+  PINCache:
+    :commit: 78c3461
+    :git: https://github.com/ello/PINCache
   SnapKit:
     :git: https://github.com/ello/SnapKit
   SVGKit:
@@ -216,6 +220,9 @@ CHECKOUT OPTIONS:
   KINWebBrowser:
     :commit: bcf29fd0beb6afb1c28a236306ad0fa1b8677bf3
     :git: https://github.com/ello/KINWebBrowser
+  PINCache:
+    :commit: 78c3461
+    :git: https://github.com/ello/PINCache
   SnapKit:
     :commit: ab6c1fd91f2f598f34e29fcf8dd2eea5500daac9
     :git: https://github.com/ello/SnapKit
@@ -251,14 +258,14 @@ SPEC CHECKSUMS:
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   KINWebBrowser: dad85d7d93e6f4620a8589b96992394affffa66e
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
-  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
+  Nimble: 1527fd1bd2b4cf0636251a36bc8ab37e81da8347
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
   PINCache: a89c8f609232afac77128557bd12c861844423d7
   PINOperation: ac23db44796d4a564ecf9b5ea7163510f579b71d
   PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SnapKit: 66bf0e9c5e02fdb6d2a549adb845ab4440d3ccfe
   SSPullToRefresh: 369e862c1d6528c7a354fc85cd4763d4e670e9af
   SVGKit: 2afbeaf2c2be4615476951284750c3ddb790d0c7
@@ -269,6 +276,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 76f5407a177ab035f6110a0535851b7829ba58ab
+PODFILE CHECKSUM: 1f5570aa167e08ca1f2efa137c777bf5c1b789be
 
 COCOAPODS: 1.1.1

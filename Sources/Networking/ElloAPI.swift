@@ -6,7 +6,7 @@ import Moya
 import Result
 
 
-typealias MoyaResult = Result<Moya.Response, Moya.Error>
+typealias MoyaResult = Result<Moya.Response, Moya.MoyaError>
 
 // 😭 I'm as sad as you are about this. We want the responder chain
 // and we want to pass ElloAPI arguments. So we box it.
