@@ -290,8 +290,8 @@ extension ElloProvider {
                 // set crashlytics stuff before processing
                 let headers = response.allHeaderFields.description
                 let responseJSON: String
-                if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                    responseJSON = string as String
+                if let string = String(data: data, encoding: .utf8) {
+                    responseJSON = string
                 }
                 else {
                     responseJSON = "failed to parse data"
