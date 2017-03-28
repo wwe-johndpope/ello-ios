@@ -22,7 +22,7 @@ class CreateCommentBackgroundView: UIView {
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
         let radius: CGFloat = 5
-        let π = CGFloat(M_PI)
+        let π = CGFloat(Double.pi)
         let corners = (
             tl: CGPoint(x: margin + radius, y: radius),
             tr: CGPoint(x: bounds.width - radius, y: radius),

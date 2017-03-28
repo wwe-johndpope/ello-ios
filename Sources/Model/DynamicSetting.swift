@@ -106,9 +106,7 @@ final class DynamicSetting: JSONAble {
         }
         return nil
     }
-}
 
-extension DynamicSetting {
     override class func fromJSON(_ data: [String: AnyObject]) -> DynamicSetting {
         let json = JSON(data)
         let label = json["label"].stringValue

@@ -9,11 +9,11 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
 
     fileprivate var pullProgress: CGFloat = 0
     fileprivate var loading = false
-    fileprivate let toValue = (360.0 * M_PI) / 180.0
+    fileprivate let toValue = (360.0 * Double.pi) / 180.0
 
     lazy var elloLogo: ElloLogoView = {
         let logo = ElloLogoView()
-        logo.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+        logo.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         logo.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
         return logo
     }()
@@ -56,7 +56,7 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
         self.pullProgress = pullProgress
         if !loading {
             let progress = min(Double(self.pullProgress), 1.0)
-            let rotation = interpolate(from: M_PI, to: M_PI * 2, at: progress)
+            let rotation = interpolate(from: Double.pi, to: Double.pi * 2, at: progress)
             elloLogo.transform = CGAffineTransform( rotationAngle: CGFloat(rotation) )
             setNeedsDisplay()
         }

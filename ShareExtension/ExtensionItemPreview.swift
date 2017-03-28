@@ -18,7 +18,7 @@ struct ExtensionItemPreview {
     }
 
     var description: String {
-        return "image: \(self.image), imagePath: \(self.imagePath) text: \(self.text) gif: \(self.gifData == nil)"
+        return "image: \(String(describing: self.image)), imagePath: \(String(describing: self.imagePath)) text: \(String(describing: self.text)) gif: \(self.gifData == nil)"
     }
 }
 

@@ -163,7 +163,7 @@ class StyledButton: UIButton {
         super.awakeFromNib()
 
         if buttonType != .custom {
-            print("Warning, StyledButton instance '\(currentTitle)' should be configured as 'Custom', not \(buttonType)")
+            print("Warning, StyledButton instance '\(String(describing: currentTitle))' should be configured as 'Custom', not \(buttonType)")
         }
     }
 

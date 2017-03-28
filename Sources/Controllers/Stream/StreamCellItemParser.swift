@@ -11,7 +11,7 @@ struct StreamCellItemParser {
     func parse(_ items: [JSONAble], streamKind: StreamKind, forceGrid: Bool = false, currentUser: User? = nil) -> [StreamCellItem] {
         let viewsAdultContent = currentUser?.viewsAdultContent ?? false
         let filteredItems = streamKind.filter(items, viewsAdultContent: viewsAdultContent)
-        let streamItems:[StreamCellItem]
+        let streamItems: [StreamCellItem]
         if let posts = filteredItems as? [Post] {
             streamItems = postCellItems(posts, streamKind: streamKind, forceGrid: forceGrid)
         }

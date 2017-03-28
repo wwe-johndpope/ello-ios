@@ -43,7 +43,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
         case let .announcementsNewContent(createdAt):
-            return "announcementsNewContent(createdAt: \(createdAt))"
+            return "announcementsNewContent(createdAt: \(String(describing: createdAt)))"
         case let .commentDetail(postId, commentId):
             return "commentDetail(postId: \(postId), commentId: \(commentId))"
         case let .createComment(parentPostId, _):
@@ -75,7 +75,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .flagUser(userId, kind):
             return "flagUser(userId: \(userId), kind: \(kind))"
         case let .followingNewContent(createdAt):
-            return "followingNewContent(createdAt: \(createdAt))"
+            return "followingNewContent(createdAt: \(String(describing: createdAt)))"
         case let .hire(userId, body):
             return "hire(userId: \(userId), body: \(body.characters.count))"
         case let .collaborate(userId, body):
@@ -87,13 +87,13 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .locationAutoComplete(terms):
             return "locationAutoComplete(terms: \(terms))"
         case let .notificationsNewContent(createdAt):
-            return "notificationsNewContent(createdAt: \(createdAt))"
+            return "notificationsNewContent(createdAt: \(String(describing: createdAt)))"
         case let .postComments(postId):
             return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
             return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
         case let .postViews(streamId, streamKind, postTokens, currentUserId):
-            return "postViews(streamId: \(streamId), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(currentUserId))"
+            return "postViews(streamId: \(String(describing: streamId)), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(String(describing: currentUserId)))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
         case let .postRelatedPosts(postId):
