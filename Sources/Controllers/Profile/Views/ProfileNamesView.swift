@@ -92,6 +92,11 @@ extension ProfileNamesView {
                 y: nameLabel.frame.maxY - usernameLabel.frame.height - 1
                 )
         }
+
+        for label in [nameLabel, usernameLabel] {
+            label.frame.origin.x = max(Size.outerMargins.left, label.frame.origin.x)
+            label.frame.size.width = min(frame.width - Size.outerMargins.left - Size.outerMargins.right, label.frame.size.width)
+        }
     }
 
     func prepareForReuse() {
