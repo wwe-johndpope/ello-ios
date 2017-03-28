@@ -17,9 +17,9 @@ class CredentialsScreen: EmptyScreen {
     let scrollView = UIScrollView()
     var scrollViewWidthConstraint: Constraint!
     let backButton = UIButton()
-    let titleLabel = StyledLabel(style: .LargeWhite)
+    let titleLabel = StyledLabel(style: .largeWhite)
     let gradientLayer = StartupGradientLayer()
-    let continueButton = StyledButton(style: .RoundedGrayOutline)
+    let continueButton = StyledButton(style: .roundedGrayOutline)
     let continueBackground = UIView()
 
     override func updateConstraints() {
@@ -86,10 +86,10 @@ class CredentialsScreen: EmptyScreen {
 
     func styleContinueButton(allValid: Bool) {
         if allValid {
-            continueButton.style = .Green
+            continueButton.style = .green
         }
         else {
-            continueButton.style = .RoundedGrayOutline
+            continueButton.style = .roundedGrayOutline
         }
     }
 }

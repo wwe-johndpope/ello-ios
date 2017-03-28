@@ -66,20 +66,20 @@ class JoinScreen: CredentialsScreen {
 
     let emailField = ClearTextField()
     let activateEmailButton = UIButton()
-    let emailErrorLabel = StyledLabel(style: .SmallWhite)
+    let emailErrorLabel = StyledLabel(style: .smallWhite)
     var emailMarginConstraint: Constraint!
 
     let usernameField = ClearTextField()
     let activateUsernameButton = UIButton()
-    let usernameErrorLabel = StyledLabel(style: .SmallWhite)
+    let usernameErrorLabel = StyledLabel(style: .smallWhite)
     var usernameMarginConstraint: Constraint!
 
     let passwordField = ClearTextField()
     let activatePasswordButton = UIButton()
-    let passwordErrorLabel = StyledLabel(style: .SmallWhite)
+    let passwordErrorLabel = StyledLabel(style: .smallWhite)
     var passwordMarginConstraint: Constraint!
 
-    let messageLabel = StyledLabel(style: .SmallWhite)
+    let messageLabel = StyledLabel(style: .smallWhite)
     var messageMarginConstraint: Constraint!
     let termsButtonNormal = UIButton()
     let termsButtonKeyboard = UIButton()

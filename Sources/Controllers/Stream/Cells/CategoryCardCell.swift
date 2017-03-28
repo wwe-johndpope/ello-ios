@@ -9,6 +9,7 @@ class CategoryCardCell: UICollectionViewCell {
     static let selectableReuseIdentifier = "SelectableCategoryCardCell"
 
     struct Size {
+        static let height: CGFloat = 110
         static let colorFillTopOffset: CGFloat = 2
         static let selectedImageOffset: CGFloat = 5
     }
@@ -48,12 +49,12 @@ class CategoryCardCell: UICollectionViewCell {
     fileprivate func updateSelected() {
         if selectable {
             colorFillView.alpha = isSelected ? 0.8 : 0.4
-            label.style = isSelected ? .BoldWhite : .White
+            label.style = isSelected ? .boldWhite : .white
             selectedImageView.isHidden = !isSelected
         }
         else {
             colorFillView.alpha = 0.4
-            label.style = .White
+            label.style = .white
             selectedImageView.isHidden = true
         }
     }

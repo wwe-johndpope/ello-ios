@@ -76,11 +76,11 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     fileprivate let headerLabel = UILabel()
 
     fileprivate let coverImageView = FLAnimatedImageView()
-    fileprivate let uploadCoverImageButton = StyledButton(style: .Green)
+    fileprivate let uploadCoverImageButton = StyledButton(style: .green)
     fileprivate let uploadCoverImagePrompt = UILabel()
 
     fileprivate let avatarImageView = FLAnimatedImageView()
-    fileprivate let uploadAvatarButton = StyledButton(style: .Green)
+    fileprivate let uploadAvatarButton = StyledButton(style: .green)
     fileprivate let uploadAvatarPrompt = UILabel()
 
     fileprivate let nameTextView = ClearTextView()
@@ -325,11 +325,11 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         switch uploading {
         case .coverImage:
             imageView = coverImageView
-            uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGrayOutline
+            uploadCoverImageButton.style = (imageRegion == nil) ? .green : .roundedGrayOutline
             if let imageRegion = imageRegion, updateDelegate { delegate?.assign(coverImage: imageRegion) }
         case .avatar:
             imageView = avatarImageView
-            uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGrayOutline
+            uploadAvatarButton.style = (imageRegion == nil) ? .green : .roundedGrayOutline
             if let imageRegion = imageRegion, updateDelegate  { delegate?.assign(avatarImage: imageRegion) }
         }
 

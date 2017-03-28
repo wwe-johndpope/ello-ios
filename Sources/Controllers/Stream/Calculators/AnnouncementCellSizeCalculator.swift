@@ -15,9 +15,9 @@ class AnnouncementCellSizeCalculator {
 // MARK: Public
 
     static func calculateAnnouncementHeight(_ announcement: Announcement, cellWidth: CGFloat) -> CGFloat {
-        let attributedTitle = NSAttributedString(label: announcement.header, style: .BoldWhite)
-        let attributedBody = NSAttributedString(label: announcement.body, style: .White)
-        let attributedCTA = NSAttributedString(button: announcement.ctaCaption, style: .WhiteUnderlined)
+        let attributedTitle = NSAttributedString(label: announcement.header, style: .boldWhite)
+        let attributedBody = NSAttributedString(label: announcement.body, style: .white)
+        let attributedCTA = NSAttributedString(button: announcement.ctaCaption, style: .whiteUnderlined)
 
         let textWidth = cellWidth - AnnouncementCell.Size.margins - AnnouncementCell.Size.imageSize - AnnouncementCell.Size.textLeadingMargin - AnnouncementCell.Size.closeButtonSize
         var calcHeight: CGFloat = 0

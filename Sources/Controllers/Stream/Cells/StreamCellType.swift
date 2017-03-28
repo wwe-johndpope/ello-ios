@@ -246,7 +246,7 @@ enum StreamCellType: Equatable {
         case .categoryPromotionalHeader, .pagePromotionalHeader:
             return 150
         case .categoryCard, .selectableCategoryCard:
-            return 110
+            return CategoryCardCell.Size.height
         case .categoryList:
             return CategoryListCell.Size.height
         case .commentHeader,

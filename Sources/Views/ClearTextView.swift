@@ -37,7 +37,7 @@ class ClearTextView: UITextView {
         didSet { updateTextStyle() }
     }
     fileprivate var line = UIView()
-    fileprivate let placeholderLabel = StyledLabel(style: .LargePlaceholder)
+    fileprivate let placeholderLabel = StyledLabel(style: .largePlaceholder)
     fileprivate let rightView = UIImageView()
     var validationState = ValidationState.none {
         didSet {
