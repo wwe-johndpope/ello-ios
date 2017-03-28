@@ -27,11 +27,7 @@ class ElloProvider {
     }
 
     static func endpointClosure(_ target: ElloAPI) -> Endpoint<ElloAPI> {
-        let sampleResponseClosure = { return EndpointSampleResponse.networkResponse(200, target.sampleData) }
-
-        let method = target.method
-        let parameters = target.parameters
-        let endpoint = Endpoint<ElloAPI>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: target.parameterEncoding)
+        let endpoint = Endpoint<ElloAPI>(url: url(target), sampleResponseClosure: { return target.stubbedNetworkResponse }, method: target.method, parameters: target.parameters, parameterEncoding: target.parameterEncoding)
         return endpoint.adding(newHTTPHeaderFields: target.headers())
     }
 

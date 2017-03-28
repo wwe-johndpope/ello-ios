@@ -65,12 +65,17 @@ class OmnibarViewController: BaseElloViewController {
     convenience init(editComment comment: ElloComment) {
         self.init(nibName: nil, bundle: nil)
         editComment = comment
-        PostService().loadComment(comment.postId, commentId: comment.id, success: { (comment, _) in
-            self.rawEditBody = comment.body
-            if let body = comment.body, self.isViewLoaded {
-                self.prepareScreenForEditing(body, isComment: true)
+        PostService().loadComment(comment.postId, commentId: comment.id)
+            .onSuccess { [weak self] comment in
+                guard let `self` = self else { return }
+                self.rawEditBody = comment.body
+                if let body = comment.body, self.isViewLoaded {
+                    self.prepareScreenForEditing(body, isComment: true)
+                }
             }
-        })
+            .onFail { error in
+                print("could not edit comment: \(error)")
+            }
     }
 
     convenience init(editPost post: Post) {

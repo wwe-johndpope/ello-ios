@@ -49,7 +49,7 @@ def common_pods
   pod 'FLAnimatedImage', '~> 1.0'
   pod 'YapDatabase', '2.8.1'
   pod 'Alamofire', '~> 4.0'
-  pod 'Moya', '~> 8.0.0-beta.6'
+  pod 'Moya', '8.0.3'
   pod 'KeychainAccess', '~> 3.0'
   pod 'SwiftyUserDefaults', '~> 3.0'
   pod 'SwiftyJSON', '~> 3.1'
@@ -86,15 +86,20 @@ plugin 'cocoapods-keys', {
     'OauthSecret',
     'CrashlyticsKey',
     'Domain',
-    'HttpProtocol',
     'SodiumChloride',
     'SegmentKey',
-
-    'StagingOauthKey',
-    'StagingOauthSecret',
-    'StagingDomain',
-    'StagingHttpProtocol',
     'StagingSegmentKey',
+    'TeamId',
+
+    'NinjaOauthKey',
+    'NinjaOauthSecret',
+    'NinjaDomain',
+    'Stage1OauthKey',
+    'Stage1OauthSecret',
+    'Stage1Domain',
+    'Stage2OauthKey',
+    'Stage2OauthSecret',
+    'Stage2Domain',
   ]
 }
 

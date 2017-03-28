@@ -10,7 +10,7 @@ class OnboardingScreen: EmptyScreen {
     }
     var controllerContainer = UIView()
     fileprivate var buttonContainer = UIView()
-    fileprivate var promptButton = StyledButton(style: .RoundedGray)
+    fileprivate var promptButton = StyledButton(style: .RoundedGrayOutline)
     fileprivate var nextButton = StyledButton(style: .Green)
     fileprivate var abortButton = StyledButton(style: .GrayText)
 
@@ -94,7 +94,7 @@ class OnboardingScreen: EmptyScreen {
         }
         else {
             promptButton.isEnabled = canGoNext
-            promptButton.style = canGoNext ? .Green : .RoundedGray
+            promptButton.style = canGoNext ? .Green : .RoundedGrayOutline
             promptButton.isHidden = false
             nextButton.isHidden = true
             abortButton.isHidden = true

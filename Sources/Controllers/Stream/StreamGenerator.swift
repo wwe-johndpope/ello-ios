@@ -11,8 +11,8 @@ protocol StreamGenerator {
 
 extension StreamGenerator {
 
-    func parse(jsonables: [JSONAble]) -> [StreamCellItem] {
-        return StreamCellItemParser().parse(jsonables, streamKind: self.streamKind, currentUser: self.currentUser)
+    func parse(jsonables: [JSONAble], forceGrid: Bool = false) -> [StreamCellItem] {
+        return StreamCellItemParser().parse(jsonables, streamKind: self.streamKind, forceGrid: forceGrid, currentUser: self.currentUser)
     }
 }
 

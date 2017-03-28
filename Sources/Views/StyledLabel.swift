@@ -137,6 +137,10 @@ extension StyledLabel.Style {
     static let LightGray = StyledLabel.Style(
         textColor: UIColor(hex: 0x9a9a9a)
         )
+    static let LargeGrayHeader = StyledLabel.Style(
+        textColor: UIColor.greyA(),
+        fontFamily: .large
+        )
     static let LargePlaceholder = StyledLabel.Style(
         textColor: .greyC(),
         fontFamily: .large

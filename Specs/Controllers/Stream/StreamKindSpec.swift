@@ -62,55 +62,6 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
-            describe("columnCount") {
-
-                beforeEach {
-                    StreamKind.discover(type: .featured).setIsGridView(false)
-                    StreamKind.category(slug: "art").setIsGridView(false)
-                    StreamKind.following.setIsGridView(false)
-                    StreamKind.notifications(category: "").setIsGridView(false)
-                    StreamKind.postDetail(postParam: "param").setIsGridView(false)
-                    StreamKind.currentUserStream.setIsGridView(false)
-                    StreamKind.following.setIsGridView(false)
-                    StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").setIsGridView(false)
-                    StreamKind.unknown.setIsGridView(false)
-                    StreamKind.userStream(userParam: "NA").setIsGridView(false)
-                }
-
-                it("is correct for all cases") {
-                    StreamKind.discover(type: .featured).setIsGridView(true)
-                    expect(StreamKind.discover(type: .featured).columnCount) == 2
-
-                    StreamKind.discover(type: .featured).setIsGridView(false)
-                    expect(StreamKind.discover(type: .featured).columnCount) == 1
-
-                    StreamKind.category(slug: "art").setIsGridView(true)
-                    expect(StreamKind.category(slug: "art").columnCount) == 2
-
-                    StreamKind.category(slug: "art").setIsGridView(false)
-                    expect(StreamKind.category(slug: "art").columnCount) == 1
-
-                    StreamKind.following.setIsGridView(false)
-                    expect(StreamKind.following.columnCount) == 1
-
-                    StreamKind.following.setIsGridView(true)
-                    expect(StreamKind.following.columnCount) == 2
-
-                    expect(StreamKind.notifications(category: "").columnCount) == 1
-                    expect(StreamKind.postDetail(postParam: "param").columnCount) == 1
-                    expect(StreamKind.currentUserStream.columnCount) == 1
-
-                    StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").setIsGridView(true)
-                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").columnCount) == 2
-
-                    StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").setIsGridView(false)
-                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").columnCount) == 1
-
-                    expect(StreamKind.unknown.columnCount) == 1
-                    expect(StreamKind.userStream(userParam: "NA").columnCount) == 1
-                }
-            }
-
             describe("showsCategory") {
                 let expectations: [(StreamKind, Bool)] = [
                     (.currentUserStream, false),
@@ -129,28 +80,6 @@ class StreamKindSpec: QuickSpec {
                 for (streamKind, expectedValue) in expectations {
                     it("\(streamKind) \(expectedValue ? "can" : "cannot") show category") {
                         expect(streamKind.showsCategory) == expectedValue
-                    }
-                }
-            }
-
-            describe("tappingTextOpensDetail in grid view") {
-                let expectations: [(StreamKind, Bool)] = [
-                    (.discover(type: .featured), true),
-                    (.category(slug: "art"), true),
-                    (.following, true),
-                    (.notifications(category: ""), true),
-                    (.postDetail(postParam: "param"), false),
-                    (.currentUserStream, true),
-                    (.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat"), true),
-                    (.unknown, true),
-                    (.userStream(userParam: "NA"), true),
-                ]
-                for (streamKind, expected) in expectations {
-                    it("is \(expected) for \(streamKind) in grid view") {
-                        let wasInGrid = streamKind.isGridView
-                        streamKind.setIsGridView(true)
-                        expect(streamKind.tappingTextOpensDetail) == expected
-                        streamKind.setIsGridView(wasInGrid)
                     }
                 }
             }
@@ -361,55 +290,20 @@ class StreamKindSpec: QuickSpec {
                 }
             }
 
-            describe("avatarHeight") {
-
-                it("is correct for list mode") {
-                    StreamKind.following.setIsGridView(false)
-                    expect(StreamKind.following.avatarHeight) == 40
-                }
-
-                it("is correct for grid mode") {
-                    StreamKind.following.setIsGridView(true)
-                    expect(StreamKind.following.avatarHeight) == 30
-                }
-            }
-
-            describe("contentForPost(:_)") {
-                var post: Post!
-
-                beforeEach {
-                    post = Post.stub([
-                        "id" : "768",
-                        "content" : [TextRegion.stub([:]), TextRegion.stub([:])],
-                        "summary" : [TextRegion.stub([:])]
-                    ])
-                }
-
-
-                it("is correct for list mode") {
-                    StreamKind.following.setIsGridView(false)
-                    expect(StreamKind.following.contentForPost(post)?.count) == 2
-                }
-
-                it("is correct for grid mode") {
-                    StreamKind.following.setIsGridView(true)
-                    expect(StreamKind.following.contentForPost(post)?.count) == 1
-                }
-            }
-
             describe("isDetail") {
 
                 it("is correct for all cases") {
-                    expect(StreamKind.discover(type: .featured).isDetail) == false
-                    expect(StreamKind.category(slug: "art").isDetail) == false
-                    expect(StreamKind.following.isDetail) == false
-                    expect(StreamKind.notifications(category: "").isDetail) == false
-                    expect(StreamKind.postDetail(postParam: "param").isDetail) == true
-                    expect(StreamKind.currentUserStream.isDetail) == false
-                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").isDetail) == false
-                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").isDetail) == false
-                    expect(StreamKind.unknown.isDetail) == false
-                    expect(StreamKind.userStream(userParam: "NA").isDetail) == false
+                    expect(StreamKind.discover(type: .featured).isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.category(slug: "art").isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.following.isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.notifications(category: "").isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.postDetail(postParam: "param").isDetail(post: Post.stub(["token": "param"]))) == true
+                    expect(StreamKind.postDetail(postParam: "param").isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.currentUserStream.isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.unknown.isDetail(post: Post.stub([:]))) == false
+                    expect(StreamKind.userStream(userParam: "NA").isDetail(post: Post.stub([:]))) == false
                 }
             }
 

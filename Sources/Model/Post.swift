@@ -251,6 +251,10 @@ final class Post: JSONAble, Authorable, Groupable {
         post.links = data["links"] as? [String: AnyObject]
         return post
     }
+
+    func contentFor(gridView: Bool) -> [Regionable]? {
+        return gridView ? summary : content
+    }
 }
 
 extension Post: JSONSaveable {
