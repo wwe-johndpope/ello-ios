@@ -63,8 +63,11 @@ struct Tmp {
     }
 
     static func read(_ fileName: String) -> String? {
-        if let data: Data = read(fileName) {
-            return NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String
+        if
+            let data: Data = read(fileName),
+            let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        {
+            return string as String
         }
         return nil
     }

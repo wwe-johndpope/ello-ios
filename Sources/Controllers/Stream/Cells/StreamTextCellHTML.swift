@@ -23,10 +23,8 @@ struct StreamTextCellHTML {
                 error = error1
                 indexAsText = nil
             }
-            if error == nil && indexAsText != nil {
-                if let indexAsSwiftString = indexAsText as? String {
-                    StreamTextCellHTML.indexFile = indexAsSwiftString
-                }
+            if let indexAsText = indexAsText, error == nil {
+                StreamTextCellHTML.indexFile = indexAsText as String
             }
             else {
                 StreamTextCellHTML.indexFile = ""

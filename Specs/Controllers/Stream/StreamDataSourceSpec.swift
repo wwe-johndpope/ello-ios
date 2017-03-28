@@ -656,7 +656,7 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .simpleStream(endpoint: ElloAPI.userStream(userParam: "54321"), title: "")),
                     ]
                 for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
+                    it("is \(String(describing: indexPath)) for \(streamKind)") {
                         subject.streamKind = streamKind
                         subject.currentUser = User.stub(["id": "12345"])
 
@@ -688,7 +688,7 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .simpleStream(endpoint: ElloAPI.userStream(userParam: "54321"), title: "")),
                     ]
                 for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
+                    it("is \(String(describing: indexPath)) for \(streamKind)") {
                         subject.streamKind = streamKind
 
                         if indexPath == nil {

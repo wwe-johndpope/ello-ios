@@ -21,7 +21,7 @@ extension UIButton {
     func setImage(_ image: UIImage!, for state: UIControlState = .normal, degree: Double) {
         self.setImage(image, for: state)
         if degree != 0 {
-            let radians = (degree * M_PI) / 180.0
+            let radians = (degree * Double.pi) / 180.0
             transform = CGAffineTransform(rotationAngle: CGFloat(radians))
         }
     }

@@ -62,7 +62,7 @@ class SafariActivitySpec: QuickSpec {
                     ("a string and an image", [image, string], nil),
                 ]
                 for (description, items, expected) in expectations {
-                    it("should assign \(expected) for \(description)") {
+                    it("should assign \(String(describing: expected)) for \(description)") {
                         subject.prepare(withActivityItems: items)
                         if expected == nil {
                             expect(subject.url).to(beNil())
