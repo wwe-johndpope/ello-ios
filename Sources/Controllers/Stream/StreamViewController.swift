@@ -269,6 +269,22 @@ final class StreamViewController: BaseElloViewController {
         addNotificationObservers()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        for cell in collectionView.visibleCells {
+            guard let cell = cell as? DismissableCell else { continue }
+            cell.didEndDisplay()
+        }
+        super.viewWillDisappear(animated)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        for cell in collectionView.visibleCells {
+            guard let cell = cell as? DismissableCell else { continue }
+            cell.willDisplay()
+        }
+    }
+
     override func loadView() {
         super.loadView()
         view.addSubview(collectionView)

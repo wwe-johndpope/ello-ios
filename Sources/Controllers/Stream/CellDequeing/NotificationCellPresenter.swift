@@ -15,7 +15,6 @@ struct NotificationCellPresenter {
             let cell = cell as? NotificationCell,
             let notification = streamCellItem.jsonable as? Notification
         else { return }
-
         cell.onWebContentReady { webView in
             if let actualHeight = webView.windowContentSize()?.height,
                 let webContent = streamCellItem.calculatedCellHeights.webContent,
@@ -41,9 +40,17 @@ struct NotificationCellPresenter {
         cell.messageHtml = notification.textRegion?.content
 
         if let imageRegion = notification.imageRegion {
+            cell.mode = .image
             let aspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
             var imageURL: URL?
-            if let asset = imageRegion.asset, !asset.isGif {
+            if let url = imageRegion.asset?.video?.url,
+                let width = imageRegion.asset?.video?.width,
+                let height = imageRegion.asset?.video?.height
+            {
+                cell.mode = .video
+                cell.setVideoURL(url, withSize: CGSize(width: width, height: height))
+            }
+            else if let asset = imageRegion.asset, !asset.isGif {
                 imageURL = asset.optimized?.url as URL?
             }
             else if let hdpiURL = imageRegion.asset?.hdpi?.url{

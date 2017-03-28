@@ -29,6 +29,10 @@ extension URL {
         return pathExtension.lowercased() == "gif"
     }
 
+    var hasMP4Extension: Bool {
+        return pathExtension.lowercased() == "mp4"
+    }
+
     var absoluteStringWithoutProtocol: String {
         return (host ?? "") + path
     }

@@ -13,9 +13,22 @@ protocol NotificationResponder: class {
     func postTapped(_ post: Post)
 }
 
+enum NotificationCellMode {
+    case image
+    case video
+    case normal
+
+    var hasImageOrVideo: Bool {
+        switch self {
+        case .normal: return false
+        default: return true
+        }
+    }
+}
 
 class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
+    var mode: NotificationCellMode = .normal
 
     struct Size {
         static let BuyButtonSize: CGFloat = 15
@@ -65,6 +78,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     let createdAtLabel = UILabel()
     let messageWebView = UIWebView()
     let notificationImageView = FLAnimatedImageView()
+    let videoView = VideoLoopView()
     let separator = UIView()
     var aspectRatio: CGFloat = 4/3
 
@@ -111,8 +125,30 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         }
     }
 
+    func setVideoURL(_ url: URL, withSize size: CGSize) {
+        self.aspectRatio = size.width / size.height
+        let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
+        if currentRatio != self.aspectRatio {
+            self.setNeedsLayout()
+        }
+        videoView.isHidden = false
+        notificationImageView.image = nil
+        notificationImageView.isHidden = true
+        loadVideo(url)
+    }
+
+    func loadVideo(_ url: URL) {
+        videoView.loadVideo(url: url).ignoreFailures()
+    }
+
     var imageURL: URL? {
         didSet {
+            guard imageURL != nil else {
+                notificationImageView.isHidden = true
+                return
+            }
+            videoView.isHidden = true
+            notificationImageView.isHidden = false
             self.notificationImageView.pin_setImage(from: imageURL) { [weak self] result in
                 guard
                     let `self` = self,
@@ -192,7 +228,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         separator.backgroundColor = .greyE5()
 
         for view in [avatarButton, titleTextView, messageWebView,
-                     notificationImageView, buyButtonImage, createdAtLabel,
+                     notificationImageView, videoView, buyButtonImage, createdAtLabel,
                      replyButton, relationshipControl, separator] {
             self.contentView.addSubview(view)
         }
@@ -223,25 +259,20 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
         let outerFrame = contentView.bounds.inset(all: Size.SideMargins)
-        let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: imageURL != nil)
+        let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: mode.hasImageOrVideo)
         separator.frame = contentView.bounds.fromBottom().grow(up: 1)
 
         avatarButton.frame = outerFrame.with(size: CGSize(width: Size.AvatarSize, height: Size.AvatarSize))
 
-        if imageURL == nil {
-            notificationImageView.frame = .zero
-        }
-        else {
-            notificationImageView.frame = outerFrame.fromRight()
-                .grow(left: Size.ImageWidth)
-                .with(height: Size.ImageWidth / aspectRatio)
-            buyButtonImage.frame.origin = CGPoint(
-                x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
-                y: notificationImageView.frame.minY + Size.BuyButtonMargin
-                )
-        }
+        notificationImageView.frame = outerFrame.fromRight()
+            .grow(left: Size.ImageWidth)
+            .with(height: Size.ImageWidth / aspectRatio)
+
+        buyButtonImage.frame.origin = CGPoint(
+            x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
+            y: notificationImageView.frame.minY + Size.BuyButtonMargin
+        )
 
         titleTextView.frame = avatarButton.frame.fromRight()
             .shift(right: Size.InnerMargin)
@@ -287,18 +318,23 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         else {
             bottomControl = createdAtLabel
         }
-
-        let actualHeight = ceil(max(notificationImageView.frame.maxY, bottomControl.frame.maxY)) + Size.SideMargins
+        let imageMaxY = mode.hasImageOrVideo ? notificationImageView.frame.maxY : 0
+        let actualHeight = ceil(max(imageMaxY, bottomControl.frame.maxY)) + Size.SideMargins
         // don't update the height if
         // - imageURL is set, but hasn't finished loading, OR
         // - messageHTML is set, but hasn't finished loading
         if actualHeight != ceil(frame.size.height) && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
             self.onHeightMismatch?(actualHeight)
         }
+
+        videoView.frame = notificationImageView.frame
     }
+
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        mode = .normal
+        videoView.reset()
         messageWebView.stopLoading()
         messageWebView.isHidden = true
         avatarButton.pin_cancelImageDownload()
@@ -380,4 +416,15 @@ extension NotificationCell {
         responder?.userTappedAuthor(cell: self)
     }
 
+}
+
+extension NotificationCell: DismissableCell {
+
+    func didEndDisplay() {
+        videoView.pauseVideo()
+    }
+
+    func willDisplay() {
+        videoView.playVideo()
+    }
 }
