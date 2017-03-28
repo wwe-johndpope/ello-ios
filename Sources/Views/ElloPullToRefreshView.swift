@@ -13,7 +13,7 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
 
     lazy var elloLogo: ElloLogoView = {
         let logo = ElloLogoView()
-        logo.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+        logo.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         logo.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
         return logo
     }()

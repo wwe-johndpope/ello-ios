@@ -489,7 +489,7 @@ extension StreamHeaderCell {
             rotateChevron(CGFloat(0))
         }
         else {
-            rotateChevron(CGFloat(Double.pi))
+            rotateChevron(CGFloat.pi)
         }
     }
 
@@ -499,11 +499,11 @@ extension StreamHeaderCell {
 
     fileprivate func rotateChevron(_ angle: CGFloat) {
         var normalized = angle
-        if angle < CGFloat(-Double.pi) {
-            normalized = CGFloat(-Double.pi)
+        if angle < -CGFloat.pi {
+            normalized = -CGFloat.pi
         }
-        else if angle > CGFloat(Double.pi) {
-            normalized = CGFloat(Double.pi)
+        else if angle > CGFloat.pi {
+            normalized = CGFloat.pi
         }
         self.chevronButton.transform = CGAffineTransform(rotationAngle: normalized)
     }
@@ -536,7 +536,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
                 Tracker.shared.commentBarVisibilityChanged(true)
             }
         } else {
-            let angle: CGFloat = -CGFloat(Double.pi) + CGFloat(Double.pi) * scrollView.contentOffset.x / revealWidth
+            let angle: CGFloat = -CGFloat.pi + CGFloat.pi * scrollView.contentOffset.x / revealWidth
             rotateChevron(angle)
             isOpen = false
         }
