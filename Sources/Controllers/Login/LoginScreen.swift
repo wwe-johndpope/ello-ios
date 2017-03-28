@@ -152,6 +152,10 @@ class LoginScreen: CredentialsScreen {
         _ = passwordField.resignFirstResponder()
         return super.resignFirstResponder()
     }
+
+    override func backAction() {
+        delegate?.backAction()
+    }
 }
 
 extension LoginScreen {
@@ -169,9 +173,6 @@ extension LoginScreen {
 
 // MARK: Actions
 extension LoginScreen {
-    override func backAction() {
-        delegate?.backAction()
-    }
 
     func forgotPasswordAction() {
         delegate?.forgotPasswordAction()

@@ -33,9 +33,7 @@ final class Availability: JSONAble {
         self.emailSuggestion = decoder.decodeKey("emailSuggestion")
         super.init(coder: aDecoder)
     }
-}
 
-extension Availability {
     override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
         let json = JSON(data)
         let username = json["username"].boolValue

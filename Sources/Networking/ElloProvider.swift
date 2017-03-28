@@ -289,7 +289,7 @@ extension ElloProvider {
             if let response = response {
                 // set crashlytics stuff before processing
                 let headers = response.allHeaderFields.description
-                let responseJSON = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String ?? "failed to parse data"
+                let responseJSON = String(data: data, encoding: .utf8) ?? "failed to parse data"
                 Tracker.trackRequest(headers: headers, statusCode: statusCode, responseJSON: responseJSON)
             }
 

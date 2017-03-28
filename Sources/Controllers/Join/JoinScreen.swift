@@ -247,6 +247,10 @@ class JoinScreen: CredentialsScreen {
         termsButtonNormal.isHidden = keyboard.active
         termsButtonKeyboard.isHidden = !keyboard.active
     }
+
+    override func backAction() {
+        delegate?.backAction()
+    }
 }
 
 extension JoinScreen {
@@ -274,10 +278,6 @@ extension JoinScreen {
 
     func activatePassword() {
       _ = passwordField.becomeFirstResponder()
-    }
-
-    override func backAction() {
-        delegate?.backAction()
     }
 
     func submitAction() {

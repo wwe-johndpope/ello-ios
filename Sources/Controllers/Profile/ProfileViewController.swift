@@ -207,7 +207,7 @@ final class ProfileViewController: StreamableViewController {
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
         let shareItem = UIBarButtonItem(image: .share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
         let moreActionsItem = UIBarButtonItem(image: .dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
-        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(currentUser)"
+        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(String(describing: currentUser))"
 
         if !isRootViewController() {
             var leftBarButtonItems: [UIBarButtonItem] = []

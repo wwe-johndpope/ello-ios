@@ -31,9 +31,7 @@ final class DynamicSettingCategory: JSONAble {
         coder.encodeObject(settings, forKey: "settings")
         super.encode(with: coder.coder)
     }
-}
 
-extension DynamicSettingCategory {
     override class func fromJSON(_ data: [String: AnyObject]) -> DynamicSettingCategory {
         let json = JSON(data)
         let label = json["label"].stringValue

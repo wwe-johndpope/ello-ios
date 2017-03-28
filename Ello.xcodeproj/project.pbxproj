@@ -3892,7 +3892,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Ello;
 				TargetAttributes = {
 					124CFB961C5976E500727D11 = {
@@ -5334,6 +5334,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8620DAA1EFF48E65387FA2DB /* Pods-Specs.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5358,6 +5359,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E5DE3DFF4328700595DA8FCD /* Pods-Specs.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5467,6 +5469,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07A600139D34D015DBD534F9 /* Pods-Ello.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = BetaAppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Support/ElloDev.entitlements;
@@ -5507,6 +5510,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D31C162DB64BB76DA28AC6DC /* Pods-Ello.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Support/Ello.entitlements;

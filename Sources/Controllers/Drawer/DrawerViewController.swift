@@ -26,10 +26,7 @@ class DrawerViewController: StreamableViewController {
     override func setupStreamController() {
         // noop
     }
-}
 
-// MARK: View Lifecycle
-extension DrawerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
