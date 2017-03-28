@@ -91,11 +91,7 @@ extension User: Stubbable {
             }
             user.addLinkArray("posts", array: postIds, type: .postsType)
         }
-        if let mostRecentPost = values["mostRecentPost"] as? Post {
-            user.addLinkObject("most_recent_post", key: mostRecentPost.id, type: .postsType)
-            ElloLinkedStore.sharedInstance.setObject(mostRecentPost, forKey: mostRecentPost.id, type: .postsType)
-        }
-
+        
         if let categories = values["categories"] as? [Ello.Category] {
             for category in categories {
                 ElloLinkedStore.sharedInstance.setObject(category, forKey: category.id, type: .categoriesType)

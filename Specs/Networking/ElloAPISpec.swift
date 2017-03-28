@@ -54,7 +54,7 @@ class ElloAPISpec: QuickSpec {
                         (.deleteWatchPost(postId: "1"), "/api/v2/posts/1/watch"),
                         (.discover(type: .featured), "/api/v2/categories/posts/recent"),
                         (.discover(type: .recent), "/api/v2/discover/posts/recent"),
-                        (.discover(type: .trending), "/api/v2/discover/users/trending"),
+                        (.discover(type: .trending), "/api/v2/discover/posts/trending"),
                         (.emojiAutoComplete(terms: ""), "/api/v2/emoji/autocomplete"),
                         (.findFriends(contacts: [:]), "/api/v2/profile/find_friends"),
                         (.flagComment(postId: "555", commentId: "666", kind: "some-string"), "/api/v2/posts/555/comments/666/flag/some-string"),
@@ -126,7 +126,7 @@ class ElloAPISpec: QuickSpec {
                     (.deletePost(postId: ""), .noContentType),
                     (.deleteSubscriptions(token: Data()), .noContentType),
                     (.discover(type: .featured), .postsType),
-                    (.discover(type: .trending), .usersType),
+                    (.discover(type: .trending), .postsType),
                     (.discover(type: .recent), .postsType),
                     (.categoryPosts(slug: "art"), .postsType),
                     (.emojiAutoComplete(terms: ""), .autoCompleteResultType),
@@ -364,7 +364,6 @@ class ElloAPISpec: QuickSpec {
                 it("Discover") {
                     let params = ElloAPI.discover(type: .featured).parameters!
                     expect(params["per_page"] as? Int) == 10
-                    expect(params["include_recent_posts"] as? Bool) == true
                     expect(params["seed"]).notTo(beNil())
                 }
 
@@ -387,7 +386,6 @@ class ElloAPISpec: QuickSpec {
                     let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [AnyObject]) { return ElloAPI.discover(type: .featured) }
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
-                    expect(params["include_recent_posts"] as? Bool) == true
                     expect(params["seed"]).notTo(beNil())
                     expect(params["after"]).notTo(beNil())
                 }
