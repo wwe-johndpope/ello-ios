@@ -689,7 +689,7 @@ extension ElloAPI: Moya.TargetType {
                     queryDict[item.name] = item.value as AnyObject?
                 }
             }
-            var origDict = elloApi().parameters ?? [String:AnyObject]()
+            var origDict = elloApi().parameters ?? [String: AnyObject]()
             origDict.merge(queryDict)
             return origDict
         case let .inviteFriends(contact):
