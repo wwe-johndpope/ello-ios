@@ -129,6 +129,7 @@ extension ElloWebBrowserViewController : WebLinkResponder {
              .requestInvitation,
              .requestInvitations,
              .resetMyPassword,
+             .resetPasswordError,
              .searchPeople,
              .searchPosts,
              .subdomain,
@@ -148,6 +149,7 @@ extension ElloWebBrowserViewController : WebLinkResponder {
              .exploreTrending:
             DeepLinking.showCategory(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
         case .betaPublicProfiles,
+             .didResetMyPassword,
              .enter,
              .exit,
              .root,

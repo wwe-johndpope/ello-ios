@@ -298,6 +298,8 @@ class ElloURISpec: QuickSpec {
                         "with RequestInvitation urls": (input: "request-an-invitation", output: .requestInvitation),
                         "with RequestInvitations urls": (input: "request_invitations", output: .requestInvitations),
                         "with ResetMyPassword urls": (input: "auth/reset-my-password?token=bla", output: .resetMyPassword),
+                        "with ResetPasswordError urls": (input: "auth/password-reset-error", output: .resetPasswordError),
+                        "with DidResetMyPassword urls": (input: "auth/forgot-my-password/", output: .didResetMyPassword),
                         "with SearchPeople urls": (input: "search/people", output: .searchPeople),
                         "with FindPeople urls": (input: "find/people", output: .searchPeople),
                         "with SearchPosts urls": (input: "search/posts", output: .searchPosts),

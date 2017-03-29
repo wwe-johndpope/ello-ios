@@ -60,6 +60,8 @@ enum ElloURI: String {
     case requestInvitation = "request-an-invitation/?$"
     case requestInvitations = "request_invitations/?$"
     case resetMyPassword = "auth/reset-my-password"
+    case resetPasswordError = "auth/password-reset-error"
+    case didResetMyPassword = "auth/forgot-my-password"
     case root = "?$"
     case signup = "signup/?$"
     case subdomain = "//.+(?<!(w{3}|staging))\\."
@@ -73,7 +75,8 @@ enum ElloURI: String {
 
     var loadsInWebViewFromWebView: Bool {
         switch self {
-        case .discover,
+        case .didResetMyPassword,
+             .discover,
              .category,
              .email,
              .enter,
@@ -118,6 +121,8 @@ enum ElloURI: String {
              .requestInvitations,
              .requestInvite,
              .resetMyPassword,
+             .resetPasswordError,
+             .didResetMyPassword,
              .subdomain,
              .unblock,
              .whoMadeThis:
@@ -269,6 +274,8 @@ enum ElloURI: String {
         requestInvitation,
         requestInvitations,
         resetMyPassword,
+        resetPasswordError,
+        didResetMyPassword,
         searchPeople,
         searchPosts,
         search,
