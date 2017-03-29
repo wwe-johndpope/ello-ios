@@ -13,63 +13,63 @@ class ElloURIWrapper: NSObject {
 enum ElloURI: String {
     // matching stream or page in app
     case discover = "discover(/featured|/recommended)?/?$"
-    case discoverRandom = "discover/random"
-    case discoverRecent = "discover/recent"
-    case discoverRelated = "discover/related"
-    case discoverTrending = "discover/trending"
-    case category = "discover/([^\\/]+)/?$"
-    case enter = "enter"
-    case friends = "friends"
-    case following = "following"
-    case noise = "noise"
-    case notifications = "notifications(?:\\/?|\\/([^\\/]+)/?)$"
-    case pushNotificationComment = "notifications/posts/([^\\/]+)\\/comments/([^\\/]+)$"
-    case pushNotificationPost = "notifications/posts/([^\\/]+)\\/?$"
-    case pushNotificationUser = "notifications/users/([^\\/]+)\\/?$"
-    case post = "\\/post\\/([^\\/]+)\\/?$"
-    case profile = "\\/?$"
-    case profileFollowers = "followers\\/?$"
-    case profileFollowing = "following\\/?$"
-    case profileLoves = "loves\\/?$"
-    case search = "(search|find)\\b\\/?(\\?*.)?"
-    case searchPeople = "(search|find)/people"
-    case searchPosts = "(search|find)/posts"
-    case settings = "settings"
+    case discoverRandom = "discover/random/?$"
+    case discoverRecent = "discover/recent/?$"
+    case discoverRelated = "discover/related/?$"
+    case discoverTrending = "discover/trending/?$"
+    case category = "discover/([^/]+)/?$"
+    case enter = "enter/?$"
+    case friends = "friends/?$"
+    case following = "following/?$"
+    case noise = "noise/?$"
+    case notifications = "notifications(?:/?|/([^/]+)/?)$"
+    case pushNotificationComment = "notifications/posts/([^/]+)/comments/([^/]+)$"
+    case pushNotificationPost = "notifications/posts/([^/]+)/?$"
+    case pushNotificationUser = "notifications/users/([^/]+)/?$"
+    case post = "post/([^/]+)/?$"
+    case profile = "[\\w_-]+"
+    case profileFollowers = "/([\\w_-]+)/followers/?$"
+    case profileFollowing = "/([\\w_-]+)/following/?$"
+    case profileLoves = "loves/?$"
+    case search = "(search|find)/?(\\?.*)?$"
+    case searchPeople = "(search|find)/people/?(\\?.*)?"
+    case searchPosts = "(search|find)/posts/?(\\?.*)?"
+    case settings = "settings/?$"
     // other ello pages
-    case confirm = "confirm"
-    case betaPublicProfiles = "beta-public-profiles"
-    case downloads = "downloads"
-    case exit = "exit"
-    case explore = "explore"
-    case exploreRecommended = "explore/recommended"
-    case exploreRecent = "explore/recent"
-    case exploreTrending = "explore/trending"
-    case faceMaker = "facemaker"
-    case forgotMyPassword = "forgot-password"
-    case freedomOfSpeech = "freedom-of-speech"
-    case invitations = "invitations"
-    case invite = "join/([^\\/]+)/?$"
-    case join = "join"
-    case login = "login"
-    case manifesto = "manifesto"
-    case nativeRedirect = "native_redirect"
-    case onboarding = "onboarding"
-    case passwordResetError = "password-reset-error"
-    case randomSearch = "random_searches"
-    case requestInvite = "request-an-invite"
-    case requestInvitation = "request-an-invitation"
-    case requestInvitations = "request_invitations"
-    case resetMyPassword = "reset-my-password"
+    case confirm = "confirm/?$"
+    case betaPublicProfiles = "beta-public-profiles/?$"
+    case downloads = "downloads/?$"
+    case exit = "exit/?$"
+    case explore = "explore/?$"
+    case exploreRecommended = "explore/recommended/?$"
+    case exploreRecent = "explore/recent/?$"
+    case exploreTrending = "explore/trending/?$"
+    case faceMaker = "facemaker/?$"
+    case forgotMyPassword = "forgot-password/?$"
+    case freedomOfSpeech = "freedom-of-speech/?$"
+    case invitations = "invitations/?$"
+    case invite = "join/([^/]+)/?$"
+    case join = "join/?$"
+    case login = "login/?$"
+    case manifesto = "manifesto/?$"
+    case nativeRedirect = "native_redirect/?$"
+    case onboarding = "onboarding/?$"
+    case passwordResetError = "password-reset-error/?$"
+    case randomSearch = "random_searches/?$"
+    case requestInvite = "request-an-invite/?$"
+    case requestInvitation = "request-an-invitation/?$"
+    case requestInvitations = "request_invitations/?$"
+    case resetMyPassword = "auth/reset-my-password"
     case root = "?$"
-    case signup = "signup"
-    case subdomain = "\\/\\/.+(?<!(w{3}|staging))\\."
-    case starred = "starred"
-    case unblock = "unblock"
-    case whoMadeThis = "who-made-this"
-    case wtf = "(wtf$|wtf\\/.*$)"
+    case signup = "signup/?$"
+    case subdomain = "//.+(?<!(w{3}|staging))\\."
+    case starred = "starred/?$"
+    case unblock = "unblock/?$"
+    case whoMadeThis = "who-made-this/?$"
+    case wtf = "(wtf$|wtf/.*$)"
     // more specific
-    case email = "(.+)@(.+)\\.([a-z]{2,})"
-    case external = "https?:\\/\\/.{3,}"
+    case email = "(.+)@(.+)\\.([a-z]{2,})/?$"
+    case external = "https?://.{3,}"
 
     var loadsInWebViewFromWebView: Bool {
         switch self {
@@ -130,9 +130,9 @@ enum ElloURI: String {
     static var baseURL: String { return APIKeys.shared.domain }
 
     // this is taken directly from app/models/user.rb
-    static let usernameRegex = "([\\w\\-]+)"
     static let fuzzyDomain: String = "((w{3}\\.)?ello\\.(?:ninja|co)|ello-stag(?:ing|e)\\d?\\.herokuapp\\.com|ello-fg-stage\\d?\\.herokuapp\\.com)"
-    static var userPathRegex: String { return "\(ElloURI.fuzzyDomain)\\/\(ElloURI.usernameRegex)\\??.*" }
+    static let usernameRegex = "([\\w\\-]+)"
+    static var userPathRegex: String { return "\(ElloURI.fuzzyDomain)/\(ElloURI.usernameRegex)\\??.*" }
 
     static func match(_ url: String) -> (type: ElloURI, data: String) {
         let trimmed = ElloURI.replaceElloScheme(url)
@@ -148,7 +148,7 @@ enum ElloURI: String {
              .external:
             return rawValue
         case .category, .invite, .notifications, .search:
-            return "\(ElloURI.fuzzyDomain)\\/\(rawValue)"
+            return "\(ElloURI.fuzzyDomain)/\(rawValue)"
         case .post:
             return "\(ElloURI.userPathRegex)\(rawValue)"
         case .pushNotificationComment,
@@ -164,7 +164,7 @@ enum ElloURI: String {
         case .subdomain:
             return "\(rawValue)\(ElloURI.fuzzyDomain)"
         default:
-            return "\(ElloURI.fuzzyDomain)\\/\(rawValue)\\/?$"
+            return "\(ElloURI.fuzzyDomain)/\(rawValue)"
         }
     }
 

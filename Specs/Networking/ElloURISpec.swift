@@ -297,7 +297,7 @@ class ElloURISpec: QuickSpec {
                         "with RequestInvite urls": (input: "request-an-invite", output: .requestInvite),
                         "with RequestInvitation urls": (input: "request-an-invitation", output: .requestInvitation),
                         "with RequestInvitations urls": (input: "request_invitations", output: .requestInvitations),
-                        "with ResetMyPassword urls": (input: "reset-my-password", output: .resetMyPassword),
+                        "with ResetMyPassword urls": (input: "auth/reset-my-password?token=bla", output: .resetMyPassword),
                         "with SearchPeople urls": (input: "search/people", output: .searchPeople),
                         "with FindPeople urls": (input: "find/people", output: .searchPeople),
                         "with SearchPosts urls": (input: "search/posts", output: .searchPosts),
