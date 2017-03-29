@@ -147,7 +147,7 @@ enum ElloAPI {
              .userStreamFollowers,
              .userStreamFollowing:
             return .usersType
-        case let .discover(type):
+        case .discover:
             return .postsType
         case .commentDetail,
              .createComment,
@@ -216,7 +216,7 @@ extension ElloAPI {
              .categories, .category, .categoryPosts, .discover, .pagePromotionals,
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
-             .postComments, .postDetail, .postLovers, .postRelatedPosts,  .postReposters, .postViews,
+             .postComments, .postDetail, .postLovers, .postRelatedPosts, .postReposters, .postViews,
              .join, .deleteSubscriptions, .userStream:
             return true
         case let .infiniteScroll(_, elloApi):
@@ -634,7 +634,7 @@ extension ElloAPI: Moya.TargetType {
                 "client_id": APIKeys.shared.key as AnyObject,
                 "client_secret": APIKeys.shared.secret as AnyObject,
                 "email": email as AnyObject,
-                "password":  password as AnyObject,
+                "password": password as AnyObject,
                 "grant_type": "password" as AnyObject
             ]
         case let .availability(content):
@@ -699,7 +699,7 @@ extension ElloAPI: Moya.TargetType {
                 "email": email,
                 "username": username,
                 "password": password,
-                "password_confirmation":  password
+                "password_confirmation": password
             ]
             if let invitationCode = invitationCode {
                 params["invitation_code"] = invitationCode
@@ -826,7 +826,7 @@ extension ElloAPI {
     static func generateSeed() -> Int { return Int(Date().timeIntervalSince1970) }
 }
 
-func += <KeyType, ValueType> (left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
+func += <KeyType, ValueType> (left: inout [KeyType: ValueType], right: [KeyType: ValueType]) {
     for (k, v) in right {
         left.updateValue(v, forKey: k)
     }

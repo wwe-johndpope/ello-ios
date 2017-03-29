@@ -13,7 +13,7 @@ class UIImagePickerControllerSpec: QuickSpec {
             describe("alertControllerForImagePicker") {
                 it("should present the photo library if no camera is available") {
                     var imagePickerController: UIImagePickerController? = nil
-                    let subject = UIImagePickerController.alertControllerForImagePicker() { presentedPicker in
+                    let subject = UIImagePickerController.alertControllerForImagePicker { presentedPicker in
                         imagePickerController = presentedPicker
                     }
                     expect(subject).to(beNil())

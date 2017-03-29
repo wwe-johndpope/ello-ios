@@ -295,7 +295,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
             delegate?.dismissController()
         }
         else {
-            image.copyWithCorrectOrientationAndSize() { image in
+            image.copyWithCorrectOrientationAndSize { image in
                 if let image = image {
                     self.setImage(ImageRegionData(image: image), target: uploading, updateDelegate: true)
                 }
@@ -410,7 +410,7 @@ extension CreateProfileScreen: UIScrollViewDelegate {
         let delta = scrollView.contentOffset.y - prevOffset.y
         prevOffset = scrollView.contentOffset
         if delta == -25 {
-            scrollView.contentOffset.y = scrollView.contentOffset.y + 55
+            scrollView.contentOffset.y += 55
         }
     }
 }

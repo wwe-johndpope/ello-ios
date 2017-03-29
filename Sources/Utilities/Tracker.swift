@@ -544,7 +544,7 @@ extension Tracker {
     }
 }
 
-// MARK:  Preferences
+// MARK: Preferences
 extension Tracker {
     func pushNotificationPreferenceChanged(_ granted: Bool) {
         let accessLevel = granted ? "granted" : "denied"

@@ -115,7 +115,7 @@ class RelationshipControl: UIView {
             self.userId,
             prev: prevRelationshipPriority,
             relationshipPriority: RelationshipPriorityWrapper(priority: newRelationshipPriority)
-        ) { [weak self] (status, relationship, isFinalValue) in
+        ) { [weak self] status, relationship, isFinalValue in
             guard let `self` = self else { return }
             self.isUserInteractionEnabled = isFinalValue
 

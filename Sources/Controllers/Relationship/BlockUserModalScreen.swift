@@ -4,7 +4,7 @@
 
 import SnapKit
 
-protocol BlockUserModalDelegate {
+protocol BlockUserModalDelegate: class {
     func updateRelationship(_ newRelationship: RelationshipPriority)
     func flagTapped()
     func closeModal()
@@ -33,7 +33,7 @@ class BlockUserModalScreen: UIView {
     fileprivate let flagLabel = UILabel()
 
     fileprivate var delegate: BlockUserModalDelegate? {
-        get { return next as? BlockUserModalDelegate }
+        return next as? BlockUserModalDelegate
     }
 
     required init(config: BlockUserModalConfig) {

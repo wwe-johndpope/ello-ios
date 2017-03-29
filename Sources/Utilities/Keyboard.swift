@@ -17,7 +17,7 @@ class Keyboard {
     static let shared = Keyboard()
 
     class func setup() {
-        let _ = shared
+        _ = shared
     }
 
     var active = false

@@ -45,8 +45,6 @@ class PostbarController: UIResponder, PostbarResponder {
         self.dataSource = dataSource
     }
 
-    // MARK:
-
     func viewsButtonTapped(_ indexPath: IndexPath) {
         guard let post = postForIndexPath(indexPath) else { return }
 

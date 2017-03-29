@@ -41,7 +41,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
                 processPHAssets([asset], done: done)
             }
             else {
-                image.copyWithCorrectOrientationAndSize() { image in
+                image.copyWithCorrectOrientationAndSize { image in
                     self.addImage(image)
                     done()
                 }

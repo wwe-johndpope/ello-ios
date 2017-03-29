@@ -113,11 +113,9 @@ struct StreamCellItemParser {
         for region in content {
             let kind = RegionKind(rawValue: region.kind) ?? .unknown
             let types = kind.streamCellTypes(region)
-            for type in types {
-                if type != .unknown {
-                    let item: StreamCellItem = StreamCellItem(jsonable: jsonable, type: type)
-                    cellArray.append(item)
-                }
+            for type in types where type != .unknown {
+                let item: StreamCellItem = StreamCellItem(jsonable: jsonable, type: type)
+                cellArray.append(item)
             }
         }
         return cellArray

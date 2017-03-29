@@ -17,7 +17,7 @@ class LoginViewController: BaseElloViewController {
     }
 
     fileprivate func loadCurrentUser() {
-        appViewController?.loadCurrentUser() { error in
+        appViewController?.loadCurrentUser { error in
             self.screen.loadingHUD(visible: false)
             let errorTitle = error.elloErrorMessage ?? InterfaceString.Login.LoadUserError
             self.screen.showError(errorTitle)
@@ -102,7 +102,7 @@ extension LoginViewController: LoginDelegate {
                     Tracker.shared.loginSuccessful()
                     self.loadCurrentUser()
                 },
-                failure: { (error, statusCode) in
+                failure: { error, statusCode in
                     Tracker.shared.loginFailed()
                     self.screen.loadingHUD(visible: false)
                     let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError

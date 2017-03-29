@@ -23,12 +23,10 @@ struct ElloProvider_Specs {
         var playback = recordings
         return { (target: ElloAPI) -> Endpoint<ElloAPI> in
             var responseClosure: ((_ target: ElloAPI) -> EndpointSampleResponse)? = nil
-            for (index, recording) in playback.enumerated() {
-                if recording.endpoint.description == target.description {
-                    responseClosure = recording.responseClosure
-                    playback.remove(at: index)
-                    break
-                }
+            for (index, recording) in playback.enumerated() where recording.endpoint.description == target.description {
+                responseClosure = recording.responseClosure
+                playback.remove(at: index)
+                break
             }
 
             let sampleResponseClosure: () -> EndpointSampleResponse

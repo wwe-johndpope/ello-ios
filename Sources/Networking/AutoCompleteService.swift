@@ -5,7 +5,7 @@
 import Alamofire
 import SwiftyJSON
 
-typealias AutoCompleteServiceSuccessCompletion = (_ results: [AutoCompleteResult], _ responseConfig: ResponseConfig) -> ()
+typealias AutoCompleteServiceSuccessCompletion = (_ results: [AutoCompleteResult], _ responseConfig: ResponseConfig) -> Void
 
 struct AutoCompleteService {
 

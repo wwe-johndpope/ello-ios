@@ -8,10 +8,10 @@
 // creds = AmazonCredentials(...)
 // data = NSData()
 // uploader = ElloS3(credentials: credentials, data: data)
-//   .onSuccess() { (response : NSData) in }
-//   .onFailure() { (error : NSError) in }
+//   .onSuccess { (response : NSData) in }
+//   .onFailure { (error : NSError) in }
 //   // NOT yet supported:
-//   //.onProgress() { (progress : Float) in }
+//   //.onProgress { (progress : Float) in }
 //   .start()
 
 import Foundation

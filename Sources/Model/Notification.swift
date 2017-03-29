@@ -61,7 +61,7 @@ final class Notification: JSONAble, Authorable, Groupable {
     // notification specific
     var textRegion: TextRegion?
     var imageRegion: ImageRegion?
-    fileprivate var attributedTitleStore: NSAttributedString? = nil
+    fileprivate var attributedTitleStore: NSAttributedString?
     var attributedTitle: NSAttributedString {
         if let attributedTitle = attributedTitleStore {
             return attributedTitle

@@ -113,13 +113,13 @@ class DebugAgent: AnalyticsAgent {
 
     private func describe(_ props: [AnyHashable: Any]) -> String {
         var retval = "{"
-        var first = true
-        for (key, value) in props {
-            if !first {
-                retval += "; "
+        retval += props.reduce("") { (memo, kv) in
+            let (key, value) = kv
+            let kvStr = "\(key): \(value)"
+            if memo == "" {
+                return kvStr
             }
-            retval += "\(key): \(value)"
-            first = false
+            return "\(memo);\(kvStr)"
         }
         retval += "}"
         return retval

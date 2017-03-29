@@ -81,7 +81,7 @@ class Proc {
 
 
 func times(_ times: Int, block: BasicBlock) {
-    times_(times) { (index: Int) in block() }
+    times_(times) { (_: Int) in block() }
 }
 
 func profiler(_ message: String = "") -> BasicBlock {

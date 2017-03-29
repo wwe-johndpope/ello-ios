@@ -395,7 +395,7 @@ extension AppViewController {
         logOutCurrentUser()
 
         if isLoggedIn() {
-            removeViewController() {
+            removeViewController {
                 if shouldAlert {
                     let message = InterfaceString.App.LoggedOut
                     let alertController = AlertViewController(message: message)
@@ -816,28 +816,26 @@ extension AppViewController {
     }
 
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        guard debugAllowed else { return }
+        guard debugAllowed, motion == .motionShake else { return }
 
-        if motion == .motionShake {
-            if isShowingDebug {
-                closeTodoController()
-            }
-            else {
-                isShowingDebug = true
-                let ctlr = debugController
-                ctlr.title = "Debugging"
+        if isShowingDebug {
+            closeTodoController()
+        }
+        else {
+            isShowingDebug = true
+            let ctlr = debugController
+            ctlr.title = "Debugging"
 
-                let nav = UINavigationController(rootViewController: ctlr)
-                let bar = UIView(frame: CGRect(x: 0, y: -20, width: view.frame.width, height: 20))
-                bar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-                bar.backgroundColor = .black
-                nav.navigationBar.addSubview(bar)
+            let nav = UINavigationController(rootViewController: ctlr)
+            let bar = UIView(frame: CGRect(x: 0, y: -20, width: view.frame.width, height: 20))
+            bar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+            bar.backgroundColor = .black
+            nav.navigationBar.addSubview(bar)
 
-                let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(AppViewController.closeTodoControllerTapped))
-                ctlr.navigationItem.leftBarButtonItem = closeItem
+            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(AppViewController.closeTodoControllerTapped))
+            ctlr.navigationItem.leftBarButtonItem = closeItem
 
-                present(nav, animated: true, completion: nil)
-            }
+            present(nav, animated: true, completion: nil)
         }
     }
 

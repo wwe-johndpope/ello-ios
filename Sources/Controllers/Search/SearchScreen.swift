@@ -58,14 +58,10 @@ class SearchScreen: UIView, SearchScreenProtocol {
     let navigationItem = UINavigationItem()
 
     fileprivate var btnWidth: CGFloat {
-        get {
-            return (searchControlsContainer.bounds.size.width - 2 * Size.containerMargin) / 2
-        }
+        return (searchControlsContainer.bounds.size.width - 2 * Size.containerMargin) / 2
     }
     fileprivate var buttonY: CGFloat {
-        get {
-            return searchControlsContainer.frame.size.height - 43
-        }
+        return searchControlsContainer.frame.size.height - 43
     }
     weak var delegate: SearchScreenDelegate?
 

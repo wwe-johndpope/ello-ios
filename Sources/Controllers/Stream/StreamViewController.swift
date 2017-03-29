@@ -251,7 +251,7 @@ final class StreamViewController: BaseElloViewController {
         setupDataSource()
         setupImageViewDelegate()
         // most consumers of StreamViewController expect all outlets (esp collectionView) to be set
-        if !isViewLoaded { let _ = view }
+        if !isViewLoaded { _ = view }
     }
 
     deinit {
