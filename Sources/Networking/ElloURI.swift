@@ -206,7 +206,7 @@ enum ElloURI: String {
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .resetMyPassword:
             return regex?.matchingGroups(url).safeValue(1) ?? url
-        case .search:
+        case .search, .searchPosts, .searchPeople:
             if let urlComponents = URLComponents(string: url),
                 let queryItems = urlComponents.queryItems,
                 let terms = (queryItems.filter { $0.name == "terms" }.first?.value)
