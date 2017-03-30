@@ -43,3 +43,21 @@ class Window {
         }
     }
 }
+
+class DeviceScreen {
+    static var isRetina: Bool {
+        return scale > 1
+    }
+
+    fileprivate static var _scale: CGFloat?
+    static var scale: CGFloat {
+        get {
+            return DeviceScreen._scale ?? UIScreen.main.scale
+        }
+        set {
+            if AppSetup.sharedState.isTesting {
+                DeviceScreen._scale = newValue
+            }
+        }
+    }
+}

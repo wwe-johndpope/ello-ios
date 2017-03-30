@@ -50,15 +50,26 @@ class AssetSpec: QuickSpec {
                     expect(videoAsset.oneColumnAttachment) == video
                 }
 
-                it("defaults to hdpi when narrow") {
+                it("returns hdpi when narrow") {
                     expect(noVideoAsset.oneColumnAttachment) == hdpi
                 }
 
-                it("defaults to xhdpi when wide") {
+                it("returns xhdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
                     expect(noVideoAsset.oneColumnAttachment) == xhdpi
                     Window.width = tmp
+                }
+
+                it("returns hdpi when wide on non-retina screen") {
+                    let tmpWidth = Window.width
+                    let tmpScale = DeviceScreen.scale
+                    Window.width = 2000
+                    DeviceScreen.scale = 1
+
+                    expect(noVideoAsset.oneColumnAttachment) == hdpi
+                    Window.width = tmpWidth
+                    DeviceScreen.scale = tmpScale
                 }
             }
 
@@ -68,11 +79,22 @@ class AssetSpec: QuickSpec {
                     expect(videoAsset.oneColumnPreviewAttachment) == hdpi
                 }
 
-                it("defaults to xhdpi when wide") {
+                it("returns xhdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
                     expect(videoAsset.oneColumnPreviewAttachment) == xhdpi
                     Window.width = tmp
+                }
+
+                it("returns hdpi when wide on non-retina screen") {
+                    let tmpWidth = Window.width
+                    let tmpScale = DeviceScreen.scale
+                    Window.width = 2000
+                    DeviceScreen.scale = 1
+
+                    expect(noVideoAsset.oneColumnPreviewAttachment) == hdpi
+                    Window.width = tmpWidth
+                    DeviceScreen.scale = tmpScale
                 }
             }
 
@@ -82,14 +104,25 @@ class AssetSpec: QuickSpec {
                     expect(videoAsset.gridLayoutAttachment) == video
                 }
 
-                it("defaults to hdpi when wide") {
+                it("returns hdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
                     expect(noVideoAsset.gridLayoutAttachment) == hdpi
                     Window.width = tmp
                 }
 
-                it("defaults to mdpi when not wide") {
+                it("returns mdpi when wide on non-retina screen") {
+                    let tmpWidth = Window.width
+                    let tmpScale = DeviceScreen.scale
+                    Window.width = 2000
+                    DeviceScreen.scale = 1
+
+                    expect(noVideoAsset.gridLayoutAttachment) == mdpi
+                    Window.width = tmpWidth
+                    DeviceScreen.scale = tmpScale
+                }
+
+                it("returns mdpi when not wide") {
                     expect(noVideoAsset.gridLayoutAttachment) == mdpi
                 }
             }
@@ -101,6 +134,17 @@ class AssetSpec: QuickSpec {
                     Window.width = 2000
                     expect(videoAsset.gridLayoutPreviewAttachment) == hdpi
                     Window.width = tmp
+                }
+
+                it("returns mdpi when wide on non-retina screen") {
+                    let tmpWidth = Window.width
+                    let tmpScale = DeviceScreen.scale
+                    Window.width = 2000
+                    DeviceScreen.scale = 1
+
+                    expect(noVideoAsset.gridLayoutPreviewAttachment) == mdpi
+                    Window.width = tmpWidth
+                    DeviceScreen.scale = tmpScale
                 }
 
                 it("returns mdpi when NOT wide") {
