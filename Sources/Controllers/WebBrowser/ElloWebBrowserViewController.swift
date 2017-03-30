@@ -106,7 +106,6 @@ extension ElloWebBrowserViewController : WebLinkResponder {
     func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
         switch type.uri {
         case .confirm,
-             .downloads,
              .email,
              .external,
              .forgotMyPassword,

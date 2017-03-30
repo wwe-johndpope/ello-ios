@@ -277,7 +277,6 @@ class ElloURISpec: QuickSpec {
                     let tests: [String: (input: String, output: ElloURI)] = [
                         "with Confirm urls": (input: "confirm", output: .confirm),
                         "with BetaPublicProfiles urls": (input: "beta-public-profiles", output: .betaPublicProfiles),
-                        "with Downloads urls": (input: "downloads", output: .downloads),
                         "with Enter urls": (input: "enter", output: .enter),
                         "with Explore urls": (input: "explore", output: .explore),
                         "with Explore Trending urls": (input: "explore/trending", output: .exploreTrending),

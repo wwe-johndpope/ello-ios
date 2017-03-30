@@ -38,7 +38,6 @@ enum ElloURI: String {
     // other ello pages
     case confirm = "confirm/?$"
     case betaPublicProfiles = "beta-public-profiles/?$"
-    case downloads = "downloads/?$"
     case exit = "exit/?$"
     case explore = "explore/?$"
     case exploreRecommended = "explore/recommended/?$"
@@ -105,7 +104,6 @@ enum ElloURI: String {
     var shouldLoadInApp: Bool {
         switch self {
         case .confirm,
-             .downloads,
              .email,
              .external,
              .faceMaker,
@@ -238,7 +236,6 @@ enum ElloURI: String {
         discoverRelated,
         discoverTrending,
         category,
-        downloads,
         enter,
         exit,
         explore,
