@@ -940,11 +940,16 @@ extension StreamViewController: StreamEditingResponder {
 // MARK: StreamViewController: StreamImageCellResponder
 extension StreamViewController: StreamImageCellResponder {
     func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell) {
-        let indexPath = collectionView.indexPath(for: cell)
-        let post = indexPath.flatMap(dataSource.postForIndexPath)
-        let imageAsset = indexPath.flatMap(dataSource.imageAssetForIndexPath)
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let streamCellItem = dataSource.visibleStreamCellItem(at: indexPath)
+        else { return }
 
-        if streamKind.isGridView || cell.isGif {
+        let post = dataSource.postForIndexPath(indexPath)
+        let imageAsset = dataSource.imageAssetForIndexPath(indexPath)
+
+        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
+        if isGridView || cell.isGif {
             if let post = post {
                 let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
                 responder?.postTapped(post)
