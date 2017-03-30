@@ -388,6 +388,11 @@ extension Tracker {
         ]
     }
 
+    func relatedPostTapped(_ post: Post) {
+        let properties = ["post_id": post.id]
+        agent.track("related post tapped", properties: properties)
+    }
+
     func postCreated(_ post: Post) {
         let properties = regionDetails(post.content)
         agent.track("Post created", properties: properties)

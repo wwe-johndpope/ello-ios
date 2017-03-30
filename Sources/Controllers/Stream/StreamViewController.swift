@@ -951,8 +951,7 @@ extension StreamViewController: StreamImageCellResponder {
         let isGridView = streamCellItem.isGridView(streamKind: streamKind)
         if isGridView || cell.isGif {
             if let post = post {
-                let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
-                responder?.postTapped(post)
+                sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
             }
         }
         else if let imageViewer = imageViewer {
@@ -962,6 +961,27 @@ extension StreamViewController: StreamImageCellResponder {
             }
         }
     }
+}
+
+// MARK: StreamViewController: Open post
+extension StreamViewController {
+
+    func sendToPostTappedResponder(post: Post, streamCellItem: StreamCellItem, scrollToComment: ElloComment? = nil) {
+        if let placeholderType = streamCellItem.placeholderType,
+            case .postRelatedPosts = placeholderType
+        {
+            Tracker.shared.relatedPostTapped(post)
+        }
+
+        let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
+        if let scrollToComment = scrollToComment {
+            responder?.postTapped(post, scrollToComment: scrollToComment)
+        }
+        else {
+            responder?.postTapped(post)
+        }
+    }
+
 }
 
 // MARK: StreamViewController: Open category
@@ -1103,19 +1123,19 @@ extension StreamViewController: UICollectionViewDelegate {
         }
         else if tappedCell is StreamSeeMoreCommentsCell {
             if let lastComment = dataSource.commentForIndexPath(indexPath),
-                let post = lastComment.loadedFromPost
+                let post = lastComment.loadedFromPost,
+                let streamCellItem = dataSource.visibleStreamCellItem(at: indexPath)
             {
-                let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:scrollToComment:)), withSender: self) as? PostTappedResponder
-                responder?.postTapped(post, scrollToComment: lastComment)
+                sendToPostTappedResponder(post: post, streamCellItem: streamCellItem, scrollToComment: lastComment)
             }
         }
         else if tappedCell is StreamLoadMoreCommentsCell {
             let responder = target(forAction: #selector(PostCommentsResponder.loadCommentsTapped), withSender: self) as? PostCommentsResponder
             responder?.loadCommentsTapped()
         }
-        else if let post = dataSource.postForIndexPath(indexPath) {
-            let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
-            responder?.postTapped(post)
+        else if let post = dataSource.postForIndexPath(indexPath),
+                let streamCellItem = dataSource.visibleStreamCellItem(at: indexPath) {
+            sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
         }
         else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
             let postId = notification.postId
