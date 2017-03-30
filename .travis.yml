@@ -36,7 +36,7 @@ before_script:
 - export LANG=en_US.UTF-8
 script:
 - gem install danger -v 2.0.1 --no-ri --no-rdoc && danger
-- set -o pipefail && xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
+- set -o pipefail && travis_retry xcodebuild -workspace Ello.xcworkspace -scheme Ello -configuration
   Debug -destination "id=$IOS_SIMULATOR_UDID" clean test | xcpretty -f `xcpretty-travis-formatter`
 notifications:
   email: false
