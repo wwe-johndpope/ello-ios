@@ -137,6 +137,11 @@ class ElloURISpec: QuickSpec {
                             outputURI: .wtf,
                             outputData: "https://ello.co/wtf/help"
                         ),
+                        "with reset password urls": (
+                            input: "https://ello.co/auth/reset-my-password?reset_password_token=abc12--abcdefg12345",
+                            outputURI: .resetMyPassword,
+                            outputData: "abc12--abcdefg12345"
+                        ),
                     ]
 
                     for (description, test) in tests {
@@ -161,11 +166,10 @@ class ElloURISpec: QuickSpec {
                     ]
 
                     for (description, test) in tests {
+                        for domain in domains {
 
-                        describe(description) {
-                            it("matches route correctly") {
-
-                                for domain in domains {
+                            describe("\(description) in domain \(domain)") {
+                                it("matches route correctly") {
                                     let (typeNoSlash, dataNoSlash) = ElloURI.match("\(domain)/\(test.input)")
 
                                     expect(typeNoSlash).to(equal(test.outputURI))
@@ -297,9 +301,7 @@ class ElloURISpec: QuickSpec {
                         "with RequestInvite urls": (input: "request-an-invite", output: .requestInvite),
                         "with RequestInvitation urls": (input: "request-an-invitation", output: .requestInvitation),
                         "with RequestInvitations urls": (input: "request_invitations", output: .requestInvitations),
-                        "with ResetMyPassword urls": (input: "auth/reset-my-password?token=bla", output: .resetMyPassword),
                         "with ResetPasswordError urls": (input: "auth/password-reset-error", output: .resetPasswordError),
-                        "with DidResetMyPassword urls": (input: "auth/forgot-my-password/", output: .didResetMyPassword),
                         "with SearchPeople urls": (input: "search/people", output: .searchPeople),
                         "with FindPeople urls": (input: "find/people", output: .searchPeople),
                         "with SearchPosts urls": (input: "search/posts", output: .searchPosts),
@@ -310,22 +312,23 @@ class ElloURISpec: QuickSpec {
                     ]
 
                     for (description, test) in tests {
+                        for domain in domains {
 
-                        describe(description) {
-                            it("matches route correctly") {
-
-                                for domain in domains {
+                            describe("\(description) in domain \(domain)") {
+                                it("matches route correctly, no slash") {
                                     let (typeNoSlash, dataNoSlash) = ElloURI.match("\(domain)/\(test.input)")
-
                                     expect(typeNoSlash).to(equal(test.output))
                                     expect(dataNoSlash) == "\(domain)/\(test.input)"
+                                }
 
+                                it("matches route correctly, trailing slash") {
                                     let (typeYesSlash, dataYesSlash) = ElloURI.match("\(domain)/\(test.input)/")
-
                                     expect(typeYesSlash).to(equal(test.output))
                                     expect(dataYesSlash) == "\(domain)/\(test.input)/"
+                                }
 
-                                    let (typeTrailingChars, _) = ElloURI.match("\(domain)/\(test.input)foo")
+                                it("doesn't match route, trailing characters") {
+                                    let (typeTrailingChars, _) = ElloURI.match("\(domain)/\(test.input)&foo")
                                     expect(typeTrailingChars).notTo(equal(test.output))
                                 }
                             }

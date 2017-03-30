@@ -58,6 +58,19 @@ class CredentialsScreen: EmptyScreen {
 
         continueBackground.addSubview(continueButton)
 
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            make.top.equalTo(blackBar.snp.bottom)
+            make.bottom.equalTo(continueBackground.snp.top)
+        }
+
+        let scrollViewAnchor = UIView()
+        scrollView.addSubview(scrollViewAnchor)
+        scrollViewAnchor.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(scrollView)
+            scrollViewWidthConstraint = make.width.equalTo(frame.size.width).priority(Priority.required).constraint
+        }
+
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(scrollView).offset(Size.titleTop)
             make.leading.equalTo(scrollView).offset(Size.inset)

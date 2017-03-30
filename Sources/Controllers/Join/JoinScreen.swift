@@ -87,6 +87,9 @@ class JoinScreen: CredentialsScreen {
     override func setText() {
         titleLabel.text = InterfaceString.Startup.SignUp
         continueButton.setTitle(InterfaceString.Join.Discover, for: .normal)
+        emailField.placeholder = InterfaceString.Join.EmailPlaceholder
+        usernameField.placeholder = InterfaceString.Join.UsernamePlaceholder
+        passwordField.placeholder = InterfaceString.Join.PasswordPlaceholder
     }
 
     override func bindActions() {
@@ -98,6 +101,9 @@ class JoinScreen: CredentialsScreen {
         activateEmailButton.addTarget(self, action: #selector(activateEmail), for: .touchUpInside)
         activateUsernameButton.addTarget(self, action: #selector(activateUsername), for: .touchUpInside)
         activatePasswordButton.addTarget(self, action: #selector(activatePassword), for: .touchUpInside)
+        emailField.delegate = self
+        usernameField.delegate = self
+        passwordField.delegate = self
     }
 
     override func style() {
@@ -117,16 +123,10 @@ class JoinScreen: CredentialsScreen {
         termsButtonKeyboard.setAttributedTitle(attributedTitle, for: .normal)
 
         ElloTextFieldView.styleAsEmailField(emailField)
-        emailField.placeholder = InterfaceString.Join.EmailPlaceholder
-        emailField.delegate = self
 
         ElloTextFieldView.styleAsUsernameField(usernameField)
-        usernameField.placeholder = InterfaceString.Join.UsernamePlaceholder
-        usernameField.delegate = self
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
-        passwordField.placeholder = InterfaceString.Join.PasswordPlaceholder
-        passwordField.delegate = self
         passwordField.returnKeyType = .join
         passwordField.hasOnePassword = onePasswordAvailable
 
@@ -154,19 +154,6 @@ class JoinScreen: CredentialsScreen {
         scrollView.addSubview(termsButtonKeyboard)
 
         addSubview(termsButtonNormal)
-
-        scrollView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self)
-            make.top.equalTo(blackBar.snp.bottom)
-            make.bottom.equalTo(continueBackground.snp.top)
-        }
-
-        let scrollViewAnchor = UIView()
-        scrollView.addSubview(scrollViewAnchor)
-        scrollViewAnchor.snp.makeConstraints { make in
-            make.leading.trailing.top.equalTo(scrollView)
-            scrollViewWidthConstraint = make.width.equalTo(frame.size.width).priority(Priority.required).constraint
-        }
 
         activateEmailButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(scrollView)

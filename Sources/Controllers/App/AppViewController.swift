@@ -240,6 +240,37 @@ extension AppViewController {
         nav.setViewControllers([loggedOutController, loginController], animated: true)
     }
 
+    func showForgotPasswordResetScreen(authToken: String) {
+        guard
+            let nav = visibleViewController as? UINavigationController,
+            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
+        else { return }
+
+        if !(nav.visibleViewController is LoggedOutViewController) {
+            _ = nav.popToRootViewController(animated: false)
+        }
+
+        pushPayload = .none
+        let forgotPasswordResetController = ForgotPasswordResetViewController(authToken: authToken)
+        nav.setViewControllers([loggedOutController, forgotPasswordResetController], animated: true)
+    }
+
+    func showForgotPasswordEmailScreen() {
+        guard
+            let nav = visibleViewController as? UINavigationController,
+            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
+        else { return }
+
+        if !(nav.visibleViewController is LoggedOutViewController) {
+            _ = nav.popToRootViewController(animated: false)
+        }
+
+        pushPayload = .none
+        let loginController = LoginViewController()
+        let forgotPasswordEmailController = ForgotPasswordEmailViewController()
+        nav.setViewControllers([loggedOutController, loginController, forgotPasswordEmailController], animated: true)
+    }
+
     func showOnboardingScreen(_ user: User) {
         currentUser = user
 
@@ -500,7 +531,13 @@ extension AppViewController {
             showCategoryScreen(slug: data)
         case .invitations:
             showInvitationScreen()
-        case .enter, .exit, .root, .explore:
+        case .forgotMyPassword:
+            showForgotPasswordEmailScreen()
+        case .resetMyPassword:
+            showForgotPasswordResetScreen(authToken: data)
+        case .enter:
+            showLoginScreen()
+        case .exit, .root, .explore:
             break
         case .friends,
              .following,

@@ -129,6 +129,14 @@ extension Tracker {
         agent.track("entered password and pressed 'next'")
     }
 
+    func tappedRequestPassword() {
+        agent.track("tapped request reset password")
+    }
+
+    func tappedReset() {
+        agent.track("tapped reset password")
+    }
+
     func tappedJoin() {
         agent.track("tapped join")
     }
@@ -139,6 +147,14 @@ extension Tracker {
 
     func tappedTsAndCs() {
         agent.track("tapped terms and conditions")
+    }
+
+    func requestPasswordValid() {
+        agent.track("reset password valid email")
+    }
+
+    func resetPasswordValid() {
+        agent.track("reset password sent")
     }
 
     func joinValid() {

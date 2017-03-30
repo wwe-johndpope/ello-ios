@@ -34,19 +34,8 @@ extension LoginViewController: LoginDelegate {
     func forgotPasswordAction() {
         Tracker.shared.tappedForgotPassword()
 
-        let browser = ElloWebBrowserViewController()
-        let nav = ElloWebBrowserViewController.navigationControllerWithBrowser(browser)
-        let url = "\(ElloURI.baseURL)/forgot-password"
-        Tracker.shared.webViewAppeared(url)
-        browser.loadURLString(url)
-        browser.tintColor = UIColor.greyA()
-
-        browser.showsURLInNavigationBar = false
-        browser.showsPageTitleInNavigationBar = false
-        browser.title = InterfaceString.Login.ForgotPassword
-        browser.toolbarHidden = true
-
-        present(nav, animated: true)
+        let vc = ForgotPasswordEmailViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func onePasswordAction(_ sender: UIView) {

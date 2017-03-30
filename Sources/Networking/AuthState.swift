@@ -65,7 +65,7 @@ enum AuthState {
     }
 
     func supports(_ target: ElloAPI) -> Bool {
-        if !target.requiresAnyToken {
+        if target.authToken == nil {
             return true
         }
 

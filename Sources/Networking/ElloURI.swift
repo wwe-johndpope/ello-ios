@@ -26,14 +26,14 @@ enum ElloURI: String {
     case pushNotificationComment = "notifications/posts/([^/]+)/comments/([^/]+)$"
     case pushNotificationPost = "notifications/posts/([^/]+)/?$"
     case pushNotificationUser = "notifications/users/([^/]+)/?$"
-    case post = "post/([^/]+)/?$"
-    case profile = "[\\w_-]+"
-    case profileFollowers = "/([\\w_-]+)/followers/?$"
-    case profileFollowing = "/([\\w_-]+)/following/?$"
-    case profileLoves = "loves/?$"
+    case post = "post/([^/]+)/?$"           // usernameRegex gets prepended
+    case profile = "(?:\\?.*?)?$"           // usernameRegex gets prepended
+    case profileFollowers = "/followers/?$" // usernameRegex gets prepended
+    case profileFollowing = "/following/?$" // usernameRegex gets prepended
+    case profileLoves = "/loves/?$"         // usernameRegex gets prepended
     case search = "(search|find)/?(\\?.*)?$"
-    case searchPeople = "(search|find)/people/?(\\?.*)?"
-    case searchPosts = "(search|find)/posts/?(\\?.*)?"
+    case searchPeople = "(search|find)/people/?(\\?.*)?$"
+    case searchPosts = "(search|find)/posts/?(\\?.*)?$"
     case settings = "settings/?$"
     // other ello pages
     case confirm = "confirm/?$"
@@ -59,9 +59,8 @@ enum ElloURI: String {
     case requestInvite = "request-an-invite/?$"
     case requestInvitation = "request-an-invitation/?$"
     case requestInvitations = "request_invitations/?$"
-    case resetMyPassword = "auth/reset-my-password"
-    case resetPasswordError = "auth/password-reset-error"
-    case didResetMyPassword = "auth/forgot-my-password"
+    case resetMyPassword = "auth/reset-my-password/?\\?reset_password_token=([^&]+)$"
+    case resetPasswordError = "auth/password-reset-error/?$"
     case root = "?$"
     case signup = "signup/?$"
     case subdomain = "//.+(?<!(w{3}|staging))\\."
@@ -75,8 +74,7 @@ enum ElloURI: String {
 
     var loadsInWebViewFromWebView: Bool {
         switch self {
-        case .didResetMyPassword,
-             .discover,
+        case .discover,
              .category,
              .email,
              .enter,
@@ -111,7 +109,6 @@ enum ElloURI: String {
              .email,
              .external,
              .faceMaker,
-             .forgotMyPassword,
              .freedomOfSpeech,
              .manifesto,
              .nativeRedirect,
@@ -120,9 +117,7 @@ enum ElloURI: String {
              .requestInvitation,
              .requestInvitations,
              .requestInvite,
-             .resetMyPassword,
              .resetPasswordError,
-             .didResetMyPassword,
              .subdomain,
              .unblock,
              .whoMadeThis:
@@ -135,7 +130,7 @@ enum ElloURI: String {
     static var baseURL: String { return APIKeys.shared.domain }
 
     // this is taken directly from app/models/user.rb
-    static let fuzzyDomain: String = "((w{3}\\.)?ello\\.(?:ninja|co)|ello-stag(?:ing|e)\\d?\\.herokuapp\\.com|ello-fg-stage\\d?\\.herokuapp\\.com)"
+    static let fuzzyDomain: String = "(?:(?:w{3}\\.)?ello\\.(?:ninja|co)|ello-stag(?:ing|e)\\d?\\.herokuapp\\.com|ello-fg-stage\\d?\\.herokuapp\\.com)"
     static let usernameRegex = "([\\w\\-]+)"
     static var userPathRegex: String { return "\(ElloURI.fuzzyDomain)/\(ElloURI.usernameRegex)\\??.*" }
 
@@ -154,15 +149,13 @@ enum ElloURI: String {
             return rawValue
         case .category, .invite, .notifications, .search:
             return "\(ElloURI.fuzzyDomain)/\(rawValue)"
-        case .post:
-            return "\(ElloURI.userPathRegex)\(rawValue)"
         case .pushNotificationComment,
              .pushNotificationPost,
              .pushNotificationUser:
             return "\(rawValue)"
-        case .profile:
-            return "\(ElloURI.userPathRegex)\(rawValue)"
-        case .profileFollowers,
+        case .post,
+             .profile,
+             .profileFollowers,
              .profileFollowing,
              .profileLoves:
             return "\(ElloURI.userPathRegex)\(rawValue)"
@@ -194,25 +187,27 @@ enum ElloURI: String {
         case .discoverTrending:
             return "trending"
         case .category:
-            return regex?.matchingGroups(url).safeValue(2) ?? url
+            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .pushNotificationUser:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .pushNotificationComment:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .invite:
-            return regex?.matchingGroups(url).safeValue(2) ?? url
+            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .notifications:
-            return regex?.matchingGroups(url).safeValue(2) ?? "notifications"
+            return regex?.matchingGroups(url).safeValue(1) ?? "notifications"
         case .profileFollowers, .profileFollowing, .profileLoves:
-            return regex?.matchingGroups(url).safeValue(2) ?? url
+            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .post:
-            let last = regex?.matchingGroups(url).safeValue(3) ?? url
+            let last = regex?.matchingGroups(url).safeValue(2) ?? url
             let lastArr = last.characters.split { $0 == "?" }.map { String($0) }
             return lastArr.first ?? last
         case .pushNotificationPost:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .profile:
-            return regex?.matchingGroups(url).safeValue(2) ?? url
+            return regex?.matchingGroups(url).safeValue(1) ?? url
+        case .resetMyPassword:
+            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .search:
             if let urlComponents = URLComponents(string: url),
                 let queryItems = urlComponents.queryItems,
@@ -275,7 +270,6 @@ enum ElloURI: String {
         requestInvitations,
         resetMyPassword,
         resetPasswordError,
-        didResetMyPassword,
         searchPeople,
         searchPosts,
         search,
