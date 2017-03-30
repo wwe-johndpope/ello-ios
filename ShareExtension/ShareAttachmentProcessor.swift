@@ -136,7 +136,7 @@ private extension ShareAttachmentProcessor {
     static func processData(_ data: Data, _ callback: @escaping ExtensionItemProcessor) {
         if let image = UIImage(data: data) {
             if UIImage.isGif(data) {
-                image.copyWithCorrectOrientationAndSize() { image in
+                image.copyWithCorrectOrientationAndSize { image in
                     let item = ExtensionItemPreview(image: image, gifData: data)
                     callback(item)
                 }
@@ -151,7 +151,7 @@ private extension ShareAttachmentProcessor {
     }
 
     static func processImage(_ image: UIImage, _ callback: @escaping ExtensionItemProcessor) {
-        image.copyWithCorrectOrientationAndSize() { image in
+        image.copyWithCorrectOrientationAndSize { image in
             let item = ExtensionItemPreview(image: image)
             callback(item)
         }

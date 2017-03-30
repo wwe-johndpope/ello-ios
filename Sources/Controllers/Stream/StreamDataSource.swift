@@ -240,7 +240,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     @discardableResult
     func removeCommentsFor(post: Post) -> [IndexPath] {
         let indexPaths = self.commentIndexPathsForPost(post)
-        temporarilyUnfilter() {
+        temporarilyUnfilter {
             // these paths might be different depending on the filter
             let unfilteredIndexPaths = self.commentIndexPathsForPost(post)
             var newItems = [StreamCellItem]()
@@ -262,7 +262,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 items.append(itemToRemove)
             }
         }
-        temporarilyUnfilter() {
+        temporarilyUnfilter {
             for itemToRemove in items {
                 if let index = self.streamCellItems.index(of: itemToRemove) {
                     self.streamCellItems.remove(at: index)
@@ -570,10 +570,8 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     func modifyUserSettingsItems(_ user: User, collectionView: ElloCollectionView) {
         let (_, changedItems) = elementsFor(jsonable: user, change: .update)
-        for item in changedItems {
-            if item.jsonable is User {
-                item.jsonable = user
-            }
+        for item in changedItems where item.jsonable is User{
+            item.jsonable = user
         }
         collectionView.reloadData()
     }
@@ -581,7 +579,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     @discardableResult
     func removeItemsFor(jsonable: JSONAble, change: ContentChange) -> [IndexPath] {
         let indexPaths = self.elementsFor(jsonable: jsonable, change: change).0
-        temporarilyUnfilter() {
+        temporarilyUnfilter {
             // these paths might be different depending on the filter
             let unfilteredIndexPaths = self.elementsFor(jsonable: jsonable, change: change).0
             var newItems = [StreamCellItem]()
@@ -733,11 +731,9 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         {
             let newState: StreamCellState = cellItem.state == .expanded ? .collapsed : .expanded
             let cellItems = self.cellItemsForPost(post)
-            for item in cellItems {
+            for item in cellItems where item.type != .footer{
                 // don't toggle the footer's state, it is used by comment open/closed
-                if item.type != .footer {
-                    item.state = newState
-                }
+                item.state = newState
             }
             self.updateFilteredItems()
         }

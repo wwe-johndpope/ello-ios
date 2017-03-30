@@ -67,7 +67,7 @@ final class Asset: JSONAble {
             (.small, small),
             (.video, video)
         ]
-        return possibles.flatMap() { type, attachment in
+        return possibles.flatMap { type, attachment in
             guard  let attachment = attachment else { return nil }
             return (type, attachment)
         }

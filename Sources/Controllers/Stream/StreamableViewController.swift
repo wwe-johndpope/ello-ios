@@ -261,7 +261,7 @@ extension StreamableViewController: CreatePostResponder {
         if OmnibarViewController.canEditRegions(post.content) {
             let vc = OmnibarViewController(editPost: post)
             vc.currentUser = self.currentUser
-            vc.onPostSuccess() { _ in
+            vc.onPostSuccess { _ in
                 _ = self.navigationController?.popViewController(animated: true)
             }
             self.navigationController?.pushViewController(vc, animated: true)

@@ -82,7 +82,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Logout") {
-            appController.closeTodoController() {
+            appController.closeTodoController {
                 appController.userLoggedOut()
             }
         }
@@ -98,7 +98,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {
-                appController.closeTodoController() {
+                appController.closeTodoController {
                     Tracker.shared.overrideAgent = DebugAgent()
                     let alertController = AlertViewController(error: "Debug tracking is on")
                     appController.present(alertController, animated: true, completion: nil)
@@ -107,7 +107,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Deep Linking") {
-            appController.closeTodoController() {
+            appController.closeTodoController {
                 let alertController = AlertViewController()
 
                 let urlAction = AlertAction(title: "Enter URL", style: .urlInput)
@@ -129,7 +129,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addAction(name: "ImagePickerSheetController") {
             let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
             controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.TakePhoto, handler: { _ in }))
-            controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.PhotoLibrary, secondaryTitle: { NSString.localizedStringWithFormat(InterfaceString.ImagePicker.AddImagesTemplate as NSString, $0) as String}, handler: { _ in }, secondaryHandler: { _, numberOfPhotos in }))
+            controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.PhotoLibrary, secondaryTitle: { NSString.localizedStringWithFormat(InterfaceString.ImagePicker.AddImagesTemplate as NSString, $0) as String}, handler: { _ in }, secondaryHandler: { _, _ in }))
             controller.addAction(ImagePickerAction(title: InterfaceString.Cancel, style: .cancel, handler: { _ in }))
 
             self.present(controller, animated: true, completion: nil)
@@ -195,7 +195,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Show Notification") {
-            appController.closeTodoController() {
+            appController.closeTodoController {
                 PushNotificationController.sharedController.receivedNotification(UIApplication.shared, userInfo: [
                     "application_target": "notifications/posts/6178",
                     "aps": [
@@ -213,7 +213,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             PushNotificationController.sharedController.permissionDenied = false
             PushNotificationController.sharedController.needsPermission = true
             if let alert = PushNotificationController.sharedController.requestPushAccessIfNeeded() {
-                appController.closeTodoController() {
+                appController.closeTodoController {
                     appController.present(alert, animated: true, completion: .none)
                 }
             }

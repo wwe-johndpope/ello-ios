@@ -29,7 +29,7 @@ public struct VideoCache {
                 return
             }
 
-            pinCache?.diskCache.fileURL(forKeyAsync: key) { (key, url) in
+            pinCache?.diskCache.fileURL(forKeyAsync: key) { key, url in
                 guard let url = url else {
                     promise.completeWithFail(VideoCache.failToLoadMessage)
                     return
@@ -57,7 +57,7 @@ public struct VideoCache {
                     return
                 }
 
-                cache.diskCache.fileURL(forKeyAsync: key) { (key, localURL) in
+                cache.diskCache.fileURL(forKeyAsync: key) { key, localURL in
                     guard let localURL = localURL else {
                         promise.completeWithFail(VideoCache.failToLoadMessage)
                         return

@@ -31,13 +31,13 @@ class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
-    var avatarView: ProfileAvatarView { get { return headerView.avatarView } }
-    var namesView: ProfileNamesView { get { return headerView.namesView } }
-    var totalCountView: ProfileTotalCountView { get { return headerView.totalCountView } }
-    var statsView: ProfileStatsView { get { return headerView.statsView } }
-    var bioView: ProfileBioView { get { return headerView.bioView } }
-    var locationView: ProfileLocationView { get { return headerView.locationView } }
-    var linksView: ProfileLinksView { get { return headerView.linksView } }
+    var avatarView: ProfileAvatarView { return headerView.avatarView }
+    var namesView: ProfileNamesView { return headerView.namesView }
+    var totalCountView: ProfileTotalCountView { return headerView.totalCountView }
+    var statsView: ProfileStatsView { return headerView.statsView }
+    var bioView: ProfileBioView { return headerView.bioView }
+    var locationView: ProfileLocationView { return headerView.locationView }
+    var linksView: ProfileLinksView { return headerView.linksView }
 
     var user: User?
     var currentUser: User?

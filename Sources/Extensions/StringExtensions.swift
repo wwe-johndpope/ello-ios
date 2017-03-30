@@ -151,6 +151,7 @@ extension String {
 }
 
 private func populateEntityLookup() -> [String: String] {
+    // swiftlint:disable colon
     return [
         "quot"     : "\"",
         "amp"      : "&",
@@ -402,4 +403,5 @@ private func populateEntityLookup() -> [String: String] {
         "hearts"   : "\u{2665}",
         "diams"    : "\u{2666}",
     ]
+    // swiftlint:enable colon
 }

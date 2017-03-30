@@ -136,10 +136,8 @@ enum ElloURI: String {
 
     static func match(_ url: String) -> (type: ElloURI, data: String) {
         let trimmed = ElloURI.replaceElloScheme(url)
-        for type in self.all {
-            if let _ = trimmed.range(of: type.regexPattern, options: .regularExpression) {
-                return (type, type.data(trimmed))
-            }
+        for type in self.all where trimmed.range(of: type.regexPattern, options: .regularExpression) != nil {
+            return (type, type.data(trimmed))
         }
         return (self.external, self.external.data(trimmed))
     }

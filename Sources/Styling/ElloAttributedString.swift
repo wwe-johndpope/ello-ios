@@ -84,7 +84,7 @@ struct ElloAttributedString {
 
     static func render(_ input: NSAttributedString) -> String {
         var output = ""
-        input.enumerateAttributes(in: NSRange(location: 0, length: input.length), options: .longestEffectiveRangeNotRequired) { (attrs, range, stopPtr) in
+        input.enumerateAttributes(in: NSRange(location: 0, length: input.length), options: .longestEffectiveRangeNotRequired) { attrs, range, stopPtr in
             // (tagName, attributes?)
             var tags = [HtmlTagTuple]()
             if let underlineStyle = attrs[NSUnderlineStyleAttributeName] as? Int, underlineStyle == NSUnderlineStyle.styleSingle.rawValue {

@@ -4,7 +4,7 @@
 
 @objc protocol GestureNavigation {
     var backGestureEdges: UIRectEdge { get }
-    func backGestureAction() -> Void
+    func backGestureAction()
 }
 
 extension UIViewController: GestureNavigation {
@@ -37,7 +37,7 @@ extension UIViewController {
         to toViewController: UIViewController,
         duration: TimeInterval = 0,
         options: UIViewAnimationOptions = [],
-        animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) -> Void
+        animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil)
     {
         if AppSetup.sharedState.isTesting {
             animations?()

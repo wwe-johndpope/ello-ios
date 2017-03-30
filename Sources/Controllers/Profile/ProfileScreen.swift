@@ -28,7 +28,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     var coverImageURL: URL? {
         get { return nil }
-        set { coverImageView.pin_setImage(from: newValue) { result in } }
+        set { coverImageView.pin_setImage(from: newValue) { _ in } }
     }
 
     // views

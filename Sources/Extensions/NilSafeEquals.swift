@@ -4,7 +4,7 @@
 
 infix operator =?= : ComparisonPrecedence
 
-func =?= <T>(lhs: Optional<T>, rhs: Optional<T>) -> Bool where T: Equatable {
+func =?= <T>(lhs: T?, rhs: T?) -> Bool where T: Equatable {
     guard
         let lhs = lhs,
         let rhs = rhs
@@ -13,7 +13,7 @@ func =?= <T>(lhs: Optional<T>, rhs: Optional<T>) -> Bool where T: Equatable {
     }
     return lhs == rhs
 }
-func =?= <T>(lhs: T, rhs: Optional<T>) -> Bool where T: Equatable {
+func =?= <T>(lhs: T, rhs: T?) -> Bool where T: Equatable {
     guard
         let rhs = rhs
     else {
@@ -21,7 +21,7 @@ func =?= <T>(lhs: T, rhs: Optional<T>) -> Bool where T: Equatable {
     }
     return lhs == rhs
 }
-func =?= <T>(lhs: Optional<T>, rhs: T) -> Bool where T: Equatable {
+func =?= <T>(lhs: T?, rhs: T) -> Bool where T: Equatable {
     guard
         let lhs = lhs
     else {

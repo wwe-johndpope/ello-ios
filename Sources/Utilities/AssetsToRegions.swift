@@ -19,7 +19,7 @@ struct AssetsToRegions {
         var newStack = stack
 
         func done() {
-            nextPHAsset(Array<PHAsset>(assets[1..<assets.count]), stack: newStack, completion: completion)
+            nextPHAsset([PHAsset](assets[1..<assets.count]), stack: newStack, completion: completion)
         }
 
         var image: UIImage?
@@ -35,7 +35,7 @@ struct AssetsToRegions {
                 done()
             }
             else {
-                image.copyWithCorrectOrientationAndSize() { orientedImage in
+                image.copyWithCorrectOrientationAndSize { orientedImage in
                     if let image = orientedImage {
                         newStack.append(ImageRegionData(image: image, buyButtonURL: nil))
                     }
