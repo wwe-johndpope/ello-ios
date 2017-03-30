@@ -29,3 +29,8 @@ class Window {
     static func isWide(_ width: Float) -> Bool { return false }
     static var width: Float { return 0 }
 }
+
+class DeviceScreen {
+    static var isRetina: Bool { return true }
+    static var scale: Float { return 2 }
+}

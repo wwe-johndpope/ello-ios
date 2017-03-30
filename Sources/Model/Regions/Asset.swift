@@ -89,20 +89,20 @@ final class Asset: JSONAble {
 
     var oneColumnAttachment: Attachment? {
         if video != nil { return video }
-        return Window.isWide(Window.width) ? xhdpi : hdpi
+        return Window.isWide(Window.width) && DeviceScreen.isRetina  ? xhdpi : hdpi
     }
 
     var oneColumnPreviewAttachment: Attachment? {
-        return Window.isWide(Window.width) ? xhdpi : hdpi
+        return Window.isWide(Window.width) && DeviceScreen.isRetina ? xhdpi : hdpi
     }
 
     var gridLayoutAttachment: Attachment? {
         if video != nil { return video }
-        return Window.isWide(Window.width) ? hdpi : mdpi
+        return Window.isWide(Window.width) && DeviceScreen.isRetina ? hdpi : mdpi
     }
 
     var gridLayoutPreviewAttachment: Attachment? {
-        return Window.isWide(Window.width) ? hdpi : mdpi
+        return Window.isWide(Window.width) && DeviceScreen.isRetina ? hdpi : mdpi
     }
 
     var hasVideo: Bool {
