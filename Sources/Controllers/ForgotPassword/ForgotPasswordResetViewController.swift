@@ -41,8 +41,7 @@ extension ForgotPasswordResetViewController: ForgotPasswordResetDelegate {
                 }
                 .onFail { error in
                     self.screen.loadingHUD(visible: false)
-                    let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
-                    self.screen.showPasswordError(errorTitle)
+                    self.screen.showFailureMessage()
                 }
         }
         else {

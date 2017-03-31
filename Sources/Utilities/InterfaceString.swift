@@ -258,6 +258,7 @@ struct InterfaceString {
         static let ForgotPasswordEnter: String = NSLocalizedString("Enter your email", comment: "Enter your email label")
         static let ForgotPasswordEnterSuccess: String = NSLocalizedString("If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.", comment: "Enter your email success description")
         static let ForgotPasswordReset: String = NSLocalizedString("Reset your password.", comment: "Reset your password label")
+        static let ForgotPasswordResetError: String = NSLocalizedString("The password reset token you used is no longer valid. This may be because you requested more than one token, or that too much time has elapsed.", comment: "Reset your password long error reason.")
         static let Tagline: String = NSLocalizedString("Be part of what’s next in art, design, fashion, web culture & more.", comment: "Be part of what's next tag line label")
     }
 

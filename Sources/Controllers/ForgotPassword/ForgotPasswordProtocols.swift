@@ -26,6 +26,7 @@ protocol ForgotPasswordResetDelegate: class {
 }
 protocol ForgotPasswordResetScreenProtocol: class {
     var passwordValid: Bool? { get set }
+    func showFailureMessage()
     func showPasswordError(_ text: String)
     func hidePasswordError()
     func loadingHUD(visible: Bool)

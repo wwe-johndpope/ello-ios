@@ -30,10 +30,13 @@ class ForgotPasswordResetScreen: CredentialsScreen {
     let passwordErrorLabel = StyledLabel(style: .smallWhite)
     var passwordMarginConstraint: Constraint!
 
+    let failureLabel = StyledLabel(style: .white)
+
     override func setText() {
         titleLabel.text = InterfaceString.Startup.ForgotPasswordReset
         continueButton.setTitle(InterfaceString.Startup.Reset, for: .normal)
         passwordField.placeholder = InterfaceString.Join.PasswordPlaceholder
+        failureLabel.text = InterfaceString.Startup.ForgotPasswordResetError
     }
 
     override func bindActions() {
@@ -47,6 +50,9 @@ class ForgotPasswordResetScreen: CredentialsScreen {
         super.style()
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
+
+        failureLabel.numberOfLines = 0
+        failureLabel.isHidden = true
     }
 
     override func arrange() {
@@ -55,6 +61,7 @@ class ForgotPasswordResetScreen: CredentialsScreen {
         scrollView.addSubview(activatePasswordButton)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(passwordErrorLabel)
+        scrollView.addSubview(failureLabel)
 
         activatePasswordButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(scrollView)
@@ -71,6 +78,11 @@ class ForgotPasswordResetScreen: CredentialsScreen {
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
         }
         passwordMarginConstraint.deactivate()
+
+        failureLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(Size.fieldsTopMargin)
+            make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)
+        }
     }
 
     func submitAction() {
@@ -88,6 +100,13 @@ extension ForgotPasswordResetScreen: ForgotPasswordResetScreenProtocol {
     override func resignFirstResponder() -> Bool {
         _ = passwordField.resignFirstResponder()
         return super.resignFirstResponder()
+    }
+
+    func showFailureMessage() {
+        failureLabel.isHidden = false
+        activatePasswordButton.isHidden = true
+        passwordField.isHidden = true
+        passwordErrorLabel.isHidden = true
     }
 
     func showPasswordError(_ text: String) {
