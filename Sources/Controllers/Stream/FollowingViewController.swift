@@ -16,9 +16,10 @@ class FollowingViewController: StreamableViewController {
 
     var navigationBar: ElloNavigationBar!
     fileprivate var loggedPromptEventForThisSession = false
-    fileprivate var reloadStreamContentObserver: NotificationObserver?
+    fileprivate var reloadFollowingContentObserver: NotificationObserver?
     fileprivate var appBackgroundObserver: NotificationObserver?
     fileprivate var appForegroundObserver: NotificationObserver?
+    fileprivate var newFollowingContentObserver: NotificationObserver?
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.following, insets: ElloTab.following.insets) }
@@ -130,7 +131,7 @@ private extension FollowingViewController {
     }
 
     func addTemporaryNotificationObservers() {
-        reloadStreamContentObserver = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) { [weak self] _ in
+        reloadFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) { [weak self] _ in
             guard let `self` = self else { return }
 
             ElloHUD.showLoadingHudInView(self.streamViewController.view)
@@ -139,16 +140,20 @@ private extension FollowingViewController {
     }
 
     func removeTemporaryNotificationObservers() {
-        reloadStreamContentObserver?.removeObserver()
+        reloadFollowingContentObserver?.removeObserver()
     }
 
     func addNotificationObservers() {
+        newFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] _ in
+        }
+
         appBackgroundObserver = NotificationObserver(notification: Application.Notifications.DidEnterBackground) { [weak self] _ in
             self?.loggedPromptEventForThisSession = false
         }
     }
 
     func removeNotificationObservers() {
+        newFollowingContentObserver?.removeObserver()
         appBackgroundObserver?.removeObserver()
     }
 }

@@ -287,7 +287,7 @@ extension ElloTabBarController {
             self?.newNotificationsAvailable = true
         }
 
-        newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newStreamContent) { [weak self] _ in
+        newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] _ in
             self?.followingDot?.isHidden = false
         }
 
@@ -338,7 +338,7 @@ extension ElloTabBarController: UITabBarDelegate {
                 }
 
                 if shouldReloadFollowingStream() {
-                    postNotification(NewContentNotifications.reloadStreamContent, value: nil)
+                    postNotification(NewContentNotifications.reloadFollowingContent, value: nil)
                 }
                 else if shouldReloadNotificationsStream() {
                     postNotification(NewContentNotifications.reloadNotifications, value: nil)

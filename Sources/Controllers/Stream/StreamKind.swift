@@ -56,8 +56,16 @@ enum StreamKind {
         }
     }
 
-    var lastViewedCreatedAtKey: String {
-        return self.cacheKey + "_createdAt"
+    var lastViewedCreatedAtKey: String? {
+        switch self {
+        case .announcements: return "Announcements_createdAt"
+        case let .discover(type): return "Discover_\(type)_createdAt"
+        case let .category(slug): return "Category_\(slug)_createdAt"
+        case .following: return "Following_createdAt"
+        case .notifications: return "Notifications_createdAt"
+        default:
+            return nil
+        }
     }
 
     var columnSpacing: CGFloat {

@@ -166,7 +166,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Show Following Dot") {
-            postNotification(NewContentNotifications.newStreamContent, value: nil)
+            postNotification(NewContentNotifications.newFollowingContent, value: nil)
             appController.closeTodoController()
         }
 
