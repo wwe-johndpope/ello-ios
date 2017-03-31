@@ -2,7 +2,6 @@
 ///  Asset.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 

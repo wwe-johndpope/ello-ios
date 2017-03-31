@@ -2,10 +2,6 @@
 ///  Keyboard.swift
 //
 
-import UIKit
-import Foundation
-import CoreGraphics
-
 class Keyboard {
     struct Notifications {
         static let KeyboardWillShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillShow")

@@ -1,10 +1,6 @@
+////
+///  CGRectExtensions.swift
 //
-//  CGRect.swift
-//
-
-import CoreGraphics
-import UIKit
-import Foundation
 
 extension CGRect {
 

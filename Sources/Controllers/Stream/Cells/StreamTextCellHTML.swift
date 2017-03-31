@@ -2,8 +2,6 @@
 ///  StreamTextCellHTML.swift
 //
 
-import Foundation
-
 struct StreamTextCellHTML {
 
     static var indexFile: String?

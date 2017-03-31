@@ -2,8 +2,6 @@
 ///  StreamCellItemParser.swift
 //
 
-import Foundation
-
 struct StreamCellItemParser {
 
     init(){}

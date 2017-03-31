@@ -2,8 +2,8 @@
 ///  NewContentService.swift
 //
 
-import Foundation
 import SwiftyUserDefaults
+
 
 struct NewContentNotifications {
     static let newAnnouncements = TypedNotification<Void?>(name: "NewAnnouncementsNotification")

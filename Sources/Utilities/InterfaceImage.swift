@@ -2,7 +2,6 @@
 ///  InterfaceImage.swift
 //
 
-import UIKit
 import SVGKit
 
 

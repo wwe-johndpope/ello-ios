@@ -2,8 +2,6 @@
 ///  AlertPresentationController.swift
 //
 
-import UIKit
-
 class AlertPresentationController: UIPresentationController {
 
     let background: UIView = {

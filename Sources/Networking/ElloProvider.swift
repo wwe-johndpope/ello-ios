@@ -3,7 +3,6 @@
 //
 
 import Crashlytics
-import Foundation
 import Moya
 import Result
 import Alamofire

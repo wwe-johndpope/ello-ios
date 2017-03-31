@@ -4,6 +4,7 @@
 
 import SwiftyUserDefaults
 
+
 class FollowingViewController: StreamableViewController {
     override func trackerName() -> String? { return "Stream" }
     override func trackerProps() -> [String: AnyObject]? {

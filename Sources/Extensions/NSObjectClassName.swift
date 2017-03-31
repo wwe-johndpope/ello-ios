@@ -2,8 +2,6 @@
 ///  NSObjectClassName.swift
 //
 
-import Foundation
-
 extension NSObject {
     func readableClassName() -> String {
         return type(of: self).readableClassName()

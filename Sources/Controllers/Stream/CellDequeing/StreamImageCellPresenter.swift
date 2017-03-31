@@ -2,8 +2,6 @@
 ///  StreamImageCellPresenter.swift
 //
 
-import Foundation
-
 struct StreamImageCellPresenter {
 
     static func preventImageStretching(_ cell: StreamImageCell, attachmentWidth: Int, columnWidth: CGFloat, leftMargin: CGFloat) {

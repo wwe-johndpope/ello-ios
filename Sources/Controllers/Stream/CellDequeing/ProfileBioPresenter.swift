@@ -2,9 +2,6 @@
 ///  ProfileBioPresenter.swift
 //
 
-import Foundation
-
-
 struct ProfileBioPresenter {
 
     static func configure(

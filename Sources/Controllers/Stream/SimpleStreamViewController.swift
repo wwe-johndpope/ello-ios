@@ -2,8 +2,6 @@
 ///  SimpleStreamController.swift
 //
 
-import Foundation
-
 class SimpleStreamViewController: StreamableViewController {
     override func trackerName() -> String? {
         return endpoint.trackerName

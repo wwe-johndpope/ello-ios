@@ -2,8 +2,6 @@
 ///  StreamRegionableCell.swift
 //
 
-import Foundation
-
 class StreamRegionableCell: UICollectionViewCell {
     var leftBorder = CALayer()
 

@@ -2,8 +2,6 @@
 ///  StreamCellType.swift
 //
 
-import Foundation
-
 typealias CellConfigClosure = (
     _ cell: UICollectionViewCell,
     _ streamCellItem: StreamCellItem,

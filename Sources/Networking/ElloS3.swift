@@ -1,9 +1,5 @@
-//
-//  ElloS3
-//  Ello
-//
-//  Created by Colin Gray on 3/3/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloS3.swift
 //
 // creds = AmazonCredentials(...)
 // data = NSData()
@@ -14,7 +10,6 @@
 //   //.onProgress { (progress : Float) in }
 //   .start()
 
-import Foundation
 
 
 class ElloS3 {

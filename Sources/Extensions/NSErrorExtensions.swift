@@ -2,8 +2,6 @@
 ///  NSErrorExtensions.swift
 //
 
-import UIKit
-
 extension NSError {
     var elloError: ElloNetworkError? {
         return userInfo[NSLocalizedFailureReasonErrorKey] as? ElloNetworkError

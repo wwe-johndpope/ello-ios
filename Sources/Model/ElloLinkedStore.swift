@@ -2,11 +2,10 @@
 ///  ElloLinkedStore.swift
 //
 
-import Foundation
 import YapDatabase
 
-private let _ElloLinkedStore = ElloLinkedStore()
 
+private let _ElloLinkedStore = ElloLinkedStore()
 
 struct ElloLinkedStore {
 

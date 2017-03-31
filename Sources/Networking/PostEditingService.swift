@@ -1,9 +1,5 @@
-//
-//  PostEditingService.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/12/14.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  PostEditingService.swift
 //
 // This service converts "raw" content (String, NSAttributedString, UIImage)
 // into Regionables (TextRegion, ImageRegion) suitable for the API, and uploads
@@ -13,8 +9,6 @@
 // asynchronously, they could come back in any order.  In this context "entry"
 // refers to the tuple of (index, Region) or (index, String/UIImage)
 
-import Foundation
-import UIKit
 
 func == (lhs: PostEditingService.PostContentRegion, rhs: PostEditingService.PostContentRegion) -> Bool {
     switch (lhs, rhs) {

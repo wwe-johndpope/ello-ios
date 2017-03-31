@@ -2,8 +2,6 @@
 ///  UserAvatarCellModel.swift
 //
 
-import Foundation
-
 let UserAvatarCellModelVersion = 2
 
 @objc(UserAvatarCellModel)

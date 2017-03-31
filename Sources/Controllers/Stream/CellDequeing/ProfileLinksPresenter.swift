@@ -2,9 +2,6 @@
 ///  ProfileLinksPresenter.swift
 //
 
-import Foundation
-
-
 struct ProfileLinksPresenter {
 
     static func configure(

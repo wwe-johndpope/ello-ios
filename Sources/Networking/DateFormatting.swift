@@ -2,8 +2,6 @@
 ///  DateFormatting.swift
 //
 
-import Foundation
-
 let ServerDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.locale = Locale(identifier: "en_US")

@@ -2,8 +2,6 @@
 ///  BasicIcon.swift
 //
 
-import Foundation
-
 class BasicIcon: UIView {
 
     fileprivate var _enabled = false

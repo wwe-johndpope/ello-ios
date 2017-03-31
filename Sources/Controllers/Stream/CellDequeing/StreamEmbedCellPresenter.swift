@@ -2,8 +2,6 @@
 ///  StreamEmbedCellPresenter.swift
 //
 
-import Foundation
-
 struct StreamEmbedCellPresenter {
 
     static func configure(

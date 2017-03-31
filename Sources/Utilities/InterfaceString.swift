@@ -2,9 +2,6 @@
 ///  InterfaceString.swift
 //
 
-import Foundation
-
-
 struct InterfaceString {
 
     // Adding type information to the strings reduced the overall compile time considerably

@@ -2,7 +2,6 @@
 ///  AuthToken.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 

@@ -2,8 +2,6 @@
 ///  ResponseConfig.swift
 //
 
-import Foundation
-
 class ResponseConfig: CustomStringConvertible {
     var description: String {
         let descripArray = [

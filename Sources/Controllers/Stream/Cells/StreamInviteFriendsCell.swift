@@ -2,8 +2,6 @@
 ///  StreamInviteFriendsCell.swift
 //
 
-import Foundation
-
 class StreamInviteFriendsCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamInviteFriendsCell"
 

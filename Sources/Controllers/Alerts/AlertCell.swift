@@ -2,10 +2,8 @@
 ///  AlertCell.swift
 //
 
-import UIKit
-import Foundation
 import ElloUIFonts
-import CoreGraphics
+
 
 @objc
 protocol AlertCellResponder: class {

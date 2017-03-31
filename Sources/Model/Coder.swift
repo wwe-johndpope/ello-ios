@@ -2,8 +2,6 @@
 ///  Decoder.swift
 //
 
-import Foundation
-
 struct Coder {
     let coder: NSCoder
 
