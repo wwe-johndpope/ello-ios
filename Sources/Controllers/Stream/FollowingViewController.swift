@@ -34,6 +34,10 @@ class FollowingViewController: StreamableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        removeNotificationObservers()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -44,6 +48,8 @@ class FollowingViewController: StreamableViewController {
         streamViewController.streamKind = .following
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+
+        addNotificationObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +64,7 @@ class FollowingViewController: StreamableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        removeNotificationObservers()
+        removeTemporaryNotificationObservers()
     }
 
     override func viewForStream() -> UIView {
