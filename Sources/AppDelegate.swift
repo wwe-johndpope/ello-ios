@@ -22,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             APIKeys.shared = debugServer.apiKeys
         }
 
+        #if DEBUG
+        Tracker.shared.overrideAgent = NullAgent()
+        #endif
+
         Keyboard.setup()
         Rate.sharedRate.setup()
         AutoCompleteService.loadEmojiJSON("emojis")
