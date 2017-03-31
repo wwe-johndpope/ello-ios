@@ -2,8 +2,6 @@
 ///  Defaults.swift
 //
 
-import Foundation
-
 let ElloGroupName = "group.ello.Ello"
 let GroupDefaults = defaults()
 

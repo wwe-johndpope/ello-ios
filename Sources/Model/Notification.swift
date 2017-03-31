@@ -2,8 +2,6 @@
 ///  Notification.swift
 //
 
-import Foundation
-
 enum NotificationFilterType: String {
     case all = "NotificationFilterTypeAll"
     case comments = "NotificationFilterTypeComments"

@@ -2,8 +2,6 @@
 ///  AlertViewControllerKeyboardExtension.swift
 //
 
-import Foundation
-
 extension AlertViewController {
 
     func keyboardUpdateFrame(_ keyboard: Keyboard) {

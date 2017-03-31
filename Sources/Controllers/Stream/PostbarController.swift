@@ -2,11 +2,6 @@
 ///  PostbarController.swift
 //
 
-import Foundation
-
-
-// swiftlint:enable colon
-
 @objc
 protocol PostbarResponder: class {
     func viewsButtonTapped(_ indexPath: IndexPath)

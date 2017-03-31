@@ -2,8 +2,6 @@
 ///  InviteCache.swift
 //
 
-import Foundation
-
 private let key = "ElloInviteCache"
 
 struct InviteCache {

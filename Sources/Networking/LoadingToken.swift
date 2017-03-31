@@ -2,8 +2,6 @@
 ///  LoadingToken.swift
 //
 
-import Foundation
-
 struct LoadingToken {
     fileprivate var loadInitialPageLoadingToken: String = ""
     var cancelLoadingClosure: ElloEmptyCompletion = {}

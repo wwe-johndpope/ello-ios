@@ -2,9 +2,6 @@
 ///  FreeMethods.swift
 //
 
-import UIKit
-
-
 #if DEBUG
 var messages: [(String, String)] = []
 func log(comment: String, object: Any?) {

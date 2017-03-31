@@ -2,7 +2,6 @@
 ///  Profile.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 

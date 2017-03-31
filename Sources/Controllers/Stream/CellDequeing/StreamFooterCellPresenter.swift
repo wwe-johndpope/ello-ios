@@ -2,9 +2,6 @@
 ///  StreamFooterCellPresenter.swift
 //
 
-import Foundation
-
-
 enum InteractionVisibility {
     case enabled
     case selectedAndEnabled

@@ -2,7 +2,6 @@
 ///  TextRegion.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 

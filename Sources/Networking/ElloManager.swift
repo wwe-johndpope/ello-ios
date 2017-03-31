@@ -2,7 +2,6 @@
 ///  ElloManager.swift
 //
 
-import Foundation
 import Alamofire
 import ElloCerts
 

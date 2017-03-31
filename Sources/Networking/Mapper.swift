@@ -2,8 +2,6 @@
 ///  Mapper.swift
 //
 
-import Foundation
-
 struct Mapper {
 
     static func mapJSON(_ data: Data) -> (AnyObject?, NSError?) {

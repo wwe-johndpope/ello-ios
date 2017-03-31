@@ -2,8 +2,6 @@
 ///  UINavigationItem.swift
 //
 
-import Foundation
-
 extension UINavigationItem {
 
     func fixNavBarItemPadding() {

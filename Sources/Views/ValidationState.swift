@@ -2,9 +2,6 @@
 ///  ValidationState.swift
 //
 
-import UIKit
-
-
 enum ValidationState {
     case loading
     case error

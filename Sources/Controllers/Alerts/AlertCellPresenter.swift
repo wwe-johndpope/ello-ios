@@ -2,8 +2,6 @@
 ///  AlertCellPresenter.swift
 //
 
-import UIKit
-
 struct AlertCellPresenter {
 
     static func configureCell(_ cell: AlertCell, type: AlertType = .normal) {

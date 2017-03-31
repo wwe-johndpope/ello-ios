@@ -2,7 +2,6 @@
 ///  Attachment.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 

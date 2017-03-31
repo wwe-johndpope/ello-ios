@@ -2,8 +2,8 @@
 ///  StreamKind.swift
 //
 
-import Foundation
 import SwiftyUserDefaults
+
 
 enum StreamKind {
     case currentUserStream

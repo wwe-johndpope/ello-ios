@@ -2,9 +2,6 @@
 ///  ContentFlagger.swift
 //
 
-import Foundation
-import UIKit
-
 class ContentFlagger {
 
     var contentFlagged: Bool?

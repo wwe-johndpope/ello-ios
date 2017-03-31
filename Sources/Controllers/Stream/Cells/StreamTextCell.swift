@@ -3,7 +3,7 @@
 //
 
 import WebKit
-import Foundation
+
 
 class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecognizerDelegate {
     static let reuseIdentifier = "StreamTextCell"

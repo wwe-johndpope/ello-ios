@@ -2,8 +2,6 @@
 ///  MultipartRequestBuilder.swift
 //
 
-import Foundation
-
 class MultipartRequestBuilder {
     let boundaryConstant: String
     fileprivate var body: Data

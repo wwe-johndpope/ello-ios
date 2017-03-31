@@ -1,14 +1,8 @@
-//
-//  TypedNotifications.swift
-//  Ello
-//
-//  Created by Sean on 1/26/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  TypedNotifications.swift
 //
 //  Thanks to objc.io http://www.objc.io/snippets/16.html
 //  Find Here: https://gist.github.com/chriseidhof/9bf7280063db3a249fbe
-
-import Foundation
 
 struct TypedNotification<A> {
     let name: NSNotification.Name

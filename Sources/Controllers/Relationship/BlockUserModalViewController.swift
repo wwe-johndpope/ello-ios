@@ -2,7 +2,6 @@
 ///  BlockUserModalViewController.swift
 //
 
-import Foundation
 import SnapKit
 
 

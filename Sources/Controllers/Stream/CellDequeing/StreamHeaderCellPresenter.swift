@@ -2,8 +2,8 @@
 ///  StreamHeaderCellPresenter.swift
 //
 
-import Foundation
 import TimeAgoInWords
+
 
 struct StreamHeaderCellPresenter {
 

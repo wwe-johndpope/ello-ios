@@ -2,8 +2,6 @@
 ///  RegionKindStreamCellTypeAddition.swift
 //
 
-import Foundation
-
 extension RegionKind {
     func streamCellTypes(_ regionable: Regionable) -> [StreamCellType] {
         switch self {

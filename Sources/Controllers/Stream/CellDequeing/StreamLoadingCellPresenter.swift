@@ -2,8 +2,6 @@
 ///  StreamLoadingCellPresenter.swift
 //
 
-import Foundation
-
 struct StreamLoadingCellPresenter {
 
     static func configure(

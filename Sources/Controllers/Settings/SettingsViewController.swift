@@ -2,8 +2,6 @@
 ///  SettingsViewController.swift
 //
 
-import Foundation
-
 enum SettingsRow: Int {
     case coverImage
     case avatarImage

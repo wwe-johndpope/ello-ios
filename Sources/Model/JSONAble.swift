@@ -3,7 +3,7 @@
 //
 
 import YapDatabase
-import Foundation
+
 
 typealias FromJSONClosure = ([String: AnyObject]) -> JSONAble
 

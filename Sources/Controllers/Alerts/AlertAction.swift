@@ -2,8 +2,6 @@
 ///  AlertAction.swift
 //
 
-import UIKit
-
 typealias AlertHandler = ((AlertAction) -> Void)?
 typealias AlertCellConfigClosure = (
     _ cell: AlertCell,

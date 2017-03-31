@@ -2,8 +2,6 @@
 ///  ElloTextFieldView.swift
 //
 
-import Foundation
-
 private let ElloTextFieldViewHeight: CGFloat = 89.0
 
 class ElloTextFieldView: UIView {

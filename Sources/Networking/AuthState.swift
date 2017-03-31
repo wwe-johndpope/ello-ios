@@ -2,8 +2,6 @@
 ///  AuthState.swift
 //
 
-import Foundation
-
 enum AuthState {
     static var uuid: UUID = UUID()
 

@@ -2,8 +2,6 @@
 ///  StreamInviteFriendsCellPresenter.swift
 //
 
-import Foundation
-
 struct StreamInviteFriendsCellPresenter {
 
     static func configure(

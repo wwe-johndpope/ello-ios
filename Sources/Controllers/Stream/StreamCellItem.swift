@@ -2,8 +2,6 @@
 ///  StreamCellItem.swift
 //
 
-import Foundation
-
 enum StreamCellState: CustomStringConvertible, CustomDebugStringConvertible {
     case none
     case loading

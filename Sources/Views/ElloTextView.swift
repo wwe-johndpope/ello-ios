@@ -2,9 +2,6 @@
 ///  ElloTextView.swift
 //
 
-import Foundation
-import UIKit
-
 protocol ElloTextViewDelegate: NSObjectProtocol {
     func textViewTapped(_ link: String, object: ElloAttributedObject)
     func textViewTappedDefault()

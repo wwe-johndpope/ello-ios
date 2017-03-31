@@ -1,4 +1,6 @@
-import Foundation
+////
+///  StreamGenerator.swift
+//
 
 protocol StreamGenerator {
 

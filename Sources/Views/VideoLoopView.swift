@@ -3,12 +3,12 @@
 //
 // Heavily inspired by https://github.com/liaujianjie/VideoLoopView/blob/master/VideoLoopView/VideoLoopView.swift
 
-import UIKit
 import AVFoundation
 import FutureKit
 import PINRemoteImage
 import PINCache
 import Alamofire
+
 
 public class VideoLoopView: UIView {
 

@@ -2,8 +2,6 @@
 ///  StreamToggleCellPresenter.swift
 //
 
-import Foundation
-
 struct StreamToggleCellPresenter {
 
     static func configure(

@@ -2,8 +2,6 @@
 ///  FileManagerExtensions.swift
 //
 
-import Foundation
-
 extension FileManager {
 
     class func ElloDocumentsDir() -> String {

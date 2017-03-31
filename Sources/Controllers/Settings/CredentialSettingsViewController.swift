@@ -2,8 +2,6 @@
 ///  CredentialSettingsViewController.swift
 //
 
-import Foundation
-
 private let CredentialSettingsSubmitViewHeight: CGFloat = 128
 
 @objc

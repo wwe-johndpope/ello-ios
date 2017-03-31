@@ -2,9 +2,6 @@
 ///  ProfileAvatarPresenter.swift
 //
 
-import Foundation
-
-
 struct ProfileAvatarPresenter {
 
     static func configure(

@@ -4,7 +4,7 @@
 
 import QuartzCore
 import FLAnimatedImage
-import CoreGraphics
+
 
 class ElloLogoView: UIImageView {
 

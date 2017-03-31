@@ -2,8 +2,6 @@
 ///  NSAttributedString.swift
 //
 
-import Foundation
-
 extension NSMutableAttributedString {
     override func appending(_ str: NSAttributedString) -> NSAttributedString {
         self.append(str)

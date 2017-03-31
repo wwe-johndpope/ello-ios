@@ -2,8 +2,8 @@
 ///  ElloURI.swift
 //
 
-import Foundation
 import Keys
+
 
 class ElloURIWrapper: NSObject {
     let uri: ElloURI

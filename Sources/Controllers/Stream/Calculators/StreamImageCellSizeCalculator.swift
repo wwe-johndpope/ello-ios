@@ -2,8 +2,6 @@
 ///  StreamImageCellSizeCalculator.swift
 //
 
-import Foundation
-
 class StreamImageCellSizeCalculator {
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     fileprivate var cellJobs: [CellJob] = []

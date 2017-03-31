@@ -2,8 +2,6 @@
 ///  ElloProviderErrors.swift
 //
 
-import Foundation
-
 extension ElloProvider {
 
     static func unCastableJSONAble(_ failure: ElloFailureCompletion) {

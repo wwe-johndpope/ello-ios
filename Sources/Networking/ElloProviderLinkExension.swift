@@ -2,8 +2,8 @@
 ///  ElloProviderLinkExension.swift
 //
 
-import Foundation
 import WebLinking
+
 
 extension ElloProvider {
     func parseLinks(_ response: HTTPURLResponse?, config: ResponseConfig) -> ResponseConfig {

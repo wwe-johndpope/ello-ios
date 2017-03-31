@@ -2,9 +2,6 @@
 ///  ProfileHeaderCellPresenter.swift
 //
 
-import Foundation
-
-
 struct ProfileHeaderCellPresenter {
 
     static func configure(

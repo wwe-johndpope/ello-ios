@@ -2,9 +2,6 @@
 ///  AlertViewController.swift
 //
 
-import UIKit
-
-
 private let DesiredWidth: CGFloat = 300
 
 let MaxHeight = UIScreen.main.bounds.height - 20

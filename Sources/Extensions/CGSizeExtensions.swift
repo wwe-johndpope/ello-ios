@@ -2,8 +2,6 @@
 ///  CGSizeExtensions.swift
 //
 
-import CoreGraphics
-
 extension CGSize {
     static let minButton = CGSize(width: 40, height: 40)
 
