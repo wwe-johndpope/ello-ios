@@ -2,6 +2,7 @@
 ///  FollowingViewController.swift
 //
 
+import SnapKit
 import SwiftyUserDefaults
 
 
@@ -15,6 +16,7 @@ class FollowingViewController: StreamableViewController {
     }
 
     var navigationBar: ElloNavigationBar!
+    let newPostsButton = NewPostsButton()
     fileprivate var loggedPromptEventForThisSession = false
     fileprivate var reloadFollowingContentObserver: NotificationObserver?
     fileprivate var appBackgroundObserver: NotificationObserver?
@@ -49,6 +51,13 @@ class FollowingViewController: StreamableViewController {
         streamViewController.streamKind = .following
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+
+        view.addSubview(newPostsButton)
+        newPostsButton.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.top.equalTo(view).offset(NewPostsButton.Size.top)
+        }
+        newPostsButton.addTarget(self, action: #selector(loadNewPosts), for: .touchUpInside)
 
         addNotificationObservers()
     }
@@ -104,6 +113,27 @@ class FollowingViewController: StreamableViewController {
         self.present(drawer, animated: true, completion: nil)
     }
 
+    override func streamViewDidScroll(scrollView: UIScrollView) {
+        super.streamViewDidScroll(scrollView: scrollView)
+
+        if scrollView.contentOffset.y <= 0 {
+            animate {
+                self.newPostsButton.alpha = 0
+            }
+        }
+    }
+
+    @objc
+    func loadNewPosts() {
+        let scrollView = streamViewController.collectionView
+        scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
+        postNotification(NewContentNotifications.reloadFollowingContent, value: nil)
+
+        animate {
+            self.newPostsButton.alpha = 0
+        }
+    }
+
 }
 
 private extension FollowingViewController {
@@ -145,6 +175,11 @@ private extension FollowingViewController {
 
     func addNotificationObservers() {
         newFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] _ in
+            guard let `self` = self else { return }
+
+            animate {
+                self.newPostsButton.alpha = 1
+            }
         }
 
         appBackgroundObserver = NotificationObserver(notification: Application.Notifications.DidEnterBackground) { [weak self] _ in

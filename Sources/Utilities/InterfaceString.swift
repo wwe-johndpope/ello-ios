@@ -33,6 +33,7 @@ struct InterfaceString {
 
     struct Following {
         static let Title: String = NSLocalizedString("Following", comment: "Following title")
+        static let NewPosts: String = NSLocalizedString("New Posts", comment: "New posts title")
         static let CurrentUserNoResultsTitle: String = NSLocalizedString("You aren't following anyone yet!", comment: "Current user no following results title")
         static let CurrentUserNoResultsBody: String = NSLocalizedString("Ello is way more rad when you're following lots of people.\n\nUse Discover to find people you're interested in, and to find or invite your contacts.\nYou can also use Search (upper right) to look for new and excellent people!", comment: "Current user No following results body.")
         static let NoResultsTitle: String = NSLocalizedString("This person isn't following anyone yet!", comment: "Non-current user followoing no results title")
