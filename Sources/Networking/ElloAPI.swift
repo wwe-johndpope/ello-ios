@@ -721,7 +721,7 @@ extension ElloAPI: Moya.TargetType {
             ]
         case .postRelatedPosts:
             return [
-                "per_page": 3,
+                "per_page": 4,
             ]
         case let .postViews(streamId, streamKind, postIds, userId):
             let streamIdDict: [String: String] = streamId.map { streamId in return ["id": streamId]} ?? [:]
