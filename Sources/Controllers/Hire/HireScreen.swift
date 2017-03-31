@@ -101,7 +101,7 @@ class HireScreen: StreamableScreen {
         successView.alpha = 0
         successLabel.textColor = .black
         successLabel.font = UIFont.defaultFont(18)
-        successImage.image = InterfaceImage.validationOK.normalImage
+        successImage.interfaceImage = .validationOK
     }
 
     override func setText() {

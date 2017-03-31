@@ -34,7 +34,7 @@ class NarrationView: UIView {
     fileprivate let pointer: UIImageView = {
         let pointer = UIImageView()
         pointer.contentMode = .scaleAspectFit
-        pointer.image = InterfaceImage.narrationPointer.normalImage
+        pointer.interfaceImage = .narrationPointer
         return pointer
     }()
 
