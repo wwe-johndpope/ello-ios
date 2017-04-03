@@ -127,7 +127,7 @@ class FollowingViewController: StreamableViewController {
     func loadNewPosts() {
         let scrollView = streamViewController.collectionView
         scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
-        postNotification(NewContentNotifications.reloadFollowingContent, value: nil)
+        postNotification(NewContentNotifications.reloadFollowingContent, value: ())
 
         animate {
             self.newPostsButton.alpha = 0
@@ -161,7 +161,7 @@ private extension FollowingViewController {
     }
 
     func addTemporaryNotificationObservers() {
-        reloadFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) { [weak self] _ in
+        reloadFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) { [weak self] in
             guard let `self` = self else { return }
 
             ElloHUD.showLoadingHudInView(self.streamViewController.view)
@@ -174,7 +174,7 @@ private extension FollowingViewController {
     }
 
     func addNotificationObservers() {
-        newFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] _ in
+        newFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] in
             guard let `self` = self else { return }
 
             animate {

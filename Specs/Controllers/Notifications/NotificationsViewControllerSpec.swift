@@ -47,7 +47,7 @@ class NotificationsViewControllerSpec: QuickSpec {
                     let navigationController = UINavigationController(rootViewController: subject)
                     showController(navigationController)
                     subject.hasNewContent = true
-                    postNotification(NewContentNotifications.reloadNotifications, value: nil)
+                    postNotification(NewContentNotifications.reloadNotifications, value: ())
                     expect(subject.hasNewContent) == false
                 }
             }

@@ -6,11 +6,11 @@ import SwiftyUserDefaults
 
 
 struct NewContentNotifications {
-    static let newAnnouncements = TypedNotification<Void?>(name: "NewAnnouncementsNotification")
-    static let newNotifications = TypedNotification<Void?>(name: "NewNotificationsNotification")
-    static let newFollowingContent = TypedNotification<Void?>(name: "NewFollowingContentNotification")
-    static let reloadFollowingContent = TypedNotification<Void?>(name: "ReloadFollowingContentNotification")
-    static let reloadNotifications = TypedNotification<Void?>(name: "ReloadNotificationsNotification")
+    static let newAnnouncements = TypedNotification<()>(name: "NewAnnouncementsNotification")
+    static let newNotifications = TypedNotification<()>(name: "NewNotificationsNotification")
+    static let newFollowingContent = TypedNotification<()>(name: "NewFollowingContentNotification")
+    static let reloadFollowingContent = TypedNotification<()>(name: "ReloadFollowingContentNotification")
+    static let reloadNotifications = TypedNotification<()>(name: "ReloadNotificationsNotification")
 }
 
 class NewContentService {
@@ -80,7 +80,7 @@ private extension NewContentService {
             ElloAPI.notificationsNewContent(createdAt: storedDate),
             success: { (_, responseConfig) in
                 if let statusCode = responseConfig.statusCode, statusCode == 204 {
-                    postNotification(NewContentNotifications.newNotifications, value: nil)
+                    postNotification(NewContentNotifications.newNotifications, value: ())
                 }
 
                 done()
@@ -96,7 +96,7 @@ private extension NewContentService {
              ElloAPI.announcementsNewContent(createdAt: storedDate),
              success: { (_, responseConfig) in
                  if let statusCode = responseConfig.statusCode, statusCode == 204 {
-                     postNotification(NewContentNotifications.newAnnouncements, value: nil)
+                     postNotification(NewContentNotifications.newAnnouncements, value: ())
                  }
 
                  done()
@@ -116,7 +116,7 @@ private extension NewContentService {
                 }
 
                 if let statusCode = responseConfig.statusCode, statusCode == 204 {
-                    postNotification(NewContentNotifications.newFollowingContent, value: nil)
+                    postNotification(NewContentNotifications.newFollowingContent, value: ())
                 }
 
                 done()
