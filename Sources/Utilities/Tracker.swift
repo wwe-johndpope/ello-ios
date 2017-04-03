@@ -81,9 +81,6 @@ extension Tracker {
     func sessionEnded() {
         agent.track("Session Ended")
     }
-
-    static func trackRequest(headers: String, statusCode: Int, responseJSON: String) {
-    }
 }
 
 // MARK: Signup and Login

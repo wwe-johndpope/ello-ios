@@ -16,8 +16,6 @@ class Tracker {
 
     init() {}
 
-    static func trackRequest(headers: String, statusCode: Int, responseJSON: String) {}
-
     func contentFlagged(_ type: ContentType, flag: ContentFlagger.AlertOption, contentId: String) {}
     func contentFlaggingFailed(_ type: ContentType, message: String, contentId: String) {}
     func contentFlaggingCanceled(_ type: ContentType, contentId: String) {}

@@ -284,12 +284,6 @@ extension ElloProvider {
             let response = moyaResponse.response as? HTTPURLResponse
             let data = moyaResponse.data
             let statusCode = moyaResponse.statusCode
-            if let response = response {
-                // set crashlytics stuff before processing
-                let headers = response.allHeaderFields.description
-                let responseJSON = String(data: data, encoding: .utf8) ?? "failed to parse data"
-                Tracker.trackRequest(headers: headers, statusCode: statusCode, responseJSON: responseJSON)
-            }
 
             switch statusCode {
             case 200...299, 300...399:
