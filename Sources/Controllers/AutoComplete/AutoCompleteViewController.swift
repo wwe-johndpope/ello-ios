@@ -66,7 +66,6 @@ extension AutoCompleteViewController {
         let alertController = AlertViewController(message: message)
         let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: nil)
         alertController.addAction(action)
-        logPresentingAlert("AutoCompleteViewController")
         present(alertController, animated: true) {
             _ = self.navigationController?.popViewController(animated: true)
         }

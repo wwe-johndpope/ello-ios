@@ -226,7 +226,6 @@ final class PostDetailViewController: StreamableViewController {
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        logPresentingAlert("PostDetailViewController")
         self.present(alertController, animated: true, completion: .none)
     }
 

@@ -85,7 +85,6 @@ class ElloProvider {
             }
             let canMakeRequest = authState.supports(target)
             if canMakeRequest {
-                Crashlytics.sharedInstance().setObjectValue(target.path, forKey: CrashlyticsKey.requestPath.rawValue)
                 ElloProvider.sharedProvider.request(target) { (result) in
                     self.handleRequest(target: target, result: result, success: success, failure: failure, uuid: uuid)
                 }

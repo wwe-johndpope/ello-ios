@@ -480,7 +480,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
 
         if let alertViewController = alertViewController {
-            logPresentingAlert("SettingsViewController")
             present(alertViewController, animated: true, completion: .none)
         }
     }
@@ -489,7 +488,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         let alertController = AlertViewController(message: message)
         let action = AlertAction(title: InterfaceString.OK, style: .light, handler: .none)
         alertController.addAction(action)
-        logPresentingAlert("SettingsViewController")
         present(alertController, animated: true, completion: .none)
     }
 }

@@ -39,7 +39,6 @@ class DrawerViewController: StreamableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
-        Crashlytics.sharedInstance().setObjectValue("Drawer", forKey: CrashlyticsKey.streamName.rawValue)
     }
 }
 

@@ -304,7 +304,6 @@ final class StreamViewController: BaseElloViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Crashlytics.sharedInstance().setObjectValue(streamKind.name, forKey: CrashlyticsKey.streamName.rawValue)
     }
 
 // MARK: Public Functions
@@ -527,7 +526,6 @@ final class StreamViewController: BaseElloViewController {
             let alertController = AlertViewController(message: message)
             let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: nil)
             alertController.addAction(action)
-            logPresentingAlert("StreamViewController")
             present(alertController, animated: true) {
                 if let navigationController = self.navigationController, navigationController.childViewControllers.count > 1 {
                     _ = navigationController.popViewController(animated: true)

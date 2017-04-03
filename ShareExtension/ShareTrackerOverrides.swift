@@ -4,13 +4,12 @@
 
 import Foundation
 
+
 enum ContentType: String {
     case post = "Post"
     case comment = "Comment"
     case user = "User"
 }
-
-func logPresentingAlert(_ name: String) {}
 
 class Tracker {
     static let shared = Tracker()

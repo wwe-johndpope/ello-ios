@@ -833,7 +833,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
         alertController.addAction(okCancelAction)
 
-        logPresentingAlert("OmnibarViewController")
         delegate?.omnibarPresentController(alertController)
     }
 

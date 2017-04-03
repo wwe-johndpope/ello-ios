@@ -163,7 +163,6 @@ class PostbarController: UIResponder, PostbarResponder {
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
         responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
@@ -261,7 +260,6 @@ class PostbarController: UIResponder, PostbarResponder {
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
         responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
@@ -319,13 +317,11 @@ class PostbarController: UIResponder, PostbarResponder {
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
-            logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
             responderChainable?.controller?.present(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .popover
             activityVC.popoverPresentationController?.sourceView = sourceView
-            logPresentingAlert(responderChainable?.controller?.readableClassName() ?? "PostbarController")
             responderChainable?.controller?.present(activityVC, animated: true) { }
         }
     }
