@@ -2,8 +2,6 @@
 ///  DrawerViewController.swift
 //
 
-import Crashlytics
-
 class DrawerViewController: StreamableViewController {
     @IBOutlet weak var tableView: UITableView!
     weak var navigationBar: ElloNavigationBar!

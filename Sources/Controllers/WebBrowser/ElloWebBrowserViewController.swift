@@ -3,7 +3,7 @@
 //
 
 import KINWebBrowser
-import Crashlytics
+
 
 class BottomBarNavController: ElloNavigationController, BottomBarController {
     var bottomBarView = UIView()

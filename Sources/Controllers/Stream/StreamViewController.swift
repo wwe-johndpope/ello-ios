@@ -4,7 +4,6 @@
 
 import SSPullToRefresh
 import FLAnimatedImage
-import Crashlytics
 import SwiftyUserDefaults
 import DeltaCalculator
 import SnapKit

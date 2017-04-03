@@ -2,7 +2,6 @@
 ///  OmnibarViewController.swift
 //
 
-import Crashlytics
 import SwiftyUserDefaults
 import PINRemoteImage
 

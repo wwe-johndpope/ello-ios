@@ -2,7 +2,6 @@
 ///  ElloProvider.swift
 //
 
-import Crashlytics
 import Moya
 import Result
 import Alamofire
