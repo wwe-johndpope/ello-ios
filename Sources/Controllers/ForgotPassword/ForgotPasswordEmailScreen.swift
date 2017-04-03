@@ -107,6 +107,8 @@ extension ForgotPasswordEmailScreen: ForgotPasswordEmailScreenProtocol {
         activateEmailButton.isHidden = true
         emailField.isHidden = true
         emailErrorLabel.isHidden = true
+        styleContinueButton(allValid: false)
+        continueButton.isUserInteractionEnabled = false
     }
 
     func showEmailError(_ text: String) {
