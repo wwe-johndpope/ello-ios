@@ -237,8 +237,6 @@ extension ElloAPI {
              .auth,
              .reAuth:
             return nil
-        case let .resetPassword(_, token):
-            return token
         default:
             return AuthToken().tokenWithBearer
         }
@@ -268,11 +266,11 @@ extension ElloAPI: Moya.TargetType {
              .relationship,
              .relationshipBatch,
              .rePost,
-             .resetPassword,
              .requestPasswordReset,
              .createWatchPost:
             return .post
-        case .userCategories:
+        case .resetPassword,
+             .userCategories:
             return .put
         case .deleteComment,
              .deleteLove,
@@ -311,9 +309,9 @@ extension ElloAPI: Moya.TargetType {
              .reAuth:
             return "/api/oauth/token"
         case .resetPassword:
-            return "/api/oauth/reset"
+            return "/api/v2/reset_password"
         case .requestPasswordReset:
-            return "/api/oauth/reset"
+            return "/api/v2/forgot-password"
         case .availability:
             return "/api/\(ElloAPI.apiVersion)/availability"
         case let .commentDetail(postId, commentId):
@@ -790,8 +788,11 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .rePost(postId):
             return [ "repost_id": Int(postId) as AnyObject? ?? -1 as AnyObject ]
-        case let .resetPassword(password, _):
-            return [ "password": password ]
+        case let .resetPassword(password, token):
+            return [
+                "password": password,
+                "reset_password_token": token,
+            ]
         case let .requestPasswordReset(email):
             return [ "email": email ]
         case let .searchForPosts(terms):
