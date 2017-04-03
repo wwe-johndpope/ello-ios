@@ -17,6 +17,13 @@ class ForgotPasswordResetViewController: BaseElloViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    fileprivate func loadCurrentUser() {
+        appViewController?.loadCurrentUser { error in
+            self.screen.loadingHUD(visible: false)
+            self.screen.showFailureMessage()
+        }
+    }
+
     override func loadView() {
         let screen = ForgotPasswordResetScreen()
         screen.delegate = self
@@ -36,10 +43,21 @@ extension ForgotPasswordResetViewController: ForgotPasswordResetDelegate {
             Tracker.shared.resetPasswordValid()
 
             UserService().resetPassword(password: password, authToken: authToken)
-                .onSuccess {
-                    self.screen.loadingHUD(visible: false)
+                .onSuccess { user in
+                    CredentialsAuthService().authenticate(email: user.username,
+                        password: password,
+                        success: {
+                            Tracker.shared.resetPasswordSuccessful()
+                            self.loadCurrentUser()
+                        },
+                        failure: { _ in
+                            Tracker.shared.resetPasswordFailed()
+                            self.appViewController?.showLoginScreen()
+                        }
+                    )
                 }
                 .onFail { error in
+                    Tracker.shared.resetPasswordFailed()
                     self.screen.loadingHUD(visible: false)
                     self.screen.showFailureMessage()
                 }

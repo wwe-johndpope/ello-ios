@@ -48,11 +48,17 @@ struct UserService {
         return promise.future
     }
 
-    func resetPassword(password: String, authToken: String) -> Future<()> {
-        let promise = Promise<()>()
+    func resetPassword(password: String, authToken: String) -> Future<User> {
+        let promise = Promise<User>()
         ElloProvider.shared.elloRequest(ElloAPI.resetPassword(password: password, authToken: authToken),
-            success: { _ in
-                promise.completeWithSuccess(())
+            success: { user, _ in
+                if let user = user as? User {
+                    promise.completeWithSuccess(user)
+                }
+                else {
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
+                }
             },
             failure: { error, _ in
                 promise.completeWithFail(error)

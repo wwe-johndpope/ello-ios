@@ -157,6 +157,14 @@ extension Tracker {
         agent.track("reset password sent")
     }
 
+    func resetPasswordSuccessful() {
+        agent.track("reset password successful")
+    }
+
+    func resetPasswordFailed() {
+        agent.track("reset password failed")
+    }
+
     func joinValid() {
         agent.track("join valid")
     }

@@ -120,7 +120,6 @@ enum ElloAPI {
         case .anonymousCredentials,
              .auth,
              .reAuth,
-             .resetPassword,
              .requestPasswordReset,
              .postViews:
             return .noContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
@@ -146,6 +145,7 @@ enum ElloAPI {
              .postLovers,
              .postReposters,
              .profileUpdate,
+             .resetPassword,
              .searchForUsers,
              .userStream,
              .userStreamFollowers,
