@@ -460,7 +460,6 @@ extension Asset: Stubbable {
         asset.large = (values["large"] as? Attachment) ?? defaultAttachment
         asset.regular = (values["regular"] as? Attachment) ?? defaultAttachment
         asset.small = (values["small"] as? Attachment) ?? defaultAttachment
-        asset.video = (values["video"] as? Attachment) ?? defaultAttachment
         ElloLinkedStore.sharedInstance.setObject(asset, forKey: asset.id, type: .assetsType)
         return asset
     }

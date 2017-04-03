@@ -185,19 +185,19 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let optimized: Attachment = stub([
                             "url" : URL(string: "http://www.example.com/optimized.gif")!,
                             "type" : "image/gif",
-                            "size" : 9999999
+                            "size" : 999_999
                             ])
 
                         let hdpi: Attachment = stub([
                             "url" : URL(string: "http://www.example.com/hdpi.gif")!,
                             "type" : "image/gif",
-                            "size" : 445566
+                            "size" : 445_566
                             ])
 
                         let video: Attachment = stub([
                             "url" : URL(string: "http://www.example.com/video.mp4")!,
                             "type" : "video/mp4",
-                            "size" : 111111
+                            "size" : 111_111
                             ])
 
                         let asset: Asset = stub([
