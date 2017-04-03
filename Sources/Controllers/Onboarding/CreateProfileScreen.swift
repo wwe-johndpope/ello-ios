@@ -101,7 +101,7 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         avatarImageView.backgroundColor = .greyE5()
         avatarImageView.clipsToBounds = true
         avatarImageView.contentMode = .center
-        avatarImageView.image = InterfaceImage.elloGrayLineLogo.normalImage
+        avatarImageView.interfaceImage = .elloGrayLineLogo
         uploadAvatarPrompt.textAlignment = .center
         uploadAvatarPrompt.textColor = .greyA()
         uploadAvatarPrompt.font = UIFont.defaultFont(12)
@@ -344,7 +344,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         }
         else if imageView == avatarImageView {
             imageView.contentMode = .center
-            imageView.image = InterfaceImage.elloGrayLineLogo.normalImage
+            imageView.interfaceImage = .elloGrayLineLogo
         }
         else if imageView == coverImageView {
             imageView.image = nil

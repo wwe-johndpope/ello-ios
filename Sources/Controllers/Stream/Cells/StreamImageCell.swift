@@ -66,7 +66,7 @@ class StreamImageCell: StreamRegionableCell {
     var isLargeImage: Bool {
         get { return !(largeImagePlayButton?.isHidden ?? true) }
         set {
-            largeImagePlayButton?.image = InterfaceImage.videoPlay.normalImage
+            largeImagePlayButton?.interfaceImage = .videoPlay
             largeImagePlayButton?.isHidden = !newValue
         }
     }
@@ -130,7 +130,7 @@ class StreamImageCell: StreamRegionableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         if let playButton = largeImagePlayButton {
-            playButton.image = InterfaceImage.videoPlay.normalImage
+            playButton.interfaceImage = .videoPlay
         }
 
         if let buyButton = buyButton, let buyButtonGreen = buyButtonGreen {

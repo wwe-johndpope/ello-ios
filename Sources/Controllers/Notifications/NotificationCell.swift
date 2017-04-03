@@ -180,7 +180,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         titleTextView.textViewDelegate = self
 
         buyButtonImage.isHidden = true
-        buyButtonImage.image = InterfaceImage.buyButton.normalImage
+        buyButtonImage.interfaceImage = .buyButton
         buyButtonImage.frame.size = CGSize(width: Size.BuyButtonSize, height: Size.BuyButtonSize)
         buyButtonImage.backgroundColor = .greenD1()
         buyButtonImage.layer.cornerRadius = Size.BuyButtonSize / 2

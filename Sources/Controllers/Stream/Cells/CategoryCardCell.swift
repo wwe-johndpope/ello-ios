@@ -72,7 +72,7 @@ class CategoryCardCell: UICollectionViewCell {
         colorFillView.backgroundColor = .black
         colorFillView.alpha = 0.4
         selectedImageView.isHidden = true
-        selectedImageView.image = InterfaceImage.smallCheck.normalImage
+        selectedImageView.interfaceImage = .smallCheck
     }
 
     fileprivate func arrange() {
