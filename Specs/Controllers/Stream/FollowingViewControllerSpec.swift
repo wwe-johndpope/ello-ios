@@ -34,6 +34,20 @@ class FollowingViewControllerSpec: QuickSpec {
                 expect(item?.leftBarButtonItems?.count) == 1
                 expect(item?.rightBarButtonItems?.count) == 2
             }
+
+            it("shows the more posts button when new content is available") {
+                subject.newPostsButton.alpha = 0
+                postNotification(NewContentNotifications.newFollowingContent, value: ())
+                expect(subject.newPostsButton.alpha) == 1
+            }
+
+            it("hide the more posts button after scrolling") {
+                subject.newPostsButton.alpha = 1
+                let scrollView = subject.streamViewController.collectionView
+                scrollView.contentOffset = .zero
+                subject.streamViewDidScroll(scrollView: scrollView)
+                expect(subject.newPostsButton.alpha) == 0
+            }
         }
     }
 }
