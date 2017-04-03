@@ -11,20 +11,12 @@ class AssetSpec: QuickSpec {
     override func spec() {
         describe("Asset") {
 
-            let video: Attachment = stub(["type": "video/mp4"])
             let mdpi: Attachment = stub([:])
             let hdpi: Attachment = stub([:])
             let xhdpi: Attachment = stub([:])
-            let videoAsset: Asset = stub(["video": video, "hdpi": hdpi, "xhdpi": xhdpi, "mdpi": mdpi])
             let noVideoAsset: Asset = stub(["hdpi": hdpi, "xhdpi": xhdpi, "mdpi": mdpi])
 
             describe("aspectRatio") {
-
-                it("returns correct aspect ratio for video") {
-                    let attachment: Attachment = stub(["width": 10, "height": 5, "type": "video/mp4"])
-                    let asset: Asset = stub(["video": attachment])
-                    expect(asset.aspectRatio) == 2.0
-                }
 
                 it("returns correct aspect ratio when hdpi present") {
                     let attachment: Attachment = stub(["width": 15, "height": 5])
@@ -45,10 +37,6 @@ class AssetSpec: QuickSpec {
             }
 
             describe("oneColumnAttachment") {
-
-                it("returns video if present") {
-                    expect(videoAsset.oneColumnAttachment) == video
-                }
 
                 it("returns hdpi when narrow") {
                     expect(noVideoAsset.oneColumnAttachment) == hdpi
@@ -76,13 +64,13 @@ class AssetSpec: QuickSpec {
             describe("oneColumnPreviewAttachment") {
 
                 it("returns hdpi when narrow") {
-                    expect(videoAsset.oneColumnPreviewAttachment) == hdpi
+                    expect(noVideoAsset.oneColumnPreviewAttachment) == hdpi
                 }
 
                 it("returns xhdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
-                    expect(videoAsset.oneColumnPreviewAttachment) == xhdpi
+                    expect(noVideoAsset.oneColumnPreviewAttachment) == xhdpi
                     Window.width = tmp
                 }
 
@@ -99,10 +87,6 @@ class AssetSpec: QuickSpec {
             }
 
             describe("gridLayoutAttachment") {
-
-                it("returns video if present") {
-                    expect(videoAsset.gridLayoutAttachment) == video
-                }
 
                 it("returns hdpi when wide") {
                     let tmp = Window.width
@@ -132,7 +116,7 @@ class AssetSpec: QuickSpec {
                 it("returns hdpi when wide") {
                     let tmp = Window.width
                     Window.width = 2000
-                    expect(videoAsset.gridLayoutPreviewAttachment) == hdpi
+                    expect(noVideoAsset.gridLayoutPreviewAttachment) == hdpi
                     Window.width = tmp
                 }
 
@@ -148,26 +132,7 @@ class AssetSpec: QuickSpec {
                 }
 
                 it("returns mdpi when NOT wide") {
-                    expect(videoAsset.gridLayoutPreviewAttachment) == mdpi
-                }
-            }
-
-            context("videos") {
-
-                it("returns 'true' for 'hasVideo'") {
-                    expect(videoAsset.hasVideo) == true
-                }
-
-                it("returns 'true' for 'isLargeVideo'") {
-                    let attachment: Attachment = stub(["size": 4_100_000, "type": "video/mp4"])
-                    let asset: Asset = stub(["video": attachment])
-                    expect(asset.isLargeVideo) == true
-                }
-
-                it("returns 'false' for 'isLargeVideo'") {
-                    let attachment: Attachment = stub(["size": 2_000_000, "type": "video/mp4"])
-                    let asset: Asset = stub(["video": attachment])
-                    expect(asset.isLargeVideo) == false
+                    expect(noVideoAsset.gridLayoutPreviewAttachment) == mdpi
                 }
             }
 
@@ -261,13 +226,6 @@ class AssetSpec: QuickSpec {
                     expect(original.type) == "image/jpeg"
                     expect(original.width) == 2560
                     expect(original.height) == 1094
-
-                    let video = asset.video!
-                    expect(video.url.absoluteString) == "https://example.com/5381/video.mp4"
-                    expect(video.size) == 183694
-                    expect(video.type) == "video/mp4"
-                    expect(video.width) == 902
-                    expect(video.height) == 288
                 }
             }
 
@@ -358,14 +316,6 @@ class AssetSpec: QuickSpec {
                             "size" : 888888
                         ])
 
-                        let video: Attachment = stub([
-                            "url" : URL(string: "http://www.example9.com")!,
-                            "height" : 90,
-                            "width" : 100,
-                            "type" : "video",
-                            "size" : 999999
-                            ])
-
                         let asset: Asset = stub([
                             "id" : "5698",
                             "optimized" : optimized,
@@ -374,8 +324,7 @@ class AssetSpec: QuickSpec {
                             "mdpi" : mdpi,
                             "hdpi" : hdpi,
                             "xhdpi" : xhdpi,
-                            "original" : original,
-                            "video" : video
+                            "original" : original
                         ])
 
                         NSKeyedArchiver.archiveRootObject(asset, toFile: filePath)
@@ -441,15 +390,6 @@ class AssetSpec: QuickSpec {
                         expect(unArchivedOriginal.height) == 80
                         expect(unArchivedOriginal.size) == 888888
                         expect(unArchivedOriginal.type) == "jpeg"
-
-                        let unArchivedVideo = unArchivedAsset.video!
-
-                        expect(unArchivedVideo.url.absoluteString) == "http://www.example9.com"
-                        expect(unArchivedVideo.width) == 100
-                        expect(unArchivedVideo.height) == 90
-                        expect(unArchivedVideo.size) == 999999
-                        expect(unArchivedVideo.type) == "video"
-
                     }
                 }
             }

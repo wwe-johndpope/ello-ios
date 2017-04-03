@@ -46,30 +46,9 @@ struct StreamImageCellPresenter {
         var attachmentToLoad: Attachment?
         var imageToLoad: URL?
         var showGifInThisCell = false
-        var showVideoInThisCell = false
         let isGridView = streamCellItem.isGridView(streamKind: streamKind)
 
-        // video first because it is a smaller size than gifs
-        if let asset = imageRegion.asset, asset.hasVideo {
-            cell.mode = .video
-            if streamKind.supportsLargeImages || !asset.isLargeVideo {
-                showVideoInThisCell = true
-            }
-
-            if showVideoInThisCell {
-                attachmentToLoad = asset.video
-                imageToLoad = asset.optimized?.url as URL?
-            }
-            else {
-                cell.presentedImageUrl = asset.optimized?.url
-                cell.isLargeImage = true
-                attachmentToLoad = isGridView ?
-                    asset.gridLayoutPreviewAttachment : asset.oneColumnPreviewAttachment
-            }
-            cell.isGif = true
-        }
-        // gifs next
-        else if let asset = imageRegion.asset, asset.isGif {
+        if let asset = imageRegion.asset, asset.isGif {
             cell.mode = .gif
             if streamKind.supportsLargeImages || !asset.isLargeGif {
                 showGifInThisCell = true
@@ -114,14 +93,7 @@ struct StreamImageCellPresenter {
             postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
         }
 
-        if let url = imageRegion.asset?.video?.url,
-            let width = imageRegion.asset?.video?.width,
-            let height = imageRegion.asset?.video?.height,
-            showVideoInThisCell {
-            cell.serverProvidedAspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
-            cell.setVideoURL(url, size: CGSize(width: width, height: height))
-        }
-        else if let image = imageToShow, !showGifInThisCell {
+        if let image = imageToShow, !showGifInThisCell {
             cell.setImage(image)
         }
         else if let imageURL = imageToLoad {

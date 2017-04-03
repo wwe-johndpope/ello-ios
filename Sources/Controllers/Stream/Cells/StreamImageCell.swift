@@ -10,7 +10,6 @@ import AVFoundation
 enum StreamImageCellMode {
     case image
     case gif
-    case video
 }
 
 class StreamImageCell: StreamRegionableCell {
@@ -46,7 +45,6 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet fileprivate weak var failWidthConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var failHeightConstraint: NSLayoutConstraint!
     fileprivate var foregroundObserver: NotificationObserver?
-    let videoView = VideoLoopView()
 
     // not used in StreamEmbedCell
     @IBOutlet weak var largeImagePlayButton: UIImageView?
@@ -161,53 +159,9 @@ class StreamImageCell: StreamRegionableCell {
         let longPressGesture = UILongPressGestureRecognizer()
         longPressGesture.addTarget(self, action: #selector(imageLongPressed(_:)))
         imageButton.addGestureRecognizer(longPressGesture)
-        contentView.insertSubview(videoView, aboveSubview: imageView)
-        videoView.frame = imageView.bounds
-    }
-
-    func setVideoURL(_ url: URL, size: CGSize) {
-        imageSize = size
-        videoView.isHidden = false
-        imageView.image = nil
-        failImage.isHidden = true
-        failImage.alpha = 0
-        imageView.alpha = 0
-        circle.pulse()
-        imageView.backgroundColor = UIColor.white
-        loadVideo(url)
-    }
-
-    func loadVideo(_ url: URL) {
-        videoView.loadVideo(url: url)
-            .onSuccess { [weak self] type in
-                guard let `self` = self else { return }
-                self.videoView.frame = self.imageView.frame
-                self.videoView.layoutIfNeeded()
-                switch type {
-                case .cache:
-                    self.videoView.alpha = 1.0
-                    self.circle.stopPulse()
-                default:
-                    self.videoView.alpha = 0.0
-                    UIView.animate(withDuration: 0.3,
-                       delay:0.0,
-                       options:UIViewAnimationOptions.curveLinear,
-                       animations: {
-                        self.videoView.alpha = 1.0
-                    }, completion: { _ in
-                        self.circle.stopPulse()
-                    })
-                }
-
-            }
-            .onFail { [weak self] _ in
-                guard let `self` = self else { return }
-                self.imageLoadFailed()
-            }
     }
 
     func setImageURL(_ url: URL) {
-        videoView.isHidden = true
         imageView.image = nil
         imageView.alpha = 0
         circle.pulse()
@@ -218,7 +172,6 @@ class StreamImageCell: StreamRegionableCell {
     }
 
     func setImage(_ image: UIImage) {
-        videoView.isHidden = true
         imageView.pin_cancelImageDownload()
         imageView.image = image
         imageView.alpha = 1
@@ -243,9 +196,7 @@ class StreamImageCell: StreamRegionableCell {
             buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
         }
 
-        videoView.frame = imageView.frame
         imageView.setNeedsLayout()
-        videoView.setNeedsLayout()
     }
 
     fileprivate func loadImage(_ url: URL) {
@@ -311,7 +262,6 @@ class StreamImageCell: StreamRegionableCell {
         super.prepareForReuse()
         mode = .image
         marginType = .post
-        videoView.reset()
         imageButton.isUserInteractionEnabled = true
         onHeightMismatch = nil
         imageView.image = nil
@@ -357,16 +307,5 @@ class StreamImageCell: StreamRegionableCell {
 
         let responder = target(forAction: #selector(StreamEditingResponder.cellLongPressed(cell:)), withSender: self) as? StreamEditingResponder
         responder?.cellLongPressed(cell: self)
-    }
-}
-
-extension StreamImageCell: DismissableCell {
-
-    func didEndDisplay() {
-        videoView.pauseVideo()
-    }
-
-    func willDisplay() {
-        videoView.playVideo()
     }
 }
