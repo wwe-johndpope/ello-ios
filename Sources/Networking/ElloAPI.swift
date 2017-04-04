@@ -231,14 +231,14 @@ extension ElloAPI {
         }
     }
 
-    var authToken: String? {
+    var requiresAnyToken: Bool {
         switch self {
         case .anonymousCredentials,
              .auth,
              .reAuth:
-            return nil
+            return false
         default:
-            return AuthToken().tokenWithBearer
+            return true
         }
     }
 }
@@ -603,7 +603,7 @@ extension ElloAPI: Moya.TargetType {
             assigned["X-iOS-Build-Number"] = buildNumber
         }
 
-        if let authToken = self.authToken {
+        if self.requiresAnyToken, let authToken = AuthToken().tokenWithBearer {
             assigned += [
                 "Authorization": authToken,
             ]
