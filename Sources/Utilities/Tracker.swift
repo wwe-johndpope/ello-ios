@@ -6,10 +6,6 @@ import Analytics
 import Keys
 import Crashlytics
 
-func logPresentingAlert(_ name: String) {
-    Crashlytics.sharedInstance().setObjectValue(name, forKey: CrashlyticsKey.alertPresenter.rawValue)
-}
-
 
 enum ContentType: String {
     case post = "Post"
@@ -38,9 +34,6 @@ struct NullAgent: AnalyticsAgent {
 extension SEGAnalytics: AnalyticsAgent { }
 
 class Tracker {
-    static var responseHeaders: NSString = ""
-    static var responseJSON: NSString = ""
-
     var overrideAgent: AnalyticsAgent?
     static let shared = Tracker()
     var settingChangedNotification: NotificationObserver?
@@ -87,14 +80,6 @@ extension Tracker {
 
     func sessionEnded() {
         agent.track("Session Ended")
-    }
-
-    static func trackRequest(headers: String, statusCode: Int, responseJSON: String) {
-        Tracker.responseHeaders = headers as NSString
-        Crashlytics.sharedInstance().setObjectValue(headers, forKey: CrashlyticsKey.responseHeaders.rawValue)
-        Crashlytics.sharedInstance().setObjectValue("\(statusCode)", forKey: CrashlyticsKey.responseStatusCode.rawValue)
-        Tracker.responseJSON = responseJSON as NSString
-        Crashlytics.sharedInstance().setObjectValue(Tracker.responseJSON, forKey: CrashlyticsKey.responseJSON.rawValue)
     }
 }
 

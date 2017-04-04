@@ -2,7 +2,6 @@
 ///  ElloProvider.swift
 //
 
-import Crashlytics
 import Moya
 import Result
 import Alamofire
@@ -85,7 +84,6 @@ class ElloProvider {
             }
             let canMakeRequest = authState.supports(target)
             if canMakeRequest {
-                Crashlytics.sharedInstance().setObjectValue(target.path, forKey: CrashlyticsKey.requestPath.rawValue)
                 ElloProvider.sharedProvider.request(target) { (result) in
                     self.handleRequest(target: target, result: result, success: success, failure: failure, uuid: uuid)
                 }
@@ -285,12 +283,6 @@ extension ElloProvider {
             let response = moyaResponse.response as? HTTPURLResponse
             let data = moyaResponse.data
             let statusCode = moyaResponse.statusCode
-            if let response = response {
-                // set crashlytics stuff before processing
-                let headers = response.allHeaderFields.description
-                let responseJSON = String(data: data, encoding: .utf8) ?? "failed to parse data"
-                Tracker.trackRequest(headers: headers, statusCode: statusCode, responseJSON: responseJSON)
-            }
 
             switch statusCode {
             case 200...299, 300...399:

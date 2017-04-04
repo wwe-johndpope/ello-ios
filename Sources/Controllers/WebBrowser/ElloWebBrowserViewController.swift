@@ -3,7 +3,7 @@
 //
 
 import KINWebBrowser
-import Crashlytics
+
 
 class BottomBarNavController: ElloNavigationController, BottomBarController {
     var bottomBarView = UIView()
@@ -47,7 +47,6 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Crashlytics.sharedInstance().setObjectValue("ElloWebBrowser", forKey: CrashlyticsKey.streamName.rawValue)
         delegate = self
     }
 
@@ -66,13 +65,11 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
         let activityVC = UIActivityViewController(activityItems: [urlForActivityItem], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
-            logPresentingAlert(readableClassName())
             present(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .popover
             activityVC.popoverPresentationController?.barButtonItem = barButtonItem
-            logPresentingAlert(readableClassName())
             present(activityVC, animated: true) { }
         }
     }

@@ -2,7 +2,6 @@
 ///  OmnibarViewController.swift
 //
 
-import Crashlytics
 import SwiftyUserDefaults
 import PINRemoteImage
 
@@ -204,7 +203,6 @@ class OmnibarViewController: BaseElloViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         bottomBarController?.setNavigationBarsVisible(true, animated: animated)
-        Crashlytics.sharedInstance().setObjectValue("Omnibar", forKey: CrashlyticsKey.streamName.rawValue)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

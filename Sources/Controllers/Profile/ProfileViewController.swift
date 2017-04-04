@@ -198,7 +198,6 @@ final class ProfileViewController: StreamableViewController {
             _ = self.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(action)
-        logPresentingAlert("ProfileViewController")
         present(alertController, animated: true, completion: nil)
     }
 
@@ -277,13 +276,11 @@ final class ProfileViewController: StreamableViewController {
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
-            logPresentingAlert(readableClassName())
             present(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .popover
             activityVC.popoverPresentationController?.sourceView = sourceView
-            logPresentingAlert(readableClassName())
             present(activityVC, animated: true) { }
         }
     }
