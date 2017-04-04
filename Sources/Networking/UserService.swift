@@ -35,6 +35,38 @@ struct UserService {
         return promise.future
     }
 
+    func requestPasswordReset(email: String) -> Future<()> {
+        let promise = Promise<()>()
+        ElloProvider.shared.elloRequest(ElloAPI.requestPasswordReset(email: email),
+            success: { _ in
+                promise.completeWithSuccess(())
+            },
+            failure: { error, _ in
+                promise.completeWithFail(error)
+            }
+        )
+        return promise.future
+    }
+
+    func resetPassword(password: String, authToken: String) -> Future<User> {
+        let promise = Promise<User>()
+        ElloProvider.shared.elloRequest(ElloAPI.resetPassword(password: password, authToken: authToken),
+            success: { user, _ in
+                if let user = user as? User {
+                    promise.completeWithSuccess(user)
+                }
+                else {
+                    let error = NSError.uncastableJSONAble()
+                    promise.completeWithFail(error)
+                }
+            },
+            failure: { error, _ in
+                promise.completeWithFail(error)
+            }
+        )
+        return promise.future
+    }
+
     func setUser(categories: [Category]) -> Future<Void> {
         let promise = Promise<Void>()
         let categoryIds = categories.map { $0.id }

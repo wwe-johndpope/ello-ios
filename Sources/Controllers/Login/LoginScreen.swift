@@ -102,19 +102,6 @@ class LoginScreen: CredentialsScreen {
 
         addSubview(continueBackground)
 
-        scrollView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self)
-            make.top.equalTo(blackBar.snp.bottom)
-            make.bottom.equalTo(continueBackground.snp.top)
-        }
-
-        let scrollViewAnchor = UIView()
-        scrollView.addSubview(scrollViewAnchor)
-        scrollViewAnchor.snp.makeConstraints { make in
-            make.leading.trailing.top.equalTo(scrollView)
-            scrollViewWidthConstraint = make.width.equalTo(frame.size.width).priority(Priority.required).constraint
-        }
-
         usernameField.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Size.fieldsTopMargin)
             make.leading.trailing.equalTo(scrollView).inset(CredentialsScreen.Size.inset)

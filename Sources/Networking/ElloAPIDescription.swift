@@ -88,6 +88,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "locationAutoComplete(terms: \(terms))"
         case let .notificationsNewContent(createdAt):
             return "notificationsNewContent(createdAt: \(String(describing: createdAt)))"
+        case let .requestPasswordReset(email):
+            return "requestPasswordReset(email: \(email))"
+        case let .resetPassword(password, authToken):
+            return "resetPassword(password: \(password), authToken: \(authToken))"
         case let .postComments(postId):
             return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
@@ -242,6 +246,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "relationship"
         case .relationshipBatch:
             return "relationshipBatch"
+        case .requestPasswordReset:
+            return "requestPasswordReset"
+        case .resetPassword:
+            return "resetPassword"
         case .searchForPosts:
             return "searchForPosts"
         case .searchForUsers:

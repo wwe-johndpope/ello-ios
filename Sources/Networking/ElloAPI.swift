@@ -73,6 +73,8 @@ enum ElloAPI {
     case rePost(postId: String)
     case relationship(userId: String, relationship: String)
     case relationshipBatch(userIds: [String], relationship: String)
+    case resetPassword(password: String, authToken: String)
+    case requestPasswordReset(email: String)
     case searchForUsers(terms: String)
     case searchForPosts(terms: String)
     case updatePost(postId: String, body: [String: AnyObject])
@@ -118,6 +120,7 @@ enum ElloAPI {
         case .anonymousCredentials,
              .auth,
              .reAuth,
+             .requestPasswordReset,
              .postViews:
             return .noContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
         case .announcements:
@@ -142,6 +145,7 @@ enum ElloAPI {
              .postLovers,
              .postReposters,
              .profileUpdate,
+             .resetPassword,
              .searchForUsers,
              .userStream,
              .userStreamFollowers,
@@ -217,7 +221,7 @@ extension ElloAPI {
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
              .postComments, .postDetail, .postLovers, .postRelatedPosts, .postReposters, .postViews,
-             .join, .deleteSubscriptions, .userStream:
+             .join, .deleteSubscriptions, .userStream, .resetPassword, .requestPasswordReset:
             return true
         case let .infiniteScroll(_, elloApi):
             let api = elloApi()
@@ -262,9 +266,11 @@ extension ElloAPI: Moya.TargetType {
              .relationship,
              .relationshipBatch,
              .rePost,
+             .requestPasswordReset,
              .createWatchPost:
             return .post
-        case .userCategories:
+        case .resetPassword,
+             .userCategories:
             return .put
         case .deleteComment,
              .deleteLove,
@@ -302,6 +308,10 @@ extension ElloAPI: Moya.TargetType {
              .auth,
              .reAuth:
             return "/api/oauth/token"
+        case .resetPassword:
+            return "/api/v2/reset_password"
+        case .requestPasswordReset:
+            return "/api/v2/forgot-password"
         case .availability:
             return "/api/\(ElloAPI.apiVersion)/availability"
         case let .commentDetail(postId, commentId):
@@ -484,7 +494,9 @@ extension ElloAPI: Moya.TargetType {
              .flagComment,
              .flagPost,
              .flagUser,
-             .userCategories:
+             .userCategories,
+             .resetPassword,
+             .requestPasswordReset:
             return stubbedData("empty")
         case .categoryPosts:
             return stubbedData("users_posts")
@@ -591,9 +603,9 @@ extension ElloAPI: Moya.TargetType {
             assigned["X-iOS-Build-Number"] = buildNumber
         }
 
-        if self.requiresAnyToken {
+        if self.requiresAnyToken, let authToken = AuthToken().tokenWithBearer {
             assigned += [
-                "Authorization": AuthToken().tokenWithBearer ?? "",
+                "Authorization": authToken,
             ]
         }
 
@@ -776,6 +788,13 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .rePost(postId):
             return [ "repost_id": Int(postId) as AnyObject? ?? -1 as AnyObject ]
+        case let .resetPassword(password, token):
+            return [
+                "password": password,
+                "reset_password_token": token,
+            ]
+        case let .requestPasswordReset(email):
+            return [ "email": email ]
         case let .searchForPosts(terms):
             return [
                 "terms": terms as AnyObject,
