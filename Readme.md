@@ -7,26 +7,34 @@
 ### Environment Variables
 
 We use the `dotenv` gem to access application secrets in the terminal, and `cocoapods-keys` to store them in the app.
+Add the following values to your `.env`.
 
-
-- `ELLO_STAFF`: set this in your bash/zsh startup script to access private cocoapods.
+- `ELLO_STAFF`: set this in your bash/zsh startup script to access private cocoapods (you must have access to the private repos).
 - `GITHUB_API_TOKEN`: used for generating release notes during distribution
-- `INVITE_FRIENDS_SALT`: used for generating the salt for sending emails to the API.
-- STAGING/PROD environment specific:
-  - `#{ENV}_CLIENT_KEY`: the key or id used for oauth (e.g. `STAGING_CLIENT_KEY`)
-  - `#{ENV}_CLIENT_SECRET`: the secret used for oauth (e.g. `PROD_CLIENT_SECRET`)
-  - `#{ENV}_DOMAIN`: the domain for the API to hit
-  - `#{ENV}_HTTP_PROTOCOL`: the protocol for the API to hit (http or https, useful when running a local instance of the API)
+- `INVITE_FRIENDS_SALT`: used for generating the salt for sending emails to the API
+- `CRASHLYTICS_KEY`: used for sending data to Fabric
+- `PROD_CLIENT_KEY`: the key or id used for oauth
+- `PROD_CLIENT_SECRET`: the secret used for oauth
+- `PROD_DOMAIN`: the domain for the API to hit
+- `NINJA_CLIENT_KEY`: the key or id used for oauth
+- `NINJA_CLIENT_SECRET`: the secret used for oauth
+- `NINJA_DOMAIN`: the domain for the API to hit
+- `STAGE1_CLIENT_KEY`: the key or id used for oauth
+- `STAGE1_CLIENT_SECRET`: the secret used for oauth
+- `STAGE1_DOMAIN`: the domain for the API to hit
+- `STAGE2_CLIENT_KEY`: the key or id used for oauth
+- `STAGE2_CLIENT_SECRET`: the secret used for oauth
+- `STAGE2_DOMAIN`: the domain for the API to hit
+- `STAGING_SEGMENT_KEY`: used for sending data to segment
 
 If you would like to run the iOS app, please [contact us](mailto:ios@ello.co) for client credentials.
 
 
 ### Setup
 
-Once you have staging and production client credentials, you can switch between them by running:
+Once you have client credentials, compile them into cocoapods-keys by running:
 
-- Prod: `bundle exec rake generate:prod_keys`
-- Staging: `bundle exec rake generate:staging_keys`
+- `rake generate:keys`
 
 
 ### Other
