@@ -63,7 +63,7 @@ class SimpleStreamViewController: StreamableViewController {
     // MARK: Private
 
     fileprivate func updateInsets() {
-        updateInsets(navBar: navigationBar, streamController: streamViewController)
+        updateInsets(navBar: navigationBar)
     }
 
     fileprivate func setupNavigationBar() {

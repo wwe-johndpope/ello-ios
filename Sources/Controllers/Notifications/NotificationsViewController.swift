@@ -221,7 +221,7 @@ private extension NotificationsViewController {
     }
 
     func updateInsets() {
-        updateInsets(navBar: screen.filterBar, streamController: streamViewController)
+        updateInsets(navBar: screen.filterBar)
     }
 }
 

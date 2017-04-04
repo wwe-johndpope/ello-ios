@@ -177,7 +177,7 @@ final class ProfileViewController: StreamableViewController {
     }
 
     fileprivate func updateInsets() {
-        updateInsets(navBar: screen.topInsetView, streamController: streamViewController)
+        updateInsets(navBar: screen.topInsetView)
     }
 
     // MARK : private

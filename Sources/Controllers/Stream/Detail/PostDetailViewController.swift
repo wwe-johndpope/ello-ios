@@ -66,7 +66,7 @@ final class PostDetailViewController: StreamableViewController {
     }
 
     fileprivate func updateInsets() {
-        updateInsets(navBar: navigationBar, streamController: streamViewController)
+        updateInsets(navBar: navigationBar)
     }
 
     override func didSetCurrentUser() {

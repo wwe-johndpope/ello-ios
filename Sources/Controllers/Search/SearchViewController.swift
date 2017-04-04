@@ -67,7 +67,7 @@ class SearchViewController: StreamableViewController {
     }
 
     fileprivate func updateInsets() {
-        updateInsets(navBar: screen.searchControlsContainer, streamController: streamViewController)
+        updateInsets(navBar: screen.searchControlsContainer)
     }
 
 }

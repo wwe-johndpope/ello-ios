@@ -139,7 +139,7 @@ class FollowingViewController: StreamableViewController {
 private extension FollowingViewController {
 
     func updateInsets() {
-        updateInsets(navBar: navigationBar, streamController: streamViewController)
+        updateInsets(navBar: navigationBar)
     }
 
     func setupNavigationBar() {

@@ -83,7 +83,7 @@ final class CategoryViewController: StreamableViewController {
     }
 
     fileprivate func updateInsets() {
-        updateInsets(navBar: screen.topInsetView, streamController: streamViewController)
+        updateInsets(navBar: screen.topInsetView)
 
         if !userDidScroll && screen.categoryCardsVisible {
             var offset: CGFloat = CategoryCardListView.Size.height
