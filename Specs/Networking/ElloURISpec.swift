@@ -40,7 +40,6 @@ class ElloURISpec: QuickSpec {
             describe("ElloURI.match") {
 
                 describe("with Search urls") {
-
                     it("does not match https://www.ello.co/searchyface") {
                         let (type, _) = ElloURI.match("https://www.ello.co/searchyface")
                         expect(type).notTo(equal(ElloURI.search))
@@ -160,6 +159,8 @@ class ElloURISpec: QuickSpec {
                 describe("app loadable routes with query params") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
                         "with Search(query param) urls": (input: "search?terms=%23hashtag", outputURI: .search, outputData: "#hashtag"),
+                        "with SearchPosts(query param) urls": (input: "search/posts/?terms=%23hashtag", outputURI: .searchPosts, outputData: "#hashtag"),
+                        "with SearchUsers(query param) urls": (input: "search/people/?terms=%40hashtag", outputURI: .searchPeople, outputData: "@hashtag"),
                         "with Find(query param) urls": (input: "find?terms=%23hashtag", outputURI: .search, outputData: "#hashtag"),
                         "with Profile(query param) urls": (input: "666?expanded=true", outputURI: .profile, outputData: "666"),
                         "with Post(query param) urls": (input: "777/post/123?expanded=true", outputURI: .post, outputData: "123"),
@@ -301,10 +302,6 @@ class ElloURISpec: QuickSpec {
                         "with RequestInvitation urls": (input: "request-an-invitation", output: .requestInvitation),
                         "with RequestInvitations urls": (input: "request_invitations", output: .requestInvitations),
                         "with ResetPasswordError urls": (input: "auth/password-reset-error", output: .resetPasswordError),
-                        "with SearchPeople urls": (input: "search/people", output: .searchPeople),
-                        "with FindPeople urls": (input: "find/people", output: .searchPeople),
-                        "with SearchPosts urls": (input: "search/posts", output: .searchPosts),
-                        "with FindPosts urls": (input: "find/posts", output: .searchPosts),
                         "with Settings urls": (input: "settings", output: .settings),
                         "with Unblock urls": (input: "unblock", output: .unblock),
                         "with WhoMadeThis urls": (input: "who-made-this", output: .whoMadeThis),
