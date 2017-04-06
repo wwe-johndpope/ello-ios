@@ -9,6 +9,7 @@ import Moya
 
 
 class PostbarControllerSpec: QuickSpec {
+
     class ReplyAllCreatePostResponder: UIWindow, CreatePostResponder {
         var postId: String?
         var post: Post?
@@ -30,6 +31,14 @@ class PostbarControllerSpec: QuickSpec {
         }
     }
 
+    class FakeCollectionView: UICollectionView {
+        var fakeIndexPath: IndexPath?
+
+        override func indexPath(for: UICollectionViewCell) -> IndexPath? {
+            return fakeIndexPath
+        }
+    }
+
     override func spec() {
         var subject: PostbarController!
         var responder: ReplyAllCreatePostResponder!
@@ -38,6 +47,7 @@ class PostbarControllerSpec: QuickSpec {
             "lovesCount": 5,
             ])
         var controller: StreamViewController!
+        var collectionView: FakeCollectionView!
         let streamKind: StreamKind = .postDetail(postParam: "post")
 
         beforeEach {
@@ -61,8 +71,9 @@ class PostbarControllerSpec: QuickSpec {
             controller.streamKind = streamKind
             controller.dataSource = dataSource
             controller.collectionView.dataSource = dataSource
+            collectionView = FakeCollectionView(frame: .zero, collectionViewLayout: controller.collectionView.collectionViewLayout)
 
-            subject = PostbarController(collectionView: controller.collectionView, dataSource: dataSource)
+            subject = PostbarController(collectionView: collectionView, dataSource: dataSource)
             subject.currentUser = currentUser
             responder = ReplyAllCreatePostResponder()
             subject.responderChainable = ResponderChainableController(
@@ -74,6 +85,7 @@ class PostbarControllerSpec: QuickSpec {
 
         describe("PostbarController") {
             describe("replyToAllButtonTapped(_:)") {
+                let cell = UICollectionViewCell()
 
                 beforeEach {
                     let post: Post = stub([
@@ -84,20 +96,19 @@ class PostbarControllerSpec: QuickSpec {
                     var postCellItems = parser.parse([post], streamKind: streamKind)
                     let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
                     postCellItems += [StreamCellItem(jsonable: newComment, type: .createComment)]
-                    controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
-                        controller.collectionView.reloadData()
-                    }
+                    controller.dataSource.appendStreamCellItems(postCellItems)
+                    collectionView.fakeIndexPath = IndexPath(item: postCellItems.count - 1, section: 0)
                 }
                 context("tapping replyToAll") {
                     it("opens an OmnibarViewController with usernames set") {
-                        subject.replyToAllButtonTapped(UICollectionViewCell())
+                        subject.replyToAllButtonTapped(cell)
                         expect(responder.text) == "@user1 @user2 "
                     }
                 }
             }
 
             describe("watchPostTapped(_:cell:)") {
-                var cell: StreamCreateCommentCell!
+                let cell = StreamCreateCommentCell()
 
                 beforeEach {
                     let post: Post = stub([
@@ -108,10 +119,8 @@ class PostbarControllerSpec: QuickSpec {
                     var postCellItems = parser.parse([post], streamKind: streamKind)
                     let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
                     postCellItems += [StreamCellItem(jsonable: newComment, type: .createComment)]
-                    cell = StreamCreateCommentCell()
-                    controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
-                        controller.collectionView.reloadData()
-                    }
+                    controller.dataSource.appendStreamCellItems(postCellItems)
+                    collectionView.fakeIndexPath = IndexPath(item: postCellItems.count - 1, section: 0)
                 }
 
                 it("should disable the cell during submission") {
@@ -168,6 +177,10 @@ class PostbarControllerSpec: QuickSpec {
                     controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
                         controller.collectionView.reloadData()
                     }
+                }
+
+                beforeEach {
+                    collectionView.fakeIndexPath = IndexPath(item: 0, section: 0)
                 }
 
                 context("post has not been loved") {
@@ -240,8 +253,8 @@ class PostbarControllerSpec: QuickSpec {
             }
 
             context("responder chain") {
-                it("reassigns next responder to StreamViewController's super.next") {
-                    expect(subject.next).to(beAKindOf(UIView.self))
+                it("returns the next responder assigned via responderChainable.next()") {
+                    expect(subject.next) == responder
                 }
             }
         }
