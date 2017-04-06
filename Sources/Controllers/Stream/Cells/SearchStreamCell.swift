@@ -67,7 +67,7 @@ extension SearchStreamCell: UITextFieldDelegate {
         }
         else {
             debounced { [weak self] in
-                self?.searchForText()
+                self?.performSearch()
             }
         }
     }
@@ -84,7 +84,7 @@ extension SearchStreamCell: UITextFieldDelegate {
         return true
     }
 
-    fileprivate func searchForText() {
+    fileprivate func performSearch() {
         guard
             let text = searchField.text,
             text.characters.count > 0
