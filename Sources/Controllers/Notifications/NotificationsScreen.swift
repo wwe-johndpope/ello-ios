@@ -18,11 +18,11 @@ class NotificationsScreen: UIView {
 
     fileprivate class func filterButton() -> UIButton {
         let button = UIButton()
-        button.titleLabel?.font = UIFont.defaultFont()
-        button.setTitleColor(UIColor.white, for: .selected)
-        button.setTitleColor(UIColor.greyA(), for: .normal)
-        button.setBackgroundImage(UIImage.imageWithColor(UIColor.black), for: .selected)
-        button.setBackgroundImage(UIImage.imageWithColor(UIColor.greyE5()), for: .normal)
+        button.titleLabel?.font = .defaultFont()
+        button.setTitleColor(.white, for: .selected)
+        button.setTitleColor(.greyA(), for: .normal)
+        button.setBackgroundImage(UIImage.imageWithColor(.black), for: .selected)
+        button.setBackgroundImage(UIImage.imageWithColor(.greyE5()), for: .normal)
         return button
     }
     fileprivate class func filterButton(image interfaceImage: InterfaceImage) -> UIButton {
@@ -46,10 +46,10 @@ class NotificationsScreen: UIView {
 
     override init(frame: CGRect) {
 
-        filterMentionButton.titleLabel!.font = UIFont.defaultFont(16)
+        filterMentionButton.titleLabel!.font = .defaultFont(16)
 
         super.init(frame: frame)
-        backgroundColor = UIColor.white
+        backgroundColor = .white
         self.addSubview(streamContainer)
 
         for (button, action) in [
