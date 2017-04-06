@@ -19,12 +19,25 @@ final class CategoryViewController: StreamableViewController {
         }
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        guard motion == .motionShake else { return }
+        onInviteFriends()
+    }
+
+    override var tabBarItem: UITabBarItem? {
+        get { return UITabBarItem.item(.sparkles, insets: ElloTab.discover.insets) }
+        set { self.tabBarItem = newValue }
+    }
+
     var mockScreen: CategoryScreenProtocol?
     var screen: CategoryScreenProtocol {
         return mockScreen ?? self.view as! CategoryScreenProtocol
     }
 
-    var gridListItem: UIBarButtonItem?
     var category: Category?
     var slug: String
     var allCategories: [Category] = []
@@ -47,16 +60,15 @@ final class CategoryViewController: StreamableViewController {
         self.title = category?.name ?? DiscoverType.fromURL(slug)?.name
 
         let screen = CategoryScreen()
-        screen.navigationItem = elloNavigationItem
+        screen.delegate = self
 
         self.view = screen
         viewContainer = screen.streamContainer
-        screen.delegate = self
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationItems()
+
         let streamKind: StreamKind
         if let type = DiscoverType.fromURL(slug) {
             streamKind = .discover(type: type)
@@ -65,7 +77,7 @@ final class CategoryViewController: StreamableViewController {
             streamKind = .category(slug: slug)
         }
         streamViewController.streamKind = streamKind
-        gridListItem?.setImage(isGridView: streamKind.isGridView)
+        screen.isGridView = streamKind.isGridView
 
         self.generator = CategoryGenerator(
             slug: slug,
@@ -88,7 +100,7 @@ final class CategoryViewController: StreamableViewController {
         if !userDidScroll && screen.categoryCardsVisible {
             var offset: CGFloat = CategoryCardListView.Size.height
             if screen.navigationBar.frame.maxY > 0 {
-                offset += ElloNavigationBar.Size.height
+                offset += ElloNavigationBar.Size.height - 1
             }
             streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
         }
@@ -119,24 +131,6 @@ final class CategoryViewController: StreamableViewController {
 }
 
 private extension CategoryViewController {
-
-    func setupNavigationItems() {
-        if let navigationController = navigationController,
-            navigationController.viewControllers.first != self
-        {
-            let backItem = UIBarButtonItem.backChevron(withController: self)
-            elloNavigationItem.leftBarButtonItems = [backItem]
-            elloNavigationItem.fixNavBarItemPadding()
-        }
-
-        let searchItem = UIBarButtonItem.searchItem(controller: self)
-        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
-        self.gridListItem = gridListItem
-        let rightBarButtonItems = [searchItem, gridListItem]
-        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-        }
-    }
 
     func loadCategory() {
         pagePromotional = nil
@@ -239,6 +233,10 @@ extension CategoryViewController: CategoryScreenDelegate {
         return allCategories.find { $0.slug == slug }
     }
 
+    func gridListToggled(sender: UIButton) {
+        streamViewController.gridListToggled(sender)
+    }
+
     func categorySelected(index: Int) {
         guard
             let category = allCategories.safeValue(index),
@@ -265,7 +263,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
-        gridListItem?.setImage(isGridView: streamKind.isGridView)
+        screen.isGridView = streamKind.isGridView
         generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)
         self.category = category
         self.slug = category.slug

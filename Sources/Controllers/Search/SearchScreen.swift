@@ -2,200 +2,179 @@
 ///  SearchScreen.swift
 //
 
-protocol SearchScreenDelegate: class {
-    func searchCanceled()
-    func searchFieldCleared()
-    func searchFieldChanged(_ text: String, isPostSearch: Bool)
-    func searchShouldReset()
-    func toggleChanged(_ text: String, isPostSearch: Bool)
-    func findFriendsTapped()
-}
-
-protocol SearchScreenProtocol: class {
-    var delegate: SearchScreenDelegate? { get set }
-    var hasBackButton: Bool { get set }
-    var hasGridViewToggle: Bool { get set }
-    var gridListItem: UIBarButtonItem? { get set }
-    var searchField: UITextField { get }
-    var navigationBar: ElloNavigationBar { get }
-    var searchControlsContainer: UIView { get }
-    func showNavBars()
-    func hideNavBars()
-    func searchForText()
-    func viewForStream() -> UIView
-    func updateInsets(bottom: CGFloat)
-}
-
-class SearchScreen: UIView, SearchScreenProtocol {
+class SearchScreen: StreamableScreen, SearchScreenProtocol {
     struct Size {
-        static let containerMargin: CGFloat = 15
+        static let margin: CGFloat = 15
+        static let buttonWidth: CGFloat = 40
+        static let searchControlsHeight: CGFloat = 30
+        static let cornerRadius: CGFloat = 5
+        static let findFriendsInsets = UIEdgeInsets(all: 20)
+        static let findFriendsLabelLeft: CGFloat = 25
+        static let findFriendsButtonHeight: CGFloat = 44
     }
 
-    fileprivate var debounced: ThrottledBlock
-    let navigationBar = ElloNavigationBar()
-    let searchField = UITextField()
-    let searchControlsContainer = UIView()
-    fileprivate let postsToggleButton = StyledButton(style: .squareBlack)
-    fileprivate let peopleToggleButton = StyledButton(style: .squareBlack)
-    fileprivate var streamViewContainer = UIView()
-    fileprivate(set) var findFriendsContainer: UIView!
-    fileprivate var bottomInset: CGFloat
-    fileprivate var navBarTitle: String = ""
-    fileprivate var fieldPlaceholderText: String = ""
-    fileprivate var isSearchView: Bool
-    fileprivate var showsFindFriends: Bool
-    var hasBackButton: Bool = true {
-        didSet {
-            setupNavigationItems()
-        }
-    }
-    var gridListItem: UIBarButtonItem?
-    var hasGridViewToggle: Bool = true {
-        didSet {
-            setupNavigationItems()
-        }
-    }
-    let navigationItem = UINavigationItem()
-
-    fileprivate var btnWidth: CGFloat {
-        return (searchControlsContainer.bounds.size.width - 2 * Size.containerMargin) / 2
-    }
-    fileprivate var buttonY: CGFloat {
-        return searchControlsContainer.frame.size.height - 43
-    }
     weak var delegate: SearchScreenDelegate?
 
-// MARK: init
+    let searchField = SearchNavBarField()
+    let searchControlsContainer = UIView()
+    var showsFindFriends: Bool = true {
+        didSet { showHideFindFriends() }
+    }
 
-    init(frame: CGRect, hasCurrentUser: Bool, isSearchView: Bool, navBarTitle: String = InterfaceString.Search.Title, fieldPlaceholderText: String = InterfaceString.Search.Prompt) {
-        debounced = debounce(0.8)
-        bottomInset = 0
-        self.navBarTitle = navBarTitle
-        self.fieldPlaceholderText = fieldPlaceholderText
-        self.isSearchView = isSearchView
-        showsFindFriends = hasCurrentUser && isSearchView
+    fileprivate let debounced: ThrottledBlock = debounce(0.8)
+    fileprivate let backButton = UIButton()
+    fileprivate let postsToggleButton = SearchToggleButton()
+    fileprivate let peopleToggleButton = SearchToggleButton()
+    fileprivate let findFriendsContainer = UIView()
+    fileprivate let findFriendsButton = StyledButton(style: .green)
+    fileprivate let findFriendsLabel = StyledLabel(style: .black)
+    fileprivate var bottomInset: CGFloat = 0
 
-        super.init(frame: frame)
+    override func setText() {
+        searchField.placeholder = InterfaceString.Friends.SearchPrompt
+        postsToggleButton.setTitle(InterfaceString.Search.Posts, for: .normal)
+        peopleToggleButton.setTitle(InterfaceString.Search.People, for: .normal)
+        findFriendsButton.setTitle(InterfaceString.Friends.FindAndInvite, for: .normal)
+        findFriendsLabel.text = InterfaceString.Search.FindFriendsPrompt
+    }
 
-        backgroundColor = UIColor.white
+    override func bindActions() {
+        searchField.addTarget(self, action: #selector(searchFieldDidChange), for: .editingChanged)
+        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        postsToggleButton.addTarget(self, action: #selector(onPostsTapped), for: .touchUpInside)
+        peopleToggleButton.addTarget(self, action: #selector(onPeopleTapped), for: .touchUpInside)
+        findFriendsButton.addTarget(self, action: #selector(findFriendsTapped), for: .touchUpInside)
+        searchField.delegate = self
+    }
 
-        setupStreamView()
-        setupSearchContainer()
-        setupNavigationBar()
-        setupSearchField()
-        if self.isSearchView {
-            setupToggleButtons()
+    override func style() {
+        backButton.setImages(.angleBracket, degree: 180)
+
+        searchControlsContainer.backgroundColor = .white
+
+        findFriendsContainer.backgroundColor = .greyF2()
+        findFriendsContainer.isHidden = !showsFindFriends
+        findFriendsContainer.layer.cornerRadius = Size.cornerRadius
+        findFriendsContainer.clipsToBounds = true
+
+        postsToggleButton.isSelected = true
+        peopleToggleButton.isSelected = false
+    }
+
+    override func arrange() {
+        super.arrange()
+
+        navigationBar.addSubview(backButton)
+        navigationBar.addSubview(searchField)
+
+        addSubview(searchControlsContainer)
+        searchControlsContainer.addSubview(postsToggleButton)
+        searchControlsContainer.addSubview(peopleToggleButton)
+
+        addSubview(findFriendsContainer)
+        findFriendsContainer.addSubview(findFriendsLabel)
+        findFriendsContainer.addSubview(findFriendsButton)
+
+        backButton.snp.makeConstraints { make in
+            make.leading.bottom.equalTo(navigationBar)
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.width.equalTo(Size.buttonWidth)
         }
-        setupFindFriendsButton()
+
+        searchField.snp.makeConstraints { make in
+            make.leading.equalTo(backButton.snp.trailing)
+            make.bottom.top.trailing.equalTo(navigationBar).inset(SearchNavBarField.Size.searchInsets)
+        }
+
+        searchControlsContainer.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom)
+            make.leading.trailing.equalTo(self)
+            make.height.equalTo(Size.searchControlsHeight)
+        }
+
+        postsToggleButton.snp.makeConstraints { make in
+            make.leading.equalTo(searchControlsContainer).offset(Size.margin)
+            make.top.bottom.equalTo(searchControlsContainer)
+        }
+
+        peopleToggleButton.snp.makeConstraints { make in
+            make.trailing.equalTo(searchControlsContainer).offset(-Size.margin)
+            make.leading.equalTo(postsToggleButton.snp.trailing)
+            make.width.equalTo(postsToggleButton)
+            make.top.bottom.equalTo(searchControlsContainer)
+        }
+
+        findFriendsContainer.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self).inset(Size.margin)
+            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.margin)
+            make.bottom.lessThanOrEqualTo(self).inset(ElloTabBar.Size.height).priority(Priority.required)
+        }
+
+        findFriendsLabel.snp.makeConstraints { make in
+            make.leading.equalTo(findFriendsContainer).offset(Size.findFriendsLabelLeft)
+            make.top.trailing.equalTo(findFriendsContainer).inset(Size.findFriendsInsets)
+        }
+
+        findFriendsButton.snp.makeConstraints { make in
+            make.top.equalTo(findFriendsLabel.snp.bottom).offset(Size.findFriendsInsets.top)
+            make.bottom.leading.trailing.equalTo(findFriendsContainer).inset(Size.findFriendsInsets)
+            make.height.equalTo(Size.findFriendsButtonHeight)
+        }
     }
 
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        searchField.becomeFirstResponder()
     }
+
+}
+
+extension SearchScreen {
 
     func showNavBars() {
-        animate(animated: true) {
-            self.searchControlsContainer.frame.origin.y = 64
-            self.streamViewContainer.frame = self.getStreamViewFrame()
+        animate {
+            self.searchControlsContainer.frame.origin.y = self.navigationBar.frame.size.height
         }
     }
 
     func hideNavBars() {
-        animate(animated: true) {
-            self.searchControlsContainer.frame.origin.y = 0
-            self.streamViewContainer.frame = self.getStreamViewFrame()
+        animate {
+            self.searchControlsContainer.frame.origin.y = -1
         }
     }
 
-// MARK: views
-
-    fileprivate func setupNavigationBar() {
-        let frame = CGRect(x: 0, y: 0, width: self.frame.width, height: ElloNavigationBar.Size.height)
-        navigationBar.frame = frame
-        navigationBar.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
-        self.addSubview(navigationBar)
-
-        let gesture = UITapGestureRecognizer()
-        gesture.addTarget(self, action: #selector(SearchScreen.activateSearchField))
-        navigationBar.addGestureRecognizer(gesture)
-
-        setupNavigationItems()
+    func updateInsets(bottom: CGFloat) {
+        bottomInset = bottom
+        setNeedsLayout()
     }
 
-    fileprivate func setupSearchContainer() {
-        searchControlsContainer.backgroundColor = .white
-        searchControlsContainer.frame = frame.at(y: 64).with(height: 50).with(width: frame.size.width)
-        searchControlsContainer.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-        addSubview(searchControlsContainer)
+    func searchFor(_ text: String) {
+        searchField.text = text
+        performSearch()
     }
 
-    func activateSearchField() {
-        _ = searchField.becomeFirstResponder()
+}
+
+extension SearchScreen {
+
+    fileprivate func clearSearch() {
+        delegate?.searchFieldCleared()
+        debounced {}
     }
 
-    // TODO: this should be moved into SearchViewController.loadView (and use elloNavigationItem)
-    fileprivate func setupNavigationItems() {
-        navigationItem.title = navBarTitle
+    fileprivate func performSearch() {
+        guard
+            let text = searchField.text,
+            text.characters.count > 0
+        else { return }
 
-        if hasBackButton {
-            let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(SearchScreen.backTapped))
-            navigationItem.leftBarButtonItems = [backItem]
-            navigationItem.fixNavBarItemPadding()
-        }
-        else {
-            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(SearchScreen.backTapped))
-            navigationItem.leftBarButtonItems = [closeItem]
-        }
-
-        if let gridListItem = gridListItem, hasGridViewToggle {
-            navigationItem.rightBarButtonItems = [gridListItem]
-        }
-        else {
-            navigationItem.rightBarButtonItems = []
-        }
-
-        navigationBar.items = [navigationItem]
+        showHideFindFriends()
+        delegate?.searchFieldChanged(text, isPostSearch: postsToggleButton.isSelected)
     }
 
-    fileprivate func setupSearchField() {
-        searchField.frame = CGRect(x: Size.containerMargin, y: 0, width: searchControlsContainer.frame.size.width - 2 * Size.containerMargin, height: searchControlsContainer.frame.size.height - 10)
-        searchField.clearButtonMode = .whileEditing
-        searchField.font = UIFont.defaultBoldFont(18)
-        searchField.textColor = UIColor.black
-        searchField.attributedPlaceholder = NSAttributedString(string: "  \(fieldPlaceholderText)", attributes: [NSForegroundColorAttributeName: UIColor.greyA()])
-        searchField.autocapitalizationType = .none
-        searchField.autocorrectionType = .no
-        searchField.spellCheckingType = .no
-        searchField.enablesReturnKeyAutomatically = true
-        searchField.returnKeyType = .search
-        searchField.keyboardAppearance = .dark
-        searchField.keyboardType = .default
-        searchField.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-        searchField.delegate = self
-        searchField.addTarget(self, action: #selector(SearchScreen.searchFieldDidChange), for: .editingChanged)
-        searchControlsContainer.addSubview(searchField)
+// MARK: actions
 
-        let lineFrame = searchField.frame.fromBottom().grow(up: 1)
-        let lineView = UIView(frame: lineFrame)
-        lineView.backgroundColor = UIColor.greyA()
-        searchControlsContainer.addSubview(lineView)
-    }
-
-    fileprivate func setupToggleButtons() {
-        searchControlsContainer.frame.size.height += 43
-        postsToggleButton.frame = CGRect(x: Size.containerMargin, y: buttonY, width: btnWidth, height: 33)
-        postsToggleButton.setTitle(InterfaceString.Search.Posts, for: .normal)
-        postsToggleButton.addTarget(self, action: #selector(SearchScreen.onPostsTapped), for: .touchUpInside)
-        searchControlsContainer.addSubview(postsToggleButton)
-
-        peopleToggleButton.frame = CGRect(x: postsToggleButton.frame.maxX, y: buttonY, width: btnWidth, height: 33)
-        peopleToggleButton.setTitle(InterfaceString.Search.People, for: .normal)
-        peopleToggleButton.addTarget(self, action: #selector(SearchScreen.onPeopleTapped), for: .touchUpInside)
-        searchControlsContainer.addSubview(peopleToggleButton)
-
-        onPostsTapped()
-    }
-
+    @objc
     func onPostsTapped() {
         postsToggleButton.isSelected = true
         peopleToggleButton.isSelected = false
@@ -207,6 +186,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton.isSelected)
     }
 
+    @objc
     func onPeopleTapped() {
         peopleToggleButton.isSelected = true
         postsToggleButton.isSelected = false
@@ -217,83 +197,6 @@ class SearchScreen: UIView, SearchScreenProtocol {
         searchField.text = searchFieldText
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton.isSelected)
     }
-
-    fileprivate func setupStreamView() {
-        streamViewContainer.frame = getStreamViewFrame()
-        streamViewContainer.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        streamViewContainer.backgroundColor = .white
-        self.addSubview(streamViewContainer)
-    }
-
-    fileprivate func getStreamViewFrame() -> CGRect {
-        return bounds
-    }
-
-    fileprivate func setupFindFriendsButton() {
-        let height = CGFloat(143)
-        let containerFrame = self.frame.fromBottom().grow(up: height)
-        findFriendsContainer = UIView(frame: containerFrame)
-        findFriendsContainer.backgroundColor = .black
-        findFriendsContainer.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
-        findFriendsContainer.isHidden = !showsFindFriends
-
-        let margins = UIEdgeInsets(top: 20, left: 15, bottom: 26, right: 15)
-        let buttonHeight = CGFloat(50)
-        let button = StyledButton(style: .white)
-        button.frame = CGRect(
-            x: margins.left,
-            y: containerFrame.height - margins.bottom - buttonHeight,
-            width: containerFrame.width - margins.left - margins.right,
-            height: buttonHeight
-            )
-        button.setTitle(InterfaceString.Friends.FindAndInvite, for: .normal)
-        button.addTarget(self, action: #selector(findFriendsTapped), for: .touchUpInside)
-        button.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        let label = StyledLabel(style: .white)
-        label.frame = CGRect(
-            x: margins.left, y: 0,
-            width: button.frame.width,
-            height: containerFrame.height - margins.bottom - button.frame.height
-        )
-        label.numberOfLines = 2
-        label.text = InterfaceString.Search.FindFriendsPrompt
-        label.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-
-        self.addSubview(findFriendsContainer)
-        findFriendsContainer.addSubview(label)
-        findFriendsContainer.addSubview(button)
-    }
-
-    func viewForStream() -> UIView {
-        return streamViewContainer
-    }
-
-    fileprivate func clearSearch() {
-        delegate?.searchFieldCleared()
-        debounced {}
-    }
-
-    func updateInsets(bottom: CGFloat) {
-        bottomInset = bottom
-        setNeedsLayout()
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        findFriendsContainer.frame.origin.y = frame.size.height - findFriendsContainer.frame.height - bottomInset - ElloTabBar.Size.height
-        postsToggleButton.frame = CGRect(x: Size.containerMargin, y: buttonY, width: btnWidth, height: 33)
-        peopleToggleButton.frame = CGRect(x: postsToggleButton.frame.maxX, y: buttonY, width: btnWidth, height: 33)
-    }
-
-    func searchForText() {
-        let text = searchField.text ?? ""
-        if text.characters.count == 0 { return }
-        hideFindFriends()
-        delegate?.searchFieldChanged(text, isPostSearch: postsToggleButton.isSelected)
-    }
-
-// MARK: actions
 
     @objc
     func backTapped() {
@@ -311,11 +214,11 @@ class SearchScreen: UIView, SearchScreenProtocol {
         let text = searchField.text ?? ""
         if text.characters.count == 0 {
             clearSearch()
-            showFindFriends()
+            showHideFindFriends()
         }
         else {
-            debounced { [unowned self] in
-                self.searchForText()
+            debounced { [weak self] in
+                self?.performSearch()
             }
         }
     }
@@ -327,7 +230,7 @@ extension SearchScreen: UITextFieldDelegate {
     @objc
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         clearSearch()
-        showFindFriends()
+        showHideFindFriends()
         return true
     }
 
@@ -340,12 +243,13 @@ extension SearchScreen: UITextFieldDelegate {
 
 extension SearchScreen {
 
-    fileprivate func showFindFriends() {
-        findFriendsContainer.isHidden = !showsFindFriends
-    }
-
-    fileprivate func hideFindFriends() {
-        findFriendsContainer.isHidden = true
+    fileprivate func showHideFindFriends() {
+        if showsFindFriends && searchField.text.isEmpty {
+            findFriendsContainer.isHidden = false
+        }
+        else {
+            findFriendsContainer.isHidden = true
+        }
     }
 
 }

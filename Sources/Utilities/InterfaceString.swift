@@ -61,11 +61,10 @@ struct InterfaceString {
     }
 
     struct Search {
-        static let Title: String = NSLocalizedString("Search", comment: "Search title")
         static let Prompt: String = NSLocalizedString("Search Ello", comment: "search ello prompt")
         static let Posts: String = NSLocalizedString("Posts", comment: "Posts search toggle")
         static let People: String = NSLocalizedString("People", comment: "People search toggle")
-        static let FindFriendsPrompt: String = NSLocalizedString("Help grow the Ello community.\nShare the experience.", comment: "Search zero state button title")
+        static let FindFriendsPrompt: String = NSLocalizedString("Help grow the Ello community.", comment: "Search zero state button title")
         static let NoMatches: String = NSLocalizedString("We couldn't find any matches.", comment: "No search results found title")
         static let TryAgain: String = NSLocalizedString("Try another search?", comment: "No search results found body")
     }

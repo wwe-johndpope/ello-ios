@@ -24,12 +24,9 @@ class SearchScreenSpec: QuickSpec {
             var subject: SearchScreen!
 
             beforeEach {
-                subject = SearchScreen(
-                    frame: CGRect(origin: .zero, size: CGSize(width: 320, height: 568)),
-                    hasCurrentUser: true,
-                    isSearchView: true,
-                    navBarTitle: "Test",
-                    fieldPlaceholderText: "placeholder test")
+                subject = SearchScreen()
+                subject.showsFindFriends = true
+                subject.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 568))
             }
 
             context("searching for people") {
@@ -50,41 +47,6 @@ class SearchScreenSpec: QuickSpec {
                     subject.searchField.text = "@"
                     subject.onPostsTapped()
                     expect(subject.searchField.text) == ""
-                }
-            }
-
-            context("hasBackButton") {
-                it("has a back button by default") {
-                    let prevItems = subject.navigationItem.leftBarButtonItems
-                    expect(subject.hasBackButton) == true
-                    expect(subject.navigationItem.leftBarButtonItem) == prevItems![0]
-
-                    showView(subject)
-                    expect(subject).to(haveValidSnapshot(named: "hasBackButton:true"))
-                }
-
-                it("can have a close button instead (left item changes)") {
-                    let prevItems = subject.navigationItem.leftBarButtonItems
-                    subject.hasBackButton = false
-                    expect(subject.hasBackButton) == false
-                    expect(subject.navigationItem.leftBarButtonItem) != prevItems![0]
-
-                    showView(subject)
-                    expect(subject).to(haveValidSnapshot(named: "hasBackButton:false"))
-                }
-
-                it("can have an explicit back button (left item changes)") {
-                    var prevItems = subject.navigationItem.leftBarButtonItems
-                    subject.hasBackButton = false
-                    expect(subject.navigationItem.leftBarButtonItem) != prevItems![0]
-
-                    prevItems = subject.navigationItem.leftBarButtonItems
-                    subject.hasBackButton = true
-                    expect(subject.hasBackButton) == true
-                    expect(subject.navigationItem.leftBarButtonItem) != prevItems![0]
-
-                    showView(subject)
-                    expect(subject).to(haveValidSnapshot(named: "hasBackButton:true"))
                 }
             }
 
@@ -125,12 +87,12 @@ class SearchScreenSpec: QuickSpec {
                     context("is search view") {
 
                         beforeEach {
-                            subject = SearchScreen(frame: .zero, hasCurrentUser: true, isSearchView: true, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
+                            subject = SearchScreen()
+                            subject.showsFindFriends = true
                         }
 
-                        it("hides find friends text") {
+                        it("shows find friends text") {
                             _ = subject.textFieldShouldClear(subject.searchField)
-
                             expect(subject.findFriendsContainer.isHidden) == false
                         }
                     }
@@ -138,12 +100,12 @@ class SearchScreenSpec: QuickSpec {
                     context("is NOT search view") {
 
                         beforeEach {
-                            subject = SearchScreen(frame: .zero, hasCurrentUser: true, isSearchView: false, navBarTitle: "Test", fieldPlaceholderText: "placeholder test")
+                            subject = SearchScreen()
+                            subject.showsFindFriends = false
                         }
 
-                        it("shows find friends text") {
+                        it("hides find friends text") {
                             _ = subject.textFieldShouldClear(subject.searchField)
-
                             expect(subject.findFriendsContainer.isHidden) == true
                         }
                     }

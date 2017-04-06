@@ -27,25 +27,20 @@ class SearchViewController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = SearchScreen(
-            frame: UIScreen.main.bounds,
-            hasCurrentUser: currentUser != nil,
-            isSearchView: true)
-        self.view = screen
+        let screen = SearchScreen()
         screen.delegate = self
+        screen.showsFindFriends = currentUser != nil
+        self.view = screen
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         streamViewController.pullToRefreshEnabled = false
-        screen.gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
-        screen.hasGridViewToggle = streamViewController.streamKind.hasGridViewToggle
         updateInsets()
     }
 
     func searchForPosts(_ terms: String) {
-        screen.searchField.text = terms
-        screen.searchForText()
+        screen.searchFor(terms)
     }
 
     override func viewForStream() -> UIView {
@@ -54,14 +49,14 @@ class SearchViewController: StreamableViewController {
 
     override func showNavBars() {
         super.showNavBars()
-        positionNavBar(screen.navigationBar, visible: true)
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         screen.showNavBars()
         updateInsets()
     }
 
     override func hideNavBars() {
         super.hideNavBars()
-        positionNavBar(screen.navigationBar, visible: false)
+        positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
         screen.hideNavBars()
         updateInsets()
     }
@@ -84,7 +79,6 @@ extension SearchViewController: SearchScreenDelegate {
         streamViewController.removeAllCellItems()
         streamViewController.loadingToken.cancelInitialPage()
         streamViewController.noResultsMessages = NoResultsMessages(title: "", body: "")
-        screen.hasGridViewToggle = false
     }
 
     func searchFieldChanged(_ text: String, isPostSearch: Bool) {
@@ -117,7 +111,6 @@ extension SearchViewController: SearchScreenDelegate {
         let endpoint = isPostSearch ? ElloAPI.searchForPosts(terms: text) : ElloAPI.searchForUsers(terms: text)
         streamViewController.noResultsMessages = NoResultsMessages(title: InterfaceString.Search.NoMatches, body: InterfaceString.Search.TryAgain)
         let streamKind = StreamKind.simpleStream(endpoint: endpoint, title: "")
-        screen.hasGridViewToggle = streamKind.hasGridViewToggle
         streamViewController.streamKind = streamKind
         streamViewController.removeAllCellItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)

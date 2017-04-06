@@ -1,0 +1,6 @@
+<svg class="svg-icon svg-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <g transform="translate(5, 5)" stroke-width="1.25" fill="none" stroke="#000" fill-rule="evenodd">
+        <path d="M8.4645,4.2411 C8.4645,6.50235 6.67223333,8.33535 4.46123333,8.33535 C2.25023333,8.33535 0.4587,6.50235 0.4587,4.2411 C0.4587,1.97985 2.25023333,0.14685 4.46123333,0.14685 C6.67223333,0.14685 8.4645,1.97985 8.4645,4.2411 L8.4645,4.2411 Z"></path>
+        <line stroke-linecap="square" stroke-linejoin="round" x1="7.48058667" y1="7.4631" x2="10.7248533" y2="10.7811"></line>
+    </g>
+</svg>

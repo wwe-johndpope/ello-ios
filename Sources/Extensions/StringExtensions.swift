@@ -149,6 +149,13 @@ extension String {
     }
 }
 
+extension Optional where Wrapped == String {
+    var isEmpty: Bool {
+        return self?.isEmpty ?? true
+    }
+}
+
+
 private func populateEntityLookup() -> [String: String] {
     // swiftlint:disable colon
     return [
