@@ -3,6 +3,9 @@
 //
 
 class BlackBar: UIView {
+    struct Size {
+        static let height: CGFloat = 20
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -15,12 +18,12 @@ class BlackBar: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 20)
+        return CGSize(width: UIViewNoIntrinsicMetric, height: Size.height)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.frame.size.height = 20
+        self.frame.size.height = Size.height
     }
 
 }

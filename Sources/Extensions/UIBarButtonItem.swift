@@ -24,9 +24,7 @@ extension UIBarButtonItem {
 
     class func backChevron(withController controller: BaseElloViewController) -> UIBarButtonItem {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
-        button.setImage(.angleBracket, imageStyle: .normal, for: .normal)
-        // rotate 180 degrees to flip
-        button.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        button.setImages(.angleBracket, degree: 180)
         button.addTarget(controller, action: #selector(BaseElloViewController.backTapped), for: .touchUpInside)
 
         return UIBarButtonItem(customView: button)
