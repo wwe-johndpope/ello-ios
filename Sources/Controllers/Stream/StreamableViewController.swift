@@ -116,7 +116,7 @@ class StreamableViewController: BaseElloViewController {
     }
 
     func navigationBarsVisible() -> Bool {
-        return bottomBarController?.navigationBarsVisible ?? false
+        return bottomBarController?.navigationBarsVisible ?? true
     }
 
     func updateInsets(navBar: UIView?, navigationBarsVisible visible: Bool? = nil) {

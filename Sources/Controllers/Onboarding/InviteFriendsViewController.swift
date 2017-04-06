@@ -36,6 +36,10 @@ class InviteFriendsViewController: StreamableViewController {
 
         streamViewController.loadInitialPage()
 
+        if onboardingViewController != nil {
+            screen.navigationBar.isHidden = true
+        }
+
         setupNavigationItems()
     }
 
@@ -44,19 +48,19 @@ class InviteFriendsViewController: StreamableViewController {
     }
 
     override func showNavBars() {
-        let visible: Bool
-        if onboardingViewController == nil {
-            visible = true
-        }
-        else {
-            visible = false
-        }
+        guard onboardingViewController == nil else { return }
 
-        positionNavBar(screen.navigationBar, visible: visible, withConstraint: screen.navigationBarTopConstraint)
+        super.showNavBars()
+
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
     }
 
     override func hideNavBars() {
+        guard onboardingViewController == nil else { return }
+
+        super.hideNavBars()
+
         positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
     }
