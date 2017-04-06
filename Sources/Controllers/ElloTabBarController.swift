@@ -226,7 +226,8 @@ extension ElloTabBarController {
 
     func setupControllers() {
         let following = FollowingViewController()
-        let discover = DiscoverAllCategoriesViewController()
+        let discover = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
+        discover.category = Category.featured
         let omnibar = OmnibarViewController()
         let notifications = NotificationsViewController()
         let profile = ProfileViewController(user: currentUser!)

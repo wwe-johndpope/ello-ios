@@ -518,9 +518,8 @@ extension AppViewController {
             }
         case .exploreRecommended,
              .exploreRecent,
-             .exploreTrending:
-            showDiscoverScreen()
-        case .discover:
+             .exploreTrending,
+             .discover:
             showDiscoverScreen()
         case .discoverRandom,
              .discoverRecent,
@@ -631,11 +630,14 @@ extension AppViewController {
         if
             let vc = self.visibleViewController as? ElloTabBarController,
             let navVC = vc.selectedViewController as? ElloNavigationController,
-            !(navVC.visibleViewController is DiscoverAllCategoriesViewController)
+            !(navVC.visibleViewController is CategoryViewController)
         {
-            let vc = DiscoverAllCategoriesViewController()
-            vc.currentUser = currentUser
-            pushDeepLinkViewController(vc)
+            vc.selectedTab = .discover
+            navVC.popToRootViewController(animated: true)
+
+            if let rootVC = navVC.viewControllers[0] as? CategoryViewController {
+                rootVC.selectCategoryFor(slug: Category.featured.slug)
+            }
         }
         else if
             let nav = self.visibleViewController as? UINavigationController,
@@ -648,12 +650,13 @@ extension AppViewController {
     fileprivate func showCategoryScreen(slug: String) {
         if
             let vc = self.visibleViewController as? ElloTabBarController,
-            let navVC = vc.selectedViewController as? ElloNavigationController, !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug)
+            let navVC = vc.selectedViewController as? ElloNavigationController,
+            let catVC = navVC.viewControllers.first as? CategoryViewController
         {
             Tracker.shared.categoryOpened(slug)
-            let vc = CategoryViewController(slug: slug)
-            vc.currentUser = currentUser
-            pushDeepLinkViewController(vc)
+            vc.selectedTab = .discover
+            catVC.selectCategoryFor(slug: slug)
+            navVC.popToRootViewController(animated: true)
         }
         else if
             let topNav = self.visibleViewController as? UINavigationController,

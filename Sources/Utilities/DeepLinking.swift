@@ -5,9 +5,11 @@
 struct DeepLinking {
 
     static func showDiscover(navVC: UINavigationController?, currentUser: User?) {
-        if navVC?.topViewController is DiscoverAllCategoriesViewController { return }
+        if navVC?.topViewController is CategoryViewController { return }
 
-        let vc = DiscoverAllCategoriesViewController()
+        let category = Category.featured
+        let vc = CategoryViewController(slug: category.slug, name: category.name)
+        vc.category = category
         vc.currentUser = currentUser
         navVC?.pushViewController(vc, animated: true)
     }
