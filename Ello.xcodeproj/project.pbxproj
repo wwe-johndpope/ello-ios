@@ -421,7 +421,6 @@
 		12D14C7D1A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */; };
 		12D14C7E1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C7A1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift */; };
 		12D14C901A43769800C6F8E8 /* LoginViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C8F1A43769800C6F8E8 /* LoginViewControllerSpec.swift */; };
-		12D24A5A1A9F765300F53D44 /* AddFriendsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D24A591A9F765300F53D44 /* AddFriendsViewControllerSpec.swift */; };
 		12D43A461AC864CC0039F54F /* StreamToggleCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D43A451AC864CC0039F54F /* StreamToggleCellPresenter.swift */; };
 		12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D43A481AC865540039F54F /* StreamToggleCell.swift */; };
 		12D86E7E1DCA50DD00465787 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
@@ -841,7 +840,6 @@
 		76629C6F1A95067400E1F92B /* BlockUserModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76629C6E1A95067400E1F92B /* BlockUserModalViewController.swift */; };
 		766375E01AA911090096FA51 /* SimpleStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766375DF1AA911090096FA51 /* SimpleStreamViewController.swift */; };
 		766375E31AA911530096FA51 /* UserListViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766375E21AA911530096FA51 /* UserListViewControllerSpec.swift */; };
-		7666C95E1B10055C009AC019 /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7666C95D1B10055C009AC019 /* AddFriendsViewController.swift */; };
 		766CAEF21AAA5E2D009E9266 /* Stubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CAEF11AAA5E2D009E9266 /* Stubs.swift */; };
 		767399811AA679CB00C4222C /* ElloTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767399801AA679CB00C4222C /* ElloTextView.swift */; };
 		7675CED21AA4D0A5008AA97B /* 0.json in Resources */ = {isa = PBXBuildFile; fileRef = 7675CED11AA4D0A5008AA97B /* 0.json */; };
@@ -1407,7 +1405,6 @@
 		12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ElloTabBarControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12D14C7A1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerSpec.swift; sourceTree = "<group>"; };
 		12D14C8F1A43769800C6F8E8 /* LoginViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewControllerSpec.swift; sourceTree = "<group>"; };
-		12D24A591A9F765300F53D44 /* AddFriendsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewControllerSpec.swift; sourceTree = "<group>"; };
 		12D43A451AC864CC0039F54F /* StreamToggleCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamToggleCellPresenter.swift; sourceTree = "<group>"; };
 		12D43A481AC865540039F54F /* StreamToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamToggleCell.swift; sourceTree = "<group>"; };
 		12D56B661A8C6BC000671280 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
@@ -1824,7 +1821,6 @@
 		76629C6E1A95067400E1F92B /* BlockUserModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalViewController.swift; sourceTree = "<group>"; };
 		766375DF1AA911090096FA51 /* SimpleStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleStreamViewController.swift; sourceTree = "<group>"; };
 		766375E21AA911530096FA51 /* UserListViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListViewControllerSpec.swift; sourceTree = "<group>"; };
-		7666C95D1B10055C009AC019 /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AddFriendsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		766CAEF11AAA5E2D009E9266 /* Stubs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stubs.swift; sourceTree = "<group>"; };
 		767399801AA679CB00C4222C /* ElloTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTextView.swift; sourceTree = "<group>"; };
 		7675CED11AA4D0A5008AA97B /* 0.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 0.json; sourceTree = "<group>"; };
@@ -2169,7 +2165,6 @@
 		121E46BB1A6B2704004AEAB7 /* Stream */ = {
 			isa = PBXGroup;
 			children = (
-				12D24A591A9F765300F53D44 /* AddFriendsViewControllerSpec.swift */,
 				1D70DE6A1DF73869008AF216 /* Calculators */,
 				1DA18E551DD0E2C2000231CC /* CategoryHeaderCellSizeCalculatorSpec.swift */,
 				12F47DCF1AD7137000A73B5F /* CellDequeing */,
@@ -2551,7 +2546,6 @@
 		12B093641A6D874300BF104E /* Stream */ = {
 			isa = PBXGroup;
 			children = (
-				7666C95D1B10055C009AC019 /* AddFriendsViewController.swift */,
 				1DA18E111DB187DF000231CC /* CalculatedCellHeights.swift */,
 				1D1BCA531BACBAAE009075E8 /* Calculators */,
 				128D36A81A95192300622833 /* CellDequeing */,
@@ -4672,7 +4666,6 @@
 				1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */,
 				1D7750F41ABB391500D92191 /* TmpSpec.swift in Sources */,
 				127BAD5E1A850D6400628696 /* StreamTextCellHTMLSpec.swift in Sources */,
-				12D24A5A1A9F765300F53D44 /* AddFriendsViewControllerSpec.swift in Sources */,
 				76BE9C591B2B85CF007575AA /* StreamInviteFriendsCellPresenterSpec.swift in Sources */,
 				1DDF39E71D072FCD00C1A75E /* BlockUserModalScreenSpec.swift in Sources */,
 				1D209BF41DA300D600CFBF92 /* ProfileSpec.swift in Sources */,
@@ -5031,7 +5024,6 @@
 				12431FFA1DBAAF27006808D4 /* CategoryHeaderCell.swift in Sources */,
 				1207C9811C73FEE000939ADB /* InviteService.swift in Sources */,
 				1275351D1B73D155006B9A0F /* Date.swift in Sources */,
-				7666C95E1B10055C009AC019 /* AddFriendsViewController.swift in Sources */,
 				12F6AE241A43389B00493660 /* LoginViewController.swift in Sources */,
 				1D2B50BB1D272A6400F6CE90 /* BlackBar.swift in Sources */,
 				1D98563B1C6D7D3300C1BF78 /* DrawerAnimators.swift in Sources */,
