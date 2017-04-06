@@ -4,17 +4,17 @@
 
 @objc
 protocol PostbarResponder: class {
-    func viewsButtonTapped(_ indexPath: IndexPath)
+    func viewsButtonTapped(_ cell: UICollectionViewCell)
     func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl)
-    func deleteCommentButtonTapped(_ indexPath: IndexPath)
-    func editCommentButtonTapped(_ indexPath: IndexPath)
-    func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath)
-    func repostButtonTapped(_ indexPath: IndexPath)
-    func shareButtonTapped(_ indexPath: IndexPath, sourceView: UIView)
-    func flagCommentButtonTapped(_ indexPath: IndexPath)
-    func replyToCommentButtonTapped(_ indexPath: IndexPath)
-    func replyToAllButtonTapped(_ indexPath: IndexPath)
-    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath)
+    func deleteCommentButtonTapped(_ cell: UICollectionViewCell)
+    func editCommentButtonTapped(_ cell: UICollectionViewCell)
+    func lovesButtonTapped(_ cell: StreamFooterCell)
+    func repostButtonTapped(_ cell: UICollectionViewCell)
+    func shareButtonTapped(_ cell: UICollectionViewCell, sourceView: UIView)
+    func flagCommentButtonTapped(_ cell: UICollectionViewCell)
+    func replyToCommentButtonTapped(_ cell: UICollectionViewCell)
+    func replyToAllButtonTapped(_ cell: UICollectionViewCell)
+    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell)
 }
 
 class PostbarController: UIResponder, PostbarResponder {
@@ -40,13 +40,24 @@ class PostbarController: UIResponder, PostbarResponder {
         self.dataSource = dataSource
     }
 
-    func viewsButtonTapped(_ indexPath: IndexPath) {
-        guard let post = postForIndexPath(indexPath) else { return }
+    // in order to include the `StreamViewController` in our responder chain
+    // search, we need to ask it directly for the correct target.  If the
+    // `StreamViewController` isn't returned, this function returns the same
+    // object as `target(forAction:,withSender:)`
+    func properTarget(forAction action: Selector, withSender sender: Any?) -> Any? {
+        return responderChainable?.controller?.target(forAction: action, withSender: sender)
+    }
+
+    func viewsButtonTapped(_ cell: UICollectionViewCell) {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let post = postForIndexPath(indexPath)
+        else { return }
 
         Tracker.shared.viewsButtonTapped(post: post)
 
-        let responder = target(forAction: #selector(PostTappedResponder.postTapped(_:)), withSender: self) as? PostTappedResponder
-        responder?.postTapped(post)
+        let responder = properTarget(forAction: #selector(StreamPostTappedResponder.postTappedInStream(_:)), withSender: self) as? StreamPostTappedResponder
+        responder?.postTappedInStream(cell)
     }
 
     func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
@@ -59,9 +70,7 @@ class PostbarController: UIResponder, PostbarResponder {
             dataSource.isFullWidthAtIndexPath(indexPath)
         else {
             cell.cancelCommentLoading()
-            if let indexPath = collectionView.indexPath(for: cell) {
-                self.viewsButtonTapped(indexPath)
-            }
+            viewsButtonTapped(cell)
             return
         }
 
@@ -132,11 +141,13 @@ class PostbarController: UIResponder, PostbarResponder {
         }
     }
 
-    func deleteCommentButtonTapped(_ indexPath: IndexPath) {
+    func deleteCommentButtonTapped(_ cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+
 
         let message = InterfaceString.Post.DeleteCommentConfirm
         let alertController = AlertViewController(message: message)
@@ -166,27 +177,33 @@ class PostbarController: UIResponder, PostbarResponder {
         responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
-    func editCommentButtonTapped(_ indexPath: IndexPath) {
+    func editCommentButtonTapped(_ cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
+            let indexPath = collectionView.indexPath(for: cell),
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller
         else { return }
 
-        let responder = target(forAction: #selector(CreatePostResponder.editComment(_:fromController:)), withSender: self) as? CreatePostResponder
+        let responder = properTarget(forAction: #selector(CreatePostResponder.editComment(_:fromController:)), withSender: self) as? CreatePostResponder
         responder?.editComment(comment, fromController: presentingController)
     }
 
-    func lovesButtonTapped(_ cell: StreamFooterCell?, indexPath: IndexPath) {
+    func lovesButtonTapped(_ cell: StreamFooterCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
-        guard let post = self.postForIndexPath(indexPath) else { return }
-        cell?.lovesControl.isUserInteractionEnabled = false
+
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let post = self.postForIndexPath(indexPath)
+        else { return }
+
+        cell.lovesControl.isUserInteractionEnabled = false
 
         if post.loved { unlovePost(post, cell: cell) }
         else { lovePost(post, cell: cell) }
@@ -238,12 +255,16 @@ class PostbarController: UIResponder, PostbarResponder {
             })
     }
 
-    func repostButtonTapped(_ indexPath: IndexPath) {
+    func repostButtonTapped(_ cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
-        guard let post = self.postForIndexPath(indexPath) else { return }
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let post = self.postForIndexPath(indexPath),
+            let presentingController = responderChainable?.controller
+        else { return }
 
         Tracker.shared.postReposted(post)
         let message = InterfaceString.Post.RepostConfirm
@@ -260,7 +281,7 @@ class PostbarController: UIResponder, PostbarResponder {
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        responderChainable?.controller?.present(alertController, animated: true, completion: .none)
+        presentingController.present(alertController, animated: true, completion: .none)
     }
 
     fileprivate func createRepost(_ post: Post, alertController: AlertViewController) {
@@ -306,32 +327,35 @@ class PostbarController: UIResponder, PostbarResponder {
             })
     }
 
-    func shareButtonTapped(_ indexPath: IndexPath, sourceView: UIView) {
+    func shareButtonTapped(_ cell: UICollectionViewCell, sourceView: UIView) {
         guard
+            let indexPath = collectionView.indexPath(for: cell),
             let post = dataSource.postForIndexPath(indexPath),
             let shareLink = post.shareLink,
-            let shareURL = URL(string: shareLink)
+            let shareURL = URL(string: shareLink),
+            let presentingController = responderChainable?.controller
         else { return }
 
         Tracker.shared.postShared(post)
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
-            responderChainable?.controller?.present(activityVC, animated: true) { }
+            presentingController.present(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .popover
             activityVC.popoverPresentationController?.sourceView = sourceView
-            responderChainable?.controller?.present(activityVC, animated: true) { }
+            presentingController.present(activityVC, animated: true) { }
         }
     }
 
-    func flagCommentButtonTapped(_ indexPath: IndexPath) {
+    func flagCommentButtonTapped(_ cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
+            let indexPath = collectionView.indexPath(for: cell),
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller
         else { return }
@@ -346,30 +370,31 @@ class PostbarController: UIResponder, PostbarResponder {
         flagger.displayFlaggingSheet()
     }
 
-    func replyToCommentButtonTapped(_ indexPath: IndexPath) {
+    func replyToCommentButtonTapped(_ cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
+            let indexPath = collectionView.indexPath(for: cell),
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller,
             let atName = comment.author?.atName
         else { return }
 
-
         let postId = comment.loadedFromPostId
 
-        let responder = target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+        let responder = properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
         responder?.createComment(postId, text: "\(atName) ", fromController: presentingController)
     }
 
-    func replyToAllButtonTapped(_ indexPath: IndexPath) {
+    func replyToAllButtonTapped(_ cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
+            let indexPath = collectionView.indexPath(for: cell),
             let comment = commentForIndexPath(indexPath),
             let presentingController = responderChainable?.controller
         else { return }
@@ -381,23 +406,25 @@ class PostbarController: UIResponder, PostbarResponder {
                 let usernamesText = usernames.reduce("") { memo, username in
                     return memo + "@\(username) "
                 }
-                let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
                 responder?.createComment(postId, text: usernamesText, fromController: presentingController)
             }
             .onFail { [weak self] error in
                 guard let `self` = self else { return }
                 guard let controller = self.responderChainable?.controller else { return }
-                let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+
+                let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
                 responder?.createComment(postId, text: nil, fromController: controller)
             }
     }
 
-    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell, indexPath: IndexPath) {
+    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
         guard
+            let indexPath = collectionView.indexPath(for: cell),
             let comment = dataSource.commentForIndexPath(indexPath),
             let post = comment.parentPost
         else { return }
@@ -452,7 +479,7 @@ class PostbarController: UIResponder, PostbarResponder {
                 if let controller = self.responderChainable?.controller,
                     indexPaths.count == 1, jsonables.count == 0, self.currentUser != nil
                 {
-                    let responder = self.target(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                    let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
                     responder?.createComment(post.id, text: nil, fromController: controller)
                 }
             }

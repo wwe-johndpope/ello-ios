@@ -22,6 +22,11 @@ protocol StreamImageCellResponder: class {
 }
 
 @objc
+protocol StreamPostTappedResponder: class {
+    func postTappedInStream(_ cell: UICollectionViewCell)
+}
+
+@objc
 protocol StreamEditingResponder: class {
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint)
     func cellLongPressed(cell: UICollectionViewCell)
@@ -907,9 +912,10 @@ extension StreamViewController: StreamEditingResponder {
             window.addSubview(imageView)
         }
 
-        if !post.loved {
+        if !post.loved,
             let footerCell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
-            postbarController?.lovesButtonTapped(footerCell, indexPath: footerPath)
+        {
+            postbarController?.lovesButtonTapped(footerCell)
         }
     }
 
@@ -961,7 +967,18 @@ extension StreamViewController: StreamImageCellResponder {
 }
 
 // MARK: StreamViewController: Open post
-extension StreamViewController {
+extension StreamViewController: StreamPostTappedResponder {
+
+    @objc
+    func postTappedInStream(_ cell: UICollectionViewCell) {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let post = dataSource.postForIndexPath(indexPath),
+            let streamCellItem = dataSource.visibleStreamCellItem(at: indexPath)
+        else { return }
+
+        sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
+    }
 
     func sendToPostTappedResponder(post: Post, streamCellItem: StreamCellItem, scrollToComment: ElloComment? = nil) {
         if let placeholderType = streamCellItem.placeholderType,
