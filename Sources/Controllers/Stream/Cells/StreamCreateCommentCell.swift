@@ -180,17 +180,13 @@ class StreamCreateCommentCell: UICollectionViewCell {
     }
 
     func replyAllTapped() {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.replyToAllButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.replyToAllButtonTapped(indexPath)
+        responder?.replyToAllButtonTapped(self)
     }
 
     func watchTapped() {
-        guard let indexPath = indexPath else { return }
-
-        let responder = target(forAction: #selector(PostbarResponder.watchPostTapped(_:cell:indexPath:)), withSender: self) as? PostbarResponder
-        responder?.watchPostTapped(!watching, cell: self, indexPath: indexPath)
+        let responder = target(forAction: #selector(PostbarResponder.watchPostTapped(_:cell:)), withSender: self) as? PostbarResponder
+        responder?.watchPostTapped(!watching, cell: self)
     }
 
 }

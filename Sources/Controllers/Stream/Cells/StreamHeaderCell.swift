@@ -411,10 +411,8 @@ class StreamHeaderCell: UICollectionViewCell {
 // MARK: - IBActions
 
     func postTapped(_ recognizer: UITapGestureRecognizer) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.viewsButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.viewsButtonTapped(indexPath)
+        responder?.viewsButtonTapped(self)
     }
 
     @IBAction func userTapped(_ sender: AvatarButton) {
@@ -438,31 +436,23 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func flagButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.flagCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.flagCommentButtonTapped(indexPath)
+        responder?.flagCommentButtonTapped(self)
     }
 
     @IBAction func replyButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.replyToCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.replyToCommentButtonTapped(indexPath)
+        responder?.replyToCommentButtonTapped(self)
     }
 
     @IBAction func deleteButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.deleteCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.deleteCommentButtonTapped(indexPath)
+        responder?.deleteCommentButtonTapped(self)
     }
 
     @IBAction func editButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.editCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.editCommentButtonTapped(indexPath)
+        responder?.editCommentButtonTapped(self)
     }
 
     @IBAction func chevronButtonTapped(_ sender: StreamFooterButton) {
