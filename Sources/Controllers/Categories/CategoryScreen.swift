@@ -69,7 +69,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     }
 
     func scrollToCategory(index: Int) {
-        self.categoryCardList.scrollToIndex(index, animated: false)
+        self.categoryCardList.scrollToIndex(index, animated: true)
     }
 
     func selectCategory(index: Int) {

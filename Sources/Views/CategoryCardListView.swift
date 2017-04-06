@@ -74,8 +74,14 @@ class CategoryCardListView: UIView {
     func scrollToIndex(_ index: Int, animated: Bool) {
         guard let view = categoryViews.safeValue(index) else { return }
 
-        let x = max(min(view.frame.minX, scrollView.contentSize.width - frame.width), 0)
-        scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: animated)
+        let left = view.frame.minX
+        let right = view.frame.maxX - frame.width
+        if scrollView.contentOffset.x > left {
+            scrollView.setContentOffset(CGPoint(x: left, y: 0), animated: animated)
+        }
+        else if scrollView.contentOffset.x < right {
+            scrollView.setContentOffset(CGPoint(x: right, y: 0), animated: animated)
+        }
     }
 
     func selectCategoryIndex(_ index: Int) {
