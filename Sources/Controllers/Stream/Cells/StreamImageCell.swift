@@ -96,9 +96,9 @@ class StreamImageCell: StreamRegionableCell {
         case .post:
             return 0
         case .comment:
-            return StreamTextCellPresenter.commentMargin
+            return StreamTextCell.Size.commentMargin
         case .repost:
-            return StreamTextCellPresenter.repostMargin
+            return StreamTextCell.Size.repostMargin
         }
     }
 

@@ -55,10 +55,10 @@ class StreamImageCellSizeCalculator {
 
         let item = cellItems.remove(at: 0)
         if (item.type.data as? Regionable)?.isRepost == true {
-            maxWidth -= StreamTextCellPresenter.repostMargin
+            maxWidth -= StreamTextCell.Size.repostMargin
         }
         else if item.jsonable is ElloComment {
-            maxWidth -= StreamTextCellPresenter.commentMargin
+            maxWidth -= StreamTextCell.Size.commentMargin
         }
 
         if let imageRegion = item.type.data as? ImageRegion {

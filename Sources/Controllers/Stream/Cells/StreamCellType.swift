@@ -361,6 +361,7 @@ enum StreamCellType: Equatable {
             profileHeaderGhost,
             search(placeholder: ""),
             spacer(height: 0.0),
+            text(data: nil),
             streamLoading,
             textHeader(nil),
             unknown

@@ -3,9 +3,6 @@
 //
 
 struct StreamTextCellPresenter {
-    static let commentMargin = CGFloat(60)
-    static let postMargin = CGFloat(15)
-    static let repostMargin = CGFloat(30)
 
     static func configure(
         _ cell: UICollectionViewCell,
@@ -32,19 +29,19 @@ struct StreamTextCellPresenter {
         if let textRegion = streamCellItem.type.data as? TextRegion {
             isRepost = textRegion.isRepost
             let content = textRegion.content
-            let html = StreamTextCellHTML.postHTML(content)
-            cell.webView.loadHTMLString(html, baseURL: URL(string: "/"))
+            cell.html = content
         }
+
         // Repost specifics
-        if isRepost == true {
-            cell.leadingConstraint.constant = 30.0
+        if isRepost {
+            cell.margin = .repost
             cell.showBorder()
         }
         else if streamCellItem.jsonable is ElloComment {
-            cell.leadingConstraint.constant = commentMargin
+            cell.margin = .comment
         }
         else {
-            cell.leadingConstraint.constant = postMargin
+            cell.margin = .post
         }
     }
 

@@ -122,7 +122,6 @@
 		122B190A1A867D1800247A05 /* StreamHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B19091A867D1800247A05 /* StreamHeaderCell.xib */; };
 		122B190D1A86894400247A05 /* StreamCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B190C1A86894400247A05 /* StreamCellType.swift */; };
 		122B19101A8692C700247A05 /* StreamImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B190F1A8692C700247A05 /* StreamImageCell.xib */; };
-		122B19131A8695BF00247A05 /* StreamTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B19121A8695BF00247A05 /* StreamTextCell.xib */; };
 		122B19161A86972900247A05 /* StreamFooterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B19151A86972900247A05 /* StreamFooterCell.xib */; };
 		122B30AE1C6A3FBB00C1B9D8 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE351A43392D00493660 /* Activity.swift */; };
 		122B30AF1C6A3FBB00C1B9D8 /* AddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = F872F3C21AA4D968005152B5 /* AddressBook.swift */; };
@@ -1200,7 +1199,6 @@
 		122B19091A867D1800247A05 /* StreamHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamHeaderCell.xib; sourceTree = "<group>"; };
 		122B190C1A86894400247A05 /* StreamCellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellType.swift; sourceTree = "<group>"; };
 		122B190F1A8692C700247A05 /* StreamImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamImageCell.xib; sourceTree = "<group>"; };
-		122B19121A8695BF00247A05 /* StreamTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamTextCell.xib; sourceTree = "<group>"; };
 		122B19151A86972900247A05 /* StreamFooterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamFooterCell.xib; sourceTree = "<group>"; };
 		122B30F61C6A41CF00C1B9D8 /* RegionKindStreamCellTypeAddition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionKindStreamCellTypeAddition.swift; sourceTree = "<group>"; };
 		122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteViewController.swift; sourceTree = "<group>"; };
@@ -2235,7 +2233,6 @@
 				76EB15A81B0295AA001BBB2A /* StreamSeeMoreCommentsCell.swift */,
 				76EB15AA1B0295BD001BBB2A /* StreamSeeMoreCommentsCell.xib */,
 				122B18F21A867C7D00247A05 /* StreamTextCell.swift */,
-				122B19121A8695BF00247A05 /* StreamTextCell.xib */,
 				122B18F31A867C7D00247A05 /* StreamTextCellHTML.swift */,
 				12D43A481AC865540039F54F /* StreamToggleCell.swift */,
 				12450FD41AC86F630084BDBA /* StreamToggleCell.xib */,
@@ -4153,7 +4150,6 @@
 				1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */,
 				1DA8FD701B98A63600472B1E /* reorder_normal.svg in Resources */,
 				76F8DED71B6C0BC4009BCF61 /* hearts_selected.svg in Resources */,
-				122B19131A8695BF00247A05 /* StreamTextCell.xib in Resources */,
 				7689B4E81AD4ED3B00E4A4A3 /* discovery_listing_random_users.json in Resources */,
 				76F8DEC01B6C0BC4009BCF61 /* checksmall_normal.svg in Resources */,
 				1D59337E1D1455E700EAF03D /* dots_light_normal.svg in Resources */,
