@@ -19,15 +19,6 @@ final class CategoryViewController: StreamableViewController {
         }
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        guard motion == .motionShake else { return }
-        onInviteFriends()
-    }
-
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.sparkles, insets: ElloTab.discover.insets) }
         set { self.tabBarItem = newValue }
