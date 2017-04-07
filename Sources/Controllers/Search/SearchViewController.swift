@@ -35,7 +35,12 @@ class SearchViewController: StreamableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let streamKind = StreamKind.simpleStream(endpoint: .searchForPosts(terms: ""), title: "")
+        streamViewController.streamKind = streamKind
+        screen.isGridView = streamKind.isGridView
         streamViewController.pullToRefreshEnabled = false
+
         updateInsets()
     }
 
@@ -92,6 +97,10 @@ extension SearchViewController: SearchScreenDelegate {
     func toggleChanged(_ text: String, isPostSearch: Bool) {
         searchShouldReset()
         loadEndpoint(text, isPostSearch: isPostSearch, checkSearchText: false)
+    }
+
+    func gridListToggled(sender: UIButton) {
+        streamViewController.gridListToggled(sender)
     }
 
     func findFriendsTapped() {

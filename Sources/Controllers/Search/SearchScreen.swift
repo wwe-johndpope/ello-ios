@@ -2,9 +2,13 @@
 ///  SearchScreen.swift
 //
 
+import SnapKit
+
+
 class SearchScreen: StreamableScreen, SearchScreenProtocol {
     struct Size {
         static let margin: CGFloat = 15
+        static let buttonMargin: CGFloat = 5
         static let buttonWidth: CGFloat = 40
         static let searchControlsHeight: CGFloat = 30
         static let cornerRadius: CGFloat = 5
@@ -20,6 +24,11 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     var showsFindFriends: Bool = true {
         didSet { showHideFindFriends() }
     }
+    var isGridView = false {
+        didSet {
+            gridListButton.setImage(isGridView ? .listView : .gridView, imageStyle: .normal, for: .normal)
+        }
+    }
 
     fileprivate let debounced: ThrottledBlock = debounce(0.8)
     fileprivate let backButton = UIButton()
@@ -29,6 +38,9 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     fileprivate let findFriendsButton = StyledButton(style: .green)
     fileprivate let findFriendsLabel = StyledLabel(style: .black)
     fileprivate var bottomInset: CGFloat = 0
+    fileprivate let gridListButton = UIButton()
+    fileprivate var gridListVisibleConstraint: Constraint!
+    fileprivate var gridListHiddenConstraint: Constraint!
 
     override func setText() {
         searchField.placeholder = InterfaceString.Friends.SearchPrompt
@@ -44,6 +56,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         postsToggleButton.addTarget(self, action: #selector(onPostsTapped), for: .touchUpInside)
         peopleToggleButton.addTarget(self, action: #selector(onPeopleTapped), for: .touchUpInside)
         findFriendsButton.addTarget(self, action: #selector(findFriendsTapped), for: .touchUpInside)
+        gridListButton.addTarget(self, action: #selector(gridListToggled), for: .touchUpInside)
         searchField.delegate = self
     }
 
@@ -66,6 +79,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
 
         navigationBar.addSubview(backButton)
         navigationBar.addSubview(searchField)
+        navigationBar.addSubview(gridListButton)
 
         addSubview(searchControlsContainer)
         searchControlsContainer.addSubview(postsToggleButton)
@@ -82,8 +96,19 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         }
 
         searchField.snp.makeConstraints { make in
+            let insets = SearchNavBarField.Size.searchInsets
             make.leading.equalTo(backButton.snp.trailing)
-            make.bottom.top.trailing.equalTo(navigationBar).inset(SearchNavBarField.Size.searchInsets)
+            make.bottom.top.equalTo(navigationBar).inset(insets)
+            gridListVisibleConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
+            gridListHiddenConstraint = make.trailing.equalTo(navigationBar).offset(-insets.right).constraint
+        }
+        gridListHiddenConstraint.deactivate()
+
+        gridListButton.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.bottom.equalTo(navigationBar)
+            make.trailing.equalTo(navigationBar).offset(-Size.buttonMargin)
+            make.width.equalTo(Size.buttonWidth)
         }
 
         searchControlsContainer.snp.makeConstraints { make in
@@ -183,6 +208,8 @@ extension SearchScreen {
             searchFieldText = ""
         }
         searchField.text = searchFieldText
+        animateGridListButton(visible: true)
+
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton.isSelected)
     }
 
@@ -195,7 +222,24 @@ extension SearchScreen {
             searchFieldText = "@"
         }
         searchField.text = searchFieldText
+        animateGridListButton(visible: false)
+
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton.isSelected)
+    }
+
+    fileprivate func animateGridListButton(visible: Bool) {
+        if visible {
+            self.gridListVisibleConstraint.activate()
+            self.gridListHiddenConstraint.deactivate()
+        }
+        else {
+            self.gridListVisibleConstraint.deactivate()
+            self.gridListHiddenConstraint.activate()
+        }
+        animate {
+            self.gridListButton.alpha = visible ? 1 : 0
+            self.navigationBar.layoutIfNeeded()
+        }
     }
 
     @objc
@@ -206,6 +250,10 @@ extension SearchScreen {
     @objc
     func findFriendsTapped() {
         delegate?.findFriendsTapped()
+    }
+
+    func gridListToggled() {
+        delegate?.gridListToggled(sender: gridListButton)
     }
 
     @objc
