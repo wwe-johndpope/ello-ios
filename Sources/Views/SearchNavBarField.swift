@@ -47,7 +47,7 @@ class SearchNavBarField: UITextField {
         keyboardType = .default
 
         leftViewMode = .always
-        leftView = UIImageView(image: InterfaceImage.searchSmall.normalImage)
+        leftView = UIImageView(image: InterfaceImage.searchField.normalImage)
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {

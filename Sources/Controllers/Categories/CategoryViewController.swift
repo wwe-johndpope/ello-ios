@@ -20,7 +20,7 @@ final class CategoryViewController: StreamableViewController {
     }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.sparkles, insets: ElloTab.discover.insets) }
+        get { return UITabBarItem.item(.searchTabBar, insets: ElloTab.discover.insets) }
         set { self.tabBarItem = newValue }
     }
 

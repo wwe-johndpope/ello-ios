@@ -67,7 +67,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
 
         screen.delegate = self
         title = InterfaceString.Notifications.Title
-        elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
 
         initialLoad()
     }

@@ -4,14 +4,6 @@
 
 extension UIBarButtonItem {
 
-    class func searchItem(controller: BaseElloViewController) -> UIBarButtonItem {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
-        button.addTarget(controller, action: #selector(BaseElloViewController.searchButtonTapped), for: .touchUpInside)
-        button.setImage(.search, imageStyle: .normal, for: .normal)
-
-        return UIBarButtonItem(customView: button)
-    }
-
     class func gridListItem(delegate: GridListToggleDelegate, isGridView: Bool) -> UIBarButtonItem {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
         let isGridView = isGridView

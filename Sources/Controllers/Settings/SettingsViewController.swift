@@ -273,8 +273,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         navigationItem.leftBarButtonItem = backItem
         navigationItem.title = InterfaceString.Settings.EditProfile
         navigationItem.fixNavBarItemPadding()
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .search, target: self, action: #selector(SettingsViewController.searchButtonTapped))
     }
 
     @IBAction func searchButtonTapped() {

@@ -151,12 +151,8 @@ private extension FollowingViewController {
 
     func setupNavigationItems(streamKind: StreamKind) {
         elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(FollowingViewController.hamburgerButtonTapped))
-        let searchItem = UIBarButtonItem.searchItem(controller: self)
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView)
-        elloNavigationItem.rightBarButtonItems = [
-            searchItem,
-            gridListItem,
-        ]
+        elloNavigationItem.rightBarButtonItem = gridListItem
         navigationBar.items = [elloNavigationItem]
     }
 
