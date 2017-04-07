@@ -15,6 +15,8 @@ class MockSearchScreenDelegate: NSObject, SearchScreenDelegate {
     func searchShouldReset(){}
     func toggleChanged(_ text: String, isPostSearch: Bool){}
     func findFriendsTapped(){}
+    func backTapped() {}
+    func gridListToggled(sender: UIButton) {}
 }
 
 class SearchScreenSpec: QuickSpec {
@@ -93,7 +95,7 @@ class SearchScreenSpec: QuickSpec {
 
                         it("shows find friends text") {
                             _ = subject.textFieldShouldClear(subject.searchField)
-                            expect(subject.findFriendsContainer.isHidden) == false
+                            expect(subject).to(haveValidSnapshot())
                         }
                     }
 
@@ -106,7 +108,7 @@ class SearchScreenSpec: QuickSpec {
 
                         it("hides find friends text") {
                             _ = subject.textFieldShouldClear(subject.searchField)
-                            expect(subject.findFriendsContainer.isHidden) == true
+                            expect(subject).to(haveValidSnapshot())
                         }
                     }
                 }

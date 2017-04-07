@@ -50,7 +50,7 @@ class DeepLinkingSpec: QuickSpec {
                 }
 
                 it("does not push a new CategoryViewController if CategoryViewController is being viewed") {
-                    let existing = CategoryViewController()
+                    let existing = CategoryViewController(slug: "", name: "")
                     fakeNavController.viewControllers = [existing]
 
                     DeepLinking.showDiscover(navVC: fakeNavController, currentUser: fakeCurrentUser)

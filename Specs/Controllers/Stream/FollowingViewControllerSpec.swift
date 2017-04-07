@@ -32,7 +32,7 @@ class FollowingViewControllerSpec: QuickSpec {
                 let item = subject.navigationBar.items?.first
 
                 expect(item?.leftBarButtonItems?.count) == 1
-                expect(item?.rightBarButtonItems?.count) == 2
+                expect(item?.rightBarButtonItems?.count) == 1
             }
 
             it("shows the more posts button when new content is available") {

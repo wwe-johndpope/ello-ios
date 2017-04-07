@@ -5,12 +5,15 @@
 @testable import Ello
 import Quick
 import Nimble
+import Nimble_Snapshots
 
 
 class CategoryViewControllerSpec: QuickSpec {
     class MockCategoryScreen: CategoryScreenProtocol {
         let topInsetView = UIView()
-        var categoryCardsVisible: Bool = true
+        let streamContainer = UIView()
+        var categoryCardsVisible = true
+        var isGridView = true
         var navigationBarTopConstraint: NSLayoutConstraint!
         let navigationBar = ElloNavigationBar()
         var navigationItem: UINavigationItem?
@@ -29,6 +32,10 @@ class CategoryViewControllerSpec: QuickSpec {
         func selectCategory(index: Int) {
             select = index
         }
+
+        func viewForStream() -> UIView {
+            return streamContainer
+        }
     }
 
     override func spec() {
@@ -46,9 +53,8 @@ class CategoryViewControllerSpec: QuickSpec {
                 showController(subject)
             }
 
-            it("has a search button in the nav bar") {
-                let rightButtons = subject.elloNavigationItem.rightBarButtonItems
-                expect(rightButtons!.count) == 2
+            it("has a nice looking nav bar") {
+                expect(subject).to(haveValidSnapshot())
             }
 
             context("setCategories(_:)") {

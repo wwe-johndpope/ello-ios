@@ -10,8 +10,17 @@ import Nimble
 class CategoryScreenSpec: QuickSpec {
     class MockCategoryScreenDelegate: CategoryScreenDelegate {
         var selectedIndex: Int?
+        var gridListToggled = 0
+        var searchButtonCount = 0
+
         func categorySelected(index: Int) {
             selectedIndex = index
+        }
+        func gridListToggled(sender: UIButton) {
+            gridListToggled += 1
+        }
+        func searchButtonTapped() {
+            searchButtonCount += 1
         }
     }
 
