@@ -66,8 +66,6 @@ class CategoryHeaderCell: UICollectionViewCell {
     let circle = PulsingCircle()
     let failImage = UIImageView()
     let failBackgroundView = UIView()
-    var failWidthConstraint: Constraint!
-    var failHeightConstraint: Constraint!
 
     fileprivate var imageSize: CGSize?
     fileprivate var aspectRatio: CGFloat? {
@@ -225,9 +223,7 @@ private extension CategoryHeaderCell {
         }
 
         failImage.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
-            failWidthConstraint = make.leading.equalTo(Size.failImageWidth).constraint
-            failHeightConstraint = make.leading.equalTo(Size.failImageHeight).constraint
+            make.edges.equalTo(contentView)
         }
 
         imageView.snp.makeConstraints { make in
@@ -285,7 +281,7 @@ private extension CategoryHeaderCell {
             return
         }
 
-        self.imageView.pin_setImage(from: url) { [weak self] result in
+        imageView.pin_setImage(from: url) { [weak self] result in
             guard let `self` = self else { return }
 
             guard result.hasImage else {
@@ -313,7 +309,6 @@ private extension CategoryHeaderCell {
             }
 
             self.layoutIfNeeded()
-
         }
     }
 
@@ -377,7 +372,7 @@ extension CategoryHeaderCell.Config {
         callToActionURL = category.ctaURL as URL?
 
         if let promotional = category.randomPromotional {
-            imageURL = promotional.image?.xhdpi?.url as URL?
+            imageURL = promotional.image?.oneColumnAttachment?.url as URL?
             user = promotional.user
         }
     }

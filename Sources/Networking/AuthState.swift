@@ -22,10 +22,10 @@ enum AuthState {
 
     fileprivate var nextStates: [AuthState] {
         switch self {
-        case .initial: return [.noToken, .anonymous, .authenticated]
+        case .initial: return [.noToken, .shouldTryAnonymousCreds, .anonymous, .authenticated]
 
         case .noToken: return [.authenticated, .userCredsSent, .anonymousCredsSent, .shouldTryAnonymousCreds]
-        case .anonymous: return [.userCredsSent, .noToken]
+        case .anonymous: return [.userCredsSent, .authenticated, .noToken]
         case .authenticated: return [.refreshTokenSent, .noToken]
 
         case .refreshTokenSent: return [.authenticated, .shouldTryRefreshToken, .shouldTryUserCreds]

@@ -22,23 +22,23 @@ struct Mapper {
         return (json, error)
     }
 
-    static func mapToObjectArray(_ dicts: [[String:AnyObject]], type: MappingType) -> [JSONAble] {
-        let fromJSON = type.fromJSON
+    static func mapToObjectArray(_ dicts: [[String: AnyObject]], type mappingType: MappingType) -> [JSONAble] {
+        let fromJSON = mappingType.fromJSON
         return dicts.map { data in
             let jsonable = fromJSON(data)
             if let id = (jsonable as? JSONSaveable)?.tableId {
-                ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: type)
+                ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: mappingType)
             }
             return jsonable
         }
     }
 
-    static func mapToObject(_ object: AnyObject?, type: MappingType) -> JSONAble? {
-        let fromJSON = type.fromJSON
-        return (object as? [String:AnyObject]).flatMap { data in
+    static func mapToObject(_ object: AnyObject?, type mappingType: MappingType) -> JSONAble? {
+        let fromJSON = mappingType.fromJSON
+        return (object as? [String: AnyObject]).flatMap { data in
             let jsonable = fromJSON(data)
             if let id = (jsonable as? JSONSaveable)?.tableId {
-                ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: type)
+                ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: mappingType)
             }
             return jsonable
         }
