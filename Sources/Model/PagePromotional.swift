@@ -15,7 +15,7 @@ final class PagePromotional: JSONAble {
     let ctaCaption: String
     let ctaURL: URL?
     let image: Asset?
-    var tileURL: URL? { return image?.xhdpi?.url as URL? }
+    var tileURL: URL? { return image?.oneColumnAttachment?.url as URL? }
 
     // links
     var user: User? { return getLinkObject("user") as? User }

@@ -305,7 +305,7 @@ extension ElloProvider {
         postNotification(AuthenticationNotifications.invalidToken, value: true)
     }
 
-    fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String:AnyObject], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String: AnyObject], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         let completion: ElloEmptyCompletion = {
             let node = dict[elloAPI.mappingType.rawValue]
             var newResponseConfig: ResponseConfig?
