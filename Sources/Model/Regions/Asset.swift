@@ -84,18 +84,10 @@ final class Asset: JSONAble {
     }
 
     var oneColumnAttachment: Attachment? {
-        return Window.isWide(Window.width) && DeviceScreen.isRetina  ? xhdpi : hdpi
-    }
-
-    var oneColumnPreviewAttachment: Attachment? {
         return Window.isWide(Window.width) && DeviceScreen.isRetina ? xhdpi : hdpi
     }
 
     var gridLayoutAttachment: Attachment? {
-        return Window.isWide(Window.width) && DeviceScreen.isRetina ? hdpi : mdpi
-    }
-
-    var gridLayoutPreviewAttachment: Attachment? {
         return Window.isWide(Window.width) && DeviceScreen.isRetina ? hdpi : mdpi
     }
 

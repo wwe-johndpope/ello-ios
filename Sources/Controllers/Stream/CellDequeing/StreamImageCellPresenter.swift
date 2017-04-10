@@ -59,8 +59,7 @@ struct StreamImageCellPresenter {
                 imageToLoad = asset.optimized?.url as URL?
             }
             else {
-                attachmentToLoad = isGridView ?
-                    asset.gridLayoutPreviewAttachment : asset.oneColumnPreviewAttachment
+                attachmentToLoad = isGridView ? asset.gridLayoutAttachment : asset.oneColumnAttachment
                 cell.presentedImageUrl = asset.optimized?.url
                 cell.isLargeImage = true
             }
