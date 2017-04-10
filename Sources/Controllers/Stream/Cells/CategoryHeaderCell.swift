@@ -66,8 +66,6 @@ class CategoryHeaderCell: UICollectionViewCell {
     let circle = PulsingCircle()
     let failImage = UIImageView()
     let failBackgroundView = UIView()
-    var failWidthConstraint: Constraint!
-    var failHeightConstraint: Constraint!
 
     fileprivate var imageSize: CGSize?
     fileprivate var aspectRatio: CGFloat? {
@@ -225,9 +223,7 @@ private extension CategoryHeaderCell {
         }
 
         failImage.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
-            failWidthConstraint = make.leading.equalTo(Size.failImageWidth).constraint
-            failHeightConstraint = make.leading.equalTo(Size.failImageHeight).constraint
+            make.edges.equalTo(contentView)
         }
 
         imageView.snp.makeConstraints { make in
