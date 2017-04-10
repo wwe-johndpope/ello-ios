@@ -102,10 +102,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setupCaches() {
         let manager = PINRemoteImageManager.shared()
-        let twoWeeks: TimeInterval = 1_209_600
-        let twoHundredFiftyMegaBytes: UInt = 250_000_000
-        manager.pinCache?.diskCache.ageLimit = twoWeeks
-        manager.pinCache?.diskCache.byteLimit = twoHundredFiftyMegaBytes
+        let diskAgeLimit: TimeInterval = 1_209_600
+        let diskByteLimit: UInt = 250_000_000
+        let memoryByteLimit: UInt = 10_000_000
+        manager.pinCache?.diskCache.ageLimit = diskAgeLimit
+        manager.pinCache?.diskCache.byteLimit = diskByteLimit
+        manager.pinCache?.memoryCache.costLimit = memoryByteLimit
         _ = CategoryService().loadCategories()
     }
 
