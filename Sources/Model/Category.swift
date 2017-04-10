@@ -146,7 +146,7 @@ final class Category: JSONAble, Groupable {
         let usesPagePromo = json["uses_page_promotionals"].bool ?? (level == .meta)
         let tileImage: Attachment?
         if let assetJson = json["tile_image"].object as? [String: AnyObject],
-            let attachmentJson = assetJson["large"] as? [String: AnyObject]
+            let attachmentJson = DeviceScreen.isRetina ? (assetJson["large"] as? [String: AnyObject]) : (assetJson["small"] as? [String: AnyObject])
         {
             tileImage = Attachment.fromJSON(attachmentJson) as? Attachment
         }

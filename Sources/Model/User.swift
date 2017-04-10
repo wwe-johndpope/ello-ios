@@ -381,7 +381,7 @@ extension User {
         if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.hasSuffix(".gif") == true {
             return coverImage?.original?.url as URL?
         }
-        return coverImage?.xhdpi?.url as URL?
+        return coverImage?.oneColumnAttachment?.url as URL?
     }
 
     func avatarURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
