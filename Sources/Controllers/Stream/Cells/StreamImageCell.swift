@@ -183,10 +183,10 @@ class StreamImageCell: StreamRegionableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         if let aspectRatio = aspectRatio, let imageSize = imageSize {
-            let width = min(imageSize.width, self.frame.width - margin)
+            let width = min(imageSize.width, frame.width - margin)
             let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
-            if ceil(actualHeight) != ceil(frame.height) {
-                self.onHeightMismatch?(actualHeight)
+            if actualHeight != frame.height {
+                onHeightMismatch?(actualHeight)
             }
         }
 
