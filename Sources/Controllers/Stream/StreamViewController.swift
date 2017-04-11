@@ -546,9 +546,11 @@ final class StreamViewController: BaseElloViewController {
             guard let `self` = self else { return }
             self.imageCellHeightUpdated(streamImageCell)
         }
-        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamTextCell in
+        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] cell in
             guard let `self` = self else { return }
-            self.collectionView.collectionViewLayout.invalidateLayout()
+            nextTick {
+                self.collectionView.collectionViewLayout.invalidateLayout()
+            }
         }
         rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [weak self] _ in
             guard let `self` = self else { return }
@@ -560,8 +562,8 @@ final class StreamViewController: BaseElloViewController {
             let columnCount = self.columnCountFor(width: size.width)
             if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
                 layout.columnCount = columnCount
-                layout.invalidateLayout()
             }
+            self.collectionView.collectionViewLayout.invalidateLayout()
             self.dataSource.columnCount = columnCount
             self.reloadCells()
         }
