@@ -796,6 +796,7 @@
 		1DF0B2D51E8D59DD001B9F97 /* ForgotPasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF0B2D11E8D59DD001B9F97 /* ForgotPasswordResetViewController.swift */; };
 		1DF0B2D91E8D679E001B9F97 /* ForgotPasswordEmailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF0B2D71E8D679E001B9F97 /* ForgotPasswordEmailScreen.swift */; };
 		1DF0B2DA1E8D679E001B9F97 /* ForgotPasswordResetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF0B2D81E8D679E001B9F97 /* ForgotPasswordResetScreen.swift */; };
+		1DF0B2DE1E8EBACF001B9F97 /* NewPostsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF0B2DD1E8EBACE001B9F97 /* NewPostsButton.swift */; };
 		1DF233611A94FB060096DA65 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233601A94FB060096DA65 /* CGRectExtensions.swift */; };
 		1DF233641A9537590096DA65 /* CGRectSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233631A9537590096DA65 /* CGRectSpec.swift */; };
 		1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF322411BD6F16C008203F3 /* DebugViewsController.swift */; };
@@ -1777,6 +1778,7 @@
 		1DF0B2D11E8D59DD001B9F97 /* ForgotPasswordResetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordResetViewController.swift; sourceTree = "<group>"; };
 		1DF0B2D71E8D679E001B9F97 /* ForgotPasswordEmailScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordEmailScreen.swift; sourceTree = "<group>"; };
 		1DF0B2D81E8D679E001B9F97 /* ForgotPasswordResetScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordResetScreen.swift; sourceTree = "<group>"; };
+		1DF0B2DD1E8EBACE001B9F97 /* NewPostsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostsButton.swift; sourceTree = "<group>"; };
 		1DF2335B1A94005C0096DA65 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		1DF233601A94FB060096DA65 /* CGRectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		1DF233631A9537590096DA65 /* CGRectSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectSpec.swift; sourceTree = "<group>"; };
@@ -3144,6 +3146,7 @@
 				1289F3911AF1468B008A938C /* ImageLabelControl.swift */,
 				1D59EF841D5CFC480029C106 /* InterpolatedLoadingView.swift */,
 				1DF404091B150DB40073460B /* NarrationView.swift */,
+				1DF0B2DD1E8EBACE001B9F97 /* NewPostsButton.swift */,
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
 				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
@@ -5046,6 +5049,7 @@
 				1D066FF61B8BAF43002B303D /* OmnibarImageDownloadCell.swift in Sources */,
 				123375751DA6B8A80019CFAD /* ProfileHeaderCompactView.swift in Sources */,
 				1299D6A71ACEBE1000D47B35 /* UICollectionViewExtensions.swift in Sources */,
+				1DF0B2DE1E8EBACF001B9F97 /* NewPostsButton.swift in Sources */,
 				1D7152DA1D74C7FD005998FE /* OnboardingScreen.swift in Sources */,
 				124B48651DAEE3C60058D3F5 /* ProfileCategoriesProtocols.swift in Sources */,
 				1207C9911C73FEE000939ADB /* UserService.swift in Sources */,

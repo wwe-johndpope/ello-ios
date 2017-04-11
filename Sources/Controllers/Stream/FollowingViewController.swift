@@ -2,6 +2,7 @@
 ///  FollowingViewController.swift
 //
 
+import SnapKit
 import SwiftyUserDefaults
 
 
@@ -15,10 +16,12 @@ class FollowingViewController: StreamableViewController {
     }
 
     var navigationBar: ElloNavigationBar!
+    let newPostsButton = NewPostsButton()
     fileprivate var loggedPromptEventForThisSession = false
-    fileprivate var reloadStreamContentObserver: NotificationObserver?
+    fileprivate var reloadFollowingContentObserver: NotificationObserver?
     fileprivate var appBackgroundObserver: NotificationObserver?
     fileprivate var appForegroundObserver: NotificationObserver?
+    fileprivate var newFollowingContentObserver: NotificationObserver?
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.following, insets: ElloTab.following.insets) }
@@ -34,6 +37,10 @@ class FollowingViewController: StreamableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        removeNotificationObservers()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -44,6 +51,15 @@ class FollowingViewController: StreamableViewController {
         streamViewController.streamKind = .following
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+
+        view.addSubview(newPostsButton)
+        newPostsButton.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.top.equalTo(view).offset(NewPostsButton.Size.top)
+        }
+        newPostsButton.addTarget(self, action: #selector(loadNewPosts), for: .touchUpInside)
+
+        addNotificationObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +74,7 @@ class FollowingViewController: StreamableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        removeNotificationObservers()
+        removeTemporaryNotificationObservers()
     }
 
     override func viewForStream() -> UIView {
@@ -97,6 +113,27 @@ class FollowingViewController: StreamableViewController {
         self.present(drawer, animated: true, completion: nil)
     }
 
+    override func streamViewDidScroll(scrollView: UIScrollView) {
+        super.streamViewDidScroll(scrollView: scrollView)
+
+        if scrollView.contentOffset.y <= 0 {
+            animate {
+                self.newPostsButton.alpha = 0
+            }
+        }
+    }
+
+    @objc
+    func loadNewPosts() {
+        let scrollView = streamViewController.collectionView
+        scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
+        postNotification(NewContentNotifications.reloadFollowingContent, value: ())
+
+        animate {
+            self.newPostsButton.alpha = 0
+        }
+    }
+
 }
 
 private extension FollowingViewController {
@@ -124,7 +161,7 @@ private extension FollowingViewController {
     }
 
     func addTemporaryNotificationObservers() {
-        reloadStreamContentObserver = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) { [weak self] _ in
+        reloadFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) { [weak self] in
             guard let `self` = self else { return }
 
             ElloHUD.showLoadingHudInView(self.streamViewController.view)
@@ -133,16 +170,25 @@ private extension FollowingViewController {
     }
 
     func removeTemporaryNotificationObservers() {
-        reloadStreamContentObserver?.removeObserver()
+        reloadFollowingContentObserver?.removeObserver()
     }
 
     func addNotificationObservers() {
+        newFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] in
+            guard let `self` = self else { return }
+
+            animate {
+                self.newPostsButton.alpha = 1
+            }
+        }
+
         appBackgroundObserver = NotificationObserver(notification: Application.Notifications.DidEnterBackground) { [weak self] _ in
             self?.loggedPromptEventForThisSession = false
         }
     }
 
     func removeNotificationObservers() {
+        newFollowingContentObserver?.removeObserver()
         appBackgroundObserver?.removeObserver()
     }
 }

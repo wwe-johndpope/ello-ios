@@ -49,16 +49,16 @@ class StreamKindSpec: QuickSpec {
             describe("lastViewedCreatedAtKey") {
 
                 it("is correct for all cases") {
-                    expect(StreamKind.discover(type: .featured).lastViewedCreatedAtKey) == "CategoryPosts_createdAt"
-                    expect(StreamKind.category(slug: "art").lastViewedCreatedAtKey) == "CategoryPosts_createdAt"
+                    expect(StreamKind.discover(type: .featured).lastViewedCreatedAtKey) == "Discover_featured_createdAt"
+                    expect(StreamKind.category(slug: "art").lastViewedCreatedAtKey) == "Category_art_createdAt"
                     expect(StreamKind.following.lastViewedCreatedAtKey) == "Following_createdAt"
                     expect(StreamKind.notifications(category: "").lastViewedCreatedAtKey) == "Notifications_createdAt"
-                    expect(StreamKind.postDetail(postParam: "param").lastViewedCreatedAtKey) == "PostDetail_createdAt"
-                    expect(StreamKind.currentUserStream.lastViewedCreatedAtKey) == "Profile_createdAt"
-                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").lastViewedCreatedAtKey) == "SearchForPosts_createdAt"
-                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").lastViewedCreatedAtKey) == "SimpleStream.meat_createdAt"
-                    expect(StreamKind.unknown.lastViewedCreatedAtKey) == "unknown_createdAt"
-                    expect(StreamKind.userStream(userParam: "NA").lastViewedCreatedAtKey) == "UserStream_createdAt"
+                    expect(StreamKind.postDetail(postParam: "param").lastViewedCreatedAtKey).to(beNil())
+                    expect(StreamKind.currentUserStream.lastViewedCreatedAtKey).to(beNil())
+                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").lastViewedCreatedAtKey).to(beNil())
+                    expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").lastViewedCreatedAtKey).to(beNil())
+                    expect(StreamKind.unknown.lastViewedCreatedAtKey).to(beNil())
+                    expect(StreamKind.userStream(userParam: "NA").lastViewedCreatedAtKey).to(beNil())
                 }
             }
 

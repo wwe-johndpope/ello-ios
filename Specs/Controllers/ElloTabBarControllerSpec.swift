@@ -146,8 +146,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                             showController(subject)
                             var reloadPosted = false
                             subject.followingDot?.isHidden = false
-                            _ = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) {
-                                _ in
+                            _ = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) {
                                 reloadPosted = true
                             }
                             let vc = child3.topViewController
@@ -170,7 +169,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                 var notificationsItem: UITabBarItem!
 
                 beforeEach {
-                    responder = NotificationObserver(notification: NewContentNotifications.reloadNotifications) { _ in
+                    responder = NotificationObserver(notification: NewContentNotifications.reloadNotifications) {
                         responded = true
                     }
                     subject = ElloTabBarController()
