@@ -92,7 +92,7 @@ class StreamImageCellSizeCalculator {
         if let assetWidth = imageBlock.asset?.gridLayoutAttachment?.width {
             imageWidth = min(imageWidth, CGFloat(assetWidth))
         }
-        return ceil((imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock)))
+        return ceil(imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock))
     }
 
 }
