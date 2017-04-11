@@ -3,6 +3,7 @@
 //
 
 protocol CategoryScreenDelegate: class {
+    func shareTapped(sender: UIView)
     func gridListToggled(sender: UIButton)
     func categorySelected(index: Int)
     func searchButtonTapped()
@@ -16,4 +17,5 @@ protocol CategoryScreenProtocol: StreamableScreenProtocol {
     func animateCategoriesList(navBarVisible: Bool)
     func scrollToCategory(index: Int)
     func selectCategory(index: Int)
+    func animateNavBar(showTitle: Bool)
 }

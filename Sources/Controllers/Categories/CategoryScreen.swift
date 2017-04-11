@@ -24,6 +24,8 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     fileprivate let searchField = SearchNavBarField()
     fileprivate let searchFieldButton = UIButton()
     fileprivate let gridListButton = UIButton()
+    fileprivate let shareButton = UIButton()
+    fileprivate let navigationContainer = UIView()
 
     var topInsetView: UIView {
         if categoryCardList.isHidden {
@@ -43,11 +45,18 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         searchField.placeholder = InterfaceString.Search.Prompt
     }
 
+    override func style() {
+        super.style()
+        shareButton.alpha = 0
+        shareButton.setImage(.share, imageStyle: .normal, for: .normal)
+    }
+
     override func bindActions() {
         super.bindActions()
         categoryCardList.delegate = self
         searchFieldButton.addTarget(self, action: #selector(searchFieldButtonTapped), for: .touchUpInside)
         gridListButton.addTarget(self, action: #selector(gridListToggled), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareTapped), for: .touchUpInside)
     }
 
     override func arrange() {
@@ -55,9 +64,11 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         addSubview(categoryCardList)
         addSubview(navigationBar)
 
-        navigationBar.addSubview(searchField)
-        navigationBar.addSubview(searchFieldButton)
+        navigationContainer.addSubview(searchField)
+        navigationContainer.addSubview(searchFieldButton)
+        navigationBar.addSubview(navigationContainer)
         navigationBar.addSubview(gridListButton)
+        navigationBar.addSubview(shareButton)
 
         categoryCardList.isHidden = true
 
@@ -67,6 +78,12 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             make.height.equalTo(CategoryCardListView.Size.height)
         }
 
+        navigationContainer.snp.makeConstraints { make in
+            make.leading.bottom.equalTo(navigationBar)
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.trailing.equalTo(gridListButton.snp.leading)
+        }
+
         searchField.snp.makeConstraints { make in
             var insets = SearchNavBarField.Size.searchInsets
             insets.bottom -= 1
@@ -74,9 +91,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right)
         }
         searchFieldButton.snp.makeConstraints { make in
-            make.leading.bottom.equalTo(navigationBar)
-            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
-            make.trailing.equalTo(gridListButton.snp.leading)
+            make.edges.equalTo(navigationContainer)
         }
         gridListButton.snp.makeConstraints { make in
             make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
@@ -84,9 +99,12 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             make.trailing.equalTo(navigationBar).offset(-Size.buttonMargin)
             make.width.equalTo(Size.buttonWidth)
         }
+        shareButton.snp.makeConstraints { make in
+            make.top.bottom.width.equalTo(gridListButton)
+            make.trailing.equalTo(gridListButton.snp.leading)
+        }
 
         navigationBar.snp.makeConstraints { make in
-            // make.height.equalTo(80).priority(Priority.required)
             make.height.equalTo(Size.navigationBarHeight).priority(Priority.required)
         }
     }
@@ -133,6 +151,18 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     func gridListToggled() {
         delegate?.gridListToggled(sender: gridListButton)
     }
+
+    func shareTapped() {
+        delegate?.shareTapped(sender: shareButton)
+    }
+
+    func animateNavBar(showTitle: Bool) {
+        animate {
+            self.navigationContainer.alpha = showTitle ? 0 : 1
+            self.shareButton.alpha = showTitle ? 1 : 0
+        }
+    }
+
 }
 
 extension CategoryScreen: CategoryCardListDelegate {
