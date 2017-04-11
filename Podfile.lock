@@ -17,7 +17,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - CRToast (0.0.7)
   - DeltaCalculator (1.0.4)
-  - ElloCerts (2.0.0):
+  - ElloCerts (3.0.0):
     - Alamofire (~> 4.0)
   - ElloUIFonts (2.0.0)
   - Fabric (1.6.11)
@@ -203,7 +203,7 @@ CHECKOUT OPTIONS:
     :commit: d384bca310305e0d000768b558cc128dec0a4aa5
     :git: https://github.com/ello/DeltaCalculator
   ElloCerts:
-    :commit: 0fb257526178beb86ef6ce1d4b11bfd08cb3bcf1
+    :commit: 26b6b863d9529ee2d8db4e8de26affe44e0f7c67
     :git: git@github.com:ello/Ello-iOS-Certs
   ElloUIFonts:
     :commit: c0bcfe900cdcc97f7df534657d5ce3b1efeb6a67
@@ -244,7 +244,7 @@ SPEC CHECKSUMS:
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
   DeltaCalculator: 97ea120ac2ebcf55e472d7ba872c8bc79c138454
-  ElloCerts: f12a2de4456c84010fde1be70e98cff6b06389e1
+  ElloCerts: 7c27117e2281761c81acf31b81a44a38869220c2
   ElloUIFonts: 50eada1c661020aa63104ced5055e22aac3d61a5
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
