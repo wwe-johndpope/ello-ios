@@ -266,23 +266,14 @@ final class ProfileViewController: StreamableViewController {
         }
     }
 
-    func sharePostTapped(_ sourceView: UIView) {
-        guard let user = user,
-            let shareLink = user.shareLink,
-            let shareURL = URL(string: shareLink)
+    func sharePostTapped(_ sender: UIView) {
+        guard
+            let user = user,
+            let shareURL = URL(string: user.shareLink)
         else { return }
 
         Tracker.shared.userShared(user)
-        let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
-        if UI_USER_INTERFACE_IDIOM() == .phone {
-            activityVC.modalPresentationStyle = .fullScreen
-            present(activityVC, animated: true) { }
-        }
-        else {
-            activityVC.modalPresentationStyle = .popover
-            activityVC.popoverPresentationController?.sourceView = sourceView
-            present(activityVC, animated: true) { }
-        }
+        showShareActivity(sender: sender, url: shareURL)
     }
 
     func toggleGrid(_ isGridView: Bool) {

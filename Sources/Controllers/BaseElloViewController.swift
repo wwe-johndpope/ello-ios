@@ -87,6 +87,19 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         _ = navigationController.popViewController(animated: true)
     }
 
+    func showShareActivity(sender: UIView, url shareURL: URL) {
+        let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
+        if UI_USER_INTERFACE_IDIOM() == .phone {
+            activityVC.modalPresentationStyle = .fullScreen
+            present(activityVC, animated: true) { }
+        }
+        else {
+            activityVC.modalPresentationStyle = .popover
+            activityVC.popoverPresentationController?.sourceView = sender
+            present(activityVC, animated: true) { }
+        }
+    }
+
     func isRootViewController() -> Bool {
         if let viewControllers = navigationController?.viewControllers {
             return (viewControllers[0] ) == self

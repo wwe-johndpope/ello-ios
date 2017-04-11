@@ -274,6 +274,12 @@ extension CategoryViewController: CategoryScreenDelegate {
     }
 
     func shareTapped(sender: UIView) {
+        guard
+            let category = category,
+            let shareURL = URL(string: category.shareLink)
+        else { return }
+
+        showShareActivity(sender: sender, url: shareURL)
     }
 
 }
