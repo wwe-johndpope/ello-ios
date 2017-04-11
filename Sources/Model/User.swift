@@ -72,7 +72,7 @@ final class User: JSONAble {
     // profile
     var profile: Profile?
 
-    var shareLink: String? {
+    var shareLink: String {
         return "\(ElloURI.baseURL)/\(username)"
     }
 

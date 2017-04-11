@@ -74,12 +74,7 @@ final class Post: JSONAble, Authorable, Groupable {
     var groupId: String { return "Post-\(id)" }
     // computed properties
     var shareLink: String? {
-        if let author = self.author {
-            return "\(ElloURI.baseURL)/\(author.username)/post/\(self.token)"
-        }
-        else {
-            return nil
-        }
+        return author.map { "\(ElloURI.baseURL)/\($0.username)/post/\(self.token)" }
     }
     var collapsed: Bool { return !contentWarning.isEmpty }
     var isRepost: Bool {
