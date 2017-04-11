@@ -28,6 +28,19 @@ class ProfileStatsPresenterSpec: QuickSpec {
                 let view = ProfileStatsView()
                 ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
                 expect(view.followersCount) == "123"
+                expect(view.followersEnabled) == true
+            }
+            it("should disable 0 followers") {
+                let user = User.stub(["followersCount": 0])
+                let view = ProfileStatsView()
+                ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
+                expect(view.followersEnabled) == false
+            }
+            it("should disable ∞ followers") {
+                let user = User.stub(["followersCount": "∞"])
+                let view = ProfileStatsView()
+                ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
+                expect(view.followersEnabled) == false
             }
             it("should support followers string") {
                 let user = User.stub(["followersCount": "∞"])
@@ -41,6 +54,13 @@ class ProfileStatsPresenterSpec: QuickSpec {
                 let view = ProfileStatsView()
                 ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
                 expect(view.followingCount) == "123"
+                expect(view.followingEnabled) == true
+            }
+            it("should disable 0 following count") {
+                let user = User.stub(["followingCount": 0])
+                let view = ProfileStatsView()
+                ProfileStatsPresenter.configure(view, user: user, currentUser: nil)
+                expect(view.followingEnabled) == false
             }
             it("should round following count") {
                 let user = User.stub(["followingCount": 1_234_000])
