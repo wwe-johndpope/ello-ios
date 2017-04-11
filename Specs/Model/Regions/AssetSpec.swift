@@ -61,31 +61,6 @@ class AssetSpec: QuickSpec {
                 }
             }
 
-            describe("oneColumnPreviewAttachment") {
-
-                it("returns hdpi when narrow") {
-                    expect(noVideoAsset.oneColumnPreviewAttachment) == hdpi
-                }
-
-                it("returns xhdpi when wide") {
-                    let tmp = Window.width
-                    Window.width = 2000
-                    expect(noVideoAsset.oneColumnPreviewAttachment) == xhdpi
-                    Window.width = tmp
-                }
-
-                it("returns hdpi when wide on non-retina screen") {
-                    let tmpWidth = Window.width
-                    let tmpScale = DeviceScreen.scale
-                    Window.width = 2000
-                    DeviceScreen.scale = 1
-
-                    expect(noVideoAsset.oneColumnPreviewAttachment) == hdpi
-                    Window.width = tmpWidth
-                    DeviceScreen.scale = tmpScale
-                }
-            }
-
             describe("gridLayoutAttachment") {
 
                 it("returns hdpi when wide") {
@@ -108,31 +83,6 @@ class AssetSpec: QuickSpec {
 
                 it("returns mdpi when not wide") {
                     expect(noVideoAsset.gridLayoutAttachment) == mdpi
-                }
-            }
-
-            describe("gridLayoutPreviewAttachment") {
-
-                it("returns hdpi when wide") {
-                    let tmp = Window.width
-                    Window.width = 2000
-                    expect(noVideoAsset.gridLayoutPreviewAttachment) == hdpi
-                    Window.width = tmp
-                }
-
-                it("returns mdpi when wide on non-retina screen") {
-                    let tmpWidth = Window.width
-                    let tmpScale = DeviceScreen.scale
-                    Window.width = 2000
-                    DeviceScreen.scale = 1
-
-                    expect(noVideoAsset.gridLayoutPreviewAttachment) == mdpi
-                    Window.width = tmpWidth
-                    DeviceScreen.scale = tmpScale
-                }
-
-                it("returns mdpi when NOT wide") {
-                    expect(noVideoAsset.gridLayoutPreviewAttachment) == mdpi
                 }
             }
 
