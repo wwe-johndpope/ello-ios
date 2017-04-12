@@ -26,6 +26,8 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     fileprivate let gridListButton = UIButton()
     fileprivate let shareButton = UIButton()
     fileprivate let navigationContainer = UIView()
+    fileprivate var shareVisibleConstraint: Constraint!
+    fileprivate var shareHiddenConstraint: Constraint!
 
     var topInsetView: UIView {
         if categoryCardList.isHidden {
@@ -88,8 +90,11 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             var insets = SearchNavBarField.Size.searchInsets
             insets.bottom -= 1
             make.leading.bottom.top.equalTo(navigationBar).inset(insets)
-            make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right)
+            shareHiddenConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
+            shareVisibleConstraint = make.trailing.equalTo(shareButton.snp.leading).offset(-Size.buttonMargin).constraint
         }
+        shareVisibleConstraint.deactivate()
+
         searchFieldButton.snp.makeConstraints { make in
             make.edges.equalTo(navigationContainer)
         }
@@ -156,10 +161,19 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         delegate?.shareTapped(sender: shareButton)
     }
 
-    func animateNavBar(showTitle: Bool) {
+    func animateNavBar(showShare: Bool) {
+        if showShare {
+            shareHiddenConstraint.deactivate()
+            shareVisibleConstraint.activate()
+        }
+        else {
+            shareHiddenConstraint.activate()
+            shareVisibleConstraint.deactivate()
+        }
+
         animate {
-            self.navigationContainer.alpha = showTitle ? 0 : 1
-            self.shareButton.alpha = showTitle ? 1 : 0
+            self.navigationBar.layoutIfNeeded()
+            self.shareButton.alpha = showShare ? 1 : 0
         }
     }
 

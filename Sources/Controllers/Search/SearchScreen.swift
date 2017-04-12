@@ -96,10 +96,11 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         }
 
         searchField.snp.makeConstraints { make in
-            let insets = SearchNavBarField.Size.searchInsets
+            var insets = SearchNavBarField.Size.searchInsets
+            insets.right = Size.margin
             make.leading.equalTo(backButton.snp.trailing)
             make.bottom.top.equalTo(navigationBar).inset(insets)
-            gridListVisibleConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
+            gridListVisibleConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-Size.buttonMargin).constraint
             gridListHiddenConstraint = make.trailing.equalTo(navigationBar).offset(-insets.right).constraint
         }
         gridListHiddenConstraint.deactivate()

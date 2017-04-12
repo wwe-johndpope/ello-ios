@@ -6,7 +6,7 @@ class SearchNavBarField: UITextField {
     struct Size {
         static let cornerRadius: CGFloat = 5
         static let verticalCorrection: CGFloat = 3
-        static let searchInsets = UIEdgeInsets(top: 30, left: 10, bottom: 10, right: 5)
+        static let searchInsets = UIEdgeInsets(top: 27, left: 7, bottom: 7, right: 7)
     }
 
     override var placeholder: String? {

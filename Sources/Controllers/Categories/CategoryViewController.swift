@@ -241,15 +241,15 @@ extension CategoryViewController: CategoryScreenDelegate {
         Tracker.shared.categoryOpened(category.slug)
 
         var kind: StreamKind?
-        let showTitle: Bool
+        let showShare: Bool
         switch category.level {
         case .meta:
-            showTitle = false
+            showShare = false
             if let type = DiscoverType.fromURL(category.slug) {
                 kind = .discover(type: type)
             }
         default:
-            showTitle = true
+            showShare = true
             kind = .category(slug: category.slug)
         }
 
@@ -258,8 +258,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         screen.isGridView = streamKind.isGridView
-        screen.animateNavBar(showTitle: showTitle)
-        screen.navigationItem = showTitle ? elloNavigationItem : nil
+        screen.animateNavBar(showShare: showShare)
         generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)
         self.category = category
         self.slug = category.slug

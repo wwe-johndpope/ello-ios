@@ -17,5 +17,5 @@ protocol CategoryScreenProtocol: StreamableScreenProtocol {
     func animateCategoriesList(navBarVisible: Bool)
     func scrollToCategory(index: Int)
     func selectCategory(index: Int)
-    func animateNavBar(showTitle: Bool)
+    func animateNavBar(showShare: Bool)
 }
