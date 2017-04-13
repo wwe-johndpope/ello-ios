@@ -9,7 +9,7 @@ class CategoryCardCell: UICollectionViewCell {
     static let selectableReuseIdentifier = "SelectableCategoryCardCell"
 
     struct Size {
-        static let height: CGFloat = 110
+        static let aspect: CGFloat = 1.5
         static let colorFillTopOffset: CGFloat = 2
         static let selectedImageOffset: CGFloat = 5
     }

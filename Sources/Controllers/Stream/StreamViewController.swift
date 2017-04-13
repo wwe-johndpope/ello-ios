@@ -333,7 +333,7 @@ final class StreamViewController: BaseElloViewController {
         else {
             debounceCellReload { [weak self] in
                 guard let `self` = self else { return }
-                
+
                 self.collectionView.reloadData()
                 self.collectionView.layoutIfNeeded()
             }
@@ -561,7 +561,7 @@ final class StreamViewController: BaseElloViewController {
         sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [weak self] size in
             guard let `self` = self else { return }
 
-            let columnCount = self.columnCountFor(width: size.width)
+            let columnCount = Window.columnCountFor(width: size.width)
             if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
                 layout.columnCount = columnCount
             }
@@ -645,18 +645,6 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    fileprivate func columnCountFor(width: CGFloat) -> Int {
-        let gridColumns: Int
-        if Window.isWide(width) {
-            gridColumns = 3
-        }
-        else {
-            gridColumns = 2
-        }
-
-        return gridColumns
-    }
-
     fileprivate func removeNotificationObservers() {
         updatedStreamImageCellHeightNotification?.removeObserver()
         updateCellHeightNotification?.removeObserver()
@@ -720,7 +708,7 @@ final class StreamViewController: BaseElloViewController {
     // this gets reset whenever the streamKind changes
     fileprivate func setupCollectionViewLayout() {
         guard let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout else { return }
-        let columnCount = columnCountFor(width: view.frame.width)
+        let columnCount = Window.columnCountFor(width: view.frame.width)
         layout.columnCount = columnCount
         dataSource.columnCount = columnCount
         layout.sectionInset = UIEdgeInsets.zero
