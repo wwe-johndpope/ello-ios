@@ -20,6 +20,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var categoryTitles: [String] = []
         var scrollTo: Int?
         var select: Int?
+        var showShare = false
 
         func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
             categoryTitles = categoriesInfo.map { $0.title }
@@ -35,6 +36,10 @@ class CategoryViewControllerSpec: QuickSpec {
 
         func viewForStream() -> UIView {
             return streamContainer
+        }
+
+        func animateNavBar(showShare: Bool) {
+            self.showShare = showShare
         }
     }
 

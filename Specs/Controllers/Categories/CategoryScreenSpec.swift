@@ -12,6 +12,7 @@ class CategoryScreenSpec: QuickSpec {
         var selectedIndex: Int?
         var gridListToggled = 0
         var searchButtonCount = 0
+        var shareCount = 0
 
         func categorySelected(index: Int) {
             selectedIndex = index
@@ -21,6 +22,9 @@ class CategoryScreenSpec: QuickSpec {
         }
         func searchButtonTapped() {
             searchButtonCount += 1
+        }
+        func shareTapped(sender: UIView) {
+            shareCount += 1
         }
     }
 
