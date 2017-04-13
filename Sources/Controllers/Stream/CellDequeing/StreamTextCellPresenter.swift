@@ -27,7 +27,7 @@ struct StreamTextCellPresenter {
                 else {
                     streamCellItem.calculatedCellHeights.oneColumn = actualHeight
                 }
-                postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
+                postNotification(StreamNotification.UpdateCellHeightNotification, value: streamCellItem)
             }
         }
 

@@ -98,7 +98,7 @@ protocol PostCommentsResponder: class {
 // MARK: StreamNotification
 struct StreamNotification {
     static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
-    static let UpdateCellHeightNotification = TypedNotification<UICollectionViewCell>(name: "UpdateCellHeightNotification")
+    static let UpdateCellHeightNotification = TypedNotification<StreamCellItem>(name: "UpdateCellHeightNotification")
 }
 
 // This is an NSObject in order to pass it as an
@@ -548,8 +548,8 @@ final class StreamViewController: BaseElloViewController {
             guard let `self` = self else { return }
             self.imageCellHeightUpdated(streamImageCell)
         }
-        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] cell in
-            guard let `self` = self else { return }
+        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamCellItem in
+            guard let `self` = self, self.dataSource.visibleCellItems.contains(streamCellItem) else { return }
             nextTick {
                 self.collectionView.collectionViewLayout.invalidateLayout()
             }

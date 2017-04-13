@@ -18,7 +18,7 @@ struct ProfileHeaderCellPresenter {
 
         cell.onHeightMismatch = { calculatedCellHeights in
             streamCellItem.calculatedCellHeights = calculatedCellHeights
-            postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
+            postNotification(StreamNotification.UpdateCellHeightNotification, value: streamCellItem)
         }
         cell.calculatedCellHeights = streamCellItem.calculatedCellHeights
 
