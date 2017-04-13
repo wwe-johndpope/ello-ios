@@ -35,7 +35,6 @@
                                         <items/>
                                     </toolbar>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="GaF-Tx-YnB" userLabel="innerContentView">
                                 <rect key="frame" x="0.0" y="0.0" width="591" height="40"/>
@@ -122,7 +121,6 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.23333450010000001" green="1" blue="0.38296981530000002" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="delegate" destination="drA-zU-V9q" id="2EA-ck-dXk"/>
                         </connections>
