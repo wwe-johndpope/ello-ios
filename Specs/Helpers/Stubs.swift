@@ -626,6 +626,7 @@ extension Announcement: Stubbable {
 
         let announcement = Announcement(
             id: (values["id"] as? String) ?? "666",
+            isStaff: (values["isStaff"] as? Bool) ?? false,
             header: (values["header"] as? String) ?? "Announcing Not For Print, Ello’s new publication",
             body: (values["body"] as? String) ?? "Submissions for Issue 01 — Censorship will be open from 11/7 – 11/23",
             ctaURL: urlFromValue(values["ctaURL"]),

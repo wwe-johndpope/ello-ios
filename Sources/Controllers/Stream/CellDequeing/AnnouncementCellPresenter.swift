@@ -21,6 +21,7 @@ struct AnnouncementCellPresenter {
         config.body = announcement.body
         config.callToAction = announcement.ctaCaption
         config.imageURL = announcement.imageURL
+        config.isStaff = announcement.isStaff
         cell.config = config
     }
 }
