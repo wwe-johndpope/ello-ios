@@ -45,6 +45,10 @@ extension DrawerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = dataSource.itemForIndexPath(indexPath) else { return }
 
+        if let tracking = item.tracking {
+            Tracker.shared.tappedDrawer(tracking)
+        }
+
         switch item.type {
         case let .external(link):
             postNotification(ExternalWebNotification, value: link)

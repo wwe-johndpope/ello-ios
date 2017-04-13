@@ -194,6 +194,10 @@ extension Tracker {
         agent.track("logout tapped")
     }
 
+    func tappedDrawer(_ item: String) {
+        agent.track("tapped \(item) drawer")
+    }
+
 }
 
 // MARK: iRate
