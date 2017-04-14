@@ -43,22 +43,26 @@ class DrawerViewController: StreamableViewController {
 // MARK: UITableViewDelegate
 extension DrawerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let item = dataSource.itemForIndexPath(indexPath) {
-            switch item.type {
-            case let .external(link):
-                postNotification(ExternalWebNotification, value: link)
-            case .invite:
-                let responder = target(forAction: #selector(InviteResponder.onInviteFriends), withSender: self) as? InviteResponder
-                responder?.onInviteFriends()
-            case .logout:
-                isLoggingOut = true
-                nextTick {
-                    self.dismiss(animated: true, completion: { _ in
-                         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
-                    })
-                }
-            default: break
+        guard let item = dataSource.itemForIndexPath(indexPath) else { return }
+
+        if let tracking = item.tracking {
+            Tracker.shared.tappedDrawer(tracking)
+        }
+
+        switch item.type {
+        case let .external(link):
+            postNotification(ExternalWebNotification, value: link)
+        case .invite:
+            let responder = target(forAction: #selector(InviteResponder.onInviteFriends), withSender: self) as? InviteResponder
+            responder?.onInviteFriends()
+        case .logout:
+            isLoggingOut = true
+            nextTick {
+                self.dismiss(animated: true, completion: { _ in
+                     postNotification(AuthenticationNotifications.userLoggedOut, value: ())
+                })
             }
+        default: break
         }
     }
 }
