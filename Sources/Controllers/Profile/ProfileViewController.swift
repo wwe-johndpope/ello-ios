@@ -226,8 +226,7 @@ final class ProfileViewController: StreamableViewController {
         }
         else if
             let user = user,
-            let currentUser = currentUser,
-            user.id != currentUser.id
+            user.id != currentUser?.id
         {
             var rightBarButtonItems: [UIBarButtonItem] = []
             if user.hasSharingEnabled {
