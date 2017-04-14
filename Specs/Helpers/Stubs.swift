@@ -173,6 +173,7 @@ extension Profile: Stubbable {
         let email: String = (values["email"] as? String) ?? "email@example.com"
         let confirmedAt: Date = (values["confirmedAt"] as? Date) ?? Date()
         let isPublic: Bool = (values["isPublic"] as? Bool) ?? true
+        let isCommunity: Bool = (values["isCommunity"] as? Bool) ?? false
         let mutedCount: Int = (values["mutedCount"] as? Int) ?? 0
         let blockedCount: Int = (values["blockedCount"] as? Int) ?? 0
         let hasSharingEnabled: Bool = (values["hasSharingEnabled"] as? Bool) ?? true
@@ -210,6 +211,7 @@ extension Profile: Stubbable {
             email: email,
             confirmedAt: confirmedAt,
             isPublic: isPublic,
+            isCommunity: isCommunity,
             mutedCount: mutedCount,
             blockedCount: blockedCount,
             hasSharingEnabled: hasSharingEnabled,
