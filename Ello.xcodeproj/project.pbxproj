@@ -537,6 +537,7 @@
 		1D2F65BD1D1C5BC00099D036 /* StreamHeaderCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */; };
 		1D2F65C11D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65BE1D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift */; };
 		1D2F65C31D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65C01D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift */; };
+		1D2F82BA1EA139F0006BAA31 /* jwt-auth-is-nabaroo.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F82B91EA139F0006BAA31 /* jwt-auth-is-nabaroo.json */; };
 		1D3128C01B557BD500E3D5B6 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */; };
 		1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */; };
 		1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284D1AE74D7A00446591 /* SearchViewController.swift */; };
@@ -1530,6 +1531,7 @@
 		1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamHeaderCellSpec.swift; sourceTree = "<group>"; };
 		1D2F65BE1D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCardCellPresenterSpec.swift; sourceTree = "<group>"; };
 		1D2F65C01D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryListCellPresenterSpec.swift; sourceTree = "<group>"; };
+		1D2F82B91EA139F0006BAA31 /* jwt-auth-is-nabaroo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "jwt-auth-is-nabaroo.json"; sourceTree = "<group>"; };
 		1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OnboardingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D33284D1AE74D7A00446591 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -3487,6 +3489,7 @@
 				1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */,
 				1D5933721D10BB5B00EAF03D /* categories.json */,
 				12ECFFFD1DDA146A007F22C5 /* category.json */,
+				1D2F82B91EA139F0006BAA31 /* jwt-auth-is-nabaroo.json */,
 				120E641A1E32A7B600CAF03E /* jwt-auth-is-staff.json */,
 				120E64181E32970800CAF03E /* jwt-auth-no-staff.json */,
 				1241EDB31DD3D07900426A17 /* page_promotionals.json */,
@@ -4100,6 +4103,7 @@
 				12CFF6881B16760C007CE68F /* loves_creating_a_love.json in Resources */,
 				1DF741671BF6869B000F5349 /* pencil_white.svg in Resources */,
 				76F8DEEC1B6C0BC4009BCF61 /* relationships_selected.svg in Resources */,
+				1D2F82BA1EA139F0006BAA31 /* jwt-auth-is-nabaroo.json in Resources */,
 				12F6AE9F1A433F2700493660 /* 503.json in Resources */,
 				76F8DEEF1B6C0BC4009BCF61 /* reply_selected.svg in Resources */,
 				769051011AFD2A720011B09A /* ello_logo.svg in Resources */,
