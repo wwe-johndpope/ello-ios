@@ -97,7 +97,6 @@ protocol PostCommentsResponder: class {
 
 // MARK: StreamNotification
 struct StreamNotification {
-    static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
     static let UpdateCellHeightNotification = TypedNotification<StreamCellItem>(name: "UpdateCellHeightNotification")
 }
 
@@ -183,7 +182,6 @@ final class StreamViewController: BaseElloViewController {
         }
     }
     var imageViewer: StreamImageViewer?
-    var updatedStreamImageCellHeightNotification: NotificationObserver?
     var updateCellHeightNotification: NotificationObserver?
     var rotationNotification: NotificationObserver?
     var sizeChangedNotification: NotificationObserver?
@@ -343,15 +341,6 @@ final class StreamViewController: BaseElloViewController {
     func removeAllCellItems() {
         dataSource.removeAllCellItems()
         reloadCells(now: true)
-    }
-
-    func imageCellHeightUpdated(_ cell: StreamImageCell) {
-        guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let calculatedHeight = cell.calculatedHeight
-        else { return }
-
-        updateCellHeight(indexPath, height: calculatedHeight)
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
@@ -544,10 +533,6 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate func addNotificationObservers() {
-        updatedStreamImageCellHeightNotification = NotificationObserver(notification: StreamNotification.AnimateCellHeightNotification) { [weak self] streamImageCell in
-            guard let `self` = self else { return }
-            self.imageCellHeightUpdated(streamImageCell)
-        }
         updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamCellItem in
             guard let `self` = self, self.dataSource.visibleCellItems.contains(streamCellItem) else { return }
             nextTick {
@@ -646,7 +631,6 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate func removeNotificationObservers() {
-        updatedStreamImageCellHeightNotification?.removeObserver()
         updateCellHeightNotification?.removeObserver()
         rotationNotification?.removeObserver()
         sizeChangedNotification?.removeObserver()
