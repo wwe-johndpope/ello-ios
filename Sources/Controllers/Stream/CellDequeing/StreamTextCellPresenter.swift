@@ -13,15 +13,21 @@ struct StreamTextCellPresenter {
     {
         guard let cell = cell as? StreamTextCell else { return }
 
+        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
+
         cell.onWebContentReady { webView in
             if let actualHeight = webView.windowContentSize()?.height,
                 let webContent = streamCellItem.calculatedCellHeights.webContent,
                 ceil(actualHeight) != ceil(webContent)
             {
                 streamCellItem.calculatedCellHeights.webContent = actualHeight
-                streamCellItem.calculatedCellHeights.oneColumn = actualHeight
-                streamCellItem.calculatedCellHeights.multiColumn = actualHeight
-                postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
+                if isGridView {
+                    streamCellItem.calculatedCellHeights.multiColumn = actualHeight
+                }
+                else {
+                    streamCellItem.calculatedCellHeights.oneColumn = actualHeight
+                }
+                postNotification(StreamNotification.UpdateCellHeightNotification, value: streamCellItem)
             }
         }
 

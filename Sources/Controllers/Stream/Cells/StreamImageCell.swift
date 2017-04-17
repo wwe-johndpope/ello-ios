@@ -120,13 +120,6 @@ class StreamImageCell: StreamRegionableCell {
         return imageSize.width / imageSize.height
     }
 
-    var calculatedHeight: CGFloat? {
-        guard let aspectRatio = aspectRatio else {
-            return nil
-        }
-        return frame.width / aspectRatio
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         if let playButton = largeImagePlayButton {
@@ -183,10 +176,10 @@ class StreamImageCell: StreamRegionableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         if let aspectRatio = aspectRatio, let imageSize = imageSize {
-            let width = min(imageSize.width, self.frame.width - margin)
+            let width = min(imageSize.width, frame.width - margin)
             let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
-            if ceil(actualHeight) != ceil(frame.height) {
-                self.onHeightMismatch?(actualHeight)
+            if abs(actualHeight - frame.height) > 1 {
+                onHeightMismatch?(actualHeight)
             }
         }
 
@@ -195,8 +188,6 @@ class StreamImageCell: StreamRegionableCell {
             buyButtonGreen.layoutIfNeeded()
             buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
         }
-
-        imageView.setNeedsLayout()
     }
 
     fileprivate func loadImage(_ url: URL) {
@@ -215,10 +206,6 @@ class StreamImageCell: StreamRegionableCell {
             }
 
             self.imageSize = result.imageSize
-
-            if self.serverProvidedAspectRatio == nil {
-                postNotification(StreamNotification.AnimateCellHeightNotification, value: self)
-            }
 
             if result.resultType != .memoryCache {
                 self.imageView.alpha = 0
@@ -246,9 +233,7 @@ class StreamImageCell: StreamRegionableCell {
         failImage.isHidden = false
         failBackgroundView.isHidden = false
         circle.stopPulse()
-        imageSize = nil
         largeImagePlayButton?.isHidden = true
-        nextTick { postNotification(StreamNotification.AnimateCellHeightNotification, value: self) }
         UIView.animate(withDuration: 0.15, animations: {
             self.failImage.alpha = 1.0
             self.imageView.backgroundColor = UIColor.greyF1()
@@ -264,6 +249,7 @@ class StreamImageCell: StreamRegionableCell {
         marginType = .post
         imageButton.isUserInteractionEnabled = true
         onHeightMismatch = nil
+        imageSize = nil
         imageView.image = nil
         imageView.animatedImage = nil
         imageView.pin_cancelImageDownload()

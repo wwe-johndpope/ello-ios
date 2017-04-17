@@ -27,6 +27,18 @@ extension UIWindow {
 
 
 class Window {
+    static func columnCountFor(width: CGFloat) -> Int {
+        let gridColumns: Int
+        if Window.isWide(width) {
+            gridColumns = 3
+        }
+        else {
+            gridColumns = 2
+        }
+
+        return gridColumns
+    }
+
     static func isWide(_ width: CGFloat) -> Bool {
         return width >= 768
     }

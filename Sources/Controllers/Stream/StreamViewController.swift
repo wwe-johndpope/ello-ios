@@ -97,8 +97,7 @@ protocol PostCommentsResponder: class {
 
 // MARK: StreamNotification
 struct StreamNotification {
-    static let AnimateCellHeightNotification = TypedNotification<StreamImageCell>(name: "AnimateCellHeightNotification")
-    static let UpdateCellHeightNotification = TypedNotification<UICollectionViewCell>(name: "UpdateCellHeightNotification")
+    static let UpdateCellHeightNotification = TypedNotification<StreamCellItem>(name: "UpdateCellHeightNotification")
 }
 
 // This is an NSObject in order to pass it as an
@@ -183,7 +182,6 @@ final class StreamViewController: BaseElloViewController {
         }
     }
     var imageViewer: StreamImageViewer?
-    var updatedStreamImageCellHeightNotification: NotificationObserver?
     var updateCellHeightNotification: NotificationObserver?
     var rotationNotification: NotificationObserver?
     var sizeChangedNotification: NotificationObserver?
@@ -331,7 +329,9 @@ final class StreamViewController: BaseElloViewController {
             self.collectionView.layoutIfNeeded()
         }
         else {
-            debounceCellReload {
+            debounceCellReload { [weak self] in
+                guard let `self` = self else { return }
+
                 self.collectionView.reloadData()
                 self.collectionView.layoutIfNeeded()
             }
@@ -341,15 +341,6 @@ final class StreamViewController: BaseElloViewController {
     func removeAllCellItems() {
         dataSource.removeAllCellItems()
         reloadCells(now: true)
-    }
-
-    func imageCellHeightUpdated(_ cell: StreamImageCell) {
-        guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let calculatedHeight = cell.calculatedHeight
-        else { return }
-
-        updateCellHeight(indexPath, height: calculatedHeight)
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
@@ -542,13 +533,11 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate func addNotificationObservers() {
-        updatedStreamImageCellHeightNotification = NotificationObserver(notification: StreamNotification.AnimateCellHeightNotification) { [weak self] streamImageCell in
-            guard let `self` = self else { return }
-            self.imageCellHeightUpdated(streamImageCell)
-        }
-        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamTextCell in
-            guard let `self` = self else { return }
-            self.collectionView.collectionViewLayout.invalidateLayout()
+        updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamCellItem in
+            guard let `self` = self, self.dataSource.visibleCellItems.contains(streamCellItem) else { return }
+            nextTick {
+                self.collectionView.collectionViewLayout.invalidateLayout()
+            }
         }
         rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [weak self] _ in
             guard let `self` = self else { return }
@@ -557,11 +546,11 @@ final class StreamViewController: BaseElloViewController {
         sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [weak self] size in
             guard let `self` = self else { return }
 
-            let columnCount = self.columnCountFor(width: size.width)
+            let columnCount = Window.columnCountFor(width: size.width)
             if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
                 layout.columnCount = columnCount
-                layout.invalidateLayout()
             }
+            self.collectionView.collectionViewLayout.invalidateLayout()
             self.dataSource.columnCount = columnCount
             self.reloadCells()
         }
@@ -641,20 +630,7 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    fileprivate func columnCountFor(width: CGFloat) -> Int {
-        let gridColumns: Int
-        if Window.isWide(width) {
-            gridColumns = 3
-        }
-        else {
-            gridColumns = 2
-        }
-
-        return gridColumns
-    }
-
     fileprivate func removeNotificationObservers() {
-        updatedStreamImageCellHeightNotification?.removeObserver()
         updateCellHeightNotification?.removeObserver()
         rotationNotification?.removeObserver()
         sizeChangedNotification?.removeObserver()
@@ -716,7 +692,7 @@ final class StreamViewController: BaseElloViewController {
     // this gets reset whenever the streamKind changes
     fileprivate func setupCollectionViewLayout() {
         guard let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout else { return }
-        let columnCount = columnCountFor(width: view.frame.width)
+        let columnCount = Window.columnCountFor(width: view.frame.width)
         layout.columnCount = columnCount
         dataSource.columnCount = columnCount
         layout.sectionInset = UIEdgeInsets.zero

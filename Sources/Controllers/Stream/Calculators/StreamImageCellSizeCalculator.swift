@@ -5,8 +5,7 @@
 class StreamImageCellSizeCalculator {
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
     fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellWidth: CGFloat = 0.0
-    fileprivate var maxWidth: CGFloat = 0.0
+    fileprivate var screenWidth: CGFloat = 0.0
     fileprivate var columnCount: Int = 1
     fileprivate var cellItems: [StreamCellItem] = []
     fileprivate var completion: ElloEmptyCompletion = {}
@@ -41,58 +40,64 @@ class StreamImageCellSizeCalculator {
             }
         }
         self.cellItems = job.cellItems
-        self.cellWidth = job.width
+        self.screenWidth = job.width
         self.columnCount = job.columnCount
         loadNext()
     }
 
     fileprivate func loadNext() {
-        self.maxWidth = cellWidth
         guard !self.cellItems.isEmpty else {
             completion()
             return
         }
 
         let item = cellItems.remove(at: 0)
+        let margin: CGFloat
         if (item.type.data as? Regionable)?.isRepost == true {
-            maxWidth -= StreamTextCell.Size.repostMargin
+            margin = StreamTextCell.Size.repostMargin
         }
         else if item.jsonable is ElloComment {
-            maxWidth -= StreamTextCell.Size.commentMargin
+            margin = StreamTextCell.Size.commentMargin
+        }
+        else {
+            margin = 0
         }
 
         if let imageRegion = item.type.data as? ImageRegion {
-            item.calculatedCellHeights.oneColumn = StreamImageCell.Size.bottomMargin + oneColumnImageHeight(imageRegion)
-            item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + multiColumnImageHeight(imageRegion)
+            let oneColumnHeight = StreamImageCell.Size.bottomMargin + oneColumnImageHeight(imageRegion, margin: margin)
+            let multiColumnHeight = StreamImageCell.Size.bottomMargin + multiColumnImageHeight(imageRegion, margin: margin)
+            item.calculatedCellHeights.oneColumn = oneColumnHeight
+            item.calculatedCellHeights.multiColumn = multiColumnHeight
         }
         else if let embedRegion = item.type.data as? EmbedRegion {
             var ratio: CGFloat
             if embedRegion.isAudioEmbed || embedRegion.service == .uStream {
-                ratio = 1.0
+                ratio = 1
             }
             else {
-                ratio = 16.0/9.0
+                ratio = 16 / 9
             }
-            item.calculatedCellHeights.oneColumn = StreamImageCell.Size.bottomMargin + maxWidth / ratio
-            item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + calculateColumnWidth(frameWidth: maxWidth, columnCount: columnCount) / ratio
+            let multiWidth = calculateColumnWidth(frameWidth: screenWidth, columnCount: columnCount) - margin
+            item.calculatedCellHeights.oneColumn = StreamImageCell.Size.bottomMargin + (screenWidth - margin) / ratio
+            item.calculatedCellHeights.multiColumn = StreamImageCell.Size.bottomMargin + multiWidth / ratio
         }
         loadNext()
     }
 
-    fileprivate func oneColumnImageHeight(_ imageRegion: ImageRegion) -> CGFloat {
-        var imageWidth = maxWidth
+    fileprivate func oneColumnImageHeight(_ imageRegion: ImageRegion, margin: CGFloat) -> CGFloat {
+        var imageWidth = screenWidth - margin
         if let assetWidth = imageRegion.asset?.oneColumnAttachment?.width {
-            imageWidth = min(maxWidth, CGFloat(assetWidth))
+            imageWidth = min(imageWidth, CGFloat(assetWidth))
         }
         return ceil(imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion))
     }
 
-    fileprivate func multiColumnImageHeight(_ imageBlock: ImageRegion) -> CGFloat {
-        var imageWidth = calculateColumnWidth(frameWidth: maxWidth, columnCount: columnCount)
-        if let assetWidth = imageBlock.asset?.gridLayoutAttachment?.width {
+    fileprivate func multiColumnImageHeight(_ imageRegion: ImageRegion, margin: CGFloat) -> CGFloat {
+        var imageWidth = calculateColumnWidth(frameWidth: screenWidth, columnCount: columnCount) - margin
+        if let assetWidth = imageRegion.asset?.gridLayoutAttachment?.width {
             imageWidth = min(imageWidth, CGFloat(assetWidth))
         }
-        return ceil((imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock)))
+        return ceil(imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion))
     }
 
 }

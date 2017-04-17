@@ -34,6 +34,9 @@ protocol StreamCollectionViewLayoutDelegate: UICollectionViewDelegate {
 }
 
 class StreamCollectionViewLayout: UICollectionViewLayout {
+    struct Size {
+        static let defaultColumnSpacing: CGFloat = 12
+    }
 
     enum Direction {
         case shortestFirst
@@ -83,7 +86,7 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
     override init(){
         columnCount = 2
         minimumInteritemSpacing = 0
-        minimumColumnSpacing = 12
+        minimumColumnSpacing = Size.defaultColumnSpacing
         sectionInset = UIEdgeInsets.zero
         itemRenderDirection = .shortestFirst
         super.init()
@@ -92,7 +95,7 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
     required init?(coder aDecoder: NSCoder) {
         columnCount = 2
         minimumInteritemSpacing = 0
-        minimumColumnSpacing = 12
+        minimumColumnSpacing = Size.defaultColumnSpacing
         sectionInset = UIEdgeInsets.zero
         itemRenderDirection = .shortestFirst
         super.init(coder: aDecoder)

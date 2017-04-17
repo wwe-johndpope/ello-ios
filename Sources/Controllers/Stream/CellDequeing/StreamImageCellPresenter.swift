@@ -86,10 +86,13 @@ struct StreamImageCellPresenter {
         }
 
         cell.onHeightMismatch = { actualHeight in
-            streamCellItem.calculatedCellHeights.webContent = actualHeight
-            streamCellItem.calculatedCellHeights.oneColumn = actualHeight
-            streamCellItem.calculatedCellHeights.multiColumn = actualHeight
-            postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
+            if isGridView {
+                streamCellItem.calculatedCellHeights.multiColumn = actualHeight
+            }
+            else {
+                streamCellItem.calculatedCellHeights.oneColumn = actualHeight
+            }
+            postNotification(StreamNotification.UpdateCellHeightNotification, value: streamCellItem)
         }
 
         if let image = imageToShow, !showGifInThisCell {
