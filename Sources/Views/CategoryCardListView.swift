@@ -51,6 +51,7 @@ class CategoryCardListView: UIView {
         backgroundColor = .white
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.scrollsToTop = false
     }
 
     fileprivate func bindActions() {

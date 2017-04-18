@@ -2,8 +2,6 @@
 ///  LocalPerson.swift
 //
 
-import Foundation
-
 // version 1: initial
 // version 2: change 'id' from Int32 to String
 let LocalPersonVersion = 2

@@ -167,9 +167,9 @@ class ImageLabelControl: UIControl {
         paragraphStyle.alignment = .left
 
         let attributes = [
-            NSFontAttributeName : titleFont,
-            NSForegroundColorAttributeName : color,
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSFontAttributeName: titleFont,
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphStyle
         ]
         attributed.addAttributes(attributes, range: range)
         return attributed

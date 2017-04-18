@@ -58,11 +58,11 @@ class DynamicSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        blockedCountChangedNotification = NotificationObserver(notification: BlockedCountChangedNotification) { [unowned self] (userId, delta) in
+        blockedCountChangedNotification = NotificationObserver(notification: BlockedCountChangedNotification) { [unowned self] userId, delta in
             self.currentUser?.profile?.blockedCount += delta
             self.reloadTables()
         }
-        mutedCountChangedNotification = NotificationObserver(notification: MutedCountChangedNotification) { [unowned self] (userId, delta) in
+        mutedCountChangedNotification = NotificationObserver(notification: MutedCountChangedNotification) { [unowned self] userId, delta in
             self.currentUser?.profile?.mutedCount += delta
             self.reloadTables()
         }
@@ -73,7 +73,7 @@ class DynamicSettingsViewController: UITableViewController {
         StreamService().loadStream(
             endpoint: .profileToggles,
             streamKind: nil,
-            success: { (data, responseConfig) in
+            success: { data, responseConfig in
                 if let categories = data as? [DynamicSettingCategory] {
                     self.dynamicCategories = categories.reduce([]) { categoryArr, category in
                         category.settings = category.settings.reduce([]) { settingsArr, setting in

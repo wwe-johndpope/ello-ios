@@ -2,9 +2,6 @@
 ///  ContentFlagger.swift
 //
 
-import Foundation
-import UIKit
-
 class ContentFlagger {
 
     var contentFlagged: Bool?
@@ -92,7 +89,6 @@ class ContentFlagger {
 
         alertController.addAction(cancelAction)
 
-        logPresentingAlert(presentingController.readableClassName())
         presentingController.present(alertController, animated: true, completion: .none)
     }
 

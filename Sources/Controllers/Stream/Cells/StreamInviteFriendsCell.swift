@@ -2,8 +2,6 @@
 ///  StreamInviteFriendsCell.swift
 //
 
-import Foundation
-
 class StreamInviteFriendsCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamInviteFriendsCell"
 
@@ -53,11 +51,11 @@ class StreamInviteFriendsCell: UICollectionViewCell {
 
     func styleInviteButton(_ invited: Bool? = false) {
         if invited == true {
-            inviteButton.style = .Invited
+            inviteButton.style = .invited
             inviteButton.setTitle(InterfaceString.Friends.Resend, for: .normal)
         }
         else {
-            inviteButton.style = .InviteFriend
+            inviteButton.style = .inviteFriend
             inviteButton.setTitle(InterfaceString.Friends.Invite, for: .normal)
         }
     }

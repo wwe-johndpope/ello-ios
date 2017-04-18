@@ -2,9 +2,6 @@
 ///  AlertViewController.swift
 //
 
-import UIKit
-
-
 private let DesiredWidth: CGFloat = 300
 
 let MaxHeight = UIScreen.main.bounds.height - 20
@@ -81,10 +78,8 @@ class AlertViewController: UIViewController {
     fileprivate var inputs: [String] = []
     var actionInputs: [String] {
         var retVals: [String] = []
-        for (index, action) in actions.enumerated() {
-            if action.isInput {
-                retVals.append(inputs[index])
-            }
+        for (index, action) in actions.enumerated() where action.isInput {
+            retVals.append(inputs[index])
         }
         return retVals
     }

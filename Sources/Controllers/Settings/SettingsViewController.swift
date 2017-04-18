@@ -2,8 +2,6 @@
 ///  SettingsViewController.swift
 //
 
-import Foundation
-
 enum SettingsRow: Int {
     case coverImage
     case avatarImage
@@ -482,7 +480,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
 
         if let alertViewController = alertViewController {
-            logPresentingAlert("SettingsViewController")
             present(alertViewController, animated: true, completion: .none)
         }
     }
@@ -491,7 +488,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         let alertController = AlertViewController(message: message)
         let action = AlertAction(title: InterfaceString.OK, style: .light, handler: .none)
         alertController.addAction(action)
-        logPresentingAlert("SettingsViewController")
         present(alertController, animated: true, completion: .none)
     }
 }
@@ -529,7 +525,7 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            image.copyWithCorrectOrientationAndSize() { image in
+            image.copyWithCorrectOrientationAndSize { image in
                 if let image = image {
                     self.photoSaveCallback?(image)
                 }

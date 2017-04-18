@@ -2,11 +2,24 @@
 ///  PostDetailGenerator.swift
 //
 
+
+protocol PostDetailStreamDestination: StreamDestination {
+    func appendComments(_: [StreamCellItem])
+}
+
+
 final class PostDetailGenerator: StreamGenerator {
 
     var currentUser: User?
     var streamKind: StreamKind
-    weak var destination: StreamDestination?
+    weak fileprivate var postDetailStreamDestination: PostDetailStreamDestination?
+    weak var destination: StreamDestination? {
+        get { return postDetailStreamDestination }
+        set {
+            if !(newValue is PostDetailStreamDestination) { fatalError("CategoryGenerator.destination must conform to PostDetailStreamDestination") }
+            postDetailStreamDestination = newValue as? PostDetailStreamDestination
+        }
+    }
 
     fileprivate var post: Post?
     fileprivate let postParam: String
@@ -48,6 +61,36 @@ final class PostDetailGenerator: StreamGenerator {
         loadPostComments(doneOperation)
         loadPostLovers(doneOperation)
         loadPostReposters(doneOperation)
+        loadRelatedPosts(doneOperation)
+    }
+
+    func loadMoreComments(nextQueryItems: [AnyObject]) {
+        guard let postId = self.post?.id else { return }
+
+        let loadingComments = [StreamCellItem(type: .streamLoading)]
+        self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments) {}
+
+        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return ElloAPI.postComments(postId: postId) }
+        StreamService().loadStream(
+            endpoint: scrollAPI,
+            streamKind: .postDetail(postParam: postId),
+            success: { [weak self] (jsonables, responseConfig) in
+                guard let `self` = self else { return }
+
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
+
+                let commentItems = self.parse(jsonables: jsonables)
+                self.postDetailStreamDestination?.appendComments(commentItems)
+
+                let loadMoreComments = self.loadMoreCommentItems(lastComment: jsonables.last as? ElloComment, responseConfig: responseConfig)
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
+            },
+            failure: { _ in
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+        },
+            noContent: {
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+        })
     }
 
 }
@@ -61,7 +104,9 @@ private extension PostDetailGenerator {
             StreamCellItem(type: .placeholder, placeholderType: .postReposters),
             StreamCellItem(type: .placeholder, placeholderType: .postSocialPadding),
             StreamCellItem(type: .placeholder, placeholderType: .postCommentBar),
-            StreamCellItem(type: .placeholder, placeholderType: .postComments)
+            StreamCellItem(type: .placeholder, placeholderType: .postComments),
+            StreamCellItem(type: .placeholder, placeholderType: .postLoadingComments),
+            StreamCellItem(type: .placeholder, placeholderType: .postRelatedPosts),
         ])
     }
 
@@ -121,6 +166,17 @@ private extension PostDetailGenerator {
         destination?.replacePlaceholder(type: .postSocialPadding, items: padding) {}
     }
 
+    func loadMoreCommentItems(lastComment: ElloComment?, responseConfig: ResponseConfig) -> [StreamCellItem] {
+        if responseConfig.nextQueryItems != nil,
+            let lastComment = lastComment
+        {
+            return [StreamCellItem(jsonable: lastComment, type: .loadMoreComments)]
+        }
+        else {
+            return []
+        }
+    }
+
     func loadPostComments(_ doneOperation: AsyncOperation) {
         guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
 
@@ -128,9 +184,8 @@ private extension PostDetailGenerator {
         displayCommentsOperation.addDependency(doneOperation)
         queue.addOperation(displayCommentsOperation)
 
-        PostService().loadPostComments(
-            postParam,
-            success: { [weak self] (comments, responseConfig) in
+        PostService().loadPostComments(postParam)
+            .onSuccess { [weak self] (comments, responseConfig) in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
@@ -138,15 +193,17 @@ private extension PostDetailGenerator {
                 displayCommentsOperation.run {
                     self.destination?.setPagingConfig(responseConfig: responseConfig)
                     inForeground {
-                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {
-                            self.destination?.pagingEnabled = true
+                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {}
+                        if let lastComment = comments.last {
+                            let loadMoreComments = self.loadMoreCommentItems(lastComment: lastComment, responseConfig: responseConfig)
+                            self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
                         }
                     }
                 }
-            },
-            failure: { _ in
+            }
+            .onFail { _ in
                 print("failed load post comments")
-        })
+            }
     }
 
     func loadPostLovers(_ doneOperation: AsyncOperation) {
@@ -156,9 +213,8 @@ private extension PostDetailGenerator {
         displayLoversOperation.addDependency(doneOperation)
         queue.addOperation(displayLoversOperation)
 
-        PostService().loadPostLovers(
-            postParam,
-            success: { [weak self] (users, _) in
+        PostService().loadPostLovers(postParam)
+            .onSuccess { [weak self] users in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -174,10 +230,10 @@ private extension PostDetailGenerator {
                         self.destination?.replacePlaceholder(type: .postLovers, items: loversItems) {}
                     }
                 }
-            },
-            failure: { _ in
+            }
+            .onFail { _ in
                 print("failed load post lovers")
-        })
+            }
     }
 
     func loadPostReposters(_ doneOperation: AsyncOperation) {
@@ -187,9 +243,8 @@ private extension PostDetailGenerator {
         displayRepostersOperation.addDependency(doneOperation)
         queue.addOperation(displayRepostersOperation)
 
-        PostService().loadPostReposters(
-            postParam,
-            success: { [weak self] (users, _) in
+        PostService().loadPostReposters(postParam)
+            .onSuccess { [weak self] users in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -205,10 +260,39 @@ private extension PostDetailGenerator {
                         self.destination?.replacePlaceholder(type: .postReposters, items: repostersItems) {}
                     }
                 }
-            },
-            failure: { _ in
+            }
+            .onFail { _ in
                 print("failed load post reposters")
-        })
+            }
+    }
+
+    func loadRelatedPosts(_ doneOperation: AsyncOperation) {
+        guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
+
+        let displayRelatedPostsOperation = AsyncOperation()
+        displayRelatedPostsOperation.addDependency(doneOperation)
+        queue.addOperation(displayRelatedPostsOperation)
+
+        PostService().loadRelatedPosts(postParam)
+            .onSuccess { [weak self] relatedPosts in
+                guard let `self` = self else { return }
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
+                guard relatedPosts.count > 0 else { return }
+
+                let header = NSAttributedString(label: InterfaceString.Post.RelatedPosts, style: .largeGrayHeader)
+                let headerCellItem = StreamCellItem(type: .textHeader(header))
+                let postItems = self.parse(jsonables: relatedPosts, forceGrid: true)
+                let relatedPostItems = [headerCellItem] + postItems
+
+                displayRelatedPostsOperation.run {
+                    inForeground {
+                        self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems) {}
+                    }
+                }
+            }
+            .onFail { _ in
+                print("failed load post reposters")
+            }
     }
 
     func userAvatarCellItems(

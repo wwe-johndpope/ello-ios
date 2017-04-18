@@ -4,6 +4,14 @@
 
 class StreamHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamHeaderCell"
+    struct Size {
+        static let gridAvatarHeight: CGFloat = 30
+        static let listAvatarHeight: CGFloat = 40
+    }
+
+    static func avatarHeight(isGridView: Bool) -> CGFloat {
+        return isGridView ? Size.gridAvatarHeight : Size.listAvatarHeight
+    }
 
     var ownPost = false {
         didSet {
@@ -168,7 +176,7 @@ class StreamHeaderCell: UICollectionViewCell {
         replyButton.setTitle("", for: .normal)
         replyButton.setImages(.reply)
 
-        repostIconView.image = InterfaceImage.repost.selectedImage
+        repostIconView.setInterfaceImage(.repost, style: .selected)
     }
 
     override func layoutSubviews() {
@@ -403,10 +411,8 @@ class StreamHeaderCell: UICollectionViewCell {
 // MARK: - IBActions
 
     func postTapped(_ recognizer: UITapGestureRecognizer) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.viewsButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.viewsButtonTapped(indexPath)
+        responder?.viewsButtonTapped(self)
     }
 
     @IBAction func userTapped(_ sender: AvatarButton) {
@@ -430,31 +436,23 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 
     @IBAction func flagButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.flagCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.flagCommentButtonTapped(indexPath)
+        responder?.flagCommentButtonTapped(self)
     }
 
     @IBAction func replyButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.replyToCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.replyToCommentButtonTapped(indexPath)
+        responder?.replyToCommentButtonTapped(self)
     }
 
     @IBAction func deleteButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.deleteCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.deleteCommentButtonTapped(indexPath)
+        responder?.deleteCommentButtonTapped(self)
     }
 
     @IBAction func editButtonTapped(_ sender: StreamFooterButton) {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.editCommentButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.editCommentButtonTapped(indexPath)
+        responder?.editCommentButtonTapped(self)
     }
 
     @IBAction func chevronButtonTapped(_ sender: StreamFooterButton) {
@@ -481,7 +479,7 @@ extension StreamHeaderCell {
             rotateChevron(CGFloat(0))
         }
         else {
-            rotateChevron(CGFloat(M_PI))
+            rotateChevron(CGFloat.pi)
         }
     }
 
@@ -491,11 +489,11 @@ extension StreamHeaderCell {
 
     fileprivate func rotateChevron(_ angle: CGFloat) {
         var normalized = angle
-        if angle < CGFloat(-M_PI) {
-            normalized = CGFloat(-M_PI)
+        if angle < -CGFloat.pi {
+            normalized = -CGFloat.pi
         }
-        else if angle > CGFloat(M_PI) {
-            normalized = CGFloat(M_PI)
+        else if angle > CGFloat.pi {
+            normalized = CGFloat.pi
         }
         self.chevronButton.transform = CGAffineTransform(rotationAngle: normalized)
     }
@@ -528,7 +526,7 @@ extension StreamHeaderCell: UIScrollViewDelegate {
                 Tracker.shared.commentBarVisibilityChanged(true)
             }
         } else {
-            let angle: CGFloat = -CGFloat(M_PI) + CGFloat(M_PI) * scrollView.contentOffset.x / revealWidth
+            let angle: CGFloat = -CGFloat.pi + CGFloat.pi * scrollView.contentOffset.x / revealWidth
             rotateChevron(angle)
             isOpen = false
         }

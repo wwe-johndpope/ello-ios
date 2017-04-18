@@ -36,10 +36,10 @@ class TwoLineButton: UIButton {
         paragraphStyle.alignment = .left
 
         return [
-            NSFontAttributeName : font,
-            NSForegroundColorAttributeName : color,
-            NSParagraphStyleAttributeName : paragraphStyle,
-            NSUnderlineStyleAttributeName : (underline ? NSUnderlineStyle.styleSingle.rawValue : NSUnderlineStyle.styleNone.rawValue) as AnyObject
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphStyle,
+            NSUnderlineStyleAttributeName: (underline ? NSUnderlineStyle.styleSingle.rawValue : NSUnderlineStyle.styleNone.rawValue) as AnyObject
         ]
     }
 

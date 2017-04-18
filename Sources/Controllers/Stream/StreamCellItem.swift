@@ -2,8 +2,6 @@
 ///  StreamCellItem.swift
 //
 
-import Foundation
-
 enum StreamCellState: CustomStringConvertible, CustomDebugStringConvertible {
     case none
     case loading
@@ -28,6 +26,11 @@ final class StreamCellItem: NSObject, NSCopying {
     var placeholderType: StreamCellType.PlaceholderType?
     var calculatedCellHeights = CalculatedCellHeights()
     var state: StreamCellState = .none
+    var forceGrid = false
+
+    func isGridView(streamKind: StreamKind) -> Bool {
+        return forceGrid || streamKind.isGridView
+    }
 
     convenience init(type: StreamCellType) {
         self.init(jsonable: JSONAble(version: 1), type: type)

@@ -2,8 +2,6 @@
 ///  ErrorStatusCode.swift
 //
 
-import Foundation
-
 enum ErrorStatusCode: Int {
     case status401_Unauthorized = 401
     case status403 = 403

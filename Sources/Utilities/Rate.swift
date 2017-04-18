@@ -2,8 +2,8 @@
 ///  Rate.swift
 //
 
-import Foundation
 import iRate
+
 
 class Rate: NSObject {
 

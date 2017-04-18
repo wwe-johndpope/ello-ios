@@ -189,7 +189,7 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
             allItemAttributes.append(attributes)
             let maxY = attributes.frame.maxY
             if isFullWidth {
-                for (index, _) in columnHeights.enumerated() {
+                for index in columnHeights.indices {
                     columnHeights[index] = maxY
                 }
             }
@@ -202,12 +202,12 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
     }
 
     override var collectionViewContentSize: CGSize {
-        let numberOfSections = collectionView!.numberOfSections
-        if numberOfSections == 0 {
-            return .zero
-        }
+        guard
+            let collectionView = collectionView,
+            collectionView.numberOfSections > 0
+        else { return .zero }
 
-        let contentWidth = self.collectionView!.bounds.size.width
+        let contentWidth = collectionView.bounds.size.width
         return CGSize(width: contentWidth, height: CGFloat(columnHeights.max() ?? 0))
     }
 

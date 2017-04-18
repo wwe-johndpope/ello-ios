@@ -50,7 +50,7 @@ class StreamFooterCell: UICollectionViewCell {
     }
 
     func updateToolbarItems(
-        streamKind: StreamKind,
+        isGridView: Bool,
         repostVisibility: InteractionVisibility,
         commentVisibility: InteractionVisibility,
         shareVisibility: InteractionVisibility,
@@ -62,7 +62,7 @@ class StreamFooterCell: UICollectionViewCell {
         var toolbarItems: [UIBarButtonItem] = []
 
         let desiredCount: Int
-        if streamKind.isGridView {
+        if isGridView {
             desiredCount = 3
 
             if commentVisibility.isVisible {
@@ -176,10 +176,8 @@ class StreamFooterCell: UICollectionViewCell {
 // MARK: - IBActions
 
     @IBAction func viewsButtonTapped() {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.viewsButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.viewsButtonTapped(indexPath)
+        responder?.viewsButtonTapped(self)
     }
 
     @IBAction func commentsButtonTapped() {
@@ -196,24 +194,18 @@ class StreamFooterCell: UICollectionViewCell {
     }
 
     @IBAction func lovesButtonTapped() {
-        guard let indexPath = indexPath else { return }
-
-        let responder = target(forAction: #selector(PostbarResponder.lovesButtonTapped(_:indexPath:)), withSender: self) as? PostbarResponder
-        responder?.lovesButtonTapped(self, indexPath: indexPath)
+        let responder = target(forAction: #selector(PostbarResponder.lovesButtonTapped(_:)), withSender: self) as? PostbarResponder
+        responder?.lovesButtonTapped(self)
     }
 
     @IBAction func repostButtonTapped() {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.repostButtonTapped(_:)), withSender: self) as? PostbarResponder
-        responder?.repostButtonTapped(indexPath)
+        responder?.repostButtonTapped(self)
     }
 
     @IBAction func shareButtonTapped() {
-        guard let indexPath = indexPath else { return }
-
         let responder = target(forAction: #selector(PostbarResponder.shareButtonTapped(_:sourceView:)), withSender: self) as? PostbarResponder
-        responder?.shareButtonTapped(indexPath, sourceView: shareControl)
+        responder?.shareButtonTapped(self, sourceView: shareControl)
     }
 
     @IBAction func replyButtonTapped() {

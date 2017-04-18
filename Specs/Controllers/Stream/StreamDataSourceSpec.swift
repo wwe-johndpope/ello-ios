@@ -458,7 +458,8 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("does not return cell items for other posts") {
-                    let post = subject.postForIndexPath(IndexPath(item: 9, section: 0))!
+                    let lastItem = subject.visibleCellItems.count - 1
+                    let post = subject.postForIndexPath(IndexPath(item: lastItem, section: 0))!
                     let items = subject.cellItemsForPost(post)
                     expect(post.id) == "777"
                     expect(items.count) == 4
@@ -655,7 +656,7 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .simpleStream(endpoint: ElloAPI.userStream(userParam: "54321"), title: "")),
                     ]
                 for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
+                    it("is \(String(describing: indexPath)) for \(streamKind)") {
                         subject.streamKind = streamKind
                         subject.currentUser = User.stub(["id": "12345"])
 
@@ -687,7 +688,7 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .simpleStream(endpoint: ElloAPI.userStream(userParam: "54321"), title: "")),
                     ]
                 for (indexPath, streamKind) in tests {
-                    it("is \(indexPath) for \(streamKind)") {
+                    it("is \(String(describing: indexPath)) for \(streamKind)") {
                         subject.streamKind = streamKind
 
                         if indexPath == nil {

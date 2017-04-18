@@ -2,10 +2,6 @@
 ///  UIEdgeInsetsExtensions.swift
 //
 
-import CoreGraphics
-import UIKit
-import Foundation
-
 extension UIEdgeInsets {
     init(top: CGFloat) {
         self.init(top: top, left: 0, bottom: 0, right: 0)

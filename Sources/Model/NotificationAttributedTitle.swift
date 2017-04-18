@@ -2,9 +2,6 @@
 ///  NotificationAttributedTitle.swift
 //
 
-import Foundation
-import UIKit
-
 struct NotificationAttributedTitle {
 
     static fileprivate func attrs(_ addlAttrs: [String : AnyObject] = [:]) -> [String : AnyObject] {

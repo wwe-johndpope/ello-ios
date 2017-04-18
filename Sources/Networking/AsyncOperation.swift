@@ -2,8 +2,6 @@
 ///  AsyncOperation.swift
 //
 
-import Foundation
-
 class AsyncOperation: Operation {
     typealias AsyncBlock = (@escaping () -> Void) -> Void
     var _block: AsyncBlock?

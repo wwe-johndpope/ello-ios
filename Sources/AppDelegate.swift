@@ -18,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        if let debugServer = DebugServer.fromDefaults {
+            APIKeys.shared = debugServer.apiKeys
+        }
+
+        #if DEBUG
+        Tracker.shared.overrideAgent = NullAgent()
+        #endif
+
         Keyboard.setup()
         Rate.sharedRate.setup()
         AutoCompleteService.loadEmojiJSON("emojis")
@@ -94,11 +102,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setupCaches() {
         let manager = PINRemoteImageManager.shared()
-        let twoWeeks: TimeInterval = 1209600
-        let twoHundredFiftyMegaBytes: UInt = 250000000
-        manager?.cache.diskCache.byteLimit = twoHundredFiftyMegaBytes
-        manager?.cache.diskCache.ageLimit = twoWeeks
-
+        let diskAgeLimit: TimeInterval = 1_209_600
+        let diskByteLimit: UInt = 250_000_000
+        let memoryByteLimit: UInt = 10_000_000
+        manager.pinCache?.diskCache.ageLimit = diskAgeLimit
+        manager.pinCache?.diskCache.byteLimit = diskByteLimit
+        manager.pinCache?.memoryCache.costLimit = memoryByteLimit
         _ = CategoryService().loadCategories()
     }
 

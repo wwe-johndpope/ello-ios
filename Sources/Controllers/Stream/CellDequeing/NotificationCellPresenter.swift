@@ -15,9 +15,11 @@ struct NotificationCellPresenter {
             let cell = cell as? NotificationCell,
             let notification = streamCellItem.jsonable as? Notification
         else { return }
-
         cell.onWebContentReady { webView in
-            if let actualHeight = webView.windowContentSize()?.height, actualHeight != streamCellItem.calculatedCellHeights.webContent {
+            if let actualHeight = webView.windowContentSize()?.height,
+                let webContent = streamCellItem.calculatedCellHeights.webContent,
+                ceil(actualHeight) != ceil(webContent)
+            {
                 StreamNotificationCellSizeCalculator.assignTotalHeight(actualHeight, cellItem: streamCellItem, cellWidth: cell.frame.width)
                 postNotification(StreamNotification.UpdateCellHeightNotification, value: cell)
             }
@@ -38,6 +40,7 @@ struct NotificationCellPresenter {
         cell.messageHtml = notification.textRegion?.content
 
         if let imageRegion = notification.imageRegion {
+            cell.mode = .image
             let aspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
             var imageURL: URL?
             if let asset = imageRegion.asset, !asset.isGif {

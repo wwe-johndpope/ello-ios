@@ -2,8 +2,6 @@
 ///  StreamCellType.swift
 //
 
-import Foundation
-
 typealias CellConfigClosure = (
     _ cell: UICollectionViewCell,
     _ streamCellItem: StreamCellItem,
@@ -31,6 +29,7 @@ enum StreamCellType: Equatable {
     case inviteFriends
     case onboardingInviteFriends
     case emptyStream(height: CGFloat)
+    case loadMoreComments
     case noPosts
     case notification
     case pagePromotionalHeader
@@ -64,10 +63,12 @@ enum StreamCellType: Equatable {
 
         case postCommentBar
         case postComments
+        case postLoadingComments
         case postHeader
         case postLovers
         case postReposters
         case postSocialPadding
+        case postRelatedPosts
 
         case cellNotFound
     }
@@ -86,6 +87,7 @@ enum StreamCellType: Equatable {
         image(data: nil),
         inviteFriends,
         onboardingInviteFriends,
+        loadMoreComments,
         noPosts,
         notification,
         pagePromotionalHeader,
@@ -134,6 +136,7 @@ enum StreamCellType: Equatable {
         case .footer: return StreamFooterCell.reuseIdentifier
         case .image: return StreamImageCell.reuseIdentifier
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.reuseIdentifier
+        case .loadMoreComments: return StreamLoadMoreCommentsCell.reuseIdentifier
         case .noPosts: return NoPostsCell.reuseIdentifier
         case .notification: return NotificationCell.reuseIdentifier
         case .placeholder: return "Placeholder"
@@ -156,15 +159,16 @@ enum StreamCellType: Equatable {
 
     var selectable: Bool {
         switch self {
-        case .categoryCard,
-             .selectableCategoryCard,
+        case .announcement,
+             .categoryCard,
              .createComment,
              .header,
              .inviteFriends,
-             .onboardingInviteFriends,
+             .loadMoreComments,
              .notification,
-             .announcement,
+             .onboardingInviteFriends,
              .seeMoreComments,
+             .selectableCategoryCard,
              .toggle,
              .userListItem:
             return true
@@ -216,6 +220,7 @@ enum StreamCellType: Equatable {
         case .footer: return StreamFooterCell.self
         case .image: return StreamImageCell.self
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.self
+        case .loadMoreComments: return StreamLoadMoreCommentsCell.self
         case .noPosts: return NoPostsCell.self
         case .notification: return NotificationCell.self
         case .placeholder: return UICollectionViewCell.self
@@ -239,7 +244,7 @@ enum StreamCellType: Equatable {
         case .categoryPromotionalHeader, .pagePromotionalHeader:
             return 150
         case .categoryCard, .selectableCategoryCard:
-            return 110
+            return CategoryCardCell.Size.height
         case .categoryList:
             return CategoryListCell.Size.height
         case .commentHeader,
@@ -255,6 +260,8 @@ enum StreamCellType: Equatable {
             return 44
         case .header:
             return 70
+        case .loadMoreComments:
+            return StreamLoadMoreCommentsCell.Size.height
         case .noPosts:
             return 215
         case .notification:
@@ -299,6 +306,7 @@ enum StreamCellType: Equatable {
              .inviteFriends,
              .onboardingInviteFriends,
              .emptyStream,
+             .loadMoreComments,
              .noPosts,
              .notification,
              .pagePromotionalHeader,
@@ -344,6 +352,7 @@ enum StreamCellType: Equatable {
             createComment,
             emptyStream(height: 282),
             fullWidthSpacer(height: 0.0),
+            loadMoreComments,
             notification,
             pagePromotionalHeader,
             announcement,

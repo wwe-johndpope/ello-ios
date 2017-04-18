@@ -2,8 +2,6 @@
 ///  CrashlyticsKey.swift
 //
 
-import Foundation
-
 enum CrashlyticsKey: String {
     case alertPresenter = "alert presenting controller"
     case requestPath = "most recent request path"

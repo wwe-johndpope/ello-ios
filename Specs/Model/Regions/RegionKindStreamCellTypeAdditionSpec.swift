@@ -82,7 +82,7 @@ class RegionKindStreamCellTypeAdditionSpec: QuickSpec {
                 }
             }
 
-            it("should split break tags") {
+            it("should not split break tags") {
                 let kind = RegionKind.text
                 let content1 = "text1"
                 let content2 = "text2"
@@ -90,31 +90,24 @@ class RegionKindStreamCellTypeAdditionSpec: QuickSpec {
                     "content": "<p>\(content1)<br>\(content2)</p>"
                     ])
                 let streamCellTypes = kind.streamCellTypes(region)
-                expect(streamCellTypes.count) == 2
+                expect(streamCellTypes.count) == 1
                 if case let .text(data) = streamCellTypes[0], let textRegion = data as? TextRegion {
-                    expect(textRegion.content) == "<p>\(content1)</p>"
+                    expect(textRegion.content) == region.content
                 }
                 else {
                     fail("wrong cell type \(streamCellTypes[0])")
-                }
-
-                if case let .text(data) = streamCellTypes[1], let textRegion = data as? TextRegion {
-                    expect(textRegion.content) == "<p>\(content2)</p>"
-                }
-                else {
-                    fail("wrong cell type \(streamCellTypes[1])")
                 }
             }
 
             it("should truncate ridiculous text") {
                 let kind = RegionKind.text
                 let region = TextRegion.stub([
-                    "content": "<p>" + String(repeating: "lorem", count: 8000/5) + "</p>"
+                    "content": "<p>" + String(repeating: "a", count: 8000) + "</p>"
                     ])
                 let streamCellTypes = kind.streamCellTypes(region)
                 expect(streamCellTypes.count) == 1
                 if case let .text(data) = streamCellTypes[0], let textRegion = data as? TextRegion {
-                    expect(textRegion.content).to(beginWith("<p>lorem"))
+                    expect(textRegion.content).to(beginWith("<p>aaaaa"))
                     expect(textRegion.content).to(endWith("&hellip;</p>"))
                 }
                 else {

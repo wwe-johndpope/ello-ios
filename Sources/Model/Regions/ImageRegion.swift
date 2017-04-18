@@ -2,7 +2,6 @@
 ///  ImageRegion.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 

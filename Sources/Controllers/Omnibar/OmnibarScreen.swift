@@ -441,11 +441,8 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     func startEditingLast() {
         var lastTextRow: Int?
-        for (row, indexedRegion) in editableRegions.enumerated() {
-            let region = indexedRegion.1
-            if region.isText {
-                lastTextRow = row
-            }
+        for (row, indexedRegion) in editableRegions.enumerated() where indexedRegion.1.isText {
+            lastTextRow = row
         }
 
         if let lastTextRow = lastTextRow {
@@ -455,12 +452,9 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     func startEditing() {
         var firstTextRow: Int?
-        for (row, indexedRegion) in editableRegions.enumerated() {
-            let region = indexedRegion.1
-            if region.isText {
-                firstTextRow = row
-                break
-            }
+        for (row, indexedRegion) in editableRegions.enumerated() where indexedRegion.1.isText {
+            firstTextRow = row
+            break
         }
 
         if let firstTextRow = firstTextRow {
@@ -793,7 +787,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             range.location -= 1
 
             var effectiveRange: NSRange? = NSRange(location: 0, length: 0)
-            if let _ = textView.textStorage.attribute(NSLinkAttributeName, at: range.location, effectiveRange: &effectiveRange!),
+            if textView.textStorage.attribute(NSLinkAttributeName, at: range.location, effectiveRange: &effectiveRange!) != nil,
                 let effectiveRange = effectiveRange
             {
                 range = effectiveRange
@@ -808,7 +802,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             linkButton.isSelected = false
         }
         else {
-            requestLinkURL() { url in
+            requestLinkURL { url in
                 guard let url = url else {
                     return
                 }
@@ -839,7 +833,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
         alertController.addAction(okCancelAction)
 
-        logPresentingAlert("OmnibarViewController")
         delegate?.omnibarPresentController(alertController)
     }
 
@@ -886,7 +879,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     func userSetCurrentImageURL(_ imageURL: URL) {
         _ = PINRemoteImageManager.shared().downloadImage(with: imageURL, options: []) { result in
-            if let image = result?.image {
+            if let image = result.image {
                 self.addImage(image)
             }
         }

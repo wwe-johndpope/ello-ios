@@ -1,20 +1,15 @@
-//
-//  ElloS3
-//  Ello
-//
-//  Created by Colin Gray on 3/3/2015.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  ElloS3.swift
 //
 // creds = AmazonCredentials(...)
 // data = NSData()
 // uploader = ElloS3(credentials: credentials, data: data)
-//   .onSuccess() { (response : NSData) in }
-//   .onFailure() { (error : NSError) in }
+//   .onSuccess { (response : NSData) in }
+//   .onFailure { (error : NSError) in }
 //   // NOT yet supported:
-//   //.onProgress() { (progress : Float) in }
+//   //.onProgress { (progress : Float) in }
 //   .start()
 
-import Foundation
 
 
 class ElloS3 {

@@ -23,11 +23,27 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return nil
         }
     }
+    var trackerStreamKind: String? {
+        switch self {
+        case .loves:
+            return "love"
+        default:
+            return nil
+        }
+    }
+    var trackerStreamId: String? {
+        switch self {
+        case let .loves(userId):
+            return userId
+        default:
+            return nil
+        }
+    }
 
     var debugDescription: String {
         switch self {
         case let .announcementsNewContent(createdAt):
-            return "announcementsNewContent(createdAt: \(createdAt))"
+            return "announcementsNewContent(createdAt: \(String(describing: createdAt)))"
         case let .commentDetail(postId, commentId):
             return "commentDetail(postId: \(postId), commentId: \(commentId))"
         case let .createComment(parentPostId, _):
@@ -59,7 +75,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .flagUser(userId, kind):
             return "flagUser(userId: \(userId), kind: \(kind))"
         case let .followingNewContent(createdAt):
-            return "followingNewContent(createdAt: \(createdAt))"
+            return "followingNewContent(createdAt: \(String(describing: createdAt)))"
         case let .hire(userId, body):
             return "hire(userId: \(userId), body: \(body.characters.count))"
         case let .collaborate(userId, body):
@@ -71,13 +87,21 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .locationAutoComplete(terms):
             return "locationAutoComplete(terms: \(terms))"
         case let .notificationsNewContent(createdAt):
-            return "notificationsNewContent(createdAt: \(createdAt))"
+            return "notificationsNewContent(createdAt: \(String(describing: createdAt)))"
+        case let .requestPasswordReset(email):
+            return "requestPasswordReset(email: \(email))"
+        case let .resetPassword(password, authToken):
+            return "resetPassword(password: \(password), authToken: \(authToken))"
         case let .postComments(postId):
             return "postComments(postId: \(postId))"
         case let .postDetail(postParam, commentCount):
             return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
+        case let .postViews(streamId, streamKind, postTokens, currentUserId):
+            return "postViews(streamId: \(String(describing: streamId)), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(String(describing: currentUserId)))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
+        case let .postRelatedPosts(postId):
+            return "postRelatedPosts(postId: \(postId))"
         case let .postReplyAll(postId):
             return "postReplyAll(postId: \(postId))"
         case let .postReposters(postId):
@@ -202,10 +226,14 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postDetail"
         case .postLovers:
             return "postLovers"
+        case .postRelatedPosts:
+            return "postRelatedPosts"
         case .postReplyAll:
             return "postReplyAll"
         case .postReposters:
             return "postReposters"
+        case .postViews:
+            return "postViews"
         case .profileUpdate:
             return "profileUpdate"
         case .profileDelete:
@@ -218,6 +246,10 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "relationship"
         case .relationshipBatch:
             return "relationshipBatch"
+        case .requestPasswordReset:
+            return "requestPasswordReset"
+        case .resetPassword:
+            return "resetPassword"
         case .searchForPosts:
             return "searchForPosts"
         case .searchForUsers:

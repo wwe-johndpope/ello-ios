@@ -2,8 +2,6 @@
 ///  StreamImageCellPresenter.swift
 //
 
-import Foundation
-
 struct StreamImageCellPresenter {
 
     static func preventImageStretching(_ cell: StreamImageCell, attachmentWidth: Int, columnWidth: CGFloat, leftMargin: CGFloat) {
@@ -43,28 +41,33 @@ struct StreamImageCellPresenter {
         guard
             let cell = cell as? StreamImageCell,
             let imageRegion = streamCellItem.type.data as? ImageRegion
-        else {
-            return
-        }
+        else { return }
 
         var attachmentToLoad: Attachment?
         var imageToLoad: URL?
         var showGifInThisCell = false
+        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
+
         if let asset = imageRegion.asset, asset.isGif {
+            cell.mode = .gif
             if streamKind.supportsLargeImages || !asset.isLargeGif {
-                attachmentToLoad = asset.optimized
-                imageToLoad = asset.optimized?.url as URL?
                 showGifInThisCell = true
             }
+
+            if showGifInThisCell {
+                attachmentToLoad = asset.optimized
+                imageToLoad = asset.optimized?.url as URL?
+            }
             else {
+                attachmentToLoad = isGridView ? asset.gridLayoutAttachment : asset.oneColumnAttachment
                 cell.presentedImageUrl = asset.optimized?.url
                 cell.isLargeImage = true
             }
             cell.isGif = true
         }
 
-        cell.isGridView = streamKind.isGridView
-        if streamKind.isGridView {
+        cell.isGridView = isGridView
+        if isGridView {
             attachmentToLoad = attachmentToLoad ?? imageRegion.asset?.gridLayoutAttachment
         }
         else {
@@ -78,7 +81,7 @@ struct StreamImageCellPresenter {
         cell.marginType = cellMargin
 
         if let attachmentWidth = attachmentToLoad?.width {
-            let columnWidth: CGFloat = calculateColumnWidth(frameWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCountFor(width: cell.frame.width))
+            let columnWidth: CGFloat = cell.frame.width
             preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: cell.margin)
         }
 
@@ -97,8 +100,8 @@ struct StreamImageCellPresenter {
             cell.setImageURL(imageURL)
         }
         else if let imageURL = imageRegion.url {
-            cell.isGif = imageURL.hasGifExtension
             cell.setImageURL(imageURL)
+            cell.isGif = imageURL.hasGifExtension
         }
 
         cell.buyButtonURL = imageRegion.buyButtonURL

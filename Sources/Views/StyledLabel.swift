@@ -50,10 +50,10 @@ class StyledLabel: UILabel {
     override var text: String? {
         didSet { updateStyle() }
     }
-    var style: Style = .Default {
+    var style: Style = .default {
         didSet { updateStyle() }
     }
-    var styleName: String = "Default" {
+    var styleName: String = "default" {
         didSet { style = Style.byName(styleName) }
     }
 
@@ -102,66 +102,61 @@ extension StyledLabel {
 }
 
 extension StyledLabel.Style {
-    static let Default = StyledLabel.Style(
+    static let `default` = StyledLabel.Style(
         textColor: .black
         )
-    static let SmallWhite = StyledLabel.Style(
+    static let smallWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .small
         )
-    static let White = StyledLabel.Style(
+    static let white = StyledLabel.Style(
         textColor: .white
         )
-    static let BoldWhite = StyledLabel.Style(
+    static let boldWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .bold
         )
-    static let LargeWhite = StyledLabel.Style(
+    static let largeWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .largeBold
         )
-    static let Black = StyledLabel.Style(
+    static let black = StyledLabel.Style(
         textColor: .black
         )
-    static let Large = StyledLabel.Style(
+    static let large = StyledLabel.Style(
         textColor: .black,
         fontFamily: .large
         )
-    static let LargeBold = StyledLabel.Style(
+    static let largeBold = StyledLabel.Style(
         textColor: .black,
         fontFamily: .largeBold
         )
-    static let Gray = StyledLabel.Style(
+    static let gray = StyledLabel.Style(
         textColor: .greyA()
         )
-    static let LightGray = StyledLabel.Style(
+    static let lightGray = StyledLabel.Style(
         textColor: UIColor(hex: 0x9a9a9a)
         )
-    static let LargePlaceholder = StyledLabel.Style(
+    static let largeGrayHeader = StyledLabel.Style(
+        textColor: UIColor.greyA(),
+        fontFamily: .large
+        )
+    static let largePlaceholder = StyledLabel.Style(
         textColor: .greyC(),
         fontFamily: .large
         )
-    static let Error = StyledLabel.Style(
+    static let error = StyledLabel.Style(
         textColor: .red
         )
 
     static func byName(_ name: String) -> StyledLabel.Style {
         switch name {
-        case "SmallWhite": return .SmallWhite
-        case "White": return .White
-        case "BoldWhite": return .BoldWhite
-        case "LargeWhite": return .LargeWhite
-
-        case "Black": return .Black
-        case "Large": return .Large
-        case "LargeBold": return .LargeBold
-
-        case "Gray": return .Gray
-        case "LightGray": return .LightGray
-
-        case "Error": return .Error
-
-        default: return .Default
+        case "white": return .white
+        case "black": return .black
+        case "gray": return .gray
+        case "lightGray": return .lightGray
+        case "error": return .error
+        default: return .default
         }
     }
 }

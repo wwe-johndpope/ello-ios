@@ -76,11 +76,11 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
     fileprivate let headerLabel = UILabel()
 
     fileprivate let coverImageView = FLAnimatedImageView()
-    fileprivate let uploadCoverImageButton = StyledButton(style: .Green)
+    fileprivate let uploadCoverImageButton = StyledButton(style: .green)
     fileprivate let uploadCoverImagePrompt = UILabel()
 
     fileprivate let avatarImageView = FLAnimatedImageView()
-    fileprivate let uploadAvatarButton = StyledButton(style: .Green)
+    fileprivate let uploadAvatarButton = StyledButton(style: .green)
     fileprivate let uploadAvatarPrompt = UILabel()
 
     fileprivate let nameTextView = ClearTextView()
@@ -101,7 +101,7 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         avatarImageView.backgroundColor = .greyE5()
         avatarImageView.clipsToBounds = true
         avatarImageView.contentMode = .center
-        avatarImageView.image = InterfaceImage.elloGrayLineLogo.normalImage
+        avatarImageView.interfaceImage = .elloGrayLineLogo
         uploadAvatarPrompt.textAlignment = .center
         uploadAvatarPrompt.textColor = .greyA()
         uploadAvatarPrompt.font = UIFont.defaultFont(12)
@@ -295,7 +295,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
             delegate?.dismissController()
         }
         else {
-            image.copyWithCorrectOrientationAndSize() { image in
+            image.copyWithCorrectOrientationAndSize { image in
                 if let image = image {
                     self.setImage(ImageRegionData(image: image), target: uploading, updateDelegate: true)
                 }
@@ -325,11 +325,11 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         switch uploading {
         case .coverImage:
             imageView = coverImageView
-            uploadCoverImageButton.style = (imageRegion == nil) ? .Green : .RoundedGray
+            uploadCoverImageButton.style = (imageRegion == nil) ? .green : .roundedGrayOutline
             if let imageRegion = imageRegion, updateDelegate { delegate?.assign(coverImage: imageRegion) }
         case .avatar:
             imageView = avatarImageView
-            uploadAvatarButton.style = (imageRegion == nil) ? .Green : .RoundedGray
+            uploadAvatarButton.style = (imageRegion == nil) ? .green : .roundedGrayOutline
             if let imageRegion = imageRegion, updateDelegate  { delegate?.assign(avatarImage: imageRegion) }
         }
 
@@ -344,7 +344,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
         }
         else if imageView == avatarImageView {
             imageView.contentMode = .center
-            imageView.image = InterfaceImage.elloGrayLineLogo.normalImage
+            imageView.interfaceImage = .elloGrayLineLogo
         }
         else if imageView == coverImageView {
             imageView.image = nil
@@ -410,7 +410,7 @@ extension CreateProfileScreen: UIScrollViewDelegate {
         let delta = scrollView.contentOffset.y - prevOffset.y
         prevOffset = scrollView.contentOffset
         if delta == -25 {
-            scrollView.contentOffset.y = scrollView.contentOffset.y + 55
+            scrollView.contentOffset.y += 55
         }
     }
 }

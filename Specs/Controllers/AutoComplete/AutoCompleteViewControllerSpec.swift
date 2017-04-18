@@ -49,7 +49,7 @@ class AutoCompleteViewControllerSpec: QuickSpec {
 
                 it("registers cells") {
                     subject.viewWillAppear(false)
-                    let match = AutoCompleteMatch(type: AutoCompleteType.username, range: (start:"test".startIndex..<"test".endIndex), text: "test")
+                    let match = AutoCompleteMatch(type: AutoCompleteType.username, range: "test".startIndex..<"test".endIndex, text: "test")
                     subject.dataSource.items = [AutoCompleteItem(result: AutoCompleteResult(name: "test"), type: AutoCompleteType.emoji, match: match)]
 
                     expect(subject.tableView).to(haveRegisteredIdentifier(AutoCompleteCell.reuseIdentifier))

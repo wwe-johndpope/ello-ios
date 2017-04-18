@@ -2,8 +2,6 @@
 ///  NetworkError.swift
 //
 
-import Foundation
-
 let ElloErrorDomain = "co.ello.Ello"
 
 enum ElloErrorCode: Int {

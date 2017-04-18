@@ -28,7 +28,36 @@ extension UIWindow {
 
 class Window {
     static func isWide(_ width: CGFloat) -> Bool {
-        return width > 1000
+        return width >= 768
     }
-    static var width: CGFloat { return UIWindow.mainWindow.frame.size.width }
+
+    fileprivate static var _width: CGFloat?
+    static var width: CGFloat {
+        get {
+            return Window._width ?? UIWindow.mainWindow.frame.size.width
+        }
+        set {
+            if AppSetup.sharedState.isTesting {
+                Window._width = newValue
+            }
+        }
+    }
+}
+
+class DeviceScreen {
+    static var isRetina: Bool {
+        return scale > 1
+    }
+
+    fileprivate static var _scale: CGFloat?
+    static var scale: CGFloat {
+        get {
+            return DeviceScreen._scale ?? UIScreen.main.scale
+        }
+        set {
+            if AppSetup.sharedState.isTesting {
+                DeviceScreen._scale = newValue
+            }
+        }
+    }
 }

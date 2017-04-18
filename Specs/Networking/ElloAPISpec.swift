@@ -54,7 +54,7 @@ class ElloAPISpec: QuickSpec {
                         (.deleteWatchPost(postId: "1"), "/api/v2/posts/1/watch"),
                         (.discover(type: .featured), "/api/v2/categories/posts/recent"),
                         (.discover(type: .recent), "/api/v2/discover/posts/recent"),
-                        (.discover(type: .trending), "/api/v2/discover/users/trending"),
+                        (.discover(type: .trending), "/api/v2/discover/posts/trending"),
                         (.emojiAutoComplete(terms: ""), "/api/v2/emoji/autocomplete"),
                         (.findFriends(contacts: [:]), "/api/v2/profile/find_friends"),
                         (.flagComment(postId: "555", commentId: "666", kind: "some-string"), "/api/v2/posts/555/comments/666/flag/some-string"),
@@ -74,6 +74,7 @@ class ElloAPISpec: QuickSpec {
                         (.pagePromotionals, "/api/v2/page_promotionals"),
                         (.postComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),
                         (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
+                        (.postViews(streamId: "", streamKind: "", postIds: Set<String>(), currentUserId: ""), "/api/v2/post_views"),
                         (.postLovers(postId: "1"), "/api/v2/posts/1/lovers"),
                         (.postReplyAll(postId: "1"), "/api/v2/posts/1/commenters_usernames"),
                         (.postReposters(postId: "1"), "/api/v2/posts/1/reposters"),
@@ -125,7 +126,7 @@ class ElloAPISpec: QuickSpec {
                     (.deletePost(postId: ""), .noContentType),
                     (.deleteSubscriptions(token: Data()), .noContentType),
                     (.discover(type: .featured), .postsType),
-                    (.discover(type: .trending), .usersType),
+                    (.discover(type: .trending), .postsType),
                     (.discover(type: .recent), .postsType),
                     (.categoryPosts(slug: "art"), .postsType),
                     (.emojiAutoComplete(terms: ""), .autoCompleteResultType),
@@ -363,7 +364,6 @@ class ElloAPISpec: QuickSpec {
                 it("Discover") {
                     let params = ElloAPI.discover(type: .featured).parameters!
                     expect(params["per_page"] as? Int) == 10
-                    expect(params["include_recent_posts"] as? Bool) == true
                     expect(params["seed"]).notTo(beNil())
                 }
 
@@ -386,7 +386,6 @@ class ElloAPISpec: QuickSpec {
                     let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [AnyObject]) { return ElloAPI.discover(type: .featured) }
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
-                    expect(params["include_recent_posts"] as? Bool) == true
                     expect(params["seed"]).notTo(beNil())
                     expect(params["after"]).notTo(beNil())
                 }
@@ -433,6 +432,37 @@ class ElloAPISpec: QuickSpec {
                 it("PostComments") {
                     let params = ElloAPI.postComments(postId: "comments-id").parameters!
                     expect(params["per_page"] as? Int) == 10
+                }
+
+                describe("postViews endpoint") {
+                    it("with email") {
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: Set(["555"]), currentUserId: "666").parameters!
+                        expect(params["post_ids"] as? String) == "555"
+                        expect(params["user_id"] as? String) == "666"
+                        expect(params["kind"] as? String) == "post"
+                        expect(params["id"] as? String) == "123"
+                    }
+                    it("with no streamId") {
+                        let params = ElloAPI.postViews(streamId: nil, streamKind: "post", postIds: Set(["555"]), currentUserId: "666").parameters!
+                        expect(params["post_ids"] as? String) == "555"
+                        expect(params["user_id"] as? String) == "666"
+                        expect(params["kind"] as? String) == "post"
+                        expect(params["id"]).to(beNil())
+                    }
+                    it("with many posts") {
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: Set(["555", "777"]), currentUserId: "666").parameters!
+                        expect(params["post_ids"] as? String).to(satisfyAnyOf(equal("555,777"), equal("777,555")))
+                        expect(params["user_id"] as? String) == "666"
+                        expect(params["kind"] as? String) == "post"
+                        expect(params["id"] as? String) == "123"
+                    }
+                    it("anonymous") {
+                        let params = ElloAPI.postViews(streamId: "123", streamKind: "post", postIds: Set(["555"]), currentUserId: nil).parameters!
+                        expect(params["post_ids"] as? String) == "555"
+                        expect(params["user_id"] as? String).to(beNil())
+                        expect(params["kind"] as? String) == "post"
+                        expect(params["id"] as? String) == "123"
+                    }
                 }
 
                 describe("PostDetail") {

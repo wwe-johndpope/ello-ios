@@ -2,8 +2,6 @@
 ///  UserListItemCellPresenter.swift
 //
 
-import Foundation
-
 struct UserListItemCellPresenter {
 
     static func configure(

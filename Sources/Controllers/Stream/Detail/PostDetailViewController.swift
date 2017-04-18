@@ -11,6 +11,10 @@ final class PostDetailViewController: StreamableViewController {
         }
         return ["id": postParam as AnyObject]
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        guard let streamId = post?.id else { return nil }
+        return ("post", streamId)
+    }
 
     var post: Post?
     var postParam: String
@@ -208,28 +212,37 @@ final class PostDetailViewController: StreamableViewController {
             }
 
             postNotification(PostChangedNotification, value: (post, .delete))
-            PostService().deletePost(post.id,
-                success: {
+            PostService().deletePost(post.id)
+                .onSuccess {
                     Tracker.shared.postDeleted(post)
-                },
-                failure: { (error, statusCode)  in
+                }
+                .onFail { error in
                     // TODO: add error handling
-                    print("failed to delete post, error: \(error.elloErrorMessage ?? error.localizedDescription)")
-                })
+                    print("failed to delete post, error: \(error)")
+                }
         }
         let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
 
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
 
-        logPresentingAlert("PostDetailViewController")
         self.present(alertController, animated: true, completion: .none)
     }
 
 }
 
-// MARK: PostDetailViewController: StreamDestination
-extension PostDetailViewController: StreamDestination {
+extension PostDetailViewController: PostCommentsResponder {
+    func loadCommentsTapped() {
+        guard
+            let nextQueryItems = streamViewController.responseConfig?.nextQueryItems
+        else { return }
+
+        generator?.loadMoreComments(nextQueryItems: nextQueryItems)
+    }
+}
+
+// MARK: PostDetailViewController: PostDetailStreamDestination
+extension PostDetailViewController: PostDetailStreamDestination {
 
     var pagingEnabled: Bool {
         get { return streamViewController.pagingEnabled }
@@ -283,6 +296,10 @@ extension PostDetailViewController: StreamDestination {
 
     func setPagingConfig(responseConfig: ResponseConfig) {
         streamViewController.responseConfig = responseConfig
+    }
+
+    func appendComments(_ commentItems: [StreamCellItem]) {
+        streamViewController.appendPlaceholder(.postComments, with: commentItems)
     }
 
     func primaryJSONAbleNotFound() {

@@ -2,9 +2,6 @@
 ///  KeyboardWindowExtension.swift
 //
 
-import Foundation
-import UIKit
-
 extension Keyboard {
     @objc
     func willShow(_ notification: Foundation.Notification) {

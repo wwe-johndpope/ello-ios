@@ -11,8 +11,8 @@ class RelationshipRequestStatusWrapper: NSObject {
 }
 
 enum RelationshipRequestStatus: String {
-    case success = "success"
-    case failure = "failure"
+    case success
+    case failure
 }
 
 @objc
@@ -129,7 +129,7 @@ extension RelationshipController: RelationshipResponder {
                     prevRelationshipPriority = newRelationshipPriority
                 }
             },
-            failure: { [weak self] (error, statusCode) in
+            failure: { [weak self] _ in
                 guard let `self` = self else { return }
                 complete(RelationshipRequestStatusWrapper(status: .failure), nil, true)
                 let responder = self.target(forAction: #selector(RelationshipControllerResponder.relationshipChanged(_:status:relationship:)), withSender: self) as? RelationshipControllerResponder

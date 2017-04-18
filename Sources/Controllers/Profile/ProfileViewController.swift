@@ -13,6 +13,10 @@ final class ProfileViewController: StreamableViewController {
         }
         return nil
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        guard let streamId = user?.id else { return nil }
+        return ("user", streamId)
+    }
 
     var _tabBarItem: UITabBarItem?
     override var tabBarItem: UITabBarItem? {
@@ -194,7 +198,6 @@ final class ProfileViewController: StreamableViewController {
             _ = self.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(action)
-        logPresentingAlert("ProfileViewController")
         present(alertController, animated: true, completion: nil)
     }
 
@@ -203,7 +206,7 @@ final class ProfileViewController: StreamableViewController {
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
         let shareItem = UIBarButtonItem(image: .share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
         let moreActionsItem = UIBarButtonItem(image: .dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
-        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(currentUser)"
+        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(String(describing: currentUser))"
 
         if !isRootViewController() {
             var leftBarButtonItems: [UIBarButtonItem] = []
@@ -273,13 +276,11 @@ final class ProfileViewController: StreamableViewController {
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
-            logPresentingAlert(readableClassName())
             present(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .popover
             activityVC.popoverPresentationController?.sourceView = sourceView
-            logPresentingAlert(readableClassName())
             present(activityVC, animated: true) { }
         }
     }

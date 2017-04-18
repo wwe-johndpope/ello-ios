@@ -13,9 +13,21 @@ protocol NotificationResponder: class {
     func postTapped(_ post: Post)
 }
 
+enum NotificationCellMode {
+    case image
+    case normal
+
+    var hasImage: Bool {
+        switch self {
+        case .normal: return false
+        default: return true
+        }
+    }
+}
 
 class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     static let reuseIdentifier = "NotificationCell"
+    var mode: NotificationCellMode = .normal
 
     struct Size {
         static let BuyButtonSize: CGFloat = 15
@@ -59,7 +71,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     let avatarButton = AvatarButton()
     let buyButtonImage = UIImageView()
-    let replyButton = StyledButton(style: .BlackPillOutline)
+    let replyButton = StyledButton(style: .blackPillOutline)
     let relationshipControl = RelationshipControl()
     let titleTextView = ElloTextView()
     let createdAtLabel = UILabel()
@@ -113,16 +125,23 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     var imageURL: URL? {
         didSet {
-            self.notificationImageView.pin_setImage(from: imageURL) { result in
-                let success = result?.image != nil || result?.animatedImage != nil
-                let isAnimated = result?.animatedImage != nil
-                if success {
-                    let imageSize = isAnimated ? result?.animatedImage.size : result?.image.size
-                    self.aspectRatio = (imageSize?.width)! / (imageSize?.height)!
-                    let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
-                    if currentRatio != self.aspectRatio {
-                        self.setNeedsLayout()
-                    }
+            guard imageURL != nil else {
+                notificationImageView.isHidden = true
+                return
+            }
+            notificationImageView.isHidden = false
+            self.notificationImageView.pin_setImage(from: imageURL) { [weak self] result in
+                guard
+                    let `self` = self,
+                    result.hasImage
+                else { return }
+
+                if let imageSize = result.imageSize {
+                    self.aspectRatio = imageSize.width / imageSize.height
+                }
+                let currentRatio = self.notificationImageView.frame.width / self.notificationImageView.frame.height
+                if currentRatio != self.aspectRatio {
+                    self.setNeedsLayout()
                 }
             }
             self.setNeedsLayout()
@@ -161,7 +180,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         titleTextView.textViewDelegate = self
 
         buyButtonImage.isHidden = true
-        buyButtonImage.image = InterfaceImage.buyButton.normalImage
+        buyButtonImage.interfaceImage = .buyButton
         buyButtonImage.frame.size = CGSize(width: Size.BuyButtonSize, height: Size.BuyButtonSize)
         buyButtonImage.backgroundColor = .greenD1()
         buyButtonImage.layer.cornerRadius = Size.BuyButtonSize / 2
@@ -221,25 +240,20 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
         let outerFrame = contentView.bounds.inset(all: Size.SideMargins)
-        let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: imageURL != nil)
+        let titleWidth = Size.messageHtmlWidth(forCellWidth: self.frame.width, hasImage: mode.hasImage)
         separator.frame = contentView.bounds.fromBottom().grow(up: 1)
 
         avatarButton.frame = outerFrame.with(size: CGSize(width: Size.AvatarSize, height: Size.AvatarSize))
 
-        if imageURL == nil {
-            notificationImageView.frame = .zero
-        }
-        else {
-            notificationImageView.frame = outerFrame.fromRight()
-                .grow(left: Size.ImageWidth)
-                .with(height: Size.ImageWidth / aspectRatio)
-            buyButtonImage.frame.origin = CGPoint(
-                x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
-                y: notificationImageView.frame.minY + Size.BuyButtonMargin
-                )
-        }
+        notificationImageView.frame = outerFrame.fromRight()
+            .grow(left: Size.ImageWidth)
+            .with(height: Size.ImageWidth / aspectRatio)
+
+        buyButtonImage.frame.origin = CGPoint(
+            x: notificationImageView.frame.maxX - Size.BuyButtonSize - Size.BuyButtonMargin,
+            y: notificationImageView.frame.minY + Size.BuyButtonMargin
+        )
 
         titleTextView.frame = avatarButton.frame.fromRight()
             .shift(right: Size.InnerMargin)
@@ -285,18 +299,20 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         else {
             bottomControl = createdAtLabel
         }
-
-        let actualHeight = ceil(max(notificationImageView.frame.maxY, bottomControl.frame.maxY)) + Size.SideMargins
+        let imageMaxY = mode.hasImage ? notificationImageView.frame.maxY : 0
+        let actualHeight = ceil(max(imageMaxY, bottomControl.frame.maxY)) + Size.SideMargins
         // don't update the height if
         // - imageURL is set, but hasn't finished loading, OR
         // - messageHTML is set, but hasn't finished loading
-        if actualHeight != frame.size.height && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
+        if actualHeight != ceil(frame.size.height) && (imageURL == nil || notificationImageView.image != nil) && (!messageVisible || !messageWebView.isHidden) {
             self.onHeightMismatch?(actualHeight)
         }
     }
 
+
     override func prepareForReuse() {
         super.prepareForReuse()
+        mode = .normal
         messageWebView.stopLoading()
         messageWebView.isHidden = true
         avatarButton.pin_cancelImageDownload()

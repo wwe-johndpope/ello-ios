@@ -34,7 +34,7 @@ class NarrationView: UIView {
     fileprivate let pointer: UIImageView = {
         let pointer = UIImageView()
         pointer.contentMode = .scaleAspectFit
-        pointer.image = InterfaceImage.narrationPointer.normalImage
+        pointer.interfaceImage = .narrationPointer
         return pointer
     }()
 
@@ -71,14 +71,14 @@ class NarrationView: UIView {
         style.lineSpacing = 6
 
         let titleAttributes = [
-            NSFontAttributeName : UIFont.defaultBoldFont(),
-            NSForegroundColorAttributeName : UIColor.white,
-            NSParagraphStyleAttributeName : style
+            NSFontAttributeName: UIFont.defaultBoldFont(),
+            NSForegroundColorAttributeName: UIColor.white,
+            NSParagraphStyleAttributeName: style
         ]
         let textAttributes = [
-            NSFontAttributeName : UIFont.defaultFont(),
-            NSForegroundColorAttributeName : UIColor.white,
-            NSParagraphStyleAttributeName : style
+            NSFontAttributeName: UIFont.defaultFont(),
+            NSForegroundColorAttributeName: UIColor.white,
+            NSParagraphStyleAttributeName: style
         ]
 
         label.attributedText = NSMutableAttributedString(string: title + "\n", attributes: titleAttributes) + NSMutableAttributedString(string: text, attributes: textAttributes)

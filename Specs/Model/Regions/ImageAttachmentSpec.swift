@@ -16,9 +16,17 @@ class AttachmentSpec: QuickSpec {
             if let url = URL(string: FileManager.ElloDocumentsDir()) {
                 filePath = url.appendingPathComponent("ImageAttachmentSpec").absoluteString
             }
-            ElloURI.httpProtocol = "https"
 
+            beforeEach {
+                let testingKeys = APIKeys(
+                    key: "", secret: "", segmentKey: "",
+                    domain: "https://ello.co"
+                    )
+                APIKeys.shared = testingKeys
+            }
             afterEach {
+                APIKeys.shared = APIKeys.default
+
                 do {
                     try FileManager.default.removeItem(atPath: filePath)
                 }

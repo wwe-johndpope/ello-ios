@@ -99,16 +99,15 @@ final class DynamicSetting: JSONAble {
     }
 
     func sets(_ anotherSetting: DynamicSetting, when: Bool) -> Bool? {
-        for dynamicSetAnother in setsAnother {
-            if dynamicSetAnother.key == anotherSetting.key && (dynamicSetAnother.when == nil || dynamicSetAnother.when == when) {
-                return dynamicSetAnother.value
-            }
+        for dynamicSetAnother in setsAnother
+        where dynamicSetAnother.key == anotherSetting.key &&
+            (dynamicSetAnother.when == nil || dynamicSetAnother.when == when)
+        {
+            return dynamicSetAnother.value
         }
         return nil
     }
-}
 
-extension DynamicSetting {
     override class func fromJSON(_ data: [String: AnyObject]) -> DynamicSetting {
         let json = JSON(data)
         let label = json["label"].stringValue

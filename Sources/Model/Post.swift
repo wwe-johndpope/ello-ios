@@ -74,13 +74,11 @@ final class Post: JSONAble, Authorable, Groupable {
     var groupId: String { return "Post-\(id)" }
     // computed properties
     var shareLink: String? {
-        get {
-            if let author = self.author {
-                return "\(ElloURI.baseURL)/\(author.username)/post/\(self.token)"
-            }
-            else {
-                return nil
-            }
+        if let author = self.author {
+            return "\(ElloURI.baseURL)/\(author.username)/post/\(self.token)"
+        }
+        else {
+            return nil
         }
     }
     var collapsed: Bool { return !contentWarning.isEmpty }
@@ -250,6 +248,10 @@ final class Post: JSONAble, Authorable, Groupable {
         // links
         post.links = data["links"] as? [String: AnyObject]
         return post
+    }
+
+    func contentFor(gridView: Bool) -> [Regionable]? {
+        return gridView ? summary : content
     }
 }
 

@@ -2,8 +2,6 @@
 ///  NumberExtensions.swift
 //
 
-import Foundation
-
 let billion = 1_000_000_000.0
 let million = 1_000_000.0
 let thousand = 1_000.0

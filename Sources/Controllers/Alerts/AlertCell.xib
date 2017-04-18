@@ -48,7 +48,7 @@
                                 <rect key="frame" x="165" y="0.0" width="155" height="49"/>
                                 <state key="normal" title="Cancel"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="LightGray"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="lightGray"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapCancelButton" destination="bcg-QX-D1W" eventType="touchUpInside" id="SZP-Ou-Nao"/>

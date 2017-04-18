@@ -13,16 +13,25 @@ class ElloURISpec: QuickSpec {
         describe("ElloURI") {
 
             describe("baseURL") {
+                afterEach {
+                    APIKeys.shared = APIKeys.default
+                }
 
                 it("can be constructed with ello-staging and http") {
-                    ElloURI.domain = "ello-staging.herokuapp.com"
-                    ElloURI.httpProtocol = "http"
+                    let testingKeys = APIKeys(
+                        key: "", secret: "", segmentKey: "",
+                        domain: "http://ello-staging.herokuapp.com"
+                        )
+                    APIKeys.shared = testingKeys
                     expect(ElloURI.baseURL).to(equal("http://ello-staging.herokuapp.com"))
                 }
 
                 it("can be constructed with ello.co and https") {
-                    ElloURI.domain = "ello.co"
-                    ElloURI.httpProtocol = "https"
+                    let testingKeys = APIKeys(
+                        key: "", secret: "", segmentKey: "",
+                        domain: "https://ello.co"
+                        )
+                    APIKeys.shared = testingKeys
                     expect(ElloURI.baseURL).to(equal("https://ello.co"))
                 }
 
@@ -31,7 +40,6 @@ class ElloURISpec: QuickSpec {
             describe("ElloURI.match") {
 
                 describe("with Search urls") {
-
                     it("does not match https://www.ello.co/searchyface") {
                         let (type, _) = ElloURI.match("https://www.ello.co/searchyface")
                         expect(type).notTo(equal(ElloURI.search))
@@ -67,8 +75,14 @@ class ElloURISpec: QuickSpec {
                 ]
 
                 beforeEach {
-                    ElloURI.domain = "ello-staging.herokuapp.com"
-                    ElloURI.httpProtocol = "https"
+                    let testingKeys = APIKeys(
+                        key: "", secret: "", segmentKey: "",
+                        domain: "https://ello-staging.herokuapp.com"
+                        )
+                    APIKeys.shared = testingKeys
+                }
+                afterEach {
+                    APIKeys.shared = APIKeys.default
                 }
 
                 describe("root urls") {
@@ -122,6 +136,11 @@ class ElloURISpec: QuickSpec {
                             outputURI: .wtf,
                             outputData: "https://ello.co/wtf/help"
                         ),
+                        "with reset password urls": (
+                            input: "https://ello.co/auth/reset-my-password?reset_password_token=abc12--abcdefg12345",
+                            outputURI: .resetMyPassword,
+                            outputData: "abc12--abcdefg12345"
+                        ),
                     ]
 
                     for (description, test) in tests {
@@ -140,17 +159,18 @@ class ElloURISpec: QuickSpec {
                 describe("app loadable routes with query params") {
                     let tests: [String: (input: String, outputURI: ElloURI, outputData: String)] = [
                         "with Search(query param) urls": (input: "search?terms=%23hashtag", outputURI: .search, outputData: "#hashtag"),
+                        "with SearchPosts(query param) urls": (input: "search/posts/?terms=%23hashtag", outputURI: .searchPosts, outputData: "#hashtag"),
+                        "with SearchUsers(query param) urls": (input: "search/people/?terms=%40hashtag", outputURI: .searchPeople, outputData: "@hashtag"),
                         "with Find(query param) urls": (input: "find?terms=%23hashtag", outputURI: .search, outputData: "#hashtag"),
                         "with Profile(query param) urls": (input: "666?expanded=true", outputURI: .profile, outputData: "666"),
                         "with Post(query param) urls": (input: "777/post/123?expanded=true", outputURI: .post, outputData: "123"),
                     ]
 
                     for (description, test) in tests {
+                        for domain in domains {
 
-                        describe(description) {
-                            it("matches route correctly") {
-
-                                for domain in domains {
+                            describe("\(description) in domain \(domain)") {
+                                it("matches route correctly") {
                                     let (typeNoSlash, dataNoSlash) = ElloURI.match("\(domain)/\(test.input)")
 
                                     expect(typeNoSlash).to(equal(test.outputURI))
@@ -258,7 +278,6 @@ class ElloURISpec: QuickSpec {
                     let tests: [String: (input: String, output: ElloURI)] = [
                         "with Confirm urls": (input: "confirm", output: .confirm),
                         "with BetaPublicProfiles urls": (input: "beta-public-profiles", output: .betaPublicProfiles),
-                        "with Downloads urls": (input: "downloads", output: .downloads),
                         "with Enter urls": (input: "enter", output: .enter),
                         "with Explore urls": (input: "explore", output: .explore),
                         "with Explore Trending urls": (input: "explore/trending", output: .exploreTrending),
@@ -266,7 +285,7 @@ class ElloURISpec: QuickSpec {
                         "with Explore Recommended urls": (input: "explore/recommended", output: .exploreRecommended),
                         "with Exit urls": (input: "exit", output: .exit),
                         "with FaceMaker urls": (input: "facemaker", output: .faceMaker),
-                        "with ForgotMyPassword urls": (input: "forgot-my-password", output: .forgotMyPassword),
+                        "with ForgotMyPassword urls": (input: "forgot-password", output: .forgotMyPassword),
                         "with Friends urls": (input: "friends", output: .friends),
                         "with FreedomOfSpeech urls": (input: "freedom-of-speech", output: .freedomOfSpeech),
                         "with Invitations urls": (input: "invitations", output: .invitations),
@@ -282,33 +301,30 @@ class ElloURISpec: QuickSpec {
                         "with RequestInvite urls": (input: "request-an-invite", output: .requestInvite),
                         "with RequestInvitation urls": (input: "request-an-invitation", output: .requestInvitation),
                         "with RequestInvitations urls": (input: "request_invitations", output: .requestInvitations),
-                        "with ResetMyPassword urls": (input: "reset-my-password", output: .resetMyPassword),
-                        "with SearchPeople urls": (input: "search/people", output: .searchPeople),
-                        "with FindPeople urls": (input: "find/people", output: .searchPeople),
-                        "with SearchPosts urls": (input: "search/posts", output: .searchPosts),
-                        "with FindPosts urls": (input: "find/posts", output: .searchPosts),
+                        "with ResetPasswordError urls": (input: "auth/password-reset-error", output: .resetPasswordError),
                         "with Settings urls": (input: "settings", output: .settings),
                         "with Unblock urls": (input: "unblock", output: .unblock),
                         "with WhoMadeThis urls": (input: "who-made-this", output: .whoMadeThis),
                     ]
 
                     for (description, test) in tests {
+                        for domain in domains {
 
-                        describe(description) {
-                            it("matches route correctly") {
-
-                                for domain in domains {
+                            describe("\(description) in domain \(domain)") {
+                                it("matches route correctly, no slash") {
                                     let (typeNoSlash, dataNoSlash) = ElloURI.match("\(domain)/\(test.input)")
-
                                     expect(typeNoSlash).to(equal(test.output))
                                     expect(dataNoSlash) == "\(domain)/\(test.input)"
+                                }
 
+                                it("matches route correctly, trailing slash") {
                                     let (typeYesSlash, dataYesSlash) = ElloURI.match("\(domain)/\(test.input)/")
-
                                     expect(typeYesSlash).to(equal(test.output))
                                     expect(dataYesSlash) == "\(domain)/\(test.input)/"
+                                }
 
-                                    let (typeTrailingChars, _) = ElloURI.match("\(domain)/\(test.input)foo")
+                                it("doesn't match route, trailing characters") {
+                                    let (typeTrailingChars, _) = ElloURI.match("\(domain)/\(test.input)&foo")
                                     expect(typeTrailingChars).notTo(equal(test.output))
                                 }
                             }

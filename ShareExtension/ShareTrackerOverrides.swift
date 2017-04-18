@@ -4,20 +4,17 @@
 
 import Foundation
 
+
 enum ContentType: String {
     case post = "Post"
     case comment = "Comment"
     case user = "User"
 }
 
-func logPresentingAlert(_ name: String) {}
-
 class Tracker {
     static let shared = Tracker()
 
     init() {}
-
-    static func trackRequest(headers: String, statusCode: Int, responseJSON: String) {}
 
     func contentFlagged(_ type: ContentType, flag: ContentFlagger.AlertOption, contentId: String) {}
     func contentFlaggingFailed(_ type: ContentType, message: String, contentId: String) {}
@@ -28,4 +25,9 @@ class Tracker {
 class Window {
     static func isWide(_ width: Float) -> Bool { return false }
     static var width: Float { return 0 }
+}
+
+class DeviceScreen {
+    static var isRetina: Bool { return true }
+    static var scale: Float { return 2 }
 }

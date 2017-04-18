@@ -14,9 +14,9 @@ class DrawerViewDataSourceSpec: QuickSpec {
 
             describe("tableView(_:numberOfrowsInSection:)") {
 
-                it("returns 7") {
+                it("returns the correct number") {
                     let dataSource = DrawerViewDataSource()
-                    expect(dataSource.tableView(UITableView(frame: .zero), numberOfRowsInSection: 0)) == 5
+                    expect(dataSource.tableView(UITableView(frame: .zero), numberOfRowsInSection: 0)) == 6
                 }
             }
 
@@ -24,8 +24,9 @@ class DrawerViewDataSourceSpec: QuickSpec {
 
                 describe("has the correct items") {
                     let expectations: [DrawerItem] = [
-                        DrawerItem(name: InterfaceString.Drawer.Store, type: .external("http://ello.threadless.com/")),
                         DrawerItem(name: InterfaceString.Drawer.Invite, type: .invite),
+                        DrawerItem(name: InterfaceString.Drawer.Magazine, type: .external("https://notforprint.co/")),
+                        DrawerItem(name: InterfaceString.Drawer.Store, type: .external("http://ello.threadless.com/")),
                         DrawerItem(name: InterfaceString.Drawer.Help, type: .external("https://ello.co/wtf/")),
                         DrawerItem(name: InterfaceString.Drawer.Logout, type: .logout),
                         DrawerItem(name: InterfaceString.Drawer.Version, type: .version),

@@ -65,7 +65,6 @@ final class User: JSONAble {
     // links
     var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     var categories: [Category]? { return getLinkArray("categories") as? [Category] }
-    var mostRecentPost: Post? { return getLinkObject("most_recent_post") as? Post }
 
     // computed
     var atName: String { return "@\(username)"}
@@ -74,9 +73,7 @@ final class User: JSONAble {
     var profile: Profile?
 
     var shareLink: String? {
-        get {
-            return "\(ElloURI.baseURL)/\(username)"
-        }
+        return "\(ElloURI.baseURL)/\(username)"
     }
 
     init(id: String,
@@ -384,7 +381,7 @@ extension User {
         if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.hasSuffix(".gif") == true {
             return coverImage?.original?.url as URL?
         }
-        return coverImage?.xhdpi?.url as URL?
+        return coverImage?.oneColumnAttachment?.url as URL?
     }
 
     func avatarURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {

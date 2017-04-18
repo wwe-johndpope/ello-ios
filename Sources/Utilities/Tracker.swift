@@ -6,10 +6,6 @@ import Analytics
 import Keys
 import Crashlytics
 
-func logPresentingAlert(_ name: String) {
-    Crashlytics.sharedInstance().setObjectValue(name, forKey: CrashlyticsKey.alertPresenter.rawValue)
-}
-
 
 enum ContentType: String {
     case post = "Post"
@@ -38,9 +34,6 @@ struct NullAgent: AnalyticsAgent {
 extension SEGAnalytics: AnalyticsAgent { }
 
 class Tracker {
-    static var responseHeaders: NSString = ""
-    static var responseJSON: NSString = ""
-
     var overrideAgent: AnalyticsAgent?
     static let shared = Tracker()
     var settingChangedNotification: NotificationObserver?
@@ -50,8 +43,8 @@ class Tracker {
     }
 
     init() {
-        let configuration = SEGAnalyticsConfiguration(writeKey: ElloKeys().segmentKey())
-         SEGAnalytics.setup(with: configuration)
+        let configuration = SEGAnalyticsConfiguration(writeKey: APIKeys.shared.segmentKey)
+        SEGAnalytics.setup(with: configuration)
 
         settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { user in
             self.shouldTrackUser = user.profile?.allowsAnalytics ?? true
@@ -88,14 +81,6 @@ extension Tracker {
     func sessionEnded() {
         agent.track("Session Ended")
     }
-
-    static func trackRequest(headers: String, statusCode: Int, responseJSON: String) {
-        Tracker.responseHeaders = headers as NSString
-        Crashlytics.sharedInstance().setObjectValue(headers, forKey: CrashlyticsKey.responseHeaders.rawValue)
-        Crashlytics.sharedInstance().setObjectValue("\(statusCode)", forKey: CrashlyticsKey.responseStatusCode.rawValue)
-        Tracker.responseJSON = responseJSON as NSString
-        Crashlytics.sharedInstance().setObjectValue(Tracker.responseJSON, forKey: CrashlyticsKey.responseJSON.rawValue)
-    }
 }
 
 // MARK: Signup and Login
@@ -129,6 +114,14 @@ extension Tracker {
         agent.track("entered password and pressed 'next'")
     }
 
+    func tappedRequestPassword() {
+        agent.track("tapped request reset password")
+    }
+
+    func tappedReset() {
+        agent.track("tapped reset password")
+    }
+
     func tappedJoin() {
         agent.track("tapped join")
     }
@@ -139,6 +132,22 @@ extension Tracker {
 
     func tappedTsAndCs() {
         agent.track("tapped terms and conditions")
+    }
+
+    func requestPasswordValid() {
+        agent.track("reset password valid email")
+    }
+
+    func resetPasswordValid() {
+        agent.track("reset password sent")
+    }
+
+    func resetPasswordSuccessful() {
+        agent.track("reset password successful")
+    }
+
+    func resetPasswordFailed() {
+        agent.track("reset password failed")
     }
 
     func joinValid() {
@@ -296,6 +305,10 @@ extension UIViewController {
     // return 'nil' to disable tracking, e.g. in StreamViewController
     func trackerName() -> String? { return readableClassName() }
     func trackerProps() -> [String: AnyObject]? { return nil }
+
+    func trackScreenAppeared() {
+        Tracker.shared.screenAppeared(self)
+    }
 }
 
 // MARK: View Appearance
@@ -382,6 +395,11 @@ extension Tracker {
             "image_regions": imageCount as AnyObject,
             "text_length": textLength as AnyObject
         ]
+    }
+
+    func relatedPostTapped(_ post: Post) {
+        let properties = ["post_id": post.id]
+        agent.track("related post tapped", properties: properties)
     }
 
     func postCreated(_ post: Post) {
@@ -540,7 +558,7 @@ extension Tracker {
     }
 }
 
-// MARK:  Preferences
+// MARK: Preferences
 extension Tracker {
     func pushNotificationPreferenceChanged(_ granted: Bool) {
         let accessLevel = granted ? "granted" : "denied"

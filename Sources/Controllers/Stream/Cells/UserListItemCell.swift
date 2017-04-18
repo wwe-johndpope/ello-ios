@@ -2,8 +2,6 @@
 ///  UserListItemCell.swift
 //
 
-import Foundation
-
 class UserListItemCell: UICollectionViewCell {
     static let reuseIdentifier = "UserListItemCell"
 

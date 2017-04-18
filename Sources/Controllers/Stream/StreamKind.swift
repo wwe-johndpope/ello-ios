@@ -2,8 +2,8 @@
 ///  StreamKind.swift
 //
 
-import Foundation
 import SwiftyUserDefaults
+
 
 enum StreamKind {
     case currentUserStream
@@ -67,43 +67,11 @@ enum StreamKind {
         }
     }
 
-    var columnCount: Int {
-        return columnCountFor(width: Window.width)
-    }
-
-    func columnCountFor(width: CGFloat) -> Int {
-        let gridColumns: Int
-        if Window.isWide(width) {
-            gridColumns = 3
-        }
-        else {
-            gridColumns = 2
-        }
-
-        if self.isGridView {
-            return gridColumns
-        }
-        else {
-            return 1
-        }
-    }
-
     var showsCategory: Bool {
         if case let .discover(type) = self, type == .featured {
             return true
         }
         return false
-    }
-
-    var tappingTextOpensDetail: Bool {
-        switch self {
-        case .postDetail:
-            return false
-        case .notifications:
-            return true
-        default:
-            return isGridView
-        }
     }
 
     var isProfileStream: Bool {
@@ -158,15 +126,7 @@ enum StreamKind {
         case .announcements:
             return jsonables
         case .discover, .category:
-            if let users = jsonables as? [User] {
-                return users.reduce([]) { accum, user in
-                    if let post = user.mostRecentPost {
-                        return accum + [post]
-                    }
-                    return accum
-                }
-            }
-            else if let comments = jsonables as? [ElloComment]  {
+            if let comments = jsonables as? [ElloComment]  {
                 return comments
             }
             else if let posts = jsonables as? [Post]  {
@@ -197,14 +157,6 @@ enum StreamKind {
         return []
     }
 
-    var avatarHeight: CGFloat {
-        return self.isGridView ? 30 : 40
-    }
-
-    func contentForPost(_ post: Post) -> [Regionable]? {
-        return self.isGridView ? post.summary : post.content
-    }
-
     func setIsGridView(_ isGridView: Bool) {
         GroupDefaults["\(cacheKey)GridViewPreferenceSet"] = true
         GroupDefaults["\(cacheKey)IsGridView"] = isGridView
@@ -233,9 +185,9 @@ enum StreamKind {
         }
     }
 
-    var isDetail: Bool {
+    func isDetail(post: Post) -> Bool {
         switch self {
-        case .postDetail: return true
+        case let .postDetail(postParam): return postParam == post.id || postParam == post.token
         default: return false
         }
     }

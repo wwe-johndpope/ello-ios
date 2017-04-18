@@ -2,19 +2,17 @@
 ///  ResponseConfig.swift
 //
 
-import Foundation
-
 class ResponseConfig: CustomStringConvertible {
     var description: String {
         let descripArray = [
             "ResponseConfig:",
-            "nextQueryItems: \(nextQueryItems)",
-            "prevQueryItems: \(prevQueryItems)",
-            "firstQueryItems: \(firstQueryItems)",
-            "lastQueryItems: \(lastQueryItems)",
-            "totalPages: \(totalPages)",
-            "totalCount: \(totalCount)",
-            "totalPagesRemaining: \(totalPagesRemaining)"
+            "nextQueryItems: \(String(describing: nextQueryItems))",
+            "prevQueryItems: \(String(describing: prevQueryItems))",
+            "firstQueryItems: \(String(describing: firstQueryItems))",
+            "lastQueryItems: \(String(describing: lastQueryItems))",
+            "totalPages: \(String(describing: totalPages))",
+            "totalCount: \(String(describing: totalCount))",
+            "totalPagesRemaining: \(String(describing: totalPagesRemaining))"
         ]
         return descripArray.joined(separator: "\n\t")
     }

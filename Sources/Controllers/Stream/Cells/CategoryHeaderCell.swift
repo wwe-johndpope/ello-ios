@@ -66,8 +66,6 @@ class CategoryHeaderCell: UICollectionViewCell {
     let circle = PulsingCircle()
     let failImage = UIImageView()
     let failBackgroundView = UIView()
-    var failWidthConstraint: Constraint!
-    var failHeightConstraint: Constraint!
 
     fileprivate var imageSize: CGSize?
     fileprivate var aspectRatio: CGFloat? {
@@ -225,9 +223,7 @@ private extension CategoryHeaderCell {
         }
 
         failImage.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
-            failWidthConstraint = make.leading.equalTo(Size.failImageWidth).constraint
-            failHeightConstraint = make.leading.equalTo(Size.failImageHeight).constraint
+            make.edges.equalTo(contentView)
         }
 
         imageView.snp.makeConstraints { make in
@@ -284,34 +280,35 @@ private extension CategoryHeaderCell {
             }
             return
         }
-        self.imageView.pin_setImage(from: url) { result in
-            let success = result?.image != nil || result?.animatedImage != nil
-            let isAnimated = result?.animatedImage != nil
-            if success {
-                let imageSize = isAnimated ? result?.animatedImage.size : result?.image.size
-                self.imageSize = imageSize
 
-                if result?.resultType != .memoryCache {
-                    self.imageView.alpha = 0
-                    UIView.animate(withDuration: 0.3,
-                                               delay:0.0,
-                                               options:UIViewAnimationOptions.curveLinear,
-                                               animations: {
-                                                self.imageView.alpha = 1.0
-                        }, completion: { _ in
-                            self.circle.stopPulse()
-                    })
-                }
-                else {
-                    self.imageView.alpha = 1.0
-                    self.circle.stopPulse()
-                }
+        imageView.pin_setImage(from: url) { [weak self] result in
+            guard let `self` = self else { return }
 
-                self.layoutIfNeeded()
+            guard result.hasImage else {
+                self.imageLoadFailed()
+                return
+            }
+
+            self.imageSize = result.imageSize
+
+            if result.resultType != .memoryCache {
+                self.imageView.alpha = 0
+                UIView.animate(
+                    withDuration: 0.3,
+                    delay:0.0,
+                    options:UIViewAnimationOptions.curveLinear,
+                    animations: {
+                        self.imageView.alpha = 1.0
+                    }, completion: { _ in
+                        self.circle.stopPulse()
+                })
             }
             else {
-                self.imageLoadFailed()
+                self.imageView.alpha = 1.0
+                self.circle.stopPulse()
             }
+
+            self.layoutIfNeeded()
         }
     }
 
@@ -375,7 +372,7 @@ extension CategoryHeaderCell.Config {
         callToActionURL = category.ctaURL as URL?
 
         if let promotional = category.randomPromotional {
-            imageURL = promotional.image?.xhdpi?.url as URL?
+            imageURL = promotional.image?.oneColumnAttachment?.url as URL?
             user = promotional.user
         }
     }

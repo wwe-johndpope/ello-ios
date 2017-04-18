@@ -2,8 +2,6 @@
 ///  UICollectionViewExtensions.swift
 //
 
-import Foundation
-
 extension UICollectionView {
     func lastIndexPathForSection(_ section: Int) -> IndexPath? {
         if self.numberOfItems(inSection: section) > 0 {

@@ -2,9 +2,6 @@
 ///  ProfileLocationPresenter.swift
 //
 
-import Foundation
-
-
 struct ProfileLocationPresenter {
 
     static func configure(

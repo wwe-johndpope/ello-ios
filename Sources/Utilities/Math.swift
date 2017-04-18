@@ -1,13 +1,10 @@
-//
-//  Math.swift
-//  Prototope
+////
+///  Math.swift
 //
 //  Created by Andy Matuschak on 10/16/14.
 //  Copyright (c) 2014 Khan Academy. All rights reserved.
 //
 //  From https://github.com/Khan/Prototope/blob/master/Prototope/Math.swift
-
-import Foundation
 
 /** Linearly interpolates between the from: value and the to: value based on the at:
 fraction. When at:0, returns the from: value. When at: 1, returns the to: value.

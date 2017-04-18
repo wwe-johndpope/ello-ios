@@ -2,7 +2,6 @@
 ///  BlockUserModalViewController.swift
 //
 
-import Foundation
 import SnapKit
 
 
@@ -66,7 +65,7 @@ class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelega
             userId: userId,
             prev: RelationshipPriorityWrapper(priority: relationshipPriority),
             relationshipPriority: RelationshipPriorityWrapper(priority: newRelationship))
-        { [weak self] (statusWrapper, relationship, isFinalValue) in
+        { [weak self] statusWrapper, relationship, isFinalValue in
             guard let `self` = self else { return }
             switch statusWrapper.status {
             case .success:

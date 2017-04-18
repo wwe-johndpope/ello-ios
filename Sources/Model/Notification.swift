@@ -2,8 +2,6 @@
 ///  Notification.swift
 //
 
-import Foundation
-
 enum NotificationFilterType: String {
     case all = "NotificationFilterTypeAll"
     case comments = "NotificationFilterTypeComments"
@@ -61,7 +59,7 @@ final class Notification: JSONAble, Authorable, Groupable {
     // notification specific
     var textRegion: TextRegion?
     var imageRegion: ImageRegion?
-    fileprivate var attributedTitleStore: NSAttributedString? = nil
+    fileprivate var attributedTitleStore: NSAttributedString?
     var attributedTitle: NSAttributedString {
         if let attributedTitle = attributedTitleStore {
             return attributedTitle

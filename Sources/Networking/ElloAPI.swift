@@ -6,7 +6,7 @@ import Moya
 import Result
 
 
-typealias MoyaResult = Result<Moya.Response, Moya.Error>
+typealias MoyaResult = Result<Moya.Response, Moya.MoyaError>
 
 // 😭 I'm as sad as you are about this. We want the responder chain
 // and we want to pass ElloAPI arguments. So we box it.
@@ -56,8 +56,10 @@ enum ElloAPI {
     case pagePromotionals
     case postComments(postId: String)
     case postDetail(postParam: String, commentCount: Int)
+    case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
+    case postRelatedPosts(postId: String)
     case postReposters(postId: String)
     case currentUserBlockedList
     case currentUserMutedList
@@ -71,6 +73,8 @@ enum ElloAPI {
     case rePost(postId: String)
     case relationship(userId: String, relationship: String)
     case relationshipBatch(userIds: [String], relationship: String)
+    case resetPassword(password: String, authToken: String)
+    case requestPasswordReset(email: String)
     case searchForUsers(terms: String)
     case searchForPosts(terms: String)
     case updatePost(postId: String, body: [String: AnyObject])
@@ -115,7 +119,9 @@ enum ElloAPI {
         switch self {
         case .anonymousCredentials,
              .auth,
-             .reAuth:
+             .reAuth,
+             .requestPasswordReset,
+             .postViews:
             return .noContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
         case .announcements:
             return .announcementsType
@@ -139,18 +145,14 @@ enum ElloAPI {
              .postLovers,
              .postReposters,
              .profileUpdate,
+             .resetPassword,
              .searchForUsers,
              .userStream,
              .userStreamFollowers,
              .userStreamFollowing:
             return .usersType
-        case let .discover(type):
-            switch type {
-            case .trending:
-                return .usersType
-            default:
-                return .postsType
-            }
+        case .discover:
+            return .postsType
         case .commentDetail,
              .createComment,
              .postComments,
@@ -163,6 +165,7 @@ enum ElloAPI {
              .createPost,
              .following,
              .postDetail,
+             .postRelatedPosts,
              .rePost,
              .searchForPosts,
              .updatePost,
@@ -217,8 +220,8 @@ extension ElloAPI {
              .categories, .category, .categoryPosts, .discover, .pagePromotionals,
              .searchForPosts, .searchForUsers,
              .userStreamPosts, .userStreamFollowing, .userStreamFollowers, .loves,
-             .postComments, .postLovers, .postReposters, .postDetail,
-             .join, .deleteSubscriptions, .userStream:
+             .postComments, .postDetail, .postLovers, .postRelatedPosts, .postReposters, .postViews,
+             .join, .deleteSubscriptions, .userStream, .resetPassword, .requestPasswordReset:
             return true
         case let .infiniteScroll(_, elloApi):
             let api = elloApi()
@@ -238,10 +241,6 @@ extension ElloAPI {
             return true
         }
     }
-}
-
-protocol ElloTarget: Moya.TargetType {
-    var sampleResponse: HTTPURLResponse { get }
 }
 
 extension ElloAPI: Moya.TargetType {
@@ -267,9 +266,11 @@ extension ElloAPI: Moya.TargetType {
              .relationship,
              .relationshipBatch,
              .rePost,
+             .requestPasswordReset,
              .createWatchPost:
             return .post
-        case .userCategories:
+        case .resetPassword,
+             .userCategories:
             return .put
         case .deleteComment,
              .deleteLove,
@@ -307,6 +308,10 @@ extension ElloAPI: Moya.TargetType {
              .auth,
              .reAuth:
             return "/api/oauth/token"
+        case .resetPassword:
+            return "/api/v2/reset_password"
+        case .requestPasswordReset:
+            return "/api/v2/forgot-password"
         case .availability:
             return "/api/\(ElloAPI.apiVersion)/availability"
         case let .commentDetail(postId, commentId):
@@ -338,8 +343,6 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watch"
         case let .discover(type):
             switch type {
-            case .trending:
-                return "/api/\(ElloAPI.apiVersion)/discover/users/trending"
             case .featured:
                 return "/api/\(ElloAPI.apiVersion)/categories/posts/recent"
             default:
@@ -385,10 +388,14 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
         case let .postDetail(postParam, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postParam)"
+        case .postViews:
+            return "/api/\(ElloAPI.apiVersion)/post_views"
         case let .postLovers(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/lovers"
         case let .postReplyAll(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/commenters_usernames"
+        case let .postRelatedPosts(postId):
+            return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/related"
         case let .postReposters(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/reposters"
         case .currentUserProfile,
@@ -431,6 +438,19 @@ extension ElloAPI: Moya.TargetType {
         }
     }
 
+    var stubbedNetworkResponse: EndpointSampleResponse {
+        switch self {
+        case .postComments:
+            let target = URL(string: url(self))!
+            let response = HTTPURLResponse(url: target, statusCode: 200, httpVersion: "1.1", headerFields: [
+                "Link": "<\(target)?before=2014-06-03T00%3A00%3A00.000000000%2B0000>; rel=\"next\""
+                ])!
+            return .response(response, sampleData)
+        default:
+            return .networkResponse(200, sampleData)
+        }
+    }
+
     var sampleData: Data {
         switch self {
         case .announcements:
@@ -469,11 +489,14 @@ extension ElloAPI: Moya.TargetType {
              .inviteFriends,
              .notificationsNewContent,
              .profileDelete,
+             .postViews,
              .pushSubscriptions,
              .flagComment,
              .flagPost,
              .flagUser,
-             .userCategories:
+             .userCategories,
+             .resetPassword,
+             .requestPasswordReset:
             return stubbedData("empty")
         case .categoryPosts:
             return stubbedData("users_posts")
@@ -514,6 +537,8 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("posts_listing_users_who_have_reposted_a_post")
         case .postReplyAll:
             return stubbedData("usernames")
+        case .postRelatedPosts:
+            return stubbedData("posts_searching_for_posts")
         case .currentUserBlockedList:
             return stubbedData("profile_listing_blocked_users")
         case .currentUserMutedList:
@@ -578,9 +603,9 @@ extension ElloAPI: Moya.TargetType {
             assigned["X-iOS-Build-Number"] = buildNumber
         }
 
-        if self.requiresAnyToken {
+        if self.requiresAnyToken, let authToken = AuthToken().tokenWithBearer {
             assigned += [
-                "Authorization": AuthToken().tokenWithBearer ?? "",
+                "Authorization": authToken,
             ]
         }
 
@@ -612,16 +637,16 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .anonymousCredentials:
             return [
-                "client_id": APIKeys.sharedKeys.key as AnyObject,
-                "client_secret": APIKeys.sharedKeys.secret as AnyObject,
+                "client_id": APIKeys.shared.key as AnyObject,
+                "client_secret": APIKeys.shared.secret as AnyObject,
                 "grant_type": "client_credentials" as AnyObject
             ]
         case let .auth(email, password):
             return [
-                "client_id": APIKeys.sharedKeys.key as AnyObject,
-                "client_secret": APIKeys.sharedKeys.secret as AnyObject,
+                "client_id": APIKeys.shared.key as AnyObject,
+                "client_secret": APIKeys.shared.secret as AnyObject,
                 "email": email as AnyObject,
-                "password":  password as AnyObject,
+                "password": password as AnyObject,
                 "grant_type": "password" as AnyObject
             ]
         case let .availability(content):
@@ -648,7 +673,6 @@ extension ElloAPI: Moya.TargetType {
         case .discover:
             return [
                 "per_page": 10 as AnyObject,
-                "include_recent_posts": true as AnyObject,
                 "seed": ElloAPI.generateSeed() as AnyObject
             ]
         case let .findFriends(contacts):
@@ -677,7 +701,7 @@ extension ElloAPI: Moya.TargetType {
                     queryDict[item.name] = item.value as AnyObject?
                 }
             }
-            var origDict = elloApi().parameters ?? [String:AnyObject]()
+            var origDict = elloApi().parameters ?? [String: AnyObject]()
             origDict.merge(queryDict)
             return origDict
         case let .inviteFriends(contact):
@@ -687,7 +711,7 @@ extension ElloAPI: Moya.TargetType {
                 "email": email,
                 "username": username,
                 "password": password,
-                "password_confirmation":  password
+                "password_confirmation": password
             ]
             if let invitationCode = invitationCode {
                 params["invitation_code"] = invitationCode
@@ -707,6 +731,20 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "comment_count": commentCount as AnyObject
             ]
+        case .postRelatedPosts:
+            return [
+                "per_page": 4,
+            ]
+        case let .postViews(streamId, streamKind, postIds, userId):
+            let streamIdDict: [String: String] = streamId.map { streamId in return ["id": streamId]} ?? [:]
+            let userIdDict: [String: String] = userId.map { userId in return ["user_id": userId]} ?? [:]
+            return [
+                "post_ids": postIds.reduce("") { memo, id in
+                    if memo == "" { return id }
+                    else { return "\(memo),\(id)" }
+                },
+                "kind": streamKind,
+            ] + streamIdDict + userIdDict
         case .currentUserStream:
             return [
                 "post_count": 10 as AnyObject
@@ -738,8 +776,8 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .reAuth(refreshToken):
             return [
-                "client_id": APIKeys.sharedKeys.key as AnyObject,
-                "client_secret": APIKeys.sharedKeys.secret as AnyObject,
+                "client_id": APIKeys.shared.key as AnyObject,
+                "client_secret": APIKeys.shared.secret as AnyObject,
                 "grant_type": "refresh_token" as AnyObject,
                 "refresh_token": refreshToken as AnyObject
             ]
@@ -750,6 +788,13 @@ extension ElloAPI: Moya.TargetType {
             ]
         case let .rePost(postId):
             return [ "repost_id": Int(postId) as AnyObject? ?? -1 as AnyObject ]
+        case let .resetPassword(password, token):
+            return [
+                "password": password,
+                "reset_password_token": token,
+            ]
+        case let .requestPasswordReset(email):
+            return [ "email": email ]
         case let .searchForPosts(terms):
             return [
                 "terms": terms as AnyObject,
@@ -800,22 +845,8 @@ extension ElloAPI {
     static func generateSeed() -> Int { return Int(Date().timeIntervalSince1970) }
 }
 
-func += <KeyType, ValueType> (left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
+func += <KeyType, ValueType> (left: inout [KeyType: ValueType], right: [KeyType: ValueType]) {
     for (k, v) in right {
         left.updateValue(v, forKey: k)
     }
 }
-
-//extension Moya.ParameterEncoding: Equatable {}
-//
-//func == (lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
-//    switch (lhs, rhs) {
-//    case (.url, .url),
-//         (.json, .json),
-//         (.PropertyList, .PropertyList),
-//         (.Custom, .Custom):
-//        return true
-//    default:
-//        return false
-//    }
-//}

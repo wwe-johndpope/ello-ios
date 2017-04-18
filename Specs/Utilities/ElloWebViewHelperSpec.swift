@@ -24,11 +24,6 @@ class ElloWebViewHelperSpec: QuickSpec {
                     expect(ElloWebViewHelper.handle(request: request, origin: nil)) == false
                 }
 
-                it("returns false with http://ello.co/downloads") {
-                    let request = URLRequest(url: URL(string: "http://ello.co/downloads")!)
-                    expect(ElloWebViewHelper.handle(request: request, origin: nil)) == false
-                }
-
                 it("returns false with http://ello.co/wtf") {
                     let request = URLRequest(url: URL(string: "http://ello.co/wtf")!)
                     expect(ElloWebViewHelper.handle(request: request, origin: nil)) == false
@@ -52,11 +47,6 @@ class ElloWebViewHelperSpec: QuickSpec {
             }
 
             context("inside web view") {
-
-                it("returns true with http://ello.co/downloads") {
-                    let request = URLRequest(url: URL(string: "http://ello.co/downloads")!)
-                    expect(ElloWebViewHelper.handle(request: request, origin: nil, fromWebView: true)) == true
-                }
 
                 it("returns true with http://ello.co/wtf") {
                     let request = URLRequest(url: URL(string: "http://ello.co/wtf")!)

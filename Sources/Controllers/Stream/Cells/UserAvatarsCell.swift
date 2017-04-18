@@ -2,8 +2,6 @@
 ///  UserAvatarsCell.swift
 //
 
-import Foundation
-
 class UserAvatarsCell: UICollectionViewCell {
     static let reuseIdentifier = "UserAvatarsCell"
 

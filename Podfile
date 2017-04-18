@@ -20,7 +20,8 @@ def ello_app_pods
   pod 'Analytics/Segmentio'
   pod 'JTSImageViewController', git: 'https://github.com/ello/JTSImageViewController'
   pod 'KINWebBrowser', git: 'https://github.com/ello/KINWebBrowser'
-  pod 'PINRemoteImage', git: 'https://github.com/pinterest/PINRemoteImage.git', commit: 'af312667f0ce830264198366f481f1b222675a31'
+  pod 'PINRemoteImage', '3.0.0-beta.8'
+  pod 'PINCache', git: 'https://github.com/ello/PINCache', commit: '78c3461'
   pod 'SSPullToRefresh', '~> 1.2'
   pod 'ImagePickerSheetController', git: 'https://github.com/ello/ImagePickerSheetController', branch: 'swift3'
   pod 'iRate', '~> 1.11'
@@ -48,7 +49,7 @@ def common_pods
   pod 'FLAnimatedImage', '~> 1.0'
   pod 'YapDatabase', '2.8.1'
   pod 'Alamofire', '~> 4.0'
-  pod 'Moya', '~> 8.0.0-beta.6'
+  pod 'Moya', '8.0.3'
   pod 'KeychainAccess', '~> 3.0'
   pod 'SwiftyUserDefaults', '~> 3.0'
   pod 'SwiftyJSON', '~> 3.1'
@@ -59,7 +60,7 @@ end
 def spec_pods
   pod 'FBSnapshotTestCase'
   pod 'Quick', '1.1.0'
-  pod 'Nimble', '5.1.1'
+  pod 'Nimble', '6.0.1'
   pod 'Nimble-Snapshots', '~> 4.4'
 end
 
@@ -85,12 +86,22 @@ plugin 'cocoapods-keys', {
     'OauthSecret',
     'CrashlyticsKey',
     'Domain',
-    'HttpProtocol',
     'SodiumChloride',
     'SegmentKey',
+    'StagingSegmentKey',
+    'TeamId',
+
+    'NinjaOauthKey',
+    'NinjaOauthSecret',
+    'NinjaDomain',
+    'Stage1OauthKey',
+    'Stage1OauthSecret',
+    'Stage1Domain',
+    'Stage2OauthKey',
+    'Stage2OauthSecret',
+    'Stage2Domain',
   ]
 }
-
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

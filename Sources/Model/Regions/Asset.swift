@@ -2,7 +2,6 @@
 ///  Asset.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 
@@ -40,9 +39,11 @@ final class Asset: JSONAble {
         //
         // unfortunately that took 12.4 seconds to compile
         // this (much more verbose) code compiles very quickly
-        if let large = large { return large }
-        if let optimized = optimized { return optimized }
-        if let xhdpi = xhdpi { return xhdpi }
+        if DeviceScreen.isRetina {
+            if let large = large { return large }
+            if let optimized = optimized { return optimized }
+            if let xhdpi = xhdpi { return xhdpi }
+        }
         if let hdpi = hdpi { return hdpi }
         if let regular = regular { return regular }
         return nil
@@ -52,8 +53,19 @@ final class Asset: JSONAble {
     var regular: Attachment?
     var small: Attachment?
     var allAttachments: [(AttachmentType, Attachment)] {
-        let possibles: [(AttachmentType, Attachment?)] = [(.optimized, optimized), (.smallScreen, smallScreen), (.ldpi, ldpi), (.mdpi, mdpi), (.hdpi, hdpi), (.xhdpi, xhdpi), (.original, original), (.large, large), (.regular, regular), (.small, small)]
-        return possibles.flatMap() { type, attachment in
+        let possibles: [(AttachmentType, Attachment?)] = [
+            (.optimized, optimized),
+            (.smallScreen, smallScreen),
+            (.ldpi, ldpi),
+            (.mdpi, mdpi),
+            (.hdpi, hdpi),
+            (.xhdpi, xhdpi),
+            (.original, original),
+            (.large, large),
+            (.regular, regular),
+            (.small, small)
+        ]
+        return possibles.flatMap { type, attachment in
             guard  let attachment = attachment else { return nil }
             return (type, attachment)
         }
@@ -63,6 +75,7 @@ final class Asset: JSONAble {
     var isGif: Bool {
         return self.optimized?.type == "image/gif"
     }
+
     var isLargeGif: Bool {
         if isGif {
             if let size = self.optimized?.size {
@@ -73,17 +86,30 @@ final class Asset: JSONAble {
     }
 
     var oneColumnAttachment: Attachment? {
-        return self.hdpi
+        return Window.isWide(Window.width) && DeviceScreen.isRetina ? xhdpi : hdpi
     }
 
     var gridLayoutAttachment: Attachment? {
-        let isWide = Window.isWide(Window.width)
-        if isWide {
-            return self.hdpi
+        return Window.isWide(Window.width) && DeviceScreen.isRetina ? hdpi : mdpi
+    }
+
+    var aspectRatio: CGFloat {
+        var attachment: Attachment?
+
+        if let tryAttachment = oneColumnAttachment {
+            attachment = tryAttachment
         }
-        else {
-            return self.mdpi
+        else if let tryAttachment = optimized {
+            attachment = tryAttachment
         }
+
+        if  let attachment = attachment,
+            let width = attachment.width,
+            let height = attachment.height
+        {
+            return CGFloat(width)/CGFloat(height)
+        }
+        return 4.0/3.0
     }
 
 // MARK: Initialization
@@ -226,26 +252,16 @@ final class Asset: JSONAble {
 extension Asset {
     func replace(attachmentType: AttachmentType, with attachment: Attachment?) {
         switch attachmentType {
-        case .optimized:
-            optimized = attachment
-        case .smallScreen:
-            smallScreen = attachment
-        case .ldpi:
-            ldpi = attachment
-        case .mdpi:
-            mdpi = attachment
-        case .hdpi:
-            hdpi = attachment
-        case .xhdpi:
-            xhdpi = attachment
-        case .original:
-            original = attachment
-        case .large:
-            large = attachment
-        case .regular:
-            regular = attachment
-        case .small:
-            small = attachment
+        case .optimized:    optimized = attachment
+        case .smallScreen:  smallScreen = attachment
+        case .ldpi:         ldpi = attachment
+        case .mdpi:         mdpi = attachment
+        case .hdpi:         hdpi = attachment
+        case .xhdpi:        xhdpi = attachment
+        case .original:     original = attachment
+        case .large:        large = attachment
+        case .regular:      regular = attachment
+        case .small:        small = attachment
         }
     }
 }

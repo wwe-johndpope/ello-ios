@@ -2,8 +2,6 @@
 ///  ElloProvider.swift
 //
 
-import Crashlytics
-import Foundation
 import Moya
 import Result
 import Alamofire
@@ -27,11 +25,7 @@ class ElloProvider {
     }
 
     static func endpointClosure(_ target: ElloAPI) -> Endpoint<ElloAPI> {
-        let sampleResponseClosure = { return EndpointSampleResponse.networkResponse(200, target.sampleData) }
-
-        let method = target.method
-        let parameters = target.parameters
-        let endpoint = Endpoint<ElloAPI>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: target.parameterEncoding)
+        let endpoint = Endpoint<ElloAPI>(url: url(target), sampleResponseClosure: { return target.stubbedNetworkResponse }, method: target.method, parameters: target.parameters, parameterEncoding: target.parameterEncoding)
         return endpoint.adding(newHTTPHeaderFields: target.headers())
     }
 
@@ -90,7 +84,6 @@ class ElloProvider {
             }
             let canMakeRequest = authState.supports(target)
             if canMakeRequest {
-                Crashlytics.sharedInstance().setObjectValue(target.path, forKey: CrashlyticsKey.requestPath.rawValue)
                 ElloProvider.sharedProvider.request(target) { (result) in
                     self.handleRequest(target: target, result: result, success: success, failure: failure, uuid: uuid)
                 }
@@ -290,12 +283,6 @@ extension ElloProvider {
             let response = moyaResponse.response as? HTTPURLResponse
             let data = moyaResponse.data
             let statusCode = moyaResponse.statusCode
-            if let response = response {
-                // set crashlytics stuff before processing
-                let headers = response.allHeaderFields.description
-                let responseJSON = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String ?? "failed to parse data"
-                Tracker.trackRequest(headers: headers, statusCode: statusCode, responseJSON: responseJSON)
-            }
 
             switch statusCode {
             case 200...299, 300...399:
@@ -318,7 +305,7 @@ extension ElloProvider {
         postNotification(AuthenticationNotifications.invalidToken, value: true)
     }
 
-    fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String:AnyObject], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String: AnyObject], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         let completion: ElloEmptyCompletion = {
             let node = dict[elloAPI.mappingType.rawValue]
             var newResponseConfig: ResponseConfig?

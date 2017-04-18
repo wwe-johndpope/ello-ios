@@ -2,7 +2,6 @@
 ///  OmnibarViewController.swift
 //
 
-import Crashlytics
 import SwiftyUserDefaults
 import PINRemoteImage
 
@@ -65,12 +64,17 @@ class OmnibarViewController: BaseElloViewController {
     convenience init(editComment comment: ElloComment) {
         self.init(nibName: nil, bundle: nil)
         editComment = comment
-        PostService().loadComment(comment.postId, commentId: comment.id, success: { (comment, _) in
-            self.rawEditBody = comment.body
-            if let body = comment.body, self.isViewLoaded {
-                self.prepareScreenForEditing(body, isComment: true)
+        PostService().loadComment(comment.postId, commentId: comment.id)
+            .onSuccess { [weak self] comment in
+                guard let `self` = self else { return }
+                self.rawEditBody = comment.body
+                if let body = comment.body, self.isViewLoaded {
+                    self.prepareScreenForEditing(body, isComment: true)
+                }
             }
-        })
+            .onFail { error in
+                print("could not edit comment: \(error)")
+            }
     }
 
     convenience init(editPost post: Post) {
@@ -199,7 +203,6 @@ class OmnibarViewController: BaseElloViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         bottomBarController?.setNavigationBarsVisible(true, animated: animated)
-        Crashlytics.sharedInstance().setObjectValue("Omnibar", forKey: CrashlyticsKey.streamName.rawValue)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -232,7 +235,7 @@ class OmnibarViewController: BaseElloViewController {
                 if let imageRegionURL = region.buyButtonURL {
                     buyButtonURL = imageRegionURL as URL
                 }
-                downloads.append((index, url as URL))
+                downloads.append((index, url))
                 regions.append(.imageURL(url))
             }
         }
@@ -246,10 +249,10 @@ class OmnibarViewController: BaseElloViewController {
 
         for (index, imageURL) in downloads {
             PINRemoteImageManager.shared().downloadImage(with: imageURL, options: []) { result in
-                if let animatedImage = result?.animatedImage {
+                if let animatedImage = result.animatedImage {
                     regions[index] = .imageData(animatedImage.posterImage, animatedImage.data, "image/gif")
                 }
-                else if let image = result?.image {
+                else if let image = result.image {
                     regions[index] = .image(image)
                 }
                 else {

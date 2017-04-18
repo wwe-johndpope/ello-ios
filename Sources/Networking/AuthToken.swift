@@ -2,7 +2,6 @@
 ///  AuthToken.swift
 //
 
-import Foundation
 import SwiftyJSON
 
 
@@ -19,12 +18,8 @@ struct AuthToken {
     // MARK: - Properties
 
     var tokenWithBearer: String? {
-        get {
-            if let key = keychain.authToken {
-                return "Bearer \(key)"
-            }
-            else { return nil }
-        }
+        guard let key = keychain.authToken else { return nil }
+        return "Bearer \(key)"
     }
 
     var token: String? {

@@ -31,7 +31,7 @@ class Application {
     }
 
     class func setup() {
-        let _ = shared()
+        _ = shared()
     }
 
     init() {

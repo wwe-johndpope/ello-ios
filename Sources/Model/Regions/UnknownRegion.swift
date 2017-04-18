@@ -2,8 +2,6 @@
 ///  UnknownRegion.swift
 //
 
-import Foundation
-
 let UnknownRegionVersion = 1
 
 @objc(UnknownRegion)

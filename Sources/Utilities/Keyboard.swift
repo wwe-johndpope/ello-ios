@@ -2,10 +2,6 @@
 ///  Keyboard.swift
 //
 
-import UIKit
-import Foundation
-import CoreGraphics
-
 class Keyboard {
     struct Notifications {
         static let KeyboardWillShow = TypedNotification<Keyboard>(name: "com.Ello.Keyboard.KeyboardWillShow")
@@ -17,7 +13,7 @@ class Keyboard {
     static let shared = Keyboard()
 
     class func setup() {
-        let _ = shared
+        _ = shared
     }
 
     var active = false

@@ -135,7 +135,7 @@ extension UIStoryboard {
 func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> NonNilMatcherFunc<T> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "\(identifier) should be registered"
-        let tableView = try! actualExpression.evaluate() as! UITableView
+        let tableView = try! actualExpression.evaluate()!
         tableView.reloadData()
         // Using the side effect of a runtime crash when dequeing a cell here, if it works :thumbsup:
         let _ = tableView.dequeueReusableCell(withIdentifier: identifier, for: IndexPath(row: 0, section: 0))

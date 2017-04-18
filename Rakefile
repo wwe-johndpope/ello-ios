@@ -11,53 +11,43 @@ namespace :generate do
     sh "find Sources -name '*.swift' | xargs genstrings -o ."
   end
 
-  desc 'Sets cocoapods-keys for the app pointed at a local development server.'
-  task :local_keys do
-    has_key = set_key('OauthKey', 'LOCAL_CLIENT_KEY')
-    has_key = set_key('OauthSecret', 'LOCAL_CLIENT_SECRET') if has_key
-    has_key = set_key('TeamId', 'ELLO_TEAM_ID') if has_key
-    has_key = set_key('Domain', 'LOCAL_DOMAIN') if has_key
-    has_key = set_key('HttpProtocol', 'LOCAL_HTTP_PROTOCOL') if has_key
-    has_key = set_key('SodiumChloride', 'INVITE_FRIENDS_SALT') if has_key
-    sh "bundle exec pod install" if has_key
-  end
-
   desc 'Sets cocoapods-keys for the app pointed at the staging server.'
-  task :staging_keys do
-    has_key = set_key('OauthKey', 'STAGING_CLIENT_KEY')
-    has_key = set_key('OauthSecret', 'STAGING_CLIENT_SECRET') if has_key
-    has_key = set_key('TeamId', 'ELLO_TEAM_ID') if has_key
-    has_key = set_key('Domain', 'STAGING_DOMAIN') if has_key
-    has_key = set_key('HttpProtocol', 'STAGING_HTTP_PROTOCOL') if has_key
-    has_key = set_key('SodiumChloride', 'INVITE_FRIENDS_SALT') if has_key
-    has_key = set_key('CrashlyticsKey', 'CRASHLYTICS_KEY') if has_key
-    has_key = set_key('SegmentKey', 'STAGING_SEGMENT_KEY') if has_key
-    sh "bundle exec pod install" if has_key
-  end
+  task :keys do
+    has_all_keys = true
+    keys = [
+      ['OauthKey', 'PROD_CLIENT_KEY'],
+      ['OauthSecret', 'PROD_CLIENT_SECRET'],
+      ['Domain', 'PROD_DOMAIN'],
+      ['SegmentKey', 'PROD_SEGMENT_KEY'],
 
-  desc 'Sets cocoapods-keys for the app pointed at the production server.'
-  task :prod_keys do
-    has_key = set_key('OauthKey', 'PROD_CLIENT_KEY')
-    has_key = set_key('OauthSecret', 'PROD_CLIENT_SECRET') if has_key
-    has_key = set_key('TeamId', 'ELLO_TEAM_ID') if has_key
-    has_key = set_key('Domain', 'PROD_DOMAIN') if has_key
-    has_key = set_key('HttpProtocol', 'PROD_HTTP_PROTOCOL') if has_key
-    has_key = set_key('SodiumChloride', 'INVITE_FRIENDS_SALT') if has_key
-    has_key = set_key('CrashlyticsKey', 'CRASHLYTICS_KEY') if has_key
-    has_key = set_key('SegmentKey', 'PROD_SEGMENT_KEY') if has_key
-    sh "bundle exec pod install" if has_key
-  end
+      ['NinjaOauthKey', 'NINJA_CLIENT_KEY'],
+      ['NinjaOauthSecret', 'NINJA_CLIENT_SECRET'],
+      ['NinjaDomain', 'NINJA_DOMAIN'],
 
-  desc 'Sets cocoapods-keys for the app pointed at the production server.'
-  task :local_keys do
-    has_key = set_key('OauthKey', 'LOCAL_CLIENT_KEY')
-    has_key = set_key('OauthSecret', 'LOCAL_CLIENT_SECRET') if has_key
-    has_key = set_key('TeamId', 'ELLO_TEAM_ID') if has_key
-    has_key = set_key('Domain', 'LOCAL_DOMAIN') if has_key
-    has_key = set_key('SodiumChloride', 'INVITE_FRIENDS_SALT') if has_key
-    has_key = set_key('CrashlyticsKey', 'CRASHLYTICS_KEY') if has_key
-    has_key = set_key('SegmentKey', 'LOCAL_SEGMENT_KEY') if has_key
-    sh "bundle exec pod install" if has_key
+      ['Stage1OauthKey', 'STAGE1_CLIENT_KEY'],
+      ['Stage1OauthSecret', 'STAGE1_CLIENT_SECRET'],
+      ['Stage1Domain', 'STAGE1_DOMAIN'],
+
+      ['Stage2OauthKey', 'STAGE2_CLIENT_KEY'],
+      ['Stage2OauthSecret', 'STAGE2_CLIENT_SECRET'],
+      ['Stage2Domain', 'STAGE2_DOMAIN'],
+
+      ['StagingSegmentKey', 'STAGING_SEGMENT_KEY'],
+
+      ['TeamId', 'ELLO_TEAM_ID'],
+      ['SodiumChloride', 'INVITE_FRIENDS_SALT'],
+      ['CrashlyticsKey', 'CRASHLYTICS_KEY'],
+    ]
+    keys.each do |name, env_name|
+      has_all_keys = has_all_keys && check_env(env_name)
+    end
+
+    if has_all_keys
+      keys.each do |name, env_name|
+        set_key(name, env_name)
+      end
+    end
+    sh "bundle exec pod install" if has_all_keys
   end
 
   def set_key(key, env_var)

@@ -2,8 +2,6 @@
 ///  ObjectCache.swift
 //
 
-import Foundation
-
 protocol PersistentLayer {
     func setObject(_ value: Any?, forKey: String)
     func objectForKey(_ defaultName: String) -> Any?

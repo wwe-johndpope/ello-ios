@@ -2,9 +2,6 @@
 ///  ImageExtensions.swift
 //
 
-import UIKit
-import CoreGraphics
-
 extension UIImage {
 
     class func isGif(_ imageData: Data) -> Bool {

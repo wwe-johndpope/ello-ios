@@ -113,7 +113,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     // MARK: BottomBarController
     fileprivate var _bottomBarVisible = true
     var bottomBarVisible: Bool {
-        get { return _bottomBarVisible }
+        return _bottomBarVisible
     }
     var bottomBarHeight: CGFloat { return ElloTabBar.Size.height }
     var navigationBarsVisible: Bool { return bottomBarVisible }
@@ -261,7 +261,7 @@ extension ElloTabBarController {
 
     fileprivate func setupNotificationObservers() {
 
-        let _ = Application.shared() // this is lame but we need Application to initialize to observe it's notifications
+        _ = Application.shared() // this is lame but we need Application to initialize to observe it's notifications
 
         systemLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.invalidToken, block: systemLoggedOut)
 
@@ -519,7 +519,7 @@ extension ElloTabBarController {
         narrationView.frame = animateInStartFrame()
         view.addSubview(narrationView)
         updateNarrationTitle(false)
-        animate() {
+        animate {
             self.narrationView.alpha = 1
             self.narrationView.frame = self.animateInFinalFrame()
         }
@@ -527,7 +527,7 @@ extension ElloTabBarController {
     }
 
     fileprivate func animateOutNarrationView() {
-        animate() {
+        animate {
             self.narrationView.alpha = 0
             self.narrationView.frame = self.animateInStartFrame()
         }

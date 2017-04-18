@@ -3,8 +3,7 @@
 //
 
 import Moya
-import Foundation
-import UIKit
+
 
 class S3UploadingService {
     typealias S3UploadSuccessCompletion = (URL?) -> Void

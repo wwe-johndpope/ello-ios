@@ -2,9 +2,6 @@
 ///  FreeMethods.swift
 //
 
-import UIKit
-
-
 #if DEBUG
 var messages: [(String, String)] = []
 func log(comment: String, object: Any?) {
@@ -81,7 +78,7 @@ class Proc {
 
 
 func times(_ times: Int, block: BasicBlock) {
-    times_(times) { (index: Int) in block() }
+    times_(times) { (_: Int) in block() }
 }
 
 func profiler(_ message: String = "") -> BasicBlock {

@@ -2,9 +2,6 @@
 ///  InterfaceString.swift
 //
 
-import Foundation
-
-
 struct InterfaceString {
 
     // Adding type information to the strings reduced the overall compile time considerably
@@ -73,8 +70,9 @@ struct InterfaceString {
     }
 
     struct Drawer {
-        static let Store: String = NSLocalizedString("Store", comment: "Store")
         static let Invite: String = NSLocalizedString("Invite", comment: "Invite")
+        static let Magazine: String = NSLocalizedString("Magazine", comment: "Magazine")
+        static let Store: String = NSLocalizedString("Store", comment: "Store")
         static let Help: String = NSLocalizedString("Help", comment: "Help")
         static let Resources: String = NSLocalizedString("Resources", comment: "Resources")
         static let About: String = NSLocalizedString("About", comment: "About")
@@ -140,6 +138,8 @@ struct InterfaceString {
         static let DefaultTitle: String = NSLocalizedString("Post Detail", comment: "Default post title")
         static let LovedByList: String = NSLocalizedString("Loved by", comment: "Loved by list title")
         static let RepostedByList: String = NSLocalizedString("Reposted by", comment: "Reposted by list title")
+        static let RelatedPosts: String = NSLocalizedString("Related Posts", comment: "Related posts title")
+        static let LoadMoreComments: String = NSLocalizedString("Load More", comment: "Load More Comments title")
 
         static let Edit: String = NSLocalizedString("Edit", comment: "Edit Post Button Title")
         static let CreateComment: String = NSLocalizedString("Comment...", comment: "Create Comment Button Prompt")
@@ -254,6 +254,11 @@ struct InterfaceString {
         static let SignUp: String = NSLocalizedString("Sign Up", comment: "sign up button")
         static let Login: String = NSLocalizedString("Login", comment: "login button")
         static let Join: String = NSLocalizedString("Join The Creators Network.", comment: "Join the creators network label")
+        static let Reset: String = NSLocalizedString("Reset", comment: "Reset button label")
+        static let ForgotPasswordEnter: String = NSLocalizedString("Enter your email", comment: "Enter your email label")
+        static let ForgotPasswordEnterSuccess: String = NSLocalizedString("If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.", comment: "Enter your email success description")
+        static let ForgotPasswordReset: String = NSLocalizedString("Reset your password.", comment: "Reset your password label")
+        static let ForgotPasswordResetError: String = NSLocalizedString("The password reset token you used is no longer valid. This may be because you requested more than one token, or that too much time has elapsed.", comment: "Reset your password long error reason.")
         static let Tagline: String = NSLocalizedString("Be part of what’s next in art, design, fashion, web culture & more.", comment: "Be part of what's next tag line label")
     }
 

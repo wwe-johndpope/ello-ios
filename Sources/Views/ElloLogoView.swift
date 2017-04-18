@@ -4,7 +4,7 @@
 
 import QuartzCore
 import FLAnimatedImage
-import CoreGraphics
+
 
 class ElloLogoView: UIImageView {
 
@@ -61,7 +61,7 @@ class ElloLogoView: UIImageView {
         let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
         let angle = layer.value(forKeyPath: "transform.rotation.z") as! NSNumber
         rotate.fromValue = angle
-        rotate.toValue = 2 * M_PI
+        rotate.toValue = 2 * Double.pi
         rotate.duration = 0.35
         rotate.repeatCount = 1_000_000
         self.layer.add(rotate, forKey: "logo-spin")

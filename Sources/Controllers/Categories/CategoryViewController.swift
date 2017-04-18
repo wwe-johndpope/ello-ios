@@ -7,6 +7,17 @@ final class CategoryViewController: StreamableViewController {
     override func trackerProps() -> [String: AnyObject]? {
         return ["category": slug as AnyObject]
     }
+    override func trackerStreamInfo() -> (String, String?)? {
+        if let streamId = category?.id {
+            return ("category", streamId)
+        }
+        else if DiscoverType.fromURL(slug) != nil {
+            return (slug, nil)
+        }
+        else {
+            return nil
+        }
+    }
 
     var mockScreen: CategoryScreenProtocol?
     var screen: CategoryScreenProtocol {
@@ -265,6 +276,6 @@ extension CategoryViewController: CategoryScreenDelegate {
             screen.scrollToCategory(index: index)
             screen.selectCategory(index: index)
         }
-        Tracker.shared.screenAppeared(self)
+        trackScreenAppeared()
     }
 }

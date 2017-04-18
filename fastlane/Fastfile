@@ -47,7 +47,7 @@ end
 
 desc 'Submit a build to testflight'
 lane :beta do
-  switch_to_prod
+  generate_keys
   increment_build_and_version
   compile
 
@@ -99,12 +99,8 @@ end
 
 ######################### PRIVATE LANES #########################
 
-private_lane :switch_to_prod do
-  `bundle exec rake generate:prod_keys`
-end
-
-private_lane :switch_to_staging do
-  `bundle exec rake generate:staging_keys`
+private_lane :generate_keys do
+  `bundle exec rake generate:keys`
 end
 
 private_lane :compile do

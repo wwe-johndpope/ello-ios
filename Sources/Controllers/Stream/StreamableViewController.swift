@@ -80,6 +80,28 @@ class StreamableViewController: BaseElloViewController {
         )
     }
 
+    func trackerStreamInfo() -> (String, String?)? {
+        return nil
+    }
+
+    override func trackScreenAppeared() {
+        super.trackScreenAppeared()
+
+        guard let (streamKind, streamId) = trackerStreamInfo() else { return }
+        let posts = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem in
+            return streamCellItem.jsonable as? Post
+        }
+        PostService().sendPostViews(posts: posts, streamId: streamId, streamKind: streamKind, userId: currentUser?.id)
+
+        let comments = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem -> ElloComment? in
+            guard streamCellItem.type != .createComment else { return nil }
+            return streamCellItem.jsonable as? ElloComment
+        }
+        if let post = posts.first, streamKind == "post", comments.count > 0 {
+            PostService().sendPostViews(comments: comments, streamId: post.id, streamKind: "comment", userId: currentUser?.id)
+        }
+    }
+
     fileprivate func willPresentStreamable(_ navBarsVisible: Bool) {
         postNotification(StatusBarNotifications.statusBarShouldHide, value: !navBarsVisible)
         UIView.setAnimationsEnabled(false)
@@ -239,7 +261,7 @@ extension StreamableViewController: CreatePostResponder {
         if OmnibarViewController.canEditRegions(post.content) {
             let vc = OmnibarViewController(editPost: post)
             vc.currentUser = self.currentUser
-            vc.onPostSuccess() { _ in
+            vc.onPostSuccess { _ in
                 _ = self.navigationController?.popViewController(animated: true)
             }
             self.navigationController?.pushViewController(vc, animated: true)

@@ -69,10 +69,7 @@ class OnboardingViewController: BaseElloViewController {
             if let url = currentUser.avatarURL(), url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.shared().downloadImage(with: url, options: []) { result in
-                    if let animatedImage = result?.animatedImage {
-                        self.onboardingData.avatarImage = ImageRegionData(image: animatedImage.posterImage, data: animatedImage.data, contentType: "image/gif")
-                    }
-                    else if let image = result?.image {
+                    if let image = result.image {
                         self.onboardingData.avatarImage = ImageRegionData(image: image)
                     }
                 }
@@ -81,10 +78,7 @@ class OnboardingViewController: BaseElloViewController {
             if let url = currentUser.coverImageURL(), url.absoluteString !~ "ello-default"
             {
                 PINRemoteImageManager.shared().downloadImage(with: url, options: []) { result in
-                    if let animatedImage = result?.animatedImage {
-                        self.onboardingData.coverImage = ImageRegionData(image: animatedImage.posterImage, data: animatedImage.data, contentType: "image/gif")
-                    }
-                    else if let image = result?.image {
+                    if let image = result.image {
                         self.onboardingData.coverImage = ImageRegionData(image: image)
                     }
                 }
@@ -206,7 +200,7 @@ extension OnboardingViewController {
     }
 
     fileprivate func showFirstViewController(_ viewController: UIViewController) {
-        Tracker.shared.screenAppeared(viewController)
+        viewController.trackScreenAppeared()
 
         prepareOnboardingController(viewController)
 
@@ -285,7 +279,7 @@ extension OnboardingViewController {
             return
         }
 
-        Tracker.shared.screenAppeared(nextViewController)
+        nextViewController.trackScreenAppeared()
 
         visibleViewController.willMove(toParentViewController: nil)
         addChildViewController(nextViewController)

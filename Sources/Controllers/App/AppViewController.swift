@@ -3,7 +3,6 @@
 //
 
 import SwiftyUserDefaults
-import Crashlytics
 
 
 struct NavigationNotifications {
@@ -240,6 +239,37 @@ extension AppViewController {
         nav.setViewControllers([loggedOutController, loginController], animated: true)
     }
 
+    func showForgotPasswordResetScreen(authToken: String) {
+        guard
+            let nav = visibleViewController as? UINavigationController,
+            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
+        else { return }
+
+        if !(nav.visibleViewController is LoggedOutViewController) {
+            _ = nav.popToRootViewController(animated: false)
+        }
+
+        pushPayload = .none
+        let forgotPasswordResetController = ForgotPasswordResetViewController(authToken: authToken)
+        nav.setViewControllers([loggedOutController, forgotPasswordResetController], animated: true)
+    }
+
+    func showForgotPasswordEmailScreen() {
+        guard
+            let nav = visibleViewController as? UINavigationController,
+            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
+        else { return }
+
+        if !(nav.visibleViewController is LoggedOutViewController) {
+            _ = nav.popToRootViewController(animated: false)
+        }
+
+        pushPayload = .none
+        let loginController = LoginViewController()
+        let forgotPasswordEmailController = ForgotPasswordEmailViewController()
+        nav.setViewControllers([loggedOutController, loginController, forgotPasswordEmailController], animated: true)
+    }
+
     func showOnboardingScreen(_ user: User) {
         currentUser = user
 
@@ -371,7 +401,7 @@ extension AppViewController {
 
     fileprivate func prepareToShowViewController(_ newViewController: UIViewController) {
         let controller = (newViewController as? UINavigationController)?.topViewController ?? newViewController
-        Tracker.shared.screenAppeared(controller)
+        controller.trackScreenAppeared()
 
         view.addSubview(newViewController.view)
         newViewController.view.frame = self.view.bounds
@@ -395,7 +425,7 @@ extension AppViewController {
         logOutCurrentUser()
 
         if isLoggedIn() {
-            removeViewController() {
+            removeViewController {
                 if shouldAlert {
                     let message = InterfaceString.App.LoggedOut
                     let alertController = AlertViewController(message: message)
@@ -500,7 +530,13 @@ extension AppViewController {
             showCategoryScreen(slug: data)
         case .invitations:
             showInvitationScreen()
-        case .enter, .exit, .root, .explore:
+        case .forgotMyPassword:
+            showForgotPasswordEmailScreen()
+        case .resetMyPassword:
+            showForgotPasswordResetScreen(authToken: data)
+        case .enter:
+            showLoginScreen()
+        case .exit, .root, .explore:
             break
         case .friends,
              .following,
@@ -811,33 +847,31 @@ extension AppViewController {
         #if DEBUG
             return true
         #else
-            return AuthToken().isStaff
+            return AuthToken().isStaff || DebugServer.fromDefaults != nil
         #endif
     }
 
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        guard debugAllowed else { return }
+        guard debugAllowed, motion == .motionShake else { return }
 
-        if motion == .motionShake {
-            if isShowingDebug {
-                closeTodoController()
-            }
-            else {
-                isShowingDebug = true
-                let ctlr = debugController
-                ctlr.title = "Debugging"
+        if isShowingDebug {
+            closeTodoController()
+        }
+        else {
+            isShowingDebug = true
+            let ctlr = debugController
+            ctlr.title = "Debugging"
 
-                let nav = UINavigationController(rootViewController: ctlr)
-                let bar = UIView(frame: CGRect(x: 0, y: -20, width: view.frame.width, height: 20))
-                bar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-                bar.backgroundColor = .black
-                nav.navigationBar.addSubview(bar)
+            let nav = UINavigationController(rootViewController: ctlr)
+            let bar = UIView(frame: CGRect(x: 0, y: -20, width: view.frame.width, height: 20))
+            bar.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+            bar.backgroundColor = .black
+            nav.navigationBar.addSubview(bar)
 
-                let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(AppViewController.closeTodoControllerTapped))
-                ctlr.navigationItem.leftBarButtonItem = closeItem
+            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(AppViewController.closeTodoControllerTapped))
+            ctlr.navigationItem.leftBarButtonItem = closeItem
 
-                present(nav, animated: true, completion: nil)
-            }
+            present(nav, animated: true, completion: nil)
         }
     }
 

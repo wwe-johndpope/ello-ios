@@ -2,11 +2,13 @@
 ///  SimpleStreamController.swift
 //
 
-import Foundation
-
 class SimpleStreamViewController: StreamableViewController {
     override func trackerName() -> String? {
         return endpoint.trackerName
+    }
+    override func trackerStreamInfo() -> (String, String?)? {
+        guard let streamKind = endpoint.trackerStreamKind else { return nil }
+        return (streamKind, endpoint.trackerStreamId)
     }
 
     var navigationBar: ElloNavigationBar!

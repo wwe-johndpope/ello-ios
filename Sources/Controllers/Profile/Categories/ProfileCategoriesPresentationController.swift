@@ -2,8 +2,6 @@
 ///  ProfileCategoriesPresentationController.swift
 //
 
-import UIKit
-
 class ProfileCategoriesPresentationController: UIPresentationController {
 
     let background: UIView = {

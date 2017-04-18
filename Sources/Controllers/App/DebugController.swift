@@ -6,6 +6,34 @@ import SwiftyUserDefaults
 import Crashlytics
 import ImagePickerSheetController
 
+
+struct DebugSettings {
+    static let useStaging = "UseStaging"
+}
+
+enum DebugServer: String {
+    static var fromDefaults: DebugServer? {
+        guard
+            !AppSetup.sharedState.isTesting,
+            let name = GroupDefaults[DebugSettings.useStaging].string,
+            let server = DebugServer(rawValue: name)
+        else { return nil }
+        return server
+    }
+
+    case ninja = "Ninja"
+    case stage1 = "Stage 1"
+    case stage2 = "Stage 2"
+
+    var apiKeys: APIKeys {
+        switch self {
+        case .ninja: return APIKeys.ninja
+        case .stage1: return APIKeys.stage1
+        case .stage2: return APIKeys.stage2
+        }
+    }
+}
+
 class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let tableView = UITableView()
@@ -28,9 +56,33 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         let appController = UIApplication.shared.keyWindow!.rootViewController as! AppViewController
+        let debugServer = DebugServer.fromDefaults
+
+        addAction(name: "Server: using \(debugServer?.rawValue ?? "Production")") {
+            let alertController = AlertViewController(message: "What server do you want to use:")
+
+            let option = AlertAction(title: "Production", style: .dark) { _ in
+                GroupDefaults[DebugSettings.useStaging] = nil
+                postNotification(AuthenticationNotifications.userLoggedOut, value: ())
+                Crashlytics.sharedInstance().crash()
+            }
+            alertController.addAction(option)
+
+            let options: [DebugServer] = [.ninja, .stage1, .stage2]
+            for option in options {
+                let action = AlertAction(title: option.rawValue, style: .dark) { _ in
+                    GroupDefaults[DebugSettings.useStaging] = option.rawValue
+                    postNotification(AuthenticationNotifications.userLoggedOut, value: ())
+                    Crashlytics.sharedInstance().crash()
+                }
+                alertController.addAction(action)
+            }
+
+            appController.present(alertController, animated: true, completion: nil)
+        }
 
         addAction(name: "Logout") {
-            appController.closeTodoController() {
+            appController.closeTodoController {
                 appController.userLoggedOut()
             }
         }
@@ -46,7 +98,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {
-                appController.closeTodoController() {
+                appController.closeTodoController {
                     Tracker.shared.overrideAgent = DebugAgent()
                     let alertController = AlertViewController(error: "Debug tracking is on")
                     appController.present(alertController, animated: true, completion: nil)
@@ -55,7 +107,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Deep Linking") {
-            appController.closeTodoController() {
+            appController.closeTodoController {
                 let alertController = AlertViewController()
 
                 let urlAction = AlertAction(title: "Enter URL", style: .urlInput)
@@ -77,7 +129,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addAction(name: "ImagePickerSheetController") {
             let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
             controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.TakePhoto, handler: { _ in }))
-            controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.PhotoLibrary, secondaryTitle: { NSString.localizedStringWithFormat(InterfaceString.ImagePicker.AddImagesTemplate as NSString, $0) as String}, handler: { _ in }, secondaryHandler: { _, numberOfPhotos in }))
+            controller.addAction(ImagePickerAction(title: InterfaceString.ImagePicker.PhotoLibrary, secondaryTitle: { NSString.localizedStringWithFormat(InterfaceString.ImagePicker.AddImagesTemplate as NSString, $0) as String}, handler: { _ in }, secondaryHandler: { _, _ in }))
             controller.addAction(ImagePickerAction(title: InterfaceString.Cancel, style: .cancel, handler: { _ in }))
 
             self.present(controller, animated: true, completion: nil)
@@ -143,7 +195,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Show Notification") {
-            appController.closeTodoController() {
+            appController.closeTodoController {
                 PushNotificationController.sharedController.receivedNotification(UIApplication.shared, userInfo: [
                     "application_target": "notifications/posts/6178",
                     "aps": [
@@ -161,7 +213,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             PushNotificationController.sharedController.permissionDenied = false
             PushNotificationController.sharedController.needsPermission = true
             if let alert = PushNotificationController.sharedController.requestPushAccessIfNeeded() {
-                appController.closeTodoController() {
+                appController.closeTodoController {
                     appController.present(alert, animated: true, completion: .none)
                 }
             }

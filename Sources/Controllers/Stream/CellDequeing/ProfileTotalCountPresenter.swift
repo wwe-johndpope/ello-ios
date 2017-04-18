@@ -2,9 +2,6 @@
 ///  ProfileTotalCountPresenter.swift
 //
 
-import Foundation
-
-
 struct ProfileTotalCountPresenter {
 
     static func configure(

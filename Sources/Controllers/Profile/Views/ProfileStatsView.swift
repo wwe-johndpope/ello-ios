@@ -1,6 +1,7 @@
 ////
 ///  ProfileStatsView.swift
 //
+// swiftlint:disable comma
 
 class ProfileStatsView: ProfileBaseView {
     struct Size {

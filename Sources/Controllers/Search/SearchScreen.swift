@@ -35,8 +35,8 @@ class SearchScreen: UIView, SearchScreenProtocol {
     let navigationBar = ElloNavigationBar()
     let searchField = UITextField()
     let searchControlsContainer = UIView()
-    fileprivate let postsToggleButton = StyledButton(style: .SquareBlack)
-    fileprivate let peopleToggleButton = StyledButton(style: .SquareBlack)
+    fileprivate let postsToggleButton = StyledButton(style: .squareBlack)
+    fileprivate let peopleToggleButton = StyledButton(style: .squareBlack)
     fileprivate var streamViewContainer = UIView()
     fileprivate(set) var findFriendsContainer: UIView!
     fileprivate var bottomInset: CGFloat
@@ -58,14 +58,10 @@ class SearchScreen: UIView, SearchScreenProtocol {
     let navigationItem = UINavigationItem()
 
     fileprivate var btnWidth: CGFloat {
-        get {
-            return (searchControlsContainer.bounds.size.width - 2 * Size.containerMargin) / 2
-        }
+        return (searchControlsContainer.bounds.size.width - 2 * Size.containerMargin) / 2
     }
     fileprivate var buttonY: CGFloat {
-        get {
-            return searchControlsContainer.frame.size.height - 43
-        }
+        return searchControlsContainer.frame.size.height - 43
     }
     weak var delegate: SearchScreenDelegate?
 
@@ -243,7 +239,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
 
         let margins = UIEdgeInsets(top: 20, left: 15, bottom: 26, right: 15)
         let buttonHeight = CGFloat(50)
-        let button = StyledButton(style: .White)
+        let button = StyledButton(style: .white)
         button.frame = CGRect(
             x: margins.left,
             y: containerFrame.height - margins.bottom - buttonHeight,
@@ -254,7 +250,7 @@ class SearchScreen: UIView, SearchScreenProtocol {
         button.addTarget(self, action: #selector(findFriendsTapped), for: .touchUpInside)
         button.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        let label = StyledLabel(style: .White)
+        let label = StyledLabel(style: .white)
         label.frame = CGRect(
             x: margins.left, y: 0,
             width: button.frame.width,

@@ -2,8 +2,6 @@
 ///  Regionable.swift
 //
 
-import Foundation
-
 @objc
 protocol Regionable {
     var kind: String { get }

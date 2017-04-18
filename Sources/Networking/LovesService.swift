@@ -2,8 +2,6 @@
 ///  LovesService.swift
 //
 
-import Foundation
-
 typealias LovesCreateSuccessCompletion = (_ love: Love, _ responseConfig: ResponseConfig) -> Void
 
 struct LovesService {

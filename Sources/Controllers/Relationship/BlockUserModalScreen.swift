@@ -4,7 +4,7 @@
 
 import SnapKit
 
-protocol BlockUserModalDelegate {
+protocol BlockUserModalDelegate: class {
     func updateRelationship(_ newRelationship: RelationshipPriority)
     func flagTapped()
     func closeModal()
@@ -25,15 +25,15 @@ class BlockUserModalScreen: UIView {
     fileprivate let innerView = UIView()
     fileprivate let closeButton = UIButton()
     fileprivate let titleLabel = UILabel()
-    fileprivate let muteButton = StyledButton(style: .White)
+    fileprivate let muteButton = StyledButton(style: .white)
     fileprivate let muteLabel = UILabel()
-    fileprivate let blockButton = StyledButton(style: .White)
+    fileprivate let blockButton = StyledButton(style: .white)
     fileprivate let blockLabel = UILabel()
-    fileprivate let flagButton = StyledButton(style: .White)
+    fileprivate let flagButton = StyledButton(style: .white)
     fileprivate let flagLabel = UILabel()
 
     fileprivate var delegate: BlockUserModalDelegate? {
-        get { return next as? BlockUserModalDelegate }
+        return next as? BlockUserModalDelegate
     }
 
     required init(config: BlockUserModalConfig) {

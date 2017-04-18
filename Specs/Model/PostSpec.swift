@@ -11,8 +11,14 @@ class PostSpec: QuickSpec {
     override func spec() {
 
         beforeEach {
-            ElloURI.domain = "ello.co"
-            ElloURI.httpProtocol = "https"
+            let testingKeys = APIKeys(
+                key: "", secret: "", segmentKey: "",
+                domain: "https://ello.co"
+                )
+            APIKeys.shared = testingKeys
+        }
+        afterEach {
+            APIKeys.shared = APIKeys.default
         }
 
         describe("+fromJSON:") {
@@ -94,6 +100,27 @@ class PostSpec: QuickSpec {
                 expect(post.collapsed).to(beFalse())
             }
 
+        }
+
+        describe("contentFor(gridView: Bool)") {
+            var post: Post!
+
+            beforeEach {
+                post = Post.stub([
+                    "id" : "768",
+                    "content" : [TextRegion.stub([:]), TextRegion.stub([:])],
+                    "summary" : [TextRegion.stub([:])]
+                ])
+            }
+
+
+            it("is correct for list mode") {
+                expect(post.contentFor(gridView: false)?.count) == 2
+            }
+
+            it("is correct for grid mode") {
+                expect(post.contentFor(gridView: true)?.count) == 1
+            }
         }
 
         context("NSCoding") {

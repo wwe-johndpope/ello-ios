@@ -1,9 +1,5 @@
-//
-//  PostEditingService.swift
-//  Ello
-//
-//  Created by Colin Gray on 2/12/14.
-//  Copyright (c) 2015 Ello. All rights reserved.
+////
+///  PostEditingService.swift
 //
 // This service converts "raw" content (String, NSAttributedString, UIImage)
 // into Regionables (TextRegion, ImageRegion) suitable for the API, and uploads
@@ -13,8 +9,6 @@
 // asynchronously, they could come back in any order.  In this context "entry"
 // refers to the tuple of (index, Region) or (index, String/UIImage)
 
-import Foundation
-import UIKit
 
 func == (lhs: PostEditingService.PostContentRegion, rhs: PostEditingService.PostContentRegion) -> Bool {
     switch (lhs, rhs) {
@@ -111,13 +105,13 @@ class PostEditingService {
             }
         }
 
-        var indexedRegions: [(Int, Regionable)] = textEntries.map() { (index, text) -> (Int, Regionable) in
+        var indexedRegions: [(Int, Regionable)] = textEntries.map { (index, text) -> (Int, Regionable) in
             return (index, TextRegion(content: text))
         }
 
         if imageDataEntries.count > 0 {
             uploadImages(imageDataEntries, success: { imageRegions in
-                indexedRegions += imageRegions.map() { entry in
+                indexedRegions += imageRegions.map { entry in
                     let (index, region) = entry
                     return (index, region as Regionable)
                 }
@@ -279,10 +273,10 @@ class PostEditingService {
     // section has been stored in `entry.0`, and this is used to sort the
     // entries, and then the sorted regions are returned.
     fileprivate func sortedRegions(_ indexedRegions: [(Int, Regionable)]) -> [Regionable] {
-        return indexedRegions.sorted() { left, right in
+        return indexedRegions.sorted { left, right in
             let (indexLeft, indexRight) = (left.0, right.0)
             return indexLeft < indexRight
-        }.map() { (index: Int, region: Regionable) -> Regionable in
+        }.map { (index: Int, region: Regionable) -> Regionable in
             return region
         }
     }

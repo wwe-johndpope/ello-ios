@@ -173,6 +173,17 @@ class StreamHeaderCellSpec: QuickSpec {
                     }
                 }
             }
+
+            describe("avatarHeight") {
+
+                it("is correct for list mode") {
+                    expect(StreamHeaderCell.avatarHeight(isGridView: false)) == 40
+                }
+
+                it("is correct for grid mode") {
+                    expect(StreamHeaderCell.avatarHeight(isGridView: true)) == 30
+                }
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ class AnnouncementCell: UICollectionViewCell {
             if let url = config.imageURL {
                 imageView.pin_setImage(from: url) { result in
                     let height: CGFloat
-                    if let image = result?.image {
+                    if let image = result.image {
                         let size = image.size
                         height = size.height * Size.imageSize / size.width
                     }
@@ -65,9 +65,9 @@ class AnnouncementCell: UICollectionViewCell {
     fileprivate let blackView = UIView()
     fileprivate let imageView = FLAnimatedImageView()
     fileprivate let closeButton = UIButton()
-    fileprivate let titleLabel = StyledLabel(style: .BoldWhite)
-    fileprivate let bodyLabel = StyledLabel(style: .White)
-    fileprivate let callToActionButton = StyledButton(style: .WhiteUnderlined)
+    fileprivate let titleLabel = StyledLabel(style: .boldWhite)
+    fileprivate let bodyLabel = StyledLabel(style: .white)
+    fileprivate let callToActionButton = StyledButton(style: .whiteUnderlined)
     fileprivate var imageHeightConstraint: Constraint!
 
     override init(frame: CGRect) {

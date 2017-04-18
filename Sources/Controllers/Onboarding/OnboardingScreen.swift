@@ -10,9 +10,9 @@ class OnboardingScreen: EmptyScreen {
     }
     var controllerContainer = UIView()
     fileprivate var buttonContainer = UIView()
-    fileprivate var promptButton = StyledButton(style: .RoundedGray)
-    fileprivate var nextButton = StyledButton(style: .Green)
-    fileprivate var abortButton = StyledButton(style: .GrayText)
+    fileprivate var promptButton = StyledButton(style: .roundedGrayOutline)
+    fileprivate var nextButton = StyledButton(style: .green)
+    fileprivate var abortButton = StyledButton(style: .grayText)
 
     weak var delegate: OnboardingDelegate?
 
@@ -94,7 +94,7 @@ class OnboardingScreen: EmptyScreen {
         }
         else {
             promptButton.isEnabled = canGoNext
-            promptButton.style = canGoNext ? .Green : .RoundedGray
+            promptButton.style = canGoNext ? .green : .roundedGrayOutline
             promptButton.isHidden = false
             nextButton.isHidden = true
             abortButton.isHidden = true

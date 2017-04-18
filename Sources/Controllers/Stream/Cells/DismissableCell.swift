@@ -4,4 +4,5 @@
 
 protocol DismissableCell: class {
     func didEndDisplay()
+    func willDisplay()
 }

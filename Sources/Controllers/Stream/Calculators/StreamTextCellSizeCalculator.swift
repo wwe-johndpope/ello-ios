@@ -2,8 +2,6 @@
 ///  StreamTextCellSizeCalculator.swift
 //
 
-import Foundation
-
 class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     let webView: UIWebView
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
