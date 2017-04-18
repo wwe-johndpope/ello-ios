@@ -35,8 +35,9 @@ class AnnouncementCellSpec: QuickSpec {
                         let width: CGFloat = 375
                         let height = AnnouncementCellSizeCalculator.calculateAnnouncementHeight(announcement, cellWidth: width)
                         let subject = AnnouncementCell()
+                        subject.frame.size = CGSize(width: width, height: height)
                         subject.config = config
-                        expectValidSnapshot(subject, device: .custom(CGSize(width: width, height: height)))
+                        expectValidSnapshot(subject)
                     }
                 }
             }
