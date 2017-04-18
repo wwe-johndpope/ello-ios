@@ -740,7 +740,6 @@
 		1DB8C6AF1D7A26BE007E1447 /* SearchStreamCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */; };
 		1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */; };
 		1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B21D7F24B4007E1447 /* SearchString.swift */; };
-		1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A3A4711AB3556F00D2AFB0 /* Math.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
 		1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */; };
 		1DBFD9F01DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD9EF1DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift */; };
@@ -4769,7 +4768,6 @@
 				128FDF351DCD21A800DBADD0 /* CategoryViewControllerSpec.swift in Sources */,
 				12D14C6A1A43761A00C6F8E8 /* ElloProviderSpec.swift in Sources */,
 				1D7152BA1D6F53C9005998FE /* LoginScreenSpec.swift in Sources */,
-				1DBE536D1ACB5F8D00DA556E /* Math.swift in Sources */,
 				124E344E1B54239F00E5A475 /* AutoCompleteSpec.swift in Sources */,
 				12687A161BBED25A0055D0BA /* SpecsTrackingAgent.swift in Sources */,
 				122034771DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift in Sources */,
