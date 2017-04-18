@@ -23,7 +23,7 @@ class StreamCellTypeSpec: QuickSpec {
                 isFullWidth: Bool,
                 collapsable: Bool)] = [
                     ("CategoryCard", type: .categoryCard, name: CategoryCardCell.reuseIdentifier, selectable: true, classType: CategoryCardCell.self, oneColumnHeight: nil, multiColumnHeight: nil, isFullWidth: false, collapsable: false),
-                    ("SelectableCategoryCard", type: .selectableCategoryCard, name: CategoryCardCell.selectableReuseIdentifier, selectable: true,classType: CategoryCardCell.self, oneColumnHeight: 110, multiColumnHeight: 110, isFullWidth: false, collapsable: false),
+                    ("SelectableCategoryCard", type: .selectableCategoryCard, name: CategoryCardCell.selectableReuseIdentifier, selectable: true,classType: CategoryCardCell.self, oneColumnHeight: nil, multiColumnHeight: nil, isFullWidth: false, collapsable: false),
                     ("CategoryList", type: .categoryList, name: CategoryListCell.reuseIdentifier, selectable: false, classType: CategoryListCell.self, oneColumnHeight: 45, multiColumnHeight: 45, isFullWidth: true, collapsable: false),
                     ("CategoryPromotionalHeader", type: .categoryPromotionalHeader, name: CategoryHeaderCell.reuseIdentifier, selectable: false,classType: CategoryHeaderCell.self, oneColumnHeight: 150, multiColumnHeight: 150, isFullWidth: true, collapsable: false),
                     ("CommentHeader", type: .commentHeader, name: StreamHeaderCell.reuseIdentifier, selectable: false,classType: StreamHeaderCell.self, oneColumnHeight: 60, multiColumnHeight: 60, isFullWidth: false, collapsable: false),
