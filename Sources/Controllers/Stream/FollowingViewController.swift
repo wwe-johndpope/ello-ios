@@ -113,23 +113,23 @@ class FollowingViewController: StreamableViewController {
         self.present(drawer, animated: true, completion: nil)
     }
 
-    override func streamViewDidScroll(scrollView: UIScrollView) {
-        super.streamViewDidScroll(scrollView: scrollView)
-
-        if scrollView.contentOffset.y <= 0 {
-            animate {
-                self.newPostsButton.alpha = 0
-            }
-        }
-    }
-
     @objc
     func loadNewPosts() {
         let scrollView = streamViewController.collectionView
         scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
         postNotification(NewContentNotifications.reloadFollowingContent, value: ())
 
-        animate {
+        hideNewPostsButton()
+    }
+
+    override func streamWillPullToRefresh() {
+        super.streamWillPullToRefresh()
+
+        hideNewPostsButton()
+    }
+
+    func hideNewPostsButton(animated: Bool = true) {
+        animate(animated: animated) {
             self.newPostsButton.alpha = 0
         }
     }
