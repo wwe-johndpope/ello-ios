@@ -43,7 +43,6 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     fileprivate var gridListHiddenConstraint: Constraint!
 
     override func setText() {
-        searchField.placeholder = InterfaceString.Friends.SearchPrompt
         postsToggleButton.setTitle(InterfaceString.Search.Posts, for: .normal)
         peopleToggleButton.setTitle(InterfaceString.Search.People, for: .normal)
         findFriendsButton.setTitle(InterfaceString.Friends.FindAndInvite, for: .normal)

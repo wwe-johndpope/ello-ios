@@ -9,18 +9,6 @@ class SearchNavBarField: UITextField {
         static let searchInsets = UIEdgeInsets(top: 27, left: 7, bottom: 7, right: 7)
     }
 
-    override var placeholder: String? {
-        didSet {
-            if let placeholder = placeholder {
-                attributedPlaceholder = NSAttributedString(
-                    string: placeholder,
-                    attributes: [
-                        NSForegroundColorAttributeName: UIColor.greyA()
-                    ])
-            }
-        }
-    }
-
     override required init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
@@ -32,7 +20,7 @@ class SearchNavBarField: UITextField {
     }
 
     fileprivate func sharedInit() {
-        font = .defaultFont(12)
+        font = .defaultFont()
         backgroundColor = .greyE5()
         clipsToBounds = true
         layer.cornerRadius = Size.cornerRadius
@@ -45,6 +33,12 @@ class SearchNavBarField: UITextField {
         returnKeyType = .search
         keyboardAppearance = .dark
         keyboardType = .default
+
+        attributedPlaceholder = NSAttributedString(
+            string: InterfaceString.Search.Prompt,
+            attributes: [
+                NSForegroundColorAttributeName: UIColor.greyA()
+            ])
 
         leftViewMode = .always
         leftView = UIImageView(image: InterfaceImage.searchField.normalImage)
