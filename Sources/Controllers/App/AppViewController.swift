@@ -40,32 +40,10 @@ class AppViewController: BaseElloViewController {
     fileprivate var receivedPushNotificationObserver: NotificationObserver?
     fileprivate var externalWebObserver: NotificationObserver?
     fileprivate var apiOutOfDateObserver: NotificationObserver?
-    fileprivate var statusBarShouldHideObserver: NotificationObserver?
 
     fileprivate var pushPayload: PushPayload?
 
     fileprivate var deepLinkPath: String?
-
-    var statusBarShouldHide = false
-
-    func hideStatusBar(_ hide: Bool) {
-        statusBarShouldHide = hide
-        animate {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return statusBarShouldHide
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
-    }
 
     override func loadView() {
         self.view = AppScreen()
@@ -172,10 +150,6 @@ class AppViewController: BaseElloViewController {
             self?.apiOutOfDateObserver?.removeObserver()
             postNotification(AuthenticationNotifications.invalidToken, value: false)
         }
-
-        statusBarShouldHideObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldHide) { [weak self] (hide) in
-            self?.hideStatusBar(hide)
-        }
     }
 
     fileprivate func removeNotificationObservers() {
@@ -183,7 +157,6 @@ class AppViewController: BaseElloViewController {
         receivedPushNotificationObserver?.removeObserver()
         externalWebObserver?.removeObserver()
         apiOutOfDateObserver?.removeObserver()
-        statusBarShouldHideObserver?.removeObserver()
     }
 }
 
