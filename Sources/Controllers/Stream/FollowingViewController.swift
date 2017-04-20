@@ -58,6 +58,7 @@ class FollowingViewController: StreamableViewController {
             make.top.equalTo(view).offset(NewPostsButton.Size.top)
         }
         newPostsButton.addTarget(self, action: #selector(loadNewPosts), for: .touchUpInside)
+        newPostsButton.alpha = 0
 
         addNotificationObservers()
     }
