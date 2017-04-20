@@ -36,6 +36,7 @@ typealias StreamCellItemGenerator = () -> [StreamCellItem]
 protocol StreamViewDelegate: class {
     func streamViewCustomLoadFailed() -> Bool
     func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator: StreamCellItemGenerator) -> [StreamCellItem]?
+    func streamWillPullToRefresh()
     func streamViewDidScroll(scrollView: UIScrollView)
     func streamViewWillBeginDragging(scrollView: UIScrollView)
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool)
@@ -817,6 +818,8 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
     func pull(_ view: SSPullToRefreshView, didTransitionTo toState: SSPullToRefreshViewState, from fromState: SSPullToRefreshViewState, animated: Bool) {
         if toState == .loading {
             if pullToRefreshEnabled {
+                streamViewDelegate?.streamWillPullToRefresh()
+
                 if let controller = parent as? BaseElloViewController {
                     controller.trackScreenAppeared()
                 }

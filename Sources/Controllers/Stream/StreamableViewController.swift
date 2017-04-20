@@ -286,6 +286,9 @@ extension StreamableViewController: StreamViewDelegate {
         return nil
     }
 
+    func streamWillPullToRefresh() {
+    }
+
     func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }
