@@ -42,11 +42,6 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         return !categoryCardList.isHidden
     }
 
-    override func setText() {
-        super.setText()
-        searchField.placeholder = InterfaceString.Search.Prompt
-    }
-
     override func style() {
         super.style()
         shareButton.alpha = 0

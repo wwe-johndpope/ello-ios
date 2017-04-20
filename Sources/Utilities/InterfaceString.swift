@@ -224,7 +224,6 @@ struct InterfaceString {
         static let AccessRestricted: String = NSLocalizedString("Access to your contacts has been denied by the system.", comment: "Access to contacts denied by system")
 
         static let FindAndInvite: String = NSLocalizedString("Find & invite your contacts", comment: "Find & invite")
-        static let SearchPrompt: String = NSLocalizedString("Name or email", comment: "Find friends prompt")
 
         static let Resend: String = NSLocalizedString("Re-send", comment: "invite friends cell re-send")
         static let Invite: String = NSLocalizedString("Invite", comment: "invite friends cell invite")
