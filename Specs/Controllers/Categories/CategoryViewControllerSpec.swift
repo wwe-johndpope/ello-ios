@@ -21,6 +21,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var scrollTo: Int?
         var select: Int?
         var showShare = false
+        var showBack = false
 
         func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
             categoryTitles = categoriesInfo.map { $0.title }
@@ -41,6 +42,10 @@ class CategoryViewControllerSpec: QuickSpec {
         func animateNavBar(showShare: Bool) {
             self.showShare = showShare
         }
+
+        func showBackButton(visible: Bool) {
+            self.showBack = visible
+        }
     }
 
     override func spec() {
@@ -60,6 +65,19 @@ class CategoryViewControllerSpec: QuickSpec {
 
             it("has a nice looking nav bar") {
                 expect(subject).to(haveValidSnapshot())
+            }
+
+            it("shows the back button when necessary") {
+                let category: Ello.Category = Ello.Category.stub([:])
+                subject = CategoryViewController(slug: category.slug)
+                screen = MockCategoryScreen()
+                subject.currentUser = currentUser
+                subject.mockScreen = screen
+
+                let nav = UINavigationController(rootViewController: UIViewController())
+                nav.pushViewController(subject, animated: false)
+                showController(nav)
+                expect(screen.showBack) == true
             }
 
             context("setCategories(_:)") {
