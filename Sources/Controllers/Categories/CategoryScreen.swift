@@ -23,9 +23,12 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     fileprivate let categoryCardList = CategoryCardListView()
     fileprivate let searchField = SearchNavBarField()
     fileprivate let searchFieldButton = UIButton()
+    fileprivate let backButton = UIButton()
     fileprivate let gridListButton = UIButton()
     fileprivate let shareButton = UIButton()
     fileprivate let navigationContainer = UIView()
+    fileprivate var backVisibleConstraint: Constraint!
+    fileprivate var backHiddenConstraint: Constraint!
     fileprivate var shareVisibleConstraint: Constraint!
     fileprivate var shareHiddenConstraint: Constraint!
 
@@ -44,6 +47,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
     override func style() {
         super.style()
+        backButton.setImages(.angleBracket, degree: 180)
         shareButton.alpha = 0
         shareButton.setImage(.share, imageStyle: .normal, for: .normal)
     }
@@ -52,6 +56,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         super.bindActions()
         categoryCardList.delegate = self
         searchFieldButton.addTarget(self, action: #selector(searchFieldButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         gridListButton.addTarget(self, action: #selector(gridListToggled), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareTapped), for: .touchUpInside)
     }
@@ -64,6 +69,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         navigationContainer.addSubview(searchField)
         navigationContainer.addSubview(searchFieldButton)
         navigationBar.addSubview(navigationContainer)
+        navigationBar.addSubview(backButton)
         navigationBar.addSubview(gridListButton)
         navigationBar.addSubview(shareButton)
 
@@ -75,6 +81,12 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             make.height.equalTo(CategoryCardListView.Size.height)
         }
 
+        backButton.snp.makeConstraints { make in
+            make.leading.bottom.equalTo(navigationBar)
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.width.equalTo(36.5)
+        }
+
         navigationContainer.snp.makeConstraints { make in
             make.leading.bottom.equalTo(navigationBar)
             make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
@@ -84,7 +96,11 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         searchField.snp.makeConstraints { make in
             var insets = SearchNavBarField.Size.searchInsets
             insets.bottom -= 1
-            make.leading.bottom.top.equalTo(navigationBar).inset(insets)
+            make.bottom.top.equalTo(navigationBar).inset(insets)
+
+            backHiddenConstraint = make.leading.equalTo(navigationBar).inset(insets).constraint
+            backVisibleConstraint = make.leading.equalTo(backButton.snp.trailing).offset(insets.left).constraint
+
             shareHiddenConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
             shareVisibleConstraint = make.trailing.equalTo(shareButton.snp.leading).offset(-Size.buttonMargin).constraint
         }
@@ -148,12 +164,29 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         delegate?.searchButtonTapped()
     }
 
+    func backTapped() {
+        delegate?.backTapped()
+    }
+
     func gridListToggled() {
         delegate?.gridListToggled(sender: gridListButton)
     }
 
     func shareTapped() {
         delegate?.shareTapped(sender: shareButton)
+    }
+
+    func showBackButton(visible: Bool) {
+        backButton.isHidden = !visible
+        if visible {
+            backHiddenConstraint.deactivate()
+            backVisibleConstraint.activate()
+        }
+        else {
+            backHiddenConstraint.activate()
+            backVisibleConstraint.deactivate()
+        }
+        navigationBar.layoutIfNeeded()
     }
 
     func animateNavBar(showShare: Bool) {

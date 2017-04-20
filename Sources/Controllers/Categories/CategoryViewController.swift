@@ -37,6 +37,11 @@ final class CategoryViewController: StreamableViewController {
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
 
+    var showBackButton: Bool {
+        guard let navigationController = navigationController else { return false }
+        return navigationController.viewControllers.first != self
+    }
+
     init(slug: String, name: String? = nil) {
         self.slug = slug
         super.init(nibName: nil, bundle: nil)
@@ -69,6 +74,7 @@ final class CategoryViewController: StreamableViewController {
         }
         streamViewController.streamKind = streamKind
         screen.isGridView = streamKind.isGridView
+        screen.showBackButton(visible: showBackButton)
 
         self.generator = CategoryGenerator(
             slug: slug,
