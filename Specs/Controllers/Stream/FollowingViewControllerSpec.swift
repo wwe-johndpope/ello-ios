@@ -41,11 +41,9 @@ class FollowingViewControllerSpec: QuickSpec {
                 expect(subject.newPostsButton.alpha) == 1
             }
 
-            it("hide the more posts button after scrolling") {
+            it("hide the more posts button after pulling to refresh") {
                 subject.newPostsButton.alpha = 1
-                let scrollView = subject.streamViewController.collectionView
-                scrollView.contentOffset = .zero
-                subject.streamViewDidScroll(scrollView: scrollView)
+                subject.streamWillPullToRefresh()
                 expect(subject.newPostsButton.alpha) == 0
             }
         }
