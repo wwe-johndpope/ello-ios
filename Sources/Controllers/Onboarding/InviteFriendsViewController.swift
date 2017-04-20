@@ -81,6 +81,10 @@ extension InviteFriendsViewController {
             elloNavigationItem.leftBarButtonItems = [backItem]
             elloNavigationItem.fixNavBarItemPadding()
         }
+        else {
+            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(closeTapped))
+            elloNavigationItem.leftBarButtonItems = [closeItem]
+        }
 
         screen.navigationItem = elloNavigationItem
     }
