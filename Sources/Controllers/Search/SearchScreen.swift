@@ -236,9 +236,20 @@ extension SearchScreen {
             self.gridListVisibleConstraint.deactivate()
             self.gridListHiddenConstraint.activate()
         }
+
         animate {
             self.gridListButton.alpha = visible ? 1 : 0
-            self.navigationBar.layoutIfNeeded()
+
+            let trailing: CGFloat
+            if visible {
+                trailing = self.gridListButton.frame.minX - Size.buttonMargin
+            }
+            else {
+                var insets = SearchNavBarField.Size.searchInsets
+                insets.right = Size.margin
+                trailing = self.navigationBar.frame.maxX - insets.right
+            }
+            self.searchField.frame.size.width = trailing - self.searchField.frame.minX
         }
     }
 
