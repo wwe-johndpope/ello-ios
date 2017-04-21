@@ -23,7 +23,7 @@ class AnnouncementCell: UICollectionViewCell {
         var imageURL: URL?
         var image: UIImage? // for testing
         var callToAction: String?
-        var isStaff: Bool = false
+        var isStaffPreview: Bool = false
 
         init() {}
     }
@@ -33,7 +33,7 @@ class AnnouncementCell: UICollectionViewCell {
             titleLabel.text = config.title
             bodyLabel.text = config.body
             callToActionButton.title = config.callToAction
-            blackView.backgroundColor = config.isStaff ? .red : .black
+            blackView.backgroundColor = config.isStaffPreview ? .red : .black
 
             if let url = config.imageURL {
                 imageView.pin_setImage(from: url) { result in
