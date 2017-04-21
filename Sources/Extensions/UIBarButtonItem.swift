@@ -4,14 +4,6 @@
 
 extension UIBarButtonItem {
 
-    class func searchItem(controller: BaseElloViewController) -> UIBarButtonItem {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
-        button.addTarget(controller, action: #selector(BaseElloViewController.searchButtonTapped), for: .touchUpInside)
-        button.setImage(.search, imageStyle: .normal, for: .normal)
-
-        return UIBarButtonItem(customView: button)
-    }
-
     class func gridListItem(delegate: GridListToggleDelegate, isGridView: Bool) -> UIBarButtonItem {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
         let isGridView = isGridView
@@ -24,9 +16,7 @@ extension UIBarButtonItem {
 
     class func backChevron(withController controller: BaseElloViewController) -> UIBarButtonItem {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
-        button.setImage(.angleBracket, imageStyle: .normal, for: .normal)
-        // rotate 180 degrees to flip
-        button.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        button.setImages(.angleBracket, degree: 180)
         button.addTarget(controller, action: #selector(BaseElloViewController.backTapped), for: .touchUpInside)
 
         return UIBarButtonItem(customView: button)

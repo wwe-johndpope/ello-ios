@@ -226,7 +226,8 @@ extension ElloTabBarController {
 
     func setupControllers() {
         let following = FollowingViewController()
-        let discover = DiscoverAllCategoriesViewController()
+        let discover = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
+        discover.category = Category.featured
         let omnibar = OmnibarViewController()
         let notifications = NotificationsViewController()
         let profile = ProfileViewController(user: currentUser!)
@@ -283,11 +284,11 @@ extension ElloTabBarController {
             self?.newContentService.stopPolling()
         }
 
-        newNotificationsObserver = NotificationObserver(notification: NewContentNotifications.newNotifications) { [weak self] _ in
+        newNotificationsObserver = NotificationObserver(notification: NewContentNotifications.newNotifications) { [weak self] in
             self?.newNotificationsAvailable = true
         }
 
-        newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newStreamContent) { [weak self] _ in
+        newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] in
             self?.followingDot?.isHidden = false
         }
 
@@ -338,10 +339,10 @@ extension ElloTabBarController: UITabBarDelegate {
                 }
 
                 if shouldReloadFollowingStream() {
-                    postNotification(NewContentNotifications.reloadStreamContent, value: nil)
+                    postNotification(NewContentNotifications.reloadFollowingContent, value: ())
                 }
                 else if shouldReloadNotificationsStream() {
-                    postNotification(NewContentNotifications.reloadNotifications, value: nil)
+                    postNotification(NewContentNotifications.reloadNotifications, value: ())
                     self.newNotificationsAvailable = false
                 }
             }

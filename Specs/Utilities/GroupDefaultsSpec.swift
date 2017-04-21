@@ -13,18 +13,18 @@ class GroupDefaultsSpec: QuickSpec {
             context("resetOnLogout") {
                 beforeEach {
                     GroupDefaults["ElloImageUploadQuality"] = 0.25
-                    GroupDefaults[StreamKind.notifications(category: nil).lastViewedCreatedAtKey] = Date()
-                    GroupDefaults[StreamKind.announcements.lastViewedCreatedAtKey] = Date()
-                    GroupDefaults[StreamKind.following.lastViewedCreatedAtKey] = Date()
+                    GroupDefaults[StreamKind.notifications(category: nil).lastViewedCreatedAtKey!] = Date()
+                    GroupDefaults[StreamKind.announcements.lastViewedCreatedAtKey!] = Date()
+                    GroupDefaults[StreamKind.following.lastViewedCreatedAtKey!] = Date()
                     GroupDefaults[ElloTab.discover.narrationDefaultKey] = true
                     GroupDefaults.resetOnLogout()
                 }
 
                 let expectations: [(String, Bool)] = [
                     ("ElloImageUploadQuality", true),
-                    (StreamKind.notifications(category: nil).lastViewedCreatedAtKey, true),
-                    (StreamKind.announcements.lastViewedCreatedAtKey, true),
-                    (StreamKind.following.lastViewedCreatedAtKey, true),
+                    (StreamKind.notifications(category: nil).lastViewedCreatedAtKey!, true),
+                    (StreamKind.announcements.lastViewedCreatedAtKey!, true),
+                    (StreamKind.following.lastViewedCreatedAtKey!, true),
                     (ElloTab.discover.narrationDefaultKey, false),
                 ]
                 for (key, isNil) in expectations {

@@ -2,6 +2,7 @@
 ///  FollowingViewController.swift
 //
 
+import SnapKit
 import SwiftyUserDefaults
 
 
@@ -15,10 +16,12 @@ class FollowingViewController: StreamableViewController {
     }
 
     var navigationBar: ElloNavigationBar!
+    let newPostsButton = NewPostsButton()
     fileprivate var loggedPromptEventForThisSession = false
-    fileprivate var reloadStreamContentObserver: NotificationObserver?
+    fileprivate var reloadFollowingContentObserver: NotificationObserver?
     fileprivate var appBackgroundObserver: NotificationObserver?
     fileprivate var appForegroundObserver: NotificationObserver?
+    fileprivate var newFollowingContentObserver: NotificationObserver?
 
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.following, insets: ElloTab.following.insets) }
@@ -34,6 +37,10 @@ class FollowingViewController: StreamableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        removeNotificationObservers()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -44,6 +51,16 @@ class FollowingViewController: StreamableViewController {
         streamViewController.streamKind = .following
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+
+        view.addSubview(newPostsButton)
+        newPostsButton.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.top.equalTo(view).offset(NewPostsButton.Size.top)
+        }
+        newPostsButton.addTarget(self, action: #selector(loadNewPosts), for: .touchUpInside)
+        newPostsButton.alpha = 0
+
+        addNotificationObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +75,7 @@ class FollowingViewController: StreamableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        removeNotificationObservers()
+        removeTemporaryNotificationObservers()
     }
 
     override func viewForStream() -> UIView {
@@ -97,12 +114,33 @@ class FollowingViewController: StreamableViewController {
         self.present(drawer, animated: true, completion: nil)
     }
 
+    @objc
+    func loadNewPosts() {
+        let scrollView = streamViewController.collectionView
+        scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
+        postNotification(NewContentNotifications.reloadFollowingContent, value: ())
+
+        hideNewPostsButton()
+    }
+
+    override func streamWillPullToRefresh() {
+        super.streamWillPullToRefresh()
+
+        hideNewPostsButton()
+    }
+
+    func hideNewPostsButton(animated: Bool = true) {
+        animate(animated: animated) {
+            self.newPostsButton.alpha = 0
+        }
+    }
+
 }
 
 private extension FollowingViewController {
 
     func updateInsets() {
-        updateInsets(navBar: navigationBar, streamController: streamViewController)
+        updateInsets(navBar: navigationBar)
     }
 
     func setupNavigationBar() {
@@ -114,17 +152,13 @@ private extension FollowingViewController {
 
     func setupNavigationItems(streamKind: StreamKind) {
         elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(FollowingViewController.hamburgerButtonTapped))
-        let searchItem = UIBarButtonItem.searchItem(controller: self)
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView)
-        elloNavigationItem.rightBarButtonItems = [
-            searchItem,
-            gridListItem,
-        ]
+        elloNavigationItem.rightBarButtonItem = gridListItem
         navigationBar.items = [elloNavigationItem]
     }
 
     func addTemporaryNotificationObservers() {
-        reloadStreamContentObserver = NotificationObserver(notification: NewContentNotifications.reloadStreamContent) { [weak self] _ in
+        reloadFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) { [weak self] in
             guard let `self` = self else { return }
 
             ElloHUD.showLoadingHudInView(self.streamViewController.view)
@@ -133,16 +167,25 @@ private extension FollowingViewController {
     }
 
     func removeTemporaryNotificationObservers() {
-        reloadStreamContentObserver?.removeObserver()
+        reloadFollowingContentObserver?.removeObserver()
     }
 
     func addNotificationObservers() {
+        newFollowingContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] in
+            guard let `self` = self else { return }
+
+            animate {
+                self.newPostsButton.alpha = 1
+            }
+        }
+
         appBackgroundObserver = NotificationObserver(notification: Application.Notifications.DidEnterBackground) { [weak self] _ in
             self?.loggedPromptEventForThisSession = false
         }
     }
 
     func removeNotificationObservers() {
+        newFollowingContentObserver?.removeObserver()
         appBackgroundObserver?.removeObserver()
     }
 }

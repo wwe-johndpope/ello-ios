@@ -63,7 +63,7 @@ class SimpleStreamViewController: StreamableViewController {
     // MARK: Private
 
     fileprivate func updateInsets() {
-        updateInsets(navBar: navigationBar, streamController: streamViewController)
+        updateInsets(navBar: navigationBar)
     }
 
     fileprivate func setupNavigationBar() {
@@ -78,12 +78,9 @@ class SimpleStreamViewController: StreamableViewController {
         elloNavigationItem.fixNavBarItemPadding()
         navigationBar.items = [elloNavigationItem]
 
-        var rightBarButtonItems: [UIBarButtonItem] = []
-        rightBarButtonItems.append(UIBarButtonItem.searchItem(controller: self))
         if streamKind.hasGridViewToggle {
-            rightBarButtonItems.append(UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView))
+            elloNavigationItem.rightBarButtonItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView)
         }
-        elloNavigationItem.rightBarButtonItems = rightBarButtonItems
     }
 
 }

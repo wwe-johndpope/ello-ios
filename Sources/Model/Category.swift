@@ -32,6 +32,9 @@ final class Category: JSONAble, Groupable {
     var hasPromotionalData: Bool {
         return body != nil
     }
+    var shareLink: String {
+        return "\(ElloURI.baseURL)/discover/\(slug)"
+    }
 
     var endpoint: ElloAPI {
         switch level {

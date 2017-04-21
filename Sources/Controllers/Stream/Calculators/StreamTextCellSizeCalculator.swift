@@ -54,7 +54,7 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
             if item.jsonable is ElloComment {
                 // need to add back in the postMargin (15) since the maxWidth should already
                 // account for 15 on the left that is part of the commentMargin (60)
-                self.webView.frame = self.webView.frame.with(width: maxWidth - StreamTextCellPresenter.commentMargin + StreamTextCellPresenter.postMargin)
+                self.webView.frame = self.webView.frame.with(width: maxWidth - StreamTextCell.Size.commentMargin + StreamTextCell.Size.postMargin)
             }
             else {
                 self.webView.frame = self.webView.frame.with(width: maxWidth)

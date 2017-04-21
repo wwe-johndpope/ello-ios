@@ -6,6 +6,7 @@ protocol StreamableScreenProtocol: class {
     var navigationBarTopConstraint: NSLayoutConstraint! { get }
     var navigationBar: ElloNavigationBar { get }
     var navigationItem: UINavigationItem? { get set }
+    func viewForStream() -> UIView
 }
 
 class StreamableScreen: Screen, StreamableScreenProtocol {
@@ -43,4 +44,9 @@ class StreamableScreen: Screen, StreamableScreenProtocol {
 
         layoutIfNeeded()
     }
+
+    func viewForStream() -> UIView {
+        return streamContainer
+    }
+
 }

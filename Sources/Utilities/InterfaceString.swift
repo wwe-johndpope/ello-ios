@@ -33,6 +33,7 @@ struct InterfaceString {
 
     struct Following {
         static let Title: String = NSLocalizedString("Following", comment: "Following title")
+        static let NewPosts: String = NSLocalizedString("New Posts", comment: "New posts title")
         static let CurrentUserNoResultsTitle: String = NSLocalizedString("You aren't following anyone yet!", comment: "Current user no following results title")
         static let CurrentUserNoResultsBody: String = NSLocalizedString("Ello is way more rad when you're following lots of people.\n\nUse Discover to find people you're interested in, and to find or invite your contacts.\nYou can also use Search (upper right) to look for new and excellent people!", comment: "Current user No following results body.")
         static let NoResultsTitle: String = NSLocalizedString("This person isn't following anyone yet!", comment: "Non-current user followoing no results title")
@@ -60,11 +61,10 @@ struct InterfaceString {
     }
 
     struct Search {
-        static let Title: String = NSLocalizedString("Search", comment: "Search title")
         static let Prompt: String = NSLocalizedString("Search Ello", comment: "search ello prompt")
         static let Posts: String = NSLocalizedString("Posts", comment: "Posts search toggle")
         static let People: String = NSLocalizedString("People", comment: "People search toggle")
-        static let FindFriendsPrompt: String = NSLocalizedString("Help grow the Ello community.\nShare the experience.", comment: "Search zero state button title")
+        static let FindFriendsPrompt: String = NSLocalizedString("Help grow the Ello community.", comment: "Search zero state button title")
         static let NoMatches: String = NSLocalizedString("We couldn't find any matches.", comment: "No search results found title")
         static let TryAgain: String = NSLocalizedString("Try another search?", comment: "No search results found body")
     }
@@ -224,7 +224,6 @@ struct InterfaceString {
         static let AccessRestricted: String = NSLocalizedString("Access to your contacts has been denied by the system.", comment: "Access to contacts denied by system")
 
         static let FindAndInvite: String = NSLocalizedString("Find & invite your contacts", comment: "Find & invite")
-        static let SearchPrompt: String = NSLocalizedString("Name or email", comment: "Find friends prompt")
 
         static let Resend: String = NSLocalizedString("Re-send", comment: "invite friends cell re-send")
         static let Invite: String = NSLocalizedString("Invite", comment: "invite friends cell invite")

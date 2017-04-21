@@ -67,7 +67,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
 
         screen.delegate = self
         title = InterfaceString.Notifications.Title
-        elloNavigationItem.rightBarButtonItem = UIBarButtonItem.searchItem(controller: self)
 
         initialLoad()
     }
@@ -204,8 +203,7 @@ private extension NotificationsViewController {
             self.respondToNotification(components)
         }
 
-        reloadNotificationsObserver = NotificationObserver(notification: NewContentNotifications.reloadNotifications) {
-            [weak self] _ in
+        reloadNotificationsObserver = NotificationObserver(notification: NewContentNotifications.reloadNotifications) { [weak self] in
             guard let `self` = self else { return }
             if self.navigationController?.childViewControllers.count == 1 {
                 self.reload(showSpinner: true)
@@ -215,15 +213,14 @@ private extension NotificationsViewController {
             }
         }
 
-        newAnnouncementsObserver = NotificationObserver(notification: NewContentNotifications.newAnnouncements) {
-            [weak self] _ in
+        newAnnouncementsObserver = NotificationObserver(notification: NewContentNotifications.newAnnouncements) { [weak self] in
             guard let `self` = self else { return }
             self.reloadAnnouncements()
         }
     }
 
     func updateInsets() {
-        updateInsets(navBar: screen.filterBar, streamController: streamViewController)
+        updateInsets(navBar: screen.filterBar)
     }
 }
 

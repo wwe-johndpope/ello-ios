@@ -29,6 +29,8 @@ class ProfileStatsView: ProfileBaseView {
         get { return lovesCountLabel.text ?? "" }
         set { lovesCountLabel.text = newValue }
     }
+    var followingEnabled = true
+    var followersEnabled = true
 
     fileprivate let postsCountLabel = UILabel()
     fileprivate let followingCountLabel = UILabel()
@@ -164,6 +166,7 @@ extension ProfileStatsView {
     }
 
     func followingButtonTapped() {
+        guard followingEnabled else { return }
         guard let cell: UICollectionViewCell = self.findParentView() else { return }
 
         let responder = target(forAction: #selector(ProfileHeaderResponder.onFollowingTapped(_:)), withSender: self) as? ProfileHeaderResponder
@@ -171,6 +174,7 @@ extension ProfileStatsView {
     }
 
     func followersButtonTapped() {
+        guard followersEnabled else { return }
         guard let cell: UICollectionViewCell = self.findParentView() else { return }
 
         let responder = target(forAction: #selector(ProfileHeaderResponder.onFollowersTapped(_:)), withSender: self) as? ProfileHeaderResponder

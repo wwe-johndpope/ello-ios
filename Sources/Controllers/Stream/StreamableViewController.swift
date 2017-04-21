@@ -116,10 +116,10 @@ class StreamableViewController: BaseElloViewController {
     }
 
     func navigationBarsVisible() -> Bool {
-        return bottomBarController?.navigationBarsVisible ?? false
+        return bottomBarController?.navigationBarsVisible ?? true
     }
 
-    func updateInsets(navBar: UIView?, streamController controller: StreamViewController, navigationBarsVisible visible: Bool? = nil) {
+    func updateInsets(navBar: UIView?, navigationBarsVisible visible: Bool? = nil) {
         let topInset = max(0, navBar?.frame.maxY ?? 0)
         let bottomInset: CGFloat
         if visible ?? bottomBarController?.bottomBarVisible ?? false {
@@ -129,8 +129,8 @@ class StreamableViewController: BaseElloViewController {
             bottomInset = 0
         }
 
-        controller.contentInset.top = topInset
-        controller.contentInset.bottom = bottomInset
+        streamViewController.contentInset.top = topInset
+        streamViewController.contentInset.bottom = bottomInset
     }
 
     func positionNavBar(_ navBar: UIView, visible: Bool, withConstraint navigationBarTopConstraint: NSLayoutConstraint? = nil, animated: Bool = true) {
@@ -286,6 +286,9 @@ extension StreamableViewController: StreamViewDelegate {
         return nil
     }
 
+    func streamWillPullToRefresh() {
+    }
+
     func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }
@@ -313,7 +316,7 @@ extension StreamableViewController: InviteResponder {
             switch result {
             case let .success(addressBook):
                 Tracker.shared.contactAccessPreferenceChanged(true)
-                let vc = AddFriendsViewController(addressBook: addressBook)
+                let vc = InviteFriendsViewController(addressBook: addressBook)
                 vc.currentUser = self.currentUser
                 if let navigationController = self.navigationController {
                     navigationController.pushViewController(vc, animated: true)

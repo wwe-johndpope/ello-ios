@@ -762,10 +762,10 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
         let (afterAll, done) = afterN(completion)
         // -30.0 acounts for the 15 on either side for constraints
-        let textLeftRightConstraintWidth = (StreamTextCellPresenter.postMargin * 2)
+        let textLeftRightConstraintWidth = (StreamTextCell.Size.postMargin * 2)
         textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: columnCount, completion: afterAll())
         // extra -30.0 acounts for the left indent on a repost with the black line
-        let repostLeftRightConstraintWidth = textLeftRightConstraintWidth + StreamTextCellPresenter.repostMargin
+        let repostLeftRightConstraintWidth = textLeftRightConstraintWidth + StreamTextCell.Size.repostMargin
         textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - repostLeftRightConstraintWidth, columnCount: columnCount, completion: afterAll())
         imageSizeCalculator.processCells(imageCells.normal + imageCells.repost, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, completion: afterAll())

@@ -57,6 +57,8 @@ enum InterfaceImage: String {
 
     // NavBar Icons
     case search = "search"
+    case searchTabBar = "search_large"
+    case searchField = "search_small"
     case burger = "burger"
     case gridView = "grid_view"
     case listView = "list_view"

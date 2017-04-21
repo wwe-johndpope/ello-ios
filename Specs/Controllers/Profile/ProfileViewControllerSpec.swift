@@ -18,12 +18,11 @@ class ProfileViewControllerSpec: QuickSpec {
                 beforeEach {
                     subject = ProfileViewController(userParam: "42")
                     subject.currentUser = currentUser
-                    UIApplication.shared.setStatusBarHidden(true, with: .none)
                     showController(subject)
                 }
 
                 it("does update the top inset") {
-                    expect(subject.streamViewController.contentInset.top) == 64
+                    expect(subject.streamViewController.contentInset.top) == 128
                 }
             }
 

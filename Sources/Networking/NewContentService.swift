@@ -6,11 +6,11 @@ import SwiftyUserDefaults
 
 
 struct NewContentNotifications {
-    static let newAnnouncements = TypedNotification<Void?>(name: "NewAnnouncementsNotification")
-    static let newNotifications = TypedNotification<Void?>(name: "NewNotificationsNotification")
-    static let newStreamContent = TypedNotification<Void?>(name: "NewStreamContentNotification")
-    static let reloadStreamContent = TypedNotification<Void?>(name: "ReloadStreamContentNotification")
-    static let reloadNotifications = TypedNotification<Void?>(name: "ReloadNotificationsNotification")
+    static let newAnnouncements = TypedNotification<()>(name: "NewAnnouncementsNotification")
+    static let newNotifications = TypedNotification<()>(name: "NewNotificationsNotification")
+    static let newFollowingContent = TypedNotification<()>(name: "NewFollowingContentNotification")
+    static let reloadFollowingContent = TypedNotification<()>(name: "ReloadFollowingContentNotification")
+    static let reloadNotifications = TypedNotification<()>(name: "ReloadNotificationsNotification")
 }
 
 class NewContentService {
@@ -38,17 +38,18 @@ extension NewContentService {
         stopPolling()
         let (restart, done) = afterN(restartPolling)
         checkForNewNotifications(restart())
-        checkForNewStreamContent(restart())
+        checkForNewFollowingContent(restart())
         done()
     }
 
     func updateCreatedAt(_ jsonables: [JSONAble], streamKind: StreamKind) {
+        guard let storedKey = streamKind.lastViewedCreatedAtKey else { return }
+
         let old = Date(timeIntervalSince1970: 0)
         let new = newestDate(jsonables)
-        let storedKey = streamKind.lastViewedCreatedAtKey
         let storedDate = GroupDefaults[storedKey].date ?? old
         let mostRecent = new > storedDate ? new : storedDate
-        GroupDefaults[streamKind.lastViewedCreatedAtKey] = mostRecent
+        GroupDefaults[storedKey] = mostRecent
     }
 }
 
@@ -72,14 +73,14 @@ private extension NewContentService {
     }
 
     func checkForNewNotifications(_ done: @escaping BasicBlock = {}) {
-        let storedKey = StreamKind.notifications(category: nil).lastViewedCreatedAtKey
+        let storedKey = StreamKind.notifications(category: nil).lastViewedCreatedAtKey!
         let storedDate = GroupDefaults[storedKey].date
 
         ElloProvider.shared.elloRequest(
             ElloAPI.notificationsNewContent(createdAt: storedDate),
             success: { (_, responseConfig) in
                 if let statusCode = responseConfig.statusCode, statusCode == 204 {
-                    postNotification(NewContentNotifications.newNotifications, value: nil)
+                    postNotification(NewContentNotifications.newNotifications, value: ())
                 }
 
                 done()
@@ -88,14 +89,14 @@ private extension NewContentService {
     }
 
     func checkForNewAnnouncements(_ done: @escaping BasicBlock = {}) {
-        let storedKey = StreamKind.announcements.lastViewedCreatedAtKey
+        let storedKey = StreamKind.announcements.lastViewedCreatedAtKey!
         let storedDate = GroupDefaults[storedKey].date
 
          ElloProvider.shared.elloRequest(
              ElloAPI.announcementsNewContent(createdAt: storedDate),
              success: { (_, responseConfig) in
                  if let statusCode = responseConfig.statusCode, statusCode == 204 {
-                     postNotification(NewContentNotifications.newAnnouncements, value: nil)
+                     postNotification(NewContentNotifications.newAnnouncements, value: ())
                  }
 
                  done()
@@ -103,19 +104,19 @@ private extension NewContentService {
              failure: { _ in done() })
     }
 
-    func checkForNewStreamContent(_ done: @escaping BasicBlock = {}) {
-        let storedKey = StreamKind.following.lastViewedCreatedAtKey
+    func checkForNewFollowingContent(_ done: @escaping BasicBlock = {}) {
+        let storedKey = StreamKind.following.lastViewedCreatedAtKey!
         let storedDate = GroupDefaults[storedKey].date
 
         ElloProvider.shared.elloRequest(
             ElloAPI.followingNewContent(createdAt: storedDate),
             success: { (_, responseConfig) in
                 if let lastModified = responseConfig.lastModified {
-                    GroupDefaults[StreamKind.following.lastViewedCreatedAtKey] = lastModified.toDate(HTTPDateFormatter)
+                    GroupDefaults[storedKey] = lastModified.toDate(HTTPDateFormatter)
                 }
 
                 if let statusCode = responseConfig.statusCode, statusCode == 204 {
-                    postNotification(NewContentNotifications.newStreamContent, value: nil)
+                    postNotification(NewContentNotifications.newFollowingContent, value: ())
                 }
 
                 done()

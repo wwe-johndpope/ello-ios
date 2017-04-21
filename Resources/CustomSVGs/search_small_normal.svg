@@ -1,0 +1,14 @@
+<svg width="13px" height="14px" viewBox="0 0 13 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search-Input-2" transform="translate(-10.000000, -8.000000)" stroke="#AAAAAA">
+            <g id="Search">
+                <g id="Icon-/-Search" transform="translate(10.000000, 9.000000)">
+                    <g id="Icon---Search" transform="translate(0.000000, 0.343120)">
+                        <path d="M8.16064,7.96064 L11.69984,11.49984" id="Stroke-5" stroke-width="1.25" stroke-linecap="square" stroke-linejoin="round"></path>
+                        <path d="M9.234,4.52384 C9.234,6.93584 7.2788,8.89104 4.8668,8.89104 C2.4548,8.89104 0.5004,6.93584 0.5004,4.52384 C0.5004,2.11184 2.4548,0.15664 4.8668,0.15664 C7.2788,0.15664 9.234,2.11184 9.234,4.52384 L9.234,4.52384 Z" id="Stroke-1" stroke-width="1.25"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -32,7 +32,19 @@ class FollowingViewControllerSpec: QuickSpec {
                 let item = subject.navigationBar.items?.first
 
                 expect(item?.leftBarButtonItems?.count) == 1
-                expect(item?.rightBarButtonItems?.count) == 2
+                expect(item?.rightBarButtonItems?.count) == 1
+            }
+
+            it("shows the more posts button when new content is available") {
+                subject.newPostsButton.alpha = 0
+                postNotification(NewContentNotifications.newFollowingContent, value: ())
+                expect(subject.newPostsButton.alpha) == 1
+            }
+
+            it("hide the more posts button after pulling to refresh") {
+                subject.newPostsButton.alpha = 1
+                subject.streamWillPullToRefresh()
+                expect(subject.newPostsButton.alpha) == 0
             }
         }
     }

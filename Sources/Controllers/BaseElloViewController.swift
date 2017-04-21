@@ -8,6 +8,28 @@ protocol ControllerThatMightHaveTheCurrentUser {
 }
 
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
+    var statusBarShouldHide = false
+    fileprivate var statusBarShouldHideObserver: NotificationObserver?
+
+    func hideStatusBar(_ hide: Bool) {
+        statusBarShouldHide = hide
+        animate {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldHide
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+
 
     var elloNavigationItem = UINavigationItem()
 
@@ -49,6 +71,17 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         super.viewDidLoad()
         self.navigationItem.fixNavBarItemPadding()
         setupRelationshipController()
+        setupStatusBarObservers()
+    }
+
+    fileprivate func setupStatusBarObservers() {
+        statusBarShouldHideObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldHide) { [weak self] (hide) in
+            self?.hideStatusBar(hide)
+        }
+    }
+
+    deinit {
+        statusBarShouldHideObserver?.removeObserver()
     }
 
     private func setupRelationshipController() {
@@ -82,9 +115,28 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     @IBAction
     func backTapped() {
         guard
-            let navigationController = navigationController, navigationController.childViewControllers.count > 1 else { return }
+            let navigationController = navigationController, navigationController.childViewControllers.count > 1
+        else { return }
 
         _ = navigationController.popViewController(animated: true)
+    }
+
+    @IBAction
+    func closeTapped() {
+        dismiss(animated: true, completion: .none)
+    }
+
+    func showShareActivity(sender: UIView, url shareURL: URL) {
+        let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
+        if UI_USER_INTERFACE_IDIOM() == .phone {
+            activityVC.modalPresentationStyle = .fullScreen
+            present(activityVC, animated: true) { }
+        }
+        else {
+            activityVC.modalPresentationStyle = .popover
+            activityVC.popoverPresentationController?.sourceView = sender
+            present(activityVC, animated: true) { }
+        }
     }
 
     func isRootViewController() -> Bool {

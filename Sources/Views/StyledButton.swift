@@ -21,7 +21,7 @@ class StyledButton: UIButton {
 
         let fontSize: CGFloat?
         let cornerRadius: CGFloat?
-        let underline: Bool
+        let underline: Bool  // used by NSAttributedString
 
         var font: UIFont {
             guard let size = fontSize else {

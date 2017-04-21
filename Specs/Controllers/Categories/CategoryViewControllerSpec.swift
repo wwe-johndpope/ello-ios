@@ -5,18 +5,23 @@
 @testable import Ello
 import Quick
 import Nimble
+import Nimble_Snapshots
 
 
 class CategoryViewControllerSpec: QuickSpec {
     class MockCategoryScreen: CategoryScreenProtocol {
         let topInsetView = UIView()
-        var categoryCardsVisible: Bool = true
+        let streamContainer = UIView()
+        var categoryCardsVisible = true
+        var isGridView = true
         var navigationBarTopConstraint: NSLayoutConstraint!
         let navigationBar = ElloNavigationBar()
         var navigationItem: UINavigationItem?
         var categoryTitles: [String] = []
         var scrollTo: Int?
         var select: Int?
+        var showShare = false
+        var showBack = false
 
         func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
             categoryTitles = categoriesInfo.map { $0.title }
@@ -28,6 +33,18 @@ class CategoryViewControllerSpec: QuickSpec {
 
         func selectCategory(index: Int) {
             select = index
+        }
+
+        func viewForStream() -> UIView {
+            return streamContainer
+        }
+
+        func animateNavBar(showShare: Bool) {
+            self.showShare = showShare
+        }
+
+        func showBackButton(visible: Bool) {
+            self.showBack = visible
         }
     }
 
@@ -46,9 +63,21 @@ class CategoryViewControllerSpec: QuickSpec {
                 showController(subject)
             }
 
-            it("has a search button in the nav bar") {
-                let rightButtons = subject.elloNavigationItem.rightBarButtonItems
-                expect(rightButtons!.count) == 2
+            it("has a nice looking nav bar") {
+                expect(subject).to(haveValidSnapshot())
+            }
+
+            it("shows the back button when necessary") {
+                let category: Ello.Category = Ello.Category.stub([:])
+                subject = CategoryViewController(slug: category.slug)
+                screen = MockCategoryScreen()
+                subject.currentUser = currentUser
+                subject.mockScreen = screen
+
+                let nav = UINavigationController(rootViewController: UIViewController())
+                nav.pushViewController(subject, animated: false)
+                showController(nav)
+                expect(screen.showBack) == true
             }
 
             context("setCategories(_:)") {

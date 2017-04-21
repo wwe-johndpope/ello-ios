@@ -75,13 +75,6 @@ class CategoryHeaderCell: UICollectionViewCell {
 
     fileprivate var callToActionURL: URL?
 
-    var calculatedHeight: CGFloat? {
-        guard let aspectRatio = aspectRatio else {
-            return nil
-        }
-        return frame.width / aspectRatio
-    }
-
     var config: Config = Config(style: .category) {
         didSet {
             titleLabel.attributedText = config.attributedTitle

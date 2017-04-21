@@ -18,12 +18,12 @@ class StreamCellTypeSpec: QuickSpec {
                 name: String,
                 selectable: Bool,
                 classType: AnyClass,
-                oneColumnHeight: CGFloat,
-                multiColumnHeight: CGFloat,
+                oneColumnHeight: CGFloat?,
+                multiColumnHeight: CGFloat?,
                 isFullWidth: Bool,
                 collapsable: Bool)] = [
-                    ("CategoryCard", type: .categoryCard, name: CategoryCardCell.reuseIdentifier, selectable: true, classType: CategoryCardCell.self, oneColumnHeight: 110, multiColumnHeight: 110, isFullWidth: false, collapsable: false),
-                    ("SelectableCategoryCard", type: .selectableCategoryCard, name: CategoryCardCell.selectableReuseIdentifier, selectable: true,classType: CategoryCardCell.self, oneColumnHeight: 110, multiColumnHeight: 110, isFullWidth: false, collapsable: false),
+                    ("CategoryCard", type: .categoryCard, name: CategoryCardCell.reuseIdentifier, selectable: true, classType: CategoryCardCell.self, oneColumnHeight: nil, multiColumnHeight: nil, isFullWidth: false, collapsable: false),
+                    ("SelectableCategoryCard", type: .selectableCategoryCard, name: CategoryCardCell.selectableReuseIdentifier, selectable: true,classType: CategoryCardCell.self, oneColumnHeight: nil, multiColumnHeight: nil, isFullWidth: false, collapsable: false),
                     ("CategoryList", type: .categoryList, name: CategoryListCell.reuseIdentifier, selectable: false, classType: CategoryListCell.self, oneColumnHeight: 45, multiColumnHeight: 45, isFullWidth: true, collapsable: false),
                     ("CategoryPromotionalHeader", type: .categoryPromotionalHeader, name: CategoryHeaderCell.reuseIdentifier, selectable: false,classType: CategoryHeaderCell.self, oneColumnHeight: 150, multiColumnHeight: 150, isFullWidth: true, collapsable: false),
                     ("CommentHeader", type: .commentHeader, name: StreamHeaderCell.reuseIdentifier, selectable: false,classType: StreamHeaderCell.self, oneColumnHeight: 60, multiColumnHeight: 60, isFullWidth: false, collapsable: false),
@@ -61,8 +61,12 @@ class StreamCellTypeSpec: QuickSpec {
                     expect(type.name) == name
                     expect(type.selectable) == selectable
                     expect(type.classType) === classType
-                    expect(type.oneColumnHeight) == oneColumnHeight
-                    expect(type.multiColumnHeight) == multiColumnHeight
+                    if let oneColumnHeight = oneColumnHeight {
+                        expect(type.oneColumnHeight) == oneColumnHeight
+                    }
+                    if let multiColumnHeight = multiColumnHeight {
+                        expect(type.multiColumnHeight) == multiColumnHeight
+                    }
                     expect(type.isFullWidth) == isFullWidth
                     expect(type.collapsable) == collapsable
                 }

@@ -6,9 +6,31 @@ import SnapKit
 
 
 class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
+    struct Size {
+        static let navigationBarHeight: CGFloat = 63
+        static let buttonWidth: CGFloat = 40
+        static let buttonMargin: CGFloat = 5
+    }
+
     weak var delegate: CategoryScreenDelegate?
 
+    var isGridView = false {
+        didSet {
+            gridListButton.setImage(isGridView ? .listView : .gridView, imageStyle: .normal, for: .normal)
+        }
+    }
+
     fileprivate let categoryCardList = CategoryCardListView()
+    fileprivate let searchField = SearchNavBarField()
+    fileprivate let searchFieldButton = UIButton()
+    fileprivate let backButton = UIButton()
+    fileprivate let gridListButton = UIButton()
+    fileprivate let shareButton = UIButton()
+    fileprivate let navigationContainer = UIView()
+    fileprivate var backVisibleConstraint: Constraint!
+    fileprivate var backHiddenConstraint: Constraint!
+    fileprivate var shareVisibleConstraint: Constraint!
+    fileprivate var shareHiddenConstraint: Constraint!
 
     var topInsetView: UIView {
         if categoryCardList.isHidden {
@@ -23,21 +45,83 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         return !categoryCardList.isHidden
     }
 
+    override func style() {
+        super.style()
+        backButton.setImages(.angleBracket, degree: 180)
+        shareButton.alpha = 0
+        shareButton.setImage(.share, imageStyle: .normal, for: .normal)
+    }
+
     override func bindActions() {
         super.bindActions()
         categoryCardList.delegate = self
+        searchFieldButton.addTarget(self, action: #selector(searchFieldButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        gridListButton.addTarget(self, action: #selector(gridListToggled), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareTapped), for: .touchUpInside)
     }
 
     override func arrange() {
         super.arrange()
         addSubview(categoryCardList)
         addSubview(navigationBar)
+
+        navigationContainer.addSubview(searchField)
+        navigationContainer.addSubview(searchFieldButton)
+        navigationBar.addSubview(navigationContainer)
+        navigationBar.addSubview(backButton)
+        navigationBar.addSubview(gridListButton)
+        navigationBar.addSubview(shareButton)
+
         categoryCardList.isHidden = true
 
         categoryCardList.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
             make.leading.trailing.equalTo(self)
             make.height.equalTo(CategoryCardListView.Size.height)
+        }
+
+        backButton.snp.makeConstraints { make in
+            make.leading.bottom.equalTo(navigationBar)
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.width.equalTo(36.5)
+        }
+
+        navigationContainer.snp.makeConstraints { make in
+            make.leading.bottom.equalTo(navigationBar)
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.trailing.equalTo(gridListButton.snp.leading)
+        }
+
+        searchField.snp.makeConstraints { make in
+            var insets = SearchNavBarField.Size.searchInsets
+            insets.bottom -= 1
+            make.bottom.top.equalTo(navigationBar).inset(insets)
+
+            backHiddenConstraint = make.leading.equalTo(navigationBar).inset(insets).constraint
+            backVisibleConstraint = make.leading.equalTo(backButton.snp.trailing).offset(insets.left).constraint
+
+            shareHiddenConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
+            shareVisibleConstraint = make.trailing.equalTo(shareButton.snp.leading).offset(-Size.buttonMargin).constraint
+        }
+        shareVisibleConstraint.deactivate()
+
+        searchFieldButton.snp.makeConstraints { make in
+            make.edges.equalTo(navigationContainer)
+        }
+        gridListButton.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.bottom.equalTo(navigationBar)
+            make.trailing.equalTo(navigationBar).offset(-Size.buttonMargin)
+            make.width.equalTo(Size.buttonWidth)
+        }
+        shareButton.snp.makeConstraints { make in
+            make.top.bottom.width.equalTo(gridListButton)
+            make.trailing.equalTo(gridListButton.snp.leading)
+        }
+
+        navigationBar.snp.makeConstraints { make in
+            make.height.equalTo(Size.navigationBarHeight).priority(Priority.required)
         }
     }
 
@@ -69,12 +153,58 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     }
 
     func scrollToCategory(index: Int) {
-        self.categoryCardList.scrollToIndex(index, animated: false)
+        self.categoryCardList.scrollToIndex(index, animated: true)
     }
 
     func selectCategory(index: Int) {
         self.categoryCardList.selectCategoryIndex(index)
     }
+
+    func searchFieldButtonTapped() {
+        delegate?.searchButtonTapped()
+    }
+
+    func backTapped() {
+        delegate?.backTapped()
+    }
+
+    func gridListToggled() {
+        delegate?.gridListToggled(sender: gridListButton)
+    }
+
+    func shareTapped() {
+        delegate?.shareTapped(sender: shareButton)
+    }
+
+    func showBackButton(visible: Bool) {
+        backButton.isHidden = !visible
+        if visible {
+            backHiddenConstraint.deactivate()
+            backVisibleConstraint.activate()
+        }
+        else {
+            backHiddenConstraint.activate()
+            backVisibleConstraint.deactivate()
+        }
+        navigationBar.layoutIfNeeded()
+    }
+
+    func animateNavBar(showShare: Bool) {
+        if showShare {
+            shareHiddenConstraint.deactivate()
+            shareVisibleConstraint.activate()
+        }
+        else {
+            shareHiddenConstraint.activate()
+            shareVisibleConstraint.deactivate()
+        }
+
+        animate {
+            self.navigationBar.layoutIfNeeded()
+            self.shareButton.alpha = showShare ? 1 : 0
+        }
+    }
+
 }
 
 extension CategoryScreen: CategoryCardListDelegate {

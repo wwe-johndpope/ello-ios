@@ -244,7 +244,9 @@ enum StreamCellType: Equatable {
         case .categoryPromotionalHeader, .pagePromotionalHeader:
             return 150
         case .categoryCard, .selectableCategoryCard:
-            return CategoryCardCell.Size.height
+            let width = UIWindow.windowWidth()
+            let aspect = CategoryCardCell.Size.aspect
+            return ceil(width / aspect)
         case .categoryList:
             return CategoryListCell.Size.height
         case .commentHeader,
@@ -289,6 +291,13 @@ enum StreamCellType: Equatable {
 
     var multiColumnHeight: CGFloat {
         switch self {
+        case .categoryCard, .selectableCategoryCard:
+            let windowWidth = UIWindow.windowWidth()
+            let columnCount = CGFloat(Window.columnCountFor(width: windowWidth))
+            let columnSpacing: CGFloat = 1
+            let width = (UIWindow.windowWidth() - columnSpacing * (columnCount - 1)) / columnCount
+            let aspect = CategoryCardCell.Size.aspect
+            return ceil(width / aspect)
         case .header,
             .notification:
             return 60
@@ -361,6 +370,7 @@ enum StreamCellType: Equatable {
             profileHeaderGhost,
             search(placeholder: ""),
             spacer(height: 0.0),
+            text(data: nil),
             streamLoading,
             textHeader(nil),
             unknown

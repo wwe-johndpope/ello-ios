@@ -4,15 +4,18 @@
 
 class InviteFriendsViewController: StreamableViewController {
     let addressBook: AddressBookProtocol
-    var mockScreen: Screen?
-    var screen: Screen { return mockScreen ?? (self.view as! Screen) }
+    var mockScreen: StreamableScreenProtocol?
+    var screen: StreamableScreenProtocol { return mockScreen ?? (self.view as! StreamableScreen) }
     var searchString = SearchString(text: "")
     var onboardingViewController: OnboardingViewController?
+    // completely unused internally, and shouldn't be, since this controller is
+    // used outside of onboarding. here only for protocol conformance.
     var onboardingData: OnboardingData!
 
     required init(addressBook: AddressBookProtocol) {
         self.addressBook = addressBook
         super.init(nibName: nil, bundle: nil)
+        title = InterfaceString.Drawer.Invite
 
         streamViewController.initialLoadClosure = { [unowned self] in self.findFriendsFromContacts() }
         streamViewController.pullToRefreshEnabled = false
@@ -23,7 +26,7 @@ class InviteFriendsViewController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = Screen()
+        let screen = StreamableScreen()
         self.view = screen
         viewContainer = screen
     }
@@ -32,13 +35,60 @@ class InviteFriendsViewController: StreamableViewController {
         super.viewDidLoad()
 
         streamViewController.loadInitialPage()
+
+        if onboardingViewController != nil {
+            screen.navigationBar.isHidden = true
+        }
+
+        setupNavigationItems()
     }
 
-    override func showNavBars() {}
-    override func hideNavBars() {}
+    override func viewForStream() -> UIView {
+        return screen.viewForStream()
+    }
+
+    override func showNavBars() {
+        guard onboardingViewController == nil else { return }
+
+        super.showNavBars()
+
+        positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
+        updateInsets()
+    }
+
+    override func hideNavBars() {
+        guard onboardingViewController == nil else { return }
+
+        super.hideNavBars()
+
+        positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
+        updateInsets()
+    }
+
+    fileprivate func updateInsets() {
+        updateInsets(navBar: screen.navigationBar)
+    }
+
 }
 
 extension InviteFriendsViewController {
+
+    func setupNavigationItems() {
+        if let navigationController = navigationController,
+            navigationController.viewControllers.first != self
+        {
+            let backItem = UIBarButtonItem.backChevron(withController: self)
+            elloNavigationItem.leftBarButtonItems = [backItem]
+            elloNavigationItem.fixNavBarItemPadding()
+        }
+        else {
+            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(closeTapped))
+            elloNavigationItem.leftBarButtonItems = [closeItem]
+        }
+
+        screen.navigationItem = elloNavigationItem
+    }
+
     fileprivate func findFriendsFromContacts() {
         ElloHUD.showLoadingHudInView(view)
         InviteService().find(addressBook,
