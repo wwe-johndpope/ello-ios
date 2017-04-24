@@ -5,7 +5,6 @@
 @testable import Ello
 import Quick
 import Nimble
-import Nimble_Snapshots
 
 
 class CategoryViewControllerSpec: QuickSpec {
@@ -64,7 +63,7 @@ class CategoryViewControllerSpec: QuickSpec {
             }
 
             it("has a nice looking nav bar") {
-                expect(subject).to(haveValidSnapshot())
+                expectValidSnapshot(subject)
             }
 
             it("shows the back button when necessary") {

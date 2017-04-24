@@ -68,6 +68,10 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
 
                     let totalHeight = avatarHeight + namesHeight + statsHeight + bioHeight + locationHeight + linksHeight + countHeight
                     let size = CGSize(width: width, height: totalHeight)
+                    cell.frame.size = size
+                    // we need to force the cell to layout so that view bounds are calculated before configure is called
+                    // (ProfileLinksView needs bounds.width > 0)
+                    prepareForSnapshot(cell, size: size)
 
                     ProfileHeaderCellPresenter.configure(cell,
                         streamCellItem: item,
@@ -76,7 +80,7 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
                         currentUser: nil
                         )
 
-                    expectValidSnapshot(cell, named: "ProfileHeaderCompactView-\(desc)", device: .custom(size))
+                    expectValidSnapshot(cell, named: "ProfileHeaderCompactView-\(desc)")
                 }
             }
         }
