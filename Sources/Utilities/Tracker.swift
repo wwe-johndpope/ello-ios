@@ -364,6 +364,10 @@ extension Tracker {
     }
 
     func badgeOpened(_ badgeName: String) {
+        track("badge opened", properties: ["badge": badgeName])
+    }
+
+    func badgeLearnMore(_ badgeName: String) {
         track("badge learn more clicked", properties: ["badge": badgeName])
     }
 
