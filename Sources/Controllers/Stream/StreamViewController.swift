@@ -891,10 +891,9 @@ extension StreamViewController: StreamEditingResponder {
             window.addSubview(imageView)
         }
 
-        if !post.loved,
+        if !post.loved {
             let footerCell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
-        {
-            postbarController?.lovesButtonTapped(footerCell)
+            postbarController?.toggleLove(footerCell, post: post)
         }
     }
 
