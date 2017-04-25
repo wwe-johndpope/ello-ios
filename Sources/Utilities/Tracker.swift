@@ -484,8 +484,8 @@ extension Tracker {
         track("Double tap love", properties: ["post_id": post.id])
     }
 
-    func postLoved(_ post: Post) {
-        track("Post loved", properties: ["post_id": post.id])
+    func postLoved(_ post: Post, via: String) {
+        track("Post loved", properties: ["post_id": post.id, "via": via])
     }
 
     func postUnloved(_ post: Post) {
