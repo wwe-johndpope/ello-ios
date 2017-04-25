@@ -1581,6 +1581,52 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(items) == []
                 }
             }
+
+            describe("calculating heights early exit") {
+                it("should call the calculatedCellItems(completion:) block immediately if no cells need to be calculated") {
+                    subject = StreamDataSource(streamKind: .following,
+                                               textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
+                                               notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
+                                               announcementSizeCalculator: AnnouncementCellSizeCalculator(),
+                                               profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
+                                               imageSizeCalculator: StreamImageCellSizeCalculator(),
+                                               categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
+                    )
+
+                    let items: [StreamCellItem] = [
+                        StreamCellItem(type: .categoryCard),
+                        StreamCellItem(type: .selectableCategoryCard),
+                        StreamCellItem(type: .categoryList),
+                        StreamCellItem(type: .commentHeader),
+                        StreamCellItem(type: .createComment),
+                        StreamCellItem(type: .footer),
+                        StreamCellItem(type: .header),
+                        StreamCellItem(type: .inviteFriends),
+                        StreamCellItem(type: .onboardingInviteFriends),
+                        StreamCellItem(type: .emptyStream(height: 10)),
+                        StreamCellItem(type: .loadMoreComments),
+                        StreamCellItem(type: .noPosts),
+                        StreamCellItem(type: .placeholder),
+                        StreamCellItem(type: .profileHeaderGhost),
+                        StreamCellItem(type: .search(placeholder: "")),
+                        StreamCellItem(type: .seeMoreComments),
+                        StreamCellItem(type: .spacer(height: 10)),
+                        StreamCellItem(type: .fullWidthSpacer(height: 10)),
+                        StreamCellItem(type: .streamLoading),
+                        StreamCellItem(type: .textHeader(nil)),
+                        StreamCellItem(type: .toggle),
+                        StreamCellItem(type: .unknown),
+                        StreamCellItem(type: .userAvatars),
+                        StreamCellItem(type: .userListItem),
+                    ]
+
+                    var done = false
+                    subject.calculateCellItems(items, withWidth: 375) { _ in
+                        done = true
+                    }
+                    expect(done) == true
+                }
+            }
         }
     }
 }
