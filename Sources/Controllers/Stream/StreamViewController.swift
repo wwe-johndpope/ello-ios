@@ -892,6 +892,7 @@ extension StreamViewController: StreamEditingResponder {
         }
 
         if !post.loved {
+            Tracker.shared.doubleTapLove(post)
             let footerCell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
             postbarController?.toggleLove(footerCell, post: post)
         }
