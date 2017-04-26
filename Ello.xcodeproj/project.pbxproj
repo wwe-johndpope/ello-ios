@@ -4314,7 +4314,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "file=\"${SRCROOT}/.env\"\nif [[ -f \"$file\" ]]; then\n  . \"$file\"\n  SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n  /bin/bash \"${SCRIPT}\" \"$NEW_RELIC_KEY\"\nfi\n";
+			shellScript = "file=\"${SRCROOT}/.env\"\nif [[ \"$CONFIGURATION\" == \"Release\" && -f \"$file\" ]]; then\n  . \"$file\"\n  SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n  /bin/bash \"${SCRIPT}\" \"$NEW_RELIC_KEY\"\nfi\n";
 		};
 		1DB68E9A1D470D5900D446C7 /* Set version information */ = {
 			isa = PBXShellScriptBuildPhase;
