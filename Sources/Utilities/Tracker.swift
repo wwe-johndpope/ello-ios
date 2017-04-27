@@ -147,6 +147,10 @@ extension Tracker {
         track("reset password failed")
     }
 
+    func joinButtonTapped() {
+        track("join button tapped")
+    }
+
     func joinValid() {
         track("join valid")
     }
@@ -165,6 +169,10 @@ extension Tracker {
 
     func tappedLogin() {
         track("tapped sign in")
+    }
+
+    func loginButtonTapped() {
+        track("login link tapped")
     }
 
     func loginValid() {
