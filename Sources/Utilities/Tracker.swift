@@ -67,7 +67,10 @@ extension Tracker {
         Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
 
         if let analyticsId = user.profile?.gaUniqueId {
+            let authToken = AuthToken()
             agent.identify(analyticsId, traits: [
+                "is_nabaroo": authToken.isNabaroo,
+                "is_featured": user.isFeatured,
                 "created_at": user.profile?.createdAt.toServerDateString() ?? "no-creation-date",
                 "agent": "ios",
             ])
