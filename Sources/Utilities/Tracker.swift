@@ -99,22 +99,6 @@ extension Tracker {
 // MARK: Signup and Login
 extension Tracker {
 
-    func tappedJoinFromStartup() {
-        track("tapped join from startup")
-    }
-
-    func tappedLoginFromStartup() {
-        track("tapped sign in from startup")
-    }
-
-    func tappedJoinFromLogin() {
-        track("tapped join from sign-in")
-    }
-
-    func tappedLoginFromJoin() {
-        track("tapped sign in from join")
-    }
-
     func enteredEmail() {
         track("entered email and pressed 'next'")
     }
@@ -143,9 +127,9 @@ extension Tracker {
         track("tapped about")
     }
 
-    func tappedTsAndCs() {
-        track("tapped terms and conditions")
-    }
+    // func tappedTsAndCs() {
+    //     track("tapped terms and conditions")
+    // }
 
     func requestPasswordValid() {
         track("reset password valid email")
