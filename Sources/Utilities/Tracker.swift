@@ -337,6 +337,12 @@ extension Tracker {
         }
     }
 
+    func loggedOutScreenAppeared(_ viewController: UIViewController) {
+        if let name = viewController.trackerName() {
+            track("logged out screen viewed", properties: ["screen": name])
+        }
+    }
+
     func screenAppeared(_ name: String, properties: [String: AnyObject]? = nil) {
         if let properties = properties {
             screen("Screen \(name)", properties: properties)
@@ -626,6 +632,10 @@ extension Tracker {
 
 // MARK: LoggedOut
 extension Tracker {
+    func loggedOutScreenViewed() {
+        track("logged out screen viewed")
+    }
+
     func loggedOutRelationshipAction() {
         track("logged out follow button")
     }
