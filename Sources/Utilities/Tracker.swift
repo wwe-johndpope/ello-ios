@@ -172,7 +172,7 @@ extension Tracker {
     }
 
     func loginButtonTapped() {
-        track("login link tapped")
+        track("login button tapped")
     }
 
     func loginValid() {
