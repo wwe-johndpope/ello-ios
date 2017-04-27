@@ -82,6 +82,11 @@ extension Tracker {
         agent.track(event, properties: properties)
     }
 
+    func screen(_ name: String, properties customProps: [AnyHashable: Any] = [:]) {
+        let properties = customProps + ["agent": "ios"]
+        agent.screen(name, properties: properties)
+    }
+
     func sessionStarted() {
         track("Session Began")
     }
@@ -333,11 +338,16 @@ extension Tracker {
     }
 
     func screenAppeared(_ name: String, properties: [String: AnyObject]? = nil) {
-        agent.screen("Screen \(name)", properties: properties)
+        if let properties = properties {
+            screen("Screen \(name)", properties: properties)
+        }
+        else {
+            screen("Screen \(name)")
+        }
     }
 
     func webViewAppeared(_ url: String) {
-        agent.screen("Web View", properties: ["url": url])
+        screen("Web View", properties: ["url": url])
     }
 
     func categoryOpened(_ categorySlug: String) {
