@@ -130,9 +130,9 @@ extension Tracker {
         track("tapped about")
     }
 
-    // func tappedTsAndCs() {
-    //     track("tapped terms and conditions")
-    // }
+    func tappedTsAndCs() {
+        track("tapped terms and conditions")
+    }
 
     func requestPasswordValid() {
         track("reset password valid email")
