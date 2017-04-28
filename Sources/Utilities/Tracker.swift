@@ -67,7 +67,10 @@ extension Tracker {
         Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
 
         if let analyticsId = user.profile?.gaUniqueId {
+            let authToken = AuthToken()
             agent.identify(analyticsId, traits: [
+                "is_nabaroo": authToken.isNabaroo,
+                "is_featured": user.isFeatured,
                 "created_at": user.profile?.createdAt.toServerDateString() ?? "no-creation-date",
                 "agent": "ios",
             ])
@@ -98,22 +101,6 @@ extension Tracker {
 
 // MARK: Signup and Login
 extension Tracker {
-
-    func tappedJoinFromStartup() {
-        track("tapped join from startup")
-    }
-
-    func tappedLoginFromStartup() {
-        track("tapped sign in from startup")
-    }
-
-    func tappedJoinFromLogin() {
-        track("tapped join from sign-in")
-    }
-
-    func tappedLoginFromJoin() {
-        track("tapped sign in from join")
-    }
 
     func enteredEmail() {
         track("entered email and pressed 'next'")
@@ -163,6 +150,10 @@ extension Tracker {
         track("reset password failed")
     }
 
+    func joinButtonTapped() {
+        track("join button tapped")
+    }
+
     func joinValid() {
         track("join valid")
     }
@@ -181,6 +172,10 @@ extension Tracker {
 
     func tappedLogin() {
         track("tapped sign in")
+    }
+
+    func loginButtonTapped() {
+        track("login button tapped")
     }
 
     func loginValid() {
@@ -334,6 +329,12 @@ extension Tracker {
         if let name = viewController.trackerName() {
             let props = viewController.trackerProps()
             screenAppeared(name, properties: props)
+        }
+    }
+
+    func loggedOutScreenAppeared(_ viewController: UIViewController) {
+        if let name = viewController.trackerName() {
+            track("logged out screen viewed", properties: ["screen": name])
         }
     }
 
@@ -626,6 +627,10 @@ extension Tracker {
 
 // MARK: LoggedOut
 extension Tracker {
+    func loggedOutScreenViewed() {
+        track("logged out screen viewed")
+    }
+
     func loggedOutRelationshipAction() {
         track("logged out follow button")
     }

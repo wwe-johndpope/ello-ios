@@ -108,6 +108,14 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         UIApplication.shared.statusBarStyle = .lightContent
     }
 
+    override func trackScreenAppeared() {
+        super.trackScreenAppeared()
+
+        if currentUser == nil {
+            Tracker.shared.loggedOutScreenAppeared(self)
+        }
+    }
+
     func didSetCurrentUser() {
         relationshipController?.currentUser = currentUser
     }

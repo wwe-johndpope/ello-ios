@@ -39,6 +39,9 @@ final class User: JSONAble {
     var hasLovesEnabled: Bool
     var isCollaborateable: Bool
     var isHireable: Bool
+    var isFeatured: Bool {
+        return (categories?.count ?? 0) > 0
+    }
     // optional
     var avatar: Asset? // required, but kinda optional due to it being nested in json
     var identifiableBy: String?

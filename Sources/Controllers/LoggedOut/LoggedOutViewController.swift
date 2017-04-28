@@ -73,10 +73,12 @@ extension LoggedOutViewController {
 
 extension LoggedOutViewController: LoggedOutProtocol {
     func showLoginScreen() {
+        Tracker.shared.loginButtonTapped()
         appViewController?.showLoginScreen()
     }
 
     func showJoinScreen() {
+        Tracker.shared.joinButtonTapped()
         appViewController?.showJoinScreen()
     }
 }
