@@ -22,4 +22,3 @@ class ProfileLocationViewSpec: QuickSpec {
         }
     }
 }
-

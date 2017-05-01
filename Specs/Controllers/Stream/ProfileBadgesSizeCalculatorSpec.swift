@@ -34,4 +34,3 @@ class ProfileBadgesSizeCalculatorSpec: QuickSpec {
         }
     }
 }
-
