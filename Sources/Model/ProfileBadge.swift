@@ -38,6 +38,8 @@ enum ProfileBadge: String {
 
     var url: URL? {
         switch self {
+        case .staff:
+            return URL(string: "https://ello.co/wtf/about/team/")
         case .spam, .nsfw:
             return nil
         default:
