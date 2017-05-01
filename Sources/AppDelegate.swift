@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
         #else
-        NewRelic.start(withApplicationToken: ElloKeys().newRelicKey())
         Crashlytics.start(withAPIKey: ElloKeys().crashlyticsKey())
         #endif
 

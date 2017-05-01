@@ -31,7 +31,6 @@ def ello_app_pods
   pod 'SnapKit', git: 'https://github.com/ello/SnapKit'
   pod 'FutureKit', git: 'https://github.com/FutureKit/FutureKit', branch: 'v3'
   pod 'DeltaCalculator', git: 'https://github.com/ello/DeltaCalculator'
-  pod 'NewRelicAgent', '~> 5.12'
 end
 
 def common_pods

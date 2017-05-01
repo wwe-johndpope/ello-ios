@@ -41,7 +41,6 @@ PODS:
   - Moya/Core (8.0.3):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - NewRelicAgent (5.12.2)
   - Nimble (6.0.1)
   - Nimble-Snapshots (4.4.0):
     - Nimble-Snapshots/Core (= 4.4.0)
@@ -144,7 +143,6 @@ DEPENDENCIES:
   - KINWebBrowser (from `https://github.com/ello/KINWebBrowser`)
   - MBProgressHUD (~> 0.9.0)
   - Moya (= 8.0.3)
-  - NewRelicAgent (~> 5.12)
   - Nimble (= 6.0.1)
   - Nimble-Snapshots (~> 4.4)
   - PINCache (from `https://github.com/ello/PINCache`, commit `78c3461`)
@@ -261,7 +259,6 @@ SPEC CHECKSUMS:
   KINWebBrowser: dad85d7d93e6f4620a8589b96992394affffa66e
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
-  NewRelicAgent: 1d41d2f6fe7c4219c13819ef12a0fc0f8d6ecaa6
   Nimble: 1527fd1bd2b4cf0636251a36bc8ab37e81da8347
   Nimble-Snapshots: e743439f26c2fa99d8f7e0d7c01c99bcb40aa6f2
   PINCache: a89c8f609232afac77128557bd12c861844423d7
@@ -279,6 +276,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 5a94875b03b1a6b9d3096346d30e162c1655568f
+PODFILE CHECKSUM: f1fae533a9e0c5a6f272c2bbe8f8aa8c476d6ac6
 
 COCOAPODS: 1.1.1
