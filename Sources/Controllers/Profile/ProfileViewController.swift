@@ -422,7 +422,11 @@ extension ProfileViewController: ProfileHeaderResponder {
     }
 
     func onMoreBadgesTapped() {
-        guard let user = self.user else { return }
+        guard
+            let user = self.user,
+            user.badges.count > 3
+        else { return }
+
         let badgesViewController = BadgesViewController(user: user)
         badgesViewController.currentUser = currentUser
         navigationController?.pushViewController(badgesViewController, animated: true)
