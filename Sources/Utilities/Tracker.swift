@@ -371,6 +371,10 @@ extension Tracker {
         track("badge learn more clicked", properties: ["badge": badgeSlug])
     }
 
+    func badgeScreenLink(_ badgeSlug: String) {
+        track("badges screen link tapped", properties: ["badge": badgeSlug])
+    }
+
     func viewedImage(_ asset: Asset, post: Post) {
         track("Viewed Image", properties: ["asset_id": asset.id, "post_id": post.id])
     }

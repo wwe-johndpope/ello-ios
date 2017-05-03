@@ -1118,6 +1118,7 @@ extension StreamViewController: UICollectionViewDelegate {
             let badge = dataSource.jsonableForIndexPath(indexPath) as? Badge,
             let url = badge.profileBadge.url
         {
+            Tracker.shared.badgeScreenLink(badge.profileBadge.rawValue)
             postNotification(ExternalWebNotification, value: url.absoluteString)
         }
         else if tappedCell is StreamSeeMoreCommentsCell {
