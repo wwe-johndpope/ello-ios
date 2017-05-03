@@ -25,8 +25,8 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
                 ("no bio", bioHeight: 0, locationHeight: defaultLocationHeight, linksHeight: defaultLinksHeight, hasTotal: true, hasBadges: true),
                 ("no links", bioHeight: defaultBioHeight, locationHeight: defaultLocationHeight, linksHeight: 0, hasTotal: true, hasBadges: true),
                 ("no location", bioHeight: defaultBioHeight, locationHeight: 0, linksHeight: defaultLinksHeight, hasTotal: true, hasBadges: true),
-                ("no badges", bioHeight: defaultBioHeight, locationHeight: 0, linksHeight: defaultLinksHeight, hasTotal: true, hasBadges: false),
-                ("no total", bioHeight: defaultBioHeight, locationHeight: 0, linksHeight: defaultLinksHeight, hasTotal: false, hasBadges: true),
+                ("no badges", bioHeight: defaultBioHeight, locationHeight: defaultLocationHeight, linksHeight: defaultLinksHeight, hasTotal: true, hasBadges: false),
+                ("no total", bioHeight: defaultBioHeight, locationHeight: defaultLocationHeight, linksHeight: defaultLinksHeight, hasTotal: false, hasBadges: true),
                 ("no bio, no links", bioHeight: 0, locationHeight: defaultLocationHeight, linksHeight: 0, hasTotal: true, hasBadges: true),
                 ("no bio, no links, no location", bioHeight: 0, locationHeight: 0, linksHeight: 0, hasTotal: true, hasBadges: true),
                 ("no bio, no links, no location, no badges", bioHeight: 0, locationHeight: 0, linksHeight: 0, hasTotal: true, hasBadges: false),
@@ -53,6 +53,8 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
                     }
 
                     let cell: ProfileHeaderCell = ProfileHeaderCell()
+                    cell.bioView.backgroundColor = .blue
+
                     let item: StreamCellItem = StreamCellItem(jsonable: user, type: .profileHeader)
                     item.calculatedCellHeights.profileAvatar = avatarHeight
                     item.calculatedCellHeights.profileTotalCount = hasTotal ? defaultCountHeight : 0

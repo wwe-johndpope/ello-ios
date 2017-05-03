@@ -39,12 +39,11 @@ class ProfileHeaderLayoutView: ProfileBaseView {
                 linksHeightConstraint.update(offset: linksHeight)
             }
 
-
             let bioLinksOrLocationHaveContent = (calculatedCellHeights.profileBio ?? 0) > 0 || (calculatedCellHeights.profileLinks ?? 0) > 0 || (calculatedCellHeights.profileLocation ?? 0) > 0
             statsView.grayLineVisible = bioLinksOrLocationHaveContent
 
-            let locationOrLinksHasContent = (calculatedCellHeights.profileLocation ?? 0) > 0 || (calculatedCellHeights.profileLinks ?? 0) > 0
-            bioView.grayLineVisible = locationOrLinksHasContent
+            let linksAndNotLocationHasContent = (calculatedCellHeights.profileLocation ?? 0) == 0 && (calculatedCellHeights.profileLinks ?? 0) > 0
+            bioView.grayLineVisible = linksAndNotLocationHasContent
 
             let linksHasContent = (calculatedCellHeights.profileLinks ?? 0) > 0
             locationView.grayLineVisible = linksHasContent
