@@ -4,9 +4,9 @@
 
 final class ProfileBadgeViewController: BaseElloViewController {
 
-    let badge: ProfileBadge
+    let badge: Badge
 
-    init(badge: ProfileBadge) {
+    init(badge: Badge) {
         self.badge = badge
         super.init(nibName: nil, bundle: nil)
     }
@@ -43,7 +43,7 @@ extension ProfileBadgeViewController: ProfileBadgeScreenDelegate {
 
     func learnMoreTapped() {
         let badge = self.badge
-        Tracker.shared.badgeLearnMore(badge.rawValue)
+        Tracker.shared.badgeLearnMore(badge.slug)
         self.dismiss(animated: true) {
             if let url = badge.url {
                 postNotification(ExternalWebNotification, value: url.absoluteString)

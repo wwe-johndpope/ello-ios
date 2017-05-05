@@ -49,7 +49,7 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
                     ])
 
                     if hasBadges {
-                        user.badges = [.featured, .community, .experimental]
+                        user.badges = [Badge.lookup(slug: "featured")!, Badge.lookup(slug: "community")!, Badge.lookup(slug: "experimental")!]
                     }
 
                     let cell: ProfileHeaderCell = ProfileHeaderCell()

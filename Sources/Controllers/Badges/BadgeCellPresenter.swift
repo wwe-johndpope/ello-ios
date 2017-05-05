@@ -16,8 +16,7 @@ struct BadgeCellPresenter {
             let badge = streamCellItem.jsonable as? Badge
         else { return }
 
-        let profileBadge = badge.profileBadge
-        if case .featured = profileBadge,
+        if badge.isFeatured,
             let categories = badge.categories
         {
             let title = ElloAttributedString.featuredIn(categories: categories, attrs: [
@@ -28,12 +27,12 @@ struct BadgeCellPresenter {
             cell.attributedTitle = title
         }
         else {
-            let title = profileBadge.name
+            let title = badge.name
             cell.title = title
         }
 
-        cell.image = profileBadge.image.normalImage
-        cell.url = profileBadge.url
+        cell.image = badge.interfaceImage?.normalImage
+        cell.url = badge.url
     }
 
 }

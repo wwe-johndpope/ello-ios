@@ -69,11 +69,16 @@ final class User: JSONAble {
     // links
     var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     var categories: [Category]? { return getLinkArray("categories") as? [Category] }
-    private var _badges: [ProfileBadge]?
-    var badges: [ProfileBadge] {
+    private var _badges: [Badge]?
+    var badges: [Badge] {
         get {
             guard let badges = _badges, badges.count > 0 else {
-                return (categories?.count ?? 0) > 0 ? [.featured] : []
+                if let count = categories?.count, count > 0,
+                    let badge = Badge.lookup(slug: "featured")
+                {
+                    return [badge]
+                }
+                return []
             }
             return badges
         }
@@ -124,8 +129,8 @@ final class User: JSONAble {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeKey("id")
         // required
@@ -160,7 +165,7 @@ final class User: JSONAble {
         }
 
         if let badgeNames: [String] = decoder.decodeOptionalKey("badges") {
-            self._badges = badgeNames.flatMap { ProfileBadge(rawValue: $0) }
+            self._badges = badgeNames.flatMap { Badge.lookup(slug: $0) }
         }
 
         // optional
@@ -182,7 +187,7 @@ final class User: JSONAble {
 
         // profile
         self.profile = decoder.decodeOptionalKey("profile")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     class func empty(id: String = UUID().uuidString) -> User {
@@ -203,46 +208,46 @@ final class User: JSONAble {
             isHireable: false)
     }
 
-    override func encode(with encoder: NSCoder) {
-        let coder = Coder(encoder)
+    override func encode(with coder: NSCoder) {
+        let encoder = Coder(coder)
 
         // active record
-        coder.encodeObject(id, forKey: "id")
+        encoder.encodeObject(id, forKey: "id")
 
         // required
-        coder.encodeObject(href, forKey: "href")
-        coder.encodeObject(username, forKey: "username")
-        coder.encodeObject(name, forKey: "name")
-        coder.encodeObject(experimentalFeatures, forKey: "experimentalFeatures")
-        coder.encodeObject(relationshipPriority.rawValue, forKey: "relationshipPriorityRaw")
-        coder.encodeObject(postsAdultContent, forKey: "postsAdultContent")
-        coder.encodeObject(viewsAdultContent, forKey: "viewsAdultContent")
-        coder.encodeObject(hasCommentingEnabled, forKey: "hasCommentingEnabled")
-        coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
-        coder.encodeObject(hasRepostingEnabled, forKey: "hasRepostingEnabled")
-        coder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
-        coder.encodeObject(isCollaborateable, forKey: "isCollaborateable")
-        coder.encodeObject(isHireable, forKey: "isHireable")
+        encoder.encodeObject(href, forKey: "href")
+        encoder.encodeObject(username, forKey: "username")
+        encoder.encodeObject(name, forKey: "name")
+        encoder.encodeObject(experimentalFeatures, forKey: "experimentalFeatures")
+        encoder.encodeObject(relationshipPriority.rawValue, forKey: "relationshipPriorityRaw")
+        encoder.encodeObject(postsAdultContent, forKey: "postsAdultContent")
+        encoder.encodeObject(viewsAdultContent, forKey: "viewsAdultContent")
+        encoder.encodeObject(hasCommentingEnabled, forKey: "hasCommentingEnabled")
+        encoder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
+        encoder.encodeObject(hasRepostingEnabled, forKey: "hasRepostingEnabled")
+        encoder.encodeObject(hasLovesEnabled, forKey: "hasLovesEnabled")
+        encoder.encodeObject(isCollaborateable, forKey: "isCollaborateable")
+        encoder.encodeObject(isHireable, forKey: "isHireable")
 
         // optional
-        coder.encodeObject(avatar, forKey: "avatar")
-        coder.encodeObject(identifiableBy, forKey: "identifiableBy")
-        coder.encodeObject(postsCount, forKey: "postsCount")
-        coder.encodeObject(lovesCount, forKey: "lovesCount")
-        coder.encodeObject(followingCount, forKey: "followingCount")
-        coder.encodeObject(followersCount, forKey: "followersCount")
-        coder.encodeObject(formattedShortBio, forKey: "formattedShortBio")
-        coder.encodeObject(externalLinksList?.map { $0.toDict() }, forKey: "externalLinksList")
-        coder.encodeObject(coverImage, forKey: "coverImage")
-        coder.encodeObject(backgroundPosition, forKey: "backgroundPosition")
-        coder.encodeObject(onboardingVersion, forKey: "onboardingVersion")
-        coder.encodeObject(totalViewsCount, forKey: "totalViewsCount")
-        coder.encodeObject(location, forKey: "location")
-        coder.encodeObject(badges.map { $0.rawValue }, forKey: "badges")
+        encoder.encodeObject(avatar, forKey: "avatar")
+        encoder.encodeObject(identifiableBy, forKey: "identifiableBy")
+        encoder.encodeObject(postsCount, forKey: "postsCount")
+        encoder.encodeObject(lovesCount, forKey: "lovesCount")
+        encoder.encodeObject(followingCount, forKey: "followingCount")
+        encoder.encodeObject(followersCount, forKey: "followersCount")
+        encoder.encodeObject(formattedShortBio, forKey: "formattedShortBio")
+        encoder.encodeObject(externalLinksList?.map { $0.toDict() }, forKey: "externalLinksList")
+        encoder.encodeObject(coverImage, forKey: "coverImage")
+        encoder.encodeObject(backgroundPosition, forKey: "backgroundPosition")
+        encoder.encodeObject(onboardingVersion, forKey: "onboardingVersion")
+        encoder.encodeObject(totalViewsCount, forKey: "totalViewsCount")
+        encoder.encodeObject(location, forKey: "location")
+        encoder.encodeObject(badges.map { $0.slug }, forKey: "badges")
 
         // profile
-        coder.encodeObject(profile, forKey: "profile")
-        super.encode(with: coder.coder)
+        encoder.encodeObject(profile, forKey: "profile")
+        super.encode(with: coder)
     }
 
 // MARK: JSONAble
@@ -306,7 +311,8 @@ final class User: JSONAble {
         }
 
         if let badgeNames: [String] = json["badges"].array?.flatMap({ $0.string }) {
-            user.badges = badgeNames.flatMap { ProfileBadge(rawValue: $0) }
+            user.badges = badgeNames
+                .flatMap { Badge.lookup(slug: $0) }
         }
 
         user.totalViewsCount = json["total_views_count"].int

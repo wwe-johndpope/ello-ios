@@ -60,11 +60,11 @@ extension User: Stubbable {
         user.lovesCount = (values["lovesCount"] as? Int) ?? 0
         user.totalViewsCount = (values["totalViewsCount"] as? Int)
 
-        if let badges = values["badges"] as? [ProfileBadge] {
+        if let badges = values["badges"] as? [Badge] {
             user.badges = badges
         }
         else if let badgeNames = values["badges"] as? [String] {
-            user.badges = badgeNames.flatMap { ProfileBadge(rawValue: $0) }
+            user.badges = badgeNames.flatMap { Badge.lookup(slug: $0) }
         }
 
         if let count = values["followersCount"] as? Int {

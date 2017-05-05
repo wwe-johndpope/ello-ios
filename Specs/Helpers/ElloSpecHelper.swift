@@ -13,6 +13,14 @@ class ElloConfiguration: QuickConfiguration {
         config.beforeSuite {
             setNimbleTolerance(0.001)
             ElloLinkedStore.databaseName = "ello_test.sqlite"
+            BadgesService.badges = [
+                "featured": Badge(slug: "featured", name: "Featured", link: "Learn More", url: nil, imageURL: nil),
+                "community": Badge(slug: "community", name: "Community", link: "Learn More", url: nil, imageURL: nil),
+                "experimental": Badge(slug: "experimental", name: "Experimental", link: "Learn More", url: nil, imageURL: nil),
+                "staff": Badge(slug: "staff", name: "Staff", link: "Meet our team", url: nil, imageURL: nil),
+                "spam": Badge(slug: "spam", name: "Spam", link: "Learn More", url: nil, imageURL: nil),
+                "nsfw": Badge(slug: "nsfw", name: "Nsfw", link: "Learn More", url: nil, imageURL: nil),
+            ]
         }
         config.beforeEach {
             let keychain = FakeKeychain()

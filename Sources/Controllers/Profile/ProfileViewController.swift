@@ -395,19 +395,20 @@ extension ProfileViewController: ProfileHeaderResponder {
         guard
             let categories = user?.categories,
             let count = user?.categories?.count,
-            count > 0
+            count > 0,
+            let badge = Badge.lookup(slug: "featured")
         else { return }
 
-        Tracker.shared.badgeOpened(ProfileBadge.featured.rawValue)
+        Tracker.shared.badgeOpened(badge.slug)
         let vc = ProfileCategoriesViewController(categories: categories)
         vc.presentingVC = self
         presentModal(vc)
     }
 
     func onBadgeTapped(_ badgeName: String) {
-        guard let badge = ProfileBadge(rawValue: badgeName) else { return }
+        guard let badge = Badge.lookup(slug: badgeName) else { return }
 
-        Tracker.shared.badgeOpened(badge.rawValue)
+        Tracker.shared.badgeOpened(badge.slug)
         let vc = ProfileBadgeViewController(badge: badge)
         presentModal(vc)
     }

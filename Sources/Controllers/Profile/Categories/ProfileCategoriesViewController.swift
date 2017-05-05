@@ -42,8 +42,8 @@ extension ProfileCategoriesViewController: UIViewControllerTransitioningDelegate
 extension ProfileCategoriesViewController: ProfileCategoriesDelegate {
 
     func learnMoreTapped() {
-        let badge = ProfileBadge.featured
-        Tracker.shared.badgeLearnMore(badge.rawValue)
+        guard let badge = Badge.lookup(slug: "featured") else { return }
+        Tracker.shared.badgeLearnMore(badge.slug)
 
         self.dismiss(animated: true) {
             if let url = badge.url {

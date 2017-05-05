@@ -11,7 +11,7 @@ class ProfileBadgesView: ProfileBaseView {
         static let badgeSize = CGSize(width: 36, height: 44)
     }
 
-    var badges: [ProfileBadge] = [] {
+    var badges: [Badge] = [] {
         didSet { updateBadgeViews() }
     }
     var badgeButtons: [UIButton] = []
@@ -52,18 +52,19 @@ class ProfileBadgesView: ProfileBaseView {
             view.removeFromSuperview()
         }
 
-        badgeButtons = badges.safeRange(0 ..< maxBadges).map { (badge: ProfileBadge) -> UIButton in
+        badgeButtons = badges.safeRange(0 ..< maxBadges).map { (badge: Badge) -> UIButton in
             let button = UIButton()
             button.addTarget(self, action: #selector(badgeTapped(_:)), for: .touchUpInside)
             button.contentMode = .center
-            let svgkImage = badge.image.svgkImage!
-            if case .featured = badge {
-                svgkImage.size = CGSize(width: 27, height: 27)
-            }
-            let image = svgkImage.uiImage.withRenderingMode(.alwaysOriginal)
-            button.setImage(image, for: .normal)
-            button.snp.makeConstraints { make in
-                make.size.equalTo(Size.badgeSize)
+            if let svgkImage = badge.interfaceImage?.svgkImage {
+                if badge.isFeatured {
+                    svgkImage.size = CGSize(width: 27, height: 27)
+                }
+                let image = svgkImage.uiImage.withRenderingMode(.alwaysOriginal)
+                button.setImage(image, for: .normal)
+                button.snp.makeConstraints { make in
+                    make.size.equalTo(Size.badgeSize)
+                }
             }
             return button
         }
@@ -114,11 +115,11 @@ extension ProfileBadgesView {
 
         let badge = badges[buttonIndex]
         let responder = target(forAction: #selector(ProfileHeaderResponder.onCategoryBadgeTapped), withSender: self) as? ProfileHeaderResponder
-        if badge == .featured {
+        if badge.slug == "featured" {
             responder?.onCategoryBadgeTapped()
         }
         else {
-            responder?.onBadgeTapped(badge.rawValue)
+            responder?.onBadgeTapped(badge.slug)
         }
     }
 
