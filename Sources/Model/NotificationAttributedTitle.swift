@@ -4,8 +4,8 @@
 
 struct NotificationAttributedTitle {
 
-    static fileprivate func attrs(_ addlAttrs: [String : AnyObject] = [:]) -> [String : AnyObject] {
-        let attrs: [String: AnyObject] = [
+    static fileprivate func attrs(_ addlAttrs: [String : Any] = [:]) -> [String : Any] {
+        let attrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(),
             NSForegroundColorAttributeName: UIColor.greyA(),
         ]
@@ -19,9 +19,9 @@ struct NotificationAttributedTitle {
     static fileprivate func styleUser(_ user: User?) -> NSAttributedString {
         if let user = user {
             return NSAttributedString(string: user.atName, attributes: attrs([
-                ElloAttributedText.Link: "user" as AnyObject,
+                ElloAttributedText.Link: "user",
                 ElloAttributedText.Object: user,
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
             ]))
         }
         else {
@@ -31,18 +31,18 @@ struct NotificationAttributedTitle {
 
     static fileprivate func stylePost(_ text: String, _ post: Post) -> NSAttributedString {
         let attrs = self.attrs([
-            ElloAttributedText.Link: "post" as AnyObject,
+            ElloAttributedText.Link: "post",
             ElloAttributedText.Object: post,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
         ])
         return NSAttributedString(string: text, attributes: attrs)
     }
 
     static fileprivate func styleComment(_ text: String, _ comment: ElloComment) -> NSAttributedString {
         let attrs = self.attrs([
-            ElloAttributedText.Link: "comment" as AnyObject,
+            ElloAttributedText.Link: "comment",
             ElloAttributedText.Object: comment,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
         ])
         return NSAttributedString(string: text, attributes: attrs)
     }

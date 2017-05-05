@@ -304,7 +304,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         let updateNameFunction = debounce(0.5) { [weak self] in
             guard let `self` = self else { return }
             let name = self.nameTextFieldView.textField.text ?? ""
-            ProfileService().updateUserProfile(["name": name as AnyObject], success: { user in
+            ProfileService().updateUserProfile(["name": name], success: { user in
                 self.updateCurrentUser(user)
                 self.nameTextFieldView.setState(.ok)
             }, failure: { _, _ in
@@ -325,7 +325,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
         bioTextViewDidChange = debounce(0.5) { [weak self] in
             guard let `self` = self, let bio = self.bioTextView.text else { return }
-            ProfileService().updateUserProfile(["unsanitized_short_bio": bio as AnyObject], success: { user in
+            ProfileService().updateUserProfile(["unsanitized_short_bio": bio], success: { user in
                 self.updateCurrentUser(user)
                 self.bioTextStatusImage.image = ValidationState.ok.imageRepresentation
             }, failure: { _, _ in
@@ -344,7 +344,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
         let updateLinksFunction = debounce(0.5) { [weak self] in
             guard let `self` = self, let links = self.linksTextFieldView.textField.text else { return }
-            ProfileService().updateUserProfile(["external_links": links as AnyObject], success: { user in
+            ProfileService().updateUserProfile(["external_links": links], success: { user in
                 self.updateCurrentUser(user)
                 self.linksTextFieldView.setState(.ok)
             }, failure: { _, _ in
@@ -368,7 +368,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         let updateLocationFunction = debounce(0.5) { [weak self] in
             guard let `self` = self, let location = self.locationTextFieldView.textField.text else { return }
             if location != self.currentUser?.location {
-                ProfileService().updateUserProfile(["location": location as AnyObject], success: { user in
+                ProfileService().updateUserProfile(["location": location], success: { user in
                     self.updateCurrentUser(user)
                     guard let count = self.locationTextFieldView.textField.text?.characters.count, count > 0 else {
                         self.locationTextFieldView.setState(.none)

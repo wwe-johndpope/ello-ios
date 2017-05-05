@@ -50,7 +50,7 @@ final class AutoCompleteResult: JSONAble {
 
     // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         let name = json["name"].string ?? json["location"].string
         let result = AutoCompleteResult(name: name)

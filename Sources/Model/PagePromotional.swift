@@ -59,7 +59,7 @@ final class PagePromotional: JSONAble {
         super.encode(with: coder)
     }
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let header = json["header"].stringValue
@@ -67,7 +67,7 @@ final class PagePromotional: JSONAble {
         let ctaCaption = json["cta_caption"].stringValue
         let ctaURL = json["cta_href"].string.flatMap { URL(string: $0) }
 
-        let image = Asset.parseAsset(id, node: data["image"] as? [String: AnyObject])
+        let image = Asset.parseAsset(id, node: data["image"] as? [String: Any])
 
         let promotional = PagePromotional(
             id: id,
@@ -77,7 +77,7 @@ final class PagePromotional: JSONAble {
             ctaURL: ctaURL,
             image: image
             )
-        promotional.links = data["links"] as? [String: AnyObject]
+        promotional.links = data["links"] as? [String: Any]
         return promotional
     }
 }

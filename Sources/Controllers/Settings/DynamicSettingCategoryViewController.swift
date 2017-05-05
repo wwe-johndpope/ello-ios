@@ -89,13 +89,13 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
             )
         }
 
-        var updatedValues: [String: AnyObject] = [
-            setting.key: value as AnyObject,
+        var updatedValues: [String: Any] = [
+            setting.key: value,
         ]
 
         for anotherSetting in category.settings {
             if let anotherValue = setting.sets(anotherSetting, when: value) {
-                updatedValues[anotherSetting.key] = anotherValue as AnyObject
+                updatedValues[anotherSetting.key] = anotherValue
             }
         }
 

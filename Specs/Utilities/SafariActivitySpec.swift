@@ -28,14 +28,14 @@ class SafariActivitySpec: QuickSpec {
                 expect(subject.activityImage).toNot(beNil())
             }
 
-            context("canPerformWithActivityItems(items: [AnyObject]) -> Bool") {
+            context("canPerformWithActivityItems(items: [Any]) -> Bool") {
                 let url = URL(string: "https://ello.co")!
                 let url2 = URL(string: "https://google.com")!
                 let string = "ignore"
                 let image = UIImage.imageWithColor(.blue)!
                 let expectations: [(String, [Any], Bool)] = [
                     ("a url", [url], true),
-                    ("a url and a string", [url, string as AnyObject], true),
+                    ("a url and a string", [url, string], true),
                     ("two urls", [string, url, string, url2], true),
 
                     ("a string", [string], false),
@@ -48,14 +48,14 @@ class SafariActivitySpec: QuickSpec {
                 }
             }
 
-            context("prepareWithActivityItems(items: [AnyObject])") {
+            context("prepareWithActivityItems(items: [Any])") {
                 let url = URL(string: "https://ello.co")!
                 let url2 = URL(string: "https://google.com")!
                 let string = "ignore"
                 let image = UIImage.imageWithColor(.blue)!
                 let expectations: [(String, [Any], URL?)] = [
                     ("a url", [url], url),
-                    ("a url and a string", [url, string as AnyObject], url),
+                    ("a url and a string", [url, string], url),
                     ("two urls", [string, url, string, url2], url),
 
                     ("a string", [string], nil),

@@ -84,7 +84,7 @@ class ClearTextView: UITextView {
     fileprivate func updateTextStyle() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 12
-        var attributes: [String: AnyObject] = [
+        var attributes: [String: Any] = [
             NSParagraphStyleAttributeName: paragraphStyle
         ]
         if let font = font {

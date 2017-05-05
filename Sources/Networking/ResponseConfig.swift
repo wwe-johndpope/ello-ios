@@ -16,10 +16,10 @@ class ResponseConfig: CustomStringConvertible {
         ]
         return descripArray.joined(separator: "\n\t")
     }
-    var nextQueryItems: [AnyObject]? // before (older)
-    var prevQueryItems: [AnyObject]? // after (newer)
-    var firstQueryItems: [AnyObject]? // first page
-    var lastQueryItems: [AnyObject]? // last page
+    var nextQueryItems: [Any]? // before (older)
+    var prevQueryItems: [Any]? // after (newer)
+    var firstQueryItems: [Any]? // first page
+    var lastQueryItems: [Any]? // last page
     var totalCount: String?
     var totalPages: String?
     var totalPagesRemaining: String?

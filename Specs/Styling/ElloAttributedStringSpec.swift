@@ -25,8 +25,8 @@ class ElloAttributedStringSpec: QuickSpec {
             it("ElloAttributedString.attrs() accepts many additional options") {
                 let c1 = UIColor.lightGray
                 let c2 = UIColor.darkGray
-                let attrs1: [String: AnyObject] = [NSForegroundColorAttributeName: c1]
-                let attrs2: [String: AnyObject] = [NSBackgroundColorAttributeName: c2]
+                let attrs1: [String: Any] = [NSForegroundColorAttributeName: c1]
+                let attrs2: [String: Any] = [NSBackgroundColorAttributeName: c2]
                 let attrs = ElloAttributedString.attrs(attrs1, attrs2)
                 expect(attrs[NSForegroundColorAttributeName] as? UIColor) == c1
                 expect(attrs[NSBackgroundColorAttributeName] as? UIColor) == c2

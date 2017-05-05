@@ -69,7 +69,7 @@ class MapperSpec: QuickSpec {
 
                 it("returns a mapped domain objects") {
                     let userData = stubbedJSONData("user", "users")
-                    let user = Mapper.mapToObject(userData as AnyObject, type: .usersType)
+                    let user = Mapper.mapToObject(userData, type: .usersType)
 
                     expect(user).toNot(beNil())
                     expect(user).to(beAKindOf(User.self))
@@ -79,9 +79,9 @@ class MapperSpec: QuickSpec {
             context("invalid input") {
 
                 it("returns nil") {
-                    let invalidAnyObject: AnyObject = NSString(string: "invalid") as AnyObject
+                    let invalidAny = "invalid"
 
-                    expect(Mapper.mapToObject(invalidAnyObject, type: .usersType)).to(beNil())
+                    expect(Mapper.mapToObject(invalidAny, type: .usersType)).to(beNil())
                 }
             }
         }

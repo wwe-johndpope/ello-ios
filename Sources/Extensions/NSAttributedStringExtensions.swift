@@ -21,11 +21,11 @@ extension NSAttributedString {
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = alignment
         let underlineValue = underlineStyle?.rawValue ?? 0
-        let attrs: [String: AnyObject] = [
+        let attrs: [String: Any] = [
             NSForegroundColorAttributeName: color,
             NSFontAttributeName: font,
             NSParagraphStyleAttributeName: paragraphStyle,
-            NSUnderlineStyleAttributeName: underlineValue as AnyObject
+            NSUnderlineStyleAttributeName: underlineValue
         ]
         self.init(string: string, attributes: attrs)
     }
@@ -56,12 +56,12 @@ extension NSAttributedString {
     convenience init(primaryHeader: String, secondaryHeader: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        let bold: [String: AnyObject] = [
+        let bold: [String: Any] = [
             NSForegroundColorAttributeName: UIColor.black,
             NSFontAttributeName: UIFont.defaultFont(16),
             NSParagraphStyleAttributeName: paragraphStyle,
             ]
-        let plain: [String: AnyObject] = [
+        let plain: [String: Any] = [
             NSForegroundColorAttributeName: UIColor.greyA(),
             NSFontAttributeName: UIFont.defaultFont(16),
             NSParagraphStyleAttributeName: paragraphStyle,

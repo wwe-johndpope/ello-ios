@@ -3,14 +3,14 @@
 //
 
 struct PushPayload {
-    let info: [String: AnyObject]
+    let info: [String: Any]
 
     var applicationTarget: String {
         return info["application_target"] as? String ?? ""
     }
 
     var message: String {
-        let aps = info["aps"] as? [String: AnyObject]
+        let aps = info["aps"] as? [String: Any]
         let alert = aps?["alert"] as? [String: String]
         return alert?["body"] ?? "New Notification"
     }

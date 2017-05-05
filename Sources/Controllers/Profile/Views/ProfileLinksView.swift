@@ -173,15 +173,15 @@ extension ProfileLinksView {
             }
         }
 
-        let attrs: [String: AnyObject] = [
+        let attrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(),
             NSForegroundColorAttributeName: UIColor.greyA(),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
         ]
-        let highlightedAttrs: [String: AnyObject] = [
+        let highlightedAttrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(),
             NSForegroundColorAttributeName: UIColor.black,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
         ]
         button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: attrs), for: .normal)
         button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: highlightedAttrs), for: .highlighted)

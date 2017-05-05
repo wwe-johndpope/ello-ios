@@ -35,7 +35,7 @@ class ObjectCache<T: Any> {
     }
 
     func persist() {
-        persistentLayer.setObject(cache as AnyObject?, forKey: name)
+        persistentLayer.setObject(cache, forKey: name)
     }
 
     func load() {

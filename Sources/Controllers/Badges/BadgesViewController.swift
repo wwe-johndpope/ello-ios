@@ -4,7 +4,7 @@
 
 class BadgesViewController: StreamableViewController, BadgesScreenDelegate {
     override func trackerName() -> String? { return "Badges" }
-    override func trackerProps() -> [String: AnyObject]? { return ["user_id": user.id as AnyObject] }
+    override func trackerProps() -> [String: Any]? { return ["user_id": user.id] }
 
     let user: User
 

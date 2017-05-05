@@ -8,7 +8,7 @@ import Alamofire
 
 
 typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
-typealias ElloSuccessCompletion = (AnyObject, ResponseConfig) -> Void
+typealias ElloSuccessCompletion = (Any, ResponseConfig) -> Void
 typealias ElloFailure = (error: NSError, Int?)
 typealias ElloFailureCompletion = (NSError, Int?) -> Void
 typealias ElloErrorCompletion = (NSError) -> Void
@@ -305,13 +305,13 @@ extension ElloProvider {
         postNotification(AuthenticationNotifications.invalidToken, value: true)
     }
 
-    fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String: AnyObject], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String: Any], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         let completion: ElloEmptyCompletion = {
             let node = dict[elloAPI.mappingType.rawValue]
             var newResponseConfig: ResponseConfig?
             if let pagingPath = elloAPI.pagingPath,
-                let links = (node as? [String: AnyObject])?["links"] as? [String: AnyObject],
-                let pagingPathNode = links[pagingPath] as? [String:AnyObject],
+                let links = (node as? [String: Any])?["links"] as? [String: Any],
+                let pagingPathNode = links[pagingPath] as? [String:Any],
                 let pagination = pagingPathNode["pagination"] as? [String: String]
             {
                 newResponseConfig = self.parsePagination(pagination)
@@ -322,12 +322,12 @@ extension ElloProvider {
                 return
             }
 
-            let mappedObjects: AnyObject?
-            if let node = node as? [[String: AnyObject]] {
-                mappedObjects = Mapper.mapToObjectArray(node, type: elloAPI.mappingType) as AnyObject?
+            let mappedObjects: Any?
+            if let node = node as? [[String: Any]] {
+                mappedObjects = Mapper.mapToObjectArray(node, type: elloAPI.mappingType)
             }
-            else if let node = node as? [String: AnyObject] {
-                mappedObjects = Mapper.mapToObject(node as AnyObject?, type: elloAPI.mappingType)
+            else if let node = node as? [String: Any] {
+                mappedObjects = Mapper.mapToObject(node, type: elloAPI.mappingType)
             }
             else {
                 mappedObjects = nil
@@ -341,7 +341,7 @@ extension ElloProvider {
             }
         }
 
-        if let linked = dict["linked"] as? [String:[[String:AnyObject]]] {
+        if let linked = dict["linked"] as? [String:[[String:Any]]] {
             ElloLinkedStore.sharedInstance.parseLinked(linked, completion: completion)
         }
         else {
@@ -350,10 +350,10 @@ extension ElloProvider {
     }
 
     fileprivate func handleNetworkSuccess(data: Data, elloAPI: ElloAPI, statusCode: Int?, response: HTTPURLResponse?, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
-        let (mappedJSON, error): (AnyObject?, NSError?) = Mapper.mapJSON(data)
+        let (mappedJSON, error): (Any?, NSError?) = Mapper.mapJSON(data)
         let responseConfig = parseResponse(response)
         if mappedJSON != nil && error == nil {
-            if let dict = mappedJSON as? [String: AnyObject] {
+            if let dict = mappedJSON as? [String: Any] {
                 parseLinked(elloAPI, dict: dict, responseConfig: responseConfig, success: success, failure: failure)
             }
             else {
@@ -361,7 +361,7 @@ extension ElloProvider {
             }
         }
         else if isEmptySuccess(data, statusCode: statusCode) {
-            success("" as AnyObject, responseConfig)
+            success("", responseConfig)
         }
         else {
             ElloProvider.failedToMapObjects(failure)
@@ -418,22 +418,22 @@ extension ElloProvider {
         config.totalPagesRemaining = node["total_pages_remaining"]
         if let next = node["next"] {
             if let comps = URLComponents(string: next) {
-                config.nextQueryItems = comps.queryItems as [AnyObject]?
+                config.nextQueryItems = comps.queryItems as [Any]?
             }
         }
         if let prev = node["prev"] {
             if let comps = URLComponents(string: prev) {
-                config.prevQueryItems = comps.queryItems as [AnyObject]?
+                config.prevQueryItems = comps.queryItems as [Any]?
             }
         }
         if let first = node["first"] {
             if let comps = URLComponents(string: first) {
-                config.firstQueryItems = comps.queryItems as [AnyObject]?
+                config.firstQueryItems = comps.queryItems as [Any]?
             }
         }
         if let last = node["last"] {
             if let comps = URLComponents(string: last) {
-                config.lastQueryItems = comps.queryItems as [AnyObject]?
+                config.lastQueryItems = comps.queryItems as [Any]?
             }
         }
         return config

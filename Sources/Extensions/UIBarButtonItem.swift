@@ -22,7 +22,7 @@ extension UIBarButtonItem {
         return UIBarButtonItem(customView: button)
     }
 
-    class func backChevronWithTarget(_ target: AnyObject, action: Selector) -> UIBarButtonItem {
+    class func backChevronWithTarget(_ target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
         button.setImage(.angleBracket, imageStyle: .normal, for: .normal)
         // rotate 180 degrees to flip
@@ -32,7 +32,7 @@ extension UIBarButtonItem {
         return UIBarButtonItem(customView: button)
     }
 
-    class func closeButton(target: AnyObject, action: Selector) -> UIBarButtonItem {
+    class func closeButton(target: Any, action: Selector) -> UIBarButtonItem {
         let closeItem = UIBarButtonItem(image: InterfaceImage.x.normalImage, style: UIBarButtonItemStyle.plain, target: target, action: action)
         return closeItem
     }
@@ -43,7 +43,7 @@ extension UIBarButtonItem {
         return spacer
     }
 
-    convenience init(image: InterfaceImage, target: AnyObject, action: Selector) {
+    convenience init(image: InterfaceImage, target: Any, action: Selector) {
         let frame = CGRect(x: 0, y: 0, width: 36.0, height: 44.0)
         let button = UIButton(frame: frame)
         button.setImage(image, imageStyle: .normal, for: .normal)

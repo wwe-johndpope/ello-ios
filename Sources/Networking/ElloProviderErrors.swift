@@ -13,11 +13,12 @@ extension ElloProvider {
         var elloNetworkError: ElloNetworkError?
 
         if let data = data {
-            let (mappedJSON, _): (AnyObject?, NSError?) = Mapper.mapJSON(data)
+            let (mappedJSON, _): (Any?, NSError?) = Mapper.mapJSON(data)
+            let dictJSON = mappedJSON as? [String: Any]
 
-            if mappedJSON != nil {
-                if let node = mappedJSON?[MappingType.errorsType.rawValue] as? [String:AnyObject] {
-                    elloNetworkError = Mapper.mapToObject(node as AnyObject?, type: MappingType.errorType) as? ElloNetworkError
+            if dictJSON != nil {
+                if let node = dictJSON?[MappingType.errorsType.rawValue] as? [String: Any] {
+                    elloNetworkError = Mapper.mapToObject(node, type: MappingType.errorType) as? ElloNetworkError
                 }
             }
         }
@@ -32,7 +33,7 @@ extension ElloProvider {
     }
 
     static func failedToSendRequest(_ failure: ElloFailureCompletion) {
-        let elloError = NSError.networkError("Failed to send request" as AnyObject?, code: ElloErrorCode.networkFailure)
+        let elloError = NSError.networkError("Failed to send request", code: ElloErrorCode.networkFailure)
         failure(elloError, nil)
     }
 

@@ -110,7 +110,7 @@ extension PushNotificationController {
         updateBadgeCount(userInfo)
         if !hasAlert(userInfo) { return }
 
-        let payload = PushPayload(info: userInfo as! [String: AnyObject])
+        let payload = PushPayload(info: userInfo as! [String: Any])
         switch application.applicationState {
         case .active:
             NotificationBanner.displayAlert(payload: payload)
@@ -132,7 +132,7 @@ extension PushNotificationController {
     }
 
     func hasAlert(_ userInfo: [AnyHashable: Any]) -> Bool {
-        if let aps = userInfo["aps"] as? [AnyHashable: Any], aps["alert"] is [NSObject: AnyObject]
+        if let aps = userInfo["aps"] as? [AnyHashable: Any], aps["alert"] is [NSObject: Any]
         {
             return true
         }

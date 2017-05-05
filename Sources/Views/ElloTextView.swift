@@ -17,7 +17,7 @@ enum ElloAttributedObject {
     case attributedUserId(userId: String)
     case unknown
 
-    static func generate(_ link: String, _ object: AnyObject?) -> ElloAttributedObject {
+    static func generate(_ link: String, _ object: Any?) -> ElloAttributedObject {
         switch link {
         case "post":
             if let post = object as? Post { return ElloAttributedObject.attributedPost(post: post) }
@@ -68,7 +68,7 @@ class ElloTextView: UITextView {
 
 // MARK: Private
 
-    fileprivate func defaultAttrs() -> [String: AnyObject]  {
+    fileprivate func defaultAttrs() -> [String: Any]  {
         return [
             NSFontAttributeName: self.customFont ?? UIFont.defaultFont(),
             NSForegroundColorAttributeName: UIColor.greyA(),
@@ -111,7 +111,7 @@ class ElloTextView: UITextView {
                     if let style = textStyling(at: pos, in: .forward),
                         let link = style[ElloAttributedText.Link] as? String
                     {
-                        let object: AnyObject? = style[ElloAttributedText.Object] as AnyObject?
+                        let object: Any? = style[ElloAttributedText.Object]
                         let attributedObject = ElloAttributedObject.generate(link, object)
                         textViewDelegate?.textViewTapped(link, object: attributedObject)
                         return

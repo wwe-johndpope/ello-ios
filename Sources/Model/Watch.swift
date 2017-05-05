@@ -72,7 +72,7 @@ final class Watch: JSONAble, PostActionable {
 
 // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         var createdAt: Date
         var updatedAt: Date

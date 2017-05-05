@@ -11,11 +11,11 @@ import Alamofire
 
 class TestObserver {
     var handled = false
-    var object:AnyObject?
+    var object:Any?
 
     func handleNotification(_ note: NSNotification) {
         handled = true
-        object = note.object as AnyObject?
+        object = note.object
     }
 }
 

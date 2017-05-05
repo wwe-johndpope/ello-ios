@@ -109,7 +109,7 @@ final class Activity: JSONAble {
 
 // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         // active record
         let id = json["created_at"].stringValue
@@ -130,7 +130,7 @@ final class Activity: JSONAble {
             subjectType: SubjectType(rawValue: json["subject_type"].stringValue) ?? SubjectType.unknown
         )
         // links
-        activity.links = data["links"] as? [String: AnyObject]
+        activity.links = data["links"] as? [String: Any]
 
         return activity
     }

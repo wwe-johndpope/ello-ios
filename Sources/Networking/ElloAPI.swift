@@ -27,9 +27,9 @@ enum ElloAPI {
     case category(slug: String)
     case categoryPosts(slug: String)
     case commentDetail(postId: String, commentId: String)
-    case createComment(parentPostId: String, body: [String: AnyObject])
+    case createComment(parentPostId: String, body: [String: Any])
     case createLove(postId: String)
-    case createPost(body: [String: AnyObject])
+    case createPost(body: [String: Any])
     case createWatchPost(postId: String)
     case deleteComment(postId: String, commentId: String)
     case deleteLove(postId: String)
@@ -46,7 +46,7 @@ enum ElloAPI {
     case followingNewContent(createdAt: Date?)
     case hire(userId: String, body: String)
     case collaborate(userId: String, body: String)
-    case infiniteScroll(queryItems: [AnyObject], elloApi: () -> ElloAPI)
+    case infiniteScroll(queryItems: [Any], elloApi: () -> ElloAPI)
     case inviteFriends(contact: String)
     case join(email: String, username: String, password: String, invitationCode: String?)
     case loves(userId: String)
@@ -67,7 +67,7 @@ enum ElloAPI {
     case currentUserStream
     case profileDelete
     case profileToggles
-    case profileUpdate(body: [String: AnyObject])
+    case profileUpdate(body: [String: Any])
     case pushSubscriptions(token: Data)
     case reAuth(token: String)
     case rePost(postId: String)
@@ -77,8 +77,8 @@ enum ElloAPI {
     case requestPasswordReset(email: String)
     case searchForUsers(terms: String)
     case searchForPosts(terms: String)
-    case updatePost(postId: String, body: [String: AnyObject])
-    case updateComment(postId: String, commentId: String, body: [String: AnyObject])
+    case updatePost(postId: String, body: [String: Any])
+    case updateComment(postId: String, commentId: String, body: [String: Any])
     case userCategories(categoryIds: [String])
     case userStream(userParam: String)
     case userStreamFollowers(userId: String)
@@ -637,23 +637,23 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .anonymousCredentials:
             return [
-                "client_id": APIKeys.shared.key as AnyObject,
-                "client_secret": APIKeys.shared.secret as AnyObject,
-                "grant_type": "client_credentials" as AnyObject
+                "client_id": APIKeys.shared.key,
+                "client_secret": APIKeys.shared.secret,
+                "grant_type": "client_credentials"
             ]
         case let .auth(email, password):
             return [
-                "client_id": APIKeys.shared.key as AnyObject,
-                "client_secret": APIKeys.shared.secret as AnyObject,
-                "email": email as AnyObject,
-                "password": password as AnyObject,
-                "grant_type": "password" as AnyObject
+                "client_id": APIKeys.shared.key,
+                "client_secret": APIKeys.shared.secret,
+                "email": email,
+                "password": password,
+                "grant_type": "password"
             ]
         case let .availability(content):
-            return content as [String : AnyObject]?
+            return content as [String : Any]?
         case .currentUserProfile:
             return [
-                "post_count": 0 as AnyObject
+                "post_count": 0
             ]
         case let .createComment(_, body):
             return body
@@ -661,19 +661,19 @@ extension ElloAPI: Moya.TargetType {
             return body
         case .categories:
             return [
-                "meta": true as AnyObject,
+                "meta": true,
             ]
         case .categoryPosts,
              .following,
              .postComments,
              .userStreamPosts:
             return [
-                "per_page": 10 as AnyObject,
+                "per_page": 10,
             ]
         case .discover:
             return [
-                "per_page": 10 as AnyObject,
-                "seed": ElloAPI.generateSeed() as AnyObject
+                "per_page": 10,
+                "seed": ElloAPI.generateSeed()
             ]
         case let .findFriends(contacts):
             var hashedContacts = [String: [String]]()
@@ -685,27 +685,27 @@ extension ElloAPI: Moya.TargetType {
                     return accum
                 }
             }
-            return ["contacts": hashedContacts as AnyObject]
+            return ["contacts": hashedContacts]
         case let .hire(_, body):
             return [
-                "body": body as AnyObject
+                "body": body
             ]
         case let .collaborate(_, body):
             return [
-                "body": body as AnyObject
+                "body": body
             ]
         case let .infiniteScroll(queryItems, elloApi):
-            var queryDict = [String: AnyObject]()
+            var queryDict = [String: Any]()
             for item in queryItems {
                 if let item = item as? URLQueryItem {
-                    queryDict[item.name] = item.value as AnyObject?
+                    queryDict[item.name] = item.value
                 }
             }
-            var origDict = elloApi().parameters ?? [String: AnyObject]()
+            var origDict = elloApi().parameters ?? [String: Any]()
             origDict.merge(queryDict)
             return origDict
         case let .inviteFriends(contact):
-            return ["email": contact as AnyObject]
+            return ["email": contact]
         case let .join(email, username, password, invitationCode):
             var params = [
                 "email": email,
@@ -716,20 +716,20 @@ extension ElloAPI: Moya.TargetType {
             if let invitationCode = invitationCode {
                 params["invitation_code"] = invitationCode
             }
-            return params as [String : AnyObject]?
+            return params as [String : Any]?
         case let .locationAutoComplete(terms):
             return [
-                "location": terms as AnyObject
+                "location": terms
             ]
         case let .notificationsStream(category):
-            var params: [String: AnyObject] = ["per_page": 10 as AnyObject]
+            var params: [String: Any] = ["per_page": 10]
             if let category = category {
-                params["category"] = category as AnyObject?
+                params["category"] = category
             }
             return params
         case let .postDetail(_, commentCount):
             return [
-                "comment_count": commentCount as AnyObject
+                "comment_count": commentCount
             ]
         case .postRelatedPosts:
             return [
@@ -747,7 +747,7 @@ extension ElloAPI: Moya.TargetType {
             ] + streamIdDict + userIdDict
         case .currentUserStream:
             return [
-                "post_count": 10 as AnyObject
+                "post_count": 10
             ]
         case let .profileUpdate(body):
             return body
@@ -770,24 +770,24 @@ extension ElloAPI: Moya.TargetType {
             }
 
             return [
-                "bundle_identifier": bundleIdentifier as AnyObject,
-                "marketing_version": bundleShortVersionString as AnyObject,
-                "build_version": bundleVersion as AnyObject
+                "bundle_identifier": bundleIdentifier,
+                "marketing_version": bundleShortVersionString,
+                "build_version": bundleVersion
             ]
         case let .reAuth(refreshToken):
             return [
-                "client_id": APIKeys.shared.key as AnyObject,
-                "client_secret": APIKeys.shared.secret as AnyObject,
-                "grant_type": "refresh_token" as AnyObject,
-                "refresh_token": refreshToken as AnyObject
+                "client_id": APIKeys.shared.key,
+                "client_secret": APIKeys.shared.secret,
+                "grant_type": "refresh_token",
+                "refresh_token": refreshToken
             ]
         case let .relationshipBatch(userIds, relationship):
             return [
-                "user_ids": userIds as AnyObject,
-                "priority": relationship as AnyObject
+                "user_ids": userIds,
+                "priority": relationship
             ]
         case let .rePost(postId):
-            return [ "repost_id": Int(postId) as AnyObject? ?? -1 as AnyObject ]
+            return [ "repost_id": Int(postId) ?? -1 ]
         case let .resetPassword(password, token):
             return [
                 "password": password,
@@ -797,13 +797,13 @@ extension ElloAPI: Moya.TargetType {
             return [ "email": email ]
         case let .searchForPosts(terms):
             return [
-                "terms": terms as AnyObject,
-                "per_page": 10 as AnyObject
+                "terms": terms,
+                "per_page": 10
             ]
         case let .searchForUsers(terms):
             return [
-                "terms": terms as AnyObject,
-                "per_page": 10 as AnyObject
+                "terms": terms,
+                "per_page": 10
             ]
         case let .updatePost(_, body):
             return body
@@ -811,15 +811,15 @@ extension ElloAPI: Moya.TargetType {
             return body
         case let .userCategories(categoryIds):
             return [
-                "followed_category_ids": categoryIds as AnyObject,
+                "followed_category_ids": categoryIds,
             ]
         case let .userNameAutoComplete(terms):
             return [
-                "terms": terms as AnyObject
+                "terms": terms
             ]
         case .userStream:
             return [
-                "post_count": "false" as AnyObject
+                "post_count": "false"
             ]
         default:
             return nil

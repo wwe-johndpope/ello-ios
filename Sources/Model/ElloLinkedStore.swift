@@ -26,7 +26,7 @@ struct ElloLinkedStore {
         writeConnection = database.newConnection()
     }
 
-    func parseLinked(_ linked: [String:[[String: AnyObject]]], completion: @escaping ElloEmptyCompletion) {
+    func parseLinked(_ linked: [String:[[String: Any]]], completion: @escaping ElloEmptyCompletion) {
         if AppSetup.sharedState.isTesting {
             parseLinkedSync(linked)
             completion()
@@ -122,11 +122,11 @@ private extension ElloLinkedStore {
         return path
     }
 
-    func parseLinkedSync(_ linked: [String: [[String: AnyObject]]]) {
-        for (type, typeObjects): (String, [[String: AnyObject]]) in linked {
+    func parseLinkedSync(_ linked: [String: [[String: Any]]]) {
+        for (type, typeObjects): (String, [[String: Any]]) in linked {
             guard let mappingType = MappingType(rawValue: type) else { continue }
 
-            for object: [String: AnyObject] in typeObjects {
+            for object: [String: Any] in typeObjects {
                 guard let id = object["id"] as? String else { continue }
 
                 let jsonable = mappingType.fromJSON(object)

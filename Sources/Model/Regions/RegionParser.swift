@@ -7,7 +7,7 @@ import SwiftyJSON
 struct RegionParser {
 
     static func regions(_ key: String, json: JSON, isRepostContent: Bool = false) -> [Regionable] {
-        if let content = json[key].object as? [[String: AnyObject]] {
+        if let content = json[key].object as? [[String: Any]] {
             return content.map { (contentDict) -> Regionable in
                 let kind = RegionKind(rawValue: contentDict["kind"] as! String) ?? RegionKind.unknown
                 let regionable: Regionable

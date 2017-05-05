@@ -8,17 +8,17 @@ import PINRemoteImage
 
 class OmnibarViewController: BaseElloViewController {
     override func trackerName() -> String? { return "Omnibar" }
-    override func trackerProps() -> [String: AnyObject]? {
+    override func trackerProps() -> [String: Any]? {
         if parentPostId != nil {
-            return ["creating": "comment" as AnyObject]
+            return ["creating": "comment"]
         }
         if editPost != nil {
-            return ["editing": "post" as AnyObject]
+            return ["editing": "post"]
         }
         if editComment != nil {
-            return ["editing": "post" as AnyObject]
+            return ["editing": "post"]
         }
-        return ["creating": "post" as AnyObject]
+        return ["creating": "post"]
     }
 
     override var tabBarItem: UITabBarItem? {
@@ -431,7 +431,7 @@ extension OmnibarViewController {
             })
     }
 
-    fileprivate func emitSuccess(_ postOrComment: AnyObject, didGoToPreviousTab: Bool) {
+    fileprivate func emitSuccess(_ postOrComment: Any, didGoToPreviousTab: Bool) {
         if let comment = postOrComment as? ElloComment {
             self.emitCommentSuccess(comment)
         }

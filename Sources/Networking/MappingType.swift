@@ -88,7 +88,7 @@ class UnknownJSONAble: JSONAble {
         self.init(version: UnknownJSONAbleVersion)
     }
 
-    override class func fromJSON(_ data: [String : AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String : Any]) -> JSONAble {
         return UnknownJSONAble()
     }
 }

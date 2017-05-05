@@ -27,13 +27,13 @@ class CategorySpec: QuickSpec {
 
             describe("+fromJSON(:)") {
                 it("parses correctly") {
-                    let data: [String: AnyObject] = [
-                        "id": "1" as AnyObject,
-                        "name": "Featured" as AnyObject,
-                        "slug": "featured" as AnyObject,
-                        "order": 0 as AnyObject,
-                        "uses_page_promotionals": true as AnyObject,
-                        "level": "primary" as AnyObject
+                    let data: [String: Any] = [
+                        "id": "1",
+                        "name": "Featured",
+                        "slug": "featured",
+                        "order": 0,
+                        "uses_page_promotionals": true,
+                        "level": "primary"
                     ]
                     let category = Category.fromJSON(data) as? Ello.Category
                     expect(category?.id) == "1"

@@ -47,7 +47,7 @@ final class LocalPerson: JSONAble {
     }
 
     // this shouldn't ever get called
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         return LocalPerson(name: "Unknown", emails: ["unknown@example.com"], id: "unknown")
     }
 }

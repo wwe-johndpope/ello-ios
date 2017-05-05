@@ -200,15 +200,15 @@ class CredentialSettingsViewController: UITableViewController {
     }
 
     @IBAction func saveButtonTapped() {
-        var content: [String: AnyObject] = [
-            "username": username as AnyObject,
-            "email": email as AnyObject,
-            "current_password": currentPassword as AnyObject
+        var content: [String: Any] = [
+            "username": username,
+            "email": email,
+            "current_password": currentPassword
         ]
 
         if !currentPassword.isEmpty {
-            content["password"] = password as AnyObject?
-            content["password_confirmation"] = password as AnyObject?
+            content["password"] = password
+            content["password_confirmation"] = password
         }
 
         ProfileService().updateUserProfile(content, success: { [weak self] user in

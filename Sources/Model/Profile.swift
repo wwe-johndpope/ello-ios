@@ -252,7 +252,7 @@ final class Profile: JSONAble {
 
 // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         // create profile
         let profile = Profile(

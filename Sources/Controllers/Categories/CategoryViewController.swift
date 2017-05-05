@@ -4,8 +4,8 @@
 
 final class CategoryViewController: StreamableViewController {
     override func trackerName() -> String? { return "Discover" }
-    override func trackerProps() -> [String: AnyObject]? {
-        return ["category": slug as AnyObject]
+    override func trackerProps() -> [String: Any]? {
+        return ["category": slug]
     }
     override func trackerStreamInfo() -> (String, String?)? {
         if let streamId = category?.id {

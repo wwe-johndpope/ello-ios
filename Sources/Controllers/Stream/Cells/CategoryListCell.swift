@@ -28,7 +28,7 @@ class CategoryListCell: UICollectionViewCell {
     fileprivate var categoryButtons: [UIButton] = []
 
     fileprivate class func buttonTitle(_ category: String) -> NSAttributedString {
-        let attrs: [String: AnyObject] = [
+        let attrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(),
             NSForegroundColorAttributeName: UIColor.black
         ]

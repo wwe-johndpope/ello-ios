@@ -138,7 +138,7 @@ final class Category: JSONAble, Groupable {
         return other
     }
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let name = json["name"].stringValue
@@ -148,8 +148,8 @@ final class Category: JSONAble, Groupable {
         let level: CategoryLevel = CategoryLevel(rawValue: json["level"].stringValue) ?? .unknown
         let usesPagePromo = json["uses_page_promotionals"].bool ?? (level == .meta)
         let tileImage: Attachment?
-        if let assetJson = json["tile_image"].object as? [String: AnyObject],
-            let attachmentJson = DeviceScreen.isRetina ? (assetJson["large"] as? [String: AnyObject]) : (assetJson["small"] as? [String: AnyObject])
+        if let assetJson = json["tile_image"].object as? [String: Any],
+            let attachmentJson = DeviceScreen.isRetina ? (assetJson["large"] as? [String: Any]) : (assetJson["small"] as? [String: Any])
         {
             tileImage = Attachment.fromJSON(attachmentJson) as? Attachment
         }
@@ -167,7 +167,7 @@ final class Category: JSONAble, Groupable {
         let category = Category(id: id, name: name, slug: slug, order: order, allowInOnboarding: allowInOnboarding, usesPagePromo: usesPagePromo, level: level, tileImage: tileImage)
 
         // links
-        category.links = data["links"] as? [String: AnyObject]
+        category.links = data["links"] as? [String: Any]
         category.isSponsored = isSponsored
         category.body = body
         category.header = header

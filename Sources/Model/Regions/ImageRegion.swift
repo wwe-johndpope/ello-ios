@@ -54,7 +54,7 @@ final class ImageRegion: JSONAble, Regionable {
 
 // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         // create region
         let imageRegion = ImageRegion(
@@ -71,7 +71,7 @@ final class ImageRegion: JSONAble, Regionable {
             imageRegion.buyButtonURL = URL(string: urlStr)
         }
         // links
-        imageRegion.links = data["links"] as? [String: AnyObject]
+        imageRegion.links = data["links"] as? [String: Any]
         return imageRegion
     }
 
@@ -83,26 +83,26 @@ final class ImageRegion: JSONAble, Regionable {
         return self
     }
 
-    func toJSON() -> [String: AnyObject] {
-        var json: [String: AnyObject]
+    func toJSON() -> [String: Any] {
+        var json: [String: Any]
         if let url = self.url?.absoluteString {
             json = [
-                "kind": self.kind as AnyObject,
+                "kind": self.kind,
                 "data": [
                     "alt": alt ?? "",
                     "url": url
-                ] as AnyObject,
+                ],
             ]
         }
         else {
             json = [
-                "kind": self.kind as AnyObject,
-                "data": [:] as AnyObject
+                "kind": self.kind,
+                "data": [:]
             ]
         }
 
         if let buyButtonURL = buyButtonURL {
-            json["link_url"] = buyButtonURL.absoluteString as AnyObject?
+            json["link_url"] = buyButtonURL.absoluteString
         }
         return json
     }

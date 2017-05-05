@@ -8,8 +8,8 @@ import SwiftyUserDefaults
 
 class FollowingViewController: StreamableViewController {
     override func trackerName() -> String? { return "Stream" }
-    override func trackerProps() -> [String: AnyObject]? {
-        return ["kind": "Following" as AnyObject]
+    override func trackerProps() -> [String: Any]? {
+        return ["kind": "Following"]
     }
     override func trackerStreamInfo() -> (String, String?)? {
         return ("following", nil)

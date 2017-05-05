@@ -4,11 +4,11 @@
 
 struct Mapper {
 
-    static func mapJSON(_ data: Data) -> (AnyObject?, NSError?) {
+    static func mapJSON(_ data: Data) -> (Any?, NSError?) {
         var error: NSError?
-        var json: AnyObject?
+        var json: Any?
         do {
-            json = try JSONSerialization.jsonObject(with: data) as AnyObject
+            json = try JSONSerialization.jsonObject(with: data)
         } catch let error1 as NSError {
             error = error1
             json = nil
@@ -22,7 +22,7 @@ struct Mapper {
         return (json, error)
     }
 
-    static func mapToObjectArray(_ dicts: [[String: AnyObject]], type mappingType: MappingType) -> [JSONAble] {
+    static func mapToObjectArray(_ dicts: [[String: Any]], type mappingType: MappingType) -> [JSONAble] {
         let fromJSON = mappingType.fromJSON
         return dicts.map { data in
             let jsonable = fromJSON(data)
@@ -33,9 +33,9 @@ struct Mapper {
         }
     }
 
-    static func mapToObject(_ object: AnyObject?, type mappingType: MappingType) -> JSONAble? {
+    static func mapToObject(_ object: Any?, type mappingType: MappingType) -> JSONAble? {
         let fromJSON = mappingType.fromJSON
-        return (object as? [String: AnyObject]).flatMap { data in
+        return (object as? [String: Any]).flatMap { data in
             let jsonable = fromJSON(data)
             if let id = (jsonable as? JSONSaveable)?.tableId {
                 ElloLinkedStore.sharedInstance.saveObject(jsonable, id: id, type: mappingType)

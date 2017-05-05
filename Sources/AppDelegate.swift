@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupGlobalStyles()
         setupCaches()
 
-        if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: AnyObject] {
+        if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
             log(comment: "notification received \(Date())", object: payload)
             PushNotificationController.sharedController.receivedNotification(application, userInfo: payload)
         }

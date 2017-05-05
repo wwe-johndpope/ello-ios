@@ -30,7 +30,7 @@ class TwoLineButton: UIButton {
 
     // MARK: Private
 
-    fileprivate func attributes(_ color: UIColor, font: UIFont, underline: Bool = false) -> [String : AnyObject] {
+    fileprivate func attributes(_ color: UIColor, font: UIFont, underline: Bool = false) -> [String : Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         paragraphStyle.alignment = .left
@@ -39,7 +39,7 @@ class TwoLineButton: UIButton {
             NSFontAttributeName: font,
             NSForegroundColorAttributeName: color,
             NSParagraphStyleAttributeName: paragraphStyle,
-            NSUnderlineStyleAttributeName: (underline ? NSUnderlineStyle.styleSingle.rawValue : NSUnderlineStyle.styleNone.rawValue) as AnyObject
+            NSUnderlineStyleAttributeName: (underline ? NSUnderlineStyle.styleSingle.rawValue : NSUnderlineStyle.styleNone.rawValue)
         ]
     }
 

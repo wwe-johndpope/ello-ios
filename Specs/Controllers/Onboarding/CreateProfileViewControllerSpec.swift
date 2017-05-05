@@ -170,7 +170,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
                 }
             }
             context("only submits changed data") {
-                var props: [String: AnyObject] = [:]
+                var props: [String: Any] = [:]
                 beforeEach {
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
                         RecordedResponse(endpoint: .profileUpdate(body: [:]), responseClosure: { target in

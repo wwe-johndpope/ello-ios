@@ -84,7 +84,7 @@ final class EmbedRegion: JSONAble, Regionable {
 
     // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         // create region
         let embedRegion = EmbedRegion(
@@ -105,12 +105,12 @@ final class EmbedRegion: JSONAble, Regionable {
         return self
     }
 
-    func toJSON() -> [String: AnyObject] {
+    func toJSON() -> [String: Any] {
         return [
-            "kind": self.kind as AnyObject,
+            "kind": self.kind,
             "data": [
                 "url": self.url.absoluteString
-                ] as AnyObject,
+                ],
         ]
     }
 }

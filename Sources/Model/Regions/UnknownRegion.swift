@@ -28,7 +28,7 @@ final class UnknownRegion: NSObject, Regionable, NSCoding {
 
     }
 
-    func toJSON() -> [String: AnyObject] {
+    func toJSON() -> [String: Any] {
         return [:]
     }
 }

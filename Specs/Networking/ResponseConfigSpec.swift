@@ -14,7 +14,7 @@ class ResponseConfigSpec: QuickSpec {
                 it("returns true") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = "0"
-                    config.nextQueryItems = ["Foo" as AnyObject]
+                    config.nextQueryItems = ["Foo"]
 
                     expect(config.isOutOfData()).to(beTrue())
                 }
@@ -24,7 +24,7 @@ class ResponseConfigSpec: QuickSpec {
                 it("returns true") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = .none
-                    config.nextQueryItems = ["Foo" as AnyObject]
+                    config.nextQueryItems = ["Foo"]
 
                     expect(config.isOutOfData()).to(beTrue())
                 }
@@ -54,7 +54,7 @@ class ResponseConfigSpec: QuickSpec {
                 it("returns false") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = "1"
-                    config.nextQueryItems = ["Foo" as AnyObject]
+                    config.nextQueryItems = ["Foo"]
 
                     expect(config.isOutOfData()).to(beFalse())
                 }

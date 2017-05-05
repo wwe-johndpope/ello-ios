@@ -265,7 +265,7 @@ final class User: JSONAble {
         return other
     }
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         // create user
         let user = User(
@@ -286,7 +286,7 @@ final class User: JSONAble {
         )
 
         // optional
-        user.avatar = Asset.parseAsset("user_avatar_\(user.id)", node: data["avatar"] as? [String: AnyObject])
+        user.avatar = Asset.parseAsset("user_avatar_\(user.id)", node: data["avatar"] as? [String: Any])
         user.identifiableBy = json["identifiable_by"].stringValue
         user.postsCount = json["posts_count"].int
         user.lovesCount = json["loves_count"].int
@@ -298,13 +298,13 @@ final class User: JSONAble {
             let externalLinks = links.flatMap { $0.dictionaryObject as? [String: String] }
             user.externalLinksList = externalLinks.flatMap { ExternalLink.fromDict($0) }
         }
-        user.coverImage = Asset.parseAsset("user_cover_image_\(user.id)", node: data["cover_image"] as? [String: AnyObject])
+        user.coverImage = Asset.parseAsset("user_cover_image_\(user.id)", node: data["cover_image"] as? [String: Any])
         user.backgroundPosition = json["background_positiion"].stringValue
         if let webOnboardingVersion = json["web_onboarding_version"].string {
             user.onboardingVersion = Int(webOnboardingVersion)
         }
         // links
-        user.links = data["links"] as? [String: AnyObject]
+        user.links = data["links"] as? [String: Any]
         // profile
         if (json["created_at"].stringValue).characters.count > 0 {
             user.profile = Profile.fromJSON(data) as? Profile

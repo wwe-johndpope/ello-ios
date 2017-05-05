@@ -293,7 +293,7 @@ class Tag: CustomStringConvertible {
     }
 
     fileprivate func attrd(_ text: String, addlAttrs: [String: Any] = [:]) -> NSAttributedString {
-        let defaultAttrs: [String: AnyObject] = [
+        let defaultAttrs: [String: Any] = [
             NSFontAttributeName: UIFont.editorFont(),
             NSForegroundColorAttributeName: UIColor.black,
         ]

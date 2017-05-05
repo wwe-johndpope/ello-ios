@@ -14,12 +14,12 @@ class ElloLinkedStoreSpec: QuickSpec {
             it("parses 'linked' and adds objects to Store") {
                 let linked = [
                     "superheroes":[
-                        ["id":"batman" as AnyObject],
-                        ["id":"superman" as AnyObject]
+                        ["id": "batman"],
+                        ["id": "superman"]
                     ],
                     "villians":[
-                        ["id":"joker" as AnyObject],
-                        ["id":"lex luther" as AnyObject]
+                        ["id": "joker"],
+                        ["id": "lex luther"]
                     ]
                 ]
                 ElloLinkedStore.sharedInstance.parseLinked(linked, completion: {})

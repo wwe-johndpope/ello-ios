@@ -64,7 +64,7 @@ final class PostDetailGenerator: StreamGenerator {
         loadRelatedPosts(doneOperation)
     }
 
-    func loadMoreComments(nextQueryItems: [AnyObject]) {
+    func loadMoreComments(nextQueryItems: [Any]) {
         guard let postId = self.post?.id else { return }
 
         let loadingComments = [StreamCellItem(type: .streamLoading)]

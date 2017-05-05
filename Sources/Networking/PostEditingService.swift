@@ -59,7 +59,7 @@ func == (lhs: ImageRegionData, rhs: ImageRegionData) -> Bool {
 
 class PostEditingService {
     // this can return either a Post or Comment
-    typealias CreatePostSuccessCompletion = (_ post: AnyObject) -> Void
+    typealias CreatePostSuccessCompletion = (_ post: Any) -> Void
     typealias UploadImagesSuccessCompletion = ([(Int, ImageRegion)]) -> Void
 
     enum PostContentRegion {
@@ -147,7 +147,7 @@ class PostEditingService {
 
         ElloProvider.shared.elloRequest(endpoint,
             success: { data, responseConfig in
-                let post: AnyObject = data
+                let post: Any = data
 
                 switch endpoint {
                 case .createComment:
@@ -160,7 +160,7 @@ class PostEditingService {
                     break
                 }
 
-                success(post as AnyObject)
+                success(post)
             },
             failure: failure
         )

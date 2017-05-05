@@ -48,7 +48,7 @@ class ImageRegionSpec: QuickSpec {
 
                 data["url"] = urlString.replacingOccurrences(of: "https://", with: "//")
                 expect(data["url"]) == "//example.com/test.jpg"
-                imageRegionData["data"] = data as AnyObject
+                imageRegionData["data"] = data
                 let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"

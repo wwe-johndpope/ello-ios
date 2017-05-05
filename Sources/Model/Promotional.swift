@@ -45,19 +45,19 @@ final class Promotional: JSONAble {
         super.encode(with: coder)
     }
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let userId = json["user_id"].stringValue
         let categoryId = json["category_id"].stringValue
 
-        let image = Asset.parseAsset(id, node: data["image"] as? [String: AnyObject])
+        let image = Asset.parseAsset(id, node: data["image"] as? [String: Any])
 
         let promotional = Promotional(id: id, userId: userId, categoryId: categoryId)
         promotional.image = image
 
         // links
-        promotional.links = data["links"] as? [String: AnyObject]
+        promotional.links = data["links"] as? [String: Any]
 
         return promotional
     }

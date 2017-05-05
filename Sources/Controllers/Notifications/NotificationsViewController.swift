@@ -5,9 +5,9 @@
 
 class NotificationsViewController: StreamableViewController, NotificationsScreenDelegate {
     override func trackerName() -> String? { return "Notifications" }
-    override func trackerProps() -> [String: AnyObject]? {
+    override func trackerProps() -> [String: Any]? {
         if let category = categoryFilterType.category {
-            return ["filter": category as AnyObject]
+            return ["filter": category]
         }
         return nil
     }

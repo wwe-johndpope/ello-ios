@@ -72,7 +72,7 @@ final class Announcement: JSONAble, Groupable {
         super.encode(with: coder)
     }
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         let id = json["id"].stringValue
         let isStaffPreview = json["is_staff_preview"].boolValue
@@ -90,7 +90,7 @@ final class Announcement: JSONAble, Groupable {
             ctaCaption: ctaCaption,
             createdAt: createdAt
             )
-        announcement.image = Asset.parseAsset("image_\(id)", node: data["image"] as? [String: AnyObject])
+        announcement.image = Asset.parseAsset("image_\(id)", node: data["image"] as? [String: Any])
         return announcement
     }
 }

@@ -316,7 +316,7 @@ extension Tracker {
 extension UIViewController {
     // return 'nil' to disable tracking, e.g. in StreamViewController
     func trackerName() -> String? { return readableClassName() }
-    func trackerProps() -> [String: AnyObject]? { return nil }
+    func trackerProps() -> [String: Any]? { return nil }
 
     func trackScreenAppeared() {
         Tracker.shared.screenAppeared(self)
@@ -338,7 +338,7 @@ extension Tracker {
         }
     }
 
-    func screenAppeared(_ name: String, properties: [String: AnyObject]? = nil) {
+    func screenAppeared(_ name: String, properties: [String: Any]? = nil) {
         if let properties = properties {
             screen("Screen \(name)", properties: properties)
         }
@@ -409,7 +409,7 @@ extension Tracker {
 
 // MARK: Content Actions
 extension Tracker {
-    fileprivate func regionDetails(_ regions: [Regionable]?) -> [String: AnyObject] {
+    fileprivate func regionDetails(_ regions: [Regionable]?) -> [String: Any] {
         guard let regions = regions else {
             return [:]
         }
@@ -426,9 +426,9 @@ extension Tracker {
         }
 
         return [
-            "total_regions": regions.count as AnyObject,
-            "image_regions": imageCount as AnyObject,
-            "text_length": textLength as AnyObject
+            "total_regions": regions.count,
+            "image_regions": imageCount,
+            "text_length": textLength
         ]
     }
 

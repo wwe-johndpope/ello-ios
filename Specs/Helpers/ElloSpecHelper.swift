@@ -61,26 +61,26 @@ func specImage(named name: String) -> UIImage? {
     return UIImage(named: name, in: Bundle(for: ElloConfiguration.self), compatibleWith: nil)!
 }
 
-func stubbedJSONData(_ file: String, _ propertyName: String) -> ([String: AnyObject]) {
+func stubbedJSONData(_ file: String, _ propertyName: String) -> ([String: Any]) {
     let loadedData: Data = stubbedData(file)
-    let json: AnyObject = try! JSONSerialization.jsonObject(with: loadedData, options: []) as AnyObject
+    let json: Any = try! JSONSerialization.jsonObject(with: loadedData, options: [])
 
-    var castJSON = json as! [String: AnyObject]
-    let parsedProperty = castJSON[propertyName] as! [String:AnyObject]
-    if let linkedJSON = castJSON["linked"] as? [String:[[String:AnyObject]]] {
+    var castJSON = json as! [String: Any]
+    let parsedProperty = castJSON[propertyName] as! [String:Any]
+    if let linkedJSON = castJSON["linked"] as? [String:[[String:Any]]] {
         ElloLinkedStore.sharedInstance.parseLinked(linkedJSON, completion: {})
     }
 
     return parsedProperty
 }
 
-func stubbedJSONDataArray(_ file: String, _ propertyName: String) -> [[String: AnyObject]] {
+func stubbedJSONDataArray(_ file: String, _ propertyName: String) -> [[String: Any]] {
     let loadedData: Data = stubbedData(file)
-    let json: AnyObject = try! JSONSerialization.jsonObject(with: loadedData, options: []) as AnyObject
+    let json: Any = try! JSONSerialization.jsonObject(with: loadedData, options: [])
 
-    var castJSON:[String:AnyObject] = json as! [String: AnyObject]
-    let parsedProperty = castJSON[propertyName] as! [[String:AnyObject]]
-    if let linkedJSON = castJSON["linked"] as? [String:[[String:AnyObject]]] {
+    var castJSON:[String:Any] = json as! [String: Any]
+    let parsedProperty = castJSON[propertyName] as! [[String:Any]]
+    if let linkedJSON = castJSON["linked"] as? [String:[[String:Any]]] {
         ElloLinkedStore.sharedInstance.parseLinked(linkedJSON, completion: {})
     }
 

@@ -39,9 +39,9 @@ class OnboardingSpec: QuickSpec {
                         }
                         let onboarding = Onboarding()
 
-                        var props: [String: AnyObject] = [:]
+                        var props: [String: Any] = [:]
                         if case let .some(webIsCurrent) = webIsCurrent {
-                            props["onboardingVersion"] = (webIsCurrent ? 1 : 0) as AnyObject
+                            props["onboardingVersion"] = (webIsCurrent ? 1 : 0)
                         }
                         let user: User = stub(props)
 

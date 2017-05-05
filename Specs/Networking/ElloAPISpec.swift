@@ -116,9 +116,9 @@ class ElloAPISpec: QuickSpec {
                     (.availability(content: ["":""]), .availabilityType),
                     (.commentDetail(postId: "", commentId: ""), .commentsType),
                     (.categories, .categoriesType),
-                    (.createComment(parentPostId: "", body: ["": "" as AnyObject]), .commentsType),
+                    (.createComment(parentPostId: "", body: ["": ""]), .commentsType),
                     (.createLove(postId: ""), .lovesType),
-                    (.createPost(body: ["": "" as AnyObject]), .postsType),
+                    (.createPost(body: ["": ""]), .postsType),
                     (.currentUserProfile, .usersType),
                     (.currentUserStream, .usersType),
                     (.deleteComment(postId: "", commentId: ""), .noContentType),
@@ -135,7 +135,7 @@ class ElloAPISpec: QuickSpec {
                     (.flagPost(postId: "", kind: ""), .noContentType),
                     (.following, .postsType),
                     (.followingNewContent(createdAt: nil), .noContentType),
-                    (.infiniteScroll(queryItems: ["" as AnyObject], elloApi: { return ElloAPI.amazonCredentials }), .amazonCredentialsType),
+                    (.infiniteScroll(queryItems: [""], elloApi: { return ElloAPI.amazonCredentials }), .amazonCredentialsType),
                     (.inviteFriends(contact: ""), .noContentType),
                     (.join(email: "", username: "", password: "", invitationCode: ""), .usersType),
                     (.loves(userId: ""), .lovesType),
@@ -148,7 +148,7 @@ class ElloAPISpec: QuickSpec {
                     (.postReposters(postId: ""), .usersType),
                     (.profileDelete, .noContentType),
                     (.profileToggles, .dynamicSettingsType),
-                    (.profileUpdate(body: ["": "" as AnyObject]), .usersType),
+                    (.profileUpdate(body: ["": ""]), .usersType),
                     (.pushSubscriptions(token: Data()), .noContentType),
                     (.reAuth(token: ""), .noContentType),
                     (.rePost(postId: ""), .postsType),
@@ -156,8 +156,8 @@ class ElloAPISpec: QuickSpec {
                     (.relationshipBatch(userIds: [""], relationship: ""), .noContentType),
                     (.searchForUsers(terms: ""), .usersType),
                     (.searchForPosts(terms: ""), .postsType),
-                    (.updatePost(postId: "", body: ["": "" as AnyObject]), .postsType),
-                    (.updateComment(postId: "", commentId: "", body: ["": "" as AnyObject]), .commentsType),
+                    (.updatePost(postId: "", body: ["": ""]), .postsType),
+                    (.updateComment(postId: "", commentId: "", body: ["": ""]), .commentsType),
                     (.userCategories(categoryIds: [""]), .noContentType),
                     (.userStream(userParam: ""), .usersType),
                     (.userStream(userParam: currentUserId), .usersType),
@@ -212,10 +212,10 @@ class ElloAPISpec: QuickSpec {
                         .flagPost(postId: "", kind: ""),
                         .followingNewContent(createdAt: nil),
                         .following,
-                        .infiniteScroll(queryItems: ["" as AnyObject], elloApi: { () -> ElloAPI in
+                        .infiniteScroll(queryItems: [""], elloApi: { () -> ElloAPI in
                             return ElloAPI.auth(email: "", password: "")
                         }),
-                        .infiniteScroll(queryItems: ["" as AnyObject], elloApi: { () -> ElloAPI in
+                        .infiniteScroll(queryItems: [""], elloApi: { () -> ElloAPI in
                             return ElloAPI.following
                         }),
                         .inviteFriends(contact: ""),
@@ -293,7 +293,7 @@ class ElloAPISpec: QuickSpec {
                         .flagComment(postId: "", commentId: "", kind: ""),
                         .flagPost(postId: "", kind: ""),
                         .following,
-                        .infiniteScroll(queryItems: ["" as AnyObject], elloApi: { () -> ElloAPI in
+                        .infiniteScroll(queryItems: [""], elloApi: { () -> ElloAPI in
                             return ElloAPI.following
                         }),
                         .inviteFriends(contact: ""),
@@ -353,12 +353,12 @@ class ElloAPISpec: QuickSpec {
 
                 it("CreateComment") {
                     let content = ["text": "my sweet comment content"]
-                    expect(ElloAPI.createComment(parentPostId: "id", body: content as [String : AnyObject]).parameters as? [String: String]) == content
+                    expect(ElloAPI.createComment(parentPostId: "id", body: content as [String : Any]).parameters as? [String: String]) == content
                 }
 
                 it("CreatePost") {
                     let content = ["text": "my sweet post content"]
-                    expect(ElloAPI.createPost(body: content as [String : AnyObject]).parameters as? [String: String]) == content
+                    expect(ElloAPI.createPost(body: content as [String : Any]).parameters as? [String: String]) == content
                 }
 
                 it("Discover") {
@@ -383,7 +383,7 @@ class ElloAPISpec: QuickSpec {
 
                 it("InfiniteScroll") {
                     let queryItems = NSURLComponents(string: "ttp://ello.co/api/v2/posts/278/comments?after=2014-06-02T00%3A00%3A00.000000000%2B0000&per_page=2")!.queryItems
-                    let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [AnyObject]) { return ElloAPI.discover(type: .featured) }
+                    let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [Any]) { return ElloAPI.discover(type: .featured) }
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
                     expect(params["seed"]).notTo(beNil())

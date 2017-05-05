@@ -93,7 +93,7 @@ final class ElloComment: JSONAble, Authorable, Groupable {
 
 // MARK: JSONAble
 
-    override class func fromJSON(_ data: [String: AnyObject]) -> JSONAble {
+    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
         // create comment
         var createdAt: Date
@@ -116,7 +116,7 @@ final class ElloComment: JSONAble, Authorable, Groupable {
         comment.body = RegionParser.regions("body", json: json)
         comment.summary = RegionParser.regions("summary", json: json)
         // links
-        comment.links = data["links"] as? [String: AnyObject]
+        comment.links = data["links"] as? [String: Any]
 
         return comment
     }

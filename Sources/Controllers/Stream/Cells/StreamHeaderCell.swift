@@ -135,7 +135,7 @@ class StreamHeaderCell: UICollectionViewCell {
             let categoryName = NSAttributedString(string: category.name, attributes: [
                 NSFontAttributeName: UIFont.defaultFont(),
                 NSForegroundColorAttributeName: UIColor.greyA(),
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject,
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
                 ])
             categoryButton.setAttributedTitle(attributedString + categoryName, for: .normal)
             categoryButton.isHidden = false

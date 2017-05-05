@@ -28,7 +28,7 @@ struct ProfileService {
             failure: failure )
     }
 
-    func updateUserProfile(_ content: [String: AnyObject], success: @escaping ProfileSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func updateUserProfile(_ content: [String: Any], success: @escaping ProfileSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         ElloProvider.shared.elloRequest(ElloAPI.profileUpdate(body: content),
             success: { data, responseConfig in
                 if let user = data as? User {
@@ -43,7 +43,7 @@ struct ProfileService {
 
     func updateUserCoverImage(
         _ image: ImageRegionData,
-        properties: [String: AnyObject] = [:],
+        properties: [String: Any] = [:],
         success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         updateUserImage(image, key: "remote_cover_image_url", properties: properties, success: { (url, user) in
             user.updateDefaultImages(avatarURL: nil, coverImageURL: url)
@@ -54,7 +54,7 @@ struct ProfileService {
 
     func updateUserAvatarImage(
         _ image: ImageRegionData,
-        properties: [String: AnyObject] = [:],
+        properties: [String: Any] = [:],
         success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         updateUserImage(image, key: "remote_avatar_url", properties: properties, success: { (url, user) in
             user.updateDefaultImages(avatarURL: url, coverImageURL: nil)
@@ -66,7 +66,7 @@ struct ProfileService {
     func updateUserImages(
         avatarImage: ImageRegionData?,
         coverImage: ImageRegionData?,
-        properties: [String: AnyObject] = [:],
+        properties: [String: Any] = [:],
         success: @escaping ProfileUploadBothSuccessCompletion,
         failure: @escaping ElloFailureCompletion
     ) {
@@ -79,16 +79,16 @@ struct ProfileService {
                 failure(error, statusCode)
             }
             else {
-                var mergedProperties: [String: AnyObject] = properties
+                var mergedProperties: [String: Any] = properties
 
                 if let avatarImage = avatarImage, let avatarURL = avatarURL {
                     TemporaryCache.save(.avatar, image: avatarImage.image)
-                    mergedProperties["remote_avatar_url"] = avatarURL.absoluteString as AnyObject
+                    mergedProperties["remote_avatar_url"] = avatarURL.absoluteString
                 }
 
                 if let coverImage = coverImage, let coverImageURL = coverImageURL {
                     TemporaryCache.save(.coverImage, image: coverImage.image)
-                    mergedProperties["remote_cover_image_url"] = coverImageURL.absoluteString as AnyObject
+                    mergedProperties["remote_cover_image_url"] = coverImageURL.absoluteString
                 }
 
                 self.updateUserProfile(mergedProperties, success: { user in
@@ -138,13 +138,13 @@ struct ProfileService {
             success: { _, _ in })
     }
 
-    fileprivate func updateUserImage(_ image: ImageRegionData, key: String, properties: [String: AnyObject], success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    fileprivate func updateUserImage(_ image: ImageRegionData, key: String, properties: [String: Any], success: @escaping ProfileUploadSuccessCompletion, failure: @escaping ElloFailureCompletion) {
         S3UploadingService().upload(imageRegionData: image, success: { url in
             guard let url = url else { return }
 
             let urlString = url.absoluteString
-            let mergedProperties: [String: AnyObject] = properties + [
-                key: urlString as AnyObject,
+            let mergedProperties: [String: Any] = properties + [
+                key: urlString,
             ]
             self.updateUserProfile(mergedProperties, success: { user in
                 success(url as URL, user)

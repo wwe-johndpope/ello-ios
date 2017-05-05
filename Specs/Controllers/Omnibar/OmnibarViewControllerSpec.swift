@@ -207,8 +207,8 @@ class OmnibarViewControllerSpec: QuickSpec {
                 beforeEach {
                     // need to pull the parent post id out of the create-comment sample json
                     let commentData = ElloAPI.createComment(parentPostId: "-", body: [:]).sampleData
-                    let commentJSON = try! JSONSerialization.jsonObject(with: commentData, options: []) as! [String: AnyObject]
-                    let postId = (commentJSON["comments"] as! [String: AnyObject])["post_id"] as! String
+                    let commentJSON = try! JSONSerialization.jsonObject(with: commentData, options: []) as! [String: Any]
+                    let postId = (commentJSON["comments"] as! [String: Any])["post_id"] as! String
                     post = Post.stub(["id": postId, "watching": false])
 
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([

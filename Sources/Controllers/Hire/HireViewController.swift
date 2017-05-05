@@ -12,8 +12,8 @@ class HireViewController: BaseElloViewController {
         case .collaborate: return "Collaborate"
         }
     }
-    override func trackerProps() -> [String: AnyObject]? {
-        return ["username": user.username as AnyObject]
+    override func trackerProps() -> [String: Any]? {
+        return ["username": user.username]
     }
 
     enum UserEmailType {
