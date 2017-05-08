@@ -603,15 +603,13 @@ extension AppViewController {
     }
 
     fileprivate func showCategoryScreen(slug: String) {
-        if
-            let vc = self.visibleViewController as? ElloTabBarController,
-            let navVC = vc.selectedViewController as? ElloNavigationController,
-            let catVC = navVC.viewControllers.first as? CategoryViewController
-        {
+        if let vc = self.visibleViewController as? ElloTabBarController {
             Tracker.shared.categoryOpened(slug)
             vc.selectedTab = .discover
-            catVC.selectCategoryFor(slug: slug)
-            navVC.popToRootViewController(animated: true)
+            let navVC = vc.selectedViewController as? ElloNavigationController
+            let catVC = navVC?.viewControllers.first as? CategoryViewController
+            catVC?.selectCategoryFor(slug: slug)
+            navVC?.popToRootViewController(animated: true)
         }
         else if
             let topNav = self.visibleViewController as? UINavigationController,
