@@ -496,7 +496,7 @@ extension AppViewController {
              .exploreRecent,
              .exploreTrending,
              .discover:
-            showDiscoverScreen()
+            showCategoryScreen(slug: Category.featured.slug)
         case .discoverRandom,
              .discoverRecent,
              .discoverRelated,
@@ -602,37 +602,14 @@ extension AppViewController {
         responder?.onInviteFriends()
     }
 
-    fileprivate func showDiscoverScreen() {
-        if
-            let vc = self.visibleViewController as? ElloTabBarController,
-            let navVC = vc.selectedViewController as? ElloNavigationController,
-            !(navVC.visibleViewController is CategoryViewController)
-        {
-            vc.selectedTab = .discover
-            navVC.popToRootViewController(animated: true)
-
-            if let rootVC = navVC.viewControllers[0] as? CategoryViewController {
-                rootVC.selectCategoryFor(slug: Category.featured.slug)
-            }
-        }
-        else if
-            let nav = self.visibleViewController as? UINavigationController,
-            nav.viewControllers.first is LoggedOutViewController
-        {
-            nav.popToRootViewController(animated: true)
-        }
-    }
-
     fileprivate func showCategoryScreen(slug: String) {
-        if
-            let vc = self.visibleViewController as? ElloTabBarController,
-            let navVC = vc.selectedViewController as? ElloNavigationController,
-            let catVC = navVC.viewControllers.first as? CategoryViewController
-        {
+        if let vc = self.visibleViewController as? ElloTabBarController {
             Tracker.shared.categoryOpened(slug)
             vc.selectedTab = .discover
-            catVC.selectCategoryFor(slug: slug)
-            navVC.popToRootViewController(animated: true)
+            let navVC = vc.selectedViewController as? ElloNavigationController
+            let catVC = navVC?.viewControllers.first as? CategoryViewController
+            catVC?.selectCategoryFor(slug: slug)
+            navVC?.popToRootViewController(animated: true)
         }
         else if
             let topNav = self.visibleViewController as? UINavigationController,
@@ -760,7 +737,8 @@ extension AppViewController {
 
     fileprivate func showSettingsScreen() {
         guard
-            let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController
+            let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController,
+            let currentUser = currentUser
         else { return }
 
         settings.currentUser = currentUser
