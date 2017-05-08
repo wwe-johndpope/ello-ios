@@ -496,7 +496,7 @@ extension AppViewController {
              .exploreRecent,
              .exploreTrending,
              .discover:
-            showDiscoverScreen()
+            showCategoryScreen(slug: Category.featured.slug)
         case .discoverRandom,
              .discoverRecent,
              .discoverRelated,
@@ -600,27 +600,6 @@ extension AppViewController {
 
         let responder = target(forAction: #selector(InviteResponder.onInviteFriends), withSender: self) as? InviteResponder
         responder?.onInviteFriends()
-    }
-
-    fileprivate func showDiscoverScreen() {
-        if
-            let vc = self.visibleViewController as? ElloTabBarController,
-            let navVC = vc.selectedViewController as? ElloNavigationController,
-            !(navVC.visibleViewController is CategoryViewController)
-        {
-            vc.selectedTab = .discover
-            navVC.popToRootViewController(animated: true)
-
-            if let rootVC = navVC.viewControllers[0] as? CategoryViewController {
-                rootVC.selectCategoryFor(slug: Category.featured.slug)
-            }
-        }
-        else if
-            let nav = self.visibleViewController as? UINavigationController,
-            nav.viewControllers.first is LoggedOutViewController
-        {
-            nav.popToRootViewController(animated: true)
-        }
     }
 
     fileprivate func showCategoryScreen(slug: String) {
