@@ -135,6 +135,7 @@ final class ProfileViewController: StreamableViewController {
         setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+        streamViewController.dataSource.postCreatedPlaceholder = generator?.postCreatedPlaceholder
 
         if let user = user {
             updateUser(user)
