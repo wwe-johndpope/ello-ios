@@ -14,6 +14,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     var streamKind: StreamKind
     var currentUser: User?
     var columnCount = 1
+    var postCreatedPlaceholder: StreamCellType.PlaceholderType?
 
     // these are the items assigned from the parent controller
     var streamCellItems: [StreamCellItem] = []
@@ -414,8 +415,12 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
             if let indexPath = indexPath {
+                let items = StreamCellItemParser().parse([jsonable], streamKind: self.streamKind, currentUser: currentUser)
+                for item in items {
+                    item.placeholderType = postCreatedPlaceholder
+                }
                 self.insertUnsizedCellItems(
-                    StreamCellItemParser().parse([jsonable], streamKind: self.streamKind, currentUser: currentUser),
+                    items,
                     withWidth: UIWindow.windowWidth(),
                     startingIndexPath: indexPath)
                     { newIndexPaths in
