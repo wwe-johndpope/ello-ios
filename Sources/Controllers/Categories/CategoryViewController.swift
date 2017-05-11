@@ -32,7 +32,7 @@ final class CategoryViewController: StreamableViewController {
 
     var category: Category?
     var slug: String
-    var allCategories: [Category] = []
+    var allCategories: [Category]?
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
@@ -192,7 +192,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         allCategories = categories
 
         let shouldAnimate = !screen.categoryCardsVisible
-        let info = allCategories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
+        let info = categories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
             return CategoryCardListView.CategoryInfo(title: category.name, imageURL: category.tileURL)
         }
 
@@ -202,7 +202,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             pullToRefreshView?.isHidden = false
         }
 
-        let selectedCategoryIndex = allCategories.index { $0.slug == slug }
+        let selectedCategoryIndex = categories.index { $0.slug == slug }
         if let selectedCategoryIndex = selectedCategoryIndex, shouldAnimate {
             screen.scrollToCategory(index: selectedCategoryIndex)
             screen.selectCategory(index: selectedCategoryIndex)
@@ -222,12 +222,17 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 extension CategoryViewController: CategoryScreenDelegate {
 
     func selectCategoryFor(slug: String) {
-        guard let category = categoryFor(slug: slug) else { return }
+        guard let category = categoryFor(slug: slug) else {
+            if allCategories == nil {
+                self.slug = slug
+            }
+            return
+        }
         select(category: category)
     }
 
     fileprivate func categoryFor(slug: String) -> Category? {
-        return allCategories.find { $0.slug == slug }
+        return allCategories?.find { $0.slug == slug }
     }
 
     func gridListToggled(sender: UIButton) {
@@ -236,7 +241,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
     func categorySelected(index: Int) {
         guard
-            let category = allCategories.safeValue(index),
+            let category = allCategories?.safeValue(index),
             category.id != self.category?.id
         else { return }
         screen.selectCategory(index: index)
@@ -271,7 +276,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.title = category.name
         loadCategory()
 
-        if let index = allCategories.index(where: { $0.slug == category.slug }) {
+        if let index = allCategories?.index(where: { $0.slug == category.slug }) {
             screen.scrollToCategory(index: index)
             screen.selectCategory(index: index)
         }
