@@ -673,7 +673,6 @@ extension ElloAPI: Moya.TargetType {
         case .discover:
             return [
                 "per_page": 10,
-                "seed": ElloAPI.generateSeed()
             ]
         case let .findFriends(contacts):
             var hashedContacts = [String: [String]]()
@@ -839,10 +838,6 @@ func url(_ route: Moya.TargetType) -> String {
 
 private func tokenStringFromData(_ data: Data) -> String {
     return String((data as NSData).description.characters.filter { !"<> ".characters.contains($0) })
-}
-
-extension ElloAPI {
-    static func generateSeed() -> Int { return Int(Date().timeIntervalSince1970) }
 }
 
 func += <KeyType, ValueType> (left: inout [KeyType: ValueType], right: [KeyType: ValueType]) {
