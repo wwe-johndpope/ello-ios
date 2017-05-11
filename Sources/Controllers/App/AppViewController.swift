@@ -39,13 +39,12 @@ class AppViewController: BaseElloViewController {
     }
 
     var visibleViewController: UIViewController?
+
     fileprivate var userLoggedOutObserver: NotificationObserver?
     fileprivate var receivedPushNotificationObserver: NotificationObserver?
     fileprivate var externalWebObserver: NotificationObserver?
     fileprivate var apiOutOfDateObserver: NotificationObserver?
-
     fileprivate var pushPayload: PushPayload?
-
     fileprivate var deepLinkPath: String?
 
     override func loadView() {
@@ -621,7 +620,6 @@ extension AppViewController {
             categoryViewController.selectCategoryFor(slug: slug)
         }
     }
-
 
     fileprivate func showFollowingScreen() {
         guard
