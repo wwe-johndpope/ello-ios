@@ -867,6 +867,11 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
 // MARK: StreamViewController: StreamEditingResponder
 extension StreamViewController: StreamEditingResponder {
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
+            return
+        }
+
         guard let path = collectionView.indexPath(for: cell),
             let post = dataSource.postForIndexPath(path),
             let footerPath = dataSource.footerIndexPathForPost(post),
