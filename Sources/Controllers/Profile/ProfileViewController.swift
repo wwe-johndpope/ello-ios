@@ -135,6 +135,7 @@ final class ProfileViewController: StreamableViewController {
         setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
+        streamViewController.dataSource.postCreatedPlaceholder = generator?.postCreatedPlaceholder
 
         if let user = user {
             updateUser(user)
@@ -205,7 +206,7 @@ final class ProfileViewController: StreamableViewController {
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
         let shareItem = UIBarButtonItem(image: .share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
         let moreActionsItem = UIBarButtonItem(image: .dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
-        let isCurrentUser = userParam == currentUser?.id || userParam == "~\(String(describing: currentUser))"
+        let isCurrentUser = userParam == currentUser?.id || userParam == currentUser.map { "~\($0.username)" }
 
         if !isRootViewController() {
             var leftBarButtonItems: [UIBarButtonItem] = []

@@ -7,6 +7,7 @@ final class ProfileGenerator: StreamGenerator {
     var currentUser: User?
     var streamKind: StreamKind
     weak var destination: StreamDestination?
+    let postCreatedPlaceholder = StreamCellType.PlaceholderType.profilePosts
 
     fileprivate var user: User?
     fileprivate let userParam: String
@@ -14,7 +15,6 @@ final class ProfileGenerator: StreamGenerator {
     fileprivate var hasPosts: Bool?
     fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
-
     fileprivate let queue = OperationQueue()
 
     func headerItems() -> [StreamCellItem] {
