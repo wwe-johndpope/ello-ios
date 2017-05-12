@@ -21,7 +21,7 @@ final class CategoryGenerator: StreamGenerator {
 
     fileprivate var category: Category?
     fileprivate var categories: [Category]?
-    fileprivate var slug: String
+    fileprivate var slug: String?
     fileprivate var pagePromotional: PagePromotional?
     fileprivate var posts: [Post]?
     fileprivate var hasPosts: Bool?
@@ -45,7 +45,7 @@ final class CategoryGenerator: StreamGenerator {
         return items
     }
 
-    init(slug: String,
+    init(slug: String?,
         currentUser: User?,
         streamKind: StreamKind,
         destination: StreamDestination?
@@ -58,10 +58,10 @@ final class CategoryGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    func reset(streamKind: StreamKind, category: Category, pagePromotional: PagePromotional?) {
+    func reset(streamKind: StreamKind, category: Category?, pagePromotional: PagePromotional?) {
         self.streamKind = streamKind
         self.category = category
-        self.slug = category.slug
+        self.slug = category?.slug
         self.pagePromotional = nil
     }
 
@@ -82,13 +82,19 @@ final class CategoryGenerator: StreamGenerator {
         }
         else {
             setPlaceHolders()
+            destination?.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
         }
         setInitialJSONAble(doneOperation)
+
         loadCategories()
-        loadCategory(doneOperation, reload: reload)
+        if let slug = slug {
+            loadCategory(doneOperation, slug: slug, reload: reload)
+        }
+
         if usesPagePromo() {
             loadPagePromotional(doneOperation)
         }
+
         loadCategoryPosts(doneOperation, reload: reload)
     }
 
@@ -127,7 +133,7 @@ private extension CategoryGenerator {
     }
 
     func usesPagePromo() -> Bool {
-        let discoverType = DiscoverType.fromURL(slug)
+        let discoverType = slug.map { DiscoverType.fromURL($0) }
         // discover types are featured/trending/recent, they always use a page promo
         guard discoverType == nil else {
             return true
@@ -140,7 +146,7 @@ private extension CategoryGenerator {
         return category.usesPagePromo
     }
 
-    func loadCategory(_ doneOperation: AsyncOperation, reload: Bool = false) {
+    func loadCategory(_ doneOperation: AsyncOperation, slug: String, reload: Bool = false) {
         guard
             !doneOperation.isFinished || reload,
             !usesPagePromo()
@@ -208,11 +214,20 @@ private extension CategoryGenerator {
 
         var apiEndpoint: ElloAPI?
         if usesPagePromo() {
-            guard let discoverType = DiscoverType.fromURL(slug) else { return }
-            apiEndpoint = .discover(type: discoverType)
+            if let slug = slug,
+                let discoverType = DiscoverType.fromURL(slug)
+            {
+                apiEndpoint = .discover(type: discoverType)
+            }
+            else {
+                apiEndpoint = nil
+            }
+        }
+        else if let slug = slug {
+            apiEndpoint = .categoryPosts(slug: slug)
         }
         else {
-            apiEndpoint = .categoryPosts(slug: slug)
+            apiEndpoint = nil
         }
 
         guard let endpoint = apiEndpoint else { return }

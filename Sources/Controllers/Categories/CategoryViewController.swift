@@ -5,13 +5,15 @@
 final class CategoryViewController: StreamableViewController {
     override func trackerName() -> String? { return "Discover" }
     override func trackerProps() -> [String: Any]? {
+        guard let slug = slug else { return nil }
+
         return ["category": slug]
     }
     override func trackerStreamInfo() -> (String, String?)? {
         if let streamId = category?.id {
             return ("category", streamId)
         }
-        else if DiscoverType.fromURL(slug) != nil {
+        else if let slug = slug, DiscoverType.fromURL(slug) != nil {
             return (slug, nil)
         }
         else {
@@ -31,12 +33,13 @@ final class CategoryViewController: StreamableViewController {
     }
 
     var category: Category?
-    var slug: String
+    var slug: String?
     var allCategories: [Category]?
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
+    var hasCategory: Bool { return slug != nil }
 
     var showBackButton: Bool {
         return !isRootViewController()
@@ -53,24 +56,27 @@ final class CategoryViewController: StreamableViewController {
     }
 
     override func loadView() {
-        self.title = category?.name ?? DiscoverType.fromURL(slug)?.name
-
         let screen = CategoryScreen()
         screen.delegate = self
 
         self.view = screen
         viewContainer = screen.streamContainer
+
+        loadCategory(initial: true)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let streamKind: StreamKind
-        if let type = DiscoverType.fromURL(slug) {
+        if let slug = slug, let type = DiscoverType.fromURL(slug) {
             streamKind = .discover(type: type)
         }
-        else {
+        else if let slug = slug {
             streamKind = .category(slug: slug)
+        }
+        else {
+            streamKind = .allCategories
         }
         streamViewController.streamKind = streamKind
         screen.isGridView = streamKind.isGridView
@@ -84,7 +90,7 @@ final class CategoryViewController: StreamableViewController {
         )
 
         ElloHUD.showLoadingHudInView(streamViewController.view)
-        streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory() }
+        streamViewController.initialLoadClosure = { [unowned self] in self.loadCategory(initial: false) }
         streamViewController.reloadClosure = { [unowned self] in self.reloadCurrentCategory() }
         streamViewController.toggleClosure = { [unowned self] isGridView in self.toggleGrid(isGridView) }
 
@@ -129,11 +135,18 @@ final class CategoryViewController: StreamableViewController {
 
 private extension CategoryViewController {
 
-    func loadCategory() {
+    func loadCategory(initial: Bool) {
+        if !initial {
+            replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+        }
+        title = category?.name ?? slug.flatMap { DiscoverType.fromURL($0)?.name } ?? InterfaceString.Discover.Title
+
         pagePromotional = nil
         categoryPromotional = nil
         category?.randomPromotional = nil
         generator?.load()
+
+        streamViewController.pagingEnabled = hasCategory
     }
 
     func reloadCurrentCategory() {
@@ -207,6 +220,13 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             screen.scrollToCategory(index: selectedCategoryIndex)
             screen.selectCategory(index: selectedCategoryIndex)
         }
+
+        if !hasCategory {
+            let sortedCategories = CategoryList(categories: categories).categories
+            let categoryItems = allCategoryItems(categories: sortedCategories)
+            replacePlaceholder(type: .categoryPosts, items: categoryItems) {}
+        }
+
         updateInsets()
     }
 
@@ -239,16 +259,37 @@ extension CategoryViewController: CategoryScreenDelegate {
         streamViewController.gridListToggled(sender)
     }
 
+    func allCategoriesTapped() {
+        selectAllCategories()
+    }
+
     func categorySelected(index: Int) {
         guard
             let category = allCategories?.safeValue(index),
             category.id != self.category?.id
         else { return }
-        screen.selectCategory(index: index)
+
         select(category: category)
     }
 
-    func select(category: Category) {
+    private func selectAllCategories() {
+        let streamKind = StreamKind.allCategories
+        streamViewController.streamKind = streamKind
+        screen.isGridView = streamKind.isGridView
+        screen.animateNavBar(showShare: false)
+        generator?.reset(streamKind: streamKind, category: nil, pagePromotional: nil)
+        self.category = nil
+        self.slug = nil
+        self.title = "All"
+
+        screen.scrollToCategory(index: -1)
+        screen.selectCategory(index: -1)
+        loadCategory(initial: false)
+
+        trackScreenAppeared()
+    }
+
+    private func select(category: Category) {
         Tracker.shared.categoryOpened(category.slug)
 
         var kind: StreamKind?
@@ -274,7 +315,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         self.category = category
         self.slug = category.slug
         self.title = category.name
-        loadCategory()
+        loadCategory(initial: false)
 
         if let index = allCategories?.index(where: { $0.slug == category.slug }) {
             screen.scrollToCategory(index: index)
@@ -292,4 +333,15 @@ extension CategoryViewController: CategoryScreenDelegate {
         showShareActivity(sender: sender, url: shareURL)
     }
 
+}
+
+// MARK: StreamViewDelegate
+extension CategoryViewController {
+    func allCategoryItems(categories: [Category]) -> [StreamCellItem] {
+        let cardCategories = categories.filter { !$0.isMeta }
+
+        var items: [StreamCellItem] = []
+        items += cardCategories.map { StreamCellItem(jsonable: $0, type: .categoryCard) }
+        return items
+    }
 }

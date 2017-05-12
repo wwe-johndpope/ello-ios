@@ -6,6 +6,7 @@ protocol CategoryScreenDelegate: class {
     func backTapped()
     func shareTapped(sender: UIView)
     func gridListToggled(sender: UIButton)
+    func allCategoriesTapped()
     func categorySelected(index: Int)
     func searchButtonTapped()
 }

@@ -3,6 +3,7 @@
 //
 
 protocol CategoryCardListDelegate: class {
+    func allCategoriesTapped()
     func categoryCardSelected(_ index: Int)
 }
 
@@ -16,6 +17,7 @@ class CategoryCardListView: UIView {
 
     struct Size {
         static let height: CGFloat = 70
+        static let smallCardSize: CGSize = CGSize(width: 50, height: 68)
         static let cardSize: CGSize = CGSize(width: 100, height: 68)
         static let spacing: CGFloat = 1
     }
@@ -66,6 +68,11 @@ class CategoryCardListView: UIView {
     }
 
     @objc
+    func allCategoriesTapped() {
+        delegate?.allCategoriesTapped()
+    }
+
+    @objc
     func categoryButtonTapped(_ button: UIButton) {
         guard let index = buttonIndexLookup[button] else { return }
         delegate?.categoryCardSelected(index)
@@ -84,9 +91,9 @@ class CategoryCardListView: UIView {
         }
     }
 
-    func selectCategoryIndex(_ index: Int) {
+    func selectCategory(index: Int) {
         guard let view = categoryViews.safeValue(index) else { return }
-        for card in categoryViews {
+        for card in categoryViews where card != view {
             card.selected = false
         }
 
@@ -100,8 +107,18 @@ class CategoryCardListView: UIView {
 
         buttonIndexLookup = [:]
 
-        categoryViews = categoriesInfo.enumerated().map { (index, info) in
-            return categoryView(index: index, info: info)
+        let allCategories = CategoryCardView(frame: .zero, info: CategoryInfo(title: "ALL", imageURL: nil))
+        allCategories.snp.makeConstraints { make in
+            make.size.equalTo(Size.smallCardSize)
+        }
+        allCategories.button.addTarget(self, action: #selector(allCategoriesTapped), for: .touchUpInside)
+
+        categoryViews = [allCategories] + categoriesInfo.enumerated().map { (index, info) in
+            let view = categoryView(index: index, info: info)
+            view.snp.makeConstraints { make in
+                make.size.equalTo(Size.cardSize)
+            }
+            return view
         }
         arrangeCategoryViews()
 
@@ -121,7 +138,6 @@ class CategoryCardListView: UIView {
             scrollView.addSubview(view)
 
             view.snp.makeConstraints { make in
-                make.size.equalTo(Size.cardSize)
                 make.centerY.equalTo(scrollView)
 
                 if let prevView = prevView {

@@ -153,11 +153,11 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     }
 
     func scrollToCategory(index: Int) {
-        self.categoryCardList.scrollToIndex(index, animated: true)
+        self.categoryCardList.scrollToIndex(index + 1, animated: true)
     }
 
     func selectCategory(index: Int) {
-        self.categoryCardList.selectCategoryIndex(index)
+        self.categoryCardList.selectCategory(index: index + 1)
     }
 
     func searchFieldButtonTapped() {
@@ -208,6 +208,10 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 }
 
 extension CategoryScreen: CategoryCardListDelegate {
+    func allCategoriesTapped() {
+        delegate?.allCategoriesTapped()
+    }
+
     func categoryCardSelected(_ index: Int) {
         delegate?.categorySelected(index: index)
     }
