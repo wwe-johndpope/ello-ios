@@ -166,9 +166,9 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
-        streamViewController.replacePlaceholder(type, with: items) {
+        streamViewController.replacePlaceholder(type: type, items: items) {
             if self.streamViewController.hasCellItems(for: .categoryHeader) && !self.streamViewController.hasCellItems(for: .categoryPosts) {
-                self.streamViewController.replacePlaceholder(.categoryPosts, with: [StreamCellItem(type: .streamLoading)]) {}
+                self.streamViewController.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
             }
 
             completion()

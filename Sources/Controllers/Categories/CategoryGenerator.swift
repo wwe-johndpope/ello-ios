@@ -82,7 +82,6 @@ final class CategoryGenerator: StreamGenerator {
         }
         else {
             setPlaceHolders()
-            destination?.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
         }
         setInitialJSONAble(doneOperation)
 

@@ -238,7 +238,7 @@ extension NotificationsViewController: StreamDestination {
             track(jsonables: jsonables)
         }
 
-        streamViewController.replacePlaceholder(type, with: items, completion: completion)
+        streamViewController.replacePlaceholder(type: type, items: items, completion: completion)
     }
 
     func setPlaceholders(items: [StreamCellItem]) {
