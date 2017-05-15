@@ -36,7 +36,7 @@ class CategoryCardView: UIView {
     }
 
     fileprivate func style() {
-        backgroundColor = .black
+        backgroundColor = .white
 
         overlay.backgroundColor = .black
         overlay.alpha = CategoryCardView.normalAlpha

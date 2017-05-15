@@ -107,7 +107,7 @@ class CategoryCardListView: UIView {
 
         buttonIndexLookup = [:]
 
-        let allCategories = CategoryCardView(frame: .zero, info: CategoryInfo(title: "ALL", imageURL: nil))
+        let allCategories = CategoryCardView(frame: .zero, info: CategoryInfo(title: InterfaceString.Discover.AllCategories, imageURL: nil))
         allCategories.snp.makeConstraints { make in
             make.size.equalTo(Size.smallCardSize)
         }
