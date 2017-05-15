@@ -120,16 +120,16 @@ class FollowingViewController: StreamableViewController {
         scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
         postNotification(NewContentNotifications.reloadFollowingContent, value: ())
 
-        hideNewPostsButton()
+        hideNewPostsButton(animated: true)
     }
 
     override func streamWillPullToRefresh() {
         super.streamWillPullToRefresh()
 
-        hideNewPostsButton()
+        hideNewPostsButton(animated: true)
     }
 
-    func hideNewPostsButton(animated: Bool = true) {
+    func hideNewPostsButton(animated: Bool) {
         animate(animated: animated) {
             self.newPostsButton.alpha = 0
         }
@@ -162,6 +162,7 @@ private extension FollowingViewController {
             guard let `self` = self else { return }
 
             ElloHUD.showLoadingHudInView(self.streamViewController.view)
+            self.hideNewPostsButton(animated: true)
             self.streamViewController.loadInitialPage(reload: true)
         }
     }
