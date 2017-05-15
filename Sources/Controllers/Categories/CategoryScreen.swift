@@ -33,16 +33,21 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     fileprivate var shareHiddenConstraint: Constraint!
 
     var topInsetView: UIView {
-        if categoryCardList.isHidden {
-            return navigationBar
+        if categoryCardsVisible {
+            return categoryCardList
         }
         else {
-            return categoryCardList
+            return navigationBar
         }
     }
 
+    fileprivate var _categoryCardsVisible: Bool = true
     var categoryCardsVisible: Bool {
-        return !categoryCardList.isHidden
+        set {
+            _categoryCardsVisible = newValue
+            categoryCardList.isHidden = !categoryCardsVisible
+        }
+        get { return _categoryCardsVisible && categoryCardList.categoriesInfo.count > 0 }
     }
 
     override func style() {
@@ -126,18 +131,22 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     }
 
     func set(categoriesInfo newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
-        categoryCardList.isHidden = newValue.isEmpty
         categoryCardList.categoriesInfo = newValue
+        categoryCardList.isHidden = !categoryCardsVisible
 
-        if !categoryCardList.isHidden && animated {
-            let originalY = categoryCardList.frame.origin.y
-            categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
-            animate(completion: { _ in completion() }) {
-                self.categoryCardList.frame.origin.y = originalY
-            }
+        if categoryCardsVisible && animated {
+            showCategoryCardList(completion: completion)
         }
         else {
             completion()
+        }
+    }
+
+    fileprivate func showCategoryCardList(completion: @escaping ElloEmptyCompletion = {}) {
+        let originalY = categoryCardList.frame.origin.y
+        categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
+        animate(completion: { _ in completion() }) {
+            self.categoryCardList.frame.origin.y = originalY
         }
     }
 
