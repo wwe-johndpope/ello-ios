@@ -10,6 +10,7 @@ import Nimble
 class CategoryScreenSpec: QuickSpec {
     class MockCategoryScreenDelegate: CategoryScreenDelegate {
         var selectedIndex: Int?
+        var allCategoriesTappedCount = 0
         var gridListToggled = 0
         var searchButtonCount = 0
         var shareCount = 0
@@ -17,6 +18,9 @@ class CategoryScreenSpec: QuickSpec {
 
         func categorySelected(index: Int) {
             selectedIndex = index
+        }
+        func allCategoriesTapped() {
+            allCategoriesTappedCount += 1
         }
         func gridListToggled(sender: UIButton) {
             gridListToggled += 1
@@ -36,6 +40,7 @@ class CategoryScreenSpec: QuickSpec {
         describe("CategoryScreen") {
             var subject: CategoryScreen!
             var delegate: MockCategoryScreenDelegate!
+            var categoryInfo: [CategoryCardListView.CategoryInfo]!
             beforeEach {
                 let infoA = CategoryCardListView.CategoryInfo(
                     title: "Art",
@@ -46,7 +51,8 @@ class CategoryScreenSpec: QuickSpec {
                     imageURL: nil
                     )
                 subject = CategoryScreen()
-                subject.set(categoriesInfo: [infoA, infoB, infoA, infoB], animated: false, completion: {})
+                categoryInfo = [infoA, infoB, infoA, infoB]
+                subject.set(categoriesInfo: categoryInfo, animated: false, completion: {})
                 delegate = MockCategoryScreenDelegate()
                 subject.delegate = delegate
             }
@@ -58,11 +64,17 @@ class CategoryScreenSpec: QuickSpec {
             }
 
             describe("CategoryScreenDelegate") {
+                it("informs delegates of all categories selection") {
+                    let categoryList: CategoryCardListView! = subview(of: subject, thatMatches: { $0 is CategoryCardListView })
+                    let button: UIButton! = allSubviews(of: categoryList, thatMatch: { $0 is UIButton }).first
+                    button.sendActions(for: .touchUpInside)
+                    expect(delegate.allCategoriesTappedCount) == 1
+                }
                 it("informs delegates of category selection") {
                     let categoryList: CategoryCardListView! = subview(of: subject, thatMatches: { $0 is CategoryCardListView })
-                    let button: UIButton! = subview(of: categoryList, thatMatches: { $0 is UIButton })
+                    let button: UIButton! = allSubviews(of: categoryList, thatMatch: { $0 is UIButton }).last
                     button.sendActions(for: .touchUpInside)
-                    expect(delegate.selectedIndex) == 0
+                    expect(delegate.selectedIndex) == categoryInfo.count - 1
                 }
             }
         }

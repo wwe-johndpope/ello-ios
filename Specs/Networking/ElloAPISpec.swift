@@ -364,7 +364,6 @@ class ElloAPISpec: QuickSpec {
                 it("Discover") {
                     let params = ElloAPI.discover(type: .featured).parameters!
                     expect(params["per_page"] as? Int) == 10
-                    expect(params["seed"]).notTo(beNil())
                 }
 
                 it("CategoryPosts") {
@@ -386,7 +385,6 @@ class ElloAPISpec: QuickSpec {
                     let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [Any]) { return ElloAPI.discover(type: .featured) }
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
-                    expect(params["seed"]).notTo(beNil())
                     expect(params["after"]).notTo(beNil())
                 }
 

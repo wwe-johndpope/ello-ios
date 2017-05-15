@@ -132,7 +132,7 @@ private extension CategoryGenerator {
     }
 
     func usesPagePromo() -> Bool {
-        let discoverType = slug.map { DiscoverType.fromURL($0) }
+        let discoverType: DiscoverType? = slug.flatMap { DiscoverType.fromURL($0) }
         // discover types are featured/trending/recent, they always use a page promo
         guard discoverType == nil else {
             return true

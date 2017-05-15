@@ -233,6 +233,12 @@ private func allSubviews(_ view: UIView) -> [UIView] {
     return view.subviews + view.subviews.flatMap { allSubviews($0) }
 }
 
+func allSubviews<T>(of view: UIView, thatMatch test: (UIView) -> Bool) -> [T] where T: UIView {
+    return allSubviews(view).filter { subview in
+        return test(subview)
+    } as! [T]
+}
+
 func subview<T>(of view: UIView, thatMatches test: (UIView) -> Bool) -> T? where T: UIView {
     for subview in allSubviews(view) {
         if test(subview) {
