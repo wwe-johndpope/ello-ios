@@ -986,10 +986,15 @@ extension StreamViewController: StreamPostTappedResponder {
 extension StreamViewController {
 
     func showCategoryViewController(slug: String, name: String) {
-        Tracker.shared.categoryOpened(slug)
-        let vc = CategoryViewController(slug: slug, name: name)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
+        if let vc = parent as? CategoryViewController {
+            vc.selectCategoryFor(slug: slug)
+        }
+        else {
+            Tracker.shared.categoryOpened(slug)
+            let vc = CategoryViewController(slug: slug, name: name)
+            vc.currentUser = currentUser
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
