@@ -63,17 +63,17 @@ class CreateProfileScreenSpec: QuickSpec {
             }
             context("setting text") {
                 it("should notify delegate of name change") {
-                    let textView: ClearTextView! = subviewThatMatches(subject) { ($0 as? ClearTextView)?.placeholder?.contains("Name") ?? false }
+                    let textView: ClearTextView! = subview(of: subject, thatMatches: { ($0 as? ClearTextView)?.placeholder?.contains("Name") ?? false })
                     _ = subject.textView(textView, shouldChangeTextIn: NSRange(location: 0, length: 0), replacementText: "!")
                     expect(delegate.didAssignName) == true
                 }
                 it("should notify delegate of bio change") {
-                    let textView: ClearTextView! = subviewThatMatches(subject) { ($0 as? ClearTextView)?.placeholder?.contains("Bio") ?? false }
+                    let textView: ClearTextView! = subview(of: subject, thatMatches: { ($0 as? ClearTextView)?.placeholder?.contains("Bio") ?? false })
                     _ = subject.textView(textView, shouldChangeTextIn: NSRange(location: 0, length: 0), replacementText: "!")
                     expect(delegate.didAssignBio) == true
                 }
                 it("should notify delegate of link change") {
-                    let textView: ClearTextView! = subviewThatMatches(subject) { ($0 as? ClearTextView)?.placeholder?.contains("Links") ?? false }
+                    let textView: ClearTextView! = subview(of: subject, thatMatches: { ($0 as? ClearTextView)?.placeholder?.contains("Links") ?? false })
                     _ = subject.textView(textView, shouldChangeTextIn: NSRange(location: 0, length: 0), replacementText: "!")
                     expect(delegate.didAssignLinks) == true
                 }

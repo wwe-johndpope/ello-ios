@@ -40,7 +40,7 @@ class CategoryCardListViewSpec: QuickSpec {
 
             describe("CategoryCardListDelegate") {
                 it("informs delegates of category selection") {
-                    let button = subviewThatMatches(subject, test: { $0 is UIButton }) as! UIButton
+                    let button: UIButton! = subview(of: subject, thatMatches: { $0 is UIButton })
                     button.sendActions(for: .touchUpInside)
                     expect(delegate.selectedIndex) == 0
                 }

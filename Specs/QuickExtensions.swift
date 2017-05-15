@@ -233,7 +233,7 @@ private func allSubviews(_ view: UIView) -> [UIView] {
     return view.subviews + view.subviews.flatMap { allSubviews($0) }
 }
 
-func subviewThatMatches<T>(_ view: UIView, test: (UIView) -> Bool) -> T? where T: UIView {
+func subview<T>(of view: UIView, thatMatches test: (UIView) -> Bool) -> T? where T: UIView {
     for subview in allSubviews(view) {
         if test(subview) {
             return subview as? T
@@ -248,7 +248,7 @@ func haveSubview<V: UIView>(thatMatches test: @escaping (UIView) -> Bool) -> Non
 
         let view = try! actualExpression.evaluate()
         if let view = view {
-            return subviewThatMatches(view, test: test) != nil
+            return subview(of: view, thatMatches: test) != nil
         }
         return false
     }

@@ -35,7 +35,7 @@ class HireScreenSpec: QuickSpec {
 
                 describe("submit button enabled") {
                     beforeEach {
-                        let textView: UITextView! = subviewThatMatches(subject) { $0 is UITextView }
+                        let textView: UITextView! = subview(of: subject, thatMatches: { $0 is UITextView })
                         textView.text = "has text"
                         subject.textViewDidChange(textView)
                     }
@@ -49,8 +49,8 @@ class HireScreenSpec: QuickSpec {
                 var submitButton: UIButton?
                 beforeEach {
                     subject = HireScreen()
-                    submitButton = subviewThatMatches(subject) { $0 is UIButton }
-                    let textView: UITextView! = subviewThatMatches(subject) { $0 is UITextView }
+                    submitButton = subview(of: subject, thatMatches: { $0 is UIButton })
+                    let textView: UITextView! = subview(of: subject, thatMatches: { $0 is UITextView })
                     textView.text = ""
                     subject.textViewDidChange(textView)
                 }
@@ -63,8 +63,8 @@ class HireScreenSpec: QuickSpec {
                 var submitButton: UIButton?
                 beforeEach {
                     subject = HireScreen()
-                    submitButton = subviewThatMatches(subject) { $0 is UIButton }
-                    let textView: UITextView! = subviewThatMatches(subject) { $0 is UITextView }
+                    submitButton = subview(of: subject, thatMatches: { $0 is UIButton })
+                    let textView: UITextView! = subview(of: subject, thatMatches: { $0 is UITextView })
                     textView.text = "hey there!"
                     subject.textViewDidChange(textView)
                 }

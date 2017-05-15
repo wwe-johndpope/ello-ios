@@ -59,8 +59,8 @@ class CategoryScreenSpec: QuickSpec {
 
             describe("CategoryScreenDelegate") {
                 it("informs delegates of category selection") {
-                    let categoryList = subviewThatMatches(subject, test: { $0 is CategoryCardListView }) as! CategoryCardListView
-                    let button = subviewThatMatches(categoryList, test: { $0 is UIButton }) as! UIButton
+                    let categoryList: CategoryCardListView! = subview(of: subject, thatMatches: { $0 is CategoryCardListView })
+                    let button: UIButton! = subview(of: categoryList, thatMatches: { $0 is UIButton })
                     button.sendActions(for: .touchUpInside)
                     expect(delegate.selectedIndex) == 0
                 }

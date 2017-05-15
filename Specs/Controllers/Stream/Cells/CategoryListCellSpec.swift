@@ -40,9 +40,9 @@ class CategoryListCellSpec: QuickSpec {
                         (title: "Trending", slug: "trending"),
                         (title: "Recent", slug: "recent"),
                     ]
-                    let categoryButton: UIButton? = subviewThatMatches(subject) { view in
+                    let categoryButton: UIButton? = subview(of: subject, thatMatches: { view in
                         (view as? UIButton)?.currentAttributedTitle?.string == "Featured"
-                    }
+                    })
                     categoryButton?.sendActions(for: .touchUpInside)
                     expect(responder.categoryTapped) == true
                     expect(responder.slug) == "featured"
