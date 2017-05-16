@@ -11,11 +11,30 @@ struct NewContentNotifications {
     static let newFollowingContent = TypedNotification<()>(name: "NewFollowingContentNotification")
     static let reloadFollowingContent = TypedNotification<()>(name: "ReloadFollowingContentNotification")
     static let reloadNotifications = TypedNotification<()>(name: "ReloadNotificationsNotification")
+    static let pause = TypedNotification<()>(name: "NewContentService-pause")
+    static let resume = TypedNotification<()>(name: "NewContentService-resume")
 }
 
 class NewContentService {
-    var timer: Timer?
-    init(){}
+    fileprivate var timer: Timer?
+    fileprivate var pauseCount = 0
+    fileprivate var pauseObserver: NotificationObserver?
+    fileprivate var resumeObserver: NotificationObserver?
+    fileprivate var postCreatedObserver: NotificationObserver?
+
+    init(){
+        pauseObserver = NotificationObserver(notification: NewContentNotifications.pause) { [weak self] _ in
+            self?.pauseCount += 1
+        }
+        resumeObserver = NotificationObserver(notification: NewContentNotifications.resume) { [weak self] _ in
+            self?.pauseCount -= 1
+        }
+        postCreatedObserver = NotificationObserver(notification: PostChangedNotification) { [weak self] (post, change) in
+            if change == .create {
+                self?.updateCreatedAt([post], streamKind: .following)
+            }
+        }
+    }
 }
 
 extension NewContentService {
@@ -35,6 +54,8 @@ extension NewContentService {
 
     @objc
     func checkForNewContent() {
+        guard pauseCount == 0 else { return }
+
         stopPolling()
         let (restart, done) = afterN(restartPolling)
         checkForNewNotifications(restart())

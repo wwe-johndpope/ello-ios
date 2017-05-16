@@ -410,6 +410,7 @@ extension OmnibarViewController {
         }
 
         startSpinner()
+        postNotification(NewContentNotifications.pause, value: ())
         service.create(
             content: content,
             buyButtonURL: buyButtonURL,
@@ -419,6 +420,7 @@ extension OmnibarViewController {
                 }
 
                 self.emitSuccess(postOrComment, didGoToPreviousTab: didGoToPreviousTab)
+                postNotification(NewContentNotifications.resume, value: ())
             },
             failure: { error, statusCode in
                 ElloHUD.hideLoadingHudInView(self.view)
@@ -428,6 +430,7 @@ extension OmnibarViewController {
                 if let vc = self.parent as? ElloTabBarController, didGoToPreviousTab {
                     vc.selectedTab = .omnibar
                 }
+                postNotification(NewContentNotifications.resume, value: ())
             })
     }
 
