@@ -70,16 +70,18 @@ final class CategoryViewController: StreamableViewController {
         let streamKind: StreamKind
         if let slug = slug, let type = DiscoverType.fromURL(slug) {
             streamKind = .discover(type: type)
+            screen.setupNavBar(show: .onlyGridToggle, back: showBackButton, animated: false)
         }
         else if let slug = slug {
             streamKind = .category(slug: slug)
+            screen.setupNavBar(show: .all, back: showBackButton, animated: false)
         }
         else {
             streamKind = .allCategories
+            screen.setupNavBar(show: .none, back: true, animated: false)
         }
         streamViewController.streamKind = streamKind
         screen.isGridView = streamKind.isGridView
-        screen.showBackButton(visible: showBackButton)
 
         self.generator = CategoryGenerator(
             slug: slug,
@@ -129,6 +131,15 @@ final class CategoryViewController: StreamableViewController {
     override func streamViewWillBeginDragging(scrollView: UIScrollView) {
         super.streamViewWillBeginDragging(scrollView: scrollView)
         userDidScroll = true
+    }
+
+    override func backTapped() {
+        if slug == nil {
+            selectCategoryFor(slug: "featured")
+        }
+        else {
+            super.backTapped()
+        }
     }
 }
 
@@ -279,8 +290,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         pagePromotional = nil
         categoryPromotional = nil
 
-        screen.isGridView = streamKind.isGridView
-        screen.animateNavBar(showShare: false)
+        screen.setupNavBar(show: .none, back: true, animated: true)
         screen.scrollToCategory(index: -1)
         screen.selectCategory(index: -1)
         screen.categoryCardsVisible = false
@@ -315,7 +325,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         category.randomPromotional = nil
         streamViewController.streamKind = streamKind
         screen.isGridView = streamKind.isGridView
-        screen.animateNavBar(showShare: showShare)
+        screen.setupNavBar(show: showShare ? .all : .onlyGridToggle, back: showBackButton, animated: true)
         screen.categoryCardsVisible = true
         generator?.reset(streamKind: streamKind, category: category, pagePromotional: nil)
         self.category = category

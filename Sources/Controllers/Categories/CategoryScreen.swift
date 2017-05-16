@@ -20,6 +20,12 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
+    enum NavBarItems {
+        case onlyGridToggle
+        case all
+        case none
+    }
+
     fileprivate let categoryCardList = CategoryCardListView()
     fileprivate let searchField = SearchNavBarField()
     fileprivate let searchFieldButton = UIButton()
@@ -31,6 +37,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     fileprivate var backHiddenConstraint: Constraint!
     fileprivate var shareVisibleConstraint: Constraint!
     fileprivate var shareHiddenConstraint: Constraint!
+    fileprivate var allHiddenConstraint: Constraint!
 
     var topInsetView: UIView {
         if categoryCardsVisible {
@@ -108,8 +115,10 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
             shareHiddenConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
             shareVisibleConstraint = make.trailing.equalTo(shareButton.snp.leading).offset(-Size.buttonMargin).constraint
+            allHiddenConstraint = make.trailing.equalTo(gridListButton.snp.trailing).offset(-Size.buttonMargin).constraint
         }
         shareVisibleConstraint.deactivate()
+        allHiddenConstraint.deactivate()
 
         searchFieldButton.snp.makeConstraints { make in
             make.edges.equalTo(navigationContainer)
@@ -185,9 +194,32 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         delegate?.shareTapped(sender: shareButton)
     }
 
-    func showBackButton(visible: Bool) {
-        backButton.isHidden = !visible
-        if visible {
+    func setupNavBar(show: CategoryScreen.NavBarItems, back backVisible: Bool, animated: Bool) {
+        let shareButtonAlpha: CGFloat
+        let gridButtonAlpha: CGFloat
+        switch show {
+        case .onlyGridToggle:
+            shareHiddenConstraint.activate()
+            shareVisibleConstraint.deactivate()
+            allHiddenConstraint.deactivate()
+            shareButtonAlpha = 0
+            gridButtonAlpha = 1
+        case .all:
+            shareHiddenConstraint.deactivate()
+            shareVisibleConstraint.activate()
+            allHiddenConstraint.deactivate()
+            shareButtonAlpha = 1
+            gridButtonAlpha = 1
+        case .none:
+            shareHiddenConstraint.deactivate()
+            shareVisibleConstraint.deactivate()
+            allHiddenConstraint.activate()
+            shareButtonAlpha = 0
+            gridButtonAlpha = 0
+        }
+
+        backButton.isHidden = !backVisible
+        if backVisible {
             backHiddenConstraint.deactivate()
             backVisibleConstraint.activate()
         }
@@ -195,22 +227,11 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             backHiddenConstraint.activate()
             backVisibleConstraint.deactivate()
         }
-        navigationBar.layoutIfNeeded()
-    }
 
-    func animateNavBar(showShare: Bool) {
-        if showShare {
-            shareHiddenConstraint.deactivate()
-            shareVisibleConstraint.activate()
-        }
-        else {
-            shareHiddenConstraint.activate()
-            shareVisibleConstraint.deactivate()
-        }
-
-        animate {
+        animate(animated: animated) {
             self.navigationBar.layoutIfNeeded()
-            self.shareButton.alpha = showShare ? 1 : 0
+            self.shareButton.alpha = shareButtonAlpha
+            self.gridListButton.alpha = gridButtonAlpha
         }
     }
 

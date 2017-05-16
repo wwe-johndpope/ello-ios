@@ -19,7 +19,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var categoryTitles: [String] = []
         var scrollTo: Int?
         var select: Int?
-        var showShare = false
+        var showShare: CategoryScreen.NavBarItems
         var showBack = false
 
         func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
@@ -38,12 +38,9 @@ class CategoryViewControllerSpec: QuickSpec {
             return streamContainer
         }
 
-        func animateNavBar(showShare: Bool) {
-            self.showShare = showShare
-        }
-
-        func showBackButton(visible: Bool) {
-            self.showBack = visible
+        func setupNavBar(show: CategoryScreen.NavBarItems, back: Bool, animated: Bool) {
+            self.showShare = show
+            self.showBack = backVisible
         }
     }
 
