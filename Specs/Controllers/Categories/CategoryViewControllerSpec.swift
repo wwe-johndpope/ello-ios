@@ -19,7 +19,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var categoryTitles: [String] = []
         var scrollTo: Int?
         var select: Int?
-        var showShare: CategoryScreen.NavBarItems
+        var showShare: CategoryScreen.NavBarItems = .all
         var showBack = false
 
         func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
@@ -38,7 +38,7 @@ class CategoryViewControllerSpec: QuickSpec {
             return streamContainer
         }
 
-        func setupNavBar(show: CategoryScreen.NavBarItems, back: Bool, animated: Bool) {
+        func setupNavBar(show: CategoryScreen.NavBarItems, back backVisible: Bool, animated: Bool) {
             self.showShare = show
             self.showBack = backVisible
         }
@@ -77,12 +77,13 @@ class CategoryViewControllerSpec: QuickSpec {
             }
 
             it("restores the previous category") {
-                subject.slug = "shop"
+                let slug = subject.allCategories!.first!.slug
+                subject.slug = slug
                 subject.allCategoriesTapped()
                 expect(subject.slug).to(beNil())
                 expect(screen.showBack) == true
                 subject.backTapped()
-                expect(subject.slug) == "shop"
+                expect(subject.slug) == slug
                 expect(screen.showBack) == false
             }
 
