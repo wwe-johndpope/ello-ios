@@ -34,6 +34,7 @@ final class CategoryViewController: StreamableViewController {
 
     var category: Category?
     var slug: String?
+    fileprivate var prevSlug: String?
     var allCategories: [Category]?
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
@@ -135,7 +136,7 @@ final class CategoryViewController: StreamableViewController {
 
     override func backTapped() {
         if slug == nil {
-            selectCategoryFor(slug: "featured")
+            selectCategoryFor(slug: prevSlug ?? "featured")
         }
         else {
             super.backTapped()
@@ -284,6 +285,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         streamViewController.pagingEnabled = false
         generator?.reset(streamKind: streamKind, category: nil, pagePromotional: nil)
 
+        prevSlug = slug
         category = nil
         slug = nil
         title = InterfaceString.Discover.Title

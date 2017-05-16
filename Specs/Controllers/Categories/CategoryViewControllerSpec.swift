@@ -76,6 +76,16 @@ class CategoryViewControllerSpec: QuickSpec {
                 expect(screen.showBack) == true
             }
 
+            it("restores the previous category") {
+                subject.slug = "shop"
+                subject.allCategoriesTapped()
+                expect(subject.slug).to(beNil())
+                expect(screen.showBack) == true
+                subject.backTapped()
+                expect(subject.slug) == "shop"
+                expect(screen.showBack) == false
+            }
+
             context("setCategories(_:)") {
                 it("accepts meta categories") {
                     subject.set(categories: [
