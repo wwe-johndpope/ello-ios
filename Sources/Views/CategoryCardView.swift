@@ -9,24 +9,36 @@ class CategoryCardView: UIView {
     let overlay = UIView()
     let button = UIButton()
 
-    fileprivate static let selectedAlpha: CGFloat = 0.8
-    fileprivate static let normalAlpha: CGFloat = 0.6
+    static let selectedAlpha: CGFloat = 0.8
+    static let normalAlpha: CGFloat = 0.6
+    static let darkAlpha: CGFloat = 0.8
 
     fileprivate var _selected = false
     var selected: Bool {
         set {
             _selected = newValue
+            let alpha: CGFloat
+            if newValue {
+                alpha = CategoryCardView.selectedAlpha
+            }
+            else if info.imageURL == nil {
+                alpha = CategoryCardView.darkAlpha
+            }
+            else {
+                alpha = CategoryCardView.normalAlpha
+            }
+
             animate {
-                self.overlay.alpha = newValue ? CategoryCardView.selectedAlpha : CategoryCardView.normalAlpha
+                self.overlay.alpha = alpha
             }
         }
         get { return _selected }
     }
 
-    init(frame: CGRect, info: CategoryCardListView.CategoryInfo) {
+    init(info: CategoryCardListView.CategoryInfo) {
         self.info = info
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         style()
         arrange()
     }
@@ -39,7 +51,12 @@ class CategoryCardView: UIView {
         backgroundColor = .white
 
         overlay.backgroundColor = .black
-        overlay.alpha = CategoryCardView.normalAlpha
+        if info.imageURL == nil {
+            overlay.alpha = CategoryCardView.darkAlpha
+        }
+        else {
+            overlay.alpha = CategoryCardView.normalAlpha
+        }
 
         button.titleLabel?.numberOfLines = 0
         let attributedString = NSAttributedString(info.title, color: .white, alignment: .center)

@@ -107,7 +107,8 @@ class CategoryCardListView: UIView {
 
         buttonIndexLookup = [:]
 
-        let allCategories = CategoryCardView(frame: .zero, info: CategoryInfo(title: InterfaceString.Discover.AllCategories, imageURL: nil))
+        let allCategories = CategoryCardView(info: CategoryInfo(title: InterfaceString.Discover.AllCategories, imageURL: nil))
+        allCategories.overlay.alpha = CategoryCardView.darkAlpha
         allCategories.snp.makeConstraints { make in
             make.size.equalTo(Size.smallCardSize)
         }
@@ -126,7 +127,7 @@ class CategoryCardListView: UIView {
     }
 
     fileprivate func categoryView(index: Int, info: CategoryInfo) -> CategoryCardView {
-        let card = CategoryCardView(frame: .zero, info: info)
+        let card = CategoryCardView(info: info)
         card.button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
         buttonIndexLookup[card.button] = index
         return card
