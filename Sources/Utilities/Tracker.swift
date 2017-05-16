@@ -71,6 +71,7 @@ extension Tracker {
             agent.identify(analyticsId, traits: [
                 "is_nabaroo": authToken.isNabaroo,
                 "is_featured": user.isFeatured,
+                "is_experimental": user.experimentalFeatures,
                 "created_at": user.profile?.createdAt.toServerDateString() ?? "no-creation-date",
                 "agent": "ios",
             ])
