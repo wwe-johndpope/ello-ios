@@ -9,23 +9,29 @@ import Nimble
 class CategoryGeneratorSpec: QuickSpec {
     override func spec() {
         describe("CategoryGenerator") {
-            let destination = CategoryDestination()
+            var destination: CategoryDestination!
+            var currentUser: User!
+            var streamKind: StreamKind!
+            var category: Ello.Category!
+            var subject: CategoryGenerator!
 
             beforeEach {
-                destination.reset()
+                destination = CategoryDestination()
+                currentUser = User.stub(["id": "42"])
+                streamKind = .category(slug: "recommended")
             }
 
-            let currentUser: User = stub(["id": "42"])
-            let streamKind: StreamKind = .category(slug: "recommended")
-
             context("page promotional") {
-                let category = Ello.Category.stub(["level" : "meta", "slug" : "recommended"])
-                let subject = CategoryGenerator(
-                    slug: category.slug,
-                    currentUser: currentUser,
-                    streamKind: streamKind,
-                    destination: destination
-                )
+
+                beforeEach {
+                    category = Ello.Category.stub(["level" : "meta", "slug" : "recommended"])
+                    subject = CategoryGenerator(
+                        slug: category.slug,
+                        currentUser: currentUser,
+                        streamKind: streamKind,
+                        destination: destination
+                    )
+                }
 
                 describe("load()") {
 
@@ -60,13 +66,16 @@ class CategoryGeneratorSpec: QuickSpec {
             }
 
             context("category") {
-                let category = Ello.Category.stub(["level" : "primary", "slug" : "art"])
-                let subject = CategoryGenerator(
-                    slug: category.slug,
-                    currentUser: currentUser,
-                    streamKind: streamKind,
-                    destination: destination
-                )
+
+                beforeEach {
+                    category = Ello.Category.stub(["level" : "primary", "slug" : "art"])
+                    subject = CategoryGenerator(
+                        slug: category.slug,
+                        currentUser: currentUser,
+                        streamKind: streamKind,
+                        destination: destination
+                    )
+                }
 
                 describe("load()") {
 
@@ -109,17 +118,6 @@ class CategoryDestination: CategoryStreamDestination {
     var pagePromotional: PagePromotional?
     var responseConfig: ResponseConfig?
     var pagingEnabled: Bool = false
-
-    func reset() {
-        placeholderItems = []
-        headerItems = []
-        postItems = []
-        otherPlaceHolderLoaded = false
-        category = nil
-        categories = []
-        pagePromotional = nil
-        responseConfig = nil
-    }
 
     func setPlaceholders(items: [StreamCellItem]) {
         placeholderItems = items

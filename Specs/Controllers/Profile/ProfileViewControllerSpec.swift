@@ -35,7 +35,9 @@ class ProfileViewControllerSpec: QuickSpec {
                     currentUser = User.stub(["id": "42"])
                     subject = ProfileViewController(user: currentUser)
                     subject.currentUser = currentUser
-                    showController(subject)
+                    let nav = UINavigationController(rootViewController: UIViewController())
+                    nav.pushViewController(subject, animated: false)
+                    showController(nav)
                     screen = subject.view as! ProfileScreen
                 }
 
@@ -84,7 +86,9 @@ class ProfileViewControllerSpec: QuickSpec {
                     currentUser = User.stub(["id": "not42"])
                     subject = ProfileViewController(userParam: "42")
                     subject.currentUser = currentUser
-                    showController(subject)
+                    let nav = UINavigationController(rootViewController: UIViewController())
+                    nav.pushViewController(subject, animated: false)
+                    showController(nav)
                     screen = subject.view as! ProfileScreen
                 }
 
@@ -160,7 +164,9 @@ class ProfileViewControllerSpec: QuickSpec {
                     currentUser = User.stub(["id": "not50"])
                     subject = ProfileViewController(userParam: "50")
                     subject.currentUser = currentUser
-                    showController(subject)
+                    let nav = UINavigationController(rootViewController: UIViewController())
+                    nav.pushViewController(subject, animated: false)
+                    showController(nav)
                 }
 
                 it("has grid/list right nav buttons") {
@@ -293,7 +299,9 @@ class ProfileViewControllerSpec: QuickSpec {
                 beforeEach {
                     subject = ProfileViewController(userParam: "42")
                     subject.currentUser = nil
-                    showController(subject)
+                    let nav = UINavigationController(rootViewController: UIViewController())
+                    nav.pushViewController(subject, animated: false)
+                    showController(nav)
                 }
 
                 it("should not show ellipses button in navigation") {

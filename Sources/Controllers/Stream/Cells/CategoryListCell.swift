@@ -74,8 +74,8 @@ class CategoryListCell: UICollectionViewCell {
         for view in categoryButtons {
             view.removeFromSuperview()
         }
-        buttonCategoryLookup = [:]
 
+        buttonCategoryLookup = [:]
         categoryButtons = categoriesInfo.map { categoryInfo in
             let button = UIButton()
             buttonCategoryLookup[button] = categoryInfo

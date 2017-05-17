@@ -10,8 +10,12 @@ import Nimble
 class CategoryCardListViewSpec: QuickSpec {
     class MockCategoryCardListDelegate: CategoryCardListDelegate {
         var selectedIndex: Int?
+        var allCategoriesTappedCount = 0
         func categoryCardSelected(_ index: Int) {
             selectedIndex = index
+        }
+        func allCategoriesTapped() {
+            allCategoriesTappedCount += 1
         }
     }
 
@@ -39,10 +43,16 @@ class CategoryCardListViewSpec: QuickSpec {
             }
 
             describe("CategoryCardListDelegate") {
-                it("informs delegates of category selection") {
-                    let button = subviewThatMatches(subject, test: { $0 is UIButton }) as! UIButton
+                it("informs delegates of all categories selection") {
+                    let button: UIButton! = allSubviews(of: subject, thatMatch: { $0 is UIButton }).first
                     button.sendActions(for: .touchUpInside)
-                    expect(delegate.selectedIndex) == 0
+                    expect(delegate.allCategoriesTappedCount) == 1
+                }
+
+                it("informs delegates of category selection") {
+                    let button: UIButton! = allSubviews(of: subject, thatMatch: { $0 is UIButton }).last
+                    button.sendActions(for: .touchUpInside)
+                    expect(delegate.selectedIndex) == subject.categoriesInfo.count - 1
                 }
             }
         }

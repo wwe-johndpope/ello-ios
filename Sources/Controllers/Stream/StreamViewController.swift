@@ -372,13 +372,13 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func replacePlaceholder(
-        _ placeholderType: StreamCellType.PlaceholderType,
-        with streamCellItems: [StreamCellItem],
+        type placeholderType: StreamCellType.PlaceholderType,
+        items streamCellItems: [StreamCellItem],
         completion: @escaping ElloEmptyCompletion = {}
         )
     {
         guard streamCellItems.count > 0 else {
-            replacePlaceholder(placeholderType, with: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)], completion: completion)
+            replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)], completion: completion)
             return
         }
 
@@ -986,10 +986,15 @@ extension StreamViewController: StreamPostTappedResponder {
 extension StreamViewController {
 
     func showCategoryViewController(slug: String, name: String) {
-        Tracker.shared.categoryOpened(slug)
-        let vc = CategoryViewController(slug: slug, name: name)
-        vc.currentUser = currentUser
-        navigationController?.pushViewController(vc, animated: true)
+        if let vc = parent as? CategoryViewController {
+            vc.selectCategoryFor(slug: slug)
+        }
+        else {
+            Tracker.shared.categoryOpened(slug)
+            let vc = CategoryViewController(slug: slug, name: name)
+            vc.currentUser = currentUser
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 

@@ -20,6 +20,12 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
+    enum NavBarItems {
+        case onlyGridToggle
+        case all
+        case none
+    }
+
     fileprivate let categoryCardList = CategoryCardListView()
     fileprivate let searchField = SearchNavBarField()
     fileprivate let searchFieldButton = UIButton()
@@ -31,18 +37,24 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     fileprivate var backHiddenConstraint: Constraint!
     fileprivate var shareVisibleConstraint: Constraint!
     fileprivate var shareHiddenConstraint: Constraint!
+    fileprivate var allHiddenConstraint: Constraint!
 
     var topInsetView: UIView {
-        if categoryCardList.isHidden {
-            return navigationBar
+        if categoryCardsVisible {
+            return categoryCardList
         }
         else {
-            return categoryCardList
+            return navigationBar
         }
     }
 
+    fileprivate var _categoryCardsVisible: Bool = true
     var categoryCardsVisible: Bool {
-        return !categoryCardList.isHidden
+        set {
+            _categoryCardsVisible = newValue
+            categoryCardList.isHidden = !categoryCardsVisible
+        }
+        get { return _categoryCardsVisible && categoryCardList.categoriesInfo.count > 0 }
     }
 
     override func style() {
@@ -103,8 +115,10 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
             shareHiddenConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-insets.right).constraint
             shareVisibleConstraint = make.trailing.equalTo(shareButton.snp.leading).offset(-Size.buttonMargin).constraint
+            allHiddenConstraint = make.trailing.equalTo(gridListButton.snp.trailing).offset(-Size.buttonMargin).constraint
         }
         shareVisibleConstraint.deactivate()
+        allHiddenConstraint.deactivate()
 
         searchFieldButton.snp.makeConstraints { make in
             make.edges.equalTo(navigationContainer)
@@ -126,18 +140,22 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     }
 
     func set(categoriesInfo newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
-        categoryCardList.isHidden = newValue.isEmpty
         categoryCardList.categoriesInfo = newValue
+        categoryCardList.isHidden = !categoryCardsVisible
 
-        if !categoryCardList.isHidden && animated {
-            let originalY = categoryCardList.frame.origin.y
-            categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
-            animate(completion: { _ in completion() }) {
-                self.categoryCardList.frame.origin.y = originalY
-            }
+        if categoryCardsVisible && animated {
+            showCategoryCardList(completion: completion)
         }
         else {
             completion()
+        }
+    }
+
+    fileprivate func showCategoryCardList(completion: @escaping ElloEmptyCompletion = {}) {
+        let originalY = categoryCardList.frame.origin.y
+        categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
+        animate(completion: { _ in completion() }) {
+            self.categoryCardList.frame.origin.y = originalY
         }
     }
 
@@ -153,11 +171,11 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     }
 
     func scrollToCategory(index: Int) {
-        self.categoryCardList.scrollToIndex(index, animated: true)
+        self.categoryCardList.scrollToIndex(index + 1, animated: true)
     }
 
     func selectCategory(index: Int) {
-        self.categoryCardList.selectCategoryIndex(index)
+        self.categoryCardList.selectCategory(index: index + 1)
     }
 
     func searchFieldButtonTapped() {
@@ -176,9 +194,32 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         delegate?.shareTapped(sender: shareButton)
     }
 
-    func showBackButton(visible: Bool) {
-        backButton.isHidden = !visible
-        if visible {
+    func setupNavBar(show: CategoryScreen.NavBarItems, back backVisible: Bool, animated: Bool) {
+        let shareButtonAlpha: CGFloat
+        let gridButtonAlpha: CGFloat
+        switch show {
+        case .onlyGridToggle:
+            shareHiddenConstraint.activate()
+            shareVisibleConstraint.deactivate()
+            allHiddenConstraint.deactivate()
+            shareButtonAlpha = 0
+            gridButtonAlpha = 1
+        case .all:
+            shareHiddenConstraint.deactivate()
+            shareVisibleConstraint.activate()
+            allHiddenConstraint.deactivate()
+            shareButtonAlpha = 1
+            gridButtonAlpha = 1
+        case .none:
+            shareHiddenConstraint.deactivate()
+            shareVisibleConstraint.deactivate()
+            allHiddenConstraint.activate()
+            shareButtonAlpha = 0
+            gridButtonAlpha = 0
+        }
+
+        backButton.isHidden = !backVisible
+        if backVisible {
             backHiddenConstraint.deactivate()
             backVisibleConstraint.activate()
         }
@@ -186,28 +227,21 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
             backHiddenConstraint.activate()
             backVisibleConstraint.deactivate()
         }
-        navigationBar.layoutIfNeeded()
-    }
 
-    func animateNavBar(showShare: Bool) {
-        if showShare {
-            shareHiddenConstraint.deactivate()
-            shareVisibleConstraint.activate()
-        }
-        else {
-            shareHiddenConstraint.activate()
-            shareVisibleConstraint.deactivate()
-        }
-
-        animate {
+        animate(animated: animated) {
             self.navigationBar.layoutIfNeeded()
-            self.shareButton.alpha = showShare ? 1 : 0
+            self.shareButton.alpha = shareButtonAlpha
+            self.gridListButton.alpha = gridButtonAlpha
         }
     }
 
 }
 
 extension CategoryScreen: CategoryCardListDelegate {
+    func allCategoriesTapped() {
+        delegate?.allCategoriesTapped()
+    }
+
     func categoryCardSelected(_ index: Int) {
         delegate?.categorySelected(index: index)
     }

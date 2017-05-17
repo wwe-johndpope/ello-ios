@@ -39,9 +39,9 @@ class BlockUserModalScreenSpec: QuickSpec {
                 controller.view = subject
                 showController(controller)
 
-                muteButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.MuteButton })
-                blockButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.BlockButton })
-                flagButton = (subviewThatMatches(subject) { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.FlagButton })
+                muteButton = subview(of: subject, thatMatches: { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.MuteButton })
+                blockButton = subview(of: subject, thatMatches: { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.BlockButton })
+                flagButton = subview(of: subject, thatMatches: { ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.FlagButton })
             }
 
             beforeEach {
