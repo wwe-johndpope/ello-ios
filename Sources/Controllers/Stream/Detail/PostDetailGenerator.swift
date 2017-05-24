@@ -25,7 +25,6 @@ final class PostDetailGenerator: StreamGenerator {
     fileprivate let postParam: String
     fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
-    fileprivate var hasPaddedSocial = false
     fileprivate let queue = OperationQueue()
 
     init(currentUser: User?,
@@ -46,7 +45,6 @@ final class PostDetailGenerator: StreamGenerator {
         let doneOperation = AsyncOperation()
         queue.addOperation(doneOperation)
 
-        hasPaddedSocial = false
         localToken = loadingToken.resetInitialPageLoadingToken()
 
         if reload {
@@ -220,13 +218,12 @@ private extension PostDetailGenerator {
                 guard users.count > 0 else { return }
 
                 let loversItems = self.userAvatarCellItems(
-                    users,
-                    icon: .heart,
-                    endpoint: .postLovers(postId: self.postParam),
-                    seeMoreTitle: InterfaceString.Post.LovedByList
+                    users: users,
+                    type: .lovers
                 )
                 displayLoversOperation.run {
                     inForeground {
+                        self.displaySocialPadding()
                         self.destination?.replacePlaceholder(type: .postLovers, items: loversItems) {}
                     }
                 }
@@ -250,13 +247,12 @@ private extension PostDetailGenerator {
                 guard users.count > 0 else { return }
 
                 let repostersItems = self.userAvatarCellItems(
-                    users,
-                    icon: .repost,
-                    endpoint: .postReposters(postId: self.postParam),
-                    seeMoreTitle: InterfaceString.Post.RepostedByList
+                    users: users,
+                    type: .reposters
                 )
                 displayRepostersOperation.run {
                     inForeground {
+                        self.displaySocialPadding()
                         self.destination?.replacePlaceholder(type: .postReposters, items: repostersItems) {}
                     }
                 }
@@ -296,18 +292,14 @@ private extension PostDetailGenerator {
     }
 
     func userAvatarCellItems(
-        _ users: [User],
-        icon: InterfaceImage,
-        endpoint: ElloAPI,
-        seeMoreTitle: String) -> [StreamCellItem]
+        users: [User],
+        type: UserAvatarCellModel.EndpointType) -> [StreamCellItem]
     {
-        let model = UserAvatarCellModel(icon: icon, seeMoreTitle: seeMoreTitle)
-        model.endpoint = endpoint
-        model.users = users
-        if !hasPaddedSocial {
-            hasPaddedSocial = true
-            displaySocialPadding()
-        }
+        let model = UserAvatarCellModel(
+            type: type,
+            users: users,
+            postParam: postParam
+            )
 
         return [
             StreamCellItem(type: .spacer(height: 4.0)),
