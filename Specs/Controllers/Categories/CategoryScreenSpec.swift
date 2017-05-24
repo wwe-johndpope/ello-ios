@@ -44,11 +44,11 @@ class CategoryScreenSpec: QuickSpec {
             beforeEach {
                 let infoA = CategoryCardListView.CategoryInfo(
                     title: "Art",
-                    imageURL: nil
+                    imageURL: URL(string: "https://example.com")
                     )
                 let infoB = CategoryCardListView.CategoryInfo(
                     title: "Lorem ipsum dolor sit amet",
-                    imageURL: nil
+                    imageURL: URL(string: "https://example.com")
                     )
                 subject = CategoryScreen()
                 categoryInfo = [infoA, infoB, infoA, infoB]
