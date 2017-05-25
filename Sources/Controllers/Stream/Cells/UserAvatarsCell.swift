@@ -16,10 +16,8 @@ class UserAvatarsCell: UICollectionViewCell {
     }
     var userAvatarCellModel: UserAvatarCellModel? {
         didSet {
-            if let model = userAvatarCellModel {
-                users = model.users ?? [User]()
-                updateAvatars()
-            }
+            users = userAvatarCellModel?.users ?? []
+            updateAvatars()
         }
     }
 
@@ -61,12 +59,11 @@ class UserAvatarsCell: UICollectionViewCell {
 
     @IBAction func seeMoreTapped(_ sender: UIButton) {
         guard
-            let model = userAvatarCellModel,
-            let endpoint = model.endpoint
+            let model = userAvatarCellModel
         else { return }
 
         let responder = target(forAction: #selector(SimpleStreamResponder.showSimpleStream(boxedEndpoint:title:noResultsMessages:)), withSender: self) as? SimpleStreamResponder
-        responder?.showSimpleStream(boxedEndpoint: BoxedElloAPI(endpoint: endpoint), title: model.seeMoreTitle, noResultsMessages: nil)
+        responder?.showSimpleStream(boxedEndpoint: BoxedElloAPI(endpoint: model.endpoint), title: model.seeMoreTitle, noResultsMessages: nil)
     }
 
     @IBAction func avatarTapped(_ sender: AvatarButton) {

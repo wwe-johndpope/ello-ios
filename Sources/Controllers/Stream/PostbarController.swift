@@ -220,14 +220,23 @@ class PostbarController: UIResponder, PostbarResponder {
             post.loved = false
             postNotification(PostChangedNotification, value: (post, .loved))
         }
+
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount - 1
             postNotification(CurrentUserChangedNotification, value: user)
         }
+
         let service = LovesService()
         service.unlovePost(
             postId: post.id,
             success: {
+                if let currentUser = self.currentUser {
+                    let love = Love(
+                        id: "", createdAt: Date(), updatedAt: Date(),
+                        deleted: true, postId: post.id, userId: currentUser.id
+                        )
+                    postNotification(JSONAbleChangedNotification, value: (love, .delete))
+                }
                 cell?.lovesControl.isUserInteractionEnabled = true
             },
             failure: { error, statusCode in

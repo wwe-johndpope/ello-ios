@@ -409,9 +409,19 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             else if jsonable is Post {
                 indexPath = clientSidePostInsertIndexPath()
             }
-            // else if love, add post to loves
-            else if jsonable is Love {
+            else if let love = jsonable as? Love {
                 indexPath = clientSideLoveInsertIndexPath()
+
+                if let post = love.post, let user = love.user {
+                    for item in visibleCellItems {
+                        if let userAvatars = item.jsonable as? UserAvatarCellModel,
+                            userAvatars.belongsTo(post: post, type: .lovers)
+                        {
+                            userAvatars.append(user: user)
+                        }
+                    }
+                    collectionView.reloadData()
+                }
             }
 
             if let indexPath = indexPath {
@@ -431,6 +441,19 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
         case .delete:
+            if let love = jsonable as? Love {
+                if let post = love.post, let user = love.user {
+                    for item in visibleCellItems {
+                        if let userAvatars = item.jsonable as? UserAvatarCellModel,
+                            userAvatars.belongsTo(post: post, type: .lovers)
+                        {
+                            userAvatars.remove(user: user)
+                        }
+                    }
+                    collectionView.reloadData()
+                }
+            }
+
             removeItemsFor(jsonable: jsonable, change: change)
             collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
         case .replaced:
@@ -820,7 +843,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return (cells, repostCells)
     }
 
-    fileprivate func temporarilyUnfilter(_ block: @escaping ElloEmptyCompletion) {
+    fileprivate func temporarilyUnfilter(_ block: ElloEmptyCompletion) {
         let cachedStreamFilter = streamFilter
         let cachedStreamCollapsedFilter = streamCollapsedFilter
         self.streamFilter = nil

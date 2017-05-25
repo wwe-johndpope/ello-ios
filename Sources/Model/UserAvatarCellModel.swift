@@ -6,44 +6,65 @@ let UserAvatarCellModelVersion = 2
 
 @objc(UserAvatarCellModel)
 final class UserAvatarCellModel: JSONAble {
-
-    let icon: InterfaceImage
-    let seeMoreTitle: String
-    var endpoint: ElloAPI?
-    var users: [User]?
-
-    var hasUsers: Bool {
-        if let arr = users {
-            return arr.count > 0
-        }
-        return false
+    enum EndpointType {
+        case lovers
+        case reposters
     }
 
-    init(icon: InterfaceImage, seeMoreTitle: String) {
-        self.icon = icon
-        self.seeMoreTitle = seeMoreTitle
+    let endpointType: EndpointType
+    var seeMoreTitle: String {
+        switch endpointType {
+        case .lovers: return InterfaceString.Post.LovedByList
+        case .reposters: return InterfaceString.Post.RepostedByList
+        }
+    }
+    var icon: InterfaceImage {
+        switch endpointType {
+        case .lovers: return .heart
+        case .reposters: return .repost
+        }
+    }
+    var endpoint: ElloAPI {
+        switch endpointType {
+        case .lovers: return .postLovers(postId: postParam)
+        case .reposters: return .postReposters(postId: postParam)
+        }
+    }
+    var users: [User] = []
+    var postParam: String
+
+    var hasUsers: Bool {
+        return users.count > 0
+    }
+
+    init(
+        type endpointType: EndpointType,
+        users: [User],
+        postParam: String
+        )
+    {
+        self.endpointType = endpointType
+        self.users = users
+        self.postParam = postParam
         super.init(version: UserAvatarCellModelVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
-        self.icon = decoder.decodeKey("icon")
-        self.seeMoreTitle = decoder.decodeKey("seeMoreTitle")
-        super.init(coder: decoder.coder)
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    override func encode(with encoder: NSCoder) {
-        let coder = Coder(encoder)
-        coder.encodeObject(icon, forKey: "icon")
-        coder.encodeObject(seeMoreTitle, forKey: "seeMoreTitle")
-        super.encode(with: coder.coder)
+    func belongsTo(post: Post, type: EndpointType) -> Bool {
+        guard type == endpointType else { return false }
+        return post.id == postParam || ("~" + post.token == postParam)
     }
 
-    override class func fromJSON(_ data: [String: Any]) -> JSONAble {
-        return UserAvatarCellModel(
-            icon: InterfaceImage(rawValue: (data["icon"] as? String) ?? "hearts")!,
-            seeMoreTitle: (data["seeMoreTitle"] as? String) ?? ""
-        )
+    func append(user: User) {
+        guard !users.any({ $0.id == user.id }) else { return }
+        users.append(user)
+    }
+
+    func remove(user: User) {
+        users = users.filter { $0.id != user.id }
     }
 
 }
