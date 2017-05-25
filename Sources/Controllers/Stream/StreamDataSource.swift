@@ -416,8 +416,8 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                     if !hasCellItems(for: .postLovers) {
                         let items = PostDetailGenerator.userAvatarCellItems(
                             users: [user],
-                            type: .lovers,
-                            postParam: post.id
+                            postParam: post.id,
+                            type: .lovers
                         )
                         replacePlaceholder(type: .postLovers, items: items)
 

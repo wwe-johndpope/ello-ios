@@ -9,7 +9,6 @@ protocol PostDetailStreamDestination: StreamDestination {
 
 
 final class PostDetailGenerator: StreamGenerator {
-
     var currentUser: User?
     var streamKind: StreamKind
     weak fileprivate var postDetailStreamDestination: PostDetailStreamDestination?
@@ -91,6 +90,26 @@ final class PostDetailGenerator: StreamGenerator {
         })
     }
 
+    static func socialPadding() -> [StreamCellItem] {
+        return [StreamCellItem(type: .spacer(height: 8.0))]
+    }
+
+    static func userAvatarCellItems(
+        users: [User],
+        postParam: String,
+        type: UserAvatarCellModel.EndpointType) -> [StreamCellItem]
+    {
+        let model = UserAvatarCellModel(
+            type: type,
+            users: users,
+            postParam: postParam
+        )
+
+        return [
+            StreamCellItem(type: .spacer(height: 4.0)),
+            StreamCellItem(jsonable: model, type: .userAvatars)
+        ]
+    }
 }
 
 private extension PostDetailGenerator {
@@ -291,26 +310,5 @@ private extension PostDetailGenerator {
             .onFail { _ in
                 print("failed load post reposters")
             }
-    }
-
-    static func socialPadding() -> [StreamCellItem] {
-        return [StreamCellItem(type: .spacer(height: 8.0))]
-    }
-
-    static func userAvatarCellItems(
-        users: [User],
-        postParam: String,
-        type: UserAvatarCellModel.EndpointType) -> [StreamCellItem]
-    {
-        let model = UserAvatarCellModel(
-            type: type,
-            users: users,
-            postParam: postParam
-            )
-
-        return [
-            StreamCellItem(type: .spacer(height: 4.0)),
-            StreamCellItem(jsonable: model, type: .userAvatars)
-        ]
     }
 }
