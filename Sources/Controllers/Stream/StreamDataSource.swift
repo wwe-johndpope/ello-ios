@@ -413,13 +413,30 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 indexPath = clientSideLoveInsertIndexPath()
 
                 if let post = love.post, let user = love.user {
-                    for item in visibleCellItems {
-                        if let userAvatars = item.jsonable as? UserAvatarCellModel,
-                            userAvatars.belongsTo(post: post, type: .lovers)
-                        {
-                            userAvatars.append(user: user)
+                    if !hasCellItems(for: .postLovers) {
+                        let items = PostDetailGenerator.userAvatarCellItems(
+                            users: [user],
+                            type: .lovers,
+                            postParam: post.id
+                        )
+                        replacePlaceholder(type: .postLovers, items: items)
+
+                        if !hasCellItems(for: .postReposters) {
+                            let padding = PostDetailGenerator.socialPadding()
+                            replacePlaceholder(type: .postSocialPadding, items: padding)
                         }
                     }
+                    else {
+                        for item in visibleCellItems {
+                            if let userAvatars = item.jsonable as? UserAvatarCellModel,
+                                userAvatars.belongsTo(post: post, type: .lovers)
+                            {
+                                userAvatars.append(user: user)
+                                break
+                            }
+                        }
+                    }
+
                     collectionView.reloadData()
                 }
             }
@@ -443,13 +460,24 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         case .delete:
             if let love = jsonable as? Love {
                 if let post = love.post, let user = love.user {
+                    var removed = false
                     for item in visibleCellItems {
                         if let userAvatars = item.jsonable as? UserAvatarCellModel,
                             userAvatars.belongsTo(post: post, type: .lovers)
                         {
                             userAvatars.remove(user: user)
+                            if userAvatars.users.count == 0 {
+                                replacePlaceholder(type: .postLovers, items: [])
+                                removed = true
+                            }
+                            break
                         }
                     }
+
+                    if removed && !hasCellItems(for: .postReposters) {
+                        replacePlaceholder(type: .postSocialPadding, items: [])
+                    }
+
                     collectionView.reloadData()
                 }
             }

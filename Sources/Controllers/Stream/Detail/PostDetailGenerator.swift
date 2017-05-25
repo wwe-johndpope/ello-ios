@@ -160,7 +160,7 @@ private extension PostDetailGenerator {
     }
 
     func displaySocialPadding() {
-        let padding = [StreamCellItem(type: .spacer(height: 8.0))]
+        let padding = PostDetailGenerator.socialPadding()
         destination?.replacePlaceholder(type: .postSocialPadding, items: padding) {}
     }
 
@@ -217,8 +217,9 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
 
-                let loversItems = self.userAvatarCellItems(
+                let loversItems = PostDetailGenerator.userAvatarCellItems(
                     users: users,
+                    postParam: self.postParam,
                     type: .lovers
                 )
                 displayLoversOperation.run {
@@ -246,8 +247,9 @@ private extension PostDetailGenerator {
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
 
-                let repostersItems = self.userAvatarCellItems(
+                let repostersItems = PostDetailGenerator.userAvatarCellItems(
                     users: users,
+                    postParam: self.postParam,
                     type: .reposters
                 )
                 displayRepostersOperation.run {
@@ -291,8 +293,13 @@ private extension PostDetailGenerator {
             }
     }
 
-    func userAvatarCellItems(
+    static func socialPadding() -> [StreamCellItem] {
+        return [StreamCellItem(type: .spacer(height: 8.0))]
+    }
+
+    static func userAvatarCellItems(
         users: [User],
+        postParam: String,
         type: UserAvatarCellModel.EndpointType) -> [StreamCellItem]
     {
         let model = UserAvatarCellModel(
