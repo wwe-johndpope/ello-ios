@@ -69,11 +69,14 @@ extension Tracker {
         if let analyticsId = user.profile?.gaUniqueId {
             let authToken = AuthToken()
             agent.identify(analyticsId, traits: [
+                // camelCase is correct, so we have parity w/ webapp
+                "hasAccount": true,
+                "agent": "ios",
+                // leave these as snake_case since they are being used in reports
                 "is_nabaroo": authToken.isNabaroo,
                 "is_featured": user.isFeatured,
                 "is_experimental": user.experimentalFeatures,
                 "created_at": user.profile?.createdAt.toServerDateString() ?? "no-creation-date",
-                "agent": "ios",
             ])
         }
         else {
