@@ -377,21 +377,9 @@ final class StreamViewController: BaseElloViewController {
         completion: @escaping ElloEmptyCompletion = {}
         )
     {
-        guard streamCellItems.count > 0 else {
-            replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)], completion: completion)
-            return
-        }
-
-        for item in streamCellItems {
-            item.placeholderType = placeholderType
-        }
-
         let width = view.frame.width
         dataSource.calculateCellItems(streamCellItems, withWidth: width) {
-            let indexPathsToReplace = self.dataSource.indexPathsForPlaceholderType(placeholderType)
-            guard indexPathsToReplace.count > 0 else { return }
-
-            _ = self.dataSource.replaceItems(at: indexPathsToReplace, with: streamCellItems)
+            self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems)
             self.reloadCells()
             completion()
         }
