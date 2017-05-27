@@ -68,7 +68,7 @@ final class PostDetailGenerator: StreamGenerator {
 
         let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return ElloAPI.postComments(postId: postId) }
         StreamService().loadStream(endpoint: scrollAPI, streamKind: .postDetail(postParam: postId))
-            .onSuccess { [weak self] response in
+            .thenFinally { [weak self] response in
                 guard let `self` = self else { return }
 
                 switch response {
@@ -84,7 +84,7 @@ final class PostDetailGenerator: StreamGenerator {
                     self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
                 }
             }
-            .onFail { _ in
+            .catch { _ in
                 self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
             }
     }
@@ -146,7 +146,7 @@ private extension PostDetailGenerator {
 
         // load the post with no comments
         PostService().loadPost(postParam, needsComments: false)
-            .onSuccess { [weak self] post in
+            .thenFinally { [weak self] post in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 self.post = post
@@ -155,7 +155,7 @@ private extension PostDetailGenerator {
                 self.destination?.replacePlaceholder(type: .postHeader, items: postItems) {}
                 doneOperation.run()
             }
-            .onFail { [weak self] _ in
+            .catch { [weak self] _ in
                 guard let `self` = self else { return }
                 self.destination?.primaryJSONAbleNotFound()
                 self.queue.cancelAllOperations()
@@ -205,7 +205,7 @@ private extension PostDetailGenerator {
         queue.addOperation(displayCommentsOperation)
 
         PostService().loadPostComments(postParam)
-            .onSuccess { [weak self] (comments, responseConfig) in
+            .thenFinally { [weak self] (comments, responseConfig) in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
@@ -221,7 +221,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .onFail { _ in
+            .catch { _ in
                 print("failed load post comments")
             }
     }
@@ -234,7 +234,7 @@ private extension PostDetailGenerator {
         queue.addOperation(displayLoversOperation)
 
         PostService().loadPostLovers(postParam)
-            .onSuccess { [weak self] users in
+            .thenFinally { [weak self] users in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -251,7 +251,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .onFail { _ in
+            .catch { _ in
                 print("failed load post lovers")
             }
     }
@@ -264,7 +264,7 @@ private extension PostDetailGenerator {
         queue.addOperation(displayRepostersOperation)
 
         PostService().loadPostReposters(postParam)
-            .onSuccess { [weak self] users in
+            .thenFinally { [weak self] users in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -281,7 +281,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .onFail { _ in
+            .catch { _ in
                 print("failed load post reposters")
             }
     }
@@ -294,7 +294,7 @@ private extension PostDetailGenerator {
         queue.addOperation(displayRelatedPostsOperation)
 
         PostService().loadRelatedPosts(postParam)
-            .onSuccess { [weak self] relatedPosts in
+            .thenFinally { [weak self] relatedPosts in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
                 guard relatedPosts.count > 0 else { return }
@@ -310,7 +310,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .onFail { _ in
+            .catch { _ in
                 print("failed load post reposters")
             }
     }
