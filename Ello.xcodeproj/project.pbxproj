@@ -3999,6 +3999,7 @@
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 3D5U9ESH74;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -4020,6 +4021,7 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 3D5U9ESH74;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -5420,6 +5422,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3D5U9ESH74;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
@@ -5430,6 +5433,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/ShareExtension-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -5446,6 +5450,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3D5U9ESH74;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
@@ -5456,6 +5461,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.Ello.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/ShareExtension-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -5608,6 +5614,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 6088;
+				DEVELOPMENT_TEAM = 3D5U9ESH74;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5630,6 +5637,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\" -Xfrontend -debug-time-function-bodies -enable-bridging-pch";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.ElloDev;
 				PRODUCT_NAME = Ello;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Ello-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -5649,6 +5657,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 6088;
+				DEVELOPMENT_TEAM = 3D5U9ESH74;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5672,6 +5681,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.Ello;
 				PRODUCT_NAME = Ello;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Ello-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
