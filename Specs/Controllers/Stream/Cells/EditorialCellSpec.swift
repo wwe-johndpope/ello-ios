@@ -18,6 +18,10 @@ class EditorialCellSpec: QuickSpec {
                     config.invite = (emails: "", sent: sent)
                     config.specsImage = specImage(named: "specs-avatar")
 
+                    let author = User.stub([:])
+                    let post = Post.stub(["author": author])
+                    config.post = post
+
                     if join {
                         config.join = (email: "email@email.com", username: "username", password: "password")
                     }
@@ -25,20 +29,20 @@ class EditorialCellSpec: QuickSpec {
                     return config
                 }
 
-                let expectations: [(String, EditorialCell.Config, EditorialCell.Type, CGFloat)] = [
-                    ("invite sent", config(sent: true), EditorialInviteCell.self, 375),
-                    ("join", config(), EditorialJoinCell.self, 375),
-                    ("join on iphone se", config(), EditorialJoinCell.self, 320),
-                    ("join on iphone plus", config(), EditorialJoinCell.self, 414),
-                    ("join filled in", config(join: true), EditorialJoinCell.self, 375),
-                    ("post", config(), EditorialPostCell.self, 375),
-                    ("post_stream", config(), EditorialPostStreamCell.self, 375),
+                let expectations: [(String, () -> EditorialCell.Config, EditorialCell.Type, CGFloat)] = [
+                    ("invite sent",         { return config(sent: true) }, EditorialInviteCell.self, 375),
+                    ("join",                { return config() }, EditorialJoinCell.self, 375),
+                    ("join on iphone se",   { return config() }, EditorialJoinCell.self, 320),
+                    ("join on iphone plus", { return config() }, EditorialJoinCell.self, 414),
+                    ("join filled in",      { return config(join: true) }, EditorialJoinCell.self, 375),
+                    ("post",                { return config() }, EditorialPostCell.self, 375),
+                    ("post_stream",         { return config() }, EditorialPostStreamCell.self, 375),
                 ]
-                for (description, config, cellClass, size) in expectations {
+                for (description, configFn, cellClass, size) in expectations {
                     it("should have valid snapshot for \(description)") {
                         let subject = cellClass.init()
                         subject.frame.size = CGSize(width: size, height: size + 1)
-                        subject.config = config
+                        subject.config = configFn()
                         expectValidSnapshot(subject)
                     }
                 }
