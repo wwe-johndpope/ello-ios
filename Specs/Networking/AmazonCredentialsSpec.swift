@@ -16,9 +16,10 @@ class AmazonCredentialsSpec: QuickSpec {
                 beforeEach() {
                     credentials = nil
                     ElloProvider.shared.request(.amazonCredentials)
-                        .then { response in
+                        .thenFinally { response in
                             credentials = response.0 as? AmazonCredentials
                         }
+                        .ignoreErrors()
                 }
 
                 it("should not be nil") {
