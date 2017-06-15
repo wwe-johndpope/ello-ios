@@ -600,6 +600,9 @@
 		1D6A02431C73CC9B0054603B /* AssetsToRegions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */; };
 		1D6A02451C73CD390054603B /* AssetsToRegionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */; };
 		1D6C97F81CE179E600E7B929 /* usernames.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D6C97F71CE179E600E7B929 /* usernames.json */; };
+		1D6D8E6E1EF2ED4600472434 /* HomeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D8E6B1EF2ED4600472434 /* HomeProtocols.swift */; };
+		1D6D8E6F1EF2ED4600472434 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D8E6C1EF2ED4600472434 /* HomeScreen.swift */; };
+		1D6D8E701EF2ED4600472434 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D8E6D1EF2ED4600472434 /* HomeViewController.swift */; };
 		1D6E42FC1EA672C60029C9B1 /* ProfileBadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E42FB1EA672C60029C9B1 /* ProfileBadgesView.swift */; };
 		1D6E43001EA673300029C9B1 /* ProfileBadgesSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E42FF1EA673300029C9B1 /* ProfileBadgesSizeCalculator.swift */; };
 		1D6E43061EA685260029C9B1 /* ProfileBadgesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E43051EA685260029C9B1 /* ProfileBadgesPresenter.swift */; };
@@ -1640,6 +1643,9 @@
 		1D6A02421C73CC9B0054603B /* AssetsToRegions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsToRegions.swift; sourceTree = "<group>"; };
 		1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetsToRegionsSpec.swift; sourceTree = "<group>"; };
 		1D6C97F71CE179E600E7B929 /* usernames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usernames.json; sourceTree = "<group>"; };
+		1D6D8E6B1EF2ED4600472434 /* HomeProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeProtocols.swift; sourceTree = "<group>"; };
+		1D6D8E6C1EF2ED4600472434 /* HomeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		1D6D8E6D1EF2ED4600472434 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1D6E42FB1EA672C60029C9B1 /* ProfileBadgesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesView.swift; sourceTree = "<group>"; };
 		1D6E42FF1EA673300029C9B1 /* ProfileBadgesSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesSizeCalculator.swift; sourceTree = "<group>"; };
 		1D6E43051EA685260029C9B1 /* ProfileBadgesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesPresenter.swift; sourceTree = "<group>"; };
@@ -3003,6 +3009,7 @@
 				12F6ADF81A43380C00493660 /* ElloTabBarController.swift */,
 				1DF0B2CE1E8D59C9001B9F97 /* ForgotPassword */,
 				1D59EF881D63C73F0029C106 /* Hire */,
+				1D6D8E6A1EF2ED2F00472434 /* Home */,
 				12F6AE1F1A43386600493660 /* Join */,
 				1D06D6BF1E3BADA0004FA878 /* LoggedOut */,
 				12F6AE221A43387B00493660 /* Login */,
@@ -3513,6 +3520,16 @@
 			name = Views;
 			path = Specs/Views;
 			sourceTree = SOURCE_ROOT;
+		};
+		1D6D8E6A1EF2ED2F00472434 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1D6D8E6B1EF2ED4600472434 /* HomeProtocols.swift */,
+				1D6D8E6C1EF2ED4600472434 /* HomeScreen.swift */,
+				1D6D8E6D1EF2ED4600472434 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
 		};
 		1D70DE6A1DF73869008AF216 /* Calculators */ = {
 			isa = PBXGroup;
@@ -5075,6 +5092,7 @@
 				1D2D18651AC322070078AA05 /* UIWebView.swift in Sources */,
 				1217009B1A7841C400EBACA5 /* StreamCellItemParser.swift in Sources */,
 				12431FFC1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift in Sources */,
+				1D6D8E701EF2ED4600472434 /* HomeViewController.swift in Sources */,
 				12224E581A72CEC300D087EC /* PostbarController.swift in Sources */,
 				1D70DE681DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift in Sources */,
 				1D59EF901D64BB490029C106 /* HireProtocols.swift in Sources */,
@@ -5202,6 +5220,7 @@
 				1D2F65AC1D186E7A0099D036 /* CategoryCardCell.swift in Sources */,
 				1DCB124A1B5EB0E60023664C /* CGSizeExtensions.swift in Sources */,
 				1D8783161ECCF45E00253602 /* EditorialExternalCell.swift in Sources */,
+				1D6D8E6E1EF2ED4600472434 /* HomeProtocols.swift in Sources */,
 				1207C98F1C73FEE000939ADB /* S3UploadingService.swift in Sources */,
 				1233758F1DA6F0F20019CFAD /* ProfileBioSizeCalculator.swift in Sources */,
 				1D783A2B1B838FDD00BD6BF4 /* OmnibarTextCell.swift in Sources */,
@@ -5391,6 +5410,7 @@
 				1D44EAFC1EB2A337003B9B3D /* BadgesService.swift in Sources */,
 				1DA18DF51DA8471F000231CC /* ProfileNamesPresenter.swift in Sources */,
 				123375851DA6ECEC0019CFAD /* ProfileBaseView.swift in Sources */,
+				1D6D8E6F1EF2ED4600472434 /* HomeScreen.swift in Sources */,
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
 				12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */,
 				1D59EF921D6624DC0029C106 /* HireService.swift in Sources */,
