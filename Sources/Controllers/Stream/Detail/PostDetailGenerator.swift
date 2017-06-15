@@ -89,6 +89,9 @@ final class PostDetailGenerator: StreamGenerator {
                 self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
         })
     }
+}
+
+extension PostDetailGenerator {
 
     static func socialPadding() -> [StreamCellItem] {
         return [StreamCellItem(type: .spacer(height: 8.0))]
@@ -103,13 +106,14 @@ final class PostDetailGenerator: StreamGenerator {
             type: type,
             users: users,
             postParam: postParam
-        )
+            )
 
         return [
             StreamCellItem(type: .spacer(height: 4.0)),
             StreamCellItem(jsonable: model, type: .userAvatars)
         ]
     }
+
 }
 
 private extension PostDetailGenerator {
