@@ -97,8 +97,14 @@ class BlockUserModalViewControllerSpec: QuickSpec {
                     subject = BlockUserModalViewController(config: BlockUserModalConfig(userId: "666", userAtName: "@archer", relationshipPriority: relationshipPriority) { _ in })
                     subject.currentUser = currentUser
                     showController(subject)
-                    let muteButton: UIButton? = subview(of: subject.view, thatMatches: { ($0 as? UIButton)?.currentTitle == "Mute" })
-                    let blockButton: UIButton? = subview(of: subject.view, thatMatches: { ($0 as? UIButton)?.currentTitle == "Block" })
+                    let muteButton: UIButton? = subview(of: subject.view, thatMatches: {
+                        ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.MuteButton ||
+                        ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.UnmuteButton
+                    })
+                    let blockButton: UIButton? = subview(of: subject.view, thatMatches: {
+                        ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.BlockButton ||
+                        ($0 as? UIButton)?.currentTitle == InterfaceString.Relationship.UnblockButton
+                    })
                     return (subject, muteButton, blockButton)
                 }
 
