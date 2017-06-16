@@ -9,7 +9,7 @@ class EditorialPostStreamCell: EditorialCell {
     fileprivate let pageControl = UIPageControl()
     fileprivate let scrollView = UIScrollView()
     fileprivate var postCells: [EditorialPostCell] = []
-    fileprivate let titleLabel = StyledLabel(style: .giantWhite)
+    fileprivate let titleLabel = StyledLabel(style: .giantBoldWhite)
     fileprivate let bg = UIView()
     fileprivate var autoscrollTimer: Timer?
 
@@ -175,6 +175,8 @@ extension EditorialPostStreamCell: UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView.contentSize.width > 0 else { return }
+
         let pageFloat: CGFloat = round(map(
             scrollView.contentOffset.x,
             fromInterval: (0, scrollView.contentSize.width),

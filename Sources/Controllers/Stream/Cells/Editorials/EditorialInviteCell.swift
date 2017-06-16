@@ -2,12 +2,18 @@
 ///  EditorialInviteCell.swift
 //
 
+import SnapKit
+
+
 class EditorialInviteCell: EditorialCell {
-    fileprivate let inviteLabel = StyledLabel(style: .largeWhite)
+    fileprivate let inviteLabel = StyledLabel(style: .giantWhite)
+    fileprivate let inviteCaption = StyledLabel(style: .largeWhite)
+    fileprivate let inviteInstructions = StyledLabel(style: .largeWhite)
     fileprivate let sentLabel = StyledLabel(style: .white)
     fileprivate let textBg = UIView()
     fileprivate let textView = ClearTextView()
     fileprivate let submitButton = StyledButton(style: .editorialJoin)
+    fileprivate var collapseInstructions: Constraint!
 
     var onInviteChange: ((Editorial.InviteInfo) -> Void)?
 
@@ -56,8 +62,12 @@ class EditorialInviteCell: EditorialCell {
         textView.keyboardType = .emailAddress
 
         inviteLabel.text = InterfaceString.Editorials.Invite
-        sentLabel.text = InterfaceString.Editorials.Sent
         inviteLabel.numberOfLines = 0
+        inviteCaption.text = InterfaceString.Editorials.InviteCaption
+        inviteCaption.numberOfLines = 0
+        inviteInstructions.text = InterfaceString.Editorials.InviteInstructions
+        inviteInstructions.numberOfLines = 0
+        sentLabel.text = InterfaceString.Editorials.Sent
         textBg.backgroundColor = .white
         textView.isEditable = true
         submitButton.isEnabled = false
@@ -68,6 +78,8 @@ class EditorialInviteCell: EditorialCell {
         super.arrange()
 
         editorialContentView.addSubview(inviteLabel)
+        editorialContentView.addSubview(inviteCaption)
+        editorialContentView.addSubview(inviteInstructions)
         editorialContentView.addSubview(sentLabel)
         editorialContentView.addSubview(textBg)
         textBg.addSubview(textView)
@@ -82,19 +94,32 @@ class EditorialInviteCell: EditorialCell {
             make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
         }
-        inviteLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+
+        inviteCaption.snp.makeConstraints { make in
+            make.top.equalTo(inviteLabel.snp.bottom).offset(Size.textFieldMargin)
+            make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
+            make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
+        }
 
         textBg.snp.makeConstraints { make in
             make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
-            make.top.equalTo(inviteLabel.snp.bottom).offset(Size.defaultMargin.top)
-            make.bottom.equalTo(submitButton.snp.top).offset(-Size.textFieldMargin)
+            make.top.equalTo(inviteCaption.snp.bottom).offset(Size.textFieldMargin)
         }
 
         textView.snp.makeConstraints { make in
             make.edges.equalTo(textBg).inset(UIEdgeInsets(tops: 20, sides: 30))
         }
 
+        inviteInstructions.snp.makeConstraints { make in
+            make.top.equalTo(textBg.snp.bottom).offset(Size.textFieldMargin)
+            make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
+            make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
+            collapseInstructions = make.height.equalTo(0).priority(Priority.required).constraint
+        }
+        collapseInstructions.deactivate()
+
         submitButton.snp.makeConstraints { make in
+            make.top.equalTo(inviteInstructions.snp.bottom).offset(Size.textFieldMargin)
             make.height.equalTo(Size.buttonHeight)
             make.bottom.equalTo(editorialContentView).offset(-Size.defaultMargin.bottom)
             make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
@@ -104,6 +129,16 @@ class EditorialInviteCell: EditorialCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         onInviteChange = nil
+        collapseInstructions.deactivate()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutIfNeeded()
+
+        if textView.frame.height < Size.minInviteTextHeight {
+            collapseInstructions.activate()
+        }
     }
 }
 

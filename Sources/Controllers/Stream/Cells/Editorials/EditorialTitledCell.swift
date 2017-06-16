@@ -3,7 +3,7 @@
 //
 
 class EditorialTitledCell: EditorialCell {
-    let titleLabel = StyledLabel(style: .giantWhite)
+    let titleLabel = StyledLabel(style: .giantBoldWhite)
     let subtitleLabel = StyledLabel(style: .largeWhite)
 
     override func style() {

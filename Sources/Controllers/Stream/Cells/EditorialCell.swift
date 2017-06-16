@@ -35,14 +35,16 @@ class EditorialCell: UICollectionViewCell {
         static let smallTopMargin: CGFloat = 28
         static let defaultMargin = UIEdgeInsets(top: 18, left: 18, bottom: 17, right: 15)
         static let textFieldMargin: CGFloat = 10
+        static let joinMargin: CGFloat = 1
         static let pageControlMargin: CGFloat = 18
         static let postStreamLabelMargin: CGFloat = 20
         static let subtitleButtonMargin: CGFloat = 36
         static let bgMargins = UIEdgeInsets(bottom: 1)
         static let buttonsMargin: CGFloat = 30
         static let buttonHeight: CGFloat = 48
-        static let minFieldHeight: CGFloat = 50
-        static let fieldHeight: CGFloat = 64
+        static let minFieldHeight: CGFloat = 45
+        static let maxFieldHeight: CGFloat = 64
+        static let minInviteTextHeight: CGFloat = 60
     }
 
     struct Config {
@@ -70,6 +72,7 @@ class EditorialCell: UICollectionViewCell {
     fileprivate let gradientView = UIView()
     fileprivate var gradientLayer = EditorialCell.generateGradientLayer()
     fileprivate let imageView = FLAnimatedImageView()
+    fileprivate let loadingView = UIView()
     var editorialContentView: UIView { return bg }
 
     override init(frame: CGRect) {
@@ -203,13 +206,13 @@ extension EditorialCell.Config {
             config.postStreamConfigs = postConfigs
         }
 
-        if let postImageURL = editorial.post?.firstImageURL {
-            config.imageURL = postImageURL
-        }
-        else if let asset = editorial.images[.size1x1],
+        if let asset = editorial.images[.size1x1],
             let imageURL = asset.largeOrBest?.url
         {
             config.imageURL = imageURL
+        }
+        else if let postImageURL = editorial.post?.firstImageURL {
+            config.imageURL = postImageURL
         }
 
         return config

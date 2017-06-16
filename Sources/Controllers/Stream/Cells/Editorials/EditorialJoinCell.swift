@@ -3,7 +3,8 @@
 //
 
 class EditorialJoinCell: EditorialCell {
-    fileprivate let joinLabel = StyledLabel(style: .largeWhite)
+    fileprivate let joinLabel = StyledLabel(style: .giantWhite)
+    fileprivate let joinCaption = StyledLabel(style: .largeWhite)
     fileprivate let emailField = ElloTextField()
     fileprivate let usernameField = ElloTextField()
     fileprivate let passwordField = ElloTextField()
@@ -53,6 +54,8 @@ class EditorialJoinCell: EditorialCell {
 
         joinLabel.text = InterfaceString.Editorials.Join
         joinLabel.numberOfLines = 0
+        joinCaption.text = InterfaceString.Editorials.JoinCaption
+        joinCaption.numberOfLines = 0
         ElloTextFieldView.styleAsEmailField(emailField)
         ElloTextFieldView.styleAsUsernameField(usernameField)
         ElloTextFieldView.styleAsPasswordField(passwordField)
@@ -70,6 +73,7 @@ class EditorialJoinCell: EditorialCell {
         super.arrange()
 
         editorialContentView.addSubview(joinLabel)
+        editorialContentView.addSubview(joinCaption)
         editorialContentView.addSubview(emailField)
         editorialContentView.addSubview(usernameField)
         editorialContentView.addSubview(passwordField)
@@ -81,39 +85,48 @@ class EditorialJoinCell: EditorialCell {
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
         }
 
+        joinCaption.snp.makeConstraints { make in
+            make.top.equalTo(joinLabel.snp.bottom).offset(Size.textFieldMargin)
+            make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
+            make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
+        }
+
         let fields = [emailField, usernameField, passwordField]
-        fields.eachPair { prevField, field in
+        fields.forEach { field in
             field.snp.makeConstraints { make in
                 make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
-                make.height.equalTo(Size.minFieldHeight)
-                if let prevField = prevField {
-                    make.top.equalTo(prevField.snp.bottom).offset(Size.textFieldMargin)
-                }
             }
         }
 
         submitButton.snp.makeConstraints { make in
-            make.height.equalTo(Size.buttonHeight)
-            make.top.equalTo(fields.last!.snp.bottom).offset(Size.textFieldMargin)
+            make.height.equalTo(Size.buttonHeight).priority(Priority.required)
             make.bottom.equalTo(editorialContentView).offset(-Size.defaultMargin.bottom)
             make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
         }
     }
 
-    override func updateConstraints() {
-        super.updateConstraints()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         layoutIfNeeded()  // why-t-f is this necessary!?
 
         // doing this simple height calculation in auto layout was a total waste of time
         let fields = [emailField, usernameField, passwordField]
-        let remainingHeight = submitButton.frame.minY - joinLabel.frame.maxY - Size.defaultMargin.top - CGFloat(fields.count) * Size.textFieldMargin
-        let fieldHeight: CGFloat = min(max(ceil(remainingHeight / 3), Size.minFieldHeight), Size.fieldHeight)
+        let textFieldsBottom = frame.height - Size.defaultMargin.bottom - Size.buttonHeight - Size.textFieldMargin
+        var remainingHeight = textFieldsBottom - joinCaption.frame.maxY - Size.textFieldMargin - CGFloat(fields.count) * Size.joinMargin
+        if remainingHeight < Size.minFieldHeight * 3 {
+            joinCaption.isHidden = true
+            remainingHeight += joinCaption.frame.height + Size.textFieldMargin
+        }
+        else {
+            joinCaption.isHidden = false
+        }
+        let fieldHeight: CGFloat = min(max(ceil(remainingHeight / 3), Size.minFieldHeight), Size.maxFieldHeight)
+        var y: CGFloat = textFieldsBottom
         for field in fields.reversed() {
-            guard field.frame.height != fieldHeight else { continue }
-
-            field.snp.updateConstraints { make in
-                make.height.equalTo(fieldHeight)
-            }
+            y -= fieldHeight
+            field.frame.origin.y = y
+            field.frame.size.height = fieldHeight
+            y -= Size.joinMargin
         }
     }
 
