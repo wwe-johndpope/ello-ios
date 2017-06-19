@@ -18,8 +18,8 @@ class StyledLabel: UILabel {
             case .normal: return UIFont.defaultFont()
             case .large: return UIFont.defaultFont(18)
             case .largeBold: return UIFont.defaultBoldFont(18)
+            case .editorialHeader: return UIFont.regularBlackFont(32)
             case .editorialCaption: return UIFont.defaultFont(16)
-            case .editorialHeader: return UIFont.regularBlackFont(24)
             case .bold: return UIFont.defaultBoldFont()
             }
         }
