@@ -101,17 +101,10 @@ class FollowingViewController: StreamableViewController {
         updateInsets()
     }
 
-    // MARK: - IBActions
-    let drawerAnimator = DrawerAnimator()
-
+    @objc
     func hamburgerButtonTapped() {
-        let drawer = DrawerViewController()
-        drawer.currentUser = currentUser
-
-        drawer.transitioningDelegate = drawerAnimator
-        drawer.modalPresentationStyle = .custom
-
-        self.present(drawer, animated: true, completion: nil)
+        let responder: DrawerResponder? = findResponder()
+        responder?.showDrawerViewController()
     }
 
     @objc
@@ -145,13 +138,13 @@ private extension FollowingViewController {
 
     func setupNavigationBar() {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.height))
+        navigationBar.sizeClass = .large
         navigationBar.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
         view.addSubview(navigationBar)
-
     }
 
     func setupNavigationItems(streamKind: StreamKind) {
-        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(FollowingViewController.hamburgerButtonTapped))
+        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
         let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView)
         elloNavigationItem.rightBarButtonItem = gridListItem
         navigationBar.items = [elloNavigationItem]

@@ -37,6 +37,10 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
     override func loadView() {
         let screen = EditorialsScreen()
         screen.delegate = self
+        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
+        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.sizeClass = .large
+        screen.navigationBar.setNeedsLayout()
 
         self.view = screen
         viewContainer = screen.streamContainer
@@ -63,6 +67,14 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
         super.hideNavBars()
         positionNavBar(screen.navigationBar, visible: false, withConstraint: screen.navigationBarTopConstraint)
         updateInsets()
+    }
+}
+
+extension EditorialsViewController {
+    @objc
+    func hamburgerButtonTapped() {
+        let responder: DrawerResponder? = findResponder()
+        responder?.showDrawerViewController()
     }
 }
 

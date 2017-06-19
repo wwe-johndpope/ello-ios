@@ -7,7 +7,9 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
     override func trackerName() -> String? { return visibleViewController?.trackerName() }
     override func trackerProps() -> [String: Any]? { return visibleViewController?.trackerProps() }
 
-    var visibleViewController: UIViewController?
+    fileprivate var visibleViewController: UIViewController?
+    fileprivate var followingViewController: FollowingViewController!
+    fileprivate var editorialsViewController: EditorialsViewController!
 
     enum Controllers {
         case editorials
@@ -25,6 +27,14 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
         get { return _mockScreen ?? self.view as! HomeScreen }
     }
 
+    override func didSetCurrentUser() {
+        super.didSetCurrentUser()
+        for controller in childViewControllers {
+            guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { continue }
+            controller.currentUser = currentUser
+        }
+    }
+
     override func loadView() {
         let screen = HomeScreen()
         screen.delegate = self
@@ -34,40 +44,68 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupControllers()
+    }
+
+}
+
+extension HomeViewController: HomeResponder {
+    func showEditorialsViewController() {
+        showController(editorialsViewController)
+    }
+
+    func showFollowingViewController() {
+        showController(followingViewController)
     }
 
     fileprivate func setupControllers() {
-        let c1 = embed(FollowingViewController())
-        addChildViewController(c1)
-        c1.didMove(toParentViewController: self)
+        let editorialsViewController = EditorialsViewController()
+        editorialsViewController.currentUser = currentUser
+        addChildViewController(editorialsViewController)
+        editorialsViewController.didMove(toParentViewController: self)
+        self.editorialsViewController = editorialsViewController
 
-        let c2 = embed(FollowingViewController())
-        addChildViewController(c2)
-        c2.didMove(toParentViewController: self)
+        let followingViewController = FollowingViewController()
+        followingViewController.currentUser = currentUser
+        addChildViewController(followingViewController)
+        followingViewController.didMove(toParentViewController: self)
+        self.followingViewController = followingViewController
 
-        showController(c1)
-    }
-
-    fileprivate func embed(_ controller: UIViewController) -> UIViewController {
-        let nav = ElloNavigationController(rootViewController: controller)
-        nav.currentUser = currentUser
-        return nav
+        showController(editorialsViewController)
     }
 
     fileprivate func showController(_ viewController: UIViewController) {
         if let visibleViewController = visibleViewController {
             viewController.trackScreenAppeared()
 
-            visibleViewController.view.removeFromSuperview()
             screen.controllerContainer.insertSubview(viewController.view, aboveSubview: visibleViewController.view)
+            visibleViewController.view.removeFromSuperview()
         }
         else {
             screen.controllerContainer.addSubview(viewController.view)
         }
+
         viewController.view.frame = screen.controllerContainer.bounds
         viewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
         visibleViewController = viewController
+    }
+
+}
+
+let drawerAnimator = DrawerAnimator()
+
+extension HomeViewController: DrawerResponder {
+
+    func showDrawerViewController() {
+        let drawer = DrawerViewController()
+        drawer.currentUser = currentUser
+
+        drawer.transitioningDelegate = drawerAnimator
+        drawer.modalPresentationStyle = .custom
+
+        self.present(drawer, animated: true, completion: nil)
     }
 
 }

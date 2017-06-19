@@ -2,6 +2,10 @@
 ///  DrawerViewController.swift
 //
 
+protocol DrawerResponder: class {
+    func showDrawerViewController()
+}
+
 class DrawerViewController: StreamableViewController {
     @IBOutlet weak var tableView: UITableView!
     weak var navigationBar: ElloNavigationBar!

@@ -2,6 +2,11 @@
 ///  HomeProtocols.swift
 //
 
+protocol HomeResponder: class {
+    func showEditorialsViewController()
+    func showFollowingViewController()
+}
+
 protocol HomeScreenDelegate: class {
 }
 

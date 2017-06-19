@@ -11,7 +11,6 @@ enum ElloTab: Int {
     case notifications
     case profile
 
-
     static let DefaultTab: ElloTab = .following
     static let ToolTipsResetForTwoPointOhKey = "ToolTipsResetForTwoPointOhKey"
 
@@ -225,7 +224,7 @@ extension ElloTabBarController {
     }
 
     func setupControllers() {
-        let following = FollowingViewController()
+        let home = HomeViewController()
         let discover = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
         discover.category = Category.featured
         let omnibar = OmnibarViewController()
@@ -233,7 +232,7 @@ extension ElloTabBarController {
         let profile = ProfileViewController(user: currentUser!)
         omnibar.canGoBack = false
 
-        self.addChildViewController(embed(following))
+        self.addChildViewController(embed(home))
         self.addChildViewController(embed(discover))
         self.addChildViewController(embed(omnibar))
         self.addChildViewController(embed(notifications))

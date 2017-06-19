@@ -5,7 +5,8 @@
 import SnapKit
 
 
-/// Easy keyboard views: pin an anchor to `keyboardAnchor.top`. It'll animate automatically, too.
+// Easy keyboard views: pin an anchor to `keyboardAnchor.top`. It'll animate
+// automatically, too.
 class Screen: UIView {
     let keyboardAnchor = UIView()
     fileprivate var keyboardTopConstraint: Constraint!
