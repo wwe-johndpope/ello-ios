@@ -3,8 +3,8 @@
 //
 
 class EditorialJoinCell: EditorialCell {
-    fileprivate let joinLabel = StyledLabel(style: .giantWhite)
-    fileprivate let joinCaption = StyledLabel(style: .largeWhite)
+    fileprivate let joinLabel = StyledLabel(style: .editorialHeaderWhite)
+    fileprivate let joinCaption = StyledLabel(style: .editorialCaptionWhite)
     fileprivate let emailField = ElloTextField()
     fileprivate let usernameField = ElloTextField()
     fileprivate let passwordField = ElloTextField()

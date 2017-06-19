@@ -6,9 +6,9 @@ import SnapKit
 
 
 class EditorialInviteCell: EditorialCell {
-    fileprivate let inviteLabel = StyledLabel(style: .giantWhite)
-    fileprivate let inviteCaption = StyledLabel(style: .largeWhite)
-    fileprivate let inviteInstructions = StyledLabel(style: .largeWhite)
+    fileprivate let inviteLabel = StyledLabel(style: .editorialHeaderWhite)
+    fileprivate let inviteCaption = StyledLabel(style: .editorialCaptionWhite)
+    fileprivate let inviteInstructions = StyledLabel(style: .editorialCaptionWhite)
     fileprivate let sentLabel = StyledLabel(style: .white)
     fileprivate let textBg = UIView()
     fileprivate let textView = ClearTextView()
@@ -94,16 +94,18 @@ class EditorialInviteCell: EditorialCell {
             make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
         }
+        inviteLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
 
         inviteCaption.snp.makeConstraints { make in
             make.top.equalTo(inviteLabel.snp.bottom).offset(Size.textFieldMargin)
             make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
         }
+        inviteCaption.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
 
         textBg.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
             make.top.equalTo(inviteCaption.snp.bottom).offset(Size.textFieldMargin)
+            make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
         }
 
         textView.snp.makeConstraints { make in
@@ -116,6 +118,7 @@ class EditorialInviteCell: EditorialCell {
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
             collapseInstructions = make.height.equalTo(0).priority(Priority.required).constraint
         }
+        inviteInstructions.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         collapseInstructions.deactivate()
 
         submitButton.snp.makeConstraints { make in

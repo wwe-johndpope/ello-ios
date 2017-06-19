@@ -9,7 +9,7 @@ class EditorialPostStreamCell: EditorialCell {
     fileprivate let pageControl = UIPageControl()
     fileprivate let scrollView = UIScrollView()
     fileprivate var postCells: [EditorialPostCell] = []
-    fileprivate let titleLabel = StyledLabel(style: .giantBoldWhite)
+    fileprivate let titleLabel = StyledLabel(style: .editorialHeaderWhite)
     fileprivate let bg = UIView()
     fileprivate var autoscrollTimer: Timer?
 
