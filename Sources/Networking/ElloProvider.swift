@@ -52,8 +52,8 @@ class ElloProvider {
             return SharedProvider.instance
         }
 
-        set (newSharedProvider) {
-            SharedProvider.instance = newSharedProvider
+        set {
+            SharedProvider.instance = newValue
         }
     }
 
