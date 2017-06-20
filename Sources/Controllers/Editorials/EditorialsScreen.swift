@@ -11,11 +11,7 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
         arrangeHomeScreenNavBar(type: .editorials, navigationBar: navigationBar)
     }
 
-    func homeScreenEditorialsTapped() {
-        let responder: HomeResponder? = self.findResponder()
-        responder?.showEditorialsViewController()
-    }
-
+    @objc
     func homeScreenFollowingTapped() {
         let responder: HomeResponder? = self.findResponder()
         responder?.showFollowingViewController()

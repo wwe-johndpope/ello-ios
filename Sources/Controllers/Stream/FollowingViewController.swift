@@ -133,14 +133,16 @@ class FollowingViewController: StreamableViewController {
 private extension FollowingViewController {
 
     func updateInsets() {
-        updateInsets(navBar: navigationBar)
+        updateInsets(maxY: max(navigationBar.frame.maxY - 14, 0))
     }
 
     func setupNavigationBar() {
-        navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.height))
+        navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.largeHeight))
         navigationBar.sizeClass = .large
         navigationBar.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
         view.addSubview(navigationBar)
+
+        arrangeHomeScreenNavBar(type: .following, navigationBar: navigationBar)
     }
 
     func setupNavigationItems(streamKind: StreamKind) {
@@ -182,4 +184,14 @@ private extension FollowingViewController {
         newFollowingContentObserver?.removeObserver()
         appBackgroundObserver?.removeObserver()
     }
+}
+
+extension FollowingViewController: HomeScreenNavBar {
+
+    @objc
+    func homeScreenEditorialsTapped() {
+        let responder: HomeResponder? = self.findResponder()
+        responder?.showEditorialsViewController()
+    }
+
 }

@@ -21,14 +21,14 @@ class HomeScreen: StreamableScreen, HomeScreenProtocol {
 
 @objc
 protocol HomeScreenNavBar: class {
-    func homeScreenEditorialsTapped()
-    func homeScreenFollowingTapped()
+    @objc optional func homeScreenEditorialsTapped()
+    @objc optional func homeScreenFollowingTapped()
 }
 
 struct HomeScreenNavBarSize {
-    static let margins = UIEdgeInsets(top: 40, left: 15, bottom: 28, right: 15)
-    static let lineThickness: CGFloat = 2
-    static let lineMargin: CGFloat = 10
+    static let margins = UIEdgeInsets(top: 32, left: 15, bottom: 20, right: 15)
+    static let buttonHeight: CGFloat = 40
+    static let lineThickness: CGFloat = 1
 }
 
 fileprivate typealias Size = HomeScreenNavBarSize
@@ -45,42 +45,42 @@ extension HomeScreenNavBar {
         editorialsButton.setTitle(InterfaceString.Editorials.Title, for: .normal)
         navigationBar.addSubview(editorialsButton)
         if type == .following {
-            // editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
+            editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
         }
 
         let editorialsLine = UIView()
         editorialsLine.backgroundColor = type == .editorials ? .black : .greyA()
-        navigationBar.addSubview(editorialsLine)
+        editorialsButton.addSubview(editorialsLine)
 
         let followingButton = StyledButton(style: type == .following ? .clearBlack : .clearGray)
         followingButton.setTitle(InterfaceString.Following.Title, for: .normal)
         navigationBar.addSubview(followingButton)
         if type == .editorials {
-            // followingButton.addTarget(self, action: #selector(homeScreenFollowingTapped), for: .touchUpInside)
+            followingButton.addTarget(self, action: #selector(homeScreenFollowingTapped), for: .touchUpInside)
         }
 
         let followingLine = UIView()
         followingLine.backgroundColor = type == .following ? .black : .greyA()
-        navigationBar.addSubview(followingLine)
+        followingButton.addSubview(followingLine)
 
         editorialsButton.snp.makeConstraints { make in
             make.leading.equalTo(navigationBar).inset(Size.margins)
             make.trailing.equalTo(followingButton.snp.leading).inset(Size.margins)
-            make.bottom.equalTo(editorialsLine.snp.top).offset(-Size.lineMargin)
+            make.bottom.equalTo(navigationBar).inset(Size.margins)
+            make.height.equalTo(Size.buttonHeight)
             make.width.equalTo(followingButton)
         }
         editorialsLine.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(editorialsButton)
-            make.bottom.equalTo(navigationBar).inset(Size.margins)
+            make.leading.trailing.bottom.equalTo(editorialsButton)
             make.height.equalTo(Size.lineThickness)
         }
         followingButton.snp.makeConstraints { make in
             make.trailing.equalTo(navigationBar).inset(Size.margins)
-            make.bottom.equalTo(followingLine.snp.top).offset(-Size.lineMargin)
+            make.bottom.equalTo(navigationBar).inset(Size.margins)
+            make.height.equalTo(Size.buttonHeight)
         }
         followingLine.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(followingButton)
-            make.bottom.equalTo(navigationBar).inset(Size.margins)
+            make.leading.trailing.bottom.equalTo(followingButton)
             make.height.equalTo(Size.lineThickness)
         }
     }

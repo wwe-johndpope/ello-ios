@@ -120,7 +120,11 @@ class StreamableViewController: BaseElloViewController {
     }
 
     func updateInsets(navBar: UIView?, navigationBarsVisible visible: Bool? = nil) {
-        let topInset = max(0, navBar?.frame.maxY ?? 0)
+        updateInsets(maxY: navBar?.frame.maxY ?? 0, navigationBarsVisible: visible)
+    }
+
+    func updateInsets(maxY: CGFloat, navigationBarsVisible visible: Bool? = nil) {
+        let topInset = max(0, maxY)
         let bottomInset: CGFloat
         if visible ?? bottomBarController?.bottomBarVisible ?? false {
             bottomInset = bottomBarController?.bottomBarHeight ?? 0

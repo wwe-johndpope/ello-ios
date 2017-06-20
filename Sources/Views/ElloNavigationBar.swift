@@ -5,7 +5,7 @@
 class ElloNavigationBar: UINavigationBar {
     struct Size {
         static let height: CGFloat = 64
-        static let largeHeight: CGFloat = 118
+        static let largeHeight: CGFloat = 110
     }
 
     enum SizeClass {
@@ -66,7 +66,10 @@ class ElloNavigationBar: UINavigationBar {
             let leftItemViews = subviews.filter {
                 return $0.frame.minX < frame.width / 2 && $0.frame.width < 60
             }
-            for view in leftItemViews {
+            let rightItemViews = subviews.filter {
+                return $0.frame.minX > frame.width / 2 && $0.frame.width < 60
+            }
+            for view in leftItemViews + rightItemViews {
                 view.frame.origin.y -= Size.largeHeight - Size.height
             }
         }
