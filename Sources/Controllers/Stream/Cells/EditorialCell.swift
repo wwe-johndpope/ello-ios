@@ -244,7 +244,7 @@ extension EditorialCell.Config {
     static func fromPost(_ post: Ello.Post, editorial: Editorial) -> EditorialCell.Config {
         var config = EditorialCell.Config()
         if let author = post.author {
-            config.title = "\(editorial.title) \(author.atName)"
+            config.title = "\(editorial.title)\n\(author.atName)"
         }
         else {
             config.title = editorial.title
