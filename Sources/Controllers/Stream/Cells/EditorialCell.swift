@@ -73,6 +73,7 @@ class EditorialCell: UICollectionViewCell {
     fileprivate var gradientLayer = EditorialCell.generateGradientLayer()
     fileprivate let imageView = FLAnimatedImageView()
     fileprivate let loadingView = UIView()
+    fileprivate let spinner = ElloLogoView(config: .grey)
     var editorialContentView: UIView { return bg }
 
     override init(frame: CGRect) {
@@ -103,6 +104,8 @@ class EditorialCell: UICollectionViewCell {
         bg.backgroundColor = .black
         gradientView.layer.addSublayer(gradientLayer)
         imageView.contentMode = .scaleAspectFill
+        loadingView.backgroundColor = .greyA()
+        spinner.animateLogo()
     }
 
     func bindActions() {
@@ -111,21 +114,34 @@ class EditorialCell: UICollectionViewCell {
 
     func updateConfig() {
         if let url = config.imageURL {
-            imageView.pin_setImage(from: url)
+            self.spinner.isHidden = false
+            self.spinner.animateLogo()
+            imageView.pin_setImage(from: url) { result in
+                self.spinner.stopAnimatingLogo()
+            }
         }
         else {
+            self.spinner.isHidden = true
             imageView.image = config.specsImage
         }
     }
 
     func arrange() {
         contentView.addSubview(bg)
+        bg.addSubview(loadingView)
+        loadingView.addSubview(spinner)
         bg.addSubview(imageView)
         bg.addSubview(tappedResponder)
         imageView.addSubview(gradientView)
 
         bg.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(Size.bgMargins)
+        }
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalTo(bg)
+        }
+        spinner.snp.makeConstraints { make in
+            make.center.equalTo(loadingView)
         }
         imageView.snp.makeConstraints { make in
             make.edges.equalTo(bg)
@@ -154,6 +170,7 @@ class EditorialCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         config = Config()
     }
 }

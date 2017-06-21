@@ -21,7 +21,7 @@ class ElloLogoView: UIImageView {
     }
 
     struct Size {
-        static let Natural = CGSize(width: 60, height: 60)
+        static let natural = CGSize(width: 60, height: 60)
     }
 
     fileprivate var wasAnimating = false
@@ -81,5 +81,9 @@ class ElloLogoView: UIImageView {
             endAnimation.duration = 0.25
         }
         self.layer.add(endAnimation, forKey: "logo-spin")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return Size.natural
     }
 }
