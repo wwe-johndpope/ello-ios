@@ -170,6 +170,7 @@ extension Editorial.Kind {
     var reuseIdentifier: String {
         switch self {
         case .post: return "EditorialPostCell"
+        case .internal: return "EditorialInternalCell"
         case .external: return "EditorialExternalCell"
         case .postStream: return "EditorialPostStreamCell"
         case .invite: return "EditorialInviteCell"
@@ -181,6 +182,7 @@ extension Editorial.Kind {
     var classType: UICollectionViewCell.Type {
         switch self {
         case .post: return EditorialPostCell.self
+        case .internal: return EditorialInternalCell.self
         case .external: return EditorialExternalCell.self
         case .postStream: return EditorialPostStreamCell.self
         case .invite: return EditorialInviteCell.self

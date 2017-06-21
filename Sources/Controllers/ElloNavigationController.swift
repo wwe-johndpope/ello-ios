@@ -3,6 +3,7 @@
 //
 
 let ExternalWebNotification = TypedNotification<String>(name: "ExternalWebNotification")
+let InternalWebNotification = TypedNotification<String>(name: "InternalWebNotification")
 
 class ElloNavigationController: UINavigationController, ControllerThatMightHaveTheCurrentUser {
 

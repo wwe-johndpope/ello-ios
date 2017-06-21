@@ -15,6 +15,7 @@ final class Editorial: JSONAble, Groupable {
         case post
         case postStream = "post_stream"
         case external
+        case `internal`
         case invite
         case join
         case unknown
@@ -35,6 +36,7 @@ final class Editorial: JSONAble, Groupable {
     var join: JoinInfo?
     var invite: InviteInfo?
     let externalURL: URL?
+    let internalURL: URL?
     let kind: Kind
     var groupId: String { return "Category-\(id)" }
     let postId: String?
@@ -53,7 +55,8 @@ final class Editorial: JSONAble, Groupable {
         subtitle: String? = nil,
         postId: String? = nil,
         postStreamURL: URL? = nil,
-        externalURL: URL? = nil)
+        externalURL: URL? = nil,
+        internalURL: URL? = nil)
     {
         self.id = id
         self.kind = kind
@@ -62,6 +65,7 @@ final class Editorial: JSONAble, Groupable {
         self.postId = postId
         self.postStreamURL = postStreamURL
         self.externalURL = externalURL
+        self.internalURL = internalURL
         super.init(version: EditorialVersion)
     }
 
@@ -74,6 +78,7 @@ final class Editorial: JSONAble, Groupable {
         postId = decoder.decodeOptionalKey("postId")
         postStreamURL = decoder.decodeOptionalKey("postStreamURL")
         externalURL = decoder.decodeOptionalKey("externalURL")
+        internalURL = decoder.decodeOptionalKey("internalURL")
         super.init(coder: coder)
     }
 
@@ -86,6 +91,7 @@ final class Editorial: JSONAble, Groupable {
         encoder.encodeObject(postId, forKey: "postId")
         encoder.encodeObject(postStreamURL, forKey: "postStreamURL")
         encoder.encodeObject(externalURL, forKey: "externalURL")
+        encoder.encodeObject(internalURL, forKey: "internalURL")
         super.encode(with: coder)
     }
 
@@ -98,6 +104,7 @@ final class Editorial: JSONAble, Groupable {
         let postId = json["links"]["post"]["id"].string
         let postStreamURL = json["links"]["post_stream"]["href"].string.flatMap { URL(string: $0) }
         let externalURL: URL? = json["url"].string.flatMap { URL(string: $0) }
+        let internalURL: URL? = json["path"].string.flatMap { URL(string: "\(ElloURI.baseURL)\($0)") }
 
         let editorial = Editorial(
             id: id,
@@ -106,7 +113,8 @@ final class Editorial: JSONAble, Groupable {
             subtitle: subtitle,
             postId: postId,
             postStreamURL: postStreamURL,
-            externalURL: externalURL)
+            externalURL: externalURL,
+            internalURL: internalURL)
         editorial.links = data["links"] as? [String: Any]
 
         for size in Size.all {

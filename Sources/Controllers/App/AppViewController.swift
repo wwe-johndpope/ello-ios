@@ -43,6 +43,7 @@ class AppViewController: BaseElloViewController {
     fileprivate var userLoggedOutObserver: NotificationObserver?
     fileprivate var receivedPushNotificationObserver: NotificationObserver?
     fileprivate var externalWebObserver: NotificationObserver?
+    fileprivate var internalWebObserver: NotificationObserver?
     fileprivate var apiOutOfDateObserver: NotificationObserver?
     fileprivate var pushPayload: PushPayload?
     fileprivate var deepLinkPath: String?
@@ -141,6 +142,9 @@ class AppViewController: BaseElloViewController {
         externalWebObserver = NotificationObserver(notification: ExternalWebNotification) { [weak self] url in
             self?.showExternalWebView(url)
         }
+        internalWebObserver = NotificationObserver(notification: InternalWebNotification) { [weak self] url in
+            self?.navigateToDeepLink(url)
+        }
         apiOutOfDateObserver = NotificationObserver(notification: ErrorStatusCode.status410.notification) { [weak self] error in
             let message = InterfaceString.App.OldVersion
             let alertController = AlertViewController(message: message)
@@ -158,6 +162,7 @@ class AppViewController: BaseElloViewController {
         userLoggedOutObserver?.removeObserver()
         receivedPushNotificationObserver?.removeObserver()
         externalWebObserver?.removeObserver()
+        internalWebObserver?.removeObserver()
         apiOutOfDateObserver?.removeObserver()
     }
 }

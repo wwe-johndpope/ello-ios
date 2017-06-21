@@ -114,8 +114,12 @@ extension EditorialPostStreamCell {
     @objc
     fileprivate func nextPage() {
         let nextPage = pageControl.currentPage + 1
-        guard nextPage < pageControl.numberOfPages else { return }
-        moveToPage(nextPage)
+        if nextPage < pageControl.numberOfPages {
+            moveToPage(nextPage)
+        }
+        else {
+            moveToPage(0)
+        }
     }
 }
 
