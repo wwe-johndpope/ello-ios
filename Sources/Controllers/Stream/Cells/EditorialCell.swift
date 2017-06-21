@@ -37,7 +37,7 @@ class EditorialCell: UICollectionViewCell {
         static let textFieldMargin: CGFloat = 10
         static let joinMargin: CGFloat = 1
         static let pageControlMargin: CGFloat = 18
-        static let postStreamLabelMargin: CGFloat = 20
+        static let postStreamLabelMargin: CGFloat = 56
         static let subtitleButtonMargin: CGFloat = 36
         static let bgMargins = UIEdgeInsets(bottom: 1)
         static let buttonsMargin: CGFloat = 30
@@ -195,17 +195,21 @@ extension Editorial.Kind {
 extension EditorialCell.Config {
     static func fromEditorial(_ editorial: Editorial) -> EditorialCell.Config {
         var config = EditorialCell.Config()
-        config.title = editorial.title
-        config.subtitle = editorial.subtitle
         config.invite = editorial.invite
         config.join = editorial.join
         config.post = editorial.post
 
         if let posts = editorial.posts {
             let postConfigs = posts.map { editorialPost in
-                return EditorialCell.Config.fromPost(editorialPost)
+                return EditorialCell.Config.fromPost(editorialPost, editorial: editorial)
             }
             config.postStreamConfigs = postConfigs
+            config.title = ""
+            config.subtitle = ""
+        }
+        else {
+            config.title = editorial.title
+            config.subtitle = editorial.subtitle
         }
 
         if let asset = editorial.images[.size1x1],
@@ -220,10 +224,15 @@ extension EditorialCell.Config {
         return config
     }
 
-    static func fromPost(_ post: Ello.Post) -> EditorialCell.Config {
+    static func fromPost(_ post: Ello.Post, editorial: Editorial) -> EditorialCell.Config {
         var config = EditorialCell.Config()
-        config.title = ""
-        config.subtitle = ""
+        if let author = post.author {
+            config.title = "\(editorial.title) \(author.atName)"
+        }
+        else {
+            config.title = editorial.title
+        }
+        config.subtitle = editorial.subtitle
         config.post = post
 
         if let postImageURL = post.firstImageURL {

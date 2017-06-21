@@ -9,7 +9,6 @@ class EditorialPostStreamCell: EditorialCell {
     fileprivate let pageControl = UIPageControl()
     fileprivate let scrollView = UIScrollView()
     fileprivate var postCells: [EditorialPostCell] = []
-    fileprivate let titleLabel = StyledLabel(style: .editorialHeaderWhite)
     fileprivate let bg = UIView()
     fileprivate var autoscrollTimer: Timer?
 
@@ -21,7 +20,6 @@ class EditorialPostStreamCell: EditorialCell {
         super.style()
 
         bg.backgroundColor = .black
-        titleLabel.numberOfLines = 0
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = false
@@ -37,7 +35,6 @@ class EditorialPostStreamCell: EditorialCell {
 
     override func updateConfig() {
         super.updateConfig()
-        titleLabel.text = config.title
 
         let postStreamConfigs: [EditorialCell.Config] = config.postStreamConfigs ?? []
         updatePostViews(configs: postStreamConfigs)
@@ -53,7 +50,6 @@ class EditorialPostStreamCell: EditorialCell {
         contentView.addSubview(bg)
         contentView.addSubview(scrollView)
         contentView.addSubview(pageControl)
-        contentView.addSubview(titleLabel)
 
         bg.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(Size.bgMargins)
@@ -64,11 +60,6 @@ class EditorialPostStreamCell: EditorialCell {
         pageControl.snp.makeConstraints { make in
             make.top.equalTo(contentView).inset(Size.pageControlMargin)
             make.centerX.equalTo(contentView)
-        }
-
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(pageControl.snp.centerY).inset(Size.postStreamLabelMargin)
-            make.leading.trailing.equalTo(contentView).inset(Size.defaultMargin)
         }
     }
 
@@ -131,6 +122,7 @@ extension EditorialPostStreamCell {
 
         postCells = configs.map { config in
             let cell = EditorialPostCell()
+            cell.titlePlacement = .inStream
             cell.config = config
             return cell
         }
