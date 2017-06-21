@@ -38,7 +38,7 @@ class EditorialCell: UICollectionViewCell {
         static let joinMargin: CGFloat = 1
         static let pageControlMargin: CGFloat = 18
         static let postStreamLabelMargin: CGFloat = 56
-        static let subtitleButtonMargin: CGFloat = 36
+        static let subtitleButtonMargin: CGFloat = 12
         static let bgMargins = UIEdgeInsets(bottom: 1)
         static let buttonsMargin: CGFloat = 30
         static let buttonHeight: CGFloat = 48
