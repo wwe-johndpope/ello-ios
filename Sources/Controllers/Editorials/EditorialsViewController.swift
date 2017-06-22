@@ -21,7 +21,6 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
             currentUser: currentUser,
             destination: self)
         streamViewController.streamKind = generator.streamKind
-        streamViewController.pagingEnabled = false
         streamViewController.initialLoadClosure = { [weak self] in self?.loadEditorials() }
     }
 
@@ -164,6 +163,7 @@ extension EditorialsViewController: StreamDestination {
     }
 
     func loadEditorials() {
+        streamViewController.pagingEnabled = false
         generator.load()
     }
 
