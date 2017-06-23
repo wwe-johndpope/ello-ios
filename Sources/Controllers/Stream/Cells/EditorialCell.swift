@@ -230,7 +230,16 @@ extension EditorialCell.Config {
             config.subtitle = editorial.subtitle
         }
 
-        if let asset = editorial.images[.size1x1],
+        let size: Editorial.Size
+        let width = UIWindow.windowWidth()
+        if width > 500 {
+            size = .size2x2
+        }
+        else {
+            size = .size1x1
+        }
+
+        if let asset = editorial.images[size],
             let imageURL = asset.largeOrBest?.url
         {
             config.imageURL = imageURL

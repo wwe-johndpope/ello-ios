@@ -24,10 +24,9 @@ final class Editorial: JSONAble, Groupable {
         case size1x1 = "one_by_one_image"
         // case size2x1 = "two_by_one_image"
         // case size1x2 = "one_by_two_image"
-        // case size2x2 = "two_by_two_image"
+        case size2x2 = "two_by_two_image"
 
-        static let all: [Size] = [size1x1]
-        // static let all: [Size] = [size1x1, size2x1, size1x2, size2x2]
+        static let all: [Size] = [size1x1, size2x2]
     }
 
     let id: String

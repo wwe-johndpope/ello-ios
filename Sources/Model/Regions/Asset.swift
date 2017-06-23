@@ -34,11 +34,10 @@ final class Asset: JSONAble {
     var original: Attachment?
     // optional avatar
     var largeOrBest: Attachment? {
-        // we originally had this expressed via
-        // return large ?? optimized ?? xhdpi ?? hdpi ?? regular
-        //
-        // unfortunately that took 12.4 seconds to compile
-        // this (much more verbose) code compiles very quickly
+        if isGif, let optimized = optimized {
+            return optimized
+        }
+
         if DeviceScreen.isRetina {
             if let large = large { return large }
             if let xhdpi = xhdpi { return xhdpi }
