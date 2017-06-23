@@ -701,17 +701,7 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate func setupDataSource() {
-        dataSource = StreamDataSource(
-            streamKind: streamKind,
-            textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
-            notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
-            announcementSizeCalculator: AnnouncementCellSizeCalculator(),
-            profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
-            imageSizeCalculator: StreamImageCellSizeCalculator(),
-            categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
-
-        )
-
+        dataSource = StreamDataSource(streamKind: streamKind)
         dataSource.streamCollapsedFilter = { item in
             if !item.type.collapsable {
                 return true

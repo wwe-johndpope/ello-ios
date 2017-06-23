@@ -42,24 +42,16 @@ class StreamDataSourceSpec: QuickSpec {
 
         describe("StreamDataSourceSpec") {
             beforeEach {
-                let textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
-                let notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
-                let announcementSizeCalculator = FakeAnnouncementCellSizeCalculator()
-                let profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
-                let imageSizeCalculator = StreamImageCellSizeCalculator()
-                let categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
-
                 StreamKind.following.setIsGridView(true)
                 vc = StreamViewController()
                 vc.streamKind = StreamKind.following
-                subject = StreamDataSource(streamKind: .following,
-                                           textSizeCalculator: textSizeCalculator,
-                                           notificationSizeCalculator: notificationSizeCalculator,
-                                           announcementSizeCalculator: announcementSizeCalculator,
-                                           profileHeaderSizeCalculator: profileHeaderSizeCalculator,
-                                           imageSizeCalculator: imageSizeCalculator,
-                                           categoryHeaderSizeCalculator: categoryHeaderSizeCalculator
-                )
+
+                subject = StreamDataSource(streamKind: .following)
+                subject.textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
+                subject.notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
+                subject.announcementSizeCalculator = FakeAnnouncementCellSizeCalculator()
+                subject.profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
+
                 vc.dataSource = subject
                 vc.collectionView.dataSource = vc.dataSource
 
@@ -1584,14 +1576,7 @@ class StreamDataSourceSpec: QuickSpec {
 
             describe("calculating heights early exit") {
                 it("should call the calculatedCellItems(completion:) block immediately if no cells need to be calculated") {
-                    subject = StreamDataSource(streamKind: .following,
-                                               textSizeCalculator: StreamTextCellSizeCalculator(webView: UIWebView()),
-                                               notificationSizeCalculator: StreamNotificationCellSizeCalculator(webView: UIWebView()),
-                                               announcementSizeCalculator: AnnouncementCellSizeCalculator(),
-                                               profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator(),
-                                               imageSizeCalculator: StreamImageCellSizeCalculator(),
-                                               categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator()
-                    )
+                    subject = StreamDataSource(streamKind: .following)
 
                     let items: [StreamCellItem] = [
                         StreamCellItem(type: .categoryCard),

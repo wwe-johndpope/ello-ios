@@ -10,7 +10,7 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     fileprivate var maxWidth: CGFloat
     fileprivate var completion: ElloEmptyCompletion = {}
 
-    init(webView: UIWebView) {
+    init(webView: UIWebView = UIWebView()) {
         self.webView = webView
         self.maxWidth = 0
         super.init()

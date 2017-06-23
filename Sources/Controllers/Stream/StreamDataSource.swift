@@ -33,31 +33,18 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         didSet { updateFilteredItems() }
     }
 
-    let textSizeCalculator: StreamTextCellSizeCalculator
-    let notificationSizeCalculator: StreamNotificationCellSizeCalculator
-    let announcementSizeCalculator: AnnouncementCellSizeCalculator
-    let profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator
-    let categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator
-    let imageSizeCalculator: StreamImageCellSizeCalculator
+    var textSizeCalculator = StreamTextCellSizeCalculator()
+    var notificationSizeCalculator = StreamNotificationCellSizeCalculator()
+    var announcementSizeCalculator = AnnouncementCellSizeCalculator()
+    var profileHeaderSizeCalculator = ProfileHeaderCellSizeCalculator()
+    var categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
+    var imageSizeCalculator = StreamImageCellSizeCalculator()
+    var editorialDownloader = EditorialDownloader()
 
     var inviteCache = InviteCache()
 
-    init(
-        streamKind: StreamKind,
-        textSizeCalculator: StreamTextCellSizeCalculator,
-        notificationSizeCalculator: StreamNotificationCellSizeCalculator,
-        announcementSizeCalculator: AnnouncementCellSizeCalculator,
-        profileHeaderSizeCalculator: ProfileHeaderCellSizeCalculator,
-        imageSizeCalculator: StreamImageCellSizeCalculator,
-        categoryHeaderSizeCalculator: CategoryHeaderCellSizeCalculator)
-    {
+    init(streamKind: StreamKind) {
         self.streamKind = streamKind
-        self.textSizeCalculator = textSizeCalculator
-        self.notificationSizeCalculator = notificationSizeCalculator
-        self.announcementSizeCalculator = announcementSizeCalculator
-        self.profileHeaderSizeCalculator = profileHeaderSizeCalculator
-        self.imageSizeCalculator = imageSizeCalculator
-        self.categoryHeaderSizeCalculator = categoryHeaderSizeCalculator
         super.init()
     }
 

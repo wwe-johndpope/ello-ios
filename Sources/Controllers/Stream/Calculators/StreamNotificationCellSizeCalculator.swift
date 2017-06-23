@@ -13,7 +13,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     fileprivate var cellItems: [StreamCellItem] = []
     fileprivate var completion: ElloEmptyCompletion = {}
 
-    init(webView: UIWebView) {
+    init(webView: UIWebView = UIWebView()) {
         self.webView = webView
         super.init()
         self.webView.delegate = self
