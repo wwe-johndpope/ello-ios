@@ -42,6 +42,7 @@ struct InterfaceString {
 
     struct Editorials {
         static let Title: String = NSLocalizedString("Editorials", comment: "")
+        static let TabbarTitle: String = NSLocalizedString("Editorial", comment: "")
         static let Join: String = NSLocalizedString("Join The Creators Network.", comment: "")
         static let JoinCaption: String = NSLocalizedString("Be part of what’s next in art, design, fasion, web, culture & more.", comment: "")
         static let SubmitJoin: String = NSLocalizedString("Create Account", comment: "")
