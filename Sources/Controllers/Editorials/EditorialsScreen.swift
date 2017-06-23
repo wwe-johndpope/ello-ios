@@ -10,11 +10,11 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
         self.usage = usage
         super.init(frame: .zero)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     required init(frame: CGRect) {
         self.usage = .loggedOut
         super.init(frame: frame)

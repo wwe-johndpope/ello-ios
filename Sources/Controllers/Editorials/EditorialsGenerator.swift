@@ -75,7 +75,7 @@ private extension EditorialsGenerator {
             else { continue }
 
             let next = afterAll()
-            ElloProvider.shared.request(.custom(url: path, mimics: { return .following }))
+            ElloProvider.shared.request(.custom(url: path, mimics: { return .discover(type: .trending) }))
                 .thenFinally { data, responseConfig in
                     guard let posts = data as? [Post] else { next() ; return }
                     editorial.posts = posts
