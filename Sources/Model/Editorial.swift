@@ -35,8 +35,7 @@ final class Editorial: JSONAble, Groupable {
     let subtitle: String?
     var join: JoinInfo?
     var invite: InviteInfo?
-    let externalURL: URL?
-    let internalURL: URL?
+    let url: URL?
     let kind: Kind
     var groupId: String { return "Category-\(id)" }
     let postId: String?
@@ -55,8 +54,7 @@ final class Editorial: JSONAble, Groupable {
         subtitle: String? = nil,
         postId: String? = nil,
         postStreamURL: URL? = nil,
-        externalURL: URL? = nil,
-        internalURL: URL? = nil)
+        url: URL? = nil)
     {
         self.id = id
         self.kind = kind
@@ -64,8 +62,7 @@ final class Editorial: JSONAble, Groupable {
         self.subtitle = subtitle
         self.postId = postId
         self.postStreamURL = postStreamURL
-        self.externalURL = externalURL
-        self.internalURL = internalURL
+        self.url = url
         super.init(version: EditorialVersion)
     }
 
@@ -77,8 +74,7 @@ final class Editorial: JSONAble, Groupable {
         subtitle = decoder.decodeOptionalKey("subtitle")
         postId = decoder.decodeOptionalKey("postId")
         postStreamURL = decoder.decodeOptionalKey("postStreamURL")
-        externalURL = decoder.decodeOptionalKey("externalURL")
-        internalURL = decoder.decodeOptionalKey("internalURL")
+        url = decoder.decodeOptionalKey("url")
         super.init(coder: coder)
     }
 
@@ -90,8 +86,7 @@ final class Editorial: JSONAble, Groupable {
         encoder.encodeObject(subtitle, forKey: "subtitle")
         encoder.encodeObject(postId, forKey: "postId")
         encoder.encodeObject(postStreamURL, forKey: "postStreamURL")
-        encoder.encodeObject(externalURL, forKey: "externalURL")
-        encoder.encodeObject(internalURL, forKey: "internalURL")
+        encoder.encodeObject(url, forKey: "url")
         super.encode(with: coder)
     }
 
@@ -113,8 +108,7 @@ final class Editorial: JSONAble, Groupable {
             subtitle: subtitle,
             postId: postId,
             postStreamURL: postStreamURL,
-            externalURL: externalURL,
-            internalURL: internalURL)
+            url: externalURL ?? internalURL)
         editorial.links = data["links"] as? [String: Any]
 
         for size in Size.all {

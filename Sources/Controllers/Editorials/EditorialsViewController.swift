@@ -86,10 +86,10 @@ extension EditorialsViewController: EditorialCellResponder {
 
         switch editorial.kind {
         case .internal:
-            guard let url = editorial.internalURL else { return }
+            guard let url = editorial.url else { return }
             postNotification(InternalWebNotification, value: url.absoluteString)
         case .external:
-            guard let url = editorial.externalURL else { return }
+            guard let url = editorial.url else { return }
             postNotification(ExternalWebNotification, value: url.absoluteString)
         case .post:
             guard let post = editorial.post else { return }

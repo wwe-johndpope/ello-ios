@@ -18,9 +18,7 @@ final class EditorialsGenerator: StreamGenerator {
 
     func load(reload: Bool = false) {
         localToken = loadingToken.resetInitialPageLoadingToken()
-        if reload {
-        }
-        else {
+        if !reload {
             setPlaceHolders()
         }
         loadEditorials()

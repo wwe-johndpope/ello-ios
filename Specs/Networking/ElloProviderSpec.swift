@@ -1,4 +1,4 @@
- ////
+////
 ///  ElloProviderSpec.swift
 //
 
