@@ -30,15 +30,30 @@ class EditorialJoinCell: EditorialCell {
             let password = passwordField.text
         else { return }
 
+        let info: Editorial.JoinInfo = (email: emailField.text, username: usernameField.text, password: passwordField.text, submitted: true)
+        onJoinChange?(info)
+
+        emailField.isEnabled = false
+        usernameField.isEnabled = false
+        passwordField.isEnabled = false
+        submitButton.isEnabled = false
+
         let responder: EditorialToolsResponder? = findResponder()
         responder?.submitJoin(cell: self, email: email, username: username, password: password)
     }
 
     override func updateConfig() {
         super.updateConfig()
+
         emailField.text = config.join?.email
         usernameField.text = config.join?.username
         passwordField.text = config.join?.password
+
+        let enabled = !(config.join?.submitted ?? false)
+        emailField.isEnabled = enabled
+        usernameField.isEnabled = enabled
+        passwordField.isEnabled = enabled
+        submitButton.isEnabled = enabled
     }
 
     override func bindActions() {
@@ -138,7 +153,7 @@ class EditorialJoinCell: EditorialCell {
 
 extension EditorialJoinCell {
     func textFieldDidChange() {
-        let info: Editorial.JoinInfo = (email: emailField.text, username: usernameField.text, password: passwordField.text)
+        let info: Editorial.JoinInfo = (email: emailField.text, username: usernameField.text, password: passwordField.text, submitted: false)
         onJoinChange?(info)
         submitButton.isEnabled = isValid
     }

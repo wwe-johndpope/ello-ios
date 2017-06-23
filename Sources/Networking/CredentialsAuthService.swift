@@ -3,13 +3,14 @@
 //
 
 import Moya
+import PromiseKit
 
-typealias AuthSuccessCompletion = () -> Void
 
 class CredentialsAuthService {
 
-    func authenticate(email: String, password: String, success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion) {
+    func authenticate(email: String, password: String) -> Promise<Void> {
         let endpoint: ElloAPI = .auth(email: email, password: password)
+        let (promise, fulfill, reject) = Promise<Void>.pending()
         ElloProvider.sharedProvider.request(endpoint) { (result) in
             switch result {
             case let .success(moyaResponse):
@@ -17,15 +18,16 @@ class CredentialsAuthService {
                 case 200...299:
                     ElloProvider.shared.authenticated(isPasswordBased: true)
                     AuthToken.storeToken(moyaResponse.data, isPasswordBased: true, email: email, password: password)
-                    success()
+                    fulfill(Void())
                 default:
                     let elloError = ElloProvider.generateElloError(moyaResponse.data, statusCode: moyaResponse.statusCode)
-                    failure(elloError, moyaResponse.statusCode)
+                    reject(elloError)
                 }
             case let .failure(error):
-                failure(error as NSError, nil)
+                reject(error)
             }
         }
+        return promise
     }
 
 }

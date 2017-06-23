@@ -134,6 +134,27 @@ extension EditorialsViewController: EditorialToolsResponder {
     func submitJoin(cell: UICollectionViewCell, email: String, username: String, password: String) {
         guard currentUser == nil else { return }
 
+        if Validator.hasValidSignUpCredentials(email: email, username: username, password: password) {
+            UserService().join(
+                email: email,
+                username: username,
+                password: password
+                )
+                .thenFinally { user in
+                    Tracker.shared.joinSuccessful()
+                    self.appViewController?.showOnboardingScreen(user)
+                }
+                .catch { error in
+                    Tracker.shared.joinFailed()
+                    self.showJoinViewController(email: email, username: username, password: password)
+                }
+        }
+        else {
+            showJoinViewController(email: email, username: username, password: password)
+        }
+    }
+
+    func showJoinViewController(email: String, username: String, password: String) {
         let vc = JoinViewController(email: email, username: username, password: password)
         navigationController?.pushViewController(vc, animated: true)
     }

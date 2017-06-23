@@ -8,7 +8,7 @@ import SwiftyJSON
 let EditorialVersion = 3
 
 final class Editorial: JSONAble, Groupable {
-    typealias JoinInfo = (email: String?, username: String?, password: String?)
+    typealias JoinInfo = (email: String?, username: String?, password: String?, submitted: Bool)
     typealias InviteInfo = (emails: String, sent: Bool)
 
     enum Kind: String {

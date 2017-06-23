@@ -88,19 +88,17 @@ extension LoginViewController: LoginDelegate {
             screen.hideError()
             screen.loadingHUD(visible: true)
 
-            CredentialsAuthService().authenticate(email: username,
-                password: password,
-                success: {
+            CredentialsAuthService().authenticate(email: username, password: password)
+                .thenFinally { _ in
                     Tracker.shared.loginSuccessful()
                     self.loadCurrentUser()
-                },
-                failure: { error, statusCode in
+                }
+                .catch { error in
                     Tracker.shared.loginFailed()
                     self.screen.loadingHUD(visible: false)
-                    let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
+                    let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
                     self.screen.showError(errorTitle)
                 }
-            )
         }
         else {
             Tracker.shared.loginInvalid()

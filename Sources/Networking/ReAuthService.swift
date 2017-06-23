@@ -1,12 +1,13 @@
 ////
-///  CredentialsAuthService.swift
+///  ReAuthService.swift
 //
 
 import Moya
 
+
 class ReAuthService {
 
-    func reAuthenticateToken(success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
+    func reAuthenticateToken(success: @escaping ElloEmptyCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
         let endpoint: ElloAPI
         let token = AuthToken()
         let refreshToken = token.refreshToken
@@ -37,7 +38,7 @@ class ReAuthService {
         }
     }
 
-    func reAuthenticateUserCreds(success: @escaping AuthSuccessCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
+    func reAuthenticateUserCreds(success: @escaping ElloEmptyCompletion, failure: @escaping ElloFailureCompletion, noNetwork: @escaping ElloEmptyCompletion) {
         var token = AuthToken()
         if let email = token.username, let password = token.password {
             let endpoint: ElloAPI = .auth(email: email, password: password)

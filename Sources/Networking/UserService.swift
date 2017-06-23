@@ -15,15 +15,20 @@ struct UserService {
         email: String,
         username: String,
         password: String,
-        invitationCode: String?) -> Promise<User>
+        invitationCode: String? = nil) -> Promise<User>
     {
-            return ElloProvider.shared.request(.join(email: email, username: username, password: password, invitationCode: invitationCode))
-                .then { data, _ -> User in
-                    guard let user = data as? User else {
-                        throw NSError.uncastableJSONAble()
-                    }
-                    return user
+        return ElloProvider.shared.request(.join(email: email, username: username, password: password, invitationCode: invitationCode))
+            .then { data, _ -> Promise<User> in
+                guard let user = data as? User else {
+                    throw NSError.uncastableJSONAble()
                 }
+
+                let promise: Promise<User> = CredentialsAuthService().authenticate(email: email, password: password)
+                    .then { _ -> User in
+                        return user
+                    }
+                return promise
+            }
     }
 
     func requestPasswordReset(email: String) -> Promise<()> {

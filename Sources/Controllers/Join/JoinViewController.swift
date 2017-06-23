@@ -96,19 +96,11 @@ extension JoinViewController: JoinDelegate {
                     invitationCode: self.invitationCode
                     )
                     .thenFinally { user in
-                        let authService = CredentialsAuthService()
-                        authService.authenticate(email: email,
-                            password: password,
-                            success: {
-                                Tracker.shared.joinSuccessful()
-                                self.showOnboardingScreen(user)
-                            },
-                            failure: { _, _ in
-                                Tracker.shared.joinFailed()
-                                self.showLoginScreen(email, password)
-                            })
+                        Tracker.shared.joinSuccessful()
+                        self.showOnboardingScreen(user)
                     }
                     .catch { error in
+                        Tracker.shared.joinFailed()
                         let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
                         self.screen.showError(errorTitle)
                         joinAborted()
