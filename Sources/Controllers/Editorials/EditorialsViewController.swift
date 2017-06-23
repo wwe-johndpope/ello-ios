@@ -14,7 +14,15 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
     }
     var generator: EditorialsGenerator!
 
-    init() {
+    enum Usage {
+        case loggedOut
+        case loggedIn
+    }
+
+    fileprivate var usage: Usage
+
+    init(usage: Usage) {
+        self.usage = usage
         super.init(nibName: nil, bundle: nil)
 
         generator = EditorialsGenerator(

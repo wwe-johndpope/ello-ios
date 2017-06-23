@@ -172,7 +172,7 @@ class AppViewController: BaseElloViewController {
 extension AppViewController {
 
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
-        let categoryController = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
+        let categoryController = EditorialsViewController(usage: .loggedOut)
         let childNavController = ElloNavigationController(rootViewController: categoryController)
         let loggedOutController = LoggedOutViewController()
         let parentNavController = ElloNavigationController(rootViewController: loggedOutController)

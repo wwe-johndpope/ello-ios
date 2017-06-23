@@ -127,7 +127,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Editorials preview") { [unowned self] in
-            let vc = EditorialsViewController()
+            let vc = EditorialsViewController(usage: .loggedOut)
             self.navigationController?.pushViewController(vc, animated: true)
         }
 

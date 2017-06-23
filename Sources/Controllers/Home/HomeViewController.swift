@@ -60,7 +60,7 @@ extension HomeViewController: HomeResponder {
     }
 
     fileprivate func setupControllers() {
-        let editorialsViewController = EditorialsViewController()
+        let editorialsViewController = EditorialsViewController(usage: .loggedIn)
         editorialsViewController.currentUser = currentUser
         addChildViewController(editorialsViewController)
         editorialsViewController.didMove(toParentViewController: self)
