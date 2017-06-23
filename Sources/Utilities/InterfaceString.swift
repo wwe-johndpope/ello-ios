@@ -50,7 +50,7 @@ struct InterfaceString {
         static let InviteCaption: String = NSLocalizedString("Help Ello grow.", comment: "")
         static let InviteInstructions: String = NSLocalizedString("Invite as many people as you want, just separate their email addresses with commas.", comment: "")
         static let InvitePlaceholder: String = NSLocalizedString("Enter email addresses", comment: "")
-        static let Sent: String = NSLocalizedString("Invitations sent.", comment: "")
+        static let InviteSent: String = NSLocalizedString("✅ Invitations sent.", comment: "")
         static let SubmitInvite: String = NSLocalizedString("Invite", comment: "")
         static let EmailPlaceholder: String = NSLocalizedString("Email", comment: "")
         static let UsernamePlaceholder: String = NSLocalizedString("Username", comment: "")

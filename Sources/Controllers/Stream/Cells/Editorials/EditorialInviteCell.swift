@@ -6,14 +6,18 @@ import SnapKit
 
 
 class EditorialInviteCell: EditorialCell {
+    fileprivate let inviteControls = UIView()
     fileprivate let inviteLabel = StyledLabel(style: .editorialHeaderWhite)
     fileprivate let inviteCaption = StyledLabel(style: .editorialCaptionWhite)
     fileprivate let inviteInstructions = StyledLabel(style: .editorialCaptionWhite)
-    fileprivate let sentLabel = StyledLabel(style: .white)
     fileprivate let textBg = UIView()
     fileprivate let textView = ClearTextView()
+    fileprivate var submitControls: UIView { return submitButton }
     fileprivate let submitButton = StyledButton(style: .editorialJoin)
+    fileprivate let sentLabel = StyledLabel(style: .white)
+
     fileprivate var collapseInstructions: Constraint!
+    fileprivate var timer: Timer?
 
     var onInviteChange: ((Editorial.InviteInfo) -> Void)?
 
@@ -23,15 +27,33 @@ class EditorialInviteCell: EditorialCell {
 
         let responder: EditorialToolsResponder? = findResponder()
         responder?.submitInvite(cell: self, emails: emails)
+
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(showControls), userInfo: .none, repeats: false)
     }
 
     override func updateConfig() {
         super.updateConfig()
         textView.text = config.invite?.emails
 
-        let sent = config.invite?.sent == true
-        textBg.isHidden = sent
-        sentLabel.isHidden = !sent
+        let showSent: Bool
+        if let sent = config.invite?.sent, Date().timeIntervalSince(sent) < 2 {
+            showSent = true
+            let timeRemaining = Date().timeIntervalSince(sent)
+            timer = Timer.scheduledTimer(timeInterval: timeRemaining, target: self, selector: #selector(showControls), userInfo: .none, repeats: false)
+        }
+        else {
+            showSent = false
+            timer?.invalidate()
+        }
+        inviteControls.isHidden = showSent
+        sentLabel.isHidden = !showSent
+    }
+
+    @objc
+    func showControls() {
+        inviteControls.isHidden = false
+        sentLabel.isHidden = true
+        timer = nil
     }
 
     override func bindActions() {
@@ -67,7 +89,7 @@ class EditorialInviteCell: EditorialCell {
         inviteCaption.numberOfLines = 0
         inviteInstructions.text = InterfaceString.Editorials.InviteInstructions
         inviteInstructions.numberOfLines = 0
-        sentLabel.text = InterfaceString.Editorials.Sent
+        sentLabel.text = InterfaceString.Editorials.InviteSent
         textBg.backgroundColor = .white
         textView.isEditable = true
         submitButton.isEnabled = false
@@ -77,16 +99,22 @@ class EditorialInviteCell: EditorialCell {
     override func arrange() {
         super.arrange()
 
-        editorialContentView.addSubview(inviteLabel)
-        editorialContentView.addSubview(inviteCaption)
-        editorialContentView.addSubview(inviteInstructions)
+        editorialContentView.addSubview(inviteControls)
         editorialContentView.addSubview(sentLabel)
-        editorialContentView.addSubview(textBg)
-        textBg.addSubview(textView)
-        editorialContentView.addSubview(submitButton)
+
+        inviteControls.addSubview(inviteLabel)
+        inviteControls.addSubview(inviteCaption)
+        inviteControls.addSubview(inviteInstructions)
+        inviteControls.addSubview(textBg)
+        inviteControls.addSubview(textView)
+        inviteControls.addSubview(submitButton)
 
         sentLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(textBg)
+            make.center.equalTo(editorialContentView)
+        }
+
+        inviteControls.snp.makeConstraints { make in
+            make.edges.equalTo(editorialContentView)
         }
 
         inviteLabel.snp.makeConstraints { make in
@@ -133,6 +161,7 @@ class EditorialInviteCell: EditorialCell {
         super.prepareForReuse()
         onInviteChange = nil
         collapseInstructions.deactivate()
+        timer?.invalidate()
     }
 
     override func layoutSubviews() {
@@ -149,7 +178,7 @@ extension EditorialInviteCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         (textView as? ClearTextView)?.textDidChange()
         submitButton.isEnabled = textView.text?.isEmpty == false
-        let info: Editorial.InviteInfo = (emails: textView.text, sent: false)
+        let info: Editorial.InviteInfo = (emails: textView.text, sent: nil)
         onInviteChange?(info)
     }
 }
