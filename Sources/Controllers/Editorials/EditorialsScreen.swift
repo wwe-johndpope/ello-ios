@@ -23,7 +23,9 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
     override func arrange() {
         super.arrange()
 
-        arrangeHomeScreenNavBar(type: .editorials, navigationBar: navigationBar)
+        if usage == .loggedIn {
+            arrangeHomeScreenNavBar(type: .editorials, navigationBar: navigationBar)
+        }
     }
 
     @objc

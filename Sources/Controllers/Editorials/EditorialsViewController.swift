@@ -42,12 +42,14 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
     }
 
     override func loadView() {
-        let screen = EditorialsScreen()
+        let screen = EditorialsScreen(usage: usage)
         screen.delegate = self
-        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
+        if usage == .loggedIn {
+            elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
+            screen.navigationBar.sizeClass = .large
+            screen.navigationBar.setNeedsLayout()
+        }
         screen.navigationItem = elloNavigationItem
-        screen.navigationBar.sizeClass = .large
-        screen.navigationBar.setNeedsLayout()
 
         self.view = screen
         viewContainer = screen.streamContainer
