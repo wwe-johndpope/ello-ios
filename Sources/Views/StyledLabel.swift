@@ -54,6 +54,9 @@ class StyledLabel: UILabel {
     override var text: String? {
         didSet { updateStyle() }
     }
+    override var lineBreakMode: NSLineBreakMode {
+        didSet { updateStyle() }
+    }
     var style: Style = .default {
         didSet { updateStyle() }
     }
@@ -68,7 +71,7 @@ class StyledLabel: UILabel {
         textColor = style.textColor
 
         if let text = text {
-            attributedText = NSAttributedString(label: text, style: style)
+            attributedText = NSAttributedString(label: text, style: style, lineBreakMode: lineBreakMode)
         }
     }
 

@@ -49,6 +49,7 @@ class EditorialCell: UICollectionViewCell {
 
     struct Config {
         var title: String?
+        var author: String?
         var subtitle: String?
         var imageURL: URL?
         var specsImage: UIImage?
@@ -244,11 +245,9 @@ extension EditorialCell.Config {
     static func fromPost(_ post: Ello.Post, editorial: Editorial) -> EditorialCell.Config {
         var config = EditorialCell.Config()
         if let author = post.author {
-            config.title = "\(editorial.title)\n\(author.atName)"
+            config.author = author.atName
         }
-        else {
-            config.title = editorial.title
-        }
+        config.title = editorial.title
         config.subtitle = editorial.subtitle
         config.post = post
 

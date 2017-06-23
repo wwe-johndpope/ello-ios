@@ -16,10 +16,13 @@ extension NSAttributedString {
         return NSAttributedString(attributedString: retval)
     }
 
-    convenience init(_ string: String, color: UIColor = .black, underlineStyle: NSUnderlineStyle? = nil, font: UIFont = .defaultFont(), alignment: NSTextAlignment = .left) {
+    convenience init(_ string: String, color: UIColor = .black, underlineStyle: NSUnderlineStyle? = nil, font: UIFont = .defaultFont(), alignment: NSTextAlignment = .left, lineBreakMode: NSLineBreakMode? = nil) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = alignment
+        if let lineBreakMode = lineBreakMode {
+            paragraphStyle.lineBreakMode = lineBreakMode
+        }
         let underlineValue = underlineStyle?.rawValue ?? 0
         let attrs: [String: Any] = [
             NSForegroundColorAttributeName: color,
@@ -30,8 +33,8 @@ extension NSAttributedString {
         self.init(string: string, attributes: attrs)
     }
 
-    convenience init(label string: String, style: StyledLabel.Style) {
-        self.init(string, color: style.textColor, font: style.font)
+    convenience init(label string: String, style: StyledLabel.Style, lineBreakMode: NSLineBreakMode? = nil) {
+        self.init(string, color: style.textColor, font: style.font, lineBreakMode: lineBreakMode)
     }
 
     convenience init(button string: String, style: StyledButton.Style, state: UIControlState = .normal) {

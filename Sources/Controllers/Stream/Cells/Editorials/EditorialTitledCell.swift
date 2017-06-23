@@ -4,6 +4,7 @@
 
 class EditorialTitledCell: EditorialCell {
     let titleLabel = StyledLabel(style: .editorialHeaderWhite)
+    let authorLabel = StyledLabel(style: .editorialHeaderWhite)
     let subtitleLabel = StyledLabel(style: .editorialCaptionWhite)
 
     enum TitlePlacement {
@@ -29,6 +30,9 @@ class EditorialTitledCell: EditorialCell {
     override func style() {
         super.style()
         titleLabel.numberOfLines = 0
+        authorLabel.numberOfLines = 1
+        authorLabel.adjustsFontSizeToFitWidth = false
+        authorLabel.lineBreakMode = .byTruncatingTail
         subtitleLabel.numberOfLines = 0
     }
 
@@ -40,6 +44,7 @@ class EditorialTitledCell: EditorialCell {
     override func updateConfig() {
         super.updateConfig()
         titleLabel.text = config.title
+        authorLabel.text = config.author
         subtitleLabel.text = config.subtitle
     }
 
@@ -47,10 +52,16 @@ class EditorialTitledCell: EditorialCell {
         super.arrange()
 
         editorialContentView.addSubview(titleLabel)
+        editorialContentView.addSubview(authorLabel)
         editorialContentView.addSubview(subtitleLabel)
 
         titleLabel.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
+        }
+
+        authorLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
+            make.top.equalTo(titleLabel.snp.bottom).offset(3)
         }
     }
 
