@@ -25,6 +25,7 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
         self.usage = usage
         super.init(nibName: nil, bundle: nil)
 
+        title = InterfaceString.Editorials.NavbarTitle
         generator = EditorialsGenerator(
             currentUser: currentUser,
             destination: self)
@@ -46,6 +47,7 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
         screen.delegate = self
         if usage == .loggedIn {
             elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
+            elloNavigationItem.titleView = UIView()
             screen.navigationBar.sizeClass = .large
             screen.navigationBar.setNeedsLayout()
         }

@@ -24,6 +24,31 @@ final class EditorialsGenerator: StreamGenerator {
         loadEditorials()
     }
 
+    static func loadPostStreamEditorials(_ postStreamEditorials: [Editorial], afterAll: AfterBlock) {
+        for editorial in postStreamEditorials {
+            guard
+                editorial.kind == .postStream,
+                let path = editorial.postStreamURL
+            else { continue }
+
+            let next = afterAll()
+            ElloProvider.shared.request(.custom(url: path, mimics: { return .discover(type: .trending) }))
+                .thenFinally { data, responseConfig in
+                    guard let posts = data as? [Post] else {
+                        next()
+                        return
+                    }
+                    editorial.posts = posts
+                }
+                .catch { _ in
+                    print(path)
+                }
+                .always {
+                    next()
+                }
+        }
+    }
+
 }
 
 private extension EditorialsGenerator {
@@ -57,7 +82,7 @@ private extension EditorialsGenerator {
                 editorialItems += self.parse(jsonables: editorials)
 
                 let postStreamEditorials = editorials.filter { $0.kind == .postStream }
-                self.loadPostStreamEditorials(postStreamEditorials, afterAll: afterAll)
+                EditorialsGenerator.loadPostStreamEditorials(postStreamEditorials, afterAll: afterAll)
                 receivedEditorials()
             }
             .catch { [weak self] _ in
@@ -65,24 +90,5 @@ private extension EditorialsGenerator {
                 self.destination?.primaryJSONAbleNotFound()
             }
         done()
-    }
-
-    private func loadPostStreamEditorials(_ postStreamEditorials: [Editorial], afterAll: AfterBlock) {
-        for editorial in postStreamEditorials {
-            guard
-                editorial.kind == .postStream,
-                let path = editorial.postStreamURL
-            else { continue }
-
-            let next = afterAll()
-            ElloProvider.shared.request(.custom(url: path, mimics: { return .discover(type: .trending) }))
-                .thenFinally { data, responseConfig in
-                    guard let posts = data as? [Post] else { next() ; return }
-                    editorial.posts = posts
-                }
-                .always {
-                    next()
-                }
-        }
     }
 }

@@ -8,9 +8,6 @@ class AnnouncementCellSizeCalculator {
     fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var completion: ElloEmptyCompletion = {}
-
-    init() {}
 
 // MARK: Public
 
@@ -57,16 +54,16 @@ class AnnouncementCellSizeCalculator {
 
 // MARK: Private
 
-    fileprivate func processJob(_ job: CellJob) {
-        self.completion = {
-            if self.cellJobs.count > 0 {
-                self.cellJobs.remove(at: 0)
-            }
-            job.completion()
-            if let nextJob = self.cellJobs.safeValue(0) {
-                self.processJob(nextJob)
-            }
+    fileprivate func finish() {
+        guard let job = cellJobs.first else { return }
+        cellJobs.remove(at: 0)
+        job.completion()
+        if let nextJob = cellJobs.safeValue(0) {
+            processJob(nextJob)
         }
+    }
+
+    fileprivate func processJob(_ job: CellJob) {
         self.cellItems = job.cellItems
         self.originalWidth = job.width
         loadNext()
@@ -82,7 +79,7 @@ class AnnouncementCellSizeCalculator {
             }
         }
         else {
-            completion()
+            finish()
         }
     }
 

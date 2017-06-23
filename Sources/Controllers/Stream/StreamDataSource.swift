@@ -832,6 +832,9 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let categoryHeaderItems = cellItems.filter {
             return $0.type == .categoryPromotionalHeader || $0.type == .pagePromotionalHeader
         }
+        let editorialItems = cellItems.filter {
+            return $0.jsonable is Editorial
+        }
 
         let (afterAll, done) = afterN(completion)
         // -30.0 acounts for the 15 on either side for constraints
@@ -845,6 +848,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         announcementSizeCalculator.processCells(announcementElements, withWidth: withWidth, completion: afterAll())
         profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
+        editorialDownloader.processCells(editorialItems, completion: afterAll())
         done()
     }
 

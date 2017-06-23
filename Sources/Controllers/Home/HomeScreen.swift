@@ -42,7 +42,7 @@ extension HomeScreenNavBar {
 
     func arrangeHomeScreenNavBar(type: HomeScreenType, navigationBar: UIView) {
         let editorialsButton = StyledButton(style: type == .editorials ? .clearBlack : .clearGray)
-        editorialsButton.setTitle(InterfaceString.Editorials.TabbarTitle, for: .normal)
+        editorialsButton.setTitle(InterfaceString.Editorials.NavbarTitle, for: .normal)
         navigationBar.addSubview(editorialsButton)
         if type == .following {
             editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
