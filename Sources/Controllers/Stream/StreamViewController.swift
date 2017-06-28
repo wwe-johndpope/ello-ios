@@ -29,6 +29,7 @@ protocol StreamPostTappedResponder: class {
 @objc
 protocol StreamEditingResponder: class {
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint)
+    func cellDoubleTapped(cell: UICollectionViewCell, post: Post, location: CGPoint)
     func cellLongPressed(cell: UICollectionViewCell)
 }
 
@@ -848,16 +849,22 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
 
 // MARK: StreamViewController: StreamEditingResponder
 extension StreamViewController: StreamEditingResponder {
+
     func cellDoubleTapped(cell: UICollectionViewCell, location: CGPoint) {
+        guard let path = collectionView.indexPath(for: cell),
+            let post = dataSource.postForIndexPath(path)
+        else { return }
+
+        cellDoubleTapped(cell: cell, post: post, location: location)
+    }
+
+    func cellDoubleTapped(cell: UICollectionViewCell, post: Post, location: CGPoint) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
 
-        guard let path = collectionView.indexPath(for: cell),
-            let post = dataSource.postForIndexPath(path),
-            post.author?.hasLovesEnabled == true
-        else { return }
+        guard post.author?.hasLovesEnabled == true else { return }
 
         if let window = cell.window {
             let fullDuration: TimeInterval = 0.4

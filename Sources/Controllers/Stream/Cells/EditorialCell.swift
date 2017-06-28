@@ -75,6 +75,8 @@ class EditorialCell: UICollectionViewCell {
     fileprivate let loadingView = UIView()
     fileprivate let spinner = ElloLogoView(config: .grey)
     var editorialContentView: UIView { return bg }
+    let doubleTapGesture = UITapGestureRecognizer()
+    let singleTapGesture = UITapGestureRecognizer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -109,13 +111,11 @@ class EditorialCell: UICollectionViewCell {
     }
 
     func bindActions() {
-        let doubleTapGesture = UITapGestureRecognizer()
         doubleTapGesture.delegate = self
         doubleTapGesture.numberOfTapsRequired = 2
         doubleTapGesture.addTarget(self, action: #selector(doubleTapped(_:)))
         contentView.addGestureRecognizer(doubleTapGesture)
 
-        let singleTapGesture = UITapGestureRecognizer()
         singleTapGesture.numberOfTapsRequired = 1
         singleTapGesture.addTarget(self, action: #selector(tappedEditorial))
         singleTapGesture.require(toFail: doubleTapGesture)
