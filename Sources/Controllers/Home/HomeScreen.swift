@@ -27,6 +27,7 @@ protocol HomeScreenNavBar: class {
 
 struct HomeScreenNavBarSize {
     static let margins = UIEdgeInsets(top: 32, left: 15, bottom: 20, right: 15)
+    static let typeOffset: CGFloat = 20
     static let buttonHeight: CGFloat = 40
     static let lineThickness: CGFloat = 1
 }
@@ -41,6 +42,10 @@ enum HomeScreenType {
 extension HomeScreenNavBar {
 
     func arrangeHomeScreenNavBar(type: HomeScreenType, navigationBar: UIView) {
+        let logoImage = UIImageView()
+        logoImage.interfaceImage = .elloType
+        navigationBar.addSubview(logoImage)
+
         let editorialsButton = StyledButton(style: type == .editorials ? .clearBlack : .clearGray)
         editorialsButton.setTitle(InterfaceString.Editorials.NavbarTitle, for: .normal)
         navigationBar.addSubview(editorialsButton)
@@ -62,6 +67,11 @@ extension HomeScreenNavBar {
         let followingLine = UIView()
         followingLine.backgroundColor = type == .following ? .black : .greyA()
         followingButton.addSubview(followingLine)
+
+        logoImage.snp.makeConstraints { make in
+            make.centerX.equalTo(navigationBar)
+            make.top.equalTo(navigationBar).offset(BlackBar.Size.height + HomeScreenNavBarSize.typeOffset)
+        }
 
         editorialsButton.snp.makeConstraints { make in
             make.leading.equalTo(navigationBar).inset(Size.margins)

@@ -16,6 +16,7 @@ enum InterfaceImage: String {
     }
 
     case elloLogo = "ello_logo"
+    case elloType = "ello_type"
     case elloLogoGrey = "ello_logo_grey"
     case elloGrayLineLogo = "ello_gray_line_logo"
 

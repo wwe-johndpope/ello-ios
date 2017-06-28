@@ -28,6 +28,9 @@ class EditorialInviteCell: EditorialCell {
         let responder: EditorialToolsResponder? = findResponder()
         responder?.submitInvite(cell: self, emails: emails)
 
+        inviteControls.isHidden = true
+        sentLabel.isHidden = false
+        textView.text = ""
         timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(showControls), userInfo: .none, repeats: false)
     }
 
@@ -38,7 +41,7 @@ class EditorialInviteCell: EditorialCell {
         let showSent: Bool
         if let sent = config.invite?.sent, Date().timeIntervalSince(sent) < 2 {
             showSent = true
-            let timeRemaining = Date().timeIntervalSince(sent)
+            let timeRemaining = 2 - Date().timeIntervalSince(sent)
             timer = Timer.scheduledTimer(timeInterval: timeRemaining, target: self, selector: #selector(showControls), userInfo: .none, repeats: false)
         }
         else {

@@ -135,9 +135,7 @@ extension EditorialsViewController: EditorialToolsResponder {
             let editorial = jsonable as? Editorial
         else { return }
 
-        editorial.invite = (emails: emailString, sent: Date())
-        streamViewController.reloadCells(now: true)
-
+        editorial.invite = (emails: "", sent: Date())
         let emails: [String] = emailString.replacingOccurrences(of: "\n", with: ",").split(",").map { $0.trimmed() }
         InviteService().sendInvitations(emails).ignoreErrors()
     }

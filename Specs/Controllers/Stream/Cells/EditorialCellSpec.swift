@@ -11,7 +11,7 @@ class EditorialCellSpec: QuickSpec {
     override func spec() {
         describe("EditorialCell") {
             context("snapshots") {
-                func config(title: String = "Editorial title", subtitle: String = "Editorial subtitle", sent: Bool = false, join: Bool = false) -> EditorialCell.Config {
+                func config(title: String = "Editorial title", subtitle: String = "Editorial subtitle", sent: Date? = nil, join: Bool = false) -> EditorialCell.Config {
                     var config = EditorialCell.Config()
                     config.title = title
                     config.subtitle = subtitle
@@ -23,7 +23,7 @@ class EditorialCellSpec: QuickSpec {
                     config.post = post
 
                     if join {
-                        config.join = (email: "email@email.com", username: "username", password: "password")
+                        config.join = (email: "email@email.com", username: "username", password: "password", submitted: false)
                     }
 
                     return config
