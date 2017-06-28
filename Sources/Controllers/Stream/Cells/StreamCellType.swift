@@ -176,7 +176,6 @@ enum StreamCellType: Equatable {
              .badge,
              .categoryCard,
              .createComment,
-             .editorial,
              .header,
              .inviteFriends,
              .loadMoreComments,

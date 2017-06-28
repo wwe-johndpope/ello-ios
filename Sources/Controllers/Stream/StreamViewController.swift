@@ -856,7 +856,6 @@ extension StreamViewController: StreamEditingResponder {
 
         guard let path = collectionView.indexPath(for: cell),
             let post = dataSource.postForIndexPath(path),
-            let footerPath = dataSource.footerIndexPathForPost(post),
             post.author?.hasLovesEnabled == true
         else { return }
 
@@ -880,8 +879,8 @@ extension StreamViewController: StreamEditingResponder {
         }
 
         if !post.loved {
-            let footerCell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
-            postbarController?.toggleLove(footerCell, post: post, via: "double tap")
+            let loveableCell = self.loveableCell(for: cell)
+            postbarController?.toggleLove(loveableCell, post: post, via: "double tap")
         }
     }
 
@@ -1077,6 +1076,21 @@ extension StreamViewController: UICollectionViewDelegate {
     func jsonable(forCell cell: UICollectionViewCell) -> JSONAble? {
         guard let indexPath = collectionView.indexPath(for: cell) else { return nil}
         return jsonable(forPath: indexPath)
+    }
+
+    func loveableCell(for cell: UICollectionViewCell) -> LoveableCell? {
+        if let cell = cell as? LoveableCell {
+            return cell
+        }
+
+        if let path = collectionView.indexPath(for: cell),
+            let post = dataSource.postForIndexPath(path),
+            let footerPath = dataSource.footerIndexPathForPost(post)
+        {
+            return collectionView.cellForItem(at: footerPath) as? LoveableCell
+        }
+
+        return nil
     }
 
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
