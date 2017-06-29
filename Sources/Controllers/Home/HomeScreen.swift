@@ -21,6 +21,7 @@ class HomeScreen: StreamableScreen, HomeScreenProtocol {
 
 @objc
 protocol HomeScreenNavBar: class {
+    @objc func homeScreenScrollToTop()
     @objc optional func homeScreenEditorialsTapped()
     @objc optional func homeScreenFollowingTapped()
 }
@@ -42,16 +43,17 @@ enum HomeScreenType {
 extension HomeScreenNavBar {
 
     func arrangeHomeScreenNavBar(type: HomeScreenType, navigationBar: UIView) {
-        let logoImage = UIImageView()
-        logoImage.interfaceImage = .elloType
-        navigationBar.addSubview(logoImage)
+        let logoButton = UIButton()
+        navigationBar.addSubview(logoButton)
+        logoButton.setImage(.elloType, imageStyle: .normal, for: .normal)
+        logoButton.addTarget(self, action: #selector(homeScreenScrollToTop), for: .touchUpInside)
 
         let editorialsButton = StyledButton(style: type == .editorials ? .clearBlack : .clearGray)
         editorialsButton.setTitle(InterfaceString.Editorials.NavbarTitle, for: .normal)
-        navigationBar.addSubview(editorialsButton)
         if type == .following {
             editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
         }
+        navigationBar.addSubview(editorialsButton)
 
         let editorialsLine = UIView()
         editorialsLine.backgroundColor = type == .editorials ? .black : .greyA()
@@ -59,16 +61,16 @@ extension HomeScreenNavBar {
 
         let followingButton = StyledButton(style: type == .following ? .clearBlack : .clearGray)
         followingButton.setTitle(InterfaceString.Following.Title, for: .normal)
-        navigationBar.addSubview(followingButton)
         if type == .editorials {
             followingButton.addTarget(self, action: #selector(homeScreenFollowingTapped), for: .touchUpInside)
         }
+        navigationBar.addSubview(followingButton)
 
         let followingLine = UIView()
         followingLine.backgroundColor = type == .following ? .black : .greyA()
         followingButton.addSubview(followingLine)
 
-        logoImage.snp.makeConstraints { make in
+        logoButton.snp.makeConstraints { make in
             make.centerX.equalTo(navigationBar)
             make.top.equalTo(navigationBar).offset(BlackBar.Size.height + HomeScreenNavBarSize.typeOffset)
         }

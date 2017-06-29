@@ -26,6 +26,21 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
         if usage == .loggedIn {
             arrangeHomeScreenNavBar(type: .editorials, navigationBar: navigationBar)
         }
+        else {
+            let logoButton = UIButton()
+            logoButton.setImage(.elloType, imageStyle: .normal, for: .normal)
+            logoButton.addTarget(self, action: #selector(homeScreenScrollToTop), for: .touchUpInside)
+            navigationBar.addSubview(logoButton)
+
+            logoButton.snp.makeConstraints { make in
+                make.center.equalTo(navigationBar).offset(BlackBar.Size.height / 2)
+            }
+        }
+    }
+
+    @objc
+    func homeScreenScrollToTop() {
+        delegate?.scrollToTop()
     }
 
     @objc

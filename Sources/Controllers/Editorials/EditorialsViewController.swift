@@ -2,7 +2,7 @@
 ///  EditorialsViewController.swift
 //
 
-class EditorialsViewController: StreamableViewController, EditorialsScreenDelegate {
+class EditorialsViewController: StreamableViewController {
     override func trackerName() -> String? { return "Editorials" }
     override func trackerProps() -> [String: Any]? { return nil }
     override func trackerStreamInfo() -> (String, String?)? { return nil }
@@ -47,10 +47,11 @@ class EditorialsViewController: StreamableViewController, EditorialsScreenDelega
         screen.delegate = self
         if usage == .loggedIn {
             elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
-            elloNavigationItem.titleView = UIView()
             screen.navigationBar.sizeClass = .large
             screen.navigationBar.setNeedsLayout()
         }
+
+        elloNavigationItem.titleView = UIView()
         screen.navigationItem = elloNavigationItem
 
         self.view = screen
@@ -219,4 +220,10 @@ extension EditorialsViewController: StreamDestination {
         self.streamViewController.doneLoading()
     }
 
+}
+
+extension EditorialsViewController: EditorialsScreenDelegate {
+    func scrollToTop() {
+        streamViewController.scrollToTop(animated: true)
+    }
 }

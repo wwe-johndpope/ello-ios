@@ -312,8 +312,8 @@ final class StreamViewController: BaseElloViewController {
 
 // MARK: Public Functions
 
-    func scrollToTop() {
-        collectionView.contentOffset = CGPoint(x: 0, y: contentInset.top)
+    func scrollToTop(animated: Bool = false) {
+        collectionView.setContentOffset(CGPoint(x: 0, y: -contentInset.top), animated: animated)
     }
 
     func doneLoading() {

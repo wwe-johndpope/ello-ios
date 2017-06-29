@@ -189,6 +189,11 @@ private extension FollowingViewController {
 extension FollowingViewController: HomeScreenNavBar {
 
     @objc
+    func homeScreenScrollToTop() {
+        streamViewController.collectionView.setContentOffset(.zero, animated: true)
+    }
+
+    @objc
     func homeScreenEditorialsTapped() {
         let responder: HomeResponder? = self.findResponder()
         responder?.showEditorialsViewController()

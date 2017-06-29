@@ -3,6 +3,7 @@
 //
 
 protocol EditorialsScreenDelegate: class {
+    func scrollToTop()
 }
 
 protocol EditorialsScreenProtocol: StreamableScreenProtocol {
