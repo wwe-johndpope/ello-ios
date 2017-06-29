@@ -14,7 +14,7 @@ class EditorialInviteCell: EditorialCell {
     fileprivate let textView = ClearTextView()
     fileprivate var submitControls: UIView { return submitButton }
     fileprivate let submitButton = StyledButton(style: .editorialJoin)
-    fileprivate let sentLabel = StyledLabel(style: .white)
+    fileprivate let sentLabel = StyledLabel(style: .editorialHeaderWhite)
 
     fileprivate var collapseInstructions: Constraint!
     fileprivate var timer: Timer?
