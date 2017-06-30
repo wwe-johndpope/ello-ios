@@ -83,11 +83,13 @@ private extension EditorialsGenerator {
 
                 let postStreamEditorials = editorials.filter { $0.kind == .postStream }
                 EditorialsGenerator.loadPostStreamEditorials(postStreamEditorials, afterAll: afterAll)
-                receivedEditorials()
             }
             .catch { [weak self] _ in
                 guard let `self` = self else { return }
                 self.destination?.primaryJSONAbleNotFound()
+            }
+            .always { _ in
+                receivedEditorials()
             }
         done()
     }
