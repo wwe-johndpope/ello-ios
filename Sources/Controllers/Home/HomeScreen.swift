@@ -28,7 +28,7 @@ protocol HomeScreenNavBar: class {
 
 struct HomeScreenNavBarSize {
     static let margins = UIEdgeInsets(top: 32, left: 15, bottom: 20, right: 15)
-    static let typeOffset: CGFloat = 20
+    static let typeOffset: CGFloat = 18.625
     static let buttonHeight: CGFloat = 40
     static let lineThickness: CGFloat = 1
 }
