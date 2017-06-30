@@ -3,9 +3,9 @@
 //
 
 class EditorialTitledCell: EditorialCell {
-    let titleLabel = StyledLabel(style: .editorialHeaderWhite)
-    let authorLabel = StyledLabel(style: .editorialHeaderWhite)
-    let subtitleLabel = StyledLabel(style: .editorialCaptionWhite)
+    let titleLabel = StyledLabel(style: .editorialHeader)
+    let authorLabel = StyledLabel(style: .editorialHeader)
+    let subtitleLabel = StyledLabel(style: .editorialCaption)
 
     enum TitlePlacement {
         case `default`

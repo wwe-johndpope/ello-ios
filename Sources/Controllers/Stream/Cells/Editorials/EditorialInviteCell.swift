@@ -7,14 +7,14 @@ import SnapKit
 
 class EditorialInviteCell: EditorialCell {
     fileprivate let inviteControls = UIView()
-    fileprivate let inviteLabel = StyledLabel(style: .editorialHeaderWhite)
-    fileprivate let inviteCaption = StyledLabel(style: .editorialCaptionWhite)
-    fileprivate let inviteInstructions = StyledLabel(style: .editorialCaptionWhite)
+    fileprivate let inviteLabel = StyledLabel(style: .editorialHeader)
+    fileprivate let inviteCaption = StyledLabel(style: .editorialCaption)
+    fileprivate let inviteInstructions = StyledLabel(style: .editorialCaption)
     fileprivate let textBg = UIView()
     fileprivate let textView = ClearTextView()
     fileprivate var submitControls: UIView { return submitButton }
     fileprivate let submitButton = StyledButton(style: .editorialJoin)
-    fileprivate let sentLabel = StyledLabel(style: .editorialHeaderWhite)
+    fileprivate let sentLabel = StyledLabel(style: .editorialSuccess)
 
     fileprivate var collapseInstructions: Constraint!
     fileprivate var timer: Timer?
