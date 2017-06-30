@@ -5,17 +5,17 @@
 import SwiftyUserDefaults
 
 enum ElloTab: Int {
-    case following
+    case home
     case discover
     case omnibar
     case notifications
     case profile
 
-    static let DefaultTab: ElloTab = .following
+    static let DefaultTab: ElloTab = .home
     static let ToolTipsResetForTwoPointOhKey = "ToolTipsResetForTwoPointOhKey"
 
     static func resetToolTips() {
-        GroupDefaults[ElloTab.following.narrationDefaultKey] = nil
+        GroupDefaults[ElloTab.home.narrationDefaultKey] = nil
         GroupDefaults[ElloTab.discover.narrationDefaultKey] = nil
         GroupDefaults[ElloTab.notifications.narrationDefaultKey] = nil
         GroupDefaults[ElloTab.profile.narrationDefaultKey] = nil
@@ -48,7 +48,7 @@ enum ElloTab: Int {
     var narrationDefaultKey: String {
         let defaultPrefix = "ElloTabBarControllerDidShowNarration"
         switch self {
-            case .following:     return "\(defaultPrefix)Stream"
+            case .home:     return "\(defaultPrefix)Stream"
             case .discover:      return "\(defaultPrefix)Discover"
             case .omnibar:       return "\(defaultPrefix)Omnibar"
             case .notifications: return "\(defaultPrefix)Notifications"
@@ -58,7 +58,7 @@ enum ElloTab: Int {
 
     var narrationTitle: String {
         switch self {
-            case .following:     return InterfaceString.Tab.PopupTitle.Following
+            case .home:     return InterfaceString.Tab.PopupTitle.Following
             case .discover:      return InterfaceString.Tab.PopupTitle.Discover
             case .omnibar:       return InterfaceString.Tab.PopupTitle.Omnibar
             case .notifications: return InterfaceString.Tab.PopupTitle.Notifications
@@ -68,7 +68,7 @@ enum ElloTab: Int {
 
     var narrationText: String {
         switch self {
-            case .following:     return InterfaceString.Tab.PopupText.Following
+            case .home:     return InterfaceString.Tab.PopupText.Following
             case .discover:      return InterfaceString.Tab.PopupText.Discover
             case .omnibar:       return InterfaceString.Tab.PopupText.Omnibar
             case .notifications: return InterfaceString.Tab.PopupText.Notifications
@@ -107,7 +107,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
             return false
         }
     }
-    fileprivate(set) var followingDot: UIView?
+    fileprivate(set) var homeDot: UIView?
 
     // MARK: BottomBarController
     fileprivate var _bottomBarVisible = true
@@ -224,7 +224,7 @@ extension ElloTabBarController {
     }
 
     func setupControllers() {
-        let home = HomeViewController()
+        let home = HomeViewController(usage: .loggedIn)
         let discover = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
         discover.category = Category.featured
         let omnibar = OmnibarViewController()
@@ -270,7 +270,7 @@ extension ElloTabBarController {
             case .notifications(category: nil):
                 self?.newNotificationsAvailable = false
             case .following:
-                self?.followingDot?.isHidden = true
+                self?.homeDot?.isHidden = true
             default: break
             }
         }
@@ -288,7 +288,7 @@ extension ElloTabBarController {
         }
 
         newStreamContentObserver = NotificationObserver(notification: NewContentNotifications.newFollowingContent) { [weak self] in
-            self?.followingDot?.isHidden = false
+            self?.homeDot?.isHidden = false
         }
 
     }
@@ -347,7 +347,7 @@ extension ElloTabBarController: UITabBarDelegate {
             }
         }
         else {
-            selectedTab = ElloTab(rawValue:index) ?? .following
+            selectedTab = ElloTab(rawValue:index) ?? .home
         }
 
         if selectedTab == .notifications {
@@ -392,7 +392,7 @@ private extension ElloTabBarController {
     }
 
     func shouldReloadFollowingStream() -> Bool {
-        return selectedTab == .following && followingDot?.isHidden == false
+        return selectedTab == .home && homeDot?.isHidden == false
     }
 
     func shouldReloadNotificationsStream() -> Bool {
@@ -461,7 +461,7 @@ extension ElloTabBarController {
 
     fileprivate func addDots() {
         notificationsDot = tabBar.addRedDotFor(tab: .notifications)
-        followingDot = tabBar.addRedDotFor(tab: .following)
+        homeDot = tabBar.addRedDotFor(tab: .home)
     }
 
     fileprivate func prepareNarration() {

@@ -3,6 +3,7 @@
 //
 
 protocol CategoryScreenDelegate: class {
+    func scrollToTop()
     func backTapped()
     func shareTapped(sender: UIView)
     func gridListToggled(sender: UIButton)

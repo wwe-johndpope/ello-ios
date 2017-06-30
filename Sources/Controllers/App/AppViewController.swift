@@ -172,8 +172,8 @@ class AppViewController: BaseElloViewController {
 extension AppViewController {
 
     fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
-        let categoryController = EditorialsViewController(usage: .loggedOut)
-        let childNavController = ElloNavigationController(rootViewController: categoryController)
+        let initialController = HomeViewController(usage: .loggedOut)
+        let childNavController = ElloNavigationController(rootViewController: initialController)
         let loggedOutController = LoggedOutViewController()
         let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
@@ -633,7 +633,7 @@ extension AppViewController {
             let vc = self.visibleViewController as? ElloTabBarController
         else { return }
 
-        vc.selectedTab = .following
+        vc.selectedTab = .home
 
         guard
             let navVC = vc.selectedViewController as? ElloNavigationController,

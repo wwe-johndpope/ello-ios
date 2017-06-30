@@ -50,7 +50,7 @@ class CategoryScreenSpec: QuickSpec {
                     title: "Lorem ipsum dolor sit amet",
                     imageURL: URL(string: "https://example.com")
                     )
-                subject = CategoryScreen()
+                subject = CategoryScreen(usage: .default)
                 categoryInfo = [infoA, infoB, infoA, infoB]
                 subject.set(categoriesInfo: categoryInfo, animated: false, completion: {})
                 delegate = MockCategoryScreenDelegate()

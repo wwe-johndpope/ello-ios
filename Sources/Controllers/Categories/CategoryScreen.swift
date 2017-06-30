@@ -7,12 +7,27 @@ import SnapKit
 
 class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
     struct Size {
-        static let navigationBarHeight: CGFloat = 63
+        static let navigationBarHeight: CGFloat = 43
+        static let largeNavigationBarHeight: CGFloat = 128
         static let buttonWidth: CGFloat = 40
         static let buttonMargin: CGFloat = 5
     }
 
     weak var delegate: CategoryScreenDelegate?
+    fileprivate let usage: CategoryViewController.Usage
+
+    init(usage: CategoryViewController.Usage) {
+        self.usage = usage
+        super.init(frame: .zero)
+    }
+
+    required init(frame: CGRect) {
+        fatalError("init(frame:) has not been implemented")
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     var isGridView = false {
         didSet {
@@ -80,10 +95,15 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
         navigationContainer.addSubview(searchField)
         navigationContainer.addSubview(searchFieldButton)
-        navigationBar.addSubview(navigationContainer)
         navigationBar.addSubview(backButton)
+        navigationBar.addSubview(navigationContainer)
         navigationBar.addSubview(gridListButton)
         navigationBar.addSubview(shareButton)
+
+        if usage == .largeNav {
+            navigationBar.sizeClass = .discoverLarge
+            arrangeHomeScreenNavBar(type: .discover, navigationBar: navigationBar)
+        }
 
         categoryCardList.isHidden = true
 
@@ -95,20 +115,16 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
 
         backButton.snp.makeConstraints { make in
             make.leading.bottom.equalTo(navigationBar)
-            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.height.equalTo(Size.navigationBarHeight)
             make.width.equalTo(36.5)
-        }
-
-        navigationContainer.snp.makeConstraints { make in
-            make.leading.bottom.equalTo(navigationBar)
-            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
-            make.trailing.equalTo(gridListButton.snp.leading)
         }
 
         searchField.snp.makeConstraints { make in
             var insets = SearchNavBarField.Size.searchInsets
+            insets.top -= BlackBar.Size.height
             insets.bottom -= 1
-            make.bottom.top.equalTo(navigationBar).inset(insets)
+            make.bottom.equalTo(navigationBar).inset(insets)
+            make.height.equalTo(Size.navigationBarHeight - insets.top - insets.bottom)
 
             backHiddenConstraint = make.leading.equalTo(navigationBar).inset(insets).constraint
             backVisibleConstraint = make.leading.equalTo(backButton.snp.trailing).offset(insets.left).constraint
@@ -120,11 +136,18 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         shareVisibleConstraint.deactivate()
         allHiddenConstraint.deactivate()
 
+        navigationContainer.snp.makeConstraints { make in
+            make.leading.equalTo(searchField).offset(-SearchNavBarField.Size.searchInsets.left)
+            make.bottom.equalTo(navigationBar)
+            make.height.equalTo(Size.navigationBarHeight)
+            make.trailing.equalTo(gridListButton.snp.leading)
+        }
+
         searchFieldButton.snp.makeConstraints { make in
             make.edges.equalTo(navigationContainer)
         }
         gridListButton.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar).offset(BlackBar.Size.height)
+            make.height.equalTo(Size.navigationBarHeight)
             make.bottom.equalTo(navigationBar)
             make.trailing.equalTo(navigationBar).offset(-Size.buttonMargin)
             make.width.equalTo(Size.buttonWidth)
@@ -135,7 +158,8 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
 
         navigationBar.snp.makeConstraints { make in
-            make.height.equalTo(Size.navigationBarHeight).priority(Priority.required)
+            let intrinsicHeight = navigationBar.sizeClass.height
+            make.height.equalTo(intrinsicHeight - 1).priority(Priority.required)
         }
     }
 
@@ -245,4 +269,19 @@ extension CategoryScreen: CategoryCardListDelegate {
     func categoryCardSelected(_ index: Int) {
         delegate?.categorySelected(index: index)
     }
+}
+
+extension CategoryScreen: HomeScreenNavBar {
+
+    @objc
+    func homeScreenScrollToTop() {
+        delegate?.scrollToTop()
+    }
+
+    @objc
+    func homeScreenEditorialsTapped() {
+        let responder: HomeResponder? = self.findResponder()
+        responder?.showEditorialsViewController()
+    }
+
 }

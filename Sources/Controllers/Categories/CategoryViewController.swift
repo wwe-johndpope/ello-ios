@@ -40,12 +40,22 @@ final class CategoryViewController: StreamableViewController {
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
+    fileprivate let usage: Usage
+
+    enum Usage {
+        case `default`
+        case largeNav
+    }
 
     var showBackButton: Bool {
+        if parent is HomeViewController {
+            return false
+        }
         return !isRootViewController()
     }
 
-    init(slug: String, name: String? = nil) {
+    init(slug: String, name: String? = nil, usage: Usage = .default) {
+        self.usage = usage
         self.slug = slug
         super.init(nibName: nil, bundle: nil)
         self.title = name
@@ -56,7 +66,7 @@ final class CategoryViewController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = CategoryScreen()
+        let screen = CategoryScreen(usage: usage)
         screen.delegate = self
 
         self.view = screen
@@ -103,11 +113,7 @@ final class CategoryViewController: StreamableViewController {
         updateInsets(navBar: screen.topInsetView)
 
         if !userDidScroll && screen.categoryCardsVisible {
-            var offset: CGFloat = CategoryCardListView.Size.height
-            if screen.navigationBar.frame.maxY > 0 {
-                offset += ElloNavigationBar.Size.height - 1
-            }
-            streamViewController.collectionView.setContentOffset(CGPoint(x: 0, y: -offset), animated: true)
+            streamViewController.scrollToTop(animated: true)
         }
     }
 
@@ -245,6 +251,9 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 }
 
 extension CategoryViewController: CategoryScreenDelegate {
+    func scrollToTop() {
+        streamViewController.scrollToTop(animated: true)
+    }
 
     func selectCategoryFor(slug: String) {
         guard let category = categoryFor(slug: slug) else {

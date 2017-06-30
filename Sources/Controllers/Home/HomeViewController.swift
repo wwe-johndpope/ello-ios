@@ -9,16 +9,34 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
 
     fileprivate var visibleViewController: UIViewController?
     fileprivate var followingViewController: FollowingViewController!
+    fileprivate var discoverViewController: CategoryViewController!
     fileprivate var editorialsViewController: EditorialsViewController!
+
+    enum Usage {
+        case loggedOut
+        case loggedIn
+    }
 
     enum Controllers {
         case editorials
         case following
+        case discover
     }
 
     override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.following, insets: ElloTab.following.insets) }
+        get { return UITabBarItem.item(.home, insets: ElloTab.home.insets) }
         set { self.tabBarItem = newValue }
+    }
+
+    fileprivate let usage: Usage
+
+    init(usage: Usage) {
+        self.usage = usage
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private var _mockScreen: HomeScreenProtocol?
@@ -59,8 +77,12 @@ extension HomeViewController: HomeResponder {
         showController(followingViewController)
     }
 
+    func showDiscoverViewController() {
+        showController(discoverViewController)
+    }
+
     fileprivate func setupControllers() {
-        let editorialsViewController = EditorialsViewController(usage: .loggedIn)
+        let editorialsViewController = EditorialsViewController(usage: usage)
         editorialsViewController.currentUser = currentUser
         addChildViewController(editorialsViewController)
         editorialsViewController.didMove(toParentViewController: self)
@@ -71,6 +93,13 @@ extension HomeViewController: HomeResponder {
         addChildViewController(followingViewController)
         followingViewController.didMove(toParentViewController: self)
         self.followingViewController = followingViewController
+
+        let discoverViewController = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name, usage: .largeNav)
+        discoverViewController.category = Category.featured
+        discoverViewController.currentUser = currentUser
+        addChildViewController(discoverViewController)
+        discoverViewController.didMove(toParentViewController: self)
+        self.discoverViewController = discoverViewController
 
         showController(editorialsViewController)
     }
