@@ -69,13 +69,14 @@ class EditorialCell: UICollectionViewCell {
     }
 
     fileprivate let bg = UIView()
-    fileprivate let tappedResponder = UIControl()
     fileprivate let gradientView = UIView()
     fileprivate var gradientLayer = EditorialCell.generateGradientLayer()
     fileprivate let imageView = FLAnimatedImageView()
     fileprivate let loadingView = UIView()
     fileprivate let spinner = ElloLogoView(config: .grey)
     var editorialContentView: UIView { return bg }
+    let doubleTapGesture = UITapGestureRecognizer()
+    let singleTapGesture = UITapGestureRecognizer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,7 +111,14 @@ class EditorialCell: UICollectionViewCell {
     }
 
     func bindActions() {
-        tappedResponder.addTarget(self, action: #selector(tappedEditorial), for: .touchUpInside)
+        doubleTapGesture.numberOfTapsRequired = 2
+        doubleTapGesture.addTarget(self, action: #selector(doubleTapped(_:)))
+        contentView.addGestureRecognizer(doubleTapGesture)
+
+        singleTapGesture.numberOfTapsRequired = 1
+        singleTapGesture.addTarget(self, action: #selector(tappedEditorial))
+        singleTapGesture.require(toFail: doubleTapGesture)
+        contentView.addGestureRecognizer(singleTapGesture)
     }
 
     func updateConfig() {
@@ -132,7 +140,6 @@ class EditorialCell: UICollectionViewCell {
         bg.addSubview(loadingView)
         loadingView.addSubview(spinner)
         bg.addSubview(imageView)
-        bg.addSubview(tappedResponder)
         imageView.addSubview(gradientView)
 
         bg.snp.makeConstraints { make in
@@ -145,9 +152,6 @@ class EditorialCell: UICollectionViewCell {
             make.center.equalTo(loadingView)
         }
         imageView.snp.makeConstraints { make in
-            make.edges.equalTo(bg)
-        }
-        tappedResponder.snp.makeConstraints { make in
             make.edges.equalTo(bg)
         }
         gradientView.snp.makeConstraints { make in
@@ -177,6 +181,14 @@ class EditorialCell: UICollectionViewCell {
 }
 
 extension EditorialCell {
+    @objc
+    func doubleTapped(_ gesture: UIGestureRecognizer) {
+        let location = gesture.location(in: nil)
+
+        let responder: StreamEditingResponder? = findResponder()
+        responder?.cellDoubleTapped(cell: self, location: location)
+    }
+
     @objc
     func tappedEditorial() {
         let responder: EditorialCellResponder? = findResponder()

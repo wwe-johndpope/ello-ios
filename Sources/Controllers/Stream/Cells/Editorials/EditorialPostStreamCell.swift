@@ -31,6 +31,9 @@ class EditorialPostStreamCell: EditorialCell {
         super.bindActions()
         pageControl.addTarget(self, action: #selector(pageTapped), for: .valueChanged)
         scrollView.delegate = self
+
+        doubleTapGesture.isEnabled = false
+        singleTapGesture.isEnabled = false
     }
 
     override func updateConfig() {

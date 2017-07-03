@@ -145,15 +145,20 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func postForIndexPath(_ indexPath: IndexPath) -> Post? {
-        let item = visibleStreamCellItem(at: indexPath)
+        guard let item = visibleStreamCellItem(at: indexPath) else { return nil }
 
-        if let notification = item?.jsonable as? Notification {
+        if let notification = item.jsonable as? Notification {
             if let comment = notification.activity.subject as? ElloComment {
                 return comment.loadedFromPost
             }
             return notification.activity.subject as? Post
         }
-        return item?.jsonable as? Post
+
+        if let editorial = item.jsonable as? Editorial {
+            return editorial.post
+        }
+
+        return item.jsonable as? Post
     }
 
     func imageAssetForIndexPath(_ indexPath: IndexPath) -> Asset? {

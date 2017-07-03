@@ -73,6 +73,17 @@ class EditorialPostCell: EditorialTitledCell {
             make.bottom.equalTo(buttonsContainer.snp.top).offset(-Size.subtitleButtonMargin)
         }
     }
+
+    @objc
+    override func doubleTapped(_ gesture: UIGestureRecognizer) {
+        guard let post = config.post else { return }
+
+        let location = gesture.location(in: nil)
+
+        let responder: StreamEditingResponder? = findResponder()
+        responder?.cellDoubleTapped(cell: self, post: post, location: location)
+    }
+
 }
 
 extension EditorialPostCell {
