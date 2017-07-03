@@ -111,7 +111,6 @@ class EditorialCell: UICollectionViewCell {
     }
 
     func bindActions() {
-        doubleTapGesture.delegate = self
         doubleTapGesture.numberOfTapsRequired = 2
         doubleTapGesture.addTarget(self, action: #selector(doubleTapped(_:)))
         contentView.addGestureRecognizer(doubleTapGesture)
@@ -278,11 +277,5 @@ extension EditorialCell.Config {
         }
 
         return config
-    }
-}
-
-extension EditorialCell: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
-        return true
     }
 }
