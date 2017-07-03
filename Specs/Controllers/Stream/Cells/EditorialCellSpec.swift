@@ -11,7 +11,7 @@ class EditorialCellSpec: QuickSpec {
     override func spec() {
         describe("EditorialCell") {
             context("snapshots") {
-                func config(title: String = "Editorial title", subtitle: String = "Editorial subtitle", sent: Date? = nil, join: Bool = false) -> EditorialCell.Config {
+                func config(title: String = "Editorial title", subtitle: String = "Editorial subtitle", sent: Date? = nil, join: Bool = false, stream: Bool = false) -> EditorialCell.Config {
                     var config = EditorialCell.Config()
                     config.title = title
                     config.subtitle = subtitle
@@ -26,6 +26,19 @@ class EditorialCellSpec: QuickSpec {
                         config.join = (email: "email@email.com", username: "username", password: "password", submitted: false)
                     }
 
+                    if stream {
+                        let author = User.stub(["username": "qwfpgjluyarstdhneiozxcvbkm"])
+                        let post = Post.stub(["author": author])
+                        let editorial = Editorial.stub([
+                            title: title,
+                            subtitle: subtitle,
+                            ])
+                        config.postStreamConfigs = [
+                            EditorialCell.Config.fromPost(post, editorial: editorial),
+                            EditorialCell.Config.fromPost(post, editorial: editorial),
+                        ]
+                    }
+
                     return config
                 }
 
@@ -36,7 +49,7 @@ class EditorialCellSpec: QuickSpec {
                     ("join on iphone plus", { return config() }, EditorialJoinCell.self, 414),
                     ("join filled in",      { return config(join: true) }, EditorialJoinCell.self, 375),
                     ("post",                { return config() }, EditorialPostCell.self, 375),
-                    ("post_stream",         { return config() }, EditorialPostStreamCell.self, 375),
+                    ("post_stream",         { return config(stream: true) }, EditorialPostStreamCell.self, 375),
                 ]
                 for (description, configFn, cellClass, size) in expectations {
                     it("should have valid snapshot for \(description)") {

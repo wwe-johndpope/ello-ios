@@ -128,9 +128,9 @@ func prepareForSnapshot(_ subject: Snapshotable, size: CGSize) {
     let view = subject.snapshotObject!
     view.frame = parent.bounds
     parent.addSubview(view)
+    showView(view)
     view.setNeedsLayout()
     view.layoutIfNeeded()
-    showView(view)
 }
 
 

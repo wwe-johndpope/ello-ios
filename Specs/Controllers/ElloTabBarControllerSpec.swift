@@ -55,7 +55,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                 if let navigationController = subject.selectedViewController as? ElloNavigationController {
                     navigationController.currentUser = User.stub(["username": "foo"])
                     if let firstController = navigationController.topViewController as? BaseElloViewController {
-                        expect(firstController).to(beAKindOf(FollowingViewController.self))
+                        expect(firstController).to(beAKindOf(HomeViewController.self))
                     }
                     else {
                         fail("navigation controller doesn't have a topViewController, or it isn't a BaseElloViewController")

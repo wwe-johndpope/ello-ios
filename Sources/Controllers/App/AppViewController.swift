@@ -637,10 +637,10 @@ extension AppViewController {
 
         guard
             let navVC = vc.selectedViewController as? ElloNavigationController,
-            let streamVC = navVC.visibleViewController as? FollowingViewController
+            let homeVC = navVC.visibleViewController as? HomeViewController
         else { return }
 
-        streamVC.currentUser = currentUser
+        homeVC.showFollowingViewController()
     }
 
     fileprivate func showNotificationsScreen(category: String) {
@@ -658,7 +658,6 @@ extension AppViewController {
         let notificationFilterType = NotificationFilterType.fromCategory(category)
         notificationsVC.categoryFilterType = notificationFilterType
         notificationsVC.activatedCategory(notificationFilterType)
-        notificationsVC.currentUser = currentUser
     }
 
     fileprivate func showProfileScreen(_ userParam: String, path: String, isSlug: Bool = true) {
