@@ -6,10 +6,6 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
     weak var delegate: EditorialsScreenDelegate?
     fileprivate var usage: EditorialsViewController.Usage
 
-    struct Size {
-        static let logoTypeOffset: CGFloat = 0.5
-    }
-
     init(usage: EditorialsViewController.Usage) {
         self.usage = usage
         super.init(frame: .zero)
@@ -37,7 +33,8 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
             navigationBar.addSubview(logoButton)
 
             logoButton.snp.makeConstraints { make in
-                make.center.equalTo(navigationBar).offset(BlackBar.Size.height / 2 + Size.logoTypeOffset)
+                make.centerX.equalTo(navigationBar)
+                make.centerY.equalTo(navigationBar).offset(BlackBar.Size.height / 2)
             }
         }
     }
