@@ -15,6 +15,7 @@ class CategoryScreenSpec: QuickSpec {
         var searchButtonCount = 0
         var shareCount = 0
         var backCount = 0
+        var scrollToTopCount = 0
 
         func categorySelected(index: Int) {
             selectedIndex = index
@@ -33,6 +34,9 @@ class CategoryScreenSpec: QuickSpec {
         }
         func backTapped() {
             backCount += 1
+        }
+        func scrollToTop() {
+            scrollToTopCount += 1
         }
     }
 
