@@ -62,8 +62,14 @@ class CategoryScreenSpec: QuickSpec {
             }
 
             describe("snapshots") {
-                validateAllSnapshots(named: "CategoryScreen") {
-                    return subject
+                validateAllSnapshots(named: "CategoryScreen") { return subject }
+
+                describe("snapshots on home screen") {
+                    beforeEach {
+                        subject = CategoryScreen(usage: .largeNav)
+                        subject.set(categoriesInfo: categoryInfo, animated: false, completion: {})
+                    }
+                    validateAllSnapshots(named: "CategoryScreen HomeScreen") { return subject }
                 }
             }
 
