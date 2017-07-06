@@ -593,6 +593,9 @@
 		1D5F97791A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */; };
 		1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF51D3EA39500B4079C /* $_add_selected.svg */; };
 		1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF71D3EA41700B4079C /* $_add_normal.svg */; };
+		1D613E1F1F0D4A5A00677D3D /* HomeViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D613E1E1F0D4A5A00677D3D /* HomeViewControllerSpec.swift */; };
+		1D613E251F0D521200677D3D /* EditorialsScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D613E231F0D521200677D3D /* EditorialsScreenSpec.swift */; };
+		1D613E261F0D521200677D3D /* EditorialsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D613E241F0D521200677D3D /* EditorialsViewControllerSpec.swift */; };
 		1D6511BC1EFD6E8400A34AF8 /* EditorialDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6511BB1EFD6E8400A34AF8 /* EditorialDownloader.swift */; };
 		1D6511BE1F01AD2F00A34AF8 /* ello_type_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6511BD1F01AD2F00A34AF8 /* ello_type_normal.svg */; };
 		1D652F5A1BC2D66200AF3B06 /* PostbarControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */; };
@@ -1639,6 +1642,9 @@
 		1D5F97771A9699DA00AEEB5F /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D612BF51D3EA39500B4079C /* $_add_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_selected.svg; sourceTree = "<group>"; };
 		1D612BF71D3EA41700B4079C /* $_add_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_normal.svg; sourceTree = "<group>"; };
+		1D613E1E1F0D4A5A00677D3D /* HomeViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSpec.swift; sourceTree = "<group>"; };
+		1D613E231F0D521200677D3D /* EditorialsScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialsScreenSpec.swift; sourceTree = "<group>"; };
+		1D613E241F0D521200677D3D /* EditorialsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialsViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D6511BB1EFD6E8400A34AF8 /* EditorialDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialDownloader.swift; sourceTree = "<group>"; };
 		1D6511BD1F01AD2F00A34AF8 /* ello_type_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_type_normal.svg; sourceTree = "<group>"; };
 		1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostbarControllerSpec.swift; sourceTree = "<group>"; };
@@ -2728,8 +2734,10 @@
 				1D7750EF1AB9F0D900D92191 /* BaseElloViewControllerSpec.swift */,
 				12A18EEE1DCD13D300FC900B /* Categories */,
 				12347A971AA8BDEF00736B42 /* Drawer */,
+				1D613E221F0D51F300677D3D /* Editorials */,
 				12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */,
 				1D59EFA11D6659ED0029C106 /* Hire */,
+				1D613E1D1F0D49C300677D3D /* Home */,
 				121D92571A5CACC7004F0455 /* Join */,
 				1D06D6C61E3C0B5D004FA878 /* LoggedOut */,
 				12D14C841A43766D00C6F8E8 /* Login */,
@@ -3479,6 +3487,23 @@
 				1D59EFA31D6659FF0029C106 /* HireViewControllerSpec.swift */,
 			);
 			path = Hire;
+			sourceTree = "<group>";
+		};
+		1D613E1D1F0D49C300677D3D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1D613E1E1F0D4A5A00677D3D /* HomeViewControllerSpec.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		1D613E221F0D51F300677D3D /* Editorials */ = {
+			isa = PBXGroup;
+			children = (
+				1D613E231F0D521200677D3D /* EditorialsScreenSpec.swift */,
+				1D613E241F0D521200677D3D /* EditorialsViewControllerSpec.swift */,
+			);
+			path = Editorials;
 			sourceTree = "<group>";
 		};
 		1D652F5F1BC3055E00AF3B06 /* Onboarding */ = {
@@ -4846,6 +4871,7 @@
 				768043781AC20382004FEE09 /* FakeProfileHeaderCellSizeCalculator.swift in Sources */,
 				1D59EFA51D6659FF0029C106 /* HireViewControllerSpec.swift in Sources */,
 				EAF43D991AB0EBE60016E110 /* InviteCacheSpec.swift in Sources */,
+				1D613E261F0D521200677D3D /* EditorialsViewControllerSpec.swift in Sources */,
 				1DF984061D9B0C1E0055EFC7 /* OnboardingViewControllerSpec.swift in Sources */,
 				127535211B73F7B2006B9A0F /* DateSpecs.swift in Sources */,
 				1D9225541C3B23E000553BAE /* ExperienceUpdateSpec.swift in Sources */,
@@ -4954,6 +4980,7 @@
 				122C663E1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift in Sources */,
 				1D8835A41CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift in Sources */,
 				1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */,
+				1D613E251F0D521200677D3D /* EditorialsScreenSpec.swift in Sources */,
 				127BAD601A8512AA00628696 /* ElloLinkedStoreSpec.swift in Sources */,
 				EAC6054A1ADDA64B009B9426 /* DynamicSettingCellPresenterSpec.swift in Sources */,
 				1DF984031D9B0C1E0055EFC7 /* CreateProfileScreenSpec.swift in Sources */,
@@ -5031,6 +5058,7 @@
 				1D98563F1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift in Sources */,
 				1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */,
 				12D14C731A43762400C6F8E8 /* UserSpec.swift in Sources */,
+				1D613E1F1F0D4A5A00677D3D /* HomeViewControllerSpec.swift in Sources */,
 				1DBFD9FE1DFF4A0E0058843D /* NotificationsGeneratorSpec.swift in Sources */,
 				12CEC2BC1AB2108F000DC184 /* TextRegionSpec.swift in Sources */,
 				EA34DAC41AD851DC002F566D /* DynamicSettingsSpec.swift in Sources */,

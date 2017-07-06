@@ -7,10 +7,10 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
     override func trackerName() -> String? { return visibleViewController?.trackerName() }
     override func trackerProps() -> [String: Any]? { return visibleViewController?.trackerProps() }
 
-    fileprivate var visibleViewController: UIViewController?
-    fileprivate var followingViewController: FollowingViewController!
-    fileprivate var discoverViewController: CategoryViewController!
-    fileprivate var editorialsViewController: EditorialsViewController!
+    var visibleViewController: UIViewController?
+    var followingViewController: FollowingViewController!
+    var discoverViewController: CategoryViewController!
+    var editorialsViewController: EditorialsViewController!
 
     enum Usage {
         case loggedOut
