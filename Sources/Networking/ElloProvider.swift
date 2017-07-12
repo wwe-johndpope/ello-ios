@@ -11,8 +11,6 @@ import PromiseKit
 typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
 typealias ElloSuccessCompletion = (Any, ResponseConfig) -> Void
 typealias ElloFailureCompletion = (NSError, Int?) -> Void
-typealias ElloErrorCompletion = (NSError) -> Void
-typealias ElloEmptyCompletion = () -> Void
 typealias ElloAPIResponse = (Any, ResponseConfig)
 
 class ElloProvider {

@@ -3,6 +3,7 @@
 //
 
 import SwiftyUserDefaults
+import PromiseKit
 
 
 struct NavigationNotifications {
@@ -91,28 +92,21 @@ class AppViewController: BaseElloViewController {
         let authToken = AuthToken()
 
         if authToken.isPasswordBased {
-            loadCurrentUser()
+            loadCurrentUser(animateLogo: true)
         }
         else {
             showStartupScreen()
         }
     }
 
-    func loadCurrentUser(_ failure: ElloErrorCompletion? = nil) {
-        let failureCompletion: ElloErrorCompletion
-        if let failure = failure {
-            failureCompletion = failure
-        }
-        else {
+    @discardableResult
+    func loadCurrentUser(animateLogo: Bool = false) -> Promise<User> {
+        if animateLogo {
             screen.animateLogo()
-            failureCompletion = { _ in
-                self.showStartupScreen()
-                self.screen.stopAnimatingLogo()
-            }
         }
 
-        ProfileService().loadCurrentUser()
-            .thenFinally { user in
+        return ProfileService().loadCurrentUser()
+            .then { user -> User in
                 self.logInNewUser()
                 JWT.refresh()
 
@@ -126,9 +120,14 @@ class AppViewController: BaseElloViewController {
                 else {
                     self.showMainScreen(user)
                 }
+
+                return user
             }
-            .catch { error in
-                failureCompletion(error as NSError)
+            .catch { _ in
+                if animateLogo {
+                    self.showStartupScreen()
+                    self.screen.stopAnimatingLogo()
+                }
             }
     }
 

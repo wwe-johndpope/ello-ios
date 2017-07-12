@@ -12,6 +12,10 @@ struct AutoCompleteService {
     func loadUsernameResults(_ terms: String) -> Promise<[AutoCompleteResult]> {
         return ElloProvider.shared.request(.userNameAutoComplete(terms: terms))
             .then { response -> [AutoCompleteResult] in
+                if response.0 as? String == "" {
+                    return []
+                }
+
                 guard let results = response.0 as? [AutoCompleteResult] else {
                     throw NSError.uncastableJSONAble()
                 }
