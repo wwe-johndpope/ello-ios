@@ -2,7 +2,7 @@
 ///  AlertAction.swift
 //
 
-typealias AlertHandler = ((AlertAction) -> Void)?
+typealias AlertHandler = (AlertAction) -> Void
 typealias AlertCellConfigClosure = (
     _ cell: AlertCell,
     _ type: AlertType,
@@ -23,7 +23,7 @@ enum ActionStyle {
 struct AlertAction {
     let title: String
     let style: ActionStyle
-    let handler: AlertHandler
+    let handler: AlertHandler?
 
     var isInput: Bool {
         switch style {
@@ -34,7 +34,7 @@ struct AlertAction {
         }
     }
 
-    init(title: String, style: ActionStyle, handler: AlertHandler = nil) {
+    init(title: String, style: ActionStyle, handler: AlertHandler? = nil) {
         self.title = title
         self.style = style
         self.handler = handler

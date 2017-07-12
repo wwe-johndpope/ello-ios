@@ -5,8 +5,6 @@
 import YapDatabase
 
 
-typealias FromJSONClosure = ([String: Any]) -> JSONAble
-
 let JSONAbleVersion = 1
 
 protocol JSONSaveable {

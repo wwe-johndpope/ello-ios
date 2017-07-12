@@ -5,7 +5,6 @@
 import PINRemoteImage
 import PromiseKit
 
-typealias CategoriesCompletion = (_ categories: [Category]) -> Void
 
 class CategoryService {
 
