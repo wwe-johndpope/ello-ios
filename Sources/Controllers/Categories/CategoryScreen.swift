@@ -120,7 +120,13 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
 
         searchField.snp.makeConstraints { make in
-            var insets = SearchNavBarField.Size.searchInsets
+            var insets: UIEdgeInsets
+            if usage == .largeNav {
+                insets = SearchNavBarField.Size.largeNavSearchInsets
+            }
+            else {
+                insets = SearchNavBarField.Size.searchInsets
+            }
             insets.top -= BlackBar.Size.height
             insets.bottom -= 1
             make.bottom.equalTo(navigationBar).inset(insets)
