@@ -171,7 +171,7 @@ class AppViewController: BaseElloViewController {
 // MARK: Screens
 extension AppViewController {
 
-    fileprivate func showStartupScreen(_ completion: @escaping ElloEmptyCompletion = {}) {
+    fileprivate func showStartupScreen(_ completion: @escaping Block = {}) {
         let categoryController = EditorialsViewController(usage: .loggedOut)
         let childNavController = ElloNavigationController(rootViewController: categoryController)
         let loggedOutController = LoggedOutViewController()
@@ -321,7 +321,7 @@ extension AppViewController {
 // MARK: Screen transitions
 extension AppViewController {
 
-    func swapViewController(_ newViewController: UIViewController, completion: @escaping ElloEmptyCompletion) {
+    func swapViewController(_ newViewController: UIViewController, completion: @escaping Block) {
         newViewController.view.alpha = 0
 
         visibleViewController?.willMove(toParentViewController: nil)
@@ -350,7 +350,7 @@ extension AppViewController {
         })
     }
 
-    func removeViewController(_ completion: @escaping ElloEmptyCompletion = {}) {
+    func removeViewController(_ completion: @escaping Block = {}) {
         if presentingViewController != nil {
             dismiss(animated: false, completion: .none)
         }

@@ -234,7 +234,7 @@ extension PostDetailViewController: PostDetailStreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
             self.checkScrollToComment()
 

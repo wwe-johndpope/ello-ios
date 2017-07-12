@@ -4,7 +4,7 @@
 
 struct LoadingToken {
     fileprivate var loadInitialPageLoadingToken: String = ""
-    var cancelLoadingClosure: ElloEmptyCompletion = {}
+    var cancelLoadingClosure: Block = {}
 
     mutating func resetInitialPageLoadingToken() -> String {
         let newToken = UUID().uuidString

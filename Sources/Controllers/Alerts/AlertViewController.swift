@@ -175,7 +175,7 @@ extension AlertViewController {
         keyboardWillHideObserver = nil
     }
 
-    func dismiss(_ animated: Bool = true, completion: ElloEmptyCompletion? = .none) {
+    func dismiss(_ animated: Bool = true, completion: Block? = .none) {
         self.dismiss(animated: animated, completion: completion)
     }
 }

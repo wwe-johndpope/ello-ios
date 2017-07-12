@@ -22,7 +22,7 @@ class CategoryViewControllerSpec: QuickSpec {
         var showShare: CategoryScreen.NavBarItems = .all
         var showBack = false
 
-        func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
+        func set(categoriesInfo: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping Block) {
             categoryTitles = categoriesInfo.map { $0.title }
         }
         func animateCategoriesList(navBarVisible: Bool) {}

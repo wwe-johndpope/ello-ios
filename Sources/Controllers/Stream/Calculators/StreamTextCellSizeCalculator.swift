@@ -4,11 +4,11 @@
 
 class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     let webView: UIWebView
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: Block)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellItems: [StreamCellItem] = []
     fileprivate var maxWidth: CGFloat
-    fileprivate var completion: ElloEmptyCompletion = {}
+    fileprivate var completion: Block = {}
 
     init(webView: UIWebView = UIWebView()) {
         self.webView = webView
@@ -19,7 +19,7 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
 
 // MARK: Public
 
-    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: @escaping Block) {
         guard cellItems.count > 0 else {
             completion()
             return

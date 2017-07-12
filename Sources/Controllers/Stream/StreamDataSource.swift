@@ -808,7 +808,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPath.item >= 0 &&  indexPath.item < visibleCellItems.count && indexPath.section == 0
     }
 
-    func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping Block) {
         let textCells = filterTextCells(cellItems)
         let imageCells = filterImageCells(cellItems)
         let notificationElements = cellItems.filter {
@@ -884,7 +884,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return (cells, repostCells)
     }
 
-    fileprivate func temporarilyUnfilter(_ block: ElloEmptyCompletion) {
+    fileprivate func temporarilyUnfilter(_ block: Block) {
         let cachedStreamFilter = streamFilter
         let cachedStreamCollapsedFilter = streamCollapsedFilter
         self.streamFilter = nil
