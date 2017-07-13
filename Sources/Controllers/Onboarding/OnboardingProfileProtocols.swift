@@ -1,8 +1,8 @@
 ////
-///  CreateProfileProtocols.swift
+///  OnboardingProfileProtocols.swift
 //
 
-protocol CreateProfileDelegate: class {
+protocol OnboardingProfileDelegate: class {
     func present(controller: UIViewController)
     func dismissController()
 
@@ -13,7 +13,7 @@ protocol CreateProfileDelegate: class {
     func assign(avatarImage: ImageRegionData)
 }
 
-protocol CreateProfileScreenProtocol: class {
+protocol OnboardingProfileScreenProtocol: class {
     var name: String? { get set }
     var bio: String? { get set }
     var links: String? { get set }

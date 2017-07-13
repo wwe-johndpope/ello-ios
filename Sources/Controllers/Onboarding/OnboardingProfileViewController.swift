@@ -1,12 +1,12 @@
 ////
-///  CreateProfileViewController.swift
+///  OnboardingProfileViewController.swift
 //
 
-class CreateProfileViewController: UIViewController, HasAppController {
-    private var _mockScreen: CreateProfileScreenProtocol?
-    var screen: CreateProfileScreenProtocol {
+class OnboardingProfileViewController: UIViewController, HasAppController {
+    private var _mockScreen: OnboardingProfileScreenProtocol?
+    var screen: OnboardingProfileScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? (self.view as! CreateProfileScreen) }
+        get { return _mockScreen ?? (self.view as! OnboardingProfileScreen) }
     }
 
     var currentUser: User?
@@ -33,13 +33,13 @@ class CreateProfileViewController: UIViewController, HasAppController {
     }
 
     override func loadView() {
-        let screen = CreateProfileScreen()
+        let screen = OnboardingProfileScreen()
         screen.delegate = self
         self.view = screen
     }
 }
 
-extension CreateProfileViewController: CreateProfileDelegate {
+extension OnboardingProfileViewController: OnboardingProfileDelegate {
     func present(controller: UIViewController) {
         present(controller, animated: true, completion: nil)
     }
@@ -100,7 +100,7 @@ extension CreateProfileViewController: CreateProfileDelegate {
     }
 }
 
-extension CreateProfileViewController: OnboardingStepController {
+extension OnboardingProfileViewController: OnboardingStepController {
     func onboardingStepBegin() {
         didSetName = (onboardingData.name?.isEmpty == false)
         didSetBio = (onboardingData.bio?.isEmpty == false)
@@ -194,7 +194,7 @@ extension CreateProfileViewController: OnboardingStepController {
             case let .success(addressBook):
                 Tracker.shared.contactAccessPreferenceChanged(true)
 
-                let vc = InviteFriendsViewController(addressBook: addressBook)
+                let vc = OnboardingInviteViewController(addressBook: addressBook)
                 vc.currentUser = self.currentUser
                 vc.onboardingViewController = self.onboardingViewController
                 self.onboardingViewController?.inviteFriendsController = vc

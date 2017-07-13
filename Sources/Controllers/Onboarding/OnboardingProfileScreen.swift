@@ -1,5 +1,5 @@
 ////
-///  CreateProfileScreen.swift
+///  OnboardingProfileScreen.swift
 //
 
 import Photos
@@ -7,7 +7,7 @@ import SnapKit
 import ImagePickerSheetController
 
 
-class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
+class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
     enum ImageTarget {
         case coverImage
         case avatar
@@ -24,7 +24,7 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
         static let uploadSize = CGSize(width: 130, height: 40)
     }
 
-    weak var delegate: CreateProfileDelegate?
+    weak var delegate: OnboardingProfileDelegate?
     var name: String? {
         get { return nameTextView.text }
         set {
@@ -250,7 +250,7 @@ class CreateProfileScreen: Screen, CreateProfileScreenProtocol {
 
 }
 
-extension CreateProfileScreen {
+extension OnboardingProfileScreen {
     func uploadCoverImageAction() {
 
         _ = resignFirstResponder()
@@ -277,7 +277,7 @@ extension CreateProfileScreen {
     }
 }
 
-extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         guard
             let uploading = uploading,
@@ -362,7 +362,7 @@ extension CreateProfileScreen: UINavigationControllerDelegate, UIImagePickerCont
 
 }
 
-extension CreateProfileScreen: UITextViewDelegate {
+extension OnboardingProfileScreen: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn nsrange: NSRange, replacementText: String) -> Bool {
         var text = textView.text ?? ""
         let originalText = text
@@ -402,7 +402,7 @@ extension CreateProfileScreen: UITextViewDelegate {
     }
 }
 
-extension CreateProfileScreen: UIScrollViewDelegate {
+extension OnboardingProfileScreen: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == self.scrollView else { return }
 

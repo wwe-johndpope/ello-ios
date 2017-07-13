@@ -1,5 +1,5 @@
 ////
-///  CreateProfileViewControllerSpec.swift
+///  OnboardingProfileViewControllerSpec.swift
 //
 
 @testable import Ello
@@ -7,8 +7,8 @@ import Quick
 import Nimble
 
 
-class CreateProfileViewControllerSpec: QuickSpec {
-    class MockCreateProfileScreen: CreateProfileScreenProtocol {
+class OnboardingProfileViewControllerSpec: QuickSpec {
+    class MockOnboardingProfileScreen: OnboardingProfileScreenProtocol {
         var name: String?
         var bio: String?
         var links: String?
@@ -19,13 +19,13 @@ class CreateProfileViewControllerSpec: QuickSpec {
     class MockOnboardingViewController: OnboardingViewController {
     }
     override func spec() {
-        var subject: CreateProfileViewController!
-        var mockScreen: CreateProfileScreenProtocol!
+        var subject: OnboardingProfileViewController!
+        var mockScreen: OnboardingProfileScreenProtocol!
         var onboardingData: OnboardingData!
         var onboardingViewController: OnboardingViewController!
         beforeEach {
-            subject = CreateProfileViewController()
-            mockScreen = MockCreateProfileScreen()
+            subject = OnboardingProfileViewController()
+            mockScreen = MockOnboardingProfileScreen()
             onboardingViewController = MockOnboardingViewController()
             onboardingData = onboardingViewController.onboardingData
             subject.onboardingData = onboardingData
@@ -33,7 +33,7 @@ class CreateProfileViewControllerSpec: QuickSpec {
             subject.onboardingViewController = onboardingViewController
         }
 
-        describe("CreateProfileViewController") {
+        describe("OnboardingProfileViewController") {
             describe("onboardingStepBegin()") {
                 describe("prepares itself according to onboardingData") {
                     it("does not set 'didSet' vars if nothing is set") {

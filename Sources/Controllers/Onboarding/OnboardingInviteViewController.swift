@@ -1,8 +1,8 @@
 ////
-///  InviteFriendsViewController.swift
+///  OnboardingInviteViewController.swift
 //
 
-class InviteFriendsViewController: StreamableViewController {
+class OnboardingInviteViewController: StreamableViewController {
     let addressBook: AddressBookProtocol
     var mockScreen: StreamableScreenProtocol?
     var screen: StreamableScreenProtocol { return mockScreen ?? (self.view as! StreamableScreen) }
@@ -71,7 +71,7 @@ class InviteFriendsViewController: StreamableViewController {
 
 }
 
-extension InviteFriendsViewController {
+extension OnboardingInviteViewController {
 
     func setupNavigationItems() {
         if let navigationController = navigationController,
@@ -125,7 +125,7 @@ extension InviteFriendsViewController {
     }
 }
 
-extension InviteFriendsViewController: OnboardingStepController {
+extension OnboardingInviteViewController: OnboardingStepController {
 
     func onboardingStepBegin() {
         onboardingViewController?.hasAbortButton = false
@@ -137,7 +137,7 @@ extension InviteFriendsViewController: OnboardingStepController {
     }
 }
 
-extension InviteFriendsViewController: SearchStreamResponder {
+extension OnboardingInviteViewController: SearchStreamResponder {
 
     func searchFieldChanged(text: String) {
         searchString.text = text
