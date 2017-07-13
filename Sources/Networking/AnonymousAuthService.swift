@@ -6,7 +6,7 @@ import Moya
 
 class AnonymousAuthService {
 
-    func authenticateAnonymously(success: @escaping ElloEmptyCompletion, failure: @escaping ElloFailureCompletion, noNetwork: ElloEmptyCompletion) {
+    func authenticateAnonymously(success: @escaping Block, failure: @escaping ElloFailureCompletion, noNetwork: Block) {
         let endpoint: ElloAPI = .anonymousCredentials
         ElloProvider.sharedProvider.request(endpoint) { (result) in
             switch result {

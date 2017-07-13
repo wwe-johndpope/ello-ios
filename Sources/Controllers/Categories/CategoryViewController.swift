@@ -176,7 +176,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
             if self.streamViewController.hasCellItems(for: .categoryHeader) && !self.streamViewController.hasCellItems(for: .categoryPosts) {
                 self.streamViewController.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}

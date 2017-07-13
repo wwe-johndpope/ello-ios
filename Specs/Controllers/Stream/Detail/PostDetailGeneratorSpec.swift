@@ -84,7 +84,7 @@ class PostDetailDestination: PostDetailStreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         switch type {
         case .postHeader:
             headerItems = items

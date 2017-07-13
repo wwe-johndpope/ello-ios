@@ -9,7 +9,7 @@ import Result
 typealias Completion = (Result<AddressBook, AddressBookError>) -> Void
 
 struct AddressBookController {
-    static func promptForAddressBookAccess(fromController controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping ElloEmptyCompletion = {}) {
+    static func promptForAddressBookAccess(fromController controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping Block = {}) {
         switch AddressBookController.authenticationStatus() {
         case .authorized:
             proceedWithImport(completion)
@@ -25,7 +25,7 @@ struct AddressBookController {
 
 extension AddressBookController {
 
-    fileprivate static func promptForAccess(_ controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping ElloEmptyCompletion = {}) {
+    fileprivate static func promptForAccess(_ controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping Block = {}) {
         let alertController = AlertViewController(message: InterfaceString.Friends.ImportPermissionPrompt, type: .rounded)
 
         let importMessage = InterfaceString.Friends.ImportAllow

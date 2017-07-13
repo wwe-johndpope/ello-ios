@@ -57,17 +57,17 @@ func animate(options: AnimationOptions, animated: Bool = true, animations: @esca
 
 // MARK: Async, Timed, and Throttled closures
 
-typealias BasicBlock = () -> Void
-typealias AfterBlock = () -> BasicBlock
-typealias ThrottledBlock = (@escaping BasicBlock) -> Void
+typealias Block = () -> Void
+typealias AfterBlock = () -> Block
+typealias ThrottledBlock = (@escaping Block) -> Void
 typealias TakesIndexBlock = (Int) -> Void
 typealias OnHeightMismatch = (CGFloat) -> Void
 
 
 class Proc {
-    var block: BasicBlock
+    var block: Block
 
-    init(_ block: @escaping BasicBlock) {
+    init(_ block: @escaping Block) {
         self.block = block
     }
 
@@ -78,11 +78,11 @@ class Proc {
 }
 
 
-func times(_ times: Int, block: BasicBlock) {
+func times(_ times: Int, block: Block) {
     times_(times) { (_: Int) in block() }
 }
 
-func profiler(_ message: String = "") -> BasicBlock {
+func profiler(_ message: String = "") -> Block {
     let start = Date()
     print("--------- PROFILING \(message)...")
     return {
@@ -90,7 +90,7 @@ func profiler(_ message: String = "") -> BasicBlock {
     }
 }
 
-func profiler(_ message: String = "", block: BasicBlock) {
+func profiler(_ message: String = "", block: Block) {
     let p = profiler(message)
     block()
     p()
@@ -114,7 +114,7 @@ private func times_(_ times: Int, block: TakesIndexBlock) {
 // everywhere a callback is expected.  The second (often called 'done') should
 // be called once, after all the callbacks have been registered. e.g.
 //
-// func networkCalls(completion: BasicBlock) {
+// func networkCalls(completion: Block) {
 //     let (afterAll, done) = afterN() { completion() }
 //     backgroundProcess1(completion: afterAll())
 //     backgroundProcess2(completion: afterAll())
@@ -123,24 +123,24 @@ private func times_(_ times: Int, block: TakesIndexBlock) {
 //
 // without this 'done' trick, there is a bug where if the first process is synchronous, the 'count'
 // is incremented (by calling 'afterAll') and then immediately decremented.
-func afterN(_ block: @escaping BasicBlock) -> (AfterBlock, BasicBlock) {
+func afterN(_ block: @escaping Block) -> (AfterBlock, Block) {
     var count = 0
     var called = false
-    let decrementCount: BasicBlock = {
+    let decrementCount: Block = {
         count -= 1
         if count == 0 && !called {
             block()
             called = true
         }
     }
-    let incrementCount: () -> BasicBlock = {
+    let incrementCount: () -> Block = {
         count += 1
         return decrementCount
     }
     return (incrementCount, incrementCount())
 }
 
-func after(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
+func after(_ times: Int, block: @escaping Block) -> Block {
     if times == 0 {
         block()
         return {}
@@ -155,7 +155,7 @@ func after(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
     }
 }
 
-func until(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
+func until(_ times: Int, block: @escaping Block) -> Block {
     if times == 0 {
         return {}
     }
@@ -169,11 +169,11 @@ func until(_ times: Int, block: @escaping BasicBlock) -> BasicBlock {
     }
 }
 
-func once(_ block: @escaping BasicBlock) -> BasicBlock {
+func once(_ block: @escaping Block) -> Block {
     return until(1, block: block)
 }
 
-func inBackground(_ block: @escaping BasicBlock) {
+func inBackground(_ block: @escaping Block) {
     if AppSetup.sharedState.isTesting {
         block()
     }
@@ -182,11 +182,11 @@ func inBackground(_ block: @escaping BasicBlock) {
     }
 }
 
-func inForeground(_ block: @escaping BasicBlock) {
+func inForeground(_ block: @escaping Block) {
     nextTick(block)
 }
 
-func nextTick(_ block: @escaping BasicBlock) {
+func nextTick(_ block: @escaping Block) {
     if AppSetup.sharedState.isTesting {
         if Thread.isMainThread {
             block()
@@ -200,11 +200,11 @@ func nextTick(_ block: @escaping BasicBlock) {
     }
 }
 
-func nextTick(_ on: DispatchQueue, block: @escaping BasicBlock) {
+func nextTick(_ on: DispatchQueue, block: @escaping Block) {
     on.async(execute: block)
 }
 
-func timeout(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func timeout(_ duration: TimeInterval, block: @escaping Block) -> Block {
     let handler = once(block)
     _ = delay(duration) {
         handler()
@@ -212,14 +212,14 @@ func timeout(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBloc
     return handler
 }
 
-func delay(_ duration: TimeInterval, background: Bool = false, block: @escaping BasicBlock) {
+func delay(_ duration: TimeInterval, background: Bool = false, block: @escaping Block) {
     let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
     let killTime = DispatchTime.now() + Double(killTimeOffset) / Double(NSEC_PER_SEC)
     let queue: DispatchQueue = background ? .global(qos: .background) : .main
     queue.asyncAfter(deadline: killTime, execute: block)
 }
 
-func cancelableDelay(_ duration: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func cancelableDelay(_ duration: TimeInterval, block: @escaping Block) -> Block {
     let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
     let killTime = DispatchTime.now() + Double(killTimeOffset) / Double(NSEC_PER_SEC)
     var cancelled = false
@@ -229,7 +229,7 @@ func cancelableDelay(_ duration: TimeInterval, block: @escaping BasicBlock) -> B
     return { cancelled = true }
 }
 
-func debounce(_ timeout: TimeInterval, block: @escaping BasicBlock) -> BasicBlock {
+func debounce(_ timeout: TimeInterval, block: @escaping Block) -> Block {
     var timer: Timer? = nil
     let proc = Proc(block)
 

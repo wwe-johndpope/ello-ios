@@ -6,15 +6,15 @@
 class CategoryHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 192
 
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
+    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellWidth: CGFloat = 0.0
     fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var completion: ElloEmptyCompletion = {}
+    fileprivate var completion: Block = {}
 
     // MARK: Public
 
-    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping Block) {
         guard cellItems.count > 0 else {
             completion()
             return

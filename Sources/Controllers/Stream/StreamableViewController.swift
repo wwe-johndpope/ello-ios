@@ -26,7 +26,7 @@ protocol CreatePostResponder: class {
 @objc
 protocol InviteResponder: class {
     func onInviteFriends()
-    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion)
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping Block)
 }
 
 class StreamableViewController: BaseElloViewController {
@@ -345,7 +345,7 @@ extension StreamableViewController: InviteResponder {
         })
     }
 
-    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping ElloEmptyCompletion) {
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping Block) {
         guard let email = person.emails.first else { return }
 
         if isOnboarding {

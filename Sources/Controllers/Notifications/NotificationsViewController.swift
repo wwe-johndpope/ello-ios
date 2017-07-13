@@ -232,7 +232,7 @@ extension NotificationsViewController: StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         if type == .announcements {
             let jsonables = items.map { $0.jsonable }
             track(jsonables: jsonables)

@@ -137,7 +137,7 @@ class AlertViewController: UIViewController {
         fatalError("This isn't implemented")
     }
 
-    convenience init(error: String, handler: AlertHandler = nil) {
+    convenience init(error: String, handler: AlertHandler? = nil) {
         self.init(message: error)
         let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: handler)
         addAction(action)
@@ -175,7 +175,7 @@ extension AlertViewController {
         keyboardWillHideObserver = nil
     }
 
-    func dismiss(_ animated: Bool = true, completion: ElloEmptyCompletion? = .none) {
+    func dismiss(_ animated: Bool = true, completion: Block? = .none) {
         self.dismiss(animated: animated, completion: completion)
     }
 }

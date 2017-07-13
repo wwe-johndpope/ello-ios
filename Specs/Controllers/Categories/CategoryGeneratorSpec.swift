@@ -123,7 +123,7 @@ class CategoryDestination: CategoryStreamDestination {
         placeholderItems = items
     }
 
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         switch type {
         case .categoryHeader:
             headerItems = items

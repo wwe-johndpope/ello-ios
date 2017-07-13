@@ -8,10 +8,10 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     let webView: UIWebView
     var originalWidth: CGFloat = 0
 
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
+    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var completion: ElloEmptyCompletion = {}
+    fileprivate var completion: Block = {}
 
     init(webView: UIWebView = UIWebView()) {
         self.webView = webView
@@ -21,7 +21,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
 
 // MARK: Public
 
-    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping Block) {
         guard cellItems.count > 0 else {
             completion()
             return

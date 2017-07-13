@@ -34,7 +34,7 @@ class CredentialSettingsViewController: UITableViewController {
         }
     }
 
-    var validationCancel: BasicBlock?
+    var validationCancel: Block?
 
     var isUpdatable: Bool {
         return currentUser?.username != usernameView.textField.text
