@@ -21,10 +21,11 @@ class ForgotPasswordResetViewController: BaseElloViewController {
     }
 
     fileprivate func loadCurrentUser() {
-        appViewController?.loadCurrentUser { error in
-            self.screen.loadingHUD(visible: false)
-            self.screen.showFailureMessage()
-        }
+        appViewController?.loadCurrentUser()
+            .catch { _ in
+                self.screen.loadingHUD(visible: false)
+                self.screen.showFailureMessage()
+            }
     }
 
     override func loadView() {

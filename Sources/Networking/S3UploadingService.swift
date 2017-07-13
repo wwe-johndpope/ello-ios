@@ -6,8 +6,6 @@ import PromiseKit
 
 
 class S3UploadingService {
-    typealias S3UploadSuccessCompletion = (URL?) -> Void
-
     var uploader: ElloS3?
 
     func upload(imageRegionData image: ImageRegionData) -> Promise<URL?> {

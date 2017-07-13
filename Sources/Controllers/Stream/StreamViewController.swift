@@ -173,8 +173,8 @@ final class StreamViewController: BaseElloViewController {
 
     var pullToRefreshView: SSPullToRefreshView?
     var allOlderPagesLoaded = false
-    var initialLoadClosure: ElloEmptyCompletion?
-    var reloadClosure: ElloEmptyCompletion?
+    var initialLoadClosure: Block?
+    var reloadClosure: Block?
     var toggleClosure: ToggleClosure?
     var initialDataLoaded = false
 
@@ -360,7 +360,7 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping ElloEmptyCompletion = {}) {
+    func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping Block = {}) {
         let width = view.frame.width
         dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { _ in
             self.reloadCells()
@@ -375,7 +375,7 @@ final class StreamViewController: BaseElloViewController {
     func replacePlaceholder(
         type placeholderType: StreamCellType.PlaceholderType,
         items streamCellItems: [StreamCellItem],
-        completion: @escaping ElloEmptyCompletion = {}
+        completion: @escaping Block = {}
         )
     {
         let width = view.frame.width
@@ -389,7 +389,7 @@ final class StreamViewController: BaseElloViewController {
     func appendPlaceholder(
         _ placeholderType: StreamCellType.PlaceholderType,
         with streamCellItems: [StreamCellItem],
-        completion: @escaping ElloEmptyCompletion = {}
+        completion: @escaping Block = {}
         )
     {
         guard let lastIndexPath = self.dataSource.indexPathsForPlaceholderType(placeholderType).last else { return }

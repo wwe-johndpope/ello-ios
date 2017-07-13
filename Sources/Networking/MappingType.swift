@@ -2,6 +2,8 @@
 ///  MappingType.swift
 //
 
+typealias FromJSONClosure = ([String: Any]) -> JSONAble
+
 enum MappingType: String {
     // these keys define the place in the JSON response where the ElloProvider
     // should look for the response data.

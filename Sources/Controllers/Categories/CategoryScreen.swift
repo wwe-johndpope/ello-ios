@@ -169,7 +169,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    func set(categoriesInfo newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping ElloEmptyCompletion) {
+    func set(categoriesInfo newValue: [CategoryCardListView.CategoryInfo], animated: Bool, completion: @escaping Block) {
         categoryCardList.categoriesInfo = newValue
         categoryCardList.isHidden = !categoryCardsVisible
 
@@ -181,7 +181,7 @@ class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
         }
     }
 
-    fileprivate func showCategoryCardList(completion: @escaping ElloEmptyCompletion = {}) {
+    fileprivate func showCategoryCardList(completion: @escaping Block = {}) {
         let originalY = categoryCardList.frame.origin.y
         categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
         animate(completion: { _ in completion() }) {

@@ -4,12 +4,12 @@
 
 
 class EditorialDownloader {
-    fileprivate typealias CellJob = (editorials: [Editorial], completion: ElloEmptyCompletion)
+    fileprivate typealias CellJob = (editorials: [Editorial], completion: Block)
     fileprivate var jobs: [CellJob] = []
     fileprivate var editorials: [Editorial] = []
-    fileprivate var completion: ElloEmptyCompletion = {}
+    fileprivate var completion: Block = {}
 
-    func processCells(_ editorialItems: [StreamCellItem], completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ editorialItems: [StreamCellItem], completion: @escaping Block) {
         guard editorialItems.count > 0 else {
             completion()
             return

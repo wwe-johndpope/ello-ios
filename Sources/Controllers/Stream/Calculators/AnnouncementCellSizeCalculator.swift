@@ -5,7 +5,7 @@
 class AnnouncementCellSizeCalculator {
     var originalWidth: CGFloat = 0
 
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: ElloEmptyCompletion)
+    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellItems: [StreamCellItem] = []
 
@@ -39,7 +39,7 @@ class AnnouncementCellSizeCalculator {
         return calcHeight + max(textHeight, imageHeight)
     }
 
-    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping Block) {
         guard cellItems.count > 0 else {
             completion()
             return

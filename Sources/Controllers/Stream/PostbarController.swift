@@ -218,15 +218,17 @@ class PostbarController: UIResponder, PostbarResponder {
 
     fileprivate func unlovePost(_ post: Post, cell: LoveableCell?) {
         Tracker.shared.postUnloved(post)
+        post.loved = false
         if let count = post.lovesCount {
             post.lovesCount = count - 1
-            post.loved = false
-            postNotification(PostChangedNotification, value: (post, .loved))
         }
+        postNotification(PostChangedNotification, value: (post, .loved))
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
 
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount - 1
             postNotification(CurrentUserChangedNotification, value: user)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
         }
 
         LovesService().unlovePost(postId: post.id)
@@ -250,14 +252,17 @@ class PostbarController: UIResponder, PostbarResponder {
 
     fileprivate func lovePost(_ post: Post, cell: LoveableCell?, via: String) {
         Tracker.shared.postLoved(post, via: via)
+        post.loved = true
         if let count = post.lovesCount {
             post.lovesCount = count + 1
-            post.loved = true
-            postNotification(PostChangedNotification, value: (post, .loved))
         }
+        postNotification(PostChangedNotification, value: (post, .loved))
+        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount + 1
             postNotification(CurrentUserChangedNotification, value: user)
+            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
         }
 
         LovesService().lovePost(postId: post.id)

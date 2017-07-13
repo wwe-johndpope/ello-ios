@@ -20,7 +20,7 @@ extension StreamGenerator {
 
 protocol StreamDestination: class {
     func setPlaceholders(items: [StreamCellItem])
-    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping ElloEmptyCompletion)
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block)
     func setPrimary(jsonable: JSONAble)
     func primaryJSONAbleNotFound()
     func setPagingConfig(responseConfig: ResponseConfig)

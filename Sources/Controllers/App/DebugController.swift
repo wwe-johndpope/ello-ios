@@ -37,9 +37,9 @@ enum DebugServer: String {
 class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let tableView = UITableView()
-    var actions = [(String, BasicBlock)]()
+    var actions = [(String, Block)]()
 
-    private func addAction(name: String, block: @escaping BasicBlock) {
+    private func addAction(name: String, block: @escaping Block) {
         actions.append((name, block))
     }
 

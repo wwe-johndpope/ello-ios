@@ -17,7 +17,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
         }
     }
 
-    fileprivate func processPHAssets(_ assets: [PHAsset], done: @escaping ElloEmptyCompletion = {}) {
+    fileprivate func processPHAssets(_ assets: [PHAsset], done: @escaping Block = {}) {
         self.interactionEnabled = false
         AssetsToRegions.processPHAssets(assets) { (imageData: [ImageRegionData]) in
             self.interactionEnabled = true

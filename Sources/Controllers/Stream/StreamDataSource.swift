@@ -452,9 +452,9 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
         case .delete:
+            var removedAvatar = false
             if let love = jsonable as? Love {
                 if let post = love.post, let user = love.user {
-                    var removed = false
                     for item in visibleCellItems {
                         if let userAvatars = item.jsonable as? UserAvatarCellModel,
                             userAvatars.belongsTo(post: post, type: .lovers)
@@ -462,22 +462,22 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                             userAvatars.remove(user: user)
                             if userAvatars.users.count == 0 {
                                 replacePlaceholder(type: .postLovers, items: [])
-                                removed = true
+                                removedAvatar = true
                             }
                             break
                         }
                     }
 
-                    if removed && !hasCellItems(for: .postReposters) {
+                    if removedAvatar && !hasCellItems(for: .postReposters) {
                         replacePlaceholder(type: .postSocialPadding, items: [])
                     }
-
-                    collectionView.reloadData()
                 }
             }
 
-            removeItemsFor(jsonable: jsonable, change: change)
-            collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
+            let removedPaths = removeItemsFor(jsonable: jsonable, change: change)
+            if removedAvatar || removedPaths.count > 0 {
+                collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
+            }
         case .replaced:
             let (oldIndexPaths, _) = elementsFor(jsonable: jsonable, change: change)
             if let post = jsonable as? Post, let firstIndexPath = oldIndexPaths.first {
@@ -808,7 +808,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPath.item >= 0 &&  indexPath.item < visibleCellItems.count && indexPath.section == 0
     }
 
-    func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping ElloEmptyCompletion) {
+    func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping Block) {
         let textCells = filterTextCells(cellItems)
         let imageCells = filterImageCells(cellItems)
         let notificationElements = cellItems.filter {
@@ -884,7 +884,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return (cells, repostCells)
     }
 
-    fileprivate func temporarilyUnfilter(_ block: ElloEmptyCompletion) {
+    fileprivate func temporarilyUnfilter(_ block: Block) {
         let cachedStreamFilter = streamFilter
         let cachedStreamCollapsedFilter = streamCollapsedFilter
         self.streamFilter = nil

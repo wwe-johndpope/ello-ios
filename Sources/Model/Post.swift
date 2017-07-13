@@ -83,6 +83,7 @@ final class Post: JSONAble, Authorable, Groupable {
     var isRepost: Bool {
         return (repostContent?.count ?? 0) > 0
     }
+    fileprivate var lovedChangedNotification: NotificationObserver?
     fileprivate var commentsCountChangedNotification: NotificationObserver?
 
 // MARK: Initialization
@@ -117,6 +118,12 @@ final class Post: JSONAble, Authorable, Groupable {
         self.summary = summary
         super.init(version: PostVersion)
 
+        lovedChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
+            if post.id == self.id && change == .loved {
+                self.loved = post.loved
+            }
+        }
+
         commentsCountChangedNotification = NotificationObserver(notification: PostCommentsCountChangedNotification) { [unowned self] (post, delta) in
             if post.id == self.id {
                 self.commentsCount = (self.commentsCount ?? 0) + delta
@@ -125,6 +132,7 @@ final class Post: JSONAble, Authorable, Groupable {
     }
 
     deinit {
+        lovedChangedNotification?.removeObserver()
         commentsCountChangedNotification?.removeObserver()
     }
 

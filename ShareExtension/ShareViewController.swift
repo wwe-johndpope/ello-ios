@@ -17,9 +17,9 @@ import MobileCoreServices
 class ShareViewController: SLComposeServiceViewController {
 
     var itemPreviews: [ExtensionItemPreview] = []
+    var itemsProcessed = false
     fileprivate lazy var background: UIView = self.createBackground()
 
-    // moved into a separate function to save compile time
     fileprivate func createBackground() -> UIView {
         let view = UIView()
         view.alpha = 0
@@ -39,7 +39,7 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func isContentValid() -> Bool {
-        return ShareAttachmentProcessor.hasContent(contentText, extensionItem: extensionContext?.inputItems.safeValue(0) as? NSExtensionItem)
+        return itemsProcessed && ShareAttachmentProcessor.hasContent(contentText, extensionItem: extensionContext?.inputItems.safeValue(0) as? NSExtensionItem)
     }
 
     override func didSelectPost() {
@@ -54,6 +54,7 @@ private extension ShareViewController {
 
     func processAttachments() {
         guard let extensionItem = extensionContext?.inputItems.safeValue(0) as? NSExtensionItem else {
+            finishProcessing()
             return
         }
 
@@ -61,9 +62,15 @@ private extension ShareViewController {
             ShareAttachmentProcessor.preview(extensionItem) { previews in
                 inForeground {
                     self.itemPreviews = previews
+                    self.finishProcessing()
                 }
             }
         }
+    }
+
+    private func finishProcessing() {
+        itemsProcessed = true
+        validateContent()
     }
 
     func showSpinner() {
@@ -80,13 +87,14 @@ private extension ShareViewController {
         PostEditingService().create(content: content, buyButtonURL: nil)
             .thenFinally { post in
 //                Tracker.shared.shareSuccessful()
-                self.donePosting()
                 self.dismissPostingForm()
             }
             .catch { error in
 //                Tracker.shared.shareFailed()
-                self.donePosting()
                 self.showFailedToPost()
+            }
+            .always { _ in
+                self.donePosting()
             }
     }
 

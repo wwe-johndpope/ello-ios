@@ -11,8 +11,6 @@ import PromiseKit
 typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
 typealias ElloSuccessCompletion = (Any, ResponseConfig) -> Void
 typealias ElloFailureCompletion = (NSError, Int?) -> Void
-typealias ElloErrorCompletion = (NSError) -> Void
-typealias ElloEmptyCompletion = () -> Void
 typealias ElloAPIResponse = (Any, ResponseConfig)
 
 class ElloProvider {
@@ -256,7 +254,7 @@ class ElloProvider {
             else if nextState.isAuthenticated {
                 AuthState.uuid = UUID()
 
-                let flushWaitList: ElloEmptyCompletion = {
+                let flushWaitList: Block = {
                     for request in self.waitList {
                         self.elloRequest(request)
                     }
@@ -319,7 +317,7 @@ extension ElloProvider {
     }
 
     fileprivate func parseLinked(_ elloAPI: ElloAPI, dict: [String: Any], responseConfig: ResponseConfig, success: @escaping ElloSuccessCompletion, failure: @escaping ElloFailureCompletion) {
-        let completion: ElloEmptyCompletion = {
+        let completion: Block = {
             let node = dict[elloAPI.mappingType.rawValue]
             var newResponseConfig: ResponseConfig?
             if let pagingPath = elloAPI.pagingPath,

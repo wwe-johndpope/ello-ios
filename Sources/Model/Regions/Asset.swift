@@ -34,8 +34,8 @@ final class Asset: JSONAble {
     var original: Attachment?
     // optional avatar
     var largeOrBest: Attachment? {
-        if isGif, let optimized = optimized {
-            return optimized
+        if isGif, let original = original {
+            return original
         }
 
         if DeviceScreen.isRetina {
@@ -72,7 +72,7 @@ final class Asset: JSONAble {
 
     // computed
     var isGif: Bool {
-        return self.optimized?.type == "image/gif"
+        return original?.type == "image/gif" || original?.url.lastPathComponent.hasSuffix(".gif") == true
     }
 
     var isLargeGif: Bool {

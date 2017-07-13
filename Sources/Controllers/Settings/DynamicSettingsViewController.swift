@@ -37,7 +37,7 @@ class DynamicSettingsViewController: UITableViewController {
     var dynamicCategories: [DynamicSettingCategory] = []
     var currentUser: User?
     weak var delegate: DynamicSettingsDelegate?
-    var hideLoadingHud: BasicBlock = ElloHUD.hideLoadingHud
+    var hideLoadingHud: Block = ElloHUD.hideLoadingHud
 
     var height: CGFloat {
         var totalRows = 0

@@ -96,7 +96,7 @@ class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelega
         closeModalAndThen {}
     }
 
-    func closeModalAndThen(_ completion: @escaping BasicBlock) {
+    func closeModalAndThen(_ completion: @escaping Block) {
         Tracker.shared.userBlockCanceled(userId)
         self.dismiss(animated: true, completion: completion)
     }
