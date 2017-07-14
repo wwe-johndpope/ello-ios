@@ -5,52 +5,23 @@
 import SwiftyUserDefaults
 
 class AppSetup {
-    var isTesting = false
-    fileprivate var _isSimulator: Bool?
-    var isSimulator: Bool {
-        get {
-            return _isSimulator ?? AppSetup.isRunningOnSimulator }
-        set {
-            if newValue == true {
-                _isSimulator = nil
-            }
-            else {
-                _isSimulator = false
-            }
-        }
-    }
+    static var shared: AppSetup = AppSetup()
 
-    /// Return true is application is running on simulator
-    fileprivate static var isRunningOnSimulator: Bool {
-        // http://stackoverflow.com/questions/24869481/detect-if-app-is-being-built-for-device-or-simulator-in-swift
-        #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
-            return true
-        #else
-            return false
-        #endif
-    }
+    lazy var isTesting: Bool = _isTesting()
+    lazy var isSimulator: Bool = _isRunningOnSimulator()
+    var imageQuality: CGFloat = 0.8
 
-    var imageQuality: CGFloat {
-        get {
-            return CGFloat(GroupDefaults["ElloImageUploadQuality"].double ?? 0.8)
-        }
-        set {
-            let quality = Double(newValue)
-            GroupDefaults["ElloImageUploadQuality"] = quality
-        }
-    }
+}
 
-    class var sharedState: AppSetup {
-        struct Static {
-            static let instance = AppSetup()
-        }
-        return Static.instance
-    }
+private func _isRunningOnSimulator() -> Bool {
+    // http://stackoverflow.com/questions/24869481/detect-if-app-is-being-built-for-device-or-simulator-in-swift
+    #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+        return true
+    #else
+        return false
+    #endif
+}
 
-    init() {
-        if NSClassFromString("XCTest") != nil {
-            isTesting = true
-        }
-    }
-
+private func _isTesting() -> Bool {
+    return NSClassFromString("XCTest") != nil
 }

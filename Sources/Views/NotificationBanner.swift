@@ -6,14 +6,14 @@ import CRToast
 
 struct NotificationBanner {
     static func displayAlert(payload: PushPayload) {
-        guard !AppSetup.sharedState.isTesting else { return }
+        guard !AppSetup.shared.isTesting else { return }
 
         configureDefaultsWith(payload: payload)
         CRToastManager.showNotification(withMessage: payload.message) { }
     }
 
     static func displayAlert(message: String) {
-        guard !AppSetup.sharedState.isTesting else { return }
+        guard !AppSetup.shared.isTesting else { return }
 
         configureDefaults()
         CRToastManager.showNotification(withMessage: message) { }
