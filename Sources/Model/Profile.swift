@@ -14,6 +14,10 @@ let ProfileVersion: Int = 4
 
 @objc(Profile)
 final class Profile: JSONAble {
+    enum CreatorType {
+        case artist
+        case fan
+    }
 
     enum Property: String {
         case name

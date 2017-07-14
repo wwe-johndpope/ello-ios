@@ -36,6 +36,16 @@ class OnboardingCreatorTypeViewController: UIViewController, HasAppController, C
 }
 
 extension OnboardingCreatorTypeViewController: OnboardingCreatorTypeDelegate {
+
+    func creatorTypeChanged(type: Profile.CreatorType) {
+    }
+
+    func creatorSelectionChanged(count: Int) {
+    }
+
+    private func revalidate() {
+    }
+
 }
 
 extension OnboardingCreatorTypeViewController: OnboardingStepController {

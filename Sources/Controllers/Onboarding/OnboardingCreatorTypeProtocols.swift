@@ -3,6 +3,8 @@
 //
 
 protocol OnboardingCreatorTypeDelegate: class {
+    func creatorTypeChanged(type: Profile.CreatorType)
+    func creatorSelectionChanged(count: Int)
 }
 
 protocol OnboardingCreatorTypeScreenProtocol: class {
