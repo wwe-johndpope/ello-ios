@@ -10,6 +10,10 @@ import PromiseKit
 
 // Add in custom configuration
 class ElloConfiguration: QuickConfiguration {
+    struct Size {
+        static let calculatorHeight = CGFloat(20)
+    }
+
     override class func configure(_ config: Configuration) {
         config.beforeSuite {
             // make sure the promise `then` blocks are run synchronously

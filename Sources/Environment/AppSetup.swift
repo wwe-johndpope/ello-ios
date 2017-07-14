@@ -5,10 +5,6 @@
 import SwiftyUserDefaults
 
 class AppSetup {
-    struct Size {
-        static let calculatorHeight = CGFloat(20)
-    }
-
     var isTesting = false
     fileprivate var _isSimulator: Bool?
     var isSimulator: Bool {

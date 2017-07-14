@@ -108,7 +108,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
                 it("sizes the items") {
                     for item in cellItems {
-                        expect(item.calculatedCellHeights.oneColumn!) == AppSetup.Size.calculatorHeight
+                        expect(item.calculatedCellHeights.oneColumn!) == ElloConfiguration.Size.calculatorHeight
                     }
                 }
             }
