@@ -176,7 +176,7 @@ class PostSpec: QuickSpec {
                 }
 
                 it("decodes successfully") {
-                    let expectedCreatedAt = Date()
+                    let expectedCreatedAt = AppSetup.shared.now
                     let author: User = stub([
                         "id" : "555",
                         "username": "thenim"

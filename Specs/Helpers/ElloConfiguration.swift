@@ -36,6 +36,9 @@ class ElloConfiguration: QuickConfiguration {
                 "spam": Badge(slug: "spam", name: "Spam", link: "Learn More", url: nil, imageURL: nil),
                 "nsfw": Badge(slug: "nsfw", name: "Nsfw", link: "Learn More", url: nil, imageURL: nil),
             ]
+
+            let now = Date()
+            AppSetup.shared.nowGenerator = { return now }
         }
 
         config.beforeEach {

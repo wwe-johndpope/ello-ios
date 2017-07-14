@@ -234,8 +234,9 @@ class PostbarController: UIResponder, PostbarResponder {
         LovesService().unlovePost(postId: post.id)
             .thenFinally {
                 if let currentUser = self.currentUser {
+                    let now = AppSetup.shared.now
                     let love = Love(
-                        id: "", createdAt: Date(), updatedAt: Date(),
+                        id: "", createdAt: now, updatedAt: now,
                         deleted: true, postId: post.id, userId: currentUser.id
                         )
                     postNotification(JSONAbleChangedNotification, value: (love, .delete))

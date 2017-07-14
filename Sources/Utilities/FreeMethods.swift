@@ -83,10 +83,10 @@ func times(_ times: Int, block: Block) {
 }
 
 func profiler(_ message: String = "") -> Block {
-    let start = Date()
+    let start = AppSetup.shared.now
     print("--------- PROFILING \(message)...")
     return {
-        print("--------- PROFILING \(message): \(Date().timeIntervalSince(start))")
+        print("--------- PROFILING \(message): \(AppSetup.shared.now.timeIntervalSince(start))")
     }
 }
 

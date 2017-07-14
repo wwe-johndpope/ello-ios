@@ -116,7 +116,7 @@ class CommentSpec: QuickSpec {
                 }
 
                 it("decodes successfully") {
-                    let expectedCreatedAt = Date()
+                    let expectedCreatedAt = AppSetup.shared.now
 
                     let parentPost: Post = stub([
                         "id" : "sample-parent-post-id"

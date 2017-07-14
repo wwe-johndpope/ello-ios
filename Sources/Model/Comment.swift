@@ -102,7 +102,7 @@ final class ElloComment: JSONAble, Authorable, Groupable {
             createdAt = date
         }
         else {
-            createdAt = Date()
+            createdAt = AppSetup.shared.now
         }
 
         let comment = ElloComment(
@@ -124,7 +124,7 @@ final class ElloComment: JSONAble, Authorable, Groupable {
     class func newCommentForPost(_ post: Post, currentUser: User) -> ElloComment {
         let comment = ElloComment(
             id: UUID().uuidString,
-            createdAt: Date(),
+            createdAt: AppSetup.shared.now,
             authorId: currentUser.id,
             postId: post.id,
             content: [Regionable]()

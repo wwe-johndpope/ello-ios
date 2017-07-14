@@ -66,7 +66,7 @@ final class Relationship: JSONAble {
             createdAt = date
         }
         else {
-            createdAt = Date()
+            createdAt = AppSetup.shared.now
         }
 
         let relationship = Relationship(

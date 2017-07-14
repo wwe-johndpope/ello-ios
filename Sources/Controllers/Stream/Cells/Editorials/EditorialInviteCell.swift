@@ -39,9 +39,10 @@ class EditorialInviteCell: EditorialCell {
         textView.text = config.invite?.emails
 
         let showSent: Bool
-        if let sent = config.invite?.sent, Date().timeIntervalSince(sent) < 2 {
+        let now = AppSetup.shared.now
+        if let sent = config.invite?.sent, now.timeIntervalSince(sent) < 2 {
             showSent = true
-            let timeRemaining = 2 - Date().timeIntervalSince(sent)
+            let timeRemaining = 2 - now.timeIntervalSince(sent)
             timer = Timer.scheduledTimer(timeInterval: timeRemaining, target: self, selector: #selector(showControls), userInfo: .none, repeats: false)
         }
         else {

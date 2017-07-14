@@ -272,7 +272,7 @@ class ElloAPISpec: QuickSpec {
                 }
 
                 context("If-Modified-Since endpoints") {
-                    let date = Date()
+                    let date = AppSetup.shared.now
                     let endpoints: [ElloAPI] = [
                         .followingNewContent(createdAt: date),
                         .notificationsNewContent(createdAt: date)

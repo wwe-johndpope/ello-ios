@@ -81,7 +81,7 @@ final class Watch: JSONAble, PostActionable {
             createdAt = date
         }
         else {
-            createdAt = Date()
+            createdAt = AppSetup.shared.now
         }
 
         if let date = json["updated_at"].stringValue.toDate() {
@@ -89,7 +89,7 @@ final class Watch: JSONAble, PostActionable {
             updatedAt = date
         }
         else {
-            updatedAt = Date()
+            updatedAt = AppSetup.shared.now
         }
 
         // create Watch

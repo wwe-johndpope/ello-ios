@@ -13,7 +13,7 @@ extension Date {
     }
 
     var isInPast: Bool {
-        let now = Date()
+        let now = AppSetup.shared.now
         return self.compare(now) == ComparisonResult.orderedAscending
     }
 

@@ -10,6 +10,8 @@ class AppSetup {
     lazy var isTesting: Bool = _isTesting()
     lazy var isSimulator: Bool = _isRunningOnSimulator()
     var imageQuality: CGFloat = 0.8
+    var nowGenerator: () -> Date = { return Date() }
+    var now: Date { return nowGenerator() }
 
 }
 

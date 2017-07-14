@@ -55,7 +55,8 @@ extension RelationshipController: RelationshipResponder {
         Tracker.shared.relationshipButtonTapped(relationshipPriority.priority, userId: userId)
         let responder = self.target(forAction: #selector(RelationshipControllerResponder.shouldSubmitRelationship(_:relationshipPriority:)), withSender: self) as? RelationshipControllerResponder
         if let shouldSubmit = responder?.shouldSubmitRelationship(userId, relationshipPriority: relationshipPriority), !shouldSubmit {
-            let relationship = Relationship(id: UUID().uuidString, createdAt: Date(), ownerId: "", subjectId: userId)
+            let now = AppSetup.shared.now
+            let relationship = Relationship(id: UUID().uuidString, createdAt: now, ownerId: "", subjectId: userId)
             complete(RelationshipRequestStatusWrapper(status: .success), relationship, true)
             return
         }

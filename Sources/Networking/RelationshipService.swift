@@ -19,7 +19,7 @@ class RelationshipService: NSObject {
         let optimisticRelationship =
             Relationship(
                 id: Tmp.uniqueName(),
-                createdAt: Date(),
+                createdAt: AppSetup.shared.now,
                 ownerId: currentUserId,
                 subjectId: userId
             )
