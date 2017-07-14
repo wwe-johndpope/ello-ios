@@ -15,6 +15,8 @@ class ElloConfiguration: QuickConfiguration {
     }
 
     override class func configure(_ config: Configuration) {
+        let now = Date()
+
         config.beforeSuite {
             // make sure the promise `then` blocks are run synchronously
             DispatchQueue.default = zalgo
@@ -37,11 +39,15 @@ class ElloConfiguration: QuickConfiguration {
                 "nsfw": Badge(slug: "nsfw", name: "Nsfw", link: "Learn More", url: nil, imageURL: nil),
             ]
 
-            let now = Date()
             AppSetup.shared.nowGenerator = { return now }
         }
 
         config.beforeEach {
+            let appSetup = AppSetup()
+            appSetup.nowGenerator = { return now }
+            appSetup.cachedCategories = nil
+            AppSetup.shared = appSetup
+
             let keychain = FakeKeychain()
             keychain.username = "email"
             keychain.password = "password"

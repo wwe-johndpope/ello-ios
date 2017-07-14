@@ -6,12 +6,10 @@ import PINRemoteImage
 import PromiseKit
 
 
-private var cachedCategories: [Category]?
-
 class CategoryService {
 
     func loadCategories() -> Promise<[Category]> {
-        if let categories = cachedCategories {
+        if let categories = AppSetup.shared.cachedCategories {
             return Promise<[Category]>.resolve(categories)
         }
 
@@ -20,7 +18,7 @@ class CategoryService {
                 guard let categories = data as? [Category] else {
                     throw NSError.uncastableJSONAble()
                 }
-                cachedCategories = categories
+                AppSetup.shared.cachedCategories = categories
                 Preloader().preloadImages(categories)
                 return categories
             }
@@ -34,7 +32,7 @@ class CategoryService {
     }
 
     func loadCategory(_ categorySlug: String) -> Promise<Category> {
-        if let category = cachedCategories?.find({ $0.slug == categorySlug }) {
+        if let category = AppSetup.shared.cachedCategories?.find({ $0.slug == categorySlug }) {
             return Promise<Category>.resolve(category)
         }
 

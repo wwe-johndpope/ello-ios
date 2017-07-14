@@ -13,6 +13,7 @@ class AppSetup {
     var nowGenerator: () -> Date = { return Date() }
     var now: Date { return nowGenerator() }
 
+    var cachedCategories: [Category]?
 }
 
 private func _isRunningOnSimulator() -> Bool {
