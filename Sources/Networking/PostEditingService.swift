@@ -189,14 +189,14 @@ class PostEditingService {
         var anyError: Error?
 
         let operationQueue = OperationQueue.main
-        let (promise, fulfill, reject) = Promise<[(Int, ImageRegion)]>.pending()
+        let (promise, resolve, reject) = Promise<[(Int, ImageRegion)]>.pending()
 
         let doneOperation = BlockOperation(block: {
             if let error = anyError {
                 reject(error)
             }
             else {
-                fulfill(uploaded)
+                resolve(uploaded)
             }
         })
         var prevUploadOperation: Operation?

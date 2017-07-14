@@ -16,7 +16,7 @@ class ElloS3 {
     let data: Data
     let contentType: String
     let credentials: AmazonCredentials
-    let (promise, fulfill, reject) = Promise<Data>.pending()
+    let (promise, resolve, reject) = Promise<Data>.pending()
 
     init(credentials: AmazonCredentials, filename: String, data: Data, contentType: String) {
         self.filename = filename
@@ -54,7 +54,7 @@ class ElloS3 {
                     statusCode >= 200 && statusCode < 300
                 {
                     if let data = data {
-                        self.fulfill(data)
+                        self.resolve(data)
                     }
                     else {
                         self.reject(NSError(domain: ElloErrorDomain, code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: "failure"]))

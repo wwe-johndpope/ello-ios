@@ -58,7 +58,7 @@ struct ProfileService {
         var avatarURL: URL?
         var coverImageURL: URL?
         var error: Swift.Error?
-        let (promise, fulfill, reject) = Promise<UploadBothSuccess>.pending()
+        let (promise, resolve, reject) = Promise<UploadBothSuccess>.pending()
 
         let bothImages = after(2) {
             if let error = error {
@@ -82,7 +82,7 @@ struct ProfileService {
                         user.updateDefaultImages(avatarURL: avatarURL, coverImageURL: coverImageURL)
                         return (avatarURL, coverImageURL, user)
                     }
-                    .then(execute: fulfill)
+                    .then(execute: resolve)
                     .catch(execute: reject)
             }
         }

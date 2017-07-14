@@ -58,10 +58,10 @@ class ElloProvider {
     // MARK: - Public
 
     func request(_ target: ElloAPI) -> Promise<ElloAPIResponse> {
-        let (promise, fulfill, reject) = Promise<ElloAPIResponse>.pending()
+        let (promise, resolve, reject) = Promise<ElloAPIResponse>.pending()
         elloRequest((target,
             success: { jsonables, responseConfig in
-                fulfill((jsonables, responseConfig))
+                resolve((jsonables, responseConfig))
             },
             failure: { error, _ in
                 reject(error)

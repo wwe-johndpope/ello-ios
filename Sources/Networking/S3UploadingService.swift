@@ -18,12 +18,12 @@ class S3UploadingService {
     }
 
     func upload(_ image: UIImage) -> Promise<URL?> {
-        let (promise, fulfill, reject) = Promise<URL?>.pending()
+        let (promise, resolve, reject) = Promise<URL?>.pending()
         inBackground {
             if let data = UIImageJPEGRepresentation(image, AppSetup.shared.imageQuality) {
                 // Head back to the thread the original caller was on before heading into the service calls. I may be overthinking it.
                 nextTick {
-                    self.upload(data, contentType: "image/jpeg").then(execute: fulfill).catch(execute: reject)
+                    self.upload(data, contentType: "image/jpeg").then(execute: resolve).catch(execute: reject)
                 }
             }
             else {
