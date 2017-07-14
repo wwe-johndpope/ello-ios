@@ -68,22 +68,22 @@ class LoveSpec: QuickSpec {
                     let expectedUpdatedAt = AppSetup.shared.now
 
                     let user: User = stub([
-                        "id" : "444"
+                        "id": "444"
                     ])
 
                     let post: Post = stub([
-                        "id" : "888"
+                        "id": "888"
                     ])
 
                     let love: Love = stub([
-                        "user" : user,
-                        "post" : post,
-                        "id" : "999",
-                        "deleted" : true,
-                        "createdAt" : expectedCreatedAt,
-                        "updatedAt" : expectedUpdatedAt,
-                        "postId" : "888",
-                        "userId" : "444"
+                        "user": user,
+                        "post": post,
+                        "id": "999",
+                        "deleted": true,
+                        "createdAt": expectedCreatedAt,
+                        "updatedAt": expectedUpdatedAt,
+                        "postId": "888",
+                        "userId": "444"
                     ])
 
                     NSKeyedArchiver.archiveRootObject(love, toFile: filePath)

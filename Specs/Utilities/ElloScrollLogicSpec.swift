@@ -8,8 +8,8 @@ import Nimble
 
 
 class ElloScrollLogicSpec: QuickSpec {
-    var didShow : Bool?
-    var didHide : Bool?
+    var didShow: Bool?
+    var didHide: Bool?
 
     fileprivate func resetShowHide() {
         didShow = nil
@@ -21,7 +21,7 @@ class ElloScrollLogicSpec: QuickSpec {
             var logic: ElloScrollLogic!
             let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
             let scrollHeight = scrollView.frame.size.height * CGFloat(2)
-            let scrollStart : CGFloat = 20
+            let scrollStart: CGFloat = 20
 
             beforeEach() {
                 logic = ElloScrollLogic(

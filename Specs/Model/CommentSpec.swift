@@ -98,7 +98,6 @@ class CommentSpec: QuickSpec {
                     expect(textRegion.content) == "I am your comment's content"
                     expect(imageRegion.alt) == "sample-alt"
                     expect(imageRegion.url?.absoluteString) == "http://www.example5.com"
-                    expect(imageAsset.id) == "qwerty"
 
                     let assetXhdpi = imageAsset.xhdpi!
                     expect(assetXhdpi.url.absoluteString) == "http://www.example2.com"
@@ -118,54 +117,47 @@ class CommentSpec: QuickSpec {
                 it("decodes successfully") {
                     let expectedCreatedAt = AppSetup.shared.now
 
-                    let parentPost: Post = stub([
-                        "id" : "sample-parent-post-id"
-                    ])
-
-                    let author: User = stub([
-                        "id" : "sample-author-id"
-                    ])
+                    let parentPost: Post = stub([:])
+                    let author: User = stub([:])
 
                     let hdpi: Attachment = stub([
-                        "url" : URL(string: "http://www.example.com")!,
-                        "height" : 122,
-                        "width" : 887,
-                        "type" : "jpeg",
-                        "size" : 666987
+                        "url": URL(string: "http://www.example.com")!,
+                        "height": 122,
+                        "width": 887,
+                        "type": "jpeg",
+                        "size": 666987
                     ])
 
                     let xhdpi: Attachment = stub([
-                        "url" : URL(string: "http://www.example2.com")!,
-                        "height" : 98,
-                        "width" : 112,
-                        "type" : "png",
-                        "size" : 5673
+                        "url": URL(string: "http://www.example2.com")!,
+                        "height": 98,
+                        "width": 112,
+                        "type": "png",
+                        "size": 5673
                     ])
 
                     let asset: Asset = stub([
-                        "id" : "qwerty",
-                        "hdpi" : hdpi,
-                        "xhdpi" : xhdpi
+                        "hdpi": hdpi,
+                        "xhdpi": xhdpi
                     ])
 
                     let textRegion: TextRegion = stub([
-                        "content" : "I am your comment's content"
+                        "content": "I am your comment's content"
                     ])
 
                     let imageRegion: ImageRegion = stub([
-                        "asset" : asset,
-                        "alt" : "sample-alt",
-                        "url" : URL(string: "http://www.example5.com")!
+                        "asset": asset,
+                        "alt": "sample-alt",
+                        "url": URL(string: "http://www.example5.com")!
                     ])
 
                     let content = [textRegion, imageRegion]
 
                     let comment: ElloComment = stub([
-                        "author" : author,
-                        "id" : "362",
-                        "createdAt" : expectedCreatedAt,
-                        "parentPost" : parentPost,
-                        "content" : content
+                        "author": author,
+                        "createdAt": expectedCreatedAt,
+                        "parentPost": parentPost,
+                        "content": content
                     ])
 
                     NSKeyedArchiver.archiveRootObject(comment, toFile: filePath)
@@ -174,10 +166,10 @@ class CommentSpec: QuickSpec {
                     expect(unArchivedComment).toNot(beNil())
                     expect(unArchivedComment.version) == 1
                     // active record
-                    expect(unArchivedComment.id) == "362"
+                    expect(unArchivedComment.id) == comment.id
                     expect(unArchivedComment.createdAt) == expectedCreatedAt
                     // required
-                    expect(unArchivedComment.postId) == "sample-parent-post-id"
+                    expect(unArchivedComment.postId) == parentPost.id
                     testRegionContent(unArchivedComment.content)
                 }
             }

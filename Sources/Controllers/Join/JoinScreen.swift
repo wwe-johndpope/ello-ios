@@ -348,7 +348,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func showUsernameSuggestions(_ usernames: [String]) {
-        let usernameAttrs: [String : Any] = [
+        let usernameAttrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(12),
             NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
         ]

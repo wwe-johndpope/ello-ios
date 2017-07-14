@@ -50,7 +50,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "url" : URL(string: "http://www.example.com/image.gif")!
+                            "url": URL(string: "http://www.example.com/image.gif")!
                         ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -71,7 +71,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "url" : URL(string: "http://www.example.com/image.jpg")!
+                            "url": URL(string: "http://www.example.com/image.jpg")!
                         ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -96,26 +96,25 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/optimized.jpg")!,
-                            "type" : "image/jpg",
-                            "size" : 9999999
+                            "url": URL(string: "http://www.example.com/optimized.jpg")!,
+                            "type": "image/jpg",
+                            "size": 9999999
                         ])
 
                         let hdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/hdpi.jpg")!,
-                            "type" : "image/jpg",
-                            "size" : 445566
+                            "url": URL(string: "http://www.example.com/hdpi.jpg")!,
+                            "type": "image/jpg",
+                            "size": 445566
                         ])
 
                         let asset: Asset = stub([
-                            "id" : "qwerty",
-                            "hdpi" : hdpi,
-                            "optimized" : optimized
+                            "hdpi": hdpi,
+                            "optimized": optimized
                             ])
 
                         let imageRegion: ImageRegion = stub([
-                            "asset" : asset,
-                            "url" : URL(string: "http://www.example.com/image.jpg")!
+                            "asset": asset,
+                            "url": URL(string: "http://www.example.com/image.jpg")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -136,33 +135,32 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/optimized.gif")!,
-                            "type" : "image/gif",
-                            "size" : 9999999
+                            "url": URL(string: "http://www.example.com/optimized.gif")!,
+                            "type": "image/gif",
+                            "size": 9999999
                             ])
 
                         let hdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/hdpi.gif")!,
-                            "type" : "image/gif",
-                            "size" : 445566
+                            "url": URL(string: "http://www.example.com/hdpi.gif")!,
+                            "type": "image/gif",
+                            "size": 445566
                             ])
 
                         let video: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/video.mp4")!,
-                            "type" : "video/mp4",
-                            "size" : 9999999
+                            "url": URL(string: "http://www.example.com/video.mp4")!,
+                            "type": "video/mp4",
+                            "size": 9999999
                             ])
 
                         let asset: Asset = stub([
-                            "id" : "qwerty",
-                            "hdpi" : hdpi,
-                            "video" : video,
-                            "optimized" : optimized
+                            "hdpi": hdpi,
+                            "video": video,
+                            "optimized": optimized
                             ])
 
                         let imageRegion: ImageRegion = stub([
-                            "asset" : asset,
-                            "url" : URL(string: "http://www.example.com/image.gif")!
+                            "asset": asset,
+                            "url": URL(string: "http://www.example.com/image.gif")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -183,33 +181,32 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/optimized.gif")!,
-                            "type" : "image/gif",
-                            "size" : 999_999
+                            "url": URL(string: "http://www.example.com/optimized.gif")!,
+                            "type": "image/gif",
+                            "size": 999_999
                             ])
 
                         let hdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/hdpi.gif")!,
-                            "type" : "image/gif",
-                            "size" : 445_566
+                            "url": URL(string: "http://www.example.com/hdpi.gif")!,
+                            "type": "image/gif",
+                            "size": 445_566
                             ])
 
                         let video: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/video.mp4")!,
-                            "type" : "video/mp4",
-                            "size" : 111_111
+                            "url": URL(string: "http://www.example.com/video.mp4")!,
+                            "type": "video/mp4",
+                            "size": 111_111
                             ])
 
                         let asset: Asset = stub([
-                            "id" : "qwerty",
-                            "hdpi" : hdpi,
-                            "video" : video,
-                            "optimized" : optimized
+                            "hdpi": hdpi,
+                            "video": video,
+                            "optimized": optimized
                             ])
 
                         let imageRegion: ImageRegion = stub([
-                            "asset" : asset,
-                            "url" : URL(string: "http://www.example.com/image.gif")!
+                            "asset": asset,
+                            "url": URL(string: "http://www.example.com/image.gif")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -230,26 +227,25 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/optimized.gif")!,
-                            "type" : "image/gif",
-                            "size" : 9999999
+                            "url": URL(string: "http://www.example.com/optimized.gif")!,
+                            "type": "image/gif",
+                            "size": 9999999
                             ])
 
                         let hdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/hdpi.gif")!,
-                            "type" : "image/gif",
-                            "size" : 445566
+                            "url": URL(string: "http://www.example.com/hdpi.gif")!,
+                            "type": "image/gif",
+                            "size": 445566
                             ])
 
                         let asset: Asset = stub([
-                            "id" : "qwerty",
-                            "hdpi" : hdpi,
-                            "optimized" : optimized
+                            "hdpi": hdpi,
+                            "optimized": optimized
                             ])
 
                         let imageRegion: ImageRegion = stub([
-                            "asset" : asset,
-                            "url" : URL(string: "http://www.example.com/image.gif")!
+                            "asset": asset,
+                            "url": URL(string: "http://www.example.com/image.gif")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -270,26 +266,25 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let optimized: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/optimized.gif")!,
-                            "type" : "image/gif",
-                            "size" : 445566
+                            "url": URL(string: "http://www.example.com/optimized.gif")!,
+                            "type": "image/gif",
+                            "size": 445566
                             ])
 
                         let hdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example.com/hdpi.gif")!,
-                            "type" : "image/gif",
-                            "size" : 445566
+                            "url": URL(string: "http://www.example.com/hdpi.gif")!,
+                            "type": "image/gif",
+                            "size": 445566
                             ])
 
                         let asset: Asset = stub([
-                            "id" : "qwerty",
-                            "hdpi" : hdpi,
-                            "optimized" : optimized
+                            "hdpi": hdpi,
+                            "optimized": optimized
                             ])
 
                         let imageRegion: ImageRegion = stub([
-                            "asset" : asset,
-                            "url" : URL(string: "http://www.example.com/image.gif")!
+                            "asset": asset,
+                            "url": URL(string: "http://www.example.com/image.gif")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -324,7 +319,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "buyButtonURL" : URL(string: "https://amazon.com")!
+                            "buyButtonURL": URL(string: "https://amazon.com")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -340,7 +335,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "buyButtonURL" : URL(string: "https://amazon.com")!
+                            "buyButtonURL": URL(string: "https://amazon.com")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()
@@ -357,7 +352,7 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         let post: Post = stub([:])
 
                         let imageRegion: ImageRegion = stub([
-                            "buyButtonURL" : URL(string: "https://amazon.com")!
+                            "buyButtonURL": URL(string: "https://amazon.com")!
                             ])
 
                         let cell: StreamImageCell = StreamImageCell.loadFromNib()

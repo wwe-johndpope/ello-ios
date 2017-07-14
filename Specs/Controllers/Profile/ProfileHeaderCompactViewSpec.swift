@@ -36,16 +36,16 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
             for (desc, bioHeight, locationHeight, linksHeight, hasTotal, hasBadges) in expectations {
                 it("\(desc) profile header renders correctly") {
                     let user: User = stub([
-                        "name" : "bob",
-                        "username" : "bill",
-                        "postsCount" : 20,
-                        "followingCount" : 123,
-                        "followersCount" : 444,
-                        "lovesCount" : 89,
-                        "formattedShortBio" : "This is a bio",
-                        "location" : locationHeight > 0 ? "Denver" : "",
-                        "totalViewsCount" : hasTotal ? 1 : 0,
-                        "externalLinksList" : linksHeight > 0 ? [["url" : "http://google.com", "text" : "google"]] : [],
+                        "name": "bob",
+                        "username": "bill",
+                        "postsCount": 20,
+                        "followingCount": 123,
+                        "followersCount": 444,
+                        "lovesCount": 89,
+                        "formattedShortBio": "This is a bio",
+                        "location": locationHeight > 0 ? "Denver": "",
+                        "totalViewsCount": hasTotal ? 1 : 0,
+                        "externalLinksList": linksHeight > 0 ? [["url": "http://google.com", "text": "google"]] : [],
                     ])
 
                     if hasBadges {

@@ -81,8 +81,8 @@ class DeepLinkingSpec: QuickSpec {
 
                 it("uses existing CategoryViewController when deep linking to a new category") {
                     let existing = CategoryViewController(slug: "art")
-                    let art = Category.stub(["slug" : "art"])
-                    let design = Category.stub(["slug" : "design"])
+                    let art = Category.stub(["slug": "art"])
+                    let design = Category.stub(["slug": "design"])
                     existing.allCategories = [art, design]
                     fakeNavController.viewControllers = [existing]
 

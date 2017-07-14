@@ -161,14 +161,14 @@ class NotificationSpec: QuickSpec {
                     it("decodes successfully") {
                         let expectedCreatedAt = AppSetup.shared.now
 
-                        let author: User = stub(["id" : "author-id"])
+                        let author: User = stub(["id": "author-id"])
 
                         let activity: Activity = stub([
-                            "subject" : author,
-                            "createdAt" : expectedCreatedAt,
-                            "id" : "test-notication-id",
-                            "kind" : "noise_post",
-                            "subjectType" : "Post"
+                            "subject": author,
+                            "createdAt": expectedCreatedAt,
+                            "id": "test-notication-id",
+                            "kind": "noise_post",
+                            "subjectType": "Post"
                             ])
                         let notification: Ello.Notification = stub(["activity": activity])
 

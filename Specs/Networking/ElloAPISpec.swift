@@ -307,7 +307,7 @@ class ElloAPISpec: QuickSpec {
                         .discover(type: .trending),
                         .categoryPosts(slug: ""),
                         .emojiAutoComplete(terms: ""),
-                        .findFriends(contacts: ["" : [""]]),
+                        .findFriends(contacts: ["": [""]]),
                         .flagComment(postId: "", commentId: "", kind: ""),
                         .flagPost(postId: "", kind: ""),
                         .following,
@@ -372,12 +372,12 @@ class ElloAPISpec: QuickSpec {
 
                 it("createComment") {
                     let content = ["text": "my sweet comment content"]
-                    expect(ElloAPI.createComment(parentPostId: "id", body: content as [String : Any]).parameters as? [String: String]) == content
+                    expect(ElloAPI.createComment(parentPostId: "id", body: content as [String: Any]).parameters as? [String: String]) == content
                 }
 
                 it("createPost") {
                     let content = ["text": "my sweet post content"]
-                    expect(ElloAPI.createPost(body: content as [String : Any]).parameters as? [String: String]) == content
+                    expect(ElloAPI.createPost(body: content as [String: Any]).parameters as? [String: String]) == content
                 }
 
                 it("discover") {

@@ -12,11 +12,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 it("configures a stream footer cell") {
                     GroupDefaults["FollowingIsGridView"] = false
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -36,11 +35,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("configures a thin stream footer cell") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     cell.frame = CGRect(origin: .zero, size: CGSize(width: 150, height: 60))
@@ -59,11 +57,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("configures a wide stream footer cell") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     cell.frame = CGRect(origin: .zero, size: CGSize(width: 180, height: 60))
@@ -85,16 +82,15 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("configures a stream footer cell") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 22
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 22
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
 
-                    StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: "768"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                    StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: post.id), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                     expect(cell.commentsControl.isSelected).to(beTrue())
                     expect(cell.views) == "9"
@@ -111,11 +107,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("usually enabled and visible") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 22
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 22
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -126,14 +121,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it") {
-                    let author: User = stub(["id" : "1", "hasCommentingEnabled" : true])
+                    let author: User = stub(["hasCommentingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -144,14 +138,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it in grid view") {
-                    let author: User = stub(["id" : "1", "hasCommentingEnabled" : true])
+                    let author: User = stub(["hasCommentingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -162,14 +155,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it") {
-                    let author: User = stub(["id" : "1", "hasCommentingEnabled" : false])
+                    let author: User = stub(["hasCommentingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -180,14 +172,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
-                    let author: User = stub(["id" : "1", "hasCommentingEnabled" : false])
+                    let author: User = stub(["hasCommentingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -202,11 +193,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("usually enabled and visible") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 22
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 22
                     ])
 
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
@@ -219,14 +209,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it") {
-                    let author: User = stub(["id" : "1", "hasSharingEnabled" : true])
+                    let author: User = stub(["hasSharingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -237,14 +226,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("never shown in grid view") {
-                    let author: User = stub(["id" : "1", "hasSharingEnabled" : true])
+                    let author: User = stub(["hasSharingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -256,14 +244,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it") {
-                    let author: User = stub(["id" : "1", "hasSharingEnabled" : false])
+                    let author: User = stub(["hasSharingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -274,14 +261,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
-                    let author: User = stub(["id" : "1", "hasSharingEnabled" : false])
+                    let author: User = stub(["hasSharingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -297,11 +283,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 it("usually enabled and visible") {
                     let user: User = stub([:])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -314,11 +299,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("enabled if currentUser, post.author and post.repostAuthor are all nil") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 55
                         ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -330,14 +314,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : true])
+                    let author: User = stub(["hasRepostingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -348,14 +331,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it, in grid view") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : true])
+                    let author: User = stub(["hasRepostingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -366,16 +348,15 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("disabled if current user already reposted") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : true])
-                    let currentUser: User = stub(["id" : "2"])
+                    let author: User = stub(["hasRepostingEnabled": true])
+                    let currentUser: User = stub([:])
                     let post: Post = stub([
-                        "id" : "768",
                         "reposted": true,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -387,14 +368,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : false])
+                    let author: User = stub(["hasRepostingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -405,14 +385,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it, in grid view") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : false])
+                    let author: User = stub(["hasRepostingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -423,14 +402,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("disabled if author is current user") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : true])
+                    let author: User = stub(["hasRepostingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -442,16 +420,15 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("disabled if author is repost author") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : true])
-                    let repostAuthor: User = stub(["id" : "2", "hasRepostingEnabled" : true])
+                    let author: User = stub(["hasRepostingEnabled": true])
+                    let repostAuthor: User = stub(["hasRepostingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "repostAuthor" : repostAuthor,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "repostAuthor": repostAuthor,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -463,14 +440,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("disabled if author is current user in grid view") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : true])
+                    let author: User = stub(["hasRepostingEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -482,14 +458,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author is current user, and reposting isn't allowed") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : false])
+                    let author: User = stub(["hasRepostingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -500,14 +475,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author is current user, and reposting isn't allowed in grid view") {
-                    let author: User = stub(["id" : "1", "hasRepostingEnabled" : false])
+                    let author: User = stub(["hasRepostingEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -522,11 +496,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("usually enabled and visible") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -538,14 +511,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : true])
+                    let author: User = stub(["hasLovesEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -556,14 +528,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("shown if author allows it in grid view") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : true])
+                    let author: User = stub(["hasLovesEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -574,14 +545,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : false])
+                    let author: User = stub(["hasLovesEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -592,14 +562,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : false])
+                    let author: User = stub(["hasLovesEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -610,14 +579,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("enabled if author is current user") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : true])
+                    let author: User = stub(["hasLovesEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -629,14 +597,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("enabled if author is current user in grid view") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : true])
+                    let author: User = stub(["hasLovesEnabled": true])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -648,14 +615,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author is current user, and loving isn't allowed") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : false])
+                    let author: User = stub(["hasLovesEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -666,14 +632,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("hidden if author is current user, and loving isn't allowed in grid view") {
-                    let author: User = stub(["id" : "1", "hasLovesEnabled" : false])
+                    let author: User = stub(["hasLovesEnabled": false])
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "author" : author,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "author": author,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -688,11 +653,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("configures a stream footer cell") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 55
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -718,11 +682,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     it("configures a stream footer cell") {
                         let post: Post = stub([
-                            "id" : "768",
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 55
+                            "viewsCount": 9,
+                            "repostsCount": 4,
+                            "commentsCount": 6,
+                            "lovesCount": 55
                         ])
                         let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                         let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
@@ -747,11 +710,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     it("configures a stream footer cell") {
                         let post: Post = stub([
-                            "id" : "768",
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 55
+                            "viewsCount": 9,
+                            "repostsCount": 4,
+                            "commentsCount": 6,
+                            "lovesCount": 55
                         ])
                         let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                         let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)

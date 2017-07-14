@@ -27,9 +27,9 @@ class NewContentServiceSpec: QuickSpec {
                 let apr_01_2015 = Date(timeIntervalSince1970: 1427846400)
                 let streamKind = StreamKind.following
 
-                let post: Post = stub(["id" : "1", "createdAt" : jan_01_2015])
-                let post2: Post = stub(["id" : "2", "createdAt" : feb_01_2015])
-                let post3: Post = stub(["id" : "3", "createdAt" : mar_01_2015])
+                let post: Post = stub(["createdAt": jan_01_2015])
+                let post2: Post = stub(["createdAt": feb_01_2015])
+                let post3: Post = stub(["createdAt": mar_01_2015])
 
                 let jsonables = [post, post2, post3]
 
@@ -70,9 +70,9 @@ class NewContentServiceSpec: QuickSpec {
                 context("jsonables with no created at") {
 
                     it("sets an old date ignoring the jsonables") {
-                        let user: User = stub(["id" : "1"])
-                        let user2: User = stub(["id" : "2"])
-                        let user3: User = stub(["id" : "3"])
+                        let user: User = stub([:])
+                        let user2: User = stub([:])
+                        let user3: User = stub([:])
                         let jsonables = [user, user2, user3]
                         let old = Date(timeIntervalSince1970: 0)
 

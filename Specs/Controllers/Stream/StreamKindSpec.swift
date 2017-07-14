@@ -142,7 +142,7 @@ class StreamKindSpec: QuickSpec {
                     var postJsonables: [JSONAble] = []
 
                     beforeEach {
-                        let post1 = Post.stub(["id": "post1", "isAdultContent" : true])
+                        let post1 = Post.stub(["id": "post1", "isAdultContent": true])
                         let post2 = Post.stub(["id": "post2"])
                         let post3 = Post.stub(["id": "post3"])
 

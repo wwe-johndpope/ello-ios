@@ -9,15 +9,14 @@ class StreamEmbedCellPresenterSpec: QuickSpec {
             context("is a repost") {
                 it("configures a stream footer cell") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14
                     ])
 
                     let embedRegion: EmbedRegion = stub([
-                        "isRepost" : true
+                        "isRepost": true
                     ])
 
                     let cell: StreamEmbedCell = StreamEmbedCell.loadFromNib()
@@ -33,15 +32,14 @@ class StreamEmbedCellPresenterSpec: QuickSpec {
             context("is not a repost") {
                 it("configures a stream footer cell") {
                     let post: Post = stub([
-                        "id" : "768",
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14
                     ])
 
                     let embedRegion: EmbedRegion = stub([
-                        "url" : URL(string: "http://www.example.com/image.jpg")!
+                        "url": URL(string: "http://www.example.com/image.jpg")!
                     ])
 
                     let cell: StreamEmbedCell = StreamEmbedCell.loadFromNib()

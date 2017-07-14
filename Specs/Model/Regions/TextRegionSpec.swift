@@ -52,7 +52,7 @@ class TextRegionSpec: QuickSpec {
 
                 it("decodes successfully") {
                     let region: TextRegion = stub([
-                        "content" : "test-content"
+                        "content": "test-content"
                     ])
 
                     NSKeyedArchiver.archiveRootObject(region, toFile: filePath)

@@ -35,92 +35,83 @@ class PreloaderSpec: QuickSpec {
             subject.manager = fakeManager
 
             mdpi = Attachment.stub([
-                "url" : URL(string: "http://www.example.com/mdpi.jpg")!,
-                "height" : 2, "width" : 5, "type" : "jpeg", "size" : 45644
+                "url": URL(string: "http://www.example.com/mdpi.jpg")!,
+                "height": 2, "width": 5, "type": "jpeg", "size": 45644
             ])
 
             hdpi = Attachment.stub([
-                "url" : URL(string: "http://www.example.com/hdpi.jpg")!,
-                "height" : 2, "width" : 5, "type" : "jpeg", "size" : 45644
+                "url": URL(string: "http://www.example.com/hdpi.jpg")!,
+                "height": 2, "width": 5, "type": "jpeg", "size": 45644
             ])
 
             regular = Attachment.stub([
-                "url" : URL(string: "http://www.example.com/regular.jpg")!,
-                "height" : 60, "width" : 60, "type" : "jpeg", "size" : 45644
+                "url": URL(string: "http://www.example.com/regular.jpg")!,
+                "height": 60, "width": 60, "type": "jpeg", "size": 45644
             ])
 
             asset = Asset.stub([
-                "id" : "qwerty", "hdpi" : hdpi, "mdpi" : mdpi
+                "hdpi": hdpi, "mdpi": mdpi
             ])
 
             imageRegion = ImageRegion.stub([
-                "asset" : asset,
-                "alt" : "some-altness",
-                "url" : URL(string: "http://www.example.com/url.jpg")!
+                "asset": asset,
+                "alt": "some-altness",
+                "url": URL(string: "http://www.example.com/url.jpg")!
             ])
 
             avatarAsset1 = Asset.stub([
-                "id" : "1234", "regular" : regular
+                "regular": regular
             ])
 
             avatarAsset2 = Asset.stub([
-                "id" : "431", "regular" : regular
+                "regular": regular
             ])
 
             avatarAsset3 = Asset.stub([
-                "id" : "0000", "regular" : regular
+                "regular": regular
             ])
 
             user1 = User.stub([
-                "id" : "fake-user-1",
-                "avatar" : avatarAsset1
+                "avatar": avatarAsset1
             ])
 
             user2 = User.stub([
-                "id" : "fake-user-2",
-                "avatar" : avatarAsset2
+                "avatar": avatarAsset2
             ])
 
             user3 = User.stub([
-                "id" : "fake-user-3",
-                "avatar" : avatarAsset3
+                "avatar": avatarAsset3
             ])
 
             oneImagePost = Post.stub([
-                "id" : "768",
-                "content" : [imageRegion],
-                "author" : user1
+                "content": [imageRegion],
+                "author": user1
             ])
 
             imagePostWithSummary = Post.stub([
-                "id" : "9159",
-                "content" : [imageRegion, imageRegion],
-                "summary" : [imageRegion],
-                "author" : user1
+                "content": [imageRegion, imageRegion],
+                "summary": [imageRegion],
+                "author": user1
             ])
 
             twoImagePost = Post.stub([
-                "id" : "888",
-                "content" : [imageRegion, imageRegion],
-                "author" : user2
+                "content": [imageRegion, imageRegion],
+                "author": user2
             ])
 
             threeImagePost = Post.stub([
-                "id" : "999",
-                "content" : [imageRegion, imageRegion, imageRegion],
-                "author" : user3
+                "content": [imageRegion, imageRegion, imageRegion],
+                "author": user3
             ])
 
             oneImageComment = ElloComment.stub([
-                "id" : "9",
-                "content" : [imageRegion],
-                "author" : user1
+                "content": [imageRegion],
+                "author": user1
             ])
 
             threeImageComment = ElloComment.stub([
-                "id" : "11",
-                "content" : [imageRegion, imageRegion, imageRegion],
-                "author" : user3
+                "content": [imageRegion, imageRegion, imageRegion],
+                "author": user3
             ])
         }
 
@@ -129,13 +120,11 @@ class PreloaderSpec: QuickSpec {
             it("preloads activity image assets and avatars") {
 
                 let activityOne: Activity = stub([
-                    "subject" : oneImagePost,
-                    "id" : "123",
+                    "subject": oneImagePost,
                 ])
 
                 let activityTwo: Activity = stub([
-                    "subject" : twoImagePost,
-                    "id" : "345",
+                    "subject": twoImagePost,
                 ])
 
                 subject.preloadImages([activityOne, activityTwo])
@@ -157,9 +146,8 @@ class PreloaderSpec: QuickSpec {
 
             it("preloads user's posts image assets and avatars") {
                 let user: User = stub([
-                    "id" : "fake-id",
-                    "avatar" : avatarAsset1,
-                    "posts" : [twoImagePost, threeImagePost]
+                    "avatar": avatarAsset1,
+                    "posts": [twoImagePost, threeImagePost]
                 ])
 
                 subject.preloadImages([user])
@@ -184,8 +172,7 @@ class PreloaderSpec: QuickSpec {
 
             it("loads regular for avatars") {
                 let user: User = stub([
-                    "id" : "fake-regular-id",
-                    "avatar" : avatarAsset1,
+                    "avatar": avatarAsset1,
                 ])
 
                 subject.preloadImages([user])

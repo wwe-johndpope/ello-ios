@@ -281,7 +281,7 @@ final class Profile: JSONAble {
             subscribeToOnboardingDrip: json["subscribe_to_onboarding_drip"].boolValue,
             notifyOfAnnouncementsViaPush: json["notify_of_announcements_via_push"].boolValue,
             notifyOfCommentsViaPush: json["notify_of_comments_via_push"].boolValue,
-            notifyOfLovesViaPush : json["notify_of_loves_via_push"].boolValue,
+            notifyOfLovesViaPush: json["notify_of_loves_via_push"].boolValue,
             notifyOfMentionsViaPush: json["notify_of_mentions_via_push"].boolValue,
             notifyOfRepostsViaPush: json["notify_of_reposts_via_push"].boolValue,
             notifyOfNewFollowersViaPush: json["notify_of_new_followers_via_push"].boolValue,

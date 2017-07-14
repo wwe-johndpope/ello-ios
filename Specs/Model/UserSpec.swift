@@ -230,27 +230,27 @@ class UserSpec: QuickSpec {
                 context("decoding") {
 
                     it("decodes successfully") {
-                        let post: Post = stub(["id" : "sample-post-id"])
+                        let post: Post = stub(["id": "sample-post-id"])
                         let attachment: Attachment = stub(["url": URL(string: "http://www.example.com")!, "height": 0, "width": 0, "type": "png", "size": 0 ])
-                        let asset: Asset = stub(["regular" : attachment])
+                        let asset: Asset = stub(["regular": attachment])
                         let coverAttachment: Attachment = stub(["url": URL(string: "http://www.example2.com")!, "height": 0, "width": 0, "type": "png", "size": 0 ])
-                        let coverAsset: Asset = stub(["hdpi" : coverAttachment])
+                        let coverAsset: Asset = stub(["hdpi": coverAttachment])
 
                         let user: User = stub([
-                            "avatar" : asset,
-                            "coverImage" : coverAsset,
-                            "experimentalFeatures" : true,
-                            "followersCount" : "6",
-                            "followingCount" : 8,
-                            "href" : "sample-href",
-                            "name" : "sample-name",
-                            "posts" : [post],
-                            "postsCount" : 9,
-                            "relationshipPriority" : "self",
-                            "id" : "sample-userId",
-                            "username" : "sample-username",
+                            "avatar": asset,
+                            "coverImage": coverAsset,
+                            "experimentalFeatures": true,
+                            "followersCount": "6",
+                            "followingCount": 8,
+                            "href": "sample-href",
+                            "name": "sample-name",
+                            "posts": [post],
+                            "postsCount": 9,
+                            "relationshipPriority": "self",
+                            "id": "sample-userId",
+                            "username": "sample-username",
                             "profile": Profile.stub(["email": "sample@email.com"]) ,
-                            "formattedShortBio" : "sample-short-bio",
+                            "formattedShortBio": "sample-short-bio",
                             "externalLinks": "sample-external-links"
                         ])
 

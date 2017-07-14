@@ -5,7 +5,7 @@
 @testable import Ello
 
 
-func stub<T: Stubbable>(_ values: [String : Any]) -> T {
+func stub<T: Stubbable>(_ values: [String: Any]) -> T {
     return T.stub(values)
 }
 

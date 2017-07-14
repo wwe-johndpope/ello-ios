@@ -30,7 +30,7 @@ class TwoLineButton: UIButton {
 
     // MARK: Private
 
-    fileprivate func attributes(_ color: UIColor, font: UIFont, underline: Bool = false) -> [String : Any] {
+    fileprivate func attributes(_ color: UIColor, font: UIFont, underline: Bool = false) -> [String: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
         paragraphStyle.alignment = .left

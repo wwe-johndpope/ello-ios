@@ -7,7 +7,7 @@ import Quick
 import Nimble
 
 
-class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
+class StreamNotificationCellSizeCalculatorSpec: QuickSpec {
     class MockUIWebView: UIWebView {
         var mockHeight: CGFloat = 50
 

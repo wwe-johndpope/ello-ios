@@ -164,7 +164,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.removeObserver(self, forKeyPath: "contentSize", context: nil)
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         let sup = { super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context) }
         guard let keyPath = keyPath, let change = change else {
             sup()
