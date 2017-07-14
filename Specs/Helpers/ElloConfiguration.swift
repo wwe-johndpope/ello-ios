@@ -37,12 +37,13 @@ class ElloConfiguration: QuickConfiguration {
                 "nsfw": Badge(slug: "nsfw", name: "Nsfw", link: "Learn More", url: nil, imageURL: nil),
             ]
         }
+
         config.beforeEach {
             let keychain = FakeKeychain()
             keychain.username = "email"
             keychain.password = "password"
             keychain.authToken = "abcde"
-            keychain.authTokenExpires = Date().addingTimeInterval(3600)
+            keychain.authTokenExpires = AppSetup.shared.now.addingTimeInterval(3600)
             keychain.authTokenType = "grant"
             keychain.refreshAuthToken = "abcde"
             keychain.isPasswordBased = true

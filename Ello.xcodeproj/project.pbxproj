@@ -413,7 +413,7 @@
 		12D14C711A43762400C6F8E8 /* ElloNetworkErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C6D1A43762400C6F8E8 /* ElloNetworkErrorSpec.swift */; };
 		12D14C721A43762400C6F8E8 /* PostSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C6E1A43762400C6F8E8 /* PostSpec.swift */; };
 		12D14C731A43762400C6F8E8 /* UserSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C6F1A43762400C6F8E8 /* UserSpec.swift */; };
-		12D14C751A43762A00C6F8E8 /* ElloSpecHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C741A43762A00C6F8E8 /* ElloSpecHelper.swift */; };
+		12D14C751A43762A00C6F8E8 /* ElloConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C741A43762A00C6F8E8 /* ElloConfiguration.swift */; };
 		12D14C7D1A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */; };
 		12D14C7E1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C7A1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift */; };
 		12D14C901A43769800C6F8E8 /* LoginViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C8F1A43769800C6F8E8 /* LoginViewControllerSpec.swift */; };
@@ -1462,7 +1462,7 @@
 		12D14C6D1A43762400C6F8E8 /* ElloNetworkErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNetworkErrorSpec.swift; sourceTree = "<group>"; };
 		12D14C6E1A43762400C6F8E8 /* PostSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PostSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12D14C6F1A43762400C6F8E8 /* UserSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSpec.swift; sourceTree = "<group>"; };
-		12D14C741A43762A00C6F8E8 /* ElloSpecHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloSpecHelper.swift; sourceTree = "<group>"; };
+		12D14C741A43762A00C6F8E8 /* ElloConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloConfiguration.swift; sourceTree = "<group>"; };
 		12D14C791A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ElloTabBarControllerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12D14C7A1A43763B00C6F8E8 /* NotificationsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerSpec.swift; sourceTree = "<group>"; };
 		12D14C8F1A43769800C6F8E8 /* LoginViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewControllerSpec.swift; sourceTree = "<group>"; };
@@ -2781,7 +2781,7 @@
 		12D14C5C1A4375B100C6F8E8 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				12D14C741A43762A00C6F8E8 /* ElloSpecHelper.swift */,
+				12D14C741A43762A00C6F8E8 /* ElloConfiguration.swift */,
 				1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */,
 				12687A151BBED25A0055D0BA /* SpecsTrackingAgent.swift */,
 				1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */,
@@ -4986,7 +4986,7 @@
 				1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */,
 				1DB17B981AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift in Sources */,
 				12A1D82B1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift in Sources */,
-				12D14C751A43762A00C6F8E8 /* ElloSpecHelper.swift in Sources */,
+				12D14C751A43762A00C6F8E8 /* ElloConfiguration.swift in Sources */,
 				766CAEF21AAA5E2D009E9266 /* Stubs.swift in Sources */,
 				12D14C901A43769800C6F8E8 /* LoginViewControllerSpec.swift in Sources */,
 				766375E31AA911530096FA51 /* UserListViewControllerSpec.swift in Sources */,
