@@ -45,8 +45,8 @@ class OnboardingScreen: EmptyScreen {
     }
 
     override func setText() {
-        promptButton.setTitle(InterfaceString.Onboard.CreateProfile, for: .normal)
-        nextButton.setTitle(InterfaceString.Onboard.CreateProfile, for: .normal)
+        promptButton.setTitle("", for: .normal)
+        nextButton.setTitle("", for: .normal)
         abortButton.setTitle(InterfaceString.Onboard.ImDone, for: .normal)
     }
 
