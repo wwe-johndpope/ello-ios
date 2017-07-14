@@ -26,6 +26,13 @@ class CategoryService {
             }
     }
 
+    func loadCreatorCategories() -> Promise<[Category]> {
+        return loadCategories()
+            .then { categories -> [Category] in
+                return categories.filter { $0.isCreatorType }
+            }
+    }
+
     func loadCategory(_ categorySlug: String) -> Promise<Category> {
         if let category = cachedCategories?.find({ $0.slug == categorySlug }) {
             return Promise<Category>.resolve(category)

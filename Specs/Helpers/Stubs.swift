@@ -608,6 +608,7 @@ extension Ello.Category: Stubbable {
             slug: (values["slug"] as? String) ?? "art",
             order: (values["order"] as? Int) ?? 0,
             allowInOnboarding: (values["allowInOnboarding"] as? Bool) ?? true,
+            isCreatorType: (values["isCreatorType"] as? Bool) ?? true,
             usesPagePromo: (values["usesPagePromo"] as? Bool) ?? false,
             level: level,
             tileImage: tileImage

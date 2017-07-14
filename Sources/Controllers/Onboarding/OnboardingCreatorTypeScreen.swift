@@ -15,6 +15,11 @@ class OnboardingCreatorTypeScreen: Screen {
         static let buttonHeight: CGFloat = 50
     }
     weak var delegate: OnboardingCreatorTypeDelegate?
+    var creatorCategories: [String] = [] {
+        didSet {
+            updateCreatorCategories()
+        }
+    }
 
     fileprivate let scrollableContainer = UIScrollView()
     fileprivate let scrollableWidth = UIView()
@@ -108,11 +113,10 @@ class OnboardingCreatorTypeScreen: Screen {
             make.height.equalTo(Size.buttonHeight)
         }
 
-        layoutCreatorSpinner()
-        layoutCreatorCategories(["Woolen Earplugs", "Sawdust", "Boogers"])
+        addCreatorCategoriesSpinner()
     }
 
-    fileprivate func layoutCreatorSpinner() {
+    fileprivate func addCreatorCategoriesSpinner() {
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         spinner.startAnimating()
         creatorButtonsContainer.addSubview(spinner)
@@ -123,7 +127,7 @@ class OnboardingCreatorTypeScreen: Screen {
         creatorButtons = [spinner]
     }
 
-    fileprivate func layoutCreatorCategories(_ creatorCategories: [String]) {
+    fileprivate func updateCreatorCategories() {
         for view in creatorButtons {
             view.removeFromSuperview()
         }

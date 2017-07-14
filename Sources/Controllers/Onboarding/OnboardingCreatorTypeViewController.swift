@@ -27,8 +27,9 @@ class OnboardingCreatorTypeViewController: UIViewController, HasAppController, C
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        CategoryService().loadCategories()
+        CategoryService().loadCreatorCategories()
             .thenFinally { categories in
+                self.screen.creatorCategories = categories.map { $0.name }
             }
             .ignoreErrors()
     }
