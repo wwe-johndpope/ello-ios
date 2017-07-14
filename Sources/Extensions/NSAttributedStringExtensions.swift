@@ -37,10 +37,13 @@ extension NSAttributedString {
         self.init(string, color: style.textColor, font: style.font, lineBreakMode: lineBreakMode)
     }
 
-    convenience init(button string: String, style: StyledButton.Style, state: UIControlState = .normal) {
+    convenience init(button string: String, style: StyledButton.Style, state: UIControlState = .normal, selected: Bool = false) {
         let stateColor: UIColor?
         if state == .disabled {
             stateColor = style.disabledTitleColor
+        }
+        else if state == .highlighted && selected {
+            stateColor = style.unselectHighlightedTitleColor ?? style.highlightedTitleColor
         }
         else if state == .highlighted {
             stateColor = style.highlightedTitleColor

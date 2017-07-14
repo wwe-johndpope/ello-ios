@@ -121,10 +121,15 @@ class OnboardingViewController: BaseElloViewController {
 private extension OnboardingViewController {
 
     func setupOnboardingControllers() {
-        let categoriesController = OnboardingInterestsViewController()
-        categoriesController.onboardingViewController = self
-        categoriesController.currentUser = currentUser
-        addOnboardingViewController(categoriesController)
+        let creatorTypeController = OnboardingCreatorTypeViewController()
+        creatorTypeController.onboardingViewController = self
+        creatorTypeController.currentUser = currentUser
+        addOnboardingViewController(creatorTypeController)
+
+        let interestsController = OnboardingInterestsViewController()
+        interestsController.onboardingViewController = self
+        interestsController.currentUser = currentUser
+        addOnboardingViewController(interestsController)
 
         let createProfileController = OnboardingProfileViewController()
         createProfileController.onboardingViewController = self

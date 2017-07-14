@@ -817,6 +817,9 @@
 		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309FC1B03F29300EAD920 /* communities.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC309FB1B03F29300EAD920 /* communities.json */; };
 		1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */; };
+		1DC78A1E1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */; };
+		1DC78A1F1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */; };
+		1DC78A201F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */; };
 		1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */; };
@@ -1857,6 +1860,9 @@
 		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309FB1B03F29300EAD920 /* communities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = communities.json; sourceTree = "<group>"; };
 		1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetupSpec.swift; sourceTree = "<group>"; };
+		1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeProtocols.swift; sourceTree = "<group>"; };
+		1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeScreen.swift; sourceTree = "<group>"; };
+		1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeViewController.swift; sourceTree = "<group>"; };
 		1DC91F741CF375F600336012 /* AutoCompleteResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResult.swift; sourceTree = "<group>"; };
 		1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedString.swift; sourceTree = "<group>"; };
 		1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentials.swift; sourceTree = "<group>"; };
@@ -3572,6 +3578,9 @@
 		1D7426371B02973200C16322 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */,
+				1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */,
+				1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */,
 				1D7152E01D75F2C1005998FE /* OnboardingData.swift */,
 				1D7152DC1D74D950005998FE /* OnboardingInterestsViewController.swift */,
 				1DB8C6A61D7A132E007E1447 /* OnboardingInviteViewController.swift */,
@@ -5346,6 +5355,7 @@
 				1207C9841C73FEE000939ADB /* MappingType.swift in Sources */,
 				1DBFD9F61DFB50F10058843D /* NotificationService.swift in Sources */,
 				122C662D1B42403D0035F4CD /* AutoCompleteViewController.swift in Sources */,
+				1DC78A1F1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift in Sources */,
 				122B18FF1A867C7D00247A05 /* StreamHeaderCell.swift in Sources */,
 				1207C9821C73FEE000939ADB /* LovesService.swift in Sources */,
 				1207C9721C73FEE000939ADB /* AuthToken.swift in Sources */,
@@ -5423,6 +5433,7 @@
 				1D7152B41D6E4FCE005998FE /* ValidationState.swift in Sources */,
 				1D2F65BB1D1AE5790099D036 /* UIEdgeInsetsExtensions.swift in Sources */,
 				12B291381DDF5E9F0056C52E /* CategoryCardView.swift in Sources */,
+				1DC78A1E1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift in Sources */,
 				1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */,
 				1D59EF8E1D64BB3F0029C106 /* HireScreen.swift in Sources */,
 				1DB8C6AF1D7A26BE007E1447 /* SearchStreamCellPresenter.swift in Sources */,
@@ -5450,6 +5461,7 @@
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
 				12D43A491AC865540039F54F /* StreamToggleCell.swift in Sources */,
 				1D59EF921D6624DC0029C106 /* HireService.swift in Sources */,
+				1DC78A201F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift in Sources */,
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,
 				12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
