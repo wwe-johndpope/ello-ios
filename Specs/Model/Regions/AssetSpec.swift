@@ -88,9 +88,27 @@ class AssetSpec: QuickSpec {
 
             context("gifs") {
 
-                it("returns 'true' for 'isGif'") {
+                it("returns 'true' for 'isGif' - optimized image - content type") {
                     let attachment: Attachment = stub(["type": "image/gif"])
                     let asset: Asset = stub(["optimized": attachment])
+                    expect(asset.isGif) == true
+                }
+
+                it("returns 'true' for 'isGif' - optimized image - url") {
+                    let attachment: Attachment = stub(["url": "http://image.com/image.gif"])
+                    let asset: Asset = stub(["optimized": attachment])
+                    expect(asset.isGif) == true
+                }
+
+                it("returns 'true' for 'isGif' - original image - content type") {
+                    let attachment: Attachment = stub(["type": "image/gif"])
+                    let asset: Asset = stub(["original": attachment])
+                    expect(asset.isGif) == true
+                }
+
+                it("returns 'true' for 'isGif' - original image - url") {
+                    let attachment: Attachment = stub(["url": "http://image.com/image.gif"])
+                    let asset: Asset = stub(["original": attachment])
                     expect(asset.isGif) == true
                 }
 

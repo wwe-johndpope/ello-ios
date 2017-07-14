@@ -65,21 +65,18 @@ final class Asset: JSONAble {
             (.small, small)
         ]
         return possibles.flatMap { type, attachment in
-            guard  let attachment = attachment else { return nil }
+            guard let attachment = attachment else { return nil }
             return (type, attachment)
         }
     }
 
-    // computed
     var isGif: Bool {
-        return original?.type == "image/gif" || original?.url.lastPathComponent.hasSuffix(".gif") == true
+        return original?.isGif == true || optimized?.isGif == true
     }
 
     var isLargeGif: Bool {
-        if isGif {
-            if let size = self.optimized?.size {
-                return size >= 3_145_728
-            }
+        if isGif, let size = self.optimized?.size {
+            return size >= 3_145_728
         }
         return false
     }
