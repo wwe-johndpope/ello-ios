@@ -14,6 +14,7 @@ class OnboardingCreatorTypeScreen: Screen {
         static let buttonOffset: CGFloat = 22
         static let buttonHeight: CGFloat = 50
     }
+
     weak var delegate: OnboardingCreatorTypeDelegate?
     var creatorCategories: [String] = [] {
         didSet {
@@ -87,7 +88,7 @@ class OnboardingCreatorTypeScreen: Screen {
         creatorButtonsContainer.snp.makeConstraints { make in
             make.top.equalTo(creatorTypeContainer.snp.bottom).offset(Size.containerOffset)
             make.leading.trailing.equalTo(creatorTypeContainer)
-            make.bottom.equalTo(scrollableContainer)
+            make.bottom.equalTo(scrollableContainer).offset(-Size.margins)
         }
         creatorLabel.snp.makeConstraints { make in
             make.top.leading.equalTo(creatorButtonsContainer)
@@ -140,10 +141,10 @@ class OnboardingCreatorTypeScreen: Screen {
         var prevView: UIView?
         for category in creatorCategories {
             let categoryView = StyledButton(style: .roundedGrayOutline)
-            categoryView.titleLabel?.lineBreakMode = .byTruncatingTail
             categoryView.addTarget(self, action: #selector(toggleCreatorCategory(sender:)), for: .touchUpInside)
             creatorButtons.append(categoryView)
-            categoryView.setTitle(category, for: .normal)
+            categoryView.title = category
+            categoryView.titleLineBreakMode = .byTruncatingTail
             creatorButtonsContainer.addSubview(categoryView)
 
             categoryView.snp.makeConstraints { make in
@@ -191,17 +192,35 @@ class OnboardingCreatorTypeScreen: Screen {
     @objc
     func toggleCreatorCategory(sender: UIButton) {
         sender.isSelected = !sender.isSelected
+
+        let count = self.creatorButtons.reduce(0) { memo, view in
+            if let button = view as? UIButton, button.isSelected {
+                return memo + 1
+            }
+            return memo
+        }
+        delegate?.creatorTypeChanged(type: .artist(count))
     }
 
     @objc
     func toggleCreatorType(sender: UIButton) {
+        let type: OnboardingCreatorType
         if sender == fanButton {
             fanButton.isSelected = !fanButton.isSelected
             artistButton.isSelected = false
+            type = .fan
         }
         else {
             fanButton.isSelected = false
             artistButton.isSelected = !artistButton.isSelected
+            type = .artist(0)
+        }
+
+        if sender.isSelected {
+            delegate?.creatorTypeChanged(type: type)
+        }
+        else {
+            delegate?.creatorTypeChanged(type: .none)
         }
 
         let creatorTypeY: CGFloat
@@ -215,7 +234,13 @@ class OnboardingCreatorTypeScreen: Screen {
             creatorButtonsAlpha = 0
         }
         creatorTypeContainerTop.update(offset: creatorTypeY)
-        animate {
+
+        let completion: (Bool) -> Void = { _ in
+            self.creatorButtons.flatMap({ (button: UIView) -> UIButton? in return button as? UIButton }).forEach { button in
+                button.isSelected = false
+            }
+        }
+        animate(completion: completion) {
             self.creatorTypeContainer.frame.origin.y = creatorTypeY
             self.creatorButtonsContainer.frame.origin.y = creatorTypeY + self.creatorTypeContainer.frame.height + Size.containerOffset
             self.creatorButtonsContainer.alpha = creatorButtonsAlpha

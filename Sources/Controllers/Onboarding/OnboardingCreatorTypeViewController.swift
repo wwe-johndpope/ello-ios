@@ -37,13 +37,17 @@ class OnboardingCreatorTypeViewController: UIViewController, HasAppController, C
 
 extension OnboardingCreatorTypeViewController: OnboardingCreatorTypeDelegate {
 
-    func creatorTypeChanged(type: Profile.CreatorType) {
-    }
-
-    func creatorSelectionChanged(count: Int) {
-    }
-
-    private func revalidate() {
+    func creatorTypeChanged(type: OnboardingCreatorType) {
+        let canGoNext: Bool
+        switch type {
+        case .none:
+            canGoNext = false
+        case .fan:
+            canGoNext = true
+        case let .artist(selections):
+            canGoNext = selections > 0
+        }
+        onboardingViewController?.canGoNext = canGoNext
     }
 
 }

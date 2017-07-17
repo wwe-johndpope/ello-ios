@@ -117,6 +117,9 @@ class StyledButton: UIButton {
         get { return currentTitle }
         set { setTitle(newValue, for: .normal) }
     }
+    var titleLineBreakMode: NSLineBreakMode = .byWordWrapping {
+        didSet { updateStyle() }
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -162,7 +165,7 @@ class StyledButton: UIButton {
         if let title = self.title(for: .normal) {
             let states: [UIControlState] = [.normal, .highlighted, .selected, .disabled]
             for state in states {
-                let attrdTitle = NSAttributedString(button: title, style: style, state: state, selected: isSelected)
+                let attrdTitle = NSAttributedString(button: title, style: style, state: state, selected: isSelected, lineBreakMode: titleLineBreakMode)
                 setAttributedTitle(attrdTitle, for: state)
             }
         }
