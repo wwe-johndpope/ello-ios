@@ -5,11 +5,11 @@
 import SnapKit
 
 
-class OnboardingCreatorTypeScreen: Screen {
+class OnboardingCreatorTypeScreen: StreamableScreen {
     struct Size {
         static let margins: CGFloat = 15
         static let bigTop: CGFloat = 243
-        static let smallTop: CGFloat = 15
+        static let smallTop: CGFloat = 64
         static let containerOffset: CGFloat = 60
         static let buttonOffset: CGFloat = 22
         static let buttonHeight: CGFloat = 50
@@ -35,36 +35,42 @@ class OnboardingCreatorTypeScreen: Screen {
     fileprivate let artistButton = StyledButton(style: .roundedGrayOutline)
     fileprivate let fanButton = StyledButton(style: .roundedGrayOutline)
     fileprivate var scrollableContainerWidth: Constraint!
+    fileprivate var scrollableContainerFanBottom: Constraint!
+    fileprivate var scrollableContainerArtistBottom: Constraint!
     fileprivate var creatorTypeContainerTop: Constraint!
     fileprivate let creatorLabel = StyledLabel(style: .gray)
     fileprivate let creatorButtonsContainer = UIView()
     fileprivate var creatorButtons: [UIView] = []
 
     override func style() {
+        super.style()
         creatorButtonsContainer.alpha = 0
     }
 
     override func bindActions() {
+        super.bindActions()
         artistButton.addTarget(self, action: #selector(toggleCreatorType(sender:)), for: .touchUpInside)
         fanButton.addTarget(self, action: #selector(toggleCreatorType(sender:)), for: .touchUpInside)
     }
 
     override func setText() {
-        creatorLabel.text = InterfaceString.Onboard.Interests
+        super.setText()
         hereAsLabel.text = InterfaceString.Onboard.HereAs
         artistButton.setTitle(InterfaceString.Onboard.Artist, for: .normal)
         fanButton.setTitle(InterfaceString.Onboard.Fan, for: .normal)
+        creatorLabel.text = InterfaceString.Onboard.Interests
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        scrollableContainerWidth.update(offset: frame.width)
+        scrollableContainerWidth?.update(offset: frame.width)
     }
 
     override func arrange() {
         super.arrange()
 
         addSubview(scrollableContainer)
+        addSubview(navigationBar)
 
         scrollableContainer.addSubview(creatorTypeContainer)
         scrollableContainer.addSubview(scrollableWidth)
@@ -90,15 +96,6 @@ class OnboardingCreatorTypeScreen: Screen {
             make.leading.trailing.equalTo(scrollableContainer).inset(Size.margins)
         }
 
-        creatorButtonsContainer.snp.makeConstraints { make in
-            make.top.equalTo(creatorTypeContainer.snp.bottom).offset(Size.containerOffset)
-            make.leading.trailing.equalTo(creatorTypeContainer)
-            make.bottom.equalTo(scrollableContainer).offset(-Size.margins)
-        }
-        creatorLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(creatorButtonsContainer)
-        }
-
         hereAsLabel.snp.makeConstraints { make in
             make.top.leading.equalTo(creatorTypeContainer)
         }
@@ -117,7 +114,21 @@ class OnboardingCreatorTypeScreen: Screen {
             make.top.equalTo(hereAsLabel.snp.bottom).offset(Size.buttonOffset)
             make.bottom.equalTo(creatorTypeContainer)
             make.height.equalTo(Size.buttonHeight)
+            scrollableContainerFanBottom = make.bottom.equalTo(scrollableContainer).inset(Size.margins).constraint
         }
+
+        creatorLabel.snp.makeConstraints { make in
+            make.top.leading.equalTo(creatorButtonsContainer)
+        }
+
+        creatorButtonsContainer.snp.makeConstraints { make in
+            make.top.equalTo(creatorTypeContainer.snp.bottom).offset(Size.containerOffset)
+            make.leading.trailing.equalTo(creatorTypeContainer)
+            scrollableContainerArtistBottom = make.bottom.equalTo(scrollableContainer).offset(-Size.margins).constraint
+        }
+
+        scrollableContainerArtistBottom.deactivate()
+        scrollableContainerFanBottom.activate()
 
         addCreatorCategoriesSpinner()
     }
@@ -209,23 +220,41 @@ class OnboardingCreatorTypeScreen: Screen {
 
     @objc
     func toggleCreatorType(sender: UIButton) {
+        let isSelected = !sender.isSelected
         let type: CreatorType
-        if sender == fanButton {
-            fanButton.isSelected = !fanButton.isSelected
-            artistButton.isSelected = false
-            type = .fan
+        if isSelected {
+            if sender == fanButton {
+                type = .fan
+            }
+            else {
+                type = .artist([])
+            }
         }
         else {
-            fanButton.isSelected = false
-            artistButton.isSelected = !artistButton.isSelected
-            type = .artist([])
+            type = .none
         }
 
-        if sender.isSelected {
-            delegate?.creatorTypeChanged(type: type)
-        }
-        else {
-            delegate?.creatorTypeChanged(type: .none)
+        delegate?.creatorTypeChanged(type: type)
+        updateButtons(type: type)
+    }
+
+    func updateButtons(type: CreatorType, animated: Bool = true) {
+        switch type {
+        case .none:
+            fanButton.isSelected = false
+            artistButton.isSelected = false
+            scrollableContainerArtistBottom.deactivate()
+            scrollableContainerFanBottom.activate()
+        case .fan:
+            fanButton.isSelected = true
+            artistButton.isSelected = false
+            scrollableContainerArtistBottom.deactivate()
+            scrollableContainerFanBottom.activate()
+        case .artist:
+            fanButton.isSelected = false
+            artistButton.isSelected = true
+            scrollableContainerArtistBottom.activate()
+            scrollableContainerFanBottom.deactivate()
         }
 
         let creatorTypeY: CGFloat
@@ -241,17 +270,38 @@ class OnboardingCreatorTypeScreen: Screen {
         creatorTypeContainerTop.update(offset: creatorTypeY)
 
         let completion: (Bool) -> Void = { _ in
-            self.creatorButtons.flatMap({ (button: UIView) -> UIButton? in return button as? UIButton }).forEach { button in
-                button.isSelected = false
-            }
+            self.unselectAllCategories()
         }
-        animate(completion: completion) {
+        animate(animated: animated, completion: completion) {
             self.creatorTypeContainer.frame.origin.y = creatorTypeY
             self.creatorButtonsContainer.frame.origin.y = creatorTypeY + self.creatorTypeContainer.frame.height + Size.containerOffset
             self.creatorButtonsContainer.alpha = creatorButtonsAlpha
         }
     }
+
+    func unselectAllCategories() {
+        creatorButtons.flatMap({ (button: UIView) -> UIButton? in return button as? UIButton }).forEach { button in
+            button.isSelected = false
+        }
+    }
 }
 
 extension OnboardingCreatorTypeScreen: OnboardingCreatorTypeScreenProtocol {
+
+    func updateCreatorType(type: Profile.CreatorType) {
+        switch type {
+        case .none:
+            updateButtons(type: .none, animated: false)
+            unselectAllCategories()
+        case .fan:
+            updateButtons(type: .fan, animated: false)
+            unselectAllCategories()
+        case let .artist(categories):
+            updateButtons(type: .artist([]), animated: false)
+            creatorButtons.flatMap({ (button: UIView) -> UIButton? in return button as? UIButton }).forEach { button in
+                button.isSelected = categories.any({ button.title(for: .normal) == $0.name })
+            }
+        }
+    }
+
 }

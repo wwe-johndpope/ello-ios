@@ -9,6 +9,7 @@ protocol DynamicSettingsDelegate: class {
 }
 
 private enum DynamicSettingsSection: Int {
+    case creatorType
     case dynamicSettings
     case blocked
     case muted
@@ -113,6 +114,7 @@ class DynamicSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch DynamicSettingsSection(rawValue: section) ?? .unknown {
+        case .creatorType: return dynamicCategories.count > 0 ? 1 : 0
         case .dynamicSettings: return dynamicCategories.count
         case .blocked: return hasBlocked ? 1 : 0
         case .muted: return hasMuted ? 1 : 0
@@ -125,6 +127,9 @@ class DynamicSettingsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PreferenceCell", for: indexPath)
 
         switch DynamicSettingsSection(rawValue: indexPath.section) ?? .unknown {
+        case .creatorType:
+            cell.textLabel?.text = DynamicSettingCategory.creatorTypeCategory.label
+
         case .dynamicSettings:
             let category = dynamicCategories[indexPath.row]
             cell.textLabel?.text = category.label
@@ -145,58 +150,56 @@ class DynamicSettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let currentUser = currentUser else { return }
+
         switch DynamicSettingsSection(rawValue: indexPath.section) ?? .unknown {
         case .dynamicSettings, .accountDeletion:
             performSegue(withIdentifier: "DynamicSettingCategorySegue", sender: nil)
+        case .creatorType:
+            let controller = OnboardingCreatorTypeViewController()
+            controller.currentUser = currentUser
+            controller.creatorType = .artist([Category.featured])
+            navigationController?.pushViewController(controller, animated: true)
         case .blocked:
-            if let currentUser = currentUser {
-                let controller = SimpleStreamViewController(endpoint: .currentUserBlockedList, title: InterfaceString.Settings.BlockedTitle)
-                controller.streamViewController.noResultsMessages =
-                    NoResultsMessages(
-                        title: InterfaceString.Relationship.BlockedNoResultsTitle,
-                        body: InterfaceString.Relationship.BlockedNoResultsBody
-                    )
-                controller.currentUser = currentUser
-                navigationController?.pushViewController(controller, animated: true)
-            }
+            let controller = SimpleStreamViewController(endpoint: .currentUserBlockedList, title: InterfaceString.Settings.BlockedTitle)
+            controller.streamViewController.noResultsMessages =
+                NoResultsMessages(
+                    title: InterfaceString.Relationship.BlockedNoResultsTitle,
+                    body: InterfaceString.Relationship.BlockedNoResultsBody
+                )
+            controller.currentUser = currentUser
+            navigationController?.pushViewController(controller, animated: true)
         case .muted:
-            if let currentUser = currentUser {
-                let controller = SimpleStreamViewController(endpoint: .currentUserMutedList, title: InterfaceString.Settings.MutedTitle)
-                controller.streamViewController.noResultsMessages =
-                    NoResultsMessages(
-                        title: InterfaceString.Relationship.MutedNoResultsTitle,
-                        body: InterfaceString.Relationship.MutedNoResultsBody
-                    )
-                controller.currentUser = currentUser
-                navigationController?.pushViewController(controller, animated: true)
-            }
+            let controller = SimpleStreamViewController(endpoint: .currentUserMutedList, title: InterfaceString.Settings.MutedTitle)
+            controller.streamViewController.noResultsMessages =
+                NoResultsMessages(
+                    title: InterfaceString.Relationship.MutedNoResultsTitle,
+                    body: InterfaceString.Relationship.MutedNoResultsBody
+                )
+            controller.currentUser = currentUser
+            navigationController?.pushViewController(controller, animated: true)
         case .unknown: break
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DynamicSettingCategorySegue" {
-            let controller = segue.destination as! DynamicSettingCategoryViewController
-            controller.delegate = delegate
-            let selectedIndexPath = tableView.indexPathForSelectedRow
+        guard segue.identifier == "DynamicSettingCategorySegue" else { return }
 
-            switch DynamicSettingsSection(rawValue: selectedIndexPath?.section ?? 0) ?? .unknown {
-            case .dynamicSettings:
-                let index = tableView.indexPathForSelectedRow?.row ?? 0
-                controller.category = dynamicCategories[index]
+        let controller = segue.destination as! DynamicSettingCategoryViewController
+        controller.delegate = delegate
+        let selectedIndexPath = tableView.indexPathForSelectedRow
 
-            case .blocked:
-                controller.category = DynamicSettingCategory.blockedCategory
+        switch DynamicSettingsSection(rawValue: selectedIndexPath?.section ?? 0) ?? .unknown {
+        case .dynamicSettings:
+            let index = tableView.indexPathForSelectedRow?.row ?? 0
+            controller.category = dynamicCategories[index]
 
-            case .muted:
-                controller.category = DynamicSettingCategory.mutedCategory
+        case .accountDeletion:
+            controller.category = DynamicSettingCategory.accountDeletionCategory
 
-            case .accountDeletion:
-                controller.category = DynamicSettingCategory.accountDeletionCategory
-
-            case .unknown: break
-            }
-            controller.currentUser = currentUser
+        case .creatorType, .blocked, .muted, .unknown:
+            break
         }
-    }
+        controller.currentUser = currentUser
+}
 }

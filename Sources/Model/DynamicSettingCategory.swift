@@ -42,6 +42,10 @@ final class DynamicSettingCategory: JSONAble {
 }
 
 extension DynamicSettingCategory {
+    static var creatorTypeCategory: DynamicSettingCategory {
+        let label = InterfaceString.Settings.CreatorType
+        return DynamicSettingCategory(label: label, settings: [DynamicSetting.creatorTypeSetting])
+    }
     static var blockedCategory: DynamicSettingCategory {
         let label = InterfaceString.Settings.BlockedTitle
         return DynamicSettingCategory(label: label, settings: [DynamicSetting.blockedSetting])

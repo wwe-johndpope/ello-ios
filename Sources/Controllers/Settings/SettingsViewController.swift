@@ -285,7 +285,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         navigationItem.fixNavBarItemPadding()
     }
 
-    @IBAction func searchButtonTapped() {
+    @IBAction
+    func searchButtonTapped() {
         containerController?.searchButtonTapped()
     }
 
@@ -456,12 +457,14 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    @IBAction func logOutTapped() {
+    @IBAction
+    func logOutTapped() {
         Tracker.shared.tappedLogout()
         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
     }
 
-    @IBAction func coverImageTapped() {
+    @IBAction
+    func coverImageTapped() {
         photoSaveCallback = { image in
             _ = ElloHUD.showLoadingHud()
             ProfileService().updateUserCoverImage(ImageRegionData(image: image))
@@ -482,7 +485,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         openImagePicker()
     }
 
-    @IBAction func avatarImageTapped() {
+    @IBAction
+    func avatarImageTapped() {
         photoSaveCallback = { image in
             _ = ElloHUD.showLoadingHud()
             ProfileService().updateUserAvatarImage(ImageRegionData(image: image))
