@@ -5,6 +5,7 @@
 protocol HomeResponder: class {
     func showEditorialsViewController()
     func showFollowingViewController()
+    func showDiscoverViewController()
 }
 
 protocol HomeScreenDelegate: class {

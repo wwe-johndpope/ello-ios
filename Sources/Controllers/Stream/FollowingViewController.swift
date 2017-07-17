@@ -23,11 +23,6 @@ class FollowingViewController: StreamableViewController {
     fileprivate var appForegroundObserver: NotificationObserver?
     fileprivate var newFollowingContentObserver: NotificationObserver?
 
-    override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.following, insets: ElloTab.following.insets) }
-        set { self.tabBarItem = newValue }
-    }
-
     required init() {
         super.init(nibName: nil, bundle: nil)
         self.title = ""

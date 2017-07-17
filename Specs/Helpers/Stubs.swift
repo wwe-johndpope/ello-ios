@@ -662,13 +662,27 @@ extension Announcement: Stubbable {
 extension Editorial: Stubbable {
 
     class func stub(_ values: [String: Any]) -> Editorial {
-        let kind = Editorial.Kind(rawValue: values["kind"] as? String ?? "post")!
+        let kind = Editorial.Kind(rawValue: values["kind"] as? String ?? "unknown")!
+        let postId: String? = (values["postId"] as? String) ?? (values["post"] as? Post)?.id
+        let postStreamURL: URL? = (values["postStreamURL"] as? URL) ?? (values["postStreamURL"] as? String).flatMap { URL(string: $0) }
+        let url: URL? = (values["url"] as? URL) ?? (values["url"] as? String).flatMap { URL(string: $0) }
+
+        if let post = values["post"] as? Post {
+            ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+        }
+
         let editorial = Editorial(
             id: (values["id"] as? String) ?? "666",
             kind: kind,
             title: (values["title"] as? String) ?? "Title",
-            subtitle: values["subtitle"] as? String
-        )
+            subtitle: values["subtitle"] as? String,
+            postId: postId,
+            postStreamURL: postStreamURL,
+            url: url
+            )
+        if let posts = values["posts"] as? [Post] {
+            editorial.posts = posts
+        }
         return editorial
     }
 }

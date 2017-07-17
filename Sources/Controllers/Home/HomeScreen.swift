@@ -24,10 +24,12 @@ protocol HomeScreenNavBar: class {
     @objc func homeScreenScrollToTop()
     @objc optional func homeScreenEditorialsTapped()
     @objc optional func homeScreenFollowingTapped()
+    @objc optional func homeScreenDiscoverTapped()
 }
 
 struct HomeScreenNavBarSize {
-    static let margins = UIEdgeInsets(top: 32, left: 15, bottom: 20, right: 15)
+    static let margins: CGFloat = 15
+    static let logoButtonMargin: CGFloat = 5
     static let typeOffset: CGFloat = 18.625
     static let buttonHeight: CGFloat = 40
     static let lineThickness: CGFloat = 1
@@ -36,8 +38,9 @@ struct HomeScreenNavBarSize {
 fileprivate typealias Size = HomeScreenNavBarSize
 
 enum HomeScreenType {
-    case editorials
+    case editorials(loggedIn: Bool)
     case following
+    case discover
 }
 
 extension HomeScreenNavBar {
@@ -48,27 +51,51 @@ extension HomeScreenNavBar {
         logoButton.setImage(.elloType, imageStyle: .normal, for: .normal)
         logoButton.addTarget(self, action: #selector(homeScreenScrollToTop), for: .touchUpInside)
 
-        let editorialsButton = StyledButton(style: type == .editorials ? .clearBlack : .clearGray)
+        let editorialsButton = StyledButton()
         editorialsButton.setTitle(InterfaceString.Editorials.NavbarTitle, for: .normal)
-        if type == .following {
-            editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
-        }
         navigationBar.addSubview(editorialsButton)
 
         let editorialsLine = UIView()
-        editorialsLine.backgroundColor = type == .editorials ? .black : .greyA()
         editorialsButton.addSubview(editorialsLine)
 
-        let followingButton = StyledButton(style: type == .following ? .clearBlack : .clearGray)
-        followingButton.setTitle(InterfaceString.Following.Title, for: .normal)
-        if type == .editorials {
-            followingButton.addTarget(self, action: #selector(homeScreenFollowingTapped), for: .touchUpInside)
-        }
-        navigationBar.addSubview(followingButton)
+        let otherButton = StyledButton()
+        navigationBar.addSubview(otherButton)
 
-        let followingLine = UIView()
-        followingLine.backgroundColor = type == .following ? .black : .greyA()
-        followingButton.addSubview(followingLine)
+        let otherLine = UIView()
+        otherButton.addSubview(otherLine)
+
+        switch type {
+        case let .editorials(loggedIn):
+            editorialsButton.style = .clearBlack
+            editorialsLine.backgroundColor = .black
+
+            otherButton.style = .clearGray
+            otherLine.backgroundColor = .greyA()
+            if loggedIn {
+                otherButton.setTitle(InterfaceString.Following.Title, for: .normal)
+                otherButton.addTarget(self, action: #selector(homeScreenFollowingTapped), for: .touchUpInside)
+            }
+            else {
+                otherButton.setTitle(InterfaceString.Discover.Title, for: .normal)
+                otherButton.addTarget(self, action: #selector(homeScreenDiscoverTapped), for: .touchUpInside)
+            }
+        case .following:
+            editorialsButton.style = .clearGray
+            editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
+            editorialsLine.backgroundColor = .greyA()
+
+            otherButton.style = .clearBlack
+            otherButton.setTitle(InterfaceString.Following.Title, for: .normal)
+            otherLine.backgroundColor = .black
+        case .discover:
+            editorialsButton.style = .clearGray
+            editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
+            editorialsLine.backgroundColor = .greyA()
+
+            otherButton.style = .clearBlack
+            otherButton.setTitle(InterfaceString.Discover.Title, for: .normal)
+            otherLine.backgroundColor = .black
+        }
 
         logoButton.snp.makeConstraints { make in
             make.centerX.equalTo(navigationBar)
@@ -77,22 +104,22 @@ extension HomeScreenNavBar {
 
         editorialsButton.snp.makeConstraints { make in
             make.leading.equalTo(navigationBar).inset(Size.margins)
-            make.trailing.equalTo(followingButton.snp.leading).inset(Size.margins)
-            make.bottom.equalTo(navigationBar).inset(Size.margins)
+            make.trailing.equalTo(otherButton.snp.leading)
+            make.top.equalTo(logoButton.snp.bottom).offset(Size.logoButtonMargin)
             make.height.equalTo(Size.buttonHeight)
-            make.width.equalTo(followingButton)
+            make.width.equalTo(otherButton)
         }
         editorialsLine.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(editorialsButton)
             make.height.equalTo(Size.lineThickness)
         }
-        followingButton.snp.makeConstraints { make in
+        otherButton.snp.makeConstraints { make in
             make.trailing.equalTo(navigationBar).inset(Size.margins)
-            make.bottom.equalTo(navigationBar).inset(Size.margins)
+            make.top.equalTo(logoButton.snp.bottom).offset(Size.logoButtonMargin)
             make.height.equalTo(Size.buttonHeight)
         }
-        followingLine.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(followingButton)
+        otherLine.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(otherButton)
             make.height.equalTo(Size.lineThickness)
         }
     }
