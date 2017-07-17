@@ -306,7 +306,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         let updateNameFunction = debounce(0.5) { [weak self] in
             guard let `self` = self else { return }
             let name = self.nameTextFieldView.textField.text ?? ""
-            ProfileService().updateUserProfile(["name": name])
+            ProfileService().updateUserProfile([.name: name])
                 .thenFinally { user in
                     self.updateCurrentUser(user)
                     self.nameTextFieldView.setState(.ok)
@@ -333,7 +333,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                 let bio = self.bioTextView.text
             else { return }
 
-            ProfileService().updateUserProfile(["unsanitized_short_bio": bio])
+            ProfileService().updateUserProfile([.bio: bio])
                 .thenFinally { user in
                     self.updateCurrentUser(user)
                     self.bioTextStatusImage.image = ValidationState.ok.imageRepresentation
@@ -358,7 +358,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                 let links = self.linksTextFieldView.textField.text
             else { return }
 
-            ProfileService().updateUserProfile(["external_links": links])
+            ProfileService().updateUserProfile([.links: links])
                 .thenFinally { user in
                     self.updateCurrentUser(user)
                     self.linksTextFieldView.setState(.ok)
@@ -388,7 +388,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             else { return }
 
             if location != self.currentUser?.location {
-                ProfileService().updateUserProfile(["location": location])
+                ProfileService().updateUserProfile([.location: location])
                     .thenFinally { user in
                         self.updateCurrentUser(user)
                         guard let count = self.locationTextFieldView.textField.text?.characters.count, count > 0 else {

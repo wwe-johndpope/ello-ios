@@ -14,7 +14,7 @@ class Onboarding {
     }
 
     func updateVersionToLatest() {
-        ProfileService().updateUserProfile(["web_onboarding_version": _currentVersion])
+        ProfileService().updateUserProfile([.webOnboardingVersion: _currentVersion])
             .ignoreErrors()
     }
 

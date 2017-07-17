@@ -15,6 +15,52 @@ let ProfileVersion: Int = 4
 @objc(Profile)
 final class Profile: JSONAble {
 
+    enum Property: String {
+        case name
+        case bio = "unsanitized_short_bio"
+        case links = "external_links"
+        case location
+        case avatarUrl = "remote_avatar_url"
+        case coverImageUrl = "remote_cover_image_url"
+        case webOnboardingVersion = "web_onboarding_version"
+        case creatorTypeCategoryIds = "creator_type_category_ids"
+
+        case username
+        case email
+        case currentPassword = "current_password"
+        case password
+        case passwordConfirmation = "password_confirmation"
+
+        case hasSharingEnabled = "has_sharing_enabled"
+        case hasAdNotificationsEnabled = "has_ad_notifications_enabled"
+        case hasAutoWatchEnabled = "has_auto_watch_enabled"
+        case hasRepostingEnabled = "has_reposting_enabled"
+        case allowsAnalytics = "allows_analytics"
+        case notifyOfCommentsViaEmail = "notify_of_comments_via_email"
+        case notifyOfLovesViaEmail = "notify_of_loves_via_email"
+        case notifyOfInvitationAcceptancesViaEmail = "notify_of_invitation_acceptances_via_email"
+        case notifyOfMentionsViaEmail = "notify_of_mentions_via_email"
+        case notifyOfNewFollowersViaEmail = "notify_of_new_followers_via_email"
+        case notifyOfRepostsViaEmail = "notify_of_reposts_via_email"
+        case subscribeToUsersEmailList = "subscribe_to_users_email_list"
+        case subscribeToDailyEllo = "subscribe_to_daily_ello"
+        case subscribeToWeeklyEllo = "subscribe_to_weekly_ello"
+        case subscribeToOnboardingDrip = "subscribe_to_onboarding_drip"
+        case notifyOfAnnouncementsViaPush = "notify_of_announcements_via_push"
+        case notifyOfCommentsViaPush = "notify_of_comments_via_push"
+        case notifyOfLovesViaPush = "notify_of_loves_via_push"
+        case notifyOfMentionsViaPush = "notify_of_mentions_via_push"
+        case notifyOfRepostsViaPush = "notify_of_reposts_via_push"
+        case notifyOfNewFollowersViaPush = "notify_of_new_followers_via_push"
+        case notifyOfInvitationAcceptancesViaPush = "notify_of_invitation_acceptances_via_push"
+        case notifyOfWatchesViaPush = "notify_of_watches_via_push"
+        case notifyOfWatchesViaEmail = "notify_of_watches_via_email"
+        case notifyOfCommentsOnPostWatchViaPush = "notify_of_comments_on_post_watch_via_push"
+        case notifyOfCommentsOnPostWatchViaEmail = "notify_of_comments_on_post_watch_via_email"
+        case hasAnnouncementsEnabled = "has_announcements_enabled"
+        case discoverable
+    }
+
     // active record
     let id: String
     let createdAt: Date
@@ -26,6 +72,8 @@ final class Profile: JSONAble {
     var isCommunity: Bool
     var mutedCount: Int
     var blockedCount: Int
+
+    // dynamic settings
     var hasSharingEnabled: Bool
     var hasAdNotificationsEnabled: Bool
     var hasAutoWatchEnabled: Bool
@@ -53,6 +101,7 @@ final class Profile: JSONAble {
     var notifyOfCommentsOnPostWatchViaEmail: Bool
     var hasAnnouncementsEnabled: Bool
     let discoverable: Bool
+
     // optional
     var gaUniqueId: String?
 

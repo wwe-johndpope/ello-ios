@@ -21,7 +21,11 @@ struct ProfileService {
             }
     }
 
-    func updateUserProfile(_ content: [String: Any]) -> Promise<User> {
+    func updateUserProfile(_ properties: [Profile.Property: Any]) -> Promise<User> {
+        var content: [String: Any] = [:]
+        for (key, value) in properties {
+            content[key.rawValue] = value
+        }
         return ElloProvider.shared.request(.profileUpdate(body: content))
             .then { response -> User in
                 guard let user = response.0 as? User else {
@@ -31,8 +35,8 @@ struct ProfileService {
             }
     }
 
-    func updateUserCoverImage(_ image: ImageRegionData, properties: [String: Any] = [:]) -> Promise<UploadSuccess> {
-        return updateUserImage(image, key: "remote_cover_image_url", properties: properties)
+    func updateUserCoverImage(_ image: ImageRegionData, properties: [Profile.Property: Any] = [:]) -> Promise<UploadSuccess> {
+        return updateUserImage(image, key: .coverImageUrl, properties: properties)
             .then { (url, user) -> UploadSuccess in
                 user.updateDefaultImages(avatarURL: nil, coverImageURL: url)
                 TemporaryCache.save(.coverImage, image: image.image)
@@ -40,8 +44,8 @@ struct ProfileService {
             }
     }
 
-    func updateUserAvatarImage(_ image: ImageRegionData, properties: [String: Any] = [:]) -> Promise<UploadSuccess> {
-        return updateUserImage(image, key: "remote_avatar_url", properties: properties)
+    func updateUserAvatarImage(_ image: ImageRegionData, properties: [Profile.Property: Any] = [:]) -> Promise<UploadSuccess> {
+        return updateUserImage(image, key: .avatarUrl, properties: properties)
             .then { (url, user) -> UploadSuccess in
                 user.updateDefaultImages(avatarURL: url, coverImageURL: nil)
                 TemporaryCache.save(.avatar, image: image.image)
@@ -52,7 +56,7 @@ struct ProfileService {
     func updateUserImages(
         avatarImage: ImageRegionData?,
         coverImage: ImageRegionData?,
-        properties: [String: Any] = [:])
+        properties: [Profile.Property: Any] = [:])
         -> Promise<UploadBothSuccess>
     {
         var avatarURL: URL?
@@ -65,16 +69,16 @@ struct ProfileService {
                 reject(error)
             }
             else {
-                var mergedProperties: [String: Any] = properties
+                var mergedProperties: [Profile.Property: Any] = properties
 
                 if let avatarImage = avatarImage, let avatarURL = avatarURL {
                     TemporaryCache.save(.avatar, image: avatarImage.image)
-                    mergedProperties["remote_avatar_url"] = avatarURL.absoluteString
+                    mergedProperties[.avatarUrl] = avatarURL.absoluteString
                 }
 
                 if let coverImage = coverImage, let coverImageURL = coverImageURL {
                     TemporaryCache.save(.coverImage, image: coverImage.image)
-                    mergedProperties["remote_cover_image_url"] = coverImageURL.absoluteString
+                    mergedProperties[.coverImageUrl] = coverImageURL.absoluteString
                 }
 
                 self.updateUserProfile(mergedProperties)
@@ -135,8 +139,8 @@ struct ProfileService {
 
     fileprivate func updateUserImage(
         _ image: ImageRegionData,
-        key: String,
-        properties: [String: Any])
+        key: Profile.Property,
+        properties: [Profile.Property: Any])
         -> Promise<UploadSuccess>
     {
         return S3UploadingService().upload(imageRegionData: image)
@@ -146,7 +150,7 @@ struct ProfileService {
                 }
 
                 let urlString = url.absoluteString
-                let mergedProperties: [String: Any] = properties + [
+                let mergedProperties: [Profile.Property: Any] = properties + [
                     key: urlString,
                 ]
 

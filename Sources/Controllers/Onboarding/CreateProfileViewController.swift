@@ -125,20 +125,20 @@ extension CreateProfileViewController: OnboardingStepController {
     }
 
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
-        var properties: [String: Any] = [:]
+        var properties: [Profile.Property: Any] = [:]
         if let name = onboardingData.name, didSetName {
             Tracker.shared.enteredOnboardName()
-            properties["name"] = name
+            properties[.name] = name
         }
 
         if let bio = onboardingData.bio, didSetBio {
             Tracker.shared.enteredOnboardBio()
-            properties["unsanitized_short_bio"] = bio
+            properties[.bio] = bio
         }
 
         if let links = onboardingData.links, didSetLinks {
             Tracker.shared.enteredOnboardLinks()
-            properties["external_links"] = links
+            properties[.links] = links
         }
 
         let avatarImage: ImageRegionData? = didUploadAvatarImage ? onboardingData.avatarImage : nil
