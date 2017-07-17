@@ -17,7 +17,7 @@ class ElloTabBarSpec: QuickSpec {
 
             beforeEach {
                 let items = [
-                    UITabBarItem.item(.following, insets: ElloTab.following.insets),
+                    UITabBarItem.item(.home, insets: ElloTab.home.insets),
                     UITabBarItem.item(.sparkles, insets: ElloTab.discover.insets),
                     UITabBarItem.item(.omni, insets: ElloTab.omnibar.insets),
                     UITabBarItem.item(.bolt, insets: ElloTab.notifications.insets),

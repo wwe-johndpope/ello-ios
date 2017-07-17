@@ -2,13 +2,9 @@
 ///  EditorialsScreen.swift
 //
 
-class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProtocol {
+class EditorialsScreen: StreamableScreen, EditorialsScreenProtocol {
     weak var delegate: EditorialsScreenDelegate?
     fileprivate var usage: EditorialsViewController.Usage
-
-    struct Size {
-        static let logoTypeOffset: CGFloat = 0.5
-    }
 
     init(usage: EditorialsViewController.Usage) {
         self.usage = usage
@@ -24,23 +20,19 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
         super.init(frame: frame)
     }
 
+    override func style() {
+        super.style()
+        navigationBar.sizeClass = .large
+    }
+
     override func arrange() {
         super.arrange()
 
-        if usage == .loggedIn {
-            arrangeHomeScreenNavBar(type: .editorials, navigationBar: navigationBar)
-        }
-        else {
-            let logoButton = UIButton()
-            logoButton.setImage(.elloType, imageStyle: .normal, for: .normal)
-            logoButton.addTarget(self, action: #selector(homeScreenScrollToTop), for: .touchUpInside)
-            navigationBar.addSubview(logoButton)
-
-            logoButton.snp.makeConstraints { make in
-                make.center.equalTo(navigationBar).offset(BlackBar.Size.height / 2 + Size.logoTypeOffset)
-            }
-        }
+        arrangeHomeScreenNavBar(type: .editorials(loggedIn: usage == .loggedIn), navigationBar: navigationBar)
     }
+}
+
+extension EditorialsScreen: HomeScreenNavBar {
 
     @objc
     func homeScreenScrollToTop() {
@@ -52,4 +44,11 @@ class EditorialsScreen: StreamableScreen, HomeScreenNavBar, EditorialsScreenProt
         let responder: HomeResponder? = self.findResponder()
         responder?.showFollowingViewController()
     }
+
+    @objc
+    func homeScreenDiscoverTapped() {
+        let responder: HomeResponder? = self.findResponder()
+        responder?.showDiscoverViewController()
+    }
+
 }

@@ -7,6 +7,7 @@ class SearchNavBarField: UITextField {
         static let cornerRadius: CGFloat = 5
         static let leftViewCorrection = CGPoint(x: 10, y: 0.5)
         static let textCorrection = CGPoint(x: 4.5, y: 2)
+        static let largeNavSearchInsets = UIEdgeInsets(top: 27, left: 15, bottom: 7, right: 7)
         static let searchInsets = UIEdgeInsets(top: 27, left: 7, bottom: 7, right: 7)
     }
 

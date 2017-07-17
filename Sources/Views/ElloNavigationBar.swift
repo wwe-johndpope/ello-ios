@@ -6,17 +6,20 @@ class ElloNavigationBar: UINavigationBar {
     struct Size {
         static let height: CGFloat = 64
         static let largeHeight: CGFloat = 125
+        static let discoverLargeHeight: CGFloat = 162
         static let largeIconOffset: CGFloat = 8
     }
 
     enum SizeClass {
         case `default`
         case large
+        case discoverLarge
 
         var height: CGFloat {
             switch self {
             case .default: return Size.height
             case .large: return Size.largeHeight
+            case .discoverLarge: return Size.discoverLargeHeight
             }
         }
     }
