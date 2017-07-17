@@ -10,6 +10,8 @@ class OnboardingCreatorTypeViewController: UIViewController, HasAppController, C
     }
 
     var currentUser: User?
+    var categories: [Category]?
+    var creatorType: Profile.CreatorType = .none
 
     var appViewController: AppViewController? {
         return findViewController { vc in vc is AppViewController } as? AppViewController
@@ -29,6 +31,7 @@ class OnboardingCreatorTypeViewController: UIViewController, HasAppController, C
 
         CategoryService().loadCreatorCategories()
             .thenFinally { categories in
+                self.categories = categories
                 self.screen.creatorCategories = categories.map { $0.name }
             }
             .ignoreErrors()
@@ -37,17 +40,23 @@ class OnboardingCreatorTypeViewController: UIViewController, HasAppController, C
 
 extension OnboardingCreatorTypeViewController: OnboardingCreatorTypeDelegate {
 
-    func creatorTypeChanged(type: OnboardingCreatorType) {
-        let canGoNext: Bool
+    func creatorTypeChanged(type: OnboardingCreatorTypeScreen.CreatorType) {
         switch type {
         case .none:
-            canGoNext = false
+            creatorType = .none
         case .fan:
-            canGoNext = true
+            creatorType = .fan
         case let .artist(selections):
-            canGoNext = selections > 0
+            if let categories = categories {
+                let selectedCategories = selections.map { categories[$0] }
+                creatorType = .artist(selectedCategories)
+            }
+            else {
+                creatorType = .none
+            }
         }
-        onboardingViewController?.canGoNext = canGoNext
+
+        onboardingViewController?.canGoNext = creatorType.isValid
     }
 
 }
@@ -60,11 +69,26 @@ extension OnboardingCreatorTypeViewController: OnboardingStepController {
     }
 
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
-        guard !abort else {
-            proceedClosure(.abort)
-            return
-        }
+        guard creatorType.isValid else { return }
 
-        proceedClosure(.continue)
+        if case let .artist(selectedCategories) = creatorType {
+            ProfileService().updateUserProfile([.creatorTypeCategoryIds: selectedCategories.map { $0.id }])
+                .thenFinally { [weak self] _ in
+                    guard let `self` = self else { return }
+
+                    self.onboardingData.creatorType = self.creatorType
+                    proceedClosure(.continue)
+                }
+                .catch { [weak self] _ in
+                    guard let `self` = self else { return }
+
+                    let alertController = AlertViewController(error: InterfaceString.GenericError)
+                    self.appViewController?.present(alertController, animated: true, completion: nil)
+                    proceedClosure(.error)
+                }
+        }
+        else {
+            proceedClosure(.continue)
+        }
     }
 }

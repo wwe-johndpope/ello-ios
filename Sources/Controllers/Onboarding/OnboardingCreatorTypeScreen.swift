@@ -15,6 +15,12 @@ class OnboardingCreatorTypeScreen: Screen {
         static let buttonHeight: CGFloat = 50
     }
 
+    enum CreatorType {
+        case none
+        case fan
+        case artist([Int])
+    }
+
     weak var delegate: OnboardingCreatorTypeDelegate?
     var creatorCategories: [String] = [] {
         didSet {
@@ -30,7 +36,6 @@ class OnboardingCreatorTypeScreen: Screen {
     fileprivate let fanButton = StyledButton(style: .roundedGrayOutline)
     fileprivate var scrollableContainerWidth: Constraint!
     fileprivate var creatorTypeContainerTop: Constraint!
-
     fileprivate let creatorLabel = StyledLabel(style: .gray)
     fileprivate let creatorButtonsContainer = UIView()
     fileprivate var creatorButtons: [UIView] = []
@@ -193,18 +198,18 @@ class OnboardingCreatorTypeScreen: Screen {
     func toggleCreatorCategory(sender: UIButton) {
         sender.isSelected = !sender.isSelected
 
-        let count = self.creatorButtons.reduce(0) { memo, view in
+        var paths: [Int] = []
+        for (index, view) in creatorButtons.enumerated() {
             if let button = view as? UIButton, button.isSelected {
-                return memo + 1
+                paths.append(index)
             }
-            return memo
         }
-        delegate?.creatorTypeChanged(type: .artist(count))
+        delegate?.creatorTypeChanged(type: .artist(paths))
     }
 
     @objc
     func toggleCreatorType(sender: UIButton) {
-        let type: OnboardingCreatorType
+        let type: CreatorType
         if sender == fanButton {
             fanButton.isSelected = !fanButton.isSelected
             artistButton.isSelected = false
@@ -213,7 +218,7 @@ class OnboardingCreatorTypeScreen: Screen {
         else {
             fanButton.isSelected = false
             artistButton.isSelected = !artistButton.isSelected
-            type = .artist(0)
+            type = .artist([])
         }
 
         if sender.isSelected {

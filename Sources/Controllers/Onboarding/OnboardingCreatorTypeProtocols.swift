@@ -3,16 +3,10 @@
 //
 
 protocol OnboardingCreatorTypeDelegate: class {
-    func creatorTypeChanged(type: OnboardingCreatorType)
+    func creatorTypeChanged(type: OnboardingCreatorTypeScreen.CreatorType)
 }
 
 protocol OnboardingCreatorTypeScreenProtocol: class {
     var delegate: OnboardingCreatorTypeDelegate? { get set }
     var creatorCategories: [String] { get set }
-}
-
-enum OnboardingCreatorType {
-    case none
-    case fan
-    case artist(Int)
 }

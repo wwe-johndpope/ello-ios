@@ -15,8 +15,20 @@ let ProfileVersion: Int = 4
 @objc(Profile)
 final class Profile: JSONAble {
     enum CreatorType {
-        case artist
+        case none
         case fan
+        case artist([Category])
+
+        var isValid: Bool {
+            switch self {
+            case .none:
+                return false
+            case .fan:
+                return true
+            case let .artist(selections):
+                return selections.count > 0
+            }
+        }
     }
 
     enum Property: String {
