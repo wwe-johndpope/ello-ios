@@ -103,9 +103,7 @@ class AlertViewController: UIViewController {
         }
     }
 
-    fileprivate let headerView: AlertHeaderView = {
-        return AlertHeaderView.loadFromNib()
-    }()
+    fileprivate let headerView = AlertHeaderView()
 
     fileprivate var totalHorizontalPadding: CGFloat {
         return leftPadding.constant + rightPadding.constant
