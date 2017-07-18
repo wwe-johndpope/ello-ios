@@ -81,6 +81,13 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             appController.present(alertController, animated: true, completion: nil)
         }
 
+        addAction(name: "Show Onboarding") {
+            appController.closeTodoController {
+                let user: User! = appController.currentUser
+                appController.showOnboardingScreen(user)
+            }
+        }
+
         addAction(name: "Logout") {
             appController.closeTodoController {
                 appController.userLoggedOut()
