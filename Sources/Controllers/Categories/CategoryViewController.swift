@@ -61,7 +61,7 @@ final class CategoryViewController: StreamableViewController {
         self.title = name
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

@@ -72,8 +72,8 @@ final class DynamicSetting: JSONAble {
         super.init(version: DynamicSettingVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.label = decoder.decodeKey("label")
         self.key = decoder.decodeKey("key")
         self.info = decoder.decodeOptionalKey("info")
@@ -82,7 +82,7 @@ final class DynamicSetting: JSONAble {
         self.dependentOn = decoder.decodeKey("dependentOn")
         self.conflictsWith = decoder.decodeKey("conflictsWith")
         self.setsAnother = decoder.decodeKey("setsAnother")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

@@ -23,8 +23,8 @@ final class LocalPerson: JSONAble {
         super.init(version: LocalPersonVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.name = decoder.decodeKey("name")
         self.emails = decoder.decodeKey("emails")
         let version: Int = decoder.decodeKey("version")
@@ -35,7 +35,7 @@ final class LocalPerson: JSONAble {
         else {
             self.id = decoder.decodeKey("id")
         }
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

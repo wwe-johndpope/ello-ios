@@ -22,8 +22,8 @@ class AmazonCredentials: JSONAble {
         super.init(version: AmazonCredentialsVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         let version: Int = decoder.decodeKey("version")
         if version > 1 {
             accessKey = decoder.decodeKey("accessKey")
@@ -39,7 +39,7 @@ class AmazonCredentials: JSONAble {
             prefix = ""
             signature = ""
         }
-        super.init(coder: aDecoder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

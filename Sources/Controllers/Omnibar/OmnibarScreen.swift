@@ -156,7 +156,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

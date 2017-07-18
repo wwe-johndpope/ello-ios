@@ -92,13 +92,13 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         columnCount = 2
         minimumInteritemSpacing = 0
         minimumColumnSpacing = Size.defaultColumnSpacing
         sectionInset = UIEdgeInsets.zero
         itemRenderDirection = .shortestFirst
-        super.init(coder: aDecoder)
+        super.init(coder: coder)
     }
 
     override func prepare(){

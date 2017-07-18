@@ -21,7 +21,7 @@ class BadgesViewController: StreamableViewController, BadgesScreenDelegate {
         title = InterfaceString.Profile.Badges
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

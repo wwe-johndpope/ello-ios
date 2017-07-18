@@ -162,8 +162,8 @@ final class Asset: JSONAble {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // required
         self.id = decoder.decodeKey("id")
         // optional
@@ -178,7 +178,7 @@ final class Asset: JSONAble {
         self.large = decoder.decodeOptionalKey("large")
         self.regular = decoder.decodeOptionalKey("regular")
         self.small = decoder.decodeOptionalKey("small")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

@@ -23,8 +23,8 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
         self.sharedInit()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         self.sharedInit()
     }
 

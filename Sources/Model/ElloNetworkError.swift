@@ -51,15 +51,15 @@ class ElloNetworkError: JSONAble {
         super.init(version: ElloNetworkErrorVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.attrs = decoder.decodeOptionalKey("attrs")
         self.code = decoder.decodeKey("code")
         self.detail = decoder.decodeOptionalKey("detail")
         self.messages = decoder.decodeOptionalKey("messages")
         self.status = decoder.decodeOptionalKey("status")
         self.title = decoder.decodeKey("title")
-        super.init(coder: aDecoder)
+        super.init(coder: coder)
     }
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {

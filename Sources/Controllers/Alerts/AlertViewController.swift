@@ -133,7 +133,7 @@ class AlertViewController: UIViewController {
         self.type = type
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("This isn't implemented")
     }
 

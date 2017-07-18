@@ -19,7 +19,7 @@ class DrawerViewController: StreamableViewController {
         super.init(nibName: "DrawerViewController", bundle: .none)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

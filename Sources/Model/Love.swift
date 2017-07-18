@@ -49,8 +49,8 @@ final class Love: JSONAble, PostActionable {
 
 
 // MARK: NSCoding
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
@@ -59,7 +59,7 @@ final class Love: JSONAble, PostActionable {
         self.deleted = decoder.decodeKey("deleted")
         self.postId = decoder.decodeKey("postId")
         self.userId = decoder.decodeKey("userId")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

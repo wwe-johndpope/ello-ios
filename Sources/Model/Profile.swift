@@ -204,8 +204,8 @@ final class Profile: JSONAble {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeOptionalKey("id") ?? ""
         self.createdAt = decoder.decodeKey("createdAt")
@@ -281,7 +281,7 @@ final class Profile: JSONAble {
         self.notifyOfNewFollowersViaPush = decoder.decodeKey("notifyOfNewFollowersViaPush")
         self.notifyOfInvitationAcceptancesViaPush = decoder.decodeKey("notifyOfInvitationAcceptancesViaPush")
         self.discoverable = decoder.decodeKey("discoverable")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

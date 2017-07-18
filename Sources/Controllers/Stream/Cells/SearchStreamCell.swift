@@ -31,7 +31,7 @@ class SearchStreamCell: UICollectionViewCell {
         searchField.addTarget(self, action: #selector(searchFieldDidChange), for: .editingChanged)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
