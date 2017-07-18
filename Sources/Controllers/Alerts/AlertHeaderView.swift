@@ -12,6 +12,8 @@ class AlertHeaderView: UIView {
     required override init(frame: CGRect) {
         super.init(frame: frame)
 
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         addSubview(label)
     }
 

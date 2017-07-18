@@ -30,7 +30,7 @@ class UserListItemCell: UICollectionViewCell {
     fileprivate func style() {
         usernameLabel.font = UIFont.defaultBoldFont(18)
         usernameLabel.textColor = UIColor.black
-        usernameLabel.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        usernameLabel.lineBreakMode = .byTruncatingTail
 
         nameLabel.font = UIFont.defaultFont()
         nameLabel.textColor = UIColor.greyA()

@@ -390,7 +390,7 @@ class StreamHeaderCell: UICollectionViewCell {
     fileprivate func styleUsernameButton() {
         usernameButton.titleLabel?.font = UIFont.defaultFont()
         usernameButton.setTitleColor(UIColor.greyA(), for: .normal)
-        usernameButton.titleLabel?.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        usernameButton.titleLabel?.lineBreakMode = .byTruncatingTail
         usernameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
     }
 
