@@ -9,8 +9,9 @@ import SwiftyJSON
 // version 2: added hasAutoWatchEnabled and moved in notifyOfWatch* settings
 // version 3: added notifyOfAnnouncementsViaPush
 // version 4: added hasAnnouncementsEnabled
-// version 4: added isCommunity
-let ProfileVersion: Int = 4
+// version 5: added isCommunity
+// version 6: added creatorTypeCategoryIds
+let ProfileVersion: Int = 6
 
 @objc(Profile)
 final class Profile: JSONAble {
@@ -88,6 +89,7 @@ final class Profile: JSONAble {
     var isCommunity: Bool
     var mutedCount: Int
     var blockedCount: Int
+    var creatorTypeCategoryIds: [String]
 
     // dynamic settings
     var hasSharingEnabled: Bool
@@ -131,6 +133,7 @@ final class Profile: JSONAble {
         isCommunity: Bool,
         mutedCount: Int,
         blockedCount: Int,
+        creatorTypeCategoryIds: [String],
         hasSharingEnabled: Bool,
         hasAdNotificationsEnabled: Bool,
         hasAutoWatchEnabled: Bool,
@@ -168,6 +171,7 @@ final class Profile: JSONAble {
         self.isCommunity = isCommunity
         self.mutedCount = mutedCount
         self.blockedCount = blockedCount
+        self.creatorTypeCategoryIds = creatorTypeCategoryIds
         self.hasSharingEnabled = hasSharingEnabled
         self.hasAdNotificationsEnabled = hasAdNotificationsEnabled
         self.hasAutoWatchEnabled = hasAutoWatchEnabled
@@ -212,9 +216,14 @@ final class Profile: JSONAble {
         self.isPublic = decoder.decodeKey("isPublic")
         self.mutedCount = decoder.decodeKey("mutedCount")
         self.blockedCount = decoder.decodeKey("blockedCount")
-        self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
-        self.hasAdNotificationsEnabled = decoder.decodeKey("hasAdNotificationsEnabled")
+
         let version: Int = decoder.decodeKey("version")
+        if version < 6 {
+            self.creatorTypeCategoryIds = []
+        }
+        else {
+            self.creatorTypeCategoryIds = decoder.decodeKey("creatorTypeCategoryIds")
+        }
 
         if version < 5 {
             self.isCommunity = false
@@ -251,6 +260,9 @@ final class Profile: JSONAble {
             self.notifyOfCommentsOnPostWatchViaPush = decoder.decodeKey("notifyOfCommentsOnPostWatchViaPush")
             self.notifyOfCommentsOnPostWatchViaEmail = decoder.decodeKey("notifyOfCommentsOnPostWatchViaEmail")
         }
+
+        self.hasSharingEnabled = decoder.decodeKey("hasSharingEnabled")
+        self.hasAdNotificationsEnabled = decoder.decodeKey("hasAdNotificationsEnabled")
         self.allowsAnalytics = decoder.decodeKey("allowsAnalytics")
         self.notifyOfCommentsViaEmail = decoder.decodeKey("notifyOfCommentsViaEmail")
         self.notifyOfLovesViaEmail = decoder.decodeKey("notifyOfLovesViaEmail")
@@ -285,6 +297,7 @@ final class Profile: JSONAble {
         coder.encodeObject(isCommunity, forKey: "isCommunity")
         coder.encodeObject(mutedCount, forKey: "mutedCount")
         coder.encodeObject(blockedCount, forKey: "blockedCount")
+        coder.encodeObject(creatorTypeCategoryIds, forKey: "creatorTypeCategoryIds")
         coder.encodeObject(hasSharingEnabled, forKey: "hasSharingEnabled")
         coder.encodeObject(hasAdNotificationsEnabled, forKey: "hasAdNotificationsEnabled")
         coder.encodeObject(hasAutoWatchEnabled, forKey: "hasAutoWatchEnabled")
@@ -319,6 +332,7 @@ final class Profile: JSONAble {
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
+        let creatorTypeCategoryIds = json["creator_type_category_ids"].arrayValue.flatMap { $0.stringValue }
         // create profile
         let profile = Profile(
             id: json["id"].string ?? "",
@@ -330,6 +344,7 @@ final class Profile: JSONAble {
             isCommunity: json["is_community"].boolValue,
             mutedCount: json["muted_count"].intValue,
             blockedCount: json["blocked_count"].intValue,
+            creatorTypeCategoryIds: creatorTypeCategoryIds,
             hasSharingEnabled: json["has_sharing_enabled"].boolValue,
             hasAdNotificationsEnabled: json["has_ad_notifications_enabled"].boolValue,
             hasAutoWatchEnabled: json["has_auto_watch_enabled"].boolValue,

@@ -156,10 +156,20 @@ class DynamicSettingsViewController: UITableViewController {
         case .dynamicSettings, .accountDeletion:
             performSegue(withIdentifier: "DynamicSettingCategorySegue", sender: nil)
         case .creatorType:
-            let controller = OnboardingCreatorTypeViewController()
-            controller.currentUser = currentUser
-            controller.creatorType = .artist([Category.featured])
-            navigationController?.pushViewController(controller, animated: true)
+            guard let categoryIds = currentUser.profile?.creatorTypeCategoryIds else { return }
+
+            CategoryService().loadCreatorCategories()
+                .thenFinally { categories in
+                    let creatorCategories = categoryIds.flatMap { id -> Category? in
+                        return categories.find { $0.id == id }
+                    }
+                    let controller = OnboardingCreatorTypeViewController()
+                    controller.delegate = self.delegate
+                    controller.currentUser = currentUser
+                    controller.creatorType = .artist(creatorCategories)
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
+                .ignoreErrors()
         case .blocked:
             let controller = SimpleStreamViewController(endpoint: .currentUserBlockedList, title: InterfaceString.Settings.BlockedTitle)
             controller.streamViewController.noResultsMessages =
