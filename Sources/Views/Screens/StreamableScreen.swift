@@ -41,8 +41,6 @@ class StreamableScreen: Screen, StreamableScreenProtocol {
             make.edges.equalTo(self)
             streamContainer.frame = self.bounds
         }
-
-        layoutIfNeeded()
     }
 
     func viewForStream() -> UIView {

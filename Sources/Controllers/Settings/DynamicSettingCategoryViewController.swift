@@ -77,9 +77,11 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
     func toggleSetting(_ setting: DynamicSetting, value: Bool) {
         guard
             let currentUser = currentUser,
-            let category = self.category else { return }
-        let settings = category.settings
+            let category = self.category,
+            let settingKey = Profile.Property(rawValue: setting.key)
+        else { return }
 
+        let settings = category.settings
         let visibility = settings.enumerated().map { (index, setting) in
             return (
                 setting: setting,
@@ -89,13 +91,15 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
             )
         }
 
-        var updatedValues: [String: Any] = [
-            setting.key: value,
+        var updatedValues: [Profile.Property: Any] = [
+            settingKey: value,
         ]
 
         for anotherSetting in category.settings {
-            if let anotherValue = setting.sets(anotherSetting, when: value) {
-                updatedValues[anotherSetting.key] = anotherValue
+            if let anotherValue = setting.sets(anotherSetting, when: value),
+                let anotherKey = Profile.Property(rawValue: anotherSetting.key)
+            {
+                updatedValues[anotherKey] = anotherValue
             }
         }
 

@@ -10,4 +10,5 @@ class OnboardingData: NSObject {
     var avatarImage: ImageRegionData?
     var invitationCode: String?
     var categories: [Category]?
+    var creatorType: Profile.CreatorType = .none
 }

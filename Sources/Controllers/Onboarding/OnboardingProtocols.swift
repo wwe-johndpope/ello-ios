@@ -3,7 +3,8 @@
 //
 
 enum OnboardingStep: Int {
-    case categories = 0
+    case creatorType = 0
+    case categories
     case createProfile
     case inviteFriends
 }

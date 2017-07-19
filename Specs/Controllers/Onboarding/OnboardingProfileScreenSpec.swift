@@ -1,5 +1,5 @@
 ////
-///  CreateProfileScreenSpec.swift
+///  OnboardingProfileScreenSpec.swift
 //
 
 @testable import Ello
@@ -7,8 +7,8 @@ import Quick
 import Nimble
 
 
-class CreateProfileScreenSpec: QuickSpec {
-    class MockDelegate: CreateProfileDelegate {
+class OnboardingProfileScreenSpec: QuickSpec {
+    class MockDelegate: OnboardingProfileDelegate {
         var didAssignName = false
         var didAssignBio = false
         var didAssignLinks = false
@@ -38,20 +38,20 @@ class CreateProfileScreenSpec: QuickSpec {
         }
     }
     override func spec() {
-        describe("CreateProfileScreen") {
-            var subject: CreateProfileScreen!
+        describe("OnboardingProfileScreen") {
+            var subject: OnboardingProfileScreen!
             var delegate: MockDelegate!
             beforeEach {
-                subject = CreateProfileScreen()
+                subject = OnboardingProfileScreen()
                 delegate = MockDelegate()
                 subject.delegate = delegate
                 showView(subject)
             }
             context("snapshots") {
-                validateAllSnapshots(named: "CreateProfileScreen") { return subject }
+                validateAllSnapshots(named: "OnboardingProfileScreen") { return subject }
             }
             context("snapshots setting existing data") {
-                validateAllSnapshots(named: "CreateProfileScreen with data") {
+                validateAllSnapshots(named: "OnboardingProfileScreen with data") {
                     subject.name = "name"
                     subject.bio = "bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio"
                     subject.links = "links links links links links links links links links links links links"

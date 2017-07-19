@@ -1,8 +1,8 @@
 ////
-///  CategoriesSelectionViewController.swift
+///  OnboardingInterestsViewController.swift
 //
 
-class CategoriesSelectionViewController: StreamableViewController {
+class OnboardingInterestsViewController: StreamableViewController {
     var mockScreen: Screen?
     var screen: Screen { return mockScreen ?? (self.view as! Screen) }
     var selectedCategories: [Category] = []
@@ -51,7 +51,7 @@ class CategoriesSelectionViewController: StreamableViewController {
     }
 }
 
-extension CategoriesSelectionViewController: OnboardingStepController {
+extension OnboardingInterestsViewController: OnboardingStepController {
 
     func onboardingStepBegin() {
         let prompt = NSString(format: InterfaceString.Onboard.PickTemplate as NSString, 3) as String
@@ -88,7 +88,7 @@ extension CategoriesSelectionViewController: OnboardingStepController {
     }
 }
 
-extension CategoriesSelectionViewController: SelectedCategoryResponder {
+extension OnboardingInterestsViewController: SelectedCategoryResponder {
 
     func categoriesSelectionChanged(selection: [Category]) {
         let selectionCount = selection.count

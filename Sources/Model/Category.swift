@@ -4,14 +4,16 @@
 
 import SwiftyJSON
 
-// Version 3: isSponsored, body, header, ctaCaption, ctaURL, promotionals
-let CategoryVersion = 3
+// Version 2: allowInOnboarding
+// Version 3: usesPagePromo
+// Version 4: isCreatorType
+let CategoryVersion = 4
 
 
 final class Category: JSONAble, Groupable {
-    static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "featured", order: 0, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
-    static let trending = Category(id: "meta2", name: InterfaceString.Discover.Trending, slug: "trending", order: 1, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
-    static let recent = Category(id: "meta3", name: InterfaceString.Discover.Recent, slug: "recent", order: 2, allowInOnboarding: false, usesPagePromo: true, level: .meta, tileImage: nil)
+    static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "featured", order: 0, allowInOnboarding: false, isCreatorType: false, usesPagePromo: true, level: .meta, tileImage: nil)
+    static let trending = Category(id: "meta2", name: InterfaceString.Discover.Trending, slug: "trending", order: 1, allowInOnboarding: false, isCreatorType: false, usesPagePromo: true, level: .meta, tileImage: nil)
+    static let recent = Category(id: "meta3", name: InterfaceString.Discover.Recent, slug: "recent", order: 2, allowInOnboarding: false, isCreatorType: false, usesPagePromo: true, level: .meta, tileImage: nil)
 
     let id: String
     var groupId: String { return "Category-\(id)" }
@@ -26,6 +28,7 @@ final class Category: JSONAble, Groupable {
     let tileImage: Attachment?
     let order: Int
     let allowInOnboarding: Bool
+    let isCreatorType: Bool
     let level: CategoryLevel
     var isMeta: Bool { return level == .meta }
     var usesPagePromo: Bool
@@ -67,6 +70,7 @@ final class Category: JSONAble, Groupable {
         slug: String,
         order: Int,
         allowInOnboarding: Bool,
+        isCreatorType: Bool,
         usesPagePromo: Bool,
         level: CategoryLevel,
         tileImage: Attachment?)
@@ -76,6 +80,7 @@ final class Category: JSONAble, Groupable {
         self.slug = slug
         self.order = order
         self.allowInOnboarding = allowInOnboarding
+        self.isCreatorType = isCreatorType
         self.usesPagePromo = usesPagePromo
         self.level = level
         self.tileImage = tileImage
@@ -102,6 +107,12 @@ final class Category: JSONAble, Groupable {
         else {
             usesPagePromo = level == .meta
         }
+        if version > 3 {
+            isCreatorType = decoder.decodeKey("isCreatorType")
+        }
+        else {
+            isCreatorType = false
+        }
         tileImage = decoder.decodeOptionalKey("tileImage")
         isSponsored = decoder.decodeOptionalKey("isSponsored")
         body = decoder.decodeOptionalKey("body")
@@ -118,6 +129,7 @@ final class Category: JSONAble, Groupable {
         encoder.encodeObject(slug, forKey: "slug")
         encoder.encodeObject(order, forKey: "order")
         encoder.encodeObject(allowInOnboarding, forKey: "allowInOnboarding")
+        encoder.encodeObject(isCreatorType, forKey: "isCreatorType")
         encoder.encodeObject(usesPagePromo, forKey: "usesPagePromo")
         encoder.encodeObject(level.rawValue, forKey: "level")
         encoder.encodeObject(tileImage, forKey: "tileImage")
@@ -145,6 +157,7 @@ final class Category: JSONAble, Groupable {
         let slug = json["slug"].stringValue
         let order = json["order"].intValue
         let allowInOnboarding = json["allow_in_onboarding"].bool ?? true
+        let isCreatorType = json["is_creator_type"].bool ?? true
         let level: CategoryLevel = CategoryLevel(rawValue: json["level"].stringValue) ?? .unknown
         let usesPagePromo = json["uses_page_promotionals"].bool ?? (level == .meta)
         let tileImage: Attachment?
@@ -164,7 +177,7 @@ final class Category: JSONAble, Groupable {
         let ctaCaption = json["cta_caption"].string
         let ctaURL = json["cta_href"].string.flatMap { URL(string: $0) }
 
-        let category = Category(id: id, name: name, slug: slug, order: order, allowInOnboarding: allowInOnboarding, usesPagePromo: usesPagePromo, level: level, tileImage: tileImage)
+        let category = Category(id: id, name: name, slug: slug, order: order, allowInOnboarding: allowInOnboarding, isCreatorType: isCreatorType, usesPagePromo: usesPagePromo, level: level, tileImage: tileImage)
 
         // links
         category.links = data["links"] as? [String: Any]

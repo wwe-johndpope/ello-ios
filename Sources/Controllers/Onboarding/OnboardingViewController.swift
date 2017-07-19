@@ -22,7 +22,7 @@ class OnboardingViewController: BaseElloViewController {
         get { return _mockScreen ?? (self.view as! OnboardingScreen) }
     }
 
-    var inviteFriendsController: InviteFriendsViewController? {
+    var inviteFriendsController: OnboardingInviteViewController? {
         willSet {
             guard inviteFriendsController == nil else {
                 fatalError("inviteFriendsController should only be set once")
@@ -121,12 +121,17 @@ class OnboardingViewController: BaseElloViewController {
 private extension OnboardingViewController {
 
     func setupOnboardingControllers() {
-        let categoriesController = CategoriesSelectionViewController()
-        categoriesController.onboardingViewController = self
-        categoriesController.currentUser = currentUser
-        addOnboardingViewController(categoriesController)
+        let creatorTypeController = OnboardingCreatorTypeViewController()
+        creatorTypeController.onboardingViewController = self
+        creatorTypeController.currentUser = currentUser
+        addOnboardingViewController(creatorTypeController)
 
-        let createProfileController = CreateProfileViewController()
+        let interestsController = OnboardingInterestsViewController()
+        interestsController.onboardingViewController = self
+        interestsController.currentUser = currentUser
+        addOnboardingViewController(interestsController)
+
+        let createProfileController = OnboardingProfileViewController()
         createProfileController.onboardingViewController = self
         createProfileController.currentUser = currentUser
         addOnboardingViewController(createProfileController)
@@ -150,19 +155,19 @@ extension OnboardingViewController {
 extension OnboardingViewController {
 
     func proceedToNextStep(abort: Bool) {
-        if visibleViewController is CategoriesSelectionViewController {
+        if visibleViewController is OnboardingInterestsViewController {
             Tracker.shared.completedCategories()
             if abort {
                 Tracker.shared.skippedNameBio()
             }
         }
-        else if visibleViewController is CreateProfileViewController {
+        else if visibleViewController is OnboardingProfileViewController {
             Tracker.shared.addedNameBio()
             if abort {
                 Tracker.shared.skippedContactImport()
             }
         }
-        else if visibleViewController is InviteFriendsViewController {
+        else if visibleViewController is OnboardingInviteViewController {
             Tracker.shared.completedContactImport()
         }
 

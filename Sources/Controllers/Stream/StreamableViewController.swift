@@ -320,7 +320,7 @@ extension StreamableViewController: InviteResponder {
             switch result {
             case let .success(addressBook):
                 Tracker.shared.contactAccessPreferenceChanged(true)
-                let vc = InviteFriendsViewController(addressBook: addressBook)
+                let vc = OnboardingInviteViewController(addressBook: addressBook)
                 vc.currentUser = self.currentUser
                 if let navigationController = self.navigationController {
                     navigationController.pushViewController(vc, animated: true)
