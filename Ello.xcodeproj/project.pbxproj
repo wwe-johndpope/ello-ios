@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01BA14787BB2CA507020C9C4 /* Pods_Ello.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */; };
-		12028E951C64F1600042AA53 /* AlertHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */; };
 		12028E961C64F1940042AA53 /* AlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8EFFB541ACC8F9A00F34B7F /* AlertViewController.xib */; };
 		12028E971C64F1B40042AA53 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8158C441ACDABF3008C15A1 /* AlertCell.xib */; };
 		1207C96E1C73FEE000939ADB /* AnonymousAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94A1C73FEE000939ADB /* AnonymousAuthService.swift */; };
@@ -322,7 +321,6 @@
 		12687A181BBF295E0055D0BA /* RateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12687A171BBF295E0055D0BA /* RateSpec.swift */; };
 		126910C71E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126910C61E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift */; };
 		126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1269484F1AEC0D1800A7EFCC /* Preloader.swift */; };
-		126E052F1B152CF00036DFA6 /* AlertHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */; };
 		126E05311B152DD70036DFA6 /* AlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126E05301B152DD70036DFA6 /* AlertHeaderView.swift */; };
 		126F2C011C5C1D7400D22BAB /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* Date.swift */; };
 		126F2C031C5C1D8D00D22BAB /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
@@ -1376,7 +1374,6 @@
 		126910C61E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCategoriesViewControllerSpec.swift; sourceTree = "<group>"; };
 		1269484F1AEC0D1800A7EFCC /* Preloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preloader.swift; sourceTree = "<group>"; };
 		126DF2351C595C53003AB563 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
-		126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AlertHeaderView.xib; path = Sources/Controllers/Alerts/AlertHeaderView.xib; sourceTree = SOURCE_ROOT; };
 		126E05301B152DD70036DFA6 /* AlertHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertHeaderView.swift; sourceTree = "<group>"; };
 		12706B9A1D3EC1D80028C9BE /* AsyncOperationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncOperationSpec.swift; sourceTree = "<group>"; };
 		127128251A77373300695F15 /* TypedNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotifications.swift; sourceTree = "<group>"; };
@@ -4032,7 +4029,6 @@
 				F8158C441ACDABF3008C15A1 /* AlertCell.xib */,
 				F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */,
 				126E05301B152DD70036DFA6 /* AlertHeaderView.swift */,
-				126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */,
 				F8158C4C1ACDD52D008C15A1 /* AlertPresentationController.swift */,
 				F87928671ACC6D6600579BE1 /* AlertViewController.swift */,
 				F8EFFB541ACC8F9A00F34B7F /* AlertViewController.xib */,
@@ -4200,7 +4196,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12028E951C64F1600042AA53 /* AlertHeaderView.xib in Resources */,
 				124CFB9D1C5976E500727D11 /* MainInterface.storyboard in Resources */,
 				122034751DE66A4A0059E633 /* ello_logo_grey.svg in Resources */,
 				123466161C65468100E61110 /* ello_logo.svg in Resources */,
@@ -4316,7 +4311,6 @@
 				125A503D1A65DA5600FB979E /* activity-own-post.json in Resources */,
 				7689B4ED1AD4ED3B00E4A4A3 /* invitations_listing_invitations.json in Resources */,
 				EA68A0EA1AADF62F003F0425 /* find-friends.json in Resources */,
-				126E052F1B152CF00036DFA6 /* AlertHeaderView.xib in Resources */,
 				1DF7416E1BFA65F0000F5349 /* link_normal.svg in Resources */,
 				12ECFFFE1DDA146A007F22C5 /* category.json in Resources */,
 				76F8DEAD1B6C0BC4009BCF61 /* abracket_selected.svg in Resources */,

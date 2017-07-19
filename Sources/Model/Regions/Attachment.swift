@@ -32,8 +32,8 @@ final class Attachment: JSONAble {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // required
         self.url = decoder.decodeKey("url")
         // optional
@@ -42,7 +42,7 @@ final class Attachment: JSONAble {
         self.size = decoder.decodeOptionalKey("size")
         self.type = decoder.decodeOptionalKey("type")
         self.image = decoder.decodeOptionalKey("image")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

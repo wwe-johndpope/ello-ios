@@ -27,8 +27,8 @@ class ElloLogoView: UIImageView {
     fileprivate var wasAnimating = false
     fileprivate var config: ElloLogoView.Config = .normal
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 
     convenience init() {

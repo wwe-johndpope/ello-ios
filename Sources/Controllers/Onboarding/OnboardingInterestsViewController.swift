@@ -14,7 +14,7 @@ class OnboardingInterestsViewController: StreamableViewController {
         streamViewController.streamKind = .allCategories
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

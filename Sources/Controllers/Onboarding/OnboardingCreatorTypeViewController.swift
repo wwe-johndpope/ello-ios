@@ -24,6 +24,7 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
 
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!
+    weak var delegate: DynamicSettingsDelegate?
 
     override func loadView() {
         let screen = OnboardingCreatorTypeScreen()
@@ -60,6 +61,14 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
     override func backTapped() {
         super.backTapped()
         saveCreatorType()
+            .thenFinally { user in
+                self.delegate?.dynamicSettingsUserChanged(user)
+            }
+            .catch { error in
+                let alertController = AlertViewController(error: InterfaceString.GenericError)
+                self.appViewController?.present(alertController, animated: true, completion: nil)
+                print(error)
+            }
     }
 
 }
@@ -111,15 +120,11 @@ extension OnboardingCreatorTypeViewController: OnboardingStepController {
         guard creatorType.isValid else { return }
 
         saveCreatorType()
-            .thenFinally { [weak self] _ in
-                guard let `self` = self else { return }
-
+            .thenFinally { _ in
                 self.onboardingData.creatorType = self.creatorType
                 proceedClosure(.continue)
             }
-            .catch { [weak self] _ in
-                guard let `self` = self else { return }
-
+            .catch { _ in
                 let alertController = AlertViewController(error: InterfaceString.GenericError)
                 self.appViewController?.present(alertController, animated: true, completion: nil)
                 proceedClosure(.error)

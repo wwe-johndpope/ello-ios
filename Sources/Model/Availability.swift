@@ -24,14 +24,14 @@ final class Availability: JSONAble {
         super.init(version: AvailabilityVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.isUsernameAvailable = decoder.decodeKey("isUsernameAvailable")
         self.isEmailAvailable = decoder.decodeKey("isEmailAvailable")
         self.isInvitationCodeAvailable = decoder.decodeKey("isInvitationCodeAvailable")
         self.usernameSuggestions = decoder.decodeKey("usernameSuggestions")
         self.emailSuggestion = decoder.decodeKey("emailSuggestion")
-        super.init(coder: aDecoder)
+        super.init(coder: coder)
     }
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {

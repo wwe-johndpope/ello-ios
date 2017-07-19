@@ -53,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = AppViewController()
+        let appController = AppViewController()
+        window.rootViewController = appController
         window.makeKeyAndVisible()
         self.window = window
 

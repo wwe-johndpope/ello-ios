@@ -18,11 +18,11 @@ final class DynamicSettingCategory: JSONAble {
         super.init(version: DynamicSettingCategoryVersion)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.label = decoder.decodeKey("label")
         self.settings = decoder.decodeKey("settings")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

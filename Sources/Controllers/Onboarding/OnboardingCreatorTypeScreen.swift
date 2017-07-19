@@ -191,6 +191,11 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
                     make.bottom.equalTo(creatorButtonsContainer)
                 }
                 make.height.equalTo(Size.buttonHeight)
+
+                if creatorCategories.count == 1 {
+                    let width = (UIScreen.main.bounds.width - 3 * Size.margins) / 2
+                    make.width.equalTo(width)
+                }
             }
             row.append(categoryView)
 

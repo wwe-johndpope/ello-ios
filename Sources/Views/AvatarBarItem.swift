@@ -16,7 +16,7 @@ class AvatarBarItem: UITabBarItem {
         self.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("This isn't implemented")
     }
 

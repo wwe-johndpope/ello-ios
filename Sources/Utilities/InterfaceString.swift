@@ -243,7 +243,7 @@ struct InterfaceString {
     }
 
     struct PushNotifications {
-        static let PermissionPrompt: String = NSLocalizedString("Ello would like to send you push notifications.\n\nWe will let you know when you have new notifications. You can makes changes in your settings.\n", comment: "Turn on Push Notifications prompt")
+        static let PermissionPrompt: String = NSLocalizedString("Ello would like to send you push notifications.\n\nWe will let you know when you have new notifications. You can make changes in your settings.\n", comment: "Turn on Push Notifications prompt")
         static let PermissionYes: String = NSLocalizedString("Yes please", comment: "Allow")
         static let PermissionNo: String = NSLocalizedString("No thanks", comment: "Disallow")
     }

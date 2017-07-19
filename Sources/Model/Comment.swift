@@ -59,8 +59,8 @@ final class ElloComment: JSONAble, Authorable, Groupable {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
@@ -72,7 +72,7 @@ final class ElloComment: JSONAble, Authorable, Groupable {
         // optional
         self.body = decoder.decodeOptionalKey("body")
         self.summary = decoder.decodeOptionalKey("summary")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

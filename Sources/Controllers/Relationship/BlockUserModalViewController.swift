@@ -23,7 +23,7 @@ class BlockUserModalViewController: BaseElloViewController, BlockUserModalDelega
         modalTransitionStyle = .crossDissolve
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

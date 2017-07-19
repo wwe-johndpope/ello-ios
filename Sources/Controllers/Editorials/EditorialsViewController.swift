@@ -30,7 +30,7 @@ class EditorialsViewController: StreamableViewController {
         streamViewController.initialLoadClosure = { [weak self] in self?.loadEditorials() }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

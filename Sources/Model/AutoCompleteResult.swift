@@ -29,15 +29,15 @@ final class AutoCompleteResult: JSONAble {
     }
 
     // MARK: NSCoding
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.url = decoder.decodeOptionalKey("url")
         self.name = decoder.decodeOptionalKey("name")
         let version: Int = decoder.decodeKey("version")
         if version > 1 {
             self.image = decoder.decodeOptionalKey("image")
         }
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

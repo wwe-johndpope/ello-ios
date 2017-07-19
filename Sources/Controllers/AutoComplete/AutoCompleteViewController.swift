@@ -17,7 +17,7 @@ class AutoCompleteViewController: UIViewController {
         super.init(nibName: "AutoCompleteViewController", bundle: .none)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

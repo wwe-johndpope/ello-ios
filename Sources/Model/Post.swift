@@ -138,8 +138,8 @@ final class Post: JSONAble, Authorable, Groupable {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
@@ -172,7 +172,7 @@ final class Post: JSONAble, Authorable, Groupable {
         self.commentsCount = decoder.decodeOptionalKey("commentsCount")
         self.repostsCount = decoder.decodeOptionalKey("repostsCount")
         self.lovesCount = decoder.decodeOptionalKey("lovesCount")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
 
         commentsCountChangedNotification = NotificationObserver(notification: PostCommentsCountChangedNotification) { (post, delta) in
             if post.id == self.id {

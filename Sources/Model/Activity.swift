@@ -83,8 +83,8 @@ final class Activity: JSONAble {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
@@ -93,7 +93,7 @@ final class Activity: JSONAble {
         self.kind = Kind(rawValue: rawKind) ?? Kind.unknown
         let rawSubjectType: String = decoder.decodeKey("rawSubjectType")
         self.subjectType = SubjectType(rawValue: rawSubjectType) ?? SubjectType.unknown
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

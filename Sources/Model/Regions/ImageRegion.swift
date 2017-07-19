@@ -30,15 +30,15 @@ final class ImageRegion: JSONAble, Regionable {
 
 // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // required
         self.isRepost = decoder.decodeKey("isRepost")
         // optional
         self.alt = decoder.decodeOptionalKey("alt")
         self.url = decoder.decodeOptionalKey("url")
         self.buyButtonURL = decoder.decodeOptionalKey("buyButtonURL")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

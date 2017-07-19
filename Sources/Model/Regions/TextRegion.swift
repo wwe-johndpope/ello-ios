@@ -29,11 +29,11 @@ final class TextRegion: JSONAble, Regionable {
         super.encode(with: coder.coder)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.content = decoder.decodeKey("content")
         self.isRepost = decoder.decodeKey("isRepost")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
 // MARK: JSONAble

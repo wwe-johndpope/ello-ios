@@ -55,8 +55,8 @@ final class EmbedRegion: JSONAble, Regionable {
 
     // MARK: NSCoding
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         // active record
         self.id = decoder.decodeKey("id")
         // required
@@ -66,7 +66,7 @@ final class EmbedRegion: JSONAble, Regionable {
         self.url = decoder.decodeKey("url")
         self.thumbnailSmallUrl = decoder.decodeKey("thumbnailSmallUrl")
         self.thumbnailLargeUrl = decoder.decodeKey("thumbnailLargeUrl")
-        super.init(coder: decoder.coder)
+        super.init(coder: coder)
     }
 
     override func encode(with encoder: NSCoder) {

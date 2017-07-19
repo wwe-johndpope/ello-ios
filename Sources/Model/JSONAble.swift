@@ -23,8 +23,8 @@ class JSONAble: NSObject, NSCoding {
         super.init()
     }
 
-    required init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    required init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.links = decoder.decodeOptionalKey("links")
         self.version = decoder.decodeKey("version")
     }

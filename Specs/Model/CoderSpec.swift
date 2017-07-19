@@ -74,8 +74,8 @@ class CoderSpecFake: NSObject {
         coder.encodeObject(optionalBoolProperty, forKey: "optionalBoolProperty")
     }
 
-    init(coder aDecoder: NSCoder) {
-        let decoder = Coder(aDecoder)
+    init(coder: NSCoder) {
+        let decoder = Coder(coder)
         self.stringProperty = decoder.decodeKey("stringProperty")
         self.intProperty = decoder.decodeKey("intProperty")
         self.boolProperty = decoder.decodeKey("boolProperty")
