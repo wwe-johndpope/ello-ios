@@ -73,7 +73,7 @@ struct ElloKeychain: KeychainType {
 
     var isStaff: Bool? {
         get { return keychain[data: AuthIsStaff]?.toBool() }
-        set { keychain[data: AuthIsNabaroo] = newValue?.toData() }
+        set { keychain[data: AuthIsStaff] = newValue?.toData() }
     }
 
     var isNabaroo: Bool? {

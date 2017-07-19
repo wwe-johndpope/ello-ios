@@ -96,6 +96,5 @@ struct AuthToken {
         keychain.isPasswordBased = false
         keychain.username = nil
         keychain.password = nil
-        keychain.isStaff = nil
     }
 }
