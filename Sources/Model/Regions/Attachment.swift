@@ -19,6 +19,10 @@ final class Attachment: JSONAble {
     var type: String?
     var image: UIImage?
 
+    var isGif: Bool {
+        return type == "image/gif" || url.lastPathComponent.hasSuffix(".gif") == true
+    }
+
 // MARK: Initialization
 
     init(url: URL) {

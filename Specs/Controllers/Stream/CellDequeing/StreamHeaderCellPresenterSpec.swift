@@ -11,7 +11,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
     override func spec() {
         describe("StreamHeaderCellPresenter") {
             let currentUser: User = stub(["username": "ello"])
-            let textRegion: TextRegion = stub(["content" : "I am your comment's content"])
+            let textRegion: TextRegion = stub(["content": "I am your comment's content"])
             let content = [textRegion]
 
             var cell: StreamHeaderCell!
@@ -24,12 +24,11 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
             context("when item is a Post Header") {
                 beforeEach {
                     let post: Post = stub([
-                        "id" : "768",
                         "author": currentUser,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14,
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14,
                         "createdAt": Date(timeIntervalSinceNow: -1000),
                     ])
 
@@ -128,12 +127,11 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                         "relationshipPriority": RelationshipPriority.following.rawValue,
                     ])
                     let post: Post = stub([
-                        "id" : "768",
                         "author": currentUser,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14,
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14,
                         "repostAuthor": repostAuthor,
                     ])
 
@@ -174,6 +172,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
             }
 
             context("when item is a Post Header with author and PostDetail streamKind") {
+                let postId = "768"
                 beforeEach {
                     let author: User = stub([
                         "id": "authorId",
@@ -181,12 +180,12 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                         "relationshipPriority": RelationshipPriority.following.rawValue,
                     ])
                     let post: Post = stub([
-                        "id" : "768",
+                        "id": postId,
                         "author": author,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14,
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14,
                     ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
@@ -194,7 +193,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = false
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: "768"), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: postId), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                     expect(cell.followButtonVisible) == true
                     expect(cell.relationshipControl.userId) == "authorId"
                     expect(cell.relationshipControl.userAtName) == "@author"
@@ -203,6 +202,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
             }
 
             context("when item is a Post Header with repostAuthor and PostDetail streamKind") {
+                let postId = "768"
                 beforeEach {
                     let repostAuthor: User = stub([
                         "id": "reposterId",
@@ -210,12 +210,12 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                         "relationshipPriority": RelationshipPriority.following.rawValue,
                     ])
                     let post: Post = stub([
-                        "id" : "768",
+                        "id": postId,
                         "author": currentUser,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14,
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14,
                         "repostAuthor": repostAuthor,
                     ])
 
@@ -224,7 +224,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = false
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: "768"), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: postId), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                     expect(cell.followButtonVisible) == true
                     expect(cell.relationshipControl.userId) == "reposterId"
                     expect(cell.relationshipControl.userAtName) == "@reposter"
@@ -236,12 +236,11 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 beforeEach {
                     let category: Ello.Category = stub(["name": "Art"])
                     let post: Post = stub([
-                        "id" : "768",
                         "author": currentUser,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14,
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14,
                         "categories": [category],
                     ])
 
@@ -258,7 +257,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
                 it("hides categoryButton if not in .Featured stream") {
                     cell.followButtonVisible = false
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: "768"), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                     expect(cell.followButtonVisible) == false
                     expect(cell.relationshipControl.isHidden) == true
                     expect(cell.categoryButton.isHidden) == true
@@ -268,12 +267,11 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
             context("when item is a Post Header with author and PostDetail streamKind, but currentUser is the author") {
                 beforeEach {
                     let post: Post = stub([
-                        "id" : "768",
                         "author": currentUser,
-                        "viewsCount" : 9,
-                        "repostsCount" : 4,
-                        "commentsCount" : 6,
-                        "lovesCount" : 14,
+                        "viewsCount": 9,
+                        "repostsCount": 4,
+                        "commentsCount": 6,
+                        "lovesCount": 14,
                         ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
@@ -281,7 +279,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = true
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: "768"), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
                     expect(cell.followButtonVisible) == false
                 }
             }
@@ -290,16 +288,15 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 context("when currentUser is not the author") {
                     beforeEach {
                         let post: Post = stub([
-                            "id" : "768",
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 14,
+                            "viewsCount": 9,
+                            "repostsCount": 4,
+                            "commentsCount": 6,
+                            "lovesCount": 14,
                         ])
                         let comment: ElloComment = stub([
-                            "id" : "362",
-                            "parentPost" : post,
-                            "content" : content
+                            "id": "362",
+                            "parentPost": post,
+                            "content": content
                         ])
 
                         cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
@@ -342,17 +339,16 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 context("when currentUser is the post author") {
                     beforeEach {
                         let post: Post = stub([
-                            "id" : "768",
                             "author": currentUser,
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 14,
+                            "viewsCount": 9,
+                            "repostsCount": 4,
+                            "commentsCount": 6,
+                            "lovesCount": 14,
                             ])
                         let comment: ElloComment = stub([
-                            "id" : "362",
-                            "loadedFromPost" : post,
-                            "content" : content
+                            "id": "362",
+                            "loadedFromPost": post,
+                            "content": content
                             ])
 
                         cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
@@ -371,19 +367,19 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     beforeEach {
                         let reposter: User = stub([:])
                         let repost: Post = stub([
-                            "id" : "901",
+                            "id": "901",
                             "author": reposter,
                             "repostAuthor": currentUser,
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 14,
+                            "viewsCount": 9,
+                            "repostsCount": 4,
+                            "commentsCount": 6,
+                            "lovesCount": 14,
                             ])
                         let comment: ElloComment = stub([
-                            "id" : "362",
-                            "parentPost" : repost,
+                            "id": "362",
+                            "parentPost": repost,
                             "loadedFromPost": repost,
-                            "content" : content
+                            "content": content
                             ])
 
                         cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
@@ -401,17 +397,16 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 context("when currentUser is the comment author") {
                     beforeEach {
                         let post: Post = stub([
-                            "id" : "768",
-                            "viewsCount" : 9,
-                            "repostsCount" : 4,
-                            "commentsCount" : 6,
-                            "lovesCount" : 14,
+                            "viewsCount": 9,
+                            "repostsCount": 4,
+                            "commentsCount": 6,
+                            "lovesCount": 14,
                             ])
                         let comment: ElloComment = stub([
-                            "id" : "362",
+                            "id": "362",
                             "author": currentUser,
-                            "parentPost" : post,
-                            "content" : content
+                            "parentPost": post,
+                            "content": content
                             ])
 
                         cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell

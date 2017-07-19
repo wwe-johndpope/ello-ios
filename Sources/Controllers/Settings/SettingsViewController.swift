@@ -285,7 +285,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         navigationItem.fixNavBarItemPadding()
     }
 
-    @IBAction func searchButtonTapped() {
+    @IBAction
+    func searchButtonTapped() {
         containerController?.searchButtonTapped()
     }
 
@@ -306,7 +307,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         let updateNameFunction = debounce(0.5) { [weak self] in
             guard let `self` = self else { return }
             let name = self.nameTextFieldView.textField.text ?? ""
-            ProfileService().updateUserProfile(["name": name])
+            ProfileService().updateUserProfile([.name: name])
                 .thenFinally { user in
                     self.updateCurrentUser(user)
                     self.nameTextFieldView.setState(.ok)
@@ -333,7 +334,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                 let bio = self.bioTextView.text
             else { return }
 
-            ProfileService().updateUserProfile(["unsanitized_short_bio": bio])
+            ProfileService().updateUserProfile([.bio: bio])
                 .thenFinally { user in
                     self.updateCurrentUser(user)
                     self.bioTextStatusImage.image = ValidationState.ok.imageRepresentation
@@ -358,7 +359,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                 let links = self.linksTextFieldView.textField.text
             else { return }
 
-            ProfileService().updateUserProfile(["external_links": links])
+            ProfileService().updateUserProfile([.links: links])
                 .thenFinally { user in
                     self.updateCurrentUser(user)
                     self.linksTextFieldView.setState(.ok)
@@ -388,7 +389,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             else { return }
 
             if location != self.currentUser?.location {
-                ProfileService().updateUserProfile(["location": location])
+                ProfileService().updateUserProfile([.location: location])
                     .thenFinally { user in
                         self.updateCurrentUser(user)
                         guard let count = self.locationTextFieldView.textField.text?.characters.count, count > 0 else {
@@ -456,12 +457,14 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    @IBAction func logOutTapped() {
+    @IBAction
+    func logOutTapped() {
         Tracker.shared.tappedLogout()
         postNotification(AuthenticationNotifications.userLoggedOut, value: ())
     }
 
-    @IBAction func coverImageTapped() {
+    @IBAction
+    func coverImageTapped() {
         photoSaveCallback = { image in
             _ = ElloHUD.showLoadingHud()
             ProfileService().updateUserCoverImage(ImageRegionData(image: image))
@@ -482,7 +485,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         openImagePicker()
     }
 
-    @IBAction func avatarImageTapped() {
+    @IBAction
+    func avatarImageTapped() {
         photoSaveCallback = { image in
             _ = ElloHUD.showLoadingHud()
             ProfileService().updateUserAvatarImage(ImageRegionData(image: image))
@@ -553,7 +557,7 @@ extension SettingsViewController: CredentialSettingsResponder, DynamicSettingsDe
 
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image.copyWithCorrectOrientationAndSize { image in
                 if let image = image {

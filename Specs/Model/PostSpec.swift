@@ -107,9 +107,8 @@ class PostSpec: QuickSpec {
 
             beforeEach {
                 post = Post.stub([
-                    "id" : "768",
-                    "content" : [TextRegion.stub([:]), TextRegion.stub([:])],
-                    "summary" : [TextRegion.stub([:])]
+                    "content": [TextRegion.stub([:]), TextRegion.stub([:])],
+                    "summary": [TextRegion.stub([:])]
                 ])
             }
 
@@ -158,7 +157,6 @@ class PostSpec: QuickSpec {
                     expect(textRegion.content) == "I am your content for sure"
                     expect(imageRegion.alt) == "some-altness"
                     expect(imageRegion.url?.absoluteString) == "http://www.example5.com"
-                    expect(imageAsset.id) == "qwerty"
 
                     let assetXhdpi = imageAsset.xhdpi!
                     expect(assetXhdpi.url.absoluteString) == "http://www.example2.com"
@@ -176,42 +174,40 @@ class PostSpec: QuickSpec {
                 }
 
                 it("decodes successfully") {
-                    let expectedCreatedAt = Date()
+                    let expectedCreatedAt = AppSetup.shared.now
                     let author: User = stub([
-                        "id" : "555",
                         "username": "thenim"
                     ])
 
                     let hdpi: Attachment = stub([
-                        "url" : URL(string: "http://www.example.com")!,
-                        "height" : 35,
-                        "width" : 45,
-                        "type" : "jpeg",
-                        "size" : 445566
+                        "url": URL(string: "http://www.example.com")!,
+                        "height": 35,
+                        "width": 45,
+                        "type": "jpeg",
+                        "size": 445566
                     ])
 
                     let xhdpi: Attachment = stub([
-                        "url" : URL(string: "http://www.example2.com")!,
-                        "height" : 99,
-                        "width" : 10,
-                        "type" : "png",
-                        "size" : 986896
+                        "url": URL(string: "http://www.example2.com")!,
+                        "height": 99,
+                        "width": 10,
+                        "type": "png",
+                        "size": 986896
                     ])
 
                     let asset: Asset = stub([
-                        "id" : "qwerty",
-                        "hdpi" : hdpi,
-                        "xhdpi" : xhdpi
+                        "hdpi": hdpi,
+                        "xhdpi": xhdpi
                     ])
 
                     let textRegion: TextRegion = stub([
-                        "content" : "I am your content for sure"
+                        "content": "I am your content for sure"
                     ])
 
                     let imageRegion: ImageRegion = stub([
-                        "asset" : asset,
-                        "alt" : "some-altness",
-                        "url" : URL(string: "http://www.example5.com")!
+                        "asset": asset,
+                        "alt": "some-altness",
+                        "url": URL(string: "http://www.example5.com")!
                     ])
 
                     let comment: ElloComment = stub([
@@ -223,32 +219,27 @@ class PostSpec: QuickSpec {
                     let repostContent = [textRegion, imageRegion]
 
                     let post: Post = stub([
-                        // active record
-                        "id" : "768",
-                        "createdAt" : expectedCreatedAt,
-                        // required
-                        "href" : "0987",
-                        "token" : "toke-en",
-                        "contentWarning" : "NSFW.",
-                        "allowComments" : true,
-                        "summary" : summary,
-                        // optional
-                        "content" : content,
-                        "repostContent" : repostContent,
-                        "repostId" : "910",
-                        "repostPath" : "http://ello.co/910",
-                        "repostViaId" : "112",
-                        "repostViaPath" : "http://ello.co/112",
-                        "viewsCount" : 78,
-                        "commentsCount" : 6,
-                        "repostsCount" : 99,
-                        "lovesCount" : 100,
-                        "reposted" : true,
-                        "loved" : true,
-                        // links
-                        "assets" : [asset],
-                        "author" : author,
-                        "comments" : [comment]
+                        "createdAt": expectedCreatedAt,
+                        "href": "0987",
+                        "token": "toke-en",
+                        "contentWarning": "NSFW.",
+                        "allowComments": true,
+                        "summary": summary,
+                        "content": content,
+                        "repostContent": repostContent,
+                        "repostId": "910",
+                        "repostPath": "http://ello.co/910",
+                        "repostViaId": "112",
+                        "repostViaPath": "http://ello.co/112",
+                        "viewsCount": 78,
+                        "commentsCount": 6,
+                        "repostsCount": 99,
+                        "lovesCount": 100,
+                        "reposted": true,
+                        "loved": true,
+                        "assets": [asset],
+                        "author": author,
+                        "comments": [comment]
                     ])
 
                     NSKeyedArchiver.archiveRootObject(post, toFile: filePath)
@@ -257,7 +248,7 @@ class PostSpec: QuickSpec {
                     expect(unArchivedPost).toNot(beNil())
                     expect(unArchivedPost.version) == 2
                     // active record
-                    expect(unArchivedPost.id) == "768"
+                    expect(unArchivedPost.id) == post.id
                     expect(unArchivedPost.createdAt) == expectedCreatedAt as Date
                     // required
                     expect(unArchivedPost.href) == "0987"
@@ -280,7 +271,7 @@ class PostSpec: QuickSpec {
                     expect(unArchivedPost.reposted) == true
                     expect(unArchivedPost.loved) == true
                     // links
-                    expect(unArchivedPost.author?.id) == "555"
+                    expect(unArchivedPost.author?.id) == author.id
                     expect(unArchivedPost.assets.count) == 1
                     expect(unArchivedPost.comments!.count) == 1
                     expect(unArchivedPost.comments![0]).to(beAKindOf(ElloComment.self))

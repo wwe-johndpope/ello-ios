@@ -51,7 +51,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                 _ = subject.view
             }
 
-            it("sets following as the selected tab") {
+            it("sets home as the selected tab") {
                 if let navigationController = subject.selectedViewController as? ElloNavigationController {
                     navigationController.currentUser = User.stub(["username": "foo"])
                     if let firstController = navigationController.topViewController as? BaseElloViewController {
@@ -145,7 +145,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                         it("posts a NewContentNotifications.reloadStreamContent"){
                             showController(subject)
                             var reloadPosted = false
-                            subject.followingDot?.isHidden = false
+                            subject.homeDot?.isHidden = false
                             _ = NotificationObserver(notification: NewContentNotifications.reloadFollowingContent) {
                                 reloadPosted = true
                             }
@@ -212,7 +212,7 @@ class ElloTabBarControllerSpec: QuickSpec {
 
             beforeEach {
                 prevTabValues = [
-                    ElloTab.following: GroupDefaults[ElloTab.following.narrationDefaultKey].bool,
+                    ElloTab.home: GroupDefaults[ElloTab.home.narrationDefaultKey].bool,
                     ElloTab.discover: GroupDefaults[ElloTab.discover.narrationDefaultKey].bool,
                     ElloTab.omnibar: GroupDefaults[ElloTab.omnibar.narrationDefaultKey].bool,
                     ElloTab.notifications: GroupDefaults[ElloTab.notifications.narrationDefaultKey].bool,
@@ -239,7 +239,7 @@ class ElloTabBarControllerSpec: QuickSpec {
             }
 
             it("should never change the key") {
-                expect(ElloTab.following.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationStream"
+                expect(ElloTab.home.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationStream"
                 expect(ElloTab.discover.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationDiscover"
                 expect(ElloTab.omnibar.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationOmnibar"
                 expect(ElloTab.notifications.narrationDefaultKey) == "ElloTabBarControllerDidShowNarrationNotifications"
@@ -247,21 +247,21 @@ class ElloTabBarControllerSpec: QuickSpec {
             }
 
             it("should set the narration values") {
-                let tab = ElloTab.following
+                let tab = ElloTab.home
                 ElloTabBarController.didShowNarration(tab, false)
                 expect(GroupDefaults[tab.narrationDefaultKey].bool).to(beFalse())
                 ElloTabBarController.didShowNarration(tab, true)
                 expect(GroupDefaults[tab.narrationDefaultKey].bool).to(beTrue())
             }
             it("should get the narration values") {
-                let tab = ElloTab.following
+                let tab = ElloTab.home
                 GroupDefaults[tab.narrationDefaultKey] = false
                 expect(ElloTabBarController.didShowNarration(tab)).to(beFalse())
                 GroupDefaults[tab.narrationDefaultKey] = true
                 expect(ElloTabBarController.didShowNarration(tab)).to(beTrue())
             }
             it("should NOT show the narrationView when changing to a tab that has already shown the narrationView") {
-                ElloTabBarController.didShowNarration(.following, true)
+                ElloTabBarController.didShowNarration(.home, true)
                 ElloTabBarController.didShowNarration(.discover, true)
                 ElloTabBarController.didShowNarration(.omnibar, true)
                 ElloTabBarController.didShowNarration(.notifications, true)
@@ -273,7 +273,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                 expect(subject.isShowingNarration).to(beFalse())
             }
             it("should show the narrationView when changing to a tab that hasn't shown the narrationView yet") {
-                ElloTabBarController.didShowNarration(.following, false)
+                ElloTabBarController.didShowNarration(.home, false)
                 ElloTabBarController.didShowNarration(.discover, false)
                 ElloTabBarController.didShowNarration(.omnibar, false)
                 ElloTabBarController.didShowNarration(.notifications, false)

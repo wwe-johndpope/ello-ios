@@ -13,7 +13,7 @@ class NotificationsFilterBarSpec: QuickSpec {
         var button1 = UIButton()
         var button2 = UIButton()
         var button3 = UIButton()
-        var buttons : [UIButton] = []
+        var buttons: [UIButton] = []
         var rect = CGRect(x:0,y:0,width:0,height:0)
 
         describe("Is not broken") {

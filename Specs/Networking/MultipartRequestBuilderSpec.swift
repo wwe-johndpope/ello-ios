@@ -12,7 +12,7 @@ class MultipartRequestBuilderSpec: QuickSpec {
         let url = URL(string: "http://ello.co")!
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
         var content = ""
-        var builder : MultipartRequestBuilder!
+        var builder: MultipartRequestBuilder!
 
         describe("building a multipart request") {
             beforeEach {

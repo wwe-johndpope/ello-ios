@@ -45,8 +45,8 @@ class OnboardingScreen: EmptyScreen {
     }
 
     override func setText() {
-        promptButton.setTitle(InterfaceString.Onboard.CreateProfile, for: .normal)
-        nextButton.setTitle(InterfaceString.Onboard.CreateProfile, for: .normal)
+        promptButton.setTitle("", for: .normal)
+        nextButton.setTitle("", for: .normal)
         abortButton.setTitle(InterfaceString.Onboard.ImDone, for: .normal)
     }
 
@@ -104,6 +104,7 @@ class OnboardingScreen: EmptyScreen {
     func styleFor(step: OnboardingStep) {
         let nextString: String
         switch step {
+        case .creatorType: nextString = InterfaceString.Onboard.CreateAccount
         case .categories: nextString = InterfaceString.Onboard.CreateProfile
         case .createProfile: nextString = InterfaceString.Onboard.InvitePeople
         case .inviteFriends: nextString = InterfaceString.Join.Discover

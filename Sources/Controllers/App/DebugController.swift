@@ -14,7 +14,7 @@ struct DebugSettings {
 enum DebugServer: String {
     static var fromDefaults: DebugServer? {
         guard
-            !AppSetup.sharedState.isTesting,
+            !AppSetup.shared.isTesting,
             let name = GroupDefaults[DebugSettings.useStaging].string,
             let server = DebugServer(rawValue: name)
         else { return nil }
@@ -85,11 +85,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             appController.closeTodoController {
                 appController.userLoggedOut()
             }
-        }
-
-        addAction(name: "Adjust Image Quality") {
-            let controller = DebugImageUploadController()
-            self.navigationController?.pushViewController(controller, animated: true)
         }
 
         addAction(name: "Debug Tracking") {

@@ -35,7 +35,7 @@ struct AnimationOptions {
 let DefaultAnimationDuration: TimeInterval = 0.2
 let DefaultAppleAnimationDuration: TimeInterval = 0.3
 func animate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
-    let shouldAnimate: Bool = animated ?? !AppSetup.sharedState.isTesting
+    let shouldAnimate: Bool = animated ?? !AppSetup.shared.isTesting
     let options = AnimationOptions(duration: duration, delay: delay, options: options, completion: completion)
     animate(options: options, animated: shouldAnimate, animations: animations)
 }
@@ -83,10 +83,10 @@ func times(_ times: Int, block: Block) {
 }
 
 func profiler(_ message: String = "") -> Block {
-    let start = Date()
+    let start = AppSetup.shared.now
     print("--------- PROFILING \(message)...")
     return {
-        print("--------- PROFILING \(message): \(Date().timeIntervalSince(start))")
+        print("--------- PROFILING \(message): \(AppSetup.shared.now.timeIntervalSince(start))")
     }
 }
 
@@ -174,7 +174,7 @@ func once(_ block: @escaping Block) -> Block {
 }
 
 func inBackground(_ block: @escaping Block) {
-    if AppSetup.sharedState.isTesting {
+    if AppSetup.shared.isTesting {
         block()
     }
     else {
@@ -187,7 +187,7 @@ func inForeground(_ block: @escaping Block) {
 }
 
 func nextTick(_ block: @escaping Block) {
-    if AppSetup.sharedState.isTesting {
+    if AppSetup.shared.isTesting {
         if Thread.isMainThread {
             block()
         }

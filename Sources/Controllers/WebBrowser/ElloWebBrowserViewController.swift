@@ -97,8 +97,8 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
 }
 
-// MARK: ElloWebBrowserViewController : WebLinkResponder
-extension ElloWebBrowserViewController : WebLinkResponder {
+// MARK: ElloWebBrowserViewController: WebLinkResponder
+extension ElloWebBrowserViewController: WebLinkResponder {
 
     func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
         switch type.uri {
@@ -154,7 +154,7 @@ extension ElloWebBrowserViewController : WebLinkResponder {
              .following,
              .noise,
              .starred:
-            self.selectTab(.following)
+            self.selectTab(.home)
         case .notifications: self.selectTab(.notifications)
         case .post,
              .pushNotificationPost,

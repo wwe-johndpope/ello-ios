@@ -5,56 +5,26 @@
 import SwiftyUserDefaults
 
 class AppSetup {
-    struct Size {
-        static let calculatorHeight = CGFloat(20)
-    }
+    static var shared: AppSetup = AppSetup()
 
-    var isTesting = false
-    fileprivate var _isSimulator: Bool?
-    var isSimulator: Bool {
-        get {
-            return _isSimulator ?? AppSetup.isRunningOnSimulator }
-        set {
-            if newValue == true {
-                _isSimulator = nil
-            }
-            else {
-                _isSimulator = false
-            }
-        }
-    }
+    lazy var isTesting: Bool = _isTesting()
+    lazy var isSimulator: Bool = _isRunningOnSimulator()
+    var imageQuality: CGFloat = 0.8
+    var nowGenerator: () -> Date = { return Date() }
+    var now: Date { return nowGenerator() }
 
-    /// Return true is application is running on simulator
-    fileprivate static var isRunningOnSimulator: Bool {
-        // http://stackoverflow.com/questions/24869481/detect-if-app-is-being-built-for-device-or-simulator-in-swift
-        #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
-            return true
-        #else
-            return false
-        #endif
-    }
+    var cachedCategories: [Category]?
+}
 
-    var imageQuality: CGFloat {
-        get {
-            return CGFloat(GroupDefaults["ElloImageUploadQuality"].double ?? 0.8)
-        }
-        set {
-            let quality = Double(newValue)
-            GroupDefaults["ElloImageUploadQuality"] = quality
-        }
-    }
+private func _isRunningOnSimulator() -> Bool {
+    // http://stackoverflow.com/questions/24869481/detect-if-app-is-being-built-for-device-or-simulator-in-swift
+    #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+        return true
+    #else
+        return false
+    #endif
+}
 
-    class var sharedState: AppSetup {
-        struct Static {
-            static let instance = AppSetup()
-        }
-        return Static.instance
-    }
-
-    init() {
-        if NSClassFromString("XCTest") != nil {
-            isTesting = true
-        }
-    }
-
+private func _isTesting() -> Bool {
+    return NSClassFromString("XCTest") != nil
 }

@@ -17,7 +17,7 @@ class DateSpecs: QuickSpec {
 
             let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
             let sep_30_1978_again = Date(timeIntervalSince1970: 275961600)
-            let now = Date()
+            let now = AppSetup.shared.now
 
             describe("toServerDateString()") {
                 // tested in DateFormatterSpec

@@ -14,7 +14,7 @@ class ProfileCategoriesViewControllerSpec: QuickSpec {
             var subject: ProfileCategoriesViewController!
             var navVC: ElloNavigationController!
             var profileVC: ProfileViewController!
-            let art = Ello.Category.stub(["level" : "primary", "slug" : "art"])
+            let art = Ello.Category.stub(["level": "primary", "slug": "art"])
 
             beforeEach {
                 UIView.setAnimationsEnabled(false)

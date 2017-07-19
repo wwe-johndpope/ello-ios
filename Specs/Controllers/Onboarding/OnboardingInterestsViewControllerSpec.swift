@@ -1,5 +1,5 @@
 ////
-///  CategoriesSelectionViewControllerSpec.swift
+///  OnboardingInterestsViewControllerSpec.swift
 //
 
 @testable import Ello
@@ -7,14 +7,14 @@ import Quick
 import Nimble
 
 
-class CategoriesSelectionViewControllerSpec: QuickSpec {
+class OnboardingInterestsViewControllerSpec: QuickSpec {
     override func spec() {
-        var subject: CategoriesSelectionViewController!
+        var subject: OnboardingInterestsViewController!
         beforeEach {
-            subject = CategoriesSelectionViewController()
+            subject = OnboardingInterestsViewController()
             subject.onboardingData = OnboardingData()
         }
-        describe("CategoriesSelectionViewController") {
+        describe("OnboardingInterestsViewController") {
             var categories: [Ello.Category]!
             beforeEach {
                 let category: Ello.Category = stub(["name": "Art"])

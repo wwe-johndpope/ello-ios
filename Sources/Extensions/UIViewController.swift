@@ -39,7 +39,7 @@ extension UIViewController {
         options: UIViewAnimationOptions = [],
         animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil)
     {
-        if AppSetup.sharedState.isTesting {
+        if AppSetup.shared.isTesting {
             animations?()
             self.transition(from: fromViewController,
                 to: toViewController,

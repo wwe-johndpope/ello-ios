@@ -12,7 +12,7 @@ class AmazonCredentialsSpec: QuickSpec {
     override func spec() {
         describe("requesting credentials") {
             describe("requesting an AmazonCredentials object") {
-                var credentials : AmazonCredentials?
+                var credentials: AmazonCredentials?
                 beforeEach() {
                     credentials = nil
                     ElloProvider.shared.request(.amazonCredentials)

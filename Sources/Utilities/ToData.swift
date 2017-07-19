@@ -7,21 +7,21 @@ protocol ToData {
 }
 
 
-extension Data : ToData {
+extension Data: ToData {
     func toData() -> Data? {
         return self
     }
 }
 
 
-extension String : ToData {
+extension String: ToData {
     func toData() -> Data? {
         return self.data(using: String.Encoding.utf8)
     }
 }
 
 
-extension UIImage : ToData {
+extension UIImage: ToData {
     func toData() -> Data? {
         return UIImagePNGRepresentation(self)
     }

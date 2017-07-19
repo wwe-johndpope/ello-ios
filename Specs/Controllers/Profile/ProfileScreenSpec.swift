@@ -42,7 +42,7 @@ class ProfileScreenSpec: QuickSpec {
                 context("current user") {
 
                     validateAllSnapshots(named: "ProfileScreen_is_current_user") {
-                        let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "self"])
+                        let user = User.stub(["username": "Archer", "relationshipPriority": "self"])
                         subject.configureButtonsForCurrentUser()
                         subject.relationshipControl.userId = user.id
                         subject.relationshipControl.userAtName = user.atName
@@ -55,7 +55,7 @@ class ProfileScreenSpec: QuickSpec {
                 context("not current user") {
 
                     it("is hireable not collaborateable") {
-                        let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
+                        let user = User.stub(["username": "Archer", "relationshipPriority": "friend"])
                         subject.configureButtonsForNonCurrentUser(isHireable: true, isCollaborateable: false)
                         subject.relationshipControl.userId = user.id
                         subject.relationshipControl.userAtName = user.atName
@@ -66,7 +66,7 @@ class ProfileScreenSpec: QuickSpec {
                     }
 
                     it("is collaborateable not hireable") {
-                        let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
+                        let user = User.stub(["username": "Archer", "relationshipPriority": "friend"])
                         subject.configureButtonsForNonCurrentUser(isHireable: false, isCollaborateable: true)
                         subject.relationshipControl.userId = user.id
                         subject.relationshipControl.userAtName = user.atName
@@ -78,7 +78,7 @@ class ProfileScreenSpec: QuickSpec {
 
                     context("is hireable and collaborateable") {
                         validateAllSnapshots(named: "ProfileScreen_not_current_user_hireable_and_collaborateable") {
-                            let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "friend"])
+                            let user = User.stub(["username": "Archer", "relationshipPriority": "friend"])
                             subject.configureButtonsForNonCurrentUser(isHireable: true, isCollaborateable: true)
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName
@@ -90,7 +90,7 @@ class ProfileScreenSpec: QuickSpec {
 
                     context("is mentionable") {
                         validateAllSnapshots(named: "ProfileScreen_not_current_user_is_mentionable") {
-                            let user = User.stub(["id": "42", "username": "Archer", "relationshipPriority" : "noise"])
+                            let user = User.stub(["username": "Archer", "relationshipPriority": "noise"])
                             subject.configureButtonsForNonCurrentUser(isHireable: false, isCollaborateable: false)
                             subject.relationshipControl.userId = user.id
                             subject.relationshipControl.userAtName = user.atName

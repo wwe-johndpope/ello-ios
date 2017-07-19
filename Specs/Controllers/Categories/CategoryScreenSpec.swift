@@ -15,6 +15,7 @@ class CategoryScreenSpec: QuickSpec {
         var searchButtonCount = 0
         var shareCount = 0
         var backCount = 0
+        var scrollToTopCount = 0
 
         func categorySelected(index: Int) {
             selectedIndex = index
@@ -34,6 +35,9 @@ class CategoryScreenSpec: QuickSpec {
         func backTapped() {
             backCount += 1
         }
+        func scrollToTop() {
+            scrollToTopCount += 1
+        }
     }
 
     override func spec() {
@@ -50,7 +54,7 @@ class CategoryScreenSpec: QuickSpec {
                     title: "Lorem ipsum dolor sit amet",
                     imageURL: URL(string: "https://example.com")
                     )
-                subject = CategoryScreen()
+                subject = CategoryScreen(usage: .default)
                 categoryInfo = [infoA, infoB, infoA, infoB]
                 subject.set(categoriesInfo: categoryInfo, animated: false, completion: {})
                 delegate = MockCategoryScreenDelegate()
@@ -58,8 +62,14 @@ class CategoryScreenSpec: QuickSpec {
             }
 
             describe("snapshots") {
-                validateAllSnapshots(named: "CategoryScreen") {
-                    return subject
+                validateAllSnapshots(named: "CategoryScreen") { return subject }
+
+                describe("snapshots on home screen") {
+                    beforeEach {
+                        subject = CategoryScreen(usage: .largeNav)
+                        subject.set(categoriesInfo: categoryInfo, animated: false, completion: {})
+                    }
+                    validateAllSnapshots(named: "CategoryScreen HomeScreen") { return subject }
                 }
             }
 

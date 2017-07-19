@@ -88,9 +88,27 @@ class AssetSpec: QuickSpec {
 
             context("gifs") {
 
-                it("returns 'true' for 'isGif'") {
+                it("returns 'true' for 'isGif' - optimized image - content type") {
                     let attachment: Attachment = stub(["type": "image/gif"])
                     let asset: Asset = stub(["optimized": attachment])
+                    expect(asset.isGif) == true
+                }
+
+                it("returns 'true' for 'isGif' - optimized image - url") {
+                    let attachment: Attachment = stub(["url": "http://image.com/image.gif"])
+                    let asset: Asset = stub(["optimized": attachment])
+                    expect(asset.isGif) == true
+                }
+
+                it("returns 'true' for 'isGif' - original image - content type") {
+                    let attachment: Attachment = stub(["type": "image/gif"])
+                    let asset: Asset = stub(["original": attachment])
+                    expect(asset.isGif) == true
+                }
+
+                it("returns 'true' for 'isGif' - original image - url") {
+                    let attachment: Attachment = stub(["url": "http://image.com/image.gif"])
+                    let asset: Asset = stub(["original": attachment])
                     expect(asset.isGif) == true
                 }
 
@@ -211,70 +229,70 @@ class AssetSpec: QuickSpec {
                     it("decodes successfully") {
 
                         let optimized: Attachment = stub([
-                            "url" : URL(string: "http://www.example1.com")!,
-                            "height" : 10,
-                            "width" : 20,
-                            "type" : "jpeg",
-                            "size" : 111111
+                            "url": URL(string: "http://www.example1.com")!,
+                            "height": 10,
+                            "width": 20,
+                            "type": "jpeg",
+                            "size": 111111
                         ])
 
                         let smallScreen: Attachment = stub([
-                            "url" : URL(string: "http://www.example2.com")!,
-                            "height" : 20,
-                            "width" : 30,
-                            "type" : "jpeg",
-                            "size" : 222222
+                            "url": URL(string: "http://www.example2.com")!,
+                            "height": 20,
+                            "width": 30,
+                            "type": "jpeg",
+                            "size": 222222
                         ])
 
                         let ldpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example3.com")!,
-                            "height" : 30,
-                            "width" : 40,
-                            "type" : "jpeg",
-                            "size" : 333333
+                            "url": URL(string: "http://www.example3.com")!,
+                            "height": 30,
+                            "width": 40,
+                            "type": "jpeg",
+                            "size": 333333
                         ])
 
                         let mdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example4.com")!,
-                            "height" : 40,
-                            "width" : 50,
-                            "type" : "jpeg",
-                            "size" : 444444
+                            "url": URL(string: "http://www.example4.com")!,
+                            "height": 40,
+                            "width": 50,
+                            "type": "jpeg",
+                            "size": 444444
                         ])
 
                         let hdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example5.com")!,
-                            "height" : 50,
-                            "width" : 60,
-                            "type" : "jpeg",
-                            "size" : 555555
+                            "url": URL(string: "http://www.example5.com")!,
+                            "height": 50,
+                            "width": 60,
+                            "type": "jpeg",
+                            "size": 555555
                         ])
 
                         let xhdpi: Attachment = stub([
-                            "url" : URL(string: "http://www.example6.com")!,
-                            "height" : 60,
-                            "width" : 70,
-                            "type" : "jpeg",
-                            "size" : 666666
+                            "url": URL(string: "http://www.example6.com")!,
+                            "height": 60,
+                            "width": 70,
+                            "type": "jpeg",
+                            "size": 666666
                         ])
 
                         let original: Attachment = stub([
-                            "url" : URL(string: "http://www.example8.com")!,
-                            "height" : 80,
-                            "width" : 90,
-                            "type" : "jpeg",
-                            "size" : 888888
+                            "url": URL(string: "http://www.example8.com")!,
+                            "height": 80,
+                            "width": 90,
+                            "type": "jpeg",
+                            "size": 888888
                         ])
 
                         let asset: Asset = stub([
-                            "id" : "5698",
-                            "optimized" : optimized,
-                            "smallScreen" : smallScreen,
-                            "ldpi" : ldpi,
-                            "mdpi" : mdpi,
-                            "hdpi" : hdpi,
-                            "xhdpi" : xhdpi,
-                            "original" : original
+                            "id": "5698",
+                            "optimized": optimized,
+                            "smallScreen": smallScreen,
+                            "ldpi": ldpi,
+                            "mdpi": mdpi,
+                            "hdpi": hdpi,
+                            "xhdpi": xhdpi,
+                            "original": original
                         ])
 
                         NSKeyedArchiver.archiveRootObject(asset, toFile: filePath)

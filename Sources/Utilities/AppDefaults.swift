@@ -5,7 +5,6 @@
 extension UserDefaults {
     func resetOnLogout() {
         let groupDefaultResetKeys = [
-            "ElloImageUploadQuality",
             StreamKind.notifications(category: nil).lastViewedCreatedAtKey!,
             StreamKind.announcements.lastViewedCreatedAtKey!,
             StreamKind.following.lastViewedCreatedAtKey!,

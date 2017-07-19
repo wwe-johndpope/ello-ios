@@ -80,7 +80,7 @@ class PostbarControllerSpec: QuickSpec {
                 beforeEach {
                     let post: Post = stub([
                         "id": "post1",
-                        "authorId" : "user1",
+                        "authorId": "user1",
                     ])
                     let parser = StreamCellItemParser()
                     var postCellItems = parser.parse([post], streamKind: streamKind)
@@ -103,7 +103,7 @@ class PostbarControllerSpec: QuickSpec {
                 beforeEach {
                     let post: Post = stub([
                         "id": "post1",
-                        "authorId" : "user1",
+                        "authorId": "user1",
                     ])
                     let parser = StreamCellItemParser()
                     var postCellItems = parser.parse([post], streamKind: streamKind)
@@ -159,9 +159,9 @@ class PostbarControllerSpec: QuickSpec {
                 func stubCellItems(loved: Bool) {
                     post = Post.stub([
                         "id": "post1",
-                        "authorId" : "user1",
-                        "lovesCount" : 5,
-                        "loved" : loved
+                        "authorId": "user1",
+                        "lovesCount": 5,
+                        "loved": loved
                     ])
                     let parser = StreamCellItemParser()
                     let postCellItems = parser.parse([post], streamKind: streamKind)

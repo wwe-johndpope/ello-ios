@@ -78,7 +78,7 @@ class CategoryHeaderCellSpec: QuickSpec {
 
                     it("has valid screenshot for \(desc)") {
 
-                        let user: User = User.stub(["id": "fakeuser", "username" : "bob"])
+                        let user: User = User.stub(["username" : "bob"])
                         let xhdpi = Attachment.stub([
                             "url": "http://ello.co/avatar.png",
                             "height": 0,
@@ -88,31 +88,29 @@ class CategoryHeaderCellSpec: QuickSpec {
                         )
                         let image = Asset.stub(["xhdpi": xhdpi])
                         let promotional = Promotional.stub([
-                            "user" : user,
-                            "userId" : user.id,
-                            "categoryId" : "888",
-                            "id" : "999",
-                            "image" : image
+                            "user": user,
+                            "userId": user.id,
+                            "categoryId": "888",
+                            "image": image
                         ])
 
                         let pagePromotional = PagePromotional.stub([
-                            "id" : "abc",
-                            "header" : name,
-                            "user" : user,
-                            "subheader" : body,
-                            "ctaCaption" : ctaCaption,
-                            "ctaURL" : "http://google.com",
-                            "image" : image
+                            "header": name,
+                            "user": user,
+                            "subheader": body,
+                            "ctaCaption": ctaCaption,
+                            "ctaURL": "http://google.com",
+                            "image": image
                         ])
 
                         let category = Ello.Category.stub([
-                            "id" : "888",
-                            "name" : name,
-                            "body" : body,
-                            "user" : user,
-                            "ctaCaption" : ctaCaption,
-                            "isSponsored" : isSponsored,
-                            "promotionals" : [promotional]
+                            "id": "888",
+                            "name": name,
+                            "body": body,
+                            "user": user,
+                            "ctaCaption": ctaCaption,
+                            "isSponsored": isSponsored,
+                            "promotionals": [promotional]
                         ])
 
                         if type == .categoryPromotionalHeader {

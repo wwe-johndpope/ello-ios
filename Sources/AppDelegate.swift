@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             transaction.removeAllObjectsInAllCollections()
         }
 
-        if AppSetup.sharedState.isTesting {
+        if AppSetup.shared.isTesting {
             if UIScreen.main.scale > 2 {
                 fatalError("Tests should be run in a @2x retina device (for snapshot specs to work)")
             }
@@ -63,7 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupCaches()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
-            log(comment: "notification received \(Date())", object: payload)
             PushNotificationController.sharedController.receivedNotification(application, userInfo: payload)
         }
 
@@ -126,7 +125,6 @@ extension AppDelegate {
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        log(comment: "notification received \(Date())", object: userInfo)
         PushNotificationController.sharedController.receivedNotification(application, userInfo: userInfo)
         completionHandler(.noData)
     }

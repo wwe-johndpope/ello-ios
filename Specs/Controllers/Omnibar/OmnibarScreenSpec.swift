@@ -7,7 +7,7 @@ import Quick
 import Nimble
 
 
-class OmnibarScreenMockDelegate : OmnibarScreenDelegate {
+class OmnibarScreenMockDelegate: OmnibarScreenDelegate {
     var didGoBack = false
     var didPresentController = false
     var didDismissController = false
@@ -21,7 +21,7 @@ class OmnibarScreenMockDelegate : OmnibarScreenDelegate {
     func omnibarPushController(_ controller: UIViewController) {
         didPushController = true
     }
-    func omnibarPresentController(_ controller : UIViewController) {
+    func omnibarPresentController(_ controller: UIViewController) {
         didPresentController = true
     }
     func omnibarDismissController() {
@@ -57,8 +57,8 @@ enum RegionExpectation {
 
 class OmnibarScreenSpec: QuickSpec {
     override func spec() {
-        var subject : OmnibarScreen!
-        var delegate : OmnibarScreenMockDelegate!
+        var subject: OmnibarScreen!
+        var delegate: OmnibarScreenMockDelegate!
 
         beforeEach {
             let controller = UIViewController()

@@ -20,15 +20,15 @@ class PushNotificationControllerSpec: QuickSpec {
                 context("has alert") {
                     it("returns true") {
                         let userInfo: [AnyHashable: Any] = [
-                            "destination_user_id" : 1234,
-                            "application_target" : "notifications/posts/4",
-                            "type" : "repost",
-                            "aps" : [
-                                "alert" : [
-                                    "body" : "@bob has reposted one of your posts",
-                                    "title" : "New Repost"
+                            "destination_user_id": 1234,
+                            "application_target": "notifications/posts/4",
+                            "type": "repost",
+                            "aps": [
+                                "alert": [
+                                    "body": "@bob has reposted one of your posts",
+                                    "title": "New Repost"
                                 ],
-                                "badge" : NSNumber(value: 4)
+                                "badge": NSNumber(value: 4)
                             ]
                         ]
 
@@ -39,10 +39,10 @@ class PushNotificationControllerSpec: QuickSpec {
                 context("no alert") {
                     it("returns false") {
                         let userInfo: [AnyHashable: Any] = [
-                            "destination_user_id" : 1234,
-                            "type" : "reset_badge_count",
-                            "aps" : [
-                                "badge" : NSNumber(value: 0)
+                            "destination_user_id": 1234,
+                            "type": "reset_badge_count",
+                            "aps": [
+                                "badge": NSNumber(value: 0)
                             ]
                         ]
 
@@ -57,10 +57,10 @@ class PushNotificationControllerSpec: QuickSpec {
                     it("updates to new value") {
                         UIApplication.shared.applicationIconBadgeNumber = 5
                         let userInfo: [AnyHashable: Any] = [
-                            "destination_user_id" : 1234,
-                            "type" : "reset_badge_count",
-                            "aps" : [
-                                "badge" : NSNumber(value: 0)
+                            "destination_user_id": 1234,
+                            "type": "reset_badge_count",
+                            "aps": [
+                                "badge": NSNumber(value: 0)
                             ]
                         ]
                         PushNotificationController.sharedController.updateBadgeCount(userInfo)
@@ -75,9 +75,9 @@ class PushNotificationControllerSpec: QuickSpec {
                     it("does nothing") {
                         UIApplication.shared.applicationIconBadgeNumber = 5
                         let userInfo: [AnyHashable: Any] = [
-                            "destination_user_id" : 1234,
-                            "type" : "reset_badge_count",
-                            "aps" : [
+                            "destination_user_id": 1234,
+                            "type": "reset_badge_count",
+                            "aps": [
                             ]
                         ]
                         PushNotificationController.sharedController.updateBadgeCount(userInfo)

@@ -196,11 +196,6 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func lovesButtonTapped(_ cell: StreamFooterCell) {
-        guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
-            return
-        }
-
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let post = self.postForIndexPath(indexPath)
@@ -210,6 +205,11 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     func toggleLove(_ cell: LoveableCell?, post: Post, via: String) {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
+            return
+        }
+
         cell?.toggleLoveControl(enabled: false)
 
         if post.loved { unlovePost(post, cell: cell) }
@@ -234,8 +234,9 @@ class PostbarController: UIResponder, PostbarResponder {
         LovesService().unlovePost(postId: post.id)
             .thenFinally {
                 if let currentUser = self.currentUser {
+                    let now = AppSetup.shared.now
                     let love = Love(
-                        id: "", createdAt: Date(), updatedAt: Date(),
+                        id: "", createdAt: now, updatedAt: now,
                         deleted: true, postId: post.id, userId: currentUser.id
                         )
                     postNotification(JSONAbleChangedNotification, value: (love, .delete))

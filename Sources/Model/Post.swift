@@ -222,7 +222,7 @@ final class Post: JSONAble, Authorable, Groupable {
             createdAt = date
         }
         else {
-            createdAt = Date()
+            createdAt = AppSetup.shared.now
         }
         // create post
         let post = Post(

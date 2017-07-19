@@ -8,17 +8,17 @@ import PromiseKit
 struct ProfileTotalCountSizeCalculator {
 
     func calculate(_ item: StreamCellItem) -> Promise<CGFloat> {
-        let (promise, fulfill, _) = Promise<CGFloat>.pending()
+        let (promise, resolve, _) = Promise<CGFloat>.pending()
         guard
             let user = item.jsonable as? User,
             let count = user.totalViewsCount,
             count > 0
         else {
-            fulfill(0)
+            resolve(0)
             return promise
         }
 
-        fulfill(ProfileTotalCountView.Size.height)
+        resolve(ProfileTotalCountView.Size.height)
         return promise
     }
 }

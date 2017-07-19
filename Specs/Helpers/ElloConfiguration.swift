@@ -10,7 +10,13 @@ import PromiseKit
 
 // Add in custom configuration
 class ElloConfiguration: QuickConfiguration {
+    struct Size {
+        static let calculatorHeight = CGFloat(20)
+    }
+
     override class func configure(_ config: Configuration) {
+        let now = Date()
+
         config.beforeSuite {
             // make sure the promise `then` blocks are run synchronously
             DispatchQueue.default = zalgo
@@ -32,13 +38,21 @@ class ElloConfiguration: QuickConfiguration {
                 "spam": Badge(slug: "spam", name: "Spam", link: "Learn More", url: nil, imageURL: nil),
                 "nsfw": Badge(slug: "nsfw", name: "Nsfw", link: "Learn More", url: nil, imageURL: nil),
             ]
+
+            AppSetup.shared.nowGenerator = { return now }
         }
+
         config.beforeEach {
+            let appSetup = AppSetup()
+            appSetup.nowGenerator = { return now }
+            appSetup.cachedCategories = nil
+            AppSetup.shared = appSetup
+
             let keychain = FakeKeychain()
             keychain.username = "email"
             keychain.password = "password"
             keychain.authToken = "abcde"
-            keychain.authTokenExpires = Date().addingTimeInterval(3600)
+            keychain.authTokenExpires = AppSetup.shared.now.addingTimeInterval(3600)
             keychain.authTokenType = "grant"
             keychain.refreshAuthToken = "abcde"
             keychain.isPasswordBased = true

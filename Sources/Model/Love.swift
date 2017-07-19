@@ -86,7 +86,7 @@ final class Love: JSONAble, PostActionable {
             createdAt = date
         }
         else {
-            createdAt = Date()
+            createdAt = AppSetup.shared.now
         }
 
         if let date = json["updated_at"].stringValue.toDate() {
@@ -94,7 +94,7 @@ final class Love: JSONAble, PostActionable {
             updatedAt = date
         }
         else {
-            updatedAt = Date()
+            updatedAt = AppSetup.shared.now
         }
 
         // create Love

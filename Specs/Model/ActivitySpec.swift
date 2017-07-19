@@ -87,14 +87,14 @@ class ActivitySpec: QuickSpec {
             context("decoding") {
 
                 it("decodes own post successfully") {
-                    let expectedCreatedAt = Date()
-                    let post: Post = stub(["id" : "768"])
+                    let expectedCreatedAt = AppSetup.shared.now
+                    let post: Post = stub(["id": "768"])
                     let activity: Activity = stub([
-                        "subject" : post,
-                        "id" : "456",
-                        "kind" : "own_post",
-                        "subjectType" : "Post",
-                        "createdAt" : expectedCreatedAt
+                        "subject": post,
+                        "id": "456",
+                        "kind": "own_post",
+                        "subjectType": "Post",
+                        "createdAt": expectedCreatedAt
                     ])
 
                     NSKeyedArchiver.archiveRootObject(activity, toFile: filePath)
@@ -115,14 +115,14 @@ class ActivitySpec: QuickSpec {
                 }
 
                 it("decodes friend post successfully") {
-                    let expectedCreatedAt = Date()
-                    let post: Post = stub(["id" : "768"])
+                    let expectedCreatedAt = AppSetup.shared.now
+                    let post: Post = stub(["id": "768"])
                     let activity: Activity = stub([
-                        "subject" : post,
-                        "id" : "456",
-                        "kind" : "friend_post",
-                        "subjectType" : "Post",
-                        "createdAt" : expectedCreatedAt
+                        "subject": post,
+                        "id": "456",
+                        "kind": "friend_post",
+                        "subjectType": "Post",
+                        "createdAt": expectedCreatedAt
                         ])
 
                     NSKeyedArchiver.archiveRootObject(activity, toFile: filePath)
@@ -143,14 +143,14 @@ class ActivitySpec: QuickSpec {
                 }
 
                 it("decodes welcome post successfully") {
-                    let expectedCreatedAt = Date()
-                    let user: User = stub(["id" : "768"])
+                    let expectedCreatedAt = AppSetup.shared.now
+                    let user: User = stub(["id": "768"])
                     let activity: Activity = stub([
-                        "subject" : user,
-                        "id" : "456",
-                        "kind" : "welcome_post",
-                        "subjectType" : "User",
-                        "createdAt" : expectedCreatedAt
+                        "subject": user,
+                        "id": "456",
+                        "kind": "welcome_post",
+                        "subjectType": "User",
+                        "createdAt": expectedCreatedAt
                         ])
 
                     NSKeyedArchiver.archiveRootObject(activity, toFile: filePath)
@@ -171,14 +171,14 @@ class ActivitySpec: QuickSpec {
                 }
 
                 it("decodes noise post successfully") {
-                    let expectedCreatedAt = Date()
-                    let post: Post = stub(["id" : "768"])
+                    let expectedCreatedAt = AppSetup.shared.now
+                    let post: Post = stub(["id": "768"])
                     let activity: Activity = stub([
-                        "subject" : post,
-                        "id" : "456",
-                        "kind" : "noise_post",
-                        "subjectType" : "Post",
-                        "createdAt" : expectedCreatedAt
+                        "subject": post,
+                        "id": "456",
+                        "kind": "noise_post",
+                        "subjectType": "Post",
+                        "createdAt": expectedCreatedAt
                     ])
 
                     NSKeyedArchiver.archiveRootObject(activity, toFile: filePath)

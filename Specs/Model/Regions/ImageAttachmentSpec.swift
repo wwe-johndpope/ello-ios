@@ -50,11 +50,11 @@ class AttachmentSpec: QuickSpec {
 
                 it("decodes successfully") {
                     let imageAttachment: Attachment = stub([
-                        "url" : URL(string: "https://www.example12.com")!,
-                        "height" : 456,
-                        "width" : 110,
-                        "type" : "png",
-                        "size" : 78787
+                        "url": URL(string: "https://www.example12.com")!,
+                        "height": 456,
+                        "width": 110,
+                        "type": "png",
+                        "size": 78787
                     ])
 
                     NSKeyedArchiver.archiveRootObject(imageAttachment, toFile: filePath)

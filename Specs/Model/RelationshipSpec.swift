@@ -96,7 +96,7 @@ class RelationshipSpec: QuickSpec {
             context("decoding") {
 
                 it("decodes successfully") {
-                    let expectedCreatedAt = Date()
+                    let expectedCreatedAt = AppSetup.shared.now
                     let relationship: Relationship = stub([
                         "id": "relationship",
                         "createdAt": expectedCreatedAt,

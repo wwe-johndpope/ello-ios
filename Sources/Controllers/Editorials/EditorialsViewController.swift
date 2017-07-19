@@ -14,12 +14,9 @@ class EditorialsViewController: StreamableViewController {
     }
     var generator: EditorialsGenerator!
 
-    enum Usage {
-        case loggedOut
-        case loggedIn
-    }
+    typealias Usage = HomeViewController.Usage
 
-    fileprivate var usage: Usage
+    fileprivate let usage: Usage
 
     init(usage: Usage) {
         self.usage = usage
@@ -45,10 +42,9 @@ class EditorialsViewController: StreamableViewController {
     override func loadView() {
         let screen = EditorialsScreen(usage: usage)
         screen.delegate = self
+
         if usage == .loggedIn {
             elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
-            screen.navigationBar.sizeClass = .large
-            screen.navigationBar.setNeedsLayout()
         }
 
         elloNavigationItem.titleView = UIView()
@@ -136,7 +132,7 @@ extension EditorialsViewController: EditorialToolsResponder {
             let editorial = jsonable as? Editorial
         else { return }
 
-        editorial.invite = (emails: "", sent: Date())
+        editorial.invite = (emails: "", sent: AppSetup.shared.now)
         let emails: [String] = emailString.replacingOccurrences(of: "\n", with: ",").split(",").map { $0.trimmed() }
         InviteService().sendInvitations(emails).ignoreErrors()
     }

@@ -63,25 +63,25 @@ class WatchSpec: QuickSpec {
             context("decoding") {
 
                 it("decodes successfully") {
-                    let expectedCreatedAt = Date()
-                    let expectedUpdatedAt = Date()
+                    let expectedCreatedAt = AppSetup.shared.now
+                    let expectedUpdatedAt = AppSetup.shared.now
 
                     let user: User = stub([
-                        "id" : "444"
+                        "id": "444"
                     ])
 
                     let post: Post = stub([
-                        "id" : "888"
+                        "id": "888"
                     ])
 
                     let watch: Watch = stub([
-                        "user" : user,
-                        "post" : post,
-                        "id" : "999",
-                        "createdAt" : expectedCreatedAt,
-                        "updatedAt" : expectedUpdatedAt,
-                        "postId" : "888",
-                        "userId" : "444"
+                        "user": user,
+                        "post": post,
+                        "id": "999",
+                        "createdAt": expectedCreatedAt,
+                        "updatedAt": expectedUpdatedAt,
+                        "postId": "888",
+                        "userId": "444"
                     ])
 
                     NSKeyedArchiver.archiveRootObject(watch, toFile: filePath)

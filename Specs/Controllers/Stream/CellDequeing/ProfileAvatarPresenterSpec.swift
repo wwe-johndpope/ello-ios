@@ -37,7 +37,7 @@ class ProfileAvatarPresenterSpec: QuickSpec {
                     )
                     let asset = Asset.stub(["attachment": attachment])
 
-                    let user = User.stub(["avatar" : asset])
+                    let user = User.stub(["avatar": asset])
                     let view = ProfileAvatarView()
                     ProfileAvatarPresenter.configure(view, user: user, currentUser: nil)
 

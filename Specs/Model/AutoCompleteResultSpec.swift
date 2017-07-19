@@ -52,8 +52,8 @@ class AutoCompleteResultSpec: QuickSpec {
 
                 it("decodes successfully") {
                     let result: AutoCompleteResult = stub([
-                        "name" : "777",
-                        "url" : URL(string:"http://www.example.com/meow")!
+                        "name": "777",
+                        "url": URL(string:"http://www.example.com/meow")!
                     ])
 
                     NSKeyedArchiver.archiveRootObject(result, toFile: filePath)

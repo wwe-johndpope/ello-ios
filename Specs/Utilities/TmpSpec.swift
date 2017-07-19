@@ -55,7 +55,7 @@ class TmpSpec: QuickSpec {
             it("+Tmp.write(Data)") {                      // "test"
                 let originalData = Data(base64Encoded: "dGVzdA==")!
                 _ = Tmp.write(originalData, to: "file")
-                if let readData : Data = Tmp.read("file") {
+                if let readData: Data = Tmp.read("file") {
                     expect(readData).to(equal(originalData))
                 }
                 else {
@@ -66,7 +66,7 @@ class TmpSpec: QuickSpec {
             it("+Tmp.write(String)") {
                 let originalString = "test"
                 _ = Tmp.write(originalString, to: "string")
-                if let readString : String = Tmp.read("string") {
+                if let readString: String = Tmp.read("string") {
                     expect(readString).to(equal(originalString))
                 }
                 else {
@@ -77,7 +77,7 @@ class TmpSpec: QuickSpec {
             it("+Tmp.write(UIImage)") {
                 let originalImage = specImage(named: "specs-avatar")!
                 _ = Tmp.write(originalImage, to: "image")
-                if let readImage : UIImage = Tmp.read("image") {
+                if let readImage: UIImage = Tmp.read("image") {
                     let readData = UIImagePNGRepresentation(readImage)
                     let originalData = UIImagePNGRepresentation(originalImage)
                     expect(readData).to(equal(originalData))
