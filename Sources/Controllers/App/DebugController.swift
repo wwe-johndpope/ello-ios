@@ -88,6 +88,18 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             }
         }
 
+        addAction(name: "Artist Invites preview") {
+            appController.closeTodoController {
+                let vc = ArtistInvitesViewController(usage: .loggedOut)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+
+        addAction(name: "Editorials preview") { [unowned self] in
+            let vc = EditorialsViewController(usage: .loggedOut)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+
         addAction(name: "Logout") {
             appController.closeTodoController {
                 appController.userLoggedOut()
@@ -126,11 +138,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
                 appController.present(alertController, animated: true, completion: nil)
             }
-        }
-
-        addAction(name: "Editorials preview") { [unowned self] in
-            let vc = EditorialsViewController(usage: .loggedOut)
-            self.navigationController?.pushViewController(vc, animated: true)
         }
 
         addAction(name: "Show Following Dot") {
