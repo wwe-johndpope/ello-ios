@@ -46,6 +46,7 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
             elloNavigationItem.fixNavBarItemPadding()
 
             screen.navigationItem = elloNavigationItem
+            postNotification(StatusBarNotifications.statusBarVisibility, value: true)
         }
 
         CategoryService().loadCreatorCategories()

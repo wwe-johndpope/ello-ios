@@ -8,18 +8,18 @@ protocol ControllerThatMightHaveTheCurrentUser {
 }
 
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
-    var statusBarShouldHide = false
-    fileprivate var statusBarShouldHideObserver: NotificationObserver?
+    var statusBarVisibility = true
+    fileprivate var statusBarVisibilityObserver: NotificationObserver?
 
-    func hideStatusBar(_ hide: Bool) {
-        statusBarShouldHide = hide
+    func showStatusBar(_ visible: Bool) {
+        statusBarVisibility = visible
         animate {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
 
     override var prefersStatusBarHidden: Bool {
-        return statusBarShouldHide
+        return !statusBarVisibility
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -79,13 +79,13 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     }
 
     fileprivate func setupStatusBarObservers() {
-        statusBarShouldHideObserver = NotificationObserver(notification: StatusBarNotifications.statusBarShouldHide) { [weak self] (hide) in
-            self?.hideStatusBar(hide)
+        statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
+            self?.showStatusBar(visible)
         }
     }
 
     deinit {
-        statusBarShouldHideObserver?.removeObserver()
+        statusBarVisibilityObserver?.removeObserver()
     }
 
     private func setupRelationshipController() {
@@ -127,7 +127,7 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     }
 
     func updateNavBars() {
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: !navigationBarsVisible)
+        postNotification(StatusBarNotifications.statusBarVisibility, value: navigationBarsVisible)
         UIView.setAnimationsEnabled(false)
         if navigationBarsVisible {
             showNavBars()

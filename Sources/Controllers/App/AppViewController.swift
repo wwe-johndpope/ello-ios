@@ -11,7 +11,7 @@ struct NavigationNotifications {
 }
 
 struct StatusBarNotifications {
-    static let statusBarShouldHide = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarShouldHide")
+    static let statusBarVisibility = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarVisibility")
 }
 
 enum LoggedOutAction {
@@ -353,7 +353,7 @@ extension AppViewController {
         if presentingViewController != nil {
             dismiss(animated: false, completion: .none)
         }
-        self.hideStatusBar(false)
+        self.showStatusBar(true)
 
         if let visibleViewController = visibleViewController {
             visibleViewController.willMove(toParentViewController: nil)

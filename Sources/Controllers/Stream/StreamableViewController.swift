@@ -136,7 +136,7 @@ class StreamableViewController: BaseElloViewController {
         }
 
         if showing {
-            postNotification(StatusBarNotifications.statusBarShouldHide, value: !visible)
+            postNotification(StatusBarNotifications.statusBarVisibility, value: visible)
         }
     }
 }

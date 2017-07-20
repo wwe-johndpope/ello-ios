@@ -87,7 +87,7 @@ class DebugAgent: AnalyticsAgent {
             shouldHideStatusBar = nil
         }
 
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
+        postNotification(StatusBarNotifications.statusBarVisibility, value: false)
         animate {
             self.logView.frame = UIWindow.mainWindow.bounds.fromTop().grow(down: ElloTabBar.Size.height)
             self.logTextView.frame.size = self.logView.frame.size
@@ -102,7 +102,7 @@ class DebugAgent: AnalyticsAgent {
         }
 
         if let shouldHideStatusBar = shouldHideStatusBar {
-            postNotification(StatusBarNotifications.statusBarShouldHide, value: shouldHideStatusBar)
+            postNotification(StatusBarNotifications.statusBarVisibility, value: !shouldHideStatusBar)
         }
     }
 

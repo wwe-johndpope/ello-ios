@@ -40,7 +40,7 @@ class DrawerViewController: StreamableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
+        postNotification(StatusBarNotifications.statusBarVisibility, value: true)
     }
 }
 

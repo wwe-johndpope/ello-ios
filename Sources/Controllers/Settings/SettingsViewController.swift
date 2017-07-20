@@ -24,7 +24,7 @@ class SettingsContainerViewController: BaseElloViewController {
     override func showNavBars() {
         navigationBarTopConstraint.constant = 0
         animate {
-            postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
+            postNotification(StatusBarNotifications.statusBarVisibility, value: true)
             self.view.layoutIfNeeded()
         }
 
@@ -39,7 +39,7 @@ class SettingsContainerViewController: BaseElloViewController {
     override func hideNavBars() {
         navigationBarTopConstraint.constant = -ElloNavigationBar.Size.height
         animate {
-            postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
+            postNotification(StatusBarNotifications.statusBarVisibility, value: false)
             self.view.layoutIfNeeded()
         }
 
@@ -72,7 +72,7 @@ class SettingsContainerViewController: BaseElloViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         let visible = bottomBarController?.navigationBarsVisible ?? !UIApplication.shared.isStatusBarHidden
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: visible)
+        postNotification(StatusBarNotifications.statusBarVisibility, value: visible)
         updateNavBars()
     }
 }

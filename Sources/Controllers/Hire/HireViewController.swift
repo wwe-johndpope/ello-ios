@@ -64,7 +64,7 @@ class HireViewController: BaseElloViewController {
 
         super.viewWillAppear(animated)
 
-        postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
+        postNotification(StatusBarNotifications.statusBarVisibility, value: true)
         UIApplication.shared.statusBarStyle = .lightContent
 
         bottomBarController?.setNavigationBarsVisible(true, animated: false)
