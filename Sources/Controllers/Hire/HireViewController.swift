@@ -67,7 +67,7 @@ class HireViewController: BaseElloViewController {
         postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
         UIApplication.shared.statusBarStyle = .lightContent
 
-        bottomBarController!.setNavigationBarsVisible(true, animated: false)
+        bottomBarController?.setNavigationBarsVisible(true, animated: false)
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)
         keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: self.keyboardWillHide)

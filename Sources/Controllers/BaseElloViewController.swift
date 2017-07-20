@@ -55,6 +55,10 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         return findViewController { vc in vc is BottomBarController } as? BottomBarController
     }
 
+    var navigationBarsVisible: Bool {
+        return bottomBarController?.navigationBarsVisible ?? true
+    }
+
     // This is an odd one, `super.next` is not accessible in a closure that
     // captures self so we stuff it in a computed variable
     var superNext: UIResponder? {

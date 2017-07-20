@@ -21,12 +21,8 @@ class SettingsContainerViewController: BaseElloViewController {
     @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     fileprivate var settingsViewController: SettingsViewController?
 
-    func navigationBarsVisible() -> Bool {
-        return bottomBarController?.navigationBarsVisible ?? false
-    }
-
     func updateNavBars() {
-        if navigationBarsVisible() {
+        if navigationBarsVisible {
             showNavBars()
         }
         else {
@@ -72,7 +68,7 @@ class SettingsContainerViewController: BaseElloViewController {
             settings.tableView.contentOffset.y = 0
             updateNavBars()
             navigationBar.items = [settings.navigationItem]
-            settings.scrollLogic.isShowing = navigationBarsVisible()
+            settings.scrollLogic.isShowing = navigationBarsVisible
         }
     }
 

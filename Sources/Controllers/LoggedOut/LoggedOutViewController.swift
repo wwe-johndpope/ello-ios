@@ -15,7 +15,8 @@ protocol BottomBarController: class {
 
 
 class LoggedOutViewController: BaseElloViewController, BottomBarController {
-    var navigationBarsVisible: Bool = true
+    private var _navigationBarsVisible: Bool = true
+    override var navigationBarsVisible: Bool { return _navigationBarsVisible }
     let bottomBarVisible: Bool = true
     var bottomBarHeight: CGFloat { return screen.bottomBarHeight }
     var bottomBarView: UIView { return screen.bottomBarView }
@@ -29,7 +30,7 @@ class LoggedOutViewController: BaseElloViewController, BottomBarController {
     fileprivate var userActionAttemptedObserver: NotificationObserver?
 
     func setNavigationBarsVisible(_ visible: Bool, animated: Bool) {
-        navigationBarsVisible = visible
+        _navigationBarsVisible = visible
     }
 
     override func addChildViewController(_ childController: UIViewController) {

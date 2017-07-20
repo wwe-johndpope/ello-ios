@@ -57,7 +57,7 @@ class StreamableViewController: BaseElloViewController {
         super.viewWillAppear(animated)
         AppDelegate.restrictRotation = true
         showing = true
-        willPresentStreamable(navigationBarsVisible())
+        willPresentStreamable(navigationBarsVisible)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,7 +67,7 @@ class StreamableViewController: BaseElloViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        willPresentStreamable(navigationBarsVisible())
+        willPresentStreamable(navigationBarsVisible)
     }
 
     override func viewDidLoad() {
@@ -113,10 +113,6 @@ class StreamableViewController: BaseElloViewController {
         }
         UIView.setAnimationsEnabled(true)
         scrollLogic.isShowing = navBarsVisible
-    }
-
-    func navigationBarsVisible() -> Bool {
-        return bottomBarController?.navigationBarsVisible ?? true
     }
 
     func updateInsets(navBar: UIView?, navigationBarsVisible visible: Bool? = nil) {
