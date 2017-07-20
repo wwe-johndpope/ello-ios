@@ -115,7 +115,13 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
         return _bottomBarVisible
     }
     var bottomBarHeight: CGFloat { return ElloTabBar.Size.height }
-    var navigationBarsVisible: Bool { return bottomBarVisible }
+    var navigationBarsVisible: Bool {
+        guard
+            let navigationController = selectedViewController.navigationController
+        else { return bottomBarVisible }
+
+        return !navigationController.isNavigationBarHidden
+    }
 
     var bottomBarView: UIView {
         return tabBar
@@ -216,7 +222,10 @@ extension ElloTabBarController {
     }
 
     func setNavigationBarsVisible(_ visible: Bool, animated: Bool) {
+        guard _bottomBarVisible != visible else { return }
+
         _bottomBarVisible = visible
+        postNotification(StatusBarNotifications.statusBarVisibility, value: visible)
 
         animate(animated: animated) {
             self.positionTabBar()
