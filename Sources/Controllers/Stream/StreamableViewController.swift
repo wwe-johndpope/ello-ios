@@ -127,6 +127,7 @@ class StreamableViewController: BaseElloViewController {
         else {
             upAmount = navBar.frame.size.height + 1
         }
+
         if let navigationBarTopConstraint = navigationBarTopConstraint {
             navigationBarTopConstraint.constant = -upAmount
         }
