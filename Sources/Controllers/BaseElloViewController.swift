@@ -51,6 +51,7 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         return findViewController { vc in vc is ElloTabBarController } as? ElloTabBarController
     }
 
+    var updatesBottomBar = true
     var bottomBarController: BottomBarController? {
         return findViewController { vc in vc is BottomBarController } as? BottomBarController
     }
@@ -139,11 +140,15 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     }
 
     func showNavBars() {
-        bottomBarController?.setNavigationBarsVisible(true, animated: true)
+        if updatesBottomBar {
+            bottomBarController?.setNavigationBarsVisible(true, animated: true)
+        }
     }
 
     func hideNavBars() {
-        bottomBarController?.setNavigationBarsVisible(false, animated: true)
+        if updatesBottomBar {
+            bottomBarController?.setNavigationBarsVisible(false, animated: true)
+        }
     }
 
     func didSetCurrentUser() {

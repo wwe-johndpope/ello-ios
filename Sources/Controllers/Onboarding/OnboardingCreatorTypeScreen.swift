@@ -9,7 +9,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
     struct Size {
         static let margins: CGFloat = 15
         static let bigTop: CGFloat = 243
-        static let smallTop: CGFloat = 64
+        static let smallTop: CGFloat = 20
         static let containerOffset: CGFloat = 60
         static let buttonOffset: CGFloat = 22
         static let buttonHeight: CGFloat = 50
@@ -28,15 +28,28 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         }
     }
 
-    fileprivate let scrollableContainer = UIScrollView()
+    var topInset: CGFloat = 0 {
+        didSet {
+            scrollView.contentInset.top = topInset
+            scrollView.scrollIndicatorInsets.top = topInset
+        }
+    }
+    var bottomInset: CGFloat = 0 {
+        didSet {
+            scrollView.contentInset.bottom = bottomInset
+            scrollView.scrollIndicatorInsets.bottom = bottomInset
+        }
+    }
+
+    fileprivate let scrollView = UIScrollView()
     fileprivate let scrollableWidth = UIView()
     fileprivate let creatorTypeContainer = UIView()
     fileprivate let hereAsLabel = StyledLabel(style: .gray)
     fileprivate let artistButton = StyledButton(style: .roundedGrayOutline)
     fileprivate let fanButton = StyledButton(style: .roundedGrayOutline)
-    fileprivate var scrollableContainerWidth: Constraint!
-    fileprivate var scrollableContainerFanBottom: Constraint!
-    fileprivate var scrollableContainerArtistBottom: Constraint!
+    fileprivate var scrollViewWidth: Constraint!
+    fileprivate var scrollViewFanBottom: Constraint!
+    fileprivate var scrollViewArtistBottom: Constraint!
     fileprivate var creatorTypeContainerTop: Constraint!
     fileprivate let creatorLabel = StyledLabel(style: .gray)
     fileprivate let creatorButtonsContainer = UIView()
@@ -63,37 +76,37 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        scrollableContainerWidth?.update(offset: frame.width)
+        scrollViewWidth?.update(offset: frame.width)
     }
 
     override func arrange() {
         super.arrange()
 
-        addSubview(scrollableContainer)
+        addSubview(scrollView)
         addSubview(navigationBar)
 
-        scrollableContainer.addSubview(creatorTypeContainer)
-        scrollableContainer.addSubview(scrollableWidth)
+        scrollView.addSubview(creatorTypeContainer)
+        scrollView.addSubview(scrollableWidth)
 
         creatorTypeContainer.addSubview(hereAsLabel)
         creatorTypeContainer.addSubview(artistButton)
         creatorTypeContainer.addSubview(fanButton)
 
-        scrollableContainer.addSubview(creatorButtonsContainer)
+        scrollView.addSubview(creatorButtonsContainer)
         creatorButtonsContainer.addSubview(creatorLabel)
 
-        scrollableContainer.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
 
         scrollableWidth.snp.makeConstraints { make in
-            scrollableContainerWidth = make.width.equalTo(frame.width).constraint
-            make.leading.trailing.equalTo(scrollableContainer)
+            scrollViewWidth = make.width.equalTo(frame.width).constraint
+            make.leading.trailing.equalTo(scrollView)
         }
 
         creatorTypeContainer.snp.makeConstraints { make in
-            creatorTypeContainerTop = make.top.equalTo(scrollableContainer).offset(Size.bigTop).constraint
-            make.leading.trailing.equalTo(scrollableContainer).inset(Size.margins)
+            creatorTypeContainerTop = make.top.equalTo(scrollView).offset(Size.bigTop).constraint
+            make.leading.trailing.equalTo(scrollView).inset(Size.margins)
         }
 
         hereAsLabel.snp.makeConstraints { make in
@@ -114,7 +127,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
             make.top.equalTo(hereAsLabel.snp.bottom).offset(Size.buttonOffset)
             make.bottom.equalTo(creatorTypeContainer)
             make.height.equalTo(Size.buttonHeight)
-            scrollableContainerFanBottom = make.bottom.equalTo(scrollableContainer).inset(Size.margins).constraint
+            scrollViewFanBottom = make.bottom.equalTo(scrollView).inset(Size.margins).constraint
         }
 
         creatorLabel.snp.makeConstraints { make in
@@ -124,11 +137,11 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         creatorButtonsContainer.snp.makeConstraints { make in
             make.top.equalTo(creatorTypeContainer.snp.bottom).offset(Size.containerOffset)
             make.leading.trailing.equalTo(creatorTypeContainer)
-            scrollableContainerArtistBottom = make.bottom.equalTo(scrollableContainer).offset(-Size.margins).constraint
+            scrollViewArtistBottom = make.bottom.equalTo(scrollView).offset(-Size.margins).constraint
         }
 
-        scrollableContainerArtistBottom.deactivate()
-        scrollableContainerFanBottom.activate()
+        scrollViewArtistBottom.deactivate()
+        scrollViewFanBottom.activate()
 
         addCreatorCategoriesSpinner()
     }
@@ -248,18 +261,18 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         case .none:
             fanButton.isSelected = false
             artistButton.isSelected = false
-            scrollableContainerArtistBottom.deactivate()
-            scrollableContainerFanBottom.activate()
+            scrollViewArtistBottom.deactivate()
+            scrollViewFanBottom.activate()
         case .fan:
             fanButton.isSelected = true
             artistButton.isSelected = false
-            scrollableContainerArtistBottom.deactivate()
-            scrollableContainerFanBottom.activate()
+            scrollViewArtistBottom.deactivate()
+            scrollViewFanBottom.activate()
         case .artist:
             fanButton.isSelected = false
             artistButton.isSelected = true
-            scrollableContainerArtistBottom.activate()
-            scrollableContainerFanBottom.deactivate()
+            scrollViewArtistBottom.activate()
+            scrollViewFanBottom.deactivate()
         }
 
         let creatorTypeY: CGFloat

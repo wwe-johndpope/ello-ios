@@ -26,6 +26,8 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
     var onboardingData: OnboardingData!
     weak var delegate: DynamicSettingsDelegate?
 
+    override var navigationBarsVisible: Bool { return true }
+
     override func loadView() {
         let screen = OnboardingCreatorTypeScreen()
         screen.delegate = self
@@ -35,10 +37,15 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if onboardingViewController != nil {
+        let isOnboarding = onboardingViewController != nil
+        if isOnboarding {
+            screen.topInset = 0
             screen.navigationBar.isHidden = true
         }
         else {
+            screen.topInset = ElloNavigationBar.Size.height
+            updatesBottomBar = false
+
             let backItem = UIBarButtonItem.backChevron(withController: self)
             let elloNavigationItem = UINavigationItem()
             elloNavigationItem.title = InterfaceString.Settings.CreatorType
@@ -68,8 +75,18 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
             .catch { error in
                 let alertController = AlertViewController(error: InterfaceString.GenericError)
                 self.appViewController?.present(alertController, animated: true, completion: nil)
-                print(error)
             }
+    }
+
+    override func updateNavBars() {
+        super.updateNavBars()
+
+        if bottomBarController?.bottomBarVisible == true {
+            screen.bottomInset = ElloTabBar.Size.height
+        }
+        else {
+            screen.bottomInset = 0
+        }
     }
 
 }
