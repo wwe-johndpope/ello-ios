@@ -110,6 +110,12 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
+        updateNavBars()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateNavBars()
     }
 
     override func trackScreenAppeared() {
@@ -118,6 +124,26 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         if currentUser == nil {
             Tracker.shared.loggedOutScreenAppeared(self)
         }
+    }
+
+    func updateNavBars() {
+        postNotification(StatusBarNotifications.statusBarShouldHide, value: !navigationBarsVisible)
+        UIView.setAnimationsEnabled(false)
+        if navigationBarsVisible {
+            showNavBars()
+        }
+        else {
+            hideNavBars()
+        }
+        UIView.setAnimationsEnabled(true)
+    }
+
+    func showNavBars() {
+        bottomBarController?.setNavigationBarsVisible(true, animated: true)
+    }
+
+    func hideNavBars() {
+        bottomBarController?.setNavigationBarsVisible(false, animated: true)
     }
 
     func didSetCurrentUser() {

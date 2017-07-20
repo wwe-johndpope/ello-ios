@@ -21,16 +21,7 @@ class SettingsContainerViewController: BaseElloViewController {
     @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     fileprivate var settingsViewController: SettingsViewController?
 
-    func updateNavBars() {
-        if navigationBarsVisible {
-            showNavBars()
-        }
-        else {
-            hideNavBars()
-        }
-    }
-
-    func showNavBars() {
+    override func showNavBars() {
         navigationBarTopConstraint.constant = 0
         animate {
             postNotification(StatusBarNotifications.statusBarShouldHide, value: false)
@@ -45,7 +36,7 @@ class SettingsContainerViewController: BaseElloViewController {
         }
     }
 
-    func hideNavBars() {
+    override func hideNavBars() {
         navigationBarTopConstraint.constant = -ElloNavigationBar.Size.height
         animate {
             postNotification(StatusBarNotifications.statusBarShouldHide, value: true)
