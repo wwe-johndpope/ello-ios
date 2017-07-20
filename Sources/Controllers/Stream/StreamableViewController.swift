@@ -142,6 +142,14 @@ class StreamableViewController: BaseElloViewController {
     }
 }
 
+extension StreamableViewController {
+    @objc
+    func hamburgerButtonTapped() {
+        let responder: DrawerResponder? = findResponder()
+        responder?.showDrawerViewController()
+    }
+}
+
 // MARK: PostTappedResponder
 extension StreamableViewController: PostTappedResponder {
 

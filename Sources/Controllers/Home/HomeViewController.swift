@@ -8,9 +8,10 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
     override func trackerProps() -> [String: Any]? { return visibleViewController?.trackerProps() }
 
     var visibleViewController: UIViewController?
+    var editorialsViewController: EditorialsViewController!
+    var artistInvitesViewController: ArtistInvitesViewController!
     var followingViewController: FollowingViewController!
     var discoverViewController: CategoryViewController!
-    var editorialsViewController: EditorialsViewController!
 
     enum Usage {
         case loggedOut
@@ -73,6 +74,10 @@ extension HomeViewController: HomeResponder {
         showController(editorialsViewController)
     }
 
+    func showArtistInvitesViewController() {
+        showController(artistInvitesViewController)
+    }
+
     func showFollowingViewController() {
         showController(followingViewController)
     }
@@ -87,6 +92,12 @@ extension HomeViewController: HomeResponder {
         addChildViewController(editorialsViewController)
         editorialsViewController.didMove(toParentViewController: self)
         self.editorialsViewController = editorialsViewController
+
+        let artistInvitesViewController = ArtistInvitesViewController()
+        artistInvitesViewController.currentUser = currentUser
+        addChildViewController(artistInvitesViewController)
+        artistInvitesViewController.didMove(toParentViewController: self)
+        self.artistInvitesViewController = artistInvitesViewController
 
         let followingViewController = FollowingViewController()
         followingViewController.currentUser = currentUser

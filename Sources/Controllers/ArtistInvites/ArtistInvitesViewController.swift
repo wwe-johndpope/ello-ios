@@ -14,15 +14,10 @@ class ArtistInvitesViewController: StreamableViewController {
     }
     var generator: ArtistInvitesGenerator!
 
-    typealias Usage = HomeViewController.Usage
-
-    fileprivate let usage: Usage
-
-    init(usage: Usage) {
-        self.usage = usage
+    init() {
         super.init(nibName: nil, bundle: nil)
 
-        title = InterfaceString.ArtistInvites.NavbarTitle
+        title = InterfaceString.ArtistInvites.Title
         generator = ArtistInvitesGenerator(
             currentUser: currentUser,
             destination: self)
@@ -40,9 +35,10 @@ class ArtistInvitesViewController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = ArtistInvitesScreen(usage: usage)
+        let screen = ArtistInvitesScreen()
         screen.delegate = self
 
+        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
         elloNavigationItem.titleView = UIView()
         screen.navigationItem = elloNavigationItem
 

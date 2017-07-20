@@ -57,6 +57,10 @@ struct InterfaceString {
         static let PasswordPlaceholder: String = NSLocalizedString("Password", comment: "")
     }
 
+    struct ArtistInvites {
+        static let Title: String = NSLocalizedString("Artist Invites", comment: "")
+    }
+
     struct FollowingStream {
         static let Title: String = NSLocalizedString("Following", comment: "Following title")
     }

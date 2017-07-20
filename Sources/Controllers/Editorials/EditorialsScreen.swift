@@ -40,6 +40,12 @@ extension EditorialsScreen: HomeScreenNavBar {
     }
 
     @objc
+    func homeScreenArtistInvitesTapped() {
+        let responder: HomeResponder? = self.findResponder()
+        responder?.showArtistInvitesViewController()
+    }
+
+    @objc
     func homeScreenFollowingTapped() {
         let responder: HomeResponder? = self.findResponder()
         responder?.showFollowingViewController()

@@ -97,12 +97,6 @@ class FollowingViewController: StreamableViewController {
     }
 
     @objc
-    func hamburgerButtonTapped() {
-        let responder: DrawerResponder? = findResponder()
-        responder?.showDrawerViewController()
-    }
-
-    @objc
     func loadNewPosts() {
         let scrollView = streamViewController.collectionView
         scrollView.setContentOffset(CGPoint(x: 0, y: -scrollView.contentInset.top), animated: true)
@@ -192,6 +186,12 @@ extension FollowingViewController: HomeScreenNavBar {
     func homeScreenEditorialsTapped() {
         let responder: HomeResponder? = self.findResponder()
         responder?.showEditorialsViewController()
+    }
+
+    @objc
+    func homeScreenArtistInvitesTapped() {
+        let responder: HomeResponder? = self.findResponder()
+        responder?.showArtistInvitesViewController()
     }
 
 }

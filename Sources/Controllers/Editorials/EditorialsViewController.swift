@@ -78,14 +78,6 @@ class EditorialsViewController: StreamableViewController {
     }
 }
 
-extension EditorialsViewController {
-    @objc
-    func hamburgerButtonTapped() {
-        let responder: DrawerResponder? = findResponder()
-        responder?.showDrawerViewController()
-    }
-}
-
 extension EditorialsViewController: EditorialCellResponder {
     func editorialTapped(cell: EditorialCell) {
         guard

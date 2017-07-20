@@ -4,6 +4,7 @@
 
 protocol HomeResponder: class {
     func showEditorialsViewController()
+    func showArtistInvitesViewController()
     func showFollowingViewController()
     func showDiscoverViewController()
 }
