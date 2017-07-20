@@ -158,6 +158,7 @@ class DynamicSettingsViewController: UITableViewController {
         case .creatorType:
             guard let categoryIds = currentUser.profile?.creatorTypeCategoryIds else { return }
 
+            tableView.isUserInteractionEnabled = false
             CategoryService().loadCreatorCategories()
                 .thenFinally { categories in
                     let creatorCategories = categoryIds.flatMap { id -> Category? in
@@ -169,7 +170,9 @@ class DynamicSettingsViewController: UITableViewController {
                     controller.creatorType = .artist(creatorCategories)
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
-                .ignoreErrors()
+                .always { _ in
+                    tableView.isUserInteractionEnabled = true
+                }
         case .blocked:
             let controller = SimpleStreamViewController(endpoint: .currentUserBlockedList, title: InterfaceString.Settings.BlockedTitle)
             controller.streamViewController.noResultsMessages =
