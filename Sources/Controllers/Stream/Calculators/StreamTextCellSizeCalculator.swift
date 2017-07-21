@@ -55,31 +55,32 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     }
 
     fileprivate func loadNext() {
-        if let item = self.cellItems.safeValue(0) {
-            if item.jsonable is ElloComment {
-                // need to add back in the postMargin (15) since the maxWidth should already
-                // account for 15 on the left that is part of the commentMargin (60)
-                self.webView.frame = self.webView.frame.with(width: maxWidth - StreamTextCell.Size.commentMargin + StreamTextCell.Size.postMargin)
-            }
-            else {
-                self.webView.frame = self.webView.frame.with(width: maxWidth)
-            }
-            let textElement = item.type.data as? TextRegion
+        guard !self.cellItems.isEmpty else {
+            completion()
+            return
+        }
 
-            if let textElement = textElement {
-                let content = textElement.content
-                let strippedContent = content.stripHtmlImgSrc()
-                let html = StreamTextCellHTML.postHTML(strippedContent)
-                // needs to use the same width as the post text region
-                self.webView.loadHTMLString(html, baseURL: URL(string: "/"))
-            }
-            else {
-                self.cellItems.remove(at: 0)
-                loadNext()
-            }
+        let item = cellItems.remove(at: 0)
+        if item.jsonable is ElloComment {
+            // need to add back in the postMargin (15) since the maxWidth should already
+            // account for 15 on the left that is part of the commentMargin (60)
+            self.webView.frame = self.webView.frame.with(width: maxWidth - StreamTextCell.Size.commentMargin + StreamTextCell.Size.postMargin)
         }
         else {
-            completion()
+            self.webView.frame = self.webView.frame.with(width: maxWidth)
+        }
+        let textElement = item.type.data as? TextRegion
+
+        if let textElement = textElement {
+            let content = textElement.content
+            let strippedContent = content.stripHtmlImgSrc()
+            let html = StreamTextCellHTML.postHTML(strippedContent)
+            // needs to use the same width as the post text region
+            self.webView.loadHTMLString(html, baseURL: URL(string: "/"))
+        }
+        else {
+            self.cellItems.remove(at: 0)
+            loadNext()
         }
     }
 
