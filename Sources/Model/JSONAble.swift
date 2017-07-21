@@ -51,9 +51,9 @@ extension JSONAble {
         guard let links = links else { return nil }
 
         var obj: JSONAble?
-        let linksMap = links[identifier] as? [String: Any]
-        if let id = linksMap?["id"] as? String,
-            let collection = linksMap?["type"] as? String
+        if let linksMap = links[identifier] as? [String: Any],
+            let id = linksMap["id"] as? String,
+            let collection = linksMap["type"] as? String
         {
             ElloLinkedStore.sharedInstance.readConnection.read { transaction in
                 obj = transaction.object(forKey: id, inCollection: collection) as? JSONAble
@@ -64,6 +64,7 @@ extension JSONAble {
                 obj = transaction.object(forKey: id, inCollection: identifier) as? JSONAble
             }
         }
+
         return obj
     }
 

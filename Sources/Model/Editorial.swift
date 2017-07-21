@@ -4,7 +4,7 @@
 
 import SwiftyJSON
 
-// Version 1: initial
+// Version 3: initial (should have been 1, but copy/paste mistake)
 let EditorialVersion = 3
 
 final class Editorial: JSONAble, Groupable {
@@ -36,7 +36,7 @@ final class Editorial: JSONAble, Groupable {
     var invite: InviteInfo?
     let url: URL?
     let kind: Kind
-    var groupId: String { return "Category-\(id)" }
+    var groupId: String { return "Editorial-\(id)" }
     let postId: String?
     var post: Post? {
         guard let postId = postId else { return nil }

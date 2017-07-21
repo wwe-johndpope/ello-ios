@@ -315,18 +315,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.userStream(userParam: "NA").supportsLargeImages) == false
                 }
             }
-
-            describe("editorials") {
-                it("doesn't display previews") {
-                    let streamKind = StreamKind.editorials
-                    if case let .editorials(preview) = streamKind.endpoint {
-                        expect(preview) == false
-                    }
-                    else {
-                        fail("incorrect streamKind endpoint")
-                    }
-                }
-            }
         }
     }
 }

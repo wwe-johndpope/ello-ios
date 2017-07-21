@@ -141,7 +141,6 @@ extension HomeScreenNavBar {
             make.top.equalTo(navigationBar).offset(BlackBar.Size.height + HomeScreenNavBarSize.typeOffset)
         }
 
-        let margins: UIEdgeInsets
         if type.tabCount == 3 {
             navigationBar.addSubview(middleButton)
             middleButton.addSubview(middleLine)

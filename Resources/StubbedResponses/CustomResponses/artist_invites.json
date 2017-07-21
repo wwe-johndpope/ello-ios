@@ -1,0 +1,263 @@
+{
+    "artist_invites": [
+        {
+            "closed_at": "2017-07-20T20:42:26.223673Z",
+            "description": "<p>We are excited to announce the new Ello publication, Not For Print. The first issue will address the theme of \u201ccensorship,\u201d and we want to see who\u2019s pushing the limits, challenging the mainstream, making work that says something important, and moving the world forward in a better direction</p>\n\n<p>Not For Print will help bring the best of Ello into the real world with a tangible, show-it-off-on-your-coffee-table magazine featuring the art of 50 creators on Ello. And we want to see your work in it! Not For Print is another way Ello is committing to provide visibility and opportunity for our incredibly talented community.</p>\n\n<p>And to make a rad fucking magazine.</p>",
+            "guide": [
+                {
+                    "raw_body": "- Post three original images (photos, illustrations, designs, paintings, sculptures, installations, GIFs, etc.) on your Ello account that address the theme \u201ccensorship.\u201d\n- Post all three images as one post and tag @notforprint\n- Include your name and a link to your website or portfolio in the post.",
+                    "rendered_body": "<ul>\n<li>Post three original images (photos, illustrations, designs, paintings, sculptures, installations, GIFs, etc.) on your Ello account that address the theme \u201ccensorship.\u201d</li>\n<li>Post all three images as one post and tag <a href=\"/notforprint\" class=\"user-mention\">@notforprint</a>\n</li>\n<li>Include your name and a link to your website or portfolio in the post.</li>\n</ul>",
+                    "title": "How To Enter"
+                },
+                {
+                    "raw_body": "- 50 artists will be selected to appear in the first-ever edition of Not For Print \n- 4 artists will be recognized with $1,000 art grants\n- 4 artists will be awarded $500 community art grants as voted on through the most comments from the Ello community",
+                    "rendered_body": "<ul>\n<li>50 artists will be selected to appear in the first-ever edition of Not For Print </li>\n<li>4 artists will be recognized with $1,000 art grants</li>\n<li>4 artists will be awarded $500 community art grants as voted on through the most comments from the Ello community</li>\n</ul>",
+                    "title": "Opportunity"
+                },
+                {
+                    "raw_body": "Ello Co-founders, Todd Berger and Lucian F\u00f6hr, and Curatorial Director, Amber Young, will curate and select the 50 artists.\n\nEllo staff will contact the winners. Selected artists should be prepared to provide in a timely manner a high-resolution image of the selected work.\n\nThis is a great opportunity to get recognition for your work. If you know great artists who are not yet Ello members, encourage them to make an account and get their best work entered. The open call will last until Wednesday, November 23, 2016, midnight MT.",
+                    "rendered_body": "<p>Ello Co-founders, Todd Berger and Lucian F\u00f6hr, and Curatorial Director, Amber Young, will curate and select the 50 artists.</p>\n\n<p>Ello staff will contact the winners. Selected artists should be prepared to provide in a timely manner a high-resolution image of the selected work.</p>\n\n<p>This is a great opportunity to get recognition for your work. If you know great artists who are not yet Ello members, encourage them to make an account and get their best work entered. The open call will last until Wednesday, November 23, 2016, midnight MT.</p>",
+                    "title": "Selection Process"
+                }
+            ],
+            "header_image": {
+                "hdpi": {
+                    "metadata": {
+                        "height": 414,
+                        "size": 73490,
+                        "type": "image/jpeg",
+                        "width": 414
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/header_image/1/ello-hdpi-cb84cf1a.jpg"
+                },
+                "optimized": {
+                    "metadata": {
+                        "height": 1440,
+                        "size": 332130,
+                        "type": "image/jpeg",
+                        "width": 1440
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/header_image/1/ello-optimized-cb84cf1a.jpg"
+                },
+                "original": {
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/header_image/1/ello-5b167a00-d377-438d-8566-80300623829c.jpeg"
+                },
+                "xhdpi": {
+                    "metadata": {
+                        "height": 837,
+                        "size": 209010,
+                        "type": "image/jpeg",
+                        "width": 837
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/header_image/1/ello-xhdpi-cb84cf1a.jpg"
+                }
+            },
+            "id": "1",
+            "invite_type": "Magazine",
+            "links": {
+                "approved_submissions": {
+                    "href": "/api/v2/artist_invites/1/submissions?status=approved",
+                    "type": "artist_invite_submission_stream"
+                },
+                "brand_account": {
+                    "href": "/api/v2/users/663",
+                    "id": "663",
+                    "type": "users"
+                },
+                "selected_submissions": {
+                    "href": "/api/v2/artist_invites/1/submissions?status=selected",
+                    "type": "artist_invite_submission_stream"
+                },
+                "unapproved_submissions": {
+                    "href": "/api/v2/artist_invites/1/submissions?status=unapproved",
+                    "type": "artist_invite_submission_stream"
+                }
+            },
+            "logo_image": {
+                "hdpi": {
+                    "metadata": {
+                        "height": 360,
+                        "size": 7261,
+                        "type": "image/png",
+                        "width": 360
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/logo_image/1/ello-hdpi-af133592.png"
+                },
+                "ldpi": {
+                    "metadata": {
+                        "height": 99,
+                        "size": 2711,
+                        "type": "image/png",
+                        "width": 99
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/logo_image/1/ello-ldpi-af133592.png"
+                },
+                "mdpi": {
+                    "metadata": {
+                        "height": 207,
+                        "size": 5691,
+                        "type": "image/png",
+                        "width": 207
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/logo_image/1/ello-mdpi-af133592.png"
+                },
+                "optimized": {
+                    "metadata": {
+                        "height": 360,
+                        "size": 7261,
+                        "type": "image/png",
+                        "width": 360
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/logo_image/1/ello-optimized-af133592.png"
+                },
+                "original": {
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/logo_image/1/ello-a108469a-88e3-4ede-a08e-e3f9e0737000.png"
+                },
+                "xhdpi": {
+                    "metadata": {
+                        "height": 360,
+                        "size": 7261,
+                        "type": "image/png",
+                        "width": 360
+                    },
+                    "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/artist_invite/logo_image/1/ello-xhdpi-af133592.png"
+                }
+            },
+            "opened_at": "2017-07-20T20:42:26.223649Z",
+            "short_description": "<p>Announcing the 1st edition of the Ello print magazine:<br>\nNot For Print, Issue 01 \u2013 Censorship</p>",
+            "slug": "nfp-issue-1",
+            "status": "open",
+            "submission_body_block": "#notforprint @holmezi",
+            "title": "Not For Print - Issue 1"
+        }
+    ],
+    "linked": {
+        "users": [
+            {
+                "avatar": {
+                    "large": {
+                        "metadata": {
+                            "height": 360,
+                            "size": 222681,
+                            "type": "image/png",
+                            "width": 360
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-large-38ddee22.png"
+                    },
+                    "original": {
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-b7ebf461-54be-4e36-9765-eba47debbdc6.jpeg"
+                    },
+                    "regular": {
+                        "metadata": {
+                            "height": 120,
+                            "size": 28230,
+                            "type": "image/png",
+                            "width": 120
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-regular-38ddee22.png"
+                    },
+                    "small": {
+                        "metadata": {
+                            "height": 60,
+                            "size": 7608,
+                            "type": "image/png",
+                            "width": 60
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-small-38ddee22.png"
+                    }
+                },
+                "bad_for_seo": false,
+                "badges": [
+                    "featured",
+                    "staff"
+                ],
+                "cover_image": {
+                    "hdpi": {
+                        "metadata": {
+                            "height": 414,
+                            "size": 161242,
+                            "type": "image/jpeg",
+                            "width": 413
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-hdpi-6355d92b.jpg"
+                    },
+                    "ldpi": {
+                        "metadata": {
+                            "height": 99,
+                            "size": 11606,
+                            "type": "image/jpeg",
+                            "width": 99
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-ldpi-6355d92b.jpg"
+                    },
+                    "mdpi": {
+                        "metadata": {
+                            "height": 207,
+                            "size": 44129,
+                            "type": "image/jpeg",
+                            "width": 206
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-mdpi-6355d92b.jpg"
+                    },
+                    "optimized": {
+                        "metadata": {
+                            "height": 1440,
+                            "size": 1546525,
+                            "type": "image/jpeg",
+                            "width": 1435
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-optimized-6355d92b.jpg"
+                    },
+                    "original": {
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-ec69965c-58d4-4662-a31f-161bd45b8234.jpeg"
+                    },
+                    "xhdpi": {
+                        "metadata": {
+                            "height": 837,
+                            "size": 572953,
+                            "type": "image/jpeg",
+                            "width": 834
+                        },
+                        "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-xhdpi-6355d92b.jpg"
+                    }
+                },
+                "experimental_features": true,
+                "external_links_list": [
+                    {
+                        "icon": "https://social-icons.ello.co/play.png",
+                        "text": "play.google.com/store/apps/details?id=asdf",
+                        "type": "Google Play Store",
+                        "url": "https://play.google.com/store/apps/details?id=asdf"
+                    }
+                ],
+                "followers_count": 25,
+                "following_count": 2,
+                "formatted_short_bio": "",
+                "has_auto_watch_enabled": true,
+                "has_commenting_enabled": true,
+                "has_loves_enabled": true,
+                "has_reposting_enabled": true,
+                "has_sharing_enabled": true,
+                "href": "/api/v2/users/663",
+                "id": "663",
+                "is_collaborateable": true,
+                "is_community": null,
+                "is_hireable": true,
+                "links": {
+                    "categories": [
+                        "2"
+                    ]
+                },
+                "location": "",
+                "loves_count": 8,
+                "name": "",
+                "posts_adult_content": false,
+                "posts_count": 15,
+                "relationship_priority": "friend",
+                "total_views_count": 20834,
+                "username": "justin",
+                "views_adult_content": true
+            }
+        ]
+    }
+}

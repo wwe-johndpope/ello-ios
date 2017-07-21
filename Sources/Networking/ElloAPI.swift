@@ -19,6 +19,8 @@ enum ElloAPI {
     case amazonCredentials
     case announcements
     case announcementsNewContent(createdAt: Date?)
+    case artistInvites
+    case artistInviteDetail(id: String)
     case markAnnouncementAsRead
     case anonymousCredentials
     case auth(email: String, password: String)
@@ -38,7 +40,7 @@ enum ElloAPI {
     case deleteSubscriptions(token: Data)
     case deleteWatchPost(postId: String)
     case discover(type: DiscoverType)
-    case editorials(preview: Bool)
+    case editorials
     case emojiAutoComplete(terms: String)
     case findFriends(contacts: [String: [String]])
     case flagComment(postId: String, commentId: String, kind: String)
@@ -137,6 +139,8 @@ enum ElloAPI {
         case .categories,
              .category:
             return .categoriesType
+        case .artistInvites, .artistInviteDetail:
+            return .artistInvites
         case .editorials:
             return .editorials
         case .pagePromotionals:
@@ -226,7 +230,9 @@ enum ElloAPI {
 extension ElloAPI {
     var supportsAnonymousToken: Bool {
         switch self {
-        case .availability,
+        case .artistInvites,
+             .artistInviteDetail,
+             .availability,
              .categories,
              .category,
              .categoryPosts,
@@ -334,6 +340,10 @@ extension ElloAPI: Moya.TargetType {
         case .announcements,
              .announcementsNewContent:
             return "/api/\(ElloAPI.apiVersion)/most_recent_announcements"
+        case .artistInvites:
+            return "/api/\(ElloAPI.apiVersion)/artist_invites"
+        case let .artistInviteDetail(id):
+            return "/api/\(ElloAPI.apiVersion)/artist_invites/\(id)"
         case .markAnnouncementAsRead:
             return "\(ElloAPI.announcements.path)/mark_last_read_announcement"
         case .anonymousCredentials,
@@ -498,6 +508,8 @@ extension ElloAPI: Moya.TargetType {
              .auth,
              .reAuth:
             return stubbedData("auth")
+        case .artistInvites, .artistInviteDetail:
+            return stubbedData("artist_invites")
         case .availability:
             return stubbedData("availability")
         case .createComment, .commentDetail:
@@ -697,11 +709,6 @@ extension ElloAPI: Moya.TargetType {
         case let .custom(url, _):
             guard let queryString = url.query else { return nil }
             return convertQueryParams(queryString)
-        case let .editorials(preview):
-            if preview {
-                return ["preview": "1"]
-            }
-            return nil
         case .currentUserProfile:
             return [
                 "post_count": 0

@@ -18,6 +18,8 @@ enum StreamKind {
     case unknown
     case userStream(userParam: String)
     case category(slug: String)
+    case artistInvites
+    case artistInviteDetail(id: String)
 
     var name: String {
         switch self {
@@ -28,6 +30,8 @@ enum StreamKind {
         case .editorials: return InterfaceString.Editorials.Title
         case .following: return InterfaceString.FollowingStream.Title
         case .notifications: return InterfaceString.Notifications.Title
+        case .artistInvites: return InterfaceString.ArtistInvites.Title
+        case .artistInviteDetail: return ""
         case .category: return ""
         case .postDetail: return ""
         case let .simpleStream(_, title): return title
@@ -38,6 +42,8 @@ enum StreamKind {
 
     var cacheKey: String {
         switch self {
+        case .artistInvites: return "ArtistInvites"
+        case .artistInviteDetail: return "ArtistInviteDetail"
         case .currentUserStream: return "Profile"
         case .allCategories: return "AllCategories"
         case .announcements: return "Announcements"
@@ -47,8 +53,7 @@ enum StreamKind {
         case .notifications: return "Notifications"
         case .postDetail: return "PostDetail"
         case .unknown: return "unknown"
-        case .userStream:
-            return "UserStream"
+        case .userStream: return "UserStream"
         case let .simpleStream(endpoint, title):
             switch endpoint {
             case .searchForPosts:
@@ -100,7 +105,9 @@ enum StreamKind {
         case .announcements: return .announcements
         case let .category(slug): return .category(slug: slug)
         case let .discover(type): return .discover(type: type)
-        case .editorials: return .editorials(preview: false)
+        case .editorials: return .editorials
+        case .artistInvites: return .artistInvites
+        case let .artistInviteDetail(id): return .artistInviteDetail(id: id)
         case .following: return .following
         case let .notifications(category): return .notificationsStream(category: category)
         case let .postDetail(postParam): return .postDetail(postParam: postParam, commentCount: 10)
@@ -144,8 +151,6 @@ enum StreamKind {
                 else { return nil }
                 return editorial
             }
-        case .announcements:
-            return jsonables
         case .discover, .category:
             if let comments = jsonables as? [ElloComment]  {
                 return comments
@@ -165,17 +170,8 @@ enum StreamKind {
                 return []
             }
         default:
-            if let jsonables = jsonables as? [ElloComment] {
-                return jsonables
-            }
-            else if let jsonables = jsonables as? [Post] {
-                return jsonables
-            }
-            else if let jsonables = jsonables as? [User] {
-                return jsonables
-            }
+            return jsonables
         }
-        return []
     }
 
     func setIsGridView(_ isGridView: Bool) {

@@ -822,6 +822,10 @@
 		1DC78A541F21302300BE2413 /* ArtistInvitesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A501F21302300BE2413 /* ArtistInvitesProtocols.swift */; };
 		1DC78A551F21302300BE2413 /* ArtistInvitesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A511F21302300BE2413 /* ArtistInvitesScreen.swift */; };
 		1DC78A561F21302300BE2413 /* ArtistInvitesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A521F21302300BE2413 /* ArtistInvitesViewController.swift */; };
+		1DC78A581F21467800BE2413 /* ArtistInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A571F21467800BE2413 /* ArtistInvite.swift */; };
+		1DC78A591F21478D00BE2413 /* ArtistInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A571F21467800BE2413 /* ArtistInvite.swift */; };
+		1DC78A5B1F2161E900BE2413 /* ArtistInviteBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A5A1F2161E900BE2413 /* ArtistInviteBubbleCell.swift */; };
+		1DC78A5D1F21624900BE2413 /* ArtistInviteCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A5C1F21624900BE2413 /* ArtistInviteCellPresenter.swift */; };
 		1DC91F751CF375F600336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1DCA942B1AA138AE0033C0EC /* ElloAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */; };
@@ -1868,6 +1872,9 @@
 		1DC78A501F21302300BE2413 /* ArtistInvitesProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInvitesProtocols.swift; sourceTree = "<group>"; };
 		1DC78A511F21302300BE2413 /* ArtistInvitesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInvitesScreen.swift; sourceTree = "<group>"; };
 		1DC78A521F21302300BE2413 /* ArtistInvitesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInvitesViewController.swift; sourceTree = "<group>"; };
+		1DC78A571F21467800BE2413 /* ArtistInvite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInvite.swift; sourceTree = "<group>"; };
+		1DC78A5A1F2161E900BE2413 /* ArtistInviteBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteBubbleCell.swift; sourceTree = "<group>"; };
+		1DC78A5C1F21624900BE2413 /* ArtistInviteCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteCellPresenter.swift; sourceTree = "<group>"; };
 		1DC91F741CF375F600336012 /* AutoCompleteResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResult.swift; sourceTree = "<group>"; };
 		1DCA942A1AA138AE0033C0EC /* ElloAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedString.swift; sourceTree = "<group>"; };
 		1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonCredentials.swift; sourceTree = "<group>"; };
@@ -2631,6 +2638,7 @@
 			isa = PBXGroup;
 			children = (
 				1D70DE6F1DF77D66008AF216 /* AnnouncementCellPresenter.swift */,
+				1DC78A5C1F21624900BE2413 /* ArtistInviteCellPresenter.swift */,
 				1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */,
 				12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */,
 				1D5933701D10ADC300EAF03D /* CategoryListCellPresenter.swift */,
@@ -3136,6 +3144,7 @@
 				F8BB4D881AA64F8700C022B0 /* AddressBookError.swift */,
 				1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */,
 				1D70DE721DF78034008AF216 /* Announcement.swift */,
+				1DC78A571F21467800BE2413 /* ArtistInvite.swift */,
 				1DC91F741CF375F600336012 /* AutoCompleteResult.swift */,
 				760303551AE17290005F7A08 /* Availability.swift */,
 				1D9A12C81EA96623003B3BD7 /* Badge.swift */,
@@ -3698,6 +3707,7 @@
 		1DC78A4E1F21300800BE2413 /* ArtistInvites */ = {
 			isa = PBXGroup;
 			children = (
+				1DC78A5A1F2161E900BE2413 /* ArtistInviteBubbleCell.swift */,
 				1DC78A4F1F21302300BE2413 /* ArtistInvitesGenerator.swift */,
 				1DC78A501F21302300BE2413 /* ArtistInvitesProtocols.swift */,
 				1DC78A511F21302300BE2413 /* ArtistInvitesScreen.swift */,
@@ -4753,6 +4763,7 @@
 				1D5566CD1EE097B400255DBF /* UIViewExtensions.swift in Sources */,
 				1D179FE01EEFEEBB00F0B37C /* PromiseKitExtensions.swift in Sources */,
 				122B30C31C6A3FBB00C1B9D8 /* PushPayload.swift in Sources */,
+				1DC78A591F21478D00BE2413 /* ArtistInvite.swift in Sources */,
 				122B30E71C6A3FC400C1B9D8 /* ImageRegion.swift in Sources */,
 				122B30BB1C6A3FBB00C1B9D8 /* ExperienceUpdate.swift in Sources */,
 				1DDC85241D91F5F500C29552 /* Authorable.swift in Sources */,
@@ -5228,6 +5239,7 @@
 				1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */,
 				1207C9701C73FEE000939ADB /* AsyncOperation.swift in Sources */,
 				12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */,
+				1DC78A5B1F2161E900BE2413 /* ArtistInviteBubbleCell.swift in Sources */,
 				12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */,
 				120E64141E327B7A00CAF03E /* JWT.swift in Sources */,
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
@@ -5262,6 +5274,7 @@
 				123375951DA6F1610019CFAD /* ProfileTotalCountSizeCalculator.swift in Sources */,
 				1D70DE671DF730C1008AF216 /* StreamImageCellSizeCalculator.swift in Sources */,
 				1207C9881C73FEE000939ADB /* PostEditingService.swift in Sources */,
+				1DC78A5D1F21624900BE2413 /* ArtistInviteCellPresenter.swift in Sources */,
 				1DF0B2D51E8D59DD001B9F97 /* ForgotPasswordResetViewController.swift in Sources */,
 				1D70DE5B1DF6106B008AF216 /* AnnouncementCell.swift in Sources */,
 				12F6ADFF1A43380C00493660 /* ProfileViewController.swift in Sources */,
@@ -5356,6 +5369,7 @@
 				1D513E061ED735910081BB2D /* EditorialsGenerator.swift in Sources */,
 				1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */,
 				7659FB831B29F15200DEB6F4 /* StreamInviteFriendsCellPresenter.swift in Sources */,
+				1DC78A581F21467800BE2413 /* ArtistInvite.swift in Sources */,
 				1DD771201AFD194700FBC049 /* FreeMethods.swift in Sources */,
 				EA92992E1AEA95B000E22976 /* DeleteAccountConfirmationViewController.swift in Sources */,
 				122B30CE1C6A3FBC00C1B9D8 /* ElloKeychain.swift in Sources */,

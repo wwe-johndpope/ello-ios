@@ -17,6 +17,7 @@ func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
 
 enum StreamCellType: Equatable {
     case announcement
+    case artistInviteBubble
     case badge
     case categoryCard
     case selectableCategoryCard
@@ -61,6 +62,7 @@ enum StreamCellType: Equatable {
         case notifications
 
         case editorials
+        case artistInvites
 
         case profileHeader
         case profilePosts
@@ -97,6 +99,7 @@ enum StreamCellType: Equatable {
         .notification,
         .pagePromotionalHeader,
         .announcement,
+        .artistInviteBubble,
         .editorial(.internal),
         .editorial(.external),
         .editorial(.postStream),
@@ -153,6 +156,7 @@ enum StreamCellType: Equatable {
         case .notification: return NotificationCell.reuseIdentifier
         case .placeholder: return "Placeholder"
         case .announcement: return AnnouncementCell.reuseIdentifier
+        case .artistInviteBubble: return ArtistInviteBubbleCell.reuseIdentifier
         case let .editorial(kind): return kind.reuseIdentifier
         case .profileHeader: return ProfileHeaderCell.reuseIdentifier
         case .profileHeaderGhost: return ProfileHeaderGhostCell.reuseIdentifier
@@ -173,6 +177,7 @@ enum StreamCellType: Equatable {
     var selectable: Bool {
         switch self {
         case .announcement,
+             .artistInviteBubble,
              .badge,
              .categoryCard,
              .createComment,
@@ -208,6 +213,7 @@ enum StreamCellType: Equatable {
         case .notification: return NotificationCellPresenter.configure
         case .pagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
         case .announcement: return AnnouncementCellPresenter.configure
+        case .artistInviteBubble: return ArtistInviteCellPresenter.configure
         case .editorial: return EditorialCellPresenter.configure
         case .profileHeader: return ProfileHeaderCellPresenter.configure
         case .search: return SearchStreamCellPresenter.configure
@@ -242,6 +248,7 @@ enum StreamCellType: Equatable {
         case .notification: return NotificationCell.self
         case .placeholder: return UICollectionViewCell.self
         case .announcement: return AnnouncementCell.self
+        case .artistInviteBubble: return ArtistInviteBubbleCell.self
         case let .editorial(kind): return kind.classType
         case .profileHeader: return ProfileHeaderCell.self
         case .profileHeaderGhost: return ProfileHeaderGhostCell.self
@@ -347,6 +354,7 @@ enum StreamCellType: Equatable {
              .notification,
              .pagePromotionalHeader,
              .announcement,
+             .artistInviteBubble,
              .editorial,
              .profileHeader,
              .profileHeaderGhost,
@@ -394,6 +402,7 @@ enum StreamCellType: Equatable {
             .notification,
             .pagePromotionalHeader,
             .announcement,
+            .artistInviteBubble,
             .editorial(.internal),
             .editorial(.external),
             .editorial(.postStream),

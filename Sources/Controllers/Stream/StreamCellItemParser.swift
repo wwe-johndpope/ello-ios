@@ -9,27 +9,31 @@ struct StreamCellItemParser {
     func parse(_ items: [JSONAble], streamKind: StreamKind, forceGrid: Bool = false, currentUser: User? = nil) -> [StreamCellItem] {
         let viewsAdultContent = currentUser?.viewsAdultContent ?? false
         let filteredItems = streamKind.filter(items, viewsAdultContent: viewsAdultContent)
-        let streamItems: [StreamCellItem]
-        if let posts = filteredItems as? [Post] {
-            streamItems = postCellItems(posts, streamKind: streamKind, forceGrid: forceGrid)
-        }
-        else if let comments = filteredItems as? [ElloComment] {
-            streamItems = commentCellItems(comments)
-        }
-        else if let notifications = filteredItems as? [Notification] {
-            streamItems = typicalCellItems(notifications, type: .notification)
-        }
-        else if let announcements = filteredItems as? [Announcement] {
-            streamItems = typicalCellItems(announcements, type: .announcement)
-        }
-        else if let users = filteredItems as? [User] {
-            streamItems = typicalCellItems(users, type: .userListItem)
-        }
-        else if let editorials = filteredItems as? [Editorial] {
-            streamItems = editorialCellItems(editorials)
-        }
-        else {
-            streamItems = []
+        var streamItems: [StreamCellItem] = []
+        for item in filteredItems {
+            if let post = item as? Post {
+                streamItems += postCellItems(post, streamKind: streamKind, forceGrid: forceGrid)
+            }
+            else if let comment = item as? ElloComment {
+                streamItems += commentCellItems(comment)
+            }
+            else if let notification = item as? Notification {
+                streamItems += typicalCellItems(notification, type: .notification)
+            }
+            else if let announcement = item as? Announcement {
+                streamItems += typicalCellItems(announcement, type: .announcement)
+            }
+            else if let user = item as? User {
+                streamItems += typicalCellItems(user, type: .userListItem)
+            }
+            else if let editorial = item as? Editorial {
+                streamItems += editorialCellItems(editorial)
+            }
+            else if let artistInvite = item as? ArtistInvite {
+                if case .artistInvites = streamKind {
+                    streamItems += typicalCellItems(artistInvite, type: .artistInviteBubble)
+                }
+            }
         }
         _ = streamItems.map { $0.forceGrid = forceGrid }
         return streamItems
@@ -37,66 +41,66 @@ struct StreamCellItemParser {
 
 // MARK: - Private
 
-    fileprivate func typicalCellItems(_ jsonables: [JSONAble], type: StreamCellType) -> [StreamCellItem] {
-        return jsonables.map { jsonable in
-            return StreamCellItem(jsonable: jsonable, type: type)
-        }
+    fileprivate func typicalCellItems(_ jsonable: JSONAble, type: StreamCellType) -> [StreamCellItem] {
+        return [StreamCellItem(jsonable: jsonable, type: type)]
     }
 
-    fileprivate func editorialCellItems(_ editorials: [Editorial]) -> [StreamCellItem] {
-        return editorials.map { editorial in
-            return StreamCellItem(jsonable: editorial, type: .editorial(editorial.kind))
-        }
+    fileprivate func editorialCellItems(_ editorial: Editorial) -> [StreamCellItem] {
+        return [StreamCellItem(jsonable: editorial, type: .editorial(editorial.kind))]
     }
 
-    fileprivate func postCellItems(_ posts: [Post], streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {
+    fileprivate func artistInviteCellItems(_ artistInvite: ArtistInvite) -> [StreamCellItem] {
+        return [StreamCellItem(jsonable: artistInvite, type: .artistInviteBubble)]
+    }
+
+    fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {
         var cellItems: [StreamCellItem] = []
         let isGridView = streamKind.isGridView || forceGrid
-        for post in posts {
-            if !streamKind.isProfileStream || post.isRepost {
-                cellItems.append(StreamCellItem(jsonable: post, type: .header))
+
+        if !streamKind.isProfileStream || post.isRepost {
+            cellItems.append(StreamCellItem(jsonable: post, type: .header))
+        }
+        else {
+            cellItems.append(StreamCellItem(jsonable: post, type: .spacer(height: 30)))
+        }
+        cellItems += postToggleItems(post)
+        if post.isRepost {
+            // add repost content
+            // this is weird, but the post summary is actually the repost summary on reposts
+            if isGridView {
+                cellItems += regionItems(post, content: post.summary)
             }
-            else {
-                cellItems.append(StreamCellItem(jsonable: post, type: .spacer(height: 30)))
-            }
-            cellItems += postToggleItems(post)
-            if post.isRepost {
-                // add repost content
-                // this is weird, but the post summary is actually the repost summary on reposts
-                if isGridView {
-                    cellItems += regionItems(post, content: post.summary)
-                }
-                else if let repostContent = post.repostContent {
-                    cellItems += regionItems(post, content: repostContent)
-                    // add additional content
-                    if let content = post.content {
-                        cellItems += regionItems(post, content: content)
-                    }
-                }
-            }
-            else {
-                if let content = post.contentFor(gridView: isGridView) {
+            else if let repostContent = post.repostContent {
+                cellItems += regionItems(post, content: repostContent)
+                // add additional content
+                if let content = post.content {
                     cellItems += regionItems(post, content: content)
                 }
             }
-            cellItems += footerStreamCellItems(post)
-            cellItems += [StreamCellItem(jsonable: post, type: .spacer(height: 10))]
         }
+        else {
+            if let content = post.contentFor(gridView: isGridView) {
+                cellItems += regionItems(post, content: content)
+            }
+        }
+        cellItems += footerStreamCellItems(post)
+        cellItems += [StreamCellItem(jsonable: post, type: .spacer(height: 10))]
+
         // set initial state on the items, but don't toggle the footer's state, it is used by comment open/closed
         for item in cellItems {
             if let post = item.jsonable as? Post, item.type != StreamCellType.footer {
                 item.state = post.collapsed ? .collapsed : .expanded
             }
         }
+
         return cellItems
     }
 
-    fileprivate func commentCellItems(_ comments: [ElloComment]) -> [StreamCellItem] {
-        var cellItems: [StreamCellItem] = []
-        for comment in comments {
-            cellItems.append(StreamCellItem(jsonable: comment, type: .commentHeader))
-            cellItems += regionItems(comment, content: comment.content)
-        }
+    fileprivate func commentCellItems(_ comment: ElloComment) -> [StreamCellItem] {
+        var cellItems: [StreamCellItem] = [
+            StreamCellItem(jsonable: comment, type: .commentHeader)
+        ]
+        cellItems += regionItems(comment, content: comment.content)
         return cellItems
     }
 
@@ -130,13 +134,13 @@ struct StreamCellItemParser {
 
 // MARK: For Testing
 extension StreamCellItemParser {
-    func testingTypicalCellItems(_ jsonables: [JSONAble], type: StreamCellType) -> [StreamCellItem] {
-        return typicalCellItems(jsonables, type: type)
+    func testingTypicalCellItems(_ jsonable: JSONAble, type: StreamCellType) -> [StreamCellItem] {
+        return typicalCellItems(jsonable, type: type)
     }
-    func testingPostCellItems(_ posts: [Post], streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {
-        return postCellItems(posts, streamKind: streamKind, forceGrid: forceGrid)
+    func testingPostCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {
+        return postCellItems(post, streamKind: streamKind, forceGrid: forceGrid)
     }
-    func testingCommentCellItems(_ comments: [ElloComment]) -> [StreamCellItem] {
-        return commentCellItems(comments)
+    func testingCommentCellItems(_ comment: ElloComment) -> [StreamCellItem] {
+        return commentCellItems(comment)
     }
 }
