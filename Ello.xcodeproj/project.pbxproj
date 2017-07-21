@@ -536,6 +536,7 @@
 		1D2F82BA1EA139F0006BAA31 /* jwt-auth-is-nabaroo.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F82B91EA139F0006BAA31 /* jwt-auth-is-nabaroo.json */; };
 		1D3128C01B557BD500E3D5B6 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */; };
 		1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */; };
+		1D313F661F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */; };
 		1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284D1AE74D7A00446591 /* SearchViewController.swift */; };
 		1D3328501AE751D200446591 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284F1AE751D200446591 /* SearchScreen.swift */; };
 		1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */; };
@@ -1597,6 +1598,7 @@
 		1D2F82B91EA139F0006BAA31 /* jwt-auth-is-nabaroo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "jwt-auth-is-nabaroo.json"; sourceTree = "<group>"; };
 		1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OnboardingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteCellSizeCalculator.swift; sourceTree = "<group>"; };
 		1D33284D1AE74D7A00446591 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1D33284F1AE751D200446591 /* SearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
@@ -3459,6 +3461,7 @@
 			isa = PBXGroup;
 			children = (
 				1D70DE6D1DF73ACB008AF216 /* AnnouncementCellSizeCalculator.swift */,
+				1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */,
 				1D70DE621DF730C1008AF216 /* CategoryHeaderCellSizeCalculator.swift */,
 				1D6511BB1EFD6E8400A34AF8 /* EditorialDownloader.swift */,
 				1D70DE631DF730C1008AF216 /* StreamImageCellSizeCalculator.swift */,
@@ -5436,6 +5439,7 @@
 				1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */,
 				1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */,
 				1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */,
+				1D313F661F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,

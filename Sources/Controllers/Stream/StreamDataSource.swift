@@ -40,6 +40,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     var categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
     var imageSizeCalculator = StreamImageCellSizeCalculator()
     var editorialDownloader = EditorialDownloader()
+    var artistInviteCalculator = ArtistInviteCellSizeCalculator()
 
     var inviteCache = InviteCache()
 
@@ -828,6 +829,18 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             return $0.jsonable is Editorial
         }
 
+        let artistInviteCellType: ArtistInviteCellSizeCalculator.CellType
+        if case .artistInvites = streamKind {
+            artistInviteCellType = .bubble
+        }
+        else {
+            artistInviteCellType = .bubble
+        }
+
+        let artistInviteItems = cellItems.filter {
+            return $0.jsonable is ArtistInvite
+        }
+
         let (afterAll, done) = afterN(completion)
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCell.Size.postMargin * 2)
@@ -841,6 +854,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
         editorialDownloader.processCells(editorialItems, completion: afterAll())
+        artistInviteCalculator.processCells(artistInviteItems, withWidth: withWidth, type: artistInviteCellType, completion: afterAll())
         done()
     }
 
