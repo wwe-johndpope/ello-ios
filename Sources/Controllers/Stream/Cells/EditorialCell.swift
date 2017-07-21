@@ -121,20 +121,6 @@ class EditorialCell: UICollectionViewCell {
         contentView.addGestureRecognizer(singleTapGesture)
     }
 
-    func updateConfig() {
-        if let url = config.imageURL {
-            self.spinner.isHidden = false
-            self.spinner.animateLogo()
-            imageView.pin_setImage(from: url) { result in
-                self.spinner.stopAnimatingLogo()
-            }
-        }
-        else {
-            self.spinner.isHidden = true
-            imageView.image = config.specsImage
-        }
-    }
-
     func arrange() {
         contentView.addSubview(bg)
         bg.addSubview(loadingView)
@@ -177,6 +163,20 @@ class EditorialCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         config = Config()
+    }
+
+    func updateConfig() {
+        if let url = config.imageURL {
+            self.spinner.isHidden = false
+            self.spinner.animateLogo()
+            imageView.pin_setImage(from: url) { result in
+                self.spinner.stopAnimatingLogo()
+            }
+        }
+        else {
+            self.spinner.isHidden = true
+            imageView.image = config.specsImage
+        }
     }
 }
 
