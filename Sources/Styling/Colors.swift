@@ -15,8 +15,6 @@ private struct ElloColors {
     static let greyEF: UIColor = UIColor(hex: 0xEFEFEF)
     static let greyF1: UIColor = UIColor(hex: 0xF1F1F1)
     static let greyF2: UIColor = UIColor(hex: 0xF2F2F2)
-    static let yellowFFFFCC: UIColor = UIColor(hex: 0xFFFFCC)
-    static let redFFCCCC: UIColor = UIColor(hex: 0xFFCCCC)
     static let modalBackground: UIColor = UIColor(white: 0x000000, alpha: 0.7)
 }
 
@@ -52,12 +50,6 @@ extension UIColor {
 
     // button title color
     class func grey6() -> UIColor { return ElloColors.grey6 }
-
-    // Used to color @ mention in omnibar/posts
-    class func yellowFFFFCC() -> UIColor { return ElloColors.yellowFFFFCC }
-
-    // Used to color @@ direct mention in omnibar/posts (not implemented yet)
-    class func redFFCCCC() -> UIColor { return ElloColors.redFFCCCC }
 
     // not popular
     class func greyF1() -> UIColor { return ElloColors.greyF1 }
