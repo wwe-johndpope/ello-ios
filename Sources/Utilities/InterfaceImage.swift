@@ -12,7 +12,7 @@ enum InterfaceImage: String {
         case selected
         case disabled
         case red
-        case green
+        case green  // used by the "watching" lightning bolt
     }
 
     case elloLogo = "ello_logo"
