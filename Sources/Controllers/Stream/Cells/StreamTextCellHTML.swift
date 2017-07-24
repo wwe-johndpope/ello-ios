@@ -32,7 +32,15 @@ struct StreamTextCellHTML {
     }
 
     static func postHTML(_ string: String) -> String {
-        let htmlString = StreamTextCellHTML.indexFileAsString().replacingOccurrences(of: "{{base-url}}", with: ElloURI.baseURL)
-        return htmlString.replacingOccurrences(of: "{{post-content}}", with: string)
+        var htmlString = StreamTextCellHTML.indexFileAsString()
+        htmlString = htmlString.replacingOccurrences(of: "{{base-url}}", with: ElloURI.baseURL)
+        htmlString = htmlString.replacingOccurrences(of: "{{post-content}}", with: string)
+        return htmlString
+    }
+
+    static func artistInviteHTML(_ string: String) -> String {
+        var htmlString = StreamTextCellHTML.postHTML(string)
+        htmlString = htmlString.replacingOccurrences(of: "background-color: white;", with: "background-color: #f2f2f2;")
+        return htmlString
     }
 }

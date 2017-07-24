@@ -537,6 +537,10 @@
 		1D3128C01B557BD500E3D5B6 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */; };
 		1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */; };
 		1D313F661F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */; };
+		1D313F6B1F265FED00953EE2 /* dot_green.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F671F265FED00953EE2 /* dot_green.svg */; };
+		1D313F6C1F265FED00953EE2 /* dot_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F681F265FED00953EE2 /* dot_normal.svg */; };
+		1D313F6D1F265FED00953EE2 /* dot_red.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F691F265FED00953EE2 /* dot_red.svg */; };
+		1D313F6E1F265FED00953EE2 /* dot_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F6A1F265FED00953EE2 /* dot_selected.svg */; };
 		1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284D1AE74D7A00446591 /* SearchViewController.swift */; };
 		1D3328501AE751D200446591 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284F1AE751D200446591 /* SearchScreen.swift */; };
 		1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */; };
@@ -1599,6 +1603,10 @@
 		1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OnboardingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteCellSizeCalculator.swift; sourceTree = "<group>"; };
+		1D313F671F265FED00953EE2 /* dot_green.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_green.svg; sourceTree = "<group>"; };
+		1D313F681F265FED00953EE2 /* dot_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_normal.svg; sourceTree = "<group>"; };
+		1D313F691F265FED00953EE2 /* dot_red.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_red.svg; sourceTree = "<group>"; };
+		1D313F6A1F265FED00953EE2 /* dot_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_selected.svg; sourceTree = "<group>"; };
 		1D33284D1AE74D7A00446591 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1D33284F1AE751D200446591 /* SearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
@@ -3808,6 +3816,10 @@
 				1DF741681BFA61B1000F5349 /* camera_white.svg */,
 				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
 				12241CEE1E60CAC700100C41 /* create_post_selected.svg */,
+				1D313F671F265FED00953EE2 /* dot_green.svg */,
+				1D313F681F265FED00953EE2 /* dot_normal.svg */,
+				1D313F691F265FED00953EE2 /* dot_red.svg */,
+				1D313F6A1F265FED00953EE2 /* dot_selected.svg */,
 				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
 				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
 				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
@@ -4349,6 +4361,7 @@
 				76F8DEAD1B6C0BC4009BCF61 /* abracket_selected.svg in Resources */,
 				12E2A5A61E5CD386000EFFBA /* create_post_normal.svg in Resources */,
 				1D405D9C1C47166D0059DAFD /* repost_disabled.svg in Resources */,
+				1D313F6C1F265FED00953EE2 /* dot_normal.svg in Resources */,
 				76F8DF061B6C0BC4009BCF61 /* xpmcirc_normal.svg in Resources */,
 				76F8DEB11B6C0BC4009BCF61 /* arrow_white.svg in Resources */,
 				1D472C231C1F2E0400B61E55 /* embetter_audio_play.svg in Resources */,
@@ -4461,6 +4474,7 @@
 				76F8DEC31B6C0BC4009BCF61 /* circ_normal.svg in Resources */,
 				128C5AF51C59802600EFC226 /* (null) in Resources */,
 				1D9B74D31BB1E62500ACD028 /* bubble_body_white.svg in Resources */,
+				1D313F6D1F265FED00953EE2 /* dot_red.svg in Resources */,
 				1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */,
 				1220347D1DECCDD80059E633 /* marker.svg in Resources */,
 				1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */,
@@ -4499,6 +4513,7 @@
 				12E2A5A31E5CD357000EFFBA /* home_normal.svg in Resources */,
 				76F8DEB21B6C0BC4009BCF61 /* bolt_normal.svg in Resources */,
 				76C050AD1AA8C9570094E69A /* UserListItemCell.xib in Resources */,
+				1D313F6B1F265FED00953EE2 /* dot_green.svg in Resources */,
 				1D9B74D51BB1E62500ACD028 /* bubble_tail.svg in Resources */,
 				12F6AE8B1A433F1100493660 /* auth.json in Resources */,
 				12931BD91BFE8E30009B26F9 /* xpmmini_normal.svg in Resources */,
@@ -4524,6 +4539,7 @@
 				1DA9AA7E1C6A81AB000562E4 /* emojis.json in Resources */,
 				76B53AD21B0AA89B00534548 /* relationship_batches__when_a_priority_is_omitted.json in Resources */,
 				1241EDB41DD3D07900426A17 /* page_promotionals.json in Resources */,
+				1D313F6E1F265FED00953EE2 /* dot_selected.svg in Resources */,
 				1D6C97F81CE179E600E7B929 /* usernames.json in Resources */,
 				7689B5041AD4ED3B00E4A4A3 /* relationships_following_a_user_as_friend.json in Resources */,
 				1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */,

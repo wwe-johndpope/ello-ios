@@ -15,7 +15,9 @@ final class ArtistInvite: JSONAble, Groupable {
 
     enum Status: String {
         case preview
+        case upcoming
         case open
+        case selecting
         case closed
     }
 
@@ -24,6 +26,7 @@ final class ArtistInvite: JSONAble, Groupable {
     let shortDescription: String
     let submissionBody: String
     let longDescription: String
+    let inviteType: String
     let status: Status
     let openedAt: Date?
     let closedAt: Date?
@@ -37,6 +40,7 @@ final class ArtistInvite: JSONAble, Groupable {
         shortDescription: String,
         submissionBody: String,
         longDescription: String,
+        inviteType: String,
         status: Status,
         openedAt: Date?,
         closedAt: Date?)
@@ -46,6 +50,7 @@ final class ArtistInvite: JSONAble, Groupable {
         self.shortDescription = shortDescription
         self.submissionBody = submissionBody
         self.longDescription = longDescription
+        self.inviteType = inviteType
         self.status = status
         self.openedAt = openedAt
         self.closedAt = closedAt
@@ -59,6 +64,7 @@ final class ArtistInvite: JSONAble, Groupable {
         shortDescription = decoder.decodeKey("shortDescription")
         submissionBody = decoder.decodeKey("submissionBody")
         longDescription = decoder.decodeKey("longDescription")
+        inviteType = decoder.decodeKey("inviteType")
         status = Status(rawValue: decoder.decodeKey("status")) ?? .closed
         openedAt = decoder.decodeOptionalKey("openedAt")
         closedAt = decoder.decodeOptionalKey("closedAt")
@@ -72,6 +78,7 @@ final class ArtistInvite: JSONAble, Groupable {
         encoder.encodeObject(shortDescription, forKey: "shortDescription")
         encoder.encodeObject(submissionBody, forKey: "submissionBody")
         encoder.encodeObject(longDescription, forKey: "longDescription")
+        encoder.encodeObject(inviteType, forKey: "inviteType")
         encoder.encodeObject(status.rawValue, forKey: "status")
         encoder.encodeObject(openedAt, forKey: "openedAt")
         encoder.encodeObject(closedAt, forKey: "closedAt")
@@ -84,11 +91,12 @@ final class ArtistInvite: JSONAble, Groupable {
         let id = json["id"].stringValue
         let title = json["title"].stringValue
         let shortDescription = json["short_description"].stringValue
-        let submissionBody = json["submission_body_block"].stringValue
         let longDescription = json["description"].stringValue
+        let inviteType = json["invite_type"].stringValue
         let status = Status(rawValue: json["status"].stringValue) ?? .closed
-        let openedAt = json["opened_at"].stringValue.toDate()
-        let closedAt = json["closed_at"].stringValue.toDate()
+        let submissionBody = json["submission_body_block"].stringValue
+        let openedAt = json["opened_at"].string?.toDate()
+        let closedAt = json["closed_at"].string?.toDate()
 
         let editorial = ArtistInvite(
             id: id,
@@ -96,6 +104,7 @@ final class ArtistInvite: JSONAble, Groupable {
             shortDescription: shortDescription,
             submissionBody: submissionBody,
             longDescription: longDescription,
+            inviteType: inviteType,
             status: status,
             openedAt: openedAt,
             closedAt: closedAt)

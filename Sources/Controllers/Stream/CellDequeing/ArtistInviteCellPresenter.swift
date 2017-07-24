@@ -13,8 +13,17 @@ struct ArtistInviteCellPresenter {
     {
         guard
             let cell = cell as? ArtistInviteBubbleCell,
-            let announcement = streamCellItem.jsonable as? ArtistInvite
+            let artistInvite = streamCellItem.jsonable as? ArtistInvite
         else { return }
+
+        var config = ArtistInviteBubbleCell.Config()
+        config.title = artistInvite.title
+        config.description = artistInvite.shortDescription
+        config.inviteType = artistInvite.inviteType
+        config.status = artistInvite.status
+        config.openedAt = artistInvite.openedAt
+        config.closedAt = artistInvite.closedAt
+        cell.config = config
     }
 
 }

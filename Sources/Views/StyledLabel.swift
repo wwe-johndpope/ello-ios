@@ -7,11 +7,12 @@ class StyledLabel: UILabel {
         case small
         case normal
         case large
+        case largeBold
+        case bold
         case editorialHeader
         case editorialSuccess
         case editorialCaption
-        case largeBold
-        case bold
+        case artistInviteTitle
 
         var font: UIFont {
             switch self {
@@ -19,10 +20,11 @@ class StyledLabel: UILabel {
             case .normal: return UIFont.defaultFont()
             case .large: return UIFont.defaultFont(18)
             case .largeBold: return UIFont.defaultBoldFont(18)
+            case .bold: return UIFont.defaultBoldFont()
             case .editorialHeader: return UIFont.regularBlackFont(32)
             case .editorialSuccess: return UIFont.regularBlackFont(24)
             case .editorialCaption: return UIFont.defaultFont(16)
-            case .bold: return UIFont.defaultBoldFont()
+            case .artistInviteTitle: return UIFont.regularBlackFont(24)
             }
         }
     }
@@ -145,6 +147,10 @@ extension StyledLabel.Style {
         textColor: .white,
         fontFamily: .editorialCaption
         )
+    static let artistInviteTitle = StyledLabel.Style(
+        textColor: .black,
+        fontFamily: .artistInviteTitle
+        )
     static let black = StyledLabel.Style(
         textColor: .black
         )
@@ -176,6 +182,9 @@ extension StyledLabel.Style {
         )
     static let error = StyledLabel.Style(
         textColor: .red
+        )
+    static let green = StyledLabel.Style(
+        textColor: .greenD1()
         )
 
     static func byName(_ name: String) -> StyledLabel.Style {
