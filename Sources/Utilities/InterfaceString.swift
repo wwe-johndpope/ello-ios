@@ -96,13 +96,13 @@ struct InterfaceString {
     }
 
     struct Drawer {
-        static let Invite: String = NSLocalizedString("Invite", comment: "Invite")
-        static let Magazine: String = NSLocalizedString("Magazine", comment: "Magazine")
-        static let Store: String = NSLocalizedString("Store", comment: "Store")
-        static let Help: String = NSLocalizedString("Help", comment: "Help")
-        static let Resources: String = NSLocalizedString("Resources", comment: "Resources")
-        static let About: String = NSLocalizedString("About", comment: "About")
-        static let Logout: String = NSLocalizedString("Logout", comment: "Logout")
+        static let Invite: String = NSLocalizedString("Invite", comment: "")
+        static let Magazine: String = NSLocalizedString("Magazine", comment: "")
+        static let Store: String = NSLocalizedString("Store", comment: "")
+        static let Help: String = NSLocalizedString("Help", comment: "")
+        static let Resources: String = NSLocalizedString("Resources", comment: "")
+        static let About: String = NSLocalizedString("About", comment: "")
+        static let Logout: String = NSLocalizedString("Logout", comment: "")
         static let Version: String = {
             let marketingVersion: String
             let buildVersion: String
@@ -119,8 +119,8 @@ struct InterfaceString {
     }
 
     struct Category {
-        static let SponsoredBy: String = NSLocalizedString("Sponsored by ", comment: "Sponsored by ")
-        static let PostedBy: String = NSLocalizedString("Posted by ", comment: "Posted by ")
+        static let SponsoredBy: String = NSLocalizedString("Sponsored by ", comment: "")
+        static let PostedBy: String = NSLocalizedString("Posted by ", comment: "")
     }
 
     struct Settings {
@@ -138,9 +138,9 @@ struct InterfaceString {
         static let MutedTitle: String = NSLocalizedString("Muted", comment: "muted settings item")
         static let DeleteAccountTitle: String = NSLocalizedString("Account Deletion", comment: "account deletion settings button")
         static let DeleteAccount: String = NSLocalizedString("Delete Account", comment: "account deletion label")
-        static let DeleteAccountExplanation: String = NSLocalizedString("By deleting your account you remove your personal information from Ello. Your account cannot be restored.", comment: "By deleting your account you remove your personal information from Ello. Your account cannot be restored.")
+        static let DeleteAccountExplanation: String = NSLocalizedString("By deleting your account you remove your personal information from Ello. Your account cannot be restored.", comment: "")
         static let DeleteAccountConfirm: String = NSLocalizedString("Delete Account?", comment: "delete account question")
-        static let AccountIsBeingDeleted: String = NSLocalizedString("Your account is in the process of being deleted.", comment: "Your account is in the process of being deleted.")
+        static let AccountIsBeingDeleted: String = NSLocalizedString("Your account is in the process of being deleted.", comment: "")
         static let RedirectedCountdownTemplate: String = NSLocalizedString("You will be redirected in %lu...", comment: "You will be redirected in ...")
     }
 
@@ -197,18 +197,18 @@ struct InterfaceString {
     struct Omnibar {
         static let SayEllo: String = NSLocalizedString("Say Ello...", comment: "Say Ello prompt")
         static let AddMoreText: String = NSLocalizedString("Add more text...", comment: "Add more text prompt")
-        static let EnterURL: String = NSLocalizedString("Enter the URL", comment: "Enter the URL")
+        static let EnterURL: String = NSLocalizedString("Enter the URL", comment: "")
         static let CreatePostTitle: String = NSLocalizedString("Post", comment: "Create a post")
-        static let CreatePostButton: String = NSLocalizedString("Post", comment: "Post")
-        static let EditPostTitle: String = NSLocalizedString("Edit this post", comment: "Edit this post")
-        static let EditPostButton: String = NSLocalizedString("Edit Post", comment: "Edit Post")
-        static let EditCommentTitle: String = NSLocalizedString("Edit this comment", comment: "Edit this comment")
-        static let EditCommentButton: String = NSLocalizedString("Edit Comment", comment: "Edit Comment")
-        static let CreateCommentTitle: String = NSLocalizedString("Leave a comment", comment: "Leave a comment")
-        static let CreateCommentButton: String = NSLocalizedString("Comment", comment: "Comment")
+        static let CreatePostButton: String = NSLocalizedString("Post", comment: "")
+        static let EditPostTitle: String = NSLocalizedString("Edit this post", comment: "")
+        static let EditPostButton: String = NSLocalizedString("Edit Post", comment: "")
+        static let EditCommentTitle: String = NSLocalizedString("Edit this comment", comment: "")
+        static let EditCommentButton: String = NSLocalizedString("Edit Comment", comment: "")
+        static let CreateCommentTitle: String = NSLocalizedString("Leave a comment", comment: "")
+        static let CreateCommentButton: String = NSLocalizedString("Comment", comment: "")
         static let TooLongError: String = NSLocalizedString("Your text is too long.\n\nThe character limit is 5,000.", comment: "Post too long (maximum characters is 5000) error message")
         static let LoadingImageErrorTemplate: String = NSLocalizedString("There was a problem loading the image\n%@", comment: "There was a problem loading the image (url)")
-        static let CreatedPost: String = NSLocalizedString("Post successfully created!", comment: "Post successfully created!")
+        static let CreatedPost: String = NSLocalizedString("Post successfully created!", comment: "")
         static let SellYourWorkTitle: String = NSLocalizedString("Sell your work", comment: "Sell your work title")
         static let ProductLinkPlaceholder: String = NSLocalizedString("Product detail URL", comment: "Product detail URL prompt")
     }
@@ -273,8 +273,8 @@ struct InterfaceString {
     }
 
     struct NSFW {
-        static let Show: String = NSLocalizedString("Tap to View.", comment: "Tap to View.")
-        static let Hide: String = NSLocalizedString("Tap to Hide.", comment: "Tap to Hide.")
+        static let Show: String = NSLocalizedString("Tap to View.", comment: "")
+        static let Hide: String = NSLocalizedString("Tap to Hide.", comment: "")
     }
 
     struct ImagePicker {
@@ -285,7 +285,7 @@ struct InterfaceString {
         static let TakePhoto: String = NSLocalizedString("Take Photo", comment: "Camera button")
         static let PhotoLibrary: String = NSLocalizedString("Photo Library", comment: "Library button")
         static let AddImagesTemplate: String = NSLocalizedString("Add %lu Image(s)", comment: "Add Images")
-        static let ChooseImage: String = NSLocalizedString("Choose Image", comment: "Choose Image")
+        static let ChooseImage: String = NSLocalizedString("Choose Image", comment: "")
     }
 
     struct WebBrowser {
@@ -383,34 +383,34 @@ struct InterfaceString {
     }
 
     struct App {
-        static let OpenInSafari: String = NSLocalizedString("Open in Safari", comment: "Open in Safari")
+        static let OpenInSafari: String = NSLocalizedString("Open in Safari", comment: "")
         static let LoggedOut: String = NSLocalizedString("You have been automatically logged out", comment: "Automatically logged out message")
         static let LoginAndView: String = NSLocalizedString("Login and view", comment: "Login and view prompt")
         static let OldVersion: String = NSLocalizedString("The version of the app you’re using is too old, and is no longer compatible with our API.\n\nPlease update the app to the latest version, using the “Updates” tab in the App Store.", comment: "App out of date message")
-        static let LoggedOutError: String = NSLocalizedString("You must be logged in", comment: "You must be logged in")
+        static let LoggedOutError: String = NSLocalizedString("You must be logged in", comment: "")
     }
 
     struct Error {
-        static let JPEGCompress: String = NSLocalizedString("Could not compress image as JPEG", comment: "Could not compress image as JPEG")
+        static let JPEGCompress: String = NSLocalizedString("Could not compress image as JPEG", comment: "")
     }
 
     static let GenericError: String = NSLocalizedString("Something went wrong. Thank you for your patience with Ello Beta!", comment: "Generic error message")
     static let UnknownError: String = NSLocalizedString("Unknown error", comment: "Unknown error message")
 
-    static let EmptyStreamText: String = NSLocalizedString("Nothing To See Here", comment: "Nothing To See Here")
-    static let Ello: String = NSLocalizedString("Ello", comment: "Ello")
-    static let OK: String = NSLocalizedString("OK", comment: "OK")
-    static let Yes: String = NSLocalizedString("Yes", comment: "Yes")
-    static let No: String = NSLocalizedString("No", comment: "No")
-    static let Cancel: String = NSLocalizedString("Cancel", comment: "Cancel")
-    static let Submit: String = NSLocalizedString("Submit", comment: "Submit")
-    static let Retry: String = NSLocalizedString("Retry", comment: "Retry")
-    static let AreYouSure: String = NSLocalizedString("Are You Sure?", comment: "are you sure question")
-    static let ThatIsOK: String = NSLocalizedString("It’s OK, I understand!", comment: "It’s OK, I understand!")
-    static let Delete: String = NSLocalizedString("Delete", comment: "Delete")
-    static let Remove: String = NSLocalizedString("Remove", comment: "Remove")
-    static let Next: String = NSLocalizedString("Next", comment: "Next button")
-    static let Done: String = NSLocalizedString("Done", comment: "Done button title")
-    static let Skip: String = NSLocalizedString("Skip", comment: "Skip action")
-    static let SeeAll: String = NSLocalizedString("See All", comment: "See All title")
+    static let EmptyStreamText: String = NSLocalizedString("Nothing To See Here", comment: "")
+    static let Ello: String = NSLocalizedString("Ello", comment: "")
+    static let OK: String = NSLocalizedString("OK", comment: "")
+    static let Yes: String = NSLocalizedString("Yes", comment: "")
+    static let No: String = NSLocalizedString("No", comment: "")
+    static let Cancel: String = NSLocalizedString("Cancel", comment: "")
+    static let Submit: String = NSLocalizedString("Submit", comment: "")
+    static let Retry: String = NSLocalizedString("Retry", comment: "")
+    static let AreYouSure: String = NSLocalizedString("Are You Sure?", comment: "")
+    static let ThatIsOK: String = NSLocalizedString("It’s OK, I understand!", comment: "")
+    static let Delete: String = NSLocalizedString("Delete", comment: "")
+    static let Remove: String = NSLocalizedString("Remove", comment: "")
+    static let Next: String = NSLocalizedString("Next", comment: "")
+    static let Done: String = NSLocalizedString("Done", comment: "")
+    static let Skip: String = NSLocalizedString("Skip", comment: "")
+    static let SeeAll: String = NSLocalizedString("See All", comment: "")
 }
