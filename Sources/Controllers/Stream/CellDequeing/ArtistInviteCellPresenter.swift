@@ -23,6 +23,8 @@ struct ArtistInviteCellPresenter {
         config.status = artistInvite.status
         config.openedAt = artistInvite.openedAt
         config.closedAt = artistInvite.closedAt
+        config.headerURL = artistInvite.headerImage?.largeOrBest?.url
+        config.logoURL = artistInvite.logoImage?.optimized?.url
         cell.config = config
     }
 

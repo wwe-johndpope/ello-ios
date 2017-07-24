@@ -13,7 +13,6 @@ class ArtistInviteCellSizeCalculator: NSObject {
     fileprivate var cellItems: [StreamCellItem] = []
     fileprivate var cellType: CellType = .bubble
     fileprivate var completion: Block = {}
-    fileprivate var maxWidth: CGFloat = 0
 
     init(webView: UIWebView = UIWebView()) {
         self.webView = webView
@@ -51,8 +50,10 @@ class ArtistInviteCellSizeCalculator: NSObject {
 
         cellItems = job.cellItems
         cellType = job.type
-        maxWidth = job.width
-        webView.frame = webView.frame.with(width: maxWidth)
+        var webWidth = job.width
+        webWidth -= ArtistInviteBubbleCell.Size.bubbleMargins.left + ArtistInviteBubbleCell.Size.bubbleMargins.right
+        webWidth -= ArtistInviteBubbleCell.Size.descriptionMargins.left + ArtistInviteBubbleCell.Size.descriptionMargins.right
+        webView.frame = webView.frame.with(width: webWidth)
 
         loadNext()
     }
@@ -66,12 +67,16 @@ class ArtistInviteCellSizeCalculator: NSObject {
         guard
             let artistInvite = cellItems[0].jsonable as? ArtistInvite
         else {
-            cellItems.remove(at: 0)
-            loadNext()
+            assignCellHeight(0)
             return
         }
 
-        let html = StreamTextCellHTML.postHTML(artistInvite.longDescription)
+        let text: String
+        switch cellType {
+        case .bubble:
+            text = artistInvite.shortDescription
+        }
+        let html = StreamTextCellHTML.postHTML(text)
         webView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 

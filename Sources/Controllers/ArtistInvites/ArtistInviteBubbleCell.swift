@@ -32,6 +32,7 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         var status: ArtistInvite.Status = .open
         var description: String = ""
         var headerURL: URL?
+        var logoURL: URL?
         var openedAt: Date?
         var closedAt: Date?
     }
@@ -44,12 +45,13 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
 
     fileprivate let bg = UIView()
     fileprivate let headerImage = FLAnimatedImageView()
+    fileprivate let logoImage = UIImageView()
     fileprivate let titleLabel = StyledLabel(style: .artistInviteTitle)
     fileprivate let inviteTypeLabel = StyledLabel(style: .gray)
     fileprivate let statusImage = UIImageView()
     fileprivate let statusLabel = StyledLabel(style: .green)
     fileprivate let dateLabel = StyledLabel(style: .gray)
-    fileprivate let descriptionView = UIWebView()
+    fileprivate let descriptionWebView = UIWebView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,6 +68,12 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         bg.layer.cornerRadius = Size.cornerRadius
         bg.clipsToBounds = true
         bg.backgroundColor = .greyF2()
+        headerImage.contentMode = .scaleAspectFill
+        headerImage.clipsToBounds = true
+        logoImage.contentMode = .center
+        logoImage.clipsToBounds = true
+        descriptionWebView.scrollView.isScrollEnabled = false
+        descriptionWebView.scrollView.scrollsToTop = false
     }
 
     func bindActions() {
@@ -75,19 +83,20 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         dateLabel.text = "June 7 — July 5, 2017"
 
         let html = StreamTextCellHTML.artistInviteHTML("<p>Hi!</p>")
-        descriptionView.loadHTMLString(html, baseURL: URL(string: "/"))
+        descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 
     func arrange() {
         contentView.addSubview(bg)
 
         bg.addSubview(headerImage)
+        bg.addSubview(logoImage)
         bg.addSubview(titleLabel)
         bg.addSubview(inviteTypeLabel)
         bg.addSubview(statusImage)
         bg.addSubview(statusLabel)
         bg.addSubview(dateLabel)
-        bg.addSubview(descriptionView)
+        bg.addSubview(descriptionWebView)
 
         bg.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(Size.bubbleMargins)
@@ -96,6 +105,10 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         headerImage.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(bg)
             make.height.equalTo(Size.headerImageHeight)
+        }
+
+        logoImage.snp.makeConstraints { make in
+            make.edges.equalTo(headerImage)
         }
 
         titleLabel.snp.makeConstraints { make in
@@ -123,7 +136,7 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
             make.leading.equalTo(statusLabel)
         }
 
-        descriptionView.snp.makeConstraints { make in
+        descriptionWebView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(bg).inset(Size.descriptionMargins)
             make.top.equalTo(dateLabel.snp.bottom).offset(Size.descriptionMargins.top)
         }
@@ -135,7 +148,6 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
     }
 
     func updateConfig() {
-        // headerImage
         titleLabel.text = config.title
         inviteTypeLabel.text = config.inviteType
 
@@ -160,8 +172,16 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         }
         dateLabel.text = dateText
 
+        if let url = config.headerURL {
+            headerImage.pin_setImage(from: url)
+        }
+        else {
+            headerImage.pin_cancelImageDownload()
+            headerImage.image = nil
+        }
+
         let html = StreamTextCellHTML.artistInviteHTML(config.description)
-        descriptionView.loadHTMLString(html, baseURL: URL(string: "/"))
+        descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 }
 

@@ -30,6 +30,8 @@ final class ArtistInvite: JSONAble, Groupable {
     let status: Status
     let openedAt: Date?
     let closedAt: Date?
+    var headerImage: Asset?
+    var logoImage: Asset?
     var guide: [Guide] = []
     var groupId: String { return "Editorial-\(id)" }
     override var description: String { return longDescription }
@@ -109,6 +111,8 @@ final class ArtistInvite: JSONAble, Groupable {
             openedAt: openedAt,
             closedAt: closedAt)
         editorial.links = data["links"] as? [String: Any]
+        editorial.headerImage = Asset.parseAsset("artist_invite_header_\(id)", node: data["header_image"] as? [String: Any])
+        editorial.logoImage = Asset.parseAsset("artist_invite_logo_\(id)", node: data["logo_image"] as? [String: Any])
 
         return editorial
     }
