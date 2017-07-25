@@ -3,15 +3,10 @@
 //
 
 class ArtistInviteCellSizeCalculator: NSObject {
-    enum CellType {
-        case bubble
-    }
-
     let webView: UIWebView
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, type: CellType, completion: Block)
+    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
     fileprivate var cellJobs: [CellJob] = []
     fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var cellType: CellType = .bubble
     fileprivate var completion: Block = {}
 
     init(webView: UIWebView = UIWebView()) {
@@ -22,13 +17,13 @@ class ArtistInviteCellSizeCalculator: NSObject {
 
 // MARK: Public
 
-    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, type: CellType, completion: @escaping Block) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping Block) {
         guard cellItems.count > 0 else {
             completion()
             return
         }
 
-        let job: CellJob = (cellItems: cellItems, width: width, type: type, completion: completion)
+        let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
             processJob(job)
@@ -49,7 +44,6 @@ class ArtistInviteCellSizeCalculator: NSObject {
         }
 
         cellItems = job.cellItems
-        cellType = job.type
         var webWidth = job.width
         webWidth -= ArtistInviteBubbleCell.Size.bubbleMargins.left + ArtistInviteBubbleCell.Size.bubbleMargins.right
         webWidth -= ArtistInviteBubbleCell.Size.descriptionMargins.left + ArtistInviteBubbleCell.Size.descriptionMargins.right
@@ -64,49 +58,94 @@ class ArtistInviteCellSizeCalculator: NSObject {
             return
         }
 
+        let cellItem = cellItems[0]
         guard
-            let artistInvite = cellItems[0].jsonable as? ArtistInvite
+            let artistInvite = cellItem.jsonable as? ArtistInvite
         else {
-            assignCellHeight(0)
+            assignHeight(nil)
             return
         }
 
-        let text: String
-        switch cellType {
-        case .bubble:
-            text = artistInvite.shortDescription
+        switch cellItem.type {
+        case .artistInviteBubble:
+            calculateBubbleHeight(cellItem, artistInvite)
+        case .artistInviteControls:
+            calculateControlsHeight(cellItem, artistInvite)
+        case .artistInviteGuide:
+            calculateGuideHeight(cellItem, artistInvite)
+        default:
+            assignHeight(nil)
         }
+    }
+
+    fileprivate func calculateBubbleHeight(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
+        let text = artistInvite.shortDescription
+        let html = StreamTextCellHTML.artistInviteHTML(text)
+        webView.loadHTMLString(html, baseURL: URL(string: "/"))
+    }
+
+    fileprivate func calculateControlsHeight(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
+        let text = artistInvite.longDescription
         let html = StreamTextCellHTML.postHTML(text)
         webView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 
-    fileprivate func assignCellHeight(_ height: CGFloat) {
-        let cellItem = cellItems.remove(at: 0)
-
-        switch cellType {
-        case .bubble:
-            assignBubbleCellHeight(cellItem, height)
+    fileprivate func calculateGuideHeight(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
+        guard let guide = cellItem.type.data as? ArtistInvite.Guide else {
+            assignHeight(nil)
+            return
         }
-        loadNext()
+        let text = guide.html
+        let html = StreamTextCellHTML.artistInviteGuideHTML(text)
+        webView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 
-    fileprivate func assignBubbleCellHeight(_ cellItem: StreamCellItem, _ height: CGFloat) {
+    fileprivate func assignHeight(_ height: CGFloat?) {
+        let cellItem = cellItems.remove(at: 0)
+        defer { loadNext() }
+        guard let height = height else { return }
+
+        let calculatedHeight: CGFloat?
+        switch cellItem.type {
+        case .artistInviteBubble:
+            calculatedHeight = assignBubbleHeight(cellItem, height)
+        case .artistInviteControls:
+            calculatedHeight = assignControlsHeight(cellItem, height)
+        case .artistInviteGuide:
+            calculatedHeight = assignGuideHeight(cellItem, height)
+        default:
+            calculatedHeight = nil
+        }
+
+        if let height = calculatedHeight {
+            cellItem.calculatedCellHeights.webContent = height
+            cellItem.calculatedCellHeights.oneColumn = height
+            cellItem.calculatedCellHeights.multiColumn = height
+        }
+    }
+
+    fileprivate func assignBubbleHeight(_ cellItem: StreamCellItem, _ height: CGFloat) -> CGFloat {
         var totalHeight = height
         totalHeight += ArtistInviteBubbleCell.Size.bubbleMargins.top
         totalHeight += ArtistInviteBubbleCell.Size.headerImageHeight
         totalHeight += ArtistInviteBubbleCell.Size.infoTotalHeight
         totalHeight += (height > 0 ? ArtistInviteBubbleCell.Size.descriptionMargins.bottom : 0)
         totalHeight += ArtistInviteBubbleCell.Size.bubbleMargins.bottom
+        return totalHeight
+    }
 
-        cellItem.calculatedCellHeights.webContent = totalHeight
-        cellItem.calculatedCellHeights.oneColumn = totalHeight
-        cellItem.calculatedCellHeights.multiColumn = totalHeight
+    fileprivate func assignControlsHeight(_ cellItem: StreamCellItem, _ height: CGFloat) -> CGFloat {
+        return ArtistInviteControlsCell.Size.controlsHeight + height
+    }
+
+    fileprivate func assignGuideHeight(_ cellItem: StreamCellItem, _ height: CGFloat) -> CGFloat {
+        return ArtistInviteGuideCell.Size.otherHeights + height
     }
 }
 
 extension ArtistInviteCellSizeCalculator: UIWebViewDelegate {
     func webViewDidFinishLoad(_ webView: UIWebView) {
         let textHeight = webView.windowContentSize()?.height
-        assignCellHeight(textHeight ?? 0)
+        assignHeight(textHeight ?? 0)
     }
 }

@@ -18,7 +18,9 @@ extension NSAttributedString {
 
     convenience init(_ string: String, color: UIColor = .black, underlineStyle: NSUnderlineStyle? = nil, font: UIFont = .defaultFont(), alignment: NSTextAlignment = .left, lineBreakMode: NSLineBreakMode? = nil) {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
+        if lineBreakMode != .byTruncatingTail {
+            paragraphStyle.lineSpacing = 6
+        }
         paragraphStyle.alignment = alignment
         if let lineBreakMode = lineBreakMode {
             paragraphStyle.lineBreakMode = lineBreakMode
@@ -28,7 +30,7 @@ extension NSAttributedString {
             NSForegroundColorAttributeName: color,
             NSFontAttributeName: font,
             NSParagraphStyleAttributeName: paragraphStyle,
-            NSUnderlineStyleAttributeName: underlineValue
+            NSUnderlineStyleAttributeName: underlineValue,
         ]
         self.init(string: string, attributes: attrs)
     }

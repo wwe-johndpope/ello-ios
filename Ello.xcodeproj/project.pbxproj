@@ -536,10 +536,11 @@
 		1D3128C01B557BD500E3D5B6 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */; };
 		1D3128C21B557BE100E3D5B6 /* OnboardingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */; };
 		1D313F661F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */; };
-		1D313F6B1F265FED00953EE2 /* dot_green.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F671F265FED00953EE2 /* dot_green.svg */; };
-		1D313F6C1F265FED00953EE2 /* dot_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F681F265FED00953EE2 /* dot_normal.svg */; };
-		1D313F6D1F265FED00953EE2 /* dot_red.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F691F265FED00953EE2 /* dot_red.svg */; };
-		1D313F6E1F265FED00953EE2 /* dot_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F6A1F265FED00953EE2 /* dot_selected.svg */; };
+		1D313F6B1F265FED00953EE2 /* artist_invite_status_open.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F671F265FED00953EE2 /* artist_invite_status_open.svg */; };
+		1D313F6C1F265FED00953EE2 /* artist_invite_status_preview.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F681F265FED00953EE2 /* artist_invite_status_preview.svg */; };
+		1D313F6D1F265FED00953EE2 /* artist_invite_status_selecting.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F691F265FED00953EE2 /* artist_invite_status_selecting.svg */; };
+		1D313F6E1F265FED00953EE2 /* artist_invite_status_upcoming.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D313F6A1F265FED00953EE2 /* artist_invite_status_upcoming.svg */; };
+		1D313F701F267FCF00953EE2 /* ArtistInviteDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D313F6F1F267FCF00953EE2 /* ArtistInviteDetailController.swift */; };
 		1D33284E1AE74D7A00446591 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284D1AE74D7A00446591 /* SearchViewController.swift */; };
 		1D3328501AE751D200446591 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D33284F1AE751D200446591 /* SearchScreen.swift */; };
 		1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */; };
@@ -688,6 +689,12 @@
 		1D7A28D31A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A28D21A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift */; };
 		1D7A28D81A97BE490050E8A2 /* ElloWebViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */; };
 		1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */; };
+		1D7E823C1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823A1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift */; };
+		1D7E823D1F26885D006ACE7A /* ArtistInviteDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823B1F26885D006ACE7A /* ArtistInviteDetailScreen.swift */; };
+		1D7E82411F2692D3006ACE7A /* ArtistInviteControlsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823E1F2692D3006ACE7A /* ArtistInviteControlsCell.swift */; };
+		1D7E82421F2692D3006ACE7A /* ArtistInviteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */; };
+		1D7E82431F2692D3006ACE7A /* ArtistInviteGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */; };
+		1D7E82451F26A523006ACE7A /* artist_invite_status_closed.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */; };
 		1D807D9A1B050DE2009B0F71 /* awesome_people.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D807D991B050DE2009B0F71 /* awesome_people.json */; };
 		1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */; };
 		1D8783161ECCF45E00253602 /* EditorialExternalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8783131ECCF45E00253602 /* EditorialExternalCell.swift */; };
@@ -1602,10 +1609,11 @@
 		1D3128BF1B557BD500E3D5B6 /* Onboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		1D3128C11B557BE100E3D5B6 /* OnboardingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OnboardingSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1D313F651F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteCellSizeCalculator.swift; sourceTree = "<group>"; };
-		1D313F671F265FED00953EE2 /* dot_green.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_green.svg; sourceTree = "<group>"; };
-		1D313F681F265FED00953EE2 /* dot_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_normal.svg; sourceTree = "<group>"; };
-		1D313F691F265FED00953EE2 /* dot_red.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_red.svg; sourceTree = "<group>"; };
-		1D313F6A1F265FED00953EE2 /* dot_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dot_selected.svg; sourceTree = "<group>"; };
+		1D313F671F265FED00953EE2 /* artist_invite_status_open.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_open.svg; sourceTree = "<group>"; };
+		1D313F681F265FED00953EE2 /* artist_invite_status_preview.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_preview.svg; sourceTree = "<group>"; };
+		1D313F691F265FED00953EE2 /* artist_invite_status_selecting.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_selecting.svg; sourceTree = "<group>"; };
+		1D313F6A1F265FED00953EE2 /* artist_invite_status_upcoming.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_upcoming.svg; sourceTree = "<group>"; };
+		1D313F6F1F267FCF00953EE2 /* ArtistInviteDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailController.swift; sourceTree = "<group>"; };
 		1D33284D1AE74D7A00446591 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1D33284F1AE751D200446591 /* SearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		1D3DED751AE16D1B00F1D514 /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
@@ -1750,6 +1758,12 @@
 		1D7A28D21A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationAttributedTitleSpec.swift; sourceTree = "<group>"; };
 		1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebViewHelper.swift; sourceTree = "<group>"; };
 		1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionVisibilitySpec.swift; sourceTree = "<group>"; };
+		1D7E823A1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailGenerator.swift; sourceTree = "<group>"; };
+		1D7E823B1F26885D006ACE7A /* ArtistInviteDetailScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailScreen.swift; sourceTree = "<group>"; };
+		1D7E823E1F2692D3006ACE7A /* ArtistInviteControlsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteControlsCell.swift; sourceTree = "<group>"; };
+		1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteHeaderCell.swift; sourceTree = "<group>"; };
+		1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteGuideCell.swift; sourceTree = "<group>"; };
+		1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_closed.svg; sourceTree = "<group>"; };
 		1D807D991B050DE2009B0F71 /* awesome_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awesome_people.json; sourceTree = "<group>"; };
 		1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReauthenticationSpec.swift; sourceTree = "<group>"; };
 		1D8783131ECCF45E00253602 /* EditorialExternalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialExternalCell.swift; sourceTree = "<group>"; };
@@ -3716,6 +3730,12 @@
 			isa = PBXGroup;
 			children = (
 				1DC78A5A1F2161E900BE2413 /* ArtistInviteBubbleCell.swift */,
+				1D7E823E1F2692D3006ACE7A /* ArtistInviteControlsCell.swift */,
+				1D313F6F1F267FCF00953EE2 /* ArtistInviteDetailController.swift */,
+				1D7E823A1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift */,
+				1D7E823B1F26885D006ACE7A /* ArtistInviteDetailScreen.swift */,
+				1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */,
+				1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */,
 				1DC78A4F1F21302300BE2413 /* ArtistInvitesGenerator.swift */,
 				1DC78A501F21302300BE2413 /* ArtistInvitesProtocols.swift */,
 				1DC78A511F21302300BE2413 /* ArtistInvitesScreen.swift */,
@@ -3792,6 +3812,11 @@
 				1D5A90171D39747E00C2AEFF /* $.svg */,
 				1D7152BD1D6F7350005998FE /* 1password_normal.svg */,
 				1D7152BE1D6F7350005998FE /* 1password_white.svg */,
+				1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */,
+				1D313F671F265FED00953EE2 /* artist_invite_status_open.svg */,
+				1D313F681F265FED00953EE2 /* artist_invite_status_preview.svg */,
+				1D313F691F265FED00953EE2 /* artist_invite_status_selecting.svg */,
+				1D313F6A1F265FED00953EE2 /* artist_invite_status_upcoming.svg */,
 				1D6E43071EA68AEA0029C9B1 /* badge_community_normal.svg */,
 				1D6E43081EA68AEA0029C9B1 /* badge_community_selected.svg */,
 				1D6E43091EA68AEA0029C9B1 /* badge_experimental_normal.svg */,
@@ -3813,10 +3838,6 @@
 				1DF741681BFA61B1000F5349 /* camera_white.svg */,
 				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
 				12241CEE1E60CAC700100C41 /* create_post_selected.svg */,
-				1D313F671F265FED00953EE2 /* dot_green.svg */,
-				1D313F681F265FED00953EE2 /* dot_normal.svg */,
-				1D313F691F265FED00953EE2 /* dot_red.svg */,
-				1D313F6A1F265FED00953EE2 /* dot_selected.svg */,
 				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
 				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
 				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
@@ -4270,6 +4291,7 @@
 				1D9CF9971D47F6C1004A95B7 /* 422_sparse.json in Resources */,
 				EAD1ABCE1AB9CBD500779A48 /* 410.json in Resources */,
 				1DF0B2E71E940572001B9F97 /* search_small_normal.svg in Resources */,
+				1D7E82451F26A523006ACE7A /* artist_invite_status_closed.svg in Resources */,
 				12CFF68B1B16760C007CE68F /* posts_listing_users_who_have_loved_a_post.json in Resources */,
 				1D9CF9A51D4966F7004A95B7 /* $_set_selected.svg in Resources */,
 				128C5AF71C59812D00EFC226 /* (null) in Resources */,
@@ -4358,7 +4380,7 @@
 				76F8DEAD1B6C0BC4009BCF61 /* abracket_selected.svg in Resources */,
 				12E2A5A61E5CD386000EFFBA /* create_post_normal.svg in Resources */,
 				1D405D9C1C47166D0059DAFD /* repost_disabled.svg in Resources */,
-				1D313F6C1F265FED00953EE2 /* dot_normal.svg in Resources */,
+				1D313F6C1F265FED00953EE2 /* artist_invite_status_preview.svg in Resources */,
 				76F8DF061B6C0BC4009BCF61 /* xpmcirc_normal.svg in Resources */,
 				76F8DEB11B6C0BC4009BCF61 /* arrow_white.svg in Resources */,
 				1D472C231C1F2E0400B61E55 /* embetter_audio_play.svg in Resources */,
@@ -4471,7 +4493,7 @@
 				76F8DEC31B6C0BC4009BCF61 /* circ_normal.svg in Resources */,
 				128C5AF51C59802600EFC226 /* (null) in Resources */,
 				1D9B74D31BB1E62500ACD028 /* bubble_body_white.svg in Resources */,
-				1D313F6D1F265FED00953EE2 /* dot_red.svg in Resources */,
+				1D313F6D1F265FED00953EE2 /* artist_invite_status_selecting.svg in Resources */,
 				1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */,
 				1220347D1DECCDD80059E633 /* marker.svg in Resources */,
 				1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */,
@@ -4510,7 +4532,7 @@
 				12E2A5A31E5CD357000EFFBA /* home_normal.svg in Resources */,
 				76F8DEB21B6C0BC4009BCF61 /* bolt_normal.svg in Resources */,
 				76C050AD1AA8C9570094E69A /* UserListItemCell.xib in Resources */,
-				1D313F6B1F265FED00953EE2 /* dot_green.svg in Resources */,
+				1D313F6B1F265FED00953EE2 /* artist_invite_status_open.svg in Resources */,
 				1D9B74D51BB1E62500ACD028 /* bubble_tail.svg in Resources */,
 				12F6AE8B1A433F1100493660 /* auth.json in Resources */,
 				12931BD91BFE8E30009B26F9 /* xpmmini_normal.svg in Resources */,
@@ -4536,7 +4558,7 @@
 				1DA9AA7E1C6A81AB000562E4 /* emojis.json in Resources */,
 				76B53AD21B0AA89B00534548 /* relationship_batches__when_a_priority_is_omitted.json in Resources */,
 				1241EDB41DD3D07900426A17 /* page_promotionals.json in Resources */,
-				1D313F6E1F265FED00953EE2 /* dot_selected.svg in Resources */,
+				1D313F6E1F265FED00953EE2 /* artist_invite_status_upcoming.svg in Resources */,
 				1D6C97F81CE179E600E7B929 /* usernames.json in Resources */,
 				7689B5041AD4ED3B00E4A4A3 /* relationships_following_a_user_as_friend.json in Resources */,
 				1D9CF9A31D496639004A95B7 /* $_set_normal.svg in Resources */,
@@ -5149,6 +5171,7 @@
 				122B30F51C6A3FC500C1B9D8 /* RegionKind.swift in Sources */,
 				76A9664C1AE996C500FB1A52 /* StreamRegionableCell.swift in Sources */,
 				125F28841B1D0CD400BA501E /* DrawerCell.swift in Sources */,
+				1D7E82431F2692D3006ACE7A /* ArtistInviteGuideCell.swift in Sources */,
 				122943291C6BF534003FCD20 /* ExtensionItemPreview.swift in Sources */,
 				12F6AE311A43390900493660 /* ScreenExtensions.swift in Sources */,
 				1DDC85281D91F60000C29552 /* PostActionable.swift in Sources */,
@@ -5273,6 +5296,7 @@
 				1DB8C6AB1D7A2349007E1447 /* SearchTextField.swift in Sources */,
 				122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */,
 				76EB15A91B0295AA001BBB2A /* StreamSeeMoreCommentsCell.swift in Sources */,
+				1D7E823C1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift in Sources */,
 				1DE261351B0D38A400475325 /* UIImageViewExtensions.swift in Sources */,
 				1D9D17111AE72394009841A4 /* UIViewController.swift in Sources */,
 				1DA18E4F1DCCED8C000231CC /* PagePromotional.swift in Sources */,
@@ -5406,6 +5430,7 @@
 				1207C9721C73FEE000939ADB /* AuthToken.swift in Sources */,
 				122B30F71C6A41CF00C1B9D8 /* RegionKindStreamCellTypeAddition.swift in Sources */,
 				122B30C51C6A3FBC00C1B9D8 /* AddressBook.swift in Sources */,
+				1D7E823D1F26885D006ACE7A /* ArtistInviteDetailScreen.swift in Sources */,
 				F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */,
 				122B30E31C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */,
 				1D3328501AE751D200446591 /* SearchScreen.swift in Sources */,
@@ -5413,6 +5438,7 @@
 				1207C9851C73FEE000939ADB /* MultipartRequestBuilder.swift in Sources */,
 				1DA18E1F1DB82753000231CC /* ProfileHeaderGhostCell.swift in Sources */,
 				122B30D51C6A3FBC00C1B9D8 /* Notification.swift in Sources */,
+				1D7E82411F2692D3006ACE7A /* ArtistInviteControlsCell.swift in Sources */,
 				128D36B91A951F7400622833 /* ProfileHeaderCellPresenter.swift in Sources */,
 				76B1A63F1AE5864900110D30 /* StreamEmbedCellPresenter.swift in Sources */,
 				1245ED381D1C772400929DD4 /* StreamGenerator.swift in Sources */,
@@ -5451,6 +5477,7 @@
 				1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */,
 				1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */,
 				1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */,
+				1D313F701F267FCF00953EE2 /* ArtistInviteDetailController.swift in Sources */,
 				1D313F661F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
@@ -5564,6 +5591,7 @@
 				122B30C41C6A3FBC00C1B9D8 /* Activity.swift in Sources */,
 				EA34DAC71AD85826002F566D /* DynamicSettingsViewController.swift in Sources */,
 				1243576A1A8927BF008B24FB /* NotificationsViewController.swift in Sources */,
+				1D7E82421F2692D3006ACE7A /* ArtistInviteHeaderCell.swift in Sources */,
 				1DF50C9C1C614E1100C62D89 /* OmnibarScreenTableViewDelegate.swift in Sources */,
 				123297B31B0BB9FA00A6E590 /* URLExtensions.swift in Sources */,
 				1D8783171ECCF45E00253602 /* EditorialPostCell.swift in Sources */,

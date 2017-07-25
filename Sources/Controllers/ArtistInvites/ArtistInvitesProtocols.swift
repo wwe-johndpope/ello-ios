@@ -8,3 +8,13 @@ protocol ArtistInvitesScreenDelegate: class {
 
 protocol ArtistInvitesScreenProtocol: StreamableScreenProtocol {
 }
+
+protocol ArtistInviteDetailScreenDelegate: class {
+}
+
+protocol ArtistInviteDetailScreenProtocol: StreamableScreenProtocol {
+}
+
+protocol ArtistInviteCell: class {
+    var config: ArtistInviteBubbleCell.Config { get set }
+}

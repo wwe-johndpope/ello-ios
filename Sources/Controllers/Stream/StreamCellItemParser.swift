@@ -33,6 +33,9 @@ struct StreamCellItemParser {
                 if case .artistInvites = streamKind {
                     streamItems += typicalCellItems(artistInvite, type: .artistInviteBubble)
                 }
+                else if case .artistInviteDetail = streamKind {
+                    streamItems += artistInviteDetailItems(artistInvite)
+                }
             }
         }
         _ = streamItems.map { $0.forceGrid = forceGrid }
@@ -49,8 +52,12 @@ struct StreamCellItemParser {
         return [StreamCellItem(jsonable: editorial, type: .editorial(editorial.kind))]
     }
 
-    fileprivate func artistInviteCellItems(_ artistInvite: ArtistInvite) -> [StreamCellItem] {
-        return [StreamCellItem(jsonable: artistInvite, type: .artistInviteBubble)]
+    fileprivate func artistInviteDetailItems(_ artistInvite: ArtistInvite) -> [StreamCellItem] {
+        return [
+            StreamCellItem(jsonable: artistInvite, type: .artistInviteHeader),
+            StreamCellItem(jsonable: artistInvite, type: .artistInviteControls),
+        ] + artistInvite.guide.map({ StreamCellItem(jsonable: artistInvite, type: .artistInviteGuide($0)) })
+        + [StreamCellItem(jsonable: artistInvite, type: .spacer(height: 30))]
     }
 
     fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {

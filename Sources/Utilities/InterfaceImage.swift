@@ -100,7 +100,6 @@ enum InterfaceImage: String {
 
     // Generic
     case x = "x"
-    case dot = "dot"
     case dots = "dots"
     case dotsLight = "dots_light"
     case plusSmall = "plussmall"
@@ -206,7 +205,7 @@ enum InterfaceImage: String {
     }
     var redImage: UIImage? {
         switch self {
-        case .x, .dot:
+        case .x:
             return svgNamed("\(self.rawValue)_red")
         default:
             return nil
@@ -214,7 +213,7 @@ enum InterfaceImage: String {
     }
     var greenImage: UIImage? {
         switch self {
-        case .watch, .dot:
+        case .watch:
             return svgNamed("\(self.rawValue)_green")
         default:
             return nil

@@ -12,20 +12,26 @@ struct ArtistInviteCellPresenter {
         currentUser: User?)
     {
         guard
-            let cell = cell as? ArtistInviteBubbleCell,
+            let cell = cell as? ArtistInviteCell,
             let artistInvite = streamCellItem.jsonable as? ArtistInvite
         else { return }
 
-        var config = ArtistInviteBubbleCell.Config()
-        config.title = artistInvite.title
-        config.description = artistInvite.shortDescription
-        config.inviteType = artistInvite.inviteType
-        config.status = artistInvite.status
-        config.openedAt = artistInvite.openedAt
-        config.closedAt = artistInvite.closedAt
-        config.headerURL = artistInvite.headerImage?.largeOrBest?.url
-        config.logoURL = artistInvite.logoImage?.optimized?.url
+        let config = ArtistInviteBubbleCell.Config.fromArtistInvite(artistInvite)
         cell.config = config
     }
 
+    static func configureGuide(
+        _ cell: UICollectionViewCell,
+        streamCellItem: StreamCellItem,
+        streamKind: StreamKind,
+        indexPath: IndexPath,
+        currentUser: User?)
+    {
+        guard
+            let cell = cell as? ArtistInviteGuideCell,
+            let guide = streamCellItem.type.data as? ArtistInvite.Guide
+        else { return }
+
+        cell.config = guide
+    }
 }

@@ -3,26 +3,24 @@
 //
 
 import SnapKit
+import SVGKit
 
 
-// @objc
-// protocol ArtistInviteCellResponder: class {
-//     func artistInviteTapped(cell: ArtistInviteCell)
-// }
-
-class ArtistInviteBubbleCell: UICollectionViewCell {
+class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteCell {
     static let reuseIdentifier = "ArtistInviteBubbleCell"
 
     struct Size {
         static let headerImageHeight: CGFloat = 230
-        static let infoTotalHeight: CGFloat = 117
+        static let infoTotalHeight: CGFloat = 130
 
+        static let logoImageSize = CGSize(width: 337.5, height: 190)
         static let cornerRadius: CGFloat = 5
-        static let bubbleMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
-        static let infoMargins = UIEdgeInsets(top: 15, left: 15, bottom: 20, right: 15)
-        static let titleCategorySpacing: CGFloat = 20
-        static let dotStatusSpacing: CGFloat = 20
-        static let statusDateSpacing: CGFloat = 10
+        static let bubbleMargins = UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 15)
+        static let infoMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
+        static let titleStatusSpacing: CGFloat = 4
+        static let dotYOffset: CGFloat = -1
+        static let dotStatusSpacing: CGFloat = 15
+        static let statusTypeDateSpacing: CGFloat = 0
         static let descriptionMargins = UIEdgeInsets(top: 20, left: 15, bottom: 15, right: 15)
     }
 
@@ -30,7 +28,8 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         var title: String = ""
         var inviteType: String = ""
         var status: ArtistInvite.Status = .open
-        var description: String = ""
+        var shortDescription: String = ""
+        var longDescription: String = ""
         var headerURL: URL?
         var logoURL: URL?
         var openedAt: Date?
@@ -47,9 +46,9 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
     fileprivate let headerImage = FLAnimatedImageView()
     fileprivate let logoImage = UIImageView()
     fileprivate let titleLabel = StyledLabel(style: .artistInviteTitle)
-    fileprivate let inviteTypeLabel = StyledLabel(style: .gray)
     fileprivate let statusImage = UIImageView()
-    fileprivate let statusLabel = StyledLabel(style: .green)
+    fileprivate let statusLabel = StyledLabel()
+    fileprivate let inviteTypeLabel = StyledLabel(style: .gray)
     fileprivate let dateLabel = StyledLabel(style: .gray)
     fileprivate let descriptionWebView = UIWebView()
 
@@ -70,20 +69,13 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         bg.backgroundColor = .greyF2()
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
-        logoImage.contentMode = .center
+        logoImage.contentMode = .scaleAspectFit
         logoImage.clipsToBounds = true
         descriptionWebView.scrollView.isScrollEnabled = false
         descriptionWebView.scrollView.scrollsToTop = false
     }
 
     func bindActions() {
-        titleLabel.text = "Digital Decade 5"
-        inviteTypeLabel.text = "Art Exhibition"
-        statusLabel.text = "Open For Submissions"
-        dateLabel.text = "June 7 — July 5, 2017"
-
-        let html = StreamTextCellHTML.artistInviteHTML("<p>Hi!</p>")
-        descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 
     func arrange() {
@@ -92,9 +84,9 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         bg.addSubview(headerImage)
         bg.addSubview(logoImage)
         bg.addSubview(titleLabel)
-        bg.addSubview(inviteTypeLabel)
         bg.addSubview(statusImage)
         bg.addSubview(statusLabel)
+        bg.addSubview(inviteTypeLabel)
         bg.addSubview(dateLabel)
         bg.addSubview(descriptionWebView)
 
@@ -108,32 +100,35 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         }
 
         logoImage.snp.makeConstraints { make in
-            make.edges.equalTo(headerImage)
+            make.center.equalTo(headerImage)
+            make.size.equalTo(Size.logoImageSize).priority(Priority.medium)
+            make.width.lessThanOrEqualTo(bg).priority(Priority.required)
+            make.height.equalTo(logoImage.snp.width).multipliedBy(Size.logoImageSize.height / Size.logoImageSize.width).priority(Priority.required)
         }
 
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(bg).offset(Size.infoMargins.left)
+            make.leading.trailing.equalTo(bg).inset(Size.infoMargins)
             make.top.equalTo(headerImage.snp.bottom).offset(Size.infoMargins.top)
         }
 
-        inviteTypeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom).offset(Size.titleCategorySpacing)
-        }
-
         statusImage.snp.makeConstraints { make in
-            make.centerY.equalTo(inviteTypeLabel)
-            make.trailing.equalTo(statusLabel.snp.leading).offset(-Size.dotStatusSpacing)
+            make.centerY.equalTo(statusLabel).offset(Size.dotYOffset)
+            make.leading.equalTo(titleLabel)
         }
 
         statusLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(bg).offset(-Size.infoMargins.right)
-            make.centerY.equalTo(inviteTypeLabel)
+            make.leading.equalTo(statusImage.snp.trailing).offset(Size.dotStatusSpacing)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Size.titleStatusSpacing)
+        }
+
+        inviteTypeLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(titleLabel)
+            make.top.equalTo(statusLabel.snp.bottom).offset(Size.statusTypeDateSpacing)
         }
 
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(statusLabel.snp.bottom).offset(Size.statusDateSpacing)
-            make.leading.equalTo(statusLabel)
+            make.top.equalTo(inviteTypeLabel.snp.bottom).offset(Size.statusTypeDateSpacing)
+            make.leading.trailing.equalTo(titleLabel)
         }
 
         descriptionWebView.snp.makeConstraints { make in
@@ -172,22 +167,37 @@ class ArtistInviteBubbleCell: UICollectionViewCell {
         }
         dateLabel.text = dateText
 
-        if let url = config.headerURL {
-            headerImage.pin_setImage(from: url)
-        }
-        else {
-            headerImage.pin_cancelImageDownload()
-            headerImage.image = nil
+        let images: [(URL?, UIImageView)] = [
+            (config.headerURL, headerImage),
+            (config.logoURL, logoImage),
+        ]
+        for (url, imageView) in images {
+            if let url = url {
+                imageView.pin_setImage(from: url)
+            }
+            else {
+                imageView.pin_cancelImageDownload()
+                imageView.image = nil
+            }
         }
 
-        let html = StreamTextCellHTML.artistInviteHTML(config.description)
+        let html = StreamTextCellHTML.artistInviteHTML(config.shortDescription)
         descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 }
 
 extension ArtistInviteBubbleCell.Config {
     static func fromArtistInvite(_ artistInvite: ArtistInvite) -> ArtistInviteBubbleCell.Config {
-        let config = ArtistInviteBubbleCell.Config()
+        var config = ArtistInviteBubbleCell.Config()
+        config.title = artistInvite.title
+        config.shortDescription = artistInvite.shortDescription
+        config.longDescription = artistInvite.longDescription
+        config.inviteType = artistInvite.inviteType
+        config.status = artistInvite.status
+        config.openedAt = artistInvite.openedAt
+        config.closedAt = artistInvite.closedAt
+        config.headerURL = artistInvite.headerImage?.largeOrBest?.url
+        config.logoURL = artistInvite.logoImage?.optimized?.url
         return config
     }
 }
@@ -205,21 +215,39 @@ extension ArtistInvite.Status {
 
     var image: UIImage? {
         switch self {
-        case .preview: return InterfaceImage.dot.normalImage
-        case .upcoming: return InterfaceImage.dot.normalImage
-        case .open: return InterfaceImage.dot.greenImage
-        case .selecting: return InterfaceImage.dot.selectedImage
-        case .closed: return InterfaceImage.dot.redImage
+        case .preview: return SVGKImage(named: "artist_invite_status_preview.svg").uiImage.withRenderingMode(.alwaysOriginal)
+        case .upcoming: return SVGKImage(named: "artist_invite_status_upcoming.svg").uiImage.withRenderingMode(.alwaysOriginal)
+        case .open: return SVGKImage(named: "artist_invite_status_open.svg").uiImage.withRenderingMode(.alwaysOriginal)
+        case .selecting: return SVGKImage(named: "artist_invite_status_selecting.svg").uiImage.withRenderingMode(.alwaysOriginal)
+        case .closed: return SVGKImage(named: "artist_invite_status_closed.svg").uiImage.withRenderingMode(.alwaysOriginal)
         }
     }
 
     var labelStyle: StyledLabel.Style {
         switch self {
-        case .preview: return .gray
-        case .upcoming: return .gray
-        case .open: return .green
-        case .selecting: return .black
-        case .closed: return .error
+        case .preview: return .artistInvitePreview
+        case .upcoming: return .artistInviteUpcoming
+        case .open: return .artistInviteOpen
+        case .selecting: return .artistInviteSelecting
+        case .closed: return .artistInviteClosed
         }
     }
+}
+
+extension StyledLabel.Style {
+    static let artistInvitePreview = StyledLabel.Style(
+        textColor: UIColor(hex: 0x0409FE)
+        )
+    static let artistInviteUpcoming = StyledLabel.Style(
+        textColor: UIColor(hex: 0xC000FF)
+        )
+    static let artistInviteOpen = StyledLabel.Style(
+        textColor: UIColor(hex: 0x00D100)
+        )
+    static let artistInviteSelecting = StyledLabel.Style(
+        textColor: UIColor(hex: 0xFDB02A)
+        )
+    static let artistInviteClosed = StyledLabel.Style(
+        textColor: UIColor(hex: 0xFE0404)
+        )
 }

@@ -43,4 +43,10 @@ struct StreamTextCellHTML {
         htmlString = htmlString.replacingOccurrences(of: "background-color: white;", with: "background-color: #f2f2f2;")
         return htmlString
     }
+
+    static func artistInviteGuideHTML(_ string: String) -> String {
+        var htmlString = StreamTextCellHTML.postHTML(string)
+        htmlString = htmlString.replacingOccurrences(of: "</style>", with: "body { color: #aaa; }</style>")
+        return htmlString
+    }
 }

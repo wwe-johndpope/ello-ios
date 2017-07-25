@@ -114,6 +114,13 @@ final class ArtistInvite: JSONAble, Groupable {
         editorial.headerImage = Asset.parseAsset("artist_invite_header_\(id)", node: data["header_image"] as? [String: Any])
         editorial.logoImage = Asset.parseAsset("artist_invite_logo_\(id)", node: data["logo_image"] as? [String: Any])
 
+        if let guide = json["guide"].array?.flatMap({ $0.object as? [String: String] }) {
+            editorial.guide = guide.flatMap { g -> Guide? in
+                guard let title = g["title"], let html = g["rendered_body"] else { return nil }
+                return Guide(title: title, html: html)
+            }
+        }
+
         return editorial
     }
 }

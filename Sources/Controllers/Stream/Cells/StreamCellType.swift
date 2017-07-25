@@ -18,6 +18,9 @@ func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
 enum StreamCellType: Equatable {
     case announcement
     case artistInviteBubble
+    case artistInviteHeader
+    case artistInviteControls
+    case artistInviteGuide(ArtistInvite.Guide?)
     case badge
     case categoryCard
     case selectableCategoryCard
@@ -100,6 +103,9 @@ enum StreamCellType: Equatable {
         .pagePromotionalHeader,
         .announcement,
         .artistInviteBubble,
+        .artistInviteHeader,
+        .artistInviteControls,
+        .artistInviteGuide(nil),
         .editorial(.internal),
         .editorial(.external),
         .editorial(.postStream),
@@ -128,6 +134,7 @@ enum StreamCellType: Equatable {
         case let .image(data): return data
         case let .text(data): return data
         case let .textHeader(data): return data
+        case let .artistInviteGuide(data): return data
         default: return nil
         }
     }
@@ -157,6 +164,9 @@ enum StreamCellType: Equatable {
         case .placeholder: return "Placeholder"
         case .announcement: return AnnouncementCell.reuseIdentifier
         case .artistInviteBubble: return ArtistInviteBubbleCell.reuseIdentifier
+        case .artistInviteHeader: return ArtistInviteHeaderCell.reuseIdentifier
+        case .artistInviteControls: return ArtistInviteControlsCell.reuseIdentifier
+        case .artistInviteGuide: return ArtistInviteGuideCell.reuseIdentifier
         case let .editorial(kind): return kind.reuseIdentifier
         case .profileHeader: return ProfileHeaderCell.reuseIdentifier
         case .profileHeaderGhost: return ProfileHeaderGhostCell.reuseIdentifier
@@ -214,6 +224,9 @@ enum StreamCellType: Equatable {
         case .pagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
         case .announcement: return AnnouncementCellPresenter.configure
         case .artistInviteBubble: return ArtistInviteCellPresenter.configure
+        case .artistInviteHeader: return ArtistInviteCellPresenter.configure
+        case .artistInviteControls: return ArtistInviteCellPresenter.configure
+        case .artistInviteGuide: return ArtistInviteCellPresenter.configureGuide
         case .editorial: return EditorialCellPresenter.configure
         case .profileHeader: return ProfileHeaderCellPresenter.configure
         case .search: return SearchStreamCellPresenter.configure
@@ -249,6 +262,9 @@ enum StreamCellType: Equatable {
         case .placeholder: return UICollectionViewCell.self
         case .announcement: return AnnouncementCell.self
         case .artistInviteBubble: return ArtistInviteBubbleCell.self
+        case .artistInviteHeader: return ArtistInviteHeaderCell.self
+        case .artistInviteControls: return ArtistInviteControlsCell.self
+        case .artistInviteGuide: return ArtistInviteGuideCell.self
         case let .editorial(kind): return kind.classType
         case .profileHeader: return ProfileHeaderCell.self
         case .profileHeaderGhost: return ProfileHeaderGhostCell.self
@@ -266,6 +282,8 @@ enum StreamCellType: Equatable {
 
     var oneColumnHeight: CGFloat {
         switch self {
+        case .artistInviteHeader:
+            return ArtistInviteHeaderCell.Size.headerImageHeight + ArtistInviteHeaderCell.Size.totalTextHeight
         case .badge:
             return 64
         case .categoryPromotionalHeader, .pagePromotionalHeader:
@@ -355,6 +373,9 @@ enum StreamCellType: Equatable {
              .pagePromotionalHeader,
              .announcement,
              .artistInviteBubble,
+             .artistInviteHeader,
+             .artistInviteControls,
+             .artistInviteGuide,
              .editorial,
              .profileHeader,
              .profileHeaderGhost,
@@ -403,6 +424,9 @@ enum StreamCellType: Equatable {
             .pagePromotionalHeader,
             .announcement,
             .artistInviteBubble,
+            .artistInviteHeader,
+            .artistInviteControls,
+            .artistInviteGuide(nil),
             .editorial(.internal),
             .editorial(.external),
             .editorial(.postStream),

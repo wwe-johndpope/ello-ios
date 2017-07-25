@@ -829,14 +829,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             return $0.jsonable is Editorial
         }
 
-        let artistInviteCellType: ArtistInviteCellSizeCalculator.CellType
-        if case .artistInvites = streamKind {
-            artistInviteCellType = .bubble
-        }
-        else {
-            artistInviteCellType = .bubble
-        }
-
         let artistInviteItems = cellItems.filter {
             return $0.jsonable is ArtistInvite
         }
@@ -854,7 +846,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
         editorialDownloader.processCells(editorialItems, completion: afterAll())
-        artistInviteCalculator.processCells(artistInviteItems, withWidth: withWidth, type: artistInviteCellType, completion: afterAll())
+        artistInviteCalculator.processCells(artistInviteItems, withWidth: withWidth, completion: afterAll())
         done()
     }
 

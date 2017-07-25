@@ -1004,7 +1004,6 @@ extension StreamViewController: CategoryResponder {
     }
 }
 
-
 // MARK: StreamViewController: UserResponder
 extension StreamViewController: UserResponder {
 
@@ -1040,6 +1039,19 @@ extension StreamViewController: UserResponder {
         userTapped(user: reposter)
     }
 }
+
+// MARK: StreamViewController: ArtistInviteResponder
+extension StreamViewController {
+
+    func artistInviteTapped(_ artistInvite: ArtistInvite) {
+        Tracker.shared.artistInviteOpened(artistInvite)
+
+        let vc = ArtistInviteDetailController(artistInvite: artistInvite)
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
 
 // MARK: StreamViewController: WebLinkResponder
 extension StreamViewController: WebLinkResponder {
@@ -1177,6 +1189,9 @@ extension StreamViewController: UICollectionViewDelegate {
             Tracker.shared.announcementOpened(announcement)
             let request = URLRequest(url: callToAction)
             ElloWebViewHelper.handle(request: request, origin: self)
+        }
+        else if let artistInvite = dataSource.jsonableForIndexPath(indexPath) as? ArtistInvite {
+            artistInviteTapped(artistInvite)
         }
         else if let comment = dataSource.commentForIndexPath(indexPath) {
             let responder: CreatePostResponder? = findResponder()

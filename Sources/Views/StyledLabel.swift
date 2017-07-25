@@ -6,6 +6,7 @@ class StyledLabel: UILabel {
     enum FontFamily {
         case small
         case normal
+        case header
         case large
         case largeBold
         case bold
@@ -18,6 +19,7 @@ class StyledLabel: UILabel {
             switch self {
             case .small: return UIFont.defaultFont(12)
             case .normal: return UIFont.defaultFont()
+            case .header: return UIFont.regularBlackFont(24)
             case .large: return UIFont.defaultFont(18)
             case .largeBold: return UIFont.defaultBoldFont(18)
             case .bold: return UIFont.defaultBoldFont()
@@ -41,7 +43,6 @@ class StyledLabel: UILabel {
         init(
             textColor: UIColor,
             backgroundColor: UIColor = .clear,
-
             fontFamily: FontFamily = .normal
         ) {
             self.textColor = textColor
@@ -51,10 +52,9 @@ class StyledLabel: UILabel {
         }
     }
 
-    struct Size {
-        static let extraBottomMargin: CGFloat = 10
+    var extraBottomMargin: CGFloat = 10 {
+        didSet { invalidateIntrinsicContentSize() }
     }
-
     override var text: String? {
         didSet { updateStyle() }
     }
@@ -81,6 +81,7 @@ class StyledLabel: UILabel {
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
+        self.lineBreakMode = .byTruncatingTail
         updateStyle()
     }
 
@@ -98,16 +99,21 @@ class StyledLabel: UILabel {
 
 // MARK: UIView Overrides
 extension StyledLabel {
+    override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        size.height += extraBottomMargin
+        return size
+    }
 
     fileprivate func heightForWidth(_ width: CGFloat) -> CGFloat {
         return (attributedText?.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
-            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            options: [.usesLineFragmentOrigin, .usesFontLeading, .truncatesLastVisibleLine],
             context: nil).size.height).map(ceil) ?? 0
     }
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)
-        size.height = heightForWidth(size.width) + Size.extraBottomMargin
+        size.height = heightForWidth(size.width) + extraBottomMargin
         return size
     }
 }
@@ -126,6 +132,10 @@ extension StyledLabel.Style {
     static let boldWhite = StyledLabel.Style(
         textColor: .white,
         fontFamily: .bold
+        )
+    static let header = StyledLabel.Style(
+        textColor: .black,
+        fontFamily: .header
         )
     static let largeWhite = StyledLabel.Style(
         textColor: .white,
@@ -182,9 +192,6 @@ extension StyledLabel.Style {
         )
     static let error = StyledLabel.Style(
         textColor: .red
-        )
-    static let green = StyledLabel.Style(
-        textColor: .greenD1()
         )
 
     static func byName(_ name: String) -> StyledLabel.Style {

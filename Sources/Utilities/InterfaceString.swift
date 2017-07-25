@@ -59,11 +59,14 @@ struct InterfaceString {
 
     struct ArtistInvites {
         static let Title: String = NSLocalizedString("Artist Invites", comment: "")
+        static let Submissions: String = NSLocalizedString("Submissions", comment: "")
+        static let SeeSubmissions: String = NSLocalizedString("↓ See Submissions", comment: "")
+        static let Submit: String = NSLocalizedString("SUBMIT", comment: "")
         static let PreviewStatus: String = NSLocalizedString("Preview", comment: "")
         static let UpcomingStatus: String = NSLocalizedString("Coming Soon", comment: "")
         static let OpenStatus: String = NSLocalizedString("Open For Submissions", comment: "")
         static let SelectingStatus: String = NSLocalizedString("Selections In Progress", comment: "")
-        static let ClosedStatus: String = NSLocalizedString("Closed", comment: "")
+        static let ClosedStatus: String = NSLocalizedString("Invite Closed", comment: "")
     }
 
     struct FollowingStream {

@@ -641,6 +641,15 @@ extension Tracker {
 
 }
 
+// MARK: ArtistInvites
+extension Tracker {
+
+    func artistInviteOpened(_ artistInvite: ArtistInvite) {
+        track("Artist Invite Clicked", properties: ["artistInvite": artistInvite.id])
+    }
+
+}
+
 // MARK: LoggedOut
 extension Tracker {
     func loggedOutScreenViewed() {
