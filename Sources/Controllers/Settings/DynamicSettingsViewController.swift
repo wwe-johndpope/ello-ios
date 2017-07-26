@@ -167,7 +167,14 @@ class DynamicSettingsViewController: UITableViewController {
                     let controller = OnboardingCreatorTypeViewController()
                     controller.delegate = self.delegate
                     controller.currentUser = currentUser
-                    controller.creatorType = .artist(creatorCategories)
+                    let creatorType: Profile.CreatorType
+                    if creatorCategories.count > 0 {
+                        creatorType = .artist(creatorCategories)
+                    }
+                    else {
+                        creatorType = .fan
+                    }
+                    controller.creatorType = creatorType
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
                 .always { _ in
