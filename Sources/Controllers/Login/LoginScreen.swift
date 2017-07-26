@@ -87,7 +87,7 @@ class LoginScreen: CredentialsScreen {
         continueBackground.backgroundColor = .white
 
         forgotPasswordButton.titleLabel?.font = UIFont.defaultFont(Size.forgotPasswordFontSize)
-        forgotPasswordButton.setTitleColor(.greyA(), for: .normal)
+        forgotPasswordButton.setTitleColor(.greyA, for: .normal)
     }
 
     override func arrange() {

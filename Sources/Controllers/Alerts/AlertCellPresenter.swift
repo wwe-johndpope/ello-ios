@@ -26,9 +26,9 @@ struct AlertCellPresenter {
         configureCell(cell, type: type)
 
         cell.label.text = action.title
-        cell.label.textColor = .grey6()
+        cell.label.textColor = .grey6
         cell.label.textAlignment = textAlignment
-        cell.background.backgroundColor = .greyE5()
+        cell.background.backgroundColor = .greyE5
     }
 
     static func configureForDarkAction(_ cell: AlertCell, type: AlertType, action: AlertAction, textAlignment: NSTextAlignment) {
@@ -46,7 +46,7 @@ struct AlertCellPresenter {
         cell.label.text = action.title
         cell.label.textColor = .white
         cell.label.textAlignment = textAlignment
-        cell.background.backgroundColor = .greenD1()
+        cell.background.backgroundColor = .greenD1
         cell.background.layer.cornerRadius = 5
     }
 
@@ -54,9 +54,9 @@ struct AlertCellPresenter {
         configureCell(cell, type: type)
 
         cell.label.text = action.title
-        cell.label.textColor = .grey6()
+        cell.label.textColor = .grey6
         cell.label.textAlignment = textAlignment
-        cell.background.backgroundColor = .greyE5()
+        cell.background.backgroundColor = .greyE5
         cell.background.layer.cornerRadius = 5
     }
 

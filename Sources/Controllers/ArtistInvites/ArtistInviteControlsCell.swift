@@ -91,13 +91,13 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteCell {
 
 extension StyledButton.Style {
     static let artistInviteSubmissions = StyledButton.Style(
-        backgroundColor: .white, highlightedBackgroundColor: .greenD1(),
-        titleColor: .greenD1(), highlightedTitleColor: .white,
-        borderColor: .greenD1(), highlightedBorderColor: .white,
+        backgroundColor: .white, highlightedBackgroundColor: .greenD1,
+        titleColor: .greenD1, highlightedTitleColor: .white,
+        borderColor: .greenD1, highlightedBorderColor: .white,
         cornerRadius: .rounded
         )
     static let artistInviteSubmit = StyledButton.Style(
-        backgroundColor: .greenD1(),
+        backgroundColor: .greenD1,
         titleColor: .white, highlightedTitleColor: .black,
         fontSize: 24,
         cornerRadius: .rounded

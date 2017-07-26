@@ -182,7 +182,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         buyButtonImage.isHidden = true
         buyButtonImage.interfaceImage = .buyButton
         buyButtonImage.frame.size = CGSize(width: Size.BuyButtonSize, height: Size.BuyButtonSize)
-        buyButtonImage.backgroundColor = .greenD1()
+        buyButtonImage.backgroundColor = .greenD1
         buyButtonImage.layer.cornerRadius = Size.BuyButtonSize / 2
 
         replyButton.isHidden = true
@@ -202,11 +202,11 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         messageWebView.scrollView.isScrollEnabled = false
         messageWebView.delegate = self
 
-        createdAtLabel.textColor = UIColor.greyA()
+        createdAtLabel.textColor = UIColor.greyA
         createdAtLabel.font = UIFont.defaultFont(12)
         createdAtLabel.text = ""
 
-        separator.backgroundColor = .greyE5()
+        separator.backgroundColor = .greyE5
 
         for view in [avatarButton, titleTextView, messageWebView,
                      notificationImageView, buyButtonImage, createdAtLabel,

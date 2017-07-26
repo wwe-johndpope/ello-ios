@@ -299,7 +299,7 @@ extension AppViewController {
             present(externalWebController, animated: true, completion: nil)
 
             if let externalWebView = externalWebController.rootWebBrowser() {
-                externalWebView.tintColor = UIColor.greyA()
+                externalWebView.tintColor = UIColor.greyA
                 externalWebView.loadURLString(url)
             }
         }

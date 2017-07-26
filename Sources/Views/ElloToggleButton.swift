@@ -35,7 +35,7 @@ class ElloToggleButton: UIButton {
     }
 
     fileprivate func toggleButton() {
-        let highlightedColor: UIColor = isEnabled ? .greyA() : .greyC()
+        let highlightedColor: UIColor = isEnabled ? .greyA : .greyC
         let offColor: UIColor = .white
 
         layer.borderColor = highlightedColor.cgColor

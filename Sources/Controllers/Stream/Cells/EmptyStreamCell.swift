@@ -38,7 +38,7 @@ class EmptyStreamCell: UICollectionViewCell {
         contentView.backgroundColor = .white
         label.numberOfLines = 0
         label.font = .defaultFont(12)
-        label.textColor = .greyA()
+        label.textColor = .greyA
         label.textAlignment = .center
     }
 

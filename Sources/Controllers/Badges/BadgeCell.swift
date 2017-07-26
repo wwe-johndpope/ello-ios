@@ -59,7 +59,7 @@ class BadgeCell: UICollectionViewCell {
         label.textColor = .black
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        grayLine.backgroundColor = .greyE5()
+        grayLine.backgroundColor = .greyE5
     }
 
     fileprivate func arrange() {

@@ -2,21 +2,6 @@
 ///  Colors.swift
 //
 
-private struct ElloColors {
-    static let grey3: UIColor = UIColor(hex: 0x333333)
-    static let grey4D: UIColor = UIColor(hex: 0x4D4D4D)
-    static let greenD1: UIColor = UIColor(hex: 0x00D100)
-    static let grey5: UIColor = UIColor(hex: 0x555555)
-    static let grey6: UIColor = UIColor(hex: 0x666666)
-    static let greyA: UIColor = UIColor(hex: 0xAAAAAA)
-    static let greyC: UIColor = UIColor(hex: 0xCCCCCC)
-    static let greyE5: UIColor = UIColor(hex: 0xE5E5E5)
-    static let greyEF: UIColor = UIColor(hex: 0xEFEFEF)
-    static let greyF1: UIColor = UIColor(hex: 0xF1F1F1)
-    static let greyF2: UIColor = UIColor(hex: 0xF2F2F2)
-    static let modalBackground: UIColor = UIColor(white: 0x000000, alpha: 0.7)
-}
-
 extension UIColor {
     // These colors are taken from the web styleguide. Any other variations should be
     // double checked with B&F or normalized to one of these..
@@ -30,34 +15,33 @@ extension UIColor {
     static let grey231F20 = UIColor(hex: 0x231F20)
 
     // common background color
-    class func grey3() -> UIColor { return ElloColors.grey3 }
+    static let grey3 = UIColor(hex: 0x333333)
 
     // dark line color
-    class func grey5() -> UIColor { return ElloColors.grey5 }
+    static let grey5 = UIColor(hex: 0x555555)
 
     // often used for text:
-    class func greyA() -> UIColor { return ElloColors.greyA }
+    static let greyA = UIColor(hex: 0xAAAAAA)
 
     // often used for disabled text:
-    class func greyC() -> UIColor { return ElloColors.greyC }
+    static let greyC = UIColor(hex: 0xCCCCCC)
 
     // background color for text fields
-    class func greyE5() -> UIColor { return ElloColors.greyE5 }
+    static let greyE5 = UIColor(hex: 0xE5E5E5)
 
     // background color for logged out container
-    class func greyEF() -> UIColor { return ElloColors.greyEF }
+    static let greyEF = UIColor(hex: 0xEFEFEF)
 
     // button title color
-    class func grey6() -> UIColor { return ElloColors.grey6 }
+    static let grey6 = UIColor(hex: 0x666666)
 
     // not popular
-    class func greyF1() -> UIColor { return ElloColors.greyF1 }
-    class func greyF2() -> UIColor { return ElloColors.greyF2 }
-    class func grey4D() -> UIColor { return ElloColors.grey4D }
+    static let greyF1 = UIColor(hex: 0xF1F1F1)
+    static let greyF2 = UIColor(hex: 0xF2F2F2)
 
     // get started button background
-    class func greenD1() -> UIColor { return ElloColors.greenD1 }
+    static let greenD1 = UIColor(hex: 0x00D100)
 
     // explains itself
-    class func modalBackground() -> UIColor { return ElloColors.modalBackground }
+    static let dimmedModalBackground = UIColor(white: 0x0, alpha: 0.7)
 }

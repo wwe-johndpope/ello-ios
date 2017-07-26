@@ -127,7 +127,7 @@ extension ProfileLinksView {
         iconButtons.append(button)
 
         button.layer.cornerRadius = Size.iconSize.width / 2
-        button.backgroundColor = .greyE5()
+        button.backgroundColor = .greyE5
         button.snp.makeConstraints { make in
             make.size.equalTo(Size.iconSize)
 
@@ -175,7 +175,7 @@ extension ProfileLinksView {
 
         let attrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
             NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
         ]
         let highlightedAttrs: [String: Any] = [

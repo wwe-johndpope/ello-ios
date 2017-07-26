@@ -66,7 +66,7 @@ class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteCell {
     func style() {
         bg.layer.cornerRadius = Size.cornerRadius
         bg.clipsToBounds = true
-        bg.backgroundColor = .greyF2()
+        bg.backgroundColor = .greyF2
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
         logoImage.contentMode = .scaleAspectFit

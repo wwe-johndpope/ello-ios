@@ -86,13 +86,13 @@ class HireScreen: StreamableScreen {
         textView.keyboardAppearance = .dark
 
         placeholder.text = InterfaceString.Omnibar.SayEllo
-        placeholder.textColor = .greyC()
+        placeholder.textColor = .greyC
         placeholder.font = UIFont.editorFont()
 
         keyboardSubmitButton.isEnabled = false
         keyboardSubmitButton.backgroundColor = .black
         keyboardSubmitButton.setTitleColor(.white, for: .normal)
-        keyboardSubmitButton.setTitleColor(.grey6(), for: .disabled)
+        keyboardSubmitButton.setTitleColor(.grey6, for: .disabled)
         keyboardSubmitButton.titleLabel?.font = UIFont.defaultFont()
         keyboardSubmitButton.contentEdgeInsets.left = 10
         keyboardSubmitButton.imageEdgeInsets.right = 20
@@ -152,7 +152,7 @@ extension HireScreen: UITextViewDelegate {
         let hasText = textView.text?.isEmpty != true
         placeholder.isHidden = hasText
         keyboardSubmitButton.isEnabled = hasText
-        keyboardSubmitButton.backgroundColor = hasText ? .greenD1() : .black
+        keyboardSubmitButton.backgroundColor = hasText ? .greenD1 : .black
     }
 }
 

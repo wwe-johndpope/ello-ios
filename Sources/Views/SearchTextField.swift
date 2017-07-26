@@ -9,7 +9,7 @@ class SearchTextField: UITextField {
                 attributedPlaceholder = NSAttributedString(
                     string: placeholder,
                     attributes: [
-                        NSForegroundColorAttributeName: UIColor.greyA()
+                        NSForegroundColorAttributeName: UIColor.greyA
                     ])
             }
         }
@@ -41,7 +41,7 @@ class SearchTextField: UITextField {
         leftView = UIImageView(image: InterfaceImage.search.normalImage)
 
         addSubview(line)
-        line.backgroundColor = .greyA()
+        line.backgroundColor = .greyA
         line.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self)
             make.bottom.equalTo(self).offset(-10)

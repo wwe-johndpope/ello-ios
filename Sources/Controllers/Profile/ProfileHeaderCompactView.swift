@@ -51,8 +51,8 @@ class ProfileHeaderCompactView: ProfileHeaderLayoutView {
 
     override func style() {
         backgroundColor = .clear
-        totalCountVerticalGreyLine.backgroundColor = .greyE5()
-        totalCountHorizontalGreyLine.backgroundColor = .greyE5()
+        totalCountVerticalGreyLine.backgroundColor = .greyE5
+        totalCountHorizontalGreyLine.backgroundColor = .greyE5
     }
 
     override func bindActions() {}

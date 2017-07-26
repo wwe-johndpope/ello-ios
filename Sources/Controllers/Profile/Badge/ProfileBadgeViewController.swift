@@ -35,7 +35,7 @@ extension ProfileBadgeViewController: UIViewControllerTransitioningDelegate {
         guard presented == self
             else { return .none }
 
-        return DarkModalPresentationController(presentedViewController: presented, presentingViewController: presenting, backgroundColor: .modalBackground())
+        return DarkModalPresentationController(presentedViewController: presented, presentingViewController: presenting, backgroundColor: .dimmedModalBackground)
     }
 }
 

@@ -10,8 +10,8 @@ class DrawerCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        backgroundColor = .grey6()
-        line.backgroundColor = .grey5()
+        backgroundColor = .grey6
+        line.backgroundColor = .grey5
         label.font = UIFont.defaultFont()
         label.textColor = .white
     }

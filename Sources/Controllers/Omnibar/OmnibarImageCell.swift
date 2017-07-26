@@ -40,7 +40,7 @@ class OmnibarImageCell: UITableViewCell {
     fileprivate func style() {
         flImageView.clipsToBounds = true
         flImageView.contentMode = .scaleAspectFit
-        buyButton.backgroundColor = .greenD1()
+        buyButton.backgroundColor = .greenD1
         buyButton.adjustsImageWhenDisabled = false
         buyButton.adjustsImageWhenHighlighted = false
         buyButton.setImage(.buyButton, imageStyle: .normal, for: .normal)

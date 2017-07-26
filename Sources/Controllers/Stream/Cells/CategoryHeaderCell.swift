@@ -312,8 +312,8 @@ private extension CategoryHeaderCell {
         imageSize = nil
         UIView.animate(withDuration: 0.15, animations: {
             self.failImage.alpha = 1.0
-            self.imageView.backgroundColor = UIColor.greyF1()
-            self.failBackgroundView.backgroundColor = UIColor.greyF1()
+            self.imageView.backgroundColor = UIColor.greyF1
+            self.failBackgroundView.backgroundColor = UIColor.greyF1
             self.imageView.alpha = 1.0
             self.failBackgroundView.alpha = 1.0
         })

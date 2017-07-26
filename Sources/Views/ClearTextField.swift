@@ -8,7 +8,7 @@ class ClearTextField: UITextField {
     }
 
     let onePasswordButton = OnePasswordButton()
-    var lineColor: UIColor? = .grey6() {
+    var lineColor: UIColor? = .grey6 {
         didSet {
             if !isFirstResponder {
                 line.backgroundColor = lineColor

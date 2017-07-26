@@ -130,11 +130,11 @@ class StreamHeaderCell: UICollectionViewCell {
         if let category = category, repostedBy == nil {
             let attributedString = NSAttributedString(string: "in ", attributes: [
                 NSFontAttributeName: UIFont.defaultFont(),
-                NSForegroundColorAttributeName: UIColor.greyA(),
+                NSForegroundColorAttributeName: UIColor.greyA,
                 ])
             let categoryName = NSAttributedString(string: category.name, attributes: [
                 NSFontAttributeName: UIFont.defaultFont(),
-                NSForegroundColorAttributeName: UIColor.greyA(),
+                NSForegroundColorAttributeName: UIColor.greyA,
                 NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
                 ])
             categoryButton.setAttributedTitle(attributedString + categoryName, for: .normal)
@@ -389,13 +389,13 @@ class StreamHeaderCell: UICollectionViewCell {
 
     fileprivate func styleUsernameButton() {
         usernameButton.titleLabel?.font = UIFont.defaultFont()
-        usernameButton.setTitleColor(UIColor.greyA(), for: .normal)
+        usernameButton.setTitleColor(UIColor.greyA, for: .normal)
         usernameButton.titleLabel?.lineBreakMode = .byTruncatingTail
         usernameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
     }
 
     fileprivate func styleTimestampLabel() {
-        timestampLabel.textColor = UIColor.greyA()
+        timestampLabel.textColor = UIColor.greyA
         timestampLabel.font = UIFont.defaultFont()
     }
 

@@ -80,11 +80,11 @@ extension ProfileStatsView {
 
         for captionLabel in captionLabels {
             captionLabel.font = .defaultFont(10)
-            captionLabel.textColor = .greyA()
+            captionLabel.textColor = .greyA
             captionLabel.textAlignment = .center
         }
 
-        grayLine.backgroundColor = .greyE5()
+        grayLine.backgroundColor = .greyE5
     }
 
     override func bindActions() {
@@ -195,7 +195,7 @@ extension ProfileStatsView {
 
     func buttonUp(_ touchedButton: UIButton) {
         for (_, captionLabel, _) in allThreeViews {
-            captionLabel.textColor = .greyA()
+            captionLabel.textColor = .greyA
         }
     }
 }

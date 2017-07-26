@@ -58,7 +58,7 @@ class AlertViewController: UIViewController {
         didSet { didSetContentView() }
     }
 
-    var modalBackgroundColor: UIColor = .modalBackground()
+    var modalBackgroundColor: UIColor = .dimmedModalBackground
 
     var desiredSize: CGSize {
         if let contentView = contentView {

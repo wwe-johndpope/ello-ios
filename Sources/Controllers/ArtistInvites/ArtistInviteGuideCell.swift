@@ -78,7 +78,7 @@ class ArtistInviteGuideCell: UICollectionViewCell {
 
 extension StyledLabel.Style {
     static let artistInviteGuide = StyledLabel.Style(
-        textColor: .greyA(),
+        textColor: .greyA,
         fontFamily: .artistInviteTitle
         )
 }

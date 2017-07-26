@@ -53,7 +53,7 @@ private extension ProfileTotalCountView {
 
         if let count = count, !count.isEmpty {
             let attributedCount = NSAttributedString(count + " ", color: .black)
-            let totalViewsText = NSAttributedString(InterfaceString.Profile.TotalViews, color: UIColor.greyA())
+            let totalViewsText = NSAttributedString(InterfaceString.Profile.TotalViews, color: UIColor.greyA)
 
             let attributed = NSMutableAttributedString()
             attributed.append(attributedCount)

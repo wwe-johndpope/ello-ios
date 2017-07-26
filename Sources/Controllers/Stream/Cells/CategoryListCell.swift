@@ -79,7 +79,7 @@ class CategoryListCell: UICollectionViewCell {
         categoryButtons = categoriesInfo.map { categoryInfo in
             let button = UIButton()
             buttonCategoryLookup[button] = categoryInfo
-            button.backgroundColor = .greyF2()
+            button.backgroundColor = .greyF2
             button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
             let attributedString = CategoryListCell.buttonTitle(categoryInfo.title)
             button.setAttributedTitle(attributedString, for: .normal)

@@ -9,7 +9,7 @@ class ClearTextView: UITextView {
     struct Size {
         static let minTextViewHeight: CGFloat = 38
     }
-    var lineColor: UIColor? = .grey6() {
+    var lineColor: UIColor? = .grey6 {
         didSet {
             if !isFirstResponder {
                 line.backgroundColor = lineColor

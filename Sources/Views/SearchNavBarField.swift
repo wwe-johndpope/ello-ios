@@ -23,7 +23,7 @@ class SearchNavBarField: UITextField {
 
     fileprivate func sharedInit() {
         font = .defaultFont()
-        backgroundColor = .greyE5()
+        backgroundColor = .greyE5
         clipsToBounds = true
         layer.cornerRadius = Size.cornerRadius
         clearButtonMode = .whileEditing
@@ -39,7 +39,7 @@ class SearchNavBarField: UITextField {
         attributedPlaceholder = NSAttributedString(
             string: InterfaceString.Search.Prompt,
             attributes: [
-                NSForegroundColorAttributeName: UIColor.greyA()
+                NSForegroundColorAttributeName: UIColor.greyA
             ])
 
         leftViewMode = .always

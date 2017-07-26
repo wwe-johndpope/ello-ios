@@ -36,7 +36,7 @@ extension ProfileAvatarView {
 
     override func style() {
         backgroundColor = .clear
-        avatarImageView.backgroundColor = .greyF2()
+        avatarImageView.backgroundColor = .greyF2
         avatarImageView.clipsToBounds = true
         avatarImageView.contentMode = .scaleAspectFill
         whiteBar.backgroundColor = .white

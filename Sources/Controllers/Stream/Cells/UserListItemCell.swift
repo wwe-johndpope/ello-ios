@@ -33,11 +33,11 @@ class UserListItemCell: UICollectionViewCell {
         usernameLabel.lineBreakMode = .byTruncatingTail
 
         nameLabel.font = UIFont.defaultFont()
-        nameLabel.textColor = UIColor.greyA()
+        nameLabel.textColor = UIColor.greyA
         nameLabel.lineBreakMode = NSLineBreakMode.byTruncatingTail
 
         // bottom border
-        bottomBorder.backgroundColor = UIColor.greyF1().cgColor
+        bottomBorder.backgroundColor = UIColor.greyF1.cgColor
         self.layer.addSublayer(bottomBorder)
     }
 

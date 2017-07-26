@@ -13,9 +13,9 @@ class ImageLabelControl: UIControl {
         get { return self.attributedNormalTitle?.string }
         set {
             if let value = newValue, label.text != value {
-                attributedNormalTitle = attributedText(value, color: .greyA())
+                attributedNormalTitle = attributedText(value, color: .greyA)
                 attributedSelectedTitle = attributedText(value, color: .black)
-                attributedDisabledTitle = attributedText(value, color: .greyC())
+                attributedDisabledTitle = attributedText(value, color: .greyC)
                 updateLayout()
                 updateTextColor()
             }

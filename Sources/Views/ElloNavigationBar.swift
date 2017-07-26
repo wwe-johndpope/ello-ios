@@ -45,7 +45,7 @@ class ElloNavigationBar: UINavigationBar {
     }
 
     fileprivate func privateInit() {
-        self.tintColor = UIColor.greyA()
+        self.tintColor = UIColor.greyA
         self.clipsToBounds = true
         self.shadowImage = UIImage.imageWithColor(UIColor.white)
         self.backgroundColor = UIColor.white

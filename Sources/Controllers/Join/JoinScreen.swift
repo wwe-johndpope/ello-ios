@@ -110,11 +110,11 @@ class JoinScreen: CredentialsScreen {
         super.style()
 
         let attrs = ElloAttributedString.attrs([
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
             NSFontAttributeName: UIFont.defaultFont(Size.termsFontSize),
         ])
         let linkAttrs = ElloAttributedString.attrs(ElloAttributedString.linkAttrs(), [
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
             NSFontAttributeName: UIFont.defaultFont(Size.termsFontSize),
         ])
         // needs i18n

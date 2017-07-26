@@ -100,7 +100,7 @@ class BlockUserModalScreen: UIView {
 
 extension BlockUserModalScreen {
     fileprivate func style() {
-        backgroundButton.backgroundColor = UIColor.modalBackground()
+        backgroundButton.backgroundColor = UIColor.dimmedModalBackground
         modalView.backgroundColor = UIColor.red
         for label in [titleLabel, muteLabel, blockLabel, flagLabel] {
             styleLabel(label)

@@ -20,7 +20,7 @@ class ElloUnderlinedTextButton: UIButton {
         if lineBreakMode != .byWordWrapping {
             self.titleLabel?.numberOfLines = 1
         }
-        self.setTitleColor(UIColor.greyA(), for: .normal)
+        self.setTitleColor(UIColor.greyA, for: .normal)
         self.titleLabel?.font = UIFont.defaultFont()
 
         if let title = self.titleLabel?.text {

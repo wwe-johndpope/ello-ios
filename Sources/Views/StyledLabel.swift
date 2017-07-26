@@ -173,21 +173,21 @@ extension StyledLabel.Style {
         fontFamily: .largeBold
         )
     static let gray = StyledLabel.Style(
-        textColor: .greyA()
+        textColor: .greyA
         )
     static let lightGray = StyledLabel.Style(
         textColor: UIColor(hex: 0x9a9a9a)
         )
     static let largeGrayHeader = StyledLabel.Style(
-        textColor: UIColor.greyA(),
+        textColor: UIColor.greyA,
         fontFamily: .large
         )
     static let placeholder = StyledLabel.Style(
-        textColor: .greyC(),
+        textColor: .greyC,
         fontFamily: .normal
         )
     static let largePlaceholder = StyledLabel.Style(
-        textColor: .greyC(),
+        textColor: .greyC,
         fontFamily: .large
         )
     static let error = StyledLabel.Style(

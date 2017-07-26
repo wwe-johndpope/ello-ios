@@ -8,7 +8,7 @@ struct AutoCompleteCellPresenter {
         cell.name.font = UIFont.defaultFont()
         cell.name.textColor = UIColor.white
         cell.line.isHidden = false
-        cell.line.backgroundColor = UIColor.grey3()
+        cell.line.backgroundColor = UIColor.grey3
 
         if let resultName = item.result.name {
             switch item.type {

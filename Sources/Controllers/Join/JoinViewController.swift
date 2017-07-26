@@ -148,7 +148,7 @@ extension JoinViewController: JoinDelegate {
         let url = "\(ElloURI.baseURL)/wtf/post/terms-of-use"
         Tracker.shared.webViewAppeared(url)
         browser?.loadURLString(url)
-        browser?.tintColor = UIColor.greyA()
+        browser?.tintColor = UIColor.greyA
         browser?.showsURLInNavigationBar = false
         browser?.showsPageTitleInNavigationBar = false
         browser?.title = InterfaceString.WebBrowser.TermsAndConditions

@@ -25,7 +25,7 @@ class AutoCompleteCellPresenterSpec: QuickSpec {
                     expect(cell.name.textColor) == UIColor.white
                     expect(cell.name.font) == UIFont.defaultFont()
                     expect(cell.line.isHidden) == false
-                    expect(cell.line.backgroundColor) == UIColor.grey3()
+                    expect(cell.line.backgroundColor) == UIColor.grey3
                 }
             }
 
@@ -45,7 +45,7 @@ class AutoCompleteCellPresenterSpec: QuickSpec {
                     expect(cell.name.textColor) == UIColor.white
                     expect(cell.name.font) == UIFont.defaultFont()
                     expect(cell.line.isHidden) == false
-                    expect(cell.line.backgroundColor) == UIColor.grey3()
+                    expect(cell.line.backgroundColor) == UIColor.grey3
                 }
             }
         }

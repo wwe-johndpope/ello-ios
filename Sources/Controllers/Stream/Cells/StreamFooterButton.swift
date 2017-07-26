@@ -9,7 +9,7 @@ class StreamFooterButton: UIButton {
     func setButtonTitleWithPadding(_ title: String?, titlePadding: CGFloat = 4.0, contentPadding: CGFloat = 5.0) {
 
         if let title = title {
-            setButtonTitle(title, color: UIColor.greyA(), for: .normal)
+            setButtonTitle(title, color: UIColor.greyA, for: .normal)
             setButtonTitle(title, color: UIColor.black, for: .highlighted)
             setButtonTitle(title, color: UIColor.black, for: .selected)
         }

@@ -17,7 +17,7 @@ extension UIImagePickerController {
         controller.mediaTypes = [kUTTypeImage as String]
         controller.allowsEditing = false
         controller.modalPresentationStyle = .fullScreen
-        controller.navigationBar.tintColor = .greyA()
+        controller.navigationBar.tintColor = .greyA
         return controller
     }
 

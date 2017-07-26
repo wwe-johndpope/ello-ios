@@ -68,7 +68,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
 
         searchControlsContainer.backgroundColor = .white
 
-        findFriendsContainer.backgroundColor = .greyF2()
+        findFriendsContainer.backgroundColor = .greyF2
         findFriendsContainer.isHidden = !showsFindFriends
         findFriendsContainer.layer.cornerRadius = Size.cornerRadius
         findFriendsContainer.clipsToBounds = true

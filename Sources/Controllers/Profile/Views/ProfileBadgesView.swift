@@ -75,7 +75,7 @@ class ProfileBadgesView: ProfileBaseView {
             let remaining = badges.count - maxBadges
             view.font = UIFont.defaultFont()
             view.text = "+\(remaining.numberToHuman())"
-            view.textColor = .greyA()
+            view.textColor = .greyA
             badgeViews.append(view)
         }
 

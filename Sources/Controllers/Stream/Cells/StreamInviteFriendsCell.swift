@@ -22,10 +22,10 @@ class StreamInviteFriendsCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.font = UIFont.defaultFont(18)
-        nameLabel.textColor = UIColor.greyA()
+        nameLabel.textColor = UIColor.greyA
         nameLabel.lineBreakMode = .byTruncatingTail
         // bottom border
-        bottomBorder.backgroundColor = UIColor.greyF1().cgColor
+        bottomBorder.backgroundColor = UIColor.greyF1.cgColor
         self.layer.addSublayer(bottomBorder)
     }
 

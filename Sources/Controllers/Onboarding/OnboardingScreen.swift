@@ -32,7 +32,7 @@ class OnboardingScreen: EmptyScreen {
     }
 
     override func style() {
-        buttonContainer.backgroundColor = .greyE5()
+        buttonContainer.backgroundColor = .greyE5
         abortButton.isHidden = true
         nextButton.isHidden = true
     }

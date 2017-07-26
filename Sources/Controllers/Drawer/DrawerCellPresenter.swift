@@ -8,7 +8,7 @@ struct DrawerCellPresenter {
         switch item.type {
         case .version:
             cell.label.font = UIFont.defaultFont(12)
-            cell.label.textColor = .greyA()
+            cell.label.textColor = .greyA
             cell.line.isHidden = true
         default:
             cell.label.font = UIFont.defaultFont()

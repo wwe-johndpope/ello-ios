@@ -32,7 +32,7 @@ extension ProfileBioView {
         bioView.scrollView.isScrollEnabled = false
         bioView.scrollView.scrollsToTop = false
         bioView.delegate = self
-        grayLine.backgroundColor = .greyE5()
+        grayLine.backgroundColor = .greyE5
     }
 
     override func bindActions() {

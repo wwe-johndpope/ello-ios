@@ -88,7 +88,7 @@ extension HomeScreenNavBar {
             editorialsLine.backgroundColor = .black
 
             otherButton.style = .clearGray
-            otherLine.backgroundColor = .greyA()
+            otherLine.backgroundColor = .greyA
 
             if loggedIn {
                 otherButton.setTitle(InterfaceString.Following.Title, for: .normal)
@@ -101,11 +101,11 @@ extension HomeScreenNavBar {
 
             middleButton.style = .clearGray
             middleButton.addTarget(self, action: #selector(homeScreenArtistInvitesTapped), for: .touchUpInside)
-            middleLine.backgroundColor = .greyA()
+            middleLine.backgroundColor = .greyA
         case .following:
             editorialsButton.style = .clearGray
             editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
-            editorialsLine.backgroundColor = .greyA()
+            editorialsLine.backgroundColor = .greyA
 
             otherButton.style = .clearBlack
             otherButton.setTitle(InterfaceString.Following.Title, for: .normal)
@@ -113,23 +113,23 @@ extension HomeScreenNavBar {
 
             middleButton.style = .clearGray
             middleButton.addTarget(self, action: #selector(homeScreenArtistInvitesTapped), for: .touchUpInside)
-            middleLine.backgroundColor = .greyA()
+            middleLine.backgroundColor = .greyA
         case .artistInvites:
             editorialsButton.style = .clearGray
             editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
-            editorialsLine.backgroundColor = .greyA()
+            editorialsLine.backgroundColor = .greyA
 
             otherButton.style = .clearGray
             otherButton.setTitle(InterfaceString.Following.Title, for: .normal)
             otherButton.addTarget(self, action: #selector(homeScreenFollowingTapped), for: .touchUpInside)
-            otherLine.backgroundColor = .greyA()
+            otherLine.backgroundColor = .greyA
 
             middleButton.style = .clearBlack
             middleLine.backgroundColor = .black
         case .discover:
             editorialsButton.style = .clearGray
             editorialsButton.addTarget(self, action: #selector(homeScreenEditorialsTapped), for: .touchUpInside)
-            editorialsLine.backgroundColor = .greyA()
+            editorialsLine.backgroundColor = .greyA
 
             otherButton.style = .clearBlack
             otherButton.setTitle(InterfaceString.Discover.Title, for: .normal)

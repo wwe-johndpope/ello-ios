@@ -90,26 +90,26 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
     override func style() {
         headerLabel.numberOfLines = 0
 
-        coverImageView.backgroundColor = .greyE5()
+        coverImageView.backgroundColor = .greyE5
         coverImageView.contentMode = .scaleAspectFill
         coverImageView.clipsToBounds = true
         uploadCoverImagePrompt.textAlignment = .center
-        uploadCoverImagePrompt.textColor = .greyA()
+        uploadCoverImagePrompt.textColor = .greyA
         uploadCoverImagePrompt.font = UIFont.defaultFont(12)
         uploadCoverImagePrompt.numberOfLines = 2
 
-        avatarImageView.backgroundColor = .greyE5()
+        avatarImageView.backgroundColor = .greyE5
         avatarImageView.clipsToBounds = true
         avatarImageView.contentMode = .center
         avatarImageView.interfaceImage = .elloGrayLineLogo
         uploadAvatarPrompt.textAlignment = .center
-        uploadAvatarPrompt.textColor = .greyA()
+        uploadAvatarPrompt.textColor = .greyA
         uploadAvatarPrompt.font = UIFont.defaultFont(12)
         uploadAvatarPrompt.numberOfLines = 2
 
         nameTextView.textColor = .black
         nameTextView.isScrollEnabled = false
-        nameTextView.lineColor = .greyE5()
+        nameTextView.lineColor = .greyE5
         nameTextView.selectedLineColor = .black
         nameTextView.keyboardAppearance = .dark
         nameTextView.autocapitalizationType = .words
@@ -118,13 +118,13 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
 
         bioTextView.textColor = .black
         bioTextView.isScrollEnabled = false
-        bioTextView.lineColor = .greyE5()
+        bioTextView.lineColor = .greyE5
         bioTextView.selectedLineColor = .black
         bioTextView.keyboardAppearance = .dark
 
         linksTextView.textColor = .black
         linksTextView.isScrollEnabled = false
-        linksTextView.lineColor = .greyE5()
+        linksTextView.lineColor = .greyE5
         linksTextView.selectedLineColor = .black
 
         linksTextView.autocapitalizationType = .none

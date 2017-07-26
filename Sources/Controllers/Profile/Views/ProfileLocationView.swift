@@ -45,8 +45,8 @@ extension ProfileLocationView {
         clipsToBounds = true
         backgroundColor = .white
         locationLabel.font = .defaultFont()
-        locationLabel.textColor = .greyA()
-        grayLine.backgroundColor = .greyE5()
+        locationLabel.textColor = .greyA
+        grayLine.backgroundColor = .greyE5
     }
 
     override func arrange() {

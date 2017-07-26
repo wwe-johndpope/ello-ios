@@ -65,13 +65,13 @@ class BuyButtonLinkScreen: UIView {
     }
 
     fileprivate func style() {
-        backgroundButton.backgroundColor = .modalBackground()
+        backgroundButton.backgroundColor = .dimmedModalBackground
 
         titleLabel.font = .defaultFont(18)
         titleLabel.textColor = .white
 
         cancelLabel.font = .defaultFont()
-        cancelLabel.textColor = .greyA()
+        cancelLabel.textColor = .greyA
 
         productLinkField.backgroundColor = .white
         productLinkField.keyboardType = .URL

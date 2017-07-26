@@ -70,7 +70,7 @@ extension NSAttributedString {
             NSParagraphStyleAttributeName: paragraphStyle,
             ]
         let plain: [String: Any] = [
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
             NSFontAttributeName: UIFont.defaultFont(16),
             NSParagraphStyleAttributeName: paragraphStyle,
             ]

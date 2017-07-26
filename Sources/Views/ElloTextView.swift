@@ -71,7 +71,7 @@ class ElloTextView: UITextView {
     fileprivate func defaultAttrs() -> [String: Any]  {
         return [
             NSFontAttributeName: self.customFont ?? UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
         ]
     }
 
@@ -83,7 +83,7 @@ class ElloTextView: UITextView {
     fileprivate func setDefaults() {
         // some default styling
         font = UIFont.defaultFont()
-        textColor = UIColor.greyA()
+        textColor = UIColor.greyA
         textContainer.lineFragmentPadding = 0
         // makes this like a UILabel
         text = ""

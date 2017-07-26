@@ -152,7 +152,7 @@ extension ArtistInvite.Status {
 
 extension StyledLabel.Style {
     static let artistInvitedDetailInfo = StyledLabel.Style(
-        textColor: .greyA(),
+        textColor: .greyA,
         fontFamily: .artistInviteTitle
         )
     static let artistInvitedDetailTitle = StyledLabel.Style(

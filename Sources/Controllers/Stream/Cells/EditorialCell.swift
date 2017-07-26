@@ -106,7 +106,7 @@ class EditorialCell: UICollectionViewCell {
         bg.backgroundColor = .black
         gradientView.layer.addSublayer(gradientLayer)
         imageView.contentMode = .scaleAspectFill
-        loadingView.backgroundColor = .greyA()
+        loadingView.backgroundColor = .greyA
         spinner.animateLogo()
     }
 

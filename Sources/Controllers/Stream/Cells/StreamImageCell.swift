@@ -131,7 +131,7 @@ class StreamImageCell: StreamRegionableCell {
             buyButtonGreen.isHidden = true
             buyButton.setTitle(nil, for: .normal)
             buyButton.setImage(.buyButton, imageStyle: .normal, for: .normal)
-            buyButtonGreen.backgroundColor = .greenD1()
+            buyButtonGreen.backgroundColor = .greenD1
             buyButtonGreen.setNeedsLayout()
             buyButtonGreen.layoutIfNeeded()
             buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
@@ -236,8 +236,8 @@ class StreamImageCell: StreamRegionableCell {
         largeImagePlayButton?.isHidden = true
         UIView.animate(withDuration: 0.15, animations: {
             self.failImage.alpha = 1.0
-            self.imageView.backgroundColor = UIColor.greyF1()
-            self.failBackgroundView.backgroundColor = UIColor.greyF1()
+            self.imageView.backgroundColor = UIColor.greyF1
+            self.failBackgroundView.backgroundColor = UIColor.greyF1
             self.imageView.alpha = 1.0
             self.failBackgroundView.alpha = 1.0
         })

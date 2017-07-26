@@ -77,7 +77,7 @@ extension DrawerViewController: UITableViewDelegate {
 // MARK: View Helpers
 private extension DrawerViewController {
     func setupTableView() {
-        tableView.backgroundColor = .grey6()
+        tableView.backgroundColor = .grey6
         tableView.delegate = self
         tableView.dataSource = dataSource
     }
@@ -85,9 +85,9 @@ private extension DrawerViewController {
     func setupNavigationBar() {
         navigationBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height)
         navigationBar.items = [elloNavigationItem]
-        navigationBar.tintColor = .greyA()
+        navigationBar.tintColor = .greyA
 
-        let color = UIColor.grey6()
+        let color = UIColor.grey6
         navigationBar.backgroundColor = color
         navigationBar.shadowImage = nil
         navigationBar.barTintColor = color

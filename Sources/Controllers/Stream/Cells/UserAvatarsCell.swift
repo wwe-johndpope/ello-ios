@@ -27,9 +27,9 @@ class UserAvatarsCell: UICollectionViewCell {
     }
 
     fileprivate func style() {
-        loadingLabel.textColor = UIColor.greyA()
+        loadingLabel.textColor = UIColor.greyA
         loadingLabel.font = UIFont.defaultFont()
-        seeAllButton.titleLabel?.textColor = UIColor.greyA()
+        seeAllButton.titleLabel?.textColor = UIColor.greyA
         seeAllButton.titleLabel?.font = UIFont.defaultFont()
     }
 

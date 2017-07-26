@@ -237,7 +237,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             button.setImages(.pencil, white: true)
             button.setTitle(InterfaceString.Omnibar.CreatePostButton, for: .normal)
             button.setTitleColor(.white, for: .normal)
-            button.setTitleColor(.grey6(), for: .disabled)
+            button.setTitleColor(.grey6, for: .disabled)
             button.titleLabel?.font = UIFont.defaultFont()
             button.contentEdgeInsets.left = -5
             button.imageEdgeInsets.right = 5
@@ -288,9 +288,9 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             linkButton,
         ]
 
-        keyboardButtonView.backgroundColor = UIColor.greyC()
+        keyboardButtonView.backgroundColor = UIColor.greyC
         for button in keyboardButtonViews as [UIView] {
-            button.backgroundColor = UIColor.greyA()
+            button.backgroundColor = UIColor.greyA
             button.frame.size = Size.keyboardButtonSize
         }
 
@@ -301,7 +301,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         ]), for: .normal)
         boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
             NSFontAttributeName: UIFont.defaultBoldFont(),
-            NSForegroundColorAttributeName: UIColor.grey6()
+            NSForegroundColorAttributeName: UIColor.grey6
         ]), for: .highlighted)
         boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
             NSFontAttributeName: UIFont.defaultBoldFont(),
@@ -315,7 +315,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         ]), for: .normal)
         italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
             NSFontAttributeName: UIFont.defaultItalicFont(),
-            NSForegroundColorAttributeName: UIColor.grey6()
+            NSForegroundColorAttributeName: UIColor.grey6
         ]), for: .highlighted)
         italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
             NSFontAttributeName: UIFont.defaultItalicFont(),

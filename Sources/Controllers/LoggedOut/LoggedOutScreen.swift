@@ -56,7 +56,7 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
     override func style() {
         closeButton.setImages(.x)
         tagLabel.numberOfLines = 0
-        bottomBarView.backgroundColor = .greyEF()
+        bottomBarView.backgroundColor = .greyEF
         bottomBarView.clipsToBounds = true
         joinButton.setTitle(InterfaceString.Startup.SignUp, for: .normal)
         loginButton.setTitle(InterfaceString.Startup.Login, for: .normal)

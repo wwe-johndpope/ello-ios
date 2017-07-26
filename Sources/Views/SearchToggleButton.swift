@@ -36,13 +36,13 @@ class SearchToggleButton: UIButton {
 
     private func style() {
         titleLabel?.font = .defaultFont()
-        setTitleColor(.greyA(), for: .normal)
+        setTitleColor(.greyA, for: .normal)
         setTitleColor(.black, for: .selected)
         updateLineColor()
     }
 
     private func updateLineColor() {
-        line.backgroundColor = isSelected ? .black : .greyF2()
+        line.backgroundColor = isSelected ? .black : .greyF2
     }
 
     private func arrange() {

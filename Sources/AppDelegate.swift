@@ -72,11 +72,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setupGlobalStyles() {
         let font = UIFont.defaultFont()
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.greyA()]
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.greyA]
         UINavigationBar.appearance().barTintColor = UIColor.white
 
         let attributes = [
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
             NSFontAttributeName: UIFont.defaultFont(12),
         ]
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)

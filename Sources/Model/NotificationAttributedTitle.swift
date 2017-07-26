@@ -7,7 +7,7 @@ struct NotificationAttributedTitle {
     static fileprivate func attrs(_ addlAttrs: [String: Any] = [:]) -> [String: Any] {
         let attrs: [String: Any] = [
             NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA(),
+            NSForegroundColorAttributeName: UIColor.greyA,
         ]
         return attrs + addlAttrs
     }

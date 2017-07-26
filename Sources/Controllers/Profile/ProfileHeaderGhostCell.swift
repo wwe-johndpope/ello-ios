@@ -64,13 +64,13 @@ class ProfileHeaderGhostCell: UICollectionViewCell {
         whiteBackground.backgroundColor = .white
         let ghostsViews = [avatar, name, totalCountLeft, totalCountRight, stat1Top, stat1Bottom, stat2Top, stat2Bottom, stat3Top, stat3Bottom, stat4Top, stat4Bottom]
         for view in ghostsViews {
-            view.backgroundColor = .greyF2()
+            view.backgroundColor = .greyF2
         }
         avatar.layer.cornerRadius = Size.avatarSize / 2
 
         let lines = [nameGrayLine, totalCountGrayLine]
         for view in lines {
-            view.backgroundColor = .greyF2()
+            view.backgroundColor = .greyF2
         }
     }
 

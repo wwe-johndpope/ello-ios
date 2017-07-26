@@ -14,8 +14,8 @@ class StreamSeeMoreCommentsCell: UICollectionViewCell {
     }
 
     fileprivate func style() {
-        buttonContainer.backgroundColor = .greyA()
-        seeMoreButton.setTitleColor(UIColor.greyA(), for: .normal)
+        buttonContainer.backgroundColor = .greyA
+        seeMoreButton.setTitleColor(UIColor.greyA, for: .normal)
         seeMoreButton.backgroundColor = .white
         seeMoreButton.titleLabel?.font = .defaultFont()
     }

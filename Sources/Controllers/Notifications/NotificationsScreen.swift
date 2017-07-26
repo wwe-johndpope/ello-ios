@@ -20,9 +20,9 @@ class NotificationsScreen: UIView {
         let button = UIButton()
         button.titleLabel?.font = .defaultFont()
         button.setTitleColor(.white, for: .selected)
-        button.setTitleColor(.greyA(), for: .normal)
+        button.setTitleColor(.greyA, for: .normal)
         button.setBackgroundImage(UIImage.imageWithColor(.black), for: .selected)
-        button.setBackgroundImage(UIImage.imageWithColor(.greyE5()), for: .normal)
+        button.setBackgroundImage(UIImage.imageWithColor(.greyE5), for: .normal)
         return button
     }
     fileprivate class func filterButton(image interfaceImage: InterfaceImage) -> UIButton {
