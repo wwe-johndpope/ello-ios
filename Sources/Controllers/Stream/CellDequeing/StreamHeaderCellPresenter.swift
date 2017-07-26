@@ -47,7 +47,7 @@ struct StreamHeaderCellPresenter {
         var author = authorable.author
         var repostedBy: User? = nil
         var followButtonVisible = false
-        if streamCellItem.type == .header {
+        if streamCellItem.type == .streamHeader {
             cell.avatarHeight = StreamHeaderCell.avatarHeight(isGridView: isGridView)
             cell.scrollView.isScrollEnabled = false
             cell.chevronHidden = true

@@ -527,7 +527,7 @@ extension StreamCellItem: Stubbable {
     class func stub(_ values: [String: Any]) -> StreamCellItem {
         return StreamCellItem(
             jsonable: (values["jsonable"] as? JSONAble) ?? Post.stub([:]),
-            type: (values["type"] as? StreamCellType) ?? StreamCellType.header
+            type: (values["type"] as? StreamCellType) ?? .streamHeader
         )
     }
 }

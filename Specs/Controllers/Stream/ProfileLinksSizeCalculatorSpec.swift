@@ -15,7 +15,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 user.externalLinksList = []
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 0
@@ -26,7 +26,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 user.externalLinksList = nil
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 0
@@ -39,7 +39,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["externalLinksList": links])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 53
@@ -54,7 +54,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["externalLinksList": links])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 82
@@ -73,7 +73,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["externalLinksList": links])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 198
@@ -88,7 +88,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["externalLinksList": links])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 53
@@ -107,7 +107,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["externalLinksList": links])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 81
@@ -120,7 +120,7 @@ class ProfileLinksSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["externalLinksList": links])
                 let calc = ProfileLinksSizeCalculator()
                 var height: CGFloat?
-                calc.calculate(StreamCellItem(jsonable: user, type: .header), maxWidth: 375)
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader), maxWidth: 375)
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 49

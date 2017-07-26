@@ -18,7 +18,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 14
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -42,7 +42,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     cell.frame = CGRect(origin: .zero, size: CGSize(width: 150, height: 60))
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     GroupDefaults["FollowingIsGridView"] = true
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
@@ -64,7 +64,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     cell.frame = CGRect(origin: .zero, size: CGSize(width: 180, height: 60))
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     GroupDefaults["FollowingIsGridView"] = true
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
@@ -88,7 +88,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 22
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: post.id), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -113,7 +113,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 22
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -130,7 +130,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -147,7 +147,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -164,7 +164,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -181,7 +181,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -200,7 +200,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     ])
 
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
                     GroupDefaults["FollowingIsGridView"] = false
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
@@ -218,7 +218,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -235,7 +235,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
                     GroupDefaults["FollowingIsGridView"] = true
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
@@ -253,7 +253,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -270,7 +270,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -289,7 +289,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: user)
 
@@ -305,7 +305,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                         ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -323,7 +323,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -340,7 +340,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -359,7 +359,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
 
@@ -377,7 +377,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -394,7 +394,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -411,7 +411,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -431,7 +431,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: repostAuthor)
 
@@ -449,7 +449,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -467,7 +467,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -484,7 +484,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -502,7 +502,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -520,7 +520,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -537,7 +537,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -554,7 +554,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -571,7 +571,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -588,7 +588,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -606,7 +606,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -624,7 +624,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -641,7 +641,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
@@ -659,7 +659,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "lovesCount": 55
                     ])
                     let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     // set the state to loading
                     item.state = .loading
@@ -688,7 +688,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                             "lovesCount": 55
                         ])
                         let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                         // set the state to expanded
                         item.state = .expanded
@@ -716,7 +716,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                             "lovesCount": 55
                         ])
                         let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .footer)
+                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                         // set the state to none
                         item.state = .none

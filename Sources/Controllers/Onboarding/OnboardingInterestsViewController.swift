@@ -40,7 +40,7 @@ class OnboardingInterestsViewController: StreamableViewController {
             primaryHeader: InterfaceString.Onboard.PickCategoriesPrimary,
             secondaryHeader: InterfaceString.Onboard.PickCategoriesSecondary
             )
-        let headerCellItem = StreamCellItem(type: .textHeader(header))
+        let headerCellItem = StreamCellItem(type: .tallHeader(header))
         var items: [StreamCellItem] = [headerCellItem]
 
         if let categories = jsonables as? [Category] {

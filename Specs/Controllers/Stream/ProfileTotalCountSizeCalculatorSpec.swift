@@ -16,7 +16,7 @@ class ProfileTotalCountSizeCalculatorSpec: QuickSpec {
                 let user: User = stub([:])
                 let calc = ProfileTotalCountSizeCalculator()
                 var height: CGFloat!
-                calc.calculate(StreamCellItem(jsonable: user, type: .header))
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader))
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 0
@@ -26,7 +26,7 @@ class ProfileTotalCountSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["totalViewsCount": 0])
                 let calc = ProfileTotalCountSizeCalculator()
                 var height: CGFloat!
-                calc.calculate(StreamCellItem(jsonable: user, type: .header))
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader))
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) == 0
@@ -36,7 +36,7 @@ class ProfileTotalCountSizeCalculatorSpec: QuickSpec {
                 let user: User = stub(["totalViewsCount": 1])
                 let calc = ProfileTotalCountSizeCalculator()
                 var height: CGFloat!
-                calc.calculate(StreamCellItem(jsonable: user, type: .header))
+                calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader))
                     .thenFinally { h in height = h }
                     .catch { _ in }
                 expect(height) > 0

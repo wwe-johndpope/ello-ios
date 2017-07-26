@@ -33,7 +33,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                    item = StreamCellItem(jsonable: post, type: .header)
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
 
                 it("starts out closed") {
@@ -136,7 +136,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                    item = StreamCellItem(jsonable: post, type: .header)
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
                 it("sets relationshipControl properties") {
                     cell.relationshipControl.userId = ""
@@ -189,7 +189,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                    item = StreamCellItem(jsonable: post, type: .header)
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = false
@@ -220,7 +220,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                    item = StreamCellItem(jsonable: post, type: .header)
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = false
@@ -245,7 +245,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                    item = StreamCellItem(jsonable: post, type: .header)
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
                 it("sets categoryButton in .Featured stream") {
                     cell.followButtonVisible = false
@@ -275,7 +275,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                         ])
 
                     cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                    item = StreamCellItem(jsonable: post, type: .header)
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
                 it("sets followButtonVisible") {
                     cell.followButtonVisible = true

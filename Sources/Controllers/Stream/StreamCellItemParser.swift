@@ -65,7 +65,7 @@ struct StreamCellItemParser {
         let isGridView = streamKind.isGridView || forceGrid
 
         if !streamKind.isProfileStream || post.isRepost {
-            cellItems.append(StreamCellItem(jsonable: post, type: .header))
+            cellItems.append(StreamCellItem(jsonable: post, type: .streamHeader))
         }
         else {
             cellItems.append(StreamCellItem(jsonable: post, type: .spacer(height: 30)))
@@ -95,7 +95,7 @@ struct StreamCellItemParser {
 
         // set initial state on the items, but don't toggle the footer's state, it is used by comment open/closed
         for item in cellItems {
-            if let post = item.jsonable as? Post, item.type != StreamCellType.footer {
+            if let post = item.jsonable as? Post, item.type != .streamFooter {
                 item.state = post.collapsed ? .collapsed : .expanded
             }
         }
@@ -134,7 +134,7 @@ struct StreamCellItemParser {
     }
 
     fileprivate func footerStreamCellItems(_ post: Post) -> [StreamCellItem] {
-        return [StreamCellItem(jsonable: post, type: .footer)]
+        return [StreamCellItem(jsonable: post, type: .streamFooter)]
     }
 }
 

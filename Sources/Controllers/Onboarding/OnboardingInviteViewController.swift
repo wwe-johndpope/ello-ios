@@ -111,7 +111,7 @@ extension OnboardingInviteViewController {
             primaryHeader: InterfaceString.Onboard.InviteFriendsPrimary,
             secondaryHeader: InterfaceString.Onboard.InviteFriendsSecondary
             )
-        let headerCellItem = StreamCellItem(type: .textHeader(header))
+        let headerCellItem = StreamCellItem(type: .tallHeader(header))
         let searchItem = StreamCellItem(jsonable: searchString, type: .search(placeholder: InterfaceString.Onboard.Search))
 
         let addressBookItems: [StreamCellItem] = AddressBookHelpers.process(contacts, currentUser: currentUser).map { item in

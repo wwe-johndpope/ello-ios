@@ -108,7 +108,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     func userForIndexPath(_ indexPath: IndexPath) -> User? {
         if let item = visibleStreamCellItem(at: indexPath) {
-            if case .header = item.type,
+            if case .streamHeader = item.type,
                 let repostAuthor = (item.jsonable as? Post)?.repostAuthor
             {
                 return repostAuthor
@@ -208,7 +208,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     func footerIndexPathForPost(_ searchPost: Post) -> IndexPath? {
         for (index, value) in visibleCellItems.enumerated() {
-            if value.type == .footer,
+            if value.type == .streamFooter,
                let post = value.jsonable as? Post {
                 if searchPost.id == post.id {
                     return IndexPath(item: index, section: 0)
@@ -791,7 +791,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         {
             let newState: StreamCellState = cellItem.state == .expanded ? .collapsed : .expanded
             let cellItems = self.cellItemsForPost(post)
-            for item in cellItems where item.type != .footer{
+            for item in cellItems where item.type != .streamFooter {
                 // don't toggle the footer's state, it is used by comment open/closed
                 item.state = newState
             }

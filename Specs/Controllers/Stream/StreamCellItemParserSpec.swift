@@ -50,7 +50,7 @@ class StreamCellItemParserSpec: QuickSpec {
                             }
                         }
                         .catch { _ in }
-                    let header = cellItems.find { $0.type == .header }
+                    let header = cellItems.find { $0.type == .streamHeader }
                     expect(header).to(beNil())
                 }
 

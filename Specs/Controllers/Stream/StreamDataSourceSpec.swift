@@ -317,8 +317,8 @@ class StreamDataSourceSpec: QuickSpec {
                         ]
 
                     let postItems = [
-                        StreamCellItem(type: .header, placeholderType: .profilePosts),
-                        StreamCellItem(type: .footer, placeholderType: .profilePosts),
+                        StreamCellItem(type: .streamHeader, placeholderType: .profilePosts),
+                        StreamCellItem(type: .streamFooter, placeholderType: .profilePosts),
                         ]
 
 
@@ -624,7 +624,7 @@ class StreamDataSourceSpec: QuickSpec {
                     let indexPath = subject.footerIndexPathForPost(post!)
 
                     expect(indexPath!.item) == 2
-                    expect(subject.visibleCellItems[indexPath!.item].type) == StreamCellType.footer
+                    expect(subject.visibleCellItems[indexPath!.item].type) == .streamFooter
                 }
             }
 
@@ -1301,13 +1301,13 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(postToToggle.collapsed).to(beTrue())
                     let toggledItems = subject.cellItemsForPost(postToToggle)
                     for item in toggledItems {
-                        if item.type != .footer {
+                        if item.type != .streamFooter {
                             expect(item.state) == StreamCellState.collapsed
                         }
                     }
                     subject.toggleCollapsedForIndexPath(indexPath0)
                     for item in toggledItems {
-                        if item.type != .footer {
+                        if item.type != .streamFooter {
                             expect(item.state) == StreamCellState.expanded
                         }
                     }
@@ -1327,18 +1327,18 @@ class StreamDataSourceSpec: QuickSpec {
                     let notToggledItems = subject.cellItemsForPost(postNotToToggle)
 
                     for item in toggledItems + notToggledItems {
-                        if item.type != .footer {
+                        if item.type != .streamFooter {
                             expect(item.state) == StreamCellState.collapsed
                         }
                     }
                     subject.toggleCollapsedForIndexPath(indexPathToToggle)
                     for item in toggledItems {
-                        if item.type != .footer {
+                        if item.type != .streamFooter {
                             expect(item.state) != StreamCellState.collapsed
                         }
                     }
                     for item in notToggledItems {
-                        if item.type != .footer {
+                        if item.type != .streamFooter {
                             expect(item.state) == StreamCellState.collapsed
                         }
                     }
@@ -1585,8 +1585,8 @@ class StreamDataSourceSpec: QuickSpec {
                         StreamCellItem(type: .categoryList),
                         StreamCellItem(type: .commentHeader),
                         StreamCellItem(type: .createComment),
-                        StreamCellItem(type: .footer),
-                        StreamCellItem(type: .header),
+                        StreamCellItem(type: .streamFooter),
+                        StreamCellItem(type: .streamHeader),
                         StreamCellItem(type: .inviteFriends),
                         StreamCellItem(type: .onboardingInviteFriends),
                         StreamCellItem(type: .emptyStream(height: 10)),
@@ -1599,7 +1599,8 @@ class StreamDataSourceSpec: QuickSpec {
                         StreamCellItem(type: .spacer(height: 10)),
                         StreamCellItem(type: .fullWidthSpacer(height: 10)),
                         StreamCellItem(type: .streamLoading),
-                        StreamCellItem(type: .textHeader(nil)),
+                        StreamCellItem(type: .header(nil)),
+                        StreamCellItem(type: .tallHeader(nil)),
                         StreamCellItem(type: .toggle),
                         StreamCellItem(type: .unknown),
                         StreamCellItem(type: .userAvatars),
