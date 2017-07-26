@@ -55,7 +55,7 @@ class ProfileGeneratorSpec: QuickSpec {
             beforeEach {
                 destination = MockProfileDestination()
                 currentUser = User.stub(["id": "42"])
-                streamKind = .currentUserStream
+                streamKind = .userStream(userParam: currentUser.id)
                 subject = ProfileGenerator(
                     currentUser: currentUser,
                     userParam: "42",

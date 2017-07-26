@@ -166,8 +166,6 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "currentUserMutedList"
         case .currentUserProfile:
             return "currentUserProfile"
-        case .currentUserStream:
-            return "currentUserStream"
         case .custom:
             return "custom"
         case .rePost:

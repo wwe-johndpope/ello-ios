@@ -67,7 +67,6 @@ enum ElloAPI {
     case currentUserBlockedList
     case currentUserMutedList
     case currentUserProfile
-    case currentUserStream
     case profileDelete
     case profileToggles
     case profileUpdate(body: [String: Any])
@@ -95,8 +94,7 @@ enum ElloAPI {
         switch self {
         case .postDetail:
             return "\(path)/comments"
-        case .currentUserStream,
-             .userStream:
+        case .userStream:
             return "\(path)/posts"
         case .category:
             return "\(path)/posts/recent"
@@ -109,8 +107,7 @@ enum ElloAPI {
         switch self {
         case .postDetail:
             return .commentsType
-        case .currentUserStream,
-             .userStream,
+        case .userStream,
              .category:
             return .postsType
         case let .custom(_, api):
@@ -146,7 +143,6 @@ enum ElloAPI {
         case .currentUserBlockedList,
              .currentUserMutedList,
              .currentUserProfile,
-             .currentUserStream,
              .findFriends,
              .join,
              .postLovers,
@@ -374,7 +370,7 @@ extension ElloAPI: Moya.TargetType {
         case let .deletePost(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)"
         case let .deleteSubscriptions(tokenData):
-            return "\(ElloAPI.currentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+            return "\(ElloAPI.currentUserProfile.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .deleteWatchPost(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/watch"
         case let .discover(type):
@@ -436,7 +432,6 @@ extension ElloAPI: Moya.TargetType {
         case let .postReposters(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/reposters"
         case .currentUserProfile,
-             .currentUserStream,
              .profileUpdate,
              .profileDelete:
             return "/api/\(ElloAPI.apiVersion)/profile"
@@ -445,9 +440,9 @@ extension ElloAPI: Moya.TargetType {
         case .currentUserMutedList:
             return "/api/\(ElloAPI.apiVersion)/profile/muted"
         case .profileToggles:
-            return "\(ElloAPI.currentUserStream.path)/settings"
+            return "\(ElloAPI.currentUserProfile.path)/settings"
         case let .pushSubscriptions(tokenData):
-            return "\(ElloAPI.currentUserStream.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
+            return "\(ElloAPI.currentUserProfile.path)/push_subscriptions/apns/\(tokenStringFromData(tokenData))"
         case let .relationship(userId, relationship):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/add/\(relationship)"
         case .relationshipBatch:
@@ -461,7 +456,7 @@ extension ElloAPI: Moya.TargetType {
         case let .updateComment(postId, commentId, _):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments/\(commentId)"
         case .userCategories:
-            return "\(ElloAPI.currentUserStream.path)/followed_categories"
+            return "\(ElloAPI.currentUserProfile.path)/followed_categories"
         case let .userStream(userParam):
             return "/api/\(ElloAPI.apiVersion)/users/\(userParam)"
         case let .userStreamFollowers(userId):
@@ -586,8 +581,7 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("profile_listing_blocked_users")
         case .currentUserMutedList:
             return stubbedData("profile_listing_muted_users")
-        case .currentUserProfile,
-             .currentUserStream:
+        case .currentUserProfile:
             return stubbedData("profile")
         case .profileToggles:
             return stubbedData("profile_available_user_profile_toggles")
@@ -797,10 +791,6 @@ extension ElloAPI: Moya.TargetType {
                 },
                 "kind": streamKind,
             ] + streamIdDict + userIdDict
-        case .currentUserStream:
-            return [
-                "post_count": 10
-            ]
         case let .profileUpdate(body):
             return body
         case .pushSubscriptions,

@@ -630,6 +630,7 @@ class StreamDataSourceSpec: QuickSpec {
 
 
             describe("clientSidePostInsertIndexPath()") {
+                let user = User.stub(["id": "12345"])
                 let zero = IndexPath(item: 0, section: 0)
                 let two = IndexPath(item: 2, section: 0)
                 let tests: [(IndexPath?, StreamKind)] = [
@@ -639,18 +640,17 @@ class StreamDataSourceSpec: QuickSpec {
                     (nil, .simpleStream(endpoint: ElloAPI.loves(userId: "12345"), title: "NA")),
                     (nil, .notifications(category: "")),
                     (nil, .postDetail(postParam: "param")),
-                    (two, .currentUserStream),
                     (nil, .unknown),
                     (nil, .userStream(userParam: "NA")),
                     (nil, .simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat")),
                     (nil, .simpleStream(endpoint: ElloAPI.userStreamFollowers(userId: "54321"), title: "")),
-                    (two, .userStream(userParam: "12345")),
+                    (two, .userStream(userParam: user.id)),
                     (nil, .simpleStream(endpoint: ElloAPI.userStream(userParam: "54321"), title: "")),
                     ]
                 for (indexPath, streamKind) in tests {
                     it("is \(String(describing: indexPath)) for \(streamKind)") {
                         subject.streamKind = streamKind
-                        subject.currentUser = User.stub(["id": "12345"])
+                        subject.currentUser = user
 
                         if indexPath == nil {
                             expect(subject.clientSidePostInsertIndexPath()).to(beNil())
@@ -671,7 +671,6 @@ class StreamDataSourceSpec: QuickSpec {
                     (one, .simpleStream(endpoint: ElloAPI.loves(userId: "12345"), title: "NA")),
                     (nil, .notifications(category: "")),
                     (nil, .postDetail(postParam: "param")),
-                    (nil, .currentUserStream),
                     (nil, .unknown),
                     (nil, .userStream(userParam: "NA")),
                     (nil, .simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat")),
@@ -787,7 +786,7 @@ class StreamDataSourceSpec: QuickSpec {
                         context("StreamKind.profile") {
 
                             it("inserts the new post at 4, 0") {
-                                subject.streamKind = .currentUserStream
+                                subject.streamKind = .userStream(userParam: "")
                                 expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
                                 subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, collectionView: fakeCollectionView)
                                 expect(subject.postForIndexPath(indexPath0)!.id) == "1"
