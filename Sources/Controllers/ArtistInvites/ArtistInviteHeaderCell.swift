@@ -14,9 +14,9 @@ class ArtistInviteHeaderCell: UICollectionViewCell, ArtistInviteConfigurableCell
 
         static let logoImageSize = ArtistInviteBubbleCell.Size.logoImageSize
         static let textMargins = UIEdgeInsets(top: 20, left: 15, bottom: 30, right: 15)
-        static let statusSpacing: CGFloat = 0
-        static let inviteTypeSpacing: CGFloat = 20
-        static let dateSpacing: CGFloat = 0
+        static let statusSpacing: CGFloat = 10
+        static let inviteTypeSpacing: CGFloat = 30
+        static let dateSpacing: CGFloat = 10
     }
 
     typealias Config = ArtistInviteBubbleCell.Config

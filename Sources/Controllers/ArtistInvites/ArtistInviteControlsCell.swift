@@ -13,7 +13,7 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
 
         static let margins = UIEdgeInsets(top: 0, left: 15, bottom: 60, right: 15)
         static let submissionsHeight: CGFloat = 40
-        static let descriptionSpacing: CGFloat = 30
+        static let descriptionSpacing: CGFloat = 40
         static let submitHeight: CGFloat = 80
     }
 

@@ -17,10 +17,10 @@ class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteConfigurableCell
         static let cornerRadius: CGFloat = 5
         static let bubbleMargins = UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 15)
         static let infoMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
-        static let titleStatusSpacing: CGFloat = 4
+        static let titleStatusSpacing: CGFloat = 14
         static let dotYOffset: CGFloat = -1
-        static let dotStatusSpacing: CGFloat = 15
-        static let statusTypeDateSpacing: CGFloat = 0
+        static let dotStatusSpacing: CGFloat = 25
+        static let statusTypeDateSpacing: CGFloat = 10
         static let descriptionMargins = UIEdgeInsets(top: 20, left: 15, bottom: 15, right: 15)
     }
 

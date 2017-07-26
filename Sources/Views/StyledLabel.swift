@@ -99,12 +99,6 @@ class StyledLabel: UILabel {
 
 // MARK: UIView Overrides
 extension StyledLabel {
-    override var intrinsicContentSize: CGSize {
-        var size = super.intrinsicContentSize
-        size.height += extraBottomMargin
-        return size
-    }
-
     fileprivate func heightForWidth(_ width: CGFloat) -> CGFloat {
         return (attributedText?.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading, .truncatesLastVisibleLine],

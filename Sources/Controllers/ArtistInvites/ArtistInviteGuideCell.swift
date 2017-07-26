@@ -12,7 +12,7 @@ class ArtistInviteGuideCell: UICollectionViewCell {
         static let otherHeights: CGFloat = 56
 
         static let margins = UIEdgeInsets(sides: 15)
-        static let guideSpacing: CGFloat = 10
+        static let guideSpacing: CGFloat = 20
     }
 
     typealias Config = ArtistInvite.Guide
