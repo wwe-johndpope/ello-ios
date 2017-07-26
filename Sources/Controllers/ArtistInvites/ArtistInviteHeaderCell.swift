@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class ArtistInviteHeaderCell: UICollectionViewCell, ArtistInviteCell {
+class ArtistInviteHeaderCell: UICollectionViewCell, ArtistInviteConfigurableCell {
     static let reuseIdentifier = "ArtistInviteHeaderCell"
 
     struct Size {

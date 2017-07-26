@@ -15,6 +15,6 @@ protocol ArtistInviteDetailScreenDelegate: class {
 protocol ArtistInviteDetailScreenProtocol: StreamableScreenProtocol {
 }
 
-protocol ArtistInviteCell: class {
+protocol ArtistInviteConfigurableCell: class {
     var config: ArtistInviteBubbleCell.Config { get set }
 }

@@ -12,7 +12,7 @@ struct ArtistInviteCellPresenter {
         currentUser: User?)
     {
         guard
-            let cell = cell as? ArtistInviteCell,
+            let cell = cell as? ArtistInviteConfigurableCell,
             let artistInvite = streamCellItem.jsonable as? ArtistInvite
         else { return }
 

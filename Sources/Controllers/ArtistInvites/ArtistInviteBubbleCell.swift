@@ -6,7 +6,7 @@ import SnapKit
 import SVGKit
 
 
-class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteCell {
+class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteConfigurableCell {
     static let reuseIdentifier = "ArtistInviteBubbleCell"
 
     struct Size {
