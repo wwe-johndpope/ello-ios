@@ -19,6 +19,7 @@ enum DrawerItemType {
     case invite
     case logout
     case version
+    case debugger
 }
 
 class DrawerViewDataSource: NSObject {
@@ -26,14 +27,18 @@ class DrawerViewDataSource: NSObject {
 
     // moved into a separate function to save compile time
     fileprivate func drawerItems() -> [DrawerItem] {
-        return [
+        var items: [DrawerItem] = [
             DrawerItem(name: InterfaceString.Drawer.Invite, type: .invite, tracking: "invite"),
             DrawerItem(name: InterfaceString.Drawer.Magazine, type: .external("https://notforprint.co/"), tracking: "magazine"),
             DrawerItem(name: InterfaceString.Drawer.Store, type: .external("http://ello.threadless.com/"), tracking: "store"),
             DrawerItem(name: InterfaceString.Drawer.Help, type: .external("https://ello.co/wtf/"), tracking: "help"),
             DrawerItem(name: InterfaceString.Drawer.Logout, type: .logout, tracking: "logout"),
-            DrawerItem(name: InterfaceString.Drawer.Version, type: .version),
         ]
+        if AuthToken().isStaff {
+            items.append(DrawerItem(name: "Show Debugger", type: .debugger))
+        }
+        items.append(DrawerItem(name: InterfaceString.Drawer.Version, type: .version))
+        return items
     }
 
     func itemForIndexPath(_ indexPath: IndexPath) -> DrawerItem? {
