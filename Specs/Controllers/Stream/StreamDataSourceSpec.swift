@@ -624,7 +624,7 @@ class StreamDataSourceSpec: QuickSpec {
                     let indexPath = subject.footerIndexPathForPost(post!)
 
                     expect(indexPath!.item) == 2
-                    expect(subject.visibleCellItems[indexPath!.item].type) == .streamFooter
+                    expect(subject.visibleCellItems[indexPath!.item].type) == StreamCellType.streamFooter
                 }
             }
 

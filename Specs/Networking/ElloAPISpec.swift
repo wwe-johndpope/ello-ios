@@ -181,7 +181,7 @@ class ElloAPISpec: QuickSpec {
                     (.userNameAutoComplete(terms: ""), .autoCompleteResultType)
                 ]
                 for (endpoint, mappingType) in expectations {
-                    it("\(endpoint.description) has the correct mappingType \(mappingType)") {
+                    it("\(endpoint) has the correct mappingType \(mappingType)") {
                         expect(endpoint.mappingType) == mappingType
                     }
                 }
