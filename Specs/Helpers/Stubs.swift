@@ -212,6 +212,7 @@ extension Profile: Stubbable {
         let notifyOfCommentsOnPostWatchViaEmail: Bool = (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? true
         let hasAnnouncementsEnabled: Bool = (values["hasAnnouncementsEnabled"] as? Bool) ?? true
         let discoverable: Bool = (values["discoverable"] as? Bool) ?? true
+        let creatorTypeCategoryIds: [String] = []
 
         let profile = Profile(
             id: id,
@@ -223,6 +224,7 @@ extension Profile: Stubbable {
             isCommunity: isCommunity,
             mutedCount: mutedCount,
             blockedCount: blockedCount,
+            creatorTypeCategoryIds: creatorTypeCategoryIds,
             hasSharingEnabled: hasSharingEnabled,
             hasAdNotificationsEnabled: hasAdNotificationsEnabled,
             hasAutoWatchEnabled: hasAutoWatchEnabled,
