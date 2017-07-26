@@ -9,7 +9,7 @@ class ArtistInviteGuideCell: UICollectionViewCell {
     static let reuseIdentifier = "ArtistInviteGuideCell"
 
     struct Size {
-        static let otherHeights: CGFloat = 34
+        static let otherHeights: CGFloat = 56
 
         static let margins = UIEdgeInsets(sides: 15)
         static let guideSpacing: CGFloat = 10
