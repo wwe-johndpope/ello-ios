@@ -259,7 +259,7 @@ extension AlertViewController: UITableViewDelegate {
             return 0
         }
         let size = CGSize(width: DesiredWidth - totalHorizontalPadding, height: .greatestFiniteMagnitude)
-        let height = headerView.label.sizeThatFits(size).height
+        let height = headerView.sizeThatFits(size).height
         return height
     }
 }
