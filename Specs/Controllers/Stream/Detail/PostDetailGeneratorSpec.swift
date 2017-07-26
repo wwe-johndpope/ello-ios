@@ -14,7 +14,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                 "id": "123",
                 "content": [TextRegion.stub([:])]
                 ])
-            let streamKind: StreamKind = .currentUserStream
+            let streamKind: StreamKind = .userStream(userParam: currentUser.id)
             var destination: PostDetailDestination!
             var subject: PostDetailGenerator!
 

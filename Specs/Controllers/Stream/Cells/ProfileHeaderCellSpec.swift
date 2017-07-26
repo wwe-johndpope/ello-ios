@@ -15,7 +15,7 @@ class ProfileHeaderCellSpec: QuickSpec {
                 beforeEach {
                     cell = ProfileHeaderCell.loadFromNib() as ProfileHeaderCell
                     let item: StreamCellItem = StreamCellItem(type: .profileHeader)
-                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .currentUserStream, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .userStream(userParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                 }
                 it("has valid snapshot with no image") {
                     expectValidSnapshot(cell, device: .phone6_Portrait)
@@ -37,7 +37,7 @@ class ProfileHeaderCellSpec: QuickSpec {
                         "followingCount": 1,
                         ])
                     let item: StreamCellItem = StreamCellItem(jsonable: user, type: .profileHeader)
-                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .currentUserStream, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .userStream(userParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                 }
                 it("has valid snapshot with user info, no avatar") {
                     expectValidSnapshot(cell, device: .phone6_Portrait)

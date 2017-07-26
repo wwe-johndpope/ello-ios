@@ -78,13 +78,14 @@ final class ProfileViewController: StreamableViewController {
     }
 
     // this should only be initialized this way for currentUser in tab nav
-    init(user: User) {
+    init(currentUser: User) {
         // this user must have the profile property assigned (since it is currentUser)
-        self.user = user
-        self.userParam = user.id
-        self.initialStreamKind = .currentUserStream
+        user = currentUser
+        userParam = currentUser.id
+        initialStreamKind = .userStream(userParam: currentUser.id)
         super.init(nibName: nil, bundle: nil)
 
+        title = currentUser.atName
         sharedInit()
         currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] _ in
             self?.updateCachedImages()

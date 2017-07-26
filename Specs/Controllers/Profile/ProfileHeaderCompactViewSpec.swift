@@ -74,7 +74,7 @@ class ProfileHeaderCompactViewSpec: QuickSpec {
 
                     ProfileHeaderCellPresenter.configure(cell,
                         streamCellItem: item,
-                        streamKind: .currentUserStream,
+                        streamKind: .userStream(userParam: ""),
                         indexPath: IndexPath(item: 0, section: 0),
                         currentUser: nil
                         )

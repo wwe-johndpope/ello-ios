@@ -6,7 +6,6 @@ import SwiftyUserDefaults
 
 
 enum StreamKind {
-    case currentUserStream
     case allCategories
     case announcements
     case discover(type: DiscoverType)
@@ -23,7 +22,6 @@ enum StreamKind {
 
     var name: String {
         switch self {
-        case .currentUserStream: return InterfaceString.Profile.Title
         case .allCategories: return InterfaceString.Discover.AllCategories
         case .announcements: return ""
         case .discover: return InterfaceString.Discover.Title
@@ -44,7 +42,6 @@ enum StreamKind {
         switch self {
         case .artistInvites: return "ArtistInvites"
         case .artistInviteDetail: return "ArtistInviteDetail"
-        case .currentUserStream: return "Profile"
         case .allCategories: return "AllCategories"
         case .announcements: return "Announcements"
         case .discover, .category: return "CategoryPosts"
@@ -93,14 +90,13 @@ enum StreamKind {
 
     var isProfileStream: Bool {
         switch self {
-        case .currentUserStream, .userStream: return true
+        case .userStream: return true
         default: return false
         }
     }
 
     var endpoint: ElloAPI {
         switch self {
-        case .currentUserStream: return .currentUserStream
         case .allCategories: return .categories
         case .announcements: return .announcements
         case let .category(slug): return .category(slug: slug)

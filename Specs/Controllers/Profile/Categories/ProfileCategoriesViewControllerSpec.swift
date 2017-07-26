@@ -18,7 +18,7 @@ class ProfileCategoriesViewControllerSpec: QuickSpec {
 
             beforeEach {
                 UIView.setAnimationsEnabled(false)
-                profileVC = ProfileViewController(user: User.stub(["id": "42"]))
+                profileVC = ProfileViewController(currentUser: User.stub(["id": "42"]))
                 navVC = ElloNavigationController(rootViewController: profileVC)
 
                 showController(navVC)

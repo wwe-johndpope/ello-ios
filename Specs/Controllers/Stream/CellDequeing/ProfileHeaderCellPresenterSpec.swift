@@ -13,7 +13,7 @@ class ProfileHeaderCellPresenterSpec: QuickSpec {
                     let item: StreamCellItem = StreamCellItem(type: .profileHeader)
 
                     expect {
-                        ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .currentUserStream, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                        ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .userStream(userParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                     } .notTo(raiseException())
                 }
             }
@@ -26,7 +26,7 @@ class ProfileHeaderCellPresenterSpec: QuickSpec {
                     item.calculatedCellHeights.profileBio = 0
                     item.calculatedCellHeights.profileLinks = 0
 
-                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .currentUserStream, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .userStream(userParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                     expect(cell.statsView.grayLineVisible) == false
                 }
             }
@@ -39,7 +39,7 @@ class ProfileHeaderCellPresenterSpec: QuickSpec {
                     item.calculatedCellHeights.profileBio = 10
                     item.calculatedCellHeights.profileLinks = 0
 
-                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .currentUserStream, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                    ProfileHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .userStream(userParam: ""), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                     expect(cell.bioView.grayLineVisible) == false
                 }
             }

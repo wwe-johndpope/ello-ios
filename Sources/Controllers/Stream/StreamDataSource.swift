@@ -346,12 +346,6 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         switch streamKind {
         case .following:
             return IndexPath(item: 0, section: 0)
-        case .currentUserStream:
-            if visibleCellItems.count == 2 && visibleCellItems[1].type == .noPosts {
-                removeItemsAtIndexPaths([IndexPath(item: 1, section: 0)])
-                return IndexPath(item: 1, section: 0)
-            }
-            return IndexPath(item: 2, section: 0)
         case let .userStream(userParam):
             if currentUserId == userParam {
                 if visibleCellItems.count == 2 && visibleCellItems[1].type == .noPosts {

@@ -61,7 +61,6 @@ class ElloAPISpec: QuickSpec {
                         (.currentUserBlockedList, "/api/v2/profile/blocked"),
                         (.currentUserMutedList, "/api/v2/profile/muted"),
                         (.currentUserProfile, "/api/v2/profile"),
-                        (.currentUserStream, "/api/v2/profile"),
                         (.deleteComment(postId: "666", commentId: "777"), "/api/v2/posts/666/comments/777"),
                         (.deleteLove(postId: "1"), "/api/v2/posts/1/love"),
                         (.deletePost(postId: "666"), "/api/v2/posts/666"),
@@ -136,7 +135,6 @@ class ElloAPISpec: QuickSpec {
                     (.createLove(postId: ""), .lovesType),
                     (.createPost(body: ["": ""]), .postsType),
                     (.currentUserProfile, .usersType),
-                    (.currentUserStream, .usersType),
                     (.deleteComment(postId: "", commentId: ""), .noContentType),
                     (.deleteLove(postId: ""), .noContentType),
                     (.deletePost(postId: ""), .noContentType),
@@ -195,7 +193,6 @@ class ElloAPISpec: QuickSpec {
                     let expectations: [(ElloAPI, String)] = [
                         (.category(slug: "art"), "/api/v2/categories/art/posts/recent"),
                         (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param/comments"),
-                        (.currentUserStream, "/api/v2/profile/posts"),
                         (.userStream(userParam: "999"), "/api/v2/users/999/posts"),
                         ]
                     for (api, pagingPath) in expectations {
@@ -245,7 +242,6 @@ class ElloAPISpec: QuickSpec {
                         .postDetail(postParam: "", commentCount: 10),
                         .postLovers(postId: ""),
                         .postReposters(postId: ""),
-                        .currentUserStream,
                         .profileDelete,
                         .profileToggles,
                         .profileUpdate(body: [:]),
@@ -323,7 +319,6 @@ class ElloAPISpec: QuickSpec {
                         .postDetail(postParam: "", commentCount: 10),
                         .postLovers(postId: ""),
                         .postReposters(postId: ""),
-                        .currentUserStream,
                         .profileDelete,
                         .profileToggles,
                         .profileUpdate(body: [:]),
@@ -496,15 +491,6 @@ class ElloAPISpec: QuickSpec {
                         let params = ElloAPI.postDetail(postParam: "post-id", commentCount: 0).parameters!
                         expect(params["comment_count"] as? Int) == 0
                     }
-                }
-
-                it("profile") {
-                    let params = ElloAPI.currentUserStream.parameters!
-                    expect(params["post_count"] as? Int) == 10
-                }
-
-                xit("pushSubscriptions, deleteSubscriptions") {
-
                 }
 
                 it("reAuth") {

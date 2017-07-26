@@ -33,7 +33,7 @@ class ProfileViewControllerSpec: QuickSpec {
 
                 beforeEach {
                     currentUser = User.stub(["id": "42"])
-                    subject = ProfileViewController(user: currentUser)
+                    subject = ProfileViewController(currentUser: currentUser)
                     subject.currentUser = currentUser
                     let nav = UINavigationController(rootViewController: UIViewController())
                     nav.pushViewController(subject, animated: false)
@@ -61,7 +61,7 @@ class ProfileViewControllerSpec: QuickSpec {
                         context("user \(isCollaborateable ? "is" : "is not") collaborateable and \(isHireable ? "is" : "is not") hireable") {
                             beforeEach {
                                 currentUser = User.stub(["id": "42", "isCollaborateable": isCollaborateable, "isHireable": isHireable])
-                                subject = ProfileViewController(user: currentUser)
+                                subject = ProfileViewController(currentUser: currentUser)
                                 subject.currentUser = currentUser
                                 showController(subject)
                                 screen = subject.view as! ProfileScreen

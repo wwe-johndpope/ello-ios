@@ -234,7 +234,7 @@ extension ElloTabBarController {
         discover.category = Category.featured
         let omnibar = OmnibarViewController()
         let notifications = NotificationsViewController()
-        let profile = ProfileViewController(user: currentUser!)
+        let profile = ProfileViewController(currentUser: currentUser!)
         omnibar.canGoBack = false
 
         self.addChildViewController(embed(home))

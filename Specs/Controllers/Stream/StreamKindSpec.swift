@@ -23,7 +23,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.name) == "Following"
                     expect(StreamKind.notifications(category: "").name) == "Notifications"
                     expect(StreamKind.postDetail(postParam: "param").name) == ""
-                    expect(StreamKind.currentUserStream.name) == "Profile"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").name) == "meat"
                     expect(StreamKind.unknown.name) == ""
                     expect(StreamKind.userStream(userParam: "n/a").name) == ""
@@ -38,7 +37,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.cacheKey) == "Following"
                     expect(StreamKind.notifications(category: "").cacheKey) == "Notifications"
                     expect(StreamKind.postDetail(postParam: "param").cacheKey) == "PostDetail"
-                    expect(StreamKind.currentUserStream.cacheKey) == "Profile"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").cacheKey) == "SearchForPosts"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").cacheKey) == "SimpleStream.meat"
                     expect(StreamKind.unknown.cacheKey) == "unknown"
@@ -54,7 +52,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.lastViewedCreatedAtKey) == "Following_createdAt"
                     expect(StreamKind.notifications(category: "").lastViewedCreatedAtKey) == "Notifications_createdAt"
                     expect(StreamKind.postDetail(postParam: "param").lastViewedCreatedAtKey).to(beNil())
-                    expect(StreamKind.currentUserStream.lastViewedCreatedAtKey).to(beNil())
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").lastViewedCreatedAtKey).to(beNil())
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").lastViewedCreatedAtKey).to(beNil())
                     expect(StreamKind.unknown.lastViewedCreatedAtKey).to(beNil())
@@ -64,7 +61,6 @@ class StreamKindSpec: QuickSpec {
 
             describe("showsCategory") {
                 let expectations: [(StreamKind, Bool)] = [
-                    (.currentUserStream, false),
                     (.allCategories, false),
                     (.discover(type: .featured), true),
                     (.discover(type: .trending), false),
@@ -91,7 +87,6 @@ class StreamKindSpec: QuickSpec {
                     (.following, false),
                     (.notifications(category: ""), false),
                     (.postDetail(postParam: "param"), false),
-                    (.currentUserStream, true),
                     (.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat"), false),
                     (.unknown, false),
                     (.userStream(userParam: "NA"), true),
@@ -112,7 +107,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.notifications(category: "").endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"
                     expect(StreamKind.postDetail(postParam: "param").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts/param"
                     expect(StreamKind.postDetail(postParam: "param").endpoint.parameters!["comment_count"] as? Int) == 10
-                    expect(StreamKind.currentUserStream.endpoint.path) == "/api/\(ElloAPI.apiVersion)/profile"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/users"
                     expect(StreamKind.unknown.endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"
@@ -128,7 +122,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.relationship) == RelationshipPriority.following
                     expect(StreamKind.notifications(category: "").relationship) == RelationshipPriority.null
                     expect(StreamKind.postDetail(postParam: "param").relationship) == RelationshipPriority.null
-                    expect(StreamKind.currentUserStream.relationship) == RelationshipPriority.null
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").relationship) == RelationshipPriority.null
                     expect(StreamKind.unknown.relationship) == RelationshipPriority.null
                     expect(StreamKind.userStream(userParam: "NA").relationship) == RelationshipPriority.null
@@ -216,7 +209,6 @@ class StreamKindSpec: QuickSpec {
                     StreamKind.following.setIsGridView(false)
                     StreamKind.notifications(category: "").setIsGridView(false)
                     StreamKind.postDetail(postParam: "param").setIsGridView(false)
-                    StreamKind.currentUserStream.setIsGridView(false)
                     StreamKind.following.setIsGridView(false)
                     StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").setIsGridView(false)
                     StreamKind.simpleStream(endpoint: ElloAPI.loves(userId: "123"), title: "123").setIsGridView(false)
@@ -246,7 +238,6 @@ class StreamKindSpec: QuickSpec {
 
                     expect(StreamKind.notifications(category: "").isGridView) == false
                     expect(StreamKind.postDetail(postParam: "param").isGridView) == false
-                    expect(StreamKind.currentUserStream.isGridView) == false
 
                     StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").setIsGridView(true)
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").isGridView) == true
@@ -274,7 +265,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.hasGridViewToggle) == true
                     expect(StreamKind.notifications(category: "").hasGridViewToggle) == false
                     expect(StreamKind.postDetail(postParam: "param").hasGridViewToggle) == false
-                    expect(StreamKind.currentUserStream.hasGridViewToggle) == false
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").hasGridViewToggle) == true
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.loves(userId: "123"), title: "123").hasGridViewToggle) == true
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").hasGridViewToggle) == false
@@ -292,7 +282,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.notifications(category: "").isDetail(post: Post.stub([:]))) == false
                     expect(StreamKind.postDetail(postParam: "param").isDetail(post: Post.stub(["token": "param"]))) == true
                     expect(StreamKind.postDetail(postParam: "param").isDetail(post: Post.stub([:]))) == false
-                    expect(StreamKind.currentUserStream.isDetail(post: Post.stub([:]))) == false
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").isDetail(post: Post.stub([:]))) == false
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").isDetail(post: Post.stub([:]))) == false
                     expect(StreamKind.unknown.isDetail(post: Post.stub([:]))) == false
@@ -308,7 +297,6 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.supportsLargeImages) == false
                     expect(StreamKind.notifications(category: "").supportsLargeImages) == false
                     expect(StreamKind.postDetail(postParam: "param").supportsLargeImages) == true
-                    expect(StreamKind.currentUserStream.supportsLargeImages) == false
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").supportsLargeImages) == false
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").supportsLargeImages) == false
                     expect(StreamKind.unknown.supportsLargeImages) == false

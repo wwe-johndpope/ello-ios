@@ -12,9 +12,22 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
         describe("DynamicSettingsViewController") {
             context("changing mutedCount and blockedCount") {
                 var subject: DynamicSettingsViewController!
+                let blockedSection = 2
+                let mutedSection = 3
 
                 beforeEach {
                     subject = UIStoryboard.storyboardWithId(StoryboardIdentifier.dynamicSettings.rawValue, storyboardName: "Settings") as! DynamicSettingsViewController
+                }
+                describe("regardless of counts") {
+                    beforeEach {
+                        let currentProfile: Profile = stub([:])
+                        let currentUser: User = stub(["profile": currentProfile])
+                        subject.currentUser = currentUser
+                        showController(subject)
+                    }
+                    it("should have correct number of sections") {
+                        expect(subject.numberOfSections(in: subject.tableView)) == 5
+                    }
                 }
                 describe("when mutedCount is 0") {
                     beforeEach {
@@ -23,14 +36,11 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                         subject.currentUser = currentUser
                         showController(subject)
                     }
-                    it("should have correct number of sections") {
-                        expect(subject.numberOfSections(in: subject.tableView)) == 4
-                    }
                     it("should have correct number of rows (0) for blocked section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: blockedSection)) == 0
                     }
                     it("should have correct number of rows (0) for muted section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: mutedSection)) == 0
                     }
                 }
                 describe("when mutedCount is 1") {
@@ -40,14 +50,11 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                         subject.currentUser = currentUser
                         showController(subject)
                     }
-                    it("should have correct number of sections") {
-                        expect(subject.numberOfSections(in: subject.tableView)) == 4
-                    }
                     it("should have correct number of rows (0) for blocked section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: blockedSection)) == 0
                     }
                     it("should have correct number of rows (1) for muted section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)) == 1
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 3)) == 1
                     }
                 }
                 describe("when mutedCount changes from 1 to 0") {
@@ -58,14 +65,11 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                         showController(subject)
                         postNotification(MutedCountChangedNotification, value: ("", -1))
                     }
-                    it("should have correct number of sections") {
-                        expect(subject.numberOfSections(in: subject.tableView)) == 4
-                    }
                     it("should have correct number of rows (0) for blocked section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: blockedSection)) == 0
                     }
                     it("should have correct number of rows (0) for muted section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: mutedSection)) == 0
                     }
                 }
                 describe("when blockedCount is 0") {
@@ -75,14 +79,11 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                         subject.currentUser = currentUser
                         showController(subject)
                     }
-                    it("should have correct number of sections") {
-                        expect(subject.numberOfSections(in: subject.tableView)) == 4
-                    }
                     it("should have correct number of rows (0) for blocked section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: blockedSection)) == 0
                     }
                     it("should have correct number of rows (0) for muted section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: mutedSection)) == 0
                     }
                 }
                 describe("when blockedCount is 1") {
@@ -92,14 +93,11 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                         subject.currentUser = currentUser
                         showController(subject)
                     }
-                    it("should have correct number of sections") {
-                        expect(subject.numberOfSections(in: subject.tableView)) == 4
-                    }
                     it("should have correct number of rows (1) for blocked section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)) == 1
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: blockedSection)) == 1
                     }
                     it("should have correct number of rows (0) for muted section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: mutedSection)) == 0
                     }
                 }
                 describe("when blockedCount changes from 1 to 0") {
@@ -110,14 +108,11 @@ class DynamicSettingsViewControllerSpec: QuickSpec {
                         showController(subject)
                         postNotification(BlockedCountChangedNotification, value: ("", -1))
                     }
-                    it("should have correct number of sections") {
-                        expect(subject.numberOfSections(in: subject.tableView)) == 4
-                    }
                     it("should have correct number of rows (0) for blocked section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: blockedSection)) == 0
                     }
                     it("should have correct number of rows (0) for muted section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)) == 0
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: mutedSection)) == 0
                     }
                 }
             }

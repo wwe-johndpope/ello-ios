@@ -3,6 +3,9 @@
 //
 
 class AlertHeaderView: UIView {
+    struct Size {
+        static let topMargin: CGFloat = 6.5
+    }
     var label = StyledLabel(style: .black)
 
     convenience init() {
@@ -23,10 +26,14 @@ class AlertHeaderView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = self.bounds
+        label.frame = self.bounds.shift(up: Size.topMargin)
     }
 
     override var intrinsicContentSize: CGSize {
         return label.intrinsicContentSize
+    }
+
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return label.sizeThatFits(size)
     }
 }
