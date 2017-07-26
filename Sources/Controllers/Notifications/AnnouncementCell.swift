@@ -91,8 +91,8 @@ class AnnouncementCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .vertical)
-        titleLabel.numberOfLines = 0
-        bodyLabel.numberOfLines = 0
+        titleLabel.isMultiline = true
+        bodyLabel.isMultiline = true
         callToActionButton.contentHorizontalAlignment = .left
         callToActionButton.isUserInteractionEnabled = false
     }

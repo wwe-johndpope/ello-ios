@@ -61,6 +61,18 @@ class StyledLabel: UILabel {
     override var lineBreakMode: NSLineBreakMode {
         didSet { updateStyle() }
     }
+    var isMultiline: Bool = false {
+        didSet {
+            if isMultiline {
+                numberOfLines = 0
+                lineBreakMode = .byWordWrapping
+            }
+            else {
+                numberOfLines = 1
+                lineBreakMode = .byTruncatingTail
+            }
+        }
+    }
     var style: Style = .default {
         didSet { updateStyle() }
     }
@@ -81,8 +93,8 @@ class StyledLabel: UILabel {
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        self.lineBreakMode = .byTruncatingTail
-        updateStyle()
+        numberOfLines = 1
+        lineBreakMode = .byTruncatingTail
     }
 
     required init?(coder: NSCoder) {

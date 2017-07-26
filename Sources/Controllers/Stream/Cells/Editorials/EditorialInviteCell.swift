@@ -88,11 +88,11 @@ class EditorialInviteCell: EditorialCell {
         textView.keyboardType = .emailAddress
 
         inviteLabel.text = InterfaceString.Editorials.Invite
-        inviteLabel.numberOfLines = 0
+        inviteLabel.isMultiline = true
         inviteCaption.text = InterfaceString.Editorials.InviteCaption
-        inviteCaption.numberOfLines = 0
+        inviteCaption.isMultiline = true
         inviteInstructions.text = InterfaceString.Editorials.InviteInstructions
-        inviteInstructions.numberOfLines = 0
+        inviteInstructions.isMultiline = true
         sentLabel.text = InterfaceString.Editorials.InviteSent
         textBg.backgroundColor = .white
         textView.isEditable = true

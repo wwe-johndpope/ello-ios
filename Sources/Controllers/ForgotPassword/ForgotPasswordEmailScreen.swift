@@ -51,7 +51,7 @@ class ForgotPasswordEmailScreen: CredentialsScreen {
 
         ElloTextFieldView.styleAsEmailField(emailField)
 
-        successLabel.numberOfLines = 0
+        successLabel.isMultiline = true
         successLabel.isHidden = true
     }
 

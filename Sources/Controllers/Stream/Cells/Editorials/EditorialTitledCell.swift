@@ -29,11 +29,9 @@ class EditorialTitledCell: EditorialCell {
 
     override func style() {
         super.style()
-        titleLabel.numberOfLines = 0
-        authorLabel.numberOfLines = 1
-        authorLabel.adjustsFontSizeToFitWidth = false
-        authorLabel.lineBreakMode = .byTruncatingTail
-        subtitleLabel.numberOfLines = 0
+        titleLabel.isMultiline = true
+        authorLabel.isMultiline = false
+        subtitleLabel.isMultiline = true
     }
 
     override func prepareForReuse() {

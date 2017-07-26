@@ -51,7 +51,7 @@ class ForgotPasswordResetScreen: CredentialsScreen {
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
 
-        failureLabel.numberOfLines = 0
+        failureLabel.isMultiline = true
         failureLabel.isHidden = true
     }
 

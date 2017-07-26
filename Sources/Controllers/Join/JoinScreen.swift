@@ -130,7 +130,7 @@ class JoinScreen: CredentialsScreen {
         passwordField.returnKeyType = .join
         passwordField.hasOnePassword = onePasswordAvailable
 
-        messageLabel.numberOfLines = 0
+        messageLabel.isMultiline = true
 
         termsButtonNormal.isHidden = Keyboard.shared.active
         termsButtonKeyboard.isHidden = !Keyboard.shared.active

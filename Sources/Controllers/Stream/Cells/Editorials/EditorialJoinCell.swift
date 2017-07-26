@@ -68,9 +68,9 @@ class EditorialJoinCell: EditorialCell {
         super.style()
 
         joinLabel.text = InterfaceString.Editorials.Join
-        joinLabel.numberOfLines = 0
+        joinLabel.isMultiline = true
         joinCaption.text = InterfaceString.Editorials.JoinCaption
-        joinCaption.numberOfLines = 0
+        joinCaption.isMultiline = true
         ElloTextFieldView.styleAsEmailField(emailField)
         ElloTextFieldView.styleAsUsernameField(usernameField)
         ElloTextFieldView.styleAsPasswordField(passwordField)
