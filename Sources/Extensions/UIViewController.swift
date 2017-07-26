@@ -23,7 +23,7 @@ extension UIViewController: GestureNavigation {
             if find(controller!) {
                 return controller
             }
-            controller = controller!.parent
+            controller = controller!.parent ?? controller!.presentingViewController
         }
         return nil
     }

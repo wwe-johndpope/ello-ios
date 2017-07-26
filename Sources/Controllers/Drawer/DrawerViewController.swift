@@ -6,7 +6,7 @@ protocol DrawerResponder: class {
     func showDrawerViewController()
 }
 
-class DrawerViewController: StreamableViewController {
+class DrawerViewController: BaseElloViewController {
     @IBOutlet weak var tableView: UITableView!
     weak var navigationBar: ElloNavigationBar!
     var isLoggingOut = false
@@ -21,12 +21,6 @@ class DrawerViewController: StreamableViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // Using a StreamableViewController to gain access to the InviteResponder
-    // Not a great longterm setup.
-    override func setupStreamController() {
-        // noop
     }
 
     override func viewDidLoad() {

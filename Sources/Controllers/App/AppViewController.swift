@@ -445,6 +445,66 @@ extension AppViewController {
     }
 }
 
+// MARK: Invitations screen
+
+// MARK: InviteResponder
+extension AppViewController: InviteResponder {
+
+    func onInviteFriends() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
+            return
+        }
+
+        Tracker.shared.inviteFriendsTapped()
+        AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
+            switch result {
+            case let .success(addressBook):
+                Tracker.shared.contactAccessPreferenceChanged(true)
+                let vc = OnboardingInviteViewController(addressBook: addressBook)
+                vc.currentUser = self.currentUser
+                if let navigationController = self.navigationController {
+                    navigationController.pushViewController(vc, animated: true)
+                }
+                else {
+                    self.present(vc, animated: true, completion: nil)
+                }
+            case let .failure(addressBookError):
+                guard addressBookError != .cancelled else { return }
+
+                Tracker.shared.contactAccessPreferenceChanged(false)
+                let message = addressBookError.rawValue
+                let alertController = AlertViewController(
+                    message: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate as NSString, message) as String
+                )
+
+                let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: .none)
+                alertController.addAction(action)
+
+                self.present(alertController, animated: true, completion: .none)
+            }
+        })
+    }
+
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping Block) {
+        guard let email = person.emails.first else { return }
+
+        if isOnboarding {
+            Tracker.shared.onboardingFriendInvited()
+        }
+        else {
+            Tracker.shared.friendInvited()
+        }
+        ElloHUD.showLoadingHudInView(view)
+        InviteService().invite(email)
+            .always { [weak self] _ in
+                guard let `self` = self else { return }
+                ElloHUD.hideLoadingHudInView(self.view)
+                completion()
+            }
+    }
+}
+
 // MARK: Push Notification Handling
 extension AppViewController {
     func receivedPushNotification(_ payload: PushPayload) {
@@ -596,15 +656,12 @@ extension AppViewController {
 
     fileprivate func showInvitationScreen() {
         guard
-            let vc = self.visibleViewController as? ElloTabBarController,
-            let nav = vc.childViewControllers.first as? UINavigationController,
-            let streamableVC = nav.viewControllers.first as? StreamableViewController
+            let vc = self.visibleViewController as? ElloTabBarController
         else { return }
 
         vc.selectedTab = .discover
 
-        let responder: InviteResponder? = streamableVC.findResponder()
-        responder?.onInviteFriends()
+        onInviteFriends()
     }
 
     fileprivate func showCategoryScreen(slug: String) {
