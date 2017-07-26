@@ -302,7 +302,8 @@ extension ProfileViewController: ProfileScreenDelegate {
     }
 
     func inviteTapped() {
-        onInviteFriends()
+        let responder: InviteResponder? = findResponder()
+        responder?.onInviteFriends()
     }
 
     func collaborateTapped() {

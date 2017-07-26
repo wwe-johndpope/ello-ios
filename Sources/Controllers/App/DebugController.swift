@@ -82,14 +82,14 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Show Onboarding") {
-            appController.closeTodoController {
+            appController.closeDebugController {
                 let user: User! = appController.currentUser
                 appController.showOnboardingScreen(user)
             }
         }
 
         addAction(name: "Artist Invites preview") {
-            appController.closeTodoController {
+            appController.closeDebugController {
                 let vc = ArtistInvitesViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -101,7 +101,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Logout") {
-            appController.closeTodoController {
+            appController.closeDebugController {
                 appController.userLoggedOut()
             }
         }
@@ -112,7 +112,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {
-                appController.closeTodoController {
+                appController.closeDebugController {
                     Tracker.shared.overrideAgent = DebugAgent()
                     let alertController = AlertViewController(error: "Debug tracking is on")
                     appController.present(alertController, animated: true, completion: nil)
@@ -121,7 +121,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Deep Linking") {
-            appController.closeTodoController {
+            appController.closeDebugController {
                 let alertController = AlertViewController()
 
                 let urlAction = AlertAction(title: "Enter URL", style: .urlInput)
@@ -142,22 +142,22 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         addAction(name: "Show Following Dot") {
             postNotification(NewContentNotifications.newFollowingContent, value: ())
-            appController.closeTodoController()
+            appController.closeDebugController()
         }
 
         addAction(name: "Show Notification Dot") {
             postNotification(NewContentNotifications.newNotifications, value: ())
-            appController.closeTodoController()
+            appController.closeDebugController()
         }
 
         addAction(name: "Reset Tab bar Tooltips") {
             ElloTab.resetToolTips()
-            appController.closeTodoController()
+            appController.closeDebugController()
         }
 
         addAction(name: "Reset Tooltips for 2.0") {
             GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey] = nil
-            appController.closeTodoController()
+            appController.closeDebugController()
         }
 
         addAction(name: "Crash the app") {
@@ -170,7 +170,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Show Notification") {
-            appController.closeTodoController {
+            appController.closeDebugController {
                 PushNotificationController.sharedController.receivedNotification(UIApplication.shared, userInfo: [
                     "application_target": "notifications/posts/6178",
                     "aps": [
@@ -188,7 +188,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             PushNotificationController.sharedController.permissionDenied = false
             PushNotificationController.sharedController.needsPermission = true
             if let alert = PushNotificationController.sharedController.requestPushAccessIfNeeded() {
-                appController.closeTodoController {
+                appController.closeDebugController {
                     appController.present(alert, animated: true, completion: .none)
                 }
             }
