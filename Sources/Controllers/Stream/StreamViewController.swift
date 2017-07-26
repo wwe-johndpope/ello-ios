@@ -1285,6 +1285,7 @@ extension StreamViewController: UIScrollViewDelegate {
             .thenFinally { response in
                 switch response {
                 case let .jsonables(jsonables, responseConfig):
+                    self.allOlderPagesLoaded = jsonables.count == 0
                     self.scrollLoaded(jsonables: jsonables, placeholderType: placeholderType)
                     self.responseConfig = responseConfig
                 case .empty:
