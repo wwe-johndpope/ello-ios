@@ -224,7 +224,7 @@ extension StyledButton {
 
 extension StyledButton.Style {
     static let `default` = StyledButton.Style(
-        backgroundColor: .black, disabledBackgroundColor: .grey231F20(),
+        backgroundColor: .black, disabledBackgroundColor: .grey231F20,
         titleColor: .white, disabledTitleColor: .greyA()
         )
     static let clearWhite = StyledButton.Style(

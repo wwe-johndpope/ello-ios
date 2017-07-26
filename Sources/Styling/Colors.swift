@@ -3,7 +3,6 @@
 //
 
 private struct ElloColors {
-    static let grey231F20: UIColor = UIColor(hex: 0x231F20)
     static let grey3: UIColor = UIColor(hex: 0x333333)
     static let grey4D: UIColor = UIColor(hex: 0x4D4D4D)
     static let greenD1: UIColor = UIColor(hex: 0x00D100)
@@ -28,7 +27,7 @@ extension UIColor {
     // red - 0xFF0000
 
     // This color is used as the background on all disabled Ello buttons
-    class func grey231F20() -> UIColor { return ElloColors.grey231F20 }
+    static let grey231F20 = UIColor(hex: 0x231F20)
 
     // common background color
     class func grey3() -> UIColor { return ElloColors.grey3 }
