@@ -15,7 +15,6 @@ struct StreamEmbedCellPresenter {
             let embedData = streamCellItem.type.data as? EmbedRegion
         else { return }
 
-        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
         cell.embedUrl = embedData.url
         if embedData.isAudioEmbed {
             cell.setPlayImageIcon(.audioPlay)
