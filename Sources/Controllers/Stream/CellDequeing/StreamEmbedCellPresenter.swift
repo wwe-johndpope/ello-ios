@@ -16,13 +16,6 @@ struct StreamEmbedCellPresenter {
         else { return }
 
         let isGridView = streamCellItem.isGridView(streamKind: streamKind)
-        var photoToLoad: URL?
-        if isGridView {
-            photoToLoad = embedData.thumbnailSmallUrl as URL
-        }
-        else {
-            photoToLoad = embedData.thumbnailLargeUrl as URL
-        }
         cell.embedUrl = embedData.url
         if embedData.isAudioEmbed {
             cell.setPlayImageIcon(.audioPlay)
@@ -31,7 +24,7 @@ struct StreamEmbedCellPresenter {
             cell.setPlayImageIcon(.videoPlay)
         }
 
-        if let photoURL = photoToLoad {
+        if let photoURL = embedData.thumbnailLargeUrl {
             cell.setImageURL(photoURL)
         }
 

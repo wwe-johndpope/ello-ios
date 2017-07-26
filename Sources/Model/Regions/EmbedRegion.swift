@@ -23,14 +23,10 @@ enum EmbedType: String {
 final class EmbedRegion: JSONAble, Regionable {
     var isRepost: Bool = false
 
-    // active record
     let id: String
-    // required
     let service: EmbedType
     let url: URL
-    let thumbnailSmallUrl: URL
-    let thumbnailLargeUrl: URL
-    // computed
+    let thumbnailLargeUrl: URL?
     var isAudioEmbed: Bool {
         return service == EmbedType.mixcloud || service == EmbedType.soundcloud || service == EmbedType.bandcamp
     }
@@ -41,14 +37,12 @@ final class EmbedRegion: JSONAble, Regionable {
         id: String,
         service: EmbedType,
         url: URL,
-        thumbnailSmallUrl: URL,
-        thumbnailLargeUrl: URL
+        thumbnailLargeUrl: URL?
         )
     {
         self.id = id
         self.service = service
         self.url = url
-        self.thumbnailSmallUrl = thumbnailSmallUrl
         self.thumbnailLargeUrl = thumbnailLargeUrl
         super.init(version: EmbedRegionVersion)
     }
@@ -64,8 +58,7 @@ final class EmbedRegion: JSONAble, Regionable {
         let serviceRaw: String = decoder.decodeKey("serviceRaw")
         self.service = EmbedType(rawValue: serviceRaw) ?? EmbedType.unknown
         self.url = decoder.decodeKey("url")
-        self.thumbnailSmallUrl = decoder.decodeKey("thumbnailSmallUrl")
-        self.thumbnailLargeUrl = decoder.decodeKey("thumbnailLargeUrl")
+        self.thumbnailLargeUrl = decoder.decodeOptionalKey("thumbnailLargeUrl")
         super.init(coder: coder)
     }
 
@@ -77,7 +70,6 @@ final class EmbedRegion: JSONAble, Regionable {
         coder.encodeObject(isRepost, forKey: "isRepost")
         coder.encodeObject(service.rawValue, forKey: "serviceRaw")
         coder.encodeObject(url, forKey: "url")
-        coder.encodeObject(thumbnailSmallUrl, forKey: "thumbnailSmallUrl")
         coder.encodeObject(thumbnailLargeUrl, forKey: "thumbnailLargeUrl")
         super.encode(with: coder.coder)
     }
@@ -86,13 +78,14 @@ final class EmbedRegion: JSONAble, Regionable {
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
+        let thumbnailLargeUrl = json["data"]["thumbnail_large_url"].string.flatMap { URL(string: $0) }
+
         // create region
         let embedRegion = EmbedRegion(
             id: json["data"]["id"].stringValue,
             service: EmbedType(rawValue: json["data"]["service"].stringValue) ?? .unknown,
             url: URL(string: json["data"]["url"].stringValue) ?? URL(string: "https://ello.co/404")!,
-            thumbnailSmallUrl: URL(string: json["data"]["thumbnail_small_url"].stringValue) ?? URL(string: "https://ello.co/404/jibberish.jpg")!,
-            thumbnailLargeUrl: URL(string: json["data"]["thumbnail_large_url"].stringValue) ?? URL(string: "https://ello.co/404/jibberish.jpg")!
+            thumbnailLargeUrl: thumbnailLargeUrl
         )
         return embedRegion
     }

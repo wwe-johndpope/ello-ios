@@ -399,8 +399,7 @@ extension EmbedRegion: Stubbable {
             id: (values["id"] as? String) ?? UUID().uuidString,
             service: EmbedType(rawValue: serviceString)!,
             url: urlFromValue(values["url"]) ?? URL(string: "http://www.google.com")!,
-            thumbnailSmallUrl: urlFromValue(values["thumbnailSmallUrl"]) ?? URL(string: "http://www.google.com")!,
-            thumbnailLargeUrl: urlFromValue(values["thumbnailLargeUrl"]) ?? URL(string: "http://www.google.com")!
+            thumbnailLargeUrl: urlFromValue(values["thumbnailLargeUrl"])
         )
         embedRegion.isRepost = (values["isRepost"] as? Bool) ?? false
         return embedRegion
