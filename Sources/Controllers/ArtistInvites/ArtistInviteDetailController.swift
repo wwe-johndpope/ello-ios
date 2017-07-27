@@ -112,4 +112,19 @@ extension ArtistInviteDetailController: StreamDestination {
 
 }
 
+extension ArtistInviteDetailController: ArtistInviteResponder {
+    func tappedArtistInviteSubmissionsButton() {
+        streamViewController.scrollTo(placeholderType: .artistInviteSubmissions, animated: true)
+    }
+
+    func tappedArtistInviteSubmitButton() {
+        let vc = OmnibarViewController()
+        vc.artistInviteId = artistInvite.id
+        vc.currentUser = currentUser
+        vc.onPostSuccess { _ in
+            _ = self.navigationController?.popViewController(animated: true)
+        }
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
 extension ArtistInviteDetailController: ArtistInviteDetailScreenDelegate {}

@@ -48,6 +48,8 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
     }
 
     func bindActions() {
+        submissionsButton.addTarget(self, action: #selector(tappedSubmissionsButton), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(tappedSubmitButton), for: .touchUpInside)
     }
 
     func setText() {
@@ -86,6 +88,20 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
     func updateConfig() {
         let html = StreamTextCellHTML.postHTML(config.longDescription)
         descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
+    }
+}
+
+extension ArtistInviteControlsCell {
+    @objc
+    func tappedSubmissionsButton() {
+        let responder: ArtistInviteResponder? = findResponder()
+        responder?.tappedArtistInviteSubmissionsButton()
+    }
+
+    @objc
+    func tappedSubmitButton() {
+        let responder: ArtistInviteResponder? = findResponder()
+        responder?.tappedArtistInviteSubmitButton()
     }
 }
 

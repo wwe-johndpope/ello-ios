@@ -33,6 +33,9 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     var isComment: Bool = false {
         didSet { updateButtons() }
     }
+    var isArtistInviteSubmission: Bool = false {
+        didSet { updateButtons() }
+    }
     var isEditing = false
     var reordering = false
 
@@ -657,7 +660,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         let canAddBuyButtonLink = !reordering && hasImage()
         buyButton.isEnabled = canAddBuyButtonLink
-        buyButton.isHidden = isComment
+        buyButton.isHidden = isComment || isArtistInviteSubmission
 
         if buyButtonURL == nil {
             buyButton.setImages(.addBuyButton)

@@ -67,6 +67,7 @@ enum StreamCellType: Equatable {
 
         case editorials
         case artistInvites
+        case artistInviteSubmissions
 
         case profileHeader
         case profilePosts

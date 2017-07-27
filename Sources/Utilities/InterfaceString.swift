@@ -202,6 +202,8 @@ struct InterfaceString {
         static let AddMoreText: String = NSLocalizedString("Add more text...", comment: "Add more text prompt")
         static let EnterURL: String = NSLocalizedString("Enter the URL", comment: "")
         static let CreatePostTitle: String = NSLocalizedString("Post", comment: "Create a post")
+        static let CreateArtistInviteTitle: String = NSLocalizedString("Artist Invite", comment: "")
+        static let CreateArtistInviteButton: String = NSLocalizedString("Submit", comment: "Create a post")
         static let CreatePostButton: String = NSLocalizedString("Post", comment: "")
         static let EditPostTitle: String = NSLocalizedString("Edit this post", comment: "")
         static let EditPostButton: String = NSLocalizedString("Edit Post", comment: "")

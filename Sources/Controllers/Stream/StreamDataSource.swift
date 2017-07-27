@@ -65,7 +65,14 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func indexPathForItem(_ item: StreamCellItem) -> IndexPath? {
-        if let index = self.visibleCellItems.index(where: {$0 == item}) {
+        if let index = self.visibleCellItems.index(where: { $0 == item }) {
+            return IndexPath(item: index, section: 0)
+        }
+        return nil
+    }
+
+    func indexPathFor(placeholderType: StreamCellType.PlaceholderType) -> IndexPath? {
+        if let index = self.visibleCellItems.index(where: { $0.placeholderType == placeholderType }) {
             return IndexPath(item: index, section: 0)
         }
         return nil

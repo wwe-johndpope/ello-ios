@@ -41,6 +41,7 @@ class OmnibarViewController: BaseElloViewController {
             }
         }
     }
+    var artistInviteId: String?
 
     typealias CommentSuccessListener = (_ comment: ElloComment) -> Void
     typealias PostSuccessListener = (_ post: Post) -> Void
@@ -140,6 +141,11 @@ class OmnibarViewController: BaseElloViewController {
                 screen.title = InterfaceString.Omnibar.CreateCommentTitle
                 screen.submitTitle = InterfaceString.Omnibar.CreateCommentButton
                 isComment = true
+            }
+            else if artistInviteId != nil {
+                screen.title = InterfaceString.Omnibar.CreateArtistInviteTitle
+                screen.submitTitle = InterfaceString.Omnibar.CreateArtistInviteButton
+                isComment = false
             }
             else {
                 screen.title = ""
@@ -241,6 +247,7 @@ class OmnibarViewController: BaseElloViewController {
         }
         screen.regions = regions
         screen.isComment = isComment
+        screen.isArtistInviteSubmission = artistInviteId != nil
         screen.buyButtonURL = buyButtonURL
 
         let completed = after(downloads.count) {
@@ -342,7 +349,7 @@ extension OmnibarViewController: OmnibarScreenDelegate {
     }
 
     func omnibarSubmitted(_ regions: [OmnibarRegion], buyButtonURL: URL?) {
-        let content = generatePostContent(regions)
+        let content = generatePostRegions(regions)
         guard content.count > 0 else {
             return
         }
@@ -360,7 +367,7 @@ extension OmnibarViewController: OmnibarScreenDelegate {
 // MARK: Posting the content to API
 extension OmnibarViewController {
 
-    func generatePostContent(_ regions: [OmnibarRegion]) -> [PostEditingService.PostContentRegion] {
+    func generatePostRegions(_ regions: [OmnibarRegion]) -> [PostEditingService.PostContentRegion] {
         var content: [PostEditingService.PostContentRegion] = []
         for region in regions {
             switch region {
@@ -413,23 +420,25 @@ extension OmnibarViewController {
         postNotification(NewContentNotifications.pause, value: ())
         service.create(
             content: content,
-            buyButtonURL: buyButtonURL)
+            buyButtonURL: buyButtonURL,
+            artistInviteId: artistInviteId
+            )
             .thenFinally { postOrComment in
                 if self.editPost != nil || self.editComment != nil {
                     URLCache.shared.removeAllCachedResponses()
                 }
 
                 self.emitSuccess(postOrComment, didGoToPreviousTab: didGoToPreviousTab)
-                postNotification(NewContentNotifications.resume, value: ())
             }
             .catch { error in
-                ElloHUD.hideLoadingHudInView(self.view)
-                self.screen.interactionEnabled = true
+                self.stopSpinner()
                 self.contentCreationFailed((error as NSError).elloErrorMessage ?? error.localizedDescription)
 
                 if let vc = self.parent as? ElloTabBarController, didGoToPreviousTab {
                     vc.selectedTab = .omnibar
                 }
+            }
+            .always { _ in
                 postNotification(NewContentNotifications.resume, value: ())
             }
     }

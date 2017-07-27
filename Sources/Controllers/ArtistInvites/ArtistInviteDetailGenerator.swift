@@ -27,7 +27,7 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
         // loadArtistInvite()
         destination?.setPrimary(jsonable: artistInvite)
         let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
-        let submissionsHeader = StreamCellItem(type: .header(header))
+        let submissionsHeader = StreamCellItem(type: .header(header), placeholderType: .artistInviteSubmissions)
         let artistInviteItems = self.parse(jsonables: [artistInvite]) + [submissionsHeader]
         self.destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {
             self.destination?.pagingEnabled = artistInviteItems.count > 0
@@ -39,7 +39,8 @@ private extension ArtistInviteDetailGenerator {
 
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
-            StreamCellItem(type: .placeholder, placeholderType: .artistInvites)
+            StreamCellItem(type: .placeholder, placeholderType: .artistInvites),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissions),
         ])
     }
 
@@ -55,7 +56,7 @@ private extension ArtistInviteDetailGenerator {
                 self.destination?.setPagingConfig(responseConfig: responseConfig)
 
                 let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
-                let submissionsHeader = StreamCellItem(type: .header(header))
+                let submissionsHeader = StreamCellItem(type: .header(header), placeholderType: .artistInviteSubmissions)
                 let artistInviteItems = self.parse(jsonables: artistInvites) + [submissionsHeader]
                 self.destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {
                     self.destination?.pagingEnabled = artistInviteItems.count > 0

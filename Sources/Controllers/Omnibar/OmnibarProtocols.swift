@@ -13,6 +13,7 @@ protocol OmnibarScreenDelegate: class {
 protocol OmnibarScreenProtocol: class {
     var delegate: OmnibarScreenDelegate? { get set }
     var isComment: Bool { get set }
+    var isArtistInviteSubmission: Bool { get set }
     var buyButtonURL: URL? { get set }
     var title: String { get set }
     var submitTitle: String { get set }

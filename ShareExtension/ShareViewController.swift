@@ -84,7 +84,7 @@ private extension ShareViewController {
     }
 
     func postContent(_ content: [PostEditingService.PostContentRegion]) {
-        PostEditingService().create(content: content, buyButtonURL: nil)
+        PostEditingService().create(content: content)
             .thenFinally { post in
 //                Tracker.shared.shareSuccessful()
                 self.dismissPostingForm()

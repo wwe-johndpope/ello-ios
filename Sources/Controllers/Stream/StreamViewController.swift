@@ -202,7 +202,7 @@ final class StreamViewController: BaseElloViewController {
         set {
             dataSource.streamFilter = newValue
             self.reloadCells(now: true)
-            self.scrollToTop()
+            self.scrollToTop(animated: false)
         }
     }
 
@@ -313,8 +313,14 @@ final class StreamViewController: BaseElloViewController {
 
 // MARK: Public Functions
 
-    func scrollToTop(animated: Bool = false) {
+    func scrollToTop(animated: Bool) {
         collectionView.setContentOffset(CGPoint(x: 0, y: -contentInset.top), animated: animated)
+    }
+
+    func scrollTo(placeholderType: StreamCellType.PlaceholderType, animated: Bool) {
+        guard let indexPath = dataSource.indexPathFor(placeholderType: placeholderType) else { return }
+
+        collectionView.scrollToItem(at: indexPath, at: .top, animated: animated)
     }
 
     func doneLoading() {
