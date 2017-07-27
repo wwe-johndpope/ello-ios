@@ -405,7 +405,6 @@
 		12D14C681A43761A00C6F8E8 /* AuthTokenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C641A43761A00C6F8E8 /* AuthTokenSpec.swift */; };
 		12D14C691A43761A00C6F8E8 /* ElloAPISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C651A43761A00C6F8E8 /* ElloAPISpec.swift */; };
 		12D14C6A1A43761A00C6F8E8 /* ElloProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C661A43761A00C6F8E8 /* ElloProviderSpec.swift */; };
-		12D14C6B1A43761A00C6F8E8 /* StreamServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C671A43761A00C6F8E8 /* StreamServiceSpec.swift */; };
 		12D14C701A43762400C6F8E8 /* ActivitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C6C1A43762400C6F8E8 /* ActivitySpec.swift */; };
 		12D14C711A43762400C6F8E8 /* ElloNetworkErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C6D1A43762400C6F8E8 /* ElloNetworkErrorSpec.swift */; };
 		12D14C721A43762400C6F8E8 /* PostSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C6E1A43762400C6F8E8 /* PostSpec.swift */; };
@@ -1476,7 +1475,6 @@
 		12D14C641A43761A00C6F8E8 /* AuthTokenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthTokenSpec.swift; sourceTree = "<group>"; };
 		12D14C651A43761A00C6F8E8 /* ElloAPISpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISpec.swift; sourceTree = "<group>"; };
 		12D14C661A43761A00C6F8E8 /* ElloProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloProviderSpec.swift; sourceTree = "<group>"; };
-		12D14C671A43761A00C6F8E8 /* StreamServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamServiceSpec.swift; sourceTree = "<group>"; };
 		12D14C6C1A43762400C6F8E8 /* ActivitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ActivitySpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		12D14C6D1A43762400C6F8E8 /* ElloNetworkErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNetworkErrorSpec.swift; sourceTree = "<group>"; };
 		12D14C6E1A43762400C6F8E8 /* PostSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PostSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2884,7 +2882,6 @@
 				1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */,
 				76FF805A1A96A28D00617A1E /* RelationshipServiceSpec.swift */,
 				F870D8F41ACB0BB000E25AA2 /* ResponseConfigSpec.swift */,
-				12D14C671A43761A00C6F8E8 /* StreamServiceSpec.swift */,
 				12FB94D91AD5AD5900547D3B /* UserServiceSpec.swift */,
 			);
 			path = Networking;
@@ -5006,7 +5003,6 @@
 				76BE9C551B2B773B007575AA /* StreamInviteFriendsCellSpec.swift in Sources */,
 				124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */,
 				1D2B6A7C1BE3FB0900D27DC9 /* AvatarButtonSpec.swift in Sources */,
-				12D14C6B1A43761A00C6F8E8 /* StreamServiceSpec.swift in Sources */,
 				F8D1606A1AB75C2900575B25 /* DrawerViewDataSourceSpec.swift in Sources */,
 				12D14C681A43761A00C6F8E8 /* AuthTokenSpec.swift in Sources */,
 				1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */,
