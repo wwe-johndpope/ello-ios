@@ -139,6 +139,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         switch self {
         case .artistInvites: return "artistInvites"
         case .artistInviteDetail: return "artistInviteDetail"
+        case .artistInviteSubmissions: return "artistInviteSubmissions"
         case .announcements: return "announcements"
         case .announcementsNewContent: return "announcementsNewContent"
         case .amazonCredentials: return "amazonCredentials"

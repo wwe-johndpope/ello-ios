@@ -4,13 +4,28 @@
 
 import SwiftyJSON
 
-// Version 1: initial
-let ArtistInviteVersion = 1
 
 final class ArtistInvite: JSONAble, Groupable {
+    // Version 1: initial
+    static let Version = 1
+
     struct Guide {
         let title: String
         let html: String
+    }
+    struct Stream {
+        let endpoint: ElloAPI
+        let label: String
+
+        init?(link: [String: Any]) {
+            guard
+                let url = (link["href"] as? String).flatMap({ URL(string: $0) }),
+                let label = link["label"] as? String
+            else { return nil }
+
+            self.endpoint = .custom(url: url, mimics: .artistInviteSubmissions)
+            self.label = label
+        }
     }
 
     enum Status: String {
@@ -33,8 +48,12 @@ final class ArtistInvite: JSONAble, Groupable {
     var headerImage: Asset?
     var logoImage: Asset?
     var guide: [Guide] = []
-    var groupId: String { return "Editorial-\(id)" }
+    var groupId: String { return "ArtistInvite-\(id)" }
     override var description: String { return longDescription }
+
+    var selectedSubmissionsStream: Stream?
+    var approvedSubmissionsStream: Stream?
+    var unapprovedSubmissionsStream: Stream?
 
     init(
         id: String,
@@ -56,7 +75,7 @@ final class ArtistInvite: JSONAble, Groupable {
         self.status = status
         self.openedAt = openedAt
         self.closedAt = closedAt
-        super.init(version: ArtistInviteVersion)
+        super.init(version: ArtistInvite.Version)
     }
 
     required init(coder: NSCoder) {
@@ -100,7 +119,7 @@ final class ArtistInvite: JSONAble, Groupable {
         let openedAt = json["opened_at"].string?.toDate()
         let closedAt = json["closed_at"].string?.toDate()
 
-        let editorial = ArtistInvite(
+        let artistInvite = ArtistInvite(
             id: id,
             title: title,
             shortDescription: shortDescription,
@@ -110,18 +129,36 @@ final class ArtistInvite: JSONAble, Groupable {
             status: status,
             openedAt: openedAt,
             closedAt: closedAt)
-        editorial.links = data["links"] as? [String: Any]
-        editorial.headerImage = Asset.parseAsset("artist_invite_header_\(id)", node: data["header_image"] as? [String: Any])
-        editorial.logoImage = Asset.parseAsset("artist_invite_logo_\(id)", node: data["logo_image"] as? [String: Any])
+        artistInvite.links = data["links"] as? [String: Any]
+        artistInvite.headerImage = Asset.parseAsset("artist_invite_header_\(id)", node: data["header_image"] as? [String: Any])
+        artistInvite.logoImage = Asset.parseAsset("artist_invite_logo_\(id)", node: data["logo_image"] as? [String: Any])
+
+        if let selectedSubmissionsLink = json["links"]["selected_submissions"].object as? [String: Any],
+            let stream = Stream(link: selectedSubmissionsLink)
+        {
+            artistInvite.selectedSubmissionsStream = stream
+        }
+
+        if let approvedSubmissionsLink = json["links"]["approved_submissions"].object as? [String: Any],
+            let stream = Stream(link: approvedSubmissionsLink)
+        {
+            artistInvite.approvedSubmissionsStream = stream
+        }
+
+        if let unapprovedSubmissionsLink = json["links"]["unapproved_submissions"].object as? [String: Any],
+            let stream = Stream(link: unapprovedSubmissionsLink)
+        {
+            artistInvite.unapprovedSubmissionsStream = stream
+        }
 
         if let guide = json["guide"].array?.flatMap({ $0.object as? [String: String] }) {
-            editorial.guide = guide.flatMap { g -> Guide? in
+            artistInvite.guide = guide.flatMap { g -> Guide? in
                 guard let title = g["title"], let html = g["rendered_body"] else { return nil }
                 return Guide(title: title, html: html)
             }
         }
 
-        return editorial
+        return artistInvite
     }
 }
 

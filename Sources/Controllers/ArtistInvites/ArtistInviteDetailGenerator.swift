@@ -39,6 +39,7 @@ private extension ArtistInviteDetailGenerator {
         destination?.setPlaceholders(items: [
             StreamCellItem(type: .placeholder, placeholderType: .artistInvites),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissions),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInvitePosts),
         ])
     }
 
@@ -74,6 +75,52 @@ private extension ArtistInviteDetailGenerator {
 
         let spinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
         destination?.replacePlaceholder(type: .artistInvitePosts, items: [spinner]) {}
+
+        loadSubmissions(artistInvite)
     }
 
+    func loadSubmissions(_ artistInvite: ArtistInvite) {
+        guard let endpoint = artistInvite.approvedSubmissionsStream?.endpoint else {
+            showSubmissionsError()
+            return
+        }
+
+        StreamService().loadStream(endpoint: endpoint)
+            .thenFinally { [weak self] response in
+                guard let `self` = self else { return }
+
+                if case .empty = response {
+                    self.showEmptySubmissions()
+                    return
+                }
+
+                guard
+                    case let .jsonables(jsonables, _) = response,
+                    let submissions = jsonables as? [ArtistInviteSubmission]
+                else { throw NSError.uncastableJSONAble() }
+
+                let posts = submissions.flatMap { $0.post }
+                if posts.count == 0 {
+                    self.showEmptySubmissions()
+                }
+                else {
+                    let items = self.parse(jsonables: posts)
+                    self.destination?.replacePlaceholder(type: .artistInvitePosts, items: items) {}
+                }
+            }
+            .catch { [weak self] _ in
+                self?.showSubmissionsError()
+            }
+    }
+
+    func showEmptySubmissions() {
+        self.destination?.replacePlaceholder(type: .artistInviteSubmissions, items: []) {}
+        self.destination?.replacePlaceholder(type: .artistInvitePosts, items: []) {}
+    }
+
+    func showSubmissionsError() {
+        let error = NSAttributedString(label: InterfaceString.ArtistInvites.SubmissionsError, style: .error)
+        let item = StreamCellItem(type: .header(error))
+        self.destination?.replacePlaceholder(type: .artistInvitePosts, items: [item]) {}
+    }
 }

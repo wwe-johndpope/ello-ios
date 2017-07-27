@@ -21,6 +21,7 @@ indirect enum ElloAPI {
     case announcementsNewContent(createdAt: Date?)
     case artistInvites
     case artistInviteDetail(id: String)
+    case artistInviteSubmissions
     case markAnnouncementAsRead
     case anonymousCredentials
     case auth(email: String, password: String)
@@ -138,6 +139,8 @@ indirect enum ElloAPI {
             return .categoriesType
         case .artistInvites, .artistInviteDetail:
             return .artistInvites
+        case .artistInviteSubmissions:
+            return .artistInviteSubmissions
         case .editorials:
             return .editorials
         case .pagePromotionals:
@@ -226,6 +229,7 @@ extension ElloAPI {
         switch self {
         case .artistInvites,
              .artistInviteDetail,
+             .artistInviteSubmissions,
              .availability,
              .categories,
              .category,
@@ -334,7 +338,7 @@ extension ElloAPI: Moya.TargetType {
         case .announcements,
              .announcementsNewContent:
             return "/api/\(ElloAPI.apiVersion)/most_recent_announcements"
-        case .artistInvites:
+        case .artistInvites, .artistInviteSubmissions:
             return "/api/\(ElloAPI.apiVersion)/artist_invites"
         case let .artistInviteDetail(id):
             return "/api/\(ElloAPI.apiVersion)/artist_invites/\(id)"
@@ -500,7 +504,7 @@ extension ElloAPI: Moya.TargetType {
              .auth,
              .reAuth:
             return stubbedData("auth")
-        case .artistInvites, .artistInviteDetail:
+        case .artistInvites, .artistInviteDetail, .artistInviteSubmissions:
             return stubbedData("artist_invites")
         case .availability:
             return stubbedData("availability")

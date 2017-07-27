@@ -694,6 +694,8 @@
 		1D7E82421F2692D3006ACE7A /* ArtistInviteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */; };
 		1D7E82431F2692D3006ACE7A /* ArtistInviteGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */; };
 		1D7E82451F26A523006ACE7A /* artist_invite_status_closed.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */; };
+		1D7E82471F2A7249006ACE7A /* ArtistInviteSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */; };
+		1D7E82481F2A7277006ACE7A /* ArtistInviteSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */; };
 		1D807D9A1B050DE2009B0F71 /* awesome_people.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D807D991B050DE2009B0F71 /* awesome_people.json */; };
 		1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */; };
 		1D8783161ECCF45E00253602 /* EditorialExternalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8783131ECCF45E00253602 /* EditorialExternalCell.swift */; };
@@ -1762,6 +1764,7 @@
 		1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteHeaderCell.swift; sourceTree = "<group>"; };
 		1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteGuideCell.swift; sourceTree = "<group>"; };
 		1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_closed.svg; sourceTree = "<group>"; };
+		1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmission.swift; sourceTree = "<group>"; };
 		1D807D991B050DE2009B0F71 /* awesome_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awesome_people.json; sourceTree = "<group>"; };
 		1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReauthenticationSpec.swift; sourceTree = "<group>"; };
 		1D8783131ECCF45E00253602 /* EditorialExternalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialExternalCell.swift; sourceTree = "<group>"; };
@@ -3163,6 +3166,7 @@
 				1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */,
 				1D70DE721DF78034008AF216 /* Announcement.swift */,
 				1DC78A571F21467800BE2413 /* ArtistInvite.swift */,
+				1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */,
 				1DC91F741CF375F600336012 /* AutoCompleteResult.swift */,
 				760303551AE17290005F7A08 /* Availability.swift */,
 				1D9A12C81EA96623003B3BD7 /* Badge.swift */,
@@ -4818,6 +4822,7 @@
 				122D1B491C602271001386CE /* FreeMethods.swift in Sources */,
 				1DDC85271D91F60000C29552 /* PostActionable.swift in Sources */,
 				122B30F81C6A41E900C1B9D8 /* RegionKind.swift in Sources */,
+				1D7E82481F2A7277006ACE7A /* ArtistInviteSubmission.swift in Sources */,
 				122D1BA51C6134A5001386CE /* AlertCellPresenter.swift in Sources */,
 				1207C9A31C752F2600939ADB /* S3UploadingService.swift in Sources */,
 				122B30B01C6A3FBB00C1B9D8 /* AddressBookError.swift in Sources */,
@@ -5480,6 +5485,7 @@
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,
 				76B0B18F1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift in Sources */,
+				1D7E82471F2A7249006ACE7A /* ArtistInviteSubmission.swift in Sources */,
 				1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */,
 				122B30EE1C6A3FC500C1B9D8 /* Attachment.swift in Sources */,
 				1DF4040C1B151BE70073460B /* UITabBarExtensions.swift in Sources */,

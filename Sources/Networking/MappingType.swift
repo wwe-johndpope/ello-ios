@@ -10,6 +10,7 @@ enum MappingType: String {
     case announcementsType = "announcements"
     case activitiesType = "activities"
     case artistInvites = "artist_invites"
+    case artistInviteSubmissions = "artist_invite_submissions"
     case amazonCredentialsType = "credentials"
     case assetsType = "assets"
     case autoCompleteResultType = "autocomplete_results"
@@ -42,6 +43,8 @@ enum MappingType: String {
             return Asset.fromJSON
         case .artistInvites:
             return ArtistInvite.fromJSON
+        case .artistInviteSubmissions:
+            return ArtistInviteSubmission.fromJSON
         case .autoCompleteResultType:
             return AutoCompleteResult.fromJSON
         case .availabilityType:
