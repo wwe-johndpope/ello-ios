@@ -31,10 +31,11 @@ class StreamService {
                     }
                 }
 
+                let jsonables = (data as? [JSONAble]) ?? (data as? JSONAble).map { [$0] }
                 if data as? String == "" {
                     return .empty
                 }
-                else if let jsonables = data as? [JSONAble] {
+                else if let jsonables = jsonables {
                     if let streamKind = streamKind {
                         Preloader().preloadImages(jsonables)
                         NewContentService().updateCreatedAt(jsonables, streamKind: streamKind)
