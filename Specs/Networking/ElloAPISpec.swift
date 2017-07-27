@@ -149,7 +149,7 @@ class ElloAPISpec: QuickSpec {
                     (.flagPost(postId: "", kind: ""), .noContentType),
                     (.following, .postsType),
                     (.followingNewContent(createdAt: nil), .noContentType),
-                    (.infiniteScroll(queryItems: [""], elloApi: { return ElloAPI.amazonCredentials }), .amazonCredentialsType),
+                    (.infiniteScroll(queryItems: [""], elloApi: .amazonCredentials), .amazonCredentialsType),
                     (.invitations(emails: [""]), .noContentType),
                     (.inviteFriends(email: ""), .noContentType),
                     (.join(email: "", username: "", password: "", invitationCode: ""), .usersType),
@@ -226,12 +226,8 @@ class ElloAPISpec: QuickSpec {
                         .flagPost(postId: "", kind: ""),
                         .followingNewContent(createdAt: nil),
                         .following,
-                        .infiniteScroll(queryItems: [""], elloApi: { () -> ElloAPI in
-                            return ElloAPI.auth(email: "", password: "")
-                        }),
-                        .infiniteScroll(queryItems: [""], elloApi: { () -> ElloAPI in
-                            return ElloAPI.following
-                        }),
+                        .infiniteScroll(queryItems: [""], api: .auth(email: "", password: "")),
+                        .infiniteScroll(queryItems: [""], api: .following),
                         .invitations(emails: [""]),
                         .inviteFriends(email: ""),
                         .join(email: "", username: "", password: "", invitationCode: ""),
@@ -307,9 +303,7 @@ class ElloAPISpec: QuickSpec {
                         .flagComment(postId: "", commentId: "", kind: ""),
                         .flagPost(postId: "", kind: ""),
                         .following,
-                        .infiniteScroll(queryItems: [""], elloApi: { () -> ElloAPI in
-                            return ElloAPI.following
-                        }),
+                        .infiniteScroll(queryItems: [""], api: .following),
                         .invitations(emails: [""]),
                         .inviteFriends(email: ""),
                         .join(email: "", username: "", password: "", invitationCode: ""),

@@ -112,10 +112,8 @@ final class ElloComment: JSONAble, Authorable, Groupable {
             postId: json["post_id"].stringValue,
             content: RegionParser.regions("content", json: json)
         )
-        // optional
         comment.body = RegionParser.regions("body", json: json)
         comment.summary = RegionParser.regions("summary", json: json)
-        // links
         comment.links = data["links"] as? [String: Any]
 
         return comment

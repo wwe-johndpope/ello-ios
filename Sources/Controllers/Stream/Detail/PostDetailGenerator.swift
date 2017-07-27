@@ -66,7 +66,7 @@ final class PostDetailGenerator: StreamGenerator {
         let loadingComments = [StreamCellItem(type: .streamLoading)]
         self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments) {}
 
-        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return ElloAPI.postComments(postId: postId) }
+        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems, api: .postComments(postId: postId))
         StreamService().loadStream(endpoint: scrollAPI, streamKind: .postDetail(postParam: postId))
             .thenFinally { [weak self] response in
                 guard let `self` = self else { return }

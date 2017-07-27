@@ -117,8 +117,8 @@ class PostbarController: UIResponder, PostbarResponder {
             imageLabelControl.isHighlighted = true
             imageLabelControl.animate()
 
-            StreamService().loadMoreCommentsForPost(post.id)
-                .thenFinally { [weak self] response in
+            PostService().loadMoreCommentsForPost(post.id)
+                .thenFinally { [weak self] comments in
                     guard
                         let `self` = self,
                         let updatedIndexPath = self.dataSource.indexPathForItem(item)
@@ -128,12 +128,7 @@ class PostbarController: UIResponder, PostbarResponder {
                     imageLabelControl.finishAnimation()
                     let nextIndexPath = IndexPath(item: updatedIndexPath.row + 1, section: updatedIndexPath.section)
 
-                    switch response {
-                    case let .jsonables(comments, _):
-                        self.commentLoadSuccess(post, comments: comments, indexPath: nextIndexPath, cell: cell)
-                    case .empty:
-                        self.commentLoadSuccess(post, comments: [], indexPath: nextIndexPath, cell: cell)
-                    }
+                    self.commentLoadSuccess(post, comments: comments, indexPath: nextIndexPath, cell: cell)
                 }
                 .catch { _ in
                     item.state = .collapsed

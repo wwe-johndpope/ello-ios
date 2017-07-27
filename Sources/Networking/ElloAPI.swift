@@ -15,7 +15,7 @@ class BoxedElloAPI: NSObject {
     init(endpoint: ElloAPI) { self.endpoint = endpoint }
 }
 
-enum ElloAPI {
+indirect enum ElloAPI {
     case amazonCredentials
     case announcements
     case announcementsNewContent(createdAt: Date?)
@@ -33,7 +33,7 @@ enum ElloAPI {
     case createLove(postId: String)
     case createPost(body: [String: Any])
     case createWatchPost(postId: String)
-    case custom(url: URL, mimics: () -> ElloAPI)
+    case custom(url: URL, mimics: ElloAPI)
     case deleteComment(postId: String, commentId: String)
     case deleteLove(postId: String)
     case deletePost(postId: String)
@@ -50,7 +50,7 @@ enum ElloAPI {
     case followingNewContent(createdAt: Date?)
     case hire(userId: String, body: String)
     case collaborate(userId: String, body: String)
-    case infiniteScroll(queryItems: [Any], elloApi: () -> ElloAPI)
+    case infiniteScroll(queryItems: [Any], api: ElloAPI)
     case invitations(emails: [String])
     case inviteFriends(email: String)
     case join(email: String, username: String, password: String, invitationCode: String?)
@@ -113,7 +113,7 @@ enum ElloAPI {
              .category:
             return .postsType
         case let .custom(_, api):
-            return api().pagingMappingType
+            return api.pagingMappingType
         default:
             return nil
         }
@@ -159,9 +159,7 @@ enum ElloAPI {
              .userStreamFollowing:
             return .usersType
         case let .custom(_, api):
-            return api().mappingType
-        case .discover:
-            return .postsType
+            return api.mappingType
         case .commentDetail,
              .createComment,
              .postComments,
@@ -172,6 +170,7 @@ enum ElloAPI {
             return .lovesType
         case .categoryPosts,
              .createPost,
+             .discover,
              .following,
              .postDetail,
              .postRelatedPosts,
@@ -209,8 +208,7 @@ enum ElloAPI {
             return .noContentType
         case .notificationsStream:
             return .activitiesType
-        case let .infiniteScroll(_, elloApi):
-            let api = elloApi()
+        case let .infiniteScroll(_, api):
             if let pagingMappingType = api.pagingMappingType {
                 return pagingMappingType
             }
@@ -254,9 +252,9 @@ extension ElloAPI {
              .userStreamPosts:
             return true
         case let .custom(_, api):
-            return api().supportsAnonymousToken
+            return api.supportsAnonymousToken
         case let .infiniteScroll(_, api):
-            return api().supportsAnonymousToken
+            return api.supportsAnonymousToken
         default:
             return false
         }
@@ -321,9 +319,9 @@ extension ElloAPI: Moya.TargetType {
              .updatePost:
             return .patch
         case let .custom(_, api):
-            return api().method
+            return api.method
         case let .infiniteScroll(_, api):
-            return api().method
+            return api.method
         default:
             return .get
         }
@@ -407,8 +405,7 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/hire_me"
         case let .collaborate(userId, _):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/collaborate"
-        case let .infiniteScroll(_, elloApi):
-            let api = elloApi()
+        case let .infiniteScroll(_, api):
             if let pagingPath = api.pagingPath {
                 return pagingPath
             }
@@ -556,9 +553,9 @@ extension ElloAPI: Moya.TargetType {
         case .following:
             return stubbedData("activity_streams_friend_stream")
         case let .custom(_, api):
-            return api().sampleData
+            return api.sampleData
         case let .infiniteScroll(_, api):
-            return api().sampleData
+            return api.sampleData
         case .join:
             return stubbedData("users_registering_an_account")
         case .loves:
@@ -745,14 +742,14 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "body": body
             ]
-        case let .infiniteScroll(queryItems, elloApi):
+        case let .infiniteScroll(queryItems, api):
             var queryDict = [String: Any]()
             for item in queryItems {
                 if let item = item as? URLQueryItem {
                     queryDict[item.name] = item.value
                 }
             }
-            var origDict = elloApi().parameters ?? [String: Any]()
+            var origDict = api.parameters ?? [String: Any]()
             origDict.merge(queryDict)
             return origDict
         case let .invitations(emails):

@@ -51,4 +51,39 @@ struct UserService {
         return ElloProvider.shared.request(.userCategories(categoryIds: categoryIds))
             .asVoid()
     }
+
+    func loadUser(_ endpoint: ElloAPI) -> Promise<User> {
+        return ElloProvider.shared.request(endpoint)
+            .then { data, responseConfig -> User in
+                guard let user = data as? User else {
+                    throw NSError.uncastableJSONAble()
+                }
+                Preloader().preloadImages([user])
+                return user
+            }
+    }
+
+    func loadUserPosts(_ userId: String) -> Promise<([Post], ResponseConfig)> {
+        return ElloProvider.shared.request(.userStreamPosts(userId: userId))
+            .then { data, responseConfig -> ([Post], ResponseConfig) in
+                let posts: [Post]?
+                if data as? String == "" {
+                    posts = []
+                }
+                else if let foundPosts = data as? [Post] {
+                    posts = foundPosts
+                }
+                else {
+                    posts = nil
+                }
+
+                if let posts = posts {
+                    Preloader().preloadImages(posts)
+                    return (posts, responseConfig)
+                }
+                else {
+                    throw NSError.uncastableJSONAble()
+                }
+            }
+    }
 }

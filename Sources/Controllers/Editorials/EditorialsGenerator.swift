@@ -32,7 +32,7 @@ final class EditorialsGenerator: StreamGenerator {
             else { continue }
 
             let next = afterAll()
-            ElloProvider.shared.request(.custom(url: path, mimics: { return .discover(type: .trending) }))
+            ElloProvider.shared.request(.custom(url: path, mimics: .discover(type: .trending)))
                 .thenFinally { data, responseConfig in
                     guard let posts = data as? [Post] else {
                         next()

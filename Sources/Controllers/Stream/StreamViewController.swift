@@ -1286,7 +1286,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
         scrollToPaginateGuard = false
 
-        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems) { return self.streamKind.endpoint }
+        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems, api: streamKind.endpoint)
         streamService.loadStream(endpoint: scrollAPI, streamKind: streamKind)
             .thenFinally { response in
                 switch response {

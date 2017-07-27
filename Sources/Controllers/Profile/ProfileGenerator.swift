@@ -98,7 +98,7 @@ private extension ProfileGenerator {
         guard !doneOperation.isFinished || reload else { return }
 
         // load the user with no posts
-        StreamService().loadUser(streamKind.endpoint)
+        UserService().loadUser(streamKind.endpoint)
             .thenFinally { [weak self] user in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
@@ -120,7 +120,7 @@ private extension ProfileGenerator {
         displayPostsOperation.addDependency(doneOperation)
         queue.addOperation(displayPostsOperation)
 
-        StreamService().loadUserPosts(userParam)
+        UserService().loadUserPosts(userParam)
             .thenFinally { [weak self] (posts, responseConfig) in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
