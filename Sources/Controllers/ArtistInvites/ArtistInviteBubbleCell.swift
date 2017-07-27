@@ -73,6 +73,7 @@ class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteConfigurableCell
         logoImage.clipsToBounds = true
         descriptionWebView.scrollView.isScrollEnabled = false
         descriptionWebView.scrollView.scrollsToTop = false
+        descriptionWebView.isUserInteractionEnabled = false
     }
 
     func bindActions() {
