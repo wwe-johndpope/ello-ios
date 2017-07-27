@@ -6,15 +6,14 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
 
     var currentUser: User?
     let streamKind: StreamKind
-    let artistInvite: ArtistInvite
+    var artistInvite: ArtistInvite?
     weak var destination: StreamDestination?
 
     fileprivate var localToken: String = ""
     fileprivate var loadingToken = LoadingToken()
 
-    init(artistInvite: ArtistInvite, currentUser: User?, destination: StreamDestination?) {
-        self.artistInvite = artistInvite
-        self.streamKind = .artistInviteDetail(id: artistInvite.id)
+    init(artistInviteId: String, currentUser: User?, destination: StreamDestination?) {
+        self.streamKind = .artistInviteDetail(id: artistInviteId)
         self.currentUser = currentUser
         self.destination = destination
     }
@@ -24,13 +23,12 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
         if !reload {
             setPlaceHolders()
         }
-        // loadArtistInvite()
-        destination?.setPrimary(jsonable: artistInvite)
-        let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
-        let submissionsHeader = StreamCellItem(type: .header(header), placeholderType: .artistInviteSubmissions)
-        let artistInviteItems = self.parse(jsonables: [artistInvite]) + [submissionsHeader]
-        self.destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {
-            self.destination?.pagingEnabled = artistInviteItems.count > 0
+
+        if !reload, let artistInvite = artistInvite {
+            setArtistInvite(artistInvite)
+        }
+        else {
+            loadArtistInvite()
         }
     }
 }
@@ -50,21 +48,32 @@ private extension ArtistInviteDetailGenerator {
                 guard
                     let `self` = self,
                     case let .jsonables(jsonables, responseConfig) = response,
-                    let artistInvites = jsonables as? [ArtistInvite]
-                else { return }
+                    let artistInvites = jsonables as? [ArtistInvite],
+                    let artistInvite = artistInvites.first
+                else { throw NSError.uncastableJSONAble() }
 
                 self.destination?.setPagingConfig(responseConfig: responseConfig)
-
-                let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
-                let submissionsHeader = StreamCellItem(type: .header(header), placeholderType: .artistInviteSubmissions)
-                let artistInviteItems = self.parse(jsonables: artistInvites) + [submissionsHeader]
-                self.destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {
-                    self.destination?.pagingEnabled = artistInviteItems.count > 0
-                }
+                self.setArtistInvite(artistInvite)
             }
             .catch { [weak self] _ in
                 guard let `self` = self else { return }
                 self.destination?.primaryJSONAbleNotFound()
             }
     }
+
+    func setArtistInvite(_ artistInvite: ArtistInvite) {
+        self.artistInvite = artistInvite
+        destination?.setPrimary(jsonable: artistInvite)
+
+        let artistInviteItems = parse(jsonables: [artistInvite])
+        destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {}
+
+        let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
+        let submissionsHeader = StreamCellItem(type: .header(header))
+        destination?.replacePlaceholder(type: .artistInviteSubmissions, items: [submissionsHeader]) {}
+
+        let spinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
+        destination?.replacePlaceholder(type: .artistInvitePosts, items: [spinner]) {}
+    }
+
 }

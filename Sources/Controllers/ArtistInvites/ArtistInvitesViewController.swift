@@ -22,6 +22,7 @@ class ArtistInvitesViewController: StreamableViewController {
             currentUser: currentUser,
             destination: self)
         streamViewController.streamKind = generator.streamKind
+        streamViewController.reloadClosure = { [weak self] in self?.generator?.load(reload: true) }
         streamViewController.initialLoadClosure = { [weak self] in self?.loadArtistInvites() }
     }
 

@@ -4,10 +4,11 @@
 
 class ArtistInviteDetailController: StreamableViewController {
     override func trackerName() -> String? { return "ArtistInvite" }
-    override func trackerProps() -> [String: Any]? { return ["id": artistInvite.id] }
+    override func trackerProps() -> [String: Any]? { return ["id": artistInviteId] }
     override func trackerStreamInfo() -> (String, String?)? { return nil }
 
-    let artistInvite: ArtistInvite
+    let artistInviteId: String
+    var artistInvite: ArtistInvite?
 
     private var _mockScreen: ArtistInviteDetailScreenProtocol?
     var screen: ArtistInviteDetailScreenProtocol {
@@ -16,17 +17,24 @@ class ArtistInviteDetailController: StreamableViewController {
     }
     var generator: ArtistInviteDetailGenerator!
 
-    init(artistInvite: ArtistInvite) {
-        self.artistInvite = artistInvite
+    init(artistInviteId: String) {
+        self.artistInviteId = artistInviteId
         super.init(nibName: nil, bundle: nil)
 
-        title = artistInvite.title
         generator = ArtistInviteDetailGenerator(
-            artistInvite: artistInvite,
+            artistInviteId: artistInviteId,
             currentUser: currentUser,
             destination: self)
         streamViewController.streamKind = generator.streamKind
-        streamViewController.initialLoadClosure = { [weak self] in self?.loadArtistInviteDetail() }
+        streamViewController.pagingEnabled = false
+        streamViewController.reloadClosure = { [weak self] in self?.generator?.load(reload: true) }
+        streamViewController.initialLoadClosure = { [weak self] in self?.generator.load() }
+    }
+
+    convenience init(artistInvite: ArtistInvite) {
+        self.init(artistInviteId: artistInvite.id)
+        self.setPrimary(jsonable: artistInvite)
+        generator.artistInvite = artistInvite
    }
 
     required init?(coder: NSCoder) {
@@ -83,11 +91,6 @@ extension ArtistInviteDetailController: StreamDestination {
         set { streamViewController.pagingEnabled = newValue }
     }
 
-    func loadArtistInviteDetail() {
-        streamViewController.pagingEnabled = false
-        generator.load()
-    }
-
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items, completion: completion)
         streamViewController.doneLoading()
@@ -99,6 +102,10 @@ extension ArtistInviteDetailController: StreamDestination {
     }
 
     func setPrimary(jsonable: JSONAble) {
+        guard let artistInvite = jsonable as? ArtistInvite else { return }
+
+        self.artistInvite = artistInvite
+        title = artistInvite.title
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {
@@ -119,7 +126,7 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
 
     func tappedArtistInviteSubmitButton() {
         let vc = OmnibarViewController()
-        vc.artistInviteId = artistInvite.id
+        vc.artistInviteId = artistInviteId
         vc.currentUser = currentUser
         vc.onPostSuccess { _ in
             _ = self.navigationController?.popViewController(animated: true)
