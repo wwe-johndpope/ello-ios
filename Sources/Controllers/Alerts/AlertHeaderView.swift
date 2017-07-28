@@ -4,7 +4,7 @@
 
 class AlertHeaderView: UIView {
     struct Size {
-        static let topMargin: CGFloat = 6.5
+        static let topMargin: CGFloat = 0.5
     }
     var label = StyledLabel(style: .black)
 

@@ -30,7 +30,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Sf2-cb-n2T" firstAttribute="top" secondItem="WvV-hs-oXY" secondAttribute="top" constant="17" id="UuI-DQ-RPH" userLabel="topPadding"/>
+                <constraint firstItem="Sf2-cb-n2T" firstAttribute="top" secondItem="WvV-hs-oXY" secondAttribute="top" constant="11" id="UuI-DQ-RPH" userLabel="topPadding"/>
                 <constraint firstAttribute="bottom" secondItem="Sf2-cb-n2T" secondAttribute="bottom" constant="17" id="hTv-m4-afz" userLabel="tableView - Bottom"/>
                 <constraint firstItem="Sf2-cb-n2T" firstAttribute="leading" secondItem="WvV-hs-oXY" secondAttribute="leading" constant="20" id="jwb-iW-mxg" userLabel="leftPadding"/>
                 <constraint firstAttribute="trailing" secondItem="Sf2-cb-n2T" secondAttribute="trailing" constant="20" id="qU8-W6-OAy" userLabel="rightPadding"/>
