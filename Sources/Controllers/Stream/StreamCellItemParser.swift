@@ -54,10 +54,12 @@ struct StreamCellItemParser {
 
     fileprivate func artistInviteDetailItems(_ artistInvite: ArtistInvite) -> [StreamCellItem] {
         return [
-            StreamCellItem(jsonable: artistInvite, type: .artistInviteHeader),
-            StreamCellItem(jsonable: artistInvite, type: .artistInviteControls),
-        ] + artistInvite.guide.map({ StreamCellItem(jsonable: artistInvite, type: .artistInviteGuide($0)) })
-        + [StreamCellItem(jsonable: artistInvite, type: .spacer(height: 30))]
+            StreamCellItem(jsonable: artistInvite, type: .artistInviteHeader, placeholderType: .artistInvites),
+            // <-- the ↓submissions button goes here, so to separate these items we tag the placeholderType
+            // the submissions button isn't inserted until the submission posts are loaded
+            StreamCellItem(jsonable: artistInvite, type: .artistInviteControls, placeholderType: .artistInviteDetails),
+        ] + artistInvite.guide.map({ StreamCellItem(jsonable: artistInvite, type: .artistInviteGuide($0), placeholderType: .artistInviteDetails) })
+        + [StreamCellItem(jsonable: artistInvite, type: .spacer(height: 30), placeholderType: .artistInviteDetails)]
     }
 
     fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {

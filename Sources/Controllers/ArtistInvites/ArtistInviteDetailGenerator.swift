@@ -38,6 +38,8 @@ private extension ArtistInviteDetailGenerator {
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
             StreamCellItem(type: .placeholder, placeholderType: .artistInvites),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissionsButton),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInviteDetails),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissions),
             StreamCellItem(type: .placeholder, placeholderType: .artistInvitePosts),
         ])
@@ -67,11 +69,10 @@ private extension ArtistInviteDetailGenerator {
         destination?.setPrimary(jsonable: artistInvite)
 
         let artistInviteItems = parse(jsonables: [artistInvite])
-        destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {}
-
-        let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
-        let submissionsHeader = StreamCellItem(type: .header(header))
-        destination?.replacePlaceholder(type: .artistInviteSubmissions, items: [submissionsHeader]) {}
+        let headers = artistInviteItems.filter { $0.placeholderType == .artistInvites }
+        let details = artistInviteItems.filter { $0.placeholderType == .artistInviteDetails }
+        destination?.replacePlaceholder(type: .artistInvites, items: headers) {}
+        destination?.replacePlaceholder(type: .artistInviteDetails, items: details) {}
 
         let spinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
         destination?.replacePlaceholder(type: .artistInvitePosts, items: [spinner]) {}
@@ -104,6 +105,12 @@ private extension ArtistInviteDetailGenerator {
                     self.showEmptySubmissions()
                 }
                 else {
+                    let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
+                    let submissionsHeader = StreamCellItem(type: .header(header))
+                    self.destination?.replacePlaceholder(type: .artistInviteSubmissions, items: [submissionsHeader]) {}
+                    let button = StreamCellItem(type: .artistInviteSubmissionsButton, placeholderType: .artistInviteSubmissionsButton)
+                    self.destination?.replacePlaceholder(type: .artistInviteSubmissionsButton, items: [button]) {}
+
                     let items = self.parse(jsonables: posts)
                     self.destination?.replacePlaceholder(type: .artistInvitePosts, items: items) {}
                 }
@@ -114,13 +121,14 @@ private extension ArtistInviteDetailGenerator {
     }
 
     func showEmptySubmissions() {
-        self.destination?.replacePlaceholder(type: .artistInviteSubmissions, items: []) {}
-        self.destination?.replacePlaceholder(type: .artistInvitePosts, items: []) {}
+        destination?.replacePlaceholder(type: .artistInviteSubmissionsButton, items: []) {}
+        destination?.replacePlaceholder(type: .artistInviteSubmissions, items: []) {}
+        destination?.replacePlaceholder(type: .artistInvitePosts, items: []) {}
     }
 
     func showSubmissionsError() {
         let error = NSAttributedString(label: InterfaceString.ArtistInvites.SubmissionsError, style: .error)
         let item = StreamCellItem(type: .header(error))
-        self.destination?.replacePlaceholder(type: .artistInvitePosts, items: [item]) {}
+        destination?.replacePlaceholder(type: .artistInvitePosts, items: [item]) {}
     }
 }

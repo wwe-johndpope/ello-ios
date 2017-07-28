@@ -696,6 +696,7 @@
 		1D7E82451F26A523006ACE7A /* artist_invite_status_closed.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */; };
 		1D7E82471F2A7249006ACE7A /* ArtistInviteSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */; };
 		1D7E82481F2A7277006ACE7A /* ArtistInviteSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */; };
+		1D7E824A1F2BCB9E006ACE7A /* ArtistInviteSubmissionsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82491F2BCB9E006ACE7A /* ArtistInviteSubmissionsButtonCell.swift */; };
 		1D807D9A1B050DE2009B0F71 /* awesome_people.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D807D991B050DE2009B0F71 /* awesome_people.json */; };
 		1D81E1D11C4E8DE6001C63DC /* ReauthenticationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */; };
 		1D8783161ECCF45E00253602 /* EditorialExternalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8783131ECCF45E00253602 /* EditorialExternalCell.swift */; };
@@ -1765,6 +1766,7 @@
 		1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteGuideCell.swift; sourceTree = "<group>"; };
 		1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artist_invite_status_closed.svg; sourceTree = "<group>"; };
 		1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmission.swift; sourceTree = "<group>"; };
+		1D7E82491F2BCB9E006ACE7A /* ArtistInviteSubmissionsButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmissionsButtonCell.swift; sourceTree = "<group>"; };
 		1D807D991B050DE2009B0F71 /* awesome_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awesome_people.json; sourceTree = "<group>"; };
 		1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReauthenticationSpec.swift; sourceTree = "<group>"; };
 		1D8783131ECCF45E00253602 /* EditorialExternalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialExternalCell.swift; sourceTree = "<group>"; };
@@ -3740,6 +3742,7 @@
 				1DC78A4F1F21302300BE2413 /* ArtistInvitesGenerator.swift */,
 				1DC78A501F21302300BE2413 /* ArtistInvitesProtocols.swift */,
 				1DC78A511F21302300BE2413 /* ArtistInvitesScreen.swift */,
+				1D7E82491F2BCB9E006ACE7A /* ArtistInviteSubmissionsButtonCell.swift */,
 				1DC78A521F21302300BE2413 /* ArtistInvitesViewController.swift */,
 			);
 			path = ArtistInvites;
@@ -5531,6 +5534,7 @@
 				123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */,
 				1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */,
 				1D44EAFC1EB2A337003B9B3D /* BadgesService.swift in Sources */,
+				1D7E824A1F2BCB9E006ACE7A /* ArtistInviteSubmissionsButtonCell.swift in Sources */,
 				1DA18DF51DA8471F000231CC /* ProfileNamesPresenter.swift in Sources */,
 				123375851DA6ECEC0019CFAD /* ProfileBaseView.swift in Sources */,
 				1D6D8E6F1EF2ED4600472434 /* HomeScreen.swift in Sources */,

@@ -9,10 +9,9 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
     static let reuseIdentifier = "ArtistInviteControlsCell"
 
     struct Size {
-        static let controlsHeight: CGFloat = 210
+        static let controlsHeight: CGFloat = 170
 
         static let margins = UIEdgeInsets(top: 0, left: 15, bottom: 60, right: 15)
-        static let submissionsHeight: CGFloat = 40
         static let descriptionSpacing: CGFloat = 40
         static let submitHeight: CGFloat = 80
     }
@@ -25,7 +24,6 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
         }
     }
 
-    fileprivate let submissionsButton = StyledButton(style: .artistInviteSubmissions)
     fileprivate let descriptionWebView = UIWebView()
     fileprivate let submitButton = StyledButton(style: .artistInviteSubmit)
 
@@ -42,36 +40,26 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
     }
 
     func style() {
-        submissionsButton.titleEdgeInsets.top = 4
         descriptionWebView.scrollView.isScrollEnabled = false
         descriptionWebView.scrollView.scrollsToTop = false
     }
 
     func bindActions() {
-        submissionsButton.addTarget(self, action: #selector(tappedSubmissionsButton), for: .touchUpInside)
         submitButton.addTarget(self, action: #selector(tappedSubmitButton), for: .touchUpInside)
     }
 
     func setText() {
-        submissionsButton.title = InterfaceString.ArtistInvites.SeeSubmissions
         submitButton.title = InterfaceString.ArtistInvites.Submit
     }
 
     func arrange() {
-        contentView.addSubview(submissionsButton)
         contentView.addSubview(descriptionWebView)
         contentView.addSubview(submitButton)
 
-        submissionsButton.snp.makeConstraints { make in
-            make.top.equalTo(contentView)
-            make.leading.trailing.equalTo(contentView).inset(Size.margins)
-            make.height.equalTo(Size.submissionsHeight)
-        }
-
         descriptionWebView.snp.makeConstraints { make in
-            make.top.equalTo(submissionsButton.snp.bottom).offset(Size.descriptionSpacing)
+            make.top.equalTo(contentView).offset(Size.descriptionSpacing)
             make.bottom.equalTo(submitButton.snp.top)
-            make.leading.trailing.equalTo(submissionsButton)
+            make.leading.trailing.equalTo(contentView).inset(Size.margins)
         }
 
         submitButton.snp.makeConstraints { make in
@@ -93,12 +81,6 @@ class ArtistInviteControlsCell: UICollectionViewCell, ArtistInviteConfigurableCe
 
 extension ArtistInviteControlsCell {
     @objc
-    func tappedSubmissionsButton() {
-        let responder: ArtistInviteResponder? = findResponder()
-        responder?.tappedArtistInviteSubmissionsButton()
-    }
-
-    @objc
     func tappedSubmitButton() {
         let responder: ArtistInviteResponder? = findResponder()
         responder?.tappedArtistInviteSubmitButton()
@@ -106,12 +88,6 @@ extension ArtistInviteControlsCell {
 }
 
 extension StyledButton.Style {
-    static let artistInviteSubmissions = StyledButton.Style(
-        backgroundColor: .white, highlightedBackgroundColor: .greenD1,
-        titleColor: .greenD1, highlightedTitleColor: .white,
-        borderColor: .greenD1, highlightedBorderColor: .white,
-        cornerRadius: .rounded
-        )
     static let artistInviteSubmit = StyledButton.Style(
         backgroundColor: .greenD1,
         titleColor: .white, highlightedTitleColor: .black,

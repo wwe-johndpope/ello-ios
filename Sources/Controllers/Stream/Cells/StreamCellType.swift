@@ -19,6 +19,7 @@ enum StreamCellType: Equatable {
     case announcement
     case artistInviteBubble
     case artistInviteHeader
+    case artistInviteSubmissionsButton
     case artistInviteControls
     case artistInviteGuide(ArtistInvite.Guide?)
     case badge
@@ -67,6 +68,8 @@ enum StreamCellType: Equatable {
 
         case editorials
         case artistInvites
+        case artistInviteSubmissionsButton
+        case artistInviteDetails
         case artistInviteSubmissions
         case artistInvitePosts
 
@@ -107,6 +110,7 @@ enum StreamCellType: Equatable {
         .announcement,
         .artistInviteBubble,
         .artistInviteHeader,
+        .artistInviteSubmissionsButton,
         .artistInviteControls,
         .artistInviteGuide(nil),
         .editorial(.internal),
@@ -170,6 +174,7 @@ enum StreamCellType: Equatable {
         case .announcement: return AnnouncementCell.reuseIdentifier
         case .artistInviteBubble: return ArtistInviteBubbleCell.reuseIdentifier
         case .artistInviteHeader: return ArtistInviteHeaderCell.reuseIdentifier
+        case .artistInviteSubmissionsButton: return ArtistInviteSubmissionsButtonCell.reuseIdentifier
         case .artistInviteControls: return ArtistInviteControlsCell.reuseIdentifier
         case .artistInviteGuide: return ArtistInviteGuideCell.reuseIdentifier
         case let .editorial(kind): return kind.reuseIdentifier
@@ -270,6 +275,7 @@ enum StreamCellType: Equatable {
         case .announcement: return AnnouncementCell.self
         case .artistInviteBubble: return ArtistInviteBubbleCell.self
         case .artistInviteHeader: return ArtistInviteHeaderCell.self
+        case .artistInviteSubmissionsButton: return ArtistInviteSubmissionsButtonCell.self
         case .artistInviteControls: return ArtistInviteControlsCell.self
         case .artistInviteGuide: return ArtistInviteGuideCell.self
         case let .editorial(kind): return kind.classType
@@ -292,6 +298,8 @@ enum StreamCellType: Equatable {
         switch self {
         case .artistInviteHeader:
             return ArtistInviteHeaderCell.Size.headerImageHeight + ArtistInviteHeaderCell.Size.totalTextHeight
+        case .artistInviteSubmissionsButton:
+            return ArtistInviteSubmissionsButtonCell.Size.height
         case .badge:
             return 64
         case .categoryPromotionalHeader, .pagePromotionalHeader:
@@ -384,6 +392,7 @@ enum StreamCellType: Equatable {
              .announcement,
              .artistInviteBubble,
              .artistInviteHeader,
+             .artistInviteSubmissionsButton,
              .artistInviteControls,
              .artistInviteGuide,
              .editorial,
@@ -436,6 +445,7 @@ enum StreamCellType: Equatable {
             .announcement,
             .artistInviteBubble,
             .artistInviteHeader,
+            .artistInviteSubmissionsButton,
             .artistInviteControls,
             .artistInviteGuide(nil),
             .editorial(.internal),
