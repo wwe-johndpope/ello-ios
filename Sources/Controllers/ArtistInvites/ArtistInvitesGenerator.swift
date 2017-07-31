@@ -46,7 +46,7 @@ private extension ArtistInvitesGenerator {
 
                 let artistInviteItems = self.parse(jsonables: artistInvites)
                 self.destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {
-                    self.destination?.pagingEnabled = artistInviteItems.count > 0
+                    self.destination?.isPagingEnabled = artistInviteItems.count > 0
                 }
             }
             .catch { [weak self] _ in

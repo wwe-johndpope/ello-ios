@@ -40,8 +40,8 @@ class BadgesViewController: StreamableViewController, BadgesScreenDelegate {
         streamViewController.initialLoadClosure = {}
         streamViewController.reloadClosure = {}
         streamViewController.toggleClosure = { _ in }
-        streamViewController.pullToRefreshEnabled = false
-        streamViewController.pagingEnabled = false
+        streamViewController.isPullToRefreshEnabled = false
+        streamViewController.isPagingEnabled = false
 
         let items: [StreamCellItem] = user.badges.map { badge in
             let badgeJSONAble = Badge(badge: badge, categories: user.categories)

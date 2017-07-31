@@ -21,7 +21,7 @@ class LoginScreenSpec: QuickSpec {
 
             describe("snapshot, one password shown") {
                 beforeEach {
-                    subject.onePasswordAvailable = true
+                    subject.isOnePasswordAvailable = true
                 }
                 it("should have a valid snapshot") {
                     expectValidSnapshot(subject, device: .phone6_Portrait)

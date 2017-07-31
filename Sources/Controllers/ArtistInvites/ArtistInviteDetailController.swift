@@ -26,7 +26,7 @@ class ArtistInviteDetailController: StreamableViewController {
             currentUser: currentUser,
             destination: self)
         streamViewController.streamKind = generator.streamKind
-        streamViewController.pagingEnabled = false
+        streamViewController.isPagingEnabled = false
         streamViewController.reloadClosure = { [weak self] in self?.generator?.load(reload: true) }
         streamViewController.initialLoadClosure = { [weak self] in self?.generator.load() }
     }
@@ -86,9 +86,9 @@ class ArtistInviteDetailController: StreamableViewController {
 
 extension ArtistInviteDetailController: StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {

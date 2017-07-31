@@ -518,9 +518,9 @@ extension ProfileViewController {
 // MARK: ProfileViewController: StreamDestination
 extension ProfileViewController:  StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {

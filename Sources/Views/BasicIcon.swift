@@ -56,7 +56,7 @@ class BasicIcon: UIView {
 
 extension BasicIcon: ImageLabelAnimatable {
 
-    var enabled: Bool {
+    var isEnabled: Bool {
         get { return _enabled }
         set {
             _enabled = newValue
@@ -64,7 +64,7 @@ extension BasicIcon: ImageLabelAnimatable {
         }
     }
 
-    var selected: Bool {
+    var isSelected: Bool {
         get { return _selected }
         set {
             _selected = newValue
@@ -72,11 +72,11 @@ extension BasicIcon: ImageLabelAnimatable {
         }
     }
 
-    var highlighted: Bool {
+    var isHighlighted: Bool {
         get { return _highlighted }
         set {
             _highlighted = newValue
-            if selected { return }
+            if isSelected { return }
             updateIcon(selected: newValue, enabled: _enabled)
         }
     }

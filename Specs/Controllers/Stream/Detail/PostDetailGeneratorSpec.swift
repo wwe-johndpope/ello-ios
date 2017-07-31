@@ -78,7 +78,7 @@ class PostDetailDestination: PostDetailStreamDestination {
     var otherPlaceHolderLoaded = false
     var post: Post?
     var responseConfig: ResponseConfig?
-    var pagingEnabled: Bool = false
+    var isPagingEnabled: Bool = false
 
     func setPlaceholders(items: [StreamCellItem]) {
         placeholderItems = items

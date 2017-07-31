@@ -92,7 +92,6 @@
 		121700B31A7841C400EBACA5 /* StreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121700981A7841C400EBACA5 /* StreamViewController.swift */; };
 		121700B61A78428D00EBACA5 /* StreamCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121700B51A78428D00EBACA5 /* StreamCollectionViewLayout.swift */; };
 		121700B91A7891B300EBACA5 /* StreamImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121700B81A7891B300EBACA5 /* StreamImageViewer.swift */; };
-		121D75A21AD84C800008F084 /* PostServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121D75A11AD84C800008F084 /* PostServiceSpec.swift */; };
 		121D92591A5CACEA004F0455 /* JoinViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */; };
 		121E46BD1A6B2798004AEAB7 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */; };
 		122034741DE66A4A0059E633 /* ello_logo_grey.svg in Resources */ = {isa = PBXBuildFile; fileRef = 122034731DE66A4A0059E633 /* ello_logo_grey.svg */; };
@@ -1258,7 +1257,6 @@
 		121700B51A78428D00EBACA5 /* StreamCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCollectionViewLayout.swift; sourceTree = "<group>"; };
 		121700B81A7891B300EBACA5 /* StreamImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamImageViewer.swift; sourceTree = "<group>"; };
 		1219BA7B1C48417C0057A7D3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		121D75A11AD84C800008F084 /* PostServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostServiceSpec.swift; sourceTree = "<group>"; };
 		121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewControllerSpec.swift; sourceTree = "<group>"; };
 		121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		122034731DE66A4A0059E633 /* ello_logo_grey.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_logo_grey.svg; sourceTree = "<group>"; };
@@ -2882,7 +2880,6 @@
 				EA68A0DF1AADF4AB003F0425 /* MapperSpec.swift */,
 				1DB17B961AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift */,
 				12BCEA3D1B6C0D4500AD85A9 /* NewContentServiceSpec.swift */,
-				121D75A11AD84C800008F084 /* PostServiceSpec.swift */,
 				124A18741A914BCB00BC7E86 /* ProfileServiceSpec.swift */,
 				1D81E1D01C4E8DE6001C63DC /* ReauthenticationSpec.swift */,
 				76FF805A1A96A28D00617A1E /* RelationshipServiceSpec.swift */,
@@ -4979,7 +4976,6 @@
 				1D9309E01EC134BC0099FCF8 /* EditorialCellSpec.swift in Sources */,
 				1DF9840C1D9B31690055EFC7 /* StreamCreateCommentCellSpec.swift in Sources */,
 				12D14C7D1A43763B00C6F8E8 /* ElloTabBarControllerSpec.swift in Sources */,
-				121D75A21AD84C800008F084 /* PostServiceSpec.swift in Sources */,
 				76224E451B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift in Sources */,
 				F8A33EDF1AB0D5B9005DE9BB /* RelationshipSpec.swift in Sources */,
 				1D3DED7A1AE170A100F1D514 /* QuickExtensions.swift in Sources */,

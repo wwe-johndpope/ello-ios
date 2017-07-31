@@ -24,7 +24,7 @@ class JoinViewController: BaseElloViewController {
     override func loadView() {
         let screen = JoinScreen()
         screen.delegate = self
-        screen.onePasswordAvailable = OnePasswordExtension.shared().isAppExtensionAvailable()
+        screen.isOnePasswordAvailable = OnePasswordExtension.shared().isAppExtensionAvailable()
         self.view = screen
     }
 
@@ -44,24 +44,24 @@ extension JoinViewController: JoinDelegate {
 
     func validate(email: String, username: String, password: String) {
         if Validator.invalidSignUpEmailReason(email) == nil {
-            screen.emailValid = true
+            screen.isEmailValid = true
         }
         else {
-            screen.emailValid = nil
+            screen.isEmailValid = nil
         }
 
         if Validator.invalidSignUpUsernameReason(username) == nil {
-            screen.usernameValid = true
+            screen.isUsernameValid = true
         }
         else {
-            screen.usernameValid = nil
+            screen.isUsernameValid = nil
         }
 
         if Validator.invalidSignUpPasswordReason(password) == nil {
-            screen.passwordValid = true
+            screen.isPasswordValid = true
         }
         else {
-            screen.passwordValid = nil
+            screen.isPasswordValid = nil
         }
     }
 

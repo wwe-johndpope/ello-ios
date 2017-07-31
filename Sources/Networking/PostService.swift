@@ -8,11 +8,9 @@ import PromiseKit
 struct PostService {
 
     func loadPost(
-        _ postParam: String,
-        needsComments: Bool) -> Promise<Post>
+        _ postParam: String) -> Promise<Post>
     {
-        let commentCount = needsComments ? 10 : 0
-        return ElloProvider.shared.request(.postDetail(postParam: postParam, commentCount: commentCount))
+        return ElloProvider.shared.request(.postDetail(postParam: postParam))
             .then { data, responseConfig -> Post in
                 guard let post = data as? Post else {
                     throw NSError.uncastableJSONAble()
@@ -160,7 +158,7 @@ struct PostService {
                     return post
                 }
                 else if !isWatching {
-                    post.watching = false
+                    post.isWatching = false
                     ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
                     return post
                 }

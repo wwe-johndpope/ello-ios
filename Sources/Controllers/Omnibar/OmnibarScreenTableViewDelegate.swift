@@ -88,7 +88,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, canEditRowAt path: IndexPath) -> Bool {
         if let (_, region) = tableViewRegions.safeValue(path.row) {
-            return region.editable
+            return region.isEditable
         }
         return false
     }
@@ -105,7 +105,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
     }
 
     func deleteReorderableAtIndexPath(_ path: IndexPath) {
-        if let (_, region) = reorderableRegions.safeValue(path.row), region.editable
+        if let (_, region) = reorderableRegions.safeValue(path.row), region.isEditable
         {
             reorderableRegions.remove(at: path.row)
             regionsTableView.deleteRows(at: [path], with: .automatic)
@@ -117,7 +117,7 @@ extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
 
     func deleteEditableAtIndexPath(_ path: IndexPath) {
         if let (index_, region) = editableRegions.safeValue(path.row),
-            let index = index_, region.editable
+            let index = index_, region.isEditable
         {
             if editableRegions.count == 1 {
                 submitableRegions = [.text("")]

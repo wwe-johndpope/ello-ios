@@ -142,7 +142,7 @@ extension Love: Stubbable {
             id: (values["id"] as? String) ?? UUID().uuidString,
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             updatedAt: (values["updatedAt"] as? Date) ?? AppSetup.shared.now,
-            deleted: (values["deleted"] as? Bool) ?? true,
+            isDeleted: (values["deleted"] as? Bool) ?? true,
             postId: post.id,
             userId: user.id
         )
@@ -274,9 +274,9 @@ extension Post: Stubbable {
             isAdultContent: (values["isAdultContent"] as? Bool) ?? false,
             contentWarning: (values["contentWarning"] as? String) ?? "",
             allowComments: (values["allowComments"] as? Bool) ?? false,
-            reposted: (values["reposted"] as? Bool) ?? false,
-            loved: (values["loved"] as? Bool) ?? false,
-            watching: (values["watching"] as? Bool) ?? false,
+            isReposted: (values["reposted"] as? Bool) ?? false,
+            isLoved: (values["loved"] as? Bool) ?? false,
+            isWatching: (values["watching"] as? Bool) ?? false,
             summary: (values["summary"] as? [Regionable]) ?? [stubbedTextRegion]
         )
 

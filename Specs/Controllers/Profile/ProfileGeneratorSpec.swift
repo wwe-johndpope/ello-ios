@@ -15,7 +15,7 @@ class ProfileGeneratorSpec: QuickSpec {
         var otherPlaceholderLoaded = false
         var user: User?
         var responseConfig: ResponseConfig?
-        var pagingEnabled: Bool = false
+        var isPagingEnabled: Bool = false
 
         func setPlaceholders(items: [StreamCellItem]) {
             placeholderItems = items

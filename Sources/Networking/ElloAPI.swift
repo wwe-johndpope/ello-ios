@@ -61,7 +61,7 @@ indirect enum ElloAPI {
     case notificationsStream(category: String?)
     case pagePromotionals
     case postComments(postId: String)
-    case postDetail(postParam: String, commentCount: Int)
+    case postDetail(postParam: String)
     case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
@@ -430,7 +430,7 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/page_promotionals"
         case let .postComments(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
-        case let .postDetail(postParam, _):
+        case let .postDetail(postParam):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postParam)"
         case .postViews:
             return "/api/\(ElloAPI.apiVersion)/post_views"
@@ -781,9 +781,9 @@ extension ElloAPI: Moya.TargetType {
                 params["category"] = category
             }
             return params
-        case let .postDetail(_, commentCount):
+        case .postDetail:
             return [
-                "comment_count": commentCount
+                "comment_count": 0,
             ]
         case .postRelatedPosts:
             return [

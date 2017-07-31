@@ -24,5 +24,5 @@ protocol StreamDestination: class {
     func setPrimary(jsonable: JSONAble)
     func primaryJSONAbleNotFound()
     func setPagingConfig(responseConfig: ResponseConfig)
-    var pagingEnabled: Bool { get set }
+    var isPagingEnabled: Bool { get set }
 }

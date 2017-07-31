@@ -207,13 +207,13 @@ class PostbarController: UIResponder, PostbarResponder {
 
         cell?.toggleLoveControl(enabled: false)
 
-        if post.loved { unlovePost(post, cell: cell) }
+        if post.isLoved { unlovePost(post, cell: cell) }
         else { lovePost(post, cell: cell, via: via) }
     }
 
     fileprivate func unlovePost(_ post: Post, cell: LoveableCell?) {
         Tracker.shared.postUnloved(post)
-        post.loved = false
+        post.isLoved = false
         if let count = post.lovesCount {
             post.lovesCount = count - 1
         }
@@ -232,7 +232,7 @@ class PostbarController: UIResponder, PostbarResponder {
                     let now = AppSetup.shared.now
                     let love = Love(
                         id: "", createdAt: now, updatedAt: now,
-                        deleted: true, postId: post.id, userId: currentUser.id
+                        isDeleted: true, postId: post.id, userId: currentUser.id
                         )
                     postNotification(JSONAbleChangedNotification, value: (love, .delete))
                 }
@@ -248,7 +248,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     fileprivate func lovePost(_ post: Post, cell: LoveableCell?, via: String) {
         Tracker.shared.postLoved(post, via: via)
-        post.loved = true
+        post.isLoved = true
         if let count = post.lovesCount {
             post.lovesCount = count + 1
         }
@@ -318,7 +318,7 @@ class PostbarController: UIResponder, PostbarResponder {
             postNotification(CurrentUserChangedNotification, value: user)
         }
 
-        post.reposted = true
+        post.isReposted = true
         if let repostsCount = post.repostsCount {
             post.repostsCount = repostsCount + 1
         }

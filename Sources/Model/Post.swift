@@ -22,9 +22,9 @@ final class Post: JSONAble, Authorable, Groupable {
     let isAdultContent: Bool
     let contentWarning: String
     let allowComments: Bool
-    var reposted: Bool
-    var loved: Bool
-    var watching: Bool
+    var isReposted: Bool
+    var isLoved: Bool
+    var isWatching: Bool
     let summary: [Regionable]
     // optional
     var content: [Regionable]?
@@ -80,7 +80,7 @@ final class Post: JSONAble, Authorable, Groupable {
     var shareLink: String? {
         return author.map { "\(ElloURI.baseURL)/\($0.username)/post/\(self.token)" }
     }
-    var collapsed: Bool { return !contentWarning.isEmpty }
+    var isCollapsed: Bool { return !contentWarning.isEmpty }
     var isRepost: Bool {
         return (repostContent?.count ?? 0) > 0
     }
@@ -97,9 +97,9 @@ final class Post: JSONAble, Authorable, Groupable {
         isAdultContent: Bool,
         contentWarning: String,
         allowComments: Bool,
-        reposted: Bool,
-        loved: Bool,
-        watching: Bool,
+        isReposted: Bool,
+        isLoved: Bool,
+        isWatching: Bool,
         summary: [Regionable]
         )
     {
@@ -113,15 +113,15 @@ final class Post: JSONAble, Authorable, Groupable {
         self.isAdultContent = isAdultContent
         self.contentWarning = contentWarning
         self.allowComments = allowComments
-        self.reposted = reposted
-        self.loved = loved
-        self.watching = watching
+        self.isReposted = isReposted
+        self.isLoved = isLoved
+        self.isWatching = isWatching
         self.summary = summary
         super.init(version: PostVersion)
 
         lovedChangedNotification = NotificationObserver(notification: PostChangedNotification) { [unowned self] (post, change) in
             if post.id == self.id && change == .loved {
-                self.loved = post.loved
+                self.isLoved = post.isLoved
             }
         }
 
@@ -152,14 +152,14 @@ final class Post: JSONAble, Authorable, Groupable {
         self.contentWarning = decoder.decodeKey("contentWarning")
         self.allowComments = decoder.decodeKey("allowComments")
         self.summary = decoder.decodeKey("summary")
-        self.reposted = decoder.decodeKey("reposted")
-        self.loved = decoder.decodeKey("loved")
+        self.isReposted = decoder.decodeKey("reposted")
+        self.isLoved = decoder.decodeKey("loved")
         let version: Int = decoder.decodeKey("version")
         if version > 1 {
-            self.watching = decoder.decodeKey("watching")
+            self.isWatching = decoder.decodeKey("watching")
         }
         else {
-            self.watching = false
+            self.isWatching = false
         }
         // optional
         self.content = decoder.decodeOptionalKey("content")
@@ -205,9 +205,9 @@ final class Post: JSONAble, Authorable, Groupable {
         coder.encodeObject(repostViaId, forKey: "repostViaId")
         coder.encodeObject(repostViaPath, forKey: "repostViaPath")
         coder.encodeObject(artistInviteId, forKey: "artistInviteId")
-        coder.encodeObject(reposted, forKey: "reposted")
-        coder.encodeObject(loved, forKey: "loved")
-        coder.encodeObject(watching, forKey: "watching")
+        coder.encodeObject(isReposted, forKey: "reposted")
+        coder.encodeObject(isLoved, forKey: "loved")
+        coder.encodeObject(isWatching, forKey: "watching")
         coder.encodeObject(viewsCount, forKey: "viewsCount")
         coder.encodeObject(commentsCount, forKey: "commentsCount")
         coder.encodeObject(repostsCount, forKey: "repostsCount")
@@ -237,9 +237,9 @@ final class Post: JSONAble, Authorable, Groupable {
             isAdultContent: json["is_adult_content"].boolValue,
             contentWarning: json["content_warning"].stringValue,
             allowComments: json["allow_comments"].boolValue,
-            reposted: json["reposted"].bool ?? false,
-            loved: json["loved"].bool ?? false,
-            watching: json["watching"].bool ?? false,
+            isReposted: json["reposted"].bool ?? false,
+            isLoved: json["loved"].bool ?? false,
+            isWatching: json["watching"].bool ?? false,
             summary: RegionParser.regions("summary", json: json)
         )
         // optional

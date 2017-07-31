@@ -81,7 +81,7 @@ class OmnibarViewController: BaseElloViewController {
     convenience init(editPost post: Post) {
         self.init(nibName: nil, bundle: nil)
         editPost = post
-        PostService().loadPost(post.id, needsComments: false)
+        PostService().loadPost(post.id)
             .thenFinally { post in
                 self.rawEditBody = post.body
                 if let body = post.body, self.isViewLoaded {
@@ -193,7 +193,7 @@ class OmnibarViewController: BaseElloViewController {
         }
         else {
             let isShowingNarration = elloTabBarController?.shouldShowNarration ?? false
-            let isPosting = !screen.interactionEnabled
+            let isPosting = !screen.isInteractionEnabled
             if !isShowingNarration && !isPosting && presentedViewController == nil {
                 // desired behavior: animate the keyboard in when this screen is
                 // shown.  without the delay, the keyboard just appears suddenly.
@@ -464,7 +464,7 @@ extension OmnibarViewController {
             postNotification(CommentChangedNotification, value: (comment, .create))
 
             if let post = comment.parentPost {
-                PostService().loadPost(post.id, needsComments: false)
+                PostService().loadPost(post.id)
                     .thenFinally { post in
                         ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
                         postNotification(PostChangedNotification, value: (post, .watching))
@@ -517,12 +517,12 @@ extension OmnibarViewController {
 
     func startSpinner() {
         ElloHUD.showLoadingHudInView(view)
-        screen.interactionEnabled = false
+        screen.isInteractionEnabled = false
     }
 
     func stopSpinner() {
         ElloHUD.hideLoadingHudInView(self.view)
-        self.screen.interactionEnabled = true
+        self.screen.isInteractionEnabled = true
     }
 
     func contentCreationFailed(_ errorMessage: String) {

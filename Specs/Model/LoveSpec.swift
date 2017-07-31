@@ -27,7 +27,7 @@ class LoveSpec: QuickSpec {
                 expect(love.createdAt) == createdAt
                 expect(love.updatedAt) == updatedAt
                 // required
-                expect(love.deleted) == false
+                expect(love.isDeleted) == false
                 expect(love.postId) == "222"
                 expect(love.userId) == "42"
                 expect(love.post).to(beAKindOf(Post.self))
@@ -97,7 +97,7 @@ class LoveSpec: QuickSpec {
                     expect(unArchivedLove.createdAt) == expectedCreatedAt
                     expect(unArchivedLove.updatedAt) == expectedUpdatedAt
                     // required
-                    expect(unArchivedLove.deleted) == true
+                    expect(unArchivedLove.isDeleted) == true
                     expect(unArchivedLove.postId) == "888"
                     expect(unArchivedLove.userId) == "444"
                 }

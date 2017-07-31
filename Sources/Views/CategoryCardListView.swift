@@ -94,10 +94,10 @@ class CategoryCardListView: UIView {
     func selectCategory(index: Int) {
         guard let view = categoryViews.safeValue(index) else { return }
         for card in categoryViews where card != view {
-            card.selected = false
+            card.isSelected = false
         }
 
-        view.selected = true
+        view.isSelected = true
     }
 
     fileprivate func updateCategoryViews() {

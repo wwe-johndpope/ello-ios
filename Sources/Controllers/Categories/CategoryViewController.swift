@@ -163,7 +163,7 @@ private extension CategoryViewController {
         category?.randomPromotional = nil
         generator?.load()
 
-        streamViewController.pagingEnabled = true
+        streamViewController.isPagingEnabled = true
     }
 
     func reloadCurrentCategory() {
@@ -177,9 +177,9 @@ private extension CategoryViewController {
 // MARK: CategoryViewController: StreamDestination
 extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
@@ -291,7 +291,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         let streamKind = StreamKind.allCategories
         streamViewController.streamKind = streamKind
-        streamViewController.pagingEnabled = false
+        streamViewController.isPagingEnabled = false
         generator?.reset(streamKind: streamKind, category: nil, pagePromotional: nil)
 
         prevSlug = slug

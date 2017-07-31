@@ -40,7 +40,7 @@ class EditorialPostCell: EditorialTitledCell {
         commentButton.isHidden = !(config.post?.author?.hasCommentingEnabled ?? false)
         lovesButton.isHidden = !(config.post?.author?.hasLovesEnabled ?? false)
 
-        let loved = config.post?.loved ?? false
+        let loved = config.post?.isLoved ?? false
         lovesButton.isEnabled = true
         lovesButton.isSelected = loved
     }

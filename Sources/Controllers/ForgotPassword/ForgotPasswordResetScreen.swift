@@ -13,10 +13,10 @@ class ForgotPasswordResetScreen: CredentialsScreen {
     }
     weak var delegate: ForgotPasswordResetDelegate?
 
-    var passwordValid: Bool? = nil {
+    var isPasswordValid: Bool? = nil {
         didSet {
-            if let passwordValid = passwordValid {
-                passwordField.validationState = passwordValid ? .okSmall : .error
+            if let isPasswordValid = isPasswordValid {
+                passwordField.validationState = isPasswordValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
             else {
@@ -111,7 +111,7 @@ extension ForgotPasswordResetScreen: ForgotPasswordResetScreenProtocol {
 
     func showPasswordError(_ text: String) {
         passwordErrorLabel.text = text
-        passwordValid = false
+        isPasswordValid = false
 
         animate {
             self.passwordMarginConstraint.activate()
@@ -170,8 +170,8 @@ extension ForgotPasswordResetScreen {
     }
 
     func allFieldsValid() -> Bool {
-        if let passwordValid = passwordValid {
-            return passwordValid
+        if let isPasswordValid = isPasswordValid {
+            return isPasswordValid
         }
         else {
             return false

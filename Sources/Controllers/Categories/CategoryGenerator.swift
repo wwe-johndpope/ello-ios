@@ -250,13 +250,13 @@ private extension CategoryGenerator {
                             if items.count == 0 {
                                 let noItems = [StreamCellItem(type: .emptyStream(height: 182))]
                                 self.destination?.replacePlaceholder(type: .categoryPosts, items: noItems) {
-                                    self.destination?.pagingEnabled = false
+                                    self.destination?.isPagingEnabled = false
                                 }
                                 self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
                             }
                             else {
                                 self.destination?.replacePlaceholder(type: .categoryPosts, items: items) {
-                                    self.destination?.pagingEnabled = true
+                                    self.destination?.isPagingEnabled = true
                                 }
                             }
                         }

@@ -121,9 +121,9 @@ class PostbarControllerSpec: QuickSpec {
                 }
                 it("should set the cell.watching property") {
                     ElloProvider.sharedProvider = ElloProvider.DelayedStubbingProvider()
-                    cell.watching = false
+                    cell.isWatching = false
                     subject.watchPostTapped(true, cell: cell)
-                    expect(cell.watching) == true
+                    expect(cell.isWatching) == true
                 }
                 it("should enable the cell after failure") {
                     ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
@@ -133,9 +133,9 @@ class PostbarControllerSpec: QuickSpec {
                 }
                 it("should restore the cell.watching property after failure") {
                     ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
-                    cell.watching = false
+                    cell.isWatching = false
                     subject.watchPostTapped(true, cell: cell)
-                    expect(cell.watching) == false
+                    expect(cell.isWatching) == false
                 }
                 it("should enable the cell after success") {
                     cell.isUserInteractionEnabled = false

@@ -195,7 +195,7 @@ enum StreamCellType: Equatable {
         }
     }
 
-    var selectable: Bool {
+    var isSelectable: Bool {
         switch self {
         case .announcement,
              .artistInviteBubble,
@@ -422,7 +422,7 @@ enum StreamCellType: Equatable {
         }
     }
 
-    var collapsable: Bool {
+    var isCollapsable: Bool {
         switch self {
         case .image, .text, .embed: return true
         default: return false

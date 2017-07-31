@@ -25,7 +25,7 @@ class RelationshipControl: UIView {
         }
     }
 
-    var enabled: Bool {
+    var isEnabled: Bool {
         set {
             followingButton.isEnabled = newValue
         }

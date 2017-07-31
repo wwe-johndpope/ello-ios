@@ -80,10 +80,10 @@ extension ForgotPasswordResetViewController: ForgotPasswordResetDelegate {
 
     func validate(password: String) {
         if Validator.invalidSignUpPasswordReason(password) == nil {
-            screen.passwordValid = true
+            screen.isPasswordValid = true
         }
         else {
-            screen.passwordValid = nil
+            screen.isPasswordValid = nil
         }
     }
 }

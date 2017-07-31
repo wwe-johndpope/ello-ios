@@ -18,9 +18,9 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
     }
 
     fileprivate func processPHAssets(_ assets: [PHAsset], done: @escaping Block = {}) {
-        self.interactionEnabled = false
+        self.isInteractionEnabled = false
         AssetsToRegions.processPHAssets(assets) { (imageData: [ImageRegionData]) in
-            self.interactionEnabled = true
+            self.isInteractionEnabled = true
             for imageDatum in imageData {
                 let (image, imageData, type) = (imageDatum.image, imageDatum.data, imageDatum.contentType)
                 self.addImage(image, data: imageData, type: type)

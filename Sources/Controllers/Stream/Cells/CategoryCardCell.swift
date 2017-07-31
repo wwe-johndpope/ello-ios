@@ -15,7 +15,7 @@ class CategoryCardCell: UICollectionViewCell {
         static let selectedImageOffset: CGFloat = 5
     }
 
-    var selectable: Bool = false {
+    var isSelectable: Bool = false {
         didSet { updateSelected() }
     }
     override var isSelected: Bool {
@@ -48,7 +48,7 @@ class CategoryCardCell: UICollectionViewCell {
     }
 
     fileprivate func updateSelected() {
-        if selectable {
+        if isSelectable {
             colorFillView.alpha = isSelected ? 0.8 : 0.4
             label.style = isSelected ? .boldWhite : .white
             selectedImageView.isHidden = !isSelected

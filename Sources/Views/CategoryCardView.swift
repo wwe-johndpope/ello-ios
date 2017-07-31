@@ -14,7 +14,7 @@ class CategoryCardView: UIView {
     static let darkAlpha: CGFloat = 0.8
 
     fileprivate var _selected = false
-    var selected: Bool {
+    var isSelected: Bool {
         set {
             _selected = newValue
             let alpha: CGFloat

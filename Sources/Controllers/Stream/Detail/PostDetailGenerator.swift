@@ -145,7 +145,7 @@ private extension PostDetailGenerator {
         guard !doneOperation.isFinished || reload else { return }
 
         // load the post with no comments
-        PostService().loadPost(postParam, needsComments: false)
+        PostService().loadPost(postParam)
             .thenFinally { [weak self] post in
                 guard let `self` = self else { return }
                 guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }

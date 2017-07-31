@@ -73,13 +73,13 @@ class ArtistInvitesViewController: StreamableViewController {
 
 extension ArtistInvitesViewController: StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func loadArtistInvites() {
-        streamViewController.pagingEnabled = false
+        streamViewController.isPagingEnabled = false
         generator.load()
     }
 

@@ -98,8 +98,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "resetPassword(password: \(password), authToken: \(authToken))"
         case let .postComments(postId):
             return "postComments(postId: \(postId))"
-        case let .postDetail(postParam, commentCount):
-            return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
+        case let .postDetail(postParam):
+            return "postDetail(postParam: \(postParam))"
         case let .postViews(streamId, streamKind, postTokens, currentUserId):
             return "postViews(streamId: \(String(describing: streamId)), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(String(describing: currentUserId)))"
         case let .postLovers(postId):

@@ -135,7 +135,7 @@ private extension ProfileGenerator {
                             let user: User = self.user ?? User.empty(id: self.userParam)
                             let noItems = [StreamCellItem(jsonable: user, type: .noPosts)]
                             self.destination?.replacePlaceholder(type: .profilePosts, items: noItems) {
-                                self.destination?.pagingEnabled = false
+                                self.destination?.isPagingEnabled = false
                             }
                             self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
                         }
@@ -146,7 +146,7 @@ private extension ProfileGenerator {
                                 self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
                             }
                             self.destination?.replacePlaceholder(type: .profilePosts, items: userPostItems) {
-                                self.destination?.pagingEnabled = true
+                                self.destination?.isPagingEnabled = true
                             }
                         }
                     }

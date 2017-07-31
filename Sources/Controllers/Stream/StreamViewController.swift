@@ -156,7 +156,7 @@ final class StreamViewController: BaseElloViewController {
     var dataSource: StreamDataSource!
     var postbarController: PostbarController?
     var responseConfig: ResponseConfig?
-    var pagingEnabled = false
+    var isPagingEnabled = false
     fileprivate var scrollToPaginateGuard = false
 
     let streamService = StreamService()
@@ -231,8 +231,8 @@ final class StreamViewController: BaseElloViewController {
         return layout.columnCount
     }
 
-    var pullToRefreshEnabled: Bool = true {
-        didSet { pullToRefreshView?.isHidden = !pullToRefreshEnabled }
+    var isPullToRefreshEnabled: Bool = true {
+        didSet { pullToRefreshView?.isHidden = !isPullToRefreshEnabled }
     }
 
     required init() {
@@ -268,7 +268,7 @@ final class StreamViewController: BaseElloViewController {
 
         pullToRefreshView = SSPullToRefreshView(scrollView: collectionView, delegate: self)
         pullToRefreshView?.contentView = ElloPullToRefreshView(frame: .zero)
-        pullToRefreshView?.isHidden = !pullToRefreshEnabled
+        pullToRefreshView?.isHidden = !isPullToRefreshEnabled
 
         setupCollectionView()
         addNotificationObservers()
@@ -412,7 +412,7 @@ final class StreamViewController: BaseElloViewController {
     func loadInitialPage(reload: Bool = false) {
         if let reloadClosure = reloadClosure, reload {
             responseConfig = nil
-            pagingEnabled = false
+            isPagingEnabled = false
             reloadClosure()
         }
         else if let initialLoadClosure = initialLoadClosure {
@@ -451,7 +451,7 @@ final class StreamViewController: BaseElloViewController {
             items.append(StreamCellItem(type: .emptyStream(height: 282)))
         }
         self.appendUnsizedCellItems(items) { indexPaths in
-            self.pagingEnabled = true
+            self.isPagingEnabled = true
         }
     }
 
@@ -710,7 +710,7 @@ final class StreamViewController: BaseElloViewController {
     fileprivate func setupDataSource() {
         dataSource = StreamDataSource(streamKind: streamKind)
         dataSource.streamCollapsedFilter = { item in
-            if !item.type.collapsable {
+            if !item.type.isCollapsable {
                 return true
             }
             if item.jsonable is Post {
@@ -802,12 +802,12 @@ extension StreamViewController: SimpleStreamResponder {
 extension StreamViewController: SSPullToRefreshViewDelegate {
 
     func pull(toRefreshViewShouldStartLoading view: SSPullToRefreshView!) -> Bool {
-        return pullToRefreshEnabled
+        return isPullToRefreshEnabled
     }
 
     func pull(_ view: SSPullToRefreshView, didTransitionTo toState: SSPullToRefreshViewState, from fromState: SSPullToRefreshViewState, animated: Bool) {
         if toState == .loading {
-            if pullToRefreshEnabled {
+            if isPullToRefreshEnabled {
                 streamViewDelegate?.streamWillPullToRefresh()
 
                 if let controller = parent as? BaseElloViewController {
@@ -891,7 +891,7 @@ extension StreamViewController: StreamEditingResponder {
             window.addSubview(imageView)
         }
 
-        if !post.loved {
+        if !post.isLoved {
             let loveableCell = self.loveableCell(for: cell)
             postbarController?.toggleLove(loveableCell, post: post, via: "double tap")
         }
@@ -1230,7 +1230,7 @@ extension StreamViewController: UICollectionViewDelegate {
                 let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
             else { return false }
 
-            return cellItemType.selectable
+            return cellItemType.isSelectable
     }
 }
 
@@ -1264,7 +1264,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
     fileprivate func loadNextPage(scrollView: UIScrollView) {
         guard
-            pagingEnabled &&
+            isPagingEnabled &&
             scrollView.contentOffset.y + (self.view.frame.height * 1.666)
             > scrollView.contentSize.height
         else { return }

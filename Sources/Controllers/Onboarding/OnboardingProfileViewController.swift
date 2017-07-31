@@ -24,7 +24,7 @@ class OnboardingProfileViewController: UIViewController, HasAppController {
     var debouncedLinksValidator = debounce(0.5)
     var didUploadCoverImage = false
     var didUploadAvatarImage = false
-    var profileIsValid: Bool {
+    var isProfileValid: Bool {
         return (didSetName ||
             didSetBio ||
             didSetLinks ||
@@ -51,14 +51,14 @@ extension OnboardingProfileViewController: OnboardingProfileDelegate {
     func assign(name: String?) -> ValidationState {
         onboardingData.name = name
         didSetName = (name?.isEmpty == false)
-        onboardingViewController?.canGoNext = profileIsValid
+        onboardingViewController?.canGoNext = isProfileValid
         return didSetName ? .okSmall : .none
     }
 
     func assign(bio: String?) -> ValidationState {
         onboardingData.bio = bio
         didSetBio = (bio?.isEmpty == false)
-        onboardingViewController?.canGoNext = profileIsValid
+        onboardingViewController?.canGoNext = isProfileValid
         return didSetBio ? .okSmall : .none
     }
 
@@ -78,7 +78,7 @@ extension OnboardingProfileViewController: OnboardingProfileDelegate {
             }
             linksAreValid = false
         }
-        onboardingViewController?.canGoNext = profileIsValid
+        onboardingViewController?.canGoNext = isProfileValid
 
         debouncedLinksValidator { [weak self] in
             guard let `self` = self else { return }
@@ -90,13 +90,13 @@ extension OnboardingProfileViewController: OnboardingProfileDelegate {
     func assign(coverImage: ImageRegionData) {
         didUploadCoverImage = true
         onboardingData.coverImage = coverImage
-        onboardingViewController?.canGoNext = profileIsValid
+        onboardingViewController?.canGoNext = isProfileValid
     }
 
     func assign(avatarImage: ImageRegionData) {
         didUploadAvatarImage = true
         onboardingData.avatarImage = avatarImage
-        onboardingViewController?.canGoNext = profileIsValid
+        onboardingViewController?.canGoNext = isProfileValid
     }
 }
 
@@ -115,7 +115,7 @@ extension OnboardingProfileViewController: OnboardingStepController {
         didUploadAvatarImage = (onboardingData.avatarImage != nil)
         didUploadCoverImage = (onboardingData.coverImage != nil)
         onboardingViewController?.hasAbortButton = true
-        onboardingViewController?.canGoNext = profileIsValid
+        onboardingViewController?.canGoNext = isProfileValid
 
         screen.name = onboardingData.name
         screen.bio = onboardingData.bio

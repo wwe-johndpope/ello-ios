@@ -12,10 +12,10 @@ protocol LoginDelegate: class {
 
 protocol LoginScreenProtocol: class {
     var username: String { get set }
-    var usernameValid: Bool? { get set }
+    var isUsernameValid: Bool? { get set }
     var password: String { get set }
-    var passwordValid: Bool? { get set }
-    var onePasswordAvailable: Bool { get set }
+    var isPasswordValid: Bool? { get set }
+    var isOnePasswordAvailable: Bool { get set }
     func loadingHUD(visible: Bool)
     func showError(_ text: String)
     func hideError()

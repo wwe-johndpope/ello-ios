@@ -4,7 +4,7 @@
 
 class ContentFlagger {
 
-    var contentFlagged: Bool?
+    var isContentFlagged: Bool?
 
     weak var presentingController: UIViewController?
     let flaggableId: String
@@ -62,12 +62,12 @@ class ContentFlagger {
             ContentFlaggingService().flagContent(endPoint)
                 .then { _ -> Void in
                     Tracker.shared.contentFlagged(self.contentType, flag: option, contentId: self.flaggableId)
-                    self.contentFlagged = true
+                    self.isContentFlagged = true
                 }
                 .catch { error in
                     let message = (error as NSError).elloErrorMessage ?? error.localizedDescription
                     Tracker.shared.contentFlaggingFailed(self.contentType, message: message, contentId: self.flaggableId)
-                    self.contentFlagged = false
+                    self.isContentFlagged = false
                 }
         }
     }

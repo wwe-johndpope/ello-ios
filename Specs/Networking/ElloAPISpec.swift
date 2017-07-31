@@ -77,7 +77,7 @@ class ElloAPISpec: QuickSpec {
                         (.followingNewContent(createdAt: nil), "/api/v2/following/posts/recent"),
                         (.following, "/api/v2/following/posts/recent"),
                         (.hire(userId: "666", body: "foo"), "/api/v2/users/666/hire_me"),
-                        (ElloAPI.infiniteScroll(queryItems: []) { return ElloAPI.following }, "/api/v2/following/posts/recent"),
+                        (ElloAPI.infiniteScroll(queryItems: [], api: .following), "/api/v2/following/posts/recent"),
                         (.invitations(emails: ["someContact"]), "/api/v2/invitations"),
                         (.inviteFriends(email: "someContact"), "/api/v2/invitations"),
                         (.join(email: "", username: "", password: "", invitationCode: nil), "/api/v2/join"),
@@ -88,7 +88,7 @@ class ElloAPISpec: QuickSpec {
                         (.notificationsStream(category: nil), "/api/v2/notifications"),
                         (.pagePromotionals, "/api/v2/page_promotionals"),
                         (.postComments(postId: "fake-id"), "/api/v2/posts/fake-id/comments"),
-                        (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param"),
+                        (.postDetail(postParam: "some-param"), "/api/v2/posts/some-param"),
                         (.postViews(streamId: "", streamKind: "", postIds: Set<String>(), currentUserId: ""), "/api/v2/post_views"),
                         (.postLovers(postId: "1"), "/api/v2/posts/1/lovers"),
                         (.postReplyAll(postId: "1"), "/api/v2/posts/1/commenters_usernames"),
@@ -149,7 +149,7 @@ class ElloAPISpec: QuickSpec {
                     (.flagPost(postId: "", kind: ""), .noContentType),
                     (.following, .postsType),
                     (.followingNewContent(createdAt: nil), .noContentType),
-                    (.infiniteScroll(queryItems: [""], elloApi: .amazonCredentials), .amazonCredentialsType),
+                    (.infiniteScroll(queryItems: [""], api: .amazonCredentials), .amazonCredentialsType),
                     (.invitations(emails: [""]), .noContentType),
                     (.inviteFriends(email: ""), .noContentType),
                     (.join(email: "", username: "", password: "", invitationCode: ""), .usersType),
@@ -158,7 +158,7 @@ class ElloAPISpec: QuickSpec {
                     (.notificationsNewContent(createdAt: nil), .noContentType),
                     (.notificationsStream(category: ""), .activitiesType),
                     (.postComments(postId: ""), .commentsType),
-                    (.postDetail(postParam: "", commentCount: 0), .postsType),
+                    (.postDetail(postParam: ""), .postsType),
                     (.postLovers(postId: ""), .usersType),
                     (.postReposters(postId: ""), .usersType),
                     (.profileDelete, .noContentType),
@@ -192,7 +192,7 @@ class ElloAPISpec: QuickSpec {
                 context("are valid") {
                     let expectations: [(ElloAPI, String)] = [
                         (.category(slug: "art"), "/api/v2/categories/art/posts/recent"),
-                        (.postDetail(postParam: "some-param", commentCount: 10), "/api/v2/posts/some-param/comments"),
+                        (.postDetail(postParam: "some-param"), "/api/v2/posts/some-param/comments"),
                         (.userStream(userParam: "999"), "/api/v2/users/999/posts"),
                         ]
                     for (api, pagingPath) in expectations {
@@ -235,7 +235,7 @@ class ElloAPISpec: QuickSpec {
                         .notificationsNewContent(createdAt: nil),
                         .notificationsStream(category: ""),
                         .postComments(postId: ""),
-                        .postDetail(postParam: "", commentCount: 10),
+                        .postDetail(postParam: ""),
                         .postLovers(postId: ""),
                         .postReposters(postId: ""),
                         .profileDelete,
@@ -310,7 +310,7 @@ class ElloAPISpec: QuickSpec {
                         .loves(userId: ""),
                         .notificationsStream(category: ""),
                         .postComments(postId: ""),
-                        .postDetail(postParam: "", commentCount: 10),
+                        .postDetail(postParam: ""),
                         .postLovers(postId: ""),
                         .postReposters(postId: ""),
                         .profileDelete,
@@ -390,7 +390,7 @@ class ElloAPISpec: QuickSpec {
 
                 it("infiniteScroll") {
                     let queryItems = NSURLComponents(string: "ttp://ello.co/api/v2/posts/278/comments?after=2014-06-02T00%3A00%3A00.000000000%2B0000&per_page=2")!.queryItems
-                    let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [Any]) { return ElloAPI.discover(type: .featured) }
+                    let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [Any], api: .discover(type: .featured))
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
                     expect(params["after"]).notTo(beNil())
@@ -473,17 +473,6 @@ class ElloAPISpec: QuickSpec {
                         expect(params["user_id"] as? String).to(beNil())
                         expect(params["kind"] as? String) == "post"
                         expect(params["id"] as? String) == "123"
-                    }
-                }
-
-                describe("PostDetail") {
-                    it("commentCount 10") {
-                        let params = ElloAPI.postDetail(postParam: "post-id", commentCount: 10).parameters!
-                        expect(params["comment_count"] as? Int) == 10
-                    }
-                    it("commentCount 0") {
-                        let params = ElloAPI.postDetail(postParam: "post-id", commentCount: 0).parameters!
-                        expect(params["comment_count"] as? Int) == 0
                     }
                 }
 

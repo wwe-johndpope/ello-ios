@@ -15,7 +15,7 @@ class LoginViewController: BaseElloViewController {
     override func loadView() {
         let screen = LoginScreen()
         screen.delegate = self
-        screen.onePasswordAvailable = OnePasswordExtension.shared().isAppExtensionAvailable()
+        screen.isOnePasswordAvailable = OnePasswordExtension.shared().isAppExtensionAvailable()
         self.view = screen
     }
 
@@ -65,17 +65,17 @@ extension LoginViewController: LoginDelegate {
 
     func validate(username: String, password: String) {
         if Validator.isValidEmail(username) || Validator.isValidUsername(username) {
-            screen.usernameValid = true
+            screen.isUsernameValid = true
         }
         else {
-            screen.usernameValid = nil
+            screen.isUsernameValid = nil
         }
 
         if Validator.isValidPassword(password) {
-            screen.passwordValid = true
+            screen.isPasswordValid = true
         }
         else {
-            screen.passwordValid = nil
+            screen.isPasswordValid = nil
         }
     }
 

@@ -13,10 +13,10 @@ class ForgotPasswordEmailScreen: CredentialsScreen {
     }
     weak var delegate: ForgotPasswordEmailDelegate?
 
-    var emailValid: Bool? = nil {
+    var isEmailValid: Bool? = nil {
         didSet {
-            if let emailValid = emailValid {
-                emailField.validationState = emailValid ? .okSmall : .error
+            if let isEmailValid = isEmailValid {
+                emailField.validationState = isEmailValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
             else {
@@ -113,7 +113,7 @@ extension ForgotPasswordEmailScreen: ForgotPasswordEmailScreenProtocol {
 
     func showEmailError(_ text: String) {
         emailErrorLabel.text = text
-        emailValid = false
+        isEmailValid = false
 
         animate {
             self.emailMarginConstraint.activate()
@@ -172,8 +172,8 @@ extension ForgotPasswordEmailScreen {
     }
 
     func allFieldsValid() -> Bool {
-        if let emailValid = emailValid {
-            return emailValid
+        if let isEmailValid = isEmailValid {
+            return isEmailValid
         }
         else {
             return false

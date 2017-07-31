@@ -98,7 +98,7 @@ struct StreamCellItemParser {
         // set initial state on the items, but don't toggle the footer's state, it is used by comment open/closed
         for item in cellItems {
             if let post = item.jsonable as? Post, item.type != .streamFooter {
-                item.state = post.collapsed ? .collapsed : .expanded
+                item.state = post.isCollapsed ? .collapsed : .expanded
             }
         }
 
@@ -114,7 +114,7 @@ struct StreamCellItemParser {
     }
 
     fileprivate func postToggleItems(_ post: Post) -> [StreamCellItem] {
-        if post.collapsed {
+        if post.isCollapsed {
             return [StreamCellItem(jsonable: post, type: .toggle)]
         }
         else {

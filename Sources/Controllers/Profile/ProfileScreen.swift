@@ -291,7 +291,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         mentionButton.isEnabled = enabled
         editButton.isEnabled = enabled
         inviteButton.isEnabled = enabled
-        relationshipControl.enabled = enabled
+        relationshipControl.isEnabled = enabled
     }
 
     func updateRelationshipControl(user: User) {

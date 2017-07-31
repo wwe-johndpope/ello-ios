@@ -21,7 +21,7 @@ protocol OmnibarScreenProtocol: class {
     var currentUser: User? { get set }
     var canGoBack: Bool { get set }
     var isEditing: Bool { get set }
-    var interactionEnabled: Bool { get set }
+    var isInteractionEnabled: Bool { get set }
     func resetAfterSuccessfulPost()
     func reportError(_ title: String, error: NSError)
     func reportError(_ title: String, errorMessage: String)

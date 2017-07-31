@@ -106,7 +106,7 @@ class StreamKindSpec: QuickSpec {
                     expect(StreamKind.following.endpoint.path) == "/api/\(ElloAPI.apiVersion)/following/posts/recent"
                     expect(StreamKind.notifications(category: "").endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"
                     expect(StreamKind.postDetail(postParam: "param").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts/param"
-                    expect(StreamKind.postDetail(postParam: "param").endpoint.parameters!["comment_count"] as? Int) == 10
+                    expect(StreamKind.postDetail(postParam: "param").endpoint.parameters!["comment_count"] as? Int) == 0
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForPosts(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/posts"
                     expect(StreamKind.simpleStream(endpoint: ElloAPI.searchForUsers(terms: "meat"), title: "meat").endpoint.path) == "/api/\(ElloAPI.apiVersion)/users"
                     expect(StreamKind.unknown.endpoint.path) == "/api/\(ElloAPI.apiVersion)/notifications"

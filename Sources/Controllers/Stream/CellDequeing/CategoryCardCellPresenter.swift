@@ -18,7 +18,7 @@ struct CategoryCardCellPresenter {
 
         cell.title = category.name
         cell.imageURL = category.tileURL
-        cell.selectable = streamCellItem.type == .selectableCategoryCard
+        cell.isSelectable = streamCellItem.type == .selectableCategoryCard
     }
 
 }

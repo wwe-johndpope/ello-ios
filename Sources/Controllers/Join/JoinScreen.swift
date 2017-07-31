@@ -15,10 +15,10 @@ class JoinScreen: CredentialsScreen {
     }
 
     weak var delegate: JoinDelegate?
-    var emailValid: Bool? = nil {
+    var isEmailValid: Bool? = nil {
         didSet {
-            if let emailValid = emailValid {
-                emailField.validationState = emailValid ? .okSmall : .error
+            if let isEmailValid = isEmailValid {
+                emailField.validationState = isEmailValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
             else {
@@ -30,10 +30,10 @@ class JoinScreen: CredentialsScreen {
         get { return emailField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? "" }
         set { emailField.text = newValue }
     }
-    var usernameValid: Bool? = nil {
+    var isUsernameValid: Bool? = nil {
         didSet {
-            if let usernameValid = usernameValid {
-                usernameField.validationState = usernameValid ? .okSmall : .error
+            if let isUsernameValid = isUsernameValid {
+                usernameField.validationState = isUsernameValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
             else {
@@ -45,10 +45,10 @@ class JoinScreen: CredentialsScreen {
         get { return usernameField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? "" }
         set { usernameField.text = newValue }
     }
-    var passwordValid: Bool? = nil {
+    var isPasswordValid: Bool? = nil {
         didSet {
-            if let passwordValid = passwordValid {
-                passwordField.validationState = passwordValid ? .okSmall : .error
+            if let isPasswordValid = isPasswordValid {
+                passwordField.validationState = isPasswordValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
             else {
@@ -60,8 +60,8 @@ class JoinScreen: CredentialsScreen {
         get { return passwordField.text ?? "" }
         set { passwordField.text = newValue }
     }
-    var onePasswordAvailable = false {
-        didSet { passwordField.hasOnePassword = onePasswordAvailable }
+    var isOnePasswordAvailable = false {
+        didSet { passwordField.hasOnePassword = isOnePasswordAvailable }
     }
 
     let emailField = ClearTextField()
@@ -128,7 +128,7 @@ class JoinScreen: CredentialsScreen {
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
         passwordField.returnKeyType = .join
-        passwordField.hasOnePassword = onePasswordAvailable
+        passwordField.hasOnePassword = isOnePasswordAvailable
 
         messageLabel.isMultiline = true
 
@@ -242,11 +242,11 @@ class JoinScreen: CredentialsScreen {
 
 extension JoinScreen {
     func allFieldsValid() -> Bool {
-        if let emailValid = emailValid,
-            let usernameValid = usernameValid,
-            let passwordValid = passwordValid
+        if let isEmailValid = isEmailValid,
+            let isUsernameValid = isUsernameValid,
+            let isPasswordValid = isPasswordValid
         {
-            return emailValid && usernameValid && passwordValid
+            return isEmailValid && isUsernameValid && isPasswordValid
         }
         else {
             return false
@@ -393,7 +393,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showUsernameError(_ text: String) {
         usernameErrorLabel.text = text
-        usernameValid = false
+        isUsernameValid = false
 
         animate {
             self.usernameMarginConstraint.activate()
@@ -412,7 +412,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showEmailError(_ text: String) {
         emailErrorLabel.text = text
-        emailValid = false
+        isEmailValid = false
 
         animate {
             self.emailMarginConstraint.activate()
@@ -431,7 +431,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showPasswordError(_ text: String) {
         passwordErrorLabel.text = text
-        passwordValid = false
+        isPasswordValid = false
 
         animate {
             self.passwordMarginConstraint.activate()

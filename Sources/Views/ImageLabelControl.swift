@@ -24,7 +24,7 @@ class ImageLabelControl: UIControl {
 
     override var isSelected: Bool {
         didSet {
-            icon.selected = isSelected
+            icon.isSelected = isSelected
             updateTextColor()
 
         }
@@ -32,14 +32,14 @@ class ImageLabelControl: UIControl {
 
     override var isHighlighted: Bool {
         didSet {
-            icon.highlighted = isHighlighted
+            icon.isHighlighted = isHighlighted
             updateTextColor()
         }
     }
 
     override var isEnabled: Bool {
         didSet {
-            icon.enabled = isEnabled
+            icon.isEnabled = isEnabled
         }
     }
 

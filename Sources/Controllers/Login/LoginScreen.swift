@@ -17,9 +17,9 @@ class LoginScreen: CredentialsScreen {
         get { return usernameField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? "" }
         set { usernameField.text = newValue }
     }
-    var usernameValid: Bool? = nil {
+    var isUsernameValid: Bool? = nil {
         didSet {
-            if let usernameValid = usernameValid {
+            if let usernameValid = isUsernameValid {
                 usernameField.validationState = usernameValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
@@ -32,9 +32,9 @@ class LoginScreen: CredentialsScreen {
         get { return passwordField.text ?? "" }
         set { passwordField.text = newValue }
     }
-    var passwordValid: Bool? = nil {
+    var isPasswordValid: Bool? = nil {
         didSet {
-            if let passwordValid = passwordValid {
+            if let passwordValid = isPasswordValid {
                 passwordField.validationState = passwordValid ? .okSmall : .error
                 styleContinueButton(allValid: allFieldsValid())
             }
@@ -43,8 +43,8 @@ class LoginScreen: CredentialsScreen {
             }
         }
     }
-    var onePasswordAvailable = false {
-        didSet { passwordField.hasOnePassword = onePasswordAvailable }
+    var isOnePasswordAvailable = false {
+        didSet { passwordField.hasOnePassword = isOnePasswordAvailable }
     }
 
     let usernameField = ClearTextField()
@@ -82,7 +82,7 @@ class LoginScreen: CredentialsScreen {
         ElloTextFieldView.styleAsEmailField(usernameField)
 
         ElloTextFieldView.styleAsPasswordField(passwordField)
-        passwordField.hasOnePassword = onePasswordAvailable
+        passwordField.hasOnePassword = isOnePasswordAvailable
 
         continueBackground.backgroundColor = .white
 
@@ -147,8 +147,8 @@ class LoginScreen: CredentialsScreen {
 
 extension LoginScreen {
     func allFieldsValid() -> Bool {
-        if let usernameValid = usernameValid,
-            let passwordValid = passwordValid
+        if let usernameValid = isUsernameValid,
+            let passwordValid = isPasswordValid
         {
             return usernameValid && passwordValid
         }
@@ -225,8 +225,8 @@ extension LoginScreen: LoginScreenProtocol {
 
     func showError(_ text: String) {
         errorLabel.text = text
-        usernameValid = false
-        passwordValid = false
+        isUsernameValid = false
+        isPasswordValid = false
 
         animate {
             self.errorLabel.alpha = 1.0

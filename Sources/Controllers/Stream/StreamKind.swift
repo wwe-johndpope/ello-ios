@@ -106,7 +106,7 @@ enum StreamKind {
         case let .artistInviteDetail(id): return .artistInviteDetail(id: id)
         case .following: return .following
         case let .notifications(category): return .notificationsStream(category: category)
-        case let .postDetail(postParam): return .postDetail(postParam: postParam, commentCount: 10)
+        case let .postDetail(postParam): return .postDetail(postParam: postParam)
         case let .simpleStream(endpoint, _): return endpoint
         case .unknown: return .notificationsStream(category: nil) // doesn't really get used
         case let .userStream(userParam): return .userStream(userParam: userParam)
