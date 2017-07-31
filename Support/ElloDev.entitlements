@@ -7,8 +7,9 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:staging.ello.co</string>
-		<string>applinks:ello-staging3.herokuapp.com</string>
-		<string>applinks:ello-staging2.herokuapp.com</string>
+		<string>applinks:ninja.ello.co</string>
+		<string>applinks:ello-fg-stage1.herokuapp.com</string>
+		<string>applinks:ello-fg-stage2.herokuapp.com</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
