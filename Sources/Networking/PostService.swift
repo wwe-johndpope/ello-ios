@@ -142,9 +142,9 @@ struct PostService {
             .asVoid()
     }
 
-    func toggleWatchPost(_ post: Post, watching: Bool) -> Promise<Post> {
+    func toggleWatchPost(_ post: Post, isWatching: Bool) -> Promise<Post> {
         let api: ElloAPI
-        if watching {
+        if isWatching {
             api = ElloAPI.createWatchPost(postId: post.id)
         }
         else {
@@ -153,13 +153,13 @@ struct PostService {
 
         return ElloProvider.shared.request(api)
             .then { data, _ -> Post in
-                if watching,
+                if isWatching,
                     let watch = data as? Watch,
                     let post = watch.post
                 {
                     return post
                 }
-                else if !watching {
+                else if !isWatching {
                     post.watching = false
                     ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
                     return post

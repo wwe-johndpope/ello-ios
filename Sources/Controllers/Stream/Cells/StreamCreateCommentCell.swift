@@ -29,9 +29,9 @@ class StreamCreateCommentCell: UICollectionViewCell {
     let replyAllButton = UIButton()
     let watchButton = UIButton()
 
-    var watching = false {
+    var isWatching = false {
         didSet {
-            watchButton.setImage(.watch, imageStyle: watching ? .green : .normal, for: .normal)
+            watchButton.setImage(.watch, imageStyle: isWatching ? .green : .normal, for: .normal)
         }
     }
     var avatarURL: URL? {
@@ -144,7 +144,7 @@ class StreamCreateCommentCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         avatarView.pin_cancelImageDownload()
-        watching = false
+        isWatching = false
         watchButtonHiddenConstraint.deactivate()
         replyAllButtonVisibleConstraint.deactivate()
         replyAllButtonHiddenConstraint.deactivate()
@@ -186,7 +186,7 @@ class StreamCreateCommentCell: UICollectionViewCell {
 
     func watchTapped() {
         let responder: PostbarResponder? = findResponder()
-        responder?.watchPostTapped(!watching, cell: self)
+        responder?.watchPostTapped(!isWatching, cell: self)
     }
 
 }

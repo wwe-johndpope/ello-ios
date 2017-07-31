@@ -155,11 +155,11 @@ final class Post: JSONAble, Authorable, Groupable {
         self.reposted = decoder.decodeKey("reposted")
         self.loved = decoder.decodeKey("loved")
         let version: Int = decoder.decodeKey("version")
-        if version == 1 {
-            self.watching = false
+        if version > 1 {
+            self.watching = decoder.decodeKey("watching")
         }
         else {
-            self.watching = decoder.decodeKey("watching")
+            self.watching = false
         }
         // optional
         self.content = decoder.decodeOptionalKey("content")

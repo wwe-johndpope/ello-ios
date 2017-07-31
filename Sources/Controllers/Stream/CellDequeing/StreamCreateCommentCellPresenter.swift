@@ -40,7 +40,7 @@ struct StreamCreateCommentCellPresenter {
 
         cell.avatarURL = user.avatarURL()
         cell.replyAllVisibility = replyAllVisibility
-        cell.watching = post.watching
+        cell.isWatching = post.watching
         cell.watchVisibility = watchVisibility
     }
 

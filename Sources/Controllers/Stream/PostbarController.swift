@@ -14,7 +14,7 @@ protocol PostbarResponder: class {
     func flagCommentButtonTapped(_ cell: UICollectionViewCell)
     func replyToCommentButtonTapped(_ cell: UICollectionViewCell)
     func replyToAllButtonTapped(_ cell: UICollectionViewCell)
-    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell)
+    func watchPostTapped(_ isWatching: Bool, cell: StreamCreateCommentCell)
 }
 
 @objc
@@ -445,7 +445,7 @@ class PostbarController: UIResponder, PostbarResponder {
             }
     }
 
-    func watchPostTapped(_ watching: Bool, cell: StreamCreateCommentCell) {
+    func watchPostTapped(_ isWatching: Bool, cell: StreamCreateCommentCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
@@ -456,16 +456,22 @@ class PostbarController: UIResponder, PostbarResponder {
             let post = comment.parentPost
         else { return }
 
-        cell.watching = watching
+        cell.isWatching = isWatching
         cell.isUserInteractionEnabled = false
-        PostService().toggleWatchPost(post, watching: watching)
+        PostService().toggleWatchPost(post, isWatching: isWatching)
             .thenFinally { post in
                 cell.isUserInteractionEnabled = true
+                if isWatching {
+                    Tracker.shared.postWatched(post)
+                }
+                else {
+                    Tracker.shared.postUnwatched(post)
+                }
                 postNotification(PostChangedNotification, value: (post, .watching))
             }
             .catch { error in
                 cell.isUserInteractionEnabled = true
-                cell.watching = !watching
+                cell.isWatching = !isWatching
             }
     }
 
