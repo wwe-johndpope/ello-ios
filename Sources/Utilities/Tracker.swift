@@ -499,20 +499,47 @@ extension Tracker {
         track("User shared", properties: ["user_id": user.id])
     }
 
+}
+
+extension Tracker {
+    fileprivate func postProps(_ post: Post, additional: [String: Any] = [:]) -> [String: Any] {
+        var props: [String: Any] = ["post_id": post.id]
+        if let artistInviteId = post.artistInviteId {
+            props["artistInviteId"] = artistInviteId
+        }
+        return props + additional
+    }
+
     func postReposted(_ post: Post) {
-        track("Post reposted", properties: ["post_id": post.id])
+        track("Post reposted", properties: postProps(post))
     }
 
     func postShared(_ post: Post) {
-        track("Post shared", properties: ["post_id": post.id])
+        track("Post shared", properties: postProps(post))
     }
 
     func postLoved(_ post: Post, via: String) {
-        track("Post loved", properties: ["post_id": post.id, "via": via])
+        var props: [String: Any] = ["post_id": post.id, "via": via]
+        if let artistInviteId = post.artistInviteId {
+            props["artistInviteId"] = artistInviteId
+        }
+        track("Post loved", properties: postProps(post, additional: ["via": via]))
     }
 
     func postUnloved(_ post: Post) {
-        track("Post unloved", properties: ["post_id": post.id])
+        track("Post unloved", properties: postProps(post))
+    }
+
+    func postWatched(_ post: Post) {
+        track("Post watched", properties: postProps(post))
+    }
+
+    func postUnwatched(_ post: Post) {
+        var props: [String: Any] = ["post_id": post.id]
+        if let artistInviteId = post.artistInviteId {
+            props["artistInviteId"] = artistInviteId
+        }
+        track("Post unwatched", properties: props)
     }
 }
 
