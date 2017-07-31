@@ -37,6 +37,7 @@ final class ArtistInvite: JSONAble, Groupable {
     }
 
     let id: String
+    let slug: String
     let title: String
     let shortDescription: String
     let submissionBody: String
@@ -57,6 +58,7 @@ final class ArtistInvite: JSONAble, Groupable {
 
     init(
         id: String,
+        slug: String,
         title: String,
         shortDescription: String,
         submissionBody: String,
@@ -67,6 +69,7 @@ final class ArtistInvite: JSONAble, Groupable {
         closedAt: Date?)
     {
         self.id = id
+        self.slug = slug
         self.title = title
         self.shortDescription = shortDescription
         self.submissionBody = submissionBody
@@ -81,6 +84,7 @@ final class ArtistInvite: JSONAble, Groupable {
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
         id = decoder.decodeKey("id")
+        slug = decoder.decodeKey("slug")
         title = decoder.decodeKey("title")
         shortDescription = decoder.decodeKey("shortDescription")
         submissionBody = decoder.decodeKey("submissionBody")
@@ -95,6 +99,7 @@ final class ArtistInvite: JSONAble, Groupable {
     override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(id, forKey: "id")
+        encoder.encodeObject(slug, forKey: "slug")
         encoder.encodeObject(title, forKey: "title")
         encoder.encodeObject(shortDescription, forKey: "shortDescription")
         encoder.encodeObject(submissionBody, forKey: "submissionBody")
@@ -110,6 +115,7 @@ final class ArtistInvite: JSONAble, Groupable {
         let json = JSON(data)
 
         let id = json["id"].stringValue
+        let slug = json["slug"].stringValue
         let title = json["title"].stringValue
         let shortDescription = json["short_description"].stringValue
         let longDescription = json["description"].stringValue
@@ -121,6 +127,7 @@ final class ArtistInvite: JSONAble, Groupable {
 
         let artistInvite = ArtistInvite(
             id: id,
+            slug: slug,
             title: title,
             shortDescription: shortDescription,
             submissionBody: submissionBody,

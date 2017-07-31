@@ -41,7 +41,7 @@ class OmnibarViewController: BaseElloViewController {
             }
         }
     }
-    var artistInviteId: String?
+    var artistInvite: (id: String, slug: String)?
 
     typealias CommentSuccessListener = (_ comment: ElloComment) -> Void
     typealias PostSuccessListener = (_ post: Post) -> Void
@@ -142,7 +142,7 @@ class OmnibarViewController: BaseElloViewController {
                 screen.submitTitle = InterfaceString.Omnibar.CreateCommentButton
                 isComment = true
             }
-            else if artistInviteId != nil {
+            else if artistInvite != nil {
                 screen.title = InterfaceString.Omnibar.CreateArtistInviteTitle
                 screen.submitTitle = InterfaceString.Omnibar.CreateArtistInviteButton
                 isComment = false
@@ -247,7 +247,7 @@ class OmnibarViewController: BaseElloViewController {
         }
         screen.regions = regions
         screen.isComment = isComment
-        screen.isArtistInviteSubmission = artistInviteId != nil
+        screen.isArtistInviteSubmission = artistInvite != nil
         screen.buyButtonURL = buyButtonURL
 
         let completed = after(downloads.count) {
@@ -421,7 +421,7 @@ extension OmnibarViewController {
         service.create(
             content: content,
             buyButtonURL: buyButtonURL,
-            artistInviteId: artistInviteId
+            artistInviteId: artistInvite?.id
             )
             .thenFinally { postOrComment in
                 if self.editPost != nil || self.editComment != nil {
@@ -498,6 +498,9 @@ extension OmnibarViewController {
             }
 
             Tracker.shared.postCreated(post)
+            if let artistInviteSlug = artistInvite?.slug {
+                Tracker.shared.artistInviteSubmitted(slug: artistInviteSlug)
+            }
             postNotification(PostChangedNotification, value: (post, .create))
         }
 

@@ -644,8 +644,16 @@ extension Tracker {
 // MARK: ArtistInvites
 extension Tracker {
 
+    func artistInvitesBrowsed() {
+        track("Clocked Artist Invites")
+    }
+
     func artistInviteOpened(_ artistInvite: ArtistInvite) {
-        track("Artist Invite Clicked", properties: ["artistInvite": artistInvite.id])
+        track("Clicked Artist Invite", properties: ["artistInvite": artistInvite.slug])
+    }
+
+    func artistInviteSubmitted(slug: String) {
+        track("Submitted Artist Invite", properties: ["artistInvite": slug])
     }
 
 }

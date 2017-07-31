@@ -34,6 +34,7 @@ final class Post: JSONAble, Authorable, Groupable {
     var repostPath: String?
     var repostViaId: String?
     var repostViaPath: String?
+    var artistInviteId: String?
     var viewsCount: Int?
     var commentsCount: Int?
     var repostsCount: Int?
@@ -168,6 +169,7 @@ final class Post: JSONAble, Authorable, Groupable {
         self.repostPath = decoder.decodeOptionalKey("repostPath")
         self.repostViaId = decoder.decodeOptionalKey("repostViaId")
         self.repostViaPath = decoder.decodeOptionalKey("repostViaPath")
+        self.artistInviteId = decoder.decodeOptionalKey("artistInviteId")
         self.viewsCount = decoder.decodeOptionalKey("viewsCount")
         self.commentsCount = decoder.decodeOptionalKey("commentsCount")
         self.repostsCount = decoder.decodeOptionalKey("repostsCount")
@@ -202,6 +204,7 @@ final class Post: JSONAble, Authorable, Groupable {
         coder.encodeObject(repostPath, forKey: "repostPath")
         coder.encodeObject(repostViaId, forKey: "repostViaId")
         coder.encodeObject(repostViaPath, forKey: "repostViaPath")
+        coder.encodeObject(artistInviteId, forKey: "artistInviteId")
         coder.encodeObject(reposted, forKey: "reposted")
         coder.encodeObject(loved, forKey: "loved")
         coder.encodeObject(watching, forKey: "watching")
@@ -247,6 +250,7 @@ final class Post: JSONAble, Authorable, Groupable {
         post.repostPath = json["repost_path"].string
         post.repostViaId = json["repost_via_id"].string
         post.repostViaPath = json["repost_via_path"].string
+        post.artistInviteId = json["artist_invite_id"].string
         post.viewsCount = json["views_count"].int
         post.commentsCount = json["comments_count"].int
         post.repostsCount = json["reposts_count"].int
