@@ -35,12 +35,23 @@ class Screen: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+
+        screenInit()
+        style()
+        bindActions()
+        setText()
+        arrange()
     }
 
     deinit {
         teardownKeyboardObservers()
     }
+
+    func style() {}
+    func bindActions() {}
+    func setText() {}
+    func arrange() {}
 
     override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
@@ -77,11 +88,7 @@ class Screen: UIView {
     func keyboardIsAnimating(_ keyboard: Keyboard) {}
     func keyboardDidAnimate() {}
 
-    func screenInit() {}
-    func style() {}
-    func bindActions() {}
-    func setText() {}
-    func arrange() {
+    fileprivate func screenInit() {
         keyboardAnchor.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
             keyboardTopConstraint = make.top.equalTo(self.snp.bottom).constraint

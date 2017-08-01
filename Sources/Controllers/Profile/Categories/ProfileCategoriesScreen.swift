@@ -55,8 +55,6 @@ class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
     }
 
     override func arrange() {
-        super.arrange()
-
         addSubview(textView)
         addSubview(learnMoreButton)
 

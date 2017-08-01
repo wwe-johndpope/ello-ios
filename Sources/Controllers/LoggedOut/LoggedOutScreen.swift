@@ -63,8 +63,6 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
     }
 
     override func arrange() {
-        super.arrange()
-
         addSubview(controllerView)
         addSubview(bottomBarView)
         bottomBarView.addSubview(loginButton)

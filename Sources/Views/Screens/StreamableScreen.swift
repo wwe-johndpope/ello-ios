@@ -26,8 +26,6 @@ class StreamableScreen: Screen, StreamableScreenProtocol {
     }
 
     override func arrange() {
-        super.arrange()
-
         addSubview(streamContainer)
         addSubview(navigationBar)
 

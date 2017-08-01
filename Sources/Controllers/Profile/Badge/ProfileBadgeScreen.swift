@@ -47,8 +47,6 @@ class ProfileBadgeScreen: Screen, ProfileBadgeScreenProtocol {
     }
 
     override func arrange() {
-        super.arrange()
-
         addSubview(titleLabel)
         addSubview(learnMoreButton)
 
