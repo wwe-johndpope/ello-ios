@@ -850,6 +850,7 @@
 		1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */; };
 		1DDC23361F30D94800E68B0E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */; };
 		1DDC233C1F30FF7E00E68B0E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233B1F30FF7E00E68B0E /* View.swift */; };
+		1DDC233E1F30FF8400E68B0E /* NestedTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233D1F30FF8400E68B0E /* NestedTabBarView.swift */; };
 		1DDC85151D91D4BE00C29552 /* WatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85141D91D4BE00C29552 /* WatchSpec.swift */; };
 		1DDC851A1D91D4F300C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
 		1DDC851B1D91D52D00C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
@@ -1911,6 +1912,7 @@
 		1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCell.swift; sourceTree = "<group>"; };
 		1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1DDC233B1F30FF7E00E68B0E /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		1DDC233D1F30FF8400E68B0E /* NestedTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedTabBarView.swift; sourceTree = "<group>"; };
 		1DDC85141D91D4BE00C29552 /* WatchSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSpec.swift; sourceTree = "<group>"; };
 		1DDC85161D91D4D200C29552 /* Watch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watch.swift; sourceTree = "<group>"; };
 		1DDC85181D91D4E400C29552 /* watches_creating_a_watch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = watches_creating_a_watch.json; sourceTree = "<group>"; };
@@ -3296,6 +3298,7 @@
 				1289F3911AF1468B008A938C /* ImageLabelControl.swift */,
 				1D59EF841D5CFC480029C106 /* InterpolatedLoadingView.swift */,
 				1DF404091B150DB40073460B /* NarrationView.swift */,
+				1DDC233D1F30FF8400E68B0E /* NestedTabBarView.swift */,
 				1DF0B2DD1E8EBACE001B9F97 /* NewPostsButton.swift */,
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
 				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
@@ -5569,6 +5572,7 @@
 				1D7152C51D6F81D2005998FE /* CredentialsScreen.swift in Sources */,
 				766375E01AA911090096FA51 /* SimpleStreamViewController.swift in Sources */,
 				12384EBB1C56B3C200608BD8 /* UIViewExtensions.swift in Sources */,
+				1DDC233E1F30FF8400E68B0E /* NestedTabBarView.swift in Sources */,
 				1220347F1DECCE890059E633 /* ProfileLocationView.swift in Sources */,
 				1D70DE611DF6229B008AF216 /* NotificationsGenerator.swift in Sources */,
 				1DA18E541DCCFB8A000231CC /* PagePromotionalHeaderCellPresenter.swift in Sources */,
