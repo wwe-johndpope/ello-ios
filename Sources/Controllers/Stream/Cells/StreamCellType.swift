@@ -18,40 +18,40 @@ func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
 enum StreamCellType: Equatable {
     case announcement
     case artistInviteBubble
-    case artistInviteHeader
-    case artistInviteSubmissionsButton
     case artistInviteControls
     case artistInviteGuide(ArtistInvite.Guide?)
+    case artistInviteHeader
+    case artistInviteSubmissionsButton
     case badge
     case categoryCard
-    case selectableCategoryCard
     case categoryList
     case categoryPromotionalHeader
     case commentHeader
     case createComment
     case editorial(Editorial.Kind)
     case embed(data: Regionable?)
-    case streamFooter
-    case streamHeader
+    case emptyStream(height: CGFloat)
+    case fullWidthSpacer(height: CGFloat)
+    case header(NSAttributedString?)
     case image(data: Regionable?)
     case inviteFriends
-    case onboardingInviteFriends
-    case emptyStream(height: CGFloat)
     case loadMoreComments
     case noPosts
     case notification
+    case onboardingInviteFriends
     case pagePromotionalHeader
     case placeholder
     case profileHeader
     case profileHeaderGhost
     case search(placeholder: String)
     case seeMoreComments
+    case selectableCategoryCard
     case spacer(height: CGFloat)
-    case fullWidthSpacer(height: CGFloat)
+    case streamFooter
+    case streamHeader
     case streamLoading
-    case text(data: Regionable?)
-    case header(NSAttributedString?)
     case tallHeader(NSAttributedString?)
+    case text(data: Regionable?)
     case toggle
     case unknown
     case userAvatars
@@ -70,6 +70,7 @@ enum StreamCellType: Equatable {
         case artistInvites
         case artistInviteSubmissionsButton
         case artistInviteDetails
+        case artistInviteAdmin
         case artistInviteSubmissionsHeader
         case artistInvitePosts
 
@@ -89,47 +90,47 @@ enum StreamCellType: Equatable {
     }
 
     static let all: [StreamCellType] = [
+        .announcement,
+        .artistInviteBubble,
+        .artistInviteControls,
+        .artistInviteGuide(nil),
+        .artistInviteHeader,
+        .artistInviteSubmissionsButton,
         .badge,
         .categoryCard,
-        .categoryPromotionalHeader,
-        .selectableCategoryCard,
         .categoryList,
+        .categoryPromotionalHeader,
         .commentHeader,
         .createComment,
+        .editorial(.external),
+        .editorial(.internal),
+        .editorial(.invite),
+        .editorial(.join),
+        .editorial(.post),
+        .editorial(.postStream),
         .embed(data: nil),
         .emptyStream(height: 282),
-        .streamFooter,
-        .streamHeader,
+        .fullWidthSpacer(height: 0.0),
+        .header(nil),
         .image(data: nil),
         .inviteFriends,
-        .onboardingInviteFriends,
         .loadMoreComments,
         .noPosts,
         .notification,
+        .onboardingInviteFriends,
         .pagePromotionalHeader,
-        .announcement,
-        .artistInviteBubble,
-        .artistInviteHeader,
-        .artistInviteSubmissionsButton,
-        .artistInviteControls,
-        .artistInviteGuide(nil),
-        .editorial(.internal),
-        .editorial(.external),
-        .editorial(.postStream),
-        .editorial(.post),
-        .editorial(.invite),
-        .editorial(.join),
+        .placeholder,
         .profileHeader,
         .profileHeaderGhost,
         .search(placeholder: ""),
         .seeMoreComments,
+        .selectableCategoryCard,
         .spacer(height: 0.0),
-        .fullWidthSpacer(height: 0.0),
-        .placeholder,
+        .streamFooter,
+        .streamHeader,
         .streamLoading,
-        .text(data: nil),
-        .header(nil),
         .tallHeader(nil),
+        .text(data: nil),
         .toggle,
         .unknown,
         .userAvatars,
@@ -138,12 +139,12 @@ enum StreamCellType: Equatable {
 
     var data: Any? {
         switch self {
-        case let .embed(data): return data
-        case let .image(data): return data
-        case let .text(data): return data
-        case let .header(data): return data
-        case let .tallHeader(data): return data
         case let .artistInviteGuide(data): return data
+        case let .embed(data): return data
+        case let .header(data): return data
+        case let .image(data): return data
+        case let .tallHeader(data): return data
+        case let .text(data): return data
         default: return nil
         }
     }
@@ -155,39 +156,39 @@ enum StreamCellType: Equatable {
 
     var reuseIdentifier: String {
         switch self {
+        case .announcement: return AnnouncementCell.reuseIdentifier
+        case .artistInviteBubble: return ArtistInviteBubbleCell.reuseIdentifier
+        case .artistInviteControls: return ArtistInviteControlsCell.reuseIdentifier
+        case .artistInviteGuide: return ArtistInviteGuideCell.reuseIdentifier
+        case .artistInviteHeader: return ArtistInviteHeaderCell.reuseIdentifier
+        case .artistInviteSubmissionsButton: return ArtistInviteSubmissionsButtonCell.reuseIdentifier
         case .badge: return BadgeCell.reuseIdentifier
         case .categoryCard: return CategoryCardCell.reuseIdentifier
-        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
-        case .selectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case .categoryList: return CategoryListCell.reuseIdentifier
+        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
         case .commentHeader, .streamHeader: return StreamHeaderCell.reuseIdentifier
         case .createComment: return StreamCreateCommentCell.reuseIdentifier
+        case let .editorial(kind): return kind.reuseIdentifier
         case .embed: return StreamEmbedCell.reuseEmbedIdentifier
         case .emptyStream: return EmptyStreamCell.reuseEmbedIdentifier
-        case .streamFooter: return StreamFooterCell.reuseIdentifier
+        case .fullWidthSpacer: return "StreamSpacerCell"
+        case .header: return TextHeaderCell.reuseIdentifier
         case .image: return StreamImageCell.reuseIdentifier
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.reuseIdentifier
         case .loadMoreComments: return StreamLoadMoreCommentsCell.reuseIdentifier
         case .noPosts: return NoPostsCell.reuseIdentifier
         case .notification: return NotificationCell.reuseIdentifier
         case .placeholder: return "Placeholder"
-        case .announcement: return AnnouncementCell.reuseIdentifier
-        case .artistInviteBubble: return ArtistInviteBubbleCell.reuseIdentifier
-        case .artistInviteHeader: return ArtistInviteHeaderCell.reuseIdentifier
-        case .artistInviteSubmissionsButton: return ArtistInviteSubmissionsButtonCell.reuseIdentifier
-        case .artistInviteControls: return ArtistInviteControlsCell.reuseIdentifier
-        case .artistInviteGuide: return ArtistInviteGuideCell.reuseIdentifier
-        case let .editorial(kind): return kind.reuseIdentifier
         case .profileHeader: return ProfileHeaderCell.reuseIdentifier
         case .profileHeaderGhost: return ProfileHeaderGhostCell.reuseIdentifier
         case .search: return SearchStreamCell.reuseIdentifier
         case .seeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
+        case .selectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case .spacer: return "StreamSpacerCell"
-        case .fullWidthSpacer: return "StreamSpacerCell"
+        case .streamFooter: return StreamFooterCell.reuseIdentifier
         case .streamLoading: return StreamLoadingCell.reuseIdentifier
-        case .text: return StreamTextCell.reuseIdentifier
-        case .header: return TextHeaderCell.reuseIdentifier
         case .tallHeader: return TextHeaderCell.reuseIdentifier
+        case .text: return StreamTextCell.reuseIdentifier
         case .toggle: return StreamToggleCell.reuseIdentifier
         case .unknown: return "StreamUnknownCell"
         case .userAvatars: return UserAvatarsCell.reuseIdentifier
@@ -202,13 +203,13 @@ enum StreamCellType: Equatable {
              .badge,
              .categoryCard,
              .createComment,
-             .streamHeader,
              .inviteFriends,
              .loadMoreComments,
              .notification,
              .onboardingInviteFriends,
              .seeMoreComments,
              .selectableCategoryCard,
+             .streamHeader,
              .toggle,
              .userListItem:
             return true
@@ -218,35 +219,35 @@ enum StreamCellType: Equatable {
 
     var configure: CellConfigClosure {
         switch self {
+        case .announcement: return AnnouncementCellPresenter.configure
+        case .artistInviteBubble: return ArtistInviteCellPresenter.configure
+        case .artistInviteControls: return ArtistInviteCellPresenter.configure
+        case .artistInviteGuide: return ArtistInviteCellPresenter.configureGuide
+        case .artistInviteHeader: return ArtistInviteCellPresenter.configure
         case .badge: return BadgeCellPresenter.configure
         case .categoryCard: return CategoryCardCellPresenter.configure
-        case .categoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
-        case .selectableCategoryCard: return CategoryCardCellPresenter.configure
         case .categoryList: return CategoryListCellPresenter.configure
+        case .categoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
         case .commentHeader, .streamHeader: return StreamHeaderCellPresenter.configure
         case .createComment: return StreamCreateCommentCellPresenter.configure
-        case .emptyStream: return EmptyStreamCellPresenter.configure
+        case .editorial: return EditorialCellPresenter.configure
         case .embed: return StreamEmbedCellPresenter.configure
-        case .streamFooter: return StreamFooterCellPresenter.configure
+        case .emptyStream: return EmptyStreamCellPresenter.configure
+        case .fullWidthSpacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
+        case .header: return TextHeaderCellPresenter.configure
         case .image: return StreamImageCellPresenter.configure
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCellPresenter.configure
         case .noPosts: return NoPostsCellPresenter.configure
         case .notification: return NotificationCellPresenter.configure
         case .pagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
-        case .announcement: return AnnouncementCellPresenter.configure
-        case .artistInviteBubble: return ArtistInviteCellPresenter.configure
-        case .artistInviteHeader: return ArtistInviteCellPresenter.configure
-        case .artistInviteControls: return ArtistInviteCellPresenter.configure
-        case .artistInviteGuide: return ArtistInviteCellPresenter.configureGuide
-        case .editorial: return EditorialCellPresenter.configure
         case .profileHeader: return ProfileHeaderCellPresenter.configure
         case .search: return SearchStreamCellPresenter.configure
+        case .selectableCategoryCard: return CategoryCardCellPresenter.configure
         case .spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
-        case .fullWidthSpacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
+        case .streamFooter: return StreamFooterCellPresenter.configure
         case .streamLoading: return StreamLoadingCellPresenter.configure
-        case .text: return StreamTextCellPresenter.configure
-        case .header: return TextHeaderCellPresenter.configure
         case .tallHeader: return TextHeaderCellPresenter.configure
+        case .text: return StreamTextCellPresenter.configure
         case .toggle: return StreamToggleCellPresenter.configure
         case .userAvatars: return UserAvatarsCellPresenter.configure
         case .userListItem: return UserListItemCellPresenter.configure
@@ -256,37 +257,37 @@ enum StreamCellType: Equatable {
 
     var classType: UICollectionViewCell.Type {
         switch self {
+        case .announcement: return AnnouncementCell.self
+        case .artistInviteBubble: return ArtistInviteBubbleCell.self
+        case .artistInviteControls: return ArtistInviteControlsCell.self
+        case .artistInviteGuide: return ArtistInviteGuideCell.self
+        case .artistInviteHeader: return ArtistInviteHeaderCell.self
+        case .artistInviteSubmissionsButton: return ArtistInviteSubmissionsButtonCell.self
         case .badge: return BadgeCell.self
         case .categoryCard: return CategoryCardCell.self
-        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.self
-        case .selectableCategoryCard: return CategoryCardCell.self
         case .categoryList: return CategoryListCell.self
+        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.self
         case .commentHeader, .streamHeader: return StreamHeaderCell.self
         case .createComment: return StreamCreateCommentCell.self
+        case let .editorial(kind): return kind.classType
         case .embed: return StreamEmbedCell.self
         case .emptyStream: return EmptyStreamCell.self
-        case .streamFooter: return StreamFooterCell.self
+        case .header: return TextHeaderCell.self
         case .image: return StreamImageCell.self
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.self
         case .loadMoreComments: return StreamLoadMoreCommentsCell.self
         case .noPosts: return NoPostsCell.self
         case .notification: return NotificationCell.self
         case .placeholder: return UICollectionViewCell.self
-        case .announcement: return AnnouncementCell.self
-        case .artistInviteBubble: return ArtistInviteBubbleCell.self
-        case .artistInviteHeader: return ArtistInviteHeaderCell.self
-        case .artistInviteSubmissionsButton: return ArtistInviteSubmissionsButtonCell.self
-        case .artistInviteControls: return ArtistInviteControlsCell.self
-        case .artistInviteGuide: return ArtistInviteGuideCell.self
-        case let .editorial(kind): return kind.classType
         case .profileHeader: return ProfileHeaderCell.self
         case .profileHeaderGhost: return ProfileHeaderGhostCell.self
         case .search: return SearchStreamCell.self
         case .seeMoreComments: return StreamSeeMoreCommentsCell.self
+        case .selectableCategoryCard: return CategoryCardCell.self
+        case .streamFooter: return StreamFooterCell.self
         case .streamLoading: return StreamLoadingCell.self
-        case .text: return StreamTextCell.self
-        case .header: return TextHeaderCell.self
         case .tallHeader: return TextHeaderCell.self
+        case .text: return StreamTextCell.self
         case .toggle: return StreamToggleCell.self
         case .unknown, .spacer, .fullWidthSpacer: return UICollectionViewCell.self
         case .userAvatars: return UserAvatarsCell.self
@@ -296,58 +297,58 @@ enum StreamCellType: Equatable {
 
     var oneColumnHeight: CGFloat {
         switch self {
+        case .announcement:
+            return 200
         case .artistInviteHeader:
             return ArtistInviteHeaderCell.Size.headerImageHeight + ArtistInviteHeaderCell.Size.totalTextHeight
         case .artistInviteSubmissionsButton:
             return ArtistInviteSubmissionsButtonCell.Size.height
         case .badge:
             return 64
-        case .categoryPromotionalHeader, .pagePromotionalHeader:
-            return 150
         case .categoryCard, .selectableCategoryCard:
             let width = UIWindow.windowWidth()
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
+        case .categoryPromotionalHeader, .pagePromotionalHeader:
+            return 150
         case .categoryList:
             return CategoryListCell.Size.height
         case .commentHeader,
              .inviteFriends,
              .onboardingInviteFriends,
              .seeMoreComments:
-            return 60
+                return 60
         case .createComment:
             return 75
-        case let .emptyStream(height):
-            return height
-        case .streamFooter:
-            return 44
-        case .streamHeader:
-            return 70
-        case .loadMoreComments:
-            return StreamLoadMoreCommentsCell.Size.height
-        case .noPosts:
-            return 215
-        case .notification:
-            return 117
         case .editorial:
             let width = UIWindow.windowWidth()
             let aspect = EditorialCell.Size.aspect
             let maxHeight: CGFloat = UIWindow.windowHeight() - 256
             let height = min(ceil(width / aspect), maxHeight)
             return height + 1
-        case .announcement:
-            return 200
-        case let .spacer(height):
+        case let .emptyStream(height):
             return height
         case let .fullWidthSpacer(height):
             return height
-        case .search:
-            return 68
-        case .streamLoading,
-             .userAvatars:
-            return 50
         case .header:
             return 30
+        case .loadMoreComments:
+            return StreamLoadMoreCommentsCell.Size.height
+        case .noPosts:
+            return 215
+        case .notification:
+            return 117
+        case .search:
+            return 68
+        case let .spacer(height):
+            return height
+        case .streamLoading,
+             .userAvatars:
+                return 50
+        case .streamFooter:
+            return 44
+        case .streamHeader:
+            return 70
         case .tallHeader:
             return 75
         case .toggle:
@@ -377,44 +378,44 @@ enum StreamCellType: Equatable {
 
     var isFullWidth: Bool {
         switch self {
-        case .badge,
-             .categoryPromotionalHeader,
+        case .announcement,
+             .artistInviteBubble,
+             .artistInviteControls,
+             .artistInviteGuide,
+             .artistInviteHeader,
+             .artistInviteSubmissionsButton,
+             .badge,
              .categoryList,
+             .categoryPromotionalHeader,
              .createComment,
-             .fullWidthSpacer,
-             .inviteFriends,
-             .onboardingInviteFriends,
+             .editorial,
              .emptyStream,
+             .fullWidthSpacer,
+             .header,
+             .inviteFriends,
              .loadMoreComments,
              .noPosts,
              .notification,
+             .onboardingInviteFriends,
              .pagePromotionalHeader,
-             .announcement,
-             .artistInviteBubble,
-             .artistInviteHeader,
-             .artistInviteSubmissionsButton,
-             .artistInviteControls,
-             .artistInviteGuide,
-             .editorial,
              .profileHeader,
              .profileHeaderGhost,
              .search,
              .seeMoreComments,
              .streamLoading,
-             .header,
              .tallHeader,
              .userAvatars,
              .userListItem:
             return true
         case .categoryCard,
-             .selectableCategoryCard,
              .commentHeader,
              .embed,
-             .streamFooter,
-             .streamHeader,
              .image,
              .placeholder,
+             .selectableCategoryCard,
              .spacer,
+             .streamFooter,
+             .streamHeader,
              .text,
              .toggle,
              .unknown:
@@ -431,38 +432,38 @@ enum StreamCellType: Equatable {
 
     static func registerAll(_ collectionView: UICollectionView) {
         let noNibTypes: [StreamCellType] = [
+            .announcement,
+            .artistInviteBubble,
+            .artistInviteControls,
+            .artistInviteGuide(nil),
+            .artistInviteHeader,
+            .artistInviteSubmissionsButton,
             .badge,
             .categoryCard,
-            .categoryPromotionalHeader,
-            .selectableCategoryCard,
             .categoryList,
+            .categoryPromotionalHeader,
             .createComment,
+            .editorial(.external),
+            .editorial(.internal),
+            .editorial(.invite),
+            .editorial(.join),
+            .editorial(.post),
+            .editorial(.postStream),
             .emptyStream(height: 282),
             .fullWidthSpacer(height: 0.0),
+            .header(nil),
             .loadMoreComments,
             .notification,
             .pagePromotionalHeader,
-            .announcement,
-            .artistInviteBubble,
-            .artistInviteHeader,
-            .artistInviteSubmissionsButton,
-            .artistInviteControls,
-            .artistInviteGuide(nil),
-            .editorial(.internal),
-            .editorial(.external),
-            .editorial(.postStream),
-            .editorial(.post),
-            .editorial(.invite),
-            .editorial(.join),
             .placeholder,
             .profileHeader,
             .profileHeaderGhost,
             .search(placeholder: ""),
+            .selectableCategoryCard,
             .spacer(height: 0.0),
-            .text(data: nil),
             .streamLoading,
-            .header(nil),
             .tallHeader(nil),
+            .text(data: nil),
             .unknown,
         ]
         for type in all {
