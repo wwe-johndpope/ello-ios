@@ -40,7 +40,7 @@ private extension ArtistInviteDetailGenerator {
             StreamCellItem(type: .placeholder, placeholderType: .artistInvites),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissionsButton),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteDetails),
-            StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissions),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissionsHeader),
             StreamCellItem(type: .placeholder, placeholderType: .artistInvitePosts),
         ])
     }
@@ -107,7 +107,8 @@ private extension ArtistInviteDetailGenerator {
                 else {
                     let header = NSAttributedString(label: InterfaceString.ArtistInvites.Submissions, style: .header)
                     let submissionsHeader = StreamCellItem(type: .header(header))
-                    self.destination?.replacePlaceholder(type: .artistInviteSubmissions, items: [submissionsHeader]) {}
+                    self.destination?.replacePlaceholder(type: .artistInviteSubmissionsHeader, items: [submissionsHeader]) {}
+
                     let button = StreamCellItem(type: .artistInviteSubmissionsButton, placeholderType: .artistInviteSubmissionsButton)
                     self.destination?.replacePlaceholder(type: .artistInviteSubmissionsButton, items: [button]) {}
 
@@ -122,7 +123,7 @@ private extension ArtistInviteDetailGenerator {
 
     func showEmptySubmissions() {
         destination?.replacePlaceholder(type: .artistInviteSubmissionsButton, items: []) {}
-        destination?.replacePlaceholder(type: .artistInviteSubmissions, items: []) {}
+        destination?.replacePlaceholder(type: .artistInviteSubmissionsHeader, items: []) {}
         destination?.replacePlaceholder(type: .artistInvitePosts, items: []) {}
     }
 
