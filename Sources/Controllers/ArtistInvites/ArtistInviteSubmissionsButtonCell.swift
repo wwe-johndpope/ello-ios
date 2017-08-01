@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class ArtistInviteSubmissionsButtonCell: UICollectionViewCell {
+class ArtistInviteSubmissionsButtonCell: CollectionViewCell {
     static let reuseIdentifier = "ArtistInviteSubmissionsButtonCell"
 
     struct Size {
@@ -27,19 +27,19 @@ class ArtistInviteSubmissionsButtonCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func style() {
+    override func style() {
         submissionsButton.titleEdgeInsets.top = 4
     }
 
-    func bindActions() {
+    override func bindActions() {
         submissionsButton.addTarget(self, action: #selector(tappedSubmissionsButton), for: .touchUpInside)
     }
 
-    func setText() {
+    override func setText() {
         submissionsButton.title = InterfaceString.ArtistInvites.SeeSubmissions
     }
 
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(submissionsButton)
 
         submissionsButton.snp.makeConstraints { make in

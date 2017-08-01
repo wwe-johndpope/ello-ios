@@ -6,7 +6,7 @@ import SnapKit
 import SVGKit
 
 
-class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteConfigurableCell {
+class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
     static let reuseIdentifier = "ArtistInviteBubbleCell"
 
     struct Size {
@@ -52,18 +52,7 @@ class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteConfigurableCell
     fileprivate let dateLabel = StyledLabel(style: .gray)
     fileprivate let descriptionWebView = UIWebView()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func style() {
+    override func style() {
         bg.layer.cornerRadius = Size.cornerRadius
         bg.clipsToBounds = true
         bg.backgroundColor = .greyF2
@@ -76,10 +65,7 @@ class ArtistInviteBubbleCell: UICollectionViewCell, ArtistInviteConfigurableCell
         descriptionWebView.isUserInteractionEnabled = false
     }
 
-    func bindActions() {
-    }
-
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(bg)
 
         bg.addSubview(headerImage)

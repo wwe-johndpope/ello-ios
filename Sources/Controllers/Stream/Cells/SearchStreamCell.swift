@@ -2,7 +2,7 @@
 ///  SearchStreamCell.swift
 //
 
-class SearchStreamCell: UICollectionViewCell {
+class SearchStreamCell: CollectionViewCell {
     static let reuseIdentifier = "SearchStreamCell"
     struct Size {
         static let insets: CGFloat = 10
@@ -20,25 +20,16 @@ class SearchStreamCell: UICollectionViewCell {
         set { searchField.text = newValue }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+    override func style() {
+        backgroundColor = .white
+    }
 
-        style()
-        arrange()
-
+    override func bindActions() {
         searchField.delegate = self
         searchField.addTarget(self, action: #selector(searchFieldDidChange), for: .editingChanged)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
-    }
-
-    fileprivate func arrange() {
+    override func arrange() {
         contentView.addSubview(searchField)
 
         searchField.snp.makeConstraints { make in

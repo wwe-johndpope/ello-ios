@@ -22,8 +22,7 @@ protocol ProfileHeaderResponder {
     func onFollowingTapped()
 }
 
-class ProfileHeaderCell: UICollectionViewCell {
-
+class ProfileHeaderCell: CollectionViewCell {
     static let reuseIdentifier = "ProfileHeaderCell"
 
     let headerView = ProfileHeaderCompactView()
@@ -54,23 +53,12 @@ class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
+    override func style() {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
     }
 
-    fileprivate func bindActions() {
+    override func bindActions() {
         avatarView.onHeightMismatch = { avatarHeight in
             guard var calculatedCellHeights = self.calculatedCellHeights else { return }
             calculatedCellHeights.profileAvatar = avatarHeight
@@ -102,7 +90,7 @@ class ProfileHeaderCell: UICollectionViewCell {
         }
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         contentView.addSubview(headerView)
 
         headerView.snp.makeConstraints { make in

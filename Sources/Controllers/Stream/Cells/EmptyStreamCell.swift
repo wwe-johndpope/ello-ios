@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class EmptyStreamCell: UICollectionViewCell {
+class EmptyStreamCell: CollectionViewCell {
     static let reuseEmbedIdentifier = "EmptyStreamCell"
 
     struct Size {
@@ -23,18 +23,7 @@ class EmptyStreamCell: UICollectionViewCell {
     fileprivate let label = UILabel()
     fileprivate let logo = ElloLogoView(config: ElloLogoView.Config.grey)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func style() {
+    override func style() {
         contentView.backgroundColor = .white
         label.numberOfLines = 0
         label.font = .defaultFont(12)
@@ -42,7 +31,7 @@ class EmptyStreamCell: UICollectionViewCell {
         label.textAlignment = .center
     }
 
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(logo)
         contentView.addSubview(label)
 

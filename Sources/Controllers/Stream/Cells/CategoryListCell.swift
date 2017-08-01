@@ -4,7 +4,7 @@
 
 import SnapKit
 
-class CategoryListCell: UICollectionViewCell {
+class CategoryListCell: CollectionViewCell {
     static let reuseIdentifier = "CategoryListCell"
 
     struct Size {
@@ -36,30 +36,8 @@ class CategoryListCell: UICollectionViewCell {
         return attributedString
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
-    fileprivate func style() {
+    override func style() {
         backgroundColor = .white
-    }
-
-    fileprivate func bindActions() {
-    }
-
-    fileprivate func arrange() {
     }
 
     @objc

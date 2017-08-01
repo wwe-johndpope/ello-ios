@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class ArtistInviteGuideCell: UICollectionViewCell {
+class ArtistInviteGuideCell: CollectionViewCell {
     static let reuseIdentifier = "ArtistInviteGuideCell"
 
     struct Size {
@@ -26,24 +26,7 @@ class ArtistInviteGuideCell: UICollectionViewCell {
     fileprivate let titleLabel = StyledLabel(style: .artistInviteGuide)
     fileprivate let guideWebView = UIWebView()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func style() {
-    }
-
-    func bindActions() {
-    }
-
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(guideWebView)
 

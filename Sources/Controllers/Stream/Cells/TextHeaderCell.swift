@@ -2,7 +2,7 @@
 ///  TextHeaderCell.swift
 //
 
-class TextHeaderCell: UICollectionViewCell {
+class TextHeaderCell: CollectionViewCell {
     static let reuseIdentifier = "TextHeaderCell"
     struct Size {
         static let insets: CGFloat = 10
@@ -15,23 +15,12 @@ class TextHeaderCell: UICollectionViewCell {
         set { headerLabel.attributedText = newValue }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = UIColor.white
-
-        style()
-        arrange()
-    }
-
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
+    override func style() {
+        backgroundColor = UIColor.white
         headerLabel.numberOfLines = 0
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         addSubview(headerLabel)
 
         headerLabel.snp.makeConstraints { make in

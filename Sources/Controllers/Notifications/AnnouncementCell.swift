@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class AnnouncementCell: UICollectionViewCell {
+class AnnouncementCell: CollectionViewCell {
     static let reuseIdentifier = "AnnouncementCell"
 
     struct Size {
@@ -30,37 +30,7 @@ class AnnouncementCell: UICollectionViewCell {
 
     var config = Config() {
         didSet {
-            titleLabel.text = config.title
-            bodyLabel.text = config.body
-            callToActionButton.title = config.callToAction
-            blackView.backgroundColor = config.isStaffPreview ? .red : .black
-
-            if let url = config.imageURL {
-                imageView.pin_setImage(from: url) { result in
-                    let height: CGFloat
-                    if let image = result.image {
-                        let size = image.size
-                        height = size.height * Size.imageSize / size.width
-                    }
-                    else {
-                        height = 0
-                    }
-                    self.imageHeightConstraint.update(offset: height)
-                }
-            }
-            else {
-                imageView.pin_cancelImageDownload()
-                let height: CGFloat
-                if let image = config.image {
-                    imageView.image = image // for testing, nice to be able to assign an image sync'ly
-                    let size = image.size
-                    height = size.height * Size.imageSize / size.width
-                }
-                else {
-                    height = 0
-                }
-                imageHeightConstraint.update(offset: height)
-            }
+            updateConfig()
         }
     }
 
@@ -72,18 +42,7 @@ class AnnouncementCell: UICollectionViewCell {
     fileprivate let callToActionButton = StyledButton(style: .whiteUnderlined)
     fileprivate var imageHeightConstraint: Constraint!
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func style() {
+    override func style() {
         closeButton.setImages(.x, white: true)
         contentView.backgroundColor = .white
         blackView.backgroundColor = .black
@@ -97,11 +56,11 @@ class AnnouncementCell: UICollectionViewCell {
         callToActionButton.isUserInteractionEnabled = false
     }
 
-    func bindActions() {
+    override func bindActions() {
         closeButton.addTarget(self, action: #selector(markAsRead), for: .touchUpInside)
     }
 
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(blackView)
         contentView.addSubview(imageView)
         contentView.addSubview(closeButton)
@@ -137,12 +96,42 @@ class AnnouncementCell: UICollectionViewCell {
         }
     }
 
-}
-
-extension AnnouncementCell {
-
     override func prepareForReuse() {
         config = Config()
+    }
+
+    fileprivate func updateConfig() {
+        titleLabel.text = config.title
+        bodyLabel.text = config.body
+        callToActionButton.title = config.callToAction
+        blackView.backgroundColor = config.isStaffPreview ? .red : .black
+
+        if let url = config.imageURL {
+            imageView.pin_setImage(from: url) { result in
+                let height: CGFloat
+                if let image = result.image {
+                    let size = image.size
+                    height = size.height * Size.imageSize / size.width
+                }
+                else {
+                    height = 0
+                }
+                self.imageHeightConstraint.update(offset: height)
+            }
+        }
+        else {
+            imageView.pin_cancelImageDownload()
+            let height: CGFloat
+            if let image = config.image {
+                imageView.image = image // for testing, nice to be able to assign an image sync'ly
+                let size = image.size
+                height = size.height * Size.imageSize / size.width
+            }
+            else {
+                height = 0
+            }
+            imageHeightConstraint.update(offset: height)
+        }
     }
 }
 

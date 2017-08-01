@@ -6,7 +6,7 @@ import FLAnimatedImage
 import SnapKit
 
 
-class StreamCreateCommentCell: UICollectionViewCell {
+class StreamCreateCommentCell: CollectionViewCell {
     static let reuseIdentifier = "StreamCreateCommentCell"
 
     struct Size {
@@ -58,23 +58,7 @@ class StreamCreateCommentCell: UICollectionViewCell {
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-
-        style()
-        bindActions()
-        arrange()
-    }
-
-    fileprivate func style() {
+    override func style() {
         contentView.backgroundColor = .white
         avatarView.backgroundColor = .black
         avatarView.clipsToBounds = true
@@ -82,18 +66,21 @@ class StreamCreateCommentCell: UICollectionViewCell {
         replyAllButton.setImage(.replyAll, imageStyle: .selected, for: .highlighted)
         watchButton.setImage(.watch, imageStyle: .normal, for: .normal)
         watchButton.contentMode = .center
-        createCommentLabel.text = InterfaceString.Post.CreateComment
         createCommentLabel.font = .defaultFont()
         createCommentLabel.textColor = .white
         createCommentLabel.textAlignment = .left
     }
 
-    fileprivate func bindActions() {
+    override func setText() {
+        createCommentLabel.text = InterfaceString.Post.CreateComment
+    }
+
+    override func bindActions() {
         replyAllButton.addTarget(self, action: #selector(replyAllTapped), for: .touchUpInside)
         watchButton.addTarget(self, action: #selector(watchTapped), for: .touchUpInside)
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         contentView.addSubview(replyAllButton)
         contentView.addSubview(avatarView)
         contentView.addSubview(createCommentBackground)

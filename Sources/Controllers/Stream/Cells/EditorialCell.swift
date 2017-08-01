@@ -28,7 +28,7 @@ protocol EditorialToolsResponder: class {
 }
 
 
-class EditorialCell: UICollectionViewCell {
+class EditorialCell: CollectionViewCell {
 
     struct Size {
         static let aspect: CGFloat = 1
@@ -78,17 +78,6 @@ class EditorialCell: UICollectionViewCell {
     let doubleTapGesture = UITapGestureRecognizer()
     let singleTapGesture = UITapGestureRecognizer()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private static func generateGradientLayer() -> CAGradientLayer {
         let layer = CAGradientLayer()
         layer.locations = [0, 1]
@@ -101,7 +90,7 @@ class EditorialCell: UICollectionViewCell {
         return layer
     }
 
-    func style() {
+    override func style() {
         bg.clipsToBounds = true
         bg.backgroundColor = .black
         gradientView.layer.addSublayer(gradientLayer)
@@ -110,7 +99,7 @@ class EditorialCell: UICollectionViewCell {
         spinner.animateLogo()
     }
 
-    func bindActions() {
+    override func bindActions() {
         doubleTapGesture.numberOfTapsRequired = 2
         doubleTapGesture.addTarget(self, action: #selector(doubleTapped(_:)))
         contentView.addGestureRecognizer(doubleTapGesture)
@@ -121,7 +110,7 @@ class EditorialCell: UICollectionViewCell {
         contentView.addGestureRecognizer(singleTapGesture)
     }
 
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(bg)
         bg.addSubview(loadingView)
         loadingView.addSubview(spinner)

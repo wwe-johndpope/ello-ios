@@ -136,4 +136,5 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
+
 extension ArtistInviteDetailController: ArtistInviteDetailScreenDelegate {}
