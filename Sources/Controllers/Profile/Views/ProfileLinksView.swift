@@ -39,12 +39,6 @@ extension ProfileLinksView {
         iconsBox.backgroundColor = .white
     }
 
-    override func bindActions() {
-    }
-
-    override func setText() {
-    }
-
     override func arrange() {
         addSubview(linksBox)
         addSubview(iconsBox)

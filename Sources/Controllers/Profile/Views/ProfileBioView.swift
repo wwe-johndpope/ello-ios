@@ -35,12 +35,6 @@ extension ProfileBioView {
         grayLine.backgroundColor = .greyE5
     }
 
-    override func bindActions() {
-    }
-
-    override func setText() {
-    }
-
     override func arrange() {
         addSubview(bioView)
         addSubview(grayLine)

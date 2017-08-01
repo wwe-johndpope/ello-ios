@@ -851,6 +851,7 @@
 		1DDC23321F30D68600E68B0E /* RevealControllerCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */; };
 		1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */; };
 		1DDC23361F30D94800E68B0E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */; };
+		1DDC233C1F30FF7E00E68B0E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233B1F30FF7E00E68B0E /* View.swift */; };
 		1DDC85151D91D4BE00C29552 /* WatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85141D91D4BE00C29552 /* WatchSpec.swift */; };
 		1DDC851A1D91D4F300C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
 		1DDC851B1D91D52D00C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
@@ -1913,6 +1914,7 @@
 		1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCellPresenter.swift; sourceTree = "<group>"; };
 		1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCell.swift; sourceTree = "<group>"; };
 		1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		1DDC233B1F30FF7E00E68B0E /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		1DDC85141D91D4BE00C29552 /* WatchSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSpec.swift; sourceTree = "<group>"; };
 		1DDC85161D91D4D200C29552 /* Watch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watch.swift; sourceTree = "<group>"; };
 		1DDC85181D91D4E400C29552 /* watches_creating_a_watch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = watches_creating_a_watch.json; sourceTree = "<group>"; };
@@ -3310,6 +3312,7 @@
 				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D70DE571DF23862008AF216 /* StyledLabel.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
+				1DDC233B1F30FF7E00E68B0E /* View.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5555,6 +5558,7 @@
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DF0B2D31E8D59DD001B9F97 /* ForgotPasswordEmailViewController.swift in Sources */,
 				1207C9831C73FEE000939ADB /* Mapper.swift in Sources */,
+				1DDC233C1F30FF7E00E68B0E /* View.swift in Sources */,
 				1DB8C6A91D7A1BAA007E1447 /* AddressBookHelpers.swift in Sources */,
 				123DEBEF1D3D4B71007B5F86 /* LoadingToken.swift in Sources */,
 				123375771DA6B8BB0019CFAD /* ProfileHeaderRegularView.swift in Sources */,
