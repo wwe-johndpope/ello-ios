@@ -849,6 +849,8 @@
 		1DDA93AC1DA6F74C0007EFDE /* NilSafeEquals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */; };
 		1DDA93AE1DA6F8590007EFDE /* NilSafeEqualsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA93AD1DA6F8590007EFDE /* NilSafeEqualsSpec.swift */; };
 		1DDA93B01DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA93AF1DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift */; };
+		1DDC23321F30D68600E68B0E /* RevealControllerCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */; };
+		1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */; };
 		1DDC23361F30D94800E68B0E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */; };
 		1DDC85151D91D4BE00C29552 /* WatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85141D91D4BE00C29552 /* WatchSpec.swift */; };
 		1DDC851A1D91D4F300C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
@@ -1910,6 +1912,8 @@
 		1DDA93AB1DA6F74C0007EFDE /* NilSafeEquals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NilSafeEquals.swift; sourceTree = "<group>"; };
 		1DDA93AD1DA6F8590007EFDE /* NilSafeEqualsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NilSafeEqualsSpec.swift; sourceTree = "<group>"; };
 		1DDA93AF1DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCreateCommentCellPresenterSpec.swift; sourceTree = "<group>"; };
+		1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCellPresenter.swift; sourceTree = "<group>"; };
+		1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCell.swift; sourceTree = "<group>"; };
 		1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1DDC85141D91D4BE00C29552 /* WatchSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSpec.swift; sourceTree = "<group>"; };
 		1DDC85161D91D4D200C29552 /* Watch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watch.swift; sourceTree = "<group>"; };
@@ -2375,6 +2379,7 @@
 				12B291391DE4ED090056C52E /* EmptyStreamCell.swift */,
 				1D7152951D6CBE0E005998FE /* NoPostsCell.swift */,
 				1D7152971D6CBE24005998FE /* NoPostsCell.xib */,
+				1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */,
 				1DB8C6AC1D7A26B1007E1447 /* SearchStreamCell.swift */,
 				122B190C1A86894400247A05 /* StreamCellType.swift */,
 				1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */,
@@ -2682,6 +2687,7 @@
 				1DA18DF31DA8470D000231CC /* ProfileNamesPresenter.swift */,
 				1DA18DFB1DAC3B4E000231CC /* ProfileStatsPresenter.swift */,
 				12A1D8361DAD783900A327D6 /* ProfileTotalCountPresenter.swift */,
+				1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */,
 				1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */,
 				1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */,
 				76B1A63E1AE5864900110D30 /* StreamEmbedCellPresenter.swift */,
@@ -5454,6 +5460,7 @@
 				1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */,
 				1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */,
 				12B2913A1DE4ED090056C52E /* EmptyStreamCell.swift in Sources */,
+				1DDC23321F30D68600E68B0E /* RevealControllerCellPresenter.swift in Sources */,
 				122B30D41C6A3FBC00C1B9D8 /* Love.swift in Sources */,
 				12D43A461AC864CC0039F54F /* StreamToggleCellPresenter.swift in Sources */,
 				12A1D8291DAC036300A327D6 /* ProfileAvatarPresenter.swift in Sources */,
@@ -5560,6 +5567,7 @@
 				1207C9901C73FEE000939ADB /* StreamService.swift in Sources */,
 				122B30D31C6A3FBC00C1B9D8 /* LocalPerson.swift in Sources */,
 				1D9A12CC1EA9662B003B3BD7 /* BadgeCell.swift in Sources */,
+				1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */,
 				1D7152E31D761AF0005998FE /* OnboardingProfileViewController.swift in Sources */,
 				126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */,
 				1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */,

@@ -52,9 +52,12 @@ final class ArtistInvite: JSONAble, Groupable {
     var groupId: String { return "ArtistInvite-\(id)" }
     override var description: String { return longDescription }
 
-    var selectedSubmissionsStream: Stream?
     var approvedSubmissionsStream: Stream?
+    var selectedSubmissionsStream: Stream?
     var unapprovedSubmissionsStream: Stream?
+    var hasAdminLinks: Bool {
+        return approvedSubmissionsStream != nil && unapprovedSubmissionsStream != nil
+    }
 
     init(
         id: String,

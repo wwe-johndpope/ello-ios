@@ -1203,6 +1203,13 @@ extension StreamViewController: UICollectionViewDelegate {
             let responder: CreatePostResponder? = findResponder()
             responder?.createComment(comment.loadedFromPostId, text: nil, fromController: self)
         }
+        else if tappedCell is RevealControllerCell,
+            let streamCellItem = dataSource.visibleStreamCellItem(at: indexPath),
+            let info = streamCellItem.type.data
+        {
+            let responder: RevealControllerResponder? = findResponder()
+            responder?.revealControllerTapped(info: info)
+        }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
             let category = dataSource.jsonableForIndexPath(indexPath) as? Category
         {

@@ -40,6 +40,7 @@ private extension ArtistInviteDetailGenerator {
             StreamCellItem(type: .placeholder, placeholderType: .artistInvites),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissionsButton),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteDetails),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInviteAdmin),
             StreamCellItem(type: .placeholder, placeholderType: .artistInviteSubmissionsHeader),
             StreamCellItem(type: .placeholder, placeholderType: .artistInvitePosts),
         ])
@@ -77,7 +78,31 @@ private extension ArtistInviteDetailGenerator {
         let spinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
         destination?.replacePlaceholder(type: .artistInvitePosts, items: [spinner]) {}
 
+        loadAdminTools(artistInvite)
         loadSubmissions(artistInvite)
+    }
+
+    func loadAdminTools(_ artistInvite: ArtistInvite) {
+        guard
+            artistInvite.hasAdminLinks,
+            let approvedSubmissionsStream = artistInvite.approvedSubmissionsStream,
+            let selectedSubmissionsStream = artistInvite.selectedSubmissionsStream,
+            let unapprovedSubmissionsStream = artistInvite.unapprovedSubmissionsStream
+        else { return }
+
+        let header = NSAttributedString(label: "Admin Controls", style: .header)
+        let submissionsHeader = StreamCellItem(type: .header(header))
+        let approvedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminApprovedStream, approvedSubmissionsStream))
+        let selectedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminSelectedStream, selectedSubmissionsStream))
+        let unapprovedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminUnapprovedStream, unapprovedSubmissionsStream))
+        let spacer = StreamCellItem(type: .spacer(height: 10))
+        self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: [
+            submissionsHeader,
+            approvedButton,
+            selectedButton,
+            unapprovedButton,
+            spacer,
+            ]) {}
     }
 
     func loadSubmissions(_ artistInvite: ArtistInvite) {

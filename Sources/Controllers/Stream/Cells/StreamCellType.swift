@@ -43,6 +43,7 @@ enum StreamCellType: Equatable {
     case placeholder
     case profileHeader
     case profileHeaderGhost
+    case revealController(label: String, Any)
     case search(placeholder: String)
     case seeMoreComments
     case selectableCategoryCard
@@ -122,6 +123,7 @@ enum StreamCellType: Equatable {
         .placeholder,
         .profileHeader,
         .profileHeaderGhost,
+        .revealController(label: "", Void()),
         .search(placeholder: ""),
         .seeMoreComments,
         .selectableCategoryCard,
@@ -143,6 +145,7 @@ enum StreamCellType: Equatable {
         case let .embed(data): return data
         case let .header(data): return data
         case let .image(data): return data
+        case let .revealController(_, data): return data
         case let .tallHeader(data): return data
         case let .text(data): return data
         default: return nil
@@ -181,6 +184,7 @@ enum StreamCellType: Equatable {
         case .placeholder: return "Placeholder"
         case .profileHeader: return ProfileHeaderCell.reuseIdentifier
         case .profileHeaderGhost: return ProfileHeaderGhostCell.reuseIdentifier
+        case .revealController: return RevealControllerCell.reuseIdentifier
         case .search: return SearchStreamCell.reuseIdentifier
         case .seeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
         case .selectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
@@ -207,6 +211,7 @@ enum StreamCellType: Equatable {
              .loadMoreComments,
              .notification,
              .onboardingInviteFriends,
+             .revealController,
              .seeMoreComments,
              .selectableCategoryCard,
              .streamHeader,
@@ -241,6 +246,7 @@ enum StreamCellType: Equatable {
         case .notification: return NotificationCellPresenter.configure
         case .pagePromotionalHeader: return PagePromotionalHeaderCellPresenter.configure
         case .profileHeader: return ProfileHeaderCellPresenter.configure
+        case .revealController: return RevealControllerCellPresenter.configure
         case .search: return SearchStreamCellPresenter.configure
         case .selectableCategoryCard: return CategoryCardCellPresenter.configure
         case .spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
@@ -281,6 +287,7 @@ enum StreamCellType: Equatable {
         case .placeholder: return UICollectionViewCell.self
         case .profileHeader: return ProfileHeaderCell.self
         case .profileHeaderGhost: return ProfileHeaderGhostCell.self
+        case .revealController: return RevealControllerCell.self
         case .search: return SearchStreamCell.self
         case .seeMoreComments: return StreamSeeMoreCommentsCell.self
         case .selectableCategoryCard: return CategoryCardCell.self
@@ -338,6 +345,8 @@ enum StreamCellType: Equatable {
             return 215
         case .notification:
             return 117
+        case .revealController:
+            return RevealControllerCell.Size.height
         case .search:
             return 68
         case let .spacer(height):
@@ -400,6 +409,7 @@ enum StreamCellType: Equatable {
              .pagePromotionalHeader,
              .profileHeader,
              .profileHeaderGhost,
+             .revealController,
              .search,
              .seeMoreComments,
              .streamLoading,
@@ -458,6 +468,7 @@ enum StreamCellType: Equatable {
             .placeholder,
             .profileHeader,
             .profileHeaderGhost,
+            .revealController(label: "", Void()),
             .search(placeholder: ""),
             .selectableCategoryCard,
             .spacer(height: 0.0),
