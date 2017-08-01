@@ -399,7 +399,6 @@
 		12CFF68B1B16760C007CE68F /* posts_listing_users_who_have_loved_a_post.json in Resources */ = {isa = PBXBuildFile; fileRef = 12CFF6841B16760C007CE68F /* posts_listing_users_who_have_loved_a_post.json */; };
 		12CFF6921B167717007CE68F /* LoveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF6911B167717007CE68F /* LoveSpec.swift */; };
 		12CFF6941B167724007CE68F /* CoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF6931B167724007CE68F /* CoderSpec.swift */; };
-		12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF6A51B16BD13007CE68F /* TwoLineButton.swift */; };
 		12D14C631A4375FE00C6F8E8 /* ValidatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C621A4375FE00C6F8E8 /* ValidatorSpec.swift */; };
 		12D14C681A43761A00C6F8E8 /* AuthTokenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C641A43761A00C6F8E8 /* AuthTokenSpec.swift */; };
 		12D14C691A43761A00C6F8E8 /* ElloAPISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D14C651A43761A00C6F8E8 /* ElloAPISpec.swift */; };
@@ -1471,7 +1470,6 @@
 		12CFF6931B167724007CE68F /* CoderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoderSpec.swift; sourceTree = "<group>"; };
 		12CFF69A1B167841007CE68F /* Coder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coder.swift; sourceTree = "<group>"; };
 		12CFF69B1B167841007CE68F /* Love.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Love.swift; sourceTree = "<group>"; };
-		12CFF6A51B16BD13007CE68F /* TwoLineButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoLineButton.swift; sourceTree = "<group>"; };
 		12D14C4F1A43752200C6F8E8 /* Specs.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Specs.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12D14C611A4375FE00C6F8E8 /* Specs-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Specs-Bridging-Header.h"; sourceTree = "<group>"; };
 		12D14C621A4375FE00C6F8E8 /* ValidatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidatorSpec.swift; sourceTree = "<group>"; };
@@ -3581,7 +3579,6 @@
 				123375701DA69C0C0019CFAD /* ProfileProtocols.swift */,
 				1249AD861D9EC3FC009074FD /* ProfileScreen.swift */,
 				12F6ADFA1A43380C00493660 /* ProfileViewController.swift */,
-				12CFF6A51B16BD13007CE68F /* TwoLineButton.swift */,
 				123375781DA6EC770019CFAD /* Views */,
 			);
 			path = Profile;
@@ -5545,7 +5542,6 @@
 				1D59EF921D6624DC0029C106 /* HireService.swift in Sources */,
 				1DC78A201F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift in Sources */,
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,
-				12CFF6A61B16BD13007CE68F /* TwoLineButton.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
 				1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */,
 				1DDA93AC1DA6F74C0007EFDE /* NilSafeEquals.swift in Sources */,
