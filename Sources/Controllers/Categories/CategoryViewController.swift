@@ -154,7 +154,7 @@ private extension CategoryViewController {
 
     func loadCategory(initial: Bool) {
         if !initial {
-            replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+            replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)])
         }
         title = category?.name ?? slug.flatMap { DiscoverType.fromURL($0)?.name } ?? InterfaceString.Discover.Title
 
@@ -185,7 +185,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
             if self.streamViewController.hasCellItems(for: .categoryHeader) && !self.streamViewController.hasCellItems(for: .categoryPosts) {
-                self.streamViewController.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+                self.streamViewController.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)])
             }
 
             completion()
@@ -308,8 +308,8 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         let sortedCategories = CategoryList(categories: allCategories).categories
         let categoryItems = allCategoryItems(categories: sortedCategories)
-        replacePlaceholder(type: .categoryHeader, items: []) {}
-        replacePlaceholder(type: .categoryPosts, items: categoryItems) {}
+        replacePlaceholder(type: .categoryHeader, items: [])
+        replacePlaceholder(type: .categoryPosts, items: categoryItems)
         streamViewController.reloadCells(now: true)
 
         trackScreenAppeared()

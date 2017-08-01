@@ -7,4 +7,3 @@ class ProfileBaseView: View {
         static let grayInset: CGFloat = 15
     }
 }
-

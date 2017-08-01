@@ -97,7 +97,7 @@ final class CategoryGenerator: StreamGenerator {
 
     func toggleGrid() {
         guard let posts = posts else { return }
-        destination?.replacePlaceholder(type: .categoryPosts, items: parse(jsonables: posts)) {}
+        destination?.replacePlaceholder(type: .categoryPosts, items: parse(jsonables: posts))
     }
 
 }
@@ -124,7 +124,7 @@ private extension CategoryGenerator {
 
         if let jsonable = jsonable {
             destination?.setPrimary(jsonable: jsonable)
-            destination?.replacePlaceholder(type: .categoryHeader, items: headerItems()) {}
+            destination?.replacePlaceholder(type: .categoryHeader, items: headerItems())
             doneOperation.run()
         }
     }
@@ -158,7 +158,7 @@ private extension CategoryGenerator {
 
                 self.category = category
                 self.destination?.setPrimary(jsonable: category)
-                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
+                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
                 doneOperation.run()
             }
             .catch { [weak self] _ in
@@ -185,7 +185,7 @@ private extension CategoryGenerator {
                 else {
                     self.destination?.primaryJSONAbleNotFound()
                 }
-                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
+                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
                 doneOperation.run()
             }
             .catch { [weak self] _ in
@@ -252,7 +252,7 @@ private extension CategoryGenerator {
                                 self.destination?.replacePlaceholder(type: .categoryPosts, items: noItems) {
                                     self.destination?.isPagingEnabled = false
                                 }
-                                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems()) {}
+                                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
                             }
                             else {
                                 self.destination?.replacePlaceholder(type: .categoryPosts, items: items) {
@@ -263,7 +263,7 @@ private extension CategoryGenerator {
                     }
                 case .empty:
                     let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
-                    self.destination?.replacePlaceholder(type: .categoryPosts, items: [noContentItem]) {}
+                    self.destination?.replacePlaceholder(type: .categoryPosts, items: [noContentItem])
                     self.destination?.primaryJSONAbleNotFound()
                     self.queue.cancelAllOperations()
                 }

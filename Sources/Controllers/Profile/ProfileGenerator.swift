@@ -64,11 +64,11 @@ final class ProfileGenerator: StreamGenerator {
 
     func toggleGrid() {
         if let posts = posts, hasPosts == true {
-            destination?.replacePlaceholder(type: .profilePosts, items: parse(jsonables: posts)) {}
+            destination?.replacePlaceholder(type: .profilePosts, items: parse(jsonables: posts))
         }
         else if let user = user, hasPosts == false {
             let noItems = [StreamCellItem(jsonable: user, type: .noPosts)]
-            destination?.replacePlaceholder(type: .profilePosts, items: noItems) {}
+            destination?.replacePlaceholder(type: .profilePosts, items: noItems)
         }
     }
 
@@ -90,7 +90,7 @@ private extension ProfileGenerator {
         guard let user = user else { return }
 
         destination?.setPrimary(jsonable: user)
-        destination?.replacePlaceholder(type: .profileHeader, items: headerItems()) {}
+        destination?.replacePlaceholder(type: .profileHeader, items: headerItems())
         doneOperation.run()
     }
 
@@ -105,7 +105,7 @@ private extension ProfileGenerator {
 
                 self.user = user
                 self.destination?.setPrimary(jsonable: user)
-                self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
+                self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems())
                 doneOperation.run()
             }
             .catch { [weak self] _ in
@@ -137,13 +137,13 @@ private extension ProfileGenerator {
                             self.destination?.replacePlaceholder(type: .profilePosts, items: noItems) {
                                 self.destination?.isPagingEnabled = false
                             }
-                            self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
+                            self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems())
                         }
                         else {
                             let updateHeaderItems = self.hasPosts == false
                             self.hasPosts = true
                             if updateHeaderItems {
-                                self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems()) {}
+                                self.destination?.replacePlaceholder(type: .profileHeader, items: self.headerItems())
                             }
                             self.destination?.replacePlaceholder(type: .profilePosts, items: userPostItems) {
                                 self.destination?.isPagingEnabled = true

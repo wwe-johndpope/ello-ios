@@ -87,7 +87,7 @@ final class NotificationsGenerator: StreamGenerator {
 
         self.announcements = newAnnouncements
         let announcementItems = StreamCellItemParser().parse(newAnnouncements, streamKind: .announcements, currentUser: self.currentUser)
-        self.destination?.replacePlaceholder(type: .announcements, items: announcementItems) {}
+        self.destination?.replacePlaceholder(type: .announcements, items: announcementItems)
     }
 
     func announcementsAreSame(_ newAnnouncements: [Announcement]) -> Bool {

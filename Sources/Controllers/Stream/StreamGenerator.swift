@@ -26,3 +26,9 @@ protocol StreamDestination: class {
     func setPagingConfig(responseConfig: ResponseConfig)
     var isPagingEnabled: Bool { get set }
 }
+
+extension StreamDestination {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem]) {
+        replacePlaceholder(type: type, items: items, completion: {})
+    }
+}

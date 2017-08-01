@@ -239,7 +239,7 @@ extension PostDetailViewController: PostDetailStreamDestination {
             self.checkScrollToComment()
 
             if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .profilePosts) {
-                self.streamViewController.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)]) {}
+                self.streamViewController.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)])
             }
             completion()
         }

@@ -64,7 +64,7 @@ final class PostDetailGenerator: StreamGenerator {
         guard let postId = self.post?.id else { return }
 
         let loadingComments = [StreamCellItem(type: .streamLoading)]
-        self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments) {}
+        self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments)
 
         let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems, api: .postComments(postId: postId))
         StreamService().loadStream(endpoint: scrollAPI, streamKind: .postDetail(postParam: postId))
@@ -79,13 +79,13 @@ final class PostDetailGenerator: StreamGenerator {
                     self.postDetailStreamDestination?.appendComments(commentItems)
 
                     let loadMoreComments = self.loadMoreCommentItems(lastComment: jsonables.last as? ElloComment, responseConfig: responseConfig)
-                    self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
+                    self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments)
                 case .empty:
-                    self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+                    self.destination?.replacePlaceholder(type: .postLoadingComments, items: [])
                 }
             }
             .catch { _ in
-                self.destination?.replacePlaceholder(type: .postLoadingComments, items: []) {}
+                self.destination?.replacePlaceholder(type: .postLoadingComments, items: [])
             }
     }
 }
@@ -136,7 +136,7 @@ private extension PostDetailGenerator {
         destination?.setPrimary(jsonable: post)
         if (post.content?.count)! > 0 || (post.repostContent?.count)! > 0 {
             let postItems = parse(jsonables: [post])
-            destination?.replacePlaceholder(type: .postHeader, items: postItems) {}
+            destination?.replacePlaceholder(type: .postHeader, items: postItems)
             doneOperation.run()
         }
     }
@@ -152,7 +152,7 @@ private extension PostDetailGenerator {
                 self.post = post
                 self.destination?.setPrimary(jsonable: post)
                 let postItems = self.parse(jsonables: [post])
-                self.destination?.replacePlaceholder(type: .postHeader, items: postItems) {}
+                self.destination?.replacePlaceholder(type: .postHeader, items: postItems)
                 doneOperation.run()
             }
             .catch { [weak self] _ in
@@ -176,14 +176,14 @@ private extension PostDetailGenerator {
 
             let barItems = [StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .createComment)]
             inForeground {
-                self.destination?.replacePlaceholder(type: .postCommentBar, items: barItems) {}
+                self.destination?.replacePlaceholder(type: .postCommentBar, items: barItems)
             }
         }
     }
 
     func displaySocialPadding() {
         let padding = PostDetailGenerator.socialPadding()
-        destination?.replacePlaceholder(type: .postSocialPadding, items: padding) {}
+        destination?.replacePlaceholder(type: .postSocialPadding, items: padding)
     }
 
     func loadMoreCommentItems(lastComment: ElloComment?, responseConfig: ResponseConfig) -> [StreamCellItem] {
@@ -213,10 +213,10 @@ private extension PostDetailGenerator {
                 displayCommentsOperation.run {
                     self.destination?.setPagingConfig(responseConfig: responseConfig)
                     inForeground {
-                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems) {}
+                        self.destination?.replacePlaceholder(type: .postComments, items: commentItems)
                         if let lastComment = comments.last {
                             let loadMoreComments = self.loadMoreCommentItems(lastComment: lastComment, responseConfig: responseConfig)
-                            self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments) {}
+                            self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadMoreComments)
                         }
                     }
                 }
@@ -247,7 +247,7 @@ private extension PostDetailGenerator {
                 displayLoversOperation.run {
                     inForeground {
                         self.displaySocialPadding()
-                        self.destination?.replacePlaceholder(type: .postLovers, items: loversItems) {}
+                        self.destination?.replacePlaceholder(type: .postLovers, items: loversItems)
                     }
                 }
             }
@@ -277,7 +277,7 @@ private extension PostDetailGenerator {
                 displayRepostersOperation.run {
                     inForeground {
                         self.displaySocialPadding()
-                        self.destination?.replacePlaceholder(type: .postReposters, items: repostersItems) {}
+                        self.destination?.replacePlaceholder(type: .postReposters, items: repostersItems)
                     }
                 }
             }
@@ -306,7 +306,7 @@ private extension PostDetailGenerator {
 
                 displayRelatedPostsOperation.run {
                     inForeground {
-                        self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems) {}
+                        self.destination?.replacePlaceholder(type: .postRelatedPosts, items: relatedPostItems)
                     }
                 }
             }
