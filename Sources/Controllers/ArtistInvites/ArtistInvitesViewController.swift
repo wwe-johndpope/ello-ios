@@ -7,8 +7,8 @@ class ArtistInvitesViewController: StreamableViewController {
     override func trackerProps() -> [String: Any]? { return nil }
     override func trackerStreamInfo() -> (String, String?)? { return nil }
 
-    private var _mockScreen: ArtistInvitesScreenProtocol?
-    var screen: ArtistInvitesScreenProtocol {
+    private var _mockScreen: StreamableScreenProtocol?
+    var screen: StreamableScreenProtocol {
         set(screen) { _mockScreen = screen }
         get { return _mockScreen ?? self.view as! ArtistInvitesScreen }
     }

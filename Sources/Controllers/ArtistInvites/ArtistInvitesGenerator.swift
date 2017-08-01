@@ -38,6 +38,7 @@ private extension ArtistInvitesGenerator {
             .thenFinally { [weak self] response in
                 guard
                     let `self` = self,
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken),
                     case let .jsonables(jsonables, responseConfig) = response,
                     let artistInvites = jsonables as? [ArtistInvite]
                 else { return }

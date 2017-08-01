@@ -688,7 +688,6 @@
 		1D7A28D81A97BE490050E8A2 /* ElloWebViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */; };
 		1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */; };
 		1D7E823C1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823A1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift */; };
-		1D7E823D1F26885D006ACE7A /* ArtistInviteDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823B1F26885D006ACE7A /* ArtistInviteDetailScreen.swift */; };
 		1D7E82411F2692D3006ACE7A /* ArtistInviteControlsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823E1F2692D3006ACE7A /* ArtistInviteControlsCell.swift */; };
 		1D7E82421F2692D3006ACE7A /* ArtistInviteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */; };
 		1D7E82431F2692D3006ACE7A /* ArtistInviteGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */; };
@@ -1761,7 +1760,6 @@
 		1D7A28D61A97BDCD0050E8A2 /* ElloWebViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebViewHelper.swift; sourceTree = "<group>"; };
 		1D7B93961C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionVisibilitySpec.swift; sourceTree = "<group>"; };
 		1D7E823A1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailGenerator.swift; sourceTree = "<group>"; };
-		1D7E823B1F26885D006ACE7A /* ArtistInviteDetailScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailScreen.swift; sourceTree = "<group>"; };
 		1D7E823E1F2692D3006ACE7A /* ArtistInviteControlsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteControlsCell.swift; sourceTree = "<group>"; };
 		1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteHeaderCell.swift; sourceTree = "<group>"; };
 		1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteGuideCell.swift; sourceTree = "<group>"; };
@@ -3742,7 +3740,6 @@
 				1D7E823E1F2692D3006ACE7A /* ArtistInviteControlsCell.swift */,
 				1D313F6F1F267FCF00953EE2 /* ArtistInviteDetailController.swift */,
 				1D7E823A1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift */,
-				1D7E823B1F26885D006ACE7A /* ArtistInviteDetailScreen.swift */,
 				1D7E823F1F2692D3006ACE7A /* ArtistInviteHeaderCell.swift */,
 				1D7E82401F2692D3006ACE7A /* ArtistInviteGuideCell.swift */,
 				1DC78A4F1F21302300BE2413 /* ArtistInvitesGenerator.swift */,
@@ -5440,7 +5437,6 @@
 				1207C9721C73FEE000939ADB /* AuthToken.swift in Sources */,
 				122B30F71C6A41CF00C1B9D8 /* RegionKindStreamCellTypeAddition.swift in Sources */,
 				122B30C51C6A3FBC00C1B9D8 /* AddressBook.swift in Sources */,
-				1D7E823D1F26885D006ACE7A /* ArtistInviteDetailScreen.swift in Sources */,
 				F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */,
 				122B30E31C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */,
 				1D3328501AE751D200446591 /* SearchScreen.swift in Sources */,

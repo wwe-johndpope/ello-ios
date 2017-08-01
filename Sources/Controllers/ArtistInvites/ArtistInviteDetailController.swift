@@ -10,10 +10,10 @@ class ArtistInviteDetailController: StreamableViewController {
     let artistInviteId: String
     var artistInvite: ArtistInvite?
 
-    private var _mockScreen: ArtistInviteDetailScreenProtocol?
-    var screen: ArtistInviteDetailScreenProtocol {
+    private var _mockScreen: StreamableScreenProtocol?
+    var screen: StreamableScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! ArtistInviteDetailScreen }
+        get { return _mockScreen ?? self.view as! StreamableScreenProtocol }
     }
     var generator: ArtistInviteDetailGenerator!
 
@@ -47,8 +47,7 @@ class ArtistInviteDetailController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = ArtistInviteDetailScreen()
-        screen.delegate = self
+        let screen = StreamableScreen()
 
         let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped))
         elloNavigationItem.leftBarButtonItem = backItem
@@ -120,6 +119,7 @@ extension ArtistInviteDetailController: StreamDestination {
 }
 
 extension ArtistInviteDetailController: ArtistInviteResponder {
+
     func tappedArtistInviteSubmissionsButton() {
         streamViewController.scrollTo(placeholderType: .artistInviteSubmissionsHeader, animated: true)
     }

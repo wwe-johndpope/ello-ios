@@ -51,6 +51,7 @@ private extension ArtistInviteDetailGenerator {
             .thenFinally { [weak self] response in
                 guard
                     let `self` = self,
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken),
                     case let .jsonables(jsonables, responseConfig) = response,
                     let artistInvites = jsonables as? [ArtistInvite],
                     let artistInvite = artistInvites.first
@@ -113,7 +114,10 @@ private extension ArtistInviteDetailGenerator {
 
         StreamService().loadStream(endpoint: endpoint)
             .thenFinally { [weak self] response in
-                guard let `self` = self else { return }
+                guard
+                    let `self` = self,
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
+                else { return }
 
                 if case .empty = response {
                     self.showEmptySubmissions()
