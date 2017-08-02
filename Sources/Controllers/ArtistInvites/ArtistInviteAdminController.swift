@@ -1,28 +1,30 @@
 ////
-///  ArtistInviteDetailController.swift
+///  ArtistInviteAdminController.swift
 //
 
-class ArtistInviteDetailController: StreamableViewController {
-    override func trackerName() -> String? { return "ArtistInvite" }
-    override func trackerProps() -> [String: Any]? { return ["id": artistInviteId] }
+class ArtistInviteAdminController: StreamableViewController {
+    override func trackerName() -> String? { return "ArtistInviteAdmin" }
+    override func trackerProps() -> [String: Any]? { return ["id": artistInvite.id] }
     override func trackerStreamInfo() -> (String, String?)? { return nil }
 
-    let artistInviteId: String
-    var artistInvite: ArtistInvite?
+    var artistInvite: ArtistInvite
 
-    private var _mockScreen: StreamableScreenProtocol?
-    var screen: StreamableScreenProtocol {
+    private var _mockScreen: ArtistInviteAdminScreenProtocol?
+    var screen: ArtistInviteAdminScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! StreamableScreenProtocol }
+        get { return _mockScreen ?? self.view as! ArtistInviteAdminScreenProtocol }
     }
-    var generator: ArtistInviteDetailGenerator!
+    var generator: ArtistInviteAdminGenerator!
 
-    init(artistInviteId: String) {
-        self.artistInviteId = artistInviteId
+    init(artistInvite: ArtistInvite, stream: ArtistInvite.Stream) {
+        self.artistInvite = artistInvite
         super.init(nibName: nil, bundle: nil)
 
-        generator = ArtistInviteDetailGenerator(
-            artistInviteId: artistInviteId,
+        title = InterfaceString.ArtistInvites.AdminTitle
+
+        generator = ArtistInviteAdminGenerator(
+            artistInvite: artistInvite,
+            stream: stream,
             currentUser: currentUser,
             destination: self)
         streamViewController.streamKind = generator.streamKind
@@ -30,12 +32,6 @@ class ArtistInviteDetailController: StreamableViewController {
         streamViewController.reloadClosure = { [weak self] in self?.generator?.load(reload: true) }
         streamViewController.initialLoadClosure = { [weak self] in self?.generator.load() }
     }
-
-    convenience init(artistInvite: ArtistInvite) {
-        self.init(artistInviteId: artistInvite.id)
-        self.setPrimary(jsonable: artistInvite)
-        generator.artistInvite = artistInvite
-   }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -47,9 +43,12 @@ class ArtistInviteDetailController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = StreamableScreen()
+        let screen = ArtistInviteAdminScreen()
+        screen.delegate = self
+        screen.selectedSubmissionsStatus = generator.stream.submissionsStatus
 
         let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped))
+        elloNavigationItem.titleView = UIView()
         elloNavigationItem.leftBarButtonItem = backItem
         elloNavigationItem.fixNavBarItemPadding()
         screen.navigationItem = elloNavigationItem
@@ -83,7 +82,33 @@ class ArtistInviteDetailController: StreamableViewController {
 
 }
 
-extension ArtistInviteDetailController: StreamDestination {
+extension ArtistInviteAdminController: ArtistInviteAdminScreenDelegate {
+
+    func tappedApprovedSubmissions() {
+        loadStream(artistInvite.approvedSubmissionsStream)
+    }
+
+    func tappedSelectedSubmissions() {
+        loadStream(artistInvite.selectedSubmissionsStream)
+    }
+
+    func tappedUnapprovedSubmissions() {
+        loadStream(artistInvite.unapprovedSubmissionsStream)
+    }
+
+    fileprivate func loadStream(_ stream: ArtistInvite.Stream?) {
+        guard let stream = stream else { return }
+
+        screen.selectedSubmissionsStatus = stream.submissionsStatus
+        replacePlaceholder(type: .artistInvitePosts, items: [StreamCellItem(type: .streamLoading)])
+        generator.stream = stream
+        streamViewController.scrollToTop(animated: true)
+        streamViewController.streamKind = generator.streamKind
+        streamViewController.loadInitialPage(reload: true)
+    }
+}
+
+extension ArtistInviteAdminController: StreamDestination {
 
     var isPagingEnabled: Bool {
         get { return streamViewController.isPagingEnabled }
@@ -101,10 +126,6 @@ extension ArtistInviteDetailController: StreamDestination {
     }
 
     func setPrimary(jsonable: JSONAble) {
-        guard let artistInvite = jsonable as? ArtistInvite else { return }
-
-        self.artistInvite = artistInvite
-        title = artistInvite.title
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {
@@ -114,39 +135,6 @@ extension ArtistInviteDetailController: StreamDestination {
     func primaryJSONAbleNotFound() {
         self.showGenericLoadFailure()
         self.streamViewController.doneLoading()
-    }
-
-}
-
-extension ArtistInviteDetailController: ArtistInviteResponder {
-
-    func tappedArtistInviteSubmissionsButton() {
-        streamViewController.scrollTo(placeholderType: .artistInviteSubmissionsHeader, animated: true)
-    }
-
-    func tappedArtistInviteSubmitButton() {
-        guard let artistInvite = artistInvite else { return }
-
-        let vc = OmnibarViewController()
-        vc.artistInvite = (id: artistInvite.id, slug: artistInvite.slug)
-        vc.currentUser = currentUser
-        vc.onPostSuccess { _ in
-            _ = self.navigationController?.popViewController(animated: true)
-        }
-        navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-extension ArtistInviteDetailController: RevealControllerResponder {
-
-    func revealControllerTapped(info: Any) {
-        guard
-            let artistInvite = artistInvite,
-            let stream = info as? ArtistInvite.Stream
-        else { return }
-
-        let vc = ArtistInviteAdminController(artistInvite: artistInvite, stream: stream)
-        navigationController?.pushViewController(vc, animated: true)
     }
 
 }

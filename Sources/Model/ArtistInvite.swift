@@ -13,11 +13,13 @@ final class ArtistInvite: JSONAble, Groupable {
         let title: String
         let html: String
     }
+
     struct Stream {
         let endpoint: ElloAPI
         let label: String
+        let submissionsStatus: ArtistInviteSubmission.Status
 
-        init?(link: [String: Any]) {
+        init?(link: [String: Any], submissionsStatus: ArtistInviteSubmission.Status) {
             guard
                 let url = (link["href"] as? String).flatMap({ URL(string: $0) }),
                 let label = link["label"] as? String
@@ -25,6 +27,7 @@ final class ArtistInvite: JSONAble, Groupable {
 
             self.endpoint = .custom(url: url, mimics: .artistInviteSubmissions)
             self.label = label
+            self.submissionsStatus = submissionsStatus
         }
     }
 
@@ -143,20 +146,20 @@ final class ArtistInvite: JSONAble, Groupable {
         artistInvite.headerImage = Asset.parseAsset("artist_invite_header_\(id)", node: data["header_image"] as? [String: Any])
         artistInvite.logoImage = Asset.parseAsset("artist_invite_logo_\(id)", node: data["logo_image"] as? [String: Any])
 
-        if let selectedSubmissionsLink = json["links"]["selected_submissions"].object as? [String: Any],
-            let stream = Stream(link: selectedSubmissionsLink)
-        {
-            artistInvite.selectedSubmissionsStream = stream
-        }
-
         if let approvedSubmissionsLink = json["links"]["approved_submissions"].object as? [String: Any],
-            let stream = Stream(link: approvedSubmissionsLink)
+            let stream = Stream(link: approvedSubmissionsLink, submissionsStatus: .approved)
         {
             artistInvite.approvedSubmissionsStream = stream
         }
 
+        if let selectedSubmissionsLink = json["links"]["selected_submissions"].object as? [String: Any],
+            let stream = Stream(link: selectedSubmissionsLink, submissionsStatus: .selected)
+        {
+            artistInvite.selectedSubmissionsStream = stream
+        }
+
         if let unapprovedSubmissionsLink = json["links"]["unapproved_submissions"].object as? [String: Any],
-            let stream = Stream(link: unapprovedSubmissionsLink)
+            let stream = Stream(link: unapprovedSubmissionsLink, submissionsStatus: .unapproved)
         {
             artistInvite.unapprovedSubmissionsStream = stream
         }

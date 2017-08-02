@@ -99,9 +99,9 @@ private extension ArtistInviteDetailGenerator {
         let spacer = StreamCellItem(type: .spacer(height: 10))
         self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: [
             submissionsHeader,
+            unapprovedButton,
             approvedButton,
             selectedButton,
-            unapprovedButton,
             spacer,
             ])
     }

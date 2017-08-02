@@ -17,6 +17,7 @@ func == (lhs: StreamCellType, rhs: StreamCellType) -> Bool {
 
 enum StreamCellType: Equatable {
     case announcement
+    case artistInviteAdminControls
     case artistInviteBubble
     case artistInviteControls
     case artistInviteGuide(ArtistInvite.Guide?)
@@ -93,6 +94,7 @@ enum StreamCellType: Equatable {
     static let all: [StreamCellType] = [
         .announcement,
         .artistInviteBubble,
+        .artistInviteAdminControls,
         .artistInviteControls,
         .artistInviteGuide(nil),
         .artistInviteHeader,
@@ -160,6 +162,7 @@ enum StreamCellType: Equatable {
     var reuseIdentifier: String {
         switch self {
         case .announcement: return AnnouncementCell.reuseIdentifier
+        case .artistInviteAdminControls: return ArtistInviteAdminControlsCell.reuseIdentifier
         case .artistInviteBubble: return ArtistInviteBubbleCell.reuseIdentifier
         case .artistInviteControls: return ArtistInviteControlsCell.reuseIdentifier
         case .artistInviteGuide: return ArtistInviteGuideCell.reuseIdentifier
@@ -225,6 +228,7 @@ enum StreamCellType: Equatable {
     var configure: CellConfigClosure {
         switch self {
         case .announcement: return AnnouncementCellPresenter.configure
+        case .artistInviteAdminControls: return ArtistInviteAdminControlsPresenter.configure
         case .artistInviteBubble: return ArtistInviteCellPresenter.configure
         case .artistInviteControls: return ArtistInviteCellPresenter.configure
         case .artistInviteGuide: return ArtistInviteCellPresenter.configureGuide
@@ -264,6 +268,7 @@ enum StreamCellType: Equatable {
     var classType: UICollectionViewCell.Type {
         switch self {
         case .announcement: return AnnouncementCell.self
+        case .artistInviteAdminControls: return ArtistInviteAdminControlsCell.self
         case .artistInviteBubble: return ArtistInviteBubbleCell.self
         case .artistInviteControls: return ArtistInviteControlsCell.self
         case .artistInviteGuide: return ArtistInviteGuideCell.self
@@ -306,6 +311,8 @@ enum StreamCellType: Equatable {
         switch self {
         case .announcement:
             return 200
+        case .artistInviteAdminControls:
+            return ArtistInviteAdminControlsCell.Size.height
         case .artistInviteHeader:
             return ArtistInviteHeaderCell.Size.headerImageHeight + ArtistInviteHeaderCell.Size.totalTextHeight
         case .artistInviteSubmissionsButton:
@@ -388,6 +395,7 @@ enum StreamCellType: Equatable {
     var isFullWidth: Bool {
         switch self {
         case .announcement,
+             .artistInviteAdminControls,
              .artistInviteBubble,
              .artistInviteControls,
              .artistInviteGuide,
@@ -443,6 +451,7 @@ enum StreamCellType: Equatable {
     static func registerAll(_ collectionView: UICollectionView) {
         let noNibTypes: [StreamCellType] = [
             .announcement,
+            .artistInviteAdminControls,
             .artistInviteBubble,
             .artistInviteControls,
             .artistInviteGuide(nil),

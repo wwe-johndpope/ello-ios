@@ -84,6 +84,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "collaborate(userId: \(userId), body: \(body.characters.count))"
         case let .custom(path, api):
             return "custom(path: \(path), elloApi: \(api))"
+        case let .customRequest(path, method, api):
+            return "customRequest(path: \(path), method: \(method), elloApi: \(api))"
         case let .infiniteScroll(_, api):
             return "infiniteScroll(elloApi: \(api))"
         case let .loves(userId):
@@ -157,6 +159,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case .currentUserMutedList: return "currentUserMutedList"
         case .currentUserProfile: return "currentUserProfile"
         case .custom: return "custom"
+        case .customRequest: return "customRequest"
         case .rePost: return "rePost"
         case .deleteComment: return "deleteComment"
         case .deleteLove: return "deleteLove"

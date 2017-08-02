@@ -41,6 +41,7 @@ extension UIColor {
 
     // get started button background
     static let greenD1 = UIColor(hex: 0x00D100)
+    static let orangeC6 = UIColor(hex: 0xFFC600)
 
     // explains itself
     static let dimmedModalBackground = UIColor(white: 0x0, alpha: 0.7)

@@ -68,13 +68,19 @@ struct InterfaceString {
         static let OpenStatus: String = NSLocalizedString("Open For Submissions", comment: "")
         static let SelectingStatus: String = NSLocalizedString("Selections In Progress", comment: "")
         static let ClosedStatus: String = NSLocalizedString("Invite Closed", comment: "")
-        static let AdminApprovedStream: String = NSLocalizedString("Approved submissions", comment: "")
-        static let AdminSelectedStream: String = NSLocalizedString("Selected submissions", comment: "")
-        static let AdminUnapprovedStream: String = NSLocalizedString("Pending submissions", comment: "")
-    }
 
-    struct FollowingStream {
-        static let Title: String = NSLocalizedString("Following", comment: "Following title")
+        static let AdminTitle: String = NSLocalizedString("Submissions", comment: "")
+        static let AdminUnapprovedStream: String = NSLocalizedString("Pending review", comment: "")
+        static let AdminApprovedStream: String = NSLocalizedString("Accepted submissions", comment: "")
+        static let AdminSelectedStream: String = NSLocalizedString("Selected submissions", comment: "")
+        static let AdminUnapprovedTab: String = NSLocalizedString("To Review", comment: "")
+        static let AdminApprovedTab: String = NSLocalizedString("Accepted", comment: "")
+        static let AdminSelectedTab: String = NSLocalizedString("Selected", comment: "")
+
+        static let AdminUnapproveAction: String = NSLocalizedString("Accepted", comment: "")
+        static let AdminUnselectAction: String = NSLocalizedString("Selected", comment: "")
+        static let AdminApproveAction: String = NSLocalizedString("Accept", comment: "")
+        static let AdminSelectAction: String = NSLocalizedString("Select", comment: "")
     }
 
     struct Notifications {

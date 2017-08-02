@@ -14,6 +14,11 @@ struct StreamCellItemParser {
             if let post = item as? Post {
                 streamItems += postCellItems(post, streamKind: streamKind, forceGrid: forceGrid)
             }
+            else if let submission = item as? ArtistInviteSubmission,
+                let post = submission.post
+            {
+                streamItems += postCellItems(post, streamKind: streamKind, forceGrid: forceGrid, submission: submission)
+            }
             else if let comment = item as? ElloComment {
                 streamItems += commentCellItems(comment)
             }
@@ -62,7 +67,7 @@ struct StreamCellItemParser {
         + [StreamCellItem(jsonable: artistInvite, type: .spacer(height: 30), placeholderType: .artistInviteDetails)]
     }
 
-    fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {
+    fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool, submission: ArtistInviteSubmission? = nil) -> [StreamCellItem] {
         var cellItems: [StreamCellItem] = []
         let isGridView = streamKind.isGridView || forceGrid
 
@@ -72,6 +77,11 @@ struct StreamCellItemParser {
         else {
             cellItems.append(StreamCellItem(jsonable: post, type: .spacer(height: 30)))
         }
+
+        if let submission = submission, submission.actions.count > 0 {
+            cellItems.append(StreamCellItem(jsonable: submission, type: .artistInviteAdminControls))
+        }
+
         cellItems += postToggleItems(post)
         if post.isRepost {
             // add repost content
