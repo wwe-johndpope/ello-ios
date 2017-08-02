@@ -428,23 +428,23 @@ extension ElloProvider {
         config.totalCount = node["total_count"]
         config.totalPagesRemaining = node["total_pages_remaining"]
         if let next = node["next"] {
-            if let comps = URLComponents(string: next) {
-                config.nextQueryItems = comps.queryItems as [Any]?
+            if let components = URLComponents(string: next) {
+                config.nextQuery = components
             }
         }
         if let prev = node["prev"] {
-            if let comps = URLComponents(string: prev) {
-                config.prevQueryItems = comps.queryItems as [Any]?
+            if let components = URLComponents(string: prev) {
+                config.prevQuery = components
             }
         }
         if let first = node["first"] {
-            if let comps = URLComponents(string: first) {
-                config.firstQueryItems = comps.queryItems as [Any]?
+            if let components = URLComponents(string: first) {
+                config.firstQuery = components
             }
         }
         if let last = node["last"] {
-            if let comps = URLComponents(string: last) {
-                config.lastQueryItems = comps.queryItems as [Any]?
+            if let components = URLComponents(string: last) {
+                config.lastQuery = components
             }
         }
         return config

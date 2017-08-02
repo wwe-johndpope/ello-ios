@@ -219,10 +219,10 @@ final class PostDetailViewController: StreamableViewController {
 extension PostDetailViewController: PostCommentsResponder {
     func loadCommentsTapped() {
         guard
-            let nextQueryItems = streamViewController.responseConfig?.nextQueryItems
+            let nextQuery = streamViewController.responseConfig?.nextQuery
         else { return }
 
-        generator.loadMoreComments(nextQueryItems: nextQueryItems)
+        generator.loadMoreComments(nextQuery: nextQuery)
     }
 }
 

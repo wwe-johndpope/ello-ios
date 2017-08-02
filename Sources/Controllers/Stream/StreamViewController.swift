@@ -1282,7 +1282,7 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         guard
-            let nextQueryItems = responseConfig?.nextQueryItems
+            let nextQuery = responseConfig?.nextQuery
         else { return }
 
         guard let lastCellItem = dataSource.visibleCellItems.last, lastCellItem.type != .streamLoading
@@ -1293,7 +1293,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
         scrollToPaginateGuard = false
 
-        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems, api: streamKind.endpoint)
+        let scrollAPI = ElloAPI.infiniteScroll(query: nextQuery, api: streamKind.endpoint)
         streamService.loadStream(endpoint: scrollAPI, streamKind: streamKind)
             .thenFinally { response in
                 switch response {

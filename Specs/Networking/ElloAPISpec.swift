@@ -77,7 +77,7 @@ class ElloAPISpec: QuickSpec {
                         (.followingNewContent(createdAt: nil), "/api/v2/following/posts/recent"),
                         (.following, "/api/v2/following/posts/recent"),
                         (.hire(userId: "666", body: "foo"), "/api/v2/users/666/hire_me"),
-                        (ElloAPI.infiniteScroll(queryItems: [], api: .following), "/api/v2/following/posts/recent"),
+                        (ElloAPI.infiniteScroll(query: [], api: .following), "/api/v2/following/posts/recent"),
                         (.invitations(emails: ["someContact"]), "/api/v2/invitations"),
                         (.inviteFriends(email: "someContact"), "/api/v2/invitations"),
                         (.join(email: "", username: "", password: "", invitationCode: nil), "/api/v2/join"),
@@ -149,7 +149,7 @@ class ElloAPISpec: QuickSpec {
                     (.flagPost(postId: "", kind: ""), .noContentType),
                     (.following, .postsType),
                     (.followingNewContent(createdAt: nil), .noContentType),
-                    (.infiniteScroll(queryItems: [""], api: .amazonCredentials), .amazonCredentialsType),
+                    (.infiniteScroll(query: [""], api: .amazonCredentials), .amazonCredentialsType),
                     (.invitations(emails: [""]), .noContentType),
                     (.inviteFriends(email: ""), .noContentType),
                     (.join(email: "", username: "", password: "", invitationCode: ""), .usersType),
@@ -226,8 +226,8 @@ class ElloAPISpec: QuickSpec {
                         .flagPost(postId: "", kind: ""),
                         .followingNewContent(createdAt: nil),
                         .following,
-                        .infiniteScroll(queryItems: [""], api: .auth(email: "", password: "")),
-                        .infiniteScroll(queryItems: [""], api: .following),
+                        .infiniteScroll(query: [""], api: .auth(email: "", password: "")),
+                        .infiniteScroll(query: [""], api: .following),
                         .invitations(emails: [""]),
                         .inviteFriends(email: ""),
                         .join(email: "", username: "", password: "", invitationCode: ""),
@@ -303,7 +303,7 @@ class ElloAPISpec: QuickSpec {
                         .flagComment(postId: "", commentId: "", kind: ""),
                         .flagPost(postId: "", kind: ""),
                         .following,
-                        .infiniteScroll(queryItems: [""], api: .following),
+                        .infiniteScroll(query: [""], api: .following),
                         .invitations(emails: [""]),
                         .inviteFriends(email: ""),
                         .join(email: "", username: "", password: "", invitationCode: ""),
@@ -389,8 +389,8 @@ class ElloAPISpec: QuickSpec {
                 }
 
                 it("infiniteScroll") {
-                    let queryItems = NSURLComponents(string: "ttp://ello.co/api/v2/posts/278/comments?after=2014-06-02T00%3A00%3A00.000000000%2B0000&per_page=2")!.queryItems
-                    let infiniteScroll = ElloAPI.infiniteScroll(queryItems: queryItems! as [Any], api: .discover(type: .featured))
+                    let query = URLComponents(string: "ttp://ello.co/api/v2/posts/278/comments?after=2014-06-02T00%3A00%3A00.000000000%2B0000&per_page=2")!
+                    let infiniteScroll = ElloAPI.infiniteScroll(query: query, api: .discover(type: .featured))
                     let params = infiniteScroll.parameters!
                     expect(params["per_page"] as? String) == "2"
                     expect(params["after"]).notTo(beNil())

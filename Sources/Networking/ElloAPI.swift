@@ -52,7 +52,7 @@ indirect enum ElloAPI {
     case followingNewContent(createdAt: Date?)
     case hire(userId: String, body: String)
     case collaborate(userId: String, body: String)
-    case infiniteScroll(queryItems: [Any], api: ElloAPI)
+    case infiniteScroll(query: URLComponents, api: ElloAPI)
     case invitations(emails: [String])
     case inviteFriends(email: String)
     case join(email: String, username: String, password: String, invitationCode: String?)
@@ -420,11 +420,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/hire_me"
         case let .collaborate(userId, _):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/collaborate"
-        case let .infiniteScroll(_, api):
-            if let pagingPath = api.pagingPath {
-                return pagingPath
-            }
-            return api.path
+        case let .infiniteScroll(query, api):
+            return api.pagingPath ?? query.path
         case .invitations,
              .inviteFriends:
             return "/api/\(ElloAPI.apiVersion)/invitations"
@@ -762,12 +759,12 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "body": body
             ]
-        case let .infiniteScroll(queryItems, api):
+        case let .infiniteScroll(query, api):
+            guard let queryItems = query.queryItems else { return nil }
+
             var queryDict = [String: Any]()
             for item in queryItems {
-                if let item = item as? URLQueryItem {
-                    queryDict[item.name] = item.value
-                }
+                queryDict[item.name] = item.value
             }
             var origDict = api.parameters ?? [String: Any]()
             origDict.merge(queryDict)

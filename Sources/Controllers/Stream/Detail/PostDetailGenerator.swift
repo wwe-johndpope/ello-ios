@@ -60,13 +60,13 @@ final class PostDetailGenerator: StreamGenerator {
         loadRelatedPosts(doneOperation)
     }
 
-    func loadMoreComments(nextQueryItems: [Any]) {
+    func loadMoreComments(nextQuery: URLComponents) {
         guard let postId = self.post?.id else { return }
 
         let loadingComments = [StreamCellItem(type: .streamLoading)]
         self.destination?.replacePlaceholder(type: .postLoadingComments, items: loadingComments)
 
-        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems, api: .postComments(postId: postId))
+        let scrollAPI = ElloAPI.infiniteScroll(query: nextQuery, api: .postComments(postId: postId))
         StreamService().loadStream(endpoint: scrollAPI, streamKind: .postDetail(postParam: postId))
             .thenFinally { [weak self] response in
                 guard let `self` = self else { return }
@@ -187,7 +187,7 @@ private extension PostDetailGenerator {
     }
 
     func loadMoreCommentItems(lastComment: ElloComment?, responseConfig: ResponseConfig) -> [StreamCellItem] {
-        if responseConfig.nextQueryItems != nil,
+        if responseConfig.nextQuery != nil,
             let lastComment = lastComment
         {
             return [StreamCellItem(jsonable: lastComment, type: .loadMoreComments)]
