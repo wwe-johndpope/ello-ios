@@ -35,7 +35,7 @@ indirect enum ElloAPI {
     case createPost(body: [String: Any])
     case createWatchPost(postId: String)
     case custom(url: URL, mimics: ElloAPI)
-    case customRequest(url: URL, method: Moya.Method, mimics: ElloAPI)
+    case customRequest(ElloRequest, mimics: ElloAPI)
     case deleteComment(postId: String, commentId: String)
     case deleteLove(postId: String)
     case deletePost(postId: String)
@@ -116,7 +116,7 @@ indirect enum ElloAPI {
             return .postsType
         case let .custom(_, api):
             return api.pagingMappingType
-        case let .customRequest(_, _, api):
+        case let .customRequest(_, api):
             return api.pagingMappingType
         default:
             return nil
@@ -166,7 +166,7 @@ indirect enum ElloAPI {
             return .usersType
         case let .custom(_, api):
             return api.mappingType
-        case let .customRequest(_, _, api):
+        case let .customRequest(_, api):
             return api.mappingType
         case .commentDetail,
              .createComment,
@@ -262,7 +262,7 @@ extension ElloAPI {
             return true
         case let .custom(_, api):
             return api.supportsAnonymousToken
-        case let .customRequest(_, _, api):
+        case let .customRequest(_, api):
             return api.supportsAnonymousToken
         case let .infiniteScroll(_, api):
             return api.supportsAnonymousToken
@@ -331,8 +331,8 @@ extension ElloAPI: Moya.TargetType {
             return .patch
         case let .custom(_, api):
             return api.method
-        case let .customRequest(_, method, _):
-            return method
+        case let .customRequest(request, _):
+            return request.method
         case let .infiniteScroll(_, api):
             return api.method
         default:
@@ -359,8 +359,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/oauth/token"
         case let .custom(url, _):
             return url.path
-        case let .customRequest(url, _, _):
-            return url.path
+        case let .customRequest(request, _):
+            return request.url.path
         case .editorials:
             return "/api/\(ElloAPI.apiVersion)/editorials"
         case .resetPassword:
@@ -566,7 +566,7 @@ extension ElloAPI: Moya.TargetType {
             return stubbedData("activity_streams_friend_stream")
         case let .custom(_, api):
             return api.sampleData
-        case let .customRequest(_, _, api):
+        case let .customRequest(_, api):
             return api.sampleData
         case let .infiniteScroll(_, api):
             return api.sampleData
@@ -714,9 +714,16 @@ extension ElloAPI: Moya.TargetType {
         case let .custom(url, _):
             guard let queryString = url.query else { return nil }
             return convertQueryParams(queryString)
-        case let .customRequest(url, _, _):
-            guard let queryString = url.query else { return nil }
-            return convertQueryParams(queryString)
+        case let .customRequest(request, _):
+            if let parameters = request.parameters {
+                return parameters
+            }
+            else if request.method == .get,
+                let queryString = request.url.query
+            {
+                return convertQueryParams(queryString)
+            }
+            return nil
         case .currentUserProfile:
             return [
                 "post_count": 0

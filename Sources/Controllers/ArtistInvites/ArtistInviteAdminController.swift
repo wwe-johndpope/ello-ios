@@ -108,6 +108,28 @@ extension ArtistInviteAdminController: ArtistInviteAdminScreenDelegate {
     }
 }
 
+extension ArtistInviteAdminController: ArtistInviteAdminResponder {
+    func tappedArtistInviteAction(cell: ArtistInviteAdminControlsCell, action: ArtistInviteSubmission.Action) {
+        let collectionView = streamViewController.collectionView
+
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let streamCellItem = streamViewController.dataSource?.visibleStreamCellItem(at: indexPath)
+        else { return }
+
+        ElloHUD.showLoadingHudInView(streamViewController.view)
+        ArtistInviteService().performAction(action: action)
+            .thenFinally { newSubmission in
+                streamCellItem.jsonable = newSubmission
+                collectionView.reloadItems(at: [indexPath])
+            }
+            .ignoreErrors()
+            .always { _ in
+                ElloHUD.hideLoadingHudInView(self.streamViewController.view)
+            }
+    }
+}
+
 extension ArtistInviteAdminController: StreamDestination {
 
     var isPagingEnabled: Bool {

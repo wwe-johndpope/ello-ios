@@ -84,8 +84,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "collaborate(userId: \(userId), body: \(body.characters.count))"
         case let .custom(path, api):
             return "custom(path: \(path), elloApi: \(api))"
-        case let .customRequest(path, method, api):
-            return "customRequest(path: \(path), method: \(method), elloApi: \(api))"
+        case let .customRequest(request, api):
+            return "customRequest(path: \(request.url.path), method: \(request.method), elloApi: \(api))"
         case let .infiniteScroll(_, api):
             return "infiniteScroll(elloApi: \(api))"
         case let .loves(userId):

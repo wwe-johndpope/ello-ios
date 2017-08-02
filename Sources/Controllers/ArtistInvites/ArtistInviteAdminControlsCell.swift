@@ -53,6 +53,7 @@ class ArtistInviteAdminControlsCell: CollectionViewCell {
             let button = StyledButton()
             button.title = action.buttonTitle
             button.setImage(action.buttonImage, for: .normal)
+            button.addTarget(self, action: #selector(tappedButton(_:)), for: .touchUpInside)
 
             switch action.name {
             case .unapprove: button.style = .clearGreen
@@ -83,6 +84,19 @@ class ArtistInviteAdminControlsCell: CollectionViewCell {
     }
 }
 
+extension ArtistInviteAdminControlsCell {
+    @objc
+    func tappedButton(_ sender: StyledButton) {
+        guard
+            let index = buttons.index(of: sender),
+            let action = config.actions.safeValue(index)
+        else { return }
+
+        let responder: ArtistInviteAdminResponder? = findResponder()
+        responder?.tappedArtistInviteAction(cell: self, action: action)
+    }
+}
+
 extension ArtistInviteAdminControlsCell.Config {
     static func from(submission: ArtistInviteSubmission) -> ArtistInviteAdminControlsCell.Config {
         var config = ArtistInviteAdminControlsCell.Config()
@@ -94,6 +108,7 @@ extension ArtistInviteAdminControlsCell.Config {
 extension ArtistInviteSubmission.Action {
     var buttonTitle: String {
         switch name {
+        case .approve: return InterfaceString.ArtistInvites.AdminApproveAction
         case .unapprove: return InterfaceString.ArtistInvites.AdminUnapproveAction
         case .unselect: return InterfaceString.ArtistInvites.AdminUnselectAction
         default: return NSLocalizedString(label, comment: "")

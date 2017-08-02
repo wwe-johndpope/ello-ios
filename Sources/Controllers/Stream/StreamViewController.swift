@@ -648,7 +648,7 @@ final class StreamViewController: BaseElloViewController {
         if height != existingHeight {
             self.dataSource.updateHeightForIndexPath(indexPath, height: height)
             // collectionView.performBatchUpdates({
-            //     collectionView.reloadItemsAtIndexPaths([indexPath])
+            //     collectionView.reloadItems(at: [indexPath])
             // }, completion: nil)
             collectionView.reloadData()
         }

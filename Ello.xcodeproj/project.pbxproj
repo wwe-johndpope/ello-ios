@@ -860,6 +860,9 @@
 		1DDC234C1F32439400E68B0E /* circle_check_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DDC23481F32439400E68B0E /* circle_check_normal.svg */; };
 		1DDC234D1F32439400E68B0E /* star_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DDC23491F32439400E68B0E /* star_normal.svg */; };
 		1DDC234E1F32439400E68B0E /* star_orange.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DDC234A1F32439400E68B0E /* star_orange.svg */; };
+		1DDC23501F326F2200E68B0E /* ElloRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC234F1F326F2200E68B0E /* ElloRequest.swift */; };
+		1DDC23511F326F3B00E68B0E /* ElloRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC234F1F326F2200E68B0E /* ElloRequest.swift */; };
+		1DDC23531F32886E00E68B0E /* ArtistInviteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23521F32886E00E68B0E /* ArtistInviteService.swift */; };
 		1DDC85151D91D4BE00C29552 /* WatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85141D91D4BE00C29552 /* WatchSpec.swift */; };
 		1DDC851A1D91D4F300C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
 		1DDC851B1D91D52D00C29552 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
@@ -1931,6 +1934,8 @@
 		1DDC23481F32439400E68B0E /* circle_check_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = circle_check_normal.svg; sourceTree = "<group>"; };
 		1DDC23491F32439400E68B0E /* star_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_normal.svg; sourceTree = "<group>"; };
 		1DDC234A1F32439400E68B0E /* star_orange.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_orange.svg; sourceTree = "<group>"; };
+		1DDC234F1F326F2200E68B0E /* ElloRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloRequest.swift; sourceTree = "<group>"; };
+		1DDC23521F32886E00E68B0E /* ArtistInviteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteService.swift; sourceTree = "<group>"; };
 		1DDC85141D91D4BE00C29552 /* WatchSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSpec.swift; sourceTree = "<group>"; };
 		1DDC85161D91D4D200C29552 /* Watch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Watch.swift; sourceTree = "<group>"; };
 		1DDC85181D91D4E400C29552 /* watches_creating_a_watch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = watches_creating_a_watch.json; sourceTree = "<group>"; };
@@ -2288,6 +2293,7 @@
 			children = (
 				1207C94A1C73FEE000939ADB /* AnonymousAuthService.swift */,
 				1207C94B1C73FEE000939ADB /* APIKeys.swift */,
+				1DDC23521F32886E00E68B0E /* ArtistInviteService.swift */,
 				1207C94C1C73FEE000939ADB /* AsyncOperation.swift */,
 				1207C94D1C73FEE000939ADB /* AuthState.swift */,
 				1207C94E1C73FEE000939ADB /* AuthToken.swift */,
@@ -2307,6 +2313,7 @@
 				1207C9581C73FEE000939ADB /* ElloProvider.swift */,
 				1207C9591C73FEE000939ADB /* ElloProviderErrors.swift */,
 				1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */,
+				1DDC234F1F326F2200E68B0E /* ElloRequest.swift */,
 				1207C95A1C73FEE000939ADB /* ElloS3.swift */,
 				1207C95B1C73FEE000939ADB /* ElloURI.swift */,
 				1207C95C1C73FEE000939ADB /* ErrorStatusCode.swift */,
@@ -4953,6 +4960,7 @@
 				122B30DA1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */,
 				1D7152B51D6E4FFA005998FE /* ValidationState.swift in Sources */,
 				1207C99F1C750F9900939ADB /* Mapper.swift in Sources */,
+				1DDC23511F326F3B00E68B0E /* ElloRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5448,6 +5456,7 @@
 				1D9A12D61EAA69BB003B3BD7 /* ProfileBadgeViewController.swift in Sources */,
 				1D513E061ED735910081BB2D /* EditorialsGenerator.swift in Sources */,
 				1DB8C6A11D789015007E1447 /* ClearTextView.swift in Sources */,
+				1DDC23531F32886E00E68B0E /* ArtistInviteService.swift in Sources */,
 				7659FB831B29F15200DEB6F4 /* StreamInviteFriendsCellPresenter.swift in Sources */,
 				1DC78A581F21467800BE2413 /* ArtistInvite.swift in Sources */,
 				1DD771201AFD194700FBC049 /* FreeMethods.swift in Sources */,
@@ -5645,6 +5654,7 @@
 				123375911DA6F1180019CFAD /* ProfileLinksSizeCalculator.swift in Sources */,
 				1207C9751C73FEE000939ADB /* ContentFlaggingService.swift in Sources */,
 				1D06D6C51E3BAFA9004FA878 /* LoggedOutScreenProtocol.swift in Sources */,
+				1DDC23501F326F2200E68B0E /* ElloRequest.swift in Sources */,
 				1D8783181ECCF45E00253602 /* EditorialPostStreamCell.swift in Sources */,
 				12F6AE631A4339C600493660 /* Validator.swift in Sources */,
 				128D36B61A951F4600622833 /* NotificationCellPresenter.swift in Sources */,
