@@ -26,7 +26,7 @@ enum StreamKind {
         case .announcements: return ""
         case .discover: return InterfaceString.Discover.Title
         case .editorials: return InterfaceString.Editorials.Title
-        case .following: return InterfaceString.FollowingStream.Title
+        case .following: return InterfaceString.Following.Title
         case .notifications: return InterfaceString.Notifications.Title
         case .artistInvites: return InterfaceString.ArtistInvites.Title
         case .artistInviteDetail: return ""
