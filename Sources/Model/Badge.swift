@@ -6,13 +6,14 @@ import SwiftyJSON
 
 
 // version 1: initial
+// amend: renamed 'link' to 'caption', kept coder/decoder as 'link'
 let BadgeVersion: Int = 2
 
 @objc
 final class Badge: JSONAble {
     var slug: String
     var name: String
-    var link: String
+    var caption: String
     var url: URL?
     var interfaceImage: InterfaceImage?
     var imageURL: URL?
@@ -23,7 +24,7 @@ final class Badge: JSONAble {
     init(badge: Badge, categories: [Category]?) {
         self.slug = badge.slug
         self.name = badge.name
-        self.link = badge.link
+        self.caption = badge.caption
         self.url = badge.url
         self.interfaceImage = badge.interfaceImage
         self.imageURL = badge.imageURL
@@ -33,14 +34,14 @@ final class Badge: JSONAble {
 
     init(slug: String,
         name: String,
-        link: String,
+        caption: String,
         url: URL?,
         imageURL: URL?
         )
     {
         self.slug = slug
         self.name = name
-        self.link = link
+        self.caption = caption
         self.url = url
         switch slug {
         case "featured":
@@ -73,7 +74,7 @@ final class Badge: JSONAble {
         let decoder = Coder(coder)
         self.slug = decoder.decodeKey("slug")
         self.name = decoder.decodeKey("name")
-        self.link = decoder.decodeKey("link")
+        self.caption = decoder.decodeKey("link")
         self.url = decoder.decodeOptionalKey("url")
         let interfaceImage: String? = decoder.decodeOptionalKey("interfaceImage")
         if let interfaceImage = interfaceImage {
@@ -88,7 +89,7 @@ final class Badge: JSONAble {
         let encoder = Coder(coder)
         encoder.encodeObject(slug, forKey: "slug")
         encoder.encodeObject(name, forKey: "name")
-        encoder.encodeObject(link, forKey: "link")
+        encoder.encodeObject(caption, forKey: "link")
         encoder.encodeObject(url, forKey: "url")
         encoder.encodeObject(interfaceImage?.rawValue, forKey: "interfaceImage")
         encoder.encodeObject(imageURL, forKey: "imageURL")
@@ -100,7 +101,7 @@ final class Badge: JSONAble {
         return Badge(
             slug: json["slug"].stringValue,
             name: json["name"].stringValue,
-            link: json["learn_more_caption"].stringValue,
+            caption: json["learn_more_caption"].stringValue,
             url: json["learn_more_href"].string.flatMap { URL(string: $0) },
             imageURL: json["image"]["url"].string.flatMap { URL(string: $0) }
             )

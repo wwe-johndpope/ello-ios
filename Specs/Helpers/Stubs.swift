@@ -689,7 +689,7 @@ extension Badge: Stubbable {
         let badge = Badge(
             slug: (values["slug"] as? String) ?? "featured",
             name: (values["name"] as? String) ?? "Featured",
-            link: (values["link"] as? String) ?? "Featured",
+            caption: (values["caption"] as? String) ?? "Featured",
             url: urlFromValue(values["url"]),
             imageURL: urlFromValue(values["imageURL"])
             )

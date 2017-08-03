@@ -12,14 +12,14 @@ class ProfileBadgeScreen: Screen, ProfileBadgeScreenProtocol {
 
     weak var delegate: ProfileBadgeScreenDelegate?
     let title: String
-    let link: String
+    let caption: String
 
     fileprivate let titleLabel = StyledLabel(style: .largeWhite)
     fileprivate let learnMoreButton = StyledButton(style: .grayUnderlined)
 
-    init(title: String, link: String) {
+    init(title: String, caption: String) {
         self.title = title
-        self.link = link
+        self.caption = caption
         super.init(frame: .zero)
     }
 
@@ -43,7 +43,7 @@ class ProfileBadgeScreen: Screen, ProfileBadgeScreenProtocol {
 
     override func setText() {
         titleLabel.text = title
-        learnMoreButton.setTitle(link, for: .normal)
+        learnMoreButton.setTitle(caption, for: .normal)
     }
 
     override func arrange() {
