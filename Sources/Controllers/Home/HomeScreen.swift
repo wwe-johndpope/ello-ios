@@ -106,7 +106,8 @@ extension HomeScreenNavBar {
         }
 
         tabBar.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(navigationBar)
+            make.leading.trailing.equalTo(navigationBar)
+            make.top.equalTo(logoButton.snp.bottom)
         }
     }
 }

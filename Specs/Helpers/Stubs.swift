@@ -682,3 +682,17 @@ extension Editorial: Stubbable {
         return editorial
     }
 }
+
+extension Badge: Stubbable {
+
+    class func stub(_ values: [String: Any]) -> Badge {
+        let badge = Badge(
+            slug: (values["slug"] as? String) ?? "featured",
+            name: (values["name"] as? String) ?? "Featured",
+            link: (values["link"] as? String) ?? "Featured",
+            url: urlFromValue(values["url"]),
+            imageURL: urlFromValue(values["imageURL"])
+            )
+        return badge
+    }
+}

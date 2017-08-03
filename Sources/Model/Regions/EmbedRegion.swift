@@ -100,9 +100,9 @@ final class EmbedRegion: JSONAble, Regionable {
 
     func toJSON() -> [String: Any] {
         return [
-            "kind": self.kind,
+            "kind": kind.rawValue,
             "data": [
-                "url": self.url.absoluteString
+                "url": url.absoluteString
                 ],
         ]
     }

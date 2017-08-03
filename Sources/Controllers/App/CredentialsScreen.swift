@@ -46,9 +46,9 @@ class CredentialsScreen: EmptyScreen {
     }
 
     override func arrange() {
-        super.arrange()
-
         layer.addSublayer(gradientLayer)
+
+        super.arrange()
 
         addSubview(scrollView)
         addSubview(continueBackground)

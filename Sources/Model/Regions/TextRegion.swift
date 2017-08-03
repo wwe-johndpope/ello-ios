@@ -54,8 +54,8 @@ final class TextRegion: JSONAble, Regionable {
 
     func toJSON() -> [String: Any] {
         return [
-            "kind": self.kind,
-            "data": self.content
+            "kind": kind.rawValue,
+            "data": content
         ]
     }
 }

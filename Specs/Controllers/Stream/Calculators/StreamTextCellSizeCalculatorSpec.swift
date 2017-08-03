@@ -16,7 +16,7 @@ class StreamTextCellSizeCalculatorSpec: QuickSpec {
             webView.mockHeight = mockHeight
             subject = StreamTextCellSizeCalculator(webView: webView)
         }
-        fdescribe("StreamTextCellSizeCalculator") {
+        describe("StreamTextCellSizeCalculator") {
             it("assigns cell height to all cell items") {
                 let post = Post.stub([:])
 

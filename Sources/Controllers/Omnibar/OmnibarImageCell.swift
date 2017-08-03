@@ -83,6 +83,7 @@ class OmnibarImageCell: TableViewCell {
             x: flImageView.frame.maxX - 10 - buyButton.frame.size.width,
             y: 10
             )
+        buyButton.layer.cornerRadius = buyButton.frame.size.width / 2
     }
 
     class func heightForImage(_ image: UIImage, tableWidth: CGFloat, editing: Bool) -> CGFloat {

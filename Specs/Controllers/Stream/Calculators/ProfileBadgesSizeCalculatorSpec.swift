@@ -24,6 +24,7 @@ class ProfileBadgesSizeCalculatorSpec: QuickSpec {
 
             it("greater than 0 if badge count > 0") {
                 let user: User = stub([:])
+                user.badges = [Badge.stub([:])]
                 let calc = ProfileBadgesSizeCalculator()
                 var height: CGFloat!
                 calc.calculate(StreamCellItem(jsonable: user, type: .streamHeader))
