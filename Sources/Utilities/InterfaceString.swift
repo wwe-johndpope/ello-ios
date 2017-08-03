@@ -70,6 +70,8 @@ struct InterfaceString {
         static let ClosedStatus: String = NSLocalizedString("Invite Closed", comment: "")
 
         static let AdminTitle: String = NSLocalizedString("Submissions", comment: "")
+        static let AdminEmpty: String = NSLocalizedString("No submissions", comment: "")
+
         static let AdminUnapprovedStream: String = NSLocalizedString("Pending review", comment: "")
         static let AdminApprovedStream: String = NSLocalizedString("Accepted submissions", comment: "")
         static let AdminSelectedStream: String = NSLocalizedString("Selected submissions", comment: "")

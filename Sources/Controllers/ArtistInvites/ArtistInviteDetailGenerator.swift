@@ -96,7 +96,7 @@ private extension ArtistInviteDetailGenerator {
         let approvedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminApprovedStream, approvedSubmissionsStream))
         let selectedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminSelectedStream, selectedSubmissionsStream))
         let unapprovedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminUnapprovedStream, unapprovedSubmissionsStream))
-        let spacer = StreamCellItem(type: .spacer(height: 10))
+        let spacer = StreamCellItem(type: .spacer(height: 30))
         self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: [
             submissionsHeader,
             unapprovedButton,

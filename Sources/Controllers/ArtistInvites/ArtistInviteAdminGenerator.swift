@@ -46,6 +46,11 @@ private extension ArtistInviteAdminGenerator {
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
                 else { return }
 
+                if case .empty = response {
+                    self.showEmptySubmissions()
+                    return
+                }
+
                 guard
                     case let .jsonables(jsonables, responseConfig) = response,
                     let submissions = jsonables as? [ArtistInviteSubmission]
@@ -65,5 +70,11 @@ private extension ArtistInviteAdminGenerator {
                 guard let `self` = self else { return }
                 self.destination?.primaryJSONAbleNotFound()
             }
+    }
+
+    func showEmptySubmissions() {
+        let header = NSAttributedString(label: InterfaceString.ArtistInvites.AdminEmpty, style: .header)
+        let headerItem = StreamCellItem(type: .header(header))
+        destination?.replacePlaceholder(type: .artistInvitePosts, items: [headerItem])
     }
 }
