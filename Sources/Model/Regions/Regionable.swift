@@ -2,9 +2,8 @@
 ///  Regionable.swift
 //
 
-@objc
-protocol Regionable {
-    var kind: String { get }
+protocol Regionable: class {
+    var kind: RegionKind { get }
     var isRepost: Bool { get set }
     func toJSON() -> [String: Any]
     func coding() -> NSCoding

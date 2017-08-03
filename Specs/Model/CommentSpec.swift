@@ -25,8 +25,8 @@ class CommentSpec: QuickSpec {
                 // required
                 expect(comment.postId) == "79"
                 expect(comment.content.count) == 2
-                expect(comment.content[0].kind) == "text"
-                expect(comment.content[1].kind) == "image"
+                expect(comment.content[0].kind) == .text
+                expect(comment.content[1].kind) == .image
                 // links
                 expect(comment.author).to(beAKindOf(User.self))
                 expect(comment.parentPost).to(beAKindOf(Post.self))

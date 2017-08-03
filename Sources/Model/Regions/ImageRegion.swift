@@ -77,7 +77,7 @@ final class ImageRegion: JSONAble, Regionable {
 
 // MARK: Regionable
 
-    var kind: String { return RegionKind.image.rawValue }
+    let kind: RegionKind = .image
 
     func coding() -> NSCoding {
         return self

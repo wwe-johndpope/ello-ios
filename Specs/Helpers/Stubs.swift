@@ -406,12 +406,6 @@ extension EmbedRegion: Stubbable {
     }
 }
 
-extension UnknownRegion: Stubbable {
-    class func stub(_ values: [String: Any]) -> UnknownRegion {
-        return UnknownRegion(name: "no-op")
-    }
-}
-
 extension AutoCompleteResult: Stubbable {
     class func stub(_ values: [String: Any]) -> AutoCompleteResult {
         let name = (values["name"] as? String) ?? "666"

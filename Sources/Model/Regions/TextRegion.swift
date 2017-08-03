@@ -46,7 +46,7 @@ final class TextRegion: JSONAble, Regionable {
 
 // MARK: Regionable
 
-    var kind: String { return RegionKind.text.rawValue }
+    let kind: RegionKind = .text
 
     func coding() -> NSCoding {
         return self

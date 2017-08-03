@@ -92,7 +92,7 @@ final class EmbedRegion: JSONAble, Regionable {
 
 // MARK: Regionable
 
-    var kind: String { return RegionKind.embed.rawValue }
+    let kind: RegionKind = .embed
 
     func coding() -> NSCoding {
         return self

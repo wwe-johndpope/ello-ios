@@ -421,7 +421,7 @@ extension Tracker {
         var imageCount = 0
         var textLength = 0
         for region in regions {
-            if region.kind == RegionKind.image.rawValue {
+            if region.kind == RegionKind.image {
                 imageCount += 1
             }
             else if let region = region as? TextRegion {

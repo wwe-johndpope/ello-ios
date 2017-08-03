@@ -534,32 +534,6 @@ class OmnibarViewControllerSpec: QuickSpec {
                         expect(OmnibarViewController.canEditRegions(regions)) == false
                     }
                 }
-                describe("cannot edit unknown regions") {
-                    it("text, unknown, image") {
-                        let regions: [Regionable]? = [
-                            TextRegion.stub([:]),
-                            UnknownRegion.stub([:]),
-                            ImageRegion.stub([:])
-                        ]
-                        expect(OmnibarViewController.canEditRegions(regions)) == false
-                    }
-                    it("unknown, image, text") {
-                        let regions: [Regionable]? = [
-                            UnknownRegion.stub([:]),
-                            ImageRegion.stub([:]),
-                            TextRegion.stub([:])
-                        ]
-                        expect(OmnibarViewController.canEditRegions(regions)) == false
-                    }
-                    it("image, text, unknown") {
-                        let regions: [Regionable]? = [
-                            ImageRegion.stub([:]),
-                            TextRegion.stub([:]),
-                            UnknownRegion.stub([:])
-                        ]
-                        expect(OmnibarViewController.canEditRegions(regions)) == false
-                    }
-                }
             }
         }
     }
