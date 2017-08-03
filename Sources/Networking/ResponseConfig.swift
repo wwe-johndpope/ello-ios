@@ -36,6 +36,7 @@ class ResponseConfig: CustomStringConvertible {
         return totalPagesRemaining == "0"
             || totalPagesRemaining == nil
             || nextQuery?.queryItems?.count == 0
+            || nextQuery?.queryItems == nil
             || nextQuery == nil
     }
 }
