@@ -1,11 +1,12 @@
 ////
-///  View.swift
+///  TableViewCell.swift
 //
 
-class View: UIView {
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
+class TableViewCell: UITableViewCell {
+
+    override init(style: UITableViewCellStyle, reuseIdentifier id: String?) {
+        super.init(style: style, reuseIdentifier: id)
+        styleCell()
         bindActions()
         setText()
         arrange()
@@ -14,21 +15,16 @@ class View: UIView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        style()
+        styleCell()
         bindActions()
         setText()
         arrange()
         layoutIfNeeded()
     }
 
-    convenience init() {
-        self.init(frame: .zero)
-    }
-}
-
-extension View {
-    func style() {}
+    func styleCell() {}
     func bindActions() {}
     func setText() {}
     func arrange() {}
+
 }

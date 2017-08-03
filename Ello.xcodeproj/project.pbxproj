@@ -552,6 +552,10 @@
 		1D447E691F338A2000013384 /* ProfileTotalCountSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E601F338A1F00013384 /* ProfileTotalCountSizeCalculatorSpec.swift */; };
 		1D447E6A1F338A2000013384 /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E611F338A1F00013384 /* StreamNotificationCellSizeCalculatorSpec.swift */; };
 		1D447E6B1F338A2000013384 /* StreamTextCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E621F338A2000013384 /* StreamTextCellSizeCalculatorSpec.swift */; };
+		1D447E721F3395D300013384 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E6E1F33936100013384 /* CollectionViewCell.swift */; };
+		1D447E731F3395D900013384 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E6F1F33936100013384 /* TableViewCell.swift */; };
+		1D447E761F3397EE00013384 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E741F3397E800013384 /* Control.swift */; };
+		1D447E781F33985500013384 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E771F33985500013384 /* Button.swift */; };
 		1D44EAFC1EB2A337003B9B3D /* BadgesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */; };
 		1D44F80C1B629606007E2DE4 /* StreamCellItemParserExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */; };
 		1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */; };
@@ -845,7 +849,6 @@
 		1DDA93B01DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA93AF1DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift */; };
 		1DDC23321F30D68600E68B0E /* RevealControllerCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */; };
 		1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */; };
-		1DDC23361F30D94800E68B0E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */; };
 		1DDC23391F30EB2D00E68B0E /* ArtistInviteAdminController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23371F30EB2D00E68B0E /* ArtistInviteAdminController.swift */; };
 		1DDC233A1F30EB2D00E68B0E /* ArtistInviteAdminGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23381F30EB2D00E68B0E /* ArtistInviteAdminGenerator.swift */; };
 		1DDC233C1F30FF7E00E68B0E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233B1F30FF7E00E68B0E /* View.swift */; };
@@ -1639,6 +1642,10 @@
 		1D447E601F338A1F00013384 /* ProfileTotalCountSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTotalCountSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D447E611F338A1F00013384 /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D447E621F338A2000013384 /* StreamTextCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
+		1D447E6E1F33936100013384 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		1D447E6F1F33936100013384 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		1D447E741F3397E800013384 /* Control.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
+		1D447E771F33985500013384 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesService.swift; sourceTree = "<group>"; };
 		1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItemParserExt.swift; sourceTree = "<group>"; };
 		1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BlockUserModalScreen.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1918,7 +1925,6 @@
 		1DDA93AF1DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCreateCommentCellPresenterSpec.swift; sourceTree = "<group>"; };
 		1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCellPresenter.swift; sourceTree = "<group>"; };
 		1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCell.swift; sourceTree = "<group>"; };
-		1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1DDC23371F30EB2D00E68B0E /* ArtistInviteAdminController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteAdminController.swift; sourceTree = "<group>"; };
 		1DDC23381F30EB2D00E68B0E /* ArtistInviteAdminGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteAdminGenerator.swift; sourceTree = "<group>"; };
 		1DDC233B1F30FF7E00E68B0E /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
@@ -2384,7 +2390,6 @@
 				1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */,
 				12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */,
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
-				1DDC23351F30D94800E68B0E /* CollectionViewCell.swift */,
 				1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */,
 				1D9309D91EC1349C0099FCF8 /* EditorialCell.swift */,
 				1D8783121ECCF45100253602 /* Editorials */,
@@ -3284,11 +3289,14 @@
 				762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */,
 				1289F3971AF17937008A938C /* BasicIcon.swift */,
 				1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */,
+				1D447E771F33985500013384 /* Button.swift */,
 				1DA18E571DD12FE8000231CC /* CategoryCardListView.swift */,
 				12B291371DDF5E9F0056C52E /* CategoryCardView.swift */,
 				1D7152AF1D6E4782005998FE /* ClearTextField.swift */,
 				1DB8C6A01D789015007E1447 /* ClearTextView.swift */,
+				1D447E6E1F33936100013384 /* CollectionViewCell.swift */,
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
+				1D447E741F3397E800013384 /* Control.swift */,
 				1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */,
 				122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */,
 				EA587A9E1ACDC6F4002AF389 /* ElloEditableTextView.swift */,
@@ -3321,6 +3329,7 @@
 				1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */,
 				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D70DE571DF23862008AF216 /* StyledLabel.swift */,
+				1D447E6F1F33936100013384 /* TableViewCell.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
 				1DDC233B1F30FF7E00E68B0E /* View.swift */,
 			);
@@ -5307,7 +5316,6 @@
 				F8006EE51AB9FE670008BB42 /* Animators.swift in Sources */,
 				1DF0B2F01E942BFA001B9F97 /* SearchProtocols.swift in Sources */,
 				1D9309D71EC1133F0099FCF8 /* Editorial.swift in Sources */,
-				1DDC23361F30D94800E68B0E /* CollectionViewCell.swift in Sources */,
 				12F9EB411DEE0F8200E127AE /* ProfileLocationSizeCalculator.swift in Sources */,
 				122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */,
 				1D7152D31D74A189005998FE /* TextHeaderCell.swift in Sources */,
@@ -5338,6 +5346,7 @@
 				1D69BBCF1C3EF5AA00FCBDE0 /* ElloSegmentedControl.swift in Sources */,
 				EAED46DE1ADC5D570081A9F7 /* DynamicSettingCell.swift in Sources */,
 				1DB8C6AB1D7A2349007E1447 /* SearchTextField.swift in Sources */,
+				1D447E781F33985500013384 /* Button.swift in Sources */,
 				122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */,
 				76EB15A91B0295AA001BBB2A /* StreamSeeMoreCommentsCell.swift in Sources */,
 				1D7E823C1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift in Sources */,
@@ -5527,6 +5536,7 @@
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
+				1D447E761F3397EE00013384 /* Control.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,
 				76B0B18F1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift in Sources */,
 				1D7E82471F2A7249006ACE7A /* ArtistInviteSubmission.swift in Sources */,
@@ -5621,6 +5631,7 @@
 				12F6AE1E1A43386300493660 /* AppViewController.swift in Sources */,
 				12F6ADFD1A43380C00493660 /* ElloTabBarController.swift in Sources */,
 				1DC78A561F21302300BE2413 /* ArtistInvitesViewController.swift in Sources */,
+				1D447E721F3395D300013384 /* CollectionViewCell.swift in Sources */,
 				1D9309DA1EC1349C0099FCF8 /* EditorialCell.swift in Sources */,
 				1289F3921AF1468B008A938C /* ImageLabelControl.swift in Sources */,
 				123971521E4B626400481CB3 /* ResponderChainableController.swift in Sources */,
@@ -5665,6 +5676,7 @@
 				1DF4040A1B150DB40073460B /* NarrationView.swift in Sources */,
 				1DA18E1C1DB55D42000231CC /* ExternalLink.swift in Sources */,
 				1D7152D91D74C7FD005998FE /* OnboardingProtocols.swift in Sources */,
+				1D447E731F3395D900013384 /* TableViewCell.swift in Sources */,
 				1D7750F21ABA48F200D92191 /* Tmp.swift in Sources */,
 				1D971CF11E1ECD3100A167A2 /* Tracker.swift in Sources */,
 				12F6AE6C1A4339EF00493660 /* ElloTabBar.swift in Sources */,

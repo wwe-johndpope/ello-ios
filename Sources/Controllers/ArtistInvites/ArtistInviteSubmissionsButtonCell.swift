@@ -15,18 +15,6 @@ class ArtistInviteSubmissionsButtonCell: CollectionViewCell {
 
     fileprivate let submissionsButton = StyledButton(style: .artistInviteSubmissions)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        setText()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func style() {
         submissionsButton.titleEdgeInsets.top = 4
     }

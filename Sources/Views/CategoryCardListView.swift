@@ -7,7 +7,7 @@ protocol CategoryCardListDelegate: class {
     func categoryCardSelected(_ index: Int)
 }
 
-class CategoryCardListView: UIView {
+class CategoryCardListView: View {
     weak var delegate: CategoryCardListDelegate?
 
     struct CategoryInfo {
@@ -37,29 +37,14 @@ class CategoryCardListView: UIView {
     fileprivate var categoryViews: [CategoryCardView] = []
     fileprivate var scrollView = UIScrollView()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
+    override func style() {
         backgroundColor = .white
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.scrollsToTop = false
     }
 
-    fileprivate func bindActions() {
-    }
-
-    fileprivate func arrange() {
+    override func arrange() {
         self.addSubview(scrollView)
 
         scrollView.snp.makeConstraints { make in
@@ -108,11 +93,11 @@ class CategoryCardListView: UIView {
         buttonIndexLookup = [:]
 
         let allCategories = CategoryCardView(info: CategoryInfo(title: InterfaceString.Discover.AllCategories, imageURL: nil))
-        allCategories.overlay.alpha = CategoryCardView.darkAlpha
+        allCategories.overlayAlpha = CategoryCardView.darkAlpha
         allCategories.snp.makeConstraints { make in
             make.size.equalTo(Size.smallCardSize)
         }
-        allCategories.button.addTarget(self, action: #selector(allCategoriesTapped), for: .touchUpInside)
+        allCategories.addTarget(self, action: #selector(allCategoriesTapped))
 
         categoryViews = [allCategories] + categoriesInfo.enumerated().map { (index, info) in
             let view = categoryView(index: index, info: info)
@@ -128,7 +113,7 @@ class CategoryCardListView: UIView {
 
     fileprivate func categoryView(index: Int, info: CategoryInfo) -> CategoryCardView {
         let card = CategoryCardView(info: info)
-        card.button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
+        card.addTarget(self, action: #selector(categoryButtonTapped(_:)))
         buttonIndexLookup[card.button] = index
         return card
     }

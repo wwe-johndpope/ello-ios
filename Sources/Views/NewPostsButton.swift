@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class NewPostsButton: UIControl {
+class NewPostsButton: Control {
     struct Size {
         static let top: CGFloat = 45
         static let sideMargin: CGFloat = 15
@@ -13,28 +13,28 @@ class NewPostsButton: UIControl {
         static let height: CGFloat = 35
     }
 
-    let bg = UIImageView()
-    let arrow = UIImageView()
-    let label = UILabel()
+    fileprivate let bg = UIImageView()
+    fileprivate let arrow = UIImageView()
+    fileprivate let label = UILabel()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override var intrinsicContentSize: CGSize {
+        guard
+            arrow.intrinsicContentSize.width != UIViewNoIntrinsicMetric,
+            label.intrinsicContentSize.width != UIViewNoIntrinsicMetric
+        else { return super.intrinsicContentSize }
 
-        setText()
-        style()
-        arrange()
+        var width = 2 * Size.sideMargin + Size.innerMargin
+        width += arrow.intrinsicContentSize.width
+        width += label.intrinsicContentSize.width
+        return CGSize(width: width, height: Size.height)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setText() {
+    override func setText() {
         arrow.setInterfaceImage(.arrow, style: .white)
         label.text = InterfaceString.Following.NewPosts
     }
 
-    private func style() {
+    override func style() {
         label.font = .defaultFont(16)
         label.textColor = .white
         bg.alpha = 0.8
@@ -42,7 +42,7 @@ class NewPostsButton: UIControl {
         bg.clipsToBounds = true
     }
 
-    private func arrange() {
+    override func arrange() {
         addSubview(bg)
         addSubview(arrow)
         addSubview(label)
@@ -60,18 +60,6 @@ class NewPostsButton: UIControl {
             make.centerY.equalTo(self)
             make.leading.equalTo(arrow.snp.trailing).offset(Size.innerMargin)
         }
-    }
-
-    override var intrinsicContentSize: CGSize {
-        guard
-            arrow.intrinsicContentSize.width != UIViewNoIntrinsicMetric,
-            label.intrinsicContentSize.width != UIViewNoIntrinsicMetric
-        else { return super.intrinsicContentSize }
-
-        var width = 2 * Size.sideMargin + Size.innerMargin
-        width += arrow.intrinsicContentSize.width
-        width += label.intrinsicContentSize.width
-        return CGSize(width: width, height: Size.height)
     }
 
     override func layoutSubviews() {

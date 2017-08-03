@@ -182,7 +182,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     override func style() {
         whiteSolidView.backgroundColor = .white
-        relationshipControl.style = .profileView
+        relationshipControl.usage = .profileView
         profileButtonsEffect.effect = UIBlurEffect(style: .light)
         coverImageView.contentMode = .scaleAspectFill
 

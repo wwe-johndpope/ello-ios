@@ -9,6 +9,7 @@ class CollectionViewCell: UICollectionViewCell {
         bindActions()
         setText()
         arrange()
+        layoutIfNeeded()
     }
 
     required init?(coder: NSCoder) {
@@ -17,6 +18,7 @@ class CollectionViewCell: UICollectionViewCell {
         bindActions()
         setText()
         arrange()
+        layoutIfNeeded()
     }
 
     func style() {}

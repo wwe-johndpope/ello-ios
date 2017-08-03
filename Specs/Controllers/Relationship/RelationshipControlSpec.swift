@@ -33,7 +33,7 @@ class RelationshipControlSpec: QuickSpec {
             }
 
             describe("snapshots") {
-                let relationships: [(RelationshipControlStyle, RelationshipPriority)] = [
+                let relationships: [(RelationshipControlUsage, RelationshipPriority)] = [
                     (.default, .following),
                     (.default, .mute),
                     (.default, .none),
@@ -41,12 +41,12 @@ class RelationshipControlSpec: QuickSpec {
                     (.profileView, .mute),
                     (.profileView, .none),
                 ]
-                for (style, relationship) in relationships {
-                    it("setting style to \(style) and relationshipPriority to \(relationship)") {
-                        subject.style = style
+                for (usage, relationship) in relationships {
+                    it("setting usage to \(usage) and relationshipPriority to \(relationship)") {
+                        subject.usage = usage
                         subject.relationshipPriority = relationship
                         subject.frame.size = subject.intrinsicContentSize
-                        expectValidSnapshot(subject, named: "style_\(style)_relationshipPriority_\(relationship)")
+                        expectValidSnapshot(subject, named: "style_\(usage)_relationshipPriority_\(relationship)")
                     }
                 }
             }

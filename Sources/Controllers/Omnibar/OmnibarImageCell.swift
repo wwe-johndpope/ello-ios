@@ -2,7 +2,7 @@
 ///  OmnibarImageCell.swift
 //
 
-class OmnibarImageCell: UITableViewCell {
+class OmnibarImageCell: TableViewCell {
     static let reuseIdentifier = "OmnibarImageCell"
 
     struct Size {
@@ -28,16 +28,13 @@ class OmnibarImageCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        arrange()
-        self.style()
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func style() {
+    override func styleCell() {
         flImageView.clipsToBounds = true
         flImageView.contentMode = .scaleAspectFit
         buyButton.backgroundColor = .greenD1
@@ -50,7 +47,7 @@ class OmnibarImageCell: UITableViewCell {
         buyButton.isEnabled = false
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         buyButton.frame.size = CGSize(width: 35, height: 35)
         contentView.addSubview(flImageView)
         contentView.addSubview(buyButton)

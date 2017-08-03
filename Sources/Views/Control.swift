@@ -1,8 +1,8 @@
 ////
-///  View.swift
+///  Control.swift
 //
 
-class View: UIView {
+class Control: UIControl {
     required override init(frame: CGRect) {
         super.init(frame: frame)
         style()
@@ -26,7 +26,7 @@ class View: UIView {
     }
 }
 
-extension View {
+extension Control {
     func style() {}
     func bindActions() {}
     func setText() {}

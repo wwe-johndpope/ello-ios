@@ -35,17 +35,17 @@ class PostSpec: QuickSpec {
                 expect(post.token) == "l9XEKBzB_hB3xkbNb6LdfQ"
                 expect(post.contentWarning) == ""
                 expect(post.summary.count) == 2
-                expect(post.summary[0].kind) == .text
-                expect(post.summary[1].kind) == .image
+                expect(post.summary[0].kind) == RegionKind.text
+                expect(post.summary[1].kind) == RegionKind.image
                 expect(post.isReposted) == false
                 expect(post.isLoved) == false
                 // optional
                 expect(post.content!.count) == 2
-                expect(post.content![0].kind) == .text
-                expect(post.content![1].kind) == .image
+                expect(post.content![0].kind) == RegionKind.text
+                expect(post.content![1].kind) == RegionKind.image
                 expect(post.body!.count) == 2
-                expect(post.body![0].kind) == .text
-                expect(post.body![1].kind) == .image
+                expect(post.body![0].kind) == RegionKind.text
+                expect(post.body![1].kind) == RegionKind.image
                 expect(post.viewsCount) == 1
                 expect(post.commentsCount) == 0
                 expect(post.repostsCount) == 0
@@ -77,17 +77,17 @@ class PostSpec: QuickSpec {
                 expect(post.token) == "0U58x7Bb4ZZpmTDQhPsYBg"
                 expect(post.contentWarning) == ""
                 expect(post.summary.count) == 2
-                expect(post.summary[0].kind) == .text
-                expect(post.summary[1].kind) == .image
+                expect(post.summary[0].kind) == RegionKind.text
+                expect(post.summary[1].kind) == RegionKind.image
                 // optional
                 expect(post.content!.count) == 1
-                expect(post.repostContent![0].kind) == .text
+                expect(post.repostContent![0].kind) == RegionKind.text
                 expect(post.viewsCount) == 0
                 expect(post.commentsCount) == 0
                 expect(post.repostsCount) == 2
                 expect(post.repostContent!.count) == 2
-                expect(post.repostContent![0].kind) == .text
-                expect(post.repostContent![1].kind) == .image
+                expect(post.repostContent![0].kind) == RegionKind.text
+                expect(post.repostContent![1].kind) == RegionKind.image
                 // TODO: create a JSON that has all of these optionals in it
                 // links
                 expect(post.repostAuthor!).to(beAKindOf(User.self))

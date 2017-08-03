@@ -10,7 +10,7 @@ protocol BlockUserModalDelegate: class {
     func closeModal()
 }
 
-class BlockUserModalScreen: UIView {
+class BlockUserModalScreen: View {
     struct Size {
         static let outerMargins = UIEdgeInsets(top: 50, left: 10, bottom: 0, right: 10)
         static let innerMargins = UIEdgeInsets(all: 20)
@@ -36,24 +36,54 @@ class BlockUserModalScreen: UIView {
         return next as? BlockUserModalDelegate
     }
 
-    required init(config: BlockUserModalConfig) {
-        super.init(frame: .zero)
-
-        style()
-        bindActions()
-        setText()
-        arrange()
+    convenience init(config: BlockUserModalConfig) {
+        self.init(frame: .zero)
         setDetails(userAtName: config.userAtName, relationshipPriority: config.relationshipPriority)
     }
 
-    required override init(frame: CGRect) {
-        fatalError("init(frame:) has not been implemented")
+    override func style() {
+        backgroundButton.backgroundColor = UIColor.dimmedModalBackground
+        modalView.backgroundColor = UIColor.red
+        for label in [titleLabel, muteLabel, blockLabel, flagLabel] {
+            styleLabel(label)
+        }
+        for button in [muteButton, blockButton, flagButton] {
+            styleButton(button)
+        }
+        closeButton.setImages(.x, white: true)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func bindActions() {
+        backgroundButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        blockButton.addTarget(self, action: #selector(blockTapped(_:)), for: .touchUpInside)
+        muteButton.addTarget(self, action: #selector(muteTapped(_:)), for: .touchUpInside)
+        flagButton.addTarget(self, action: #selector(flagTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
     }
 
+    override func setText() {
+        muteButton.setTitle(InterfaceString.Relationship.MuteButton, for: .normal)
+        blockButton.setTitle(InterfaceString.Relationship.BlockButton, for: .normal)
+        flagButton.setTitle(InterfaceString.Relationship.FlagButton, for: .normal)
+    }
+
+    override func arrange() {
+        addSubview(backgroundButton)
+        addSubview(modalView)
+
+        modalView.addSubview(innerView)
+        let innerViews: [UIView] = [closeButton, titleLabel, muteButton, muteLabel, blockButton, blockLabel, flagButton, flagLabel]
+        for view in innerViews {
+            innerView.addSubview(view)
+        }
+
+        backgroundButton.snp.makeConstraints { make in
+            make.edges.equalTo(self)
+        }
+    }
+}
+
+extension BlockUserModalScreen {
     fileprivate func setDetails(userAtName: String, relationshipPriority: RelationshipPriority) {
         let titleText: String
         switch relationshipPriority {
@@ -94,22 +124,6 @@ class BlockUserModalScreen: UIView {
         muteButton.isSelected = false
         blockButton.isSelected = false
     }
-}
-
-// MARK: STYLING
-
-extension BlockUserModalScreen {
-    fileprivate func style() {
-        backgroundButton.backgroundColor = UIColor.dimmedModalBackground
-        modalView.backgroundColor = UIColor.red
-        for label in [titleLabel, muteLabel, blockLabel, flagLabel] {
-            styleLabel(label)
-        }
-        for button in [muteButton, blockButton, flagButton] {
-            styleButton(button)
-        }
-        closeButton.setImages(.x, white: true)
-    }
 
     fileprivate func styleLabel(_ label: UILabel) {
         label.font = .defaultFont()
@@ -125,16 +139,8 @@ extension BlockUserModalScreen {
     }
 }
 
-extension BlockUserModalScreen {
-    fileprivate func bindActions() {
-        backgroundButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
-        blockButton.addTarget(self, action: #selector(blockTapped(_:)), for: .touchUpInside)
-        muteButton.addTarget(self, action: #selector(muteTapped(_:)), for: .touchUpInside)
-        flagButton.addTarget(self, action: #selector(flagTapped), for: .touchUpInside)
-        closeButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
-    }
-
 // MARK: ACTIONS
+extension BlockUserModalScreen {
 
     func blockTapped(_ sender: UIButton) {
         let relationshipPriority: RelationshipPriority
@@ -162,14 +168,6 @@ extension BlockUserModalScreen {
 
     func closeModal() {
         delegate?.closeModal()
-    }
-}
-
-extension BlockUserModalScreen {
-    fileprivate func setText() {
-        muteButton.setTitle(InterfaceString.Relationship.MuteButton, for: .normal)
-        blockButton.setTitle(InterfaceString.Relationship.BlockButton, for: .normal)
-        flagButton.setTitle(InterfaceString.Relationship.FlagButton, for: .normal)
     }
 }
 
@@ -228,21 +226,6 @@ extension BlockUserModalScreen {
             y: Size.outerMargins.top,
             width: modalWidth, height: min(bestScrollHeight, maxScrollHeight)
             )
-    }
-
-    fileprivate func arrange() {
-        addSubview(backgroundButton)
-        addSubview(modalView)
-
-        modalView.addSubview(innerView)
-        let innerViews: [UIView] = [closeButton, titleLabel, muteButton, muteLabel, blockButton, blockLabel, flagButton, flagLabel]
-        for view in innerViews {
-            innerView.addSubview(view)
-        }
-
-        backgroundButton.snp.makeConstraints { make in
-            make.edges.equalTo(self)
-        }
     }
 
 }

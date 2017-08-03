@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class SearchToggleButton: UIButton {
+class SearchToggleButton: Button {
     struct Size {
         static let lineHeight: CGFloat = 1
     }
@@ -19,37 +19,22 @@ class SearchToggleButton: UIButton {
         }
     }
 
-    convenience init() {
-        self.init(frame: .zero)
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func style() {
+    override func style() {
         titleLabel?.font = .defaultFont()
         setTitleColor(.greyA, for: .normal)
         setTitleColor(.black, for: .selected)
         updateLineColor()
     }
 
-    private func updateLineColor() {
-        line.backgroundColor = isSelected ? .black : .greyF2
-    }
-
-    private func arrange() {
+    override func arrange() {
         addSubview(line)
         line.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
             make.height.equalTo(Size.lineHeight)
         }
+    }
+
+    private func updateLineColor() {
+        line.backgroundColor = isSelected ? .black : .greyF2
     }
 }

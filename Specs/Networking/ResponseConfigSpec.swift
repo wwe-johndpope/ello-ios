@@ -10,14 +10,14 @@ import Nimble
 class ResponseConfigSpec: QuickSpec {
     override func spec() {
         describe("isOutOfData") {
-            let nextComponents = URLComponents(url: URL(string: "https://ello.co?next=next")!)!
+            let nextComponents = URLComponents(string: "https://ello.co?next=next")!
             let emptyComponents = URLComponents()
 
             context("when the number of remaining pages is 0") {
                 it("returns true") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = "0"
-                    config.nextQuery = URLComponents()
+                    config.nextQuery = nextComponents
 
                     expect(config.isOutOfData()).to(beTrue())
                 }
@@ -27,7 +27,7 @@ class ResponseConfigSpec: QuickSpec {
                 it("returns true") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = .none
-                    config.nextQuery = URLComponents()
+                    config.nextQuery = nextComponents
 
                     expect(config.isOutOfData()).to(beTrue())
                 }
@@ -37,7 +37,7 @@ class ResponseConfigSpec: QuickSpec {
                 it("returns true") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = "1"
-                    config.nextQuery = URLComponents()
+                    config.nextQuery = emptyComponents
 
                     expect(config.isOutOfData()).to(beTrue())
                 }
@@ -57,7 +57,7 @@ class ResponseConfigSpec: QuickSpec {
                 it("returns false") {
                     let config = ResponseConfig()
                     config.totalPagesRemaining = "1"
-                    config.nextQuery = URLComponents()
+                    config.nextQuery = nextComponents
 
                     expect(config.isOutOfData()).to(beFalse())
                 }

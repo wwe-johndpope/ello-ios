@@ -28,9 +28,6 @@ class Screen: UIView {
         bindActions()
         setText()
         arrange()
-
-        // for controllers that use "container" views, they need to be set to the correct dimensions,
-        // otherwise there'll be constraint violations.
         layoutIfNeeded()
     }
 
@@ -42,6 +39,7 @@ class Screen: UIView {
         bindActions()
         setText()
         arrange()
+        layoutIfNeeded()
     }
 
     deinit {
