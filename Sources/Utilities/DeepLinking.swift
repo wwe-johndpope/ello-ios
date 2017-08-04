@@ -5,7 +5,7 @@
 struct DeepLinking {
 
     static func showDiscover(navVC: UINavigationController?, currentUser: User?) {
-        if navVC?.topViewController is CategoryViewController { return }
+        if navVC?.visibleViewController is CategoryViewController { return }
 
         let category = Category.featured
         let vc = CategoryViewController(slug: category.slug, name: category.name)
@@ -27,7 +27,7 @@ struct DeepLinking {
     static func showCategory(navVC: UINavigationController?, currentUser: User?, slug: String) {
         guard !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug) else { return }
 
-        if let categoryVC = navVC?.topViewController as? CategoryViewController {
+        if let categoryVC = navVC?.visibleViewController as? CategoryViewController {
             categoryVC.selectCategoryFor(slug: slug)
         }
         else {
@@ -35,6 +35,21 @@ struct DeepLinking {
             vc.currentUser = currentUser
             navVC?.pushViewController(vc, animated: true)
         }
+    }
+
+    static func showArtistInvites(navVC: UINavigationController?, currentUser: User?, slug: String? = nil) {
+        guard !DeepLinking.alreadyOnArtistInvites(navVC: navVC, slug: slug) else { return }
+
+        let vc: BaseElloViewController
+        if let slug = slug {
+            vc = ArtistInviteDetailController(slug: slug)
+        }
+        else {
+            vc = ArtistInvitesViewController()
+        }
+
+        vc.currentUser = currentUser
+        navVC?.pushViewController(vc, animated: true)
     }
 
     static func showProfile(navVC: UINavigationController?, currentUser: User?, username: String) {
@@ -70,6 +85,18 @@ struct DeepLinking {
     static func alreadyOnCurrentCategory(navVC: UINavigationController?, slug: String) -> Bool {
         if let categoryVC = navVC?.visibleViewController as? CategoryViewController {
             return slug == categoryVC.slug
+        }
+        return false
+    }
+
+    static func alreadyOnArtistInvites(navVC: UINavigationController?, slug: String?) -> Bool {
+        if let slug = slug,
+            let detailVC = navVC?.visibleViewController as? ArtistInviteDetailController
+        {
+            return detailVC.artistInvite?.slug == slug
+        }
+        else if slug == nil {
+            return navVC?.visibleViewController is ArtistInvitesViewController
         }
         return false
     }

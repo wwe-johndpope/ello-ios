@@ -17,7 +17,11 @@ class ArtistInviteDetailController: StreamableViewController {
     }
     var generator: ArtistInviteDetailGenerator!
 
-    init(artistInviteId: String) {
+    convenience init(slug: String) {
+        self.init(id: "~\(slug)")
+    }
+
+    init(id artistInviteId: String) {
         self.artistInviteId = artistInviteId
         super.init(nibName: nil, bundle: nil)
 
@@ -32,7 +36,7 @@ class ArtistInviteDetailController: StreamableViewController {
     }
 
     convenience init(artistInvite: ArtistInvite) {
-        self.init(artistInviteId: artistInvite.id)
+        self.init(id: artistInvite.id)
         self.setPrimary(jsonable: artistInvite)
         generator.artistInvite = artistInvite
    }
