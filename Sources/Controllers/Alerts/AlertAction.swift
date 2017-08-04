@@ -22,6 +22,7 @@ enum ActionStyle {
 
 struct AlertAction {
     let title: String
+    let initial: String
     let style: ActionStyle
     let handler: AlertHandler?
 
@@ -34,8 +35,9 @@ struct AlertAction {
         }
     }
 
-    init(title: String, style: ActionStyle, handler: AlertHandler? = nil) {
+    init(title: String, initial: String = "", style: ActionStyle, handler: AlertHandler? = nil) {
         self.title = title
+        self.initial = initial
         self.style = style
         self.handler = handler
     }

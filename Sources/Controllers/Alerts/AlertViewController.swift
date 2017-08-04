@@ -181,7 +181,7 @@ extension AlertViewController {
 extension AlertViewController {
     func addAction(_ action: AlertAction) {
         actions.append(action)
-        inputs.append("")
+        inputs.append(action.initial)
 
         tableView.reloadData()
     }
