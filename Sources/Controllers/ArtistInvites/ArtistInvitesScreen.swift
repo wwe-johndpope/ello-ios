@@ -2,7 +2,7 @@
 ///  ArtistInvitesScreen.swift
 //
 
-class ArtistInvitesScreen: StreamableScreen, ArtistInvitesScreenProtocol {
+class ArtistInvitesScreen: StreamableScreen {
     weak var delegate: ArtistInvitesScreenDelegate?
 
     override func style() {

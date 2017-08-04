@@ -56,17 +56,6 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
     fileprivate let doubleTapGesture = UITapGestureRecognizer()
     fileprivate let longPressGesture = UILongPressGestureRecognizer()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        arrange()
-        setupWebView(webView)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func setupWebView(_ webView: UIWebView) {
         self.webView.delegate = nil
         self.webView.removeFromSuperview()
@@ -91,7 +80,12 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
         self.webView = webView
     }
 
-    func arrange() {
+    override func style() {
+        super.style()
+        setupWebView(webView)
+    }
+
+    override func arrange() {
         contentView.addSubview(webViewContainer)
 
         webViewContainer.snp.makeConstraints { make in

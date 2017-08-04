@@ -7,8 +7,8 @@ class ArtistInvitesViewController: StreamableViewController {
     override func trackerProps() -> [String: Any]? { return nil }
     override func trackerStreamInfo() -> (String, String?)? { return nil }
 
-    private var _mockScreen: ArtistInvitesScreenProtocol?
-    var screen: ArtistInvitesScreenProtocol {
+    private var _mockScreen: StreamableScreenProtocol?
+    var screen: StreamableScreenProtocol {
         set(screen) { _mockScreen = screen }
         get { return _mockScreen ?? self.view as! ArtistInvitesScreen }
     }
@@ -73,13 +73,13 @@ class ArtistInvitesViewController: StreamableViewController {
 
 extension ArtistInvitesViewController: StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func loadArtistInvites() {
-        streamViewController.pagingEnabled = false
+        streamViewController.isPagingEnabled = false
         generator.load()
     }
 

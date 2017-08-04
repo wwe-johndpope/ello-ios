@@ -382,7 +382,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.regions = [OmnibarRegion]()
                             expect(subject.regions.count) == 1
                             expect(subject.regions[0].isText) == true
-                            expect(subject.regions[0].empty) == true
+                            expect(subject.regions[0].isEmpty) == true
                         }
                         it("should disable buyButton") {
                             expect(subject.buyButton.isEnabled) == false
@@ -395,7 +395,7 @@ class OmnibarScreenSpec: QuickSpec {
                         it("should set it to one text region") {
                             expect(subject.regions.count) == 1
                             expect(subject.regions[0].isText) == true
-                            expect(subject.regions[0].empty) == false
+                            expect(subject.regions[0].isEmpty) == false
                         }
                         it("should disable buyButton") {
                             expect(subject.buyButton.isEnabled) == false
@@ -525,7 +525,7 @@ class OmnibarScreenSpec: QuickSpec {
                 ]
                 for (name, region, expected) in expectations {
                     it("\(name) should \(expected ? "be" : "not be") editable") {
-                        expect(region.editable) == expected
+                        expect(region.isEditable) == expected
                     }
                 }
             }

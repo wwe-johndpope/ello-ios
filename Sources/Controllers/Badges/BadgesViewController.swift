@@ -2,16 +2,16 @@
 ///  BadgesViewController.swift
 //
 
-class BadgesViewController: StreamableViewController, BadgesScreenDelegate {
+class BadgesViewController: StreamableViewController {
     override func trackerName() -> String? { return "Badges" }
     override func trackerProps() -> [String: Any]? { return ["user_id": user.id] }
 
     let user: User
 
-    var _mockScreen: BadgesScreenProtocol?
-    var screen: BadgesScreenProtocol {
+    var _mockScreen: StreamableScreenProtocol?
+    var screen: StreamableScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! BadgesScreen }
+        get { return _mockScreen ?? self.view as! StreamableScreenProtocol }
     }
 
     init(user: User) {
@@ -28,7 +28,7 @@ class BadgesViewController: StreamableViewController, BadgesScreenDelegate {
     override func loadView() {
         let screen = BadgesScreen()
         screen.navigationItem = elloNavigationItem
-        screen.delegate = self
+
         self.view = screen
         viewContainer = screen.streamContainer
     }
@@ -40,8 +40,8 @@ class BadgesViewController: StreamableViewController, BadgesScreenDelegate {
         streamViewController.initialLoadClosure = {}
         streamViewController.reloadClosure = {}
         streamViewController.toggleClosure = { _ in }
-        streamViewController.pullToRefreshEnabled = false
-        streamViewController.pagingEnabled = false
+        streamViewController.isPullToRefreshEnabled = false
+        streamViewController.isPagingEnabled = false
 
         let items: [StreamCellItem] = user.badges.map { badge in
             let badgeJSONAble = Badge(badge: badge, categories: user.categories)

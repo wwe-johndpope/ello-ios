@@ -6,13 +6,14 @@ protocol ArtistInvitesScreenDelegate: class {
     func scrollToTop()
 }
 
-protocol ArtistInvitesScreenProtocol: StreamableScreenProtocol {
+protocol ArtistInviteAdminScreenProtocol: StreamableScreenProtocol {
+    var selectedSubmissionsStatus: ArtistInviteSubmission.Status { get set }
 }
 
-protocol ArtistInviteDetailScreenDelegate: class {
-}
-
-protocol ArtistInviteDetailScreenProtocol: StreamableScreenProtocol {
+protocol ArtistInviteAdminScreenDelegate: class {
+    func tappedApprovedSubmissions()
+    func tappedSelectedSubmissions()
+    func tappedUnapprovedSubmissions()
 }
 
 protocol ArtistInviteConfigurableCell: class {
@@ -22,4 +23,8 @@ protocol ArtistInviteConfigurableCell: class {
 protocol ArtistInviteResponder: class {
     func tappedArtistInviteSubmissionsButton()
     func tappedArtistInviteSubmitButton()
+}
+
+protocol ArtistInviteAdminResponder: class {
+    func tappedArtistInviteAction(cell: ArtistInviteAdminControlsCell, action: ArtistInviteSubmission.Action)
 }

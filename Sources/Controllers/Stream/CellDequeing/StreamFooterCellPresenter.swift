@@ -64,7 +64,7 @@ struct StreamFooterCellPresenter {
 
         let repostingEnabled = post.author?.hasRepostingEnabled ?? true
         var repostVisibility: InteractionVisibility = .enabled
-        if post.reposted { repostVisibility = .disabled }
+        if post.isReposted { repostVisibility = .disabled }
         else if !repostingEnabled { repostVisibility = .hidden }
         else if ownPost { repostVisibility = .disabled }
 
@@ -76,7 +76,7 @@ struct StreamFooterCellPresenter {
 
         let lovingEnabled = post.author?.hasLovesEnabled ?? true
         var loveVisibility: InteractionVisibility = .enabled
-        if post.loved { loveVisibility = .selectedAndEnabled }
+        if post.isLoved { loveVisibility = .selectedAndEnabled }
         if !lovingEnabled { loveVisibility = .hidden }
 
         cell.updateToolbarItems(

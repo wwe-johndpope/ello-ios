@@ -84,6 +84,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "collaborate(userId: \(userId), body: \(body.characters.count))"
         case let .custom(path, api):
             return "custom(path: \(path), elloApi: \(api))"
+        case let .customRequest(request, api):
+            return "customRequest(path: \(request.url.path), method: \(request.method), elloApi: \(api))"
         case let .infiniteScroll(_, api):
             return "infiniteScroll(elloApi: \(api))"
         case let .loves(userId):
@@ -98,8 +100,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "resetPassword(password: \(password), authToken: \(authToken))"
         case let .postComments(postId):
             return "postComments(postId: \(postId))"
-        case let .postDetail(postParam, commentCount):
-            return "postDetail(postParam: \(postParam), commentCount: \(commentCount))"
+        case let .postDetail(postParam):
+            return "postDetail(postParam: \(postParam))"
         case let .postViews(streamId, streamKind, postTokens, currentUserId):
             return "postViews(streamId: \(String(describing: streamId)), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(String(describing: currentUserId)))"
         case let .postLovers(postId):
@@ -157,6 +159,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case .currentUserMutedList: return "currentUserMutedList"
         case .currentUserProfile: return "currentUserProfile"
         case .custom: return "custom"
+        case .customRequest: return "customRequest"
         case .rePost: return "rePost"
         case .deleteComment: return "deleteComment"
         case .deleteLove: return "deleteLove"

@@ -7,7 +7,7 @@ import FLAnimatedImage
 import PINRemoteImage
 
 
-class CategoryHeaderCell: UICollectionViewCell {
+class CategoryHeaderCell: CollectionViewCell {
     static let reuseIdentifier = "CategoryHeaderCell"
 
     enum Style {
@@ -77,106 +77,11 @@ class CategoryHeaderCell: UICollectionViewCell {
 
     var config: Config = Config(style: .category) {
         didSet {
-            titleLabel.attributedText = config.attributedTitle
-            bodyLabel.attributedText = config.attributedBody
-            setImageURL(config.imageURL)
-            postedByAvatar.setUserAvatarURL(config.user?.avatarURL())
-            postedByButton.setAttributedTitle(config.attributedPostedBy, for: .normal)
-            callToActionURL = config.callToActionURL
-            callToActionButton.setAttributedTitle(config.attributedCallToAction, for: .normal)
-
-            if config.style == .category {
-                titleUnderlineView.isHidden = false
-                titleCenteredConstraint.update(priority: Priority.high)
-                titleLeftConstraint.update(priority: Priority.low)
-            }
-            else {
-                titleUnderlineView.isHidden = true
-                titleCenteredConstraint.update(priority: Priority.low)
-                titleLeftConstraint.update(priority: Priority.high)
-            }
+            updateConfig()
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if callToActionButton.frame.intersects(postedByButton.frame) {
-            // frames need to stack vertically
-            postedByButtonAlignedConstraint.update(priority: Priority.low)
-            postedByButtonStackedConstraint.update(priority: Priority.high)
-            setNeedsLayout()
-        }
-        else if callToActionButton.frame.maxX < postedByButton.frame.minX && callToActionButton.frame.maxY < postedByButton.frame.minY {
-            // frames should be restored to horizontal arrangement
-            postedByButtonAlignedConstraint.update(priority: Priority.high)
-            postedByButtonStackedConstraint.update(priority: Priority.low)
-            setNeedsLayout()
-        }
-    }
-
-    func setImageURL(_ url: URL?) {
-        guard let url = url else {
-            imageView.pin_cancelImageDownload()
-            imageView.image = nil
-            return
-        }
-
-        imageView.image = nil
-        imageView.alpha = 0
-        circle.pulse()
-        failImage.isHidden = true
-        failImage.alpha = 0
-        imageView.backgroundColor = .white
-        loadImage(url)
-    }
-
-    func setImage(_ image: UIImage) {
-        imageView.pin_cancelImageDownload()
-        imageView.image = image
-        imageView.alpha = 1
-        failImage.isHidden = true
-        failImage.alpha = 0
-        imageView.backgroundColor = .white
-    }
-
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        let config = Config(style: .category)
-        self.config = config
-    }
-
-    func postedByTapped() {
-        Tracker.shared.categoryHeaderPostedBy(config.tracking)
-
-        let responder: UserResponder? = findResponder()
-        responder?.userTappedAuthor(cell: self)
-    }
-
-    func callToActionTapped() {
-        guard let url = callToActionURL else { return }
-        Tracker.shared.categoryHeaderCallToAction(config.tracking)
-        let request = URLRequest(url: url)
-        ElloWebViewHelper.handle(request: request, origin: self)
-    }
-}
-
-private extension CategoryHeaderCell {
-
-    func style() {
+    override func style() {
         titleLabel.numberOfLines = 0
         titleUnderlineView.backgroundColor = .white
         bodyLabel.numberOfLines = 0
@@ -187,13 +92,13 @@ private extension CategoryHeaderCell {
         failBackgroundView.backgroundColor = .white
     }
 
-    func bindActions() {
+    override func bindActions() {
         callToActionButton.addTarget(self, action: #selector(callToActionTapped), for: .touchUpInside)
         postedByButton.addTarget(self, action: #selector(postedByTapped), for: .touchUpInside)
         postedByAvatar.addTarget(self, action: #selector(postedByTapped), for: .touchUpInside)
     }
 
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(circle)
         contentView.addSubview(failBackgroundView)
         contentView.addSubview(failImage)
@@ -265,6 +170,94 @@ private extension CategoryHeaderCell {
         }
 
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if callToActionButton.frame.intersects(postedByButton.frame) {
+            // frames need to stack vertically
+            postedByButtonAlignedConstraint.update(priority: Priority.low)
+            postedByButtonStackedConstraint.update(priority: Priority.high)
+            setNeedsLayout()
+        }
+        else if callToActionButton.frame.maxX < postedByButton.frame.minX && callToActionButton.frame.maxY < postedByButton.frame.minY {
+            // frames should be restored to horizontal arrangement
+            postedByButtonAlignedConstraint.update(priority: Priority.high)
+            postedByButtonStackedConstraint.update(priority: Priority.low)
+            setNeedsLayout()
+        }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.config = Config(style: .category)
+    }
+
+    fileprivate func updateConfig() {
+        titleLabel.attributedText = config.attributedTitle
+        bodyLabel.attributedText = config.attributedBody
+        setImageURL(config.imageURL)
+        postedByAvatar.setUserAvatarURL(config.user?.avatarURL())
+        postedByButton.setAttributedTitle(config.attributedPostedBy, for: .normal)
+        callToActionURL = config.callToActionURL
+        callToActionButton.setAttributedTitle(config.attributedCallToAction, for: .normal)
+
+        if config.style == .category {
+            titleUnderlineView.isHidden = false
+            titleCenteredConstraint.update(priority: Priority.high)
+            titleLeftConstraint.update(priority: Priority.low)
+        }
+        else {
+            titleUnderlineView.isHidden = true
+            titleCenteredConstraint.update(priority: Priority.low)
+            titleLeftConstraint.update(priority: Priority.high)
+        }
+    }
+
+    func setImageURL(_ url: URL?) {
+        guard let url = url else {
+            imageView.pin_cancelImageDownload()
+            imageView.image = nil
+            return
+        }
+
+        imageView.image = nil
+        imageView.alpha = 0
+        circle.pulse()
+        failImage.isHidden = true
+        failImage.alpha = 0
+        imageView.backgroundColor = .white
+        loadImage(url)
+    }
+
+    func setImage(_ image: UIImage) {
+        imageView.pin_cancelImageDownload()
+        imageView.image = image
+        imageView.alpha = 1
+        failImage.isHidden = true
+        failImage.alpha = 0
+        imageView.backgroundColor = .white
+    }
+}
+
+extension CategoryHeaderCell {
+
+    func postedByTapped() {
+        Tracker.shared.categoryHeaderPostedBy(config.tracking)
+
+        let responder: UserResponder? = findResponder()
+        responder?.userTappedAuthor(cell: self)
+    }
+
+    func callToActionTapped() {
+        guard let url = callToActionURL else { return }
+        Tracker.shared.categoryHeaderCallToAction(config.tracking)
+        let request = URLRequest(url: url)
+        ElloWebViewHelper.handle(request: request, origin: self)
+    }
+}
+
+private extension CategoryHeaderCell {
 
     func loadImage(_ url: URL) {
         guard url.scheme?.isEmpty == false else {

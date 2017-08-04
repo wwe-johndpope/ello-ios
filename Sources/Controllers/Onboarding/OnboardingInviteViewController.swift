@@ -18,7 +18,7 @@ class OnboardingInviteViewController: StreamableViewController {
         title = InterfaceString.Drawer.Invite
 
         streamViewController.initialLoadClosure = { [weak self] in self?.findFriendsFromContacts() }
-        streamViewController.pullToRefreshEnabled = false
+        streamViewController.isPullToRefreshEnabled = false
     }
 
     required init?(coder: NSCoder) {

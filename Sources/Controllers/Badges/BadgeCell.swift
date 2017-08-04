@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class BadgeCell: UICollectionViewCell {
+class BadgeCell: CollectionViewCell {
     static let reuseIdentifier = "BadgeCell"
 
     struct Size {
@@ -32,17 +32,6 @@ class BadgeCell: UICollectionViewCell {
     fileprivate let imageView = UIImageView()
     fileprivate let grayLine = UIImageView()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
         label.text = ""
@@ -50,7 +39,7 @@ class BadgeCell: UICollectionViewCell {
         url = nil
     }
 
-    fileprivate func style() {
+    override func style() {
         label.textViewDelegate = self
         label.backgroundColor = .clear
         label.isEditable = false
@@ -62,7 +51,7 @@ class BadgeCell: UICollectionViewCell {
         grayLine.backgroundColor = .greyE5
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         contentView.addSubview(imageView)
         contentView.addSubview(label)
         contentView.addSubview(grayLine)

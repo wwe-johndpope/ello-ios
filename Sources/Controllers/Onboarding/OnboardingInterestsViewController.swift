@@ -27,7 +27,7 @@ class OnboardingInterestsViewController: StreamableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        streamViewController.pullToRefreshEnabled = false
+        streamViewController.isPullToRefreshEnabled = false
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
     }

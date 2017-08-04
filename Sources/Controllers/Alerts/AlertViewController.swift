@@ -34,7 +34,7 @@ enum AlertType {
         }
     }
 
-    var rounded: Bool {
+    var isRounded: Bool {
         switch self {
         case .rounded: return true
         default: return false
@@ -124,7 +124,7 @@ class AlertViewController: UIViewController {
         tableView.backgroundColor = type.backgroundColor
         headerView.label.textColor = type.headerTextColor
         headerView.backgroundColor = type.backgroundColor
-        if type.rounded {
+        if type.isRounded {
             view.clipsToBounds = true
             view.layer.cornerRadius = 5
         }

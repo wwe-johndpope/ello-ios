@@ -3,13 +3,13 @@
 //
 
 
-enum RelationshipControlStyle {
+enum RelationshipControlUsage {
     case `default`
     case profileView
 }
 
 
-class RelationshipControl: UIView {
+class RelationshipControl: View {
     struct Size {
         static let viewHeight: CGFloat = 30
         static let minViewWidth: CGFloat = 105
@@ -17,46 +17,25 @@ class RelationshipControl: UIView {
 
     let followingButton = FollowButton()
 
-    var style: RelationshipControlStyle = .default {
+    var usage: RelationshipControlUsage = .default {
         didSet {
-            followingButton.relationshipStyle = style
+            followingButton.relationshipUsage = usage
             setNeedsLayout()
             invalidateIntrinsicContentSize()
         }
     }
 
-    var enabled: Bool {
+    var isEnabled: Bool {
         set {
             followingButton.isEnabled = newValue
         }
         get { return followingButton.isEnabled }
     }
-    var userId: String
-    var userAtName: String
+    var userId: String = ""
+    var userAtName: String = ""
 
     var relationshipPriority: RelationshipPriority = .none {
         didSet { updateRelationshipPriority() }
-    }
-
-    required override init(frame: CGRect) {
-        self.userId = ""
-        self.userAtName = ""
-        super.init(frame: frame)
-        setup()
-    }
-
-    required init?(coder: NSCoder) {
-        self.userId = ""
-        self.userAtName = ""
-        super.init(coder: coder)
-        setup()
-    }
-
-    fileprivate func setup() {
-        arrange()
-        bindActions()
-        updateRelationshipPriority()
-        backgroundColor = .clear
     }
 
     override var intrinsicContentSize: CGSize {
@@ -72,9 +51,54 @@ class RelationshipControl: UIView {
         return totalSize
     }
 
-    // MARK: IBActions
+    override func style() {
+        updateRelationshipPriority()
+        backgroundColor = .clear
+    }
 
-    @IBAction func followingButtonTapped(_ sender: UIButton) {
+    override func bindActions() {
+        followingButton.addTarget(self, action: #selector(RelationshipControl.followingButtonTapped(_:)), for: .touchUpInside)
+    }
+
+    override func arrange() {
+        addSubview(followingButton)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        followingButton.frame = bounds
+    }
+
+    fileprivate enum Config {
+        case following
+        case muted
+        case blocked
+        case none
+    }
+
+    class FollowButton: StyledButton {
+        var relationshipUsage: RelationshipControlUsage = .default {
+            didSet { restyleUsage() }
+        }
+        fileprivate var config: Config = .none {
+            didSet { restyleUsage() }
+        }
+
+        override func sharedSetup() {
+            super.sharedSetup()
+            contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 10)
+            adjustsImageWhenDisabled = false
+            restyleUsage()
+        }
+    }
+}
+
+// MARK: IBActions
+extension RelationshipControl {
+
+    @IBAction
+    func followingButtonTapped(_ sender: UIButton) {
         switch relationshipPriority {
         case .mute, .block:
             launchUnmuteModal()
@@ -103,6 +127,14 @@ class RelationshipControl: UIView {
         }
     }
 
+    fileprivate func handleFollow() {
+        handleRelationship(.following)
+    }
+
+    fileprivate func handleUnfollow() {
+        handleRelationship(.inactive)
+    }
+
     fileprivate func handleRelationship(_ newRelationshipPriority: RelationshipPriority) {
         self.isUserInteractionEnabled = false
         let prevRelationshipPriority = RelationshipPriorityWrapper(priority: self.relationshipPriority)
@@ -126,24 +158,9 @@ class RelationshipControl: UIView {
         }
     }
 
-    fileprivate func handleFollow() {
-        handleRelationship(.following)
-    }
+}
 
-    fileprivate func handleUnfollow() {
-        handleRelationship(.inactive)
-    }
-
-    // MARK: Private
-
-    fileprivate func arrange() {
-        addSubview(followingButton)
-    }
-
-    fileprivate func bindActions() {
-        followingButton.addTarget(self, action: #selector(RelationshipControl.followingButtonTapped(_:)), for: .touchUpInside)
-    }
-
+extension RelationshipControl {
     fileprivate func updateRelationshipPriority() {
         let config: Config
         switch relationshipPriority {
@@ -158,94 +175,69 @@ class RelationshipControl: UIView {
         setNeedsLayout()
         invalidateIntrinsicContentSize()
     }
+}
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        followingButton.frame = bounds
-    }
-
-    fileprivate enum Config {
-        case following
-        case muted
-        case blocked
-        case none
-
-        var title: String {
-            switch self {
-            case .none: return InterfaceString.Relationship.Follow
-            case .following: return InterfaceString.Relationship.Following
-            case .muted: return InterfaceString.Relationship.Muted
-            case .blocked: return InterfaceString.Relationship.Blocked
-            }
-        }
-
-
-        var image: UIImage? {
-            switch self {
-            case .muted, .blocked: return nil
-            case .following: return InterfaceImage.checkSmall.whiteImage
-            default: return InterfaceImage.plusSmall.selectedImage
-            }
-        }
-
-        var highlightedImage: UIImage? {
-            switch self {
-            case .muted, .blocked, .following: return self.image
-            default: return InterfaceImage.plusSmall.whiteImage
-            }
+extension RelationshipControl.Config {
+    var title: String {
+        switch self {
+        case .none: return InterfaceString.Relationship.Follow
+        case .following: return InterfaceString.Relationship.Following
+        case .muted: return InterfaceString.Relationship.Muted
+        case .blocked: return InterfaceString.Relationship.Blocked
         }
     }
 
-    class FollowButton: StyledButton {
-        var relationshipStyle: RelationshipControlStyle = .default {
-            didSet { recalculateStyle() }
-        }
-        fileprivate var config: Config = .none {
-            didSet { recalculateStyle() }
-        }
 
-        fileprivate func recalculateStyle() {
-            let style: StyledButton.Style
-            var image: UIImage? = nil
-            var highlightedImage: UIImage? = nil
+    var image: UIImage? {
+        switch self {
+        case .muted, .blocked: return nil
+        case .following: return InterfaceImage.checkSmall.whiteImage
+        default: return InterfaceImage.plusSmall.selectedImage
+        }
+    }
 
-            if config == .following {
-                if relationshipStyle == .profileView {
-                    style = .grayPill
-                }
-                else {
-                    style = .blackPill
-                }
-                image = InterfaceImage.checkSmall.whiteImage
-                highlightedImage = image
-            }
-            else if config == .muted || config == .blocked {
-                style = .redPill
-            }
-            else if relationshipStyle == .profileView && config == .none {
-                style = .greenPill
-                image = InterfaceImage.plusSmall.whiteImage
-                highlightedImage = image
+    var highlightedImage: UIImage? {
+        switch self {
+        case .muted, .blocked, .following: return self.image
+        default: return InterfaceImage.plusSmall.whiteImage
+        }
+    }
+}
+
+extension RelationshipControl.FollowButton {
+    fileprivate func restyleUsage() {
+        let style: StyledButton.Style
+        var image: UIImage? = nil
+        var highlightedImage: UIImage? = nil
+
+        if config == .following {
+            if relationshipUsage == .profileView {
+                style = .grayPill
             }
             else {
-                style = .blackPillOutline
-                image = InterfaceImage.plusSmall.selectedImage
-                highlightedImage = InterfaceImage.plusSmall.whiteImage
+                style = .blackPill
             }
-
-            setTitle(config.title, for: .normal)
-            setImage(image, for: .normal)
-            setImage(highlightedImage, for: .highlighted)
-            setImage(UIImage(), for: .disabled)
-            self.style = style
+            image = InterfaceImage.checkSmall.whiteImage
+            highlightedImage = image
+        }
+        else if config == .muted || config == .blocked {
+            style = .redPill
+        }
+        else if relationshipUsage == .profileView && config == .none {
+            style = .greenPill
+            image = InterfaceImage.plusSmall.whiteImage
+            highlightedImage = image
+        }
+        else {
+            style = .blackPillOutline
+            image = InterfaceImage.plusSmall.selectedImage
+            highlightedImage = InterfaceImage.plusSmall.whiteImage
         }
 
-        override func sharedSetup() {
-            super.sharedSetup()
-            contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 10)
-            adjustsImageWhenDisabled = false
-            recalculateStyle()
-        }
+        setTitle(config.title, for: .normal)
+        setImage(image, for: .normal)
+        setImage(highlightedImage, for: .highlighted)
+        setImage(UIImage(), for: .disabled)
+        self.style = style
     }
 }

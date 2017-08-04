@@ -56,11 +56,11 @@ class StreamDataSourceSpec: QuickSpec {
                 vc.collectionView.dataSource = vc.dataSource
 
                 subject.streamCollapsedFilter = { item in
-                    if !item.type.collapsable {
+                    if !item.type.isCollapsable {
                         return true
                     }
                     if let post = item.jsonable as? Post {
-                        return !post.collapsed
+                        return !post.isCollapsed
                     }
                     return true
                 }
@@ -1298,7 +1298,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("toggles collapsed on the post at an indexPath") {
-                    expect(postToToggle.collapsed).to(beTrue())
+                    expect(postToToggle.isCollapsed).to(beTrue())
                     let toggledItems = subject.cellItemsForPost(postToToggle)
                     for item in toggledItems {
                         if item.type != .streamFooter {
@@ -1320,8 +1320,8 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(postToToggle) == subject.postForIndexPath(indexPathToToggle)!
                     expect(postNotToToggle) == subject.postForIndexPath(indexPathNotToToggle)!
 
-                    expect(postToToggle.collapsed).to(beTrue())
-                    expect(postNotToToggle.collapsed).to(beTrue())
+                    expect(postToToggle.isCollapsed).to(beTrue())
+                    expect(postNotToToggle.isCollapsed).to(beTrue())
 
                     let toggledItems = subject.cellItemsForPost(postToToggle)
                     let notToggledItems = subject.cellItemsForPost(postNotToToggle)

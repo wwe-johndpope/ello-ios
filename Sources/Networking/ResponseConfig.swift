@@ -6,20 +6,20 @@ class ResponseConfig: CustomStringConvertible {
     var description: String {
         let descripArray = [
             "ResponseConfig:",
-            "nextQueryItems: \(String(describing: nextQueryItems))",
-            "prevQueryItems: \(String(describing: prevQueryItems))",
-            "firstQueryItems: \(String(describing: firstQueryItems))",
-            "lastQueryItems: \(String(describing: lastQueryItems))",
+            "nextQuery: \(String(describing: nextQuery))",
+            "prevQuery: \(String(describing: prevQuery))",
+            "firstQuery: \(String(describing: firstQuery))",
+            "lastQuery: \(String(describing: lastQuery))",
             "totalPages: \(String(describing: totalPages))",
             "totalCount: \(String(describing: totalCount))",
             "totalPagesRemaining: \(String(describing: totalPagesRemaining))"
         ]
         return descripArray.joined(separator: "\n\t")
     }
-    var nextQueryItems: [Any]? // before (older)
-    var prevQueryItems: [Any]? // after (newer)
-    var firstQueryItems: [Any]? // first page
-    var lastQueryItems: [Any]? // last page
+    var nextQuery: URLComponents? // before (older)
+    var prevQuery: URLComponents? // after (newer)
+    var firstQuery: URLComponents? // first page
+    var lastQuery: URLComponents? // last page
     var totalCount: String?
     var totalPages: String?
     var totalPagesRemaining: String?
@@ -35,7 +35,8 @@ class ResponseConfig: CustomStringConvertible {
 
         return totalPagesRemaining == "0"
             || totalPagesRemaining == nil
-            || nextQueryItems?.count == 0
-            || nextQueryItems == nil
+            || nextQuery?.queryItems?.count == 0
+            || nextQuery?.queryItems == nil
+            || nextQuery == nil
     }
 }

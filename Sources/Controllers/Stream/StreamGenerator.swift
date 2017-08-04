@@ -24,5 +24,11 @@ protocol StreamDestination: class {
     func setPrimary(jsonable: JSONAble)
     func primaryJSONAbleNotFound()
     func setPagingConfig(responseConfig: ResponseConfig)
-    var pagingEnabled: Bool { get set }
+    var isPagingEnabled: Bool { get set }
+}
+
+extension StreamDestination {
+    func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem]) {
+        replacePlaceholder(type: type, items: items, completion: {})
+    }
 }

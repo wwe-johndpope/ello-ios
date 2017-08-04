@@ -54,10 +54,10 @@ extension ForgotPasswordEmailViewController: ForgotPasswordEmailDelegate {
 
     func validate(email: String) {
         if Validator.invalidSignUpEmailReason(email) == nil {
-            screen.emailValid = true
+            screen.isEmailValid = true
         }
         else {
-            screen.emailValid = nil
+            screen.isEmailValid = nil
         }
     }
 }

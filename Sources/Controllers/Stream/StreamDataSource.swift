@@ -532,7 +532,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             case let .simpleStream(endpoint, _):
                 switch endpoint {
                 case .loves:
-                    if let post = jsonable as? Post, !post.loved {
+                    if let post = jsonable as? Post, !post.isLoved {
                         // the post was unloved
                         removeItemsFor(jsonable: jsonable, change: .delete)
                         collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)

@@ -2,19 +2,14 @@
 ///  BlackBar.swift
 //
 
-class BlackBar: UIView {
+class BlackBar: View {
     struct Size {
         static let height: CGFloat = 20
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func style() {
         autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
         backgroundColor = .black
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     override var intrinsicContentSize: CGSize {

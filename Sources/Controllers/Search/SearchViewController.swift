@@ -39,7 +39,7 @@ class SearchViewController: StreamableViewController {
         let streamKind = StreamKind.simpleStream(endpoint: .searchForPosts(terms: ""), title: "")
         streamViewController.streamKind = streamKind
         screen.isGridView = streamKind.isGridView
-        streamViewController.pullToRefreshEnabled = false
+        streamViewController.isPullToRefreshEnabled = false
 
         updateInsets()
     }

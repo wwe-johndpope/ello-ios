@@ -182,7 +182,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     override func style() {
         whiteSolidView.backgroundColor = .white
-        relationshipControl.style = .profileView
+        relationshipControl.usage = .profileView
         profileButtonsEffect.effect = UIBlurEffect(style: .light)
         coverImageView.contentMode = .scaleAspectFill
 
@@ -291,7 +291,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         mentionButton.isEnabled = enabled
         editButton.isEnabled = enabled
         inviteButton.isEnabled = enabled
-        relationshipControl.enabled = enabled
+        relationshipControl.isEnabled = enabled
     }
 
     func updateRelationshipControl(user: User) {

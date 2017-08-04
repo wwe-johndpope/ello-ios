@@ -219,19 +219,19 @@ final class PostDetailViewController: StreamableViewController {
 extension PostDetailViewController: PostCommentsResponder {
     func loadCommentsTapped() {
         guard
-            let nextQueryItems = streamViewController.responseConfig?.nextQueryItems
+            let nextQuery = streamViewController.responseConfig?.nextQuery
         else { return }
 
-        generator.loadMoreComments(nextQueryItems: nextQueryItems)
+        generator.loadMoreComments(nextQuery: nextQuery)
     }
 }
 
 // MARK: PostDetailViewController: PostDetailStreamDestination
 extension PostDetailViewController: PostDetailStreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
@@ -239,7 +239,7 @@ extension PostDetailViewController: PostDetailStreamDestination {
             self.checkScrollToComment()
 
             if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .profilePosts) {
-                self.streamViewController.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)]) {}
+                self.streamViewController.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)])
             }
             completion()
         }

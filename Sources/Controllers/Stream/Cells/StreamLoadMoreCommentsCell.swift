@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class StreamLoadMoreCommentsCell: UICollectionViewCell {
+class StreamLoadMoreCommentsCell: CollectionViewCell {
     static let reuseIdentifier = "StreamLoadMoreCommentsCell"
 
     struct Size {
@@ -13,25 +13,14 @@ class StreamLoadMoreCommentsCell: UICollectionViewCell {
         static let margin: CGFloat = 15
     }
 
-    let button = StyledButton(style: .roundedGray)
+    fileprivate let button = StyledButton(style: .roundedGray)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
+    override func style() {
         button.setTitle(InterfaceString.Post.LoadMoreComments, for: .normal)
         button.isUserInteractionEnabled = false  // let StreamViewController handle taps
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         contentView.addSubview(button)
 
         button.snp.makeConstraints { make in

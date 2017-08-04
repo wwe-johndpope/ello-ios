@@ -35,6 +35,7 @@ indirect enum ElloAPI {
     case createPost(body: [String: Any])
     case createWatchPost(postId: String)
     case custom(url: URL, mimics: ElloAPI)
+    case customRequest(ElloRequest, mimics: ElloAPI)
     case deleteComment(postId: String, commentId: String)
     case deleteLove(postId: String)
     case deletePost(postId: String)
@@ -51,7 +52,7 @@ indirect enum ElloAPI {
     case followingNewContent(createdAt: Date?)
     case hire(userId: String, body: String)
     case collaborate(userId: String, body: String)
-    case infiniteScroll(queryItems: [Any], api: ElloAPI)
+    case infiniteScroll(query: URLComponents, api: ElloAPI)
     case invitations(emails: [String])
     case inviteFriends(email: String)
     case join(email: String, username: String, password: String, invitationCode: String?)
@@ -61,7 +62,7 @@ indirect enum ElloAPI {
     case notificationsStream(category: String?)
     case pagePromotionals
     case postComments(postId: String)
-    case postDetail(postParam: String, commentCount: Int)
+    case postDetail(postParam: String)
     case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
@@ -115,6 +116,8 @@ indirect enum ElloAPI {
             return .postsType
         case let .custom(_, api):
             return api.pagingMappingType
+        case let .customRequest(_, api):
+            return api.pagingMappingType
         default:
             return nil
         }
@@ -162,6 +165,8 @@ indirect enum ElloAPI {
              .userStreamFollowing:
             return .usersType
         case let .custom(_, api):
+            return api.mappingType
+        case let .customRequest(_, api):
             return api.mappingType
         case .commentDetail,
              .createComment,
@@ -257,6 +262,8 @@ extension ElloAPI {
             return true
         case let .custom(_, api):
             return api.supportsAnonymousToken
+        case let .customRequest(_, api):
+            return api.supportsAnonymousToken
         case let .infiniteScroll(_, api):
             return api.supportsAnonymousToken
         default:
@@ -324,6 +331,8 @@ extension ElloAPI: Moya.TargetType {
             return .patch
         case let .custom(_, api):
             return api.method
+        case let .customRequest(request, _):
+            return request.method
         case let .infiniteScroll(_, api):
             return api.method
         default:
@@ -350,6 +359,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/oauth/token"
         case let .custom(url, _):
             return url.path
+        case let .customRequest(request, _):
+            return request.url.path
         case .editorials:
             return "/api/\(ElloAPI.apiVersion)/editorials"
         case .resetPassword:
@@ -409,11 +420,8 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/hire_me"
         case let .collaborate(userId, _):
             return "/api/\(ElloAPI.apiVersion)/users/\(userId)/collaborate"
-        case let .infiniteScroll(_, api):
-            if let pagingPath = api.pagingPath {
-                return pagingPath
-            }
-            return api.path
+        case let .infiniteScroll(query, api):
+            return api.pagingPath ?? query.path
         case .invitations,
              .inviteFriends:
             return "/api/\(ElloAPI.apiVersion)/invitations"
@@ -430,7 +438,7 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/page_promotionals"
         case let .postComments(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
-        case let .postDetail(postParam, _):
+        case let .postDetail(postParam):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postParam)"
         case .postViews:
             return "/api/\(ElloAPI.apiVersion)/post_views"
@@ -557,6 +565,8 @@ extension ElloAPI: Moya.TargetType {
         case .following:
             return stubbedData("activity_streams_friend_stream")
         case let .custom(_, api):
+            return api.sampleData
+        case let .customRequest(_, api):
             return api.sampleData
         case let .infiniteScroll(_, api):
             return api.sampleData
@@ -704,6 +714,16 @@ extension ElloAPI: Moya.TargetType {
         case let .custom(url, _):
             guard let queryString = url.query else { return nil }
             return convertQueryParams(queryString)
+        case let .customRequest(request, _):
+            if let parameters = request.parameters {
+                return parameters
+            }
+            else if request.method == .get,
+                let queryString = request.url.query
+            {
+                return convertQueryParams(queryString)
+            }
+            return nil
         case .currentUserProfile:
             return [
                 "post_count": 0
@@ -746,12 +766,12 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "body": body
             ]
-        case let .infiniteScroll(queryItems, api):
+        case let .infiniteScroll(query, api):
+            guard let queryItems = query.queryItems else { return nil }
+
             var queryDict = [String: Any]()
             for item in queryItems {
-                if let item = item as? URLQueryItem {
-                    queryDict[item.name] = item.value
-                }
+                queryDict[item.name] = item.value
             }
             var origDict = api.parameters ?? [String: Any]()
             origDict.merge(queryDict)
@@ -781,9 +801,9 @@ extension ElloAPI: Moya.TargetType {
                 params["category"] = category
             }
             return params
-        case let .postDetail(_, commentCount):
+        case .postDetail:
             return [
-                "comment_count": commentCount
+                "comment_count": 0,
             ]
         case .postRelatedPosts:
             return [

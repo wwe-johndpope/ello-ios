@@ -30,13 +30,13 @@ class StreamCreateCommentCellSpec: QuickSpec {
                 it("has a valid not-watching button") {
                     subject.watchVisibility = .enabled
                     subject.replyAllVisibility = .hidden
-                    subject.watching = false
+                    subject.isWatching = false
                     expectValidSnapshot(subject)
                 }
                 it("has a valid watching button") {
                     subject.watchVisibility = .enabled
                     subject.replyAllVisibility = .hidden
-                    subject.watching = true
+                    subject.isWatching = true
                     expectValidSnapshot(subject)
                 }
             }

@@ -159,7 +159,6 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
     }
 
     override func arrange() {
-        super.arrange()
         addSubview(scrollView)
 
         let widthAnchor = UIView()

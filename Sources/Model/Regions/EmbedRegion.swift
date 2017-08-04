@@ -92,7 +92,7 @@ final class EmbedRegion: JSONAble, Regionable {
 
 // MARK: Regionable
 
-    var kind: String { return RegionKind.embed.rawValue }
+    let kind: RegionKind = .embed
 
     func coding() -> NSCoding {
         return self
@@ -100,9 +100,9 @@ final class EmbedRegion: JSONAble, Regionable {
 
     func toJSON() -> [String: Any] {
         return [
-            "kind": self.kind,
+            "kind": kind.rawValue,
             "data": [
-                "url": self.url.absoluteString
+                "url": url.absoluteString
                 ],
         ]
     }

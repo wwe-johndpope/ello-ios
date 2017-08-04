@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class CategoryCardCell: UICollectionViewCell {
+class CategoryCardCell: CollectionViewCell {
     static let reuseIdentifier = "CategoryCardCell"
     static let selectableReuseIdentifier = "SelectableCategoryCardCell"
 
@@ -15,7 +15,7 @@ class CategoryCardCell: UICollectionViewCell {
         static let selectedImageOffset: CGFloat = 5
     }
 
-    var selectable: Bool = false {
+    var isSelectable: Bool = false {
         didSet { updateSelected() }
     }
     override var isSelected: Bool {
@@ -36,19 +36,8 @@ class CategoryCardCell: UICollectionViewCell {
     fileprivate let imageView = UIImageView()
     fileprivate let selectedImageView = UIImageView()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     fileprivate func updateSelected() {
-        if selectable {
+        if isSelectable {
             colorFillView.alpha = isSelected ? 0.8 : 0.4
             label.style = isSelected ? .boldWhite : .white
             selectedImageView.isHidden = !isSelected
@@ -60,14 +49,7 @@ class CategoryCardCell: UICollectionViewCell {
         }
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        label.text = ""
-        imageView.image = nil
-        isSelected = false
-    }
-
-    fileprivate func style() {
+    override func style() {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         colorFillView.backgroundColor = .black
@@ -76,7 +58,7 @@ class CategoryCardCell: UICollectionViewCell {
         selectedImageView.interfaceImage = .smallCheck
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         contentView.addSubview(imageView)
         contentView.addSubview(colorFillView)
         contentView.addSubview(label)
@@ -98,5 +80,12 @@ class CategoryCardCell: UICollectionViewCell {
             make.trailing.equalTo(label.snp.leading).offset(-Size.selectedImageOffset)
             make.centerY.equalTo(colorFillView)
         }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        label.text = ""
+        imageView.image = nil
+        isSelected = false
     }
 }

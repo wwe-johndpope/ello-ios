@@ -16,7 +16,7 @@ enum OmnibarRegion {
 }
 
 extension OmnibarRegion {
-    var editable: Bool {
+    var isEditable: Bool {
         switch self {
         case .imageData, .image: return true
         case let .attributedText(text): return text.string.characters.count > 0
@@ -53,7 +53,7 @@ extension OmnibarRegion {
         }
     }
 
-    var empty: Bool {
+    var isEmpty: Bool {
         switch self {
         case let .attributedText(text): return text.string.characters.count == 0
         case .spacer: return true

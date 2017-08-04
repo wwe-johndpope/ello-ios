@@ -10,7 +10,7 @@ protocol ForgotPasswordEmailDelegate: class {
 }
 
 protocol ForgotPasswordEmailScreenProtocol: class {
-    var emailValid: Bool? { get set }
+    var isEmailValid: Bool? { get set }
     func showEmailError(_ text: String)
     func hideEmailError()
     func loadingHUD(visible: Bool)
@@ -25,7 +25,7 @@ protocol ForgotPasswordResetDelegate: class {
     func submit(password: String)
 }
 protocol ForgotPasswordResetScreenProtocol: class {
-    var passwordValid: Bool? { get set }
+    var isPasswordValid: Bool? { get set }
     func showFailureMessage()
     func showPasswordError(_ text: String)
     func hidePasswordError()

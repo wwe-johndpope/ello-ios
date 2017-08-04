@@ -142,7 +142,7 @@ extension Love: Stubbable {
             id: (values["id"] as? String) ?? UUID().uuidString,
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             updatedAt: (values["updatedAt"] as? Date) ?? AppSetup.shared.now,
-            deleted: (values["deleted"] as? Bool) ?? true,
+            isDeleted: (values["deleted"] as? Bool) ?? true,
             postId: post.id,
             userId: user.id
         )
@@ -274,9 +274,9 @@ extension Post: Stubbable {
             isAdultContent: (values["isAdultContent"] as? Bool) ?? false,
             contentWarning: (values["contentWarning"] as? String) ?? "",
             allowComments: (values["allowComments"] as? Bool) ?? false,
-            reposted: (values["reposted"] as? Bool) ?? false,
-            loved: (values["loved"] as? Bool) ?? false,
-            watching: (values["watching"] as? Bool) ?? false,
+            isReposted: (values["reposted"] as? Bool) ?? false,
+            isLoved: (values["loved"] as? Bool) ?? false,
+            isWatching: (values["watching"] as? Bool) ?? false,
             summary: (values["summary"] as? [Regionable]) ?? [stubbedTextRegion]
         )
 
@@ -403,12 +403,6 @@ extension EmbedRegion: Stubbable {
         )
         embedRegion.isRepost = (values["isRepost"] as? Bool) ?? false
         return embedRegion
-    }
-}
-
-extension UnknownRegion: Stubbable {
-    class func stub(_ values: [String: Any]) -> UnknownRegion {
-        return UnknownRegion(name: "no-op")
     }
 }
 
@@ -686,5 +680,19 @@ extension Editorial: Stubbable {
             editorial.posts = posts
         }
         return editorial
+    }
+}
+
+extension Badge: Stubbable {
+
+    class func stub(_ values: [String: Any]) -> Badge {
+        let badge = Badge(
+            slug: (values["slug"] as? String) ?? "featured",
+            name: (values["name"] as? String) ?? "Featured",
+            caption: (values["caption"] as? String) ?? "Featured",
+            url: urlFromValue(values["url"]),
+            imageURL: urlFromValue(values["imageURL"])
+            )
+        return badge
     }
 }

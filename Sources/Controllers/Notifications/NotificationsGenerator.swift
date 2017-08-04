@@ -87,7 +87,7 @@ final class NotificationsGenerator: StreamGenerator {
 
         self.announcements = newAnnouncements
         let announcementItems = StreamCellItemParser().parse(newAnnouncements, streamKind: .announcements, currentUser: self.currentUser)
-        self.destination?.replacePlaceholder(type: .announcements, items: announcementItems) {}
+        self.destination?.replacePlaceholder(type: .announcements, items: announcementItems)
     }
 
     func announcementsAreSame(_ newAnnouncements: [Announcement]) -> Bool {
@@ -120,20 +120,20 @@ final class NotificationsGenerator: StreamGenerator {
                         let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
                         self.hasNotifications = false
                         self.destination?.replacePlaceholder(type: .notifications, items: [noContentItem]) {
-                            self.destination?.pagingEnabled = false
+                            self.destination?.isPagingEnabled = false
                         }
                     }
                     else {
                         self.hasNotifications = true
                         self.destination?.replacePlaceholder(type: .notifications, items: notificationItems) {
-                            self.destination?.pagingEnabled = true
+                            self.destination?.isPagingEnabled = true
                         }
                     }
                 case .empty:
                     let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
                     self.destination?.setPrimary(jsonable: JSONAble(version: JSONAbleVersion))
                     self.destination?.replacePlaceholder(type: .notifications, items: [noContentItem]) {
-                        self.destination?.pagingEnabled = false
+                        self.destination?.isPagingEnabled = false
                     }
                 }
             }

@@ -15,7 +15,7 @@ final class Love: JSONAble, PostActionable {
     let createdAt: Date
     let updatedAt: Date
     // required
-    var deleted: Bool
+    var isDeleted: Bool
     let postId: String
     let userId: String
 
@@ -32,7 +32,7 @@ final class Love: JSONAble, PostActionable {
     init(id: String,
         createdAt: Date,
         updatedAt: Date,
-        deleted: Bool,
+        isDeleted: Bool,
         postId: String,
         userId: String )
     {
@@ -41,7 +41,7 @@ final class Love: JSONAble, PostActionable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         // required
-        self.deleted = deleted
+        self.isDeleted = isDeleted
         self.postId = postId
         self.userId = userId
         super.init(version: LoveVersion)
@@ -56,7 +56,7 @@ final class Love: JSONAble, PostActionable {
         self.createdAt = decoder.decodeKey("createdAt")
         self.updatedAt = decoder.decodeKey("updatedAt")
         // required
-        self.deleted = decoder.decodeKey("deleted")
+        self.isDeleted = decoder.decodeKey("deleted")
         self.postId = decoder.decodeKey("postId")
         self.userId = decoder.decodeKey("userId")
         super.init(coder: coder)
@@ -69,7 +69,7 @@ final class Love: JSONAble, PostActionable {
         coder.encodeObject(createdAt, forKey: "createdAt")
         coder.encodeObject(updatedAt, forKey: "updatedAt")
         // required
-        coder.encodeObject(deleted, forKey: "deleted")
+        coder.encodeObject(isDeleted, forKey: "deleted")
         coder.encodeObject(postId, forKey: "postId")
         coder.encodeObject(userId, forKey: "userId")
         super.encode(with: coder.coder)
@@ -102,7 +102,7 @@ final class Love: JSONAble, PostActionable {
             id: json["id"].stringValue,
             createdAt: createdAt,
             updatedAt: updatedAt,
-            deleted: json["deleted"].boolValue,
+            isDeleted: json["deleted"].boolValue,
             postId: json["post_id"].stringValue,
             userId: json["user_id"].stringValue
         )

@@ -154,7 +154,7 @@ private extension CategoryViewController {
 
     func loadCategory(initial: Bool) {
         if !initial {
-            replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+            replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)])
         }
         title = category?.name ?? slug.flatMap { DiscoverType.fromURL($0)?.name } ?? InterfaceString.Discover.Title
 
@@ -163,7 +163,7 @@ private extension CategoryViewController {
         category?.randomPromotional = nil
         generator?.load()
 
-        streamViewController.pagingEnabled = true
+        streamViewController.isPagingEnabled = true
     }
 
     func reloadCurrentCategory() {
@@ -177,15 +177,15 @@ private extension CategoryViewController {
 // MARK: CategoryViewController: StreamDestination
 extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
             if self.streamViewController.hasCellItems(for: .categoryHeader) && !self.streamViewController.hasCellItems(for: .categoryPosts) {
-                self.streamViewController.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)]) {}
+                self.streamViewController.replacePlaceholder(type: .categoryPosts, items: [StreamCellItem(type: .streamLoading)])
             }
 
             completion()
@@ -291,7 +291,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         let streamKind = StreamKind.allCategories
         streamViewController.streamKind = streamKind
-        streamViewController.pagingEnabled = false
+        streamViewController.isPagingEnabled = false
         generator?.reset(streamKind: streamKind, category: nil, pagePromotional: nil)
 
         prevSlug = slug
@@ -308,8 +308,8 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         let sortedCategories = CategoryList(categories: allCategories).categories
         let categoryItems = allCategoryItems(categories: sortedCategories)
-        replacePlaceholder(type: .categoryHeader, items: []) {}
-        replacePlaceholder(type: .categoryPosts, items: categoryItems) {}
+        replacePlaceholder(type: .categoryHeader, items: [])
+        replacePlaceholder(type: .categoryPosts, items: categoryItems)
         streamViewController.reloadCells(now: true)
 
         trackScreenAppeared()

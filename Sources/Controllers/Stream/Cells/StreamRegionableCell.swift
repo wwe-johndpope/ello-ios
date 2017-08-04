@@ -2,16 +2,16 @@
 ///  StreamRegionableCell.swift
 //
 
-class StreamRegionableCell: UICollectionViewCell {
+class StreamRegionableCell: CollectionViewCell {
     var leftBorder = CALayer()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func style() {
+        super.style()
         leftBorder.backgroundColor = UIColor.black.cgColor
     }
 
     func showBorder() {
-        self.layer.addSublayer(leftBorder)
+        layer.addSublayer(leftBorder)
     }
 
     func hideBorder() {
@@ -19,7 +19,7 @@ class StreamRegionableCell: UICollectionViewCell {
     }
 
     override func layoutSubviews() {
-        leftBorder.frame = CGRect(x: 15, y: 0, width: 1, height: self.bounds.height)
         super.layoutSubviews()
+        leftBorder.frame = CGRect(x: 15, y: 0, width: 1, height: self.bounds.height)
     }
 }

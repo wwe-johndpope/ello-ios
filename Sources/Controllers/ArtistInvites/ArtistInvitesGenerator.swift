@@ -38,6 +38,7 @@ private extension ArtistInvitesGenerator {
             .thenFinally { [weak self] response in
                 guard
                     let `self` = self,
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken),
                     case let .jsonables(jsonables, responseConfig) = response,
                     let artistInvites = jsonables as? [ArtistInvite]
                 else { return }
@@ -46,7 +47,7 @@ private extension ArtistInvitesGenerator {
 
                 let artistInviteItems = self.parse(jsonables: artistInvites)
                 self.destination?.replacePlaceholder(type: .artistInvites, items: artistInviteItems) {
-                    self.destination?.pagingEnabled = artistInviteItems.count > 0
+                    self.destination?.isPagingEnabled = artistInviteItems.count > 0
                 }
             }
             .catch { [weak self] _ in

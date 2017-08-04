@@ -2,7 +2,7 @@
 ///  ProfileHeaderGhostCell.swift
 //
 
-class ProfileHeaderGhostCell: UICollectionViewCell {
+class ProfileHeaderGhostCell: CollectionViewCell {
     static let reuseIdentifier = "ProfileHeaderGhostCell"
 
     struct Size {
@@ -50,17 +50,7 @@ class ProfileHeaderGhostCell: UICollectionViewCell {
     fileprivate let stat4Top = UIView()
     fileprivate let stat4Bottom = UIView()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
+    override func style() {
         whiteBackground.backgroundColor = .white
         let ghostsViews = [avatar, name, totalCountLeft, totalCountRight, stat1Top, stat1Bottom, stat2Top, stat2Bottom, stat3Top, stat3Bottom, stat4Top, stat4Bottom]
         for view in ghostsViews {
@@ -74,7 +64,7 @@ class ProfileHeaderGhostCell: UICollectionViewCell {
         }
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         addSubview(whiteBackground)
 
         addSubview(avatar)

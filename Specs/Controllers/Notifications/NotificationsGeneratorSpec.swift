@@ -15,7 +15,7 @@ class NotificationsGeneratorSpec: QuickSpec {
         var notificationItems: [StreamCellItem] = []
         var otherPlaceholderLoaded = false
         var responseConfig: ResponseConfig?
-        var pagingEnabled: Bool = false
+        var isPagingEnabled: Bool = false
 
         func setPlaceholders(items: [StreamCellItem]) {
             placeholderItems = items

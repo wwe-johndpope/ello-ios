@@ -2,19 +2,13 @@
 ///  CategoryCardView.swift
 //
 
-class CategoryCardView: UIView {
-
-    let info: CategoryCardListView.CategoryInfo
-
-    let overlay = UIView()
-    let button = UIButton()
-
+class CategoryCardView: View {
     static let selectedAlpha: CGFloat = 0.8
     static let normalAlpha: CGFloat = 0.6
     static let darkAlpha: CGFloat = 0.8
 
-    fileprivate var _selected = false
-    var selected: Bool {
+    let info: CategoryCardListView.CategoryInfo
+    var isSelected: Bool {
         set {
             _selected = newValue
             let alpha: CGFloat
@@ -35,19 +29,29 @@ class CategoryCardView: UIView {
         get { return _selected }
     }
 
+    var overlayAlpha: CGFloat {
+        get { return overlay.alpha }
+        set { overlay.alpha = newValue }
+    }
+
+    let button = UIButton()
+    fileprivate let overlay = UIView()
+    fileprivate var _selected = false
+
     init(info: CategoryCardListView.CategoryInfo) {
         self.info = info
-
         super.init(frame: .zero)
-        style()
-        arrange()
+    }
+
+    required init(frame: CGRect) {
+        fatalError("use init(info:)")
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("use init(info:)")
     }
 
-    fileprivate func style() {
+    override func style() {
         backgroundColor = .white
 
         overlay.backgroundColor = .black
@@ -63,7 +67,7 @@ class CategoryCardView: UIView {
         button.setAttributedTitle(attributedString, for: .normal)
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         if let url = info.imageURL {
             let imageView = UIImageView()
             imageView.clipsToBounds = true
@@ -78,5 +82,11 @@ class CategoryCardView: UIView {
 
         overlay.snp.makeConstraints { $0.edges.equalTo(self) }
         button.snp.makeConstraints { $0.edges.equalTo(self).inset(5) }
+    }
+}
+
+extension CategoryCardView {
+    func addTarget(_ target: Any?, action: Selector) {
+        button.addTarget(target, action: action, for: .touchUpInside)
     }
 }

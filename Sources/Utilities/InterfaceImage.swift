@@ -13,6 +13,7 @@ enum InterfaceImage: String {
         case disabled
         case red
         case green  // used by the "watching" lightning bolt
+        case orange  // used by the "selected" star
     }
 
     case elloLogo = "ello_logo"
@@ -98,6 +99,10 @@ enum InterfaceImage: String {
     // OnePassword
     case onePassword = "1password"
 
+    // Artist Invites
+    case circleCheck = "circle_check"
+    case star = "star"
+
     // Generic
     case x = "x"
     case dots = "dots"
@@ -118,6 +123,7 @@ enum InterfaceImage: String {
         case .disabled: return disabledImage
         case .red:      return redImage
         case .green:    return greenImage
+        case .orange:    return orangeImage
         }
     }
 
@@ -213,8 +219,16 @@ enum InterfaceImage: String {
     }
     var greenImage: UIImage? {
         switch self {
-        case .watch:
+        case .watch, .circleCheck:
             return svgNamed("\(self.rawValue)_green")
+        default:
+            return nil
+        }
+    }
+    var orangeImage: UIImage? {
+        switch self {
+        case .star:
+            return svgNamed("\(self.rawValue)_orange")
         default:
             return nil
         }

@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class ArtistInviteHeaderCell: UICollectionViewCell, ArtistInviteConfigurableCell {
+class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
     static let reuseIdentifier = "ArtistInviteHeaderCell"
 
     struct Size {
@@ -34,28 +34,14 @@ class ArtistInviteHeaderCell: UICollectionViewCell, ArtistInviteConfigurableCell
     fileprivate let inviteTypeLabel = StyledLabel(style: .artistInvitedDetailInfo)
     fileprivate let dateLabel = StyledLabel(style: .artistInvitedDetailInfo)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        style()
-        bindActions()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func style() {
+    override func style() {
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
         logoImage.contentMode = .scaleAspectFit
         logoImage.clipsToBounds = true
     }
 
-    func bindActions() {
-    }
-
-    func arrange() {
+    override func arrange() {
         contentView.addSubview(headerImage)
         contentView.addSubview(logoImage)
         contentView.addSubview(titleLabel)

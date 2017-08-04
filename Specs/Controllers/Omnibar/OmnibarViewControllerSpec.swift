@@ -11,7 +11,8 @@ class OmnibarMockScreen: OmnibarScreenProtocol {
     var delegate: OmnibarScreenDelegate?
     var isEditing: Bool = false
     var isComment: Bool = false
-    var interactionEnabled: Bool = true
+    var isArtistInviteSubmission: Bool = true
+    var isInteractionEnabled: Bool = true
     var title: String = ""
     var submitTitle: String = ""
     var buyButtonURL: URL?
@@ -184,7 +185,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         showController(subject)
                         subject.omnibarSubmitted(regions, buyButtonURL: nil)
 
-                        expect(screen.interactionEnabled) == false
+                        expect(screen.isInteractionEnabled) == false
                     }
 
                     it("enables interaction after submitting the post") {
@@ -198,7 +199,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                         showController(subject)
                         subject.omnibarSubmitted(regions, buyButtonURL: nil)
 
-                        expect(screen.interactionEnabled) == true
+                        expect(screen.isInteractionEnabled) == true
                     }
                 }
             }
@@ -212,7 +213,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                     post = Post.stub(["id": postId, "watching": false])
 
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
-                        RecordedResponse(endpoint: .postDetail(postParam: postId, commentCount: 0), response: .networkResponse(200,
+                        RecordedResponse(endpoint: .postDetail(postParam: postId), response: .networkResponse(200,
                             // the id of this stubbed post must match the postId above ("52" last time I checked)
                             stubbedData("post_detail__watching"))
                         ),
@@ -228,7 +229,7 @@ class OmnibarViewControllerSpec: QuickSpec {
 
                 it("sets the watching property of the parent post to true after submitting the post") {
                     let parentPost = ElloLinkedStore.sharedInstance.getObject(post.id, type: .postsType) as! Post
-                    expect(parentPost.watching) == true
+                    expect(parentPost.isWatching) == true
                 }
             }
 
@@ -529,32 +530,6 @@ class OmnibarViewControllerSpec: QuickSpec {
                             ImageRegion.stub([:]),
                             TextRegion.stub([:]),
                             EmbedRegion.stub([:])
-                        ]
-                        expect(OmnibarViewController.canEditRegions(regions)) == false
-                    }
-                }
-                describe("cannot edit unknown regions") {
-                    it("text, unknown, image") {
-                        let regions: [Regionable]? = [
-                            TextRegion.stub([:]),
-                            UnknownRegion.stub([:]),
-                            ImageRegion.stub([:])
-                        ]
-                        expect(OmnibarViewController.canEditRegions(regions)) == false
-                    }
-                    it("unknown, image, text") {
-                        let regions: [Regionable]? = [
-                            UnknownRegion.stub([:]),
-                            ImageRegion.stub([:]),
-                            TextRegion.stub([:])
-                        ]
-                        expect(OmnibarViewController.canEditRegions(regions)) == false
-                    }
-                    it("image, text, unknown") {
-                        let regions: [Regionable]? = [
-                            ImageRegion.stub([:]),
-                            TextRegion.stub([:]),
-                            UnknownRegion.stub([:])
                         ]
                         expect(OmnibarViewController.canEditRegions(regions)) == false
                     }

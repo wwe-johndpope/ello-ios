@@ -156,7 +156,7 @@ final class StreamViewController: BaseElloViewController {
     var dataSource: StreamDataSource!
     var postbarController: PostbarController?
     var responseConfig: ResponseConfig?
-    var pagingEnabled = false
+    var isPagingEnabled = false
     fileprivate var scrollToPaginateGuard = false
 
     let streamService = StreamService()
@@ -231,8 +231,8 @@ final class StreamViewController: BaseElloViewController {
         return layout.columnCount
     }
 
-    var pullToRefreshEnabled: Bool = true {
-        didSet { pullToRefreshView?.isHidden = !pullToRefreshEnabled }
+    var isPullToRefreshEnabled: Bool = true {
+        didSet { pullToRefreshView?.isHidden = !isPullToRefreshEnabled }
     }
 
     required init() {
@@ -268,7 +268,7 @@ final class StreamViewController: BaseElloViewController {
 
         pullToRefreshView = SSPullToRefreshView(scrollView: collectionView, delegate: self)
         pullToRefreshView?.contentView = ElloPullToRefreshView(frame: .zero)
-        pullToRefreshView?.isHidden = !pullToRefreshEnabled
+        pullToRefreshView?.isHidden = !isPullToRefreshEnabled
 
         setupCollectionView()
         addNotificationObservers()
@@ -412,7 +412,7 @@ final class StreamViewController: BaseElloViewController {
     func loadInitialPage(reload: Bool = false) {
         if let reloadClosure = reloadClosure, reload {
             responseConfig = nil
-            pagingEnabled = false
+            isPagingEnabled = false
             reloadClosure()
         }
         else if let initialLoadClosure = initialLoadClosure {
@@ -451,7 +451,7 @@ final class StreamViewController: BaseElloViewController {
             items.append(StreamCellItem(type: .emptyStream(height: 282)))
         }
         self.appendUnsizedCellItems(items) { indexPaths in
-            self.pagingEnabled = true
+            self.isPagingEnabled = true
         }
     }
 
@@ -648,7 +648,7 @@ final class StreamViewController: BaseElloViewController {
         if height != existingHeight {
             self.dataSource.updateHeightForIndexPath(indexPath, height: height)
             // collectionView.performBatchUpdates({
-            //     collectionView.reloadItemsAtIndexPaths([indexPath])
+            //     collectionView.reloadItems(at: [indexPath])
             // }, completion: nil)
             collectionView.reloadData()
         }
@@ -710,7 +710,7 @@ final class StreamViewController: BaseElloViewController {
     fileprivate func setupDataSource() {
         dataSource = StreamDataSource(streamKind: streamKind)
         dataSource.streamCollapsedFilter = { item in
-            if !item.type.collapsable {
+            if !item.type.isCollapsable {
                 return true
             }
             if item.jsonable is Post {
@@ -802,12 +802,12 @@ extension StreamViewController: SimpleStreamResponder {
 extension StreamViewController: SSPullToRefreshViewDelegate {
 
     func pull(toRefreshViewShouldStartLoading view: SSPullToRefreshView!) -> Bool {
-        return pullToRefreshEnabled
+        return isPullToRefreshEnabled
     }
 
     func pull(_ view: SSPullToRefreshView, didTransitionTo toState: SSPullToRefreshViewState, from fromState: SSPullToRefreshViewState, animated: Bool) {
         if toState == .loading {
-            if pullToRefreshEnabled {
+            if isPullToRefreshEnabled {
                 streamViewDelegate?.streamWillPullToRefresh()
 
                 if let controller = parent as? BaseElloViewController {
@@ -891,7 +891,7 @@ extension StreamViewController: StreamEditingResponder {
             window.addSubview(imageView)
         }
 
-        if !post.loved {
+        if !post.isLoved {
             let loveableCell = self.loveableCell(for: cell)
             postbarController?.toggleLove(loveableCell, post: post, via: "double tap")
         }
@@ -1203,6 +1203,13 @@ extension StreamViewController: UICollectionViewDelegate {
             let responder: CreatePostResponder? = findResponder()
             responder?.createComment(comment.loadedFromPostId, text: nil, fromController: self)
         }
+        else if tappedCell is RevealControllerCell,
+            let streamCellItem = dataSource.visibleStreamCellItem(at: indexPath),
+            let info = streamCellItem.type.data
+        {
+            let responder: RevealControllerResponder? = findResponder()
+            responder?.revealControllerTapped(info: info)
+        }
         else if let item = dataSource.visibleStreamCellItem(at: indexPath),
             let category = dataSource.jsonableForIndexPath(indexPath) as? Category
         {
@@ -1230,7 +1237,7 @@ extension StreamViewController: UICollectionViewDelegate {
                 let cellItemType = dataSource.visibleStreamCellItem(at: indexPath)?.type
             else { return false }
 
-            return cellItemType.selectable
+            return cellItemType.isSelectable
     }
 }
 
@@ -1264,7 +1271,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
     fileprivate func loadNextPage(scrollView: UIScrollView) {
         guard
-            pagingEnabled &&
+            isPagingEnabled &&
             scrollView.contentOffset.y + (self.view.frame.height * 1.666)
             > scrollView.contentSize.height
         else { return }
@@ -1275,7 +1282,7 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         guard
-            let nextQueryItems = responseConfig?.nextQueryItems
+            let nextQuery = responseConfig?.nextQuery
         else { return }
 
         guard let lastCellItem = dataSource.visibleCellItems.last, lastCellItem.type != .streamLoading
@@ -1286,7 +1293,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
         scrollToPaginateGuard = false
 
-        let scrollAPI = ElloAPI.infiniteScroll(queryItems: nextQueryItems, api: streamKind.endpoint)
+        let scrollAPI = ElloAPI.infiniteScroll(query: nextQuery, api: streamKind.endpoint)
         streamService.loadStream(endpoint: scrollAPI, streamKind: streamKind)
             .thenFinally { response in
                 switch response {

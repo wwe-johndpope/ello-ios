@@ -10,7 +10,7 @@ protocol BuyButtonLinkDelegate: class {
     func clearLink()
 }
 
-class BuyButtonLinkScreen: UIView {
+class BuyButtonLinkScreen: View {
     struct Size {
         static let topMargin: CGFloat = 120
         static let sideMargin: CGFloat = 10
@@ -51,20 +51,7 @@ class BuyButtonLinkScreen: UIView {
         }
     }
 
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        style()
-        bindActions()
-        setText()
-        arrange()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    fileprivate func style() {
+    override func style() {
         backgroundButton.backgroundColor = .dimmedModalBackground
 
         titleLabel.font = .defaultFont(18)
@@ -86,14 +73,14 @@ class BuyButtonLinkScreen: UIView {
         removeButton.isHidden = true
     }
 
-    fileprivate func bindActions() {
+    override func bindActions() {
         backgroundButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
         submitButton.addTarget(self, action: #selector(submitLink), for: .touchUpInside)
         removeButton.addTarget(self, action: #selector(removeLink), for: .touchUpInside)
         productLinkField.addTarget(self, action: #selector(productLinkDidChange), for: .editingChanged)
     }
 
-    fileprivate func setText() {
+    override func setText() {
         titleLabel.text = InterfaceString.Omnibar.SellYourWorkTitle
         productLinkField.placeholder = InterfaceString.Omnibar.ProductLinkPlaceholder
         submitButton.setTitle(InterfaceString.Submit, for: .normal)
@@ -101,7 +88,7 @@ class BuyButtonLinkScreen: UIView {
         cancelLabel.text = InterfaceString.Cancel
     }
 
-    fileprivate func arrange() {
+    override func arrange() {
         addSubview(backgroundButton)
         addSubview(titleLabel)
         addSubview(productLinkField)

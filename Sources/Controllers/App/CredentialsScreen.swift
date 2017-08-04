@@ -40,13 +40,12 @@ class CredentialsScreen: EmptyScreen {
     }
 
     override func style() {
-        super.style()
         backButton.setImages(.angleBracket, degree: 180, white: true)
         backButton.contentMode = .center
+        layer.masksToBounds = true
     }
 
     override func arrange() {
-        layer.masksToBounds = true
         layer.addSublayer(gradientLayer)
 
         super.arrange()

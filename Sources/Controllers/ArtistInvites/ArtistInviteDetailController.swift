@@ -10,10 +10,10 @@ class ArtistInviteDetailController: StreamableViewController {
     let artistInviteId: String
     var artistInvite: ArtistInvite?
 
-    private var _mockScreen: ArtistInviteDetailScreenProtocol?
-    var screen: ArtistInviteDetailScreenProtocol {
+    private var _mockScreen: StreamableScreenProtocol?
+    var screen: StreamableScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! ArtistInviteDetailScreen }
+        get { return _mockScreen ?? self.view as! StreamableScreenProtocol }
     }
     var generator: ArtistInviteDetailGenerator!
 
@@ -26,7 +26,7 @@ class ArtistInviteDetailController: StreamableViewController {
             currentUser: currentUser,
             destination: self)
         streamViewController.streamKind = generator.streamKind
-        streamViewController.pagingEnabled = false
+        streamViewController.isPagingEnabled = false
         streamViewController.reloadClosure = { [weak self] in self?.generator?.load(reload: true) }
         streamViewController.initialLoadClosure = { [weak self] in self?.generator.load() }
     }
@@ -47,8 +47,7 @@ class ArtistInviteDetailController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = ArtistInviteDetailScreen()
-        screen.delegate = self
+        let screen = StreamableScreen()
 
         let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped))
         elloNavigationItem.leftBarButtonItem = backItem
@@ -86,9 +85,9 @@ class ArtistInviteDetailController: StreamableViewController {
 
 extension ArtistInviteDetailController: StreamDestination {
 
-    var pagingEnabled: Bool {
-        get { return streamViewController.pagingEnabled }
-        set { streamViewController.pagingEnabled = newValue }
+    var isPagingEnabled: Bool {
+        get { return streamViewController.isPagingEnabled }
+        set { streamViewController.isPagingEnabled = newValue }
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
@@ -120,8 +119,9 @@ extension ArtistInviteDetailController: StreamDestination {
 }
 
 extension ArtistInviteDetailController: ArtistInviteResponder {
+
     func tappedArtistInviteSubmissionsButton() {
-        streamViewController.scrollTo(placeholderType: .artistInviteSubmissions, animated: true)
+        streamViewController.scrollTo(placeholderType: .artistInviteSubmissionsHeader, animated: true)
     }
 
     func tappedArtistInviteSubmitButton() {
@@ -136,4 +136,17 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-extension ArtistInviteDetailController: ArtistInviteDetailScreenDelegate {}
+
+extension ArtistInviteDetailController: RevealControllerResponder {
+
+    func revealControllerTapped(info: Any) {
+        guard
+            let artistInvite = artistInvite,
+            let stream = info as? ArtistInvite.Stream
+        else { return }
+
+        let vc = ArtistInviteAdminController(artistInvite: artistInvite, stream: stream)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+}

@@ -14,6 +14,11 @@ struct StreamCellItemParser {
             if let post = item as? Post {
                 streamItems += postCellItems(post, streamKind: streamKind, forceGrid: forceGrid)
             }
+            else if let submission = item as? ArtistInviteSubmission,
+                let post = submission.post
+            {
+                streamItems += postCellItems(post, streamKind: streamKind, forceGrid: forceGrid, submission: submission)
+            }
             else if let comment = item as? ElloComment {
                 streamItems += commentCellItems(comment)
             }
@@ -62,7 +67,7 @@ struct StreamCellItemParser {
         + [StreamCellItem(jsonable: artistInvite, type: .spacer(height: 30), placeholderType: .artistInviteDetails)]
     }
 
-    fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool) -> [StreamCellItem] {
+    fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool, submission: ArtistInviteSubmission? = nil) -> [StreamCellItem] {
         var cellItems: [StreamCellItem] = []
         let isGridView = streamKind.isGridView || forceGrid
 
@@ -72,6 +77,11 @@ struct StreamCellItemParser {
         else {
             cellItems.append(StreamCellItem(jsonable: post, type: .spacer(height: 30)))
         }
+
+        if let submission = submission, submission.actions.count > 0 {
+            cellItems.append(StreamCellItem(jsonable: submission, type: .artistInviteAdminControls))
+        }
+
         cellItems += postToggleItems(post)
         if post.isRepost {
             // add repost content
@@ -87,10 +97,8 @@ struct StreamCellItemParser {
                 }
             }
         }
-        else {
-            if let content = post.contentFor(gridView: isGridView) {
-                cellItems += regionItems(post, content: content)
-            }
+        else if let content = post.contentFor(gridView: isGridView) {
+            cellItems += regionItems(post, content: content)
         }
         cellItems += footerStreamCellItems(post)
         cellItems += [StreamCellItem(jsonable: post, type: .spacer(height: 10))]
@@ -98,7 +106,7 @@ struct StreamCellItemParser {
         // set initial state on the items, but don't toggle the footer's state, it is used by comment open/closed
         for item in cellItems {
             if let post = item.jsonable as? Post, item.type != .streamFooter {
-                item.state = post.collapsed ? .collapsed : .expanded
+                item.state = post.isCollapsed ? .collapsed : .expanded
             }
         }
 
@@ -114,7 +122,7 @@ struct StreamCellItemParser {
     }
 
     fileprivate func postToggleItems(_ post: Post) -> [StreamCellItem] {
-        if post.collapsed {
+        if post.isCollapsed {
             return [StreamCellItem(jsonable: post, type: .toggle)]
         }
         else {
@@ -123,16 +131,46 @@ struct StreamCellItemParser {
     }
 
     fileprivate func regionItems(_ jsonable: JSONAble, content: [Regionable]) -> [StreamCellItem] {
-        var cellArray: [StreamCellItem] = []
-        for region in content {
-            let kind = RegionKind(rawValue: region.kind) ?? .unknown
-            let types = kind.streamCellTypes(region)
-            for type in types where type != .unknown {
-                let item: StreamCellItem = StreamCellItem(jsonable: jsonable, type: type)
-                cellArray.append(item)
+        return content.flatMap(regionStreamCells).map { StreamCellItem(jsonable: jsonable, type: $0) }
+    }
+
+    func regionStreamCells(_ region: Regionable) -> [StreamCellType] {
+        switch region.kind {
+        case .image:
+            return [.image(data: region)]
+        case .text:
+            guard let textRegion = region as? TextRegion else { return [] }
+
+            let content = textRegion.content
+
+            var paragraphs: [String] = content.components(separatedBy: "</p>")
+            if paragraphs.last == "" {
+                _ = paragraphs.removeLast()
             }
+            let truncatedParagraphs = paragraphs.map { line -> String in
+                let max = 7500
+                guard line.characters.count < max + 10 else {
+                    let startIndex = line.characters.startIndex
+                    let endIndex = line.characters.index(line.characters.startIndex, offsetBy: max)
+                    return String(line.characters[startIndex..<endIndex]) + "&hellip;</p>"
+                }
+                return line + "</p>"
+            }
+
+            return truncatedParagraphs.flatMap { (text: String) -> StreamCellType? in
+                if text == "" {
+                    return nil
+                }
+
+                let newRegion = TextRegion(content: text)
+                newRegion.isRepost = textRegion.isRepost
+                return .text(data: newRegion)
+            }
+        case .embed:
+            return [.embed(data: region)]
+        case .unknown:
+            return []
         }
-        return cellArray
     }
 
     fileprivate func footerStreamCellItems(_ post: Post) -> [StreamCellItem] {

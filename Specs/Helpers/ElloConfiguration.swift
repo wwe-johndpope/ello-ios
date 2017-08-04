@@ -31,12 +31,12 @@ class ElloConfiguration: QuickConfiguration {
 
             ElloLinkedStore.databaseName = "ello_test.sqlite"
             BadgesService.badges = [
-                "featured": Badge(slug: "featured", name: "Featured", link: "Learn More", url: nil, imageURL: nil),
-                "community": Badge(slug: "community", name: "Community", link: "Learn More", url: nil, imageURL: nil),
-                "experimental": Badge(slug: "experimental", name: "Experimental", link: "Learn More", url: nil, imageURL: nil),
-                "staff": Badge(slug: "staff", name: "Staff", link: "Meet our team", url: nil, imageURL: nil),
-                "spam": Badge(slug: "spam", name: "Spam", link: "Learn More", url: nil, imageURL: nil),
-                "nsfw": Badge(slug: "nsfw", name: "Nsfw", link: "Learn More", url: nil, imageURL: nil),
+                "featured": Badge(slug: "featured", name: "Featured", caption: "Learn More", url: nil, imageURL: nil),
+                "community": Badge(slug: "community", name: "Community", caption: "Learn More", url: nil, imageURL: nil),
+                "experimental": Badge(slug: "experimental", name: "Experimental", caption: "Learn More", url: nil, imageURL: nil),
+                "staff": Badge(slug: "staff", name: "Staff", caption: "Meet our team", url: nil, imageURL: nil),
+                "spam": Badge(slug: "spam", name: "Spam", caption: "Learn More", url: nil, imageURL: nil),
+                "nsfw": Badge(slug: "nsfw", name: "Nsfw", caption: "Learn More", url: nil, imageURL: nil),
             ]
 
             AppSetup.shared.nowGenerator = { return now }

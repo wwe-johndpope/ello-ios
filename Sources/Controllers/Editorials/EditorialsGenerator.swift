@@ -65,7 +65,7 @@ private extension EditorialsGenerator {
             guard let `self` = self else { return }
 
             self.destination?.replacePlaceholder(type: .editorials, items: editorialItems) {
-                self.destination?.pagingEnabled = editorialItems.count > 0
+                self.destination?.isPagingEnabled = editorialItems.count > 0
             }
         }
 

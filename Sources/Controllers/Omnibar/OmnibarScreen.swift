@@ -39,13 +39,13 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     var isEditing = false
     var reordering = false
 
-    var interactionEnabled: Bool = true {
+    var isInteractionEnabled: Bool = true {
         didSet {
-            isUserInteractionEnabled = interactionEnabled
-            boldButton.isUserInteractionEnabled = interactionEnabled
-            italicButton.isUserInteractionEnabled = interactionEnabled
-            linkButton.isUserInteractionEnabled = interactionEnabled
-            keyboardSubmitButton.isUserInteractionEnabled = interactionEnabled
+            isUserInteractionEnabled = isInteractionEnabled
+            boldButton.isUserInteractionEnabled = isInteractionEnabled
+            italicButton.isUserInteractionEnabled = isInteractionEnabled
+            linkButton.isUserInteractionEnabled = isInteractionEnabled
+            keyboardSubmitButton.isUserInteractionEnabled = isInteractionEnabled
         }
     }
 
@@ -471,7 +471,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     fileprivate func generateReorderableRegions(_ regions: [OmnibarRegion]) -> [IndexedRegion] {
         let nonEmptyRegions = regions.filter { region in
-            return region.editable && !region.empty
+            return region.isEditable && !region.isEmpty
         }
         return nonEmptyRegions.map { (region: OmnibarRegion) -> IndexedRegion in
             return (nil, region)
@@ -560,7 +560,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     func resignKeyboard() {
         _ = textView.resignFirstResponder()
-        regions = regions.filter { !$0.empty }
+        regions = regions.filter { !$0.isEmpty }
     }
 
 // MARK: Layout and update views
@@ -842,7 +842,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 // MARK: Post logic
 
     func canPost() -> Bool {
-        return submitableRegions.any { !$0.empty }
+        return submitableRegions.any { !$0.isEmpty }
     }
 
     func hasImage() -> Bool {
@@ -859,7 +859,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             return
         }
 
-        if let region = submitableRegions.last, region.empty {
+        if let region = submitableRegions.last, region.isEmpty {
             let lastIndex = submitableRegions.count - 1
             submitableRegions.remove(at: lastIndex)
         }

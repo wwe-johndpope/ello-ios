@@ -28,19 +28,28 @@ class Screen: UIView {
         bindActions()
         setText()
         arrange()
-
-        // for controllers that use "container" views, they need to be set to the correct dimensions,
-        // otherwise there'll be constraint violations.
         layoutIfNeeded()
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+
+        screenInit()
+        style()
+        bindActions()
+        setText()
+        arrange()
+        layoutIfNeeded()
     }
 
     deinit {
         teardownKeyboardObservers()
     }
+
+    func style() {}
+    func bindActions() {}
+    func setText() {}
+    func arrange() {}
 
     override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
@@ -77,11 +86,7 @@ class Screen: UIView {
     func keyboardIsAnimating(_ keyboard: Keyboard) {}
     func keyboardDidAnimate() {}
 
-    func screenInit() {}
-    func style() {}
-    func bindActions() {}
-    func setText() {}
-    func arrange() {
+    fileprivate func screenInit() {
         keyboardAnchor.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
             keyboardTopConstraint = make.top.equalTo(self.snp.bottom).constraint

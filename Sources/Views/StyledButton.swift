@@ -302,6 +302,12 @@ extension StyledButton.Style {
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .rounded
         )
+    static let clearGreen = StyledButton.Style(
+        titleColor: .greenD1, highlightedTitleColor: .greyA, disabledTitleColor: .greyC
+        )
+    static let clearOrange = StyledButton.Style(
+        titleColor: .orangeC6, highlightedTitleColor: .greyA, disabledTitleColor: .greyC
+        )
     static let editorialJoin = StyledButton.Style(
         backgroundColor: .greenD1, disabledBackgroundColor: UIColor(hex: 0x7AC97A),
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
