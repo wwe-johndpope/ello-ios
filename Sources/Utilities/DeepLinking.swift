@@ -38,18 +38,25 @@ struct DeepLinking {
     }
 
     static func showArtistInvites(navVC: UINavigationController?, currentUser: User?, slug: String? = nil) {
-        guard !DeepLinking.alreadyOnArtistInvites(navVC: navVC, slug: slug) else { return }
-
-        let vc: BaseElloViewController
         if let slug = slug {
-            vc = ArtistInviteDetailController(slug: slug)
+            guard !DeepLinking.alreadyOnArtistInvites(navVC: navVC, slug: slug) else { return }
+
+            let vc = ArtistInviteDetailController(slug: slug)
+            vc.currentUser = currentUser
+            navVC?.pushViewController(vc, animated: true)
         }
         else {
-            vc = ArtistInvitesViewController()
-        }
+            let appVC = UIApplication.shared.keyWindow?.rootViewController as? AppViewController
+            let tabBarVC = appVC?.visibleViewController as? ElloTabBarController
+            tabBarVC?.selectedTab = .home
 
-        vc.currentUser = currentUser
-        navVC?.pushViewController(vc, animated: true)
+            let tabBarNavVC = tabBarVC?.selectedViewController as? ElloNavigationController
+            let homeVC = tabBarNavVC?.viewControllers.first as? HomeViewController
+            homeVC?.showArtistInvitesViewController()
+            tabBarNavVC?.popToRootViewController(animated: false)
+
+            navVC?.dismiss(animated: true)
+        }
     }
 
     static func showProfile(navVC: UINavigationController?, currentUser: User?, username: String) {
@@ -89,16 +96,9 @@ struct DeepLinking {
         return false
     }
 
-    static func alreadyOnArtistInvites(navVC: UINavigationController?, slug: String?) -> Bool {
-        if let slug = slug,
-            let detailVC = navVC?.visibleViewController as? ArtistInviteDetailController
-        {
-            return detailVC.artistInvite?.slug == slug
-        }
-        else if slug == nil {
-            return navVC?.visibleViewController is ArtistInvitesViewController
-        }
-        return false
+    static func alreadyOnArtistInvites(navVC: UINavigationController?, slug: String) -> Bool {
+        let detailVC = navVC?.visibleViewController as? ArtistInviteDetailController
+        return detailVC?.artistInvite?.slug == slug
     }
 
     static func alreadyOnUserProfile(navVC: UINavigationController?, userParam: String) -> Bool {

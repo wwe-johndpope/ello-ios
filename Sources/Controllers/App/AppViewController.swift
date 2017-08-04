@@ -669,9 +669,9 @@ extension AppViewController {
     }
 
     fileprivate func showArtistInvitesScreen(slug: String? = nil) {
-        guard !DeepLinking.alreadyOnArtistInvites(navVC: pushDeepNavigationController(), slug: slug) else { return }
-
         if let slug = slug {
+            guard !DeepLinking.alreadyOnArtistInvites(navVC: pushDeepNavigationController(), slug: slug) else { return }
+
             Tracker.shared.artistInviteOpened(slug: slug)
             let vc = ArtistInviteDetailController(slug: slug)
             vc.currentUser = currentUser
