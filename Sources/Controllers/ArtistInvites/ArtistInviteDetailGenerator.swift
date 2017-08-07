@@ -7,6 +7,7 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
     var currentUser: User?
     let streamKind: StreamKind
     var artistInvite: ArtistInvite?
+    var artistInviteDetails: [StreamCellItem] = []
     weak var destination: StreamDestination?
 
     fileprivate var localToken: String = ""
@@ -48,9 +49,8 @@ private extension ArtistInviteDetailGenerator {
 
     func loadArtistInvite() {
         StreamService().loadStream(streamKind: streamKind)
-            .thenFinally { [weak self] response in
+            .thenFinally { response in
                 guard
-                    let `self` = self,
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken),
                     case let .jsonables(jsonables, responseConfig) = response,
                     let artistInvites = jsonables as? [ArtistInvite],
@@ -60,8 +60,7 @@ private extension ArtistInviteDetailGenerator {
                 self.destination?.setPagingConfig(responseConfig: responseConfig)
                 self.setArtistInvite(artistInvite)
             }
-            .catch { [weak self] _ in
-                guard let `self` = self else { return }
+            .catch { _ in
                 self.destination?.primaryJSONAbleNotFound()
             }
     }
@@ -72,14 +71,13 @@ private extension ArtistInviteDetailGenerator {
 
         let artistInviteItems = parse(jsonables: [artistInvite])
         let headers = artistInviteItems.filter { $0.placeholderType == .artistInvites }
-        let details = artistInviteItems.filter { $0.placeholderType == .artistInviteDetails }
+        self.artistInviteDetails = artistInviteItems.filter { $0.placeholderType == .artistInviteDetails }
         destination?.replacePlaceholder(type: .artistInvites, items: headers)
-        destination?.replacePlaceholder(type: .artistInviteDetails, items: details)
 
-        let spinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
-        destination?.replacePlaceholder(type: .artistInvitePosts, items: [spinner])
+        let postsSpinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
+        destination?.replacePlaceholder(type: .artistInviteDetails, items: [postsSpinner])
 
-        loadAdminTools(artistInvite)
+        // loadAdminTools(artistInvite)
         loadSubmissions(artistInvite)
     }
 
@@ -113,9 +111,8 @@ private extension ArtistInviteDetailGenerator {
         }
 
         StreamService().loadStream(endpoint: endpoint)
-            .thenFinally { [weak self] response in
+            .thenFinally { response in
                 guard
-                    let `self` = self,
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
                 else { return }
 
@@ -145,8 +142,11 @@ private extension ArtistInviteDetailGenerator {
                     self.destination?.replacePlaceholder(type: .artistInvitePosts, items: items)
                 }
             }
-            .catch { [weak self] _ in
-                self?.showSubmissionsError()
+            .catch { _ in
+                self.showSubmissionsError()
+            }
+            .always { _ in
+                self.destination?.replacePlaceholder(type: .artistInviteDetails, items: self.artistInviteDetails)
             }
     }
 

@@ -2,24 +2,10 @@
 ///  StreamLoadingCell.swift
 //
 
-class StreamLoadingCell: UICollectionViewCell {
+class StreamLoadingCell: CollectionViewCell {
     static let reuseIdentifier = "StreamLoadingCell"
 
-    lazy var elloLogo: ElloLogoView = {
-        let logo = ElloLogoView()
-        logo.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
-        return logo
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.sharedInit()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.sharedInit()
-    }
+    let elloLogo = ElloLogoView(style: .loading)
 
     func start() {
         elloLogo.animateLogo()
@@ -29,13 +15,15 @@ class StreamLoadingCell: UICollectionViewCell {
         elloLogo.stopAnimatingLogo()
     }
 
-    fileprivate func sharedInit() {
-        backgroundColor = .white
+    override func arrange() {
         addSubview(elloLogo)
+
+        elloLogo.snp.makeConstraints { make in
+            make.center.equalTo(self)
+        }
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        elloLogo.center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
+    override func style() {
+        backgroundColor = .white
     }
 }

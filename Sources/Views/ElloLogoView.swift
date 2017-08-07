@@ -8,13 +8,21 @@ import FLAnimatedImage
 
 class ElloLogoView: UIImageView {
 
-    enum Config {
+    enum Style {
         case normal
         case grey
+        case loading
+
+        var size: CGSize {
+            switch self {
+            case .loading: return Size.loading
+            default: return Size.natural
+            }
+        }
 
         var image: UIImage {
             switch self {
-            case .normal: return InterfaceImage.elloLogo.normalImage
+            case .normal, .loading: return InterfaceImage.elloLogo.normalImage
             case .grey: return InterfaceImage.elloLogoGrey.normalImage
             }
         }
@@ -22,10 +30,11 @@ class ElloLogoView: UIImageView {
 
     struct Size {
         static let natural = CGSize(width: 60, height: 60)
+        static let loading = CGSize(width: 30, height: 30)
     }
 
     fileprivate var wasAnimating = false
-    fileprivate var config: ElloLogoView.Config = .normal
+    fileprivate var style: ElloLogoView.Style = .normal
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -35,15 +44,15 @@ class ElloLogoView: UIImageView {
         self.init(frame: .zero)
     }
 
-    convenience init(config: ElloLogoView.Config) {
+    convenience init(style: Style) {
         self.init(frame: .zero)
-        self.config = config
-        self.image = self.config.image
+        self.style = style
+        self.image = self.style.image
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.image = self.config.image
+        self.image = self.style.image
         self.contentMode = .scaleAspectFit
     }
 
@@ -84,6 +93,6 @@ class ElloLogoView: UIImageView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return Size.natural
+        return style.size
     }
 }

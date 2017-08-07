@@ -9,10 +9,9 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
     static let reuseIdentifier = "ArtistInviteControlsCell"
 
     struct Size {
-        static let controlsHeight: CGFloat = 170
+        static let controlsHeight: CGFloat = 130
 
         static let margins = UIEdgeInsets(top: 0, left: 15, bottom: 60, right: 15)
-        static let descriptionSpacing: CGFloat = 40
         static let submitHeight: CGFloat = 80
     }
 
@@ -45,7 +44,7 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
         contentView.addSubview(submitButton)
 
         descriptionWebView.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(Size.descriptionSpacing)
+            make.top.equalTo(contentView)
             make.bottom.equalTo(submitButton.snp.top)
             make.leading.trailing.equalTo(contentView).inset(Size.margins)
         }
@@ -79,7 +78,7 @@ extension StyledButton.Style {
     static let artistInviteSubmit = StyledButton.Style(
         backgroundColor: .greenD1,
         titleColor: .white, highlightedTitleColor: .black,
-        fontSize: 24,
+        font: .regularLightFont(24),
         cornerRadius: .rounded
         )
 }

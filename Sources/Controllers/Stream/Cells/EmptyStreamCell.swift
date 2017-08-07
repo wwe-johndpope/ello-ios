@@ -21,7 +21,7 @@ class EmptyStreamCell: CollectionViewCell {
     }
 
     fileprivate let label = UILabel()
-    fileprivate let logo = ElloLogoView(config: ElloLogoView.Config.grey)
+    fileprivate let logo = ElloLogoView(style: .grey)
 
     override func style() {
         contentView.backgroundColor = .white

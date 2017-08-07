@@ -17,9 +17,9 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         static let cornerRadius: CGFloat = 5
         static let bubbleMargins = UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 15)
         static let infoMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
-        static let titleStatusSpacing: CGFloat = 14
+        static let titleStatusSpacing: CGFloat = 21.5
         static let dotYOffset: CGFloat = -1
-        static let dotStatusSpacing: CGFloat = 25
+        static let dotStatusSpacing: CGFloat = 15
         static let statusTypeDateSpacing: CGFloat = 10
         static let descriptionMargins = UIEdgeInsets(top: 20, left: 15, bottom: 15, right: 15)
     }
@@ -44,6 +44,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
 
     fileprivate let bg = UIView()
     fileprivate let headerImage = FLAnimatedImageView()
+    fileprivate let headerOverlay = UIView()
     fileprivate let logoImage = UIImageView()
     fileprivate let titleLabel = StyledLabel(style: .artistInviteTitle)
     fileprivate let statusImage = UIImageView()
@@ -58,6 +59,8 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         bg.backgroundColor = .greyF2
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
+        headerOverlay.backgroundColor = .black
+        headerOverlay.alpha = 0.3
         logoImage.contentMode = .scaleAspectFit
         logoImage.clipsToBounds = true
         descriptionWebView.scrollView.isScrollEnabled = false
@@ -69,6 +72,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         contentView.addSubview(bg)
 
         bg.addSubview(headerImage)
+        bg.addSubview(headerOverlay)
         bg.addSubview(logoImage)
         bg.addSubview(titleLabel)
         bg.addSubview(statusImage)
@@ -84,6 +88,10 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         headerImage.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(bg)
             make.height.equalTo(Size.headerImageHeight)
+        }
+
+        headerOverlay.snp.makeConstraints { make in
+            make.edges.equalTo(headerImage)
         }
 
         logoImage.snp.makeConstraints { make in

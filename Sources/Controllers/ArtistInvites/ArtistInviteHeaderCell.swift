@@ -28,21 +28,25 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
     }
 
     fileprivate let headerImage = FLAnimatedImageView()
+    fileprivate let headerOverlay = UIView()
     fileprivate let logoImage = UIImageView()
-    fileprivate let titleLabel = StyledLabel(style: .artistInvitedDetailTitle)
+    fileprivate let titleLabel = StyledLabel(style: .artistInviteDetailTitle)
     fileprivate let statusLabel = StyledLabel()
-    fileprivate let inviteTypeLabel = StyledLabel(style: .artistInvitedDetailInfo)
-    fileprivate let dateLabel = StyledLabel(style: .artistInvitedDetailInfo)
+    fileprivate let inviteTypeLabel = StyledLabel(style: .artistInviteDetailInfo)
+    fileprivate let dateLabel = StyledLabel(style: .artistInviteDetailInfo)
 
     override func style() {
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
+        headerOverlay.backgroundColor = .black
+        headerOverlay.alpha = 0.3
         logoImage.contentMode = .scaleAspectFit
         logoImage.clipsToBounds = true
     }
 
     override func arrange() {
         contentView.addSubview(headerImage)
+        contentView.addSubview(headerOverlay)
         contentView.addSubview(logoImage)
         contentView.addSubview(titleLabel)
         contentView.addSubview(statusLabel)
@@ -52,6 +56,10 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
         headerImage.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(contentView)
             make.height.equalTo(Size.headerImageHeight)
+        }
+
+        headerOverlay.snp.makeConstraints { make in
+            make.edges.equalTo(headerImage)
         }
 
         logoImage.snp.makeConstraints { make in
@@ -127,43 +135,43 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
 extension ArtistInvite.Status {
     var detailLabelStyle: StyledLabel.Style {
         switch self {
-        case .preview: return .artistInvitedDetailPreview
-        case .upcoming: return .artistInvitedDetailUpcoming
-        case .open: return .artistInvitedDetailOpen
-        case .selecting: return .artistInvitedDetailSelecting
-        case .closed: return .artistInvitedDetailClosed
+        case .preview: return .artistInviteDetailPreview
+        case .upcoming: return .artistInviteDetailUpcoming
+        case .open: return .artistInviteDetailOpen
+        case .selecting: return .artistInviteDetailSelecting
+        case .closed: return .artistInviteDetailClosed
         }
     }
 }
 
 extension StyledLabel.Style {
-    static let artistInvitedDetailInfo = StyledLabel.Style(
-        textColor: .greyA,
-        fontFamily: .artistInviteTitle
-        )
-    static let artistInvitedDetailTitle = StyledLabel.Style(
+    static let artistInviteDetailTitle = StyledLabel.Style(
         textColor: .black,
         fontFamily: .artistInviteTitle
         )
+    static let artistInviteDetailInfo = StyledLabel.Style(
+        textColor: .greyA,
+        fontFamily: .artistInviteDetail
+        )
 
-    static let artistInvitedDetailPreview = StyledLabel.Style(
+    static let artistInviteDetailPreview = StyledLabel.Style(
         textColor: UIColor(hex: 0x0409FE),
-        fontFamily: .artistInviteTitle
+        fontFamily: .artistInviteDetail
         )
-    static let artistInvitedDetailUpcoming = StyledLabel.Style(
+    static let artistInviteDetailUpcoming = StyledLabel.Style(
         textColor: UIColor(hex: 0xC000FF),
-        fontFamily: .artistInviteTitle
+        fontFamily: .artistInviteDetail
         )
-    static let artistInvitedDetailOpen = StyledLabel.Style(
+    static let artistInviteDetailOpen = StyledLabel.Style(
         textColor: UIColor(hex: 0x00D100),
-        fontFamily: .artistInviteTitle
+        fontFamily: .artistInviteDetail
         )
-    static let artistInvitedDetailSelecting = StyledLabel.Style(
+    static let artistInviteDetailSelecting = StyledLabel.Style(
         textColor: UIColor(hex: 0xFDB02A),
-        fontFamily: .artistInviteTitle
+        fontFamily: .artistInviteDetail
         )
-    static let artistInvitedDetailClosed = StyledLabel.Style(
+    static let artistInviteDetailClosed = StyledLabel.Style(
         textColor: UIColor(hex: 0xFE0404),
-        fontFamily: .artistInviteTitle
+        fontFamily: .artistInviteDetail
         )
 }
