@@ -7,6 +7,7 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
     var currentUser: User?
     let streamKind: StreamKind
     var artistInvite: ArtistInvite?
+    var artistInviteDetails: [StreamCellItem] = []
     weak var destination: StreamDestination?
 
     fileprivate var localToken: String = ""
@@ -48,9 +49,8 @@ private extension ArtistInviteDetailGenerator {
 
     func loadArtistInvite() {
         StreamService().loadStream(streamKind: streamKind)
-            .thenFinally { [weak self] response in
+            .thenFinally { response in
                 guard
-                    let `self` = self,
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken),
                     case let .jsonables(jsonables, responseConfig) = response,
                     let artistInvites = jsonables as? [ArtistInvite],
@@ -60,8 +60,7 @@ private extension ArtistInviteDetailGenerator {
                 self.destination?.setPagingConfig(responseConfig: responseConfig)
                 self.setArtistInvite(artistInvite)
             }
-            .catch { [weak self] _ in
-                guard let `self` = self else { return }
+            .catch { _ in
                 self.destination?.primaryJSONAbleNotFound()
             }
     }
@@ -72,38 +71,13 @@ private extension ArtistInviteDetailGenerator {
 
         let artistInviteItems = parse(jsonables: [artistInvite])
         let headers = artistInviteItems.filter { $0.placeholderType == .artistInvites }
-        let details = artistInviteItems.filter { $0.placeholderType == .artistInviteDetails }
+        self.artistInviteDetails = artistInviteItems.filter { $0.placeholderType == .artistInviteDetails }
         destination?.replacePlaceholder(type: .artistInvites, items: headers)
-        destination?.replacePlaceholder(type: .artistInviteDetails, items: details)
 
-        let spinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
-        destination?.replacePlaceholder(type: .artistInvitePosts, items: [spinner])
+        let postsSpinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
+        destination?.replacePlaceholder(type: .artistInviteDetails, items: [postsSpinner])
 
-        loadAdminTools(artistInvite)
         loadSubmissions(artistInvite)
-    }
-
-    func loadAdminTools(_ artistInvite: ArtistInvite) {
-        guard
-            artistInvite.hasAdminLinks,
-            let approvedSubmissionsStream = artistInvite.approvedSubmissionsStream,
-            let selectedSubmissionsStream = artistInvite.selectedSubmissionsStream,
-            let unapprovedSubmissionsStream = artistInvite.unapprovedSubmissionsStream
-        else { return }
-
-        let header = NSAttributedString(label: "Admin Controls", style: .header)
-        let submissionsHeader = StreamCellItem(type: .header(header))
-        let approvedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminApprovedStream, approvedSubmissionsStream))
-        let selectedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminSelectedStream, selectedSubmissionsStream))
-        let unapprovedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminUnapprovedStream, unapprovedSubmissionsStream))
-        let spacer = StreamCellItem(type: .spacer(height: 30))
-        self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: [
-            submissionsHeader,
-            unapprovedButton,
-            approvedButton,
-            selectedButton,
-            spacer,
-            ])
     }
 
     func loadSubmissions(_ artistInvite: ArtistInvite) {
@@ -113,9 +87,8 @@ private extension ArtistInviteDetailGenerator {
         }
 
         StreamService().loadStream(endpoint: endpoint)
-            .thenFinally { [weak self] response in
+            .thenFinally { response in
                 guard
-                    let `self` = self,
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
                 else { return }
 
@@ -145,8 +118,12 @@ private extension ArtistInviteDetailGenerator {
                     self.destination?.replacePlaceholder(type: .artistInvitePosts, items: items)
                 }
             }
-            .catch { [weak self] _ in
-                self?.showSubmissionsError()
+            .catch { _ in
+                self.showSubmissionsError()
+            }
+            .always { _ in
+                self.loadAdminTools(artistInvite)
+                self.destination?.replacePlaceholder(type: .artistInviteDetails, items: self.artistInviteDetails)
             }
     }
 
@@ -160,5 +137,28 @@ private extension ArtistInviteDetailGenerator {
         let error = NSAttributedString(label: InterfaceString.ArtistInvites.SubmissionsError, style: .error)
         let item = StreamCellItem(type: .header(error))
         destination?.replacePlaceholder(type: .artistInvitePosts, items: [item])
+    }
+
+    func loadAdminTools(_ artistInvite: ArtistInvite) {
+        guard
+            artistInvite.hasAdminLinks,
+            let approvedSubmissionsStream = artistInvite.approvedSubmissionsStream,
+            let selectedSubmissionsStream = artistInvite.selectedSubmissionsStream,
+            let unapprovedSubmissionsStream = artistInvite.unapprovedSubmissionsStream
+        else { return }
+
+        let header = NSAttributedString(label: "Admin Controls", style: .header)
+        let submissionsHeader = StreamCellItem(type: .header(header))
+        let approvedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminApprovedStream, approvedSubmissionsStream))
+        let selectedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminSelectedStream, selectedSubmissionsStream))
+        let unapprovedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminUnapprovedStream, unapprovedSubmissionsStream))
+        let spacer = StreamCellItem(type: .spacer(height: 30))
+        self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: [
+            submissionsHeader,
+            unapprovedButton,
+            approvedButton,
+            selectedButton,
+            spacer,
+            ])
     }
 }

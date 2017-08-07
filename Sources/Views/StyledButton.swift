@@ -39,16 +39,10 @@ class StyledButton: UIButton {
         let disabledBorderColor: UIColor?
         let borderColor: UIColor?
 
-        let fontSize: CGFloat?
         let cornerRadius: CornerRadius
         let underline: Bool  // used by NSAttributedString
 
-        var font: UIFont {
-            guard let size = fontSize else {
-                return UIFont.defaultFont()
-            }
-            return UIFont.defaultFont(size)
-        }
+        let font: UIFont
 
         init(
             backgroundColor: UIColor? = nil,
@@ -69,7 +63,7 @@ class StyledButton: UIButton {
             selectedBorderColor: UIColor? = nil,
             disabledBorderColor: UIColor? = nil,
 
-            fontSize: CGFloat? = nil,
+            font: UIFont? = nil,
             cornerRadius: CornerRadius = .square,
             underline: Bool = false
         ) {
@@ -91,9 +85,15 @@ class StyledButton: UIButton {
             self.disabledBorderColor = disabledBorderColor
             self.borderColor = borderColor
 
-            self.fontSize = fontSize
             self.cornerRadius = cornerRadius
             self.underline = underline
+
+            if let font = font {
+                self.font = font
+            }
+            else {
+                self.font = .defaultFont()
+            }
         }
     }
 

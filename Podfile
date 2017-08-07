@@ -40,7 +40,7 @@ def common_pods
     pod 'ElloUIFonts', git: ENV['ELLO_UI_FONTS_URL']
     pod 'ElloOSSCerts', '~> 2.0'
   else
-    pod 'ElloOSSUIFonts', '~> 2.0'
+    pod 'ElloOSSUIFonts', '~> 2.2'
     pod 'ElloOSSCerts', '~> 2.0'
   end
   pod 'PromiseKit'

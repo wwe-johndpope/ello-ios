@@ -49,6 +49,7 @@ enum StreamCellType: Equatable {
     case seeMoreComments
     case selectableCategoryCard
     case spacer(height: CGFloat)
+    case spinner(height: CGFloat)
     case streamFooter
     case streamHeader
     case streamLoading
@@ -113,7 +114,7 @@ enum StreamCellType: Equatable {
         .editorial(.postStream),
         .embed(data: nil),
         .emptyStream(height: 282),
-        .fullWidthSpacer(height: 0.0),
+        .fullWidthSpacer(height: 0),
         .header(nil),
         .image(data: nil),
         .inviteFriends,
@@ -129,7 +130,8 @@ enum StreamCellType: Equatable {
         .search(placeholder: ""),
         .seeMoreComments,
         .selectableCategoryCard,
-        .spacer(height: 0.0),
+        .spacer(height: 0),
+        .spinner(height: 0),
         .streamFooter,
         .streamHeader,
         .streamLoading,
@@ -192,6 +194,7 @@ enum StreamCellType: Equatable {
         case .seeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
         case .selectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case .spacer: return "StreamSpacerCell"
+        case .spinner: return StreamLoadingCell.reuseIdentifier
         case .streamFooter: return StreamFooterCell.reuseIdentifier
         case .streamLoading: return StreamLoadingCell.reuseIdentifier
         case .tallHeader: return TextHeaderCell.reuseIdentifier
@@ -254,6 +257,7 @@ enum StreamCellType: Equatable {
         case .search: return SearchStreamCellPresenter.configure
         case .selectableCategoryCard: return CategoryCardCellPresenter.configure
         case .spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
+        case .spinner: return StreamLoadingCellPresenter.configure
         case .streamFooter: return StreamFooterCellPresenter.configure
         case .streamLoading: return StreamLoadingCellPresenter.configure
         case .tallHeader: return TextHeaderCellPresenter.configure
@@ -296,6 +300,7 @@ enum StreamCellType: Equatable {
         case .search: return SearchStreamCell.self
         case .seeMoreComments: return StreamSeeMoreCommentsCell.self
         case .selectableCategoryCard: return CategoryCardCell.self
+        case .spinner: return StreamLoadingCell.self
         case .streamFooter: return StreamFooterCell.self
         case .streamLoading: return StreamLoadingCell.self
         case .tallHeader: return TextHeaderCell.self
@@ -357,6 +362,8 @@ enum StreamCellType: Equatable {
         case .search:
             return 68
         case let .spacer(height):
+            return height
+        case let .spinner(height):
             return height
         case .streamLoading,
              .userAvatars:
@@ -432,6 +439,7 @@ enum StreamCellType: Equatable {
              .placeholder,
              .selectableCategoryCard,
              .spacer,
+             .spinner,
              .streamFooter,
              .streamHeader,
              .text,
@@ -469,7 +477,7 @@ enum StreamCellType: Equatable {
             .editorial(.post),
             .editorial(.postStream),
             .emptyStream(height: 282),
-            .fullWidthSpacer(height: 0.0),
+            .fullWidthSpacer(height: 0),
             .header(nil),
             .loadMoreComments,
             .notification,
@@ -480,7 +488,8 @@ enum StreamCellType: Equatable {
             .revealController(label: "", Void()),
             .search(placeholder: ""),
             .selectableCategoryCard,
-            .spacer(height: 0.0),
+            .spacer(height: 0),
+            .spinner(height: 0),
             .streamLoading,
             .tallHeader(nil),
             .text(data: nil),

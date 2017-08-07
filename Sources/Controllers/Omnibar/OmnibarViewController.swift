@@ -41,7 +41,7 @@ class OmnibarViewController: BaseElloViewController {
             }
         }
     }
-    var artistInvite: (id: String, slug: String)?
+    var artistInvite: ArtistInvite?
 
     typealias CommentSuccessListener = (_ comment: ElloComment) -> Void
     typealias PostSuccessListener = (_ post: Post) -> Void
@@ -142,9 +142,9 @@ class OmnibarViewController: BaseElloViewController {
                 screen.submitTitle = InterfaceString.Omnibar.CreateCommentButton
                 isComment = true
             }
-            else if artistInvite != nil {
-                screen.title = InterfaceString.Omnibar.CreateArtistInviteTitle
-                screen.submitTitle = InterfaceString.Omnibar.CreateArtistInviteButton
+            else if let artistInvite = artistInvite {
+                screen.title = InterfaceString.Omnibar.CreateArtistInviteSubmission(title: artistInvite.title)
+                screen.submitTitle = InterfaceString.Omnibar.CreatePostButton
                 isComment = false
             }
             else {
@@ -412,8 +412,13 @@ extension OmnibarViewController {
         else {
             service = PostEditingService()
 
-            goToPreviousTab()
-            didGoToPreviousTab = true
+            if artistInvite == nil {
+                goToPreviousTab()
+                didGoToPreviousTab = true
+            }
+            else {
+                didGoToPreviousTab = false
+            }
         }
 
         startSpinner()

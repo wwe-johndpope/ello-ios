@@ -14,6 +14,7 @@ class StyledLabel: UILabel {
         case editorialSuccess
         case editorialCaption
         case artistInviteTitle
+        case artistInviteDetail
 
         var font: UIFont {
             switch self {
@@ -27,6 +28,7 @@ class StyledLabel: UILabel {
             case .editorialSuccess: return UIFont.regularBlackFont(24)
             case .editorialCaption: return UIFont.defaultFont(16)
             case .artistInviteTitle: return UIFont.regularBlackFont(24)
+            case .artistInviteDetail: return UIFont.regularLightFont(24)
             }
         }
     }

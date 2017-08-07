@@ -9,8 +9,8 @@ class ArtistInviteSubmissionsButtonCell: CollectionViewCell {
     static let reuseIdentifier = "ArtistInviteSubmissionsButtonCell"
 
     struct Size {
-        static let margins = UIEdgeInsets(top: 0, left: 15, bottom: 60, right: 15)
-        static let height: CGFloat = 40
+        static let height: CGFloat = 70
+        static let buttonMargins = UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15)
     }
 
     fileprivate let submissionsButton = StyledButton(style: .artistInviteSubmissions)
@@ -31,9 +31,7 @@ class ArtistInviteSubmissionsButtonCell: CollectionViewCell {
         contentView.addSubview(submissionsButton)
 
         submissionsButton.snp.makeConstraints { make in
-            make.top.equalTo(contentView)
-            make.leading.trailing.equalTo(contentView).inset(Size.margins)
-            make.height.equalTo(Size.height)
+            make.edges.equalTo(contentView).inset(Size.buttonMargins)
         }
     }
 }

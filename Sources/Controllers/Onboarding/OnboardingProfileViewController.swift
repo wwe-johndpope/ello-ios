@@ -208,7 +208,7 @@ extension OnboardingProfileViewController: OnboardingStepController {
 
                 Tracker.shared.contactAccessPreferenceChanged(false)
                 let message = addressBookError.rawValue
-                let alertController = AlertViewController(error: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate as NSString, [message]) as String)
+                let alertController = AlertViewController(error: InterfaceString.Friends.ImportError(message))
                 presenter.present(alertController, animated: true, completion: .none)
             }
         },

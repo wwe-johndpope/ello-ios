@@ -15,7 +15,7 @@ class OmnibarErrorCell: UITableViewCell {
         get { return nil }
         set {
             if let url = newValue {
-                label.text = NSString.localizedStringWithFormat(InterfaceString.Omnibar.LoadingImageErrorTemplate as NSString, [url]) as String
+                label.text = InterfaceString.Omnibar.LoadingImageError(url: url)
             }
         }
     }

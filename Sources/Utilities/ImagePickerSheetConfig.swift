@@ -10,6 +10,6 @@ struct ImagePickerSheetConfig {
     var photoLibrary = InterfaceString.ImagePicker.PhotoLibrary
     var mediaType: ImagePickerMediaType = .image
     var addImage: (Int) -> String = { count in
-        return NSString.localizedStringWithFormat(InterfaceString.ImagePicker.AddImagesTemplate as NSString, count) as String
+        return InterfaceString.ImagePicker.AddImages(count)
     }
 }
