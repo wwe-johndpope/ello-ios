@@ -11,6 +11,7 @@ enum Priority: ConstraintPriorityTarget {
     case low
     case required
 
+    var value: Float { return constraintPriorityTargetValue }
     var constraintPriorityTargetValue: Float {
         switch self {
         case .high: return UILayoutPriorityDefaultHigh

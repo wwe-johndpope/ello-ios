@@ -65,7 +65,11 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
         logoImage.snp.makeConstraints { make in
             make.center.equalTo(headerImage)
             make.size.equalTo(Size.logoImageSize)
+            make.width.lessThanOrEqualTo(contentView).priority(Priority.required)
+            make.height.equalTo(logoImage.snp.width).multipliedBy(Size.logoImageSize.height / Size.logoImageSize.width).priority(Priority.required)
         }
+        logoImage.setContentCompressionResistancePriority(Priority.low.value, for: .vertical)
+        logoImage.setContentCompressionResistancePriority(Priority.low.value, for: .horizontal)
 
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(Size.textMargins)

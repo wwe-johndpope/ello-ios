@@ -13,7 +13,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         static let headerImageHeight: CGFloat = 230
         static let infoTotalHeight: CGFloat = 130
 
-        static let logoImageSize = CGSize(width: 337.5, height: 190)
+        static let logoImageSize = CGSize(width: 270, height: 152)
         static let cornerRadius: CGFloat = 5
         static let bubbleMargins = UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 15)
         static let infoMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
@@ -100,6 +100,8 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
             make.width.lessThanOrEqualTo(bg).priority(Priority.required)
             make.height.equalTo(logoImage.snp.width).multipliedBy(Size.logoImageSize.height / Size.logoImageSize.width).priority(Priority.required)
         }
+        logoImage.setContentCompressionResistancePriority(Priority.low.constraintPriorityTargetValue, for: .vertical)
+        logoImage.setContentCompressionResistancePriority(Priority.low.constraintPriorityTargetValue, for: .horizontal)
 
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(bg).inset(Size.infoMargins)
