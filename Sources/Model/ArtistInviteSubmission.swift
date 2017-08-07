@@ -56,6 +56,16 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         let request: ElloRequest
         var endpoint: ElloAPI { return .customRequest(request, mimics: .artistInviteSubmissions) }
 
+        var order: Int {
+            switch name {
+            case .unapprove: return 0
+            case .approve: return 1
+            case .unselect: return 2
+            case .select: return 3
+            case .other: return 4
+            }
+        }
+
         init(statusChange: Status, name: Name, label: String, request: ElloRequest) {
             self.statusChange = statusChange
             self.name = name
@@ -114,6 +124,8 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         if let actions = data["actions"] as? [String: Any] {
             submission.actions = actions.flatMap { key, value in
                 return Action(name: key, json: JSON(value))
+            }.sorted { a, b in
+                return a.order < b.order
             }
         }
 

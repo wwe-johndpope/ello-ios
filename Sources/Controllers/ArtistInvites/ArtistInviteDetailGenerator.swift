@@ -77,7 +77,7 @@ private extension ArtistInviteDetailGenerator {
         let postsSpinner = StreamCellItem(type: .streamLoading, placeholderType: .artistInvitePosts)
         destination?.replacePlaceholder(type: .artistInviteDetails, items: [postsSpinner])
 
-        // loadAdminTools(artistInvite)
+        loadAdminTools(artistInvite)
         loadSubmissions(artistInvite)
     }
 
