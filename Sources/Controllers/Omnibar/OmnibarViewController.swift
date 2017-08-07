@@ -41,7 +41,7 @@ class OmnibarViewController: BaseElloViewController {
             }
         }
     }
-    var artistInvite: (id: String, slug: String)?
+    var artistInvite: ArtistInvite?
 
     typealias CommentSuccessListener = (_ comment: ElloComment) -> Void
     typealias PostSuccessListener = (_ post: Post) -> Void
@@ -412,8 +412,13 @@ extension OmnibarViewController {
         else {
             service = PostEditingService()
 
-            goToPreviousTab()
-            didGoToPreviousTab = true
+            if artistInvite == nil {
+                goToPreviousTab()
+                didGoToPreviousTab = true
+            }
+            else {
+                didGoToPreviousTab = false
+            }
         }
 
         startSpinner()

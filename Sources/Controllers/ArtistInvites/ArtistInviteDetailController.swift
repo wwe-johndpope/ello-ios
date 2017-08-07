@@ -128,7 +128,7 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
         guard let artistInvite = artistInvite else { return }
 
         let vc = OmnibarViewController()
-        vc.artistInvite = (id: artistInvite.id, slug: artistInvite.slug)
+        vc.artistInvite = artistInvite
         vc.currentUser = currentUser
         vc.onPostSuccess { _ in
             _ = self.navigationController?.popViewController(animated: true)
