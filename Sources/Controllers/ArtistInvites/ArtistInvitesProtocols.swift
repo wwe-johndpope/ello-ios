@@ -6,6 +6,9 @@ protocol ArtistInvitesScreenDelegate: class {
     func scrollToTop()
 }
 
+protocol ArtistInviteDetailScreenProtocol: StreamableScreenProtocol {
+    func showSuccess()
+}
 protocol ArtistInviteAdminScreenProtocol: StreamableScreenProtocol {
     var selectedSubmissionsStatus: ArtistInviteSubmission.Status { get set }
 }

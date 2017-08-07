@@ -10,10 +10,10 @@ class ArtistInviteDetailController: StreamableViewController {
     let artistInviteId: String
     var artistInvite: ArtistInvite?
 
-    private var _mockScreen: StreamableScreenProtocol?
-    var screen: StreamableScreenProtocol {
+    private var _mockScreen: ArtistInviteDetailScreenProtocol?
+    var screen: ArtistInviteDetailScreenProtocol {
         set(screen) { _mockScreen = screen }
-        get { return _mockScreen ?? self.view as! StreamableScreenProtocol }
+        get { return _mockScreen ?? self.view as! ArtistInviteDetailScreenProtocol }
     }
     var generator: ArtistInviteDetailGenerator!
 
@@ -47,7 +47,7 @@ class ArtistInviteDetailController: StreamableViewController {
     }
 
     override func loadView() {
-        let screen = StreamableScreen()
+        let screen = ArtistInviteDetailScreen()
 
         let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped))
         elloNavigationItem.leftBarButtonItem = backItem
@@ -132,6 +132,7 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
         vc.currentUser = currentUser
         vc.onPostSuccess { _ in
             _ = self.navigationController?.popViewController(animated: true)
+            self.screen.showSuccess()
         }
         navigationController?.pushViewController(vc, animated: true)
     }
