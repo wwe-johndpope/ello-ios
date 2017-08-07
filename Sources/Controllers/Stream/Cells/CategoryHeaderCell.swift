@@ -317,8 +317,8 @@ extension CategoryHeaderCell.Config {
 
     var attributedTitle: NSAttributedString {
         switch style {
-        case .category: return NSAttributedString(title, color: .white, font: .defaultFont(16), alignment: .center)
-        case .page: return NSAttributedString(title, color: .white, font: .defaultFont(18))
+        case .category: return NSAttributedString(title, color: .white, font: .regularBlackFont(16), alignment: .center)
+        case .page: return NSAttributedString(title, color: .white, font: .regularBlackFont(18))
         }
     }
 
@@ -350,6 +350,7 @@ extension CategoryHeaderCell.Config {
 
     init(category: Category) {
         self.init(style: .category)
+
         title = category.name
         body = category.body
         tracking = category.slug
