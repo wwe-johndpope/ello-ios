@@ -87,14 +87,14 @@ extension BlockUserModalScreen {
     fileprivate func setDetails(userAtName: String, relationshipPriority: RelationshipPriority) {
         let titleText: String
         switch relationshipPriority {
-        case .mute: titleText = String(format: InterfaceString.Relationship.UnmuteAlertTemplate, userAtName)
-        case .block: titleText = String(format: InterfaceString.Relationship.BlockAlertTemplate, userAtName)
-        default: titleText = String(format: InterfaceString.Relationship.MuteAlertTemplate, userAtName)
+        case .mute: titleText = InterfaceString.Relationship.UnmuteAlert(atName: userAtName)
+        case .block: titleText = InterfaceString.Relationship.UnblockAlert(atName: userAtName)
+        default: titleText = InterfaceString.Relationship.MuteAlert(atName: userAtName)
         }
 
-        let muteText = String(format: InterfaceString.Relationship.MuteWarningTemplate, userAtName, userAtName)
-        let blockText = String(format: InterfaceString.Relationship.BlockWarningTemplate, userAtName)
-        let flagText = String(format: InterfaceString.Relationship.BlockWarningTemplate, userAtName)
+        let muteText = InterfaceString.Relationship.MuteWarning(atName: userAtName)
+        let blockText = InterfaceString.Relationship.BlockWarning(atName: userAtName)
+        let flagText = InterfaceString.Relationship.FlagWarning(atName: userAtName)
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6

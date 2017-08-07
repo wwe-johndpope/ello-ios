@@ -54,7 +54,7 @@ class OnboardingInterestsViewController: StreamableViewController {
 extension OnboardingInterestsViewController: OnboardingStepController {
 
     func onboardingStepBegin() {
-        let prompt = NSString(format: InterfaceString.Onboard.PickTemplate as NSString, 3) as String
+        let prompt = InterfaceString.Onboard.Pick(3)
         onboardingViewController?.hasAbortButton = false
         onboardingViewController?.canGoNext = false
         onboardingViewController?.prompt = prompt
@@ -96,7 +96,7 @@ extension OnboardingInterestsViewController: SelectedCategoryResponder {
         let canGoNext: Bool
         switch selectionCount {
         case 0, 1, 2:
-            prompt = NSString(format: InterfaceString.Onboard.PickTemplate as NSString, 3 - selectionCount) as String
+            prompt = InterfaceString.Onboard.Pick(3 - selectionCount)
             canGoNext = false
         default:
             prompt = nil

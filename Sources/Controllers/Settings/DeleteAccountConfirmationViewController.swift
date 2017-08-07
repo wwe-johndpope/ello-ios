@@ -61,7 +61,7 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
 
     @objc
     fileprivate func tick() {
-        let text = NSString(format: InterfaceString.Settings.RedirectedCountdownTemplate as NSString, counter) as String
+        let text = InterfaceString.Settings.RedirectedCountdown(counter)
         nextTick {
             self.cancelLabel.text = text
             self.counter -= 1

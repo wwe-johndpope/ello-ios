@@ -475,7 +475,7 @@ extension AppViewController: InviteResponder {
                 Tracker.shared.contactAccessPreferenceChanged(false)
                 let message = addressBookError.rawValue
                 let alertController = AlertViewController(
-                    message: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate as NSString, message) as String
+                    message: InterfaceString.Friends.ImportError(message)
                 )
 
                 let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: .none)

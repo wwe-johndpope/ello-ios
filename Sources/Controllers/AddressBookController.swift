@@ -56,7 +56,7 @@ extension AddressBookController {
 
     fileprivate static func displayAddressBookAlert(_ controller: UIViewController, message: String, completion: @escaping Completion) {
         let alertController = AlertViewController(
-            message: NSString.localizedStringWithFormat(InterfaceString.Friends.ImportErrorTemplate as NSString, message) as String
+            message: InterfaceString.Friends.ImportError(message)
         )
 
         let action = AlertAction(title: InterfaceString.OK, style: .dark) { _ in

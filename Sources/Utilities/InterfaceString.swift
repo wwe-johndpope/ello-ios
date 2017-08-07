@@ -156,7 +156,9 @@ struct InterfaceString {
         static let DeleteAccountExplanation: String = NSLocalizedString("By deleting your account you remove your personal information from Ello. Your account cannot be restored.", comment: "")
         static let DeleteAccountConfirm: String = NSLocalizedString("Delete Account?", comment: "delete account question")
         static let AccountIsBeingDeleted: String = NSLocalizedString("Your account is in the process of being deleted.", comment: "")
-        static let RedirectedCountdownTemplate: String = NSLocalizedString("You will be redirected in %lu...", comment: "You will be redirected in ...")
+        static func RedirectedCountdown(_ count: Int) -> String {
+            return String.localizedStringWithFormat("You will be redirected in %lu...", count)
+        }
     }
 
     struct Profile {
@@ -214,8 +216,9 @@ struct InterfaceString {
         static let AddMoreText: String = NSLocalizedString("Add more text...", comment: "Add more text prompt")
         static let EnterURL: String = NSLocalizedString("Enter the URL", comment: "")
         static let CreatePostTitle: String = NSLocalizedString("Post", comment: "Create a post")
-        static let CreateArtistInviteTitle: String = NSLocalizedString("Artist Invite", comment: "")
-        static let CreateArtistInviteButton: String = NSLocalizedString("Submit", comment: "Create a post")
+        static func CreateArtistInviteSubmission(title: String) -> String {
+            return String.localizedStringWithFormat("Submit to %@", title)
+        }
         static let CreatePostButton: String = NSLocalizedString("Post", comment: "")
         static let EditPostTitle: String = NSLocalizedString("Edit this post", comment: "")
         static let EditPostButton: String = NSLocalizedString("Edit Post", comment: "")
@@ -224,7 +227,9 @@ struct InterfaceString {
         static let CreateCommentTitle: String = NSLocalizedString("Leave a comment", comment: "")
         static let CreateCommentButton: String = NSLocalizedString("Comment", comment: "")
         static let TooLongError: String = NSLocalizedString("Your text is too long.\n\nThe character limit is 5,000.", comment: "Post too long (maximum characters is 5000) error message")
-        static let LoadingImageErrorTemplate: String = NSLocalizedString("There was a problem loading the image\n%@", comment: "There was a problem loading the image (url)")
+        static func LoadingImageError(url: URL) -> String {
+            return String.localizedStringWithFormat("There was a problem loading the image\n%@", url.absoluteString)
+        }
         static let CreatedPost: String = NSLocalizedString("Post successfully created!", comment: "")
         static let SellYourWorkTitle: String = NSLocalizedString("Sell your work", comment: "Sell your work title")
         static let ProductLinkPlaceholder: String = NSLocalizedString("Product detail URL", comment: "Product detail URL prompt")
@@ -232,8 +237,12 @@ struct InterfaceString {
 
     struct Hire {
         static let Send: String = NSLocalizedString("Send", comment: "Send Button title")
-        static let HireTitleTemplate = NSLocalizedString("Hire %@", comment: "Hire (username) title")
-        static let CollaborateTitleTemplate = NSLocalizedString("Collaborate with %@", comment: "Collaborate (username) title")
+        static func HireTitle(atName: String) -> String {
+            return String.localizedStringWithFormat("Hire %@", atName)
+        }
+        static func CollaborateTitle(atName: String) -> String {
+            return String.localizedStringWithFormat("Collaborate with %@", atName)
+        }
     }
 
     struct Loves {
@@ -260,12 +269,24 @@ struct InterfaceString {
         static let MutedNoResultsTitle: String = NSLocalizedString("You haven't muted any users", comment: "Current user no muted results title")
         static let MutedNoResultsBody = ""
 
-        static let UnmuteAlertTemplate: String = NSLocalizedString("Would you like to \nunmute or block %@?", comment: "alert prompt before unmuting or blocking")
-        static let BlockAlertTemplate: String = NSLocalizedString("Would you like to \nmute or unblock %@?", comment: "alert prompt before muting or unblocking")
-        static let MuteAlertTemplate: String = NSLocalizedString("Would you like to \nmute or block %@?", comment: "alert prompt before muting or blocking")
-        static let MuteWarningTemplate: String = NSLocalizedString("%@ will not be able to comment on your posts. If %@ mentions you, you will not be notified.", comment: "muting explanation")
-        static let BlockWarningTemplate: String = NSLocalizedString("%@ will not be able to follow you or view your profile, posts or find you in search.", comment: "muting explanation")
-        static let FlagWarningTemplate: String = NSLocalizedString("%@ will be investigated by our staff.", comment: "flagging explanation")
+        static func UnmuteAlert(atName: String) -> String {
+            return String.localizedStringWithFormat("Would you like to \nunmute or block %@?", atName)
+        }
+        static func UnblockAlert(atName: String) -> String {
+            return String.localizedStringWithFormat("Would you like to \nmute or unblock %@?", atName)
+        }
+        static func MuteAlert(atName: String) -> String {
+            return String.localizedStringWithFormat("Would you like to \nmute or block %@?", atName)
+        }
+        static func MuteWarning(atName: String) -> String {
+            return String.localizedStringWithFormat("%@ will not be able to comment on your posts. If %@ mentions you, you will not be notified.", atName, atName)
+        }
+        static func BlockWarning(atName: String) -> String {
+            return String.localizedStringWithFormat("%@ will not be able to follow you or view your profile, posts or find you in search.", atName)
+        }
+        static func FlagWarning(atName: String) -> String {
+            return String.localizedStringWithFormat("%@ will be investigated by our staff.", atName)
+        }
     }
 
     struct PushNotifications {
@@ -279,7 +300,9 @@ struct InterfaceString {
         static let ImportAllow: String = NSLocalizedString("Import my contacts", comment: "Import my contacts action")
         static let ImportNotNow: String = NSLocalizedString("Not now", comment: "Not now action")
 
-        static let ImportErrorTemplate: String = NSLocalizedString("We were unable to access your address book\n%@", comment: "Unable to access address book and error message")
+        static func ImportError(_ message: String) -> String {
+            return String.localizedStringWithFormat("We were unable to access your address book\n%@", message)
+        }
         static let AccessDenied: String = NSLocalizedString("Access to your contacts has been denied.  If you want to search for friends, you will need to grant access from Settings.", comment: "Access to contacts denied by user")
         static let AccessRestricted: String = NSLocalizedString("Access to your contacts has been denied by the system.", comment: "Access to contacts denied by system")
 
@@ -301,7 +324,9 @@ struct InterfaceString {
         static let NoSourceAvailable: String = NSLocalizedString("Sorry, but your device doesn’t have a photo library!", comment: "device doesn't support photo library")
         static let TakePhoto: String = NSLocalizedString("Take Photo", comment: "Camera button")
         static let PhotoLibrary: String = NSLocalizedString("Photo Library", comment: "Library button")
-        static let AddImagesTemplate: String = NSLocalizedString("Add %lu Image(s)", comment: "Add Images")
+        static func AddImages(_ count: Int) -> String {
+            return String.localizedStringWithFormat("Add %lu Image(s)", count)
+        }
         static let ChooseImage: String = NSLocalizedString("Choose Image", comment: "")
     }
 
@@ -378,8 +403,9 @@ struct InterfaceString {
         static let CreateProfile: String = NSLocalizedString("Create Your Profile", comment: "")
         static let InvitePeople: String = NSLocalizedString("Invite Cool People", comment: "")
         static let ImDone: String = NSLocalizedString("I’m done", comment: "")
-        static let PickTemplate: String = NSLocalizedString("Pick %lu", comment: "Pick 3 prompt")
-
+        static func Pick(_ count: Int) -> String {
+            return String.localizedStringWithFormat("Pick %lu", count)
+        }
         static let UploadCoverButton: String = NSLocalizedString("Upload Header", comment: "")
         static let UploadCoverImagePrompt: String = NSLocalizedString("2560 x 1440\nAnimated Gifs work, too", comment: "")
         static let UploadAvatarButton: String = NSLocalizedString("Upload Avatar", comment: "")
