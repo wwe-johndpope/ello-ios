@@ -5,7 +5,7 @@
 struct DeepLinking {
 
     static func showDiscover(navVC: UINavigationController?, currentUser: User?) {
-        if navVC?.topViewController is CategoryViewController { return }
+        if navVC?.visibleViewController is CategoryViewController { return }
 
         let category = Category.featured
         let vc = CategoryViewController(slug: category.slug, name: category.name)
@@ -27,13 +27,35 @@ struct DeepLinking {
     static func showCategory(navVC: UINavigationController?, currentUser: User?, slug: String) {
         guard !DeepLinking.alreadyOnCurrentCategory(navVC: navVC, slug: slug) else { return }
 
-        if let categoryVC = navVC?.topViewController as? CategoryViewController {
+        if let categoryVC = navVC?.visibleViewController as? CategoryViewController {
             categoryVC.selectCategoryFor(slug: slug)
         }
         else {
             let vc = CategoryViewController(slug: slug)
             vc.currentUser = currentUser
             navVC?.pushViewController(vc, animated: true)
+        }
+    }
+
+    static func showArtistInvites(navVC: UINavigationController?, currentUser: User?, slug: String? = nil) {
+        if let slug = slug {
+            guard !DeepLinking.alreadyOnArtistInvites(navVC: navVC, slug: slug) else { return }
+
+            let vc = ArtistInviteDetailController(slug: slug)
+            vc.currentUser = currentUser
+            navVC?.pushViewController(vc, animated: true)
+        }
+        else {
+            let appVC = UIApplication.shared.keyWindow?.rootViewController as? AppViewController
+            let tabBarVC = appVC?.visibleViewController as? ElloTabBarController
+            tabBarVC?.selectedTab = .home
+
+            let tabBarNavVC = tabBarVC?.selectedViewController as? ElloNavigationController
+            let homeVC = tabBarNavVC?.viewControllers.first as? HomeViewController
+            homeVC?.showArtistInvitesViewController()
+            tabBarNavVC?.popToRootViewController(animated: false)
+
+            navVC?.dismiss(animated: true)
         }
     }
 
@@ -72,6 +94,11 @@ struct DeepLinking {
             return slug == categoryVC.slug
         }
         return false
+    }
+
+    static func alreadyOnArtistInvites(navVC: UINavigationController?, slug: String) -> Bool {
+        let detailVC = navVC?.visibleViewController as? ArtistInviteDetailController
+        return detailVC?.artistInvite?.slug == slug
     }
 
     static func alreadyOnUserProfile(navVC: UINavigationController?, userParam: String) -> Bool {

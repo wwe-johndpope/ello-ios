@@ -675,8 +675,8 @@ extension Tracker {
         track("Clocked Artist Invites")
     }
 
-    func artistInviteOpened(_ artistInvite: ArtistInvite) {
-        track("Clicked Artist Invite", properties: ["artistInvite": artistInvite.slug])
+    func artistInviteOpened(slug: String) {
+        track("Clicked Artist Invite", properties: ["artistInvite": slug])
     }
 
     func artistInviteSubmitted(slug: String) {

@@ -11,69 +11,71 @@ class ElloURIWrapper: NSObject {
 }
 
 enum ElloURI: String {
-    // matching stream or page in app
+    // more specific
+    case artistInvitesBrowse = "artist-invites/?$"
+    case artistInvitesDetail = "artist-invites/([^/]+)/?$"
+    case betaPublicProfiles = "beta-public-profiles/?$"
+    case category = "discover/([^/]+)/?$"
+    case confirm = "confirm/?$"
     case discover = "discover(/featured|/recommended)?/?$"
     case discoverRandom = "discover/random/?$"
     case discoverRecent = "discover/recent/?$"
     case discoverRelated = "discover/related/?$"
     case discoverTrending = "discover/trending/?$"
-    case category = "discover/([^/]+)/?$"
+    case email = "(.+)@(.+)\\.([a-z]{2,})/?$"
     case enter = "enter/?$"
-    case friends = "friends/?$"
-    case following = "following/?$"
-    case noise = "noise/?$"
-    case notifications = "notifications(?:/?|/([^/]+)/?)$"
-    case pushNotificationComment = "notifications/posts/([^/]+)/comments/([^/]+)$"
-    case pushNotificationPost = "notifications/posts/([^/]+)/?$"
-    case pushNotificationUser = "notifications/users/([^/]+)/?$"
-    case post = "post/([^/]+)/?$"           // usernameRegex gets prepended
-    case profile = "(?:\\?.*?)?$"           // usernameRegex gets prepended
-    case profileFollowers = "/followers/?$" // usernameRegex gets prepended
-    case profileFollowing = "/following/?$" // usernameRegex gets prepended
-    case profileLoves = "/loves/?$"         // usernameRegex gets prepended
-    case search = "(search|find)/?(\\?.*)?$"
-    case searchPeople = "(search|find)/people/?(\\?.*)?$"
-    case searchPosts = "(search|find)/posts/?(\\?.*)?$"
-    case settings = "settings/?$"
-    // other ello pages
-    case confirm = "confirm/?$"
-    case betaPublicProfiles = "beta-public-profiles/?$"
     case exit = "exit/?$"
     case explore = "explore/?$"
-    case exploreRecommended = "explore/recommended/?$"
     case exploreRecent = "explore/recent/?$"
+    case exploreRecommended = "explore/recommended/?$"
     case exploreTrending = "explore/trending/?$"
+    case external = "https?://.{3,}"
     case faceMaker = "facemaker/?$"
+    case following = "following/?$"
     case forgotMyPassword = "forgot-password/?$"
     case freedomOfSpeech = "freedom-of-speech/?$"
+    case friends = "friends/?$"
     case invitations = "invitations/?$"
     case invite = "join/([^/]+)/?$"
     case join = "join/?$"
     case login = "login/?$"
     case manifesto = "manifesto/?$"
     case nativeRedirect = "native_redirect/?$"
+    case noise = "noise/?$"
+    case notifications = "notifications(?:/?|/([^/]+)/?)$"
     case onboarding = "onboarding/?$"
     case passwordResetError = "password-reset-error/?$"
+    case post = "post/([^/]+)/?$"           // usernameRegex gets prepended
+    case profile = "(?:\\?.*?)?$"           // usernameRegex gets prepended
+    case profileFollowers = "/followers/?$" // usernameRegex gets prepended
+    case profileFollowing = "/following/?$" // usernameRegex gets prepended
+    case profileLoves = "/loves/?$"         // usernameRegex gets prepended
+    case pushNotificationComment = "notifications/posts/([^/]+)/comments/([^/]+)$"
+    case pushNotificationPost = "notifications/posts/([^/]+)/?$"
+    case pushNotificationUser = "notifications/users/([^/]+)/?$"
     case randomSearch = "random_searches/?$"
-    case requestInvite = "request-an-invite/?$"
     case requestInvitation = "request-an-invitation/?$"
     case requestInvitations = "request_invitations/?$"
+    case requestInvite = "request-an-invite/?$"
     case resetMyPassword = "auth/reset-my-password/?\\?reset_password_token=([^&]+)$"
     case resetPasswordError = "auth/password-reset-error/?$"
     case root = "?$"
+    case search = "(search|find)/?(\\?.*)?$"
+    case searchPeople = "(search|find)/people/?(\\?.*)?$"
+    case searchPosts = "(search|find)/posts/?(\\?.*)?$"
+    case settings = "settings/?$"
     case signup = "signup/?$"
-    case subdomain = "//.+(?<!(w{3}|staging))\\."
     case starred = "starred/?$"
+    case subdomain = "//.+(?<!(w{3}|staging))\\."
     case unblock = "unblock/?$"
     case whoMadeThis = "who-made-this/?$"
     case wtf = "(wtf$|wtf/.*$)"
-    // more specific
-    case email = "(.+)@(.+)\\.([a-z]{2,})/?$"
-    case external = "https?://.{3,}"
 
     var loadsInWebViewFromWebView: Bool {
         switch self {
-        case .discover,
+        case .artistInvitesBrowse,
+             .artistInvitesDetail,
+             .discover,
              .category,
              .email,
              .enter,
@@ -145,7 +147,12 @@ enum ElloURI: String {
         case .email,
              .external:
             return rawValue
-        case .category, .invite, .notifications, .search:
+        case .artistInvitesBrowse,
+             .artistInvitesDetail,
+             .category,
+             .invite,
+             .notifications,
+             .search:
             return "\(ElloURI.fuzzyDomain)/\(rawValue)"
         case .pushNotificationComment,
              .pushNotificationPost,
@@ -184,6 +191,8 @@ enum ElloURI: String {
             return "related"
         case .discoverTrending:
             return "trending"
+        case .artistInvitesDetail:
+            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .category:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .pushNotificationUser:
@@ -236,6 +245,8 @@ enum ElloURI: String {
         discoverRelated,
         discoverTrending,
         category,
+        artistInvitesBrowse,
+        artistInvitesDetail,
         enter,
         exit,
         explore,

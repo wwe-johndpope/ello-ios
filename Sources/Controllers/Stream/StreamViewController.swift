@@ -1050,7 +1050,7 @@ extension StreamViewController: UserResponder {
 extension StreamViewController {
 
     func artistInviteTapped(_ artistInvite: ArtistInvite) {
-        Tracker.shared.artistInviteOpened(artistInvite)
+        Tracker.shared.artistInviteOpened(slug: artistInvite.slug)
 
         let vc = ArtistInviteDetailController(artistInvite: artistInvite)
         vc.currentUser = currentUser

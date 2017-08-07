@@ -9,6 +9,7 @@ import ImagePickerSheetController
 
 struct DebugSettings {
     static let useStaging = "UseStaging"
+    static let deepLinkURL = "DebugServer.deepLinkURL"
 }
 
 enum DebugServer: String {
@@ -124,12 +125,16 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             appController.closeDebugController {
                 let alertController = AlertViewController()
 
-                let urlAction = AlertAction(title: "Enter URL", style: .urlInput)
+                let initial = GroupDefaults[DebugSettings.deepLinkURL].string ?? "https://ello.co/"
+                let urlAction = AlertAction(title: "Enter URL", initial: initial, style: .urlInput)
                 alertController.addAction(urlAction)
 
                 let okCancelAction = AlertAction(title: "", style: .okCancel) { _ in
                     delay(0.5) {
-                        if let urlString = alertController.actionInputs.safeValue(0) {
+                        if let urlString = alertController.actionInputs.safeValue(0),
+                            !urlString.isEmpty
+                        {
+                            GroupDefaults[DebugSettings.deepLinkURL] = urlString
                             appController.navigateToDeepLink(urlString)
                         }
                     }

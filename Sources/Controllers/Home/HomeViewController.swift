@@ -18,12 +18,6 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
         case loggedIn
     }
 
-    enum Controllers {
-        case editorials
-        case following
-        case discover
-    }
-
     override var tabBarItem: UITabBarItem? {
         get { return UITabBarItem.item(.home, insets: ElloTab.home.insets) }
         set { self.tabBarItem = newValue }

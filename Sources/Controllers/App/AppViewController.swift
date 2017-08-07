@@ -555,6 +555,10 @@ extension AppViewController {
                     break
                 }
             }
+        case .artistInvitesBrowse:
+            showArtistInvitesScreen()
+        case .artistInvitesDetail:
+            showArtistInvitesScreen(slug: data)
         case .exploreRecommended,
              .exploreRecent,
              .exploreTrending,
@@ -662,6 +666,25 @@ extension AppViewController {
         vc.selectedTab = .discover
 
         onInviteFriends()
+    }
+
+    fileprivate func showArtistInvitesScreen(slug: String? = nil) {
+        if let slug = slug {
+            guard !DeepLinking.alreadyOnArtistInvites(navVC: pushDeepNavigationController(), slug: slug) else { return }
+
+            Tracker.shared.artistInviteOpened(slug: slug)
+            let vc = ArtistInviteDetailController(slug: slug)
+            vc.currentUser = currentUser
+
+            pushDeepLinkViewController(vc)
+        }
+        else if let vc = self.visibleViewController as? ElloTabBarController {
+            vc.selectedTab = .home
+            let navVC = vc.selectedViewController as? ElloNavigationController
+            let homeVC = navVC?.viewControllers.first as? HomeViewController
+            homeVC?.showArtistInvitesViewController()
+            navVC?.popToRootViewController(animated: true)
+        }
     }
 
     fileprivate func showCategoryScreen(slug: String) {
@@ -805,7 +828,7 @@ extension AppViewController {
         pushDeepLinkViewController(settings)
     }
 
-    fileprivate func pushDeepLinkViewController(_ vc: UIViewController) {
+    fileprivate func pushDeepNavigationController() -> UINavigationController? {
         var navController: UINavigationController?
 
         if
@@ -823,7 +846,11 @@ extension AppViewController {
             navController = childNav
         }
 
-        navController?.pushViewController(vc, animated: true)
+        return navController
+    }
+
+    fileprivate func pushDeepLinkViewController(_ vc: UIViewController) {
+        pushDeepNavigationController()?.pushViewController(vc, animated: true)
     }
 
     fileprivate func selectTab(_ tab: ElloTab) {
