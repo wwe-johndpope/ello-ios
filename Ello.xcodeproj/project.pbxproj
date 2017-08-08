@@ -559,6 +559,7 @@
 		1D447E7A1F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E791F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift */; };
 		1D447E7D1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E7C1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift */; };
 		1D447E801F38DB8700013384 /* ArtistInviteDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E7E1F38DB7D00013384 /* ArtistInviteDetailScreen.swift */; };
+		1D447E821F3A12AC00013384 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D447E811F3A12AC00013384 /* MessageUI.framework */; };
 		1D44EAFC1EB2A337003B9B3D /* BadgesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */; };
 		1D44F80C1B629606007E2DE4 /* StreamCellItemParserExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */; };
 		1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */; };
@@ -1652,6 +1653,7 @@
 		1D447E791F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmissionSuccessScreen.swift; sourceTree = "<group>"; };
 		1D447E7C1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmissionSuccessScreenSpec.swift; sourceTree = "<group>"; };
 		1D447E7E1F38DB7D00013384 /* ArtistInviteDetailScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailScreen.swift; sourceTree = "<group>"; };
+		1D447E811F3A12AC00013384 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesService.swift; sourceTree = "<group>"; };
 		1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItemParserExt.swift; sourceTree = "<group>"; };
 		1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BlockUserModalScreen.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2289,6 +2291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D447E821F3A12AC00013384 /* MessageUI.framework in Frameworks */,
 				12F800801C59D714002436D1 /* KeychainAccess.framework in Frameworks */,
 				01BA14787BB2CA507020C9C4 /* Pods_Ello.framework in Frameworks */,
 			);
@@ -4126,6 +4129,7 @@
 		F2E6171EAB0582B635BF53D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D447E811F3A12AC00013384 /* MessageUI.framework */,
 				12DEB24D1C5BFA9200D4CDCE /* libcommonCrypto.tbd */,
 				12F8007F1C59D714002436D1 /* KeychainAccess.framework */,
 				12F8007D1C59D70A002436D1 /* KeychainAccess.framework */,

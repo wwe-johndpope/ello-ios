@@ -5,6 +5,7 @@
 import SwiftyUserDefaults
 import Crashlytics
 import ImagePickerSheetController
+import MessageUI
 
 
 struct DebugSettings {
@@ -36,6 +37,7 @@ enum DebugServer: String {
 }
 
 class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    fileprivate var retainer: UIViewController?
 
     let tableView = UITableView()
     var actions = [(String, Block)]()
@@ -80,6 +82,23 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             }
 
             appController.present(alertController, animated: true, completion: nil)
+        }
+
+        addAction(name: "Share via SMS") {
+            self.retainer = self
+            appController.closeDebugController {
+                guard MFMessageComposeViewController.canSendText() else { return }
+
+                let recipents = ["3035019055"]
+                let message = "Check out Ello! https://itunes.apple.com/us/app/ello/id953614327"
+
+                let messageController = MFMessageComposeViewController()
+                messageController.messageComposeDelegate = self
+                messageController.recipients = recipents
+                messageController.body = message
+
+                appController.present(messageController, animated: true, completion: nil)
+            }
         }
 
         addAction(name: "Show Onboarding") {
@@ -244,4 +263,17 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
 
+}
+
+extension DebugController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        guard let viewController = controller.presentingViewController else {
+            self.retainer = nil
+            return
+        }
+
+        viewController.dismiss(animated: true) {
+            self.retainer = nil
+        }
+    }
 }
