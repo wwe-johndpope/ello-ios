@@ -33,8 +33,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
         return self.view as! NotificationsScreen
     }
 
-    var navigationNotificationObserver: NotificationObserver?
-
     init() {
         super.init(nibName: nil, bundle: nil)
         addNotificationObservers()
@@ -51,7 +49,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
     }
 
     deinit {
-        navigationNotificationObserver?.removeObserver()
         reloadNotificationsObserver?.removeObserver()
         newAnnouncementsObserver?.removeObserver()
     }
@@ -198,11 +195,6 @@ extension NotificationsViewController: NotificationResponder {
 private extension NotificationsViewController {
 
     func addNotificationObservers() {
-        navigationNotificationObserver = NotificationObserver(notification: NavigationNotifications.showingNotificationsTab) { [weak self] components in
-            guard let `self` = self else { return }
-            self.respondToNotification(components)
-        }
-
         reloadNotificationsObserver = NotificationObserver(notification: NewContentNotifications.reloadNotifications) { [weak self] in
             guard let `self` = self else { return }
             if self.navigationController?.childViewControllers.count == 1 {

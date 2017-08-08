@@ -4,10 +4,11 @@
 
 import SwiftyUserDefaults
 import PromiseKit
+import AudioToolbox
 
 
-struct NavigationNotifications {
-    static let showingNotificationsTab = TypedNotification<[String]>(name: "co.ello.NavigationNotification.NotificationsTab")
+struct HapticFeedbackNotifications {
+    static let successfulUserEvent = TypedNotification<(Void)>(name: "co.ello.HapticFeedbackNotifications.successfulUserEvent")
 }
 
 struct StatusBarNotifications {
@@ -42,6 +43,7 @@ class AppViewController: BaseElloViewController {
     var visibleViewController: UIViewController?
 
     fileprivate var userLoggedOutObserver: NotificationObserver?
+    fileprivate var successfulUserEventObserver: NotificationObserver?
     fileprivate var receivedPushNotificationObserver: NotificationObserver?
     fileprivate var externalWebObserver: NotificationObserver?
     fileprivate var internalWebObserver: NotificationObserver?
@@ -135,6 +137,9 @@ class AppViewController: BaseElloViewController {
         userLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.userLoggedOut) { [weak self] in
             self?.userLoggedOut()
         }
+        successfulUserEventObserver = NotificationObserver(notification: HapticFeedbackNotifications.successfulUserEvent) {
+            AudioServicesPlaySystemSound(1520)
+        }
         receivedPushNotificationObserver = NotificationObserver(notification: PushNotificationNotifications.interactedWithPushNotification) { [weak self] payload in
             self?.receivedPushNotification(payload)
         }
@@ -159,6 +164,7 @@ class AppViewController: BaseElloViewController {
 
     fileprivate func removeNotificationObservers() {
         userLoggedOutObserver?.removeObserver()
+        successfulUserEventObserver?.removeObserver()
         receivedPushNotificationObserver?.removeObserver()
         externalWebObserver?.removeObserver()
         internalWebObserver?.removeObserver()
@@ -380,7 +386,6 @@ extension AppViewController {
     }
 
     fileprivate func prepareToShowViewController(_ newViewController: UIViewController) {
-        let controller = (newViewController as? UINavigationController)?.topViewController ?? newViewController
         view.addSubview(newViewController.view)
         newViewController.view.frame = self.view.bounds
         newViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]

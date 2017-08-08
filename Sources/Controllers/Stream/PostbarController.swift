@@ -264,6 +264,7 @@ class PostbarController: UIResponder, PostbarResponder {
         LovesService().lovePost(postId: post.id)
             .thenFinally { love in
                 postNotification(JSONAbleChangedNotification, value: (love, .create))
+                postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
                 cell?.toggleLoveState(loved: true)
                 cell?.toggleLoveControl(enabled: true)
             }
@@ -331,6 +332,7 @@ class PostbarController: UIResponder, PostbarResponder {
         RePostService().repost(post: post)
             .thenFinally { repost in
                 postNotification(PostChangedNotification, value: (repost, .create))
+                postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
                 alertController.contentView = nil
                 alertController.message = InterfaceString.Post.RepostSuccess
                 delay(1) {

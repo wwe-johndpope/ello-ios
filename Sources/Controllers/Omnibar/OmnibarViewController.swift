@@ -4,7 +4,6 @@
 
 import SwiftyUserDefaults
 import PINRemoteImage
-import AudioToolbox
 
 
 class OmnibarViewController: BaseElloViewController {
@@ -458,7 +457,7 @@ extension OmnibarViewController {
             self.emitPostSuccess(post, didGoToPreviousTab: didGoToPreviousTab)
         }
 
-        AudioServicesPlaySystemSound(1520)
+        postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
     }
 
     fileprivate func emitCommentSuccess(_ comment: ElloComment) {
