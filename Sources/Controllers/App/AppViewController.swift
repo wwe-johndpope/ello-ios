@@ -342,6 +342,7 @@ extension AppViewController {
 
             self.addChildViewController(newViewController)
 
+            self.visibleViewController?.didMove(toParentViewController: nil)
             newViewController.didMove(toParentViewController: self)
 
             self.visibleViewController = newViewController
@@ -380,8 +381,6 @@ extension AppViewController {
 
     fileprivate func prepareToShowViewController(_ newViewController: UIViewController) {
         let controller = (newViewController as? UINavigationController)?.topViewController ?? newViewController
-        controller.trackScreenAppeared()
-
         view.addSubview(newViewController.view)
         newViewController.view.frame = self.view.bounds
         newViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]

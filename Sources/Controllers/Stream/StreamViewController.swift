@@ -307,10 +307,6 @@ final class StreamViewController: BaseElloViewController {
         view.layoutIfNeeded()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
 // MARK: Public Functions
 
     func scrollToTop(animated: Bool) {

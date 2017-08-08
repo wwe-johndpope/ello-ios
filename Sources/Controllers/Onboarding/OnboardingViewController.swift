@@ -208,10 +208,9 @@ extension OnboardingViewController {
     }
 
     fileprivate func showFirstViewController(_ viewController: UIViewController) {
-        viewController.trackScreenAppeared()
-
         prepareOnboardingController(viewController)
 
+        viewController.willMove(toParentViewController: nil)
         addChildViewController(viewController)
         screen.controllerContainer.addSubview(viewController.view)
         viewController.view.frame = screen.controllerContainer.bounds
@@ -287,8 +286,7 @@ extension OnboardingViewController {
             return
         }
 
-        nextViewController.trackScreenAppeared()
-
+        nextViewController.willMove(toParentViewController: nil)
         visibleViewController.willMove(toParentViewController: nil)
         addChildViewController(nextViewController)
 
@@ -313,6 +311,7 @@ extension OnboardingViewController {
             },
             completion: { _ in
                 nextViewController.didMove(toParentViewController: self)
+                visibleViewController.didMove(toParentViewController: nil)
                 visibleViewController.removeFromParentViewController()
                 self.visibleViewController = nextViewController
                 self.transitioningViewController = nil

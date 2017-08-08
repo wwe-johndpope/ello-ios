@@ -330,16 +330,14 @@ extension UIViewController {
 // MARK: View Appearance
 extension Tracker {
     func screenAppeared(_ viewController: UIViewController) {
-        if let name = viewController.trackerName() {
-            let props = viewController.trackerProps()
-            screenAppeared(name, properties: props)
-        }
+        guard let name = viewController.trackerName() else { return }
+        let props = viewController.trackerProps()
+        screenAppeared(name, properties: props)
     }
 
     func loggedOutScreenAppeared(_ viewController: UIViewController) {
-        if let name = viewController.trackerName() {
-            track("logged out screen viewed", properties: ["screen": name])
-        }
+        guard let name = viewController.trackerName() else { return }
+        track("logged out screen viewed", properties: ["screen": name])
     }
 
     func screenAppeared(_ name: String, properties: [String: Any]? = nil) {

@@ -4,8 +4,7 @@
 
 
 class HomeViewController: BaseElloViewController, HomeScreenDelegate {
-    override func trackerName() -> String? { return visibleViewController?.trackerName() }
-    override func trackerProps() -> [String: Any]? { return visibleViewController?.trackerProps() }
+    override func trackerName() -> String? { return nil }
 
     var visibleViewController: UIViewController?
     var editorialsViewController: EditorialsViewController!
@@ -111,8 +110,6 @@ extension HomeViewController: HomeResponder {
 
     fileprivate func showController(_ viewController: UIViewController) {
         if let visibleViewController = visibleViewController {
-            viewController.trackScreenAppeared()
-
             screen.controllerContainer.insertSubview(viewController.view, aboveSubview: visibleViewController.view)
             visibleViewController.view.removeFromSuperview()
         }
