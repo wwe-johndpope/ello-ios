@@ -22,6 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             APIKeys.shared = debugServer.apiKeys
         }
 
+        let loveAction = UIMutableUserNotificationAction()
+        loveAction.identifier = "LOVE_POST_ACTION"
+        loveAction.title = "Love"
+        loveAction.activationMode = .background
+        loveAction.isAuthenticationRequired = true
+        loveAction.isDestructive = false
+
+        let postActionsCategory = UIMutableUserNotificationCategory()
+        postActionsCategory.identifier = "POST_ACTIONS_CATEGORY"
+        postActionsCategory.setActions([loveAction], for: .default)
+        postActionsCategory.setActions([loveAction], for: .minimal)
+
+        let settings = UIUserNotificationSettings(types: [.alert, .sound], categories: [postActionsCategory])
+        UIApplication.shared.registerUserNotificationSettings(settings)
+
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
         #else
@@ -128,6 +143,10 @@ extension AppDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         PushNotificationController.sharedController.receivedNotification(application, userInfo: userInfo)
         completionHandler(.noData)
+    }
+
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable: Any], completionHandler: @escaping () -> Void) {
+        completionHandler()
     }
 }
 
