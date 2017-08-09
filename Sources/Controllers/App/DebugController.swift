@@ -219,12 +219,12 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         for (comment, message) in getlog() {
-            actions.append((comment, {
-                let alertController = AlertViewController(message: message)
-                let okCancelAction = AlertAction(title: "", style: .okCancel) { _ in }
-                alertController.addAction(okCancelAction)
+            addAction(name: comment) {
+                UIPasteboard.general.string = message
+
+                let alertController = AlertViewController(error: "Copied\n\n\(message)")
                 appController.present(alertController, animated: true, completion: nil)
-            }))
+            }
         }
 
         tableView.frame = view.bounds
