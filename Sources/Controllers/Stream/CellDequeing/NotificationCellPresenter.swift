@@ -30,7 +30,7 @@ struct NotificationCellPresenter {
             postNotification(StreamNotification.UpdateCellHeightNotification, value: streamCellItem)
         }
 
-        cell.title = notification.attributedTitle
+        cell.title = NotificationAttributedTitle.from(notification: notification)
         cell.createdAt = notification.createdAt
         cell.user = notification.author
         cell.canReplyToComment = notification.canReplyToComment

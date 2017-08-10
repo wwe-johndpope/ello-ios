@@ -3,5 +3,5 @@
 //
 
 extension ElloAPI {
-    var sharingHeaders: [String: String]? { return nil }
+    var extensionHeaders: [String: String]? { return nil }
 }

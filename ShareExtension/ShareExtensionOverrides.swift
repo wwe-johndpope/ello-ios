@@ -1,9 +1,6 @@
 ////
-///  ShareKeyboardOverrides.swift
+///  ShareExtensionOverrides.swift
 //
-
-import Foundation
-import UIKit
 
 extension Keyboard {
 
@@ -27,3 +24,15 @@ extension Keyboard {
     }
 }
 
+
+extension AlertViewController {
+    // do not reference anything in the Keyboard
+    // App Extensions are prohibited from using
+    // some APIs
+    func keyboardUpdateFrame(_ keyboard: Keyboard) {
+    }
+}
+
+
+extension Tracker {
+}

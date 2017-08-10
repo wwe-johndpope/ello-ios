@@ -84,6 +84,10 @@ final class Post: JSONAble, Authorable, Groupable {
     var isRepost: Bool {
         return (repostContent?.count ?? 0) > 0
     }
+    var notificationContent: [Regionable]? {
+        if isRepost { return repostContent }
+        return content
+    }
     fileprivate var lovedChangedNotification: NotificationObserver?
     fileprivate var commentsCountChangedNotification: NotificationObserver?
 

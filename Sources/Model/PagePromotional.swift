@@ -7,6 +7,8 @@ import SwiftyJSON
 
 let PagePromotionalVersion = 1
 
+
+@objc(PagePromotional)
 final class PagePromotional: JSONAble {
 
     let id: String

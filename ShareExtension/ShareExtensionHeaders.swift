@@ -1,9 +1,9 @@
 ////
-///  ElloAPISharingHeaders.swift
+///  ShareExtensionHeaders.swift
 //
 
 extension ElloAPI {
-    var sharingHeaders: [String: String]? {
+    var extensionHeaders: [String: String]? {
         switch self {
         case .createPost:
             return ["X-Segment-Event": "share-event"]

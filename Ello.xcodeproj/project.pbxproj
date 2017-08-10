@@ -46,14 +46,13 @@
 		1207C98F1C73FEE000939ADB /* S3UploadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C96B1C73FEE000939ADB /* S3UploadingService.swift */; };
 		1207C9901C73FEE000939ADB /* StreamService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C96C1C73FEE000939ADB /* StreamService.swift */; };
 		1207C9911C73FEE000939ADB /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C96D1C73FEE000939ADB /* UserService.swift */; };
-		1207C9921C73FF4A00939ADB /* ContentFlaggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9511C73FEE000939ADB /* ContentFlaggingService.swift */; };
 		1207C9931C74CD3A00939ADB /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9531C73FEE000939ADB /* DateFormatting.swift */; };
 		1207C9941C74CD4A00939ADB /* PostEditingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9641C73FEE000939ADB /* PostEditingService.swift */; };
 		1207C9951C74CD5100939ADB /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94E1C73FEE000939ADB /* AuthToken.swift */; };
 		1207C9961C74CD5C00939ADB /* ElloAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9541C73FEE000939ADB /* ElloAPI.swift */; };
 		1207C9971C74CD7600939ADB /* ElloProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9581C73FEE000939ADB /* ElloProvider.swift */; };
 		1207C9981C74CD8200939ADB /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94C1C73FEE000939ADB /* AsyncOperation.swift */; };
-		1207C99A1C750E4B00939ADB /* ShareTrackerOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9991C750E4B00939ADB /* ShareTrackerOverrides.swift */; };
+		1207C99A1C750E4B00939ADB /* ExtensionOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9991C750E4B00939ADB /* ExtensionOverrides.swift */; };
 		1207C99B1C750F5F00939ADB /* MappingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9601C73FEE000939ADB /* MappingType.swift */; };
 		1207C99C1C750F8400939ADB /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94D1C73FEE000939ADB /* AuthState.swift */; };
 		1207C99D1C750F8A00939ADB /* ElloManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9561C73FEE000939ADB /* ElloManager.swift */; };
@@ -64,9 +63,7 @@
 		1207C9A21C752F1C00939ADB /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94B1C73FEE000939ADB /* APIKeys.swift */; };
 		1207C9A31C752F2600939ADB /* S3UploadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C96B1C73FEE000939ADB /* S3UploadingService.swift */; };
 		1207C9A41C752F3C00939ADB /* ReAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9671C73FEE000939ADB /* ReAuthService.swift */; };
-		1207C9A51C752F4800939ADB /* CredentialsAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9521C73FEE000939ADB /* CredentialsAuthService.swift */; };
 		1207C9A61C752F6400939ADB /* ElloProviderErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9591C73FEE000939ADB /* ElloProviderErrors.swift */; };
-		1207C9A71C752F8F00939ADB /* ContentFlagger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1266E50C1A9E2B9E00270E1C /* ContentFlagger.swift */; };
 		1207C9A81C752F9F00939ADB /* ErrorStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C95C1C73FEE000939ADB /* ErrorStatusCode.swift */; };
 		1207C9A91C752FD800939ADB /* ElloS3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C95A1C73FEE000939ADB /* ElloS3.swift */; };
 		1207C9AA1C752FF000939ADB /* MultipartRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9611C73FEE000939ADB /* MultipartRequestBuilder.swift */; };
@@ -74,7 +71,6 @@
 		1207C9AC1C75312900939ADB /* ElloNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE361A43392D00493660 /* ElloNetworkError.swift */; };
 		1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */; };
 		1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
-		1207C9B11C7538D100939ADB /* ShareElloProviderLinkOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */; };
 		120E64141E327B7A00CAF03E /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
 		120E64151E327D6300CAF03E /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
 		120E64191E32970800CAF03E /* jwt-auth-no-staff.json in Resources */ = {isa = PBXBuildFile; fileRef = 120E64181E32970800CAF03E /* jwt-auth-no-staff.json */; };
@@ -122,8 +118,6 @@
 		122B19101A8692C700247A05 /* StreamImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B190F1A8692C700247A05 /* StreamImageCell.xib */; };
 		122B19161A86972900247A05 /* StreamFooterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122B19151A86972900247A05 /* StreamFooterCell.xib */; };
 		122B30AE1C6A3FBB00C1B9D8 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE351A43392D00493660 /* Activity.swift */; };
-		122B30AF1C6A3FBB00C1B9D8 /* AddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = F872F3C21AA4D968005152B5 /* AddressBook.swift */; };
-		122B30B01C6A3FBB00C1B9D8 /* AddressBookError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BB4D881AA64F8700C022B0 /* AddressBookError.swift */; };
 		122B30B11C6A3FBB00C1B9D8 /* AmazonCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */; };
 		122B30B31C6A3FBB00C1B9D8 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760303551AE17290005F7A08 /* Availability.swift */; };
 		122B30B41C6A3FBB00C1B9D8 /* Coder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF69A1B167841007CE68F /* Coder.swift */; };
@@ -138,7 +132,6 @@
 		122B30BD1C6A3FBB00C1B9D8 /* LocalPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0EC1AAE166F003F0425 /* LocalPerson.swift */; };
 		122B30BE1C6A3FBB00C1B9D8 /* Love.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF69B1B167841007CE68F /* Love.swift */; };
 		122B30BF1C6A3FBB00C1B9D8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF2335B1A94005C0096DA65 /* Notification.swift */; };
-		122B30C01C6A3FBB00C1B9D8 /* NotificationAttributedTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7A28D01A979BC40050E8A2 /* NotificationAttributedTitle.swift */; };
 		122B30C11C6A3FBB00C1B9D8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE381A43392D00493660 /* Post.swift */; };
 		122B30C21C6A3FBB00C1B9D8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760F66181AD843990071F633 /* Profile.swift */; };
 		122B30C31C6A3FBB00C1B9D8 /* PushPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83648ED1B0CDDC0000CDBC5 /* PushPayload.swift */; };
@@ -165,7 +158,6 @@
 		122B30DA1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = F872635F1AB0BB1800FCB59D /* Relationship.swift */; };
 		122B30DB1C6A3FBF00C1B9D8 /* RelationshipPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B5A1C602621001386CE /* RelationshipPriority.swift */; };
 		122B30DD1C6A3FBF00C1B9D8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE391A43392D00493660 /* User.swift */; };
-		122B30DE1C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */; };
 		122B30DF1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = F872635F1AB0BB1800FCB59D /* Relationship.swift */; };
 		122B30E01C6A3FBF00C1B9D8 /* RelationshipPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B5A1C602621001386CE /* RelationshipPriority.swift */; };
 		122B30E21C6A3FBF00C1B9D8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE391A43392D00493660 /* User.swift */; };
@@ -186,7 +178,6 @@
 		122B30F31C6A3FC500C1B9D8 /* TextRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247E4EC1A8B8CFB00DDC24A /* TextRegion.swift */; };
 		122B30F51C6A3FC500C1B9D8 /* RegionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B921C612FB9001386CE /* RegionKind.swift */; };
 		122B30F81C6A41E900C1B9D8 /* RegionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B921C612FB9001386CE /* RegionKind.swift */; };
-		122B30F91C6A427F00C1B9D8 /* ElloTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767399801AA679CB00C4222C /* ElloTextView.swift */; };
 		122C662D1B42403D0035F4CD /* AutoCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */; };
 		122C662F1B42411E0035F4CD /* AutoCompleteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122C662E1B42411E0035F4CD /* AutoCompleteViewController.xib */; };
 		122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */; };
@@ -203,8 +194,6 @@
 		122D1B4D1C602337001386CE /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7341BA232530000D809 /* Box.swift */; };
 		122D1B4E1C602337001386CE /* BoxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7351BA232530000D809 /* BoxType.swift */; };
 		122D1B4F1C602337001386CE /* MutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7361BA232530000D809 /* MutableBox.swift */; };
-		122D1B501C602355001386CE /* CrashlyticsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */; };
-		122D1B591C6025D2001386CE /* ShareCryptoStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B581C6025D2001386CE /* ShareCryptoStringExtensions.swift */; };
 		122D1B631C6028EF001386CE /* AuthenticationNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE791A433B1C00493660 /* AuthenticationNotifications.swift */; };
 		122D1B7C1C610892001386CE /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */; };
 		122D1B981C613085001386CE /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87928671ACC6D6600579BE1 /* AlertViewController.swift */; };
@@ -213,22 +202,17 @@
 		122D1B9B1C6130D9001386CE /* AlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126E05301B152DD70036DFA6 /* AlertHeaderView.swift */; };
 		122D1B9D1C6130FB001386CE /* NSErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */; };
 		122D1B9E1C61311F001386CE /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C461ACDAF7F008C15A1 /* AlertCell.swift */; };
-		122D1B9F1C613134001386CE /* ElloTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE691A4339EF00493660 /* ElloTextField.swift */; };
 		122D1BA11C613161001386CE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE431A43397400493660 /* Colors.swift */; };
 		122D1BA21C613181001386CE /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D061B4E1AAA192200493435 /* Keyboard.swift */; };
 		122D1BA41C61347B001386CE /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */; };
 		122D1BA51C6134A5001386CE /* AlertCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */; };
-		122D1BA61C6134D5001386CE /* UIViewNibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */; };
 		122D1BA81C61390F001386CE /* AlertViewControllerKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1BA71C61390F001386CE /* AlertViewControllerKeyboardExtension.swift */; };
-		122D1BAA1C61395D001386CE /* ShareAlertViewControllerOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1BA91C61395D001386CE /* ShareAlertViewControllerOverrides.swift */; };
 		122D1BAB1C613976001386CE /* AlertPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C4C1ACDD52D008C15A1 /* AlertPresentationController.swift */; };
 		122D1BAC1C6139A4001386CE /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233601A94FB060096DA65 /* CGRectExtensions.swift */; };
 		122D1BAE1C6139DA001386CE /* KeyboardWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1BAD1C6139DA001386CE /* KeyboardWindowExtension.swift */; };
-		122D1BB01C613A9D001386CE /* ShareKeyboardOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1BAF1C613A9D001386CE /* ShareKeyboardOverrides.swift */; };
 		122D1BB91C64036A001386CE /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE271A43390900493660 /* ImageExtensions.swift */; };
 		122D1BBA1C640398001386CE /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB12491B5EB0E60023664C /* CGSizeExtensions.swift */; };
 		122D1BBE1C641188001386CE /* ElloHUDWindowExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1BBD1C641188001386CE /* ElloHUDWindowExtensions.swift */; };
-		122D1BBF1C6411D6001386CE /* ElloHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE661A4339EF00493660 /* ElloHUD.swift */; };
 		122D1BC01C6411E0001386CE /* ElloLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B531001A93B75700E01D72 /* ElloLogoView.swift */; };
 		122DEA201AB0A024005DF1F1 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DEA1F1AB0A024005DF1F1 /* FileManagerExtensions.swift */; };
 		123297B31B0BB9FA00A6E590 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123297B21B0BB9FA00A6E590 /* URLExtensions.swift */; };
@@ -316,7 +300,7 @@
 		126910C71E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126910C61E56405500E4DA4F /* ProfileCategoriesViewControllerSpec.swift */; };
 		126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1269484F1AEC0D1800A7EFCC /* Preloader.swift */; };
 		126E05311B152DD70036DFA6 /* AlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126E05301B152DD70036DFA6 /* AlertHeaderView.swift */; };
-		126F2C011C5C1D7400D22BAB /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* Date.swift */; };
+		126F2C011C5C1D7400D22BAB /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* DateExtensions.swift */; };
 		126F2C031C5C1D8D00D22BAB /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
 		12706B9B1D3EC1D80028C9BE /* AsyncOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12706B9A1D3EC1D80028C9BE /* AsyncOperationSpec.swift */; };
 		127128261A77373300695F15 /* TypedNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127128251A77373300695F15 /* TypedNotifications.swift */; };
@@ -324,7 +308,7 @@
 		1274E0171CDBB2BF0064BA82 /* ElloAPIDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9551C73FEE000939ADB /* ElloAPIDescription.swift */; };
 		127502D41AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json in Resources */ = {isa = PBXBuildFile; fileRef = 127502D01AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json */; };
 		127502D71AE99D6500FED224 /* full_examples_full_post_details.json in Resources */ = {isa = PBXBuildFile; fileRef = 127502D31AE99D6500FED224 /* full_examples_full_post_details.json */; };
-		1275351D1B73D155006B9A0F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* Date.swift */; };
+		1275351D1B73D155006B9A0F /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* DateExtensions.swift */; };
 		1275351F1B73D1D1006B9A0F /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */; };
 		127535211B73F7B2006B9A0F /* DateSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127535201B73F7B2006B9A0F /* DateSpecs.swift */; };
 		127BAD5C1A83F01700628696 /* StreamCellItemParserSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */; };
@@ -411,7 +395,7 @@
 		12D86E7E1DCA50DD00465787 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
 		12DB1CA71D9C6B9E007E3E4C /* UINavigationItemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DB1CA61D9C6B9E007E3E4C /* UINavigationItemSpec.swift */; };
 		12DD85C61B015A76004D3EEF /* UITabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD85C51B015A76004D3EEF /* UITabBarItem.swift */; };
-		12DEB2491C5BED4000D4CDCE /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
+		12DEB2491C5BED4000D4CDCE /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */; };
 		12DEB24A1C5BED4600D4CDCE /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		12DEB24B1C5BF9E600D4CDCE /* AppSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F0E3B61A4333EC0012CEA2 /* AppSetup.swift */; };
 		12DEB2501C5BFB3100D4CDCE /* CryptoStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */; };
@@ -481,6 +465,13 @@
 		1D06D6CC1E43B7DD004FA878 /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D06D6CB1E43B7DD004FA878 /* AppDefaults.swift */; };
 		1D08320F1AAA54880076C67D /* TypedNotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08320E1AAA54880076C67D /* TypedNotificationSpec.swift */; };
 		1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */; };
+		1D104FD01F3CEBCD00B5487A /* ElloTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE691A4339EF00493660 /* ElloTextField.swift */; };
+		1D104FD11F3CEC5900B5487A /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152B31D6E4FCE005998FE /* ValidationState.swift */; };
+		1D104FD21F3CEC6E00B5487A /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */; };
+		1D104FD31F3CEC7800B5487A /* ElloHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE661A4339EF00493660 /* ElloHUD.swift */; };
+		1D104FD41F3CF36300B5487A /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9651C73FEE000939ADB /* PostService.swift */; };
+		1D104FD51F3CF7C600B5487A /* Tmp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7750F11ABA48F200D92191 /* Tmp.swift */; };
+		1D104FD61F3CFAA800B5487A /* ToData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7750F81ABB68DF00D92191 /* ToData.swift */; };
 		1D15C2781C7D12890013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
 		1D15C2791C7D12890013B192 /* InterfaceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2771C7D12890013B192 /* InterfaceString.swift */; };
 		1D15C27B1C7D13050013B192 /* InterfaceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2771C7D12890013B192 /* InterfaceString.swift */; };
@@ -562,6 +553,108 @@
 		1D447E821F3A12AC00013384 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D447E811F3A12AC00013384 /* MessageUI.framework */; };
 		1D447EA31F3A693100013384 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447EA21F3A693100013384 /* NotificationService.swift */; };
 		1D447EA71F3A693100013384 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1D447EA01F3A693100013384 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1D447EB11F3BC37B00013384 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D56B661A8C6BC000671280 /* Asset.swift */; };
+		1D447EB21F3BC38600013384 /* Promotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3A2741DBE811900D42599 /* Promotional.swift */; };
+		1D447EB31F3BC38D00013384 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* DateExtensions.swift */; };
+		1D447EB41F3BC39500013384 /* ElloURI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C95B1C73FEE000939ADB /* ElloURI.swift */; };
+		1D447EB51F3BC3A000013384 /* DynamicSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA34DABF1AD83CA3002F566D /* DynamicSetting.swift */; };
+		1D447EB61F3BC3A800013384 /* DiscoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F65A81D185AB90099D036 /* DiscoverType.swift */; };
+		1D447EB71F3BC3D900013384 /* Editorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9309D61EC1133F0099FCF8 /* Editorial.swift */; };
+		1D447EB91F3BC44C00013384 /* NotificationExtensionHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447EB81F3BC44C00013384 /* NotificationExtensionHeaders.swift */; };
+		1D447EBA1F3BC5C000013384 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760303551AE17290005F7A08 /* Availability.swift */; };
+		1D447EBB1F3BC5C800013384 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE281A43390900493660 /* NumberExtensions.swift */; };
+		1D447EBC1F3BC5D900013384 /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */; };
+		1D447EBD1F3BC5E600013384 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE2B1A43390900493660 /* StringExtensions.swift */; };
+		1D447EBE1F3BC5F100013384 /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247E4E81A8B8CFB00DDC24A /* Attachment.swift */; };
+		1D447EBF1F3BC5FA00013384 /* ElloManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9561C73FEE000939ADB /* ElloManager.swift */; };
+		1D447EC01F3BC60B00013384 /* PromiseKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D513E071ED8DA660081BB2D /* PromiseKitExtensions.swift */; };
+		1D447EC11F3BC61800013384 /* PushPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83648ED1B0CDDC0000CDBC5 /* PushPayload.swift */; };
+		1D447EC21F3BC62100013384 /* ArtistInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A571F21467800BE2413 /* ArtistInvite.swift */; };
+		1D447EC31F3BC62600013384 /* ImageRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247E4E91A8B8CFB00DDC24A /* ImageRegion.swift */; };
+		1D447EC41F3BC63000013384 /* Authorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC851D1D91F5E500C29552 /* Authorable.swift */; };
+		1D447EC51F3BC64100013384 /* ElloProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9581C73FEE000939ADB /* ElloProvider.swift */; };
+		1D447EC61F3BC64B00013384 /* Regionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247E4EA1A8B8CFB00DDC24A /* Regionable.swift */; };
+		1D447EC71F3BC64F00013384 /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF806521CDD1A42002D60AD /* Username.swift */; };
+		1D447EC81F3BC65A00013384 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE271A43390900493660 /* ImageExtensions.swift */; };
+		1D447EC91F3BC65E00013384 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336A1D10ADA600EAF03D /* Category.swift */; };
+		1D447ECB1F3BC66300013384 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE391A43392D00493660 /* User.swift */; };
+		1D447ECC1F3BC67400013384 /* BoxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7351BA232530000D809 /* BoxType.swift */; };
+		1D447ECD1F3BC67900013384 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
+		1D447ECE1F3BC68000013384 /* FreeMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD7711F1AFD194700FBC049 /* FreeMethods.swift */; };
+		1D447ECF1F3BC68700013384 /* PostActionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC851F1D91F5E500C29552 /* PostActionable.swift */; };
+		1D447ED01F3BC68C00013384 /* RegionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B921C612FB9001386CE /* RegionKind.swift */; };
+		1D447ED11F3BC69400013384 /* ArtistInviteSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7E82461F2A7249006ACE7A /* ArtistInviteSubmission.swift */; };
+		1D447ED21F3BC69C00013384 /* S3UploadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C96B1C73FEE000939ADB /* S3UploadingService.swift */; };
+		1D447ED31F3BC6AB00013384 /* ElloNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE361A43392D00493660 /* ElloNetworkError.swift */; };
+		1D447ED41F3BC6B100013384 /* ErrorStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C95C1C73FEE000939ADB /* ErrorStatusCode.swift */; };
+		1D447ED51F3BC6B500013384 /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94D1C73FEE000939ADB /* AuthState.swift */; };
+		1D447ED61F3BC6D900013384 /* ExtensionOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9991C750E4B00939ADB /* ExtensionOverrides.swift */; };
+		1D447ED71F3BC6E900013384 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE381A43392D00493660 /* Post.swift */; };
+		1D447ED81F3BC6F100013384 /* CategoryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5933741D10BC8100EAF03D /* CategoryLevel.swift */; };
+		1D447ED91F3BC6F700013384 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9621C73FEE000939ADB /* NetworkError.swift */; };
+		1D447EDA1F3BC6FC00013384 /* Love.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF69B1B167841007CE68F /* Love.swift */; };
+		1D447EDB1F3BC70000013384 /* RelationshipPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B5A1C602621001386CE /* RelationshipPriority.swift */; };
+		1D447EDC1F3BC70600013384 /* ResponseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C96A1C73FEE000939ADB /* ResponseConfig.swift */; };
+		1D447EDD1F3BC70B00013384 /* AmazonCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA94321AA65E010033C0EC /* AmazonCredentials.swift */; };
+		1D447EDE1F3BC72D00013384 /* ExternalLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E1B1DB55D42000231CC /* ExternalLink.swift */; };
+		1D447EDF1F3BC73F00013384 /* EmbedRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C3949A1AE04C69001CA79B /* EmbedRegion.swift */; };
+		1D447EE01F3BC74A00013384 /* NSErrorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */; };
+		1D447EE11F3BC75E00013384 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C043651A609A2000E3051A /* Comment.swift */; };
+		1D447EE21F3BC76900013384 /* TextRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247E4EC1A8B8CFB00DDC24A /* TextRegion.swift */; };
+		1D447EE31F3BC77000013384 /* TypedNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127128251A77373300695F15 /* TypedNotifications.swift */; };
+		1D447EE41F3BC77400013384 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE351A43392D00493660 /* Activity.swift */; };
+		1D447EE51F3BC78F00013384 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9A12C81EA96623003B3BD7 /* Badge.swift */; };
+		1D447EE61F3BC79600013384 /* JSONAble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE371A43392D00493660 /* JSONAble.swift */; };
+		1D447EE71F3BC79E00013384 /* MultipartRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9611C73FEE000939ADB /* MultipartRequestBuilder.swift */; };
+		1D447EE81F3BC7A300013384 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
+		1D447EE91F3BC7A800013384 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9531C73FEE000939ADB /* DateFormatting.swift */; };
+		1D447EEA1F3BC7AD00013384 /* AppSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F0E3B61A4333EC0012CEA2 /* AppSetup.swift */; };
+		1D447EEB1F3BC7B200013384 /* ElloLinkedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C183A11A76DA6D00E7D72A /* ElloLinkedStore.swift */; };
+		1D447EEC1F3BC7BE00013384 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94B1C73FEE000939ADB /* APIKeys.swift */; };
+		1D447EED1F3BC7FD00013384 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF2335B1A94005C0096DA65 /* Notification.swift */; };
+		1D447EEE1F3BC80000013384 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7341BA232530000D809 /* Box.swift */; };
+		1D447EEF1F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
+		1D447EF01F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
+		1D447EF11F3BC84D00013384 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
+		1D447EF21F3BC8B000013384 /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
+		1D447EF31F3BC8BB00013384 /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
+		1D447EF41F3BC8C400013384 /* RegionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247E4EB1A8B8CFB00DDC24A /* RegionParser.swift */; };
+		1D447EF51F3BC8C800013384 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */; };
+		1D447EF61F3BC92500013384 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
+		1D447EF71F3BC92900013384 /* Groupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC851E1D91F5E500C29552 /* Groupable.swift */; };
+		1D447EF81F3BC93B00013384 /* ElloAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9541C73FEE000939ADB /* ElloAPI.swift */; };
+		1D447EF91F3BC94200013384 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94E1C73FEE000939ADB /* AuthToken.swift */; };
+		1D447EFA1F3BC94900013384 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760F66181AD843990071F633 /* Profile.swift */; };
+		1D447EFB1F3BC95100013384 /* MutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7361BA232530000D809 /* MutableBox.swift */; };
+		1D447EFC1F3BC95600013384 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
+		1D447EFD1F3BC95C00013384 /* NSObjectClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */; };
+		1D447EFE1F3BC98000013384 /* Coder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CFF69A1B167841007CE68F /* Coder.swift */; };
+		1D447EFF1F3BC98800013384 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */; };
+		1D447F001F3BC98E00013384 /* PagePromotional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA18E4E1DCCED8C000231CC /* PagePromotional.swift */; };
+		1D447F011F3BC9A000013384 /* ElloProviderErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9591C73FEE000939ADB /* ElloProviderErrors.swift */; };
+		1D447F021F3BC9A800013384 /* LocalPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0EC1AAE166F003F0425 /* LocalPerson.swift */; };
+		1D447F031F3BC9AD00013384 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE721DF78034008AF216 /* Announcement.swift */; };
+		1D447F041F3BC9BC00013384 /* DynamicSettingCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA34DABD1AD83C8F002F566D /* DynamicSettingCategory.swift */; };
+		1D447F051F3BC9C100013384 /* ElloS3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C95A1C73FEE000939ADB /* ElloS3.swift */; };
+		1D447F061F3BC9CC00013384 /* MappingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9601C73FEE000939ADB /* MappingType.swift */; };
+		1D447F071F3BC9D300013384 /* ElloKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B8B6D1AEFFA6E00A9FC97 /* ElloKeychain.swift */; };
+		1D447F081F3BC9DB00013384 /* Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC85161D91D4D200C29552 /* Watch.swift */; };
+		1D447F0A1F3BCA0200013384 /* InterfaceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2771C7D12890013B192 /* InterfaceString.swift */; };
+		1D447F0B1F3BCA0600013384 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94C1C73FEE000939ADB /* AsyncOperation.swift */; };
+		1D447F0C1F3BCA0C00013384 /* ElloAPIDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9551C73FEE000939ADB /* ElloAPIDescription.swift */; };
+		1D447F0D1F3BCA1200013384 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = F872635F1AB0BB1800FCB59D /* Relationship.swift */; };
+		1D447F0E1F3BCA1D00013384 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C95F1C73FEE000939ADB /* Mapper.swift */; };
+		1D447F0F1F3BCA2600013384 /* ElloRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC234F1F326F2200E68B0E /* ElloRequest.swift */; };
+		1D447F111F3BCA4800013384 /* ShareExtensionOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447F101F3BCA4800013384 /* ShareExtensionOverrides.swift */; };
+		1D447F121F3BCA6D00013384 /* ReAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9671C73FEE000939ADB /* ReAuthService.swift */; };
+		1D447F131F3BCA7300013384 /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB12491B5EB0E60023664C /* CGSizeExtensions.swift */; };
+		1D447F151F3BCAD700013384 /* ImageRegionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447F141F3BCAD700013384 /* ImageRegionData.swift */; };
+		1D447F161F3BCADB00013384 /* ImageRegionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447F141F3BCAD700013384 /* ImageRegionData.swift */; };
+		1D447F171F3BCADB00013384 /* ImageRegionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447F141F3BCAD700013384 /* ImageRegionData.swift */; };
+		1D447F191F3BCB3400013384 /* NotificationOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447F181F3BCB3400013384 /* NotificationOverrides.swift */; };
+		1D447F1A1F3BCC3100013384 /* AnonymousAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94A1C73FEE000939ADB /* AnonymousAuthService.swift */; };
+		1D447F1B1F3BCC3C00013384 /* AuthenticationNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE791A433B1C00493660 /* AuthenticationNotifications.swift */; };
+		1D447F1C1F3BCC9C00013384 /* ExperienceUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E83D9E1ADF12120074ECF6 /* ExperienceUpdate.swift */; };
 		1D44EAFC1EB2A337003B9B3D /* BadgesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */; };
 		1D44F80C1B629606007E2DE4 /* StreamCellItemParserExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */; };
 		1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */; };
@@ -571,7 +664,6 @@
 		1D472C281C1F42BA00B61E55 /* InterfaceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */; };
 		1D513E061ED735910081BB2D /* EditorialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D513E051ED735910081BB2D /* EditorialsGenerator.swift */; };
 		1D513E081ED8DA660081BB2D /* PromiseKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D513E071ED8DA660081BB2D /* PromiseKitExtensions.swift */; };
-		1D5566CD1EE097B400255DBF /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */; };
 		1D59336C1D10ADA600EAF03D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336A1D10ADA600EAF03D /* Category.swift */; };
 		1D59336D1D10ADA600EAF03D /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D59336F1D10ADB800EAF03D /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */; };
@@ -601,7 +693,7 @@
 		1D5A003E1CE3C0A80070B2BF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */; };
 		1D5A90181D39747E00C2AEFF /* $.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A90171D39747E00C2AEFF /* $.svg */; };
 		1D5A901C1D3991CC00C2AEFF /* buy-button-image-region.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */; };
-		1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */; };
+		1D5A901E1D3D749B00C2AEFF /* ShareExtensionHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901D1D3D749B00C2AEFF /* ShareExtensionHeaders.swift */; };
 		1D5A90201D3D74B300C2AEFF /* ElloAPISharingHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */; };
 		1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF51D3EA39500B4079C /* $_add_selected.svg */; };
 		1D612BF81D3EA41700B4079C /* $_add_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D612BF71D3EA41700B4079C /* $_add_normal.svg */; };
@@ -663,7 +755,6 @@
 		1D7152B01D6E4782005998FE /* ClearTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152AF1D6E4782005998FE /* ClearTextField.swift */; };
 		1D7152B21D6E479A005998FE /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152B11D6E479A005998FE /* LoginScreen.swift */; };
 		1D7152B41D6E4FCE005998FE /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152B31D6E4FCE005998FE /* ValidationState.swift */; };
-		1D7152B51D6E4FFA005998FE /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152B31D6E4FCE005998FE /* ValidationState.swift */; };
 		1D7152B81D6E50CD005998FE /* LoginProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152B71D6E50CD005998FE /* LoginProtocols.swift */; };
 		1D7152BA1D6F53C9005998FE /* LoginScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7152B91D6F53C9005998FE /* LoginScreenSpec.swift */; };
 		1D7152C11D6F777E005998FE /* 1password_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D7152BD1D6F7350005998FE /* 1password_normal.svg */; };
@@ -722,7 +813,6 @@
 		1D9201BC1B6AD7CD007528BF /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9201BB1B6AD7CD007528BF /* Tag.swift */; };
 		1D9225541C3B23E000553BAE /* ExperienceUpdateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9225531C3B23E000553BAE /* ExperienceUpdateSpec.swift */; };
 		1D9309CD1EBCEBAF0099FCF8 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9A12C81EA96623003B3BD7 /* Badge.swift */; };
-		1D9309CE1EBCF1A30099FCF8 /* BadgesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */; };
 		1D9309D31EC1093B0099FCF8 /* EditorialsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9309D01EC1093B0099FCF8 /* EditorialsProtocols.swift */; };
 		1D9309D41EC1093B0099FCF8 /* EditorialsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9309D11EC1093B0099FCF8 /* EditorialsScreen.swift */; };
 		1D9309D51EC1093B0099FCF8 /* EditorialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9309D21EC1093B0099FCF8 /* EditorialsViewController.swift */; };
@@ -1116,6 +1206,7 @@
 		76FF805D1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FF805C1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift */; };
 		86D8D8FE1B1798B200CC8D6C /* RelationshipControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D8D8FD1B1798B200CC8D6C /* RelationshipControl.swift */; };
 		C7EE78CC0CA7B5B463A2A74F /* Pods_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A54199AC75D0009416AD802 /* Pods_ShareExtension.framework */; };
+		DEE56AC3CCFF91CD26DA2E60 /* Pods_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1874F06AFC92C6F62E966AC5 /* Pods_NotificationServiceExtension.framework */; };
 		EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */; };
 		EA004C941AC357320021B44B /* ElloTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA004C931AC357320021B44B /* ElloTextFieldView.xib */; };
 		EA0977C91AE6C42000F898CA /* UIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0977C81AE6C42000F898CA /* UIImagePickerController.swift */; };
@@ -1166,7 +1257,7 @@
 		F87928681ACC6D6600579BE1 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87928671ACC6D6600579BE1 /* AlertViewController.swift */; };
 		F87A101E1AF1700F00A48E7F /* PushNotificationControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87A101D1AF1700F00A48E7F /* PushNotificationControllerSpec.swift */; };
 		F8A33EDF1AB0D5B9005DE9BB /* RelationshipSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A33EDE1AB0D5B9005DE9BB /* RelationshipSpec.swift */; };
-		F8A3B6451AC457CA00806224 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* Array.swift */; };
+		F8A3B6451AC457CA00806224 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */; };
 		F8BDA7551AA8F3C800A662B4 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */; };
 		F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */; };
 		F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */; };
@@ -1265,7 +1356,7 @@
 		1207C96B1C73FEE000939ADB /* S3UploadingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3UploadingService.swift; sourceTree = "<group>"; };
 		1207C96C1C73FEE000939ADB /* StreamService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamService.swift; sourceTree = "<group>"; };
 		1207C96D1C73FEE000939ADB /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
-		1207C9991C750E4B00939ADB /* ShareTrackerOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareTrackerOverrides.swift; sourceTree = "<group>"; };
+		1207C9991C750E4B00939ADB /* ExtensionOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionOverrides.swift; sourceTree = "<group>"; };
 		1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloProviderLinkExension.swift; sourceTree = "<group>"; };
 		1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareElloProviderLinkOverrides.swift; sourceTree = "<group>"; };
 		120E64131E327B7A00CAF03E /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
@@ -1320,13 +1411,10 @@
 		122C663D1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCellPresenterSpec.swift; sourceTree = "<group>"; };
 		122C66431B4303400035F4CD /* AutoCompleteResultSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResultSpec.swift; sourceTree = "<group>"; };
 		122CD3601C6E770200B37624 /* ElloManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloManagerSpec.swift; sourceTree = "<group>"; };
-		122D1B581C6025D2001386CE /* ShareCryptoStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareCryptoStringExtensions.swift; sourceTree = "<group>"; };
 		122D1B5A1C602621001386CE /* RelationshipPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipPriority.swift; sourceTree = "<group>"; };
 		122D1B921C612FB9001386CE /* RegionKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionKind.swift; sourceTree = "<group>"; };
 		122D1BA71C61390F001386CE /* AlertViewControllerKeyboardExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewControllerKeyboardExtension.swift; sourceTree = "<group>"; };
-		122D1BA91C61395D001386CE /* ShareAlertViewControllerOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAlertViewControllerOverrides.swift; sourceTree = "<group>"; };
 		122D1BAD1C6139DA001386CE /* KeyboardWindowExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardWindowExtension.swift; sourceTree = "<group>"; };
-		122D1BAF1C613A9D001386CE /* ShareKeyboardOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareKeyboardOverrides.swift; sourceTree = "<group>"; };
 		122D1BBD1C641188001386CE /* ElloHUDWindowExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloHUDWindowExtensions.swift; sourceTree = "<group>"; };
 		122DEA1F1AB0A024005DF1F1 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		123297B21B0BB9FA00A6E590 /* URLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
@@ -1424,7 +1512,7 @@
 		127128251A77373300695F15 /* TypedNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotifications.swift; sourceTree = "<group>"; };
 		127502D01AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json; path = Resources/StubbedResponses/push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json; sourceTree = SOURCE_ROOT; };
 		127502D31AE99D6500FED224 /* full_examples_full_post_details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = full_examples_full_post_details.json; path = Resources/StubbedResponses/full_examples_full_post_details.json; sourceTree = SOURCE_ROOT; };
-		1275351C1B73D155006B9A0F /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		1275351C1B73D155006B9A0F /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		1275351E1B73D1D1006B9A0F /* NSStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSStringExtensions.swift; sourceTree = "<group>"; };
 		127535201B73F7B2006B9A0F /* DateSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSpecs.swift; sourceTree = "<group>"; };
 		127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItemParserSpec.swift; sourceTree = "<group>"; };
@@ -1577,6 +1665,7 @@
 		12FB94D91AD5AD5900547D3B /* UserServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserServiceSpec.swift; sourceTree = "<group>"; };
 		12FEBD011A4225F600933A02 /* Ello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12FEEB541A60396A00E32248 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = "<group>"; };
+		1874F06AFC92C6F62E966AC5 /* Pods_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D061B4C1AAA191500493435 /* KeyboardSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardSpec.swift; sourceTree = "<group>"; };
 		1D061B4E1AAA192200493435 /* Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		1D061B511AAA1C6D00493435 /* StringExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionSpec.swift; sourceTree = "<group>"; };
@@ -1668,6 +1757,10 @@
 		1D447EA21F3A693100013384 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		1D447EA41F3A693100013384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D447EAE1F3A6CA300013384 /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		1D447EB81F3BC44C00013384 /* NotificationExtensionHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationExtensionHeaders.swift; sourceTree = "<group>"; };
+		1D447F101F3BCA4800013384 /* ShareExtensionOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareExtensionOverrides.swift; sourceTree = "<group>"; };
+		1D447F141F3BCAD700013384 /* ImageRegionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRegionData.swift; sourceTree = "<group>"; };
+		1D447F181F3BCB3400013384 /* NotificationOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationOverrides.swift; sourceTree = "<group>"; };
 		1D44EAFB1EB2A337003B9B3D /* BadgesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesService.swift; sourceTree = "<group>"; };
 		1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellItemParserExt.swift; sourceTree = "<group>"; };
 		1D45E5721D05F17500AAB730 /* BlockUserModalScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BlockUserModalScreen.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1704,7 +1797,7 @@
 		1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
 		1D5A90171D39747E00C2AEFF /* $.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $.svg; sourceTree = "<group>"; };
 		1D5A901B1D3991CC00C2AEFF /* buy-button-image-region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "buy-button-image-region.json"; sourceTree = "<group>"; };
-		1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
+		1D5A901D1D3D749B00C2AEFF /* ShareExtensionHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareExtensionHeaders.swift; sourceTree = "<group>"; };
 		1D5A901F1D3D74B300C2AEFF /* ElloAPISharingHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAPISharingHeaders.swift; sourceTree = "<group>"; };
 		1D612BF51D3EA39500B4079C /* $_add_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_selected.svg; sourceTree = "<group>"; };
 		1D612BF71D3EA41700B4079C /* $_add_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = $_add_normal.svg; sourceTree = "<group>"; };
@@ -1764,7 +1857,7 @@
 		1D7152AF1D6E4782005998FE /* ClearTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearTextField.swift; sourceTree = "<group>"; };
 		1D7152B11D6E479A005998FE /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		1D7152B31D6E4FCE005998FE /* ValidationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
-		1D7152B61D6E5037005998FE /* ShareExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShareExtension-Bridging-Header.h"; sourceTree = "<group>"; };
+		1D7152B61D6E5037005998FE /* Extensions-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Extensions-Bridging-Header.h"; sourceTree = "<group>"; };
 		1D7152B71D6E50CD005998FE /* LoginProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginProtocols.swift; sourceTree = "<group>"; };
 		1D7152B91D6F53C9005998FE /* LoginScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreenSpec.swift; sourceTree = "<group>"; };
 		1D7152BD1D6F7350005998FE /* 1password_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1password_normal.svg; sourceTree = "<group>"; };
@@ -2216,6 +2309,8 @@
 		91944BE577C550B17C0B263D /* Pods_Specs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Specs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A824F716382ED3E3CB5E30F4 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D31C162DB64BB76DA28AC6DC /* Pods-Ello.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ello.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ello/Pods-Ello.release.xcconfig"; sourceTree = "<group>"; };
+		D59022AF717EDB8AC3B3B925 /* Pods-NotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		DF40AE99DBB4807FA4CA6BA5 /* Pods-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		E5DE3DFF4328700595DA8FCD /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
 		EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTextFieldView.swift; sourceTree = "<group>"; };
 		EA004C931AC357320021B44B /* ElloTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ElloTextFieldView.xib; sourceTree = "<group>"; };
@@ -2271,7 +2366,7 @@
 		F87928671ACC6D6600579BE1 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		F87A101D1AF1700F00A48E7F /* PushNotificationControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationControllerSpec.swift; sourceTree = "<group>"; };
 		F8A33EDE1AB0D5B9005DE9BB /* RelationshipSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RelationshipSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		F8A3B6441AC457CA00806224 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		F8BB4D881AA64F8700C022B0 /* AddressBookError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookError.swift; sourceTree = "<group>"; };
 		F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewController.xib; sourceTree = "<group>"; };
@@ -2315,6 +2410,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE56AC3CCFF91CD26DA2E60 /* Pods_NotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2372,6 +2468,7 @@
 				1207C96B1C73FEE000939ADB /* S3UploadingService.swift */,
 				1207C96C1C73FEE000939ADB /* StreamService.swift */,
 				1207C96D1C73FEE000939ADB /* UserService.swift */,
+				1D447F141F3BCAD700013384 /* ImageRegionData.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2630,20 +2727,18 @@
 		124CFB981C5976E500727D11 /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				1D5A901D1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift */,
+				1D5A901D1D3D749B00C2AEFF /* ShareExtensionHeaders.swift */,
 				127D26531C655C87001F2E3E /* ExtensionItemPreview.swift */,
 				124CFB9E1C5976E500727D11 /* Info.plist */,
 				124CFB9B1C5976E500727D11 /* MainInterface.storyboard */,
 				123466141C650B3000E61110 /* NSItemProviderExtensions.swift */,
-				122D1BA91C61395D001386CE /* ShareAlertViewControllerOverrides.swift */,
 				12F7EB7E1C69686A0090209A /* ShareAttachmentProcessor.swift */,
-				122D1B581C6025D2001386CE /* ShareCryptoStringExtensions.swift */,
 				12F8007C1C59D5DE002436D1 /* ShareExtension.entitlements */,
-				122D1BAF1C613A9D001386CE /* ShareKeyboardOverrides.swift */,
 				120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */,
 				124CFB991C5976E500727D11 /* ShareViewController.swift */,
-				1207C9991C750E4B00939ADB /* ShareTrackerOverrides.swift */,
+				1207C9991C750E4B00939ADB /* ExtensionOverrides.swift */,
 				1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */,
+				1D447F101F3BCA4800013384 /* ShareExtensionOverrides.swift */,
 			);
 			path = ShareExtension;
 			sourceTree = "<group>";
@@ -3030,7 +3125,7 @@
 				12F6AE251A4338F600493660 /* Extensions */,
 				12F6AE341A43391400493660 /* Model */,
 				1207C9491C73FEB400939ADB /* Networking */,
-				1D7152B61D6E5037005998FE /* ShareExtension-Bridging-Header.h */,
+				1D7152B61D6E5037005998FE /* Extensions-Bridging-Header.h */,
 				12F6AE3F1A43394600493660 /* Storyboards */,
 				12F6AE421A43395E00493660 /* Styling */,
 				1267C7321BA232530000D809 /* ThirdParty */,
@@ -3171,12 +3266,12 @@
 		12F6AE251A4338F600493660 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F8A3B6441AC457CA00806224 /* Array.swift */,
+				F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */,
 				1DF233601A94FB060096DA65 /* CGRectExtensions.swift */,
 				1DCB12491B5EB0E60023664C /* CGSizeExtensions.swift */,
 				1D9BF3CF1A8E815E00A5F5C2 /* ColorExtensions.swift */,
 				12DEB24F1C5BFB3100D4CDCE /* CryptoStringExtensions.swift */,
-				1275351C1B73D155006B9A0F /* Date.swift */,
+				1275351C1B73D155006B9A0F /* DateExtensions.swift */,
 				1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */,
 				122DEA1F1AB0A024005DF1F1 /* FileManagerExtensions.swift */,
 				12F6AE271A43390900493660 /* ImageExtensions.swift */,
@@ -3576,6 +3671,8 @@
 				1D447EAE1F3A6CA300013384 /* NotificationServiceExtension.entitlements */,
 				1D447EA21F3A693100013384 /* NotificationService.swift */,
 				1D447EA41F3A693100013384 /* Info.plist */,
+				1D447EB81F3BC44C00013384 /* NotificationExtensionHeaders.swift */,
+				1D447F181F3BCB3400013384 /* NotificationOverrides.swift */,
 			);
 			path = NotificationServiceExtension;
 			sourceTree = "<group>";
@@ -3989,6 +4086,8 @@
 				3C261EFB7364350D4876F32B /* Pods-ShareExtension.release.xcconfig */,
 				8620DAA1EFF48E65387FA2DB /* Pods-Specs.debug.xcconfig */,
 				E5DE3DFF4328700595DA8FCD /* Pods-Specs.release.xcconfig */,
+				DF40AE99DBB4807FA4CA6BA5 /* Pods-NotificationServiceExtension.debug.xcconfig */,
+				D59022AF717EDB8AC3B3B925 /* Pods-NotificationServiceExtension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -4172,6 +4271,7 @@
 				31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */,
 				0A54199AC75D0009416AD802 /* Pods_ShareExtension.framework */,
 				91944BE577C550B17C0B263D /* Pods_Specs.framework */,
+				1874F06AFC92C6F62E966AC5 /* Pods_NotificationServiceExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4284,10 +4384,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D447EAA1F3A693100013384 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
 			buildPhases = (
+				D83137B97D4A1B6336F14A3F /* [CP] Check Pods Manifest.lock */,
 				1D447E9C1F3A693100013384 /* Sources */,
 				1D447E9D1F3A693100013384 /* Frameworks */,
 				1D447E9E1F3A693100013384 /* Resources */,
 				1D447EAB1F3A6BB000013384 /* Set version information */,
+				4986E8A61B5A7C314BDBAFAB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4815,6 +4917,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ello/Pods-Ello-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4986E8A61B5A7C314BDBAFAB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4ECDD613F4760A0989C1A545 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4905,6 +5022,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		D83137B97D4A1B6336F14A3F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4940,23 +5072,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D447F111F3BCA4800013384 /* ShareExtensionOverrides.swift in Sources */,
+				1D447F151F3BCAD700013384 /* ImageRegionData.swift in Sources */,
 				122B30E41C6A3FC400C1B9D8 /* Asset.swift in Sources */,
-				122D1BBF1C6411D6001386CE /* ElloHUD.swift in Sources */,
 				12D86E7E1DCA50DD00465787 /* Promotional.swift in Sources */,
-				126F2C011C5C1D7400D22BAB /* Date.swift in Sources */,
+				126F2C011C5C1D7400D22BAB /* DateExtensions.swift in Sources */,
 				1207C9A11C752F1300939ADB /* ElloURI.swift in Sources */,
-				1D9309CE1EBCF1A30099FCF8 /* BadgesService.swift in Sources */,
 				122B30B61C6A3FBB00C1B9D8 /* DynamicSetting.swift in Sources */,
 				1D2F65AA1D185B120099D036 /* DiscoverType.swift in Sources */,
-				122D1BA61C6134D5001386CE /* UIViewNibLoading.swift in Sources */,
 				1D9309D81EC1134D0099FCF8 /* Editorial.swift in Sources */,
-				1D5A901E1D3D749B00C2AEFF /* ElloAPISharingHeaders.swift in Sources */,
+				1D104FD31F3CEC7800B5487A /* ElloHUD.swift in Sources */,
+				1D5A901E1D3D749B00C2AEFF /* ShareExtensionHeaders.swift in Sources */,
 				122B30B31C6A3FBB00C1B9D8 /* Availability.swift in Sources */,
 				12A1D83A1DAE7AE900A327D6 /* NumberExtensions.swift in Sources */,
 				122D1B7C1C610892001386CE /* NSStringExtensions.swift in Sources */,
 				122B30E51C6A3FC400C1B9D8 /* Attachment.swift in Sources */,
 				1207C99D1C750F8A00939ADB /* ElloManager.swift in Sources */,
-				1D5566CD1EE097B400255DBF /* UIViewExtensions.swift in Sources */,
 				1D179FE01EEFEEBB00F0B37C /* PromiseKitExtensions.swift in Sources */,
 				122B30C31C6A3FBB00C1B9D8 /* PushPayload.swift in Sources */,
 				1DC78A591F21478D00BE2413 /* ArtistInvite.swift in Sources */,
@@ -4965,14 +5096,12 @@
 				1DDC85241D91F5F500C29552 /* Authorable.swift in Sources */,
 				122D1B981C613085001386CE /* AlertViewController.swift in Sources */,
 				1207C9971C74CD7600939ADB /* ElloProvider.swift in Sources */,
-				1207C9A71C752F8F00939ADB /* ContentFlagger.swift in Sources */,
 				122B30E81C6A3FC400C1B9D8 /* Regionable.swift in Sources */,
 				1DF806541CDD1AFE002D60AD /* Username.swift in Sources */,
 				122D1BB91C64036A001386CE /* ImageExtensions.swift in Sources */,
 				12DEB2511C5BFB6F00D4CDCE /* StringExtensions.swift in Sources */,
 				1D5933921D1492D100EAF03D /* Category.swift in Sources */,
 				122B30DD1C6A3FBF00C1B9D8 /* User.swift in Sources */,
-				122D1B501C602355001386CE /* CrashlyticsKey.swift in Sources */,
 				122D1B4E1C602337001386CE /* BoxType.swift in Sources */,
 				126F2C031C5C1D8D00D22BAB /* DictionaryExtensions.swift in Sources */,
 				122D1B9E1C61311F001386CE /* AlertCell.swift in Sources */,
@@ -4982,11 +5111,10 @@
 				1D7E82481F2A7277006ACE7A /* ArtistInviteSubmission.swift in Sources */,
 				122D1BA51C6134A5001386CE /* AlertCellPresenter.swift in Sources */,
 				1207C9A31C752F2600939ADB /* S3UploadingService.swift in Sources */,
-				122B30B01C6A3FBB00C1B9D8 /* AddressBookError.swift in Sources */,
 				122B30BA1C6A3FBB00C1B9D8 /* ElloNetworkError.swift in Sources */,
 				1207C9A81C752F9F00939ADB /* ErrorStatusCode.swift in Sources */,
 				1207C99C1C750F8400939ADB /* AuthState.swift in Sources */,
-				1207C99A1C750E4B00939ADB /* ShareTrackerOverrides.swift in Sources */,
+				1207C99A1C750E4B00939ADB /* ExtensionOverrides.swift in Sources */,
 				122B30C11C6A3FBB00C1B9D8 /* Post.swift in Sources */,
 				1D5933931D1492D700EAF03D /* CategoryLevel.swift in Sources */,
 				1207C9A01C752F0400939ADB /* NetworkError.swift in Sources */,
@@ -4994,33 +5122,27 @@
 				122B30DB1C6A3FBF00C1B9D8 /* RelationshipPriority.swift in Sources */,
 				1207C99E1C750F9300939ADB /* ResponseConfig.swift in Sources */,
 				122B30B11C6A3FBB00C1B9D8 /* AmazonCredentials.swift in Sources */,
-				122D1BB01C613A9D001386CE /* ShareKeyboardOverrides.swift in Sources */,
 				1DA18E1D1DB55D4E000231CC /* ExternalLink.swift in Sources */,
-				122B30DE1C6A3FBF00C1B9D8 /* UserAvatarCellModel.swift in Sources */,
 				122B30E61C6A3FC400C1B9D8 /* EmbedRegion.swift in Sources */,
-				1207C9A51C752F4800939ADB /* CredentialsAuthService.swift in Sources */,
 				122D1B9D1C6130FB001386CE /* NSErrorExtensions.swift in Sources */,
 				120FF6C91C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */,
 				122D1B9B1C6130D9001386CE /* AlertHeaderView.swift in Sources */,
 				122B30B51C6A3FBB00C1B9D8 /* Comment.swift in Sources */,
 				122D1BA11C613161001386CE /* Colors.swift in Sources */,
 				122B30EA1C6A3FC400C1B9D8 /* TextRegion.swift in Sources */,
+				1D104FD01F3CEBCD00B5487A /* ElloTextField.swift in Sources */,
 				122D1B4C1C60232D001386CE /* TypedNotifications.swift in Sources */,
 				122B30AE1C6A3FBB00C1B9D8 /* Activity.swift in Sources */,
-				122D1B591C6025D2001386CE /* ShareCryptoStringExtensions.swift in Sources */,
 				1D9309CD1EBCEBAF0099FCF8 /* Badge.swift in Sources */,
 				122B30BC1C6A3FBB00C1B9D8 /* JSONAble.swift in Sources */,
-				122B30F91C6A427F00C1B9D8 /* ElloTextView.swift in Sources */,
 				1207C9AA1C752FF000939ADB /* MultipartRequestBuilder.swift in Sources */,
 				120E64151E327D6300CAF03E /* JWT.swift in Sources */,
 				1207C9931C74CD3A00939ADB /* DateFormatting.swift in Sources */,
 				12DEB24B1C5BF9E600D4CDCE /* AppSetup.swift in Sources */,
 				122B30B91C6A3FBB00C1B9D8 /* ElloLinkedStore.swift in Sources */,
-				122D1BAA1C61395D001386CE /* ShareAlertViewControllerOverrides.swift in Sources */,
 				1207C9A21C752F1C00939ADB /* APIKeys.swift in Sources */,
 				122B30BF1C6A3FBB00C1B9D8 /* Notification.swift in Sources */,
 				122D1B4D1C602337001386CE /* Box.swift in Sources */,
-				1207C9B11C7538D100939ADB /* ShareElloProviderLinkOverrides.swift in Sources */,
 				1DC91F761CF376FA00336012 /* AutoCompleteResult.swift in Sources */,
 				122D1BAB1C613976001386CE /* AlertPresentationController.swift in Sources */,
 				122D1BAC1C6139A4001386CE /* CGRectExtensions.swift in Sources */,
@@ -5028,20 +5150,18 @@
 				12DEB24A1C5BED4600D4CDCE /* RegexExtensions.swift in Sources */,
 				1D70DE591DF23C36008AF216 /* StyledLabel.swift in Sources */,
 				122B30E91C6A3FC400C1B9D8 /* RegionParser.swift in Sources */,
-				12DEB2491C5BED4000D4CDCE /* Array.swift in Sources */,
+				12DEB2491C5BED4000D4CDCE /* ArrayExtensions.swift in Sources */,
 				1D15C27C1C7D137F0013B192 /* InterfaceImage.swift in Sources */,
 				12F7EB7F1C69686A0090209A /* ShareAttachmentProcessor.swift in Sources */,
 				1207C9AB1C752FF700939ADB /* AnonymousAuthService.swift in Sources */,
-				122D1B9F1C613134001386CE /* ElloTextField.swift in Sources */,
 				1207C9961C74CD5C00939ADB /* ElloAPI.swift in Sources */,
+				1D447EF01F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */,
 				1207C9951C74CD5100939ADB /* AuthToken.swift in Sources */,
-				1207C9921C73FF4A00939ADB /* ContentFlaggingService.swift in Sources */,
 				122B30C21C6A3FBB00C1B9D8 /* Profile.swift in Sources */,
 				122D1B4F1C602337001386CE /* MutableBox.swift in Sources */,
 				1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */,
 				122D1B9A1C6130B4001386CE /* NSObjectClassName.swift in Sources */,
 				122D1B991C61308F001386CE /* AlertAction.swift in Sources */,
-				122B30C01C6A3FBB00C1B9D8 /* NotificationAttributedTitle.swift in Sources */,
 				122B30B41C6A3FBB00C1B9D8 /* Coder.swift in Sources */,
 				122D1BA41C61347B001386CE /* ColorExtensions.swift in Sources */,
 				1DA18E501DCCED9D000231CC /* PagePromotional.swift in Sources */,
@@ -5056,21 +5176,21 @@
 				122B30B71C6A3FBB00C1B9D8 /* DynamicSettingCategory.swift in Sources */,
 				1207C9A91C752FD800939ADB /* ElloS3.swift in Sources */,
 				122D1BC01C6411E0001386CE /* ElloLogoView.swift in Sources */,
-				122B30AF1C6A3FBB00C1B9D8 /* AddressBook.swift in Sources */,
 				1207C99B1C750F5F00939ADB /* MappingType.swift in Sources */,
 				1D70DE561DF2350A008AF216 /* StyledButton.swift in Sources */,
 				122B30B81C6A3FBB00C1B9D8 /* ElloKeychain.swift in Sources */,
+				1D104FD21F3CEC6E00B5487A /* UIViewExtensions.swift in Sources */,
 				1207C9A41C752F3C00939ADB /* ReAuthService.swift in Sources */,
 				1DDC851B1D91D52D00C29552 /* Watch.swift in Sources */,
 				122D1B631C6028EF001386CE /* AuthenticationNotifications.swift in Sources */,
 				122D1BA21C613181001386CE /* Keyboard.swift in Sources */,
 				124CFB9A1C5976E500727D11 /* ShareViewController.swift in Sources */,
+				1D104FD11F3CEC5900B5487A /* ValidationState.swift in Sources */,
 				123466151C650B3000E61110 /* NSItemProviderExtensions.swift in Sources */,
 				1D15C27B1C7D13050013B192 /* InterfaceString.swift in Sources */,
 				1207C9981C74CD8200939ADB /* AsyncOperation.swift in Sources */,
 				1274E0171CDBB2BF0064BA82 /* ElloAPIDescription.swift in Sources */,
 				122B30DA1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */,
-				1D7152B51D6E4FFA005998FE /* ValidationState.swift in Sources */,
 				1207C99F1C750F9900939ADB /* Mapper.swift in Sources */,
 				1DDC23511F326F3B00E68B0E /* ElloRequest.swift in Sources */,
 			);
@@ -5511,7 +5631,7 @@
 				121700B31A7841C400EBACA5 /* StreamViewController.swift in Sources */,
 				122B30D61C6A3FBC00C1B9D8 /* NotificationAttributedTitle.swift in Sources */,
 				1DF0B2EE1E942BE2001B9F97 /* SearchToggleButton.swift in Sources */,
-				F8A3B6451AC457CA00806224 /* Array.swift in Sources */,
+				F8A3B6451AC457CA00806224 /* ArrayExtensions.swift in Sources */,
 				12A3A46F1AB348FB00D2AFB0 /* ElloPullToRefreshView.swift in Sources */,
 				1D9309DC1EC134A20099FCF8 /* EditorialCellPresenter.swift in Sources */,
 				F8158C471ACDAF7F008C15A1 /* AlertCell.swift in Sources */,
@@ -5560,7 +5680,7 @@
 				1DB8C6A31D78C85C007E1447 /* StyledButton.swift in Sources */,
 				12431FFA1DBAAF27006808D4 /* CategoryHeaderCell.swift in Sources */,
 				1207C9811C73FEE000939ADB /* InviteService.swift in Sources */,
-				1275351D1B73D155006B9A0F /* Date.swift in Sources */,
+				1275351D1B73D155006B9A0F /* DateExtensions.swift in Sources */,
 				12F6AE241A43389B00493660 /* LoginViewController.swift in Sources */,
 				1D2B50BB1D272A6400F6CE90 /* BlackBar.swift in Sources */,
 				1D98563B1C6D7D3300C1BF78 /* DrawerAnimators.swift in Sources */,
@@ -5665,6 +5785,7 @@
 				12B531011A93B75700E01D72 /* ElloLogoView.swift in Sources */,
 				1D4042CA1E0997DD00E4E74D /* SnapKitExtensions.swift in Sources */,
 				1207C96F1C73FEE000939ADB /* APIKeys.swift in Sources */,
+				1D447F161F3BCADB00013384 /* ImageRegionData.swift in Sources */,
 				123375711DA69C0C0019CFAD /* ProfileProtocols.swift in Sources */,
 				1D87831D1ECCF5B300253602 /* EditorialJoinCell.swift in Sources */,
 				EAEE2A3A1AC48A2A000B6CDA /* UIViewNibLoading.swift in Sources */,
@@ -5809,7 +5930,108 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D447EE41F3BC77400013384 /* Activity.swift in Sources */,
+				1D447F001F3BC98E00013384 /* PagePromotional.swift in Sources */,
+				1D447F131F3BCA7300013384 /* CGSizeExtensions.swift in Sources */,
+				1D447F1C1F3BCC9C00013384 /* ExperienceUpdate.swift in Sources */,
+				1D447ECB1F3BC66300013384 /* User.swift in Sources */,
+				1D447F081F3BC9DB00013384 /* Watch.swift in Sources */,
+				1D447EF91F3BC94200013384 /* AuthToken.swift in Sources */,
+				1D447EF31F3BC8BB00013384 /* RegexExtensions.swift in Sources */,
+				1D447EE61F3BC79600013384 /* JSONAble.swift in Sources */,
+				1D447F051F3BC9C100013384 /* ElloS3.swift in Sources */,
+				1D447ED51F3BC6B500013384 /* AuthState.swift in Sources */,
+				1D447EDD1F3BC70B00013384 /* AmazonCredentials.swift in Sources */,
+				1D447EF81F3BC93B00013384 /* ElloAPI.swift in Sources */,
+				1D447ECF1F3BC68700013384 /* PostActionable.swift in Sources */,
+				1D447EB61F3BC3A800013384 /* DiscoverType.swift in Sources */,
+				1D447EF21F3BC8B000013384 /* CategoryList.swift in Sources */,
+				1D447EC61F3BC64B00013384 /* Regionable.swift in Sources */,
+				1D447ED41F3BC6B100013384 /* ErrorStatusCode.swift in Sources */,
+				1D447EC51F3BC64100013384 /* ElloProvider.swift in Sources */,
+				1D447EC81F3BC65A00013384 /* ImageExtensions.swift in Sources */,
+				1D447EB41F3BC39500013384 /* ElloURI.swift in Sources */,
+				1D447ED91F3BC6F700013384 /* NetworkError.swift in Sources */,
+				1D447EE01F3BC74A00013384 /* NSErrorExtensions.swift in Sources */,
+				1D447ECE1F3BC68000013384 /* FreeMethods.swift in Sources */,
+				1D447ED81F3BC6F100013384 /* CategoryLevel.swift in Sources */,
+				1D447EE91F3BC7A800013384 /* DateFormatting.swift in Sources */,
+				1D104FD61F3CFAA800B5487A /* ToData.swift in Sources */,
+				1D447EB11F3BC37B00013384 /* Asset.swift in Sources */,
+				1D447EDB1F3BC70000013384 /* RelationshipPriority.swift in Sources */,
+				1D104FD51F3CF7C600B5487A /* Tmp.swift in Sources */,
+				1D447F041F3BC9BC00013384 /* DynamicSettingCategory.swift in Sources */,
+				1D447ED11F3BC69400013384 /* ArtistInviteSubmission.swift in Sources */,
+				1D447EEB1F3BC7B200013384 /* ElloLinkedStore.swift in Sources */,
+				1D447EFA1F3BC94900013384 /* Profile.swift in Sources */,
+				1D447EBC1F3BC5D900013384 /* NSStringExtensions.swift in Sources */,
+				1D447EE71F3BC79E00013384 /* MultipartRequestBuilder.swift in Sources */,
+				1D447EFD1F3BC95C00013384 /* NSObjectClassName.swift in Sources */,
+				1D447F031F3BC9AD00013384 /* Announcement.swift in Sources */,
+				1D447EDA1F3BC6FC00013384 /* Love.swift in Sources */,
+				1D447EEA1F3BC7AD00013384 /* AppSetup.swift in Sources */,
+				1D447EB51F3BC3A000013384 /* DynamicSetting.swift in Sources */,
+				1D447F0F1F3BCA2600013384 /* ElloRequest.swift in Sources */,
+				1D447EDF1F3BC73F00013384 /* EmbedRegion.swift in Sources */,
+				1D447EE31F3BC77000013384 /* TypedNotifications.swift in Sources */,
+				1D447ECC1F3BC67400013384 /* BoxType.swift in Sources */,
+				1D447F171F3BCADB00013384 /* ImageRegionData.swift in Sources */,
+				1D447F071F3BC9D300013384 /* ElloKeychain.swift in Sources */,
+				1D447EF51F3BC8C800013384 /* ArrayExtensions.swift in Sources */,
+				1D447EB91F3BC44C00013384 /* NotificationExtensionHeaders.swift in Sources */,
 				1D447EA31F3A693100013384 /* NotificationService.swift in Sources */,
+				1D447EDE1F3BC72D00013384 /* ExternalLink.swift in Sources */,
+				1D447ED01F3BC68C00013384 /* RegionKind.swift in Sources */,
+				1D447F121F3BCA6D00013384 /* ReAuthService.swift in Sources */,
+				1D447EEF1F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */,
+				1D447EB21F3BC38600013384 /* Promotional.swift in Sources */,
+				1D447EC11F3BC61800013384 /* PushPayload.swift in Sources */,
+				1D447EBE1F3BC5F100013384 /* Attachment.swift in Sources */,
+				1D447ED61F3BC6D900013384 /* ExtensionOverrides.swift in Sources */,
+				1D447ECD1F3BC67900013384 /* DictionaryExtensions.swift in Sources */,
+				1D447EBF1F3BC5FA00013384 /* ElloManager.swift in Sources */,
+				1D447F0A1F3BCA0200013384 /* InterfaceString.swift in Sources */,
+				1D447EB31F3BC38D00013384 /* DateExtensions.swift in Sources */,
+				1D447F0D1F3BCA1200013384 /* Relationship.swift in Sources */,
+				1D447EC71F3BC64F00013384 /* Username.swift in Sources */,
+				1D447EDC1F3BC70600013384 /* ResponseConfig.swift in Sources */,
+				1D447F0E1F3BCA1D00013384 /* Mapper.swift in Sources */,
+				1D447EE51F3BC78F00013384 /* Badge.swift in Sources */,
+				1D447F1A1F3BCC3100013384 /* AnonymousAuthService.swift in Sources */,
+				1D447EEC1F3BC7BE00013384 /* APIKeys.swift in Sources */,
+				1D447EFB1F3BC95100013384 /* MutableBox.swift in Sources */,
+				1D447EC91F3BC65E00013384 /* Category.swift in Sources */,
+				1D447F1B1F3BCC3C00013384 /* AuthenticationNotifications.swift in Sources */,
+				1D447F011F3BC9A000013384 /* ElloProviderErrors.swift in Sources */,
+				1D447F0C1F3BCA0C00013384 /* ElloAPIDescription.swift in Sources */,
+				1D447EBA1F3BC5C000013384 /* Availability.swift in Sources */,
+				1D447EFF1F3BC98800013384 /* ColorExtensions.swift in Sources */,
+				1D447EFE1F3BC98000013384 /* Coder.swift in Sources */,
+				1D104FD41F3CF36300B5487A /* PostService.swift in Sources */,
+				1D447F061F3BC9CC00013384 /* MappingType.swift in Sources */,
+				1D447EC21F3BC62100013384 /* ArtistInvite.swift in Sources */,
+				1D447EC41F3BC63000013384 /* Authorable.swift in Sources */,
+				1D447EC01F3BC60B00013384 /* PromiseKitExtensions.swift in Sources */,
+				1D447F021F3BC9A800013384 /* LocalPerson.swift in Sources */,
+				1D447EFC1F3BC95600013384 /* Defaults.swift in Sources */,
+				1D447EE81F3BC7A300013384 /* JWT.swift in Sources */,
+				1D447EF11F3BC84D00013384 /* AutoCompleteResult.swift in Sources */,
+				1D447F191F3BCB3400013384 /* NotificationOverrides.swift in Sources */,
+				1D447EF61F3BC92500013384 /* InterfaceImage.swift in Sources */,
+				1D447EF41F3BC8C400013384 /* RegionParser.swift in Sources */,
+				1D447EB71F3BC3D900013384 /* Editorial.swift in Sources */,
+				1D447ED21F3BC69C00013384 /* S3UploadingService.swift in Sources */,
+				1D447EBD1F3BC5E600013384 /* StringExtensions.swift in Sources */,
+				1D447F0B1F3BCA0600013384 /* AsyncOperation.swift in Sources */,
+				1D447EE11F3BC75E00013384 /* Comment.swift in Sources */,
+				1D447ED31F3BC6AB00013384 /* ElloNetworkError.swift in Sources */,
+				1D447ED71F3BC6E900013384 /* Post.swift in Sources */,
+				1D447EED1F3BC7FD00013384 /* Notification.swift in Sources */,
+				1D447EBB1F3BC5C800013384 /* NumberExtensions.swift in Sources */,
+				1D447EEE1F3BC80000013384 /* Box.swift in Sources */,
+				1D447EF71F3BC92900013384 /* Groupable.swift in Sources */,
+				1D447EC31F3BC62600013384 /* ImageRegion.swift in Sources */,
+				1D447EE21F3BC76900013384 /* TextRegion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5867,7 +6089,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Sources/ShareExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Extensions-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -5895,7 +6117,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Sources/ShareExtension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Extensions-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -6124,6 +6346,7 @@
 		};
 		1D447EA81F3A693100013384 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF40AE99DBB4807FA4CA6BA5 /* Pods-NotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -6140,12 +6363,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Extensions-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		1D447EA91F3A693100013384 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D59022AF717EDB8AC3B3B925 /* Pods-NotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -6162,6 +6387,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.ello.Ello.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Extensions-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

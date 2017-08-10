@@ -60,13 +60,6 @@ final class Notification: JSONAble, Authorable, Groupable {
     var textRegion: TextRegion?
     var imageRegion: ImageRegion?
     fileprivate var attributedTitleStore: NSAttributedString?
-    var attributedTitle: NSAttributedString {
-        if let attributedTitle = attributedTitleStore {
-            return attributedTitle
-        }
-        attributedTitleStore = NotificationAttributedTitle.attributedTitle(activity.kind, author: author, subject: subject)
-        return attributedTitleStore!
-    }
 
     var hasImage: Bool {
         return self.imageRegion != nil

@@ -27,20 +27,25 @@ def ello_app_pods
   pod 'iRate', '~> 1.11'
   # swift pods
   pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
-  pod 'WebLinking', git: 'https://github.com/kylef/WebLinking.swift'
   pod 'SnapKit', git: 'https://github.com/ello/SnapKit'
   pod 'DeltaCalculator', git: 'https://github.com/ello/DeltaCalculator'
+
+end
+
+def ui_pods
+  if ENV['ELLO_STAFF']
+    pod 'ElloUIFonts', git: 'git@github.com:ello/ElloUIFonts'
+  elsif ENV['ELLO_UI_FONTS_URL']
+    pod 'ElloUIFonts', git: ENV['ELLO_UI_FONTS_URL']
+  else
+    pod 'ElloOSSUIFonts', '~> 2.2'
+  end
 end
 
 def common_pods
   if ENV['ELLO_STAFF']
-    pod 'ElloUIFonts', git: 'git@github.com:ello/ElloUIFonts'
     pod 'ElloCerts', git: 'git@github.com:ello/Ello-iOS-Certs'
-  elsif ENV['ELLO_UI_FONTS_URL']
-    pod 'ElloUIFonts', git: ENV['ELLO_UI_FONTS_URL']
-    pod 'ElloOSSCerts', '~> 2.0'
   else
-    pod 'ElloOSSUIFonts', '~> 2.2'
     pod 'ElloOSSCerts', '~> 2.0'
   end
   pod 'PromiseKit'
@@ -54,6 +59,7 @@ def common_pods
   pod 'SwiftyUserDefaults', '~> 3.0'
   pod 'SwiftyJSON', '~> 3.1'
   pod 'JWTDecode', '~> 2.0'
+  pod 'WebLinking', git: 'https://github.com/kylef/WebLinking.swift'
   pod 'Crashlytics', '~> 3.4'
 end
 
@@ -67,9 +73,15 @@ end
 target 'Ello' do
   common_pods
   ello_app_pods
+  ui_pods
 end
 
 target 'ShareExtension' do
+  common_pods
+  ui_pods
+end
+
+target 'NotificationServiceExtension' do
   common_pods
 end
 

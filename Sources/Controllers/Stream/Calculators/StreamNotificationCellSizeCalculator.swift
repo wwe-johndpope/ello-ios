@@ -94,7 +94,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
     class func assignTotalHeight(_ webContentHeight: CGFloat?, cellItem: StreamCellItem, cellWidth: CGFloat) {
         let notification = cellItem.jsonable as! Notification
 
-        textViewForSizing.attributedText = notification.attributedTitle
+        textViewForSizing.attributedText = NotificationAttributedTitle.from(notification: notification)
         let titleWidth = NotificationCell.Size.messageHtmlWidth(forCellWidth: cellWidth, hasImage: notification.hasImage)
         let titleSize = textViewForSizing.sizeThatFits(CGSize(width: titleWidth, height: .greatestFiniteMagnitude))
         var totalTextHeight = ceil(titleSize.height)

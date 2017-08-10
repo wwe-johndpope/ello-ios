@@ -72,14 +72,7 @@ final class User: JSONAble {
     private var _badges: [Badge]?
     var badges: [Badge] {
         get {
-            guard let badges = _badges, badges.count > 0 else {
-                if let count = categories?.count, count > 0,
-                    let badge = Badge.lookup(slug: "featured")
-                {
-                    return [badge]
-                }
-                return []
-            }
+            guard let badges = _badges, badges.count > 0 else { return [] }
             return badges
         }
         set { _badges = newValue }

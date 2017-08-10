@@ -10,6 +10,7 @@ import SwiftyJSON
 let CategoryVersion = 4
 
 
+@objc(Category)
 final class Category: JSONAble, Groupable {
     static let featured = Category(id: "meta1", name: InterfaceString.Discover.Featured, slug: "featured", order: 0, allowInOnboarding: false, isCreatorType: false, usesPagePromo: true, level: .meta, tileImage: nil)
     static let trending = Category(id: "meta2", name: InterfaceString.Discover.Trending, slug: "trending", order: 1, allowInOnboarding: false, isCreatorType: false, usesPagePromo: true, level: .meta, tileImage: nil)

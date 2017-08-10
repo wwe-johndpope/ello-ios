@@ -669,8 +669,8 @@ extension ElloAPI: Moya.TargetType {
             ]
         }
 
-        if let sharingHeaders = self.sharingHeaders {
-            assigned += sharingHeaders
+        if let extensionHeaders = extensionHeaders {
+            assigned += extensionHeaders
         }
 
         let createdAtHeader: String?

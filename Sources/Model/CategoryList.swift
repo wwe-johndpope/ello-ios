@@ -6,6 +6,8 @@ import SwiftyJSON
 
 let CategoryListVersion = 1
 
+
+@objc(CategoryList)
 class CategoryList: JSONAble {
     let categories: [Category]
 

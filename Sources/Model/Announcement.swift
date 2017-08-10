@@ -7,7 +7,7 @@ import SwiftyJSON
 // version 2: added 'isStaffPreview'
 let AnnouncementVersion = 2
 
-@objc
+@objc(Announcement)
 final class Announcement: JSONAble, Groupable {
     let id: String
     let isStaffPreview: Bool

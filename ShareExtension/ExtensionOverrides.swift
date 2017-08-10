@@ -1,9 +1,6 @@
 ////
-///  ShareTrackerOverrides.swift
+///  ExtensionOverrides.swift
 //
-
-import Foundation
-
 
 enum ContentType: String {
     case post = "Post"
@@ -16,9 +13,6 @@ class Tracker {
 
     init() {}
 
-    func contentFlagged(_ type: ContentType, flag: ContentFlagger.AlertOption, contentId: String) {}
-    func contentFlaggingFailed(_ type: ContentType, message: String, contentId: String) {}
-    func contentFlaggingCanceled(_ type: ContentType, contentId: String) {}
     func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {}
 }
 
@@ -31,4 +25,18 @@ class Window {
 class DeviceScreen {
     static var isRetina: Bool { return true }
     static var scale: Float { return 2 }
+}
+
+extension String {
+
+    // no need to include common crypto in
+    // an app extension so we return an
+    // unmodified string in ShareExtension
+    var saltedSHA1String: String? {
+        return self
+    }
+
+    var SHA1String: String? {
+        return self
+    }
 }

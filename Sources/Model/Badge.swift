@@ -9,7 +9,7 @@ import SwiftyJSON
 // amend: renamed 'link' to 'caption', kept coder/decoder as 'link'
 let BadgeVersion: Int = 2
 
-@objc
+@objc(Badge)
 final class Badge: JSONAble {
     var slug: String
     var name: String
@@ -20,6 +20,14 @@ final class Badge: JSONAble {
     var isFeatured: Bool { return slug == "featured" }
 
     let categories: [Category]?
+
+    static var badges: [String: Badge] {
+        get { return readBadges() }
+        set {
+            let data = NSKeyedArchiver.archivedData(withRootObject: badges)
+            saveBadgesData(data)
+        }
+    }
 
     init(badge: Badge, categories: [Category]?) {
         self.slug = badge.slug
@@ -65,7 +73,7 @@ final class Badge: JSONAble {
     }
 
     static func lookup(slug: String) -> Badge? {
-        return BadgesService.badges[slug]
+        return Badge.badges[slug]
     }
 
 // MARK: NSCoding
@@ -107,4 +115,28 @@ final class Badge: JSONAble {
             )
     }
 
+}
+
+private var _cachedBadges: [String: Badge]?
+private func readBadges() -> [String: Badge] {
+    if let _cachedBadges = _cachedBadges { return _cachedBadges }
+
+    guard
+        let fileURL = badgesFileURL(),
+        let data = (try? Data(contentsOf: fileURL)),
+        let badges = NSKeyedUnarchiver.unarchiveObject(with: data) as? [String: Badge]
+    else { return [:] }
+
+    _cachedBadges = badges
+    return badges
+}
+
+private func saveBadgesData(_ data: Data) {
+    guard let fileURL = badgesFileURL() else { return }
+    try? data.write(to: fileURL, options: [.atomic])
+}
+
+private func badgesFileURL() -> URL? {
+    guard let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+    return pathURL.appendingPathComponent("badges.data")
 }

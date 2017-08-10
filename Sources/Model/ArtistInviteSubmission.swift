@@ -6,6 +6,7 @@ import SwiftyJSON
 import Moya
 
 
+@objc(ArtistInviteSubmission)
 final class ArtistInviteSubmission: JSONAble, Groupable {
     // Version 1: initial
     static let Version = 1

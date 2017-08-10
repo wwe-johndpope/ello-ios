@@ -195,10 +195,6 @@ enum ElloURI: String {
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .category:
             return regex?.matchingGroups(url).safeValue(1) ?? url
-        case .pushNotificationUser:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
-        case .pushNotificationComment:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .invite:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .notifications:
@@ -209,7 +205,11 @@ enum ElloURI: String {
             let last = regex?.matchingGroups(url).safeValue(2) ?? url
             let lastArr = last.characters.split { $0 == "?" }.map { String($0) }
             return lastArr.first ?? last
+        case .pushNotificationComment:
+            return regex?.matchingGroups(url).safeValue(1) ?? url
         case .pushNotificationPost:
+            return regex?.matchingGroups(url).safeValue(1) ?? url
+        case .pushNotificationUser:
             return regex?.matchingGroups(url).safeValue(1) ?? url
         case .profile:
             return regex?.matchingGroups(url).safeValue(1) ?? url
