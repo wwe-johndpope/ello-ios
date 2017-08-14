@@ -115,6 +115,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        URLCache.shared.removeAllCachedResponses()
+        TemporaryCache.clear()
+
+        let manager = PINRemoteImageManager.shared()
+        manager.pinCache?.diskCache.trim(toSize: 0)
+        PINDiskCache.shared.trim(toSize: 0)
+
         Tracker.shared.sessionEnded()
     }
 
