@@ -30,7 +30,7 @@ struct ImageRegionData {
         }
         return true
     }
-    
+
 }
 
 extension ImageRegionData: Equatable {}

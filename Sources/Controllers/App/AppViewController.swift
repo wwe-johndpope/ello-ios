@@ -287,9 +287,7 @@ extension AppViewController {
             }
 
             vc.activateTabBar()
-            if let alert = PushNotificationController.sharedController.requestPushAccessIfNeeded() {
-                vc.present(alert, animated: true, completion: .none)
-            }
+            PushNotificationController.sharedController.requestPushAccessIfNeeded(vc)
         }
     }
 }
@@ -442,6 +440,7 @@ extension AppViewController {
         UIApplication.shared.applicationIconBadgeNumber = 0
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
+        ElloLinkedStore.removeDB()
         var cache = InviteCache()
         cache.clear()
         Tracker.shared.identify(user: nil)

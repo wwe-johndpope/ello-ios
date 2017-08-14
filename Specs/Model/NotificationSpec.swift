@@ -27,7 +27,7 @@ class NotificationSpec: QuickSpec {
                 expect(notification.activity.subjectType) == Activity.SubjectType.post
                 expect((notification.subject as? Post)?.id) == post.id
 
-                expect(notification.attributedTitle.string) == "@foo reposted your post."
+                expect(NotificationAttributedTitle.from(notification: notification).string) == "@foo reposted your post."
                 expect(notification.textRegion?.content) == "<p>This is a post summary!</p>"
                 expect(notification.imageRegion).to(beNil())
             }
@@ -56,7 +56,7 @@ class NotificationSpec: QuickSpec {
                 expect(notification.activity.subjectType) == Activity.SubjectType.post
                 expect((notification.subject as? Post)?.id) == post.id
 
-                expect(notification.attributedTitle.string) == "@foo reposted your post."
+                expect(NotificationAttributedTitle.from(notification: notification).string) == "@foo reposted your post."
                 expect(notification.textRegion?.content) == "<p>summary1!</p><br/><p>summary2!</p>"
                 expect(notification.imageRegion?.alt) == imageRegion1.alt
             }
@@ -83,7 +83,7 @@ class NotificationSpec: QuickSpec {
                 expect(notification.activity.subjectType) == Activity.SubjectType.comment
                 expect((notification.subject as? ElloComment)?.id) == comment.id
 
-                expect(notification.attributedTitle.string) == "@foo mentioned you in a comment."
+                expect(NotificationAttributedTitle.from(notification: notification).string) == "@foo mentioned you in a comment."
                 expect(notification.textRegion?.content) == "<p>This is a post summary!</p><br/><p>This is a comment summary!</p>"
                 expect(notification.imageRegion).to(beNil())
             }
@@ -124,7 +124,7 @@ class NotificationSpec: QuickSpec {
                 expect(notification.activity.subjectType) == Activity.SubjectType.comment
                 expect((notification.subject as? ElloComment)?.id) == comment.id
 
-                expect(notification.attributedTitle.string) == "@foo mentioned you in a comment."
+                expect(NotificationAttributedTitle.from(notification: notification).string) == "@foo mentioned you in a comment."
                 expect(notification.textRegion?.content) == "<p>summary1!</p><br/><p>summary2!</p><br/><p>comment summary1!</p><br/><p>comment summary2!</p>"
                 expect(notification.imageRegion?.alt) == commentRegion1.alt
             }

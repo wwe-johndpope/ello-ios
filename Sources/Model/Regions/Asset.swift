@@ -81,6 +81,13 @@ final class Asset: JSONAble {
         return false
     }
 
+    var isSmallGif: Bool {
+        if isGif, let size = self.optimized?.size {
+            return size <= 1_000_000
+        }
+        return false
+    }
+
     var oneColumnAttachment: Attachment? {
         return Window.isWide(Window.width) && DeviceScreen.isRetina ? xhdpi : hdpi
     }

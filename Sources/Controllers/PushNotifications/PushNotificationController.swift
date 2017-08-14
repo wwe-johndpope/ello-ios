@@ -14,6 +14,18 @@ struct PushNotificationNotifications {
     static let receivedPushNotification = TypedNotification<PushPayload>(name: "com.Ello.PushNotification.Received")
 }
 
+struct PushActions {
+    static let ownPostCategory = "co.ello.OWN_POST_CATEGORY"
+    static let otherPostCategory = "co.ello.POST_CATEGORY"
+    static let commentCategory = "co.ello.COMMENT_CATEGORY"
+    static let userCategory = "co.ello.USER_CATEGORY"
+
+    static let followUser = "co.ello.FOLLOW_USER_ACTION"
+    static let lovePost = "co.ello.LOVE_POST_ACTION"
+    static let postComment = "co.ello.POST_COMMENT_ACTION"
+    static let commentReply = "co.ello.COMMENT_REPLY_ACTION"
+}
+
 class PushNotificationController: NSObject {
     static let sharedController = PushNotificationController(defaults: GroupDefaults, keychain: ElloKeychain())
 
@@ -41,29 +53,30 @@ extension PushNotificationController: UNUserNotificationCenterDelegate {
     // foreground - notification incoming while using the app
     @objc @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        receivedNotification(UIApplication.shared, userInfo: notification.request.content.userInfo)
+        receivedNotification(UIApplication.shared, action: nil, userInfo: notification.request.content.userInfo)
         completionHandler(UNNotificationPresentationOptions.sound)
     }
 
     // background - user interacted with notification outside of the app
     @objc @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-
-        receivedNotification(UIApplication.shared, userInfo: response.notification.request.content.userInfo)
-
+        receivedNotification(UIApplication.shared, action: response.actionIdentifier, userInfo: response.notification.request.content.userInfo)
         completionHandler()
     }
 }
 
 extension PushNotificationController {
-    func requestPushAccessIfNeeded() -> AlertViewController? {
-        guard AuthToken().isPasswordBased else { return .none }
-        guard !permissionDenied else { return .none }
+    func requestPushAccessIfNeeded(_ vc: UIViewController) {
+        guard AuthToken().isPasswordBased else { return }
+        guard !permissionDenied else { return }
 
-        guard !needsPermission else { return alertViewController() }
+        guard !needsPermission else {
+            vc.present(alertViewController(), animated: true, completion: nil)
+            return
+        }
 
         registerForRemoteNotifications()
-        return .none
+        return
     }
 
     func registerForRemoteNotifications() {
@@ -72,9 +85,20 @@ extension PushNotificationController {
         let app = UIApplication.shared
 
         if #available(iOS 10.0, *){
-            let userNC = UNUserNotificationCenter.current()
-            userNC.delegate = self
-            userNC.requestAuthorization(options: [.badge, .sound, .alert]) {
+            let replyAction = UNTextInputNotificationAction(identifier: PushActions.commentReply, title: "Reply", options: [.authenticationRequired], textInputButtonTitle: "Send", textInputPlaceholder: "")
+            let commentAction = UNTextInputNotificationAction(identifier: PushActions.postComment, title: "Comment", options: [.authenticationRequired], textInputButtonTitle: "Send", textInputPlaceholder: "")
+            let loveAction = UNNotificationAction(identifier: PushActions.lovePost, title: "Love", options: [.authenticationRequired])
+            let followAction = UNNotificationAction(identifier: PushActions.followUser, title: "Follow", options: [.authenticationRequired])
+
+            let ownPostCategory = UNNotificationCategory(identifier: PushActions.ownPostCategory, actions: [], intentIdentifiers: [], options: [])
+            let otherPostCategory = UNNotificationCategory(identifier: PushActions.otherPostCategory, actions: [loveAction, commentAction], intentIdentifiers: [], options: [])
+            let commentCategory = UNNotificationCategory(identifier: PushActions.commentCategory, actions: [replyAction], intentIdentifiers: [], options: [])
+            let userCategory = UNNotificationCategory(identifier: PushActions.userCategory, actions: [followAction], intentIdentifiers: [], options: [])
+
+            let center = UNUserNotificationCenter.current()
+            center.delegate = self
+            center.setNotificationCategories([ownPostCategory, otherPostCategory, commentCategory, userCategory])
+            center.requestAuthorization(options: [.badge, .sound, .alert]) {
                 (granted, _) in
                 if granted {
                     app.registerForRemoteNotifications()
@@ -83,7 +107,7 @@ extension PushNotificationController {
         }
 
         else { //If user is not on iOS 10 use the old methods we've been using
-            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: .none)
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: [])
             app.registerUserNotificationSettings(settings)
             app.registerForRemoteNotifications()
         }
@@ -106,16 +130,22 @@ extension PushNotificationController {
         }
     }
 
-    func receivedNotification(_ application: UIApplication, userInfo: [AnyHashable: Any]) {
+    func receivedNotification(_ application: UIApplication, action: String?, userInfo: [AnyHashable: Any]) {
         updateBadgeCount(userInfo)
         if !hasAlert(userInfo) { return }
 
         let payload = PushPayload(info: userInfo as! [String: Any])
-        switch application.applicationState {
-        case .active:
+        if application.applicationState == .active {
             NotificationBanner.displayAlert(payload: payload)
-        default:
-            postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+        }
+        else {
+            switch action ?? "" {
+            case PushActions.lovePost:
+                print("here!")
+                break
+            default:
+                postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+            }
         }
     }
 

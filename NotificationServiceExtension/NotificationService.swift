@@ -31,54 +31,50 @@ class NotificationService: UNNotificationServiceExtension {
         default:
             return
         }
-
-        if let bestAttemptContent = bestAttemptContent {
-            // Modify the notification content here...
-            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
-
-            contentHandler(bestAttemptContent)
-        }
     }
 
     private func fetchPost(id: String, content: UNMutableNotificationContent) {
-        content.title = "\(content.title) [post \(id)]"
         PostService().loadPost(id)
             .thenFinally { post in
-                guard let regions = post.notificationContent else { return }
+                guard let regions = post.notificationContent,
+                    let contentHandler = self.contentHandler
+                else { return }
 
-                var downloadedImages: [(order: Int, data: Data, name: String)] = []
-
-                let (afterAll, done) = afterN() {
-                    guard let contentHandler = self.contentHandler else { return }
-
-                    let images = downloadedImages.sorted { $0.order < $1.order }
-                    content.attachments = images.flatMap { entry -> UNNotificationAttachment? in
-                        let identifier = "region-\(entry.order)-\(entry.name)"
-                        guard let url = Tmp.write(entry.data, to: identifier) else { return nil }
-                        return try? UNNotificationAttachment(identifier: identifier, url: url, options: nil)
-                    }
-                    contentHandler(content)
-                }
-
-                for (index, region) in regions.enumerated() {
+                let downloadedImages: [URL] = regions.flatMap { region -> URL? in
                     switch region.kind {
                     case .image:
-                        guard let region = region as? ImageRegion,
-                            let url = region.asset?.largeOrBest?.url
-                        else { continue }
+                        guard
+                            let region = region as? ImageRegion,
+                            let asset = region.asset
+                        else { return nil }
 
-                        let next = afterAll()
-                        Alamofire.download(url).responseData { response in
-                            if let data = response.result.value {
-                                downloadedImages.append((order: index, data: data, name: url.lastPathComponent))
-                            }
-                            next()
+                        let attachment: Attachment?
+                        if asset.isSmallGif {
+                            attachment = asset.original
                         }
-                    default: break
+                        else {
+                            attachment = asset.hdpi
+                        }
+
+                        guard
+                            let url = attachment?.url,
+                            let data = try? Data(contentsOf: url)
+                        else { return nil }
+
+                        print(url.absoluteString)
+
+                        return Tmp.write(data, to: url.lastPathComponent)
+                    default:
+                        return nil
                     }
                 }
 
-                done()
+                content.attachments = downloadedImages.flatMap { location -> UNNotificationAttachment? in
+                    let identifier = "region-\(location.lastPathComponent)"
+                    let attachment = try? UNNotificationAttachment(identifier: identifier, url: location, options: nil)
+                    return attachment
+                }
+                contentHandler(content)
             }
             .ignoreErrors()
     }

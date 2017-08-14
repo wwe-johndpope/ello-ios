@@ -131,7 +131,7 @@ extension String {
     }
 
     var camelCase: String {
-        let splits = self.characters.split { $0 == "_" }.map { String($0) }
+        let splits = split("_")
         var capSplits: [String] = splits.map { s in
             let index = s.characters.index(after: s.startIndex)
             return s.substring(to: index).capitalized + s.substring(from: index)

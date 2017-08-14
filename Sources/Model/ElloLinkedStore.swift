@@ -5,12 +5,14 @@
 import YapDatabase
 
 
-private let _ElloLinkedStore = ElloLinkedStore()
-
 struct ElloLinkedStore {
 
-    static var sharedInstance: ElloLinkedStore { return _ElloLinkedStore }
-    static var databaseName = "ello.sqlite"
+    static var sharedInstance = ElloLinkedStore()
+    static var databaseName = "ello-v2.sqlite" {
+        didSet {
+            sharedInstance = ElloLinkedStore()
+        }
+    }
 
     var readConnection: YapDatabaseConnection {
         let connection = database.newConnection()
@@ -21,7 +23,6 @@ struct ElloLinkedStore {
     fileprivate var database: YapDatabase
 
     init() {
-        ElloLinkedStore.deleteNonSharedDB()
         database = YapDatabase(path: ElloLinkedStore.databasePath())
         writeConnection = database.newConnection()
     }
@@ -70,54 +71,20 @@ struct ElloLinkedStore {
 
 }
 
-// MARK: Private
-private extension ElloLinkedStore {
+extension ElloLinkedStore {
 
-    static func deleteNonSharedDB(_ overrideDefaults: UserDefaults? = nil) {
-        let defaults: UserDefaults
-        if let overrideDefaults = overrideDefaults {
-            defaults = overrideDefaults
-        }
-        else {
-            defaults = GroupDefaults
-        }
+    static func removeDB(name: String? = nil) {
+        let path = ElloLinkedStore.databasePath(name: name)
 
-        let didDeleteNonSharedDB = defaults["DidDeleteNonSharedDB"].bool ?? false
-        if !didDeleteNonSharedDB {
-            defaults["DidDeleteNonSharedDB"] = true
-            ElloLinkedStore.removeNonSharedDB()
-        }
-    }
-
-    static func removeNonSharedDB() {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let baseDir: String
-        if let firstPath = paths.first {
-            baseDir = firstPath
-        }
-        else {
-            baseDir = NSTemporaryDirectory()
-        }
-
-        let path: String
-        if let baseURL = URL(string: baseDir) {
-            path = baseURL.appendingPathComponent(ElloLinkedStore.databaseName).path
-        }
-        else {
-            path = ""
-        }
         if FileManager.default.fileExists(atPath: path) {
-            do {
-                try FileManager.default.removeItem(atPath: path)
-            }
-            catch _ {}
+            try? FileManager.default.removeItem(atPath: path)
         }
     }
 
-    static func databasePath() -> String {
+    static func databasePath(name: String? = nil) -> String {
         var path = ""
         if let baseURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ElloGroupName) {
-            path = baseURL.appendingPathComponent(ElloLinkedStore.databaseName).path
+            path = baseURL.appendingPathComponent(name ?? ElloLinkedStore.databaseName).path
         }
         return path
     }

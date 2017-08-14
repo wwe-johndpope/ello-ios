@@ -728,6 +728,8 @@
 		1D6E431A1EA68B5E0029C9B1 /* badge_nsfw_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */; };
 		1D6E431C1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */; };
 		1D6E431E1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */; };
+		1D6E659E1F3E6E840072E946 /* UIViewNibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */; };
+		1D6E659F1F3E6EC00072E946 /* NSObjectClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */; };
 		1D70DE561DF2350A008AF216 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6A21D78C85C007E1447 /* StyledButton.swift */; };
 		1D70DE581DF23862008AF216 /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE571DF23862008AF216 /* StyledLabel.swift */; };
 		1D70DE591DF23C36008AF216 /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70DE571DF23862008AF216 /* StyledLabel.swift */; };
@@ -5258,6 +5260,7 @@
 				1D3DED7A1AE170A100F1D514 /* QuickExtensions.swift in Sources */,
 				123DEBF61D3D644E007B5F86 /* PostDetailViewControllerSpec.swift in Sources */,
 				1D6E431E1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift in Sources */,
+				1D6E659F1F3E6EC00072E946 /* NSObjectClassName.swift in Sources */,
 				12CEC2BA1AB21087000DC184 /* ImageRegionSpec.swift in Sources */,
 				1D2178E81DD52477002A54CB /* CategoryCardListViewSpec.swift in Sources */,
 				1DA18E491DB959B2000231CC /* ProfileHeaderGhostCellSpec.swift in Sources */,
@@ -5289,6 +5292,7 @@
 				1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */,
 				1D7750F41ABB391500D92191 /* TmpSpec.swift in Sources */,
 				127BAD5E1A850D6400628696 /* StreamTextCellHTMLSpec.swift in Sources */,
+				1D6E659E1F3E6E840072E946 /* UIViewNibLoading.swift in Sources */,
 				76BE9C591B2B85CF007575AA /* StreamInviteFriendsCellPresenterSpec.swift in Sources */,
 				1DDF39E71D072FCD00C1A75E /* BlockUserModalScreenSpec.swift in Sources */,
 				1D209BF41DA300D600CFBF92 /* ProfileSpec.swift in Sources */,

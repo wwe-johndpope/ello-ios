@@ -22,20 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             APIKeys.shared = debugServer.apiKeys
         }
 
-        let loveAction = UIMutableUserNotificationAction()
-        loveAction.identifier = "LOVE_POST_ACTION"
-        loveAction.title = "Love"
-        loveAction.activationMode = .background
-        loveAction.isAuthenticationRequired = true
-        loveAction.isDestructive = false
-
-        let postActionsCategory = UIMutableUserNotificationCategory()
-        postActionsCategory.identifier = "POST_ACTIONS_CATEGORY"
-        postActionsCategory.setActions([loveAction], for: .default)
-        postActionsCategory.setActions([loveAction], for: .minimal)
-
-        let settings = UIUserNotificationSettings(types: [.alert, .sound], categories: [postActionsCategory])
-        UIApplication.shared.registerUserNotificationSettings(settings)
+        // remove old sqlite stores
+        ElloLinkedStore.removeDB(name: "ello.sqlite")
+        ElloLinkedStore.removeDB(name: "ello_test.sqlite")
 
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
@@ -79,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupCaches()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
-            PushNotificationController.sharedController.receivedNotification(application, userInfo: payload)
+            PushNotificationController.sharedController.receivedNotification(application, action: nil, userInfo: payload)
         }
 
         return true
@@ -141,7 +130,7 @@ extension AppDelegate {
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        PushNotificationController.sharedController.receivedNotification(application, userInfo: userInfo)
+        PushNotificationController.sharedController.receivedNotification(application, action: nil, userInfo: userInfo)
         completionHandler(.noData)
     }
 

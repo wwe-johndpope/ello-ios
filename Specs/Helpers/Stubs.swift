@@ -416,16 +416,39 @@ extension AutoCompleteResult: Stubbable {
 }
 
 extension Activity: Stubbable {
-    class func stub(_ values: [String: Any]) -> Activity {
 
-        let activityKindString = (values["kind"] as? String) ?? Activity.Kind.friendPost.rawValue
-        let subjectTypeString = (values["subjectType"] as? String) ?? SubjectType.post.rawValue
+    class func stub(_ values: [String: Any]) -> Activity {
+        let activityKind: Activity.Kind
+        if let kind = values["kind"] as? Activity.Kind {
+            activityKind = kind
+        }
+        else if let kindString = values["kind"] as? String,
+            let kind = Activity.Kind(rawValue: kindString)
+        {
+            activityKind = kind
+        }
+        else {
+            activityKind = .friendPost
+        }
+
+        let activitySubjectType: SubjectType
+        if let type = values["subjectType"] as? SubjectType {
+            activitySubjectType = type
+        }
+        else if let subjectTypeString = values["subjectType"] as? String,
+            let type = SubjectType(rawValue: subjectTypeString)
+        {
+            activitySubjectType = type
+        }
+        else {
+            activitySubjectType = .post
+        }
 
         let activity = Activity(
             id: (values["id"] as? String) ?? UUID().uuidString,
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
-            kind: Activity.Kind(rawValue: activityKindString) ?? Activity.Kind.friendPost,
-            subjectType: SubjectType(rawValue: subjectTypeString) ?? SubjectType.post
+            kind: activityKind,
+            subjectType: activitySubjectType
         )
 
         if let user = values["subject"] as? User {

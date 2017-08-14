@@ -14,8 +14,12 @@ class NotificationCellSpec: QuickSpec {
                 let subject = NotificationCell()
                 subject.frame.size = CGSize(width: 320, height: 40)
                 let author: User = .stub(["username": "ello"])
-                let post: Post = .stub(["authorId": author.id])
-                subject.title = NotificationAttributedTitle.attributedTitle(.postMentionNotification, author: author, subject: post)
+                let post: Post = .stub(["author": author])
+                let activity: Activity = stub([
+                    "kind": Activity.Kind.postMentionNotification,
+                    "subject": post,
+                    ])
+                subject.title = NotificationAttributedTitle.from(notification: Notification(activity: activity))
                 subject.layoutIfNeeded()
 
                 expect(subject.titleTextView.frame.size.height) == 17
@@ -25,8 +29,12 @@ class NotificationCellSpec: QuickSpec {
                 let subject = NotificationCell()
                 subject.frame.size = CGSize(width: 160, height: 40)
                 let author: User = .stub(["username": "ello"])
-                let post: Post = .stub(["authorId": author.id])
-                subject.title = NotificationAttributedTitle.attributedTitle(.postMentionNotification, author: author, subject: post)
+                let post: Post = .stub(["author": author])
+                let activity: Activity = stub([
+                    "kind": Activity.Kind.postMentionNotification,
+                    "subject": post,
+                    ])
+                subject.title = NotificationAttributedTitle.from(notification: Notification(activity: activity))
                 subject.layoutIfNeeded()
 
                 expect(subject.titleTextView.frame.size.height) == 51
@@ -35,7 +43,11 @@ class NotificationCellSpec: QuickSpec {
             context("snapshots") {
                 let author: User = .stub(["username": "ello"])
                 let post: Post = .stub(["author": author])
-                let title = NotificationAttributedTitle.attributedTitle(.postMentionNotification, author: author, subject: post)
+                let activity: Activity = stub([
+                    "kind": Activity.Kind.postMentionNotification,
+                    "subject": post,
+                    ])
+                let title = NotificationAttributedTitle.from(notification: Notification(activity: activity))
                 let createdAt = Date(timeIntervalSinceNow: -86_460)
                 let aspectRatio: CGFloat = 1
                 let image = UIImage.imageWithColor(.blue, size: CGSize(width: 300, height: 300))!

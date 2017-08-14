@@ -4,6 +4,14 @@ import Nimble
 
 
 class PushNotificationControllerSpec: QuickSpec {
+    class MockViewController: UIViewController {
+        var presented = false
+
+        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+            presented = true
+        }
+    }
+
     override func spec() {
         describe("PushNotificationController"){
             var currentBadgeCount = 0
@@ -91,28 +99,29 @@ class PushNotificationControllerSpec: QuickSpec {
                 }
 
                 context("when the user isn't authenticated") {
-                    it("returns .none") {
+                    it("does not present prompt") {
                         keychain.isPasswordBased = false
                         let controller = PushNotificationController(defaults: UserDefaults(), keychain: keychain)
-                        let alert = controller.requestPushAccessIfNeeded()
-                        expect(alert).to(beNil())
+                        let vc = MockViewController()
+                        controller.requestPushAccessIfNeeded(vc)
+                        expect(vc.presented) == false
                     }
                 }
 
                 context("when the user is authenticated, but has denied access") {
-                    it("returns .none") {
+                    it("does not present prompt") {
                         keychain.isPasswordBased = true
 
                         let controller = PushNotificationController(defaults: UserDefaults(), keychain: keychain)
                         controller.permissionDenied = true
-                        let alert = controller.requestPushAccessIfNeeded()
-
-                        expect(alert).to(beNil())
+                        let vc = MockViewController()
+                        controller.requestPushAccessIfNeeded(vc)
+                        expect(vc.presented) == false
                     }
                 }
 
                 context("when the user is authenticated, hasn't previously denied access, and hasn't seen the custom alert before") {
-                    it("returns an AlertViewController") {
+                    it("presents a prompt") {
                         keychain.authToken = "abcde"
                         keychain.isPasswordBased = true
 
@@ -120,9 +129,9 @@ class PushNotificationControllerSpec: QuickSpec {
                         controller.permissionDenied = false
                         controller.needsPermission = true
 
-                        let alert = controller.requestPushAccessIfNeeded()
-
-                        expect(alert).to(beAnInstanceOf(AlertViewController.self))
+                        let vc = MockViewController()
+                        controller.requestPushAccessIfNeeded(vc)
+                        expect(vc.presented) == true
                     }
                 }
             }

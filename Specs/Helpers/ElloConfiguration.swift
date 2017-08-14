@@ -29,8 +29,8 @@ class ElloConfiguration: QuickConfiguration {
                     )
             }
 
-            ElloLinkedStore.databaseName = "ello_test.sqlite"
-            BadgesService.badges = [
+            ElloLinkedStore.databaseName = "ello-test-v2.sqlite"
+            Badge.badges = [
                 "featured": Badge(slug: "featured", name: "Featured", caption: "Learn More", url: nil, imageURL: nil),
                 "community": Badge(slug: "community", name: "Community", caption: "Learn More", url: nil, imageURL: nil),
                 "experimental": Badge(slug: "experimental", name: "Experimental", caption: "Learn More", url: nil, imageURL: nil),

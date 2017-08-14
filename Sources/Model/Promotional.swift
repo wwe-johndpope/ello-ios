@@ -6,6 +6,7 @@ import SwiftyJSON
 
 let PromotionalVersion = 1
 
+@objc(Promotional)
 final class Promotional: JSONAble {
 
     let id: String

@@ -24,7 +24,7 @@ final class Badge: JSONAble {
     static var badges: [String: Badge] {
         get { return readBadges() }
         set {
-            let data = NSKeyedArchiver.archivedData(withRootObject: badges)
+            let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
             saveBadgesData(data)
         }
     }
@@ -138,5 +138,5 @@ private func saveBadgesData(_ data: Data) {
 
 private func badgesFileURL() -> URL? {
     guard let pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-    return pathURL.appendingPathComponent("badges.data")
+    return pathURL.appendingPathComponent("badges-v2.data")
 }
