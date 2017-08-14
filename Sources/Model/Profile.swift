@@ -11,6 +11,7 @@ import SwiftyJSON
 // version 4: added hasAnnouncementsEnabled
 // version 5: added isCommunity
 // version 6: added creatorTypeCategoryIds
+// version 7: added notifyOfApprovedSubmissionsViaPush
 let ProfileVersion: Int = 6
 
 @objc(Profile)
@@ -64,6 +65,7 @@ final class Profile: JSONAble {
         case subscribeToWeeklyEllo = "subscribe_to_weekly_ello"
         case subscribeToOnboardingDrip = "subscribe_to_onboarding_drip"
         case notifyOfAnnouncementsViaPush = "notify_of_announcements_via_push"
+        case notifyOfApprovedSubmissionsViaPush = "notify_of_approved_submissions_via_push"
         case notifyOfCommentsViaPush = "notify_of_comments_via_push"
         case notifyOfLovesViaPush = "notify_of_loves_via_push"
         case notifyOfMentionsViaPush = "notify_of_mentions_via_push"
@@ -107,6 +109,7 @@ final class Profile: JSONAble {
     let subscribeToWeeklyEllo: Bool
     let subscribeToOnboardingDrip: Bool
     let notifyOfAnnouncementsViaPush: Bool
+    let notifyOfApprovedSubmissionsViaPush: Bool
     let notifyOfCommentsViaPush: Bool
     let notifyOfLovesViaPush: Bool
     let notifyOfMentionsViaPush: Bool
@@ -149,6 +152,7 @@ final class Profile: JSONAble {
         subscribeToWeeklyEllo: Bool,
         subscribeToOnboardingDrip: Bool,
         notifyOfAnnouncementsViaPush: Bool,
+        notifyOfApprovedSubmissionsViaPush: Bool,
         notifyOfCommentsViaPush: Bool,
         notifyOfLovesViaPush: Bool,
         notifyOfMentionsViaPush: Bool,
@@ -187,6 +191,7 @@ final class Profile: JSONAble {
         self.subscribeToWeeklyEllo = subscribeToWeeklyEllo
         self.subscribeToOnboardingDrip = subscribeToOnboardingDrip
         self.notifyOfAnnouncementsViaPush = notifyOfAnnouncementsViaPush
+        self.notifyOfApprovedSubmissionsViaPush = notifyOfApprovedSubmissionsViaPush
         self.notifyOfCommentsViaPush = notifyOfCommentsViaPush
         self.notifyOfLovesViaPush = notifyOfLovesViaPush
         self.notifyOfMentionsViaPush = notifyOfMentionsViaPush
@@ -218,6 +223,13 @@ final class Profile: JSONAble {
         self.blockedCount = decoder.decodeKey("blockedCount")
 
         let version: Int = decoder.decodeKey("version")
+        if version < 7 {
+            self.notifyOfApprovedSubmissionsViaPush = true
+        }
+        else {
+            self.notifyOfApprovedSubmissionsViaPush = decoder.decodeKey("notifyOfApprovedSubmissionsViaPush")
+        }
+
         if version < 6 {
             self.creatorTypeCategoryIds = []
         }
@@ -313,6 +325,7 @@ final class Profile: JSONAble {
         coder.encodeObject(subscribeToWeeklyEllo, forKey: "subscribeToWeeklyEllo")
         coder.encodeObject(subscribeToOnboardingDrip, forKey: "subscribeToOnboardingDrip")
         coder.encodeObject(notifyOfAnnouncementsViaPush, forKey: "notifyOfAnnouncementsViaPush")
+        coder.encodeObject(notifyOfApprovedSubmissionsViaPush, forKey: "notifyOfApprovedSubmissionsViaPush")
         coder.encodeObject(notifyOfCommentsViaPush, forKey: "notifyOfCommentsViaPush")
         coder.encodeObject(notifyOfLovesViaPush, forKey: "notifyOfLovesViaPush")
         coder.encodeObject(notifyOfMentionsViaPush, forKey: "notifyOfMentionsViaPush")
@@ -360,6 +373,7 @@ final class Profile: JSONAble {
             subscribeToWeeklyEllo: json["subscribe_to_weekly_ello"].boolValue,
             subscribeToOnboardingDrip: json["subscribe_to_onboarding_drip"].boolValue,
             notifyOfAnnouncementsViaPush: json["notify_of_announcements_via_push"].boolValue,
+            notifyOfApprovedSubmissionsViaPush: json["notify_of_approved_submissions_via_push"].boolValue,
             notifyOfCommentsViaPush: json["notify_of_comments_via_push"].boolValue,
             notifyOfLovesViaPush: json["notify_of_loves_via_push"].boolValue,
             notifyOfMentionsViaPush: json["notify_of_mentions_via_push"].boolValue,

@@ -43,6 +43,8 @@ final class Activity: JSONAble {
         case loveOnRepostNotification = "love_on_repost_notification" // someone loved your repost
         case loveOnOriginalPostNotification = "love_on_original_post_notification" // someone loved other's repost of your post
 
+        case approvedArtistInviteSubmission = "approved_artist_invite_submission" // your submission has been accepted
+
         // Fallback for not defined types
         case unknown = "Unknown"
     }

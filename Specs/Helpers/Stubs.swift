@@ -200,6 +200,7 @@ extension Profile: Stubbable {
         let subscribeToWeeklyEllo: Bool = (values["subscribeToWeeklyEllo"] as? Bool) ?? true
         let subscribeToOnboardingDrip: Bool = (values["subscribeToOnboardingDrip"] as? Bool) ?? true
         let notifyOfAnnouncementsViaPush: Bool = (values["notifyOfAnnouncementsViaPush"] as? Bool) ?? true
+        let notifyOfApprovedSubmissionsViaPush: Bool = (values["notifyOfApprovedSubmissionsViaPush"] as? Bool) ?? true
         let notifyOfCommentsViaPush: Bool = (values["notifyOfCommentsViaPush"] as? Bool) ?? true
         let notifyOfLovesViaPush: Bool  = (values["notifyOfLovesViaPush"] as? Bool) ?? true
         let notifyOfMentionsViaPush: Bool = (values["notifyOfMentionsViaPush"] as? Bool) ?? true
@@ -240,6 +241,7 @@ extension Profile: Stubbable {
             subscribeToWeeklyEllo: subscribeToWeeklyEllo,
             subscribeToOnboardingDrip: subscribeToOnboardingDrip,
             notifyOfAnnouncementsViaPush: notifyOfAnnouncementsViaPush,
+            notifyOfApprovedSubmissionsViaPush: notifyOfApprovedSubmissionsViaPush,
             notifyOfCommentsViaPush: notifyOfCommentsViaPush,
             notifyOfLovesViaPush: notifyOfLovesViaPush,
             notifyOfMentionsViaPush: notifyOfMentionsViaPush,

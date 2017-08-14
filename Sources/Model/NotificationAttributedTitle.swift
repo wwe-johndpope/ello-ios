@@ -228,6 +228,8 @@ struct NotificationAttributedTitle {
                 else {
                     return styleUser(author).appending(styleText(" is watching a repost of your post."))
                 }
+            case .approvedArtistInviteSubmission:
+                return styleText("Your submission has been accepted!")
             case .welcomeNotification:
                 return styleText("Welcome to Ello!")
             default:
