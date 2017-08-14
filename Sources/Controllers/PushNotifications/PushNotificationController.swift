@@ -160,6 +160,7 @@ extension PushNotificationController {
                 }
             case PushActions.commentReply:
                 if case .pushNotificationComment = type,
+                    let userId = payload.destinationUserId,
                     let text = userInfo[PushActions.userInputKey] as? String
                 {
                     actionPostCommentReply(userId: userId, postId: data, text: text)
@@ -170,15 +171,15 @@ extension PushNotificationController {
                 if case .pushNotificationUser = type {
                     actionMessageUser(userId: data, text: text)
                 }
-                else let userId = payload.destinationUserId {
+                else if let userId = payload.destinationUserId {
                     actionMessageUser(userId: userId, text: text)
                 }
             case PushActions.followUser:
                 if case .pushNotificationUser = type {
                     actionFollowUser(userId: data)
                 }
-                else let userId = payload.destinationUserId {
-                    actionFollowUser(userId: userId, text: text)
+                else if let userId = payload.destinationUserId {
+                    actionFollowUser(userId: userId)
                 }
             case PushActions.lovePost:
                 if type == .pushNotificationPost || type == .pushNotificationComment {
@@ -195,7 +196,7 @@ extension PushNotificationController {
     }
 
     private func actionPostCommentReply(userId: String, postId: String, text: String) {
-        actionSendMessage(userId: userId, text: text, postEditingService: PostEditingService(parentPostId: parentPostId))
+        actionSendMessage(userId: userId, text: text, postEditingService: PostEditingService(parentPostId: postId))
     }
 
     private func actionMessageUser(userId: String, text: String) {
