@@ -428,7 +428,7 @@ extension Activity: Stubbable {
             activityKind = kind
         }
         else {
-            activityKind = .friendPost
+            activityKind = .newFollowerPost
         }
 
         let activitySubjectType: SubjectType

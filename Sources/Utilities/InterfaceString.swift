@@ -238,7 +238,6 @@ struct InterfaceString {
     }
 
     struct Hire {
-        static let Send: String = NSLocalizedString("Send", comment: "Send Button title")
         static func HireTitle(atName: String) -> String {
             return String.localizedStringWithFormat("Hire %@", atName)
         }
@@ -295,6 +294,13 @@ struct InterfaceString {
         static let PermissionPrompt: String = NSLocalizedString("Ello would like to send you push notifications.\n\nWe will let you know when you have new notifications. You can make changes in your settings.\n", comment: "Turn on Push Notifications prompt")
         static let PermissionYes: String = NSLocalizedString("Yes please", comment: "Allow")
         static let PermissionNo: String = NSLocalizedString("No thanks", comment: "Disallow")
+
+        static let CommentReply: String = NSLocalizedString("Reply", comment: "")
+        static let MessageUser: String = NSLocalizedString("Message", comment: "")
+        static let PostComment: String = NSLocalizedString("Comment", comment: "")
+        static let LovePost: String = NSLocalizedString("Love", comment: "")
+        static let FollowUser: String = NSLocalizedString("Follow", comment: "")
+        static let View: String = NSLocalizedString("View", comment: "")
     }
 
     struct Friends {
@@ -458,4 +464,5 @@ struct InterfaceString {
     static let Done: String = NSLocalizedString("Done", comment: "")
     static let Skip: String = NSLocalizedString("Skip", comment: "")
     static let SeeAll: String = NSLocalizedString("See All", comment: "")
+    static let Send: String = NSLocalizedString("Send", comment: "")
 }

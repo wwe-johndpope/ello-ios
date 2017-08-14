@@ -10,22 +10,25 @@ import PromiseKit
 class RelationshipService: NSObject {
 
     func updateRelationship(
-        currentUserId: String,
+        currentUserId: String?,
         userId: String,
         relationshipPriority: RelationshipPriority
         ) -> (Relationship?, Promise<Relationship?>)
     {
         // optimistic success
-        let optimisticRelationship =
-            Relationship(
-                id: Tmp.uniqueName(),
+        let optimisticRelationship: Relationship? = currentUserId.map({ currentUserId in
+            return Relationship(
+                id: UUID().uuidString,
                 createdAt: AppSetup.shared.now,
                 ownerId: currentUserId,
                 subjectId: userId
             )
+        })
         var returnedRelationship: Relationship?
 
-        if let subject = optimisticRelationship.subject {
+        if let optimisticRelationship = optimisticRelationship,
+            let subject = optimisticRelationship.subject
+        {
             subject.relationshipPriority = relationshipPriority
             ElloLinkedStore.sharedInstance.setObject(subject, forKey: subject.id, type: .usersType)
             returnedRelationship = optimisticRelationship

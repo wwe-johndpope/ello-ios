@@ -15,15 +15,19 @@ struct PushNotificationNotifications {
 }
 
 struct PushActions {
-    static let ownPostCategory = "co.ello.OWN_POST_CATEGORY"
-    static let otherPostCategory = "co.ello.POST_CATEGORY"
+    static let postCategory = "co.ello.POST_CATEGORY"
     static let commentCategory = "co.ello.COMMENT_CATEGORY"
     static let userCategory = "co.ello.USER_CATEGORY"
+    static let userMessageCategory = "co.ello.USER_MESSAGE_CATEGORY"
 
     static let followUser = "co.ello.FOLLOW_USER_ACTION"
     static let lovePost = "co.ello.LOVE_POST_ACTION"
     static let postComment = "co.ello.POST_COMMENT_ACTION"
     static let commentReply = "co.ello.COMMENT_REPLY_ACTION"
+    static let messageUser = "co.ello.MESSAGE_USER_ACTION"
+    static let view = "co.ello.VIEW_ACTION"
+
+    static let userInputKey = "co.ello.PushActions.TextInput"
 }
 
 class PushNotificationController: NSObject {
@@ -60,7 +64,11 @@ extension PushNotificationController: UNUserNotificationCenterDelegate {
     // background - user interacted with notification outside of the app
     @objc @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        receivedNotification(UIApplication.shared, action: response.actionIdentifier, userInfo: response.notification.request.content.userInfo)
+        var userInfo = response.notification.request.content.userInfo
+        if let response = response as? UNTextInputNotificationResponse {
+            userInfo[PushActions.userInputKey] = response.userText
+        }
+        receivedNotification(UIApplication.shared, action: response.actionIdentifier, userInfo: userInfo)
         completionHandler()
     }
 }
@@ -85,19 +93,21 @@ extension PushNotificationController {
         let app = UIApplication.shared
 
         if #available(iOS 10.0, *){
-            let replyAction = UNTextInputNotificationAction(identifier: PushActions.commentReply, title: "Reply", options: [.authenticationRequired], textInputButtonTitle: "Send", textInputPlaceholder: "")
-            let commentAction = UNTextInputNotificationAction(identifier: PushActions.postComment, title: "Comment", options: [.authenticationRequired], textInputButtonTitle: "Send", textInputPlaceholder: "")
-            let loveAction = UNNotificationAction(identifier: PushActions.lovePost, title: "Love", options: [.authenticationRequired])
-            let followAction = UNNotificationAction(identifier: PushActions.followUser, title: "Follow", options: [.authenticationRequired])
+            let replyAction = UNTextInputNotificationAction(identifier: PushActions.commentReply, title: InterfaceString.PushNotifications.CommentReply, options: [.authenticationRequired], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
+            let messageAction = UNTextInputNotificationAction(identifier: PushActions.messageUser, title: InterfaceString.PushNotifications.MessageUser, options: [.authenticationRequired], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
+            let commentAction = UNTextInputNotificationAction(identifier: PushActions.postComment, title: InterfaceString.PushNotifications.PostComment, options: [.authenticationRequired], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
+            let loveAction = UNNotificationAction(identifier: PushActions.lovePost, title: InterfaceString.PushNotifications.LovePost, options: [.authenticationRequired])
+            let followAction = UNNotificationAction(identifier: PushActions.followUser, title: InterfaceString.PushNotifications.FollowUser, options: [.authenticationRequired])
+            let viewAction = UNNotificationAction(identifier: PushActions.view, title: InterfaceString.PushNotifications.View, options: [.authenticationRequired, .foreground])
 
-            let ownPostCategory = UNNotificationCategory(identifier: PushActions.ownPostCategory, actions: [], intentIdentifiers: [], options: [])
-            let otherPostCategory = UNNotificationCategory(identifier: PushActions.otherPostCategory, actions: [loveAction, commentAction], intentIdentifiers: [], options: [])
-            let commentCategory = UNNotificationCategory(identifier: PushActions.commentCategory, actions: [replyAction], intentIdentifiers: [], options: [])
-            let userCategory = UNNotificationCategory(identifier: PushActions.userCategory, actions: [followAction], intentIdentifiers: [], options: [])
+            let postCategory = UNNotificationCategory(identifier: PushActions.postCategory, actions: [loveAction, commentAction, viewAction], intentIdentifiers: [], options: [])
+            let commentCategory = UNNotificationCategory(identifier: PushActions.commentCategory, actions: [loveAction, replyAction, viewAction], intentIdentifiers: [], options: [])
+            let userCategory = UNNotificationCategory(identifier: PushActions.userCategory, actions: [followAction, messageAction, viewAction], intentIdentifiers: [], options: [])
+            let userMessageCategory = UNNotificationCategory(identifier: PushActions.userMessageCategory, actions: [messageAction, viewAction], intentIdentifiers: [], options: [])
 
             let center = UNUserNotificationCenter.current()
             center.delegate = self
-            center.setNotificationCategories([ownPostCategory, otherPostCategory, commentCategory, userCategory])
+            center.setNotificationCategories([postCategory, commentCategory, userCategory, userMessageCategory])
             center.requestAuthorization(options: [.badge, .sound, .alert]) {
                 (granted, _) in
                 if granted {
@@ -139,14 +149,80 @@ extension PushNotificationController {
             NotificationBanner.displayAlert(payload: payload)
         }
         else {
-            switch action ?? "" {
+            let (type, data) = ElloURI.match(payload.applicationTarget)
+
+            switch action ?? PushActions.view {
+            case PushActions.postComment:
+                if case .pushNotificationPost = type,
+                    let text = userInfo[PushActions.userInputKey] as? String
+                {
+                    actionPostComment(postId: data, text: text)
+                }
+            case PushActions.commentReply:
+                if case .pushNotificationComment = type,
+                    let text = userInfo[PushActions.userInputKey] as? String
+                {
+                    actionPostCommentReply(userId: userId, postId: data, text: text)
+                }
+            case PushActions.messageUser:
+                guard let text = userInfo[PushActions.userInputKey] as? String else { return }
+
+                if case .pushNotificationUser = type {
+                    actionMessageUser(userId: data, text: text)
+                }
+                else let userId = payload.destinationUserId {
+                    actionMessageUser(userId: userId, text: text)
+                }
+            case PushActions.followUser:
+                if case .pushNotificationUser = type {
+                    actionFollowUser(userId: data)
+                }
+                else let userId = payload.destinationUserId {
+                    actionFollowUser(userId: userId, text: text)
+                }
             case PushActions.lovePost:
-                print("here!")
-                break
+                if type == .pushNotificationPost || type == .pushNotificationComment {
+                    actionLovePost(postId: data)
+                }
             default:
                 postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
             }
         }
+    }
+
+    private func actionPostComment(postId: String, text: String) {
+        PostEditingService(parentPostId: postId).create(content: [.text(text)]).ignoreErrors()
+    }
+
+    private func actionPostCommentReply(userId: String, postId: String, text: String) {
+        actionSendMessage(userId: userId, text: text, postEditingService: PostEditingService(parentPostId: parentPostId))
+    }
+
+    private func actionMessageUser(userId: String, text: String) {
+        actionSendMessage(userId: userId, text: text, postEditingService: PostEditingService())
+    }
+
+    private func actionSendMessage(userId: String, text: String, postEditingService: PostEditingService) {
+        UserService().loadUser(.userStream(userParam: userId))
+            .thenFinally { user in
+                let postText: String
+                if text =~ "\(user.atName)\\b" {
+                    postText = text
+                }
+                else {
+                    postText = "\(user.atName) \(text)"
+                }
+                postEditingService.create(content: [.text(postText)]).ignoreErrors()
+            }
+            .ignoreErrors()
+    }
+
+    private func actionFollowUser(userId: String) {
+        _ = RelationshipService().updateRelationship(currentUserId: nil, userId: userId, relationshipPriority: .following)
+    }
+
+    private func actionLovePost(postId: String) {
+        LovesService().lovePost(postId: postId).ignoreErrors()
     }
 
     func updateBadgeCount(_ userInfo: [AnyHashable: Any]) {

@@ -5,6 +5,11 @@
 struct PushPayload {
     let info: [String: Any]
 
+    var destinationUserId: String? {
+        if let id = (info["destination_user_id"] as? Int).map(String.init) { return id }
+        return info["destination_user_id"] as? String
+    }
+
     var applicationTarget: String {
         return info["application_target"] as? String ?? ""
     }
@@ -12,7 +17,7 @@ struct PushPayload {
     var message: String {
         let aps = info["aps"] as? [String: Any]
         let alert = aps?["alert"] as? [String: String]
-        return alert?["body"] ?? "New Notification"
+        return alert?["body"] ?? ""
     }
 }
 
