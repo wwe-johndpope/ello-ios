@@ -61,8 +61,6 @@ class NotificationService: UNNotificationServiceExtension {
                             let data = try? Data(contentsOf: url)
                         else { return nil }
 
-                        print(url.absoluteString)
-
                         return Tmp.write(data, to: url.lastPathComponent)
                     default:
                         return nil
