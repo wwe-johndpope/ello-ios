@@ -71,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: payload)
         }
 
+        Tracker.shared.sessionStarted()
         return true
     }
 
