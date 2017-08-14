@@ -16,5 +16,5 @@ struct PushPayload {
     }
 }
 
-// {"application_target": "notifications/posts/6178", "aps": {"alert": {"body": "Hello, Ello!"}}}
-// PushNotificationController.sharedController.receivedNotification(UIApplication.sharedApplication(), userInfo: ["application_target": "notifications/posts/6178", "aps": ["alert": ["body": "Hello, Ello!"]]])
+// {"application_target": "notifications/posts/6178", "destination_user_id": "12345", "aps": {"alert": {"body": "Hello, Ello!"}}}
+// PushNotificationController.shared.receivedNotification(UIApplication.sharedApplication(), userInfo: ["application_target": "notifications/posts/6178", "aps": ["alert": ["body": "Hello, Ello!"]]])

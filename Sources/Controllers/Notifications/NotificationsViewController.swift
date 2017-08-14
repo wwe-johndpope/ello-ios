@@ -76,7 +76,7 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
         }
         fromTabBar = false
 
-        PushNotificationController.sharedController.updateBadgeNumber(0)
+        PushNotificationController.shared.updateBadgeNumber(0)
     }
 
     override public func viewDidAppear(_ animated: Bool) {

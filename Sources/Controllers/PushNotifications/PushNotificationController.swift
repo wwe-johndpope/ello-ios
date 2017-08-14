@@ -27,7 +27,7 @@ struct PushActions {
 }
 
 class PushNotificationController: NSObject {
-    static let sharedController = PushNotificationController(defaults: GroupDefaults, keychain: ElloKeychain())
+    static let shared = PushNotificationController(defaults: GroupDefaults, keychain: ElloKeychain())
 
     fileprivate let defaults: UserDefaults
     fileprivate var keychain: KeychainType

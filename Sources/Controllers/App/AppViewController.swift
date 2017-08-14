@@ -287,7 +287,7 @@ extension AppViewController {
             }
 
             vc.activateTabBar()
-            PushNotificationController.sharedController.requestPushAccessIfNeeded(vc)
+            PushNotificationController.shared.requestPushAccessIfNeeded(vc)
         }
     }
 }
@@ -434,7 +434,7 @@ extension AppViewController {
     }
 
     fileprivate func logOutCurrentUser() {
-        PushNotificationController.sharedController.deregisterStoredToken()
+        PushNotificationController.shared.deregisterStoredToken()
         ElloProvider.shared.logout()
         GroupDefaults.resetOnLogout()
         UIApplication.shared.applicationIconBadgeNumber = 0

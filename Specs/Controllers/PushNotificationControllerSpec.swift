@@ -39,7 +39,7 @@ class PushNotificationControllerSpec: QuickSpec {
                             ]
                         ]
 
-                        expect(PushNotificationController.sharedController.hasAlert(userInfo)) == true
+                        expect(PushNotificationController.shared.hasAlert(userInfo)) == true
                     }
                 }
 
@@ -52,7 +52,7 @@ class PushNotificationControllerSpec: QuickSpec {
                             ]
                         ]
 
-                        expect(PushNotificationController.sharedController.hasAlert(userInfo)) == false
+                        expect(PushNotificationController.shared.hasAlert(userInfo)) == false
                     }
                 }
             }
@@ -68,7 +68,7 @@ class PushNotificationControllerSpec: QuickSpec {
                                 "badge": NSNumber(value: 0)
                             ]
                         ]
-                        PushNotificationController.sharedController.updateBadgeCount(userInfo)
+                        PushNotificationController.shared.updateBadgeCount(userInfo)
                         // yes, apparently, *printing* the value makes this spec pass
                         print("count: \(UIApplication.shared.applicationIconBadgeNumber)")
 
@@ -84,7 +84,7 @@ class PushNotificationControllerSpec: QuickSpec {
                             "aps": [
                             ]
                         ]
-                        PushNotificationController.sharedController.updateBadgeCount(userInfo)
+                        PushNotificationController.shared.updateBadgeCount(userInfo)
 
                         expect(UIApplication.shared.applicationIconBadgeNumber) == 5
                     }

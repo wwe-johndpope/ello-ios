@@ -195,7 +195,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         addAction(name: "Show Notification") {
             appController.closeDebugController {
-                PushNotificationController.sharedController.receivedNotification(UIApplication.shared, action: nil, userInfo: [
+                PushNotificationController.shared.receivedNotification(UIApplication.shared, action: nil, userInfo: [
                     "application_target": "notifications/posts/6178",
                     "aps": [
                         "alert": ["body": "Hello, Ello!"]
@@ -209,10 +209,10 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
 
         addAction(name: "Show Push Notification Alert") {
-            PushNotificationController.sharedController.permissionDenied = false
-            PushNotificationController.sharedController.needsPermission = true
+            PushNotificationController.shared.permissionDenied = false
+            PushNotificationController.shared.needsPermission = true
             appController.closeDebugController {
-                PushNotificationController.sharedController.requestPushAccessIfNeeded(appController)
+                PushNotificationController.shared.requestPushAccessIfNeeded(appController)
             }
         }
 

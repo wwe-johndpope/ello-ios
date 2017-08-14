@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupCaches()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
-            PushNotificationController.sharedController.receivedNotification(application, action: nil, userInfo: payload)
+            PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: payload)
         }
 
         return true
@@ -126,11 +126,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: Notifications
 extension AppDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        PushNotificationController.sharedController.updateToken(deviceToken)
+        PushNotificationController.shared.updateToken(deviceToken)
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        PushNotificationController.sharedController.receivedNotification(application, action: nil, userInfo: userInfo)
+        PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: userInfo)
         completionHandler(.noData)
     }
 
