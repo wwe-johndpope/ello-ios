@@ -167,7 +167,7 @@ class NotificationSpec: QuickSpec {
                             "subject": author,
                             "createdAt": expectedCreatedAt,
                             "id": "test-notication-id",
-                            "kind": "noise_post",
+                            "kind": "new_follower_post",
                             "subjectType": "Post"
                             ])
                         let notification: Ello.Notification = stub(["activity": activity])
@@ -180,7 +180,7 @@ class NotificationSpec: QuickSpec {
                         expect(unArchivedNotification?.author?.id) == "author-id"
                         expect(unArchivedNotification?.createdAt) == expectedCreatedAt
                         expect(unArchivedNotification?.activity.id) == "test-notication-id"
-                        expect(unArchivedNotification?.activity.kind.rawValue) == Activity.Kind.noisePost.rawValue
+                        expect(unArchivedNotification?.activity.kind) == Activity.Kind.newFollowerPost
                         expect(unArchivedNotification?.activity.subjectType.rawValue) == Activity.SubjectType.post.rawValue
                     }
                 }

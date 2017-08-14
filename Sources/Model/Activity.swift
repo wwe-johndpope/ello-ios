@@ -20,16 +20,6 @@ final class Activity: JSONAble {
     var subject: JSONAble? { return getLinkObject("subject") }
 
     enum Kind: String {
-        // Posts
-        case friendPost = "friend_post" // main feed
-        case ownPost = "own_post" // main feed
-        case welcomePost = "welcome_post" // main feed
-        case noisePost = "noise_post" // main feed
-
-        // Comments
-
-        case friendComment = "friend_comment"
-
         // Notifications
         case newFollowerPost = "new_follower_post" // someone started following you
         case newFollowedUserPost = "new_followed_user_post" // you started following someone
@@ -52,9 +42,6 @@ final class Activity: JSONAble {
         case loveNotification = "love_notification" // someone loved your post
         case loveOnRepostNotification = "love_on_repost_notification" // someone loved your repost
         case loveOnOriginalPostNotification = "love_on_original_post_notification" // someone loved other's repost of your post
-
-        // Deprecated posts
-        case commentMention = "comment_mention"
 
         // Fallback for not defined types
         case unknown = "Unknown"
