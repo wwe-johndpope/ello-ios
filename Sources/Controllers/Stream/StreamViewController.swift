@@ -722,13 +722,8 @@ final class StreamViewController: BaseElloViewController {
     fileprivate func setupDataSource() {
         dataSource = StreamDataSource(streamKind: streamKind)
         dataSource.streamCollapsedFilter = { item in
-            if !item.type.isCollapsable {
-                return true
-            }
-            if item.jsonable is Post {
-                return item.state != .collapsed
-            }
-            return true
+            guard item.type.isCollapsable, item.jsonable is Post else { return true }
+            return item.state != .collapsed
         }
     }
 
