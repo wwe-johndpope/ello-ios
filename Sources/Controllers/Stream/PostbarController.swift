@@ -261,10 +261,11 @@ class PostbarController: UIResponder, PostbarResponder {
             ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
         }
 
+        postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
+
         LovesService().lovePost(postId: post.id)
             .thenFinally { love in
                 postNotification(JSONAbleChangedNotification, value: (love, .create))
-                postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
                 cell?.toggleLoveState(loved: true)
                 cell?.toggleLoveControl(enabled: true)
             }
