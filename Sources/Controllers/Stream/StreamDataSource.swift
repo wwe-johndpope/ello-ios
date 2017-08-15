@@ -847,7 +847,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: columnCount, completion: afterAll())
         categoryHeaderSizeCalculator.processCells(categoryHeaderItems, withWidth: withWidth, completion: afterAll())
         editorialDownloader.processCells(editorialItems, completion: afterAll())
-        artistInviteCalculator.processCells(artistInviteItems, withWidth: withWidth, completion: afterAll())
+        artistInviteCalculator.processCells(artistInviteItems, withWidth: withWidth, hasCurrentUser: true, completion: afterAll())
         done()
     }
 

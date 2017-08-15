@@ -130,6 +130,10 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
 
     func tappedArtistInviteSubmitButton() {
         guard let artistInvite = artistInvite else { return }
+        guard let currentUser = currentUser else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .artistInviteSubmit)
+            return
+        }
 
         let vc = OmnibarViewController()
         vc.artistInvite = artistInvite

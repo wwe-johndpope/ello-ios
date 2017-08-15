@@ -18,6 +18,7 @@ struct StatusBarNotifications {
 enum LoggedOutAction {
     case relationshipChange
     case postTool
+    case artistInviteSubmit
 }
 
 struct LoggedOutNotifications {

@@ -111,7 +111,7 @@ private extension ArtistInviteDetailGenerator {
                     let submissionsHeader = StreamCellItem(type: .header(header))
                     self.destination?.replacePlaceholder(type: .artistInviteSubmissionsHeader, items: [submissionsHeader])
 
-                    let button = StreamCellItem(type: .artistInviteSubmissionsButton, placeholderType: .artistInviteSubmissionsButton)
+                    let button = StreamCellItem(type: .artistInviteSubmissionsButton)
                     self.destination?.replacePlaceholder(type: .artistInviteSubmissionsButton, items: [button])
 
                     let items = self.parse(jsonables: posts)
