@@ -123,13 +123,18 @@ private func times_(_ times: Int, block: TakesIndexBlock) {
 //
 // without this 'done' trick, there is a bug where if the first process is synchronous, the 'count'
 // is incremented (by calling 'afterAll') and then immediately decremented.
-func afterN(_ block: @escaping Block) -> (AfterBlock, Block) {
+func afterN(_ block: @escaping Block, on queue: DispatchQueue? = nil) -> (AfterBlock, Block) {
     var count = 0
     var called = false
     let decrementCount: Block = {
         count -= 1
         if count == 0 && !called {
-            block()
+            if let queue = queue {
+                queue.async(execute: block)
+            }
+            else {
+                block()
+            }
             called = true
         }
     }
