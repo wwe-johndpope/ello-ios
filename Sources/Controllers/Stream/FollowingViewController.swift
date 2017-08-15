@@ -77,13 +77,6 @@ class FollowingViewController: StreamableViewController {
         return view
     }
 
-    override func didSetCurrentUser() {
-        if isViewLoaded {
-            streamViewController.currentUser = currentUser
-        }
-        super.didSetCurrentUser()
-    }
-
     override func showNavBars() {
         super.showNavBars()
         positionNavBar(navigationBar, visible: true)

@@ -151,6 +151,7 @@ extension ArtistInviteDetailController: RevealControllerResponder {
         else { return }
 
         let vc = ArtistInviteAdminController(artistInvite: artistInvite, stream: stream)
+        vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
 
