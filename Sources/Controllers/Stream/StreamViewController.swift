@@ -327,7 +327,19 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate var debounceCellReload = debounce(0.05)
+    fileprivate var allowReload = true {
+        didSet {
+            if allowReload && shouldReload { reloadCells(now: true) }
+        }
+    }
+    fileprivate var shouldReload = false
     func reloadCells(now: Bool = false) {
+        guard allowReload else {
+            shouldReload = true
+            return
+        }
+        shouldReload = false
+
         if now {
             debounceCellReload {}
             self.collectionView.reloadData()
@@ -355,8 +367,12 @@ final class StreamViewController: BaseElloViewController {
 
     func appendUnsizedCellItems(_ items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
         let width = view.frame.width
+        self.allowReload = false
         dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
-            self.reloadCells()
+            self.collectionView.performBatchUpdates {
+                self.collectionView.insertItems(at: indexPaths)
+            }
+            self.allowReload = true
             self.doneLoading()
             completion?(indexPaths)
         }
