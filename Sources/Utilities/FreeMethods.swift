@@ -129,7 +129,13 @@ func afterN(on queue: DispatchQueue? = nil, execute block: @escaping Block) -> (
     let decrementCount: Block = {
         count -= 1
         if count == 0 && !called {
-            if let queue = queue {
+            if AppSetup.shared.isTesting, queue == DispatchQueue.main {
+                block()
+            }
+            else if queue == DispatchQueue.main, Thread.isMainThread {
+                block()
+            }
+            else if let queue = queue {
                 queue.async(execute: block)
             }
             else {
