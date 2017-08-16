@@ -131,6 +131,8 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
     func tappedArtistInviteSubmitButton() {
         guard let artistInvite = artistInvite else { return }
         guard let currentUser = currentUser else {
+            let alertController = AlertViewController(error: InterfaceString.ArtistInvites.SubmissionLoggedOutError)
+            present(alertController, animated: true, completion: nil)
             postNotification(LoggedOutNotifications.userActionAttempted, value: .artistInviteSubmit)
             return
         }

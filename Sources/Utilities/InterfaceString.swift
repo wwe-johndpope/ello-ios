@@ -68,7 +68,8 @@ struct InterfaceString {
         static let OpenStatus: String = NSLocalizedString("Open For Submissions", comment: "")
         static let SelectingStatus: String = NSLocalizedString("Selections In Progress", comment: "")
         static let ClosedStatus: String = NSLocalizedString("Invite Closed", comment: "")
-        static let SubmissionSuccessTitle: String = NSLocalizedString("Submission recieved!", comment: "")
+        static let SubmissionLoggedOutError: String = NSLocalizedString("To submit to an Artist Invite you first need to create an Ello account.", comment: "")
+        static let SubmissionSuccessTitle: String = NSLocalizedString("Submission received!", comment: "")
         static let SubmissionSuccessDescription: String = NSLocalizedString("Our team of curators will review your submission and you’ll recieve a notification when it is accepted.", comment: "")
 
         static let AdminTitle: String = NSLocalizedString("Submissions", comment: "")
