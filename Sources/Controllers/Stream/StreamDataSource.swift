@@ -728,21 +728,24 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         insertUnsizedCellItems(cellItems, withWidth: withWidth, startingIndexPath: startingIndexPath, completion: completion)
     }
 
-    func replacePlaceholder(type placeholderType: StreamCellType.PlaceholderType, items streamCellItems: [StreamCellItem]) {
+    @discardableResult
+    func replacePlaceholder(type placeholderType: StreamCellType.PlaceholderType, items streamCellItems: [StreamCellItem])
+        -> (deleted: [IndexPath], inserted: [IndexPath])?
+    {
         guard streamCellItems.count > 0 else {
-            replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)])
-            return
+            return replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)])
         }
 
         for item in streamCellItems {
             item.placeholderType = placeholderType
         }
 
-        let indexPaths = indexPathsForPlaceholderType(placeholderType)
-        guard indexPaths.count > 0 else { return }
+        let deletedIndexPaths = indexPathsForPlaceholderType(placeholderType)
+        guard deletedIndexPaths.count > 0 else { return nil }
 
-        removeItemsAtIndexPaths(indexPaths)
-        insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
+        removeItemsAtIndexPaths(deletedIndexPaths)
+        let insertedIndexPaths = insertStreamCellItems(streamCellItems, startingIndexPath: deletedIndexPaths[0])
+        return (deleted: deletedIndexPaths, inserted: insertedIndexPaths)
     }
 
     @discardableResult

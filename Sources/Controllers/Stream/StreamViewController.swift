@@ -407,9 +407,15 @@ final class StreamViewController: BaseElloViewController {
         )
     {
         let width = view.frame.width
+        self.allowReload = false
         dataSource.calculateCellItems(streamCellItems, withWidth: width) {
-            self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems)
-            self.reloadCells()
+            if let changes = self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems) {
+                self.performBatchUpdates {
+                    self.collectionView.deleteItems(at: changes.deleted)
+                    self.collectionView.insertItems(at: changes.inserted)
+                }
+            }
+            self.allowReload = true
             completion()
         }
     }
