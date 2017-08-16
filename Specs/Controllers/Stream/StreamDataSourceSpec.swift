@@ -30,7 +30,6 @@ class FakeCollectionView: ElloCollectionView {
 class StreamDataSourceSpec: QuickSpec {
 
     override func spec() {
-        let webWidth: CGFloat = 320
         let indexPath0 = IndexPath(item: 0, section: 0)
         let indexPath1 = IndexPath(item: 1, section: 0)
         let indexPathOutOfBounds = IndexPath(item: 1000, section: 0)
