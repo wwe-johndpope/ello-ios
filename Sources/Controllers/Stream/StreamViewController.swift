@@ -207,10 +207,10 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
-        let delta = dataSource.updateFilter(filter)
-        collectionView.performBatchUpdates({
+        performBatchUpdates {
+            let delta = self.dataSource.updateFilter(filter)
             delta.applyUpdatesToCollectionView(self.collectionView, inSection: 0)
-        }, completion: nil)
+        }
     }
 
     var contentInset: UIEdgeInsets {
@@ -373,8 +373,8 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
-        let indexPaths = dataSource.appendStreamCellItems(items)
-        self.performBatchUpdates {
+        performBatchUpdates {
+            let indexPaths = self.dataSource.appendStreamCellItems(items)
             self.collectionView.insertItems(at: indexPaths)
         }
     }
@@ -382,8 +382,10 @@ final class StreamViewController: BaseElloViewController {
     func appendUnsizedCellItems(_ items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
         let width = view.frame.width
         blockReload()
-        dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
+        dataSource.calculateCellItems(items, withWidth: width) {
+            var indexPaths: [IndexPath]!
             self.performBatchUpdates {
+                indexPaths = self.dataSource.appendStreamCellItems(items)
                 self.collectionView.insertItems(at: indexPaths)
             }
             self.unblockReload()
@@ -395,8 +397,9 @@ final class StreamViewController: BaseElloViewController {
     func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping Block = {}) {
         let width = view.frame.width
         blockReload()
-        dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { indexPaths in
+        dataSource.calculateCellItems(cellItems, withWidth: width) {
             self.performBatchUpdates {
+                let indexPaths = self.dataSource.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
                 self.collectionView.insertItems(at: indexPaths)
             }
             self.unblockReload()

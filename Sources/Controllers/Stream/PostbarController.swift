@@ -489,7 +489,6 @@ class PostbarController: UIResponder, PostbarResponder {
 
     fileprivate func commentLoadSuccess(_ post: Post, comments jsonables: [JSONAble], indexPath: IndexPath, cell: StreamFooterCell) {
         self.appendCreateCommentItem(post, at: indexPath)
-        let commentsStartingIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
 
         var items = StreamCellItemParser().parse(jsonables, streamKind: StreamKind.following, currentUser: currentUser)
 
@@ -504,20 +503,20 @@ class PostbarController: UIResponder, PostbarResponder {
             items.append(StreamCellItem(type: .spacer(height: 10.0)))
         }
 
-        self.dataSource.insertUnsizedCellItems(items,
-            withWidth: self.collectionView.frame.width,
-            startingIndexPath: commentsStartingIndexPath) { [weak self] (indexPaths) in
-                guard let `self` = self else { return }
-                self.collectionView.reloadData() // insertItemsAtIndexPaths(indexPaths)
-                cell.commentsControl.isEnabled = true
+        dataSource.calculateCellItems(items, withWidth: self.collectionView.frame.width) { [weak self] in
+            guard let `self` = self else { return }
 
-                if let controller = self.responderChainable?.controller,
-                    indexPaths.count == 1, jsonables.count == 0, self.currentUser != nil
-                {
-                    let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
-                    responder?.createComment(post.id, text: nil, fromController: controller)
-                }
+            let indexPaths = self.dataSource.insertStreamCellItems(items, startingIndexPath: indexPath)
+            self.collectionView.reloadData()
+            cell.commentsControl.isEnabled = true
+
+            if let controller = self.responderChainable?.controller,
+                indexPaths.count == 1, jsonables.count == 0, self.currentUser != nil
+            {
+                let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                responder?.createComment(post.id, text: nil, fromController: controller)
             }
+        }
     }
 
     fileprivate func appendCreateCommentItem(_ post: Post, at indexPath: IndexPath) {
