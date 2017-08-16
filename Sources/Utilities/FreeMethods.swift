@@ -115,7 +115,7 @@ private func times_(_ times: Int, block: TakesIndexBlock) {
 // be called once, after all the callbacks have been registered. e.g.
 //
 // func networkCalls(completion: Block) {
-//     let (afterAll, done) = afterN() { completion() }
+//     let (afterAll, done) = afterN { completion() }
 //     backgroundProcess1(completion: afterAll())
 //     backgroundProcess2(completion: afterAll())
 //     done()  // this doesn't execute the callback, just says "i'm done registering callbacks"
@@ -123,7 +123,7 @@ private func times_(_ times: Int, block: TakesIndexBlock) {
 //
 // without this 'done' trick, there is a bug where if the first process is synchronous, the 'count'
 // is incremented (by calling 'afterAll') and then immediately decremented.
-func afterN(_ block: @escaping Block, on queue: DispatchQueue? = nil) -> (AfterBlock, Block) {
+func afterN(on queue: DispatchQueue? = nil, execute block: @escaping Block) -> (AfterBlock, Block) {
     var count = 0
     var called = false
     let decrementCount: Block = {

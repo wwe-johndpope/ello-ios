@@ -824,7 +824,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             return $0.jsonable is ArtistInvite
         }
 
-        let (afterAll, done) = afterN(completion, on: DispatchQueue.main)
+        let (afterAll, done) = afterN(on: DispatchQueue.main, execute: completion)
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCell.Size.postMargin * 2)
         textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: columnCount, completion: afterAll())
