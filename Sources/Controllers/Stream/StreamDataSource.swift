@@ -713,9 +713,14 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     // MARK: Adding items
-    func appendStreamCellItems(_ items: [StreamCellItem]) {
+    @discardableResult
+    func appendStreamCellItems(_ items: [StreamCellItem]) -> [IndexPath] {
+        let startIndex = visibleCellItems.count
         self.streamCellItems += items
         self.updateFilteredItems()
+        let lastIndex = visibleCellItems.count
+
+        return (startIndex ..< lastIndex).map { IndexPath(item: $0, section: 0) }
     }
 
     func appendUnsizedCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping StreamContentReady) {

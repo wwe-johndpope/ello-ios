@@ -326,6 +326,10 @@ final class StreamViewController: BaseElloViewController {
         updateNoResultsLabel()
     }
 
+    func performBatchUpdates(_ block: @escaping () -> Void) {
+        self.collectionView.performBatchUpdates(block, completion: nil)
+    }
+
     fileprivate var debounceCellReload = debounce(0.05)
     fileprivate var allowReload = true {
         didSet {
@@ -361,15 +365,17 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
-        dataSource.appendStreamCellItems(items)
-        reloadCells(now: true)
+        let indexPaths = dataSource.appendStreamCellItems(items)
+        self.performBatchUpdates {
+            self.collectionView.insertItems(at: indexPaths)
+        }
     }
 
     func appendUnsizedCellItems(_ items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
         let width = view.frame.width
         self.allowReload = false
         dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
-            self.collectionView.performBatchUpdates {
+            self.performBatchUpdates {
                 self.collectionView.insertItems(at: indexPaths)
             }
             self.allowReload = true
@@ -380,8 +386,12 @@ final class StreamViewController: BaseElloViewController {
 
     func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping Block = {}) {
         let width = view.frame.width
-        dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { _ in
-            self.reloadCells()
+        self.allowReload = false
+        dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { indexPaths in
+            self.performBatchUpdates {
+                self.collectionView.insertItems(at: indexPaths)
+            }
+            self.allowReload = true
             completion()
         }
     }
@@ -1351,6 +1361,8 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         dataSource.removeItemsAtIndexPaths([lastIndexPath])
-        reloadCells(now: true)
+        self.performBatchUpdates {
+            self.collectionView.deleteItems(at: [lastIndexPath])
+        }
     }
 }
