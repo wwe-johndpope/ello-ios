@@ -15,6 +15,7 @@ class EditorialPostCell: EditorialTitledCell {
 
         lovesButton.setImage(.heartOutline, imageStyle: .white, for: .normal)
         lovesButton.setImage(.heart, imageStyle: .white, for: .selected)
+        lovesButton.adjustsImageWhenDisabled = false
         commentButton.setImage(.commentsOutline, imageStyle: .white, for: .normal)
         repostButton.setImage(.repost, imageStyle: .white, for: .normal)
         shareButton.setImage(.share, imageStyle: .white, for: .normal)
@@ -122,7 +123,7 @@ extension EditorialPostCell {
 
 extension EditorialPostCell: LoveableCell {
     func toggleLoveControl(enabled: Bool) {
-        lovesButton.isEnabled = enabled
+        isUserInteractionEnabled = enabled
     }
 
     func toggleLoveState(loved: Bool) {
