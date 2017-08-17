@@ -73,20 +73,20 @@ class FreeMethodsSpec: QuickSpec {
             describe("afterN gets called") {
                 it("should not get called afterN(1) (0)") {
                     var called = 0
-                    let (afterAll, _) = afterN() { called += 1 }
+                    let (afterAll, _) = afterN { called += 1 }
                     _ = afterAll()
                     expect(called) == 0
                 }
                 it("should not get called afterN(1) (1)") {
                     var called = 0
-                    let (afterAll, _) = afterN() { called += 1 }
+                    let (afterAll, _) = afterN { called += 1 }
                     let blk = afterAll()
                     blk()
                     expect(called) == 0
                 }
                 it("should get called afterN(1) and done() (1)") {
                     var called = 0
-                    let (afterAll, done) = afterN() { called += 1 }
+                    let (afterAll, done) = afterN { called += 1 }
                     let blk = afterAll()
                     done()
                     blk()
@@ -94,7 +94,7 @@ class FreeMethodsSpec: QuickSpec {
                 }
                 it("should only get called once afterN(1) (2)") {
                     var called = 0
-                    let (afterAll, done) = afterN() { called += 1 }
+                    let (afterAll, done) = afterN { called += 1 }
                     let blk = afterAll()
                     done()
                     blk()
@@ -103,7 +103,7 @@ class FreeMethodsSpec: QuickSpec {
                 }
                 it("should get called afterN(2) (2)") {
                     var called = 0
-                    let (afterAll, done) = afterN() { called += 1 }
+                    let (afterAll, done) = afterN { called += 1 }
                     let blk1 = afterAll()
                     let blk2 = afterAll()
                     done()
@@ -114,7 +114,7 @@ class FreeMethodsSpec: QuickSpec {
                 }
                 it("should get called afterN(2) (2) regardless of order") {
                     var called = 0
-                    let (afterAll, done) = afterN() { called += 1 }
+                    let (afterAll, done) = afterN { called += 1 }
                     let blk1 = afterAll()
                     let blk2 = afterAll()
                     done()

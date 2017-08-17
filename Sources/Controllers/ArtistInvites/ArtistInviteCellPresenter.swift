@@ -16,7 +16,7 @@ struct ArtistInviteCellPresenter {
             let artistInvite = streamCellItem.jsonable as? ArtistInvite
         else { return }
 
-        let config = ArtistInviteBubbleCell.Config.fromArtistInvite(artistInvite)
+        let config = ArtistInviteBubbleCell.Config.fromArtistInvite(artistInvite, hasCurrentUser: true)
         cell.config = config
     }
 

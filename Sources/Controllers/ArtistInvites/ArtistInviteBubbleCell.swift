@@ -34,6 +34,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         var logoURL: URL?
         var openedAt: Date?
         var closedAt: Date?
+        var hasCurrentUser = false
     }
 
     var config = Config() {
@@ -184,7 +185,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
 }
 
 extension ArtistInviteBubbleCell.Config {
-    static func fromArtistInvite(_ artistInvite: ArtistInvite) -> ArtistInviteBubbleCell.Config {
+    static func fromArtistInvite(_ artistInvite: ArtistInvite, hasCurrentUser: Bool) -> ArtistInviteBubbleCell.Config {
         var config = ArtistInviteBubbleCell.Config()
         config.title = artistInvite.title
         config.shortDescription = artistInvite.shortDescription
@@ -195,6 +196,7 @@ extension ArtistInviteBubbleCell.Config {
         config.closedAt = artistInvite.closedAt
         config.headerURL = artistInvite.headerImage?.largeOrBest?.url
         config.logoURL = artistInvite.logoImage?.optimized?.url
+        config.hasCurrentUser = hasCurrentUser
         return config
     }
 }

@@ -207,10 +207,10 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
-        let delta = dataSource.updateFilter(filter)
-        collectionView.performBatchUpdates({
+        performBatchUpdates {
+            let delta = self.dataSource.updateFilter(filter)
             delta.applyUpdatesToCollectionView(self.collectionView, inSection: 0)
-        }, completion: nil)
+        }
     }
 
     var contentInset: UIEdgeInsets {
@@ -326,8 +326,24 @@ final class StreamViewController: BaseElloViewController {
         updateNoResultsLabel()
     }
 
+    func performBatchUpdates(_ block: @escaping () -> Void) {
+        self.collectionView.performBatchUpdates(block, completion: nil)
+    }
+
     fileprivate var debounceCellReload = debounce(0.05)
+    fileprivate var allowReloadCount = 0 {
+        didSet {
+            if allowReloadCount == 0 && shouldReload { reloadCells(now: true) }
+        }
+    }
+    fileprivate var shouldReload = false
     func reloadCells(now: Bool = false) {
+        guard allowReloadCount == 0 else {
+            shouldReload = true
+            return
+        }
+        shouldReload = false
+
         if now {
             debounceCellReload {}
             self.collectionView.reloadData()
@@ -343,20 +359,36 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
+    fileprivate func blockReload() {
+        allowReloadCount += 1
+    }
+
+    fileprivate func unblockReload() {
+        allowReloadCount -= 1
+    }
+
     func removeAllCellItems() {
         dataSource.removeAllCellItems()
         reloadCells(now: true)
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
-        dataSource.appendStreamCellItems(items)
-        reloadCells(now: true)
+        performBatchUpdates {
+            let indexPaths = self.dataSource.appendStreamCellItems(items)
+            self.collectionView.insertItems(at: indexPaths)
+        }
     }
 
     func appendUnsizedCellItems(_ items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
         let width = view.frame.width
-        dataSource.appendUnsizedCellItems(items, withWidth: width) { indexPaths in
-            self.reloadCells()
+        blockReload()
+        dataSource.calculateCellItems(items, withWidth: width) {
+            var indexPaths: [IndexPath]!
+            self.performBatchUpdates {
+                indexPaths = self.dataSource.appendStreamCellItems(items)
+                self.collectionView.insertItems(at: indexPaths)
+            }
+            self.unblockReload()
             self.doneLoading()
             completion?(indexPaths)
         }
@@ -364,8 +396,13 @@ final class StreamViewController: BaseElloViewController {
 
     func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping Block = {}) {
         let width = view.frame.width
-        dataSource.insertUnsizedCellItems(cellItems, withWidth: width, startingIndexPath: startingIndexPath) { _ in
-            self.reloadCells()
+        blockReload()
+        dataSource.calculateCellItems(cellItems, withWidth: width) {
+            self.performBatchUpdates {
+                let indexPaths = self.dataSource.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
+                self.collectionView.insertItems(at: indexPaths)
+            }
+            self.unblockReload()
             completion()
         }
     }
@@ -381,9 +418,15 @@ final class StreamViewController: BaseElloViewController {
         )
     {
         let width = view.frame.width
+        blockReload()
         dataSource.calculateCellItems(streamCellItems, withWidth: width) {
-            self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems)
-            self.reloadCells()
+            if let changes = self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems) {
+                self.performBatchUpdates {
+                    self.collectionView.deleteItems(at: changes.deleted)
+                    self.collectionView.insertItems(at: changes.inserted)
+                }
+            }
+            self.unblockReload()
             completion()
         }
     }
@@ -706,13 +749,8 @@ final class StreamViewController: BaseElloViewController {
     fileprivate func setupDataSource() {
         dataSource = StreamDataSource(streamKind: streamKind)
         dataSource.streamCollapsedFilter = { item in
-            if !item.type.isCollapsable {
-                return true
-            }
-            if item.jsonable is Post {
-                return item.state != .collapsed
-            }
-            return true
+            guard item.type.isCollapsable, item.jsonable is Post else { return true }
+            return item.state != .collapsed
         }
     }
 
@@ -1340,6 +1378,8 @@ extension StreamViewController: UIScrollViewDelegate {
         else { return }
 
         dataSource.removeItemsAtIndexPaths([lastIndexPath])
-        reloadCells(now: true)
+        self.performBatchUpdates {
+            self.collectionView.deleteItems(at: [lastIndexPath])
+        }
     }
 }

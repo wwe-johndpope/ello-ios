@@ -64,6 +64,8 @@ extension LoggedOutViewController {
                 Tracker.shared.loggedOutRelationshipAction()
             case .postTool:
                 Tracker.shared.loggedOutPostTool()
+            case .artistInviteSubmit:
+                Tracker.shared.loggedOutArtistInviteSubmit()
             }
             self?.screen.showJoinText()
         }

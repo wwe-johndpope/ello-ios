@@ -41,10 +41,10 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
 
     override func didSetCurrentUser() {
         super.didSetCurrentUser()
-        for controller in childViewControllers {
-            guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { continue }
-            controller.currentUser = currentUser
-        }
+        editorialsViewController?.currentUser = currentUser
+        artistInvitesViewController?.currentUser = currentUser
+        followingViewController?.currentUser = currentUser
+        discoverViewController?.currentUser = currentUser
     }
 
     override func loadView() {

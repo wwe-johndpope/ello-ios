@@ -4,9 +4,9 @@
 
 class ArtistInviteCellSizeCalculator: NSObject {
     let webView: UIWebView
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
+    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, hasCurrentUser: Bool, completion: Block)
     fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellItems: [StreamCellItem] = []
+    fileprivate var job: CellJob?
     fileprivate var completion: Block = {}
 
     init(webView: UIWebView = UIWebView()) {
@@ -17,13 +17,13 @@ class ArtistInviteCellSizeCalculator: NSObject {
 
 // MARK: Public
 
-    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, completion: @escaping Block) {
+    func processCells(_ cellItems: [StreamCellItem], withWidth width: CGFloat, hasCurrentUser: Bool, completion: @escaping Block) {
         guard cellItems.count > 0 else {
             completion()
             return
         }
 
-        let job: CellJob = (cellItems: cellItems, width: width, completion: completion)
+        let job: CellJob = (cellItems: cellItems, width: width, hasCurrentUser: hasCurrentUser, completion: completion)
         cellJobs.append(job)
         if cellJobs.count == 1 {
             processJob(job)
@@ -43,7 +43,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
             }
         }
 
-        cellItems = job.cellItems
+        self.job = job
         var webWidth = job.width
         webWidth -= ArtistInviteBubbleCell.Size.bubbleMargins.left + ArtistInviteBubbleCell.Size.bubbleMargins.right
         webWidth -= ArtistInviteBubbleCell.Size.descriptionMargins.left + ArtistInviteBubbleCell.Size.descriptionMargins.right
@@ -53,12 +53,13 @@ class ArtistInviteCellSizeCalculator: NSObject {
     }
 
     fileprivate func loadNext() {
-        guard !self.cellItems.isEmpty else {
+        guard let job = job else { return }
+        guard !job.cellItems.isEmpty else {
             completion()
             return
         }
 
-        let cellItem = cellItems[0]
+        let cellItem = job.cellItems[0]
         guard
             let artistInvite = cellItem.jsonable as? ArtistInvite
         else {
@@ -101,8 +102,12 @@ class ArtistInviteCellSizeCalculator: NSObject {
     }
 
     fileprivate func assignHeight(_ height: CGFloat?) {
-        let cellItem = cellItems.remove(at: 0)
-        defer { loadNext() }
+        guard var job = job else { return }
+        let cellItem = job.cellItems.remove(at: 0)
+        self.job = job
+        defer {
+            loadNext()
+        }
         guard let height = height else { return }
 
         let calculatedHeight: CGFloat?
@@ -110,7 +115,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
         case .artistInviteBubble:
             calculatedHeight = assignBubbleHeight(cellItem, height)
         case .artistInviteControls:
-            calculatedHeight = assignControlsHeight(cellItem, height)
+            calculatedHeight = assignControlsHeight(cellItem, height, hasCurrentUser: job.hasCurrentUser)
         case .artistInviteGuide:
             calculatedHeight = assignGuideHeight(cellItem, height)
         default:
@@ -134,8 +139,15 @@ class ArtistInviteCellSizeCalculator: NSObject {
         return totalHeight
     }
 
-    fileprivate func assignControlsHeight(_ cellItem: StreamCellItem, _ height: CGFloat) -> CGFloat {
-        return ArtistInviteControlsCell.Size.controlsHeight + height
+    fileprivate func assignControlsHeight(_ cellItem: StreamCellItem, _ height: CGFloat, hasCurrentUser: Bool) -> CGFloat {
+        var totalHeight = height
+        if hasCurrentUser {
+            totalHeight += ArtistInviteControlsCell.Size.controlsHeight
+        }
+        else {
+            totalHeight += ArtistInviteControlsCell.Size.loggedOutControlsHeight
+        }
+        return totalHeight
     }
 
     fileprivate func assignGuideHeight(_ cellItem: StreamCellItem, _ height: CGFloat) -> CGFloat {

@@ -39,17 +39,6 @@ enum HomeScreenType {
     case artistInvites
     case following
     case discover
-
-    var tabCount: Int {
-        switch self {
-        case let .editorials(loggedIn):
-            return loggedIn ? 3 : 2
-        case .artistInvites, .following:
-            return 3
-        case .discover:
-            return 2
-        }
-    }
 }
 
 extension HomeScreenNavBar {
@@ -68,9 +57,7 @@ extension HomeScreenNavBar {
         middleTab.addTarget(self, action: #selector(homeScreenArtistInvitesTapped))
 
         tabBar.addTab(editorialsTab)
-        if type.tabCount == 3 {
-            tabBar.addTab(middleTab)
-        }
+        tabBar.addTab(middleTab)
         tabBar.addTab(otherTab)
 
         switch type {

@@ -165,7 +165,8 @@ class PostbarControllerSpec: QuickSpec {
                     ])
                     let parser = StreamCellItemParser()
                     let postCellItems = parser.parse([post], streamKind: streamKind)
-                    controller.dataSource.appendUnsizedCellItems(postCellItems, withWidth: 320.0) { cellCount in
+                    controller.dataSource.calculateCellItems(postCellItems, withWidth: 320.0) {
+                        controller.dataSource.appendStreamCellItems(postCellItems)
                         controller.collectionView.reloadData()
                     }
                 }

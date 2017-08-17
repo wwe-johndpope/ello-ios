@@ -696,4 +696,8 @@ extension Tracker {
     func loggedOutPostTool() {
         track("logged out post tool")
     }
+
+    func loggedOutArtistInviteSubmit() {
+        track("logged out artist invite submit")
+    }
 }

@@ -10,6 +10,7 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
 
     struct Size {
         static let controlsHeight: CGFloat = 130
+        static let loggedOutControlsHeight: CGFloat = 50
 
         static let margins = UIEdgeInsets(top: 0, left: 15, bottom: 60, right: 15)
         static let submitHeight: CGFloat = 80
@@ -25,6 +26,8 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
 
     fileprivate let descriptionWebView = UIWebView()
     fileprivate let submitButton = StyledButton(style: .artistInviteSubmit)
+    fileprivate var submitVisibleConstraint: Constraint!
+    fileprivate var submitHiddenConstraint: Constraint!
 
     override func style() {
         descriptionWebView.scrollView.isScrollEnabled = false
@@ -45,9 +48,11 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
 
         descriptionWebView.snp.makeConstraints { make in
             make.top.equalTo(contentView)
-            make.bottom.equalTo(submitButton.snp.top)
+            submitVisibleConstraint = make.bottom.equalTo(submitButton.snp.top).constraint
+            submitHiddenConstraint = make.bottom.equalTo(contentView).constraint
             make.leading.trailing.equalTo(contentView).inset(Size.margins)
         }
+        submitHiddenConstraint.deactivate()
 
         submitButton.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalTo(contentView).inset(Size.margins)
@@ -63,6 +68,17 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
     func updateConfig() {
         let html = StreamTextCellHTML.postHTML(config.longDescription)
         descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
+
+        if config.hasCurrentUser {
+            submitVisibleConstraint.activate()
+            submitHiddenConstraint.deactivate()
+            submitButton.isHidden = false
+        }
+        else {
+            submitVisibleConstraint.deactivate()
+            submitHiddenConstraint.activate()
+            submitButton.isHidden = true
+        }
     }
 }
 

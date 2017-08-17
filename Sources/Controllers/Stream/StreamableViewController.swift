@@ -34,6 +34,13 @@ class StreamableViewController: BaseElloViewController {
     fileprivate var showing = false
     let streamViewController = StreamViewController()
 
+    override func didSetCurrentUser() {
+        if isViewLoaded {
+            streamViewController.currentUser = currentUser
+        }
+        super.didSetCurrentUser()
+    }
+
     func setupStreamController() {
         streamViewController.currentUser = currentUser
         streamViewController.streamViewDelegate = self
