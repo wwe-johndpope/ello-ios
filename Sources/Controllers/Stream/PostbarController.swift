@@ -205,6 +205,7 @@ class PostbarController: UIResponder, PostbarResponder {
             return
         }
 
+        cell?.toggleLoveState(loved: !post.isLoved)
         cell?.toggleLoveControl(enabled: false)
 
         if post.isLoved { unlovePost(post, cell: cell) }
@@ -236,13 +237,13 @@ class PostbarController: UIResponder, PostbarResponder {
                         )
                     postNotification(JSONAbleChangedNotification, value: (love, .delete))
                 }
-                cell?.toggleLoveState(loved: false)
-                cell?.toggleLoveControl(enabled: true)
             }
             .catch { error in
-                cell?.toggleLoveControl(enabled: true)
                 let message = (error as NSError).elloErrorMessage ?? error.localizedDescription
                 print("failed to unlove post \(post.id), error: \(message)")
+            }
+            .always { _ in
+                cell?.toggleLoveControl(enabled: true)
             }
     }
 
@@ -266,13 +267,13 @@ class PostbarController: UIResponder, PostbarResponder {
         LovesService().lovePost(postId: post.id)
             .thenFinally { love in
                 postNotification(JSONAbleChangedNotification, value: (love, .create))
-                cell?.toggleLoveState(loved: true)
-                cell?.toggleLoveControl(enabled: true)
             }
             .catch { error in
-                cell?.toggleLoveControl(enabled: true)
                 let message = (error as NSError).elloErrorMessage ?? error.localizedDescription
                 print("failed to love post \(post.id), error: \(message)")
+            }
+            .always { _ in
+                cell?.toggleLoveControl(enabled: true)
             }
     }
 
