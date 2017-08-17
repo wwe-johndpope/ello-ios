@@ -229,7 +229,13 @@ struct NotificationAttributedTitle {
                     return styleUser(author).appending(styleText(" is watching a repost of your post."))
                 }
             case .approvedArtistInviteSubmission:
-                return styleText("Your submission has been accepted!")
+                if let submission = subject as? ArtistInviteSubmission,
+                    let artistInvite = submission.artistInvite {
+                    return styleText("Your submission to \(artistInvite.title) has been accepted!")
+                }
+                else {
+                    return styleText("Your submission has been accepted!")
+                }
             case .welcomeNotification:
                 return styleText("Welcome to Ello!")
             default:

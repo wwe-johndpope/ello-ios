@@ -141,9 +141,9 @@ indirect enum ElloAPI {
              .category:
             return .categoriesType
         case .artistInvites, .artistInviteDetail:
-            return .artistInvites
+            return .artistInvitesType
         case .artistInviteSubmissions:
-            return .artistInviteSubmissions
+            return .artistInviteSubmissionsType
         case .editorials:
             return .editorials
         case .pagePromotionals:

@@ -9,9 +9,15 @@ import Moya
 @objc(ArtistInviteSubmission)
 final class ArtistInviteSubmission: JSONAble, Groupable {
     // Version 1: initial
-    static let Version = 1
+    // Version 2: artistInviteId, postId
+    static let Version = 2
 
     let id: String
+    let artistInviteId: String
+    let postId: String
+    var artistInvite: ArtistInvite? {
+        return ElloLinkedStore.sharedInstance.getObject(self.artistInviteId, type: .artistInvitesType) as? ArtistInvite
+    }
     let status: Status
     var actions: [Action] = []
     var groupId: String { return "ArtistInviteSubmission-\(id)" }
@@ -91,8 +97,10 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         return getLinkObject("post") as? Post
     }
 
-    init(id: String, status: Status) {
+    init(id: String, artistInviteId: String, postId: String, status: Status) {
         self.id = id
+        self.artistInviteId = artistInviteId
+        self.postId = postId
         self.status = status
         super.init(version: ArtistInviteSubmission.Version)
     }
@@ -101,6 +109,14 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         let decoder = Coder(coder)
         let version: Int = decoder.decodeKey("version")
         id = decoder.decodeKey("id")
+        if version > 1 {
+            artistInviteId = decoder.decodeKey("artistInviteId")
+            postId = decoder.decodeKey("postId")
+        }
+        else {
+            artistInviteId = ""
+            postId = ""
+        }
         status = Status(rawValue: decoder.decodeKey("status") as String) ?? .unapproved
         let actions: [[String: Any]] = decoder.decodeKey("actions")
         self.actions = actions.flatMap { Action.decode($0, version: version) }
@@ -110,6 +126,8 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
     override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(id, forKey: "id")
+        encoder.encodeObject(artistInviteId, forKey: "artistInviteId")
+        encoder.encodeObject(postId, forKey: "postId")
         encoder.encodeObject(status.rawValue, forKey: "status")
         encoder.encodeObject(actions.map { $0.encodeable }, forKey: "actions")
         super.encode(with: coder)
@@ -119,8 +137,10 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         let json = JSON(data)
 
         let id = json["id"].stringValue
+        let artistInviteId = json["artist_invite_id"].stringValue
+        let postId = json["post_id"].stringValue
         let status = Status(rawValue: json["status"].stringValue) ?? .unapproved
-        let submission = ArtistInviteSubmission(id: id, status: status)
+        let submission = ArtistInviteSubmission(id: id, artistInviteId: artistInviteId, postId: postId, status: status)
         submission.links = data["links"] as? [String: Any]
         if let actions = data["actions"] as? [String: Any] {
             submission.actions = actions.flatMap { key, value in

@@ -7,6 +7,18 @@ import PromiseKit
 
 class ArtistInviteService {
 
+    func load(id: String) -> Promise<ArtistInvite> {
+        return ElloProvider.shared.request(.artistInviteDetail(id: id))
+            .then { data, _ -> ArtistInvite in
+                if let artistInvite = data as? ArtistInvite {
+                    return artistInvite
+                }
+                else {
+                    throw NSError.uncastableJSONAble()
+                }
+            }
+    }
+
     func performAction(action: ArtistInviteSubmission.Action) -> Promise<ArtistInviteSubmission> {
         return ElloProvider.shared.request(action.endpoint)
             .then { data, _ -> ArtistInviteSubmission in

@@ -2,11 +2,14 @@
 ///  NotificationsGenerator.swift
 //
 
+import PromiseKit
+
+
 final class NotificationsGenerator: StreamGenerator {
     var currentUser: User?
     var streamKind: StreamKind
 
-    fileprivate var notifications: [Activity] = []
+    fileprivate var notificationActivities: [Activity] = []
     fileprivate var announcements: [Announcement] = []
     fileprivate var hasNotifications: Bool?
 
@@ -30,7 +33,7 @@ final class NotificationsGenerator: StreamGenerator {
 
         if reload {
             announcements = []
-            notifications = []
+            notificationActivities = []
         }
         else {
             setPlaceHolders()
@@ -107,28 +110,32 @@ final class NotificationsGenerator: StreamGenerator {
                 switch response {
                 case let .jsonables(jsonables, responseConfig):
                     guard
-                        let notifications = jsonables as? [Activity]
+                        let notificationActivities = jsonables as? [Activity]
                     else { return }
 
-                    self.notifications = notifications
+                    self.notificationActivities = notificationActivities
                     // setting primaryJSONAble also triggers the "done loading" code
                     self.destination?.setPrimary(jsonable: JSONAble(version: JSONAbleVersion))
                     self.destination?.setPagingConfig(responseConfig: responseConfig)
 
-                    let notificationItems = self.parse(jsonables: notifications)
-                    if notificationItems.count == 0 {
-                        let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
-                        self.hasNotifications = false
-                        self.destination?.replacePlaceholder(type: .notifications, items: [noContentItem]) {
-                            self.destination?.isPagingEnabled = false
+                    self.loadExtraNotificationContent(notificationActivities)
+                        .thenFinally {
+                            let notificationItems = self.parse(jsonables: notificationActivities)
+                            if notificationItems.count == 0 {
+                                let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
+                                self.hasNotifications = false
+                                self.destination?.replacePlaceholder(type: .notifications, items: [noContentItem]) {
+                                    self.destination?.isPagingEnabled = false
+                                }
+                            }
+                            else {
+                                self.hasNotifications = true
+                                self.destination?.replacePlaceholder(type: .notifications, items: notificationItems) {
+                                    self.destination?.isPagingEnabled = true
+                                }
+                            }
                         }
-                    }
-                    else {
-                        self.hasNotifications = true
-                        self.destination?.replacePlaceholder(type: .notifications, items: notificationItems) {
-                            self.destination?.isPagingEnabled = true
-                        }
-                    }
+                        .ignoreErrors()
                 case .empty:
                     let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
                     self.destination?.setPrimary(jsonable: JSONAble(version: JSONAbleVersion))
@@ -140,5 +147,25 @@ final class NotificationsGenerator: StreamGenerator {
             .catch { [weak self] _ in
                 self?.destination?.primaryJSONAbleNotFound()
             }
+    }
+
+    fileprivate func loadExtraNotificationContent(_ notificationActivities: [Activity]) -> Promise<Void> {
+        let (promise, resolve, _) = Promise<Void>.pending()
+        let (afterAll, done) = afterN {
+            resolve(Void())
+        }
+        for activity in notificationActivities {
+            guard let submission = activity.subject as? ArtistInviteSubmission, submission.artistInvite == nil else { continue }
+
+            let next = afterAll()
+            ArtistInviteService().load(id: submission.artistInviteId)
+                .thenFinally { artistInvite in
+                    ElloLinkedStore.sharedInstance.setObject(artistInvite, forKey: submission.artistInviteId, type: .artistInvitesType)
+                    print("submission.artistInvite: \(submission.artistInvite)")
+                }
+                .always { _ in next() }
+        }
+        done()
+        return promise
     }
 }

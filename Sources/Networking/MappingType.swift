@@ -9,8 +9,8 @@ enum MappingType: String {
     // should look for the response data.
     case announcementsType = "announcements"
     case activitiesType = "activities"
-    case artistInvites = "artist_invites"
-    case artistInviteSubmissions = "artist_invite_submissions"
+    case artistInvitesType = "artist_invites"
+    case artistInviteSubmissionsType = "artist_invite_submissions"
     case amazonCredentialsType = "credentials"
     case assetsType = "assets"
     case autoCompleteResultType = "autocomplete_results"
@@ -41,9 +41,9 @@ enum MappingType: String {
             return AmazonCredentials.fromJSON
         case .assetsType:
             return Asset.fromJSON
-        case .artistInvites:
+        case .artistInvitesType:
             return ArtistInvite.fromJSON
-        case .artistInviteSubmissions:
+        case .artistInviteSubmissionsType:
             return ArtistInviteSubmission.fromJSON
         case .autoCompleteResultType:
             return AutoCompleteResult.fromJSON
