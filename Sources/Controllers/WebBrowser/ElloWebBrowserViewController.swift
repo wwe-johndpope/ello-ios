@@ -146,7 +146,7 @@ extension ElloWebBrowserViewController: WebLinkResponder {
             DeepLinking.showCategory(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
         case .artistInvitesBrowse:
             DeepLinking.showArtistInvites(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
-        case .artistInvitesDetail:
+        case .artistInvitesDetail, .pushNotificationArtistInvite:
             DeepLinking.showArtistInvites(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
         case .betaPublicProfiles,
              .enter,
