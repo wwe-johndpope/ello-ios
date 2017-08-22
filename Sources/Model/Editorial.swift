@@ -4,12 +4,13 @@
 
 import SwiftyJSON
 
-// Version 3: initial (should have been 1, but copy/paste mistake)
-let EditorialVersion = 3
-
 
 @objc(Editorial)
 final class Editorial: JSONAble, Groupable {
+    // Version 3: initial (should have been 1, but copy/paste mistake)
+    // Version 4: renderedSubtitle
+    static let Version = 4
+
     typealias JoinInfo = (email: String?, username: String?, password: String?, submitted: Bool)
     typealias InviteInfo = (emails: String, sent: Date?)
 
@@ -34,6 +35,7 @@ final class Editorial: JSONAble, Groupable {
     let id: String
     let title: String
     let subtitle: String?
+    let renderedSubtitle: String?
     var join: JoinInfo?
     var invite: InviteInfo?
     let url: URL?
@@ -53,6 +55,7 @@ final class Editorial: JSONAble, Groupable {
         kind: Kind,
         title: String,
         subtitle: String? = nil,
+        renderedSubtitle: String? = nil,
         postId: String? = nil,
         postStreamURL: URL? = nil,
         url: URL? = nil)
@@ -61,10 +64,11 @@ final class Editorial: JSONAble, Groupable {
         self.kind = kind
         self.title = title
         self.subtitle = subtitle
+        self.renderedSubtitle = renderedSubtitle
         self.postId = postId
         self.postStreamURL = postStreamURL
         self.url = url
-        super.init(version: EditorialVersion)
+        super.init(version: Editorial.Version)
     }
 
     required init(coder: NSCoder) {
@@ -73,6 +77,7 @@ final class Editorial: JSONAble, Groupable {
         kind = Kind(rawValue: decoder.decodeKey("kind")) ?? .post
         title = decoder.decodeKey("title")
         subtitle = decoder.decodeOptionalKey("subtitle")
+        renderedSubtitle = decoder.decodeOptionalKey("renderedSubtitle")
         postId = decoder.decodeOptionalKey("postId")
         postStreamURL = decoder.decodeOptionalKey("postStreamURL")
         url = decoder.decodeOptionalKey("url")
@@ -85,6 +90,7 @@ final class Editorial: JSONAble, Groupable {
         encoder.encodeObject(kind.rawValue, forKey: "kind")
         encoder.encodeObject(title, forKey: "title")
         encoder.encodeObject(subtitle, forKey: "subtitle")
+        encoder.encodeObject(renderedSubtitle, forKey: "renderedSubtitle")
         encoder.encodeObject(postId, forKey: "postId")
         encoder.encodeObject(postStreamURL, forKey: "postStreamURL")
         encoder.encodeObject(url, forKey: "url")
@@ -97,6 +103,7 @@ final class Editorial: JSONAble, Groupable {
         let kind = Kind(rawValue: json["kind"].stringValue) ?? .unknown
         let title = json["title"].stringValue
         let subtitle = json["subtitle"].string
+        let renderedSubtitle = json["rendered_subtitle"].string
         let postId = json["links"]["post"]["id"].string
         let postStreamURL = json["links"]["post_stream"]["href"].string.flatMap { URL(string: $0) }
         let externalURL: URL? = json["url"].string.flatMap { URL(string: $0) }
@@ -107,6 +114,7 @@ final class Editorial: JSONAble, Groupable {
             kind: kind,
             title: title,
             subtitle: subtitle,
+            renderedSubtitle: renderedSubtitle,
             postId: postId,
             postStreamURL: postStreamURL,
             url: externalURL ?? internalURL)
