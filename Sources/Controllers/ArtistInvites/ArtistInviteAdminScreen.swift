@@ -16,6 +16,7 @@ class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol
             case .approved: tabBar.select(tab: approvedTab)
             case .selected: tabBar.select(tab: selectedTab)
             case .unapproved: tabBar.select(tab: unapprovedTab)
+            case .unspecified: break
             }
         }
     }
