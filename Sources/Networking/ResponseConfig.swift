@@ -7,9 +7,6 @@ class ResponseConfig: CustomStringConvertible {
         let descripArray = [
             "ResponseConfig:",
             "nextQuery: \(String(describing: nextQuery))",
-            "prevQuery: \(String(describing: prevQuery))",
-            "firstQuery: \(String(describing: firstQuery))",
-            "lastQuery: \(String(describing: lastQuery))",
             "totalPages: \(String(describing: totalPages))",
             "totalCount: \(String(describing: totalCount))",
             "totalPagesRemaining: \(String(describing: totalPagesRemaining))"
@@ -17,9 +14,6 @@ class ResponseConfig: CustomStringConvertible {
         return descripArray.joined(separator: "\n\t")
     }
     var nextQuery: URLComponents? // before (older)
-    var prevQuery: URLComponents? // after (newer)
-    var firstQuery: URLComponents? // first page
-    var lastQuery: URLComponents? // last page
     var totalCount: String?
     var totalPages: String?
     var totalPagesRemaining: String?

@@ -432,21 +432,6 @@ extension ElloProvider {
                 config.nextQuery = components
             }
         }
-        if let prev = node["prev"] {
-            if let components = URLComponents(string: prev) {
-                config.prevQuery = components
-            }
-        }
-        if let first = node["first"] {
-            if let components = URLComponents(string: first) {
-                config.firstQuery = components
-            }
-        }
-        if let last = node["last"] {
-            if let components = URLComponents(string: last) {
-                config.lastQuery = components
-            }
-        }
         return config
     }
 
