@@ -5,7 +5,7 @@
 import SnapKit
 
 
-class CategoryScreen: StreamableScreen, CategoryScreenProtocol {
+class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
     struct Size {
         static let navigationBarHeight: CGFloat = 43
         static let largeNavigationBarHeight: CGFloat = 128
@@ -282,12 +282,6 @@ extension CategoryScreen: HomeScreenNavBar {
     @objc
     func homeScreenScrollToTop() {
         delegate?.scrollToTop()
-    }
-
-    @objc
-    func homeScreenEditorialsTapped() {
-        let responder: HomeResponder? = self.findResponder()
-        responder?.showEditorialsViewController()
     }
 
 }

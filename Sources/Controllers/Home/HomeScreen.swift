@@ -2,7 +2,6 @@
 ///  HomeScreen.swift
 //
 
-
 class HomeScreen: StreamableScreen, HomeScreenProtocol {
     weak var delegate: HomeScreenDelegate?
     let controllerContainer = UIView()
@@ -36,7 +35,7 @@ fileprivate typealias Size = HomeScreenNavBarSize
 
 enum HomeScreenType {
     case editorials(loggedIn: Bool)
-    case artistInvites
+    case artistInvites(loggedIn: Bool)
     case following
     case discover
 }
@@ -75,10 +74,17 @@ extension HomeScreenNavBar {
         case .following:
             tabBar.select(tab: otherTab)
             otherTab.title = InterfaceString.Following.Title
-        case .artistInvites:
+        case let .artistInvites(loggedIn):
             tabBar.select(tab: middleTab)
-            otherTab.title = InterfaceString.Following.Title
-            otherTab.addTarget(self, action: #selector(homeScreenFollowingTapped))
+
+            if loggedIn {
+                otherTab.title = InterfaceString.Following.Title
+                otherTab.addTarget(self, action: #selector(homeScreenFollowingTapped))
+            }
+            else {
+                otherTab.title = InterfaceString.Discover.Title
+                otherTab.addTarget(self, action: #selector(homeScreenDiscoverTapped))
+            }
         case .discover:
             tabBar.select(tab: otherTab)
             otherTab.title = InterfaceString.Discover.Title

@@ -2,7 +2,7 @@
 ///  EditorialsScreen.swift
 //
 
-class EditorialsScreen: StreamableScreen, EditorialsScreenProtocol {
+class EditorialsScreen: HomeSubviewScreen, EditorialsScreenProtocol {
     weak var delegate: EditorialsScreenDelegate?
     fileprivate var usage: EditorialsViewController.Usage
 
@@ -37,24 +37,6 @@ extension EditorialsScreen: HomeScreenNavBar {
     @objc
     func homeScreenScrollToTop() {
         delegate?.scrollToTop()
-    }
-
-    @objc
-    func homeScreenArtistInvitesTapped() {
-        let responder: HomeResponder? = self.findResponder()
-        responder?.showArtistInvitesViewController()
-    }
-
-    @objc
-    func homeScreenFollowingTapped() {
-        let responder: HomeResponder? = self.findResponder()
-        responder?.showFollowingViewController()
-    }
-
-    @objc
-    func homeScreenDiscoverTapped() {
-        let responder: HomeResponder? = self.findResponder()
-        responder?.showDiscoverViewController()
     }
 
 }
