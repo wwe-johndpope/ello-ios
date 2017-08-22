@@ -86,7 +86,7 @@ extension HomeViewController: HomeResponder {
         editorialsViewController.didMove(toParentViewController: self)
         self.editorialsViewController = editorialsViewController
 
-        let artistInvitesViewController = ArtistInvitesViewController()
+        let artistInvitesViewController = ArtistInvitesViewController(usage: usage)
         artistInvitesViewController.currentUser = currentUser
         addChildViewController(artistInvitesViewController)
         artistInvitesViewController.didMove(toParentViewController: self)
@@ -109,6 +109,8 @@ extension HomeViewController: HomeResponder {
     }
 
     fileprivate func showController(_ viewController: UIViewController) {
+        guard visibleViewController != viewController else { return }
+
         if let visibleViewController = visibleViewController {
             screen.controllerContainer.insertSubview(viewController.view, aboveSubview: visibleViewController.view)
             visibleViewController.view.removeFromSuperview()

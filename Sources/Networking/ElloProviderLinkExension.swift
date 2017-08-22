@@ -12,21 +12,6 @@ extension ElloProvider {
                 config.nextQuery = components
             }
         }
-        if let prevLink = response?.findLink(relation: "prev") {
-            if let components = URLComponents(string: prevLink.uri) {
-                config.prevQuery = components
-            }
-        }
-        if let firstLink = response?.findLink(relation: "first") {
-            if let components = URLComponents(string: firstLink.uri) {
-                config.firstQuery = components
-            }
-        }
-        if let lastLink = response?.findLink(relation: "last") {
-            if let components = URLComponents(string: lastLink.uri) {
-                config.lastQuery = components
-            }
-        }
         return config
     }
 }

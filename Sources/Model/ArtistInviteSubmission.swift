@@ -26,6 +26,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         case approved
         case selected
         case unapproved
+        case unspecified
     }
 
     struct Action {
@@ -117,7 +118,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
             artistInviteId = ""
             postId = ""
         }
-        status = Status(rawValue: decoder.decodeKey("status") as String) ?? .unapproved
+        status = Status(rawValue: decoder.decodeKey("status") as String) ?? .unspecified
         let actions: [[String: Any]] = decoder.decodeKey("actions")
         self.actions = actions.flatMap { Action.decode($0, version: version) }
         super.init(coder: coder)
@@ -138,7 +139,16 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
 
         let id = json["id"].stringValue
         let artistInviteId = json["artist_invite_id"].stringValue
-        let postId = json["post_id"].stringValue
+        let postId: String
+        if let v1 = json["post_id"].string {
+            postId = v1
+        }
+        else if let v2 = json["links"]["post"]["id"].string {
+            postId = v2
+        }
+        else {
+            postId = ""
+        }
         let status = Status(rawValue: json["status"].stringValue) ?? .unapproved
         let submission = ArtistInviteSubmission(id: id, artistInviteId: artistInviteId, postId: postId, status: status)
         submission.links = data["links"] as? [String: Any]

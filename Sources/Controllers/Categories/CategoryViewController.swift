@@ -161,7 +161,7 @@ private extension CategoryViewController {
         pagePromotional = nil
         categoryPromotional = nil
         category?.randomPromotional = nil
-        generator?.load(reload: true)
+        generator?.load(reload: !initial)
 
         streamViewController.isPagingEnabled = true
     }

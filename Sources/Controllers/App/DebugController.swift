@@ -110,7 +110,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         addAction(name: "Artist Invites preview") {
             appController.closeDebugController {
-                let vc = ArtistInvitesViewController()
+                let vc = ArtistInvitesViewController(usage: .loggedOut)
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
