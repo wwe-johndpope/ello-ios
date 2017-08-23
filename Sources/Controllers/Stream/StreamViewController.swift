@@ -473,7 +473,6 @@ final class StreamViewController: BaseElloViewController {
                     }
                 }
                 .catch { error in
-                    print("failed to load \(self.streamKind.cacheKey) stream (reason: \(error))")
                     self.initialLoadFailure()
                 }
         }
@@ -1341,7 +1340,6 @@ extension StreamViewController: UIScrollViewDelegate {
                 }
             }
             .catch { error in
-                print("failed to load stream (reason: \(error))")
                 self.scrollLoaded()
             }
     }

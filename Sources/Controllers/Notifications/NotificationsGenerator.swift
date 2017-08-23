@@ -161,7 +161,6 @@ final class NotificationsGenerator: StreamGenerator {
             ArtistInviteService().load(id: submission.artistInviteId)
                 .thenFinally { artistInvite in
                     ElloLinkedStore.sharedInstance.setObject(artistInvite, forKey: submission.artistInviteId, type: .artistInvitesType)
-                    print("submission.artistInvite: \(submission.artistInvite?.description ?? "nil")")
                 }
                 .always { _ in next() }
         }

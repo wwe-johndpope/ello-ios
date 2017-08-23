@@ -203,7 +203,6 @@ final class PostDetailViewController: StreamableViewController {
                 }
                 .catch { error in
                     // TODO: add error handling
-                    print("failed to delete post, error: \(error)")
                 }
         }
         let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)

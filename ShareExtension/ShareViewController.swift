@@ -110,10 +110,7 @@ private extension ShareViewController {
     }
 
     func checkIfLoggedIn() -> Bool {
-        if AuthToken().isPasswordBased {
-            print("you are logged in")
-        }
-        else {
+        if !AuthToken().isPasswordBased {
             showNotSignedIn()
         }
         return AuthToken().isPasswordBased

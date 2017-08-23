@@ -15,6 +15,7 @@ struct NotificationCellPresenter {
             let cell = cell as? NotificationCell,
             let notification = streamCellItem.jsonable as? Notification
         else { return }
+
         cell.onWebContentReady { webView in
             if let actualHeight = webView.windowContentSize()?.height,
                 let webContent = streamCellItem.calculatedCellHeights.webContent,
@@ -24,6 +25,7 @@ struct NotificationCellPresenter {
                 postNotification(StreamNotification.UpdateCellHeightNotification, value: streamCellItem)
             }
         }
+
         cell.onHeightMismatch = { height in
             streamCellItem.calculatedCellHeights.oneColumn = height
             streamCellItem.calculatedCellHeights.multiColumn = height

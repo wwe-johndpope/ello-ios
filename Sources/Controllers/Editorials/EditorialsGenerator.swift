@@ -40,9 +40,6 @@ final class EditorialsGenerator: StreamGenerator {
                     }
                     editorial.posts = posts
                 }
-                .catch { _ in
-                    print(path)
-                }
                 .always {
                     next()
                 }

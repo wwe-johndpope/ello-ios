@@ -90,9 +90,6 @@ class ElloProvider {
             waitList.append(request)
         }
         else {
-            if !authState.supports(target) {
-                print("cannot send: \(target)")
-            }
             let canMakeRequest = authState.supports(target)
             if canMakeRequest {
                 ElloProvider.sharedProvider.request(target) { (result) in
