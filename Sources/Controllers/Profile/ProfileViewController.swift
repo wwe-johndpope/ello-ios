@@ -534,8 +534,7 @@ extension ProfileViewController:  StreamDestination {
     }
 
     func setPlaceholders(items: [StreamCellItem]) {
-        streamViewController.clearForInitialLoad()
-        streamViewController.appendStreamCellItems(items)
+        streamViewController.clearForInitialLoad(newItems: items)
         setupNavigationItems()
     }
 

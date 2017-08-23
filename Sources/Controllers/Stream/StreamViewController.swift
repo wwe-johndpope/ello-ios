@@ -422,10 +422,9 @@ final class StreamViewController: BaseElloViewController {
         )
     {
         let width = view.frame.width
-        blockReload()
         dataSource.calculateCellItems(streamCellItems, withWidth: width) {
-            self.collectionView.reloadData()
-            self.unblockReload()
+            self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems)
+            self.reloadCells()
             completion()
         }
     }
@@ -480,14 +479,14 @@ final class StreamViewController: BaseElloViewController {
     /// This method can be called by a `StreamableViewController` if it wants to
     /// override `loadInitialPage`, but doesn't need to customize the cell generation.
     func showInitialJSONAbles(_ jsonables: [JSONAble]) {
-        self.clearForInitialLoad()
-        self.currentJSONables = jsonables
+        clearForInitialLoad()
+        currentJSONables = jsonables
 
-        var items = self.generateStreamCellItems(jsonables)
+        var items = generateStreamCellItems(jsonables)
         if jsonables.count == 0 {
             items.append(StreamCellItem(type: .emptyStream(height: 282)))
         }
-        self.appendUnsizedCellItems(items) { indexPaths in
+        appendUnsizedCellItems(items) { _ in
             self.isPagingEnabled = true
         }
     }
@@ -528,9 +527,12 @@ final class StreamViewController: BaseElloViewController {
         })
     }
 
-    func clearForInitialLoad() {
+    func clearForInitialLoad(newItems: [StreamCellItem] = []) {
         allOlderPagesLoaded = false
         dataSource.removeAllCellItems()
+        if newItems.count > 0 {
+            dataSource.appendStreamCellItems(newItems)
+        }
         reloadCells(now: true)
     }
 

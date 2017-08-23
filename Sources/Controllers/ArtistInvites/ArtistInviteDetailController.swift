@@ -100,8 +100,7 @@ extension ArtistInviteDetailController: StreamDestination {
     }
 
     func setPlaceholders(items: [StreamCellItem]) {
-        streamViewController.clearForInitialLoad()
-        streamViewController.appendStreamCellItems(items)
+        streamViewController.clearForInitialLoad(newItems: items)
     }
 
     func setPrimary(jsonable: JSONAble) {
