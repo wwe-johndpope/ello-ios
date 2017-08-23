@@ -101,15 +101,8 @@ Create the certs in Apple's developer portal in the usual way (using the
 1Password APNS password as the cert keyphrase), and download the `.cer` file
 (two of them, actually, one for `co.ello.Ello`, one for `co.ello.ElloDev`).
 Install that file into your keychain, then export the private key (in`.p12`
-format).  Then we convert those into Amazon's preferred `.pem` format:
+format).
 
-```bash
-openssl x509 -in ~/Downloads/co.ello.Ello.cer -inform DER -out ~/Downloads/co.ello.Ello.pem
-openssl pkcs12 -in ~/Downloads/co.ello.Ello.p12 -out co.ello.Ello.key.pem
-
-# verify
-openssl s_client -connect gateway.sandbox.push.apple.com:2195 -cert co.ello.Ello.pem -key co.ello.Ello.key.pem
-```
 
 ### Pinning certificates
 We use pinned certificates to avoid man-in-the-middle SSL attacks.  We use a rolling "primary + backup" pair of certificates, so if the primary expires or needs to be pulled, the backup is easy to swap in.  Every now and then the primary / backup need to be rotated.

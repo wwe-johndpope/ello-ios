@@ -20,7 +20,6 @@ public struct JWT {
             authToken.isNabaroo = data["is_nabaroo"] as? Bool ?? false
         }
         catch {
-            print("Unable to decode JWT")
         }
     }
 }

@@ -12,6 +12,11 @@ import SnapKit
 // MARK: Responder Implementations
 
 @objc
+protocol StreamCellResponder: class {
+    func streamCellTapped(cell: UICollectionViewCell)
+}
+
+@objc
 protocol SimpleStreamResponder: class {
     func showSimpleStream(boxedEndpoint: BoxedElloAPI, title: String, noResultsMessages: NoResultsMessages?)
 }
@@ -58,7 +63,6 @@ protocol SelectedCategoryResponder: class {
 protocol UserResponder: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
-    func userTappedText(cell: UICollectionViewCell)
     func userTapped(user: User)
 }
 
@@ -473,7 +477,6 @@ final class StreamViewController: BaseElloViewController {
                     }
                 }
                 .catch { error in
-                    print("failed to load \(self.streamKind.cacheKey) stream (reason: \(error))")
                     self.initialLoadFailure()
                 }
         }
@@ -883,7 +886,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     func collectionView (_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
         isFullWidthAtIndexPath indexPath: IndexPath) -> Bool
     {
-        return dataSource.isFullWidthAtIndexPath(indexPath)
+        return dataSource.isFullWidth(at: indexPath)
     }
 }
 
@@ -1044,17 +1047,22 @@ extension StreamViewController: CategoryResponder {
     }
 }
 
-// MARK: StreamViewController: UserResponder
-extension StreamViewController: UserResponder {
+// MARK: StreamViewController: StreamCellResponder
+extension StreamViewController: StreamCellResponder {
 
-    func userTappedText(cell: UICollectionViewCell) {
+    func streamCellTapped(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            !dataSource.isFullWidthAtIndexPath(indexPath)
+            dataSource.isTappable(at: indexPath)
         else { return }
 
         collectionView(collectionView, didSelectItemAt: indexPath)
     }
+
+}
+
+// MARK: StreamViewController: UserResponder
+extension StreamViewController: UserResponder {
 
     func userTapped(user: User) {
         let responder: UserTappedResponder? = findResponder()
@@ -1090,6 +1098,15 @@ extension StreamViewController {
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
+
+    func artistInviteTapped(slug: String) {
+        Tracker.shared.artistInviteOpened(slug: slug)
+
+        let vc = ArtistInviteDetailController(slug: slug)
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
 }
 
 
@@ -1223,6 +1240,12 @@ extension StreamViewController: UICollectionViewDelegate {
         {
             userTapped(user: user)
         }
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
+            let artistInviteSubmission = notification.subject as? ArtistInviteSubmission,
+            let artistInvite = artistInviteSubmission.artistInvite
+        {
+            artistInviteTapped(slug: artistInvite.slug)
+        }
         else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
             let callToAction = announcement.ctaURL
         {
@@ -1341,7 +1364,6 @@ extension StreamViewController: UIScrollViewDelegate {
                 }
             }
             .catch { error in
-                print("failed to load stream (reason: \(error))")
                 self.scrollLoaded()
             }
     }

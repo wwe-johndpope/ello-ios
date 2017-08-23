@@ -124,10 +124,9 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
     }
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if let scheme = request.url?.scheme, scheme == "default"
-        {
-            let responder: UserResponder? = findResponder()
-            responder?.userTappedText(cell: self)
+        if let scheme = request.url?.scheme, scheme == "default" {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
             return false
         }
         else {

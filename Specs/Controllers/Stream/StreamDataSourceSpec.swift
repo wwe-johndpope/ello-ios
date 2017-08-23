@@ -1279,7 +1279,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-            describe("-isFullWidthAtIndexPath:") {
+            describe("-isFullWidth(at:)") {
 
                 beforeEach {
                     let items = [
@@ -1290,22 +1290,58 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns true for Full Width items") {
-                    let isFullWidth = subject.isFullWidthAtIndexPath(indexPath0)
+                    let isFullWidth = subject.isFullWidth(at: indexPath0)
                     expect(isFullWidth) == true
                 }
 
                 it("returns false for all other items") {
-                    let indexPath = IndexPath(item: 1, section: 0)
-                    let isFullWidth = subject.isFullWidthAtIndexPath(indexPath)
+                    let isFullWidth = subject.isFullWidth(at: indexPath1)
                     expect(isFullWidth) == false
                 }
 
                 it("returns true when out of bounds") {
-                    expect(subject.isFullWidthAtIndexPath(indexPathOutOfBounds)) == true
+                    expect(subject.isFullWidth(at: indexPathOutOfBounds)) == true
                 }
 
                 it("returns true when invalid section") {
-                    expect(subject.isFullWidthAtIndexPath(indexPathInvalidSection)) == true
+                    expect(subject.isFullWidth(at: indexPathInvalidSection)) == true
+                }
+
+            }
+
+            describe("-isTappable(at:)") {
+
+                beforeEach {
+                    let items = [
+                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment),
+                        StreamCellItem(jsonable: Notification.stub([:]), type: .notification),
+                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .commentHeader)
+                    ]
+                    subject.appendStreamCellItems(items)
+                }
+
+                it("returns true for Full Width items") {
+                    let isTappable = subject.isTappable(at: indexPath0)
+                    expect(isTappable) == true
+                }
+
+                it("returns true for Selectable items") {
+                    let isTappable = subject.isTappable(at: indexPath1)
+                    expect(isTappable) == true
+                }
+
+                it("returns false for all other items") {
+                    let indexPath = IndexPath(item: 2, section: 0)
+                    let isTappable = subject.isTappable(at: indexPath)
+                    expect(isTappable) == false
+                }
+
+                it("returns false when out of bounds") {
+                    expect(subject.isTappable(at: indexPathOutOfBounds)) == false
+                }
+
+                it("returns false when invalid section") {
+                    expect(subject.isTappable(at: indexPathInvalidSection)) == false
                 }
 
             }

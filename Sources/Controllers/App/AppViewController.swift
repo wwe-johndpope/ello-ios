@@ -561,7 +561,7 @@ extension AppViewController {
             }
         case .artistInvitesBrowse:
             showArtistInvitesScreen()
-        case .artistInvitesDetail:
+        case .artistInvitesDetail, .pushNotificationArtistInvite:
             showArtistInvitesScreen(slug: data)
         case .exploreRecommended,
              .exploreRecent,

@@ -72,9 +72,7 @@ class PostbarController: UIResponder, PostbarResponder {
             let item = dataSource.visibleStreamCellItem(at: indexPath)
         else { return }
 
-        guard
-            dataSource.isFullWidthAtIndexPath(indexPath)
-        else {
+        guard dataSource.isFullWidth(at: indexPath) else {
             cell.cancelCommentLoading()
             viewsButtonTapped(cell)
             return
@@ -134,7 +132,6 @@ class PostbarController: UIResponder, PostbarResponder {
                     item.state = .collapsed
                     imageLabelControl.finishAnimation()
                     cell.cancelCommentLoading()
-                    print("comment load failure")
                 }
         }
     }
@@ -161,10 +158,7 @@ class PostbarController: UIResponder, PostbarResponder {
                     .then {
                         Tracker.shared.commentDeleted(comment)
                     }
-                    .catch { error in
-                        // TODO: add error handling
-                        print("failed to delete comment, error: \(error)")
-                    }
+                    .ignoreErrors()
             }
         }
         let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
@@ -238,10 +232,6 @@ class PostbarController: UIResponder, PostbarResponder {
                     postNotification(JSONAbleChangedNotification, value: (love, .delete))
                 }
             }
-            .catch { error in
-                let message = (error as NSError).elloErrorMessage ?? error.localizedDescription
-                print("failed to unlove post \(post.id), error: \(message)")
-            }
             .always { _ in
                 cell?.toggleLoveControl(enabled: true)
             }
@@ -267,10 +257,6 @@ class PostbarController: UIResponder, PostbarResponder {
         LovesService().lovePost(postId: post.id)
             .thenFinally { love in
                 postNotification(JSONAbleChangedNotification, value: (love, .create))
-            }
-            .catch { error in
-                let message = (error as NSError).elloErrorMessage ?? error.localizedDescription
-                print("failed to love post \(post.id), error: \(message)")
             }
             .always { _ in
                 cell?.toggleLoveControl(enabled: true)

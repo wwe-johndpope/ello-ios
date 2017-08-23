@@ -172,6 +172,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     }
     var post: Post?
     var comment: ElloComment?
+    var submission: ArtistInviteSubmission?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -329,8 +330,8 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default"
         {
-            let responder: UserResponder? = findResponder()
-            responder?.userTappedText(cell: self)
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
 
             return false
         }
@@ -371,8 +372,8 @@ extension NotificationCell: ElloTextViewDelegate {
     }
 
     func textViewTappedDefault() {
-        let responder: UserResponder? = findResponder()
-        responder?.userTappedText(cell: self)
+        let responder: StreamCellResponder? = findResponder()
+        responder?.streamCellTapped(cell: self)
     }
 }
 
@@ -389,8 +390,14 @@ extension NotificationCell {
     }
 
     func avatarTapped() {
-        let responder: UserResponder? = findResponder()
-        responder?.userTappedAuthor(cell: self)
+        if submission != nil {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+        }
+        else {
+            let responder: UserResponder? = findResponder()
+            responder?.userTappedAuthor(cell: self)
+        }
     }
 
 }

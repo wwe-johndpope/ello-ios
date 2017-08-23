@@ -221,9 +221,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .catch { _ in
-                print("failed load post comments")
-            }
+            .ignoreErrors()
     }
 
     func loadPostLovers(_ doneOperation: AsyncOperation) {
@@ -251,9 +249,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .catch { _ in
-                print("failed load post lovers")
-            }
+            .ignoreErrors()
     }
 
     func loadPostReposters(_ doneOperation: AsyncOperation) {
@@ -281,9 +277,7 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .catch { _ in
-                print("failed load post reposters")
-            }
+            .ignoreErrors()
     }
 
     func loadRelatedPosts(_ doneOperation: AsyncOperation) {
@@ -310,8 +304,6 @@ private extension PostDetailGenerator {
                     }
                 }
             }
-            .catch { _ in
-                print("failed load post reposters")
-            }
+            .ignoreErrors()
     }
 }
