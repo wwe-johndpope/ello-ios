@@ -2,10 +2,14 @@
 ///  EditorialTitledCell.swift
 //
 
+import SnapKit
+
+
 class EditorialTitledCell: EditorialCell {
     let titleLabel = StyledLabel(style: .editorialHeader)
     let authorLabel = StyledLabel(style: .editorialHeader)
-    let subtitleLabel = StyledLabel(style: .editorialCaption)
+    let subtitleWebView = UIWebView()
+    var subtitleHeightConstraint: Constraint?
 
     enum TitlePlacement {
         case `default`
@@ -31,7 +35,10 @@ class EditorialTitledCell: EditorialCell {
         super.style()
         titleLabel.isMultiline = true
         authorLabel.isMultiline = false
-        subtitleLabel.isMultiline = true
+        subtitleWebView.delegate = self
+        subtitleWebView.backgroundColor = .clear
+        subtitleWebView.isOpaque = false
+        subtitleWebView.scrollView.isScrollEnabled = false
     }
 
     override func prepareForReuse() {
@@ -43,7 +50,14 @@ class EditorialTitledCell: EditorialCell {
         super.updateConfig()
         titleLabel.text = config.title
         authorLabel.text = config.author
-        subtitleLabel.text = config.subtitle
+
+        if let html = config.subtitle {
+            let wrappedHtml = StreamTextCellHTML.editorialHTML(html)
+            subtitleWebView.loadHTMLString(wrappedHtml, baseURL: URL(string: "/"))
+        }
+        else {
+            subtitleWebView.loadHTMLString("", baseURL: URL(string: "/"))
+        }
     }
 
     override func arrange() {
@@ -51,7 +65,7 @@ class EditorialTitledCell: EditorialCell {
 
         editorialContentView.addSubview(titleLabel)
         editorialContentView.addSubview(authorLabel)
-        editorialContentView.addSubview(subtitleLabel)
+        editorialContentView.addSubview(subtitleWebView)
 
         titleLabel.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
@@ -63,4 +77,25 @@ class EditorialTitledCell: EditorialCell {
         }
     }
 
+}
+
+extension EditorialTitledCell: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let scheme = request.url?.scheme, scheme == "default" {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+            return false
+        }
+        else {
+            return ElloWebViewHelper.handle(request: request, origin: self)
+        }
+    }
+
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        if let actualHeight = webView.windowContentSize()?.height,
+            let constraint = subtitleHeightConstraint
+        {
+            constraint.update(offset: actualHeight)
+        }
+    }
 }

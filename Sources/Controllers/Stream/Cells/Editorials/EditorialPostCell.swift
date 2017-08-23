@@ -68,10 +68,11 @@ class EditorialPostCell: EditorialTitledCell {
             make.trailing.top.bottom.equalTo(buttonsContainer)
         }
 
-        subtitleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
-            make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
+        subtitleWebView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(editorialContentView).inset(Size.defaultMargin)
+            // make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
             make.bottom.equalTo(buttonsContainer.snp.top).offset(-Size.subtitleButtonMargin)
+            subtitleHeightConstraint = make.height.equalTo(0).constraint
         }
     }
 

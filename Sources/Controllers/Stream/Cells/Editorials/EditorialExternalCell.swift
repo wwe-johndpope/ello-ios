@@ -19,9 +19,10 @@ class EditorialExternalCell: EditorialTitledCell {
     override func arrange() {
         super.arrange()
 
-        subtitleLabel.snp.makeConstraints { make in
-            make.leading.bottom.equalTo(editorialContentView).inset(Size.defaultMargin)
-            make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
+        subtitleWebView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(editorialContentView).inset(Size.defaultMargin)
+            // make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
+            subtitleHeightConstraint = make.height.equalTo(0).constraint
         }
     }
 }

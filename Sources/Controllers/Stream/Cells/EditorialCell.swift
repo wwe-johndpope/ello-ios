@@ -229,7 +229,7 @@ extension EditorialCell.Config {
         }
         else {
             config.title = editorial.title
-            config.subtitle = editorial.subtitle
+            config.subtitle = editorial.renderedSubtitle
         }
 
         let size: Editorial.Size
@@ -259,7 +259,7 @@ extension EditorialCell.Config {
             config.author = author.atName
         }
         config.title = editorial.title
-        config.subtitle = editorial.subtitle
+        config.subtitle = editorial.renderedSubtitle
         config.post = post
 
         if let postImageURL = post.firstImageURL {
