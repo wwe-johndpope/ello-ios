@@ -886,7 +886,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     func collectionView (_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
         isFullWidthAtIndexPath indexPath: IndexPath) -> Bool
     {
-        return dataSource.isFullWidthAtIndexPath(indexPath)
+        return dataSource.isFullWidth(at: indexPath)
     }
 }
 
@@ -1053,7 +1053,7 @@ extension StreamViewController: StreamCellResponder {
     func streamCellTapped(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            !dataSource.isFullWidthAtIndexPath(indexPath)
+            dataSource.isTappable(at: indexPath)
         else { return }
 
         collectionView(collectionView, didSelectItemAt: indexPath)
@@ -1098,6 +1098,15 @@ extension StreamViewController {
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
     }
+
+    func artistInviteTapped(slug: String) {
+        Tracker.shared.artistInviteOpened(slug: slug)
+
+        let vc = ArtistInviteDetailController(slug: slug)
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
 }
 
 
@@ -1230,6 +1239,12 @@ extension StreamViewController: UICollectionViewDelegate {
             let user = notification.subject as? User
         {
             userTapped(user: user)
+        }
+        else if let notification = dataSource.jsonableForIndexPath(indexPath) as? Notification,
+            let artistInviteSubmission = notification.subject as? ArtistInviteSubmission,
+            let artistInvite = artistInviteSubmission.artistInvite
+        {
+            artistInviteTapped(slug: artistInvite.slug)
         }
         else if let announcement = dataSource.jsonableForIndexPath(indexPath) as? Announcement,
             let callToAction = announcement.ctaURL

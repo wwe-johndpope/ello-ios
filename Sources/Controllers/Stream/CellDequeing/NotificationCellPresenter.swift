@@ -39,6 +39,7 @@ struct NotificationCellPresenter {
         cell.canBackFollow = notification.canBackFollow
         cell.post = notification.activity.subject as? Post
         cell.comment = notification.activity.subject as? ElloComment
+        cell.submission = notification.activity.subject as? ArtistInviteSubmission
         cell.messageHtml = notification.textRegion?.content
 
         if let imageRegion = notification.imageRegion {

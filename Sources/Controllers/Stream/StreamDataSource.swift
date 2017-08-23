@@ -287,13 +287,22 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
     }
 
-    func isFullWidthAtIndexPath(_ indexPath: IndexPath) -> Bool {
+    func isFullWidth(at indexPath: IndexPath) -> Bool {
         guard let item = visibleStreamCellItem(at: indexPath) else { return true }
 
         if item.type.isFullWidth {
             return true
         }
         return !item.isGridView(streamKind: streamKind)
+    }
+
+    func isTappable(at indexPath: IndexPath) -> Bool {
+        guard let item = visibleStreamCellItem(at: indexPath) else { return true }
+
+        if item.type.isSelectable {
+            return true
+        }
+        return !isFullWidth(at: indexPath)
     }
 
     func groupForIndexPath(_ indexPath: IndexPath) -> String? {

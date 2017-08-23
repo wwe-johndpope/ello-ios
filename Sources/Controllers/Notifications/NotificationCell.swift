@@ -172,6 +172,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
     }
     var post: Post?
     var comment: ElloComment?
+    var submission: ArtistInviteSubmission?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -389,8 +390,14 @@ extension NotificationCell {
     }
 
     func avatarTapped() {
-        let responder: UserResponder? = findResponder()
-        responder?.userTappedAuthor(cell: self)
+        if submission != nil {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+        }
+        else {
+            let responder: UserResponder? = findResponder()
+            responder?.userTappedAuthor(cell: self)
+        }
     }
 
 }
