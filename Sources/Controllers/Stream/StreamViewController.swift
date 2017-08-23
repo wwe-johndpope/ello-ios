@@ -12,6 +12,11 @@ import SnapKit
 // MARK: Responder Implementations
 
 @objc
+protocol StreamCellResponder: class {
+    func streamCellTapped(cell: UICollectionViewCell)
+}
+
+@objc
 protocol SimpleStreamResponder: class {
     func showSimpleStream(boxedEndpoint: BoxedElloAPI, title: String, noResultsMessages: NoResultsMessages?)
 }
@@ -58,7 +63,6 @@ protocol SelectedCategoryResponder: class {
 protocol UserResponder: class {
     func userTappedAuthor(cell: UICollectionViewCell)
     func userTappedReposter(cell: UICollectionViewCell)
-    func userTappedText(cell: UICollectionViewCell)
     func userTapped(user: User)
 }
 
@@ -1043,10 +1047,10 @@ extension StreamViewController: CategoryResponder {
     }
 }
 
-// MARK: StreamViewController: UserResponder
-extension StreamViewController: UserResponder {
+// MARK: StreamViewController: StreamCellResponder
+extension StreamViewController: StreamCellResponder {
 
-    func userTappedText(cell: UICollectionViewCell) {
+    func streamCellTapped(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             !dataSource.isFullWidthAtIndexPath(indexPath)
@@ -1054,6 +1058,11 @@ extension StreamViewController: UserResponder {
 
         collectionView(collectionView, didSelectItemAt: indexPath)
     }
+
+}
+
+// MARK: StreamViewController: UserResponder
+extension StreamViewController: UserResponder {
 
     func userTapped(user: User) {
         let responder: UserTappedResponder? = findResponder()

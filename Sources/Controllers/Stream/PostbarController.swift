@@ -72,9 +72,7 @@ class PostbarController: UIResponder, PostbarResponder {
             let item = dataSource.visibleStreamCellItem(at: indexPath)
         else { return }
 
-        guard
-            dataSource.isFullWidthAtIndexPath(indexPath)
-        else {
+        guard dataSource.isFullWidth(at: indexPath) else {
             cell.cancelCommentLoading()
             viewsButtonTapped(cell)
             return
