@@ -331,22 +331,6 @@ final class StreamViewController: BaseElloViewController {
         updateNoResultsLabel()
     }
 
-    @discardableResult
-    func performBatchUpdates(_ block: @escaping () -> Void) -> Promise<Void> {
-        let (promise, fulfill, _) = Promise<Void>.pending()
-
-        // don't perform a batch update if a full reload is pending
-        guard !shouldReload else {
-            fulfill(())
-            return promise
-        }
-
-        collectionView.performBatchUpdates(block, completion: { _ in
-            fulfill(())
-        })
-        return promise
-    }
-
     fileprivate var debounceCellReload = debounce(0.05)
     fileprivate var allowReloadCount = 0 {
         didSet {
@@ -382,6 +366,24 @@ final class StreamViewController: BaseElloViewController {
         allowReloadCount -= 1
     }
 
+    @discardableResult
+    func performBatchUpdates(_ block: @escaping () -> Void) -> Promise<Void> {
+        let (promise, fulfill, _) = Promise<Void>.pending()
+
+        // don't perform a batch update if a full reload is pending
+        guard !shouldReload else {
+            fulfill(())
+            return promise
+        }
+
+        blockReload()
+        collectionView.performBatchUpdates(block, completion: { _ in
+            self.unblockReload()
+            fulfill(())
+        })
+        return promise
+    }
+
     func removeAllCellItems() {
         dataSource.removeAllCellItems()
         reloadCells(now: true)
@@ -396,13 +398,11 @@ final class StreamViewController: BaseElloViewController {
 
     func appendUnsizedCellItems(_ items: [StreamCellItem], completion: Block? = nil) {
         let width = view.frame.width
-        blockReload()
         dataSource.calculateCellItems(items, withWidth: width) {
             self.performBatchUpdates {
                 let indexPaths = self.dataSource.appendStreamCellItems(items)
                 self.collectionView.insertItems(at: indexPaths)
             }.always { _ in
-                self.unblockReload()
                 self.doneLoading()
                 completion?()
             }
@@ -416,13 +416,11 @@ final class StreamViewController: BaseElloViewController {
         }
 
         let width = view.frame.width
-        blockReload()
         dataSource.calculateCellItems(cellItems, withWidth: width) {
             self.performBatchUpdates {
                 let indexPaths = self.dataSource.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
                 self.collectionView.insertItems(at: indexPaths)
             }.always { _ in
-                self.unblockReload()
                 completion()
             }
         }
