@@ -82,8 +82,7 @@ class EditorialTitledCell: EditorialCell {
 extension EditorialTitledCell: UIWebViewDelegate {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let scheme = request.url?.scheme, scheme == "default" {
-            let responder: StreamCellResponder? = findResponder()
-            responder?.streamCellTapped(cell: self)
+            tappedEditorial()
             return false
         }
         else {
