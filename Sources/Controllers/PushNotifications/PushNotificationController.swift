@@ -19,6 +19,7 @@ struct PushActions {
     static let commentCategory = "co.ello.COMMENT_CATEGORY"
     static let userCategory = "co.ello.USER_CATEGORY"
     static let userMessageCategory = "co.ello.USER_MESSAGE_CATEGORY"
+    static let artistInviteSubmissionCategory = "co.ello.ARTIST_INVITE_SUBMISSION_CATEGORY"
 
     static let followUser = "co.ello.FOLLOW_USER_ACTION"
     static let lovePost = "co.ello.LOVE_POST_ACTION"
@@ -101,7 +102,7 @@ extension PushNotificationController {
             let viewAction = UNNotificationAction(identifier: PushActions.view, title: InterfaceString.PushNotifications.View, options: [.authenticationRequired, .foreground])
 
             let postCategory = UNNotificationCategory(identifier: PushActions.postCategory, actions: [loveAction, commentAction, viewAction], intentIdentifiers: [], options: [])
-            let commentCategory = UNNotificationCategory(identifier: PushActions.commentCategory, actions: [loveAction, replyAction, viewAction], intentIdentifiers: [], options: [])
+            let commentCategory = UNNotificationCategory(identifier: PushActions.commentCategory, actions: [replyAction, viewAction], intentIdentifiers: [], options: [])
             let userCategory = UNNotificationCategory(identifier: PushActions.userCategory, actions: [followAction, messageAction, viewAction], intentIdentifiers: [], options: [])
             let userMessageCategory = UNNotificationCategory(identifier: PushActions.userMessageCategory, actions: [messageAction, viewAction], intentIdentifiers: [], options: [])
 
