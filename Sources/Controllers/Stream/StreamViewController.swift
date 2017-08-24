@@ -7,6 +7,7 @@ import FLAnimatedImage
 import SwiftyUserDefaults
 import DeltaCalculator
 import SnapKit
+import PromiseKit
 
 
 // MARK: Responder Implementations
@@ -330,8 +331,20 @@ final class StreamViewController: BaseElloViewController {
         updateNoResultsLabel()
     }
 
-    func performBatchUpdates(_ block: @escaping () -> Void) {
-        self.collectionView.performBatchUpdates(block, completion: nil)
+    @discardableResult
+    func performBatchUpdates(_ block: @escaping () -> Void) -> Promise<Void> {
+        let (promise, fulfill, _) = Promise<Void>.pending()
+
+        // don't perform a batch update if a full reload is pending
+        guard !shouldReload else {
+            fulfill(())
+            return promise
+        }
+
+        collectionView.performBatchUpdates(block, completion: { _ in
+            fulfill(())
+        })
+        return promise
     }
 
     fileprivate var debounceCellReload = debounce(0.05)
@@ -346,19 +359,17 @@ final class StreamViewController: BaseElloViewController {
             shouldReload = true
             return
         }
-        shouldReload = false
 
         if now {
+            shouldReload = false
             debounceCellReload {}
             self.collectionView.reloadData()
             self.collectionView.layoutIfNeeded()
         }
         else {
+            shouldReload = true
             debounceCellReload { [weak self] in
-                guard let `self` = self else { return }
-
-                self.collectionView.reloadData()
-                self.collectionView.layoutIfNeeded()
+                self?.reloadCells(now: true)
             }
         }
     }
@@ -383,31 +394,37 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    func appendUnsizedCellItems(_ items: [StreamCellItem], completion: StreamDataSource.StreamContentReady? = nil) {
+    func appendUnsizedCellItems(_ items: [StreamCellItem], completion: Block? = nil) {
         let width = view.frame.width
         blockReload()
         dataSource.calculateCellItems(items, withWidth: width) {
-            var indexPaths: [IndexPath]!
             self.performBatchUpdates {
-                indexPaths = self.dataSource.appendStreamCellItems(items)
+                let indexPaths = self.dataSource.appendStreamCellItems(items)
                 self.collectionView.insertItems(at: indexPaths)
+            }.always { _ in
+                self.unblockReload()
+                self.doneLoading()
+                completion?()
             }
-            self.unblockReload()
-            self.doneLoading()
-            completion?(indexPaths)
         }
     }
 
     func insertUnsizedCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath, completion: @escaping Block = {}) {
+        guard cellItems.count > 0 else {
+            completion()
+            return
+        }
+
         let width = view.frame.width
         blockReload()
         dataSource.calculateCellItems(cellItems, withWidth: width) {
             self.performBatchUpdates {
                 let indexPaths = self.dataSource.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
                 self.collectionView.insertItems(at: indexPaths)
+            }.always { _ in
+                self.unblockReload()
+                completion()
             }
-            self.unblockReload()
-            completion()
         }
     }
 
@@ -486,7 +503,7 @@ final class StreamViewController: BaseElloViewController {
         if jsonables.count == 0 {
             items.append(StreamCellItem(type: .emptyStream(height: 282)))
         }
-        appendUnsizedCellItems(items) { _ in
+        appendUnsizedCellItems(items) {
             self.isPagingEnabled = true
         }
     }
@@ -798,7 +815,7 @@ extension StreamViewController: GridListToggleDelegate {
             items = [item]
         }
 
-        self.appendUnsizedCellItems(items) { indexPaths in
+        self.appendUnsizedCellItems(items) {
             animate {
                 if let streamableViewController = self.parent as? StreamableViewController {
                     streamableViewController.trackScreenAppeared()
