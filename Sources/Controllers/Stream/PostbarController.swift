@@ -223,14 +223,14 @@ class PostbarController: UIResponder, PostbarResponder {
 
         LovesService().unlovePost(postId: post.id)
             .thenFinally {
-                if let currentUser = self.currentUser {
-                    let now = AppSetup.shared.now
-                    let love = Love(
-                        id: "", createdAt: now, updatedAt: now,
-                        isDeleted: true, postId: post.id, userId: currentUser.id
-                        )
-                    postNotification(JSONAbleChangedNotification, value: (love, .delete))
-                }
+                guard let currentUser = self.currentUser else { return }
+
+                let now = AppSetup.shared.now
+                let love = Love(
+                    id: "", createdAt: now, updatedAt: now,
+                    isDeleted: true, postId: post.id, userId: currentUser.id
+                )
+                postNotification(JSONAbleChangedNotification, value: (love, .delete))
             }
             .always { _ in
                 cell?.toggleLoveControl(enabled: true)
