@@ -899,6 +899,7 @@
 		1DB271181F547A0F0044D475 /* UserFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271161F547A0F0044D475 /* UserFlag.swift */; };
 		1DB271191F547A0F0044D475 /* UserFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271161F547A0F0044D475 /* UserFlag.swift */; };
 		1DB2711A1F547A650044D475 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D971CF01E1ECD3100A167A2 /* Tracker.swift */; };
+		1DB2710D1F4F882D0044D475 /* StreamResponders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2710C1F4F882D0044D475 /* StreamResponders.swift */; };
 		1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */; };
 		1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
@@ -2000,6 +2001,7 @@
 		1DB17B961AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartRequestBuilderSpec.swift; sourceTree = "<group>"; };
 		1DB2710A1F4C95BF0044D475 /* HomeSubviewScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSubviewScreen.swift; sourceTree = "<group>"; };
 		1DB271161F547A0F0044D475 /* UserFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFlag.swift; sourceTree = "<group>"; };
+		1DB2710C1F4F882D0044D475 /* StreamResponders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamResponders.swift; sourceTree = "<group>"; };
 		1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarErrorCell.swift; sourceTree = "<group>"; };
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -2884,6 +2886,7 @@
 				122B18CC1A867BCE00247A05 /* Cells */,
 				1266E50C1A9E2B9E00270E1C /* ContentFlagger.swift */,
 				1D1AF61E1A83ED6600E06C93 /* Detail */,
+				121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */,
 				12224E571A72CEC300D087EC /* PostbarController.swift */,
 				123971511E4B626400481CB3 /* ResponderChainableController.swift */,
 				766375DF1AA911090096FA51 /* SimpleStreamViewController.swift */,
@@ -2891,11 +2894,11 @@
 				1217008B1A7841C400EBACA5 /* StreamCellItem.swift */,
 				1217008C1A7841C400EBACA5 /* StreamCellItemParser.swift */,
 				121700B51A78428D00EBACA5 /* StreamCollectionViewLayout.swift */,
-				121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */,
 				1217008F1A7841C400EBACA5 /* StreamDataSource.swift */,
 				1245ED371D1C772400929DD4 /* StreamGenerator.swift */,
 				121700B81A7891B300EBACA5 /* StreamImageViewer.swift */,
 				128D36A51A95174C00622833 /* StreamKind.swift */,
+				1DB2710C1F4F882D0044D475 /* StreamResponders.swift */,
 				121700981A7841C400EBACA5 /* StreamViewController.swift */,
 			);
 			path = Stream;
@@ -5785,6 +5788,7 @@
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
+				1DB2710D1F4F882D0044D475 /* StreamResponders.swift in Sources */,
 				1D447E761F3397EE00013384 /* Control.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,
 				76B0B18F1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift in Sources */,

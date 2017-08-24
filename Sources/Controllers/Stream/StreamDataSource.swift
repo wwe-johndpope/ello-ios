@@ -380,7 +380,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
-    func modifyItems(_ jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
+    func modifyItems(_ jsonable: JSONAble, change: ContentChange, streamViewController: StreamViewController) {
         // get items that match id and type -> [IndexPath]
         // based on change decide to update/remove those items
         switch change {
@@ -431,7 +431,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                         }
                     }
 
-                    collectionView.reloadData()
+                    streamViewController.collectionView.reloadData()
                 }
             }
 
@@ -443,7 +443,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 self.calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
                     self.insertStreamCellItems(items, startingIndexPath: indexPath)
                     delay(0.5) {  // no one hates this more than me - colin
-                        collectionView.reloadData()
+                        streamViewController.collectionView.reloadData()
                     }
                 }
             }
@@ -473,7 +473,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
 
             let removedPaths = removeItemsFor(jsonable: jsonable, change: change)
             if removedAvatar || removedPaths.count > 0 {
-                collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
+                streamViewController.collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
             }
         case .replaced:
             let (oldIndexPaths, _) = elementsFor(jsonable: jsonable, change: change)
@@ -488,14 +488,14 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 }
                 let items = StreamCellItemParser().parse([post], streamKind: self.streamKind, currentUser: currentUser)
                 calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
-                    collectionView.performBatchUpdates({
+                    streamViewController.collectionView.performBatchUpdates({
                         let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
                         for wrongIndexPath in Array(oldIndexPaths.reversed()) {
                             let indexPath = IndexPath(item: wrongIndexPath.item + newIndexPaths.count, section: wrongIndexPath.section)
                             self.removeItemsAtIndexPaths([indexPath])
                         }
-                        collectionView.insertItems(at: newIndexPaths)
-                        collectionView.deleteItems(at: oldIndexPaths)
+                        streamViewController.collectionView.insertItems(at: newIndexPaths)
+                        streamViewController.collectionView.deleteItems(at: oldIndexPaths)
                     }, completion: nil)
                 }
             }
@@ -510,46 +510,42 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 }
                 let items = StreamCellItemParser().parse([comment], streamKind: self.streamKind, currentUser: currentUser)
                 self.calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
-                    collectionView.performBatchUpdates({
+                    streamViewController.collectionView.performBatchUpdates({
                         let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
                         for wrongIndexPath in Array(oldIndexPaths.reversed()) {
                             let indexPath = IndexPath(item: wrongIndexPath.item + newIndexPaths.count, section: wrongIndexPath.section)
                             self.removeItemsAtIndexPaths([indexPath])
                         }
-                        collectionView.insertItems(at: newIndexPaths)
-                        collectionView.deleteItems(at: oldIndexPaths)
+                        streamViewController.collectionView.insertItems(at: newIndexPaths)
+                        streamViewController.collectionView.deleteItems(at: oldIndexPaths)
                     }, completion: nil)
                 }
             }
         case .update:
             var shouldReload = true
-            switch streamKind {
-            case let .simpleStream(endpoint, _):
-                switch endpoint {
-                case .loves:
-                    if let post = jsonable as? Post, !post.isLoved {
-                        // the post was unloved
-                        removeItemsFor(jsonable: jsonable, change: .delete)
-                        collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
-                        shouldReload = false
-                    }
-                default: break
-                }
-            default: break
+
+            if case let .simpleStream(endpoint, _) = streamKind,
+                case .loves = endpoint,
+                let post = jsonable as? Post, !post.isLoved
+            {
+                // the post was unloved
+                removeItemsFor(jsonable: jsonable, change: .delete)
+                streamViewController.collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
+                shouldReload = false
             }
 
             if shouldReload {
-                mergeAndReloadElementsFor(jsonable: jsonable, change: change, collectionView: collectionView)
+                mergeAndReloadElementsFor(jsonable: jsonable, change: change, streamViewController: streamViewController)
             }
         case .loved,
              .reposted,
              .watching:
-            mergeAndReloadElementsFor(jsonable: jsonable, change: change, collectionView: collectionView)
+            mergeAndReloadElementsFor(jsonable: jsonable, change: change, streamViewController: streamViewController)
         default: break
         }
     }
 
-    func mergeAndReloadElementsFor(jsonable: JSONAble, change: ContentChange, collectionView: ElloCollectionView) {
+    func mergeAndReloadElementsFor(jsonable: JSONAble, change: ContentChange, streamViewController: StreamViewController) {
         let (_, items) = elementsFor(jsonable: jsonable, change: change)
         let T = type(of: jsonable)
         var modified = false
@@ -560,11 +556,11 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
         }
         if modified {
-            collectionView.reloadData() // reload(indexPaths)
+            streamViewController.collectionView.reloadData()
         }
     }
 
-    func modifyUserRelationshipItems(_ user: User, collectionView: ElloCollectionView) {
+    func modifyUserRelationshipItems(_ user: User, streamViewController: StreamViewController) {
         let (_, changedItems) = elementsFor(jsonable: user, change: .update)
 
         for item in changedItems {
@@ -592,7 +588,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
         }
 
-        collectionView.reloadData()
+        streamViewController.collectionView.reloadData()
 
         if user.relationshipPriority.isMutedOrBlocked {
             var shouldDelete = true
@@ -614,17 +610,17 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             }
 
             if shouldDelete {
-                modifyItems(user, change: .delete, collectionView: collectionView)
+                modifyItems(user, change: .delete, streamViewController: streamViewController)
             }
         }
     }
 
-    func modifyUserSettingsItems(_ user: User, collectionView: ElloCollectionView) {
-        let (_, changedItems) = elementsFor(jsonable: user, change: .update)
+    func modifyUserSettingsItems(_ user: User, streamViewController: StreamViewController) {
+        let (indexPaths, changedItems) = elementsFor(jsonable: user, change: .update)
         for item in changedItems where item.jsonable is User{
             item.jsonable = user
         }
-        collectionView.reloadData()
+        streamViewController.collectionView.reloadItems(at: indexPaths)
     }
 
     @discardableResult
