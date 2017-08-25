@@ -900,6 +900,7 @@
 		1DB271191F547A0F0044D475 /* UserFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271161F547A0F0044D475 /* UserFlag.swift */; };
 		1DB2711A1F547A650044D475 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D971CF01E1ECD3100A167A2 /* Tracker.swift */; };
 		1DB2710D1F4F882D0044D475 /* StreamResponders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2710C1F4F882D0044D475 /* StreamResponders.swift */; };
+		1DB2710F1F5068CB0044D475 /* StreamViewDataChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2710E1F5068CB0044D475 /* StreamViewDataChange.swift */; };
 		1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */; };
 		1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
@@ -2002,6 +2003,7 @@
 		1DB2710A1F4C95BF0044D475 /* HomeSubviewScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSubviewScreen.swift; sourceTree = "<group>"; };
 		1DB271161F547A0F0044D475 /* UserFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFlag.swift; sourceTree = "<group>"; };
 		1DB2710C1F4F882D0044D475 /* StreamResponders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamResponders.swift; sourceTree = "<group>"; };
+		1DB2710E1F5068CB0044D475 /* StreamViewDataChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamViewDataChange.swift; sourceTree = "<group>"; };
 		1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarErrorCell.swift; sourceTree = "<group>"; };
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -2900,6 +2902,7 @@
 				128D36A51A95174C00622833 /* StreamKind.swift */,
 				1DB2710C1F4F882D0044D475 /* StreamResponders.swift */,
 				121700981A7841C400EBACA5 /* StreamViewController.swift */,
+				1DB2710E1F5068CB0044D475 /* StreamViewDataChange.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -5501,6 +5504,7 @@
 				12431FFC1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift in Sources */,
 				1D6D8E701EF2ED4600472434 /* HomeViewController.swift in Sources */,
 				12224E581A72CEC300D087EC /* PostbarController.swift in Sources */,
+				1DB2710F1F5068CB0044D475 /* StreamViewDataChange.swift in Sources */,
 				1D70DE681DF730C1008AF216 /* StreamNotificationCellSizeCalculator.swift in Sources */,
 				1D59EF901D64BB490029C106 /* HireProtocols.swift in Sources */,
 				123375931DA6F13C0019CFAD /* ProfileNamesSizeCalculator.swift in Sources */,

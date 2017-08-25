@@ -118,12 +118,11 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
-        performBatchUpdates {
-            let delta = self.dataSource.updateFilter(filter)
-            delta.applyUpdatesToCollectionView(self.collectionView, inSection: 0)
-        }
-    }
+    fileprivate var dataChangeJobs: [(
+        change: StreamViewDataChange,
+        promise: Promise<Void>,
+        fulfill: (Void) -> Void)] = []
+    fileprivate var isRunningDataChangeJobs = false
 
     var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
@@ -239,56 +238,23 @@ final class StreamViewController: BaseElloViewController {
     }
 
     fileprivate var debounceCellReload = debounce(0.05)
-    fileprivate var allowReloadCount = 0 {
-        didSet {
-            if allowReloadCount == 0 && shouldReload { reloadCells(now: true) }
-        }
-    }
-    fileprivate var shouldReload = false
     func reloadCells(now: Bool = false) {
-        guard allowReloadCount == 0 else {
-            shouldReload = true
-            return
-        }
-
         if now {
-            shouldReload = false
             debounceCellReload {}
             self.collectionView.reloadData()
             self.collectionView.layoutIfNeeded()
+
+            for job in dataChangeJobs {
+                job.fulfill(())
+            }
+            isRunningDataChangeJobs = false
+            dataChangeJobs = []
         }
         else {
-            shouldReload = true
             debounceCellReload { [weak self] in
                 self?.reloadCells(now: true)
             }
         }
-    }
-
-    fileprivate func blockReload() {
-        allowReloadCount += 1
-    }
-
-    fileprivate func unblockReload() {
-        allowReloadCount -= 1
-    }
-
-    @discardableResult
-    func performBatchUpdates(_ block: @escaping () -> Void) -> Promise<Void> {
-        let (promise, fulfill, _) = Promise<Void>.pending()
-
-        // don't perform a batch update if a full reload is pending
-        guard !shouldReload else {
-            fulfill(())
-            return promise
-        }
-
-        blockReload()
-        collectionView.performBatchUpdates(block, completion: { _ in
-            self.unblockReload()
-            fulfill(())
-        })
-        return promise
     }
 
     func removeAllCellItems() {
@@ -297,7 +263,7 @@ final class StreamViewController: BaseElloViewController {
     }
 
     func appendStreamCellItems(_ items: [StreamCellItem]) {
-        performBatchUpdates {
+        performDataChange {
             let indexPaths = self.dataSource.appendStreamCellItems(items)
             self.collectionView.insertItems(at: indexPaths)
         }
@@ -306,7 +272,7 @@ final class StreamViewController: BaseElloViewController {
     func appendUnsizedCellItems(_ items: [StreamCellItem], completion: Block? = nil) {
         let width = view.frame.width
         dataSource.calculateCellItems(items, withWidth: width) {
-            self.performBatchUpdates {
+            self.performDataChange {
                 let indexPaths = self.dataSource.appendStreamCellItems(items)
                 self.collectionView.insertItems(at: indexPaths)
             }.always { _ in
@@ -324,7 +290,7 @@ final class StreamViewController: BaseElloViewController {
 
         let width = view.frame.width
         dataSource.calculateCellItems(cellItems, withWidth: width) {
-            self.performBatchUpdates {
+            self.performDataChange {
                 let indexPaths = self.dataSource.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
                 self.collectionView.insertItems(at: indexPaths)
             }.always { _ in
@@ -503,7 +469,7 @@ final class StreamViewController: BaseElloViewController {
         }
         rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [weak self] _ in
             guard let `self` = self else { return }
-            self.reloadCells()
+            self.reloadCells(now: true)
         }
         sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [weak self] size in
             guard let `self` = self else { return }
@@ -514,7 +480,7 @@ final class StreamViewController: BaseElloViewController {
             }
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.dataSource.columnCount = columnCount
-            self.reloadCells()
+            self.reloadCells(now: true)
         }
 
         commentChangedNotification = NotificationObserver(notification: CommentChangedNotification) { [weak self] (comment, change) in
@@ -607,11 +573,10 @@ final class StreamViewController: BaseElloViewController {
     fileprivate func updateCellHeight(_ indexPath: IndexPath, height: CGFloat) {
         let existingHeight = dataSource.heightForIndexPath(indexPath, numberOfColumns: columnCount)
         if height != existingHeight {
-            self.dataSource.updateHeightForIndexPath(indexPath, height: height)
-            // collectionView.performBatchUpdates({
-            //     collectionView.reloadItems(at: [indexPath])
-            // }, completion: nil)
-            collectionView.reloadData()
+            performDataChange {
+                self.dataSource.updateHeightForIndexPath(indexPath, height: height)
+                self.collectionView.reloadItems(at: [indexPath])
+            }
         }
     }
 
@@ -1117,8 +1082,10 @@ extension StreamViewController: UICollectionViewDelegate {
 
         var keepSelected = false
         if tappedCell is StreamToggleCell {
-            dataSource.toggleCollapsedForIndexPath(indexPath)
-            reloadCells(now: true)
+            performDataChange {
+                self.dataSource.toggleCollapsedForIndexPath(indexPath)
+                self.collectionView.reloadItems(at: [indexPath])
+            }
         }
         else if tappedCell is UserListItemCell {
             if let user = dataSource.userForIndexPath(indexPath) {
@@ -1318,9 +1285,87 @@ extension StreamViewController: UIScrollViewDelegate {
             dataSource.visibleCellItems[lastIndexPath.row].type == .streamLoading
         else { return }
 
-        dataSource.removeItemsAtIndexPaths([lastIndexPath])
-        self.performBatchUpdates {
+        performDataChange {
+            self.dataSource.removeItemsAtIndexPaths([lastIndexPath])
             self.collectionView.deleteItems(at: [lastIndexPath])
+        }
+    }
+}
+
+extension StreamViewController {
+    func batchUpdateFilter(_ filter: StreamDataSource.StreamFilter) {
+        let delta = self.dataSource.updateFilter(filter)
+        peformDataChange(delta)
+    }
+
+    fileprivate func checkForReload() -> Promise<Void>? {
+        if let lastReload = dataChangeJobs.last,
+            lastReload.change == .reloadAll
+        {
+            runNextDataChangeJob()
+            return lastReload.promise
+        }
+        return nil
+    }
+
+    @discardableResult
+    func peformDataChange(_ delta: Delta) -> Promise<Void> {
+        if let lastReloadPromise = checkForReload() { return lastReloadPromise }
+
+        let (promise, fulfill, _) = Promise<Void>.pending()
+        dataChangeJobs.append((.delta(delta), promise, fulfill))
+        runNextDataChangeJob()
+        return promise
+    }
+
+    @discardableResult
+    func performDataChange(_ block: @escaping Block) -> Promise<Void> {
+        if let lastReloadPromise = checkForReload() { return lastReloadPromise }
+
+        let (promise, fulfill, _) = Promise<Void>.pending()
+        dataChangeJobs.append((.block(block), promise, fulfill))
+        runNextDataChangeJob()
+        return promise
+    }
+
+    @discardableResult
+    func performDataReload() -> Promise<Void> {
+        if let lastReloadPromise = checkForReload() { return lastReloadPromise }
+
+        let (promise, fulfill, _) = Promise<Void>.pending()
+        dataChangeJobs.append((.reloadAll, promise, fulfill))
+        runNextDataChangeJob()
+        return promise
+    }
+
+    func runNextDataChangeJob() {
+        guard
+            dataChangeJobs.count > 0,
+            !isRunningDataChangeJobs
+        else {
+            isRunningDataChangeJobs = false
+            return
+        }
+        isRunningDataChangeJobs = true
+
+        let job = dataChangeJobs.removeFirst()
+        job.promise.always { _ in
+            self.runNextDataChangeJob()
+        }
+
+        switch job.change {
+        case .reloadAll:
+            collectionView.reloadData()
+            job.fulfill(())
+        case let .delta(delta):
+            collectionView.performBatchUpdates({
+                delta.applyUpdatesToCollectionView(self.collectionView, inSection: 0)
+            }, completion: { _ in
+                job.fulfill(())
+            })
+        case let .block(block):
+            block()
+            job.fulfill(())
         }
     }
 }
