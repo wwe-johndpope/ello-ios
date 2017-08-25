@@ -901,6 +901,8 @@
 		1DB2711A1F547A650044D475 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D971CF01E1ECD3100A167A2 /* Tracker.swift */; };
 		1DB2710D1F4F882D0044D475 /* StreamResponders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2710C1F4F882D0044D475 /* StreamResponders.swift */; };
 		1DB2710F1F5068CB0044D475 /* StreamViewDataChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2710E1F5068CB0044D475 /* StreamViewDataChange.swift */; };
+		1DB271111F509D9F0044D475 /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271101F509D9F0044D475 /* CollectionViewDataSource.swift */; };
+		1DB271131F50AF510044D475 /* ElloDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271121F50AF510044D475 /* ElloDataSource.swift */; };
 		1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */; };
 		1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
@@ -2004,6 +2006,8 @@
 		1DB271161F547A0F0044D475 /* UserFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFlag.swift; sourceTree = "<group>"; };
 		1DB2710C1F4F882D0044D475 /* StreamResponders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamResponders.swift; sourceTree = "<group>"; };
 		1DB2710E1F5068CB0044D475 /* StreamViewDataChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamViewDataChange.swift; sourceTree = "<group>"; };
+		1DB271101F509D9F0044D475 /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
+		1DB271121F50AF510044D475 /* ElloDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloDataSource.swift; sourceTree = "<group>"; };
 		1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarErrorCell.swift; sourceTree = "<group>"; };
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -2886,8 +2890,10 @@
 				1D1BCA531BACBAAE009075E8 /* Calculators */,
 				128D36A81A95192300622833 /* CellDequeing */,
 				122B18CC1A867BCE00247A05 /* Cells */,
+				1DB271101F509D9F0044D475 /* CollectionViewDataSource.swift */,
 				1266E50C1A9E2B9E00270E1C /* ContentFlagger.swift */,
 				1D1AF61E1A83ED6600E06C93 /* Detail */,
+				1DB271121F50AF510044D475 /* ElloDataSource.swift */,
 				121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */,
 				12224E571A72CEC300D087EC /* PostbarController.swift */,
 				123971511E4B626400481CB3 /* ResponderChainableController.swift */,
@@ -5781,6 +5787,7 @@
 				122DEA201AB0A024005DF1F1 /* FileManagerExtensions.swift in Sources */,
 				1267C7391BA232530000D809 /* MutableBox.swift in Sources */,
 				76C0A51E1AB38C69009B96E6 /* UIButtonExtensions.swift in Sources */,
+				1DB271131F50AF510044D475 /* ElloDataSource.swift in Sources */,
 				12431FF21DBAA6D3006808D4 /* CategoryViewController.swift in Sources */,
 				1D06D6CC1E43B7DD004FA878 /* AppDefaults.swift in Sources */,
 				1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */,
@@ -5789,6 +5796,7 @@
 				1D06D6C41E3BAFA9004FA878 /* LoggedOutScreen.swift in Sources */,
 				1D313F701F267FCF00953EE2 /* ArtistInviteDetailController.swift in Sources */,
 				1D313F661F264BB200953EE2 /* ArtistInviteCellSizeCalculator.swift in Sources */,
+				1DB271111F509D9F0044D475 /* CollectionViewDataSource.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,

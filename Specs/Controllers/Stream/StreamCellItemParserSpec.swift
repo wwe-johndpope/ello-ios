@@ -17,7 +17,7 @@ class StreamCellItemParserSpec: QuickSpec {
                 subject = StreamCellItemParser()
             }
 
-            describe("-streamCellItems:") {
+            describe("-parse(_:streamKind:)") {
 
                 it("returns an empty array if an empty array of Posts is passed in") {
                     let posts = [Post]()

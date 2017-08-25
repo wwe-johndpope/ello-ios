@@ -100,7 +100,7 @@ extension ArtistInviteAdminController: ArtistInviteAdminScreenDelegate {
         guard let stream = stream else { return }
 
         screen.selectedSubmissionsStatus = stream.submissionsStatus
-        replacePlaceholder(type: .artistInvitePosts, items: [StreamCellItem(type: .streamLoading)])
+        replacePlaceholder(type: .streamPosts, items: [StreamCellItem(type: .streamLoading)])
         generator.stream = stream
         streamViewController.scrollToTop(animated: true)
         streamViewController.streamKind = generator.streamKind
@@ -114,7 +114,7 @@ extension ArtistInviteAdminController: ArtistInviteAdminResponder {
 
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let streamCellItem = streamViewController.dataSource?.visibleStreamCellItem(at: indexPath)
+            let streamCellItem = streamViewController.collectionViewDataSource.streamCellItem(at: indexPath)
         else { return }
 
         ElloHUD.showLoadingHudInView(streamViewController.view)

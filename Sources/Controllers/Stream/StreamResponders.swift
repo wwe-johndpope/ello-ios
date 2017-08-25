@@ -91,3 +91,30 @@ protocol AnnouncementResponder: class {
 protocol PostCommentsResponder: class {
     func loadCommentsTapped()
 }
+
+@objc
+protocol PostTappedResponder: class {
+    func postTapped(_ post: Post)
+    func postTapped(_ post: Post, scrollToComment: ElloComment?)
+    func postTapped(postId: String)
+}
+
+@objc
+protocol UserTappedResponder: class {
+    func userTapped(_ user: User)
+    func userParamTapped(_ param: String, username: String?)
+}
+
+@objc
+protocol CreatePostResponder: class {
+    func createPost(text: String?, fromController: UIViewController)
+    func createComment(_ postId: String, text: String?, fromController: UIViewController)
+    func editComment(_ comment: ElloComment, fromController: UIViewController)
+    func editPost(_ post: Post, fromController: UIViewController)
+}
+
+@objc
+protocol InviteResponder: class {
+    func onInviteFriends()
+    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping Block)
+}

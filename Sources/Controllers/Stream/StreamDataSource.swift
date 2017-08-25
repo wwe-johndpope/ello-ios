@@ -6,32 +6,21 @@ import WebKit
 import DeltaCalculator
 
 
-class StreamDataSource: NSObject, UICollectionViewDataSource {
+class StreamDataSource: ElloDataSource {
 
     typealias StreamContentReady = (_ indexPaths: [IndexPath]) -> Void
-    typealias StreamFilter = ((StreamCellItem) -> Bool)?
+    typealias StreamFilter = ((StreamCellItem) -> Bool)
 
-    var streamKind: StreamKind
-    var currentUser: User?
     var columnCount = 1
-    var postCreatedPlaceholder: StreamCellType.PlaceholderType?
 
     // these are the items assigned from the parent controller
-    var streamCellItems: [StreamCellItem] = []
-
-    // these are either the same as streamCellItems (no filter) or if a filter
-    // is applied this stores the filtered items
-    fileprivate(set) var visibleCellItems: [StreamCellItem] = []
+    var allStreamCellItems: [StreamCellItem] = []
 
     // if a filter is added or removed, we update the items
-    var streamFilter: StreamFilter {
-        didSet { updateFilteredItems() }
-    }
+    fileprivate var streamFilter: StreamFilter?
 
     // if a filter is added or removed, we update the items
-    var streamCollapsedFilter: StreamFilter {
-        didSet { updateFilteredItems() }
-    }
+    var streamCollapsedFilter: StreamFilter?
 
     var textSizeCalculator = StreamTextCellSizeCalculator()
     var notificationSizeCalculator = StreamNotificationCellSizeCalculator()
@@ -42,47 +31,11 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     var editorialDownloader = EditorialDownloader()
     var artistInviteCalculator = ArtistInviteCellSizeCalculator()
 
-    var inviteCache = InviteCache()
-
-    init(streamKind: StreamKind) {
-        self.streamKind = streamKind
-        super.init()
-    }
-
-    // MARK: - Public
-
-    func removeAllCellItems() {
-        streamCellItems = []
-        updateFilteredItems()
-    }
-
-    func updateFilter(_ filter: StreamFilter) -> Delta {
-        let prevItems = visibleCellItems
-        streamFilter = filter
-
-        let calculator = DeltaCalculator<StreamCellItem>()
-        return calculator.deltaFromOldArray(prevItems, toNewArray: visibleCellItems)
-    }
-
-    func indexPathForItem(_ item: StreamCellItem) -> IndexPath? {
-        if let index = self.visibleCellItems.index(where: { $0 == item }) {
-            return IndexPath(item: index, section: 0)
-        }
-        return nil
-    }
-
-    func indexPathFor(placeholderType: StreamCellType.PlaceholderType) -> IndexPath? {
-        if let index = self.visibleCellItems.index(where: { $0.placeholderType == placeholderType }) {
-            return IndexPath(item: index, section: 0)
-        }
-        return nil
-    }
-
     func hasCellItems(for placeholderType: StreamCellType.PlaceholderType) -> Bool {
         // don't filter on 'type', because we need to check that the number of
         // items is 1 or 0, and if it's 1, then we need to see if its type is
         // .Placeholder
-        let items = streamCellItems.filter {
+        let items = allStreamCellItems.filter {
             $0.placeholderType == placeholderType
         }
         if let item = items.first, items.count == 1 {
@@ -96,88 +49,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return items.count > 0
     }
 
-    func indexPathsForPlaceholderType(_ placeholderType: StreamCellType.PlaceholderType) -> [IndexPath] {
-        return (0 ..< visibleCellItems.count).flatMap { index in
-            guard visibleCellItems[index].placeholderType == placeholderType else { return nil }
-            return IndexPath(item: index, section: 0)
-        }
-    }
-
-    func userForIndexPath(_ indexPath: IndexPath) -> User? {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return nil }
-
-        if case .streamHeader = item.type,
-            let repostAuthor = (item.jsonable as? Post)?.repostAuthor
-        {
-            return repostAuthor
-        }
-
-        if case .pagePromotionalHeader = item.type,
-            let user = (item.jsonable as? PagePromotional)?.user
-        {
-            return user
-        }
-
-        if case .categoryPromotionalHeader = item.type,
-            let user = (item.jsonable as? Category)?.randomPromotional?.user
-        {
-            return user
-        }
-
-        if let authorable = item.jsonable as? Authorable {
-            return authorable.author
-        }
-
-        return item.jsonable as? User
-    }
-
-    func reposterForIndexPath(_ indexPath: IndexPath) -> User? {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return nil }
-
-        if let authorable = item.jsonable as? Authorable {
-            return authorable.author
-        }
-        return item.jsonable as? User
-    }
-
-    func postForIndexPath(_ indexPath: IndexPath) -> Post? {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return nil }
-
-        if let notification = item.jsonable as? Notification {
-            if let comment = notification.activity.subject as? ElloComment {
-                return comment.loadedFromPost
-            }
-            return notification.activity.subject as? Post
-        }
-
-        if let editorial = item.jsonable as? Editorial {
-            return editorial.post
-        }
-
-        return item.jsonable as? Post
-    }
-
-    func imageAssetForIndexPath(_ indexPath: IndexPath) -> Asset? {
-        let item = visibleStreamCellItem(at: indexPath)
-        let region = item?.type.data as? ImageRegion
-        return region?.asset
-    }
-
-    func commentForIndexPath(_ indexPath: IndexPath) -> ElloComment? {
-        return jsonableForIndexPath(indexPath) as? ElloComment
-    }
-
-    func jsonableForIndexPath(_ indexPath: IndexPath) -> JSONAble? {
-        let item = visibleStreamCellItem(at: indexPath)
-        return item?.jsonable
-    }
-
-    func visibleStreamCellItem(at indexPath: IndexPath) -> StreamCellItem? {
-        guard indexPath.section == 0 else { return nil }
-        return visibleCellItems.safeValue(indexPath.item)
-    }
-
-    func cellItemsForPost(_ post: Post) -> [StreamCellItem] {
+    func cellItems(for post: Post) -> [StreamCellItem] {
         var tmp = [StreamCellItem]()
         temporarilyUnfilter {
             tmp = self.visibleCellItems.reduce([]) { arr, item in
@@ -191,7 +63,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     // this includes the `createComment` cell, `spacer` cell, and `seeMoreComments` cell since they contain a comment item
-    func commentIndexPathsForPost(_ post: Post) -> [IndexPath] {
+    func commentIndexPaths(forPost post: Post) -> [IndexPath] {
         var indexPaths = [IndexPath]()
         for (index, value) in visibleCellItems.enumerated() {
             if let comment = value.jsonable as? ElloComment, comment.loadedFromPostId == post.id {
@@ -201,48 +73,39 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPaths
     }
 
-    func footerIndexPathForPost(_ searchPost: Post) -> IndexPath? {
-        for (index, value) in visibleCellItems.enumerated() {
-            if value.type == .streamFooter,
-               let post = value.jsonable as? Post {
-                if searchPost.id == post.id {
-                    return IndexPath(item: index, section: 0)
-                }
-            }
-        }
-        return nil
+    func removeAllCellItems() {
+        allStreamCellItems = []
+        updateFilteredItems()
     }
 
-    func createCommentIndexPathForPost(_ post: Post) -> IndexPath? {
-        let paths = commentIndexPathsForPost(post)
-        guard
-            let path = paths.first,
-            let createCommentItem = visibleStreamCellItem(at: path),
-            createCommentItem.type == .createComment
-        else { return nil }
+    func updateFilter(_ filter: StreamFilter?) -> Delta {
+        let prevItems = visibleCellItems
+        streamFilter = filter
+        updateFilteredItems()
 
-        return path
+        let calculator = DeltaCalculator<StreamCellItem>()
+        return calculator.deltaFromOldArray(prevItems, toNewArray: visibleCellItems)
     }
 
     @discardableResult
-    func removeCommentsFor(post: Post) -> [IndexPath] {
-        let indexPaths = commentIndexPathsForPost(post)
+    func removeComments(forPost post: Post) -> [IndexPath] {
+        let indexPaths = commentIndexPaths(forPost: post)
         temporarilyUnfilter {
             // these paths might be different depending on the filter
-            let unfilteredIndexPaths = commentIndexPathsForPost(post)
+            let unfilteredIndexPaths = commentIndexPaths(forPost: post)
             var newItems = [StreamCellItem]()
-            for (index, item) in streamCellItems.enumerated() {
+            for (index, item) in allStreamCellItems.enumerated() {
                 let skip = unfilteredIndexPaths.any { $0.item == index }
                 if !skip {
                     newItems.append(item)
                 }
             }
-            streamCellItems = newItems
+            allStreamCellItems = newItems
         }
         return indexPaths
     }
 
-    func removeItemsAtIndexPaths(_ indexPaths: [IndexPath]) {
+    func removeItems(at indexPaths: [IndexPath]) {
         var items: [StreamCellItem] = []
         for indexPath in indexPaths {
             if let itemToRemove = visibleCellItems.safeValue(indexPath.item) {
@@ -251,98 +114,33 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
         temporarilyUnfilter {
             for itemToRemove in items {
-                if let index = streamCellItems.index(of: itemToRemove) {
-                    streamCellItems.remove(at: index)
+                if let index = allStreamCellItems.index(of: itemToRemove) {
+                    allStreamCellItems.remove(at: index)
                 }
             }
         }
     }
 
-    func updateHeightForIndexPath(_ indexPath: IndexPath, height: CGFloat) {
+    func updateHeight(at indexPath: IndexPath, height: CGFloat) {
         guard isValidIndexPath(indexPath) else { return }
 
         visibleCellItems[indexPath.item].calculatedCellHeights.oneColumn = height
         visibleCellItems[indexPath.item].calculatedCellHeights.multiColumn = height
     }
 
-    func heightForIndexPath(_ indexPath: IndexPath, numberOfColumns: NSInteger) -> CGFloat {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return 0 }
-
-        // always try to return a calculated value before the default
-        if numberOfColumns == 1 {
-            if let height = item.calculatedCellHeights.oneColumn {
-                return height
-            }
-            else {
-                return item.type.oneColumnHeight
-            }
-        }
-        else {
-            if let height = item.calculatedCellHeights.multiColumn {
-                return height
-            }
-            else {
-                return item.type.multiColumnHeight
-            }
-        }
-    }
-
-    func isFullWidth(at indexPath: IndexPath) -> Bool {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return true }
-
-        if item.type.isFullWidth {
-            return true
-        }
-        return !item.isGridView(streamKind: streamKind)
-    }
-
-    func isTappable(at indexPath: IndexPath) -> Bool {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return false }
-
-        if item.type.isSelectable {
-            return true
-        }
-        return !isFullWidth(at: indexPath)
-    }
-
-    func groupForIndexPath(_ indexPath: IndexPath) -> String? {
+    func toggleCollapsed(at indexPath: IndexPath) {
         guard
-            let item = visibleStreamCellItem(at: indexPath),
-            let groupable = item.jsonable as? Groupable
-        else { return nil }
+            let post = self.post(at: indexPath),
+            let cellItem = self.streamCellItem(at: indexPath)
+        else { return }
 
-        return groupable.groupId
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleCellItems.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard isValidIndexPath(indexPath) else {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: StreamCellType.unknown.reuseIdentifier, for: indexPath)
+        let newState: StreamCellState = cellItem.state == .expanded ? .collapsed : .expanded
+        let streamCellItems = cellItems(for: post)
+        for item in streamCellItems where item.type != .streamFooter {
+            // don't toggle the footer's state, it is used by comment open/closed
+            item.state = newState
         }
-
-        let streamCellItem = visibleCellItems[indexPath.item]
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: streamCellItem.type.reuseIdentifier, for: indexPath)
-
-        switch streamCellItem.type {
-        case .inviteFriends, .onboardingInviteFriends:
-            (cell as! StreamInviteFriendsCell).inviteCache = inviteCache
-        default:
-            break
-        }
-
-        streamCellItem.type.configure(
-            cell,
-            streamCellItem,
-            streamKind,
-            indexPath,
-            currentUser
-        )
-
-        return cell
+        updateFilteredItems()
     }
 
     func clientSidePostInsertIndexPath() -> IndexPath? {
@@ -354,25 +152,10 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         case let .userStream(userParam):
             if currentUserId == userParam {
                 if visibleCellItems.count == 2 && visibleCellItems[1].type == .noPosts {
-                    removeItemsAtIndexPaths([IndexPath(item: 1, section: 0)])
+                    removeItems(at: [IndexPath(item: 1, section: 0)])
                     return IndexPath(item: 1, section: 0)
                 }
                 return IndexPath(item: 2, section: 0)
-            }
-        default:
-            break
-        }
-        return nil
-    }
-
-    func clientSideLoveInsertIndexPath() -> IndexPath? {
-        switch streamKind {
-        case let .simpleStream(endpoint, _):
-            switch endpoint {
-            case .loves:
-                return IndexPath(item: 1, section: 0)
-            default:
-                break
             }
         default:
             break
@@ -385,140 +168,129 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         // based on change decide to update/remove those items
         switch change {
         case .create:
-            var indexPath: IndexPath?
+            if let love = jsonable as? Love {
+                guard let post = love.post, let user = love.user,
+                    streamKind.isDetail(post: post) else { return }
 
-            // if comment, add new comment cells
-            if let comment = jsonable as? ElloComment,
-                let parentPost = comment.loadedFromPost
-            {
-                let indexPaths = self.commentIndexPathsForPost(parentPost)
-                if let first = indexPaths.first, self.visibleCellItems[first.item].type == .createComment
-                {
-                    indexPath = IndexPath(item: first.item + 1, section: first.section)
-                }
-            }
-            // else if post, add new post cells
-            else if jsonable is Post {
-                indexPath = clientSidePostInsertIndexPath()
-            }
-            else if let love = jsonable as? Love {
-                indexPath = clientSideLoveInsertIndexPath()
+                if hasCellItems(for: .postLovers) {
+                    for (index, item) in visibleCellItems.enumerated() {
+                        guard let userAvatars = item.jsonable as? UserAvatarCellModel,
+                            userAvatars.belongsTo(post: post, type: .lovers)
+                        else { continue }
 
-                if let post = love.post, let user = love.user,
-                    streamKind.isDetail(post: post)
-                {
-                    if !hasCellItems(for: .postLovers) {
-                        let items = PostDetailGenerator.userAvatarCellItems(
-                            users: [user],
-                            postParam: post.id,
-                            type: .lovers
-                        )
-                        replacePlaceholder(type: .postLovers, items: items)
-
-                        if !hasCellItems(for: .postReposters) {
-                            let padding = PostDetailGenerator.socialPadding()
-                            replacePlaceholder(type: .postSocialPadding, items: padding)
+                        let indexPath = IndexPath(row: index, section: 0)
+                        streamViewController.performDataUpdate { collectionView in
+                            userAvatars.append(user: user)
+                            collectionView.reloadItems(at: [indexPath])
                         }
+                        break
                     }
-                    else {
-                        for item in visibleCellItems {
-                            if let userAvatars = item.jsonable as? UserAvatarCellModel,
-                                userAvatars.belongsTo(post: post, type: .lovers)
-                            {
-                                userAvatars.append(user: user)
-                                break
-                            }
-                        }
+                }
+                else {
+                    let items = PostDetailGenerator.userAvatarCellItems(
+                        users: [user],
+                        postParam: post.id,
+                        type: .lovers
+                    )
+                    let (deleted, inserted) = self.replacePlaceholder(type: .postLovers, items: items)
+                    streamViewController.performDataChange { collectionView in
+                        collectionView.deleteItems(at: deleted)
+                        collectionView.insertItems(at: inserted)
                     }
+                }
 
-                    streamViewController.collectionView.reloadData()
+                if hasCellItems(for: .postReposters) {
+                    let padding = PostDetailGenerator.socialPadding()
+                    let (deleted, inserted) = self.replacePlaceholder(type: .postSocialPadding, items: padding)
+                    streamViewController.performDataChange { collectionView in
+                        collectionView.deleteItems(at: deleted)
+                        collectionView.insertItems(at: inserted)
+                    }
                 }
             }
+            else {
+                var indexPath: IndexPath?
 
-            if let indexPath = indexPath {
-                let items = StreamCellItemParser().parse([jsonable], streamKind: self.streamKind, currentUser: currentUser)
-                for item in items {
-                    item.placeholderType = postCreatedPlaceholder
+                if let comment = jsonable as? ElloComment,
+                    let parentPost = comment.loadedFromPost
+                {
+                    let indexPaths = commentIndexPaths(forPost: parentPost)
+                    if let firstPath = indexPaths.first,
+                        visibleCellItems[firstPath.item].type == .createComment
+                    {
+                        indexPath = IndexPath(item: firstPath.item + 1, section: 0)
+                    }
                 }
-                self.calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
-                    self.insertStreamCellItems(items, startingIndexPath: indexPath)
-                    delay(0.5) {  // no one hates this more than me - colin
-                        streamViewController.collectionView.reloadData()
+                // else if post, add new post cells
+                else if jsonable is Post {
+                    indexPath = clientSidePostInsertIndexPath()
+                }
+
+                if let indexPath = indexPath {
+                    let items = StreamCellItemParser().parse([jsonable], streamKind: streamKind, currentUser: currentUser)
+                    let postCreatedPlaceholder: StreamCellType.PlaceholderType = .streamPosts
+                    for item in items {
+                        item.placeholderType = postCreatedPlaceholder
+                    }
+                    calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
+                        let indexPaths = self.insertStreamCellItems(items, startingIndexPath: indexPath)
+                        streamViewController.performDataChange { collectionView in
+                            collectionView.insertItems(at: indexPaths)
+                        }
                     }
                 }
             }
 
         case .delete:
-            var removedAvatar = false
-            if let love = jsonable as? Love {
-                if let post = love.post, let user = love.user {
-                    for item in visibleCellItems {
-                        if let userAvatars = item.jsonable as? UserAvatarCellModel,
-                            userAvatars.belongsTo(post: post, type: .lovers)
-                        {
-                            userAvatars.remove(user: user)
-                            if userAvatars.users.count == 0 {
-                                replacePlaceholder(type: .postLovers, items: [])
-                                removedAvatar = true
-                            }
-                            break
+            if let love = jsonable as? Love,
+                let post = love.post,
+                let user = love.user
+            {
+                for (index, item) in visibleCellItems.enumerated() {
+                    guard let userAvatars = item.jsonable as? UserAvatarCellModel,
+                        userAvatars.belongsTo(post: post, type: .lovers) else { continue }
+
+                    userAvatars.remove(user: user)
+
+                    if userAvatars.users.count == 0 {
+                        let (deleted, inserted) = self.replacePlaceholder(type: .postLovers, items: [])
+                        streamViewController.performDataChange { collectionView in
+                            collectionView.deleteItems(at: deleted)
+                            collectionView.insertItems(at: inserted)
                         }
                     }
+                    else {
+                        let indexPath = IndexPath(row: index, section: 0)
+                        streamViewController.performDataUpdate { collectionView in
+                            collectionView.reloadItems(at: [indexPath])
+                        }
+                    }
+                    break
+                }
 
-                    if removedAvatar && !hasCellItems(for: .postReposters) {
-                        replacePlaceholder(type: .postSocialPadding, items: [])
+                if !hasCellItems(for: .postLovers) && !hasCellItems(for: .postReposters) {
+                    let (deleted, inserted) = self.replacePlaceholder(type: .postSocialPadding, items: [])
+                    streamViewController.performDataChange { collectionView in
+                        collectionView.deleteItems(at: deleted)
+                        collectionView.insertItems(at: inserted)
                     }
                 }
             }
 
-            let removedPaths = removeItemsFor(jsonable: jsonable, change: change)
-            if removedAvatar || removedPaths.count > 0 {
-                streamViewController.collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
+            let removedPaths = self.removeItemsFor(jsonable: jsonable, change: change)
+            streamViewController.performDataChange { collectionView in
+                collectionView.deleteItems(at: removedPaths)
             }
         case .replaced:
             let (oldIndexPaths, _) = elementsFor(jsonable: jsonable, change: change)
-            if let post = jsonable as? Post, let firstIndexPath = oldIndexPaths.first {
-                let firstIndexPath = oldIndexPaths.reduce(firstIndexPath) { (memo: IndexPath, path: IndexPath) in
-                    if path.section == memo.section {
-                        return path.item > memo.section ? memo : path
-                    }
-                    else {
-                        return path.section > memo.section ? memo : path
-                    }
-                }
-                let items = StreamCellItemParser().parse([post], streamKind: self.streamKind, currentUser: currentUser)
-                calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
-                    streamViewController.collectionView.performBatchUpdates({
-                        let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
-                        for wrongIndexPath in Array(oldIndexPaths.reversed()) {
-                            let indexPath = IndexPath(item: wrongIndexPath.item + newIndexPaths.count, section: wrongIndexPath.section)
-                            self.removeItemsAtIndexPaths([indexPath])
-                        }
-                        streamViewController.collectionView.insertItems(at: newIndexPaths)
-                        streamViewController.collectionView.deleteItems(at: oldIndexPaths)
-                    }, completion: nil)
-                }
-            }
-            else if let comment = jsonable as? ElloComment, let firstIndexPath = oldIndexPaths.first  {
-                let firstIndexPath = oldIndexPaths.reduce(firstIndexPath) { (memo: IndexPath, path: IndexPath) in
-                    if path.section == memo.section {
-                        return path.item > memo.section ? memo : path
-                    }
-                    else {
-                        return path.section > memo.section ? memo : path
-                    }
-                }
-                let items = StreamCellItemParser().parse([comment], streamKind: self.streamKind, currentUser: currentUser)
-                self.calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
-                    streamViewController.collectionView.performBatchUpdates({
-                        let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
-                        for wrongIndexPath in Array(oldIndexPaths.reversed()) {
-                            let indexPath = IndexPath(item: wrongIndexPath.item + newIndexPaths.count, section: wrongIndexPath.section)
-                            self.removeItemsAtIndexPaths([indexPath])
-                        }
-                        streamViewController.collectionView.insertItems(at: newIndexPaths)
-                        streamViewController.collectionView.deleteItems(at: oldIndexPaths)
-                    }, completion: nil)
+            let items = StreamCellItemParser().parse([jsonable], streamKind: self.streamKind, currentUser: currentUser)
+            let firstIndexPath = oldIndexPaths.first!
+            calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
+                self.removeItems(at: oldIndexPaths)
+                let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
+                streamViewController.performDataChange { collectionView in
+                    collectionView.deleteItems(at: oldIndexPaths)
+                    collectionView.insertItems(at: newIndexPaths)
                 }
             }
         case .update:
@@ -528,9 +300,10 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 case .loves = endpoint,
                 let post = jsonable as? Post, !post.isLoved
             {
-                // the post was unloved
-                removeItemsFor(jsonable: jsonable, change: .delete)
-                streamViewController.collectionView.reloadData() // deleteItemsAtIndexPaths(indexPaths)
+                let removedPaths = removeItemsFor(jsonable: jsonable, change: .delete)
+                streamViewController.performDataChange { collectionView in
+                    collectionView.deleteItems(at: removedPaths)
+                }
                 shouldReload = false
             }
 
@@ -546,7 +319,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func mergeAndReloadElementsFor(jsonable: JSONAble, change: ContentChange, streamViewController: StreamViewController) {
-        let (_, items) = elementsFor(jsonable: jsonable, change: change)
+        let (indexPaths, items) = elementsFor(jsonable: jsonable, change: change)
         let T = type(of: jsonable)
         var modified = false
         for item in items {
@@ -555,40 +328,45 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
                 modified = true
             }
         }
+
         if modified {
-            streamViewController.collectionView.reloadData()
+            streamViewController.performDataUpdate { collectionView in
+                collectionView.reloadItems(at: indexPaths)
+            }
         }
     }
 
     func modifyUserRelationshipItems(_ user: User, streamViewController: StreamViewController) {
-        let (_, changedItems) = elementsFor(jsonable: user, change: .update)
+        let (indexPaths, changedItems) = elementsFor(jsonable: user, change: .update)
 
-        for item in changedItems {
-            if let oldUser = item.jsonable as? User {
-                // relationship changes
-                oldUser.relationshipPriority = user.relationshipPriority
-                oldUser.followersCount = user.followersCount
-                oldUser.followingCount = user.followingCount
+        streamViewController.performDataUpdate { collectionView in
+            for item in changedItems {
+                if let oldUser = item.jsonable as? User {
+                    // relationship changes
+                    oldUser.relationshipPriority = user.relationshipPriority
+                    oldUser.followersCount = user.followersCount
+                    oldUser.followingCount = user.followingCount
+                }
+
+                if let authorable = item.jsonable as? Authorable,
+                    let author = authorable.author, author.id == user.id
+                {
+                    author.relationshipPriority = user.relationshipPriority
+                    author.followersCount = user.followersCount
+                    author.followingCount = user.followingCount
+                }
+
+                if let post = item.jsonable as? Post,
+                    let repostAuthor = post.repostAuthor, repostAuthor.id == user.id
+                {
+                    repostAuthor.relationshipPriority = user.relationshipPriority
+                    repostAuthor.followersCount = user.followersCount
+                    repostAuthor.followingCount = user.followingCount
+                }
             }
 
-            if let authorable = item.jsonable as? Authorable,
-                let author = authorable.author, author.id == user.id
-            {
-                author.relationshipPriority = user.relationshipPriority
-                author.followersCount = user.followersCount
-                author.followingCount = user.followingCount
-            }
-
-            if let post = item.jsonable as? Post,
-                let repostAuthor = post.repostAuthor, repostAuthor.id == user.id
-            {
-                repostAuthor.relationshipPriority = user.relationshipPriority
-                repostAuthor.followersCount = user.followersCount
-                repostAuthor.followingCount = user.followingCount
-            }
+            collectionView.reloadItems(at: indexPaths)
         }
-
-        streamViewController.collectionView.reloadData()
 
         if user.relationshipPriority.isMutedOrBlocked {
             var shouldDelete = true
@@ -620,7 +398,9 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         for item in changedItems where item.jsonable is User{
             item.jsonable = user
         }
-        streamViewController.collectionView.reloadItems(at: indexPaths)
+        streamViewController.performDataUpdate { collectionView in
+            collectionView.reloadItems(at: indexPaths)
+        }
     }
 
     @discardableResult
@@ -628,27 +408,32 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let indexPaths = self.elementsFor(jsonable: jsonable, change: change).0
         temporarilyUnfilter {
             // these paths might be different depending on the filter
-            let unfilteredIndexPaths = self.elementsFor(jsonable: jsonable, change: change).0
+            let unfilteredIndexPaths = elementsFor(jsonable: jsonable, change: change).0
             var newItems = [StreamCellItem]()
-            for (index, item) in self.streamCellItems.enumerated() {
+            for (index, item) in allStreamCellItems.enumerated() {
                 let skip = unfilteredIndexPaths.any { $0.item == index }
                 if !skip {
                     newItems.append(item)
                 }
             }
-            self.streamCellItems = newItems
+            allStreamCellItems = newItems
         }
         return indexPaths
     }
 
+    // the IndexPaths returned are guaranteed to be in order, so that the first
+    // item has the lowest row/item value.
     fileprivate func elementsFor(jsonable: JSONAble, change: ContentChange) -> ([IndexPath], [StreamCellItem]) {
         var indexPaths = [IndexPath]()
         var items = [StreamCellItem]()
         if let post = jsonable as? Post {
             for (index, item) in visibleCellItems.enumerated() {
                 if let itemPost = item.jsonable as? Post, post.id == itemPost.id {
-                    indexPaths.append(IndexPath(item: index, section: 0))
-                    items.append(item)
+                    // on loved events, only include the post footer, since nothing else will change
+                    if change != .loved || item.type == .streamFooter {
+                        indexPaths.append(IndexPath(item: index, section: 0))
+                        items.append(item)
+                    }
                 }
                 else if change == .delete {
                     if let itemComment = item.jsonable as? ElloComment, itemComment.loadedFromPostId == post.id || itemComment.postId == post.id {
@@ -715,10 +500,11 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     // MARK: Adding items
+
     @discardableResult
     func appendStreamCellItems(_ items: [StreamCellItem]) -> [IndexPath] {
         let startIndex = visibleCellItems.count
-        self.streamCellItems += items
+        self.allStreamCellItems += items
         self.updateFilteredItems()
         let lastIndex = visibleCellItems.count
 
@@ -726,39 +512,39 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     @discardableResult
-    func replacePlaceholder(type placeholderType: StreamCellType.PlaceholderType, items streamCellItems: [StreamCellItem])
-        -> (deleted: [IndexPath], inserted: [IndexPath])?
+    func replacePlaceholder(type placeholderType: StreamCellType.PlaceholderType, items allStreamCellItems: [StreamCellItem])
+        -> (deleted: [IndexPath], inserted: [IndexPath])
     {
-        guard streamCellItems.count > 0 else {
+        guard allStreamCellItems.count > 0 else {
             return replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)])
         }
 
-        for item in streamCellItems {
+        for item in allStreamCellItems {
             item.placeholderType = placeholderType
         }
 
-        let deletedIndexPaths = indexPathsForPlaceholderType(placeholderType)
-        guard deletedIndexPaths.count > 0 else { return nil }
+        let deletedIndexPaths = indexPaths(forPlaceholderType: placeholderType)
+        guard deletedIndexPaths.count > 0 else { return (deleted: [], inserted: []) }
 
-        removeItemsAtIndexPaths(deletedIndexPaths)
-        let insertedIndexPaths = insertStreamCellItems(streamCellItems, startingIndexPath: deletedIndexPaths[0])
+        removeItems(at: deletedIndexPaths)
+        let insertedIndexPaths = insertStreamCellItems(allStreamCellItems, startingIndexPath: deletedIndexPaths[0])
         return (deleted: deletedIndexPaths, inserted: insertedIndexPaths)
     }
 
     @discardableResult
     func insertStreamCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath) -> [IndexPath] {
         // startingIndex represents the filtered index,
-        // arrayIndex is the streamCellItems index
+        // arrayIndex is the allStreamCellItems index
         let startingIndex = startingIndexPath.item
         var arrayIndex = startingIndexPath.item
 
-        if let item = visibleStreamCellItem(at: startingIndexPath) {
-            if let foundIndex = streamCellItems.index(of: item) {
+        if let item = streamCellItem(at: startingIndexPath) {
+            if let foundIndex = allStreamCellItems.index(of: item) {
                 arrayIndex = foundIndex
             }
         }
         else if arrayIndex == visibleCellItems.count {
-            arrayIndex = streamCellItems.count
+            arrayIndex = allStreamCellItems.count
         }
 
         var indexPaths: [IndexPath] = []
@@ -767,36 +553,20 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
             indexPaths.append(IndexPath(item: startingIndex + index, section: startingIndexPath.section))
 
             let atIndex = arrayIndex + index
-            if atIndex <= streamCellItems.count {
-                streamCellItems.insert(cellItem, at: atIndex)
+            if atIndex <= allStreamCellItems.count {
+                allStreamCellItems.insert(cellItem, at: atIndex)
             }
             else {
-                streamCellItems.append(cellItem)
+                allStreamCellItems.append(cellItem)
             }
         }
 
         updateFilteredItems()
         return indexPaths
     }
+}
 
-    func toggleCollapsedForIndexPath(_ indexPath: IndexPath) {
-        guard
-            let post = self.postForIndexPath(indexPath),
-            let cellItem = self.visibleStreamCellItem(at: indexPath)
-        else { return }
-
-        let newState: StreamCellState = cellItem.state == .expanded ? .collapsed : .expanded
-        let cellItems = cellItemsForPost(post)
-        for item in cellItems where item.type != .streamFooter {
-            // don't toggle the footer's state, it is used by comment open/closed
-            item.state = newState
-        }
-        updateFilteredItems()
-    }
-
-    func isValidIndexPath(_ indexPath: IndexPath) -> Bool {
-        return indexPath.item >= 0 && indexPath.item < visibleCellItems.count && indexPath.section == 0
-    }
+extension StreamDataSource {
 
     func calculateCellItems(_ cellItems: [StreamCellItem], withWidth: CGFloat, completion: @escaping Block) {
         let textCells = filterTextCells(cellItems)
@@ -884,7 +654,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
         let cachedStreamCollapsedFilter = streamCollapsedFilter
         streamFilter = nil
         streamCollapsedFilter = nil
-        visibleCellItems = streamCellItems
+        visibleCellItems = allStreamCellItems
 
         block()
 
@@ -894,7 +664,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     fileprivate func updateFilteredItems() {
-        visibleCellItems = streamCellItems.filter { item in
+        visibleCellItems = allStreamCellItems.filter { item in
             guard !item.alwaysShow() else { return true }
             let streamFiltered = streamFilter?(item) ?? true
             let collapsedFiltered = streamCollapsedFilter?(item) ?? true

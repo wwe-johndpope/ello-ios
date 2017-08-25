@@ -82,7 +82,7 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        let jsonables = streamViewController.dataSource.streamCellItems.map { $0.jsonable }
+        let jsonables = streamViewController.collectionViewDataSource.visibleCellItems.map { $0.jsonable }
         track(jsonables: jsonables)
     }
 
