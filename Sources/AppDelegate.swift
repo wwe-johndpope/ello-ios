@@ -77,8 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setupGlobalStyles() {
         let font = UIFont.defaultFont()
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.greyA]
-        UINavigationBar.appearance().barTintColor = UIColor.white
+        ElloNavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.greyA]
+        ElloNavigationBar.appearance().barTintColor = .white
 
         let attributes = [
             NSForegroundColorAttributeName: UIColor.greyA,
