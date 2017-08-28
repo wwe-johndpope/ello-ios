@@ -2,7 +2,6 @@
 ///  CategoryService.swift
 //
 
-import PINRemoteImage
 import PromiseKit
 
 

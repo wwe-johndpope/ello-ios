@@ -45,13 +45,13 @@ class ContentFlaggerSpec: QuickSpec {
                 let adultAction = actions[5]
                 let dontLikeAction = actions[6]
 
-                expect(ContentFlagger.AlertOption(rawValue: spamAction.title)) == ContentFlagger.AlertOption.spam
-                expect(ContentFlagger.AlertOption(rawValue: violenceAction.title)) == ContentFlagger.AlertOption.violence
-                expect(ContentFlagger.AlertOption(rawValue: copyrightAction.title)) == ContentFlagger.AlertOption.copyright
-                expect(ContentFlagger.AlertOption(rawValue: threateningAction.title)) == ContentFlagger.AlertOption.threatening
-                expect(ContentFlagger.AlertOption(rawValue: hateAction.title)) == ContentFlagger.AlertOption.hate
-                expect(ContentFlagger.AlertOption(rawValue: adultAction.title)) == ContentFlagger.AlertOption.adult
-                expect(ContentFlagger.AlertOption(rawValue: dontLikeAction.title)) == ContentFlagger.AlertOption.dontLike
+                expect(ContentFlagger.UserFlag(rawValue: spamAction.title)) == ContentFlagger.UserFlag.spam
+                expect(ContentFlagger.UserFlag(rawValue: violenceAction.title)) == ContentFlagger.UserFlag.violence
+                expect(ContentFlagger.UserFlag(rawValue: copyrightAction.title)) == ContentFlagger.UserFlag.copyright
+                expect(ContentFlagger.UserFlag(rawValue: threateningAction.title)) == ContentFlagger.UserFlag.threatening
+                expect(ContentFlagger.UserFlag(rawValue: hateAction.title)) == ContentFlagger.UserFlag.hate
+                expect(ContentFlagger.UserFlag(rawValue: adultAction.title)) == ContentFlagger.UserFlag.adult
+                expect(ContentFlagger.UserFlag(rawValue: dontLikeAction.title)) == ContentFlagger.UserFlag.dontLike
             }
         }
     }

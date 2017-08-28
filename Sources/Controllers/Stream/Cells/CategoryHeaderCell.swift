@@ -4,7 +4,6 @@
 
 import SnapKit
 import FLAnimatedImage
-import PINRemoteImage
 
 
 class CategoryHeaderCell: CollectionViewCell {

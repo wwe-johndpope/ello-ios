@@ -86,11 +86,11 @@ private extension ShareViewController {
     func postContent(_ content: [PostEditingService.PostContentRegion]) {
         PostEditingService().create(content: content)
             .thenFinally { post in
-//                Tracker.shared.shareSuccessful()
+                Tracker.shared.shareSuccessful()
                 self.dismissPostingForm()
             }
             .catch { error in
-//                Tracker.shared.shareFailed()
+                Tracker.shared.shareFailed()
                 self.showFailedToPost()
             }
             .always { _ in

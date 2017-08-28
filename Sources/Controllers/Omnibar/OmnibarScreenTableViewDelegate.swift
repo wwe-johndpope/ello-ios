@@ -2,6 +2,9 @@
 ///  OmnibarScreenTableViewDelegate.swift
 //
 
+import FLAnimatedImage
+
+
 extension OmnibarScreen: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableViewRegions.count

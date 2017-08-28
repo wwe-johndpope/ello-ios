@@ -894,6 +894,11 @@
 		1DADC57A1AF449B3000DAC88 /* ElloWebBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DADC5791AF449B3000DAC88 /* ElloWebBrowserViewController.swift */; };
 		1DB17B981AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB17B961AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift */; };
 		1DB2710B1F4C95BF0044D475 /* HomeSubviewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2710A1F4C95BF0044D475 /* HomeSubviewScreen.swift */; };
+		1DB271151F5479A50044D475 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D971CF01E1ECD3100A167A2 /* Tracker.swift */; };
+		1DB271171F547A0F0044D475 /* UserFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271161F547A0F0044D475 /* UserFlag.swift */; };
+		1DB271181F547A0F0044D475 /* UserFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271161F547A0F0044D475 /* UserFlag.swift */; };
+		1DB271191F547A0F0044D475 /* UserFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB271161F547A0F0044D475 /* UserFlag.swift */; };
+		1DB2711A1F547A650044D475 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D971CF01E1ECD3100A167A2 /* Tracker.swift */; };
 		1DB286E61B96021F00D03516 /* OmnibarErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */; };
 		1DB474FB1BAB5584000AA9DC /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
 		1DB474FD1BAB5904000AA9DC /* RegexExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */; };
@@ -1994,6 +1999,7 @@
 		1DADC5791AF449B3000DAC88 /* ElloWebBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewController.swift; sourceTree = "<group>"; };
 		1DB17B961AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartRequestBuilderSpec.swift; sourceTree = "<group>"; };
 		1DB2710A1F4C95BF0044D475 /* HomeSubviewScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSubviewScreen.swift; sourceTree = "<group>"; };
+		1DB271161F547A0F0044D475 /* UserFlag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFlag.swift; sourceTree = "<group>"; };
 		1DB286E51B96021F00D03516 /* OmnibarErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarErrorCell.swift; sourceTree = "<group>"; };
 		1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensions.swift; sourceTree = "<group>"; };
 		1DB474FC1BAB5904000AA9DC /* RegexExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -3355,6 +3361,7 @@
 				76B0B1921B41CEAA004C2D7B /* UserAvatarCellModel.swift */,
 				1DF806521CDD1A42002D60AD /* Username.swift */,
 				1DDC85161D91D4D200C29552 /* Watch.swift */,
+				1DB271161F547A0F0044D475 /* UserFlag.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5117,6 +5124,7 @@
 				122D1BA51C6134A5001386CE /* AlertCellPresenter.swift in Sources */,
 				1207C9A31C752F2600939ADB /* S3UploadingService.swift in Sources */,
 				122B30BA1C6A3FBB00C1B9D8 /* ElloNetworkError.swift in Sources */,
+				1DB271181F547A0F0044D475 /* UserFlag.swift in Sources */,
 				1207C9A81C752F9F00939ADB /* ErrorStatusCode.swift in Sources */,
 				1207C99C1C750F8400939ADB /* AuthState.swift in Sources */,
 				1207C99A1C750E4B00939ADB /* ExtensionOverrides.swift in Sources */,
@@ -5181,6 +5189,7 @@
 				122B30B71C6A3FBB00C1B9D8 /* DynamicSettingCategory.swift in Sources */,
 				1207C9A91C752FD800939ADB /* ElloS3.swift in Sources */,
 				122D1BC01C6411E0001386CE /* ElloLogoView.swift in Sources */,
+				1DB271151F5479A50044D475 /* Tracker.swift in Sources */,
 				1207C99B1C750F5F00939ADB /* MappingType.swift in Sources */,
 				1D70DE561DF2350A008AF216 /* StyledButton.swift in Sources */,
 				122B30B81C6A3FBB00C1B9D8 /* ElloKeychain.swift in Sources */,
@@ -5497,6 +5506,7 @@
 				1D87831C1ECCF5B300253602 /* EditorialInviteCell.swift in Sources */,
 				128D36AA1A951A6400622833 /* StreamFooterCellPresenter.swift in Sources */,
 				1D6E42FC1EA672C60029C9B1 /* ProfileBadgesView.swift in Sources */,
+				1DB271171F547A0F0044D475 /* UserFlag.swift in Sources */,
 				122B30F21C6A3FC500C1B9D8 /* RegionParser.swift in Sources */,
 				1D2F65AE1D186E7F0099D036 /* CategoryCardCellPresenter.swift in Sources */,
 				1D7751011ABCE78800D92191 /* UINavigationItem.swift in Sources */,
@@ -5991,6 +6001,7 @@
 				1D447EDE1F3BC72D00013384 /* ExternalLink.swift in Sources */,
 				1D447ED01F3BC68C00013384 /* RegionKind.swift in Sources */,
 				1D447F121F3BCA6D00013384 /* ReAuthService.swift in Sources */,
+				1DB271191F547A0F0044D475 /* UserFlag.swift in Sources */,
 				1D447EEF1F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */,
 				1D447EB21F3BC38600013384 /* Promotional.swift in Sources */,
 				1D447EC11F3BC61800013384 /* PushPayload.swift in Sources */,
@@ -6029,6 +6040,7 @@
 				1D447EF41F3BC8C400013384 /* RegionParser.swift in Sources */,
 				1D447EB71F3BC3D900013384 /* Editorial.swift in Sources */,
 				1D447ED21F3BC69C00013384 /* S3UploadingService.swift in Sources */,
+				1DB2711A1F547A650044D475 /* Tracker.swift in Sources */,
 				1D447EBD1F3BC5E600013384 /* StringExtensions.swift in Sources */,
 				1D447F0B1F3BCA0600013384 /* AsyncOperation.swift in Sources */,
 				1D447EE11F3BC75E00013384 /* Comment.swift in Sources */,

@@ -2,20 +2,6 @@
 ///  ExtensionOverrides.swift
 //
 
-enum ContentType: String {
-    case post = "Post"
-    case comment = "Comment"
-    case user = "User"
-}
-
-class Tracker {
-    static let shared = Tracker()
-
-    init() {}
-
-    func encounteredNetworkError(_ path: String, error: NSError, statusCode: Int?) {}
-}
-
 class Window {
     static func columnCountFor(width: CGFloat) -> Int { return 1 }
     static func isWide(_ width: Float) -> Bool { return false }

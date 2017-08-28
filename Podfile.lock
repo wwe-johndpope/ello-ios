@@ -1,10 +1,7 @@
 PODS:
   - 1PasswordExtension (1.6.1)
   - Alamofire (4.2.0)
-  - Analytics/Core-iOS (2.0.17):
-    - TRVSDictionaryWithCaseInsensitivity (= 0.0.2)
-  - Analytics/Segmentio (2.0.17):
-    - Analytics/Core-iOS
+  - Analytics (3.6.7)
   - CocoaLumberjack (2.4.0):
     - CocoaLumberjack/Default (= 2.4.0)
     - CocoaLumberjack/Extensions (= 2.4.0)
@@ -85,7 +82,6 @@ PODS:
   - SwiftyJSON (3.1.4)
   - SwiftyUserDefaults (3.0.0)
   - TimeAgoInWords (3.0.0)
-  - TRVSDictionaryWithCaseInsensitivity (0.0.2)
   - WebLinking (1.1.0)
   - YapDatabase (2.8.1):
     - YapDatabase/Standard (= 2.8.1)
@@ -134,7 +130,7 @@ PODS:
 DEPENDENCIES:
   - 1PasswordExtension (from `https://github.com/ello/onepassword-app-extension`)
   - Alamofire (~> 4.0)
-  - Analytics/Segmentio
+  - Analytics (~> 3.0)
   - Crashlytics (~> 3.4)
   - CRToast (from `https://github.com/ello/CRToast`)
   - DeltaCalculator (from `https://github.com/ello/DeltaCalculator`)
@@ -243,7 +239,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   1PasswordExtension: faed6b7ab3f1e26551b08fef580c88bff0d0f247
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  Analytics: 51d6163cb568c8ede69f2b92ef4779d91e1524e2
+  Analytics: 2c09a50e3478a3a7ced08a22d00c43ba6f7011e6
   CocoaLumberjack: aa9dcab71bdf9eaf2a63bbd9ddc87863efe45457
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
@@ -276,10 +272,9 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
   TimeAgoInWords: 85c5f962523d61f7ca34d3b83c70afb28cd257e2
-  TRVSDictionaryWithCaseInsensitivity: 51d2ccf52c6d645d27b63467a98fa02c556e01b0
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 94c224f8893790e79f6be8ef5168bba928f0898f
+PODFILE CHECKSUM: ac73eee4a610c78210f1cfe9eb3bd167f7f04cba
 
 COCOAPODS: 1.1.1

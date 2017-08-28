@@ -14,20 +14,20 @@ enum ContentType: String {
 }
 
 protocol AnalyticsAgent {
-    func identify(_ userId: String!, traits: [AnyHashable: Any]!)
-    func track(_ event: String!)
-    func track(_ event: String!, properties: [AnyHashable: Any]!)
-    func screen(_ screenTitle: String!)
-    func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!)
+    func identify(_ userId: String?, traits: [String: Any]?)
+    func track(_ event: String)
+    func track(_ event: String, properties: [String: Any]?)
+    func screen(_ screenTitle: String)
+    func screen(_ screenTitle: String, properties: [String: Any]?)
     func reset()
 }
 
 struct NullAgent: AnalyticsAgent {
-    func identify(_ userId: String!, traits: [AnyHashable: Any]!) { }
-    func track(_ event: String!) { }
-    func track(_ event: String!, properties: [AnyHashable: Any]!) { }
-    func screen(_ screenTitle: String!) { }
-    func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) { }
+    func identify(_ userId: String?, traits: [String: Any]?) { }
+    func track(_ event: String) { }
+    func track(_ event: String, properties: [String: Any]?) { }
+    func screen(_ screenTitle: String) { }
+    func screen(_ screenTitle: String, properties: [String: Any]?) { }
     func reset() { }
 }
 
@@ -84,12 +84,12 @@ extension Tracker {
         }
     }
 
-    func track(_ event: String, properties customProps: [AnyHashable: Any] = [:]) {
+    func track(_ event: String, properties customProps: [String: Any] = [:]) {
         let properties = customProps + ["agent": "ios"]
         agent.track(event, properties: properties)
     }
 
-    func screen(_ name: String, properties customProps: [AnyHashable: Any] = [:]) {
+    func screen(_ name: String, properties customProps: [String: Any] = [:]) {
         let properties = customProps + ["agent": "ios"]
         agent.screen(name, properties: properties)
     }
@@ -481,7 +481,7 @@ extension Tracker {
         track("\(type.rawValue) creation failed", properties: ["message": message])
     }
 
-    func contentFlagged(_ type: ContentType, flag: ContentFlagger.AlertOption, contentId: String) {
+    func contentFlagged(_ type: ContentType, flag: UserFlag, contentId: String) {
         track("\(type.rawValue) flagged", properties: ["content_id": contentId, "flag": flag.rawValue])
     }
 

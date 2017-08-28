@@ -3,9 +3,7 @@
 //
 
 import FLAnimatedImage
-import PINRemoteImage
-import Alamofire
-import AVFoundation
+
 
 enum StreamImageCellMode {
     case image

@@ -2,7 +2,6 @@
 ///  PagePromotionalService.swift
 //
 
-import PINRemoteImage
 import PromiseKit
 
 

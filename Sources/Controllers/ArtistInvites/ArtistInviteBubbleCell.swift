@@ -4,6 +4,7 @@
 
 import SnapKit
 import SVGKit
+import FLAnimatedImage
 
 
 class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {

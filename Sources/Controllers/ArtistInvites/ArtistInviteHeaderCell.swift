@@ -3,6 +3,7 @@
 //
 
 import SnapKit
+import FLAnimatedImage
 
 
 class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {

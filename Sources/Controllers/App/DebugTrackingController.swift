@@ -111,7 +111,9 @@ class DebugAgent: AnalyticsAgent {
         dismiss()
     }
 
-    private func describe(_ props: [AnyHashable: Any]) -> String {
+    private func describe(_ props: [String: Any]?) -> String {
+        guard let props = props else { return "nil" }
+
         var retval = "{"
         retval += props.reduce("") { (memo, kv) in
             let (key, value) = kv
@@ -143,15 +145,15 @@ class DebugAgent: AnalyticsAgent {
         }
     }
 
-    func identify(_ userId: String!, traits: [AnyHashable: Any]!) {
-        append(("User Id", userId, describe(traits)))
+    func identify(_ userId: String?, traits: [String: Any]?) {
+        append(("User Id", userId ?? "", describe(traits)))
     }
 
-    func track(_ event: String!) {
+    func track(_ event: String) {
         append(("Event", event, nil))
     }
 
-    func track(_ event: String!, properties: [AnyHashable: Any]!) {
+    func track(_ event: String, properties: [String: Any]?) {
         if let properties = properties {
             append(("Event", event, describe(properties)))
         }
@@ -160,11 +162,11 @@ class DebugAgent: AnalyticsAgent {
         }
     }
 
-    func screen(_ screenTitle: String!) {
+    func screen(_ screenTitle: String) {
         append(("Screen", screenTitle, nil))
     }
 
-    func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) {
+    func screen(_ screenTitle: String, properties: [String: Any]?) {
         if let properties = properties {
             append(("Screen", screenTitle, describe(properties)))
         }

@@ -17,7 +17,6 @@ def ello_app_pods
   pod '1PasswordExtension', git: 'https://github.com/ello/onepassword-app-extension'
   pod 'CRToast', git: 'https://github.com/ello/CRToast'
   pod 'Fabric', '~> 1.6'
-  pod 'Analytics/Segmentio'
   pod 'JTSImageViewController', git: 'https://github.com/ello/JTSImageViewController'
   pod 'KINWebBrowser', git: 'https://github.com/ello/KINWebBrowser'
   pod 'PINRemoteImage', '3.0.0-beta.8'
@@ -61,6 +60,7 @@ def common_pods
   pod 'JWTDecode', '~> 2.0'
   pod 'WebLinking', git: 'https://github.com/kylef/WebLinking.swift'
   pod 'Crashlytics', '~> 3.4'
+  pod 'Analytics', '~> 3.0'
 end
 
 def spec_pods
