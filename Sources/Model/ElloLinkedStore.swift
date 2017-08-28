@@ -42,29 +42,32 @@ struct ElloLinkedStore {
 
     // primarialy used for testing for now.. could be used for setting a model after it's fromJSON
     func setObject(_ object: JSONAble, forKey key: String, type: MappingType) {
+        let collection = type.rawValue
         writeConnection.readWrite { transaction in
-            transaction.setObject(object, forKey: key, inCollection: type.rawValue)
+            transaction.setObject(object, forKey: key, inCollection: collection)
         }
     }
 
     func getObject(_ key: String, type: MappingType) -> JSONAble? {
+        let collection = type.rawValue
         var object: JSONAble?
         readConnection.read { transaction in
-            if transaction.hasObject(forKey: key, inCollection: type.rawValue) {
-                object = transaction.object(forKey: key, inCollection: type.rawValue) as? JSONAble
+            if transaction.hasObject(forKey: key, inCollection: collection) {
+                object = transaction.object(forKey: key, inCollection: collection) as? JSONAble
             }
         }
         return object
     }
 
     func saveObject(_ jsonable: JSONAble, id: String, type: MappingType) {
+        let collection = type.rawValue
         self.writeConnection.readWrite { transaction in
-            if let existing = transaction.object(forKey: id, inCollection: type.rawValue) as? JSONAble {
+            if let existing = transaction.object(forKey: id, inCollection: collection) as? JSONAble {
                 let merged = existing.merge(jsonable)
-                transaction.replace(merged, forKey: id, inCollection: type.rawValue)
+                transaction.replace(merged, forKey: id, inCollection: collection)
             }
             else {
-                transaction.setObject(jsonable, forKey: id, inCollection: type.rawValue)
+                transaction.setObject(jsonable, forKey: id, inCollection: collection)
             }
         }
     }
