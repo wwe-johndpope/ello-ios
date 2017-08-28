@@ -120,8 +120,10 @@ class AlertViewController: UIViewController {
         transitioningDelegate = self
         headerView.label.text = message
 
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 15
         view.backgroundColor = type.backgroundColor
-        tableView.backgroundColor = type.backgroundColor
+        tableView.backgroundColor = .clear
         headerView.label.textColor = type.headerTextColor
         headerView.backgroundColor = type.backgroundColor
         if type.isRounded {
