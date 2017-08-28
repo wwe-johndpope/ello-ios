@@ -18,36 +18,8 @@ class ContentFlagger {
         self.commentPostId = commentPostId
     }
 
-    enum AlertOption: String {
-        case spam = "Spam"
-        case violence = "Violence"
-        case copyright = "Copyright infringement"
-        case threatening = "Threatening"
-        case hate = "Hate Speech"
-        case adult = "NSFW Content"
-        case dontLike = "I don't like it"
-
-        var name: String {
-            return self.rawValue
-        }
-
-        var kind: String {
-            switch self {
-            case .spam: return "spam"
-            case .violence: return "violence"
-            case .copyright: return "copyright"
-            case .threatening: return "threatening"
-            case .hate: return "hate_speech"
-            case .adult: return "adult"
-            case .dontLike: return "offensive"
-            }
-        }
-
-        static let all = [spam, violence, copyright, threatening, hate, adult, dontLike]
-    }
-
     func handler(_ action: AlertAction) {
-        let option = AlertOption(rawValue: action.title)
+        let option = UserFlag(rawValue: action.title)
         if let option = option {
             let endPoint: ElloAPI
             switch contentType {
@@ -79,7 +51,7 @@ class ContentFlagger {
 
         let alertController = AlertViewController(message: "Would you like to flag this content as:", textAlignment: .left)
 
-        for option in AlertOption.all {
+        for option in UserFlag.all {
             let action = AlertAction(title: option.name, style: .dark, handler: handler)
             alertController.addAction(action)
         }
