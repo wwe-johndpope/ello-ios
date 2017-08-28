@@ -883,7 +883,6 @@ extension AppViewController {
 }
 
 var isShowingDebug = false
-var debugController = DebugController()
 
 extension AppViewController {
 
@@ -912,7 +911,8 @@ extension AppViewController {
 
     func showDebugController() {
         isShowingDebug = true
-        let ctlr = debugController
+        let ctlr = DebugController()
+
         ctlr.title = "Debugging"
 
         let nav = UINavigationController(rootViewController: ctlr)
