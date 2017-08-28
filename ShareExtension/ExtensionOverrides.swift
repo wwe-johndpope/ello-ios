@@ -2,7 +2,6 @@
 ///  ExtensionOverrides.swift
 //
 
-
 class Window {
     static func columnCountFor(width: CGFloat) -> Int { return 1 }
     static func isWide(_ width: Float) -> Bool { return false }

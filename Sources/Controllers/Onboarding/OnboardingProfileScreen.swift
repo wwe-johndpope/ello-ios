@@ -5,6 +5,7 @@
 import Photos
 import SnapKit
 import ImagePickerSheetController
+import FLAnimatedImage
 
 
 class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {

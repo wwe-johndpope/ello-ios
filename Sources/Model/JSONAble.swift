@@ -2,9 +2,6 @@
 ///  JSONAble.swift
 //
 
-import YapDatabase
-
-
 let JSONAbleVersion = 1
 
 protocol JSONSaveable {

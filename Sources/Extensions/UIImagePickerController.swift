@@ -4,6 +4,7 @@
 
 import ImagePickerSheetController
 import Photos
+import MobileCoreServices
 
 
 enum ImagePickerSheetResult {

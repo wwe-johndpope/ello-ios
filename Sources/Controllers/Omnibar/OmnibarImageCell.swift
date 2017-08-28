@@ -2,6 +2,9 @@
 ///  OmnibarImageCell.swift
 //
 
+import FLAnimatedImage
+
+
 class OmnibarImageCell: TableViewCell {
     static let reuseIdentifier = "OmnibarImageCell"
 

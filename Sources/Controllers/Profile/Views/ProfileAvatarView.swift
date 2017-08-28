@@ -2,6 +2,9 @@
 ///  ProfileAvatarView.swift
 //
 
+import FLAnimatedImage
+
+
 class ProfileAvatarView: ProfileBaseView {
 
     struct Size {
