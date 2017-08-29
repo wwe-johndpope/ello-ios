@@ -1,9 +1,6 @@
+////
+///  StreamCollectionViewLayout.swift
 //
-//  StreamCollectionViewLayout.swift
-//  Ello
-//
-//  Created by Sean on 1/26/15.
-//  Copyright (c) 2015 Ello. All rights reserved.
 //  Big thanks to https://github.com/chiahsien
 //  Swiftified and modified https://github.com/chiahsien/CHTCollectionViewWaterfallLayout
 

@@ -1,11 +1,5 @@
-//
-//  Optionals.swift
-//  Ello
-//
-//  From tomlokhorst
-//  https://gist.github.com/tomlokhorst/f9a826bf24d16cb5f6a3
-//  Created by Sean Dougherty on 12/15/14.
-//  Copyright (c) 2014 Ello. All rights reserved.
+////
+///  Optionals.swift
 //
 
 func unwrap<T1, T2>(_ optional1: T1?, optional2: T2?) -> (T1, T2)? {

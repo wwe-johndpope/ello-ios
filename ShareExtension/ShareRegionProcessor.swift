@@ -2,8 +2,6 @@
 ///  ShareRegionProcessor.swift
 //
 
-import Foundation
-
 class ShareRegionProcessor {
 
     init(){}

@@ -1,18 +1,14 @@
-//
-//  ShareViewController.swift
-//  ShareExtension
-//
-//  Created by Sean on 1/27/16.
-//  Copyright © 2016 Ello. All rights reserved.
+////
+///  ShareViewController.swift
 //
 
-import UIKit
 import Social
 import KeychainAccess
 import SwiftyUserDefaults
 import Moya
 import Alamofire
 import MobileCoreServices
+
 
 class ShareViewController: SLComposeServiceViewController {
 

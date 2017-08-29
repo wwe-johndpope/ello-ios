@@ -2,7 +2,6 @@
 ///  NSItemProviderExtensions.swift
 //
 
-import Foundation
 import MobileCoreServices
 
 extension NSItemProvider {

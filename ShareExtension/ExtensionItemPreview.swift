@@ -2,8 +2,6 @@
 ///  ExtensionItemPreview.swift
 //
 
-import UIKit
-
 struct ExtensionItemPreview {
     let image: UIImage?
     let imagePath: URL?
