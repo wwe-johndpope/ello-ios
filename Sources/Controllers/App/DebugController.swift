@@ -89,7 +89,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             appController.closeDebugController {
                 guard MFMessageComposeViewController.canSendText() else { return }
 
-                let message = "Check out Ello! https://itunes.apple.com/us/app/ello/id953614327"
+                let message = InterfaceString.Friends.SMSMessage
 
                 let messageController = MFMessageComposeViewController()
                 messageController.messageComposeDelegate = self

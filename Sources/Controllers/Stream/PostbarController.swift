@@ -277,7 +277,7 @@ class PostbarController: UIResponder, PostbarResponder {
         Tracker.shared.postReposted(post)
         let message = InterfaceString.Post.RepostConfirm
         let alertController = AlertViewController(message: message)
-        alertController.autoDismiss = false
+        alertController.shouldAutoDismiss = false
 
         let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) { action in
             self.createRepost(post, alertController: alertController)
@@ -294,7 +294,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     fileprivate func createRepost(_ post: Post, alertController: AlertViewController) {
         alertController.resetActions()
-        alertController.dismissable = false
+        alertController.isDismissable = false
 
         let spinnerContainer = UIView(frame: CGRect(x: 0, y: 0, width: alertController.view.frame.size.width, height: 200))
         let spinner = ElloLogoView(frame: CGRect(origin: .zero, size: ElloLogoView.Size.natural))
@@ -330,8 +330,8 @@ class PostbarController: UIResponder, PostbarResponder {
             .catch { _ in
                 alertController.contentView = nil
                 alertController.message = InterfaceString.Post.RepostError
-                alertController.autoDismiss = true
-                alertController.dismissable = true
+                alertController.shouldAutoDismiss = true
+                alertController.isDismissable = true
                 let okAction = AlertAction(title: InterfaceString.OK, style: .light, handler: .none)
                 alertController.addAction(okAction)
             }

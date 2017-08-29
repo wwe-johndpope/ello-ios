@@ -188,8 +188,7 @@ extension OnboardingProfileViewController: OnboardingStepController {
         }
 
         Tracker.shared.inviteFriendsTapped()
-        AddressBookController.promptForAddressBookAccess(fromController: self,
-            completion: { result in
+        AddressBookController.promptForAddressBookAccess(fromController: self, completion: { result in
             switch result {
             case let .success(addressBook):
                 Tracker.shared.contactAccessPreferenceChanged(true)

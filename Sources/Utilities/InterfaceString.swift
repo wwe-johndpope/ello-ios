@@ -305,9 +305,13 @@ struct InterfaceString {
     }
 
     struct Friends {
-        static let ImportPermissionPrompt: String = NSLocalizedString("Import your contacts to invite cool people to Ello.\n\nEllo does not sell user data, and never contacts anyone without your permission.", comment: "Use address book permission prompt")
-        static let ImportAllow: String = NSLocalizedString("Import my contacts", comment: "Import my contacts action")
-        static let ImportNotNow: String = NSLocalizedString("Not now", comment: "Not now action")
+        static let ImportPermissionTitle: String = NSLocalizedString("Invite some cool people", comment: "")
+        static let ImportPermissionSubtitle: String = NSLocalizedString("Help Ello grow.", comment: "")
+        static let ImportPermissionPrompt: String = NSLocalizedString("Ello does not sell user data, and will never contact anyone without your permission.", comment: "")
+        static let ImportSMS: String = NSLocalizedString("Send Invite", comment: "")
+        static let SMSMessage: String = NSLocalizedString("Check out Ello, the Creators Network. https://itunes.apple.com/us/app/ello/id953614327", comment: "")
+        static let ImportAllow: String = NSLocalizedString("Import my contacts", comment: "")
+        static let ImportNotNow: String = NSLocalizedString("Not now", comment: "")
 
         static func ImportError(_ message: String) -> String {
             return String.localizedStringWithFormat("We were unable to access your address book\n%@", message)
