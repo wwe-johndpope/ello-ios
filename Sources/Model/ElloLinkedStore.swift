@@ -76,6 +76,12 @@ struct ElloLinkedStore {
 
 extension ElloLinkedStore {
 
+    static func clearDB(name: String? = nil) {
+        ElloLinkedStore.sharedInstance.writeConnection.readWrite { transaction in
+            transaction.removeAllObjectsInAllCollections()
+        }
+    }
+
     static func removeDB(name: String? = nil) {
         let path = ElloLinkedStore.databasePath(name: name)
 
