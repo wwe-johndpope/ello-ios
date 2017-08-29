@@ -40,16 +40,6 @@ class AlertViewControllerSpec: QuickSpec {
 
             describe("contentView") {
 
-                it("accepts a contentView") {
-                    let controller = AlertViewController(message: .none)
-                    self.presentAlert(controller)
-
-                    let view = UIView()
-                    controller.contentView = view
-
-                    expect(controller.contentView).to(equal(view))
-                }
-
                 it("hides its tableView") {
                     let controller = AlertViewController(message: .none)
                     self.presentAlert(controller)
