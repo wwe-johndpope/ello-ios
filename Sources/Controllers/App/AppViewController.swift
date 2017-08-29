@@ -441,7 +441,7 @@ extension AppViewController {
         UIApplication.shared.applicationIconBadgeNumber = 0
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
-        ElloLinkedStore.removeDB()
+        ElloLinkedStore.clearDB()
         var cache = InviteCache()
         cache.clear()
         Tracker.shared.identify(user: nil)

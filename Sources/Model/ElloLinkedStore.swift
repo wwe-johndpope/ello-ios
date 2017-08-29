@@ -41,10 +41,10 @@ struct ElloLinkedStore {
     }
 
     // primarialy used for testing for now.. could be used for setting a model after it's fromJSON
-    func setObject(_ object: JSONAble, forKey key: String, type: MappingType) {
+    func setObject(_ jsonable: JSONAble, forKey key: String, type: MappingType) {
         let collection = type.rawValue
         writeConnection.readWrite { transaction in
-            transaction.setObject(object, forKey: key, inCollection: collection)
+            transaction.setObject(jsonable, forKey: key, inCollection: collection)
         }
     }
 
@@ -75,6 +75,12 @@ struct ElloLinkedStore {
 }
 
 extension ElloLinkedStore {
+
+    static func clearDB(name: String? = nil) {
+        ElloLinkedStore.sharedInstance.writeConnection.readWrite { transaction in
+            transaction.removeAllObjectsInAllCollections()
+        }
+    }
 
     static func removeDB(name: String? = nil) {
         let path = ElloLinkedStore.databasePath(name: name)
