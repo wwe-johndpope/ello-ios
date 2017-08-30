@@ -45,13 +45,13 @@ class ContentFlaggerSpec: QuickSpec {
                 let adultAction = actions[5]
                 let dontLikeAction = actions[6]
 
-                expect(ContentFlagger.UserFlag(rawValue: spamAction.title)) == ContentFlagger.UserFlag.spam
-                expect(ContentFlagger.UserFlag(rawValue: violenceAction.title)) == ContentFlagger.UserFlag.violence
-                expect(ContentFlagger.UserFlag(rawValue: copyrightAction.title)) == ContentFlagger.UserFlag.copyright
-                expect(ContentFlagger.UserFlag(rawValue: threateningAction.title)) == ContentFlagger.UserFlag.threatening
-                expect(ContentFlagger.UserFlag(rawValue: hateAction.title)) == ContentFlagger.UserFlag.hate
-                expect(ContentFlagger.UserFlag(rawValue: adultAction.title)) == ContentFlagger.UserFlag.adult
-                expect(ContentFlagger.UserFlag(rawValue: dontLikeAction.title)) == ContentFlagger.UserFlag.dontLike
+                expect(UserFlag(rawValue: spamAction.title)) == UserFlag.spam
+                expect(UserFlag(rawValue: violenceAction.title)) == UserFlag.violence
+                expect(UserFlag(rawValue: copyrightAction.title)) == UserFlag.copyright
+                expect(UserFlag(rawValue: threateningAction.title)) == UserFlag.threatening
+                expect(UserFlag(rawValue: hateAction.title)) == UserFlag.hate
+                expect(UserFlag(rawValue: adultAction.title)) == UserFlag.adult
+                expect(UserFlag(rawValue: dontLikeAction.title)) == UserFlag.dontLike
             }
         }
     }

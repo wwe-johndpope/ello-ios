@@ -8,32 +8,32 @@ class SpecsTrackingAgent: AnalyticsAgent {
 
     var resetCalled = false
     var lastEvent = ""
-    var lastUserId = ""
-    var lastTraits: [AnyHashable: Any] = [:]
+    var lastUserId: String? = ""
+    var lastTraits: [String: Any]?
     var lastScreenTitle = ""
-    var lastProperties: [AnyHashable: Any] = [:]
+    var lastProperties: [String: Any]?
 
-    func identify(_ userId: String!, traits: [AnyHashable: Any]!) {
+    func identify(_ userId: String?, traits: [String: Any]?) {
         lastUserId = userId
         lastTraits = traits
     }
 
-    func track(_ event: String!) {
+    func track(_ event: String) {
         lastEvent = event
     }
 
-    func track(_ event: String!, properties: [AnyHashable: Any]!) {
+    func track(_ event: String, properties: [String: Any]?) {
         lastEvent = event
         lastProperties = properties
     }
 
-    func screen(_ screenTitle: String!) {
+    func screen(_ screenTitle: String) {
         lastScreenTitle = screenTitle
     }
 
-    func screen(_ screenTitle: String!, properties: [AnyHashable: Any]!) {
-        lastScreenTitle = screenTitle ?? ""
-        lastProperties = properties ?? [:]
+    func screen(_ screenTitle: String, properties: [String: Any]?) {
+        lastScreenTitle = screenTitle
+        lastProperties = properties
     }
 
     func reset() {

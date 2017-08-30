@@ -1331,6 +1331,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns false for all other items") {
+                    StreamKind.following.setIsGridView(false)
                     let indexPath = IndexPath(item: 2, section: 0)
                     let isTappable = subject.isTappable(at: indexPath)
                     expect(isTappable) == false

@@ -297,7 +297,7 @@ class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func isTappable(at indexPath: IndexPath) -> Bool {
-        guard let item = visibleStreamCellItem(at: indexPath) else { return true }
+        guard let item = visibleStreamCellItem(at: indexPath) else { return false }
 
         if item.type.isSelectable {
             return true

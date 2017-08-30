@@ -33,7 +33,7 @@ class AppViewControllerSpec: QuickSpec {
                     subject.navigateToDeepLink("http://ello.co/deeplink")
 
                     expect(agent.lastEvent) == "Deep Link Visited"
-                    expect(agent.lastProperties["path"] as? String) == "http://ello.co/deeplink"
+                    expect(agent.lastProperties?["path"] as? String) == "http://ello.co/deeplink"
                 }
             }
         }
