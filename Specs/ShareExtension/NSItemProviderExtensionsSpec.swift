@@ -5,6 +5,8 @@
 @testable import Ello
 import Quick
 import Nimble
+import MobileCoreServices
+
 
 class NSItemProviderExtensionsSpec: QuickSpec {
     override func spec() {
