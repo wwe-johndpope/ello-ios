@@ -35,6 +35,10 @@ class AlertViewController: UIViewController {
         }
         else {
             var contentHeight = totalVerticalPadding
+            if !message.isEmpty {
+                contentHeight += headerView.frame.height
+            }
+
             for action in actions {
                 contentHeight += action.heightForWidth(Size.width)
             }
@@ -191,7 +195,7 @@ extension AlertViewController {
     func resize() {
         self.view.frame.size = self.desiredSize
         if let superview = self.view.superview {
-            self.view.center = superview.center
+            self.view.center = superview.bounds.center
         }
     }
 }

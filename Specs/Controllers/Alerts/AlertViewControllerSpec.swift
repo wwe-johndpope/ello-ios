@@ -17,17 +17,6 @@ class AlertViewControllerSpec: QuickSpec {
 
     override func spec() {
         describe("AlertViewController") {
-            describe("nib") {
-                it("outlets are set") {
-                    let controller = AlertViewController(message: .none)
-                    self.presentAlert(controller)
-
-                    expect(controller.tableView).toNot(beNil())
-                    expect(controller.topPadding).toNot(beNil())
-                    expect(controller.leftPadding).toNot(beNil())
-                }
-            }
-
             describe("snapshots") {
                 validateAllSnapshots {
                     let subject = AlertViewController(message: "hey there!")
