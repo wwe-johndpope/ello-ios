@@ -70,6 +70,7 @@ class CollectionViewDataSourceSpec: QuickSpec {
             describe("-isFullWidth(at:)") {
 
                 beforeEach {
+                    StreamKind.following.setIsGridView(true)
                     let items = [
                         StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment),
                         StreamCellItem(jsonable: ElloComment.stub([:]), type: .commentHeader)
@@ -77,7 +78,7 @@ class CollectionViewDataSourceSpec: QuickSpec {
                     subject.visibleCellItems = items
                 }
 
-                it("returns true for Full Width items") {
+                it("returns true for full width items") {
                     let isFullWidth = subject.isFullWidth(at: indexPath0)
                     expect(isFullWidth) == true
                 }
