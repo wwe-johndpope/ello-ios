@@ -2,8 +2,6 @@
 ///  StoryboardIdentifiers.swift
 //
 
-import Foundation
-
 enum StoryboardIdentifier: String {
     case notifications = "NotificationsViewController"
     case streamDetail = "PostDetailViewController"

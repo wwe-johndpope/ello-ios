@@ -15,10 +15,12 @@ class AlertCell: UITableViewCell {
     static let reuseIdentifier = "AlertCell"
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var button: UILabel!
     @IBOutlet weak var input: ElloTextField!
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var okButton: StyledButton!
     @IBOutlet weak var cancelButton: StyledButton!
+
     let inputBorder = UIView()
 
     var onInputChanged: ((String) -> Void)?
@@ -29,6 +31,7 @@ class AlertCell: UITableViewCell {
         label.font = .defaultFont()
         label.textColor = .black
         label.textAlignment = .left
+        label.numberOfLines = 0
 
         input.backgroundColor = UIColor.white
         input.font = UIFont.defaultFont()

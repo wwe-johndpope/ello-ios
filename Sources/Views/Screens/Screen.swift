@@ -56,6 +56,7 @@ class Screen: UIView {
 
         if newWindow != nil && window == nil {
             setupKeyboardObservers()
+            keyboardWillChange(Keyboard.shared)
         }
         else if newWindow == nil && window != nil {
             teardownKeyboardObservers()

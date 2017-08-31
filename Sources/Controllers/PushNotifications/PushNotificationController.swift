@@ -253,7 +253,7 @@ extension PushNotificationController {
 private extension PushNotificationController {
     func alertViewController() -> AlertViewController {
         let alert = AlertViewController(message: InterfaceString.PushNotifications.PermissionPrompt)
-        alert.dismissable = false
+        alert.isDismissable = false
 
         let allowAction = AlertAction(title: InterfaceString.PushNotifications.PermissionYes, style: .dark) { _ in
             self.registerForRemoteNotifications()

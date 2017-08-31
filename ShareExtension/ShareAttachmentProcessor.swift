@@ -2,10 +2,6 @@
 ///  ShareAttachmentProcessor.swift
 //
 
-import Foundation
-import UIKit
-
-
 typealias ExtensionItemProcessor = (ExtensionItemPreview?) -> Void
 typealias ShareAttachmentFilter = (ExtensionItemPreview) -> Bool
 

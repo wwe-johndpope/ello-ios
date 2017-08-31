@@ -13,7 +13,7 @@ extension AlertViewController {
             let bottomInset = Keyboard.shared.keyboardBottomInset(inView: self.tableView)
             self.tableView.contentInset.bottom = bottomInset
             self.tableView.scrollIndicatorInsets.bottom = bottomInset
-            self.tableView.isScrollEnabled = (bottomInset > 0 || self.view.frame.height == MaxHeight)
+            self.tableView.isScrollEnabled = (bottomInset > 0 || self.view.frame.height == Size.maxHeight)
         }
     }
 }

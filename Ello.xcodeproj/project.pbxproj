@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01BA14787BB2CA507020C9C4 /* Pods_Ello.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */; };
-		12028E961C64F1940042AA53 /* AlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8EFFB541ACC8F9A00F34B7F /* AlertViewController.xib */; };
 		12028E971C64F1B40042AA53 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8158C441ACDABF3008C15A1 /* AlertCell.xib */; };
 		1207C96E1C73FEE000939ADB /* AnonymousAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94A1C73FEE000939ADB /* AnonymousAuthService.swift */; };
 		1207C96F1C73FEE000939ADB /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94B1C73FEE000939ADB /* APIKeys.swift */; };
@@ -1271,7 +1270,6 @@
 		F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */; };
 		F8D1606A1AB75C2900575B25 /* DrawerViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160691AB75C2900575B25 /* DrawerViewDataSourceSpec.swift */; };
 		F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */; };
-		F8EFFB551ACC8F9A00F34B7F /* AlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8EFFB541ACC8F9A00F34B7F /* AlertViewController.xib */; };
 		F8FDB1B81AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */; };
 /* End PBXBuildFile section */
 
@@ -2383,7 +2381,6 @@
 		F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewDataSource.swift; sourceTree = "<group>"; };
 		F8D160691AB75C2900575B25 /* DrawerViewDataSourceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewDataSourceSpec.swift; sourceTree = "<group>"; };
 		F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
-		F8EFFB541ACC8F9A00F34B7F /* AlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertViewController.xib; sourceTree = "<group>"; };
 		F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScreenEdgePanGestureRecognizer.swift; sourceTree = "<group>"; };
 		FCC6D1CF14C9670467D6090C /* Pods-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4306,7 +4303,6 @@
 				126E05301B152DD70036DFA6 /* AlertHeaderView.swift */,
 				F8158C4C1ACDD52D008C15A1 /* AlertPresentationController.swift */,
 				F87928671ACC6D6600579BE1 /* AlertViewController.swift */,
-				F8EFFB541ACC8F9A00F34B7F /* AlertViewController.xib */,
 				122D1BA71C61390F001386CE /* AlertViewControllerKeyboardExtension.swift */,
 			);
 			path = Alerts;
@@ -4509,7 +4505,6 @@
 				124CFB9D1C5976E500727D11 /* MainInterface.storyboard in Resources */,
 				122034751DE66A4A0059E633 /* ello_logo_grey.svg in Resources */,
 				123466161C65468100E61110 /* ello_logo.svg in Resources */,
-				12028E961C64F1940042AA53 /* AlertViewController.xib in Resources */,
 				12028E971C64F1B40042AA53 /* AlertCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4589,7 +4584,6 @@
 				1D942C091EC3AF8700056761 /* bubble_outline_normal.svg in Resources */,
 				7689B4DA1AD4ED3B00E4A4A3 /* activity_streams__when_a_category_is_specified.json in Resources */,
 				76B53AD61B0AA89B00534548 /* users_searching_without_terms_fails.json in Resources */,
-				F8EFFB551ACC8F9A00F34B7F /* AlertViewController.xib in Resources */,
 				76F8DEBC1B6C0BC4009BCF61 /* camera_selected.svg in Resources */,
 				1D7152981D6CBE24005998FE /* NoPostsCell.xib in Resources */,
 				1D6E43171EA68AEA0029C9B1 /* badge_staff_normal.svg in Resources */,

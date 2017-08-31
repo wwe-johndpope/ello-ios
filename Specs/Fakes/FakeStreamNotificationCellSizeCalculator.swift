@@ -3,7 +3,6 @@
 //
 
 @testable import Ello
-import Foundation
 
 
 class FakeStreamNotificationCellSizeCalculator: StreamNotificationCellSizeCalculator {

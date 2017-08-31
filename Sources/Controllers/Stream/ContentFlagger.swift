@@ -49,7 +49,7 @@ class ContentFlagger {
             return
         }
 
-        let alertController = AlertViewController(message: "Would you like to flag this content as:", textAlignment: .left)
+        let alertController = AlertViewController(message: "Would you like to flag this content as:", buttonAlignment: .left)
 
         for option in UserFlag.all {
             let action = AlertAction(title: option.name, style: .dark, handler: handler)
