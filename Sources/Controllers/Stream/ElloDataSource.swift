@@ -19,7 +19,7 @@ class ElloDataSource: NSObject {
     }
 
     func indexPath(forItem item: StreamCellItem) -> IndexPath? {
-        if let index = self.visibleCellItems.index(where: { $0 == item }) {
+        if let index = visibleCellItems.index(where: { $0 == item }) {
             return IndexPath(item: index, section: 0)
         }
         return nil

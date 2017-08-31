@@ -4,8 +4,6 @@
 
 struct StreamCellItemParser {
 
-    init(){}
-
     func parse(_ items: [JSONAble], streamKind: StreamKind, forceGrid: Bool = false, currentUser: User? = nil) -> [StreamCellItem] {
         let viewsAdultContent = currentUser?.viewsAdultContent ?? false
         let filteredItems = streamKind.filter(items, viewsAdultContent: viewsAdultContent)
@@ -100,7 +98,7 @@ struct StreamCellItemParser {
         else if let content = post.contentFor(gridView: isGridView) {
             cellItems += regionItems(post, content: content)
         }
-        cellItems += footerStreamCellItems(post)
+        cellItems += [StreamCellItem(jsonable: post, type: .streamFooter)]
         cellItems += [StreamCellItem(jsonable: post, type: .spacer(height: 10))]
 
         // set initial state on the items, but don't toggle the footer's state, it is used by comment open/closed
@@ -171,10 +169,6 @@ struct StreamCellItemParser {
         case .unknown:
             return []
         }
-    }
-
-    fileprivate func footerStreamCellItems(_ post: Post) -> [StreamCellItem] {
-        return [StreamCellItem(jsonable: post, type: .streamFooter)]
     }
 }
 

@@ -12,35 +12,24 @@ import Nimble
 
 class UserServiceSpec: QuickSpec {
     override func spec() {
-        var subject = UserService()
-
-        describe("-join") {
-
-            context("success") {
-
-                it("Calls success with a User") {
-                    var loadedUser: User?
-
+        describe("UserService") {
+            var subject: UserService!
+            beforeEach {
+                subject = UserService()
+            }
+            describe("join(email:username:password:invitationCode:)") {
+                it("stores the email and password in the keychain") {
                     subject.join(email: "fake@example.com",
                         username: "fake-username",
                         password: "fake-password",
                         invitationCode: .none,
-                        success: {
-                            (user, responseConfig) in
-                            loadedUser = user
-                        }, failure: .none)
+                        success: {}, failure: .none)
 
-                    expect(loadedUser).toNot(beNil())
-
-                    //smoke test the user
-                    expect(loadedUser!.userId) == "1"
-                    expect(loadedUser!.email) == "sterling@isisagency.com"
-                    expect(loadedUser!.username) == "archer"
+                    let authToken = AuthToken()
+                    expect(authToken.username) == "fake-username"
+                    expect(authToken.password) == "fake-password"
                 }
             }
-
-            xcontext("failure") {}
-
         }
     }
 }

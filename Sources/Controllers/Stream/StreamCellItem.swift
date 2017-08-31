@@ -2,21 +2,11 @@
 ///  StreamCellItem.swift
 //
 
-enum StreamCellState: CustomStringConvertible, CustomDebugStringConvertible {
-    case none
-    case loading
-    case expanded
-    case collapsed
-
-    var description: String {
-        switch self {
-        case .none: return "None"
-        case .loading: return "Loading"
-        case .expanded: return "Expanded"
-        case .collapsed: return "Collapsed"
-        }
-    }
-    var debugDescription: String { return "StreamCellState.\(description)" }
+enum StreamCellState: String {
+    case none = "None"
+    case loading = "Loading"
+    case expanded = "Expanded"
+    case collapsed = "Collapsed"
 }
 
 
@@ -69,20 +59,18 @@ final class StreamCellItem: NSObject, NSCopying {
     }
 
     override var description: String {
-        switch type {
-        case let .text(data):
-            let text: String
-            if let textRegion = data as? TextRegion {
-                text = textRegion.content
-            }
-            else {
-                text = "unknown"
-            }
-
-            return "StreamCellItem(type: \(type.reuseIdentifier), jsonable: \(type(of: jsonable)), state: \(state), text: \(text))"
-        default:
-            return "StreamCellItem(type: \(type.reuseIdentifier), jsonable: \(type(of: jsonable)), state: \(state))"
+        var description = "StreamCellItem(type: \(type.reuseIdentifier), jsonable: \(type(of: jsonable)), state: \(state)"
+        if case let .text(data) = type,
+            let textRegion = data as? TextRegion
+        {
+            description += ", text: \(textRegion.content)"
         }
+
+        if let placeholderType = placeholderType {
+            description += ", placeholderType: \(placeholderType))"
+        }
+        description += ")"
+        return description
     }
 
 }

@@ -69,7 +69,7 @@ final class StreamViewController: BaseElloViewController {
 
     typealias ToggleClosure = (Bool) -> Void
 
-    fileprivate var dataSource: StreamDataSource!
+    var dataSource: StreamDataSource!
     var collectionViewDataSource: CollectionViewDataSource!
 
     var postbarController: PostbarController?
@@ -219,10 +219,6 @@ final class StreamViewController: BaseElloViewController {
 
     fileprivate func setupDataSources() {
         dataSource = StreamDataSource(streamKind: streamKind)
-        dataSource.streamCollapsedFilter = { item in
-            guard item.type.isCollapsable, item.jsonable is Post else { return true }
-            return item.state != .collapsed
-        }
         collectionViewDataSource = CollectionViewDataSource(streamKind: streamKind)
     }
 

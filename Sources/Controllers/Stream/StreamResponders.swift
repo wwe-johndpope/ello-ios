@@ -2,6 +2,9 @@
 ///  StreamResponders.swift
 //
 
+import FLAnimatedImage
+
+
 @objc
 protocol StreamCellResponder: class {
     func streamCellTapped(cell: UICollectionViewCell)

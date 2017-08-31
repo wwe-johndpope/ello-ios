@@ -35,61 +35,26 @@ class StreamDataSourceSpec: QuickSpec {
         let indexPathOutOfBounds = IndexPath(item: 1000, section: 0)
         let indexPathInvalidSection = IndexPath(item: 0, section: 10)
 
-        var vc: StreamViewController!
+        var streamViewController: StreamViewController!
         var subject: StreamDataSource!
-        var fakeCollectionView: FakeCollectionView!
+
+        beforeEach {
+            StreamKind.following.setIsGridView(true)
+
+            subject = StreamDataSource(streamKind: .following)
+            subject.textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
+            subject.notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
+            subject.announcementSizeCalculator = FakeAnnouncementCellSizeCalculator()
+            subject.profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
+
+            streamViewController = StreamViewController()
+            streamViewController.streamKind = .following
+            streamViewController.dataSource = subject
+
+            showController(streamViewController)
+        }
 
         describe("StreamDataSourceSpec") {
-            beforeEach {
-                StreamKind.following.setIsGridView(true)
-                vc = StreamViewController()
-                vc.streamKind = StreamKind.following
-
-                subject = StreamDataSource(streamKind: .following)
-                subject.textSizeCalculator = FakeStreamTextCellSizeCalculator(webView: UIWebView())
-                subject.notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator(webView: UIWebView())
-                subject.announcementSizeCalculator = FakeAnnouncementCellSizeCalculator()
-                subject.profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
-
-                vc.dataSource = subject
-                vc.collectionView.dataSource = vc.dataSource
-
-                subject.streamCollapsedFilter = { item in
-                    if !item.type.isCollapsable {
-                        return true
-                    }
-                    if let post = item.jsonable as? Post {
-                        return !post.isCollapsed
-                    }
-                    return true
-                }
-                showController(vc)
-                fakeCollectionView = FakeCollectionView(frame: vc.collectionView.frame, collectionViewLayout: vc.collectionView.collectionViewLayout)
-            }
-
-            afterEach {
-                subject.removeAllCellItems()
-            }
-
-            describe("init(streamKind:textSizeCalculator:notificationSizeCalculator:profileHeaderSizeCalculator:)") {
-
-                it("has streamKind") {
-                    expect(subject.streamKind).toNot(beNil())
-                }
-
-                it("has textSizeCalculator") {
-                    expect(subject.textSizeCalculator).toNot(beNil())
-                }
-
-                it("has notificationSizeCalculator") {
-                    expect(subject.notificationSizeCalculator).toNot(beNil())
-                }
-
-                it("has profileHeaderSizeCalculator") {
-                    expect(subject.profileHeaderSizeCalculator).toNot(beNil())
-                }
-            }
-
             context("appendStreamCellItems(_:)") {
                 let post = Post.stub([:])
                 let cellItems = [
@@ -99,6 +64,7 @@ class StreamDataSourceSpec: QuickSpec {
                 beforeEach {
                     subject.appendStreamCellItems(cellItems)
                 }
+
                 it("adds items") {
                     expect(subject.visibleCellItems.count) == cellItems.count
                 }
@@ -109,20 +75,69 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
+            context("replacePlaceholder(type:items:)") {
+                beforeEach {
+                    subject.appendStreamCellItems([StreamCellItem(type: .placeholder, placeholderType: .streamPosts)])
+                }
+                it("replaces a placeholder with items") {
+                    let newItems = [
+                        StreamCellItem(type: .streamHeader),
+                        StreamCellItem(type: .streamHeader),
+                    ]
+                    subject.replacePlaceholder(type: .streamPosts, items: newItems)
+                    expect(subject.allStreamCellItems) == newItems
+                }
+
+                it("assigns the placeholderType to the new items") {
+                    let newItems = [
+                        StreamCellItem(type: .streamHeader),
+                        StreamCellItem(type: .streamHeader),
+                    ]
+                    subject.replacePlaceholder(type: .streamPosts, items: newItems)
+                    for item in subject.allStreamCellItems {
+                        expect(item.placeholderType) == StreamCellType.PlaceholderType.streamPosts
+                    }
+                }
+
+                it("restores a placeholder when replacing with zero items") {
+                    let newItems = [
+                        StreamCellItem(type: .streamHeader),
+                        StreamCellItem(type: .streamHeader),
+                    ]
+                    subject.replacePlaceholder(type: .streamPosts, items: newItems)
+                    expect(subject.allStreamCellItems.count) == 2
+
+                    subject.replacePlaceholder(type: .streamPosts, items: [])
+                    expect(subject.allStreamCellItems.count) == 1
+                    expect(subject.allStreamCellItems[0].type) == StreamCellType.placeholder
+                    expect(subject.allStreamCellItems[0].placeholderType) == StreamCellType.PlaceholderType.streamPosts
+                }
+
+                it("ignores replacements if the placeholder is not in the data source") {
+                    let newItems = [
+                        StreamCellItem(type: .streamHeader),
+                        StreamCellItem(type: .streamHeader),
+                    ]
+                    subject.replacePlaceholder(type: .categoryList, items: newItems)
+
+                    expect(subject.allStreamCellItems.count) == 1
+                    expect(subject.allStreamCellItems[0].type) == StreamCellType.placeholder
+                    expect(subject.allStreamCellItems[0].placeholderType) == StreamCellType.PlaceholderType.streamPosts
+                }
+            }
+
             context("insertStreamCellItems(_:, startingIndexPath:)") {
-                let post1 = Post.stub([:])
-                let post2 = Post.stub([:])
                 let firstCellItems = [
-                    StreamCellItem(jsonable: post1, type: .text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post1, type: .text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post1, type: .text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post1, type: .text(data: TextRegion.stub([:])))
+                    StreamCellItem(type: .streamHeader),
+                    StreamCellItem(type: .streamHeader),
+                    StreamCellItem(type: .streamHeader),
+                    StreamCellItem(type: .streamHeader),
                 ]
                 let secondCellItems = [
-                    StreamCellItem(jsonable: post2, type: .text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post2, type: .text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post2, type: .text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post2, type: .text(data: TextRegion.stub([:])))
+                    StreamCellItem(type: .streamHeader),
+                    StreamCellItem(type: .streamHeader),
+                    StreamCellItem(type: .streamHeader),
+                    StreamCellItem(type: .streamHeader),
                 ]
 
                 beforeEach {
@@ -130,109 +145,67 @@ class StreamDataSourceSpec: QuickSpec {
                     subject.insertStreamCellItems(firstCellItems, startingIndexPath: indexPath0)
                 }
                 it("inserts items") {
-                    for (index, item) in (firstCellItems + secondCellItems).enumerated() {
-                        expect(subject.visibleCellItems[index]) == item
-                    }
+                    expect(subject.allStreamCellItems) == (firstCellItems + secondCellItems)
                 }
             }
 
-            describe("collectionView(_:numberOfItemsInSection:)") {
-                context("with posts") {
-                    beforeEach {
-                        // there should be 10 posts
-                        // 10 * 3(number of cells for a post w/ 1 region) = 30
-                        var posts = [Post]()
-                        for index in 1...10 {
-                            posts.append(Post.stub(["id": "\(index)"]))
-                        }
-                        let cellItems = StreamCellItemParser().parse(posts, streamKind: .following)
-                        subject.appendStreamCellItems(cellItems)
-                        vc.collectionView.reloadData()
-                    }
-
-                    it("returns the correct number of rows") {
-                        expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 40
-                    }
+            context("hasCellItems(for:)") {
+                beforeEach {
+                    subject.appendStreamCellItems([
+                        StreamCellItem(type: .placeholder, placeholderType: .streamPosts),
+                        StreamCellItem(jsonable: Post.stub([:]), type: .streamHeader, placeholderType: .postHeader),
+                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .streamHeader, placeholderType: .postComments),
+                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .streamHeader, placeholderType: .postComments),
+                    ])
                 }
 
-                context("isValidIndexPath(_:)") {
-                    beforeEach {
-                        let item = StreamCellItem(jsonable: ElloComment.newCommentForPost(Post.stub([:]), currentUser: User.stub([:])), type: .createComment)
-                        subject.appendStreamCellItems([item])
-                    }
-                    it("returns true for valid path (0, 0)") {
-                        expect(subject.isValidIndexPath(IndexPath(item: 0, section: 0))) == true
-                    }
-                    it("returns true for valid path (items.count - 1, 0)") {
-                        let idx = subject.visibleCellItems.count
-                        expect(subject.isValidIndexPath(IndexPath(item: idx - 1, section: 0))) == true
-                    }
-                    it("returns false for invalid path (-1, 0)") {
-                        expect(subject.isValidIndexPath(IndexPath(item: -1, section: 0))) == false
-                    }
-                    it("returns false for invalid path (items.count, 0)") {
-                        let idx = subject.visibleCellItems.count
-                        expect(subject.isValidIndexPath(IndexPath(item: idx, section: 0))) == false
-                    }
-                    it("returns false for invalid path (0, 1)") {
-                        expect(subject.isValidIndexPath(IndexPath(item: 0, section: 1))) == false
-                    }
+                it("returns false if data doesn't include placeholderType") {
+                    expect(subject.hasCellItems(for: .editorials)) == false
                 }
 
-                context("with reposts") {
-                    var posts = [Post]()
-                    for index in 1...10 {
-                        posts.append(Post.stub([
-                            "id": "\(index)",
-                            "repostContent": [TextRegion.stub([:]), TextRegion.stub([:])],
-                            "content": [TextRegion.stub([:]), TextRegion.stub([:])]
-                            ])
-                        )
-                    }
-                    context("Following stream") {
-                        beforeEach {
-                            let cellItems = StreamCellItemParser().parse(posts, streamKind: .following)
-                            subject.appendStreamCellItems(cellItems)
-                            vc.collectionView.reloadData()
-                        }
-                        it("returns the correct number of rows") {
-                            // there should be 10 reposts
-                            // 10 * 4(number of cells for a repost w/ 2 regions) = 40
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 40
-                        }
-                    }
-
+                it("returns false if data only includes a placeholder item") {
+                    expect(subject.hasCellItems(for: .streamPosts)) == false
                 }
 
+                it("returns true if data includes one item of placeholderType") {
+                    expect(subject.hasCellItems(for: .postHeader)) == true
+                }
 
-                context("with collapsed and non collapsed posts") {
-                    beforeEach {
-                        var posts = [Post]()
-                        // there should be 5 collapsed and 5 non collapsed
-                        // 5 * 5(number of cells for non collapsed w/ 3 regions) = 25
-                        // 5 * 3(number of cells for collapsed) = 15
-                        // thus the 40
-                        for index in 1...10 {
-                            posts.append(Post.stub([
-                                "id": "\(index)",
-                                "contentWarning": index % 2 == 0 ? "" : "NSFW",
-                                "summary": [TextRegion.stub([:]), TextRegion.stub([:]), TextRegion.stub([:])],
-                                "content": [TextRegion.stub([:]), TextRegion.stub([:]), TextRegion.stub([:])],
-                                ])
-                            )
-                        }
-                        let cellItems = StreamCellItemParser().parse(posts, streamKind: .following)
-                        subject.appendStreamCellItems(cellItems)
-                        vc.collectionView.reloadData()
-                    }
-
-                    it("returns the correct number of rows") {
-                        expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 50
-                    }
+                it("returns true if data includes more than one item of placeholderType") {
+                    expect(subject.hasCellItems(for: .postComments)) == true
                 }
             }
 
-            describe("indexPathForItem(_:)") {
+            context("isValidIndexPath(_:)") {
+                beforeEach {
+                    let item = StreamCellItem(jsonable: ElloComment.newCommentForPost(Post.stub([:]), currentUser: User.stub([:])), type: .createComment)
+                    subject.appendStreamCellItems([item])
+                }
+
+                it("returns true for first row") {
+                    expect(subject.isValidIndexPath(IndexPath(item: 0, section: 0))) == true
+                }
+
+                it("returns true for last row") {
+                    let index = subject.visibleCellItems.count - 1
+                    expect(subject.isValidIndexPath(IndexPath(item: index, section: 0))) == true
+                }
+
+                it("returns false for row before first") {
+                    expect(subject.isValidIndexPath(IndexPath(item: -1, section: 0))) == false
+                }
+
+                it("returns false for row after last") {
+                    let index = subject.visibleCellItems.count
+                    expect(subject.isValidIndexPath(IndexPath(item: index, section: 0))) == false
+                }
+
+                it("returns false for invalid section") {
+                    expect(subject.isValidIndexPath(IndexPath(item: 0, section: 1))) == false
+                }
+            }
+
+            describe("indexPath(forItem:)") {
                 var postItem: StreamCellItem!
                 beforeEach {
                     let cellItems = StreamCellItemParser().parse([Post.stub([:])], streamKind: .following)
@@ -241,17 +214,12 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns an indexPath") {
-                    expect(subject.indexPathForItem(postItem)).notTo(beNil())
+                    expect(subject.indexPath(forItem: postItem)).notTo(beNil())
                 }
 
                 it("returns nil when cell doesn't exist") {
-                    let anyItem = StreamCellItem(jsonable: ElloComment.stub([:]), type: .seeMoreComments)
-                    expect(subject.indexPathForItem(anyItem)).to(beNil())
-                }
-
-                it("returns nil when cell is hidden") {
-                    subject.streamFilter = { postItem in return false }
-                    expect(subject.indexPathForItem(postItem)).to(beNil())
+                    let anyItem = StreamCellItem(type: .seeMoreComments)
+                    expect(subject.indexPath(forItem: anyItem)).to(beNil())
                 }
 
                 it("returns the correct indexPath for same StreamCellItem Placeholder Types") {
@@ -263,22 +231,26 @@ class StreamDataSourceSpec: QuickSpec {
                     subject.removeAllCellItems()
                     subject.appendStreamCellItems([testItem])
 
-                    expect(subject.indexPathForItem(testItem2)?.item) == 0
+                    // this is actually a test of StreamCellItem.==, but since
+                    // we don't have StreamCellItemSpec.swift, this is as good a
+                    // place as any to test it.
+                    let item = subject.indexPath(forItem: testItem2)?.item
+                    expect(item) == 0
                 }
 
-                it("returns nil for same StreamCellItem Placeholder Types that are not the same") {
+                it("returns nil for StreamCellItem placeholders that are not the same placeholderType") {
                     let testItem = StreamCellItem(type: .placeholder)
                     testItem.placeholderType = .postHeader
                     let testItem2 = StreamCellItem(type: .placeholder)
                     testItem2.placeholderType = .categoryList
-                    subject.removeAllCellItems()
+
                     subject.appendStreamCellItems([testItem])
 
-                    expect(subject.indexPathForItem(testItem2)).to(beNil())
+                    expect(subject.indexPath(forItem: testItem2)).to(beNil())
                 }
             }
 
-            describe("indpexPathsForPlaceholderType(_:)") {
+            describe("indexPaths(forPlaceholderType:)") {
 
                 beforeEach {
                     let user = User.stub([:])
@@ -286,15 +258,13 @@ class StreamDataSourceSpec: QuickSpec {
                     let profileHeaderItems = [
                         StreamCellItem(jsonable: user, type: .profileHeader, placeholderType: .profileHeader),
                         StreamCellItem(jsonable: user, type: .fullWidthSpacer(height: 5), placeholderType: .profileHeader),
-                        ]
+                    ]
 
                     let postItems = [
                         StreamCellItem(type: .streamHeader, placeholderType: .streamPosts),
                         StreamCellItem(type: .streamFooter, placeholderType: .streamPosts),
-                        ]
+                    ]
 
-
-                    subject.removeAllCellItems()
                     subject.appendStreamCellItems(profileHeaderItems + postItems)
                 }
 
@@ -313,7 +283,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-            describe("postForIndexPath(_:)") {
+            describe("post(at:)") {
 
                 beforeEach {
                     let cellItems = StreamCellItemParser().parse([Post.stub([:])], streamKind: .following)
@@ -321,15 +291,15 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns a post") {
-                    expect(subject.postForIndexPath(indexPath0)).to(beAKindOf(Post.self))
+                    expect(subject.post(at: indexPath0)).to(beAKindOf(Post.self))
                 }
 
                 it("returns nil when out of bounds") {
-                    expect(subject.postForIndexPath(indexPathOutOfBounds)).to(beNil())
+                    expect(subject.post(at: indexPathOutOfBounds)).to(beNil())
                 }
 
                 it("returns nil when invalid section") {
-                    expect(subject.postForIndexPath(indexPathInvalidSection)).to(beNil())
+                    expect(subject.post(at: indexPathInvalidSection)).to(beNil())
                 }
             }
 
@@ -359,7 +329,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-            describe("commentForIndexPath(_:)") {
+            describe("comment(at:)") {
 
                 beforeEach {
                     let cellItems = StreamCellItemParser().parse([ElloComment.stub([:])], streamKind: .following)
@@ -367,15 +337,15 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns a comment") {
-                    expect(subject.commentForIndexPath(indexPath0)).to(beAKindOf(ElloComment.self))
+                    expect(subject.comment(at: indexPath0)).to(beAKindOf(ElloComment.self))
                 }
 
                 it("returns nil when out of bounds") {
-                    expect(subject.commentForIndexPath(indexPathOutOfBounds)).to(beNil())
+                    expect(subject.comment(at: indexPathOutOfBounds)).to(beNil())
                 }
 
                 it("returns nil when invalid section") {
-                    expect(subject.commentForIndexPath(indexPathInvalidSection)).to(beNil())
+                    expect(subject.comment(at: indexPathInvalidSection)).to(beNil())
                 }
             }
 
@@ -391,7 +361,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns an array of StreamCellItems") {
-                    let post = subject.postForIndexPath(indexPath0)!
+                    let post = subject.post(at: indexPath0)!
                     let items = subject.cellItems(for: post)
                     expect(items.count) == 4
                     for item in subject.visibleCellItems {
@@ -415,7 +385,7 @@ class StreamDataSourceSpec: QuickSpec {
 
                 it("does not return cell items for other posts") {
                     let lastItem = subject.visibleCellItems.count - 1
-                    let post = subject.postForIndexPath(IndexPath(item: lastItem, section: 0))!
+                    let post = subject.post(at: IndexPath(item: lastItem, section: 0))!
                     let items = subject.cellItems(for: post)
                     expect(post.id) == "777"
                     expect(items.count) == 4
@@ -538,7 +508,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns an array of comment index paths") {
-                    let post = subject.postForIndexPath(indexPath0)
+                    let post = subject.post(at: indexPath0)
                     let indexPaths = subject.commentIndexPaths(forPost: post!)
 
                     expect(indexPaths.count) == 5
@@ -550,7 +520,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("does not return index paths for comments from another post") {
-                    let post = subject.postForIndexPath(IndexPath(item: 9, section: 0))
+                    let post = subject.post(at: IndexPath(item: 9, section: 0))
                     let indexPaths = subject.commentIndexPaths(forPost: post!)
 
                     expect(indexPaths.count) == 2
@@ -559,7 +529,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns an array of comment index paths when collapsed") {
-                    let post = subject.postForIndexPath(IndexPath(item: 16, section: 0))
+                    let post = subject.post(at: IndexPath(item: 16, section: 0))
                     let indexPaths = subject.commentIndexPaths(forPost: post!)
 
                     expect(indexPaths.count) == 3
@@ -576,7 +546,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns the index path of the footer associated with this post") {
-                    let post = subject.postForIndexPath(indexPath0)
+                    let post = subject.post(at: indexPath0)
                     let indexPath = subject.footerIndexPath(forPost: post!)
 
                     expect(indexPath!.item) == 2
@@ -618,7 +588,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-            describe("modifyItems(_:change:collectionView:)") {
+            describe("modifyItems(_:change:streamViewController:)") {
 
                 context("with comments") {
 
@@ -632,43 +602,48 @@ class StreamDataSourceSpec: QuickSpec {
                             cellItems = cellItems + commentButtonCellItem + commentCellItems
                         }
                         subject.appendStreamCellItems(cellItems)
-                        vc.collectionView.reloadData()
                     }
 
-                    describe(".Create") {
+                    describe(".create") {
 
                         it("inserts the new comment") {
                             stubCommentCellItems(true)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 7
-                            subject.modifyItems(ElloComment.stub(["id": "new_comment", "parentPostId": "456"]), change: .create, collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
-                            expect(subject.commentForIndexPath(IndexPath(item: 5, section: 0))!.id) == "new_comment"
+                            expect(subject.allStreamCellItems.count) == 7
+                            streamViewController.performDataReload()
+
+                            subject.modifyItems(ElloComment.stub(["id": "new_comment", "parentPostId": "456"]), change: .create, streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 9
+                            expect(subject.comment(at: IndexPath(item: 5, section: 0))!.id) == "new_comment"
                         }
 
                         it("doesn't insert the new comment") {
                             stubCommentCellItems(false)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 4
-                            subject.modifyItems(ElloComment.stub(["id": "new_comment", "parentPostId": "456"]), change: .create, collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 4
+                            expect(subject.allStreamCellItems.count) == 4
+                            subject.modifyItems(ElloComment.stub(["id": "new_comment", "parentPostId": "456"]), change: .create, streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 4
                         }
 
                     }
 
-                    describe(".Delete") {
+                    describe(".delete") {
 
                         it("removes the deleted comment") {
                             stubCommentCellItems(true)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 7
-                            subject.modifyItems(ElloComment.stub(["id": "111", "parentPostId": "456"]), change: .delete, collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 5
+                            expect(subject.allStreamCellItems.count) == 7
+                            streamViewController.performDataReload()
+
+                            subject.modifyItems(ElloComment.stub(["id": "111", "parentPostId": "456"]), change: .delete, streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 5
 
                         }
 
                         it("doesn't remove the deleted comment") {
                             stubCommentCellItems(false)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 4
-                            subject.modifyItems(ElloComment.stub(["id": "111", "parentPostId": "456"]), change: .delete, collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 4
+                            expect(subject.allStreamCellItems.count) == 4
+                            streamViewController.performDataReload()
+
+                            subject.modifyItems(ElloComment.stub(["id": "111", "parentPostId": "456"]), change: .delete, streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 4
                         }
 
                     }
@@ -689,19 +664,20 @@ class StreamDataSourceSpec: QuickSpec {
 
                         let cellItems = StreamCellItemParser().parse(posts, streamKind: .following)
                         subject.appendStreamCellItems(cellItems)
-                        vc.collectionView.reloadData()
                     }
 
-                    describe(".Create") {
+                    describe(".create") {
 
                         context("StreamKind.following") {
 
                             it("inserts the new post at 1, 0") {
                                 subject.streamKind = .following
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, collectionView: fakeCollectionView)
-                                expect(subject.postForIndexPath(indexPath1)!.id) == "new_post"
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 24
+                                expect(subject.allStreamCellItems.count) == 20
+                                streamViewController.performDataReload()
+
+                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, streamViewController: streamViewController)
+                                expect(subject.post(at: indexPath1)!.id) == "new_post"
+                                expect(subject.allStreamCellItems.count) == 24
                             }
 
                         }
@@ -712,11 +688,13 @@ class StreamDataSourceSpec: QuickSpec {
                                 let currentUser = User.stub([:])
                                 subject.currentUser = currentUser
                                 subject.streamKind = .userStream(userParam: currentUser.id)
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, collectionView: fakeCollectionView)
-                                expect(subject.postForIndexPath(indexPath0)!.id) == "1"
-                                expect(subject.postForIndexPath(IndexPath(item: 4, section: 0))!.id) == "new_post"
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 24
+                                expect(subject.allStreamCellItems.count) == 20
+                                streamViewController.performDataReload()
+
+                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, streamViewController: streamViewController)
+                                expect(subject.post(at: indexPath0)!.id) == "1"
+                                expect(subject.post(at: IndexPath(item: 4, section: 0))!.id) == "new_post"
+                                expect(subject.allStreamCellItems.count) == 24
                             }
 
                         }
@@ -726,76 +704,81 @@ class StreamDataSourceSpec: QuickSpec {
                             it("inserts the new post at 4, 0") {
                                 subject.currentUser = User.stub(["id": "user-id-here"])
                                 subject.streamKind = .userStream(userParam: "user-id-here")
+                                expect(subject.allStreamCellItems.count) == 20
+                                streamViewController.performDataReload()
 
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
+                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, streamViewController: streamViewController)
 
-                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, collectionView: fakeCollectionView)
-
-                                expect(subject.postForIndexPath(indexPath0)!.id) == "1"
-                                expect(subject.postForIndexPath(IndexPath(item: 4, section: 0))!.id) == "new_post"
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 24
+                                expect(subject.post(at: indexPath0)!.id) == "1"
+                                expect(subject.post(at: IndexPath(item: 4, section: 0))!.id) == "new_post"
+                                expect(subject.allStreamCellItems.count) == 24
                             }
 
                             it("does not insert a post in other user's profiles") {
                                 subject.currentUser = User.stub(["id": "not-current-user-id-here"])
                                 subject.streamKind = .userStream(userParam: "user-id-here")
+                                expect(subject.allStreamCellItems.count) == 20
+                                streamViewController.performDataReload()
 
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-
-                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, collectionView: fakeCollectionView)
-
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
+                                subject.modifyItems(Post.stub(["id": "new_post"]), change: .create, streamViewController: streamViewController)
+                                expect(subject.allStreamCellItems.count) == 20
                             }
                         }
 
                         context("StreamKind.loves") {
 
                             it("adds the newly loved post") {
-                                subject.streamKind = StreamKind.simpleStream(endpoint: ElloAPI.loves(userId: "fake-id"), title: "Loves")
+                                subject.streamKind = .simpleStream(endpoint: .loves(userId: "fake-id"), title: "Loves")
                                 let love: Love = stub(["id": "love1", "postId": "post1"])
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
+                                expect(subject.allStreamCellItems.count) == 20
+                                streamViewController.performDataReload()
 
-                                subject.modifyItems(love, change: .create, collectionView: fakeCollectionView)
-
-                                expect(subject.postForIndexPath(indexPath1)!.id) == "post1"
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 24
+                                subject.modifyItems(love, change: .create, streamViewController: streamViewController)
+                                expect(subject.post(at: indexPath1)!.id) == "post1"
+                                expect(subject.allStreamCellItems.count) == 24
                             }
                         }
                     }
 
-                    describe(".Delete") {
+                    describe(".delete") {
 
                         beforeEach {
                             subject.streamKind = .following
                         }
 
                         it("removes the deleted post") {
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-                            subject.modifyItems(Post.stub(["id": "1"]), change: .delete, collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 16
+                            expect(subject.allStreamCellItems.count) == 20
+                            streamViewController.performDataReload()
+
+                            subject.modifyItems(Post.stub(["id": "1"]), change: .delete, streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 16
                         }
 
                         it("doesn't remove the deleted comment") {
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-                            subject.modifyItems(Post.stub(["id": "not-present"]), change: .delete, collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
+                            expect(subject.allStreamCellItems.count) == 20
+                            streamViewController.performDataReload()
+
+                            subject.modifyItems(Post.stub(["id": "not-present"]), change: .delete, streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 20
                         }
                     }
 
-                    describe(".Update") {
+                    describe(".update") {
 
                         beforeEach {
                             subject.streamKind = .following
                         }
 
                         it("updates the updated post") {
-                            expect(subject.postForIndexPath(IndexPath(item: 4, section: 0))!.commentsCount) == 5
-                            subject.modifyItems(Post.stub(["id": "2", "commentsCount": 9]), change: .update, collectionView: fakeCollectionView)
-                            expect(subject.postForIndexPath(IndexPath(item: 4, section: 0))!.commentsCount) == 9
+                            expect(subject.post(at: IndexPath(item: 4, section: 0))!.commentsCount) == 5
+                            streamViewController.performDataReload()
+
+                            subject.modifyItems(Post.stub(["id": "2", "commentsCount": 9]), change: .update, streamViewController: streamViewController)
+                            expect(subject.post(at: IndexPath(item: 4, section: 0))!.commentsCount) == 9
                         }
 
                         it("doesn't update the updated post") {
-                            subject.modifyItems(Post.stub(["id": "not-present", "commentsCount": 88]), change: .update, collectionView: fakeCollectionView)
+                            subject.modifyItems(Post.stub(["id": "not-present", "commentsCount": 88]), change: .update, streamViewController: streamViewController)
 
                             for item in subject.allStreamCellItems {
                                 // this check gets around the fact that there are spacers in posts
@@ -812,16 +795,18 @@ class StreamDataSourceSpec: QuickSpec {
                             }
 
                             it("removes the unloved post") {
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 20
-                                subject.modifyItems(Post.stub(["id": "2", "commentsCount": 9, "loved": false]), change: .update, collectionView: fakeCollectionView)
-                                expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 16
+                                expect(subject.allStreamCellItems.count) == 20
+                                streamViewController.performDataReload()
+
+                                subject.modifyItems(Post.stub(["id": "2", "commentsCount": 9, "loved": false]), change: .update, streamViewController: streamViewController)
+                                expect(subject.allStreamCellItems.count) == 16
                             }
                         }
                     }
                 }
             }
 
-            describe("modifyUserRelationshipItems(_:collectionView:)") {
+            describe("modifyUserRelationshipItems(_:streamViewController:)") {
 
                 let stubCellItems: (_ streamKind: StreamKind) -> Void = { streamKind in
                     let user1: User = stub(["id": "user1"])
@@ -843,7 +828,6 @@ class StreamDataSourceSpec: QuickSpec {
                     let cellItems = userCellItems + post1CellItems + post1CommentCellItems
                     subject.streamKind = streamKind
                     subject.appendStreamCellItems(cellItems)
-                    vc.collectionView.reloadData()
                 }
 
                 describe("blocking a user") {
@@ -851,26 +835,32 @@ class StreamDataSourceSpec: QuickSpec {
                     context("blocked user is the post author") {
                         it("removes blocked user, their post and all comments on that post") {
                             stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
-                            subject.modifyUserRelationshipItems(User.stub(["id": "user1", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 0
+                            expect(subject.allStreamCellItems.count) == 9
+                            streamViewController.performDataReload()
+
+                            subject.modifyUserRelationshipItems(User.stub(["id": "user1", "relationshipPriority": RelationshipPriority.block.rawValue]), streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 0
                         }
                     }
 
                     context("blocked user is not the post author") {
                         it("removes blocked user's comments") {
                             stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
-                            subject.modifyUserRelationshipItems(User.stub(["id": "user2", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
-                            expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 7
+                            expect(subject.allStreamCellItems.count) == 9
+                            streamViewController.performDataReload()
+
+                            subject.modifyUserRelationshipItems(User.stub(["id": "user2", "relationshipPriority": RelationshipPriority.block.rawValue]), streamViewController: streamViewController)
+                            expect(subject.allStreamCellItems.count) == 7
                         }
                     }
 
                     it("does not remove cells tied to other users") {
                         stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
-                        expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
-                        subject.modifyUserRelationshipItems(User.stub(["id": "unrelated-user", "relationshipPriority": RelationshipPriority.block.rawValue]), collectionView: fakeCollectionView)
-                        expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 9
+                        expect(subject.allStreamCellItems.count) == 9
+                        streamViewController.performDataReload()
+
+                        subject.modifyUserRelationshipItems(User.stub(["id": "unrelated-user", "relationshipPriority": RelationshipPriority.block.rawValue]), streamViewController: streamViewController)
+                        expect(subject.allStreamCellItems.count) == 9
                     }
 
                 }
@@ -882,19 +872,12 @@ class StreamDataSourceSpec: QuickSpec {
                         var user1 = subject.user(at: indexPath0)!
                         expect(user1.followersCount) == "stub-user-followers-count"
                         expect(user1.relationshipPriority.rawValue) == RelationshipPriority.none.rawValue
-                        subject.modifyUserRelationshipItems(User.stub(["id": "user1", "followersCount": "2", "followingCount": 2, "relationshipPriority": RelationshipPriority.following.rawValue]), collectionView: fakeCollectionView)
+                        streamViewController.performDataReload()
+
+                        subject.modifyUserRelationshipItems(User.stub(["id": "user1", "followersCount": "2", "followingCount": 2, "relationshipPriority": RelationshipPriority.following.rawValue]), streamViewController: streamViewController)
                         user1 = subject.user(at: indexPath0)!
                         expect(user1.followersCount) == "2"
                         expect(user1.relationshipPriority.rawValue) == RelationshipPriority.following.rawValue
-                    }
-
-                    xit("updates comments from that user") {
-                        // comments are not yet affected by User.RelationshipPriority changes
-                        // left intentionally empty for documentation
-                    }
-
-                    it("updates cells tied to that user") {
-
                     }
                 }
 
@@ -910,19 +893,20 @@ class StreamDataSourceSpec: QuickSpec {
                         let notificationCellItems = parser.parse([activity1, activity2], streamKind: streamKind)
                         subject.streamKind = streamKind
                         subject.appendStreamCellItems(notificationCellItems)
-                        vc.collectionView.reloadData()
                     }
 
                     it("clears out notifications from that user when on notifications") {
-                        expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 2
-                        subject.modifyUserRelationshipItems(User.stub(["id": "user1", "relationshipPriority": RelationshipPriority.mute.rawValue]), collectionView: fakeCollectionView)
-                        expect(subject.collectionView(vc.collectionView, numberOfItemsInSection: 0)) == 1
+                        expect(subject.allStreamCellItems.count) == 2
+                        streamViewController.performDataReload()
+
+                        subject.modifyUserRelationshipItems(User.stub(["id": "user1", "relationshipPriority": RelationshipPriority.mute.rawValue]), streamViewController: streamViewController)
+                        expect(subject.allStreamCellItems.count) == 1
                     }
                 }
 
             }
 
-            describe("modifyUserSettingsItems(_:collectionView:)") {
+            describe("modifyUserSettingsItems(_:streamViewController:)") {
 
                 let stubCellItems: (_ streamKind: StreamKind) -> Void = { streamKind in
                     let user1: User = stub(["id": "user1", "username": "sweet"])
@@ -937,7 +921,9 @@ class StreamDataSourceSpec: QuickSpec {
                     it("removes blocked user, their post and all comments on that post") {
                         stubCellItems(StreamKind.simpleStream(endpoint: ElloAPI.following, title: "some title"))
                         expect(subject.user(at: indexPath0)!.username) == "sweet"
-                        subject.modifyUserSettingsItems(User.stub(["id": "user1", "username": "sweetness"]), collectionView: fakeCollectionView)
+                        streamViewController.performDataReload()
+
+                        subject.modifyUserSettingsItems(User.stub(["id": "user1", "username": "sweetness"]), streamViewController: streamViewController)
                         expect(subject.user(at: indexPath0)!.username) == "sweetness"
                     }
                 }
@@ -980,7 +966,7 @@ class StreamDataSourceSpec: QuickSpec {
                     let indexPath = IndexPath(item: 1, section: 0)
                     subject.updateHeight(at: indexPath, height: 256)
 
-                    let cellItem = subject.visibleStreamCellItem(at: indexPath)
+                    let cellItem = subject.streamCellItem(at: indexPath)
                     expect(cellItem!.calculatedCellHeights.oneColumn!) == 256
                     expect(cellItem!.calculatedCellHeights.multiColumn!) == 256
                 }
@@ -993,27 +979,6 @@ class StreamDataSourceSpec: QuickSpec {
                 it("handles invalid section") {
                     expect(subject.updateHeight(at: indexPathInvalidSection, height: 256))
                         .notTo(raiseException())
-                }
-            }
-
-            describe("-heightForIndexPath:numberOfColumns") {
-                beforeEach {
-                    var items = [StreamCellItem]()
-                    items.append(StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment))
-
-                    subject.appendStreamCellItems(items)
-                }
-                it("returns the correct height") {
-                    expect(subject.heightForIndexPath(indexPath0, numberOfColumns: 1)) == 75.0
-                    expect(subject.heightForIndexPath(indexPath0, numberOfColumns: 2)) == 75.0
-                }
-
-                it("returns 0 when out of bounds") {
-                    expect(subject.heightForIndexPath(indexPathOutOfBounds, numberOfColumns: 0)) == 0
-                }
-
-                it("returns 0 when invalid section") {
-                    expect(subject.heightForIndexPath(indexPathInvalidSection, numberOfColumns: 0)) == 0
                 }
             }
 
@@ -1121,7 +1086,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-            describe("-visibleStreamCellItem:") {
+            describe("-streamCellItem:") {
 
                 beforeEach {
                     var items = [StreamCellItem]()
@@ -1131,29 +1096,13 @@ class StreamDataSourceSpec: QuickSpec {
                 }
 
                 it("returns the correct stream cell item") {
-                    let item = subject.visibleStreamCellItem(at: IndexPath(item: 0, section: 0))
+                    let item = subject.streamCellItem(at: IndexPath(item: 0, section: 0))
                     expect(item?.type.reuseIdentifier) == "StreamCreateCommentCell"
                 }
 
                 it("returns nil if indexpath does not exist") {
-                    let item = subject.visibleStreamCellItem(at: IndexPath(item: 50, section: 0))
+                    let item = subject.streamCellItem(at: IndexPath(item: 50, section: 0))
                     expect(item).to(beNil())
-                }
-
-                it("returns nil if a filter (returns false) is active") {
-                    subject.streamFilter = { _ in return false }
-                    let itemExists = subject.allStreamCellItems[0]
-                    expect(itemExists.type.reuseIdentifier) == "StreamCreateCommentCell"
-                    let itemHidden = subject.visibleStreamCellItem(at: IndexPath(item: 0, section: 0))
-                    expect(itemHidden).to(beNil())
-                }
-
-                it("returns item if a filter (returns true) is active") {
-                    subject.streamFilter = { _ in return true }
-                    let itemExists = subject.allStreamCellItems[0]
-                    expect(itemExists.type.reuseIdentifier) == "StreamCreateCommentCell"
-                    let itemHidden = subject.visibleStreamCellItem(at: IndexPath(item: 0, section: 0))
-                    expect(itemHidden?.type.reuseIdentifier) == "StreamCreateCommentCell"
                 }
             }
 
@@ -1192,8 +1141,8 @@ class StreamDataSourceSpec: QuickSpec {
                     let indexPathToToggle = IndexPath(item: 0, section: 0)
                     let indexPathNotToToggle = IndexPath(item: 4, section: 0)
 
-                    expect(postToToggle) == subject.postForIndexPath(indexPathToToggle)!
-                    expect(postNotToToggle) == subject.postForIndexPath(indexPathNotToToggle)!
+                    expect(postToToggle) == subject.post(at: indexPathToToggle)!
+                    expect(postNotToToggle) == subject.post(at: indexPathNotToToggle)!
 
                     expect(postToToggle.isCollapsed).to(beTrue())
                     expect(postNotToToggle.isCollapsed).to(beTrue())
@@ -1217,132 +1166,6 @@ class StreamDataSourceSpec: QuickSpec {
                             expect(item.state) == StreamCellState.collapsed
                         }
                     }
-                }
-            }
-
-            describe("-isFullWidth(at:)") {
-
-                beforeEach {
-                    let items = [
-                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment),
-                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .commentHeader)
-                    ]
-                    subject.appendStreamCellItems(items)
-                }
-
-                it("returns true for Full Width items") {
-                    let isFullWidth = subject.isFullWidth(at: indexPath0)
-                    expect(isFullWidth) == true
-                }
-
-                it("returns false for all other items") {
-                    let isFullWidth = subject.isFullWidth(at: indexPath1)
-                    expect(isFullWidth) == false
-                }
-
-                it("returns true when out of bounds") {
-                    expect(subject.isFullWidth(at: indexPathOutOfBounds)) == true
-                }
-
-                it("returns true when invalid section") {
-                    expect(subject.isFullWidth(at: indexPathInvalidSection)) == true
-                }
-
-            }
-
-            describe("-isTappable(at:)") {
-
-                beforeEach {
-                    let items = [
-                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment),
-                        StreamCellItem(jsonable: Notification.stub([:]), type: .notification),
-                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .commentHeader)
-                    ]
-                    subject.appendStreamCellItems(items)
-                }
-
-                it("returns true for Full Width items") {
-                    let isTappable = subject.isTappable(at: indexPath0)
-                    expect(isTappable) == true
-                }
-
-                it("returns true for Selectable items") {
-                    let isTappable = subject.isTappable(at: indexPath1)
-                    expect(isTappable) == true
-                }
-
-                it("returns false for all other items") {
-                    StreamKind.following.setIsGridView(false)
-                    let indexPath = IndexPath(item: 2, section: 0)
-                    let isTappable = subject.isTappable(at: indexPath)
-                    expect(isTappable) == false
-                }
-
-                it("returns false when out of bounds") {
-                    expect(subject.isTappable(at: indexPathOutOfBounds)) == false
-                }
-
-                it("returns false when invalid section") {
-                    expect(subject.isTappable(at: indexPathInvalidSection)) == false
-                }
-
-            }
-
-            describe("-group(at:)") {
-                var post: Post!
-                beforeEach {
-                    var items = [StreamCellItem]()
-                    let parser = StreamCellItemParser()
-                    post = Post.stub(["id": "666", "content": [TextRegion.stub([:])]])
-                    items += parser.parse([post], streamKind: .following)
-                    items.append(StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: User.stub([:])), type: .createComment))
-                    items += parser.parse([ElloComment.stub(["parentPostId": "666"]), ElloComment.stub(["parentPostId": "666"])], streamKind: .following)
-
-                    subject.appendStreamCellItems(items)
-                }
-
-                it("returns the same value for a post and it's comments") {
-                    for (index, item) in subject.visibleCellItems.enumerated() {
-                        let indexPath = IndexPath(item: index, section: 0)
-                        let groupId = subject.group(at: indexPath)
-                        if item.jsonable is Post || item.jsonable is ElloComment {
-                            expect(groupId) == post.groupId
-                        }
-                    }
-                }
-
-                it("does not return the same value for two different posts") {
-                    let firstPostIndexPath = IndexPath(item: 0, section: 0)
-                    let secondPostIndexPath = IndexPath(item: subject.visibleCellItems.count, section: 0)
-
-                    let parser = StreamCellItemParser()
-                    let post2 = Post.stub(["id": "555"])
-                    let items = parser.parse([post2], streamKind: .following)
-                    subject.appendStreamCellItems(items)
-
-                    let firstGroupId = subject.group(at: firstPostIndexPath)
-                    let secondGroupId = subject.group(at: secondPostIndexPath)
-
-                    expect(firstGroupId) != secondGroupId
-                }
-
-                it("returns nil if indexPath out of bounds") {
-                    expect(subject.group(at: indexPathOutOfBounds)).to(beNil())
-                }
-
-                it("returns nil if invalid section") {
-                    expect(subject.group(at: indexPathInvalidSection)).to(beNil())
-                }
-
-                it("returns nil if StreamCellItem's jsonable is not Groupable") {
-                    let lastIndexPath = IndexPath(item: subject.visibleCellItems.count, section: 0)
-                    let nonGroupable: Asset = stub(["id": "123"])
-
-                    let item = StreamCellItem(jsonable: nonGroupable, type: .image(data: ImageRegion.stub([:])))
-
-                    subject.appendStreamCellItems([item])
-
-                    expect(subject.group(at: lastIndexPath)).to(beNil())
                 }
             }
 

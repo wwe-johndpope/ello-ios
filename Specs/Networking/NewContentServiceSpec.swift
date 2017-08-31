@@ -84,19 +84,6 @@ class NewContentServiceSpec: QuickSpec {
                     }
                 }
             }
-
-            describe("startPolling()") {
-                // difficult to unit test, need the ability to force it to run synchronously
-            }
-
-            describe("stopPolling()") {
-                // difficult to unit test, need the ability to force it to run synchronously
-            }
-
-            describe("checkForNewContent()") {
-                // difficult to unit test, need the ability to stub response config, currently
-                // there is no mechanism for sutbbing a status code
-            }
         }
     }
 }

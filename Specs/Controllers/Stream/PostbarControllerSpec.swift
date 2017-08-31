@@ -51,20 +51,12 @@ class PostbarControllerSpec: QuickSpec {
         let streamKind: StreamKind = .postDetail(postParam: "post")
 
         beforeEach {
-            let dataSource = StreamDataSource(streamKind: streamKind)
-            dataSource.textSizeCalculator = FakeStreamTextCellSizeCalculator()
-            dataSource.notificationSizeCalculator = FakeStreamNotificationCellSizeCalculator()
-            dataSource.announcementSizeCalculator = FakeAnnouncementCellSizeCalculator()
-            dataSource.profileHeaderSizeCalculator = FakeProfileHeaderCellSizeCalculator()
+            let dataSource = CollectionViewDataSource(streamKind: streamKind)
 
             controller = StreamViewController()
             controller.streamKind = streamKind
-            controller.dataSource = dataSource
-            controller.collectionView.dataSource = dataSource
-            collectionView = FakeCollectionView(frame: .zero, collectionViewLayout: controller.collectionView.collectionViewLayout)
 
-            subject = PostbarController(collectionView: collectionView, dataSource: dataSource)
-            subject.currentUser = currentUser
+            subject = PostbarController(streamViewController: controller, collectionViewDataSource: dataSource)
             responder = ReplyAllCreatePostResponder()
             subject.responderChainable = ResponderChainableController(
                 controller: controller,

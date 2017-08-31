@@ -16,11 +16,11 @@ class StreamDataSource: ElloDataSource {
     // these are the items assigned from the parent controller
     var allStreamCellItems: [StreamCellItem] = []
 
-    // if a filter is added or removed, we update the items
     fileprivate var streamFilter: StreamFilter?
-
-    // if a filter is added or removed, we update the items
-    var streamCollapsedFilter: StreamFilter?
+    fileprivate var streamCollapsedFilter: StreamFilter? = { item in
+        guard item.type.isCollapsable, item.jsonable is Post else { return true }
+        return item.state != .collapsed
+    }
 
     var textSizeCalculator = StreamTextCellSizeCalculator()
     var notificationSizeCalculator = StreamNotificationCellSizeCalculator()
@@ -31,6 +31,74 @@ class StreamDataSource: ElloDataSource {
     var editorialDownloader = EditorialDownloader()
     var artistInviteCalculator = ArtistInviteCellSizeCalculator()
 
+    // MARK: Adding items
+
+    @discardableResult
+    func appendStreamCellItems(_ items: [StreamCellItem]) -> [IndexPath] {
+        let startIndex = visibleCellItems.count
+        self.allStreamCellItems += items
+        self.updateFilteredItems()
+        let lastIndex = visibleCellItems.count
+
+        return (startIndex ..< lastIndex).map { IndexPath(item: $0, section: 0) }
+    }
+
+    @discardableResult
+    func replacePlaceholder(type placeholderType: StreamCellType.PlaceholderType, items cellItems: [StreamCellItem])
+        -> (deleted: [IndexPath], inserted: [IndexPath])
+    {
+        guard cellItems.count > 0 else {
+            return replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)])
+        }
+
+        for item in cellItems {
+            item.placeholderType = placeholderType
+        }
+
+        let deletedIndexPaths = indexPaths(forPlaceholderType: placeholderType)
+        guard deletedIndexPaths.count > 0 else { return (deleted: [], inserted: []) }
+
+        removeItems(at: deletedIndexPaths)
+        let insertedIndexPaths = insertStreamCellItems(cellItems, startingIndexPath: deletedIndexPaths[0])
+        return (deleted: deletedIndexPaths, inserted: insertedIndexPaths)
+    }
+
+    @discardableResult
+    func insertStreamCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath) -> [IndexPath] {
+        // startingIndex represents the filtered index,
+        // arrayIndex is the allStreamCellItems index
+        let startingIndex = startingIndexPath.item
+        var arrayIndex = startingIndexPath.item
+
+        if let item = streamCellItem(at: startingIndexPath) {
+            if let foundIndex = allStreamCellItems.index(of: item) {
+                arrayIndex = foundIndex
+            }
+        }
+        else if arrayIndex == visibleCellItems.count {
+            arrayIndex = allStreamCellItems.count
+        }
+
+        var indexPaths: [IndexPath] = []
+
+        for (index, cellItem) in cellItems.enumerated() {
+            indexPaths.append(IndexPath(item: startingIndex + index, section: startingIndexPath.section))
+
+            let atIndex = arrayIndex + index
+            if atIndex <= allStreamCellItems.count {
+                allStreamCellItems.insert(cellItem, at: atIndex)
+            }
+            else {
+                allStreamCellItems.append(cellItem)
+            }
+        }
+
+        updateFilteredItems()
+        return indexPaths
+    }
+
+    // MARK: retrieving/searching for items
+
     func hasCellItems(for placeholderType: StreamCellType.PlaceholderType) -> Bool {
         // don't filter on 'type', because we need to check that the number of
         // items is 1 or 0, and if it's 1, then we need to see if its type is
@@ -38,14 +106,14 @@ class StreamDataSource: ElloDataSource {
         let items = allStreamCellItems.filter {
             $0.placeholderType == placeholderType
         }
-        if let item = items.first, items.count == 1 {
-            switch item.type {
-            case .placeholder:
-                return false
-            default:
-                return true
-            }
+
+        if let item = items.first,
+            items.count == 1,
+            case .placeholder = item.type
+        {
+            return false
         }
+
         return items.count > 0
     }
 
@@ -163,14 +231,29 @@ class StreamDataSource: ElloDataSource {
         return nil
     }
 
+    func clientSideLoveInsertIndexPath() -> IndexPath? {
+        switch streamKind {
+        case let .simpleStream(endpoint, _):
+            switch endpoint {
+            case .loves:
+                return IndexPath(item: 1, section: 0)
+            default:
+                break
+            }
+        default:
+            break
+        }
+        return nil
+    }
+
     func modifyItems(_ jsonable: JSONAble, change: ContentChange, streamViewController: StreamViewController) {
         // get items that match id and type -> [IndexPath]
         // based on change decide to update/remove those items
         switch change {
         case .create:
-            if let love = jsonable as? Love {
-                guard let post = love.post, let user = love.user,
-                    streamKind.isDetail(post: post) else { return }
+            // in post detail, show/hide the love drawer
+            if let love = jsonable as? Love, love.post.map({ streamKind.isDetail(post: $0) }) == true {
+                guard let post = love.post, let user = love.user else { return }
 
                 if hasCellItems(for: .postLovers) {
                     for (index, item) in visibleCellItems.enumerated() {
@@ -224,6 +307,9 @@ class StreamDataSource: ElloDataSource {
                 // else if post, add new post cells
                 else if jsonable is Post {
                     indexPath = clientSidePostInsertIndexPath()
+                }
+                else if jsonable is Love {
+                    indexPath = clientSideLoveInsertIndexPath()
                 }
 
                 if let indexPath = indexPath {
@@ -498,72 +584,6 @@ class StreamDataSource: ElloDataSource {
         }
         return (indexPaths, items)
     }
-
-    // MARK: Adding items
-
-    @discardableResult
-    func appendStreamCellItems(_ items: [StreamCellItem]) -> [IndexPath] {
-        let startIndex = visibleCellItems.count
-        self.allStreamCellItems += items
-        self.updateFilteredItems()
-        let lastIndex = visibleCellItems.count
-
-        return (startIndex ..< lastIndex).map { IndexPath(item: $0, section: 0) }
-    }
-
-    @discardableResult
-    func replacePlaceholder(type placeholderType: StreamCellType.PlaceholderType, items allStreamCellItems: [StreamCellItem])
-        -> (deleted: [IndexPath], inserted: [IndexPath])
-    {
-        guard allStreamCellItems.count > 0 else {
-            return replacePlaceholder(type: placeholderType, items: [StreamCellItem(type: .placeholder, placeholderType: placeholderType)])
-        }
-
-        for item in allStreamCellItems {
-            item.placeholderType = placeholderType
-        }
-
-        let deletedIndexPaths = indexPaths(forPlaceholderType: placeholderType)
-        guard deletedIndexPaths.count > 0 else { return (deleted: [], inserted: []) }
-
-        removeItems(at: deletedIndexPaths)
-        let insertedIndexPaths = insertStreamCellItems(allStreamCellItems, startingIndexPath: deletedIndexPaths[0])
-        return (deleted: deletedIndexPaths, inserted: insertedIndexPaths)
-    }
-
-    @discardableResult
-    func insertStreamCellItems(_ cellItems: [StreamCellItem], startingIndexPath: IndexPath) -> [IndexPath] {
-        // startingIndex represents the filtered index,
-        // arrayIndex is the allStreamCellItems index
-        let startingIndex = startingIndexPath.item
-        var arrayIndex = startingIndexPath.item
-
-        if let item = streamCellItem(at: startingIndexPath) {
-            if let foundIndex = allStreamCellItems.index(of: item) {
-                arrayIndex = foundIndex
-            }
-        }
-        else if arrayIndex == visibleCellItems.count {
-            arrayIndex = allStreamCellItems.count
-        }
-
-        var indexPaths: [IndexPath] = []
-
-        for (index, cellItem) in cellItems.enumerated() {
-            indexPaths.append(IndexPath(item: startingIndex + index, section: startingIndexPath.section))
-
-            let atIndex = arrayIndex + index
-            if atIndex <= allStreamCellItems.count {
-                allStreamCellItems.insert(cellItem, at: atIndex)
-            }
-            else {
-                allStreamCellItems.append(cellItem)
-            }
-        }
-
-        updateFilteredItems()
-        return indexPaths
-    }
 }
 
 extension StreamDataSource {
@@ -650,16 +670,10 @@ extension StreamDataSource {
     }
 
     fileprivate func temporarilyUnfilter(_ block: Block) {
-        let cachedStreamFilter = streamFilter
-        let cachedStreamCollapsedFilter = streamCollapsedFilter
-        streamFilter = nil
-        streamCollapsedFilter = nil
         visibleCellItems = allStreamCellItems
 
         block()
 
-        streamFilter = cachedStreamFilter
-        streamCollapsedFilter = cachedStreamCollapsedFilter
         updateFilteredItems()
     }
 

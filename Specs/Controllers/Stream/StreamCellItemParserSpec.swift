@@ -19,39 +19,95 @@ class StreamCellItemParserSpec: QuickSpec {
 
             describe("-parse(_:streamKind:)") {
 
-                it("returns an empty array if an empty array of Posts is passed in") {
-                    let posts = [Post]()
-                    expect(subject.parse(posts, streamKind: .following).count) == 0
-                }
+                it("sets collapsed and non collapsed state") {
+                    let posts: [Post] = (1 ... 10).map { index in
+                        return Post.stub([
+                            "contentWarning": index % 2 == 0 ? "" : "NSFW",
+                            ])
+                    }
 
-                it("returns an empty array if an empty array of Comments is passed in") {
-                    let comments = [ElloComment]()
-                    expect(subject.parse(comments, streamKind: .following).count) == 0
-                }
+                    let cellItems = StreamCellItemParser().parse(posts, streamKind: .following)
+                    for item in cellItems {
+                        guard let post = item.jsonable as? Post else { fail("this should be a post") ; break }
 
-                it("returns an array with the proper count of stream cell items when parsing friends.json's posts") {
-                    var cellItems = [StreamCellItem]()
-                    StreamService().loadStream(endpoint: .following)
-                        .thenFinally { response in
-                            if case let .jsonables(jsonables, _) = response {
-                                cellItems = subject.parse(jsonables, streamKind: .following)
-                            }
+                        if item.type == .streamFooter {
+                            expect(item.state) == StreamCellState.none
                         }
-                        .catch { _ in }
-                    expect(cellItems.count) == 8
+                        else if post.isCollapsed {
+                            expect(item.state) == StreamCellState.collapsed
+                        }
+                        else {
+                            expect(item.state) == StreamCellState.expanded
+                        }
+                    }
                 }
 
-                it("doesn't include user's own post headers on a profile stream") {
-                    var cellItems = [StreamCellItem]()
-                    StreamService().loadStream(endpoint: .following)
-                        .thenFinally { response in
-                            if case let .jsonables(jsonables, _) = response {
-                                cellItems = subject.parse(jsonables, streamKind: .userStream(userParam: "42"))
-                            }
-                        }
-                        .catch { _ in }
-                    let header = cellItems.find { $0.type == .streamHeader }
-                    expect(header).to(beNil())
+                context("parsing a post") {
+                    let zeroPosts = [Post]()
+                    let twoPosts = [
+                        Post.stub(["content": [TextRegion.stub(["content": "<p>post 1</p>"])]]),
+                        Post.stub(["content": [TextRegion.stub(["content": "<p>post 2</p>"])]]),
+                    ]
+                    let oneRepost = [
+                        Post.stub([
+                            "content": [TextRegion](),
+                            "repostContent": [TextRegion.stub(["content": "<p>repost</p>"])],
+                            "summary": [TextRegion.stub(["content": "<p>repost summary</p>"])],
+                            ]),
+                    ]
+
+                    it("returns an empty array if an empty array of Posts is passed in") {
+                        let cellItems = subject.parse(zeroPosts, streamKind: .following)
+                        expect(cellItems.count) == 0
+                    }
+
+                    it("normal post") {
+                        let cellItems = subject.parse(twoPosts, streamKind: .following)
+                        let actualTypes = cellItems.map { $0.type }
+                        let expectedTypes: [StreamCellType] = [
+                            .streamHeader,
+                            .text(data: TextRegion(content: "<p>post 1</p>")),
+                            .streamFooter,
+                            .spacer(height: 10),
+                            .streamHeader,
+                            .text(data: TextRegion(content: "<p>post 2</p>")),
+                            .streamFooter,
+                            .spacer(height: 10),
+                        ]
+                        expect(actualTypes) == expectedTypes
+                    }
+
+                    it("repost in list view") {
+                        StreamKind.following.setIsGridView(false)
+                        let cellItems = subject.parse(oneRepost, streamKind: .following)
+                        let actualTypes = cellItems.map { $0.type }
+                        let expectedTypes: [StreamCellType] = [
+                            .streamHeader,
+                            .text(data: TextRegion(content: "<p>repost</p>")),
+                            .streamFooter,
+                            .spacer(height: 10),
+                        ]
+                        expect(actualTypes) == expectedTypes
+                    }
+
+                    it("repost in grid view") {
+                        StreamKind.following.setIsGridView(true)
+                        let cellItems = subject.parse(oneRepost, streamKind: .following)
+                        let actualTypes = cellItems.map { $0.type }
+                        let expectedTypes: [StreamCellType] = [
+                            .streamHeader,
+                            .text(data: TextRegion(content: "<p>repost summary</p>")),
+                            .streamFooter,
+                            .spacer(height: 10),
+                        ]
+                        expect(actualTypes) == expectedTypes
+                    }
+
+                    it("doesn't include user's own post headers on a profile stream") {
+                        let cellItems = subject.parse(twoPosts, streamKind: .userStream(userParam: "42"))
+                        let header = cellItems.find { $0.type == .streamHeader }
+                        expect(header).to(beNil())
+                    }
                 }
 
                 it("returns an empty array if an empty array of Activities is passed in") {
