@@ -48,15 +48,21 @@ class PostbarControllerSpec: QuickSpec {
             ])
         var controller: StreamViewController!
         var collectionView: FakeCollectionView!
+        var collectionViewDataSource: CollectionViewDataSource!
         let streamKind: StreamKind = .postDetail(postParam: "post")
 
         beforeEach {
-            let dataSource = CollectionViewDataSource(streamKind: streamKind)
+            collectionViewDataSource = CollectionViewDataSource(streamKind: streamKind)
 
             controller = StreamViewController()
+            controller.currentUser = currentUser
             controller.streamKind = streamKind
 
-            subject = PostbarController(streamViewController: controller, collectionViewDataSource: dataSource)
+            collectionView = FakeCollectionView(frame: .zero, collectionViewLayout: StreamCollectionViewLayout())
+
+            subject = PostbarController(streamViewController: controller, collectionViewDataSource: collectionViewDataSource)
+            subject.collectionView = collectionView
+
             responder = ReplyAllCreatePostResponder()
             subject.responderChainable = ResponderChainableController(
                 controller: controller,
@@ -78,9 +84,10 @@ class PostbarControllerSpec: QuickSpec {
                     var postCellItems = parser.parse([post], streamKind: streamKind)
                     let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
                     postCellItems += [StreamCellItem(jsonable: newComment, type: .createComment)]
-                    controller.dataSource.appendStreamCellItems(postCellItems)
+                    collectionViewDataSource.visibleCellItems = postCellItems
                     collectionView.fakeIndexPath = IndexPath(item: postCellItems.count - 1, section: 0)
                 }
+
                 context("tapping replyToAll") {
                     it("opens an OmnibarViewController with usernames set") {
                         subject.replyToAllButtonTapped(cell)
@@ -101,7 +108,7 @@ class PostbarControllerSpec: QuickSpec {
                     var postCellItems = parser.parse([post], streamKind: streamKind)
                     let newComment = ElloComment.newCommentForPost(post, currentUser: currentUser)
                     postCellItems += [StreamCellItem(jsonable: newComment, type: .createComment)]
-                    controller.dataSource.appendStreamCellItems(postCellItems)
+                    collectionViewDataSource.visibleCellItems = postCellItems
                     collectionView.fakeIndexPath = IndexPath(item: postCellItems.count - 1, section: 0)
                 }
 
@@ -157,10 +164,7 @@ class PostbarControllerSpec: QuickSpec {
                     ])
                     let parser = StreamCellItemParser()
                     let postCellItems = parser.parse([post], streamKind: streamKind)
-                    controller.dataSource.calculateCellItems(postCellItems, withWidth: 320.0) {
-                        controller.dataSource.appendStreamCellItems(postCellItems)
-                        controller.collectionView.reloadData()
-                    }
+                    collectionViewDataSource.visibleCellItems = postCellItems
                 }
 
                 beforeEach {
@@ -172,10 +176,10 @@ class PostbarControllerSpec: QuickSpec {
                         stubCellItems(loved: false)
                         let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
 
-                        var lovesCount = 0
+                        var lovesCount: Int?
                         var contentChange: ContentChange?
                         let observer = NotificationObserver(notification: PostChangedNotification) { (post, change) in
-                            lovesCount = post.lovesCount!
+                            lovesCount = post.lovesCount
                             contentChange = change
                         }
                         subject.lovesButtonTapped(cell)
@@ -190,9 +194,9 @@ class PostbarControllerSpec: QuickSpec {
                         let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
 
                         let prevLovesCount = currentUser.lovesCount!
-                        var lovesCount = 0
+                        var lovesCount: Int?
                         let observer = NotificationObserver(notification: CurrentUserChangedNotification) { (user) in
-                            lovesCount = user.lovesCount!
+                            lovesCount = user.lovesCount
                         }
                         subject.lovesButtonTapped(cell)
                         observer.removeObserver()
@@ -206,10 +210,10 @@ class PostbarControllerSpec: QuickSpec {
                         stubCellItems(loved: true)
                         let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
 
-                        var lovesCount = 0
+                        var lovesCount: Int?
                         var contentChange: ContentChange?
                         let observer = NotificationObserver(notification: PostChangedNotification) { (post, change) in
-                            lovesCount = post.lovesCount!
+                            lovesCount = post.lovesCount
                             contentChange = change
                         }
                         subject.lovesButtonTapped(cell)
@@ -239,10 +243,10 @@ class PostbarControllerSpec: QuickSpec {
                     it("loves the post") {
                         stubCellItems(loved: false)
 
-                        var lovesCount = 0
+                        var lovesCount: Int?
                         var contentChange: ContentChange?
                         let observer = NotificationObserver(notification: PostChangedNotification) { (post, change) in
-                            lovesCount = post.lovesCount!
+                            lovesCount = post.lovesCount
                             contentChange = change
                         }
                         subject.toggleLove(nil, post: post, via: "")
@@ -256,9 +260,9 @@ class PostbarControllerSpec: QuickSpec {
                         stubCellItems(loved: false)
 
                         let prevLovesCount = currentUser.lovesCount!
-                        var lovesCount = 0
+                        var lovesCount: Int?
                         let observer = NotificationObserver(notification: CurrentUserChangedNotification) { (user) in
-                            lovesCount = user.lovesCount!
+                            lovesCount = user.lovesCount
                         }
                         subject.toggleLove(nil, post: post, via: "")
                         observer.removeObserver()

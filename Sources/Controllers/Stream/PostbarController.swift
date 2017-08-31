@@ -36,8 +36,9 @@ class PostbarController: UIResponder, PostbarResponder {
     var responderChainable: ResponderChainableController?
     weak var streamViewController: StreamViewController!
     weak var collectionViewDataSource: CollectionViewDataSource!
+    // overrideable to make specs easier to write
+    weak var collectionView: UICollectionView!
 
-    var collectionView: UICollectionView { return streamViewController.collectionView }
     var currentUser: User? { return streamViewController.currentUser }
 
     // on the post detail screen, the comments don't show/hide
@@ -45,6 +46,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
     init(streamViewController: StreamViewController, collectionViewDataSource: CollectionViewDataSource) {
         self.streamViewController = streamViewController
+        self.collectionView = streamViewController.collectionView
         self.collectionViewDataSource = collectionViewDataSource
     }
 
