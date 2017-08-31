@@ -8,7 +8,7 @@
         "recent": {
           "related": "/api/v2/categories/art/posts/recent"
         },
-        "promotionals": ["4", "17", "18", "19", "20", "66", "68"]
+        "promotionals": ["19"]
       },
       "level": "primary",
       "order": null,
@@ -20,18 +20,19 @@
       "cta_href": "http://vote.com",
       "tile_image": {
         "original": {
-          "url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default.png"
+          "url": "https://madeupimage.com",
+          "metadata": null
         },
         "large": {
-          "url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default-large.png",
+          "url": "https://madeupimage.com",
           "metadata": null
         },
         "regular": {
-          "url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default-regular.png",
+          "url": "https://madeupimage.com",
           "metadata": null
         },
         "small": {
-          "url": "https://ello-stage2.herokuapp.com/images/fallback/category/tile_image/ello-default-small.png",
+          "url": "https://madeupimage.com",
           "metadata": null
         }
       }
@@ -86,10 +87,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-xhdpi-a7909b5d.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-optimized-15620058.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 233996,
             "type": "image/jpeg",
@@ -98,7 +99,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-xhdpi-15620058.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 299715,
             "type": "image/jpeg",
@@ -107,7 +108,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/4/ello-hdpi-15620058.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 88472,
             "type": "image/jpeg",
@@ -129,10 +130,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/frogs-1347637_960_720.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/ello-optimized-a8f58779.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 310513,
             "type": "image/jpeg",
@@ -141,7 +142,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/ello-xhdpi-a8f58779.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 311860,
             "type": "image/jpeg",
@@ -150,7 +151,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/17/ello-hdpi-a8f58779.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 138443,
             "type": "image/jpeg",
@@ -172,10 +173,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/frogs-eat_81348f18f515b8fd_1hr1oD9DR3WClPbpRyN94A.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/ello-optimized-3595a983.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 69259,
             "type": "image/jpeg",
@@ -184,7 +185,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/ello-xhdpi-3595a983.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 70341,
             "type": "image/jpeg",
@@ -193,7 +194,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/18/ello-hdpi-3595a983.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 70341,
             "type": "image/jpeg",
@@ -215,10 +216,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/Art.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/ello-optimized-978d7d6b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 667330,
             "type": "image/jpeg",
@@ -227,7 +228,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/ello-xhdpi-978d7d6b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 624460,
             "type": "image/jpeg",
@@ -236,7 +237,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/19/ello-hdpi-978d7d6b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 243422,
             "type": "image/jpeg",
@@ -258,10 +259,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/Art-portrait-collage_2.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/ello-optimized-3b82b840.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 387465,
             "type": "image/jpeg",
@@ -270,7 +271,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/ello-xhdpi-3b82b840.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 357257,
             "type": "image/jpeg",
@@ -279,7 +280,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/20/ello-hdpi-3b82b840.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 145282,
             "type": "image/jpeg",
@@ -301,10 +302,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/fart-e1363889285693.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/ello-optimized-7169143f.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 241367,
             "type": "image/jpeg",
@@ -313,7 +314,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/ello-xhdpi-7169143f.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 133709,
             "type": "image/jpeg",
@@ -322,7 +323,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/66/ello-hdpi-7169143f.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 60280,
             "type": "image/jpeg",
@@ -344,10 +345,10 @@
       "category_id": "1",
       "image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/860932.png"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/ello-optimized-17760cb3.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 55878,
             "type": "image/jpeg",
@@ -356,7 +357,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/ello-xhdpi-17760cb3.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 92097,
             "type": "image/jpeg",
@@ -365,7 +366,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/promotional/image/68/ello-hdpi-17760cb3.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 92097,
             "type": "image/jpeg",
@@ -406,16 +407,16 @@
       "loves_count": 0,
       "formatted_short_bio": "<p>Lorem ipsum <a href='http://ello.co/' rel='nofollow' target='_blank'>http://ello.co/</a> dolor sit amet, consectetur adipiscing elit. Praesent et blandit nunc. Pellentesque non ex in nulla laoreet euismod nec a felis. In at est eget sem consectetur venenatis.</p>\n\n<p>Lorem ipsum <a href='http://ello.co/' rel='nofollow' target='_blank'>http://ello.co/</a> dolor sit amet, consectetur adipiscing elit. Praesent et blandit nunc. Pellentesque no ex in nulla laoreet euismod nec a felis. In at est eget sem consectetur venenatis.</p>\n\n<p>This is the last line</p>",
       "external_links_list": [{
-        "url": "http://ello.co",
+        "url": "https://madeupimage.com",
         "text": "ello.co"
       }],
       "background_position": "50% 50%",
       "avatar": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-72fdc63c-d9d8-4f94-bfb2-9d4b939a5102.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "large": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-large-30ef5f89.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 274183,
             "type": "image/png",
@@ -424,7 +425,7 @@
           }
         },
         "regular": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-regular-30ef5f89.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 36019,
             "type": "image/png",
@@ -433,7 +434,7 @@
           }
         },
         "small": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/4/ello-small-30ef5f89.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 10188,
             "type": "image/png",
@@ -444,10 +445,10 @@
       },
       "cover_image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-38988006-1130-449c-a459-b937a5afc463.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-optimized-e0ba7623.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 175198,
             "type": "image/jpeg",
@@ -456,7 +457,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-xhdpi-e0ba7623.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 175491,
             "type": "image/jpeg",
@@ -465,7 +466,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-hdpi-e0ba7623.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 64491,
             "type": "image/jpeg",
@@ -474,7 +475,7 @@
           }
         },
         "mdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-mdpi-e0ba7623.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 17479,
             "type": "image/jpeg",
@@ -483,7 +484,7 @@
           }
         },
         "ldpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/4/ello-ldpi-e0ba7623.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 4707,
             "type": "image/jpeg",
@@ -519,10 +520,10 @@
       "background_position": null,
       "avatar": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/sdough.png"
+          "url": "https://madeupimage.comg"
         },
         "large": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/ello-large-8f0d6e80.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 47095,
             "type": "image/png",
@@ -531,7 +532,7 @@
           }
         },
         "regular": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/ello-regular-8f0d6e80.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 9687,
             "type": "image/png",
@@ -540,7 +541,7 @@
           }
         },
         "small": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/543/ello-small-8f0d6e80.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 3625,
             "type": "image/png",
@@ -551,26 +552,26 @@
       },
       "cover_image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default.jpg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-optimized.jpg",
+          "url": "https://madeupimage.com",
           "metadata": null
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-xhdpi.jpg",
+          "url": "https://madeupimage.com",
           "metadata": null
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-hdpi.jpg",
+          "url": "https://madeupimage.com",
           "metadata": null
         },
         "mdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-mdpi.jpg",
+          "url": "https://madeupimage.com",
           "metadata": null
         },
         "ldpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/images/fallback/user/cover_image/15/ello-default-ldpi.jpg",
+          "url": "https://madeupimage.com",
           "metadata": null
         }
       }
@@ -598,7 +599,7 @@
       "loves_count": 0,
       "formatted_short_bio": "",
       "external_links_list": [{
-        "url": "https://play.google.com/store/apps/details?id=asdf",
+        "url": "https://madeupimage.com",
         "text": "play.google.com/store/apps/details?id=asdf",
         "type": "play",
         "icon": "https://social-icons.ello.co/play.png"
@@ -606,10 +607,10 @@
       "background_position": null,
       "avatar": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-b7ebf461-54be-4e36-9765-eba47debbdc6.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "large": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-large-38ddee22.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 222681,
             "type": "image/png",
@@ -618,7 +619,7 @@
           }
         },
         "regular": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-regular-38ddee22.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 28230,
             "type": "image/png",
@@ -627,7 +628,7 @@
           }
         },
         "small": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/663/ello-small-38ddee22.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 7608,
             "type": "image/png",
@@ -638,10 +639,10 @@
       },
       "cover_image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-ec69965c-58d4-4662-a31f-161bd45b8234.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-optimized-6355d92b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 1546525,
             "type": "image/jpeg",
@@ -650,7 +651,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-xhdpi-6355d92b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 572953,
             "type": "image/jpeg",
@@ -659,7 +660,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-hdpi-6355d92b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 161242,
             "type": "image/jpeg",
@@ -668,7 +669,7 @@
           }
         },
         "mdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-mdpi-6355d92b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 44129,
             "type": "image/jpeg",
@@ -677,7 +678,7 @@
           }
         },
         "ldpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/663/ello-ldpi-6355d92b.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 11606,
             "type": "image/jpeg",
@@ -710,12 +711,12 @@
       "loves_count": 2,
       "formatted_short_bio": "<p>what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? what&apos;s happening suckaz? <img class='emoji' title=':metal:' alt=':metal:' src='https://ello-stage2.herokuapp.com/images/emoji/metal.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':skull:' alt=':skull:' src='https://ello-stage2.herokuapp.com/images/emoji/unicode/1f480.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':metal:' alt=':metal:' src='https://ello-stage2.herokuapp.com/images/emoji/metal.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':skull:' alt=':skull:' src='https://ello-stage2.herokuapp.com/images/emoji/unicode/1f480.png' height='20' width='20' align='absmiddle'/> <img class='emoji' title=':metal:' alt=':metal:' src='https://ello-stage2.herokuapp.com/images/emoji/metal.png' height='20' width='20' align='absmiddle'/> :</p>",
       "external_links_list": [{
-        "url": "http://github.com/rynbyjn",
+        "url": "https://madeupimage.com",
         "text": "github.com/rynbyjn",
         "type": "github",
         "icon": "https://social-icons.ello.co/github.png"
       }, {
-        "url": "http://soundcloud.com/18-squeeler",
+        "url": "https://madeupimage.com",
         "text": "soundcloud.com/18-squeeler",
         "type": "soundcloud",
         "icon": "https://social-icons.ello.co/soundcloud.png"
@@ -723,10 +724,10 @@
       "background_position": "50% 50%",
       "avatar": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-dfc11f00-0eea-4660-b089-8d554a0f4d0a.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "large": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-large-da2278c1.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 238273,
             "type": "image/png",
@@ -735,7 +736,7 @@
           }
         },
         "regular": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-regular-da2278c1.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 29608,
             "type": "image/png",
@@ -744,7 +745,7 @@
           }
         },
         "small": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/9/ello-small-da2278c1.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 8467,
             "type": "image/png",
@@ -755,10 +756,10 @@
       },
       "cover_image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-c831a0ee-d39a-40af-b643-ebab71c98158.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-optimized-e74d1b6d.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 114467,
             "type": "image/jpeg",
@@ -767,7 +768,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-xhdpi-e74d1b6d.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 111009,
             "type": "image/jpeg",
@@ -776,7 +777,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-hdpi-e74d1b6d.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 105798,
             "type": "image/jpeg",
@@ -785,7 +786,7 @@
           }
         },
         "mdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-mdpi-e74d1b6d.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 32152,
             "type": "image/jpeg",
@@ -794,7 +795,7 @@
           }
         },
         "ldpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/9/ello-ldpi-e74d1b6d.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 9776,
             "type": "image/jpeg",
@@ -827,7 +828,7 @@
       "loves_count": 20,
       "formatted_short_bio": "<p>bio bio bio bio</p>",
       "external_links_list": [{
-        "url": "http://twitter.com/dcdoran",
+        "url": "https://madeupimage.com",
         "text": "twitter.com/dcdoran",
         "type": "twitter",
         "icon": "https://social-icons.ello.co/twitter.png"
@@ -835,10 +836,10 @@
       "background_position": "50% 50%",
       "avatar": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-28543c9f-06bc-444e-98db-909aa8890017.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "large": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-large-e2cfacc2.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 127069,
             "type": "image/png",
@@ -847,7 +848,7 @@
           }
         },
         "regular": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-regular-e2cfacc2.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 18516,
             "type": "image/png",
@@ -856,7 +857,7 @@
           }
         },
         "small": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/avatar/27/ello-small-e2cfacc2.png",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 5996,
             "type": "image/png",
@@ -867,10 +868,10 @@
       },
       "cover_image": {
         "original": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-2e54b943-4d2d-4329-ae65-b3c3ca53fb31.jpeg"
+          "url": "https://madeupimage.comg"
         },
         "optimized": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-optimized-809906f0.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 1584915,
             "type": "image/jpeg",
@@ -879,7 +880,7 @@
           }
         },
         "xhdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-xhdpi-809906f0.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 577955,
             "type": "image/jpeg",
@@ -888,7 +889,7 @@
           }
         },
         "hdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-hdpi-809906f0.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 144840,
             "type": "image/jpeg",
@@ -897,7 +898,7 @@
           }
         },
         "mdpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-mdpi-809906f0.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 41863,
             "type": "image/jpeg",
@@ -906,7 +907,7 @@
           }
         },
         "ldpi": {
-          "url": "https://d1qqdyhbrvi5gr.cloudfront.net/uploads/user/cover_image/27/ello-ldpi-809906f0.jpg",
+          "url": "https://madeupimage.com",
           "metadata": {
             "size": 12005,
             "type": "image/jpeg",

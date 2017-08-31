@@ -7,7 +7,7 @@
 			"recent": {
 				"related": "/api/v2/categories/art/posts/recent"
 			},
-			"promotionals": ["4", "17", "18", "19", "20", "66", "68"]
+			"promotionals": ["19"]
 		},
 		"level": "primary",
 		"order": null,
