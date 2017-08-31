@@ -61,9 +61,10 @@ enum StreamCellType: Equatable {
     case userListItem
 
     enum PlaceholderType {
+        case streamPosts
+
         case categoryList
         case categoryHeader
-        case categoryPosts
         case peopleToFollow
 
         case announcements
@@ -75,10 +76,8 @@ enum StreamCellType: Equatable {
         case artistInviteDetails
         case artistInviteAdmin
         case artistInviteSubmissionsHeader
-        case artistInvitePosts
 
         case profileHeader
-        case profilePosts
 
         case postCommentBar
         case postComments

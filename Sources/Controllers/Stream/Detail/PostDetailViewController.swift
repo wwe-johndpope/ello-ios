@@ -134,11 +134,13 @@ final class PostDetailViewController: StreamableViewController {
     fileprivate func checkScrollToComment() {
         guard let comment = self.scrollToComment else { return }
 
-        let commentItem = streamViewController.dataSource.visibleCellItems.find { item in
+        let commentItem = streamViewController.collectionViewDataSource.visibleCellItems.find { item in
             return (item.jsonable as? ElloComment)?.id == comment.id
         }
 
-        if let commentItem = commentItem, let indexPath = self.streamViewController.dataSource.indexPathForItem(commentItem) {
+        if let commentItem = commentItem,
+            let indexPath = streamViewController.collectionViewDataSource.indexPath(forItem: commentItem)
+        {
             self.scrollToComment = nil
             // nextTick didn't work, the collection view hadn't shown its
             // cells or updated contentView.  so this.
@@ -237,8 +239,8 @@ extension PostDetailViewController: PostDetailStreamDestination {
         streamViewController.replacePlaceholder(type: type, items: items) {
             self.checkScrollToComment()
 
-            if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .profilePosts) {
-                self.streamViewController.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)])
+            if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .streamPosts) {
+                self.streamViewController.replacePlaceholder(type: .streamPosts, items: [StreamCellItem(type: .streamLoading)])
             }
             completion()
         }

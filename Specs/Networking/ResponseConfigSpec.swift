@@ -9,7 +9,7 @@ import Nimble
 
 class ResponseConfigSpec: QuickSpec {
     override func spec() {
-        describe("isOutOfData") {
+        describe("ResponseConfig") {
             let nextComponents = URLComponents(string: "https://ello.co?next=next")!
             let emptyComponents = URLComponents()
 

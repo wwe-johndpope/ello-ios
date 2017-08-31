@@ -136,7 +136,6 @@ final class ProfileViewController: StreamableViewController {
         setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
-        streamViewController.dataSource.postCreatedPlaceholder = generator?.postCreatedPlaceholder
 
         if let user = user {
             updateUser(user)
@@ -374,8 +373,10 @@ extension ProfileViewController {
 // MARK: ProfileViewController: PostsTappedResponder
 extension ProfileViewController: PostsTappedResponder {
     func onPostsTapped() {
-        let indexPath = IndexPath(item: 1, section: 0)
-        guard streamViewController.dataSource.isValidIndexPath(indexPath) else { return }
+        guard
+            let indexPath = streamViewController.collectionViewDataSource.firstIndexPath(forPlaceholderType: .streamPosts)
+        else { return }
+
         streamViewController.collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top, animated: true)
     }
 }
@@ -525,8 +526,8 @@ extension ProfileViewController:  StreamDestination {
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
-            if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .profilePosts) {
-                self.streamViewController.replacePlaceholder(type: .profilePosts, items: [StreamCellItem(type: .streamLoading)])
+            if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .streamPosts) {
+                self.streamViewController.replacePlaceholder(type: .streamPosts, items: [StreamCellItem(type: .streamLoading)])
             }
 
             completion()

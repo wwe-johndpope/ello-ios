@@ -2,33 +2,6 @@
 ///  StreamableViewController.swift
 //
 
-@objc
-protocol PostTappedResponder: class {
-    func postTapped(_ post: Post)
-    func postTapped(_ post: Post, scrollToComment: ElloComment?)
-    func postTapped(postId: String)
-}
-
-@objc
-protocol UserTappedResponder: class {
-    func userTapped(_ user: User)
-    func userParamTapped(_ param: String, username: String?)
-}
-
-@objc
-protocol CreatePostResponder: class {
-    func createPost(text: String?, fromController: UIViewController)
-    func createComment(_ postId: String, text: String?, fromController: UIViewController)
-    func editComment(_ comment: ElloComment, fromController: UIViewController)
-    func editPost(_ post: Post, fromController: UIViewController)
-}
-
-@objc
-protocol InviteResponder: class {
-    func onInviteFriends()
-    func sendInvite(person: LocalPerson, isOnboarding: Bool, completion: @escaping Block)
-}
-
 class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     fileprivate var showing = false
@@ -89,12 +62,12 @@ class StreamableViewController: BaseElloViewController {
         super.trackScreenAppeared()
 
         guard let (streamKind, streamId) = trackerStreamInfo() else { return }
-        let posts = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem in
+        let posts = streamViewController.collectionViewDataSource.visibleCellItems.flatMap { streamCellItem in
             return streamCellItem.jsonable as? Post
         }
         PostService().sendPostViews(posts: posts, streamId: streamId, streamKind: streamKind, userId: currentUser?.id)
 
-        let comments = streamViewController.dataSource.visibleCellItems.flatMap { streamCellItem -> ElloComment? in
+        let comments = streamViewController.collectionViewDataSource.visibleCellItems.flatMap { streamCellItem -> ElloComment? in
             guard streamCellItem.type != .createComment else { return nil }
             return streamCellItem.jsonable as? ElloComment
         }

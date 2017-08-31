@@ -21,46 +21,24 @@ class StreamViewControllerSpec: QuickSpec {
             showController(controller)
         }
 
-        describe("initialization") {
-
-            describe("storyboard") {
-                it("IBOutlets are  not nil") {
-                    expect(controller.collectionView).notTo(beNil())
-                }
-            }
-
-            it("can be instantiated from storyboard") {
-                expect(controller).notTo(beNil())
-            }
-
-            it("is a BaseElloViewController") {
-                expect(controller).to(beAKindOf(BaseElloViewController.self))
-            }
-
-            it("is a StreamViewController") {
-                expect(controller).to(beAKindOf(StreamViewController.self))
-            }
-
-        }
-
         describe("hasCellItems(for:)") {
             it("returns 'false' if 0 items") {
-                expect(controller.hasCellItems(for: .profilePosts)) == false
+                expect(controller.hasCellItems(for: .streamPosts)) == false
             }
             it("returns 'false' if 1 placeholder item") {
-                controller.appendStreamCellItems([StreamCellItem(type: .placeholder, placeholderType: .profilePosts)])
-                expect(controller.hasCellItems(for: .profilePosts)) == false
+                controller.appendStreamCellItems([StreamCellItem(type: .placeholder, placeholderType: .streamPosts)])
+                expect(controller.hasCellItems(for: .streamPosts)) == false
             }
             it("returns 'true' if 1 jsonable item") {
-                controller.appendStreamCellItems([StreamCellItem(type: .streamLoading, placeholderType: .profilePosts)])
-                expect(controller.hasCellItems(for: .profilePosts)) == true
+                controller.appendStreamCellItems([StreamCellItem(type: .streamLoading, placeholderType: .streamPosts)])
+                expect(controller.hasCellItems(for: .streamPosts)) == true
             }
             it("returns 'true' if more than 1 jsonable item") {
                 controller.appendStreamCellItems([
-                    StreamCellItem(type: .streamLoading, placeholderType: .profilePosts),
-                    StreamCellItem(type: .streamLoading, placeholderType: .profilePosts),
+                    StreamCellItem(type: .streamLoading, placeholderType: .streamPosts),
+                    StreamCellItem(type: .streamLoading, placeholderType: .streamPosts),
                 ])
-                expect(controller.hasCellItems(for: .profilePosts)) == true
+                expect(controller.hasCellItems(for: .streamPosts)) == true
             }
         }
 
@@ -94,14 +72,6 @@ class StreamViewControllerSpec: QuickSpec {
         }
 
         describe("viewDidLoad()") {
-            it("properly configures dataSource") {
-                expect(controller.dataSource).to(beAnInstanceOf(StreamDataSource.self))
-
-                // FAILS for some reason
-                // let dataSource = controller.collectionView.dataSource! as StreamDataSource
-                // expect(dataSource) == controller.dataSource
-            }
-
             it("sets up a postbar controller and assigns it to the datasource") {
                 expect(controller.postbarController).notTo(beNil())
             }
@@ -122,7 +92,7 @@ class StreamViewControllerSpec: QuickSpec {
 
             beforeEach {
                 controller.streamKind = StreamKind.following
-                controller.streamService.loadStream(endpoint: controller.streamKind.endpoint)
+                StreamService().loadStream(endpoint: controller.streamKind.endpoint)
                     .thenFinally { response in
                         if case let .jsonables(jsonables, responseConfig) = response {
                             controller.appendUnsizedCellItems(StreamCellItemParser().parse(jsonables, streamKind: controller.streamKind))

@@ -376,7 +376,7 @@ extension ElloComment: Stubbable {
 extension TextRegion: Stubbable {
     class func stub(_ values: [String: Any]) -> TextRegion {
         return TextRegion(
-            content: (values["content"] as? String) ?? "Lorem Ipsum"
+            content: (values["content"] as? String) ?? "<p>Lorem Ipsum</p>"
         )
     }
 }

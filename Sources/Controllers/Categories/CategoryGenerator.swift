@@ -97,7 +97,7 @@ final class CategoryGenerator: StreamGenerator {
 
     func toggleGrid() {
         guard let posts = posts else { return }
-        destination?.replacePlaceholder(type: .categoryPosts, items: parse(jsonables: posts))
+        destination?.replacePlaceholder(type: .streamPosts, items: parse(jsonables: posts))
     }
 
 }
@@ -107,7 +107,7 @@ private extension CategoryGenerator {
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
             StreamCellItem(type: .placeholder, placeholderType: .categoryHeader),
-            StreamCellItem(type: .placeholder, placeholderType: .categoryPosts)
+            StreamCellItem(type: .placeholder, placeholderType: .streamPosts)
         ])
     }
 
@@ -249,13 +249,13 @@ private extension CategoryGenerator {
                         inForeground {
                             if items.count == 0 {
                                 let noItems = [StreamCellItem(type: .emptyStream(height: 182))]
-                                self.destination?.replacePlaceholder(type: .categoryPosts, items: noItems) {
+                                self.destination?.replacePlaceholder(type: .streamPosts, items: noItems) {
                                     self.destination?.isPagingEnabled = false
                                 }
                                 self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
                             }
                             else {
-                                self.destination?.replacePlaceholder(type: .categoryPosts, items: items) {
+                                self.destination?.replacePlaceholder(type: .streamPosts, items: items) {
                                     self.destination?.isPagingEnabled = true
                                 }
                             }
@@ -263,7 +263,7 @@ private extension CategoryGenerator {
                     }
                 case .empty:
                     let noContentItem = StreamCellItem(type: .emptyStream(height: 282))
-                    self.destination?.replacePlaceholder(type: .categoryPosts, items: [noContentItem])
+                    self.destination?.replacePlaceholder(type: .streamPosts, items: [noContentItem])
                     self.destination?.primaryJSONAbleNotFound()
                     self.queue.cancelAllOperations()
                 }

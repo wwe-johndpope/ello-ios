@@ -34,45 +34,54 @@ class PostbarController: UIResponder, PostbarResponder {
     }
 
     var responderChainable: ResponderChainableController?
-    var collectionView: UICollectionView
-    let dataSource: StreamDataSource
-    var currentUser: User?
+    weak var streamViewController: StreamViewController!
+    weak var collectionViewDataSource: CollectionViewDataSource!
+    // overrideable to make specs easier to write
+    weak var collectionView: UICollectionView!
+
+    var currentUser: User? { return streamViewController.currentUser }
 
     // on the post detail screen, the comments don't show/hide
     var toggleableComments: Bool = true
 
-    init(collectionView: UICollectionView, dataSource: StreamDataSource) {
-        self.collectionView = collectionView
-        self.dataSource = dataSource
+    init(streamViewController: StreamViewController, collectionViewDataSource: CollectionViewDataSource) {
+        self.streamViewController = streamViewController
+        self.collectionView = streamViewController.collectionView
+        self.collectionViewDataSource = collectionViewDataSource
     }
 
     // in order to include the `StreamViewController` in our responder chain
-    // search, we need to ask it directly for the correct target.  If the
+    // search, we need to ask it directly for the correct responder.  If the
     // `StreamViewController` isn't returned, this function returns the same
-    // object as `target(forAction:,withSender:)`
-    func properTarget(forAction action: Selector, withSender sender: Any?) -> Any? {
-        return responderChainable?.controller?.target(forAction: action, withSender: sender)
+    // object as `findResponder`
+    func findProperResponder<T>() -> T? {
+        if let responder: T? = findResponder() {
+            return responder
+        }
+        else {
+            return responderChainable?.controller?.findResponder()
+        }
     }
 
     func viewsButtonTapped(_ cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let post = postForIndexPath(indexPath)
+            let post = collectionViewDataSource.post(at: indexPath)
         else { return }
 
         Tracker.shared.viewsButtonTapped(post: post)
 
-        let responder = properTarget(forAction: #selector(StreamPostTappedResponder.postTappedInStream(_:)), withSender: self) as? StreamPostTappedResponder
+        let responder: StreamPostTappedResponder? = findProperResponder()
         responder?.postTappedInStream(cell)
     }
 
     func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let item = dataSource.visibleStreamCellItem(at: indexPath)
+            let item = collectionViewDataSource.streamCellItem(at: indexPath)
         else { return }
 
-        guard dataSource.isFullWidth(at: indexPath) else {
+        guard collectionViewDataSource.isFullWidth(at: indexPath) else {
             cell.cancelCommentLoading()
             viewsButtonTapped(cell)
             return
@@ -95,7 +104,7 @@ class PostbarController: UIResponder, PostbarResponder {
             return
         }
 
-        guard !dataSource.streamKind.isDetail(post: post) else {
+        guard !streamViewController.streamKind.isDetail(post: post) else {
             return
         }
 
@@ -103,8 +112,7 @@ class PostbarController: UIResponder, PostbarResponder {
         cell.commentsControl.isEnabled = false
 
         if !cell.commentsOpened {
-            self.dataSource.removeCommentsFor(post: post)
-            self.collectionView.reloadData()
+            streamViewController.removeComments(forPost: post)
             item.state = .collapsed
             imageLabelControl.isEnabled = true
             imageLabelControl.finishAnimation()
@@ -119,7 +127,7 @@ class PostbarController: UIResponder, PostbarResponder {
                 .thenFinally { [weak self] comments in
                     guard
                         let `self` = self,
-                        let updatedIndexPath = self.dataSource.indexPathForItem(item)
+                        let updatedIndexPath = self.collectionViewDataSource.indexPath(forItem: item)
                     else { return }
 
                     item.state = .expanded
@@ -147,19 +155,16 @@ class PostbarController: UIResponder, PostbarResponder {
         let message = InterfaceString.Post.DeleteCommentConfirm
         let alertController = AlertViewController(message: message)
 
-        let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) {
-            action in
-            if let comment = self.commentForIndexPath(indexPath) {
-                // comment deleted
-                postNotification(CommentChangedNotification, value: (comment, .delete))
-                // post comment count updated
-                ContentChange.updateCommentCount(comment, delta: -1)
-                PostService().deleteComment(comment.postId, commentId: comment.id)
-                    .then {
-                        Tracker.shared.commentDeleted(comment)
-                    }
-                    .ignoreErrors()
-            }
+        let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) { action in
+            guard let comment = self.collectionViewDataSource.comment(at: indexPath) else { return }
+
+            postNotification(CommentChangedNotification, value: (comment, .delete))
+            ContentChange.updateCommentCount(comment, delta: -1)
+
+            PostService().deleteComment(comment.postId, commentId: comment.id)
+                .then {
+                    Tracker.shared.commentDeleted(comment)
+                }.ignoreErrors()
         }
         let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
 
@@ -176,18 +181,18 @@ class PostbarController: UIResponder, PostbarResponder {
         }
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let comment = commentForIndexPath(indexPath),
+            let comment = collectionViewDataSource.comment(at: indexPath),
             let presentingController = responderChainable?.controller
         else { return }
 
-        let responder = properTarget(forAction: #selector(CreatePostResponder.editComment(_:fromController:)), withSender: self) as? CreatePostResponder
+        let responder: CreatePostResponder? = self.findProperResponder()
         responder?.editComment(comment, fromController: presentingController)
     }
 
     func lovesButtonTapped(_ cell: StreamFooterCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let post = self.postForIndexPath(indexPath)
+            let post = collectionViewDataSource.post(at: indexPath)
         else { return }
 
         toggleLove(cell, post: post, via: "button")
@@ -270,7 +275,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let post = self.postForIndexPath(indexPath),
+            let post = collectionViewDataSource.post(at: indexPath),
             let presentingController = responderChainable?.controller
         else { return }
 
@@ -340,7 +345,7 @@ class PostbarController: UIResponder, PostbarResponder {
     func shareButtonTapped(_ cell: UICollectionViewCell, sourceView: UIView) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let post = dataSource.postForIndexPath(indexPath)
+            let post = collectionViewDataSource.post(at: indexPath)
         else { return }
 
         sharePost(post, sourceView: sourceView)
@@ -373,7 +378,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let comment = commentForIndexPath(indexPath),
+            let comment = collectionViewDataSource.comment(at: indexPath),
             let presentingController = responderChainable?.controller
         else { return }
 
@@ -394,14 +399,14 @@ class PostbarController: UIResponder, PostbarResponder {
         }
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let comment = commentForIndexPath(indexPath),
+            let comment = collectionViewDataSource.comment(at: indexPath),
             let presentingController = responderChainable?.controller,
             let atName = comment.author?.atName
         else { return }
 
         let postId = comment.loadedFromPostId
 
-        let responder = properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+        let responder: CreatePostResponder? = self.findProperResponder()
         responder?.createComment(postId, text: "\(atName) ", fromController: presentingController)
     }
 
@@ -412,7 +417,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let comment = commentForIndexPath(indexPath),
+            let comment = collectionViewDataSource.comment(at: indexPath),
             let presentingController = responderChainable?.controller
         else { return }
 
@@ -423,14 +428,14 @@ class PostbarController: UIResponder, PostbarResponder {
                 let usernamesText = usernames.reduce("") { memo, username in
                     return memo + "@\(username) "
                 }
-                let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                let responder: CreatePostResponder? = self.findProperResponder()
                 responder?.createComment(postId, text: usernamesText, fromController: presentingController)
             }
             .catch { [weak self] error in
                 guard let `self` = self else { return }
                 guard let controller = self.responderChainable?.controller else { return }
 
-                let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                let responder: CreatePostResponder? = self.findProperResponder()
                 responder?.createComment(postId, text: nil, fromController: controller)
             }
     }
@@ -442,7 +447,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let comment = dataSource.commentForIndexPath(indexPath),
+            let comment = collectionViewDataSource.comment(at: indexPath),
             let post = comment.parentPost
         else { return }
 
@@ -467,23 +472,15 @@ class PostbarController: UIResponder, PostbarResponder {
 
 // MARK: - Private
 
-    fileprivate func postForIndexPath(_ indexPath: IndexPath) -> Post? {
-        return dataSource.postForIndexPath(indexPath)
-    }
-
-    fileprivate func commentForIndexPath(_ indexPath: IndexPath) -> ElloComment? {
-        return dataSource.commentForIndexPath(indexPath)
-    }
-
     fileprivate func commentLoadSuccess(_ post: Post, comments jsonables: [JSONAble], indexPath: IndexPath, cell: StreamFooterCell) {
+        let createCommentNow = jsonables.count == 0
         self.appendCreateCommentItem(post, at: indexPath)
 
         var items = StreamCellItemParser().parse(jsonables, streamKind: StreamKind.following, currentUser: currentUser)
 
         if let lastComment = jsonables.last,
-            let maxCount = ElloAPI.postComments(postId: "").parameters!["per_page"] as? Int,
-            let postCommentCount = post.commentsCount,
-            postCommentCount > maxCount
+            let postCommentsCount = post.commentsCount,
+            postCommentsCount > jsonables.count
         {
             items.append(StreamCellItem(jsonable: lastComment, type: .seeMoreComments))
         }
@@ -491,17 +488,16 @@ class PostbarController: UIResponder, PostbarResponder {
             items.append(StreamCellItem(type: .spacer(height: 10.0)))
         }
 
-        dataSource.calculateCellItems(items, withWidth: self.collectionView.frame.width) { [weak self] in
+        streamViewController.insertUnsizedCellItems(items, startingIndexPath: indexPath) { [weak self] in
             guard let `self` = self else { return }
 
-            let indexPaths = self.dataSource.insertStreamCellItems(items, startingIndexPath: indexPath)
-            self.collectionView.reloadData()
             cell.commentsControl.isEnabled = true
 
             if let controller = self.responderChainable?.controller,
-                indexPaths.count == 1, jsonables.count == 0, self.currentUser != nil
+                createCommentNow,
+                self.currentUser != nil
             {
-                let responder = self.properTarget(forAction: #selector(CreatePostResponder.createComment(_:text:fromController:)), withSender: self) as? CreatePostResponder
+                let responder: CreatePostResponder? = self.findProperResponder()
                 responder?.createComment(post.id, text: nil, fromController: controller)
             }
         }
@@ -514,11 +510,7 @@ class PostbarController: UIResponder, PostbarResponder {
         let createCommentItem = StreamCellItem(jsonable: comment, type: .createComment)
 
         let items = [createCommentItem]
-        self.dataSource.insertStreamCellItems(items, startingIndexPath: indexPath)
-        self.collectionView.reloadData() // insertItemsAtIndexPaths([indexPath]) //
-    }
-
-    fileprivate func commentLoadFailure(_ error: NSError, statusCode: Int?) {
+        streamViewController.insertUnsizedCellItems(items, startingIndexPath: indexPath)
     }
 
 }
