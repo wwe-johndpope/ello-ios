@@ -198,6 +198,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
     }
 
     func setPrimary(jsonable: JSONAble) {
+        var trackingPostToken: String?
         if let category = jsonable as? Category {
             self.category = category
 
@@ -209,10 +210,18 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
             }
 
             self.title = category.name
+            trackingPostToken = categoryPromotional?.postToken
         }
         else if let pagePromotional = jsonable as? PagePromotional {
             self.pagePromotional = pagePromotional
+            trackingPostToken = pagePromotional.postToken
         }
+
+        if let trackingPostToken = trackingPostToken {
+            let trackViews: ElloAPI = .promotionalViews(tokens: [trackingPostToken])
+            ElloProvider.shared.request(trackViews).ignoreErrors()
+        }
+
         updateInsets()
         streamViewController.doneLoading()
     }

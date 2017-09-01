@@ -5,13 +5,13 @@
 import SwiftyJSON
 
 
-let PagePromotionalVersion = 1
-
-
 @objc(PagePromotional)
 final class PagePromotional: JSONAble {
+    // version 1: initial
+    static let Version = 1
 
     let id: String
+    let postToken: String?
     let header: String
     let subheader: String
     let ctaCaption: String
@@ -24,6 +24,7 @@ final class PagePromotional: JSONAble {
 
     init(
         id: String,
+        postToken: String?,
         header: String,
         subheader: String,
         ctaCaption: String,
@@ -31,17 +32,19 @@ final class PagePromotional: JSONAble {
         image: Asset?
     ) {
         self.id = id
+        self.postToken = postToken
         self.header = header
         self.subheader = subheader
         self.ctaCaption = ctaCaption
         self.ctaURL = ctaURL
         self.image = image
-        super.init(version: PagePromotionalVersion)
+        super.init(version: PagePromotional.Version)
     }
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
         id = decoder.decodeKey("id")
+        postToken = decoder.decodeOptionalKey("postToken")
         header = decoder.decodeKey("header")
         subheader = decoder.decodeKey("subheader")
         ctaCaption = decoder.decodeKey("ctaCaption")
@@ -53,6 +56,7 @@ final class PagePromotional: JSONAble {
     override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
         encoder.encodeObject(id, forKey: "id")
+        encoder.encodeObject(postToken, forKey: "postToken")
         encoder.encodeObject(header, forKey: "header")
         encoder.encodeObject(subheader, forKey: "subheader")
         encoder.encodeObject(ctaCaption, forKey: "ctaCaption")
@@ -68,11 +72,13 @@ final class PagePromotional: JSONAble {
         let subheader = json["subheader"].stringValue
         let ctaCaption = json["cta_caption"].stringValue
         let ctaURL = json["cta_href"].string.flatMap { URL(string: $0) }
+        let postToken = json["post_token"].string
 
         let image = Asset.parseAsset(id, node: data["image"] as? [String: Any])
 
         let promotional = PagePromotional(
             id: id,
+            postToken: postToken,
             header: header,
             subheader: subheader,
             ctaCaption: ctaCaption,

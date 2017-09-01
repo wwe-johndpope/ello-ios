@@ -104,6 +104,8 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
             return "postDetail(postParam: \(postParam))"
         case let .postViews(streamId, streamKind, postTokens, currentUserId):
             return "postViews(streamId: \(streamId ?? "nil"), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(currentUserId ?? "nil"))"
+        case let .promotionalViews(tokens):
+            return "promotionalViews(tokens: \(tokens))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
         case let .postRelatedPosts(postId):

@@ -22,6 +22,10 @@ func urlFromValue(_ value: Any?) -> URL? {
     return nil
 }
 
+func generateID() -> String {
+    return UUID().uuidString
+}
+
 let stubbedTextRegion: TextRegion = stub([:])
 
 protocol Stubbable: NSObjectProtocol {
@@ -39,7 +43,7 @@ extension User: Stubbable {
         }
 
         let user =  User(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             href: (values["href"] as? String) ?? "href",
             username: (values["username"] as? String) ?? "username",
             name: (values["name"] as? String) ?? "name",
@@ -132,14 +136,14 @@ extension Love: Stubbable {
 
         // create necessary links
 
-        let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? UUID().uuidString])
+        let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
 
-        let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? UUID().uuidString])
+        let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
 
         let love = Love(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             updatedAt: (values["updatedAt"] as? Date) ?? AppSetup.shared.now,
             isDeleted: (values["deleted"] as? Bool) ?? true,
@@ -156,14 +160,14 @@ extension Watch: Stubbable {
 
         // create necessary links
 
-        let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? UUID().uuidString])
+        let post: Post = (values["post"] as? Post) ?? Post.stub(["id": values["postId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
 
-        let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? UUID().uuidString])
+        let user: User = (values["user"] as? User) ?? User.stub(["id": values["userId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
 
         let watch = Watch(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             updatedAt: (values["updatedAt"] as? Date) ?? AppSetup.shared.now,
             postId: post.id,
@@ -176,7 +180,7 @@ extension Watch: Stubbable {
 
 extension Profile: Stubbable {
     class func stub(_ values: [String: Any]) -> Profile {
-        let id: String = (values["id"] as? String) ?? UUID().uuidString
+        let id: String = (values["id"] as? String) ?? generateID()
         let createdAt: Date = (values["createdAt"] as? Date) ?? AppSetup.shared.now
         let shortBio: String = (values["shortBio"] as? String) ?? "shortBio"
         let email: String = (values["email"] as? String) ?? "email@example.com"
@@ -264,11 +268,11 @@ extension Post: Stubbable {
 
         // create necessary links
 
-        let author: User = (values["author"] as? User) ?? User.stub(["id": values["authorId"] ?? UUID().uuidString])
+        let author: User = (values["author"] as? User) ?? User.stub(["id": values["authorId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(author, forKey: author.id, type: .usersType)
 
         let post = Post(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             authorId: author.id,
             href: (values["href"] as? String) ?? "sample-href",
@@ -341,15 +345,15 @@ extension ElloComment: Stubbable {
     class func stub(_ values: [String: Any]) -> ElloComment {
 
         // create necessary links
-        let author: User = (values["author"] as? User) ?? User.stub(["id": values["authorId"] ?? UUID().uuidString])
+        let author: User = (values["author"] as? User) ?? User.stub(["id": values["authorId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(author, forKey: author.id, type: .usersType)
-        let parentPost: Post = (values["parentPost"] as? Post) ?? Post.stub(["id": values["parentPostId"] ?? UUID().uuidString])
+        let parentPost: Post = (values["parentPost"] as? Post) ?? Post.stub(["id": values["parentPostId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(parentPost, forKey: parentPost.id, type: .postsType)
         let loadedFromPost: Post = (values["loadedFromPost"] as? Post) ?? parentPost
         ElloLinkedStore.shared.setObject(loadedFromPost, forKey: loadedFromPost.id, type: .postsType)
 
         let comment = ElloComment(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             authorId: author.id,
             postId: parentPost.id,
@@ -398,7 +402,7 @@ extension EmbedRegion: Stubbable {
     class func stub(_ values: [String: Any]) -> EmbedRegion {
         let serviceString = (values["service"] as? String) ?? EmbedType.youtube.rawValue
         let embedRegion = EmbedRegion(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             service: EmbedType(rawValue: serviceString)!,
             url: urlFromValue(values["url"]) ?? URL(string: "http://www.google.com")!,
             thumbnailLargeUrl: urlFromValue(values["thumbnailLargeUrl"])
@@ -447,7 +451,7 @@ extension Activity: Stubbable {
         }
 
         let activity = Activity(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             kind: activityKind,
             subjectType: activitySubjectType
@@ -479,7 +483,7 @@ extension Asset: Stubbable {
             return Asset(url: url)
         }
 
-        let asset = Asset(id: (values["id"] as? String) ?? UUID().uuidString)
+        let asset = Asset(id: (values["id"] as? String) ?? generateID())
         let defaultAttachment = values["attachment"] as? Attachment
         asset.optimized = (values["optimized"] as? Attachment) ?? defaultAttachment
         asset.smallScreen = (values["smallScreen"] as? Attachment) ?? defaultAttachment
@@ -517,13 +521,13 @@ extension Ello.Notification: Stubbable {
 extension Relationship: Stubbable {
     class func stub(_ values: [String: Any]) -> Relationship {
         // create necessary links
-        let owner: User = (values["owner"] as? User) ?? User.stub(["relationshipPriority": "self", "id": values["ownerId"] ?? UUID().uuidString])
+        let owner: User = (values["owner"] as? User) ?? User.stub(["relationshipPriority": "self", "id": values["ownerId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(owner, forKey: owner.id, type: .usersType)
-        let subject: User = (values["subject"] as? User) ?? User.stub(["relationshipPriority": "friend", "id": values["subjectId"] ?? UUID().uuidString])
+        let subject: User = (values["subject"] as? User) ?? User.stub(["relationshipPriority": "friend", "id": values["subjectId"] ?? generateID()])
         ElloLinkedStore.shared.setObject(owner, forKey: owner.id, type: .usersType)
 
         return Relationship(
-            id: (values["id"] as? String) ?? UUID().uuidString,
+            id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? AppSetup.shared.now,
             ownerId: owner.id,
             subjectId: subject.id
@@ -536,7 +540,7 @@ extension LocalPerson: Stubbable {
         return LocalPerson(
             name: (values["name"] as? String) ?? "Sterling Archer",
             emails: (values["emails"] as? [String]) ?? ["sterling_archer@gmail.com"],
-            id: (values["id"] as? String) ?? "987654"
+            id: (values["id"] as? String) ?? generateID()
         )
     }
 }
@@ -554,9 +558,10 @@ extension Promotional: Stubbable {
     class func stub(_ values: [String: Any]) -> Promotional {
 
         let promotional = Promotional(
-            id: (values["id"] as? String) ?? "123",
-            userId: (values["userId"] as? String) ?? "456",
-            categoryId: (values["categoryId"] as? String) ?? "1"
+            id: (values["id"] as? String) ?? generateID(),
+            userId: (values["userId"] as? String) ?? generateID(),
+            postToken: (values["postToken"] as? String),
+            categoryId: (values["categoryId"] as? String) ?? generateID()
         )
 
         if let image = values["image"] as? Asset {
@@ -578,7 +583,8 @@ extension PagePromotional: Stubbable {
     class func stub(_ values: [String: Any]) -> PagePromotional {
 
         let pagePromotional = PagePromotional(
-            id: (values["id"] as? String) ?? "999",
+            id: (values["id"] as? String) ?? generateID(),
+            postToken: (values["postToken"] as? String),
             header: (values["header"] as? String) ?? "Default Header",
             subheader: (values["subheader"] as? String) ?? "Default Subheader",
             ctaCaption: (values["ctaCaption"] as? String) ?? "Default CTA Caption",
@@ -623,7 +629,7 @@ extension Ello.Category: Stubbable {
         }
 
         let category = Category(
-            id: (values["id"] as? String) ?? "666",
+            id: (values["id"] as? String) ?? generateID(),
             name: (values["name"] as? String) ?? "Art",
             slug: (values["slug"] as? String) ?? "art",
             order: (values["order"] as? Int) ?? 0,
@@ -657,7 +663,7 @@ extension Announcement: Stubbable {
     class func stub(_ values: [String: Any]) -> Announcement {
 
         let announcement = Announcement(
-            id: (values["id"] as? String) ?? "666",
+            id: (values["id"] as? String) ?? generateID(),
             isStaffPreview: (values["isStaffPreview"] as? Bool) ?? false,
             header: (values["header"] as? String) ?? "Announcing Not For Print, Ello’s new publication",
             body: (values["body"] as? String) ?? "Submissions for Issue 01 — Censorship will be open from 11/7 – 11/23",
@@ -693,7 +699,7 @@ extension Editorial: Stubbable {
         }
 
         let editorial = Editorial(
-            id: (values["id"] as? String) ?? "666",
+            id: (values["id"] as? String) ?? generateID(),
             kind: kind,
             title: (values["title"] as? String) ?? "Title",
             subtitle: values["subtitle"] as? String,
