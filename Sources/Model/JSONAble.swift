@@ -52,12 +52,12 @@ extension JSONAble {
             let id = linksMap["id"] as? String,
             let collection = linksMap["type"] as? String
         {
-            ElloLinkedStore.sharedInstance.readConnection.read { transaction in
+            ElloLinkedStore.shared.readConnection.read { transaction in
                 obj = transaction.object(forKey: id, inCollection: collection) as? JSONAble
             }
         }
         else if let id = links[identifier] as? String {
-            ElloLinkedStore.sharedInstance.readConnection.read { transaction in
+            ElloLinkedStore.shared.readConnection.read { transaction in
                 obj = transaction.object(forKey: id, inCollection: identifier) as? JSONAble
             }
         }
@@ -77,7 +77,7 @@ extension JSONAble {
         else { return [] }
 
         var arr = [JSONAble]()
-        ElloLinkedStore.sharedInstance.readConnection.read { transaction in
+        ElloLinkedStore.shared.readConnection.read { transaction in
             for key in ids {
                 if let jsonable = transaction.object(forKey: key, inCollection: identifier) as? JSONAble {
                     arr.append(jsonable)
@@ -95,7 +95,7 @@ extension JSONAble {
 
     func addLinkObject(_ model: JSONAble, identifier: String, key: String, type: MappingType) {
         addLinkObject(identifier, key: key, type: type)
-        ElloLinkedStore.sharedInstance.setObject(model, forKey: key, type: type)
+        ElloLinkedStore.shared.setObject(model, forKey: key, type: type)
     }
 
     func clearLinkObject(_ identifier: String) {

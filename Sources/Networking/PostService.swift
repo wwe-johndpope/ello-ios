@@ -159,7 +159,7 @@ struct PostService {
                 }
                 else if !isWatching {
                     post.isWatching = false
-                    ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+                    ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
                     return post
                 }
                 else {

@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutoCompleteService.loadEmojiJSON("emojis")
         BadgesService.loadStaticBadges()
         UIFont.loadFonts()
-        ElloLinkedStore.sharedInstance.writeConnection.readWrite { transaction in
+        ElloLinkedStore.shared.writeConnection.readWrite { transaction in
             transaction.removeAllObjectsInAllCollections()
         }
 

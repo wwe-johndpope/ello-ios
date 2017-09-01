@@ -28,7 +28,7 @@ class RelationshipServiceSpec: QuickSpec {
                     it("should return an optimisticResult") {
                         let currentUser: User = stub([:])
                         let user: User = stub([:])
-                        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
+                        ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
                         let (optimisticResult, _) = subject.updateRelationship(currentUserId: currentUser.id, userId: user.id, relationshipPriority: .following)
                         expect(optimisticResult).notTo(beNil())
                     }
@@ -36,10 +36,10 @@ class RelationshipServiceSpec: QuickSpec {
                     it("should set the relationshipPriority") {
                         let currentUser: User = stub([:])
                         let user: User = stub(["relationshipPriority": RelationshipPriority.none])
-                        ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
+                        ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
 
                         _ = subject.updateRelationship(currentUserId: currentUser.id, userId: user.id, relationshipPriority: .following)
-                        let newUser: User? = ElloLinkedStore.sharedInstance.getObject(user.id, type: .usersType) as? User
+                        let newUser: User? = ElloLinkedStore.shared.getObject(user.id, type: .usersType) as? User
                         expect(newUser?.relationshipPriority) == RelationshipPriority.following
                     }
                 }

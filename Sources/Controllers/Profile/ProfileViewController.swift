@@ -63,7 +63,7 @@ final class ProfileViewController: StreamableViewController {
         }
 
         if self.user == nil {
-            if let user = ElloLinkedStore.sharedInstance.getObject(self.userParam, type: .usersType) as? User {
+            if let user = ElloLinkedStore.shared.getObject(self.userParam, type: .usersType) as? User {
                 self.user = user
             }
         }

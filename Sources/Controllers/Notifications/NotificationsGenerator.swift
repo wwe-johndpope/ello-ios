@@ -160,7 +160,7 @@ final class NotificationsGenerator: StreamGenerator {
             let next = afterAll()
             ArtistInviteService().load(id: submission.artistInviteId)
                 .thenFinally { artistInvite in
-                    ElloLinkedStore.sharedInstance.setObject(artistInvite, forKey: submission.artistInviteId, type: .artistInvitesType)
+                    ElloLinkedStore.shared.setObject(artistInvite, forKey: submission.artistInviteId, type: .artistInvitesType)
                 }
                 .always { _ in next() }
         }

@@ -44,7 +44,7 @@ final class Editorial: JSONAble, Groupable {
     let postId: String?
     var post: Post? {
         guard let postId = postId else { return nil }
-        return ElloLinkedStore.sharedInstance.getObject(postId, type: .postsType) as? Post
+        return ElloLinkedStore.shared.getObject(postId, type: .postsType) as? Post
     }
     var postStreamURL: URL?
     var posts: [Post]?

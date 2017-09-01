@@ -7,10 +7,10 @@ import YapDatabase
 
 struct ElloLinkedStore {
 
-    static var sharedInstance = ElloLinkedStore()
+    static var shared = ElloLinkedStore()
     static var databaseName = "ello-v2.sqlite" {
         didSet {
-            sharedInstance = ElloLinkedStore()
+            shared = ElloLinkedStore()
         }
     }
 
@@ -77,7 +77,7 @@ struct ElloLinkedStore {
 extension ElloLinkedStore {
 
     static func clearDB(name: String? = nil) {
-        ElloLinkedStore.sharedInstance.writeConnection.readWrite { transaction in
+        ElloLinkedStore.shared.writeConnection.readWrite { transaction in
             transaction.removeAllObjectsInAllCollections()
         }
     }
