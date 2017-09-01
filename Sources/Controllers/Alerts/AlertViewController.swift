@@ -35,9 +35,7 @@ class AlertViewController: UIViewController {
         }
         else {
             var contentHeight = totalVerticalPadding
-            if !message.isEmpty {
-                contentHeight += headerView.frame.height
-            }
+            contentHeight += tableView(tableView, heightForHeaderInSection: 0)
 
             for action in actions {
                 contentHeight += action.heightForWidth(Size.width)
