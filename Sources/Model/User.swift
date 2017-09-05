@@ -353,15 +353,15 @@ extension User {
 }
 
 extension User {
-    func isOwn(post: Post) -> Bool {
+    func isOwnerOf(post: Post) -> Bool {
         return id == post.authorId
     }
 
-    func isOwn(comment: ElloComment) -> Bool {
+    func isOwnerOf(comment: ElloComment) -> Bool {
         return id == comment.authorId
     }
 
-    func isOwnParentPost(comment: ElloComment) -> Bool {
+    func isOwnerOfParentPost(comment: ElloComment) -> Bool {
         return id == comment.loadedFromPost?.authorId || id == comment.loadedFromPost?.repostAuthor?.id
     }
 }
