@@ -260,7 +260,7 @@ final class User: JSONAble {
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
-        // create user
+
         let user = User(
             id: json["id"].stringValue,
             href: json["href"].stringValue,
@@ -278,7 +278,6 @@ final class User: JSONAble {
             isHireable: json["is_hireable"].boolValue
         )
 
-        // optional
         user.avatar = Asset.parseAsset("user_avatar_\(user.id)", node: data["avatar"] as? [String: Any])
         user.identifiableBy = json["identifiable_by"].stringValue
         user.postsCount = json["posts_count"].int
@@ -286,21 +285,15 @@ final class User: JSONAble {
         user.followersCount = json["followers_count"].stringValue
         user.followingCount = json["following_count"].int
         user.formattedShortBio = json["formatted_short_bio"].string
-        // grab links
+        user.coverImage = Asset.parseAsset("user_cover_image_\(user.id)", node: data["cover_image"] as? [String: Any])
+        user.backgroundPosition = json["background_positiion"].stringValue
+        user.onboardingVersion = json["web_onboarding_version"].string.flatMap { Int($0) }
+        user.totalViewsCount = json["total_views_count"].int
+        user.location = json["location"].string
+
         if let links = json["external_links_list"].array {
             let externalLinks = links.flatMap { $0.dictionaryObject as? [String: String] }
             user.externalLinksList = externalLinks.flatMap { ExternalLink.fromDict($0) }
-        }
-        user.coverImage = Asset.parseAsset("user_cover_image_\(user.id)", node: data["cover_image"] as? [String: Any])
-        user.backgroundPosition = json["background_positiion"].stringValue
-        if let webOnboardingVersion = json["web_onboarding_version"].string {
-            user.onboardingVersion = Int(webOnboardingVersion)
-        }
-        // links
-        user.links = data["links"] as? [String: Any]
-        // profile
-        if (json["created_at"].stringValue).characters.count > 0 {
-            user.profile = Profile.fromJSON(data) as? Profile
         }
 
         if let badgeNames: [String] = json["badges"].array?.flatMap({ $0.string }) {
@@ -308,8 +301,11 @@ final class User: JSONAble {
                 .flatMap { Badge.lookup(slug: $0) }
         }
 
-        user.totalViewsCount = json["total_views_count"].int
-        user.location = json["location"].string
+        user.links = data["links"] as? [String: Any]
+
+        if json["relationship_priority"].string == "self" {
+            user.profile = Profile.fromJSON(data) as? Profile
+        }
 
         return user
     }
