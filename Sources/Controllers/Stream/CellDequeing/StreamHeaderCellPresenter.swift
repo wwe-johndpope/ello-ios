@@ -24,6 +24,7 @@ struct StreamHeaderCellPresenter {
         cell.close()
         cell.ownPost = false
         cell.ownComment = false
+        cell.canDeleteComment = false
         cell.isGridLayout = isGridView
 
         switch streamKind {
@@ -38,6 +39,9 @@ struct StreamHeaderCellPresenter {
         {
             if currentUser.isOwnerOf(comment: comment) {
                 cell.ownComment = true
+            }
+            else if AuthToken().isStaff {
+                cell.canDeleteComment = true
             }
             else if currentUser.isOwnerOfParentPost(comment: comment) {
                 cell.ownPost = true
