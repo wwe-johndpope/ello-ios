@@ -23,14 +23,10 @@ func == (lhs: AutoCompleteMatch, rhs: AutoCompleteMatch) -> Bool {
     return lhs.type == rhs.type && lhs.range == rhs.range && lhs.text == rhs.text
 }
 
-enum AutoCompleteType: String, CustomStringConvertible {
-    case emoji = "Emoji"
-    case username = "Username"
-    case location = "Location"
-
-    var description: String {
-        return self.rawValue
-    }
+enum AutoCompleteType {
+    case emoji
+    case username
+    case location
 }
 
 struct AutoComplete {
