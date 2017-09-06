@@ -265,6 +265,20 @@ class AutoCompleteSpec: QuickSpec {
                     }
                 }
 
+                context("with multibyte characters") {
+                    it("returns the correct character range and string") {
+                        let str = "😀 :emoji"
+                        let result = subject.check(str, location: 6)
+
+                        let startIndex = str.characters.index(str.startIndex, offsetBy: 2)
+                        let endIndex = str.characters.index(str.startIndex, offsetBy: 6)
+
+                        expect(result?.type) == AutoCompleteType.emoji
+                        expect(result?.range) == startIndex..<endIndex
+                        expect(result?.text) == ":emo"
+                    }
+                }
+
                 context("end of emoji") {
                     it("returns nil") {
                         let str = "start :emoji:"
