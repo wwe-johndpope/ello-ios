@@ -71,7 +71,7 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
 
         let isOpen = config.status == .open
 
-        if config.hasCurrentUser {
+        if config.hasCurrentUser && isOpen {
             submitVisibleConstraint.activate()
             submitHiddenConstraint.deactivate()
             submitButton.isHidden = false
@@ -79,7 +79,7 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
         else {
             submitVisibleConstraint.deactivate()
             submitHiddenConstraint.activate()
-            submitButton.isHidden = !isOpen
+            submitButton.isHidden = true
         }
     }
 }
