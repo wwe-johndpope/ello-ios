@@ -69,6 +69,8 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
         let html = StreamTextCellHTML.postHTML(config.longDescription)
         descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
 
+        let isOpen = config.status == .open
+
         if config.hasCurrentUser {
             submitVisibleConstraint.activate()
             submitHiddenConstraint.deactivate()
@@ -77,7 +79,7 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
         else {
             submitVisibleConstraint.deactivate()
             submitHiddenConstraint.activate()
-            submitButton.isHidden = true
+            submitButton.isHidden = !isOpen
         }
     }
 }
