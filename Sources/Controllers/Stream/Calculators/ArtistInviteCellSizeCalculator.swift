@@ -140,8 +140,16 @@ class ArtistInviteCellSizeCalculator: NSObject {
     }
 
     fileprivate func assignControlsHeight(_ cellItem: StreamCellItem, _ height: CGFloat, hasCurrentUser: Bool) -> CGFloat {
+        let isOpen: Bool
+        if let artistInvite = cellItem.jsonable as? ArtistInvite {
+            isOpen = artistInvite.status == .open
+        }
+        else {
+            isOpen = false
+        }
+
         var totalHeight = height
-        if hasCurrentUser {
+        if hasCurrentUser && isOpen {
             totalHeight += ArtistInviteControlsCell.Size.controlsHeight
         }
         else {
