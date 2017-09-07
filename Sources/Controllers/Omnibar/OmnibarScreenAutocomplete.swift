@@ -47,14 +47,14 @@ extension OmnibarScreen: UITextViewDelegate {
             return false
         }
 
-        if var text = textView.text {
-            if let range = text.rangeFromNSRange(nsrange) {
-                text = text.replacingCharacters(in: range, with: replacementText)
-            }
+        if var text = textView.text,
+            let range = text.rangeFromNSRange(nsrange)
+        {
+            text = text.replacingCharacters(in: range, with: replacementText)
 
-            var cursorLocation = nsrange.location
-            cursorLocation += replacementText.characters.count
-            throttleAutoComplete(textView, text: text, location: cursorLocation)
+            var location: Int = text.characters.distance(from: text.characters.startIndex, to: range.lowerBound)
+            location += replacementText.characters.count
+            throttleAutoComplete(textView, text: text, location: location)
         }
         return true
     }
