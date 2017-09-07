@@ -116,7 +116,7 @@ final class PostDetailViewController: StreamableViewController {
 
         var rightBarButtonItems: [UIBarButtonItem] = []
 
-        if isOwnPost() {
+        if isOwnerOfPost() {
             rightBarButtonItems = [
                 UIBarButtonItem(image: .xBox, target: self, action: #selector(PostDetailViewController.deletePost)),
                 UIBarButtonItem(image: .pencil, target: self, action: #selector(PostDetailViewController.editPostAction)),
@@ -160,11 +160,11 @@ final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    fileprivate func isOwnPost() -> Bool {
+    fileprivate func isOwnerOfPost() -> Bool {
         guard let post = post, let currentUser = currentUser else {
             return false
         }
-        return currentUser.isOwn(post: post)
+        return currentUser.isOwnerOf(post: post)
     }
 
     func flagPost() {
@@ -177,7 +177,7 @@ final class PostDetailViewController: StreamableViewController {
     }
 
     func editPostAction() {
-        guard let post = post, isOwnPost() else {
+        guard let post = post, isOwnerOfPost() else {
             return
         }
 
@@ -185,7 +185,7 @@ final class PostDetailViewController: StreamableViewController {
     }
 
     func deletePost() {
-        guard let post = post, let currentUser = currentUser, isOwnPost() else {
+        guard let post = post, let currentUser = currentUser, isOwnerOfPost() else {
             return
         }
 
@@ -274,7 +274,7 @@ extension PostDetailViewController: PostDetailStreamDestination {
 
         setupNavigationItems()
 
-        if isOwnPost() {
+        if isOwnerOfPost() {
             showNavBars()
         }
     }

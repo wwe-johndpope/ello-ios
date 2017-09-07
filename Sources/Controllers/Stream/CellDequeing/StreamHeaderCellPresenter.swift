@@ -24,6 +24,7 @@ struct StreamHeaderCellPresenter {
         cell.close()
         cell.ownPost = false
         cell.ownComment = false
+        cell.canDeleteComment = false
         cell.isGridLayout = isGridView
 
         switch streamKind {
@@ -36,10 +37,13 @@ struct StreamHeaderCellPresenter {
         if let currentUser = currentUser,
             let comment = streamCellItem.jsonable as? ElloComment
         {
-            if currentUser.isOwn(comment: comment) {
+            if currentUser.isOwnerOf(comment: comment) {
                 cell.ownComment = true
             }
-            else if currentUser.isOwnParentPost(comment: comment) {
+            else if AuthToken().isStaff {
+                cell.canDeleteComment = true
+            }
+            else if currentUser.isOwnerOfParentPost(comment: comment) {
                 cell.ownPost = true
             }
         }

@@ -25,6 +25,12 @@ class StreamHeaderCell: UICollectionViewCell {
         }
     }
 
+    var canDeleteComment = false {
+        didSet {
+            self.updateItems()
+        }
+    }
+
     var followButtonVisible = false {
         didSet {
             setNeedsLayout()
@@ -207,6 +213,11 @@ class StreamHeaderCell: UICollectionViewCell {
         if ownComment {
             bottomToolBar.items = [
                 flexibleItem(), editItem, deleteItem, fixedItem(-10)
+            ]
+        }
+        else if canDeleteComment {
+            bottomToolBar.items = [
+                flexibleItem(), deleteItem, fixedItem(-10)
             ]
         }
         else if ownPost {
