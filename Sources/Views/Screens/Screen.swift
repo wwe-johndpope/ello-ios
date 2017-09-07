@@ -56,7 +56,7 @@ class Screen: UIView {
 
         if newWindow != nil && window == nil {
             setupKeyboardObservers()
-            keyboardWillChange(Keyboard.shared)
+            keyboardWillChange(Keyboard.shared, animated: false)
         }
         else if newWindow == nil && window != nil {
             teardownKeyboardObservers()
@@ -64,8 +64,8 @@ class Screen: UIView {
     }
 
     fileprivate func setupKeyboardObservers() {
-        keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: keyboardWillChange)
-        keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: keyboardWillChange)
+        keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: keyboardWillChangeAnimated)
+        keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: keyboardWillChangeAnimated)
     }
 
     fileprivate func teardownKeyboardObservers() {
@@ -75,9 +75,13 @@ class Screen: UIView {
         keyboardWillHideObserver = nil
     }
 
-    func keyboardWillChange(_ keyboard: Keyboard) {
+    func keyboardWillChangeAnimated(_ keyboard: Keyboard) {
+        keyboardWillChange(keyboard, animated: true)
+    }
+
+    func keyboardWillChange(_ keyboard: Keyboard, animated: Bool) {
         let bottomInset = keyboard.keyboardBottomInset(inView: self)
-        animate(duration: keyboard.duration, options: keyboard.options, completion: { _ in self.keyboardDidAnimate() }) {
+        animate(duration: keyboard.duration, options: keyboard.options, animated: animated) {
             self.keyboardTopConstraint.update(offset: -bottomInset)
             self.keyboardIsAnimating(keyboard)
             self.layoutIfNeeded()
@@ -85,7 +89,6 @@ class Screen: UIView {
     }
 
     func keyboardIsAnimating(_ keyboard: Keyboard) {}
-    func keyboardDidAnimate() {}
 
     fileprivate func screenInit() {
         keyboardAnchor.snp.makeConstraints { make in

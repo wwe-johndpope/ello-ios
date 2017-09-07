@@ -41,7 +41,7 @@ class LoginScreenSpec: QuickSpec {
                 beforeEach {
                     Keyboard.shared.active = true
                     Keyboard.shared.bottomInset = 216
-                    subject.keyboardWillChange(Keyboard.shared)
+                    subject.keyboardWillChange(Keyboard.shared, animated: false)
                 }
                 afterEach {
                     Keyboard.shared.active = false

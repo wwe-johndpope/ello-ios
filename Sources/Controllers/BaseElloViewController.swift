@@ -12,6 +12,8 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     fileprivate var statusBarVisibilityObserver: NotificationObserver?
 
     func showStatusBar(_ visible: Bool) {
+        guard statusBarVisibility != visible else { return }
+
         statusBarVisibility = visible
         animate {
             self.setNeedsStatusBarAppearanceUpdate()
