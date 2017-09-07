@@ -234,6 +234,7 @@ struct InterfaceString {
             return String.localizedStringWithFormat("There was a problem loading the image\n%@", url.absoluteString)
         }
         static let CreatedPost: String = NSLocalizedString("Post successfully created!", comment: "")
+        static let CreatedComment: String = NSLocalizedString("Comment successfully created!", comment: "")
         static let SellYourWorkTitle: String = NSLocalizedString("Sell your work", comment: "Sell your work title")
         static let ProductLinkPlaceholder: String = NSLocalizedString("Product detail URL", comment: "Product detail URL prompt")
     }

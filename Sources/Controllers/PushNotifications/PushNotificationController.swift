@@ -94,9 +94,9 @@ extension PushNotificationController {
         let app = UIApplication.shared
 
         if #available(iOS 10.0, *){
-            let replyAction = UNTextInputNotificationAction(identifier: PushActions.commentReply, title: InterfaceString.PushNotifications.CommentReply, options: [.authenticationRequired], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
-            let messageAction = UNTextInputNotificationAction(identifier: PushActions.messageUser, title: InterfaceString.PushNotifications.MessageUser, options: [.authenticationRequired], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
-            let commentAction = UNTextInputNotificationAction(identifier: PushActions.postComment, title: InterfaceString.PushNotifications.PostComment, options: [.authenticationRequired], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
+            let replyAction = UNTextInputNotificationAction(identifier: PushActions.commentReply, title: InterfaceString.PushNotifications.CommentReply, options: [.authenticationRequired, .foreground], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
+            let messageAction = UNTextInputNotificationAction(identifier: PushActions.messageUser, title: InterfaceString.PushNotifications.MessageUser, options: [.authenticationRequired, .foreground], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
+            let commentAction = UNTextInputNotificationAction(identifier: PushActions.postComment, title: InterfaceString.PushNotifications.PostComment, options: [.authenticationRequired, .foreground], textInputButtonTitle: InterfaceString.Send, textInputPlaceholder: "")
             let loveAction = UNNotificationAction(identifier: PushActions.lovePost, title: InterfaceString.PushNotifications.LovePost, options: [.authenticationRequired])
             let followAction = UNNotificationAction(identifier: PushActions.followUser, title: InterfaceString.PushNotifications.FollowUser, options: [.authenticationRequired])
             let viewAction = UNNotificationAction(identifier: PushActions.view, title: InterfaceString.PushNotifications.View, options: [.authenticationRequired, .foreground])
@@ -154,14 +154,11 @@ extension PushNotificationController {
 
             switch action ?? PushActions.view {
             case PushActions.postComment:
-                if case .pushNotificationPost = type,
-                    let text = userInfo[PushActions.userInputKey] as? String
-                {
+                if let text = userInfo[PushActions.userInputKey] as? String {
                     actionPostComment(postId: data, text: text)
                 }
             case PushActions.commentReply:
-                if case .pushNotificationComment = type,
-                    let userId = payload.destinationUserId,
+                if let userId = payload.destinationUserId,
                     let text = userInfo[PushActions.userInputKey] as? String
                 {
                     actionPostCommentReply(userId: userId, postId: data, text: text)
@@ -214,7 +211,17 @@ extension PushNotificationController {
                 else {
                     postText = "\(user.atName) \(text)"
                 }
-                postEditingService.create(content: [.text(postText)]).ignoreErrors()
+                postEditingService.create(content: [.text(postText)])
+                    .thenFinally { _ in
+                        if postEditingService.parentPostId == nil {
+                            NotificationBanner.displayAlert(message: InterfaceString.Omnibar.CreatedPost)
+                        }
+                        else {
+                            NotificationBanner.displayAlert(message: InterfaceString.Omnibar.CreatedComment)
+                        }
+                        postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
+                    }
+                    .ignoreErrors()
             }
             .ignoreErrors()
     }
