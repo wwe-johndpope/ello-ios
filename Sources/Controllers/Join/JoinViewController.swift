@@ -101,7 +101,7 @@ extension JoinViewController: JoinDelegate {
                     }
                     .catch { error in
                         Tracker.shared.joinFailed()
-                        let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
+                        let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
                         self.screen.showError(errorTitle)
                         joinAborted()
                     }
@@ -201,7 +201,7 @@ extension JoinViewController {
                 }
             }
             .catch { error in
-                let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
+                let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
                 self.screen.showEmailError(errorTitle)
                 completion(false)
             }
@@ -229,7 +229,7 @@ extension JoinViewController {
                 }
             }
             .catch { error in
-                let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
+                let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
                 self.screen.showUsernameError(errorTitle)
                 self.screen.hideMessage()
                 completion(false)

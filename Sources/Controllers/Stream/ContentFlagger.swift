@@ -37,7 +37,7 @@ class ContentFlagger {
                     self.isContentFlagged = true
                 }
                 .catch { error in
-                    let message = (error as NSError).elloErrorMessage ?? error.localizedDescription
+                    let message = error.elloErrorMessage ?? error.localizedDescription
                     Tracker.shared.contentFlaggingFailed(self.contentType, message: message, contentId: self.flaggableId)
                     self.isContentFlagged = false
                 }

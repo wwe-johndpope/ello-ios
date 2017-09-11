@@ -151,10 +151,14 @@ extension PushNotificationController {
         }
         else {
             let (type, data) = ElloURI.match(payload.applicationTarget)
+            log(comment: "--- 154 type", object: type)
+            log(comment: action ?? PushActions.view, object: nil)
 
             switch action ?? PushActions.view {
             case PushActions.postComment, PushActions.commentReply:
+                log(comment: "--- 159", object: nil)
                 if let text = userInfo[PushActions.userInputKey] as? String {
+                    log(comment: "--- 161", object: nil)
                     actionPostComment(postId: data, text: text)
                 }
             case PushActions.messageUser:
@@ -199,8 +203,10 @@ extension PushNotificationController {
     }
 
     private func actionSendMessage(text: String, postEditingService: PostEditingService) {
+        log(comment: "--- 206", object: nil)
         postEditingService.create(content: [.text(text)])
             .thenFinally { _ in
+                log(comment: "--- 209", object: nil)
                 let message: String
                 if postEditingService.parentPostId == nil {
                     message = InterfaceString.Omnibar.CreatedPost
@@ -210,6 +216,9 @@ extension PushNotificationController {
                 }
                 NotificationBanner.displayAlert(message: message)
                 postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
+            }
+            .catch { err in
+                log(comment: "--- 221 ERROR \(err.elloErrorMessage ?? "unknown")", object: err)
             }
             .ignoreErrors()
     }

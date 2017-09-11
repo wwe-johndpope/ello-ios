@@ -34,7 +34,7 @@ extension ForgotPasswordEmailViewController: ForgotPasswordEmailDelegate {
                 }
                 .catch { error in
                     self.screen.loadingHUD(visible: false)
-                    let errorTitle = (error as NSError).elloErrorMessage ?? InterfaceString.UnknownError
+                    let errorTitle = error.elloErrorMessage ?? InterfaceString.UnknownError
                     self.screen.showEmailError(errorTitle)
                 }
         }

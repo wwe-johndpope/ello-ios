@@ -2,7 +2,6 @@
 ///  FreeMethods.swift
 //
 
-#if DEBUG
 var messages: [(String, String)] = []
 func log(comment: String, object: Any?) {
     if let object = object {
@@ -17,10 +16,6 @@ func getlog() -> [(String, String)] {
     messages.removeAll()
     return m
 }
-#else
-func log(comment: String, object: Any?) {}
-func getlog() -> [(String, String)] { return [] }
-#endif
 
 
 // MARK: Animations
