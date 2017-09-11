@@ -131,7 +131,14 @@ extension OnboardingCreatorTypeViewController: OnboardingStepController {
     func onboardingStepBegin() {
         onboardingViewController?.hasAbortButton = false
         onboardingViewController?.canGoNext = false
-        onboardingViewController?.prompt = InterfaceString.Onboard.CreateAccount
+
+        let onboardingVersion = currentUser?.onboardingVersion ?? 0
+        if onboardingVersion < Onboarding.minCreatorTypeVersion {
+            onboardingViewController?.prompt = InterfaceString.Onboard.CreateAccount
+        }
+        else {
+            onboardingViewController?.prompt = InterfaceString.Onboard.ImDone
+        }
     }
 
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {

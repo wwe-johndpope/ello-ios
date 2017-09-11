@@ -227,13 +227,25 @@ extension OnboardingViewController {
 extension OnboardingViewController {
 
     func goToNextStep() {
-        self.visibleViewControllerIndex += 1
+        visibleViewControllerIndex += 1
 
-        if let nextViewController = onboardingViewControllers.safeValue(visibleViewControllerIndex) {
-            goToController(nextViewController, direction: .right)
-        }
+        guard
+            let nextViewController = onboardingViewControllers.safeValue(visibleViewControllerIndex)
         else {
             doneOnboarding()
+            return
+        }
+
+        if let onboardingVersion = currentUser?.onboardingVersion,
+            onboardingVersion >= Onboarding.minCreatorTypeVersion
+        {
+            doneOnboarding()
+        }
+        else {
+            // onboarding can be considered "done", even if they abort the app
+            Onboarding.shared.updateVersionToLatest()
+
+            goToController(nextViewController, direction: .right)
         }
     }
 
