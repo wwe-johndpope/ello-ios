@@ -5,29 +5,29 @@
 import SwiftyUserDefaults
 
 
-private let _sharedInstance = Onboarding()
-private let _currentVersion = 2
 
 class Onboarding {
-    static var currentVersion: Int {
-        return _currentVersion
-    }
+    static let currentVersion = 3
+    static let minCreatorTypeVersion = 3
+    static let shared = Onboarding()
 
     func updateVersionToLatest() {
-        ProfileService().updateUserProfile([.webOnboardingVersion: _currentVersion])
+        ProfileService().updateUserProfile([.webOnboardingVersion: Onboarding.currentVersion])
             .ignoreErrors()
     }
 
-    class func shared() -> Onboarding {
-        return _sharedInstance
-    }
-
-    init() {
-    }
-
-    // only show if webVersion is nil
-    func showOnboarding(_ user: User) -> Bool {
+    // only show if onboardingVersion is nil
+    func shouldShowOnboarding(_ user: User) -> Bool {
         return user.onboardingVersion == nil
+    }
+
+    // only show if onboardingVersion is set and < 3
+    // (if it isn't set, we will show the entire onboarding flow)
+    func shouldShowCreatorType(_ user: User) -> Bool {
+        if let onboardingVersion = user.onboardingVersion {
+            return onboardingVersion < 3
+        }
+        return false
     }
 
 }

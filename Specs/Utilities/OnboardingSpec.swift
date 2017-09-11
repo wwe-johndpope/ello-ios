@@ -11,47 +11,30 @@ import SwiftyUserDefaults
 class OnboardingSpec: QuickSpec {
     override func spec() {
         describe("Onboarding") {
-            let expectations: [(localIsCurrent: Bool, webIsCurrent: Bool?, showOnboarding: Bool)] = [
-                (localIsCurrent: true, webIsCurrent: nil, showOnboarding: true),
-                (localIsCurrent: true, webIsCurrent: false, showOnboarding: false),
-                (localIsCurrent: true, webIsCurrent: true, showOnboarding: false),
-                (localIsCurrent: false, webIsCurrent: nil, showOnboarding: true),
-                (localIsCurrent: false, webIsCurrent: false, showOnboarding: false),
-                (localIsCurrent: false, webIsCurrent: true, showOnboarding: false),
+            let expectations: [(currentValue: Int?, shouldShowOnboarding: Bool, shouldShowCreatorType: Bool)] = [
+                (currentValue: nil, shouldShowOnboarding: true, shouldShowCreatorType: false),
+                (currentValue: Onboarding.currentVersion - 1, shouldShowOnboarding: false, shouldShowCreatorType: true),
+                (currentValue: Onboarding.currentVersion, shouldShowOnboarding: false, shouldShowCreatorType: false),
             ]
-            for (localIsCurrent, webIsCurrent, showOnboarding) in expectations {
-                let title1: String
-                if localIsCurrent { title1 = "localVersion is currentVersion" }
-                else { title1 = "localVersion less than currentVersion" }
-                let title2: String
-                switch webIsCurrent {
-                case .none:        title2 = "webVersion is nil"
-                case .some(true):  title2 = "webVersion is currentVersion"
-                case .some(false): title2 = "webVersion less than currentVersion"
+            for (currentValue, shouldShowOnboarding, shouldShowCreatorType) in expectations {
+                let value = currentValue.map { String($0) } ?? "nil"
+                let user: User
+                if let currentValue = currentValue {
+                    user = User.stub(["onboardingVersion": currentValue])
                 }
-                describe("\(title1) and \(title2)") {
-                    it("showOnboarding should be \(showOnboarding)") {
-                        if localIsCurrent {
-                            GroupDefaults["ViewedOnboardingVersion"] = 1
-                        }
-                        else {
-                            GroupDefaults["ViewedOnboardingVersion"] = 0
-                        }
-                        let onboarding = Onboarding()
+                else {
+                    user = User.stub([:])
+                }
 
-                        var props: [String: Any] = [:]
-                        if case let .some(webIsCurrent) = webIsCurrent {
-                            props["onboardingVersion"] = (webIsCurrent ? 1 : 0)
-                        }
-                        let user: User = stub(props)
+                describe("Onboarding.shouldShowOnboarding(\(value))") {
+                    it("should be \(shouldShowOnboarding)") {
+                        expect(Onboarding.shared.shouldShowOnboarding(user)) == shouldShowOnboarding
+                    }
+                }
 
-                        if let webIsCurrent = webIsCurrent {
-                            expect(user.onboardingVersion ?? -1) == (webIsCurrent ? 1 : 0)
-                        }
-                        else {
-                            expect(user.onboardingVersion).to(beNil())
-                        }
-                        expect(onboarding.showOnboarding(user)) == showOnboarding
+                describe("Onboarding.shouldShowCreatorType(\(value))") {
+                    it("should be \(shouldShowCreatorType)") {
+                        expect(Onboarding.shared.shouldShowCreatorType(user)) == shouldShowCreatorType
                     }
                 }
             }

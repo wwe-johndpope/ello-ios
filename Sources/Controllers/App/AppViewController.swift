@@ -116,9 +116,13 @@ class AppViewController: BaseElloViewController {
                 self.screen.stopAnimatingLogo()
                 self.currentUser = user
 
-                let shouldShowOnboarding = Onboarding.shared().showOnboarding(user)
+                let shouldShowOnboarding = Onboarding.shared.shouldShowOnboarding(user)
+                let shouldShowCreatorType = Onboarding.shared.shouldShowCreatorType(user)
                 if shouldShowOnboarding {
                     self.showOnboardingScreen(user)
+                }
+                else if shouldShowCreatorType {
+                    self.showCreatorTypeScreen(user)
                 }
                 else {
                     self.showMainScreen(user)
@@ -266,8 +270,17 @@ extension AppViewController {
     }
 
     func doneOnboarding() {
-        Onboarding.shared().updateVersionToLatest()
+        Onboarding.shared.updateVersionToLatest()
         self.showMainScreen(currentUser!)
+    }
+
+    func showCreatorTypeScreen(_ user: User) {
+        currentUser = user
+
+        let vc = OnboardingViewController()
+        vc.currentUser = user
+
+        swapViewController(vc) {}
     }
 
     func showMainScreen(_ user: User) {

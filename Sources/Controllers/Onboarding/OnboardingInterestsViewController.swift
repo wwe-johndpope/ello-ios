@@ -72,9 +72,6 @@ extension OnboardingInterestsViewController: OnboardingStepController {
             .thenFinally { [weak self] _ in
                 guard let `self` = self else { return }
 
-                // onboarding can be considered "done", even if they abort the app
-                Onboarding.shared().updateVersionToLatest()
-
                 self.onboardingData.categories = categories
                 proceedClosure(.continue)
             }
