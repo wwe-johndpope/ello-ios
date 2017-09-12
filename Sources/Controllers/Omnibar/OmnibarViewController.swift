@@ -436,13 +436,14 @@ extension OmnibarViewController {
             }
             .catch { error in
                 self.stopSpinner()
-                self.contentCreationFailed((error as NSError).elloErrorMessage ?? error.localizedDescription)
+                self.contentCreationFailed(error.elloErrorMessage ?? error.localizedDescription)
 
                 if let vc = self.parent as? ElloTabBarController, didGoToPreviousTab {
                     vc.selectedTab = .omnibar
                 }
             }
             .always { _ in
+                log(comment: "authtoken", object: AuthToken().token)
                 postNotification(NewContentNotifications.resume, value: ())
             }
     }

@@ -153,15 +153,9 @@ extension PushNotificationController {
             let (type, data) = ElloURI.match(payload.applicationTarget)
 
             switch action ?? PushActions.view {
-            case PushActions.postComment:
+            case PushActions.postComment, PushActions.commentReply:
                 if let text = userInfo[PushActions.userInputKey] as? String {
                     actionPostComment(postId: data, text: text)
-                }
-            case PushActions.commentReply:
-                if let userId = payload.destinationUserId,
-                    let text = userInfo[PushActions.userInputKey] as? String
-                {
-                    actionPostCommentReply(userId: userId, postId: data, text: text)
                 }
             case PushActions.messageUser:
                 guard let text = userInfo[PushActions.userInputKey] as? String else { return }
@@ -169,39 +163,27 @@ extension PushNotificationController {
                 if case .pushNotificationUser = type {
                     actionMessageUser(userId: data, text: text)
                 }
-                else if let userId = payload.destinationUserId {
-                    actionMessageUser(userId: userId, text: text)
-                }
             case PushActions.followUser:
                 if case .pushNotificationUser = type {
                     actionFollowUser(userId: data)
-                }
-                else if let userId = payload.destinationUserId {
-                    actionFollowUser(userId: userId)
                 }
             case PushActions.lovePost:
                 if type == .pushNotificationPost || type == .pushNotificationComment {
                     actionLovePost(postId: data)
                 }
             default:
-                postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+                break
             }
+
+            postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
         }
     }
 
     private func actionPostComment(postId: String, text: String) {
-        PostEditingService(parentPostId: postId).create(content: [.text(text)]).ignoreErrors()
-    }
-
-    private func actionPostCommentReply(userId: String, postId: String, text: String) {
-        actionSendMessage(userId: userId, text: text, postEditingService: PostEditingService(parentPostId: postId))
+        actionSendMessage(text: text, postEditingService: PostEditingService(parentPostId: postId))
     }
 
     private func actionMessageUser(userId: String, text: String) {
-        actionSendMessage(userId: userId, text: text, postEditingService: PostEditingService())
-    }
-
-    private func actionSendMessage(userId: String, text: String, postEditingService: PostEditingService) {
         UserService().loadUser(.userStream(userParam: userId))
             .thenFinally { user in
                 let postText: String
@@ -211,17 +193,28 @@ extension PushNotificationController {
                 else {
                     postText = "\(user.atName) \(text)"
                 }
-                postEditingService.create(content: [.text(postText)])
-                    .thenFinally { _ in
-                        if postEditingService.parentPostId == nil {
-                            NotificationBanner.displayAlert(message: InterfaceString.Omnibar.CreatedPost)
-                        }
-                        else {
-                            NotificationBanner.displayAlert(message: InterfaceString.Omnibar.CreatedComment)
-                        }
-                        postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
-                    }
-                    .ignoreErrors()
+                self.actionSendMessage(text: postText, postEditingService: PostEditingService())
+            }
+            .ignoreErrors()
+    }
+
+    private func actionSendMessage(text: String, postEditingService: PostEditingService) {
+        postEditingService.create(content: [.text(text)])
+            .thenFinally { _ in
+                let message: String
+                if postEditingService.parentPostId == nil {
+                    message = InterfaceString.Omnibar.CreatedPost
+                }
+                else {
+                    message = InterfaceString.Omnibar.CreatedComment
+                }
+                NotificationBanner.displayAlert(message: message)
+                postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
+            }
+            .catch { _ in
+                if postEditingService.parentPostId != nil {
+                    NotificationBanner.displayAlert(message: InterfaceString.Omnibar.CannotComment)
+                }
             }
             .ignoreErrors()
     }

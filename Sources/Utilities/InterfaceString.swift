@@ -229,6 +229,7 @@ struct InterfaceString {
         static let EditCommentButton: String = NSLocalizedString("Edit Comment", comment: "")
         static let CreateCommentTitle: String = NSLocalizedString("Leave a comment", comment: "")
         static let CreateCommentButton: String = NSLocalizedString("Comment", comment: "")
+        static let CannotComment: String = NSLocalizedString("This user has disabled comments.", comment: "")
         static let TooLongError: String = NSLocalizedString("Your text is too long.\n\nThe character limit is 5,000.", comment: "Post too long (maximum characters is 5000) error message")
         static func LoadingImageError(url: URL) -> String {
             return String.localizedStringWithFormat("There was a problem loading the image\n%@", url.absoluteString)
