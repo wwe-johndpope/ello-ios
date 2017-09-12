@@ -153,6 +153,7 @@ extension PushNotificationController {
             let (type, data) = ElloURI.match(payload.applicationTarget)
             log(comment: "--- 154 type", object: type)
             log(comment: action ?? PushActions.view, object: nil)
+            log(comment: "authtoken", object: AuthToken().token)
 
             switch action ?? PushActions.view {
             case PushActions.postComment, PushActions.commentReply:
@@ -218,7 +219,8 @@ extension PushNotificationController {
                 postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
             }
             .catch { err in
-                log(comment: "--- 221 ERROR \(err.elloErrorMessage ?? "unknown")", object: err)
+                log(comment: "--- 221 ERROR", object: err.elloErrorMessage)
+                log(comment: "authtoken", object: AuthToken().token)
             }
             .ignoreErrors()
     }

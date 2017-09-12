@@ -443,6 +443,7 @@ extension OmnibarViewController {
                 }
             }
             .always { _ in
+                log(comment: "authtoken", object: AuthToken().token)
                 postNotification(NewContentNotifications.resume, value: ())
             }
     }
