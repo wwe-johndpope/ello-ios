@@ -2128,6 +2128,7 @@
 		1DFC26A81AF297150051D491 /* NSErrorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrorExtensions.swift; sourceTree = "<group>"; };
 		1DFC5DC21AAB56AD008DA855 /* ElloAttributedStringSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloAttributedStringSpec.swift; sourceTree = "<group>"; };
 		1DFC5DC61AACBFE4008DA855 /* create-post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "create-post.json"; sourceTree = "<group>"; };
+		1DFF09591F69DA280012F524 /* IDETemplateMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = IDETemplateMacros.plist; path = Ello.xcworkspace/xcshareddata/IDETemplateMacros.plist; sourceTree = "<group>"; };
 		1DFF43511A8D520E00D43CFF /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ello.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C261EFB7364350D4876F32B /* Pods-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -3142,7 +3143,6 @@
 				12F6AE341A43391400493660 /* Model */,
 				1207C9491C73FEB400939ADB /* Networking */,
 				1D7152B61D6E5037005998FE /* Extensions-Bridging-Header.h */,
-				12F6AE3F1A43394600493660 /* Storyboards */,
 				12F6AE421A43395E00493660 /* Styling */,
 				1267C7321BA232530000D809 /* ThirdParty */,
 				12F6AE5E1A4339B600493660 /* Utilities */,
@@ -3372,13 +3372,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		12F6AE3F1A43394600493660 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storyboards;
-			sourceTree = "<group>";
-		};
 		12F6AE421A43395E00493660 /* Styling */ = {
 			isa = PBXGroup;
 			children = (
@@ -3585,6 +3578,7 @@
 		12FEBCF81A4225F500933A02 = {
 			isa = PBXGroup;
 			children = (
+				1DFF09591F69DA280012F524 /* IDETemplateMacros.plist */,
 				12F0E3AC1A4333370012CEA2 /* Sources */,
 				124CFB981C5976E500727D11 /* ShareExtension */,
 				1D447EA11F3A693100013384 /* NotificationServiceExtension */,
