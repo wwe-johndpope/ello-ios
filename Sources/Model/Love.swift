@@ -20,11 +20,11 @@ final class Love: JSONAble, PostActionable {
     let userId: String
 
     var post: Post? {
-        return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .postsType) as? Post
+        return ElloLinkedStore.shared.getObject(self.postId, type: .postsType) as? Post
     }
 
     var user: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.userId, type: .usersType) as? User
+        return ElloLinkedStore.shared.getObject(self.userId, type: .usersType) as? User
     }
 
 // MARK: Initialization

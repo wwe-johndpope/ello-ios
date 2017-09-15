@@ -28,7 +28,7 @@ final class PostDetailViewController: StreamableViewController {
         self.postParam = postParam
         super.init(nibName: nil, bundle: nil)
         if self.post == nil {
-            if let post = ElloLinkedStore.sharedInstance.getObject(self.postParam, type: .postsType) as? Post {
+            if let post = ElloLinkedStore.shared.getObject(self.postParam, type: .postsType) as? Post {
                 self.post = post
             }
         }

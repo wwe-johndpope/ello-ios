@@ -25,13 +25,13 @@ final class ElloComment: JSONAble, Authorable, Groupable {
         return getLinkArray("assets") as? [Asset] ?? []
     }
     var author: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.authorId, type: .usersType) as? User
+        return ElloLinkedStore.shared.getObject(self.authorId, type: .usersType) as? User
     }
     var parentPost: Post? {
-        return ElloLinkedStore.sharedInstance.getObject(self.postId, type: .postsType) as? Post
+        return ElloLinkedStore.shared.getObject(self.postId, type: .postsType) as? Post
     }
     var loadedFromPost: Post? {
-        return (ElloLinkedStore.sharedInstance.getObject(self.loadedFromPostId, type: .postsType) as? Post) ?? parentPost
+        return (ElloLinkedStore.shared.getObject(self.loadedFromPostId, type: .postsType) as? Post) ?? parentPost
     }
     // computed properties
     var groupId: String { return "Post-\(postId)" }

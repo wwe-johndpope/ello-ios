@@ -43,7 +43,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
         case let .announcementsNewContent(createdAt):
-            return "announcementsNewContent(createdAt: \(String(describing: createdAt)))"
+            return "announcementsNewContent(createdAt: \(createdAt ?? Date()))"
         case let .artistInviteDetail(id):
             return "artistInviteDetail(id: \(id))"
         case let .commentDetail(postId, commentId):
@@ -77,7 +77,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .flagUser(userId, kind):
             return "flagUser(userId: \(userId), kind: \(kind))"
         case let .followingNewContent(createdAt):
-            return "followingNewContent(createdAt: \(String(describing: createdAt)))"
+            return "followingNewContent(createdAt: \(createdAt ?? Date())"
         case let .hire(userId, body):
             return "hire(userId: \(userId), body: \(body.characters.count))"
         case let .collaborate(userId, body):
@@ -93,7 +93,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .locationAutoComplete(terms):
             return "locationAutoComplete(terms: \(terms))"
         case let .notificationsNewContent(createdAt):
-            return "notificationsNewContent(createdAt: \(String(describing: createdAt)))"
+            return "notificationsNewContent(createdAt: \(createdAt ?? Date()))"
         case let .requestPasswordReset(email):
             return "requestPasswordReset(email: \(email))"
         case let .resetPassword(password, authToken):
@@ -103,7 +103,9 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .postDetail(postParam):
             return "postDetail(postParam: \(postParam))"
         case let .postViews(streamId, streamKind, postTokens, currentUserId):
-            return "postViews(streamId: \(String(describing: streamId)), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(String(describing: currentUserId)))"
+            return "postViews(streamId: \(streamId ?? "nil"), streamKind: \(streamKind), postTokens: \(postTokens), currentUserId: \(currentUserId ?? "nil"))"
+        case let .promotionalViews(tokens):
+            return "promotionalViews(tokens: \(tokens))"
         case let .postLovers(postId):
             return "postLovers(postId: \(postId))"
         case let .postRelatedPosts(postId):
@@ -196,6 +198,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case .postReplyAll: return "postReplyAll"
         case .postReposters: return "postReposters"
         case .postViews: return "postViews"
+        case .promotionalViews: return "promotionalViews"
         case .profileUpdate: return "profileUpdate"
         case .profileDelete: return "profileDelete"
         case .profileToggles: return "profileToggles"

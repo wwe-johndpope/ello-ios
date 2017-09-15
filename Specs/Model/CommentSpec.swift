@@ -12,8 +12,8 @@ class CommentSpec: QuickSpec {
 
             it("parses correctly") {
                 // add stubs for references in json
-                ElloLinkedStore.sharedInstance.setObject(Post.stub(["id": "79"]), forKey: "79", type: .postsType)
-                ElloLinkedStore.sharedInstance.setObject(User.stub(["userId": "420"]), forKey: "420", type: .usersType)
+                ElloLinkedStore.shared.setObject(Post.stub(["id": "79"]), forKey: "79", type: .postsType)
+                ElloLinkedStore.shared.setObject(User.stub(["userId": "420"]), forKey: "420", type: .usersType)
 
                 let parsedComment = stubbedJSONData("comments_comment_details", "comments")
 

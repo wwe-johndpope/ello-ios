@@ -350,7 +350,7 @@ extension ElloProvider {
         }
 
         if let linked = dict["linked"] as? [String:[[String:Any]]] {
-            ElloLinkedStore.sharedInstance.parseLinked(linked, completion: completion)
+            ElloLinkedStore.shared.parseLinked(linked, completion: completion)
         }
         else {
             completion()

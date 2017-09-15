@@ -228,7 +228,7 @@ class OmnibarViewControllerSpec: QuickSpec {
                 }
 
                 it("sets the watching property of the parent post to true after submitting the post") {
-                    let parentPost = ElloLinkedStore.sharedInstance.getObject(post.id, type: .postsType) as! Post
+                    let parentPost = ElloLinkedStore.shared.getObject(post.id, type: .postsType) as! Post
                     expect(parentPost.isWatching) == true
                 }
             }

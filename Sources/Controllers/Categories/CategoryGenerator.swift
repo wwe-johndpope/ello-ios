@@ -159,6 +159,7 @@ private extension CategoryGenerator {
                 self.category = category
                 self.destination?.setPrimary(jsonable: category)
                 self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+
                 doneOperation.run()
             }
             .catch { [weak self] _ in

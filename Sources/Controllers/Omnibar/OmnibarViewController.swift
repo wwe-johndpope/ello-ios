@@ -473,7 +473,7 @@ extension OmnibarViewController {
             if let post = comment.parentPost {
                 PostService().loadPost(post.id)
                     .thenFinally { post in
-                        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+                        ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
                         postNotification(PostChangedNotification, value: (post, .watching))
                         self.stopSpinner()
                     }

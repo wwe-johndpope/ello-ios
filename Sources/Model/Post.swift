@@ -47,7 +47,7 @@ final class Post: JSONAble, Authorable, Groupable {
         return assets.first?.largeOrBest?.url
     }
     var author: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.authorId, type: .usersType) as? User
+        return ElloLinkedStore.shared.getObject(self.authorId, type: .usersType) as? User
     }
     var categories: [Category] {
         guard let categories = getLinkArray("categories") as? [Category] else {

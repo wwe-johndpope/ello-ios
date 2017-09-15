@@ -37,9 +37,9 @@ enum ContentChange {
 
                 // this must happen AFTER the notification, otherwise the
                 // storedPost will be in-memory, and the notification will update the comment count
-                if let storedPost = ElloLinkedStore.sharedInstance.getObject(post.id, type: .postsType) as? Post {
+                if let storedPost = ElloLinkedStore.shared.getObject(post.id, type: .postsType) as? Post {
                     storedPost.commentsCount = count + delta
-                    ElloLinkedStore.sharedInstance.setObject(storedPost, forKey: post.id, type: .postsType)
+                    ElloLinkedStore.shared.setObject(storedPost, forKey: post.id, type: .postsType)
                 }
             }
         }

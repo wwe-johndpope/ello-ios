@@ -64,6 +64,7 @@ indirect enum ElloAPI {
     case postComments(postId: String)
     case postDetail(postParam: String)
     case postViews(streamId: String?, streamKind: String, postIds: Set<String>, currentUserId: String?)
+    case promotionalViews(tokens: Set<String>)
     case postLovers(postId: String)
     case postReplyAll(postId: String)
     case postRelatedPosts(postId: String)
@@ -129,7 +130,8 @@ indirect enum ElloAPI {
              .auth,
              .reAuth,
              .requestPasswordReset,
-             .postViews:
+             .postViews,
+             .promotionalViews:
             return .noContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
         case .announcements:
             return .announcementsType
@@ -251,6 +253,7 @@ extension ElloAPI {
              .postRelatedPosts,
              .postReposters,
              .postViews,
+             .promotionalViews,
              .requestPasswordReset,
              .resetPassword,
              .searchForPosts,
@@ -440,7 +443,7 @@ extension ElloAPI: Moya.TargetType {
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/comments"
         case let .postDetail(postParam):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postParam)"
-        case .postViews:
+        case .postViews, .promotionalViews:
             return "/api/\(ElloAPI.apiVersion)/post_views"
         case let .postLovers(postId):
             return "/api/\(ElloAPI.apiVersion)/posts/\(postId)/lovers"
@@ -544,6 +547,7 @@ extension ElloAPI: Moya.TargetType {
              .notificationsNewContent,
              .profileDelete,
              .postViews,
+             .promotionalViews,
              .pushSubscriptions,
              .flagComment,
              .flagPost,
@@ -819,6 +823,14 @@ extension ElloAPI: Moya.TargetType {
                 },
                 "kind": streamKind,
             ] + streamIdDict + userIdDict
+        case let .promotionalViews(tokens):
+            return [
+                "tokens": tokens.reduce("") { memo, id in
+                    if memo == "" { return id }
+                    else { return "\(memo),\(id)" }
+                },
+                "kind": "promo",
+            ]
         case let .profileUpdate(body):
             return body
         case .pushSubscriptions,

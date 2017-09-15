@@ -218,12 +218,12 @@ class PostbarController: UIResponder, PostbarResponder {
             post.lovesCount = count - 1
         }
         postNotification(PostChangedNotification, value: (post, .loved))
-        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+        ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
 
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount - 1
             postNotification(CurrentUserChangedNotification, value: user)
-            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
+            ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
         }
 
         LovesService().unlovePost(postId: post.id)
@@ -249,12 +249,12 @@ class PostbarController: UIResponder, PostbarResponder {
             post.lovesCount = count + 1
         }
         postNotification(PostChangedNotification, value: (post, .loved))
-        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+        ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
 
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount + 1
             postNotification(CurrentUserChangedNotification, value: user)
-            ElloLinkedStore.sharedInstance.setObject(user, forKey: user.id, type: .usersType)
+            ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
         }
 
         postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
@@ -319,7 +319,7 @@ class PostbarController: UIResponder, PostbarResponder {
         else {
             post.repostsCount = 1
         }
-        ElloLinkedStore.sharedInstance.setObject(post, forKey: post.id, type: .postsType)
+        ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
         postNotification(PostChangedNotification, value: (post, .reposted))
 
         RePostService().repost(post: post)

@@ -16,7 +16,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
     let artistInviteId: String
     let postId: String
     var artistInvite: ArtistInvite? {
-        return ElloLinkedStore.sharedInstance.getObject(self.artistInviteId, type: .artistInvitesType) as? ArtistInvite
+        return ElloLinkedStore.shared.getObject(self.artistInviteId, type: .artistInvitesType) as? ArtistInvite
     }
     let status: Status
     var actions: [Action] = []

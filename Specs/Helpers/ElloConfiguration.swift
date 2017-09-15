@@ -68,7 +68,7 @@ class ElloConfiguration: QuickConfiguration {
             window.rootViewController = UIViewController()
             window.makeKeyAndVisible()
 
-            ElloLinkedStore.sharedInstance.writeConnection.readWrite { transaction in
+            ElloLinkedStore.shared.writeConnection.readWrite { transaction in
                 transaction.removeAllObjectsInAllCollections()
             }
         }
@@ -90,7 +90,7 @@ func stubbedJSONData(_ file: String, _ propertyName: String) -> ([String: Any]) 
     var castJSON = json as! [String: Any]
     let parsedProperty = castJSON[propertyName] as! [String:Any]
     if let linkedJSON = castJSON["linked"] as? [String:[[String:Any]]] {
-        ElloLinkedStore.sharedInstance.parseLinked(linkedJSON, completion: {})
+        ElloLinkedStore.shared.parseLinked(linkedJSON, completion: {})
     }
 
     return parsedProperty
@@ -103,7 +103,7 @@ func stubbedJSONDataArray(_ file: String, _ propertyName: String) -> [[String: A
     var castJSON:[String:Any] = json as! [String: Any]
     let parsedProperty = castJSON[propertyName] as! [[String:Any]]
     if let linkedJSON = castJSON["linked"] as? [String:[[String:Any]]] {
-        ElloLinkedStore.sharedInstance.parseLinked(linkedJSON, completion: {})
+        ElloLinkedStore.shared.parseLinked(linkedJSON, completion: {})
     }
 
     return parsedProperty

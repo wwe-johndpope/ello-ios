@@ -18,10 +18,10 @@ final class Relationship: JSONAble {
     let subjectId: String
     // computed
     var owner: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.ownerId, type: .usersType) as? User
+        return ElloLinkedStore.shared.getObject(self.ownerId, type: .usersType) as? User
     }
     var subject: User? {
-        return ElloLinkedStore.sharedInstance.getObject(self.subjectId, type: .usersType) as? User
+        return ElloLinkedStore.shared.getObject(self.subjectId, type: .usersType) as? User
     }
 
     init(id: String, createdAt: Date, ownerId: String, subjectId: String) {

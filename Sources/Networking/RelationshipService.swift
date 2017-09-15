@@ -30,7 +30,7 @@ class RelationshipService: NSObject {
             let subject = optimisticRelationship.subject
         {
             subject.relationshipPriority = relationshipPriority
-            ElloLinkedStore.sharedInstance.setObject(subject, forKey: subject.id, type: .usersType)
+            ElloLinkedStore.shared.setObject(subject, forKey: subject.id, type: .usersType)
             returnedRelationship = optimisticRelationship
         }
 
