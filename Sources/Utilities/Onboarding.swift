@@ -8,7 +8,7 @@ import SwiftyUserDefaults
 
 class Onboarding {
     static let currentVersion = 3
-    static let minCreatorTypeVersion = 3
+    static let minCreatorTypeVersion = 1
     static let shared = Onboarding()
 
     func updateVersionToLatest() {
