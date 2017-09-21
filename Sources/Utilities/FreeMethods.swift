@@ -96,7 +96,7 @@ func elloAnimate(
     animations: @escaping Block
     ) -> AnimationPromise
 {
-    let shouldAnimate: Bool = animated ?? !AppSetup.shared.isTesting
+    let shouldAnimate: Bool = animated ?? !Globals.isTesting
     let options = AnimationOptions(duration: duration, delay: delay, options: options)
     return performAnimation(options: options, animated: shouldAnimate, animations: animations)
 }
@@ -138,10 +138,10 @@ func times(_ times: Int, block: Block) {
 }
 
 func profiler(_ message: String = "") -> Block {
-    let start = AppSetup.shared.now
+    let start = Globals.now
     print("--------- PROFILING \(message)...")
     return {
-        print("--------- PROFILING \(message): \(AppSetup.shared.now.timeIntervalSince(start))")
+        print("--------- PROFILING \(message): \(Globals.now.timeIntervalSince(start))")
     }
 }
 
@@ -184,7 +184,7 @@ func afterN(on queue: DispatchQueue? = nil, execute block: @escaping Block) -> (
     let decrementCount: Block = {
         count -= 1
         if count == 0 && !called {
-            if AppSetup.shared.isTesting, queue == DispatchQueue.main {
+            if Globals.isTesting, queue == DispatchQueue.main {
                 block()
             }
             else if queue == DispatchQueue.main, Thread.isMainThread {
@@ -240,7 +240,7 @@ func once(_ block: @escaping Block) -> Block {
 }
 
 func inBackground(_ block: @escaping Block) {
-    if AppSetup.shared.isTesting {
+    if Globals.isTesting {
         block()
     }
     else {
@@ -253,7 +253,7 @@ func inForeground(_ block: @escaping Block) {
 }
 
 func nextTick(_ block: @escaping Block) {
-    if AppSetup.shared.isTesting {
+    if Globals.isTesting {
         if Thread.isMainThread {
             block()
         }

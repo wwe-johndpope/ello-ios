@@ -86,7 +86,7 @@ private extension DrawerViewController {
         navigationBar.backgroundColor = .grey6
 
         let logoView = UIImageView(image: InterfaceImage.elloLogo.normalImage)
-        let logoY: CGFloat = AppSetup.shared.statusBarHeight + 10
+        let logoY: CGFloat = Globals.statusBarHeight + 10
         logoView.frame = CGRect(x: 15, y: logoY, width: 24, height: 24)
         navigationBar.addSubview(logoView)
     }

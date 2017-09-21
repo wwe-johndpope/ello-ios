@@ -38,7 +38,7 @@ extension UIViewController {
         options: UIViewAnimationOptions = [],
         animations: Block? = nil, completion: BoolBlock? = nil)
     {
-        if AppSetup.shared.isTesting {
+        if Globals.isTesting {
             animations?()
             self.transition(from: fromViewController,
                 to: toViewController,

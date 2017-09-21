@@ -9,14 +9,14 @@ class ElloTabBar: UIView {
         static let topOffset: CGFloat = calculateTopOffset()
 
         static private func calculateHeight() -> CGFloat {
-            if AppSetup.shared.isIphoneX {
+            if Globals.isIphoneX {
                 return 66
             }
             return 44
         }
 
         static private func calculateTopOffset() -> CGFloat {
-            if AppSetup.shared.isIphoneX {
+            if Globals.isIphoneX {
                 return 5
             }
             return 0
