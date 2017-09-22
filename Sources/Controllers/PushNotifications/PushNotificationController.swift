@@ -109,10 +109,9 @@ extension PushNotificationController {
             let center = UNUserNotificationCenter.current()
             center.delegate = self
             center.setNotificationCategories([postCategory, commentCategory, userCategory, userMessageCategory])
-            center.requestAuthorization(options: [.badge, .sound, .alert]) {
-                (granted, _) in
+            center.requestAuthorization(options: [.badge, .sound, .alert]) { granted, _ in
                 if granted {
-                    app.registerForRemoteNotifications()
+                    nextTick(app.registerForRemoteNotifications)
                 }
             }
         }
