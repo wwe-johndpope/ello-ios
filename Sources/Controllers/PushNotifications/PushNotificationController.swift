@@ -115,7 +115,6 @@ extension PushNotificationController {
                 }
             }
         }
-
         else { //If user is not on iOS 10 use the old methods we've been using
             let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: [])
             app.registerUserNotificationSettings(settings)
