@@ -133,12 +133,14 @@ extension OnboardingCreatorTypeViewController: OnboardingStepController {
         onboardingViewController?.canGoNext = false
 
         let onboardingVersion = currentUser?.onboardingVersion ?? 0
-        if onboardingVersion < Onboarding.minCreatorTypeVersion {
+        let showAllOnboarding = onboardingVersion < Onboarding.minCreatorTypeVersion
+        if showAllOnboarding {
             onboardingViewController?.prompt = InterfaceString.Onboard.CreateAccount
         }
         else {
             onboardingViewController?.prompt = InterfaceString.Submit
         }
+        screen.showAllOnboarding = showAllOnboarding
     }
 
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {
