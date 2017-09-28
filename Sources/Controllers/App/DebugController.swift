@@ -186,11 +186,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             Crashlytics.sharedInstance().crash()
         }
 
-        addAction(name: "Debug Views") { [unowned self] in
-            let vc = DebugViewsController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-
         addAction(name: "Show Notification") {
             appController.closeDebugController {
                 PushNotificationController.shared.receivedNotification(UIApplication.shared, action: nil, userInfo: [
