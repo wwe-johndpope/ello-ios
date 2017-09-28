@@ -137,7 +137,7 @@ extension OnboardingCreatorTypeViewController: OnboardingStepController {
             onboardingViewController?.prompt = InterfaceString.Onboard.CreateAccount
         }
         else {
-            onboardingViewController?.prompt = InterfaceString.Onboard.ImDone
+            onboardingViewController?.prompt = InterfaceString.Submit
         }
     }
 

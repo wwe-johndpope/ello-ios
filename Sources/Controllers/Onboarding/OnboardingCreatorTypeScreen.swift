@@ -8,9 +8,9 @@ import SnapKit
 class OnboardingCreatorTypeScreen: StreamableScreen {
     struct Size {
         static let margins: CGFloat = 15
-        static let bigTop: CGFloat = 243
-        static let smallTop: CGFloat = 20
-        static let containerOffset: CGFloat = 60
+        static let bigTop: CGFloat = 90
+        static let smallTop: CGFloat = 30
+        static let containerOffset: CGFloat = 30
         static let buttonOffset: CGFloat = 22
         static let buttonHeight: CGFloat = 50
     }
@@ -41,6 +41,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         }
     }
 
+    fileprivate let headerLabel = StyledLabel(style: .black)
     fileprivate let scrollView = UIScrollView()
     fileprivate let scrollableWidth = UIView()
     fileprivate let creatorTypeContainer = UIView()
@@ -57,6 +58,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
 
     override func style() {
         super.style()
+        headerLabel.isMultiline = true
         creatorButtonsContainer.alpha = 0
     }
 
@@ -68,6 +70,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
 
     override func setText() {
         super.setText()
+        headerLabel.text = InterfaceString.Onboard.CreatorTypeHeader
         hereAsLabel.text = InterfaceString.Onboard.HereAs
         artistButton.setTitle(InterfaceString.Onboard.Artist, for: .normal)
         fanButton.setTitle(InterfaceString.Onboard.Fan, for: .normal)
@@ -85,14 +88,14 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         addSubview(scrollView)
         addSubview(navigationBar)
 
+        scrollView.addSubview(headerLabel)
         scrollView.addSubview(creatorTypeContainer)
         scrollView.addSubview(scrollableWidth)
+        scrollView.addSubview(creatorButtonsContainer)
 
         creatorTypeContainer.addSubview(hereAsLabel)
         creatorTypeContainer.addSubview(artistButton)
         creatorTypeContainer.addSubview(fanButton)
-
-        scrollView.addSubview(creatorButtonsContainer)
         creatorButtonsContainer.addSubview(creatorLabel)
 
         scrollView.snp.makeConstraints { make in
@@ -104,8 +107,12 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
             make.leading.trailing.equalTo(scrollView)
         }
 
+        headerLabel.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(scrollView).inset(Size.margins)
+        }
+
         creatorTypeContainer.snp.makeConstraints { make in
-            creatorTypeContainerTop = make.top.equalTo(scrollView).offset(Size.bigTop).constraint
+            creatorTypeContainerTop = make.top.equalTo(headerLabel.snp.bottom).offset(Size.bigTop).constraint
             make.leading.trailing.equalTo(scrollView).inset(Size.margins)
         }
 
@@ -130,14 +137,14 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
             scrollViewFanBottom = make.bottom.equalTo(scrollView).inset(Size.margins).constraint
         }
 
-        creatorLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(creatorButtonsContainer)
-        }
-
         creatorButtonsContainer.snp.makeConstraints { make in
             make.top.equalTo(creatorTypeContainer.snp.bottom).offset(Size.containerOffset)
             make.leading.trailing.equalTo(creatorTypeContainer)
             scrollViewArtistBottom = make.bottom.equalTo(scrollView).offset(-Size.margins).constraint
+        }
+
+        creatorLabel.snp.makeConstraints { make in
+            make.top.leading.equalTo(creatorButtonsContainer)
         }
 
         scrollViewArtistBottom.deactivate()
@@ -275,21 +282,22 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
             scrollViewFanBottom.deactivate()
         }
 
-        let creatorTypeY: CGFloat
+        let creatorTypeMargin: CGFloat
         let creatorButtonsAlpha: CGFloat
         if artistButton.isSelected {
-            creatorTypeY = Size.smallTop
+            creatorTypeMargin = Size.smallTop
             creatorButtonsAlpha = 1
         }
         else {
-            creatorTypeY = Size.bigTop
+            creatorTypeMargin = Size.bigTop
             creatorButtonsAlpha = 0
         }
-        creatorTypeContainerTop.update(offset: creatorTypeY)
+        creatorTypeContainerTop.update(offset: creatorTypeMargin)
 
         let completion: (Bool) -> Void = { _ in
             self.unselectAllCategories()
         }
+        let creatorTypeY = headerLabel.frame.maxY + creatorTypeMargin
         animate(animated: animated, completion: completion) {
             self.creatorTypeContainer.frame.origin.y = creatorTypeY
             self.creatorButtonsContainer.frame.origin.y = creatorTypeY + self.creatorTypeContainer.frame.height + Size.containerOffset
