@@ -27,6 +27,11 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
             updateCreatorCategories()
         }
     }
+    var showAllOnboarding: Bool = false {
+        didSet {
+            updateCreatorTypeLabels()
+        }
+    }
 
     var topInset: CGFloat = 0 {
         didSet {
@@ -162,6 +167,10 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
             make.centerX.bottom.equalTo(creatorButtonsContainer)
         }
         creatorButtons = [spinner]
+    }
+
+    fileprivate func updateCreatorTypeLabels() {
+        headerLabel.isHidden = showAllOnboarding
     }
 
     fileprivate func updateCreatorCategories() {

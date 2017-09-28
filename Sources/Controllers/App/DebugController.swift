@@ -102,6 +102,15 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addAction(name: "Show Onboarding") {
             appController.closeDebugController {
                 let user: User! = appController.currentUser
+                user.onboardingVersion = nil
+                appController.showOnboardingScreen(user)
+            }
+        }
+
+        addAction(name: "Show Creator Type") {
+            appController.closeDebugController {
+                let user: User! = appController.currentUser
+                user.onboardingVersion = Onboarding.minCreatorTypeVersion
                 appController.showOnboardingScreen(user)
             }
         }
@@ -184,11 +193,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         addAction(name: "Crash the app") {
             Crashlytics.sharedInstance().crash()
-        }
-
-        addAction(name: "Debug Views") { [unowned self] in
-            let vc = DebugViewsController()
-            self.navigationController?.pushViewController(vc, animated: true)
         }
 
         addAction(name: "Show Notification") {

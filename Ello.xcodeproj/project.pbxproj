@@ -1004,7 +1004,6 @@
 		1DF0B2F01E942BFA001B9F97 /* SearchProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF0B2EF1E942BFA001B9F97 /* SearchProtocols.swift */; };
 		1DF233611A94FB060096DA65 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233601A94FB060096DA65 /* CGRectExtensions.swift */; };
 		1DF233641A9537590096DA65 /* CGRectSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233631A9537590096DA65 /* CGRectSpec.swift */; };
-		1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF322411BD6F16C008203F3 /* DebugViewsController.swift */; };
 		1DF404081B150CF20073460B /* narration_pointer.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DF404071B150CF20073460B /* narration_pointer.svg */; };
 		1DF4040A1B150DB40073460B /* NarrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF404091B150DB40073460B /* NarrationView.swift */; };
 		1DF4040C1B151BE70073460B /* UITabBarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF4040B1B151BE70073460B /* UITabBarExtensions.swift */; };
@@ -2102,7 +2101,6 @@
 		1DF233601A94FB060096DA65 /* CGRectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		1DF233631A9537590096DA65 /* CGRectSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectSpec.swift; sourceTree = "<group>"; };
 		1DF233661A9655860096DA65 /* FreeMethodsSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeMethodsSpecs.swift; sourceTree = "<group>"; };
-		1DF322411BD6F16C008203F3 /* DebugViewsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewsController.swift; sourceTree = "<group>"; };
 		1DF404071B150CF20073460B /* narration_pointer.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = narration_pointer.svg; sourceTree = "<group>"; };
 		1DF404091B150DB40073460B /* NarrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NarrationView.swift; sourceTree = "<group>"; };
 		1DF4040B1B151BE70073460B /* UITabBarExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITabBarExtensions.swift; sourceTree = "<group>"; };
@@ -3256,7 +3254,6 @@
 				1D7152C31D6F8189005998FE /* CredentialsScreen.swift */,
 				1D24AA501B7E8CD5004BAAFA /* DebugController.swift */,
 				1D971CF21E1ED2BD00A167A2 /* DebugTrackingController.swift */,
-				1DF322411BD6F16C008203F3 /* DebugViewsController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -5866,7 +5863,6 @@
 				1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */,
 				1D7152E31D761AF0005998FE /* OnboardingProfileViewController.swift in Sources */,
 				126948501AEC0D1800A7EFCC /* Preloader.swift in Sources */,
-				1DF322421BD6F16C008203F3 /* DebugViewsController.swift in Sources */,
 				12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */,
 				124B48671DAEE3D70058D3F5 /* ProfileCategoriesScreen.swift in Sources */,
 				122B30F11C6A3FC500C1B9D8 /* Regionable.swift in Sources */,
