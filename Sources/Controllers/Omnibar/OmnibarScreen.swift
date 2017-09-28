@@ -613,7 +613,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         keyboardButtonsContainer.frame.size = CGSize(width: frame.width, height: keyboardButtonHeight)
         tabbarSubmitButton.frame.size = CGSize(width: frame.width, height: keyboardButtonHeight)
 
-        var bumpKeyboardHeight = false
         if Keyboard.shared.active {
             tabbarSubmitButton.frame.origin.y = frame.height
         }

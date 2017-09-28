@@ -455,6 +455,15 @@ enum StreamCellType: Equatable {
         }
     }
 
+    var showsUserRelationship: Bool {
+        switch self {
+        case .commentHeader, .notification, .streamHeader, .userListItem:
+            return true
+        default:
+            return false
+        }
+    }
+
     static func registerAll(_ collectionView: UICollectionView) {
         let noNibTypes: [StreamCellType] = [
             .announcement,

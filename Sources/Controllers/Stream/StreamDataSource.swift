@@ -424,59 +424,83 @@ class StreamDataSource: ElloDataSource {
     }
 
     func modifyUserRelationshipItems(_ user: User, streamViewController: StreamViewController) {
-        let (indexPaths, changedItems) = elementsFor(jsonable: user, change: .update)
+        if user.relationshipPriority.isMutedOrBlocked {
+            removeUserFromStream(user, streamViewController: streamViewController)
+        }
+        else {
+            updateUserRelationshipControls(user, streamViewController: streamViewController)
+        }
+    }
 
-        streamViewController.performDataUpdate { collectionView in
-            for item in changedItems {
-                if let oldUser = item.jsonable as? User {
-                    // relationship changes
-                    oldUser.relationshipPriority = user.relationshipPriority
-                    oldUser.followersCount = user.followersCount
-                    oldUser.followingCount = user.followingCount
-                }
+    private func removeUserFromStream(_ user: User, streamViewController: StreamViewController) {
+        var shouldDelete = true
 
-                if let authorable = item.jsonable as? Authorable,
-                    let author = authorable.author, author.id == user.id
-                {
-                    author.relationshipPriority = user.relationshipPriority
-                    author.followersCount = user.followersCount
-                    author.followingCount = user.followingCount
-                }
-
-                if let post = item.jsonable as? Post,
-                    let repostAuthor = post.repostAuthor, repostAuthor.id == user.id
-                {
-                    repostAuthor.relationshipPriority = user.relationshipPriority
-                    repostAuthor.followersCount = user.followersCount
-                    repostAuthor.followingCount = user.followingCount
-                }
+        switch streamKind {
+        case let .userStream(userId):
+            shouldDelete = user.id != userId
+        case let .simpleStream(endpoint, _):
+            if case .currentUserBlockedList = endpoint,
+                user.relationshipPriority == .block
+            {
+                shouldDelete = false
             }
-
-            collectionView.reloadItems(at: indexPaths)
+            else if case .currentUserMutedList = endpoint,
+                user.relationshipPriority == .mute
+            {
+                shouldDelete = false
+            }
+        default:
+            break
         }
 
-        if user.relationshipPriority.isMutedOrBlocked {
-            var shouldDelete = true
+        if shouldDelete {
+            modifyItems(user, change: .delete, streamViewController: streamViewController)
+        }
+    }
 
-            switch streamKind {
-            case let .userStream(userId):
-                shouldDelete = user.id != userId
-            case let .simpleStream(endpoint, _):
-                if case .currentUserBlockedList = endpoint, user.relationshipPriority == .block
-                {
-                    shouldDelete = false
-                }
-                else if case .currentUserMutedList = endpoint, user.relationshipPriority == .mute
-                {
-                    shouldDelete = false
-                }
-            default:
-                break
+    private func updateUserRelationshipControls(_ user: User, streamViewController: StreamViewController) {
+        var indexPaths = [IndexPath]()
+        var changedItems = [StreamCellItem]()
+        for (index, item) in visibleCellItems.enumerated() {
+            guard item.type.showsUserRelationship,
+                let itemUserId = (item.jsonable as? User)?.id ?? (item.jsonable as? Authorable)?.author?.id
+            else { continue}
+
+            if itemUserId == user.id {
+                indexPaths.append(IndexPath(item: index, section: 0))
+                changedItems.append(item)
+            }
+        }
+
+        guard changedItems.count > 0 else { return }
+
+        for item in changedItems {
+            if let oldUser = item.jsonable as? User {
+                // relationship changes
+                oldUser.relationshipPriority = user.relationshipPriority
+                oldUser.followersCount = user.followersCount
+                oldUser.followingCount = user.followingCount
             }
 
-            if shouldDelete {
-                modifyItems(user, change: .delete, streamViewController: streamViewController)
+            if let authorable = item.jsonable as? Authorable,
+                let author = authorable.author, author.id == user.id
+            {
+                author.relationshipPriority = user.relationshipPriority
+                author.followersCount = user.followersCount
+                author.followingCount = user.followingCount
             }
+
+            if let post = item.jsonable as? Post,
+                let repostAuthor = post.repostAuthor, repostAuthor.id == user.id
+            {
+                repostAuthor.relationshipPriority = user.relationshipPriority
+                repostAuthor.followersCount = user.followersCount
+                repostAuthor.followingCount = user.followingCount
+            }
+        }
+
+        streamViewController.performDataUpdate { collectionView in
+            collectionView.reloadItems(at: indexPaths)
         }
     }
 
