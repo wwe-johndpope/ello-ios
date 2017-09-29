@@ -410,7 +410,7 @@ struct InterfaceString {
         static let InviteFriendsPrimary: String = NSLocalizedString("Invite some cool people.", comment: "")
         static let InviteFriendsSecondary: String = NSLocalizedString("Make Ello better.", comment: "")
 
-        static let CreatorTypeHeader: String = NSLocalizedString("We’re doing a quick survey to find out a little more about the artistic composition of the Ello community.  You can always update your answers in settings.  Thank you!", comment: "")
+        static let CreatorTypeHeader: String = NSLocalizedString("We’re doing a quick survey to find out a little more about the artistic composition of the Ello community.  You can always update your selection(s) in settings.  Thank you!", comment: "")
         static let HereAs: String = NSLocalizedString("I am here as:", comment: "")
         static let Interests: String = NSLocalizedString("I make:", comment: "")
         static let Artist: String = NSLocalizedString("An Artist", comment: "")
