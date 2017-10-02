@@ -81,7 +81,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
 
         init?(name nameStr: String, json: JSON) {
             guard
-                let parameters = json["body"].object as? [String: String],
+                let parameters = json["body"].object as? [String: Any],
                 let label = json["label"].string,
                 let method = json["method"].string.map({ $0.uppercased() }).flatMap({ Moya.Method(rawValue: $0) }),
                 let url = json["href"].string.flatMap({ URL(string: $0) })
