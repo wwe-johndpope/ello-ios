@@ -15,7 +15,7 @@ class FollowingViewController: StreamableViewController {
         return ("following", nil)
     }
 
-    var navigationBar: ElloNavigationBar!
+    var navigationBar = ElloNavigationBar()
     let newPostsButton = NewPostsButton()
     fileprivate var loggedPromptEventForThisSession = false
     fileprivate var reloadFollowingContentObserver: NotificationObserver?
@@ -119,7 +119,7 @@ private extension FollowingViewController {
     }
 
     func setupNavigationBar() {
-        navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.largeHeight))
+        navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.largeHeight)
         navigationBar.sizeClass = .large
         navigationBar.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
         view.addSubview(navigationBar)
@@ -128,10 +128,8 @@ private extension FollowingViewController {
     }
 
     func setupNavigationItems(streamKind: StreamKind) {
-        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
-        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView)
-        elloNavigationItem.rightBarButtonItem = gridListItem
-        navigationBar.items = [elloNavigationItem]
+        navigationBar.leftItems = [.burger]
+        navigationBar.rightItems = [.gridList(isGrid: streamKind.isGridView)]
     }
 
     func addTemporaryNotificationObservers() {
