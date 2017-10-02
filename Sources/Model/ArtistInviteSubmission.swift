@@ -58,7 +58,6 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
             }
         }
 
-        let statusChange: Status
         let name: Name
         let label: String
         let request: ElloRequest
@@ -74,8 +73,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
             }
         }
 
-        init(statusChange: Status, name: Name, label: String, request: ElloRequest) {
-            self.statusChange = statusChange
+        init(name: Name, label: String, request: ElloRequest) {
             self.name = name
             self.label = label
             self.request = request
@@ -84,13 +82,12 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         init?(name nameStr: String, json: JSON) {
             guard
                 let parameters = json["body"].object as? [String: String],
-                let statusChange = json["body"]["status"].string.flatMap({ Status(rawValue: $0) }),
                 let label = json["label"].string,
                 let method = json["method"].string.map({ $0.uppercased() }).flatMap({ Moya.Method(rawValue: $0) }),
                 let url = json["href"].string.flatMap({ URL(string: $0) })
             else { return nil }
 
-            self.init(statusChange: statusChange, name: Name(nameStr), label: label, request: ElloRequest(url: url, method: method, parameters: parameters))
+            self.init(name: Name(nameStr), label: label, request: ElloRequest(url: url, method: method, parameters: parameters))
         }
     }
 
@@ -173,7 +170,6 @@ extension ArtistInviteSubmission.Action {
     var encodeable: [String: Any] {
         let parameters: [String: Any] = request.parameters ?? [:]
         return [
-            "statusChange": statusChange.rawValue,
             "name": name.string,
             "label": label,
             "url": request.url,
@@ -184,7 +180,6 @@ extension ArtistInviteSubmission.Action {
 
     static func decode(_ decodeable: [String: Any], version: Int) -> ArtistInviteSubmission.Action? {
         guard
-            let statusChange = (decodeable["statusChange"] as? String).flatMap({ ArtistInviteSubmission.Status(rawValue: $0) }),
             let nameStr = decodeable["name"] as? String,
             let label = decodeable["label"] as? String,
             let url = decodeable["url"] as? URL,
@@ -192,6 +187,6 @@ extension ArtistInviteSubmission.Action {
             let parameters = decodeable["parameters"] as? [String: String]
         else { return nil }
 
-        return ArtistInviteSubmission.Action(statusChange: statusChange, name: Name(nameStr), label: label, request: ElloRequest(url: url, method: method, parameters: parameters))
+        return ArtistInviteSubmission.Action(name: Name(nameStr), label: label, request: ElloRequest(url: url, method: method, parameters: parameters))
     }
 }
