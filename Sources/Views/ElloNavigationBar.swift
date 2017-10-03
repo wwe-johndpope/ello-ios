@@ -63,15 +63,8 @@ class ElloNavigationBar: UIView {
 
         var lastInset: CGFloat {
             switch self {
-            case .edit: return 0
-            case let .gridList(isGrid):
-                if isGrid {
-                    return 3.5
-                }
-                else {
-                    return 3.5
-                }
-            case .more: return 0
+            case .edit: return 1
+            case .more: return -1.5
             default: return 0
             }
         }
@@ -261,7 +254,7 @@ class ElloNavigationBar: UIView {
         }
         else {
             let rightInset = items.last?.lastInset ?? 0
-            rightTrailingConstraint.update(offset: -rightInset)
+            rightTrailingConstraint.update(offset: rightInset)
         }
 
         return newButtons
