@@ -292,3 +292,9 @@ extension StreamableViewController {
     }
 
 }
+
+extension StreamableViewController: HasGridListButton {
+    func gridListToggled(_ sender: UIButton) {
+        streamViewController.gridListToggled(sender)
+    }
+}
