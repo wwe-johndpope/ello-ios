@@ -624,12 +624,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="244"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avo-sD-Kn2" customClass="ElloNavigationBar" customModule="Ello" customModuleProvider="target">
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="44" translatesAutoresizingMaskIntoConstraints="NO" id="NIo-ls-5Wy" userLabel="Navigation Bar" customClass="ElloNavigationBar" customModule="Ello" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <items>
-                                    <navigationItem title="Title" id="DeH-NM-G7z"/>
-                                </items>
-                            </navigationBar>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TqN-8X-tkG">
                                 <rect key="frame" x="0.0" y="44" width="600" height="200"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -642,20 +640,20 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="NIo-ls-5Wy" firstAttribute="leading" secondItem="o77-zi-6ls" secondAttribute="leading" id="0TD-Ig-HMp"/>
+                            <constraint firstItem="NIo-ls-5Wy" firstAttribute="top" secondItem="o77-zi-6ls" secondAttribute="top" id="AMe-lZ-eob"/>
                             <constraint firstAttribute="centerX" secondItem="TqN-8X-tkG" secondAttribute="centerX" id="DOU-Rp-8Cp"/>
-                            <constraint firstAttribute="centerX" secondItem="avo-sD-Kn2" secondAttribute="centerX" id="Ebw-Jg-GZp"/>
                             <constraint firstItem="o15-O8-mb2" firstAttribute="top" secondItem="TqN-8X-tkG" secondAttribute="bottom" id="FG6-wg-kXE"/>
+                            <constraint firstItem="TqN-8X-tkG" firstAttribute="top" secondItem="NIo-ls-5Wy" secondAttribute="bottom" id="J3O-lk-XVf"/>
+                            <constraint firstItem="NIo-ls-5Wy" firstAttribute="trailing" secondItem="o77-zi-6ls" secondAttribute="trailing" id="Jua-w3-7HY"/>
                             <constraint firstAttribute="width" secondItem="TqN-8X-tkG" secondAttribute="width" id="esA-GH-B0e"/>
-                            <constraint firstItem="avo-sD-Kn2" firstAttribute="width" secondItem="o77-zi-6ls" secondAttribute="width" id="f58-ax-PId"/>
-                            <constraint firstItem="TqN-8X-tkG" firstAttribute="top" secondItem="avo-sD-Kn2" secondAttribute="bottom" id="iRg-R0-SUR"/>
-                            <constraint firstItem="avo-sD-Kn2" firstAttribute="top" secondItem="o77-zi-6ls" secondAttribute="top" id="wPu-em-xYC"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="244"/>
                     <connections>
-                        <outlet property="navBar" destination="avo-sD-Kn2" id="pYN-dv-yw7"/>
+                        <outlet property="navigationBar" destination="NIo-ls-5Wy" id="sH4-e6-KVf"/>
                         <outlet property="tableView" destination="TqN-8X-tkG" id="9V3-ni-D4y"/>
                         <outlet property="view" destination="o77-zi-6ls" id="UDI-vH-aNp"/>
                     </connections>
