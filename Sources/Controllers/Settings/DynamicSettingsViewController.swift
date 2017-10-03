@@ -164,6 +164,7 @@ class DynamicSettingsViewController: UITableViewController {
                     let creatorCategories = categoryIds.flatMap { id -> Category? in
                         return categories.find { $0.id == id }
                     }
+
                     let controller = OnboardingCreatorTypeViewController()
                     controller.delegate = self.delegate
                     controller.currentUser = currentUser
