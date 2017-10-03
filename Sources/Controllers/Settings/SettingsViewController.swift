@@ -17,8 +17,8 @@ enum SettingsRow: Int {
 
 
 class SettingsContainerViewController: BaseElloViewController {
-    weak var navigationBar: ElloNavigationBar!
-    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
+    @IBOutlet var navigationBar: ElloNavigationBar!
+    @IBOutlet var navigationBarTopConstraint: NSLayoutConstraint!
     fileprivate var settingsViewController: SettingsViewController?
 
     override func showNavBars() {
@@ -52,17 +52,19 @@ class SettingsContainerViewController: BaseElloViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SettingsContainerSegue" {
-            let settings = segue.destination as! SettingsViewController
-            settings.currentUser = currentUser
-            settingsViewController = settings
-            settings.tableView.contentOffset.y = 0
-            updateNavBars()
-            navigationBar.items = [settings.navigationItem]
+        guard segue.identifier == "SettingsContainerSegue" else { return }
 
-            if let navigationBarsVisible = navigationBarsVisible {
-                settings.scrollLogic.isShowing = navigationBarsVisible
-            }
+        let settings = segue.destination as! SettingsViewController
+        settings.currentUser = currentUser
+        settingsViewController = settings
+        settings.tableView.contentOffset.y = 0
+        updateNavBars()
+
+        navigationBar.title = InterfaceString.Settings.EditProfile
+        navigationBar.leftItems = [.back]
+
+        if let navigationBarsVisible = navigationBarsVisible {
+            settings.scrollLogic.isShowing = navigationBarsVisible
         }
     }
 
@@ -133,7 +135,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupNavigationBar()
         scrollLogic = ElloScrollLogic(
             onShow: { [weak self] in self?.showNavBars() },
             onHide: { [weak self] in self?.hideNavBars() }
@@ -266,13 +267,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         containerController?.showNavBars()
         setupDefaultValues()
         setupUserValues()
-    }
-
-    fileprivate func setupNavigationBar() {
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(SettingsViewController.backAction))
-        navigationItem.leftBarButtonItem = backItem
-        navigationItem.title = InterfaceString.Settings.EditProfile
-        navigationItem.fixNavBarItemPadding()
     }
 
     @IBAction

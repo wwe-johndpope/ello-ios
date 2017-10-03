@@ -49,12 +49,8 @@ class HireViewController: BaseElloViewController {
     }
 
     override func loadView() {
-        let item = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [item]
-        elloNavigationItem.fixNavBarItemPadding()
-
         let screen = HireScreen()
-        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.leftItems = [.back]
         screen.delegate = self
         screen.recipient = user.displayName
         self.view = screen

@@ -202,10 +202,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     // TODO: use elloNavigationItem, move into OmnibarViewController.loadView
     fileprivate func setupNavigationBar() {
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backAction))
-        navigationItem.leftBarButtonItem = backItem
-        navigationItem.fixNavBarItemPadding()
-        navigationBar.items = [navigationItem]
+        navigationBar.leftItems = [.back]
 
         statusBarUnderlay.backgroundColor = .black
         addSubview(statusBarUnderlay)

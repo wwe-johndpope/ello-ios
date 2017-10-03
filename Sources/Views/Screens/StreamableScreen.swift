@@ -5,7 +5,6 @@
 protocol StreamableScreenProtocol: class {
     var navigationBarTopConstraint: NSLayoutConstraint! { get }
     var navigationBar: ElloNavigationBar { get }
-    var navigationItem: UINavigationItem? { get set }
     func viewForStream() -> UIView
 }
 
@@ -13,13 +12,6 @@ class StreamableScreen: Screen, StreamableScreenProtocol {
     let navigationBar = ElloNavigationBar()
     var navigationBarTopConstraint: NSLayoutConstraint!
     let streamContainer = UIView()
-
-    var navigationItem: UINavigationItem? {
-        get { return navigationBar.items?.first }
-        set {
-            navigationBar.items = newValue.flatMap { [$0] }
-        }
-    }
 
     convenience init() {
         self.init(frame: UIScreen.main.bounds)

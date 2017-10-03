@@ -121,7 +121,6 @@ final class ProfileViewController: StreamableViewController {
     override func loadView() {
         let screen = ProfileScreen()
         screen.delegate = self
-        screen.navigationItem = elloNavigationItem
         screen.clipsToBounds = true
         self.view = screen
         viewContainer = screen.streamContainer
@@ -192,44 +191,35 @@ final class ProfileViewController: StreamableViewController {
     }
 
     fileprivate func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
-        let shareItem = UIBarButtonItem(image: .share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
-        let moreActionsItem = UIBarButtonItem(image: .dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
+        let gridListItem = ElloNavigationBar.Item.gridList(isGrid: streamViewController.streamKind.isGridView)
         let isCurrentUser = userParam == currentUser?.id || userParam == currentUser.map { "~\($0.username)" }
 
         if !isRootViewController() {
-            var leftBarButtonItems: [UIBarButtonItem] = []
-            leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
-            leftBarButtonItems.append(backItem)
-            if !isCurrentUser {
-                leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
-                if currentUser != nil {
-                    leftBarButtonItems.append(moreActionsItem)
-                }
+            var leftItems: [ElloNavigationBar.Item] = []
+            leftItems.append(.back)
+            if !isCurrentUser, currentUser != nil {
+                leftItems.append(.more)
             }
-            elloNavigationItem.leftBarButtonItems = leftBarButtonItems
+            screen.navigationBar.leftItems = leftItems
         }
 
         if isCurrentUser {
-            elloNavigationItem.rightBarButtonItems = [shareItem, gridListItem]
+            screen.navigationBar.rightItems = [.share, gridListItem]
         }
         else if
             let user = user,
             user.id != currentUser?.id
         {
-            var rightBarButtonItems: [UIBarButtonItem] = []
+            var rightItems: [ElloNavigationBar.Item] = []
             if user.hasSharingEnabled {
-                rightBarButtonItems.append(shareItem)
+                rightItems.append(.share)
             }
-            rightBarButtonItems.append(gridListItem)
+            rightItems.append(gridListItem)
 
-            if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
-                elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            }
+            screen.navigationBar.rightItems = rightItems
         }
         else {
-            elloNavigationItem.rightBarButtonItems = []
+            screen.navigationBar.rightItems = []
         }
     }
 

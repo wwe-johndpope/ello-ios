@@ -52,11 +52,7 @@ class ArtistInviteDetailController: StreamableViewController {
 
     override func loadView() {
         let screen = ArtistInviteDetailScreen()
-
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped))
-        elloNavigationItem.leftBarButtonItem = backItem
-        elloNavigationItem.fixNavBarItemPadding()
-        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.leftItems = [.back]
 
         self.view = screen
         viewContainer = screen.streamContainer

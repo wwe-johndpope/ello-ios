@@ -67,6 +67,7 @@ final class CategoryViewController: StreamableViewController {
 
     override func loadView() {
         let screen = CategoryScreen(usage: usage)
+        screen.navigationBar.title = ""
         screen.delegate = self
 
         self.view = screen

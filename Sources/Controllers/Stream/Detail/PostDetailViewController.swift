@@ -104,10 +104,7 @@ final class PostDetailViewController: StreamableViewController {
     }
 
     fileprivate func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [backItem]
-        elloNavigationItem.fixNavBarItemPadding()
-        navigationBar.items = [elloNavigationItem]
+        navigationBar.leftItems = [.back]
 
         guard post != nil else {
             elloNavigationItem.rightBarButtonItems = []

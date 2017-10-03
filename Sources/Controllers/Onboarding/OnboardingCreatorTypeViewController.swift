@@ -46,13 +46,8 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
             screen.topInset = ElloNavigationBar.Size.height
             updatesBottomBar = false
 
-            let backItem = UIBarButtonItem.backChevron(withController: self)
-            let elloNavigationItem = UINavigationItem()
-            elloNavigationItem.title = InterfaceString.Settings.CreatorType
-            elloNavigationItem.leftBarButtonItems = [backItem]
-            elloNavigationItem.fixNavBarItemPadding()
-
-            screen.navigationItem = elloNavigationItem
+            screen.navigationBar.title = InterfaceString.Settings.CreatorType
+            screen.navigationBar.leftItems = [.back]
             postNotification(StatusBarNotifications.statusBarVisibility, value: true)
         }
 

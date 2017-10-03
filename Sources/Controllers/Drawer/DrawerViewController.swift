@@ -28,7 +28,6 @@ class DrawerViewController: BaseElloViewController {
 
         addLeftButtons()
         setupTableView()
-        setupNavigationBar()
         registerCells()
     }
 
@@ -80,17 +79,6 @@ private extension DrawerViewController {
         tableView.backgroundColor = .grey6
         tableView.delegate = self
         tableView.dataSource = dataSource
-    }
-
-    func setupNavigationBar() {
-        navigationBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height)
-        navigationBar.items = [elloNavigationItem]
-        navigationBar.tintColor = .greyA
-
-        let color = UIColor.grey6
-        navigationBar.backgroundColor = color
-        navigationBar.shadowImage = nil
-        navigationBar.barTintColor = color
     }
 
     func addLeftButtons() {

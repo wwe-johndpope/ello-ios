@@ -6,7 +6,8 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     var category: DynamicSettingCategory?
     var currentUser: User?
     weak var delegate: DynamicSettingsDelegate?
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var navigationBar: ElloNavigationBar?
+    @IBOutlet var tableView: UITableView!
     weak var navBar: ElloNavigationBar!
 
     override func viewDidLoad() {
@@ -24,11 +25,8 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     }
 
     fileprivate func setupNavigationBar() {
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(DynamicSettingCategoryViewController.backAction))
-        navigationItem.leftBarButtonItem = backItem
-        navigationItem.title = category?.label
-        navigationItem.fixNavBarItemPadding()
-        navBar.items = [navigationItem]
+        navigationBar?.title = category?.label
+        navigationBar?.leftItems = [.back]
         postNotification(StatusBarNotifications.statusBarVisibility, value: true)
     }
 

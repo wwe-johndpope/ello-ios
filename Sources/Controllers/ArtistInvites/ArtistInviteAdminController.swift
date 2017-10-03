@@ -47,11 +47,8 @@ class ArtistInviteAdminController: StreamableViewController {
         screen.delegate = self
         screen.selectedSubmissionsStatus = generator.stream.submissionsStatus
 
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backTapped))
-        elloNavigationItem.titleView = UIView()
-        elloNavigationItem.leftBarButtonItem = backItem
-        elloNavigationItem.fixNavBarItemPadding()
-        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.title = ""
+        screen.navigationBar.leftItems = [.back]
 
         self.view = screen
         viewContainer = screen.streamContainer
