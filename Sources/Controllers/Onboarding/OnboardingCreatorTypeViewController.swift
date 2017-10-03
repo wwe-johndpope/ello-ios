@@ -31,6 +31,8 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
     override func loadView() {
         let screen = OnboardingCreatorTypeScreen()
         screen.delegate = self
+        screen.showIntroText = false
+
         self.view = screen
     }
 
@@ -134,7 +136,7 @@ extension OnboardingCreatorTypeViewController: OnboardingStepController {
         else {
             onboardingViewController?.prompt = InterfaceString.Submit
         }
-        screen.showAllOnboarding = showAllOnboarding
+        screen.showIntroText = !showAllOnboarding
     }
 
     func onboardingWillProceed(abort: Bool, proceedClosure: @escaping (_ success: OnboardingViewController.OnboardingProceed) -> Void) {

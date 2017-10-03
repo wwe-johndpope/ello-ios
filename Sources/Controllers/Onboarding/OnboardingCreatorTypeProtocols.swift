@@ -11,7 +11,7 @@ protocol OnboardingCreatorTypeScreenProtocol: StreamableScreenProtocol {
     var creatorCategories: [String] { get set }
     var topInset: CGFloat { get set }
     var bottomInset: CGFloat { get set }
-    var showAllOnboarding: Bool { get set }
+    var showIntroText: Bool { get set }
 
     func updateCreatorType(type: Profile.CreatorType)
 }
