@@ -87,19 +87,28 @@ class StreamableViewController: BaseElloViewController {
         updateInsets(maxY: navBar?.frame.maxY ?? 0, navigationBarsVisible: visible)
     }
 
-    func updateInsets(maxY: CGFloat, navigationBarsVisible _visible: Bool? = nil) {
-        let visible = _visible ?? bottomBarController?.bottomBarVisible ?? false
-        let defaultTopInset: CGFloat
-        if AppSetup.shared.isIphoneX && !visible {
-            defaultTopInset = 44
+    func calculateDefaultTopInset() -> CGFloat {
+        if AppSetup.shared.isIphoneX {
+            return 44
         }
         else {
-            defaultTopInset = 0
+            return 0
         }
-        let topInset = max(defaultTopInset, maxY)
+    }
 
+    func updateInsets(maxY: CGFloat, navigationBarsVisible _visible: Bool? = nil) {
+        let topBarVisible = _visible ?? bottomBarController?.navigationBarsVisible ?? false
+        let topInset: CGFloat
+        if topBarVisible {
+            topInset = max(0, maxY)
+        }
+        else {
+            topInset = max(calculateDefaultTopInset(), maxY)
+        }
+
+        let bottomBarVisible = _visible ?? bottomBarController?.bottomBarVisible ?? false
         let bottomInset: CGFloat
-        if visible {
+        if bottomBarVisible {
             bottomInset = bottomBarController?.bottomBarHeight ?? 0
         }
         else {
