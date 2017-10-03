@@ -36,8 +36,6 @@ class EditorialTitledCell: EditorialCell {
         titleLabel.isMultiline = true
         authorLabel.isMultiline = false
         subtitleWebView.delegate = self
-        subtitleWebView.backgroundColor = .clear
-        subtitleWebView.isOpaque = false
         subtitleWebView.scrollView.isScrollEnabled = false
     }
 
