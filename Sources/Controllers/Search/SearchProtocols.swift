@@ -3,7 +3,7 @@
 //
 
 protocol SearchScreenDelegate: class {
-    func backTapped()
+    func backButtonTapped()
     func searchCanceled()
     func searchFieldCleared()
     func searchFieldChanged(_ text: String, isPostSearch: Bool)

@@ -672,10 +672,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
 // MARK: Button Actions
 
-    func backAction() {
-        delegate?.omnibarCancel()
-    }
-
     func cancelEditingAction() {
         if reordering {
             reorderingTable(false)
@@ -896,4 +892,10 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         self.delegate?.omnibarPresentController(pickerSheet)
     }
 
+}
+
+extension OmnibarScreen: HasBackButton {
+    func backButtonTapped() {
+        delegate?.omnibarCancel()
+    }
 }

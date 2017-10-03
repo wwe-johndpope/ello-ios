@@ -233,37 +233,6 @@ final class ProfileViewController: StreamableViewController {
         }
     }
 
-    func moreButtonTapped() {
-        guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
-            return
-        }
-        guard let user = user else { return }
-
-        let userId = user.id
-        let userAtName = user.atName
-        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: user.relationshipPriority)
-
-        let responder: RelationshipResponder? = findResponder()
-        responder?.launchBlockModal(
-            userId,
-            userAtName: userAtName,
-            relationshipPriority: prevRelationshipPriority
-        ) { newRelationshipPriority in
-            user.relationshipPriority = newRelationshipPriority.priority
-        }
-    }
-
-    func sharePostTapped(_ sender: UIView) {
-        guard
-            let user = user,
-            let shareURL = URL(string: user.shareLink)
-        else { return }
-
-        Tracker.shared.userShared(user)
-        showShareActivity(sender: sender, url: shareURL)
-    }
-
     func toggleGrid(_ isGridView: Bool) {
         generator?.toggleGrid()
     }
@@ -578,5 +547,40 @@ extension ProfileViewController:  StreamDestination {
             self.showGenericLoadFailure()
         }
         self.streamViewController.doneLoading()
+    }
+}
+
+extension ProfileViewController: HasMoreButton {
+    func moreButtonTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
+            return
+        }
+        guard let user = user else { return }
+
+        let userId = user.id
+        let userAtName = user.atName
+        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: user.relationshipPriority)
+
+        let responder: RelationshipResponder? = findResponder()
+        responder?.launchBlockModal(
+            userId,
+            userAtName: userAtName,
+            relationshipPriority: prevRelationshipPriority
+        ) { newRelationshipPriority in
+            user.relationshipPriority = newRelationshipPriority.priority
+        }
+    }
+}
+
+extension ProfileViewController: HasShareButton {
+    func shareButtonTapped(_ sender: UIView) {
+        guard
+            let user = user,
+            let shareURL = URL(string: user.shareLink)
+        else { return }
+
+        Tracker.shared.userShared(user)
+        showShareActivity(sender: sender, url: shareURL)
     }
 }

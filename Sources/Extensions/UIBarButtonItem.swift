@@ -17,7 +17,7 @@ extension UIBarButtonItem {
     class func backChevron(withController controller: BaseElloViewController) -> UIBarButtonItem {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
         button.setImages(.angleBracket, degree: 180)
-        button.addTarget(controller, action: #selector(BaseElloViewController.backTapped), for: .touchUpInside)
+        button.addTarget(controller, action: #selector(BaseElloViewController.backButtonTapped), for: .touchUpInside)
 
         return UIBarButtonItem(customView: button)
     }

@@ -65,9 +65,8 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
             .ignoreErrors()
     }
 
-    @IBAction
-    override func backTapped() {
-        super.backTapped()
+    override func backButtonTapped() {
+        super.backButtonTapped()
         saveCreatorType()
             .thenFinally { user in
                 self.delegate?.dynamicSettingsUserChanged(user)

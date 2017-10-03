@@ -32,7 +32,7 @@ class CategoryScreenSpec: QuickSpec {
         func shareTapped(sender: UIView) {
             shareCount += 1
         }
-        func backTapped() {
+        func backButtonTapped() {
             backCount += 1
         }
         func scrollToTop() {

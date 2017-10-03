@@ -140,12 +140,12 @@ final class CategoryViewController: StreamableViewController {
         userDidScroll = true
     }
 
-    override func backTapped() {
+    override func backButtonTapped() {
         if slug == nil {
             selectCategoryFor(slug: prevSlug ?? "featured")
         }
         else {
-            super.backTapped()
+            super.backButtonTapped()
         }
     }
 }

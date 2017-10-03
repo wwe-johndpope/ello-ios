@@ -32,7 +32,7 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
         postNotification(StatusBarNotifications.statusBarVisibility, value: true)
     }
 
-    func backAction() {
+    func backButtonTapped() {
         _ = navigationController?.popViewController(animated: true)
     }
 

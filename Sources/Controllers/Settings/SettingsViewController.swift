@@ -413,10 +413,6 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    func backAction() {
-        _ = navigationController?.popViewController(animated: true)
-    }
-
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch SettingsRow(rawValue: indexPath.row) ?? .unknown {
         case .coverImage: return 200

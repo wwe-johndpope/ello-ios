@@ -57,7 +57,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
 
     override func bindActions() {
         searchField.addTarget(self, action: #selector(searchFieldDidChange), for: .editingChanged)
-        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         postsToggleButton.addTarget(self, action: #selector(onPostsTapped), for: .touchUpInside)
         peopleToggleButton.addTarget(self, action: #selector(onPeopleTapped), for: .touchUpInside)
         findFriendsButton.addTarget(self, action: #selector(findFriendsTapped), for: .touchUpInside)
@@ -267,7 +267,7 @@ extension SearchScreen {
     }
 
     @objc
-    func backTapped() {
+    func backButtonTapped() {
         delegate?.searchCanceled()
     }
 
