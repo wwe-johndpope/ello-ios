@@ -4,8 +4,8 @@
 
 extension UIView {
 
-    func findSubview<T>(_ test: (UIView) -> Bool) -> T? where T: UIView {
-        if let view = self as? T, test(self) {
+    func findSubview<T>(_ test: ((UIView) -> Bool)? = nil) -> T? where T: UIView {
+        if let view = self as? T, test?(self) ?? true {
             return view
         }
 
