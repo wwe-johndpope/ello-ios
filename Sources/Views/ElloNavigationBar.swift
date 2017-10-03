@@ -182,6 +182,7 @@ class ElloNavigationBar: UIView {
         clipsToBounds = true
         backgroundColor = .white
         isOpaque = true
+        titleLabel.lineBreakMode = .byTruncatingTail
 
         let bar = BlackBar()
 
@@ -193,6 +194,8 @@ class ElloNavigationBar: UIView {
 
         titleLabel.snp.makeConstraints { make in
             make.center.equalTo(navigationContainer)
+            make.leading.greaterThanOrEqualTo(leftButtonContainer.snp.trailing).priority(Priority.required)
+            make.trailing.lessThanOrEqualTo(rightButtonContainer.snp.leading).priority(Priority.required)
         }
 
         bar.snp.makeConstraints { make in
