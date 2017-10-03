@@ -7,10 +7,11 @@ class ElloNavigationBar: UIView {
         static let height: CGFloat = calculateHeight()
         static let largeHeight: CGFloat = calculateLargeHeight()
         static let discoverLargeHeight: CGFloat = 162
+        static let navigationHeight: CGFloat = 44
         static let buttonWidth: CGFloat = 39
 
         static private func calculateHeight() -> CGFloat {
-            return 44 + BlackBar.Size.height
+            return Size.navigationHeight + BlackBar.Size.height
         }
         static private func calculateLargeHeight() -> CGFloat {
             return 105 + BlackBar.Size.height
@@ -33,12 +34,14 @@ class ElloNavigationBar: UIView {
 
     enum Item {
         case back
+        case close
+        case share
+        case more
         case burger
         case gridList(isGrid: Bool)
 
         func generateButton(target: Any, action: Selector) -> UIButton {
-            let frame = CGRect(x: 0, y: 0, width: 36.0, height: 44.0)
-            let button = UIButton(frame: frame)
+            let button = UIButton()
             button.setImage(image, imageStyle: .normal, for: .normal)
             button.setImage(image, imageStyle: .selected, for: .selected)
             button.setImage(image, imageStyle: .disabled, for: .disabled)
@@ -48,23 +51,35 @@ class ElloNavigationBar: UIView {
 
         func trigger(from view: UIResponder, sender: UIButton) {
             switch self {
+            case .close:
+                let responder: HasCloseButton? = view.findResponder()
+                responder?.closeButtonTapped()
             case .back:
-                let responder: BaseElloViewController? = view.findResponder()
-                responder.backTapped()
+                let responder: HasBackButton? = view.findResponder()
+                responder?.backButtonTapped()
+            case .share:
+                let responder: HasShareButton? = view.findResponder()
+                responder?.shareButtonTapped(sender)
+            case .more:
+                let responder: HasMoreButton? = view.findResponder()
+                responder?.moreButtonTapped()
             case .burger:
                 let responder: StreamableViewController? = view.findResponder()
-                responder.hamburgerButtonTapped()
+                responder?.hamburgerButtonTapped()
             case .gridList:
                 let responder: GridListToggleDelegate? = view.findResponder()
-                responder.gridListToggled(sender)
+                responder?.gridListToggled(sender)
             }
         }
 
         var image: InterfaceImage {
             switch self {
             case .back: return .back
+            case .close: return .x
+            case .share: return .share
+            case .more: return .dots
             case .burger: return .burger
-            case .gridList(isGrid): return isGrid ? .listView : .gridView
+            case let .gridList(isGrid): return isGrid ? .listView : .gridView
             }
         }
     }
@@ -75,16 +90,28 @@ class ElloNavigationBar: UIView {
         }
     }
 
-    var leftItems: [Item] = [] {
-        didSet { leftButtons = updateButtons(buttons: leftButtons, items: leftItems, parent: leftButtonContainer) }
+    var title: String? {
+        didSet { titleLabel.text = title }
     }
-    fileprivate var leftButtonContainer = UIView()
+    fileprivate var defaultTitle: String? {
+        guard
+            let controller: UIViewController = findResponder()
+        else { return nil }
+        return controller.title
+    }
+    fileprivate let titleLabel = StyledLabel(style: .gray)
+    fileprivate let navigationContainer = Container()
+
+    var leftItems: [Item] = [] {
+        didSet { leftButtons = updateButtons(buttons: leftButtons, items: leftItems, container: leftButtonContainer) }
+    }
+    fileprivate var leftButtonContainer = Container()
     fileprivate var leftButtons: [UIButton] = []
 
     var rightItems: [Item] = [] {
-        didSet { rightButtons = updateButtons(buttons: rightButtons, items: rightItems, parent: rightButtonContainer) }
+        didSet { rightButtons = updateButtons(buttons: rightButtons, items: rightItems, container: rightButtonContainer) }
     }
-    fileprivate var rightButtonContainer = UIView()
+    fileprivate var rightButtonContainer = Container()
     fileprivate var rightButtons: [UIButton] = []
 
     override init(frame: CGRect) {
@@ -101,6 +128,12 @@ class ElloNavigationBar: UIView {
         privateInit()
     }
 
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+
+        titleLabel.text = title ?? defaultTitle
+    }
+
     fileprivate func privateInit() {
         tintColor = .greyA
         clipsToBounds = true
@@ -108,22 +141,33 @@ class ElloNavigationBar: UIView {
         isOpaque = true
 
         let bar = BlackBar()
+
+        addSubview(titleLabel)
         addSubview(bar)
-        addSubview(leftButtonContainer)
-        addSubview(rightButtonContainer)
+        addSubview(navigationContainer)
+        navigationContainer.addSubview(leftButtonContainer)
+        navigationContainer.addSubview(rightButtonContainer)
+
+        titleLabel.snp.makeConstraints { make in
+            make.center.equalTo(navigationContainer)
+        }
 
         bar.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(self)
         }
 
-        leftButtonContainer.snp.makeConstraints { make in
+        navigationContainer.snp.makeConstraints { make in
             make.top.equalTo(bar.snp.bottom)
-            make.leading.bottom.equalTo(self)
+            make.height.equalTo(Size.navigationHeight)
+            make.leading.trailing.equalTo(self)
+        }
+
+        leftButtonContainer.snp.makeConstraints { make in
+            make.top.bottom.leading.equalTo(navigationContainer)
         }
 
         rightButtonContainer.snp.makeConstraints { make in
-            make.top.equalTo(bar.snp.bottom)
-            make.trailing.bottom.equalTo(self)
+            make.top.bottom.trailing.equalTo(navigationContainer)
         }
 
     }
@@ -132,36 +176,39 @@ class ElloNavigationBar: UIView {
         return CGSize(width: UIViewNoIntrinsicMetric, height: sizeClass.height)
     }
 
-    fileprivate func updateButtons(buttons oldButtons: [UIButton], items: [Item], parent parentView: UIView) -> [UIButton] {
+    fileprivate func updateButtons(buttons oldButtons: [UIButton], items: [Item], container: UIView) -> [UIButton] {
         for button in oldButtons {
             button.removeFromSuperview()
         }
 
         let newButtons = items.map { $0.generateButton(target: self, action: #selector(tappedButton(_:)))}
         newButtons.eachPair { prevButton, button, isLast in
-            parentView.addSubview(button)
+            container.addSubview(button)
 
             button.snp.makeConstraints { make in
-                make.top.bottom.equalTo(parentView)
+                make.top.bottom.equalTo(container)
+                make.height.equalTo(Size.navigationHeight)
                 make.width.equalTo(Size.buttonWidth)
 
                 if let prevButton = prevButton {
                     make.leading.equalTo(prevButton.snp.trailing)
                 }
                 else {
-                    make.leading.equalTo(parentView)
+                    make.leading.equalTo(container)
                 }
 
                 if isLast {
-                    make.trailing.equalTo(parentView)
+                    make.trailing.equalTo(container)
                 }
             }
         }
+
+        return newButtons
     }
 
     @objc
     private func tappedButton(_ sender: UIButton) {
-        let item: Item?
+        var item: Item?
         if let index = leftButtons.index(of: sender) {
             item = leftItems[index]
         }
