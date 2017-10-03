@@ -144,6 +144,10 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         autoCompleteVC.delegate = self
         autoCompleteVC.view.alpha = 0
 
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
+
         tableView.estimatedRowHeight = 100
     }
 
