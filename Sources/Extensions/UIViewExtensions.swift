@@ -4,6 +4,19 @@
 
 extension UIView {
 
+    func findSubview<T>(_ test: (UIView) -> Bool) -> T? where T: UIView {
+        if let view = self as? T, test(self) {
+            return view
+        }
+
+        for subview in subviews {
+            guard let subview: T = subview.findSubview(test) else { continue }
+            return subview
+        }
+
+        return nil
+    }
+
     func findParentView<T>(_ test: ((T) -> Bool)? = nil) -> T? where T: UIView {
         var view: UIView? = superview
         while view != nil {
