@@ -135,8 +135,7 @@ class StreamableViewController: BaseElloViewController {
     }
 }
 
-extension StreamableViewController {
-    @objc
+extension StreamableViewController: HasHamburgerButton {
     func hamburgerButtonTapped() {
         let responder: DrawerResponder? = findResponder()
         responder?.showDrawerViewController()

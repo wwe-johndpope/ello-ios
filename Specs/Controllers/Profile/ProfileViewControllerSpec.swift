@@ -60,12 +60,11 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has grid/list and share buttons") {
-                    let rightButtons = subject.elloNavigationItem.rightBarButtonItems
-                    expect(rightButtons?.count ?? 0) == 2
+                    expect(subject.navigationBar.count) == 2
                 }
 
                 it("has back left nav button") {
-                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 2
+                    expect(subject.navigationBar.leftItems.count) == 2
                 }
 
                 context("collaborateable and hireable don't affect currentUser profile") {
@@ -111,11 +110,11 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has grid/list and share right nav buttons") {
-                    expect(subject.elloNavigationItem.rightBarButtonItems?.count) == 2
+                    expect(subject.navigationBar.rightItems.count) == 2
                 }
 
                 it("has back and more left nav buttons") {
-                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 4
+                    expect(subject.navigationBar.leftItems.count) == 4
                 }
 
                 let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [
@@ -188,11 +187,11 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has grid/list right nav buttons") {
-                    expect(subject.elloNavigationItem.rightBarButtonItems?.count) == 1
+                    expect(subject.navigationBar.rightItems.count) == 1
                 }
 
                 it("has back and more left nav buttons") {
-                    expect(subject.elloNavigationItem.leftBarButtonItems?.count) == 4
+                    expect(subject.navigationBar.leftItems.count) == 4
                 }
             }
 
@@ -323,9 +322,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("should not show ellipses button in navigation") {
-                    let elloNavigationItem = subject.elloNavigationItem
-                    let leftButtons = elloNavigationItem.leftBarButtonItems
-                    expect(leftButtons?.count) == 3
+                    expect(subject.navigationBar.leftItems.count) == 3
                 }
             }
         }

@@ -200,7 +200,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         autoCompleteContainer.addSubview(autoCompleteVC.view)
     }
 
-    // TODO: use elloNavigationItem, move into OmnibarViewController.loadView
     fileprivate func setupNavigationBar() {
         navigationBar.leftItems = [.back]
 

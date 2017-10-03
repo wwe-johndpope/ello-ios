@@ -2,6 +2,18 @@
 ///  ElloNavigationBar.swift
 //
 
+import SnapKit
+
+
+@objc protocol HasBackButton { func backButtonTapped() }
+@objc protocol HasCloseButton { func closeButtonTapped() }
+@objc protocol HasDeleteButton { func deleteButtonTapped() }
+@objc protocol HasEditButton { func editButtonTapped() }
+@objc protocol HasGridListButton { func gridListToggled(_ sender: UIButton) }
+@objc protocol HasHamburgerButton { func hamburgerButtonTapped() }
+@objc protocol HasMoreButton { func moreButtonTapped() }
+@objc protocol HasShareButton { func shareButtonTapped(_ sender: UIView) }
+
 class ElloNavigationBar: UIView {
     struct Size {
         static let height: CGFloat = calculateHeight()
@@ -34,11 +46,35 @@ class ElloNavigationBar: UIView {
 
     enum Item {
         case back
-        case close
-        case share
-        case more
         case burger
+        case close
+        case edit
+        case delete
         case gridList(isGrid: Bool)
+        case more
+        case share
+
+        var firstInset: CGFloat {
+            switch self {
+            case .back: return -5
+            default: return 0
+            }
+        }
+
+        var lastInset: CGFloat {
+            switch self {
+            case .edit: return 0
+            case let .gridList(isGrid):
+                if isGrid {
+                    return 3.5
+                }
+                else {
+                    return 3.5
+                }
+            case .more: return 0
+            default: return 0
+            }
+        }
 
         func generateButton(target: Any, action: Selector) -> UIButton {
             let button = UIButton()
@@ -51,35 +87,43 @@ class ElloNavigationBar: UIView {
 
         func trigger(from view: UIResponder, sender: UIButton) {
             switch self {
-            case .close:
-                let responder: HasCloseButton? = view.findResponder()
-                responder?.closeButtonTapped()
             case .back:
                 let responder: HasBackButton? = view.findResponder()
                 responder?.backButtonTapped()
-            case .share:
-                let responder: HasShareButton? = view.findResponder()
-                responder?.shareButtonTapped(sender)
+            case .burger:
+                let responder: HasHamburgerButton? = view.findResponder()
+                responder?.hamburgerButtonTapped()
+            case .close:
+                let responder: HasCloseButton? = view.findResponder()
+                responder?.closeButtonTapped()
+            case .edit:
+                let responder: HasEditButton? = view.findResponder()
+                responder?.editButtonTapped()
+            case .delete:
+                let responder: HasDeleteButton? = view.findResponder()
+                responder?.deleteButtonTapped()
+            case .gridList:
+                let responder: HasGridListButton? = view.findResponder()
+                responder?.gridListToggled(sender)
             case .more:
                 let responder: HasMoreButton? = view.findResponder()
                 responder?.moreButtonTapped()
-            case .burger:
-                let responder: StreamableViewController? = view.findResponder()
-                responder?.hamburgerButtonTapped()
-            case .gridList:
-                let responder: GridListToggleDelegate? = view.findResponder()
-                responder?.gridListToggled(sender)
+            case .share:
+                let responder: HasShareButton? = view.findResponder()
+                responder?.shareButtonTapped(sender)
             }
         }
 
         var image: InterfaceImage {
             switch self {
             case .back: return .back
-            case .close: return .x
-            case .share: return .share
-            case .more: return .dots
             case .burger: return .burger
+            case .close: return .x
+            case .delete: return .xBox
+            case .edit: return .pencil
             case let .gridList(isGrid): return isGrid ? .listView : .gridView
+            case .more: return .dots
+            case .share: return .share
             }
         }
     }
@@ -114,6 +158,9 @@ class ElloNavigationBar: UIView {
     fileprivate var rightButtonContainer = Container()
     fileprivate var rightButtons: [UIButton] = []
 
+    fileprivate var leftLeadingConstraint: Constraint!
+    fileprivate var rightTrailingConstraint: Constraint!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         privateInit()
@@ -130,7 +177,10 @@ class ElloNavigationBar: UIView {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
+        self.invalidateDefaultTitle()
+    }
 
+    func invalidateDefaultTitle() {
         titleLabel.text = title ?? defaultTitle
     }
 
@@ -163,11 +213,13 @@ class ElloNavigationBar: UIView {
         }
 
         leftButtonContainer.snp.makeConstraints { make in
-            make.top.bottom.leading.equalTo(navigationContainer)
+            make.top.bottom.equalTo(navigationContainer)
+            leftLeadingConstraint = make.leading.equalTo(navigationContainer).constraint
         }
 
         rightButtonContainer.snp.makeConstraints { make in
-            make.top.bottom.trailing.equalTo(navigationContainer)
+            make.top.bottom.equalTo(navigationContainer)
+            rightTrailingConstraint = make.trailing.equalTo(navigationContainer).constraint
         }
 
     }
@@ -201,6 +253,15 @@ class ElloNavigationBar: UIView {
                     make.trailing.equalTo(container)
                 }
             }
+        }
+
+        if container == leftButtonContainer {
+            let leftInset = items.first?.firstInset ?? 0
+            leftLeadingConstraint.update(offset: leftInset)
+        }
+        else {
+            let rightInset = items.last?.lastInset ?? 0
+            rightTrailingConstraint.update(offset: -rightInset)
         }
 
         return newButtons

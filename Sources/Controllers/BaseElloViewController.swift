@@ -7,11 +7,6 @@ protocol ControllerThatMightHaveTheCurrentUser {
     var currentUser: User? { get set }
 }
 
-@objc protocol HasBackButton { func backButtonTapped() }
-@objc protocol HasCloseButton { func closeButtonTapped() }
-@objc protocol HasMoreButton { func moreButtonTapped() }
-@objc protocol HasShareButton { func shareButtonTapped(_ sender: UIView) }
-
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
     var statusBarVisibility = true
     fileprivate var statusBarVisibilityObserver: NotificationObserver?
@@ -37,12 +32,10 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         return .slide
     }
 
-
-    var elloNavigationItem = UINavigationItem()
-
     override var title: String? {
         didSet {
-            elloNavigationItem.title = title ?? ""
+            let elloNavigationBar: ElloNavigationBar? = view.findSubview()
+            elloNavigationBar?.invalidateDefaultTitle()
         }
     }
 
@@ -81,7 +74,7 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.fixNavBarItemPadding()
+
         setupRelationshipController()
         setupStatusBarObservers()
     }
