@@ -126,13 +126,18 @@ final class ProfileViewController: StreamableViewController {
         viewContainer = screen.streamContainer
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setupNavigationItems()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if user == nil {
             screen.disableButtons()
         }
-        setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
 
@@ -194,14 +199,14 @@ final class ProfileViewController: StreamableViewController {
         let gridListItem = ElloNavigationBar.Item.gridList(isGrid: streamViewController.streamKind.isGridView)
         let isCurrentUser = userParam == currentUser?.id || userParam == currentUser.map { "~\($0.username)" }
 
+        var leftItems: [ElloNavigationBar.Item] = []
         if !isRootViewController() {
-            var leftItems: [ElloNavigationBar.Item] = []
             leftItems.append(.back)
             if !isCurrentUser, currentUser != nil {
                 leftItems.append(.more)
             }
-            screen.navigationBar.leftItems = leftItems
         }
+        screen.navigationBar.leftItems = leftItems
 
         if isCurrentUser {
             screen.navigationBar.rightItems = [.share, gridListItem]

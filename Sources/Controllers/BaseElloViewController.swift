@@ -34,8 +34,10 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
 
     override var title: String? {
         didSet {
-            let elloNavigationBar: ElloNavigationBar? = view.findSubview()
-            elloNavigationBar?.invalidateDefaultTitle()
+            if isViewLoaded {
+                let elloNavigationBar: ElloNavigationBar? = view.findSubview()
+                elloNavigationBar?.invalidateDefaultTitle()
+            }
         }
     }
 
