@@ -200,12 +200,8 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         autoCompleteContainer.addSubview(autoCompleteVC.view)
     }
 
-    // TODO: use elloNavigationItem, move into OmnibarViewController.loadView
     fileprivate func setupNavigationBar() {
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(backAction))
-        navigationItem.leftBarButtonItem = backItem
-        navigationItem.fixNavBarItemPadding()
-        navigationBar.items = [navigationItem]
+        navigationBar.leftItems = [.back]
 
         statusBarUnderlay.backgroundColor = .black
         addSubview(statusBarUnderlay)
@@ -672,10 +668,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
 // MARK: Button Actions
 
-    func backAction() {
-        delegate?.omnibarCancel()
-    }
-
     func cancelEditingAction() {
         if reordering {
             reorderingTable(false)
@@ -896,4 +888,10 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         self.delegate?.omnibarPresentController(pickerSheet)
     }
 
+}
+
+extension OmnibarScreen: HasBackButton {
+    func backButtonTapped() {
+        delegate?.omnibarCancel()
+    }
 }

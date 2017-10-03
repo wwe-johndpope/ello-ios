@@ -104,31 +104,23 @@ final class PostDetailViewController: StreamableViewController {
     }
 
     fileprivate func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [backItem]
-        elloNavigationItem.fixNavBarItemPadding()
-        navigationBar.items = [elloNavigationItem]
+        navigationBar.leftItems = [.back]
 
         guard post != nil else {
-            elloNavigationItem.rightBarButtonItems = []
+            navigationBar.rightItems = []
             return
         }
 
-        var rightBarButtonItems: [UIBarButtonItem] = []
+        var rightItems: [ElloNavigationBar.Item] = []
 
         if isOwnerOfPost() {
-            rightBarButtonItems = [
-                UIBarButtonItem(image: .xBox, target: self, action: #selector(PostDetailViewController.deletePost)),
-                UIBarButtonItem(image: .pencil, target: self, action: #selector(PostDetailViewController.editPostAction)),
-            ]
+            rightItems = [.delete, .edit]
         }
         else if currentUser != nil {
-            rightBarButtonItems = [UIBarButtonItem(image: .dots, target: self, action: #selector(PostDetailViewController.flagPost))]
+            rightItems = [.more]
         }
 
-        if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
-            elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-        }
+        navigationBar.rightItems = rightItems
     }
 
     fileprivate func checkScrollToComment() {
@@ -165,54 +157,6 @@ final class PostDetailViewController: StreamableViewController {
             return false
         }
         return currentUser.isOwnerOf(post: post)
-    }
-
-    func flagPost() {
-        guard let post = post else { return }
-
-        let flagger = ContentFlagger(presentingController: self,
-            flaggableId: post.id,
-            contentType: .post)
-        flagger.displayFlaggingSheet()
-    }
-
-    func editPostAction() {
-        guard let post = post, isOwnerOfPost() else {
-            return
-        }
-
-        editPost(post, fromController: self)
-    }
-
-    func deletePost() {
-        guard let post = post, let currentUser = currentUser, isOwnerOfPost() else {
-            return
-        }
-
-        let message = InterfaceString.Post.DeletePostConfirm
-        let alertController = AlertViewController(message: message)
-
-        let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) { _ in
-            if let userPostCount = currentUser.postsCount {
-                currentUser.postsCount = userPostCount - 1
-                postNotification(CurrentUserChangedNotification, value: currentUser)
-            }
-
-            postNotification(PostChangedNotification, value: (post, .delete))
-            PostService().deletePost(post.id)
-                .then {
-                    Tracker.shared.postDeleted(post)
-                }
-                .catch { error in
-                    // TODO: add error handling
-                }
-        }
-        let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
-
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-
-        self.present(alertController, animated: true, completion: .none)
     }
 
 }
@@ -299,5 +243,59 @@ extension PostDetailViewController: PostDetailStreamDestination {
             self.showGenericLoadFailure()
         }
         self.streamViewController.doneLoading()
+    }
+}
+
+extension PostDetailViewController: HasMoreButton {
+    func moreButtonTapped() {
+        guard let post = post else { return }
+
+        let flagger = ContentFlagger(presentingController: self,
+            flaggableId: post.id,
+            contentType: .post)
+        flagger.displayFlaggingSheet()
+    }
+}
+
+extension PostDetailViewController: HasDeleteButton {
+    func deleteButtonTapped() {
+        guard let post = post, let currentUser = currentUser, isOwnerOfPost() else {
+            return
+        }
+
+        let message = InterfaceString.Post.DeletePostConfirm
+        let alertController = AlertViewController(message: message)
+
+        let yesAction = AlertAction(title: InterfaceString.Yes, style: .dark) { _ in
+            if let userPostCount = currentUser.postsCount {
+                currentUser.postsCount = userPostCount - 1
+                postNotification(CurrentUserChangedNotification, value: currentUser)
+            }
+
+            postNotification(PostChangedNotification, value: (post, .delete))
+            PostService().deletePost(post.id)
+                .then {
+                    Tracker.shared.postDeleted(post)
+                }
+                .catch { error in
+                    // TODO: add error handling
+                }
+        }
+        let noAction = AlertAction(title: InterfaceString.No, style: .light, handler: .none)
+
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+
+        self.present(alertController, animated: true, completion: .none)
+    }
+}
+
+extension PostDetailViewController: HasEditButton {
+    func editButtonTapped() {
+        guard let post = post, isOwnerOfPost() else {
+            return
+        }
+
+        editPost(post, fromController: self)
     }
 }

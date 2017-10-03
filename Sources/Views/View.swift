@@ -32,3 +32,5 @@ extension View {
     func setText() {}
     func arrange() {}
 }
+
+class Container: UIView {}

@@ -6,8 +6,8 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     var category: DynamicSettingCategory?
     var currentUser: User?
     weak var delegate: DynamicSettingsDelegate?
-    @IBOutlet weak var tableView: UITableView!
-    weak var navBar: ElloNavigationBar!
+    @IBOutlet var navigationBar: ElloNavigationBar?
+    @IBOutlet var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,16 +24,9 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
     }
 
     fileprivate func setupNavigationBar() {
-        let backItem = UIBarButtonItem.backChevronWithTarget(self, action: #selector(DynamicSettingCategoryViewController.backAction))
-        navigationItem.leftBarButtonItem = backItem
-        navigationItem.title = category?.label
-        navigationItem.fixNavBarItemPadding()
-        navBar.items = [navigationItem]
+        navigationBar?.title = category?.label
+        navigationBar?.leftItems = [.back]
         postNotification(StatusBarNotifications.statusBarVisibility, value: true)
-    }
-
-    func backAction() {
-        _ = navigationController?.popViewController(animated: true)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,13 +87,13 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
         var updatedValues: [Profile.Property: Any] = [
             settingKey: value,
         ]
-
         for anotherSetting in category.settings {
-            if let anotherValue = setting.sets(anotherSetting, when: value),
+            guard
+                let anotherValue = setting.sets(anotherSetting, when: value),
                 let anotherKey = Profile.Property(rawValue: anotherSetting.key)
-            {
-                updatedValues[anotherKey] = anotherValue
-            }
+            else { continue }
+
+            updatedValues[anotherKey] = anotherValue
         }
 
         ProfileService().updateUserProfile(updatedValues)
@@ -132,5 +125,11 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
     func deleteAccount() {
         let vc = DeleteAccountConfirmationViewController()
         present(vc, animated: true, completion: .none)
+    }
+}
+
+extension DynamicSettingCategoryViewController: HasBackButton {
+    func backButtonTapped() {
+        _ = navigationController?.popViewController(animated: true)
     }
 }

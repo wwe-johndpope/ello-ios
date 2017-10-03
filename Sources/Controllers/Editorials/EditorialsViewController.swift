@@ -44,11 +44,10 @@ class EditorialsViewController: StreamableViewController {
         screen.delegate = self
 
         if usage == .loggedIn {
-            elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
+            screen.navigationBar.leftItems = [.burger]
         }
 
-        elloNavigationItem.titleView = UIView()
-        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.title = ""
 
         self.view = screen
         viewContainer = screen.streamContainer

@@ -66,11 +66,6 @@ protocol WebLinkResponder: class {
 }
 
 @objc
-protocol GridListToggleDelegate: class {
-    func gridListToggled(_ sender: UIButton)
-}
-
-@objc
 protocol CategoryListCellResponder: class {
     func categoryListCellTapped(slug: String, name: String)
 }

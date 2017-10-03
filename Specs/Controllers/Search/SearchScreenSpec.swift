@@ -15,7 +15,7 @@ class MockSearchScreenDelegate: NSObject, SearchScreenDelegate {
     func searchShouldReset(){}
     func toggleChanged(_ text: String, isPostSearch: Bool){}
     func findFriendsTapped(){}
-    func backTapped() {}
+    func backButtonTapped() {}
     func gridListToggled(sender: UIButton) {}
 }
 

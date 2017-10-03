@@ -4,7 +4,7 @@
 
 protocol CategoryScreenDelegate: class {
     func scrollToTop()
-    func backTapped()
+    func backButtonTapped()
     func shareTapped(sender: UIView)
     func gridListToggled(sender: UIButton)
     func allCategoriesTapped()

@@ -27,7 +27,7 @@ class BadgesViewController: StreamableViewController {
 
     override func loadView() {
         let screen = BadgesScreen()
-        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.leftItems = [.back]
 
         self.view = screen
         viewContainer = screen.streamContainer
@@ -49,8 +49,6 @@ class BadgesViewController: StreamableViewController {
             return item
         }
         streamViewController.appendStreamCellItems(items)
-
-        setupNavigationItems()
     }
 
     override func showNavBars() {
@@ -67,16 +65,6 @@ class BadgesViewController: StreamableViewController {
 
     fileprivate func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
-    }
-
-}
-
-extension BadgesViewController {
-
-    fileprivate func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [backItem]
-        elloNavigationItem.fixNavBarItemPadding()
     }
 
 }

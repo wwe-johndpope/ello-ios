@@ -88,7 +88,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
         super.bindActions()
         categoryCardList.delegate = self
         searchFieldButton.addTarget(self, action: #selector(searchFieldButtonTapped), for: .touchUpInside)
-        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         gridListButton.addTarget(self, action: #selector(gridListToggled), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareTapped), for: .touchUpInside)
     }
@@ -240,8 +240,8 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
         delegate?.searchButtonTapped()
     }
 
-    func backTapped() {
-        delegate?.backTapped()
+    func backButtonTapped() {
+        delegate?.backButtonTapped()
     }
 
     func gridListToggled() {

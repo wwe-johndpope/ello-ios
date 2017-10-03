@@ -67,6 +67,7 @@ final class CategoryViewController: StreamableViewController {
 
     override func loadView() {
         let screen = CategoryScreen(usage: usage)
+        screen.navigationBar.title = ""
         screen.delegate = self
 
         self.view = screen
@@ -140,12 +141,12 @@ final class CategoryViewController: StreamableViewController {
         userDidScroll = true
     }
 
-    override func backTapped() {
+    override func backButtonTapped() {
         if slug == nil {
             selectCategoryFor(slug: prevSlug ?? "featured")
         }
         else {
-            super.backTapped()
+            super.backButtonTapped()
         }
     }
 }

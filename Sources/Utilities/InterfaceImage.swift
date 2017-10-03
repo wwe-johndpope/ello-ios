@@ -110,6 +110,7 @@ enum InterfaceImage: String {
     case plusSmall = "plussmall"
     case checkSmall = "checksmall"
     case angleBracket = "abracket"
+    case back = "back"
 
     // Embeds
     case audioPlay = "embetter_audio_play"
@@ -179,6 +180,7 @@ enum InterfaceImage: String {
         switch self {
         case .angleBracket,
              .arrow,
+             .back,
              .breakLink,
              .bubbleBody,
              .camera,
@@ -203,7 +205,7 @@ enum InterfaceImage: String {
     }
     var disabledImage: UIImage? {
         switch self {
-        case .repost, .angleBracket, .addBuyButton:
+        case .angleBracket, .addBuyButton, .back, .repost:
             return svgNamed("\(self.rawValue)_disabled")
         default:
             return nil

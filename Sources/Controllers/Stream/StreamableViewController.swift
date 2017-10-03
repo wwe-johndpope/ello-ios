@@ -135,8 +135,7 @@ class StreamableViewController: BaseElloViewController {
     }
 }
 
-extension StreamableViewController {
-    @objc
+extension StreamableViewController: HasHamburgerButton {
     func hamburgerButtonTapped() {
         let responder: DrawerResponder? = findResponder()
         responder?.showDrawerViewController()
@@ -292,4 +291,10 @@ extension StreamableViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
+}
+
+extension StreamableViewController: HasGridListButton {
+    func gridListToggled(_ sender: UIButton) {
+        streamViewController.gridListToggled(sender)
+    }
 }

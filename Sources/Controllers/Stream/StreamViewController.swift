@@ -640,9 +640,7 @@ final class StreamViewController: BaseElloViewController {
 
 // MARK: DELEGATE & RESPONDER EXTENSIONS
 
-
-// MARK: StreamViewController: GridListToggleDelegate
-extension StreamViewController: GridListToggleDelegate {
+extension StreamViewController: HasGridListButton {
     func gridListToggled(_ sender: UIButton) {
         let isGridView = !streamKind.isGridView
         sender.setImage(isGridView ? .listView : .gridView, imageStyle: .normal, for: .normal)

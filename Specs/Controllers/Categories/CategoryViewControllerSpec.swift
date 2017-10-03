@@ -82,7 +82,7 @@ class CategoryViewControllerSpec: QuickSpec {
                 subject.allCategoriesTapped()
                 expect(subject.slug).to(beNil())
                 expect(screen.showBack) == true
-                subject.backTapped()
+                subject.backButtonTapped()
                 expect(subject.slug) == slug
                 expect(screen.showBack) == false
             }

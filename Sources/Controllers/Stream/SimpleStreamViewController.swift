@@ -66,13 +66,10 @@ class SimpleStreamViewController: StreamableViewController {
     }
 
     fileprivate func setupNavigationItems(streamKind: StreamKind) {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        elloNavigationItem.leftBarButtonItems = [backItem]
-        elloNavigationItem.fixNavBarItemPadding()
-        navigationBar.items = [elloNavigationItem]
+        navigationBar.leftItems = [.back]
 
         if streamKind.hasGridViewToggle {
-            elloNavigationItem.rightBarButtonItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamKind.isGridView)
+            navigationBar.rightItems = [.gridList(isGrid: streamKind.isGridView)]
         }
     }
 

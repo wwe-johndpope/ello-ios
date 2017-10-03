@@ -32,12 +32,12 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         return .slide
     }
 
-
-    var elloNavigationItem = UINavigationItem()
-
     override var title: String? {
         didSet {
-            elloNavigationItem.title = title ?? ""
+            if isViewLoaded {
+                let elloNavigationBar: ElloNavigationBar? = view.findSubview()
+                elloNavigationBar?.invalidateDefaultTitle()
+            }
         }
     }
 
@@ -76,7 +76,7 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.fixNavBarItemPadding()
+
         setupRelationshipController()
         setupStatusBarObservers()
     }
@@ -159,20 +159,6 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         relationshipController?.currentUser = currentUser
     }
 
-    @IBAction
-    func backTapped() {
-        guard
-            let navigationController = navigationController, navigationController.childViewControllers.count > 1
-        else { return }
-
-        _ = navigationController.popViewController(animated: true)
-    }
-
-    @IBAction
-    func closeTapped() {
-        dismiss(animated: true, completion: .none)
-    }
-
     func showShareActivity(sender: UIView, url shareURL: URL) {
         let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
@@ -198,5 +184,21 @@ extension BaseElloViewController {
         let search = SearchViewController()
         search.currentUser = currentUser
         self.navigationController?.pushViewController(search, animated: true)
+    }
+}
+
+extension BaseElloViewController: HasBackButton {
+    func backButtonTapped() {
+        guard
+            let navigationController = navigationController, navigationController.childViewControllers.count > 1
+        else { return }
+
+        _ = navigationController.popViewController(animated: true)
+    }
+}
+
+extension BaseElloViewController: HasCloseButton {
+    func closeButtonTapped() {
+        dismiss(animated: true, completion: .none)
     }
 }

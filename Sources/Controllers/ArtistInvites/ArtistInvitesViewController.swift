@@ -44,9 +44,8 @@ class ArtistInvitesViewController: StreamableViewController {
         let screen = ArtistInvitesScreen(usage: usage)
         screen.delegate = self
 
-        elloNavigationItem.leftBarButtonItem = UIBarButtonItem(image: InterfaceImage.burger.normalImage, style: .done, target: self, action: #selector(hamburgerButtonTapped))
-        elloNavigationItem.titleView = UIView()
-        screen.navigationItem = elloNavigationItem
+        screen.navigationBar.title = ""
+        screen.navigationBar.leftItems = [.burger]
 
         self.view = screen
         viewContainer = screen.streamContainer

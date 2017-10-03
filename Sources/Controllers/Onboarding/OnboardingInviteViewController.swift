@@ -77,16 +77,11 @@ extension OnboardingInviteViewController {
         if let navigationController = navigationController,
             navigationController.viewControllers.first != self
         {
-            let backItem = UIBarButtonItem.backChevron(withController: self)
-            elloNavigationItem.leftBarButtonItems = [backItem]
-            elloNavigationItem.fixNavBarItemPadding()
+            screen.navigationBar.leftItems = [.back]
         }
         else {
-            let closeItem = UIBarButtonItem.closeButton(target: self, action: #selector(closeTapped))
-            elloNavigationItem.leftBarButtonItems = [closeItem]
+            screen.navigationBar.leftItems = [.close]
         }
-
-        screen.navigationItem = elloNavigationItem
     }
 
     fileprivate func findFriendsFromContacts() {

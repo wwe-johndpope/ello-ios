@@ -121,10 +121,15 @@ final class ProfileViewController: StreamableViewController {
     override func loadView() {
         let screen = ProfileScreen()
         screen.delegate = self
-        screen.navigationItem = elloNavigationItem
         screen.clipsToBounds = true
         self.view = screen
         viewContainer = screen.streamContainer
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setupNavigationItems()
     }
 
     override func viewDidLoad() {
@@ -133,7 +138,6 @@ final class ProfileViewController: StreamableViewController {
         if user == nil {
             screen.disableButtons()
         }
-        setupNavigationItems()
         ElloHUD.showLoadingHudInView(streamViewController.view)
         streamViewController.loadInitialPage()
 
@@ -192,76 +196,36 @@ final class ProfileViewController: StreamableViewController {
     }
 
     fileprivate func setupNavigationItems() {
-        let backItem = UIBarButtonItem.backChevron(withController: self)
-        let gridListItem = UIBarButtonItem.gridListItem(delegate: streamViewController, isGridView: streamViewController.streamKind.isGridView)
-        let shareItem = UIBarButtonItem(image: .share, target: self, action: #selector(ProfileViewController.sharePostTapped(_:)))
-        let moreActionsItem = UIBarButtonItem(image: .dots, target: self, action: #selector(ProfileViewController.moreButtonTapped))
+        let gridListItem = ElloNavigationBar.Item.gridList(isGrid: streamViewController.streamKind.isGridView)
         let isCurrentUser = userParam == currentUser?.id || userParam == currentUser.map { "~\($0.username)" }
 
+        var leftItems: [ElloNavigationBar.Item] = []
         if !isRootViewController() {
-            var leftBarButtonItems: [UIBarButtonItem] = []
-            leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
-            leftBarButtonItems.append(backItem)
-            if !isCurrentUser {
-                leftBarButtonItems.append(UIBarButtonItem.spacer(width: -17))
-                if currentUser != nil {
-                    leftBarButtonItems.append(moreActionsItem)
-                }
+            leftItems.append(.back)
+            if !isCurrentUser, currentUser != nil {
+                leftItems.append(.more)
             }
-            elloNavigationItem.leftBarButtonItems = leftBarButtonItems
         }
+        screen.navigationBar.leftItems = leftItems
 
         if isCurrentUser {
-            elloNavigationItem.rightBarButtonItems = [shareItem, gridListItem]
+            screen.navigationBar.rightItems = [.share, gridListItem]
         }
         else if
             let user = user,
             user.id != currentUser?.id
         {
-            var rightBarButtonItems: [UIBarButtonItem] = []
+            var rightItems: [ElloNavigationBar.Item] = []
             if user.hasSharingEnabled {
-                rightBarButtonItems.append(shareItem)
+                rightItems.append(.share)
             }
-            rightBarButtonItems.append(gridListItem)
+            rightItems.append(gridListItem)
 
-            if !elloNavigationItem.areRightButtonsTheSame(rightBarButtonItems) {
-                elloNavigationItem.rightBarButtonItems = rightBarButtonItems
-            }
+            screen.navigationBar.rightItems = rightItems
         }
         else {
-            elloNavigationItem.rightBarButtonItems = []
+            screen.navigationBar.rightItems = []
         }
-    }
-
-    func moreButtonTapped() {
-        guard currentUser != nil else {
-            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
-            return
-        }
-        guard let user = user else { return }
-
-        let userId = user.id
-        let userAtName = user.atName
-        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: user.relationshipPriority)
-
-        let responder: RelationshipResponder? = findResponder()
-        responder?.launchBlockModal(
-            userId,
-            userAtName: userAtName,
-            relationshipPriority: prevRelationshipPriority
-        ) { newRelationshipPriority in
-            user.relationshipPriority = newRelationshipPriority.priority
-        }
-    }
-
-    func sharePostTapped(_ sender: UIView) {
-        guard
-            let user = user,
-            let shareURL = URL(string: user.shareLink)
-        else { return }
-
-        Tracker.shared.userShared(user)
-        showShareActivity(sender: sender, url: shareURL)
     }
 
     func toggleGrid(_ isGridView: Bool) {
@@ -578,5 +542,40 @@ extension ProfileViewController:  StreamDestination {
             self.showGenericLoadFailure()
         }
         self.streamViewController.doneLoading()
+    }
+}
+
+extension ProfileViewController: HasMoreButton {
+    func moreButtonTapped() {
+        guard currentUser != nil else {
+            postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
+            return
+        }
+        guard let user = user else { return }
+
+        let userId = user.id
+        let userAtName = user.atName
+        let prevRelationshipPriority = RelationshipPriorityWrapper(priority: user.relationshipPriority)
+
+        let responder: RelationshipResponder? = findResponder()
+        responder?.launchBlockModal(
+            userId,
+            userAtName: userAtName,
+            relationshipPriority: prevRelationshipPriority
+        ) { newRelationshipPriority in
+            user.relationshipPriority = newRelationshipPriority.priority
+        }
+    }
+}
+
+extension ProfileViewController: HasShareButton {
+    func shareButtonTapped(_ sender: UIView) {
+        guard
+            let user = user,
+            let shareURL = URL(string: user.shareLink)
+        else { return }
+
+        Tracker.shared.userShared(user)
+        showShareActivity(sender: sender, url: shareURL)
     }
 }
