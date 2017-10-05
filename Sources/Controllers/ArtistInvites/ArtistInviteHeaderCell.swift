@@ -31,7 +31,7 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
     fileprivate let headerImage = FLAnimatedImageView()
     fileprivate let headerOverlay = UIView()
     fileprivate let logoImage = UIImageView()
-    fileprivate let titleLabel = StyledLabel(style: .artistInviteDetailTitle)
+    fileprivate let titleLabel = StyledLabel(style: .artistInviteTitle)
     fileprivate let statusLabel = StyledLabel()
     fileprivate let inviteTypeLabel = StyledLabel(style: .artistInviteDetailInfo)
     fileprivate let dateLabel = StyledLabel(style: .artistInviteDetailInfo)
@@ -150,10 +150,6 @@ extension ArtistInvite.Status {
 }
 
 extension StyledLabel.Style {
-    static let artistInviteDetailTitle = StyledLabel.Style(
-        textColor: .black,
-        fontFamily: .artistInviteTitle
-        )
     static let artistInviteDetailInfo = StyledLabel.Style(
         textColor: .greyA,
         fontFamily: .artistInviteDetail
