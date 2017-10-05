@@ -11,7 +11,7 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
 
     struct Size {
         static let headerImageHeight: CGFloat = 220
-        static let totalTextHeight: CGFloat = 196
+        static let remainingTextHeight: CGFloat = 148
 
         static let logoImageSize = ArtistInviteBubbleCell.Size.logoImageSize
         static let textMargins = UIEdgeInsets(top: 20, left: 15, bottom: 30, right: 15)
@@ -36,11 +36,20 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
     fileprivate let inviteTypeLabel = StyledLabel(style: .artistInviteDetailInfo)
     fileprivate let dateLabel = StyledLabel(style: .artistInviteDetailInfo)
 
+    static func calculateDynamicHeights(title: String, inviteType: String, cellWidth: CGFloat) -> CGFloat {
+        let textWidth = cellWidth - Size.textMargins.left - Size.textMargins.right
+        let height1 = NSAttributedString(label: title, style: .artistInviteTitle, lineBreakMode: .byWordWrapping).heightForWidth(textWidth)
+        let height2 = NSAttributedString(label: inviteType, style: .artistInviteDetailInfo, lineBreakMode: .byWordWrapping).heightForWidth(textWidth)
+        return height1 + height2
+    }
+
     override func style() {
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
         headerOverlay.backgroundColor = .black
         headerOverlay.alpha = 0.3
+        titleLabel.isMultiline = true
+        inviteTypeLabel.isMultiline = true
         logoImage.contentMode = .scaleAspectFit
         logoImage.clipsToBounds = true
     }

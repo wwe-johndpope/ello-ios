@@ -67,6 +67,8 @@ class ArtistInviteCellSizeCalculator: NSObject {
         switch cellItem.type {
         case .artistInviteBubble:
             loadBubbleHTML(cellItem, artistInvite)
+        case .artistInviteHeader:
+            assignHeight(webHeight: 0)
         case .artistInviteControls:
             loadControlsHTML(cellItem, artistInvite)
         case .artistInviteGuide:
@@ -125,6 +127,8 @@ class ArtistInviteCellSizeCalculator: NSObject {
         switch cellItem.type {
         case .artistInviteBubble:
             calculatedHeight = calculateBubbleHeight(cellItem, webHeight)
+        case .artistInviteHeader:
+            calculatedHeight = calculateHeaderHeight(cellItem)
         case .artistInviteControls:
             calculatedHeight = calculateControlsHeight(cellItem, webHeight, hasCurrentUser: job.hasCurrentUser)
         case .artistInviteGuide:
@@ -152,6 +156,18 @@ class ArtistInviteCellSizeCalculator: NSObject {
         totalHeight += ArtistInviteBubbleCell.Size.infoTotalHeight
         totalHeight += (webHeight > 0 ? ArtistInviteBubbleCell.Size.descriptionMargins.bottom : 0)
         totalHeight += ArtistInviteBubbleCell.Size.bubbleMargins.bottom
+        return totalHeight
+    }
+
+    fileprivate func calculateHeaderHeight(_ cellItem: StreamCellItem) -> CGFloat {
+        var totalHeight: CGFloat = 0
+        totalHeight += ArtistInviteHeaderCell.Size.headerImageHeight
+        totalHeight += ArtistInviteHeaderCell.Size.remainingTextHeight
+        if let width = job?.width,
+            let artistInvite = cellItem.jsonable as? ArtistInvite
+        {
+            totalHeight += ArtistInviteHeaderCell.calculateDynamicHeights(title: artistInvite.title, inviteType: artistInvite.inviteType, cellWidth: width)
+        }
         return totalHeight
     }
 
