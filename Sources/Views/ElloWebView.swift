@@ -5,6 +5,8 @@
 class ElloWebView: UIWebView {
     required override init(frame: CGRect) {
         super.init(frame: frame)
+        isOpaque = false
+        backgroundColor = .clear
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
         }
@@ -12,6 +14,8 @@ class ElloWebView: UIWebView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        isOpaque = false
+        backgroundColor = .clear
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
         }

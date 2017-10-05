@@ -198,8 +198,6 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         relationshipControl.isHidden = true
 
         notificationImageView.contentMode = .scaleAspectFit
-        messageWebView.isOpaque = false
-        messageWebView.backgroundColor = .clear
         messageWebView.scrollView.isScrollEnabled = false
         messageWebView.delegate = self
 

@@ -29,6 +29,7 @@ protocol HomeScreenNavBar: class {
 
 struct HomeScreenNavBarSize {
     static let typeOffset: CGFloat = 18.625
+    static let tabBarOffset: CGFloat = 4.5
 }
 
 fileprivate typealias Size = HomeScreenNavBarSize
@@ -100,7 +101,7 @@ extension HomeScreenNavBar {
 
         tabBar.snp.makeConstraints { make in
             make.leading.trailing.equalTo(navigationBar)
-            make.top.equalTo(logoButton.snp.bottom)
+            make.top.equalTo(logoButton.snp.bottom).offset(HomeScreenNavBarSize.tabBarOffset)
         }
     }
 }
