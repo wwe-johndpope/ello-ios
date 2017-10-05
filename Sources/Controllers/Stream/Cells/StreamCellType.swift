@@ -317,8 +317,6 @@ enum StreamCellType: Equatable {
             return 200
         case .artistInviteAdminControls:
             return ArtistInviteAdminControlsCell.Size.height
-        case .artistInviteHeader:
-            return ArtistInviteHeaderCell.Size.headerImageHeight + ArtistInviteHeaderCell.Size.totalTextHeight
         case .artistInviteSubmissionsButton:
             return ArtistInviteSubmissionsButtonCell.Size.height
         case .badge:

@@ -165,10 +165,6 @@ extension StyledLabel.Style {
         textColor: .white,
         fontFamily: .editorialCaption
         )
-    static let artistInviteTitle = StyledLabel.Style(
-        textColor: .black,
-        fontFamily: .artistInviteTitle
-        )
     static let black = StyledLabel.Style(
         textColor: .black
         )
