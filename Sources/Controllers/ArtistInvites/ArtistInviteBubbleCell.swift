@@ -244,6 +244,10 @@ extension ArtistInvite.Status {
 }
 
 extension StyledLabel.Style {
+    static let artistInviteTitle = StyledLabel.Style(
+        textColor: .black,
+        fontFamily: .artistInviteTitle
+        )
     static let artistInvitePreview = StyledLabel.Style(
         textColor: UIColor(hex: 0x0409FE)
         )
