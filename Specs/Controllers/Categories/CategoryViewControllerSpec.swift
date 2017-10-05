@@ -15,7 +15,6 @@ class CategoryViewControllerSpec: QuickSpec {
         var isGridView = true
         var navigationBarTopConstraint: NSLayoutConstraint!
         let navigationBar = ElloNavigationBar()
-        var navigationItem: UINavigationItem?
         var categoryTitles: [String] = []
         var scrollTo: Int?
         var select: Int?

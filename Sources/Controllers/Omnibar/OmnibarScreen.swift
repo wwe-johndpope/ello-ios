@@ -93,11 +93,9 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     var title: String = "" {
         didSet {
-            navigationItem.title = title
+            navigationBar.title = title
         }
     }
-
-    let navigationItem = UINavigationItem()
 
     var canGoBack: Bool = false {
         didSet { setNeedsLayout() }
