@@ -107,28 +107,36 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
         config = Config()
     }
 
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        if superview != nil && config.isInCountdown {
+            startTimer()
+        }
+        else {
+            stopTimer()
+        }
+    }
+
+    private var timer: Timer?
+
+    private func startTimer() {
+        guard timer == nil else { return }
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(updateDateText), userInfo: nil, repeats: true)
+    }
+
+    private func stopTimer() {
+        guard let timer = timer else { return }
+        timer.invalidate()
+        self.timer = nil
+    }
+
     func updateConfig() {
         titleLabel.text = config.title
         statusLabel.text = config.status.text
         statusLabel.style = config.status.detailLabelStyle
         inviteTypeLabel.text = config.inviteType
-
-        let dateText: String
-        if let openedAt = config.openedAt {
-            if let closedAt = config.closedAt {
-                dateText = "\(openedAt.monthDay()) — \(closedAt.monthDayYear())"
-            }
-            else {
-                dateText = "Opens \(openedAt.monthDayYear())"
-            }
-        }
-        else if let closedAt = config.closedAt {
-            dateText = "Ends \(closedAt.monthDayYear())"
-        }
-        else {
-            dateText = ""
-        }
-        dateLabel.text = dateText
+        updateDateText()
 
         let images: [(URL?, UIImageView)] = [
             (config.headerURL, headerImage),
@@ -143,6 +151,11 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
                 imageView.image = nil
             }
         }
+    }
+
+    @objc
+    private func updateDateText() {
+        dateLabel.text = config.dateText()
     }
 }
 
