@@ -36,6 +36,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         var openedAt: Date?
         var closedAt: Date?
         var hasCurrentUser = false
+        var isInCountdown: Bool { return status == .open }
     }
 
     var config = Config() {
@@ -150,6 +151,30 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         config = Config()
     }
 
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        if superview != nil && config.isInCountdown {
+            startTimer()
+        }
+        else {
+            stopTimer()
+        }
+    }
+
+    private var timer: Timer?
+
+    private func startTimer() {
+        guard timer == nil else { return }
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(updateDateText), userInfo: nil, repeats: true)
+    }
+
+    private func stopTimer() {
+        guard let timer = timer else { return }
+        timer.invalidate()
+        self.timer = nil
+    }
+
     func updateConfig() {
         titleLabel.text = config.title
         inviteTypeLabel.text = config.inviteType
@@ -157,23 +182,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         statusImage.image = config.status.image
         statusLabel.text = config.status.text
         statusLabel.style = config.status.labelStyle
-
-        let dateText: String
-        if let openedAt = config.openedAt {
-            if let closedAt = config.closedAt {
-                dateText = "\(openedAt.monthDay()) — \(closedAt.monthDayYear())"
-            }
-            else {
-                dateText = "Opens \(openedAt.monthDayYear())"
-            }
-        }
-        else if let closedAt = config.closedAt {
-            dateText = "Ends \(closedAt.monthDayYear())"
-        }
-        else {
-            dateText = ""
-        }
-        dateLabel.text = dateText
+        updateDateText()
 
         let images: [(URL?, UIImageView)] = [
             (config.headerURL, headerImage),
@@ -191,6 +200,11 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
 
         let html = StreamTextCellHTML.artistInviteHTML(config.shortDescription)
         descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
+    }
+
+    @objc
+    private func updateDateText() {
+        dateLabel.text = config.dateText()
     }
 }
 
@@ -263,4 +277,40 @@ extension StyledLabel.Style {
     static let artistInviteClosed = StyledLabel.Style(
         textColor: UIColor(hex: 0xFE0404)
         )
+}
+
+extension ArtistInviteBubbleCell.Config {
+    func dateText() -> String {
+        switch status {
+        case .preview, .upcoming:
+            return ""
+        case .selecting:
+            return InterfaceString.ArtistInvites.Selecting
+        case .closed:
+            guard let closedAt = closedAt else { return "" }
+            return InterfaceString.ArtistInvites.Ended(closedAt.monthDayYear())
+        default: break
+        }
+
+        if let openedAt = openedAt, let closedAt = closedAt {
+            return dateTextRemaining(openedAt, closedAt)
+        }
+        else if let openedAt = openedAt {
+            return InterfaceString.ArtistInvites.Opens(openedAt.monthDayYear())
+        }
+        else if let closedAt = closedAt {
+            return InterfaceString.ArtistInvites.Ends(closedAt.monthDayYear())
+        }
+        return ""
+    }
+
+    fileprivate func dateTextRemaining(_ openedAt: Date, _ closedAt: Date) -> String {
+        let secondsRemaining = Int(closedAt.timeIntervalSince(openedAt))
+        let daysRemaining = Int(secondsRemaining / 24 / 3600)
+        if daysRemaining > 1 {
+            return InterfaceString.ArtistInvites.DaysRemaining(daysRemaining)
+        }
+        return InterfaceString.ArtistInvites.Countdown(secondsRemaining)
+    }
+
 }
