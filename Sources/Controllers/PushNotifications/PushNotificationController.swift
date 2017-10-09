@@ -218,7 +218,7 @@ extension PushNotificationController {
     }
 
     private func actionFollowUser(userId: String) {
-        _ = RelationshipService().updateRelationship(currentUserId: nil, userId: userId, relationshipPriority: .following)
+        _ = RelationshipService().updateRelationship(userId: userId, relationshipPriority: .following)
     }
 
     private func actionLovePost(postId: String) {
