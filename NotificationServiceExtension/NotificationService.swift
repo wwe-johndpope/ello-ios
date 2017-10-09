@@ -78,7 +78,6 @@ class NotificationService: UNNotificationServiceExtension {
     }
 
     private func fetchUser(id: String, content: UNMutableNotificationContent) {
-        content.title = "\(content.title) [user \(id)]"
         contentHandler?(content)
     }
 
