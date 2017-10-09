@@ -9,7 +9,8 @@ class BadgeCell: CollectionViewCell {
     static let reuseIdentifier = "BadgeCell"
 
     struct Size {
-        static let imageInsets = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 0)
+        static let imageLeftMargin: CGFloat = 20
+        static let imageSize = CGSize(width: 24, height: 24)
         static let grayInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         static let labelMargin: CGFloat = 20
     }
@@ -22,11 +23,17 @@ class BadgeCell: CollectionViewCell {
         set { label.attributedText = newValue }
         get { return label.attributedText }
     }
-    var image: UIImage? {
-        get { return imageView.image }
-        set { imageView.image = newValue }
-    }
     var url: URL?
+    var imageURL: URL? {
+        didSet {
+            guard let imageURL = imageURL else {
+                imageView.pin_cancelImageDownload()
+                imageView.image = nil
+                return
+            }
+            imageView.pin_setImage(from: imageURL)
+        }
+    }
 
     fileprivate let label = ElloTextView()
     fileprivate let imageView = UIImageView()
@@ -57,8 +64,9 @@ class BadgeCell: CollectionViewCell {
         contentView.addSubview(grayLine)
 
         imageView.snp.makeConstraints { make in
-            make.leading.top.bottom.equalTo(contentView).inset(Size.imageInsets)
-            imageView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+            make.leading.equalTo(contentView).offset(Size.imageLeftMargin)
+            make.centerY.equalTo(contentView)
+            make.size.equalTo(Size.imageSize)
         }
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -69,12 +77,6 @@ class BadgeCell: CollectionViewCell {
             make.leading.trailing.bottom.equalTo(contentView).inset(Size.grayInsets)
             make.height.equalTo(1)
         }
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        imageView.layer.cornerRadius = max(imageView.frame.width / 2, imageView.frame.height / 2)
     }
 }
 

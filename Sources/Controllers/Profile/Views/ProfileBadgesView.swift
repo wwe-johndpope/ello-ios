@@ -9,6 +9,7 @@ class ProfileBadgesView: ProfileBaseView {
     struct Size {
         static let height: CGFloat = 60
         static let badgeSize = CGSize(width: 36, height: 44)
+        static let imageEdgeInsets = UIEdgeInsets(top: 10, left: 6, bottom: 10, right: 6)
     }
 
     var badges: [Badge] = [] {
@@ -55,16 +56,12 @@ class ProfileBadgesView: ProfileBaseView {
         badgeButtons = badges.safeRange(0 ..< maxBadges).map { (badge: Badge) -> UIButton in
             let button = UIButton()
             button.addTarget(self, action: #selector(badgeTapped(_:)), for: .touchUpInside)
-            button.contentMode = .center
-            if let svgkImage = badge.interfaceImage?.svgkImage {
-                if badge.isFeatured {
-                    svgkImage.size = CGSize(width: 27, height: 27)
-                }
-                let image = svgkImage.uiImage.withRenderingMode(.alwaysOriginal)
-                button.setImage(image, for: .normal)
-                button.snp.makeConstraints { make in
-                    make.size.equalTo(Size.badgeSize)
-                }
+            button.snp.makeConstraints { make in
+                make.size.equalTo(Size.badgeSize)
+            }
+            button.imageEdgeInsets = Size.imageEdgeInsets
+            if let imageURL = badge.imageURL {
+                button.pin_setImage(from: imageURL)
             }
             return button
         }
