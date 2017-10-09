@@ -31,7 +31,7 @@ struct BadgeCellPresenter {
             cell.title = title
         }
 
-        cell.image = badge.interfaceImage?.normalImage
+        cell.imageURL = badge.imageURL
         cell.url = badge.url
     }
 
