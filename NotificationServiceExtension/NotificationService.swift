@@ -9,27 +9,26 @@ import Alamofire
 class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
-    var bestAttemptContent: UNMutableNotificationContent?
+    var originalContent: UNNotificationContent?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         guard
             let path = request.content.userInfo["application_target"] as? String,
             let content = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        else { return }
+        else {
+            contentHandler(request.content)
+            return
+        }
 
+        self.originalContent = request.content
         self.contentHandler = contentHandler
 
         let (type, data) = ElloURI.match(path)
-
         switch type {
-        case .pushNotificationComment:
+        case .pushNotificationComment, .pushNotificationPost:
             fetchPost(id: data, content: content)
-        case .pushNotificationPost:
-            fetchPost(id: data, content: content)
-        case .pushNotificationUser:
-            fetchUser(id: data, content: content)
         default:
-            return
+            contentHandler(request.content)
         }
     }
 
@@ -69,24 +68,22 @@ class NotificationService: UNNotificationServiceExtension {
 
                 content.attachments = downloadedImages.flatMap { location -> UNNotificationAttachment? in
                     let identifier = "region-\(location.lastPathComponent)"
-                    let attachment = try? UNNotificationAttachment(identifier: identifier, url: location, options: nil)
-                    return attachment
+                    return try? UNNotificationAttachment(identifier: identifier, url: location, options: nil)
                 }
                 contentHandler(content)
             }
             .ignoreErrors()
     }
 
-    private func fetchUser(id: String, content: UNMutableNotificationContent) {
-        content.title = "\(content.title) [user \(id)]"
-        contentHandler?(content)
-    }
-
     override func serviceExtensionTimeWillExpire() {
-        contentHandler = nil
-        // guard let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent else { return }
+        defer {
+            self.originalContent = nil
+            self.contentHandler = nil
+        }
 
-        // contentHandler(bestAttemptContent)
+        guard let contentHandler = contentHandler, let originalContent = originalContent else { return }
+
+        contentHandler(originalContent)
     }
 
 }

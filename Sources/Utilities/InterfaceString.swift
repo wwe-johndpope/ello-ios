@@ -324,7 +324,7 @@ struct InterfaceString {
         static let PermissionNo: String = NSLocalizedString("No thanks", comment: "Disallow")
 
         static let CommentReply: String = NSLocalizedString("Reply", comment: "")
-        static let MessageUser: String = NSLocalizedString("Message", comment: "")
+        static let MessageUser: String = NSLocalizedString("Mention", comment: "")
         static let PostComment: String = NSLocalizedString("Comment", comment: "")
         static let LovePost: String = NSLocalizedString("Love", comment: "")
         static let FollowUser: String = NSLocalizedString("Follow", comment: "")

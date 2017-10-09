@@ -10,7 +10,7 @@ import PromiseKit
 class RelationshipService: NSObject {
 
     func updateRelationship(
-        currentUserId: String?,
+        currentUserId: String? = nil,
         userId: String,
         relationshipPriority: RelationshipPriority
         ) -> (Relationship?, Promise<Relationship?>)
