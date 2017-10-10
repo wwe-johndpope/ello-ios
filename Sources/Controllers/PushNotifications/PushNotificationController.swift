@@ -150,38 +150,45 @@ extension PushNotificationController {
         else {
             let (type, data) = ElloURI.match(payload.applicationTarget)
 
+            var shouldInteract = true
             switch action ?? PushActions.view {
             case PushActions.postComment, PushActions.commentReply:
                 if let text = userInfo[PushActions.userInputKey] as? String {
-                    actionPostComment(postId: data, text: text)
+                    actionPostComment(postId: data, text: text, payload: payload)
+                    shouldInteract = false
                 }
             case PushActions.messageUser:
                 guard let text = userInfo[PushActions.userInputKey] as? String else { return }
 
                 if case .pushNotificationUser = type {
-                    actionMessageUser(userId: data, text: text)
+                    actionMessageUser(userId: data, text: text, payload: payload)
+                    shouldInteract = false
                 }
             case PushActions.followUser:
                 if case .pushNotificationUser = type {
-                    actionFollowUser(userId: data)
+                    actionFollowUser(userId: data, payload: payload)
+                    shouldInteract = false
                 }
             case PushActions.lovePost:
                 if type == .pushNotificationPost || type == .pushNotificationComment {
-                    actionLovePost(postId: data)
+                    actionLovePost(postId: data, payload: payload)
+                    shouldInteract = false
                 }
             default:
                 break
             }
 
-            postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+            if shouldInteract {
+                postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+            }
         }
     }
 
-    private func actionPostComment(postId: String, text: String) {
-        actionSendMessage(text: text, postEditingService: PostEditingService(parentPostId: postId))
+    private func actionPostComment(postId: String, text: String, payload: PushPayload) {
+        actionSendMessage(text: text, postEditingService: PostEditingService(parentPostId: postId), payload: payload)
     }
 
-    private func actionMessageUser(userId: String, text: String) {
+    private func actionMessageUser(userId: String, text: String, payload: PushPayload) {
         UserService().loadUser(.userStream(userParam: userId))
             .thenFinally { user in
                 let postText: String
@@ -191,12 +198,12 @@ extension PushNotificationController {
                 else {
                     postText = "\(user.atName) \(text)"
                 }
-                self.actionSendMessage(text: postText, postEditingService: PostEditingService())
+                self.actionSendMessage(text: postText, postEditingService: PostEditingService(), payload: payload)
             }
             .ignoreErrors()
     }
 
-    private func actionSendMessage(text: String, postEditingService: PostEditingService) {
+    private func actionSendMessage(text: String, postEditingService: PostEditingService, payload: PushPayload) {
         postEditingService.create(content: [.text(text)])
             .thenFinally { _ in
                 let message: String
@@ -208,6 +215,7 @@ extension PushNotificationController {
                 }
                 NotificationBanner.displayAlert(message: message)
                 postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
+                postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
             }
             .catch { _ in
                 if postEditingService.parentPostId != nil {
@@ -217,20 +225,26 @@ extension PushNotificationController {
             .ignoreErrors()
     }
 
-    private func actionFollowUser(userId: String) {
-        _ = RelationshipService().updateRelationship(userId: userId, relationshipPriority: .following)
+    private func actionFollowUser(userId: String, payload: PushPayload) {
+        let (_, promise) = RelationshipService().updateRelationship(userId: userId, relationshipPriority: .following)
+        promise.always { _ in
+            postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+        }
     }
 
-    private func actionLovePost(postId: String) {
-        LovesService().lovePost(postId: postId).ignoreErrors()
+    private func actionLovePost(postId: String, payload: PushPayload) {
+        LovesService().lovePost(postId: postId).always { _ in
+            postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
+        }
     }
 
     func updateBadgeCount(_ userInfo: [AnyHashable: Any]) {
-        if let aps = userInfo["aps"] as? [AnyHashable: Any],
+        guard
+            let aps = userInfo["aps"] as? [AnyHashable: Any],
             let badges = aps["badge"] as? Int
-        {
-            updateBadgeNumber(badges)
-        }
+        else { return  }
+
+        updateBadgeNumber(badges)
     }
 
     func updateBadgeNumber(_ badges: Int) {
@@ -238,13 +252,8 @@ extension PushNotificationController {
     }
 
     func hasAlert(_ userInfo: [AnyHashable: Any]) -> Bool {
-        if let aps = userInfo["aps"] as? [AnyHashable: Any], aps["alert"] is [NSObject: Any]
-        {
-            return true
-        }
-        else {
-            return false
-        }
+        let aps = userInfo["aps"] as? [AnyHashable: Any]
+        return aps?["alert"] is [NSObject: Any]
     }
 }
 

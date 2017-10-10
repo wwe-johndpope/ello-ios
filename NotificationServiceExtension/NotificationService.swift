@@ -28,10 +28,16 @@ class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
 
         let (type, data) = ElloURI.match(path)
+        var handled = false
         switch type {
         case .pushNotificationComment, .pushNotificationPost:
+            handled = true
             fetchPost(id: data, content: content)
         default:
+            break
+        }
+
+        if !handled {
             contentHandler(request.content)
         }
     }
