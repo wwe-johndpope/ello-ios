@@ -12,6 +12,10 @@ class NotificationService: UNNotificationServiceExtension {
     var originalContent: UNNotificationContent?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        if let debugServer = DebugServer.fromDefaults {
+            APIKeys.shared = debugServer.apiKeys
+        }
+
         guard
             let path = request.content.userInfo["application_target"] as? String,
             let content = (request.content.mutableCopy() as? UNMutableNotificationContent)
@@ -20,7 +24,7 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
 
-        self.originalContent = request.content
+        self.originalContent = content
         self.contentHandler = contentHandler
 
         let (type, data) = ElloURI.match(path)
@@ -42,21 +46,25 @@ class NotificationService: UNNotificationServiceExtension {
                 let downloadedImages: [URL] = regions.flatMap { region -> URL? in
                     switch region.kind {
                     case .image:
-                        guard
-                            let region = region as? ImageRegion,
-                            let asset = region.asset
-                        else { return nil }
+                        guard let region = region as? ImageRegion else { return nil }
 
-                        let attachment: Attachment?
-                        if asset.isSmallGif {
-                            attachment = asset.original
+                        let imageURL: URL?
+                        if let asset = region.asset {
+                            let attachment: Attachment?
+                            if asset.isSmallGif {
+                                attachment = asset.original
+                            }
+                            else {
+                                attachment = asset.hdpi
+                            }
+                            imageURL = attachment?.url
                         }
                         else {
-                            attachment = asset.hdpi
+                            imageURL = region.url
                         }
 
                         guard
-                            let url = attachment?.url,
+                            let url = imageURL,
                             let data = try? Data(contentsOf: url)
                         else { return nil }
 

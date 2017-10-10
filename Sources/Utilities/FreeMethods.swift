@@ -11,6 +11,7 @@ func log(comment: String, object: Any?) {
         messages.append((comment, "nil"))
     }
 }
+
 func getlog() -> [(String, String)] {
     let m = messages
     messages.removeAll()
