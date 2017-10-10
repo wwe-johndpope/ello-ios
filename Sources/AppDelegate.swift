@@ -167,7 +167,6 @@ extension AppDelegate {
     }
 }
 
-
 // universal links
 extension AppDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
