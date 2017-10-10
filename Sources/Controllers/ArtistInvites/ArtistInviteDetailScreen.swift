@@ -3,7 +3,7 @@
 //
 
 class ArtistInviteDetailScreen: StreamableScreen, ArtistInviteDetailScreenProtocol {
-    fileprivate let successScreen = ArtistInviteSubmissionSuccessScreen()
+    private let successScreen = ArtistInviteSubmissionSuccessScreen()
 
     override func style() {
         super.style()
@@ -27,14 +27,14 @@ class ArtistInviteDetailScreen: StreamableScreen, ArtistInviteDetailScreenProtoc
     }
 
     func showSuccess() {
-        animate {
+        elloAnimate {
             self.successScreen.alpha = 1
         }
         delay(3, block: hideSuccess)
     }
 
     func hideSuccess() {
-        animate {
+        elloAnimate {
             self.successScreen.alpha = 0
         }
     }

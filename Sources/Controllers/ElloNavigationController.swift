@@ -80,6 +80,7 @@ class ElloNavigationController: UINavigationController, ControllerThatMightHaveT
         }
     }
 
+    @objc
     func handleBackGesture(_ gesture: UIScreenEdgePanGestureRecognizer) {
         let percentThroughView = gesture.percentageThroughView(gesture.edges)
 

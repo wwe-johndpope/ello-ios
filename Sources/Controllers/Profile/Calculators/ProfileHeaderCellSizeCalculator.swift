@@ -8,12 +8,12 @@ import PromiseKit
 class ProfileHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 211
 
-    fileprivate var retainCalculators: [Any] = []
-    fileprivate var maxWidth: CGFloat = 0.0
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: Block)
-    fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var completion: Block = {}
+    private var retainCalculators: [Any] = []
+    private var maxWidth: CGFloat = 0.0
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: Block)
+    private var cellJobs: [CellJob] = []
+    private var cellItems: [StreamCellItem] = []
+    private var completion: Block = {}
 
 // MARK: Public
     init() {}

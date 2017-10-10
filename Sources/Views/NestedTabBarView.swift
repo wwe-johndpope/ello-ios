@@ -12,8 +12,8 @@ class NestedTabBarView: View {
     }
 
     class Tab {
-        fileprivate let button = StyledButton(style: .clearGray)
-        fileprivate let line = UIView()
+        private let button = StyledButton(style: .clearGray)
+        private let line = UIView()
 
         static func == (lhs: Tab, rhs: Tab) -> Bool {
             return lhs.button == rhs.button
@@ -76,7 +76,7 @@ class NestedTabBarView: View {
         }
     }
 
-    fileprivate func rearrange() {
+    private func rearrange() {
         guard !isArranged else { return }
 
         tabs.eachPair { prevTab, tab, isLast in

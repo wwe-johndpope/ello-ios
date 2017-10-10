@@ -345,7 +345,7 @@ final class Profile: JSONAble {
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
-        let creatorTypeCategoryIds = json["creator_type_category_ids"].arrayValue.flatMap { $0.stringValue }
+        let creatorTypeCategoryIds: [String] = json["creator_type_category_ids"].arrayValue.flatMap { $0.stringValue }
         // create profile
         let profile = Profile(
             id: json["id"].string ?? "",

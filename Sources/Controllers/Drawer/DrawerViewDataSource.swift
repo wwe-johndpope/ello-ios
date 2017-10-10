@@ -26,7 +26,7 @@ class DrawerViewDataSource: NSObject {
     lazy var items: [DrawerItem] = self.drawerItems()
 
     // moved into a separate function to save compile time
-    fileprivate func drawerItems() -> [DrawerItem] {
+    private func drawerItems() -> [DrawerItem] {
         var items: [DrawerItem] = [
             DrawerItem(name: InterfaceString.Drawer.Invite, type: .invite, tracking: "invite"),
             DrawerItem(name: InterfaceString.Drawer.Magazine, type: .external("https://notforprint.co/"), tracking: "magazine"),

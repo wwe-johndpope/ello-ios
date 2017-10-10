@@ -22,13 +22,13 @@ class HireScreen: StreamableScreen {
     }
     weak var delegate: HireDelegate?
 
-    fileprivate let successView = UIView()
-    fileprivate let successLabel = UILabel()
-    fileprivate let successImage = UIImageView()
-    fileprivate let textView = UITextView()
-    fileprivate let placeholder = UILabel()
-    fileprivate let keyboardSubmitButton = UIButton()
-    fileprivate var keyboardBottomConstraint: Constraint!
+    private let successView = UIView()
+    private let successLabel = UILabel()
+    private let successImage = UIImageView()
+    private let textView = UITextView()
+    private let placeholder = UILabel()
+    private let keyboardSubmitButton = UIButton()
+    private var keyboardBottomConstraint: Constraint!
 
     override func arrange() {
         super.arrange()
@@ -126,6 +126,7 @@ class HireScreen: StreamableScreen {
         }
     }
 
+    @objc
     func submitAction() {
         guard let text = textView.text else { return }
 
@@ -134,13 +135,13 @@ class HireScreen: StreamableScreen {
     }
 
     func showSuccess() {
-        animate {
+        elloAnimate {
             self.successView.alpha = 1
         }
     }
 
     func hideSuccess() {
-        animate {
+        elloAnimate {
             self.successView.alpha = 0
         }
     }

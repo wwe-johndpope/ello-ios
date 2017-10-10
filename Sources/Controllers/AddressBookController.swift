@@ -31,7 +31,7 @@ struct AddressBookController {
 
 extension AddressBookController {
 
-    fileprivate static func promptForAccess(_ controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping Block = {}) {
+    private static func promptForAccess(_ controller: UIViewController, completion: @escaping Completion, cancelCompletion: @escaping Block = {}) {
         let alertController = AlertViewController()
 
         let title = AlertAction(title: InterfaceString.Friends.ImportPermissionTitle, style: .title)
@@ -78,14 +78,14 @@ extension AddressBookController {
         controller.present(alertController, animated: true, completion: .none)
     }
 
-    fileprivate static func proceedWithImport(_ completion: @escaping Completion) {
+    private static func proceedWithImport(_ completion: @escaping Completion) {
         Tracker.shared.addressBookAccessed()
         AddressBookController.getAddressBook { result in
             completion(result)
         }
     }
 
-    fileprivate static func displayAddressBookAlert(_ controller: UIViewController, message: String, completion: @escaping Completion) {
+    private static func displayAddressBookAlert(_ controller: UIViewController, message: String, completion: @escaping Completion) {
         let alertController = AlertViewController(
             message: InterfaceString.Friends.ImportError(message)
         )
@@ -98,7 +98,7 @@ extension AddressBookController {
         controller.present(alertController, animated: true, completion: .none)
     }
 
-    fileprivate static func getAddressBook(_ completion: @escaping Completion) {
+    private static func getAddressBook(_ completion: @escaping Completion) {
         switch AddressBookController.authenticationStatus() {
         case .notDetermined:
             let store = CNContactStore()
@@ -115,7 +115,7 @@ extension AddressBookController {
         }
     }
 
-    fileprivate static func authenticationStatus() -> CNAuthorizationStatus {
+    private static func authenticationStatus() -> CNAuthorizationStatus {
         return CNContactStore.authorizationStatus(for: .contacts)
     }
 }

@@ -3,7 +3,7 @@
 //
 
 class CommentsIcon: BasicIcon {
-    fileprivate let commentTailView: UIView
+    private let commentTailView: UIView
 
     init() {
         let iconImage = InterfaceImage.bubbleBody.normalImage

@@ -59,7 +59,7 @@ class ElloTextField: UITextField {
         return rect
     }
 
-    fileprivate func rectForBounds(_ bounds: CGRect) -> CGRect {
+    private func rectForBounds(_ bounds: CGRect) -> CGRect {
         var rect = bounds.shrink(left: 15).inset(topBottom: 10, sides: 15)
         if let leftView = leftView {
             rect = rect.shrink(right: leftView.frame.size.width + 6)

@@ -4,9 +4,9 @@
 
 class MultipartRequestBuilder {
     let boundaryConstant: String
-    fileprivate var body: Data
-    fileprivate var requestIsBuilt: Bool = false
-    fileprivate var request: URLRequest
+    private var body: Data
+    private var requestIsBuilt: Bool = false
+    private var request: URLRequest
 
     init(url: URL, capacity: Int = 0) {
         let cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData

@@ -137,7 +137,7 @@ class StreamCreateCommentCell: CollectionViewCell {
         replyAllButtonHiddenConstraint.deactivate()
     }
 
-    fileprivate func updateCreateButtonConstraints() {
+    private func updateCreateButtonConstraints() {
         if replyAllButton.isHidden && watchButton.isHidden {
             watchButtonHiddenConstraint.activate()
             replyAllButtonVisibleConstraint.deactivate()
@@ -166,11 +166,13 @@ class StreamCreateCommentCell: CollectionViewCell {
         createCommentBackground.setNeedsDisplay()
     }
 
+    @objc
     func replyAllTapped() {
         let responder: PostbarResponder? = findResponder()
         responder?.replyToAllButtonTapped(self)
     }
 
+    @objc
     func watchTapped() {
         let responder: PostbarResponder? = findResponder()
         responder?.watchPostTapped(!isWatching, cell: self)

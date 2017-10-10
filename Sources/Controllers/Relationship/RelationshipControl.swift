@@ -70,7 +70,7 @@ class RelationshipControl: View {
         followingButton.frame = bounds
     }
 
-    fileprivate enum Config {
+    private enum Config {
         case following
         case muted
         case blocked
@@ -81,7 +81,7 @@ class RelationshipControl: View {
         var relationshipUsage: RelationshipControlUsage = .default {
             didSet { restyleUsage() }
         }
-        fileprivate var config: Config = .none {
+        private var config: Config = .none {
             didSet { restyleUsage() }
         }
 
@@ -109,7 +109,7 @@ extension RelationshipControl {
         }
     }
 
-    fileprivate func launchUnmuteModal() {
+    private func launchUnmuteModal() {
         guard relationshipPriority.isMutedOrBlocked else {
             return
         }
@@ -127,15 +127,15 @@ extension RelationshipControl {
         }
     }
 
-    fileprivate func handleFollow() {
+    private func handleFollow() {
         handleRelationship(.following)
     }
 
-    fileprivate func handleUnfollow() {
+    private func handleUnfollow() {
         handleRelationship(.inactive)
     }
 
-    fileprivate func handleRelationship(_ newRelationshipPriority: RelationshipPriority) {
+    private func handleRelationship(_ newRelationshipPriority: RelationshipPriority) {
         self.isUserInteractionEnabled = false
         let prevRelationshipPriority = RelationshipPriorityWrapper(priority: self.relationshipPriority)
         self.relationshipPriority = newRelationshipPriority
@@ -161,7 +161,7 @@ extension RelationshipControl {
 }
 
 extension RelationshipControl {
-    fileprivate func updateRelationshipPriority() {
+    private func updateRelationshipPriority() {
         let config: Config
         switch relationshipPriority {
         case .following: config = .following
@@ -205,7 +205,7 @@ extension RelationshipControl.Config {
 }
 
 extension RelationshipControl.FollowButton {
-    fileprivate func restyleUsage() {
+    private func restyleUsage() {
         let style: StyledButton.Style
         var image: UIImage? = nil
         var highlightedImage: UIImage? = nil

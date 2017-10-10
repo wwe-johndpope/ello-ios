@@ -23,8 +23,8 @@ class ArtistInviteAdminControlsCell: CollectionViewCell {
         }
     }
 
-    fileprivate let buttonContainer = UIView()
-    fileprivate var buttons: [StyledButton] = []
+    private let buttonContainer = UIView()
+    private var buttons: [StyledButton] = []
 
     override func style() {
         contentView.backgroundColor = .greyF2

@@ -35,7 +35,7 @@ struct StreamFooterCellPresenter {
         configureCommentControl(cell, post: post, streamCellItem: streamCellItem, streamKind: streamKind, currentUser: currentUser)
     }
 
-    fileprivate static func configureDisplayCounts(
+    private static func configureDisplayCounts(
         _ cell: StreamFooterCell,
         post: Post,
         isGridView: Bool)
@@ -54,7 +54,7 @@ struct StreamFooterCellPresenter {
         cell.comments = post.commentsCount?.numberToHuman(rounding: rounding)
     }
 
-    fileprivate static func configureToolBarItems(
+    private static func configureToolBarItems(
         _ cell: StreamFooterCell,
         post: Post,
         currentUser: User?,
@@ -88,7 +88,7 @@ struct StreamFooterCellPresenter {
         )
     }
 
-    fileprivate static func configureCommentControl(
+    private static func configureCommentControl(
         _ cell: StreamFooterCell,
         post: Post,
         streamCellItem: StreamCellItem,

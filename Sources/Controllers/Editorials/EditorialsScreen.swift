@@ -4,7 +4,7 @@
 
 class EditorialsScreen: HomeSubviewScreen, EditorialsScreenProtocol {
     weak var delegate: EditorialsScreenDelegate?
-    fileprivate var usage: EditorialsViewController.Usage
+    private var usage: EditorialsViewController.Usage
 
     init(usage: EditorialsViewController.Usage) {
         self.usage = usage

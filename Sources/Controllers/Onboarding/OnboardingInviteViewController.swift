@@ -65,7 +65,7 @@ class OnboardingInviteViewController: StreamableViewController {
         updateInsets()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
     }
 
@@ -84,7 +84,7 @@ extension OnboardingInviteViewController {
         }
     }
 
-    fileprivate func findFriendsFromContacts() {
+    private func findFriendsFromContacts() {
         ElloHUD.showLoadingHudInView(view)
         InviteService().find(addressBook, currentUser: self.currentUser)
             .thenFinally { mixedContacts in
@@ -99,7 +99,7 @@ extension OnboardingInviteViewController {
             }
     }
 
-    fileprivate func setContacts(_ contacts: [(LocalPerson, User?)]) {
+    private func setContacts(_ contacts: [(LocalPerson, User?)]) {
         ElloHUD.hideLoadingHudInView(view)
 
         let header = NSAttributedString(

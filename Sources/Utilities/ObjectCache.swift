@@ -3,15 +3,15 @@
 //
 
 protocol PersistentLayer {
-    func setObject(_ value: Any?, forKey: String)
-    func objectForKey(_ defaultName: String) -> Any?
-    func removeObjectForKey(_ defaultName: String)
+    func set(_ value: Any?, forKey: String)
+    func object(forKey defaultName: String) -> Any?
+    func removeObject(forKey defaultName: String)
 }
 
 extension UserDefaults: PersistentLayer { }
 
 class ObjectCache<T: Any> {
-    fileprivate let persistentLayer: PersistentLayer
+    private let persistentLayer: PersistentLayer
     var cache: [T] = []
     let name: String
 
@@ -35,14 +35,14 @@ class ObjectCache<T: Any> {
     }
 
     func persist() {
-        persistentLayer.setObject(cache, forKey: name)
+        persistentLayer.set(cache, forKey: name)
     }
 
     func load() {
-        cache = persistentLayer.objectForKey(name) as? [T] ?? []
+        cache = persistentLayer.object(forKey: name) as? [T] ?? []
     }
 
     func clear() {
-        persistentLayer.removeObjectForKey(name)
+        persistentLayer.removeObject(forKey: name)
     }
 }

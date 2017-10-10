@@ -66,7 +66,7 @@ class SearchViewController: StreamableViewController {
         updateInsets()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.topInsetView)
     }
 
@@ -108,7 +108,7 @@ extension SearchViewController: SearchScreenDelegate {
         responder?.onInviteFriends()
     }
 
-    fileprivate func loadEndpoint(_ text: String, isPostSearch: Bool, checkSearchText: Bool = true) {
+    private func loadEndpoint(_ text: String, isPostSearch: Bool, checkSearchText: Bool = true) {
         guard
             text.characters.count > 2,  // just.. no (and the server doesn't guard against empty/short searches)
             !checkSearchText || searchText != text  // a search is already in progress for this text

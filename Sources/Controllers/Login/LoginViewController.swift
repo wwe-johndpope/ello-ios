@@ -19,7 +19,7 @@ class LoginViewController: BaseElloViewController {
         self.view = screen
     }
 
-    fileprivate func loadCurrentUser() {
+    private func loadCurrentUser() {
         appViewController?.loadCurrentUser()
             .catch { error in
                 self.screen.loadingHUD(visible: false)

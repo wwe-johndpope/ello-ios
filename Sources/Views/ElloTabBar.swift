@@ -22,8 +22,8 @@ class ElloTabBar: UITabBar {
         }
     }
 
-    fileprivate var redDotViews = [(ElloTab, UIView)]()
-    fileprivate var tabbarButtons: [UIControl] {
+    private var redDotViews = [(ElloTab, UIView)]()
+    private var tabbarButtons: [UIControl] {
         return subviews.flatMap { $0 as? UIControl }
     }
 
@@ -42,7 +42,7 @@ class ElloTabBar: UITabBar {
         privateInit()
     }
 
-    fileprivate func privateInit() {
+    private func privateInit() {
         self.backgroundColor = UIColor.white
         self.isTranslucent = false
         self.isOpaque = true
@@ -70,7 +70,7 @@ class ElloTabBar: UITabBar {
         return redDot
     }
 
-    fileprivate func tabBarFrameAtIndex(_ index: Int) -> CGRect {
+    private func tabBarFrameAtIndex(_ index: Int) -> CGRect {
         let tabBarButtons = subviews.filter {
             $0 is UIControl
         }.sorted {
@@ -79,11 +79,11 @@ class ElloTabBar: UITabBar {
         return tabBarButtons.safeValue(index)?.frame ?? .zero
     }
 
-    fileprivate func positionTabButton(_ button: UIControl) {
+    private func positionTabButton(_ button: UIControl) {
         button.frame.origin.y = Size.topOffset
     }
 
-    fileprivate func positionRedDot(_ redDot: UIView, forTab tab: ElloTab) {
+    private func positionRedDot(_ redDot: UIView, forTab tab: ElloTab) {
         let radius: CGFloat = 3
         let diameter = radius * 2
         let tabBarItemFrame = tabBarFrameAtIndex(tab.rawValue)

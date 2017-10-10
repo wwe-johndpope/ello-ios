@@ -23,11 +23,11 @@ class ProfileLinksView: ProfileBaseView {
         }
     }
 
-    fileprivate var linksBox = UIView()
-    fileprivate var iconsBox = UIView()
-    fileprivate var linkButtons: [UIButton] = []
-    fileprivate var iconButtons: [UIButton] = []
-    fileprivate var buttonLinks: [UIButton: ExternalLink] = [:]
+    private var linksBox = UIView()
+    private var iconsBox = UIView()
+    private var linkButtons: [UIButton] = []
+    private var iconButtons: [UIButton] = []
+    private var buttonLinks: [UIButton: ExternalLink] = [:]
 
     var onHeightMismatch: OnHeightMismatch?
 }
@@ -112,7 +112,7 @@ extension ProfileLinksView {
         }
     }
 
-    fileprivate func addIconButton(_ externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?, perRow: Int, hasTextLinks: Bool) -> UIButton {
+    private func addIconButton(_ externalLink: ExternalLink, iconsCount: Int, prevIcon: UIButton?, prevRow: UIView?, perRow: Int, hasTextLinks: Bool) -> UIButton {
         let button = UIButton()
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         buttonLinks[button] = externalLink
@@ -148,7 +148,7 @@ extension ProfileLinksView {
         return button
     }
 
-    fileprivate func addLinkButton(_ externalLink: ExternalLink, prevLink: UIButton?) -> UIButton {
+    private func addLinkButton(_ externalLink: ExternalLink, prevLink: UIButton?) -> UIButton {
         let button = UIButton()
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         buttonLinks[button] = externalLink
@@ -167,15 +167,15 @@ extension ProfileLinksView {
             }
         }
 
-        let attrs: [String: Any] = [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+        let attrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ]
-        let highlightedAttrs: [String: Any] = [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.black,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+        let highlightedAttrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.black,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ]
         button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: attrs), for: .normal)
         button.setAttributedTitle(NSAttributedString(string: externalLink.text, attributes: highlightedAttrs), for: .highlighted)
@@ -183,6 +183,7 @@ extension ProfileLinksView {
         return button
     }
 
+    @objc
     func buttonTapped(_ button: UIButton) {
         guard
             let externalLink = buttonLinks[button]

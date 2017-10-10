@@ -19,14 +19,14 @@ class StreamFooterButton: UIButton {
         sizeToFit()
     }
 
-    fileprivate func setButtonTitle(_ title: String, color: UIColor, for state: UIControlState) {
+    private func setButtonTitle(_ title: String, color: UIColor, for state: UIControlState) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
 
         let attributes = [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: color,
-            NSParagraphStyleAttributeName: paragraphStyle
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: color,
+            NSAttributedStringKey.paragraphStyle: paragraphStyle
         ]
         attributedText = NSMutableAttributedString(string: title, attributes: attributes)
 

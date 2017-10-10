@@ -51,7 +51,7 @@ final class ProfileViewController: StreamableViewController {
     var relationshipChangedNotification: NotificationObserver?
     var deeplinkPath: String?
     var generator: ProfileGenerator?
-    fileprivate var isSetup = false
+    private var isSetup = false
 
     init(userParam: String, username: String? = nil) {
         self.userParam = userParam
@@ -92,7 +92,7 @@ final class ProfileViewController: StreamableViewController {
         }
     }
 
-    fileprivate func sharedInit() {
+    private func sharedInit() {
         streamViewController.streamKind = initialStreamKind
         streamViewController.initialLoadClosure = { [weak self] in self?.loadProfile() }
         streamViewController.reloadClosure = { [weak self] in self?.reloadEntireProfile() }
@@ -180,22 +180,22 @@ final class ProfileViewController: StreamableViewController {
         screen.hideNavBars(offset, isCurrentUser: currentUser)
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.topInsetView)
     }
 
     // MARK: private
 
-    fileprivate func loadProfile() {
+    private func loadProfile() {
         generator?.load()
     }
 
-    fileprivate func reloadEntireProfile() {
+    private func reloadEntireProfile() {
         screen.resetCoverImage()
         generator?.load(reload: true)
     }
 
-    fileprivate func setupNavigationItems() {
+    private func setupNavigationItems() {
         let gridListItem = ElloNavigationBar.Item.gridList(isGrid: streamViewController.streamKind.isGridView)
         let isCurrentUser = userParam == currentUser?.id || userParam == currentUser.map { "~\($0.username)" }
 

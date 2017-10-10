@@ -110,12 +110,12 @@ class JoinScreen: CredentialsScreen {
         super.style()
 
         let attrs = ElloAttributedString.attrs([
-            NSForegroundColorAttributeName: UIColor.greyA,
-            NSFontAttributeName: UIFont.defaultFont(Size.termsFontSize),
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
+            NSAttributedStringKey.font: UIFont.defaultFont(Size.termsFontSize),
         ])
         let linkAttrs = ElloAttributedString.attrs(ElloAttributedString.linkAttrs(), [
-            NSForegroundColorAttributeName: UIColor.greyA,
-            NSFontAttributeName: UIFont.defaultFont(Size.termsFontSize),
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
+            NSAttributedStringKey.font: UIFont.defaultFont(Size.termsFontSize),
         ])
         // needs i18n
         let attributedTitle = NSAttributedString(string: "By clicking Continue you are agreeing to our ", attributes: attrs) + NSAttributedString(string: "Terms", attributes: linkAttrs)
@@ -255,27 +255,33 @@ extension JoinScreen {
 }
 
 extension JoinScreen {
+    @objc
     func activateEmail() {
       _ = emailField.becomeFirstResponder()
     }
 
+    @objc
     func activateUsername() {
       _ = usernameField.becomeFirstResponder()
     }
 
+    @objc
     func activatePassword() {
       _ = passwordField.becomeFirstResponder()
     }
 
+    @objc
     func submitAction() {
         delegate?.submit(email: email, username: username, password: password)
     }
 
+    @objc
     func termsAction() {
         Tracker.shared.tappedTsAndCs()
         delegate?.termsAction()
     }
 
+    @objc
     func onePasswordAction(_ sender: UIView) {
         delegate?.onePasswordAction(sender)
     }
@@ -348,12 +354,12 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func showUsernameSuggestions(_ usernames: [String]) {
-        let usernameAttrs: [String: Any] = [
-            NSFontAttributeName: UIFont.defaultFont(12),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+        let usernameAttrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: UIFont.defaultFont(12),
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle,
         ]
         let plainAttrs = [
-            NSFontAttributeName: UIFont.defaultFont(12),
+            NSAttributedStringKey.font: UIFont.defaultFont(12),
         ]
         let suggestions: NSAttributedString = usernames.reduce(NSAttributedString(string: "", attributes: plainAttrs)) { attrdString, username in
             let usernameAttrd = NSAttributedString(string: username, attributes: usernameAttrs)
@@ -368,7 +374,7 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showMessage(_ text: String) {
         let plainAttrs = [
-            NSFontAttributeName: UIFont.defaultFont(12),
+            NSAttributedStringKey.font: UIFont.defaultFont(12),
         ]
         showMessageAttributed(NSAttributedString(string: text, attributes: plainAttrs))
     }
@@ -376,7 +382,7 @@ extension JoinScreen: JoinScreenProtocol {
     func showMessageAttributed(_ attrd: NSAttributedString) {
         messageLabel.attributedText = attrd
 
-        animate {
+        elloAnimate {
             self.messageMarginConstraint.activate()
             self.messageLabel.alpha = 1.0
             self.layoutIfNeeded()
@@ -384,7 +390,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hideMessage() {
-        animate {
+        elloAnimate {
             self.messageMarginConstraint.deactivate()
             self.messageLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -395,7 +401,7 @@ extension JoinScreen: JoinScreenProtocol {
         usernameErrorLabel.text = text
         isUsernameValid = false
 
-        animate {
+        elloAnimate {
             self.usernameMarginConstraint.activate()
             self.usernameErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
@@ -403,7 +409,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hideUsernameError() {
-        animate {
+        elloAnimate {
             self.usernameMarginConstraint.deactivate()
             self.usernameErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -414,7 +420,7 @@ extension JoinScreen: JoinScreenProtocol {
         emailErrorLabel.text = text
         isEmailValid = false
 
-        animate {
+        elloAnimate {
             self.emailMarginConstraint.activate()
             self.emailErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
@@ -422,7 +428,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hideEmailError() {
-        animate {
+        elloAnimate {
             self.emailMarginConstraint.deactivate()
             self.emailErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -433,7 +439,7 @@ extension JoinScreen: JoinScreenProtocol {
         passwordErrorLabel.text = text
         isPasswordValid = false
 
-        animate {
+        elloAnimate {
             self.passwordMarginConstraint.activate()
             self.passwordErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
@@ -441,7 +447,7 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func hidePasswordError() {
-        animate {
+        elloAnimate {
             self.passwordMarginConstraint.deactivate()
             self.passwordErrorLabel.alpha = 0.0
             self.layoutIfNeeded()

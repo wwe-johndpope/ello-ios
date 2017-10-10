@@ -134,6 +134,7 @@ class BuyButtonLinkScreen: View {
         }
     }
 
+    @objc
     func productLinkDidChange() {
         if let url = productLinkField.text {
             submitButton.isEnabled = URL.isValidShorthand(url)
@@ -143,10 +144,12 @@ class BuyButtonLinkScreen: View {
         }
     }
 
+    @objc
     func closeModal() {
         delegate?.closeModal()
     }
 
+    @objc
     func submitLink() {
         guard let urlString = productLinkField.text else {
             return
@@ -158,6 +161,7 @@ class BuyButtonLinkScreen: View {
         closeModal()
     }
 
+    @objc
     func removeLink() {
         delegate?.clearLink()
         closeModal()

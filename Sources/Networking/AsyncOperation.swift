@@ -22,7 +22,7 @@ class AsyncOperation: Operation {
         }
     }
 
-    fileprivate var _executing: Bool = false
+    private var _executing: Bool = false
     override var isExecuting: Bool {
         get { return _executing }
         set {
@@ -32,7 +32,7 @@ class AsyncOperation: Operation {
         }
     }
 
-    fileprivate var _finished: Bool = false
+    private var _finished: Bool = false
     override var isFinished: Bool {
         get { return _finished }
         set {

@@ -3,12 +3,12 @@
 //
 
 class EditorialPostCell: EditorialTitledCell {
-    fileprivate let buttonsContainer = UIView()
-    fileprivate let postControlsStack = UIStackView()
-    fileprivate let lovesButton = UIButton()
-    fileprivate let commentButton = UIButton()
-    fileprivate let repostButton = UIButton()
-    fileprivate let shareButton = UIButton()
+    private let buttonsContainer = UIView()
+    private let postControlsStack = UIStackView()
+    private let lovesButton = UIButton()
+    private let commentButton = UIButton()
+    private let repostButton = UIButton()
+    private let shareButton = UIButton()
 
     override func style() {
         super.style()

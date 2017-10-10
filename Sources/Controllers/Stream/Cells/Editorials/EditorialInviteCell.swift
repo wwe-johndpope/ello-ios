@@ -6,18 +6,18 @@ import SnapKit
 
 
 class EditorialInviteCell: EditorialCell {
-    fileprivate let inviteControls = UIView()
-    fileprivate let inviteLabel = StyledLabel(style: .editorialHeader)
-    fileprivate let inviteCaption = StyledLabel(style: .editorialCaption)
-    fileprivate let inviteInstructions = StyledLabel(style: .editorialCaption)
-    fileprivate let textBg = UIView()
-    fileprivate let textView = ClearTextView()
-    fileprivate var submitControls: UIView { return submitButton }
-    fileprivate let submitButton = StyledButton(style: .editorialJoin)
-    fileprivate let sentLabel = StyledLabel(style: .editorialSuccess)
+    private let inviteControls = UIView()
+    private let inviteLabel = StyledLabel(style: .editorialHeader)
+    private let inviteCaption = StyledLabel(style: .editorialCaption)
+    private let inviteInstructions = StyledLabel(style: .editorialCaption)
+    private let textBg = UIView()
+    private let textView = ClearTextView()
+    private var submitControls: UIView { return submitButton }
+    private let submitButton = StyledButton(style: .editorialJoin)
+    private let sentLabel = StyledLabel(style: .editorialSuccess)
 
-    fileprivate var collapseInstructions: Constraint!
-    fileprivate var timer: Timer?
+    private var collapseInstructions: Constraint!
+    private var timer: Timer?
 
     var onInviteChange: ((Editorial.InviteInfo) -> Void)?
 
@@ -126,14 +126,14 @@ class EditorialInviteCell: EditorialCell {
             make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
         }
-        inviteLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        inviteLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
 
         inviteCaption.snp.makeConstraints { make in
             make.top.equalTo(inviteLabel.snp.bottom).offset(Size.textFieldMargin)
             make.leading.equalTo(editorialContentView).inset(Size.defaultMargin)
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
         }
-        inviteCaption.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        inviteCaption.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
 
         textBg.snp.makeConstraints { make in
             make.top.equalTo(inviteCaption.snp.bottom).offset(Size.textFieldMargin)
@@ -150,7 +150,7 @@ class EditorialInviteCell: EditorialCell {
             make.trailing.lessThanOrEqualTo(editorialContentView).inset(Size.defaultMargin).priority(Priority.required)
             collapseInstructions = make.height.equalTo(0).priority(Priority.required).constraint
         }
-        inviteInstructions.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        inviteInstructions.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         collapseInstructions.deactivate()
 
         submitButton.snp.makeConstraints { make in

@@ -292,21 +292,21 @@ class Tag: CustomStringConvertible {
         }
     }
 
-    fileprivate func attrd(_ text: String, addlAttrs: [String: Any] = [:]) -> NSAttributedString {
-        let defaultAttrs: [String: Any] = [
-            NSFontAttributeName: UIFont.editorFont(),
-            NSForegroundColorAttributeName: UIColor.black,
+    private func attrd(_ text: String, addlAttrs: [NSAttributedStringKey: Any] = [:]) -> NSAttributedString {
+        let defaultAttrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: UIFont.editorFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.black,
         ]
         return NSAttributedString(string: text, attributes: defaultAttrs + addlAttrs)
     }
 
-    func makeEditable(_ inheritedAttrs: [String: Any] = [:]) -> NSAttributedString {
+    func makeEditable(_ inheritedAttrs: [NSAttributedStringKey: Any] = [:]) -> NSAttributedString {
         if comment != nil {
             return NSAttributedString()
         }
 
         let retval = NSMutableAttributedString(string: "")
-        var newAttrs: [String: Any] = inheritedAttrs
+        var newAttrs: [NSAttributedStringKey: Any] = inheritedAttrs
         let text: String? = self.text
 
         if let tag = name {
@@ -314,22 +314,22 @@ class Tag: CustomStringConvertible {
             case "br":
                 retval.append(attrd("\n"))
             case "u":
-                newAttrs[NSUnderlineStyleAttributeName] = NSUnderlineStyle.styleSingle.rawValue
+                newAttrs[NSAttributedStringKey.underlineStyle] = NSUnderlineStyle.styleSingle.rawValue
             case "b", "strong":
-                if let existingFont = inheritedAttrs[NSFontAttributeName] as? UIFont, existingFont.fontName == UIFont.editorItalicFont().fontName
+                if let existingFont = inheritedAttrs[NSAttributedStringKey.font] as? UIFont, existingFont.fontName == UIFont.editorItalicFont().fontName
                 {
-                    newAttrs[NSFontAttributeName] = UIFont.editorBoldItalicFont()
+                    newAttrs[NSAttributedStringKey.font] = UIFont.editorBoldItalicFont()
                 }
                 else {
-                    newAttrs[NSFontAttributeName] = UIFont.editorBoldFont()
+                    newAttrs[NSAttributedStringKey.font] = UIFont.editorBoldFont()
                 }
             case "i", "em":
-                if let existingFont = inheritedAttrs[NSFontAttributeName] as? UIFont, existingFont.fontName == UIFont.editorBoldFont().fontName
+                if let existingFont = inheritedAttrs[NSAttributedStringKey.font] as? UIFont, existingFont.fontName == UIFont.editorBoldFont().fontName
                 {
-                    newAttrs[NSFontAttributeName] = UIFont.editorBoldItalicFont()
+                    newAttrs[NSAttributedStringKey.font] = UIFont.editorBoldItalicFont()
                 }
                 else {
-                    newAttrs[NSFontAttributeName] = UIFont.editorItalicFont()
+                    newAttrs[NSAttributedStringKey.font] = UIFont.editorItalicFont()
                 }
             default:
                 break
@@ -379,7 +379,7 @@ class Tag: CustomStringConvertible {
         return urls
     }
 
-    fileprivate func imageURL() -> URL? {
+    private func imageURL() -> URL? {
         if let tag = name, let src: AttrValue = attrs["src"], tag == "img" {
             switch src {
             case let .value(value):

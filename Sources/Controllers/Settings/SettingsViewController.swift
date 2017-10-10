@@ -19,7 +19,7 @@ enum SettingsRow: Int {
 class SettingsContainerViewController: BaseElloViewController {
     @IBOutlet var navigationBar: ElloNavigationBar!
     @IBOutlet var navigationBarTopConstraint: NSLayoutConstraint!
-    fileprivate var settingsViewController: SettingsViewController?
+    private var settingsViewController: SettingsViewController?
 
     override func showNavBars() {
         navigationBarTopConstraint.constant = 0
@@ -110,7 +110,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
     @IBOutlet weak var bioTextView: ElloEditableTextView!
     @IBOutlet weak var bioTextCountLabel: StyledLabel!
     @IBOutlet weak var bioTextStatusImage: UIImageView!
-    fileprivate var bioTextViewDidChange: (() -> Void)?
+    private var bioTextViewDidChange: (() -> Void)?
 
     @IBOutlet weak var linksTextFieldView: ElloTextFieldView!
     @IBOutlet weak var locationTextFieldView: ElloTextFieldView!
@@ -194,7 +194,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                 guard let `self` = self else { return }
                 self.updateCurrentUser(user)
             }
-            .always { _ in
+            .always {
                 hideHud()
             }
 
@@ -225,12 +225,12 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         keyboardWillHideObserver = nil
     }
 
-    fileprivate func updateCurrentUser(_ user: User) {
+    private func updateCurrentUser(_ user: User) {
         appViewController?.currentUser = user
         postNotification(SettingChangedNotification, value: user)
     }
 
-    fileprivate func setupUserValues() {
+    private func setupUserValues() {
         if let cachedImage = TemporaryCache.load(.coverImage) {
             coverImage.image = cachedImage
         }
@@ -265,7 +265,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    fileprivate func setupViews() {
+    private func setupViews() {
         tableView.addSubview(autoCompleteVC.view)
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
         containerController?.showNavBars()
@@ -278,7 +278,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         containerController?.searchButtonTapped()
     }
 
-    fileprivate func setupDefaultValues() {
+    private func setupDefaultValues() {
         setupNameTextField()
         setupBioTextField()
         setupLinksTextField()
@@ -287,7 +287,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         profileDescription.text = InterfaceString.Settings.ProfileDescription
     }
 
-    fileprivate func setupNameTextField() {
+    private func setupNameTextField() {
         nameTextFieldView.label.text = InterfaceString.Settings.Name
         nameTextFieldView.textField.keyboardAppearance = .dark
         nameTextFieldView.textField.text = currentUser?.name
@@ -311,7 +311,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    fileprivate func setupBioTextField() {
+    private func setupBioTextField() {
         bioTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 30)
         bioTextView.keyboardAppearance = .dark
         bioTextView.delegate = self
@@ -333,7 +333,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    fileprivate func setupLinksTextField() {
+    private func setupLinksTextField() {
         linksTextFieldView.label.text = InterfaceString.Settings.Links
         linksTextFieldView.textField.spellCheckingType = .no
         linksTextFieldView.textField.autocapitalizationType = .none
@@ -363,7 +363,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    fileprivate func setupLocationTextField() {
+    private func setupLocationTextField() {
         locationTextFieldView.label.text = InterfaceString.Settings.Location
         locationTextFieldView.textField.keyboardAppearance = .dark
         locationTextFieldView.textField.autocorrectionType = .no
@@ -462,7 +462,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                     self.coverImage.image = image
                     self.alertUserOfImageProcessing(InterfaceString.Settings.CoverImageUploaded)
                 }
-                .always { _ in
+                .always {
                     ElloHUD.hideLoadingHud()
                 }
         }
@@ -484,14 +484,14 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                     self.avatarImage.image = image
                     self.alertUserOfImageProcessing(InterfaceString.Settings.AvatarUploaded)
                 }
-                .always { _ in
+                .always {
                     ElloHUD.hideLoadingHud()
                 }
         }
         openImagePicker()
     }
 
-    fileprivate func openImagePicker() {
+    private func openImagePicker() {
         let alertViewController = UIImagePickerController.alertControllerForImagePicker { imagePicker in
             imagePicker.delegate = self
             self.present(imagePicker, animated: true, completion: .none)
@@ -502,7 +502,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
     }
 
-    fileprivate func alertUserOfImageProcessing(_ message: String) {
+    private func alertUserOfImageProcessing(_ message: String) {
         let alertController = AlertViewController(message: message)
         let action = AlertAction(title: InterfaceString.OK, style: .light, handler: .none)
         alertController.addAction(action)

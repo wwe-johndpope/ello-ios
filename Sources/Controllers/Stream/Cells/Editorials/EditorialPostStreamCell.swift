@@ -6,11 +6,11 @@ import SnapKit
 
 
 class EditorialPostStreamCell: EditorialCell {
-    fileprivate let pageControl = UIPageControl()
-    fileprivate let scrollView = UIScrollView()
-    fileprivate var postCells: [EditorialPostCell] = []
-    fileprivate let bg = UIView()
-    fileprivate var autoscrollTimer: Timer?
+    private let pageControl = UIPageControl()
+    private let scrollView = UIScrollView()
+    private var postCells: [EditorialPostCell] = []
+    private let bg = UIView()
+    private var autoscrollTimer: Timer?
 
     deinit {
         autoscrollTimer = nil
@@ -83,7 +83,7 @@ extension EditorialPostStreamCell {
         stopAutoscroll()
     }
 
-    fileprivate func moveToPage(_ page: Int) {
+    private func moveToPage(_ page: Int) {
         guard scrollView.frame.width > 0 else {
             scrollView.contentOffset = .zero
             return
@@ -94,19 +94,19 @@ extension EditorialPostStreamCell {
         scrollView.setContentOffset(CGPoint(x: destX, y: scrollView.contentOffset.y), animated: true)
     }
 
-    fileprivate func startAutoscroll() {
+    private func startAutoscroll() {
         guard autoscrollTimer == nil else { return }
 
         autoscrollTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(nextPage), userInfo: nil, repeats: true)
     }
 
-    fileprivate func stopAutoscroll() {
+    private func stopAutoscroll() {
         autoscrollTimer?.invalidate()
         autoscrollTimer = nil
     }
 
     @objc
-    fileprivate func nextPage() {
+    private func nextPage() {
         let nextPage = pageControl.currentPage + 1
         if nextPage < pageControl.numberOfPages {
             moveToPage(nextPage)

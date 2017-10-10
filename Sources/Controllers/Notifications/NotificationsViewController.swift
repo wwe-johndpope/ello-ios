@@ -15,8 +15,8 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
     var generator: NotificationsGenerator?
     var hasNewContent = false
     var fromTabBar = false
-    fileprivate var reloadNotificationsObserver: NotificationObserver?
-    fileprivate var newAnnouncementsObserver: NotificationObserver?
+    private var reloadNotificationsObserver: NotificationObserver?
+    private var newAnnouncementsObserver: NotificationObserver?
     var categoryFilterType = NotificationFilterType.all
     var categoryStreamKind: StreamKind { return .notifications(category: categoryFilterType.category) }
 

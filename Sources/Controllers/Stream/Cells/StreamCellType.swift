@@ -264,7 +264,7 @@ enum StreamCellType: Equatable {
         case .toggle: return StreamToggleCellPresenter.configure
         case .userAvatars: return UserAvatarsCellPresenter.configure
         case .userListItem: return UserListItemCellPresenter.configure
-        default: return { _ in }
+        default: return { _, _, _, _, _ in }
         }
     }
 

@@ -4,7 +4,7 @@
 
 class ArtistInvitesScreen: HomeSubviewScreen {
     weak var delegate: ArtistInvitesScreenDelegate?
-    fileprivate var usage: ArtistInvitesViewController.Usage
+    private var usage: ArtistInvitesViewController.Usage
 
     init(usage: ArtistInvitesViewController.Usage) {
         self.usage = usage

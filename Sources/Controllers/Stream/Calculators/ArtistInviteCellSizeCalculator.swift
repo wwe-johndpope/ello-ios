@@ -4,10 +4,10 @@
 
 class ArtistInviteCellSizeCalculator: NSObject {
     let webView: UIWebView
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, hasCurrentUser: Bool, completion: Block)
-    fileprivate var cellJobs: [CellJob] = []
-    fileprivate var job: CellJob?
-    fileprivate var completion: Block = {}
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, hasCurrentUser: Bool, completion: Block)
+    private var cellJobs: [CellJob] = []
+    private var job: CellJob?
+    private var completion: Block = {}
 
     init(webView: UIWebView = ElloWebView()) {
         self.webView = webView
@@ -32,7 +32,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
 
 // MARK: Private
 
-    fileprivate func processJob(_ job: CellJob) {
+    private func processJob(_ job: CellJob) {
         self.completion = {
             if self.cellJobs.count > 0 {
                 self.cellJobs.remove(at: 0)
@@ -52,7 +52,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
         loadNext()
     }
 
-    fileprivate func loadNext() {
+    private func loadNext() {
         guard let job = job else { return }
         guard let cellItem = job.cellItems.first else {
             completion()
@@ -78,19 +78,19 @@ class ArtistInviteCellSizeCalculator: NSObject {
         }
     }
 
-    fileprivate func loadBubbleHTML(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
+    private func loadBubbleHTML(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
         let text = artistInvite.shortDescription
         let html = StreamTextCellHTML.artistInviteHTML(text)
         webView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 
-    fileprivate func loadControlsHTML(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
+    private func loadControlsHTML(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
         let text = artistInvite.longDescription
         let html = StreamTextCellHTML.postHTML(text)
         webView.loadHTMLString(html, baseURL: URL(string: "/"))
     }
 
-    fileprivate func loadGuideHTML(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
+    private func loadGuideHTML(_ cellItem: StreamCellItem, _ artistInvite: ArtistInvite) {
         guard let guide = cellItem.type.data as? ArtistInvite.Guide else {
             skipCellItem()
             return
@@ -101,19 +101,19 @@ class ArtistInviteCellSizeCalculator: NSObject {
     }
 
     @discardableResult
-    fileprivate func removeFirstItem() -> StreamCellItem? {
+    private func removeFirstItem() -> StreamCellItem? {
         guard var job = job, !job.cellItems.isEmpty else { return nil }
         let cellItem = job.cellItems.remove(at: 0)
         self.job = job  // job is a struct, so we need to reassign it after modifying it
         return cellItem
     }
 
-    fileprivate func skipCellItem() {
+    private func skipCellItem() {
         removeFirstItem()
         loadNext()
     }
 
-    fileprivate func assignHeight(webHeight: CGFloat) {
+    private func assignHeight(webHeight: CGFloat) {
         defer {
             loadNext()
         }
@@ -144,7 +144,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
         }
     }
 
-    fileprivate func calculateBubbleHeight(_ cellItem: StreamCellItem, _ webHeight: CGFloat) -> CGFloat {
+    private func calculateBubbleHeight(_ cellItem: StreamCellItem, _ webHeight: CGFloat) -> CGFloat {
         var totalHeight = webHeight
         totalHeight += ArtistInviteBubbleCell.Size.bubbleMargins.top
         totalHeight += ArtistInviteBubbleCell.Size.headerImageHeight
@@ -159,7 +159,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
         return totalHeight
     }
 
-    fileprivate func calculateHeaderHeight(_ cellItem: StreamCellItem) -> CGFloat {
+    private func calculateHeaderHeight(_ cellItem: StreamCellItem) -> CGFloat {
         var totalHeight: CGFloat = 0
         totalHeight += ArtistInviteHeaderCell.Size.headerImageHeight
         totalHeight += ArtistInviteHeaderCell.Size.remainingTextHeight
@@ -171,7 +171,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
         return totalHeight
     }
 
-    fileprivate func calculateControlsHeight(_ cellItem: StreamCellItem, _ webHeight: CGFloat, hasCurrentUser: Bool) -> CGFloat {
+    private func calculateControlsHeight(_ cellItem: StreamCellItem, _ webHeight: CGFloat, hasCurrentUser: Bool) -> CGFloat {
         let isOpen: Bool
         if let artistInvite = cellItem.jsonable as? ArtistInvite {
             isOpen = artistInvite.status == .open
@@ -190,7 +190,7 @@ class ArtistInviteCellSizeCalculator: NSObject {
         return totalHeight
     }
 
-    fileprivate func calculateGuideHeight(_ cellItem: StreamCellItem, _ webHeight: CGFloat) -> CGFloat {
+    private func calculateGuideHeight(_ cellItem: StreamCellItem, _ webHeight: CGFloat) -> CGFloat {
         return ArtistInviteGuideCell.Size.otherHeights + webHeight
     }
 }

@@ -64,7 +64,7 @@ final class PostDetailViewController: StreamableViewController {
         return view
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: navigationBar)
     }
 
@@ -87,15 +87,15 @@ final class PostDetailViewController: StreamableViewController {
 
     // MARK: private
 
-    fileprivate func loadEntirePostDetail() {
+    private func loadEntirePostDetail() {
         generator.load()
     }
 
-    fileprivate func reloadEntirePostDetail() {
+    private func reloadEntirePostDetail() {
         generator.load(reload: true)
     }
 
-    fileprivate func setupNavigationBar() {
+    private func setupNavigationBar() {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
         view.addSubview(navigationBar)
@@ -103,7 +103,7 @@ final class PostDetailViewController: StreamableViewController {
         setupNavigationItems()
     }
 
-    fileprivate func setupNavigationItems() {
+    private func setupNavigationItems() {
         navigationBar.leftItems = [.back]
 
         guard post != nil else {
@@ -123,7 +123,7 @@ final class PostDetailViewController: StreamableViewController {
         navigationBar.rightItems = rightItems
     }
 
-    fileprivate func checkScrollToComment() {
+    private func checkScrollToComment() {
         guard let comment = self.scrollToComment else { return }
 
         let commentItem = streamViewController.collectionViewDataSource.visibleCellItems.find { item in
@@ -152,7 +152,7 @@ final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    fileprivate func isOwnerOfPost() -> Bool {
+    private func isOwnerOfPost() -> Bool {
         guard let post = post, let currentUser = currentUser else {
             return false
         }

@@ -16,7 +16,7 @@ class ArtistInvitesViewController: StreamableViewController {
 
     typealias Usage = HomeViewController.Usage
 
-    fileprivate let usage: Usage
+    private let usage: Usage
 
     init(usage: Usage) {
         self.usage = usage
@@ -58,7 +58,7 @@ class ArtistInvitesViewController: StreamableViewController {
         streamViewController.loadInitialPage()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
     }
 

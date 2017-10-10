@@ -211,7 +211,7 @@ class PostbarController: UIResponder, PostbarResponder {
         else { lovePost(post, cell: cell, via: via) }
     }
 
-    fileprivate func unlovePost(_ post: Post, cell: LoveableCell?) {
+    private func unlovePost(_ post: Post, cell: LoveableCell?) {
         Tracker.shared.postUnloved(post)
         post.isLoved = false
         if let count = post.lovesCount {
@@ -237,12 +237,12 @@ class PostbarController: UIResponder, PostbarResponder {
                 )
                 postNotification(JSONAbleChangedNotification, value: (love, .delete))
             }
-            .always { _ in
+            .always {
                 cell?.toggleLoveControl(enabled: true)
             }
     }
 
-    fileprivate func lovePost(_ post: Post, cell: LoveableCell?, via: String) {
+    private func lovePost(_ post: Post, cell: LoveableCell?, via: String) {
         Tracker.shared.postLoved(post, via: via)
         post.isLoved = true
         if let count = post.lovesCount {
@@ -263,7 +263,7 @@ class PostbarController: UIResponder, PostbarResponder {
             .thenFinally { love in
                 postNotification(JSONAbleChangedNotification, value: (love, .create))
             }
-            .always { _ in
+            .always {
                 cell?.toggleLoveControl(enabled: true)
             }
     }
@@ -297,7 +297,7 @@ class PostbarController: UIResponder, PostbarResponder {
         presentingController.present(alertController, animated: true, completion: .none)
     }
 
-    fileprivate func createRepost(_ post: Post, alertController: AlertViewController) {
+    private func createRepost(_ post: Post, alertController: AlertViewController) {
         alertController.resetActions()
         alertController.isDismissable = false
 
@@ -472,7 +472,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
 // MARK: - Private
 
-    fileprivate func commentLoadSuccess(_ post: Post, comments jsonables: [JSONAble], indexPath: IndexPath, cell: StreamFooterCell) {
+    private func commentLoadSuccess(_ post: Post, comments jsonables: [JSONAble], indexPath: IndexPath, cell: StreamFooterCell) {
         let createCommentNow = jsonables.count == 0
         self.appendCreateCommentItem(post, at: indexPath)
 
@@ -503,7 +503,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
     }
 
-    fileprivate func appendCreateCommentItem(_ post: Post, at indexPath: IndexPath) {
+    private func appendCreateCommentItem(_ post: Post, at indexPath: IndexPath) {
         guard let currentUser = currentUser else { return }
 
         let comment = ElloComment.newCommentForPost(post, currentUser: currentUser)

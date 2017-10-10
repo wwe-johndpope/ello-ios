@@ -41,7 +41,7 @@ final class StreamCellItem: NSObject, NSCopying {
     }
 
     func copy(with zone: NSZone?) -> Any {
-        let copy = type(of: self).init(
+        let copy = Swift.type(of: self).init(
             jsonable: self.jsonable,
             type: self.type
             )
@@ -59,7 +59,7 @@ final class StreamCellItem: NSObject, NSCopying {
     }
 
     override var description: String {
-        var description = "StreamCellItem(type: \(type.reuseIdentifier), jsonable: \(type(of: jsonable)), state: \(state)"
+        var description = "StreamCellItem(type: \(type.reuseIdentifier), jsonable: \(Swift.type(of: jsonable)), state: \(state)"
         if case let .text(data) = type,
             let textRegion = data as? TextRegion
         {

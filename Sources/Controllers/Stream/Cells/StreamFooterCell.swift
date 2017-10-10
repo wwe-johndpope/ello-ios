@@ -43,7 +43,7 @@ class StreamFooterCell: UICollectionViewCell {
         return self.replyItem.customView as! ImageLabelControl
     }
 
-    fileprivate func updateButtonVisibility(_ button: UIControl, visibility: InteractionVisibility) {
+    private func updateButtonVisibility(_ button: UIControl, visibility: InteractionVisibility) {
         button.isHidden = !visibility.isVisible
         button.isEnabled = visibility.isEnabled
         button.isSelected = visibility.isSelected
@@ -145,17 +145,17 @@ class StreamFooterCell: UICollectionViewCell {
 
 // MARK: - Private
 
-    fileprivate func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
+    private func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
         let item = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         item.width = width
         return item
     }
 
-    fileprivate func flexibleItem() -> UIBarButtonItem {
+    private func flexibleItem() -> UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     }
 
-    fileprivate func addButtonHandlers() {
+    private func addButtonHandlers() {
         commentsControl.addTarget(self, action: #selector(StreamFooterCell.commentsButtonTapped), for: .touchUpInside)
         lovesControl.addTarget(self, action: #selector(StreamFooterCell.lovesButtonTapped), for: .touchUpInside)
         replyControl.addTarget(self, action: #selector(StreamFooterCell.replyButtonTapped), for: .touchUpInside)

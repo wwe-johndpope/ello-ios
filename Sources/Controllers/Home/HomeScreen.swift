@@ -32,7 +32,7 @@ struct HomeScreenNavBarSize {
     static let tabBarOffset: CGFloat = 4.5
 }
 
-fileprivate typealias Size = HomeScreenNavBarSize
+private typealias Size = HomeScreenNavBarSize
 
 enum HomeScreenType {
     case editorials(loggedIn: Bool)

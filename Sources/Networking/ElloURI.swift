@@ -143,7 +143,7 @@ enum ElloURI: String {
         return (self.external, self.external.data(trimmed))
     }
 
-    fileprivate var regexPattern: String {
+    private var regexPattern: String {
         switch self {
         case .email,
              .external:
@@ -173,14 +173,14 @@ enum ElloURI: String {
         }
     }
 
-    fileprivate static func replaceElloScheme(_ path: String) -> String {
+    private static func replaceElloScheme(_ path: String) -> String {
         if path.hasPrefix("ello://") {
             return path.replacingOccurrences(of: "ello://", with: "\(baseURL)/")
         }
         return path
     }
 
-    fileprivate func data(_ url: String) -> String {
+    private func data(_ url: String) -> String {
         let regex = Regex(self.regexPattern)
         switch self {
         case .discover:

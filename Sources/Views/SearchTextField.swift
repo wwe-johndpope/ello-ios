@@ -9,12 +9,12 @@ class SearchTextField: UITextField {
                 attributedPlaceholder = NSAttributedString(
                     string: placeholder,
                     attributes: [
-                        NSForegroundColorAttributeName: UIColor.greyA
+                        NSAttributedStringKey.foregroundColor: UIColor.greyA
                     ])
             }
         }
     }
-    fileprivate var line = UIView()
+    private var line = UIView()
 
     override required init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,7 +26,7 @@ class SearchTextField: UITextField {
         sharedInit()
     }
 
-    fileprivate func sharedInit() {
+    private func sharedInit() {
         clearButtonMode = .whileEditing
         font = .defaultFont(18)
         textColor = .black
@@ -57,7 +57,7 @@ class SearchTextField: UITextField {
         return rectForBounds(bounds)
     }
 
-    fileprivate func rectForBounds(_ bounds: CGRect) -> CGRect {
+    private func rectForBounds(_ bounds: CGRect) -> CGRect {
         let rect = super.editingRect(forBounds: bounds)
         return rect.shrink(right: 10)
     }

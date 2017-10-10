@@ -8,7 +8,7 @@ class TextHeaderCell: CollectionViewCell {
         static let insets: CGFloat = 10
     }
 
-    fileprivate let headerLabel = UILabel()
+    private let headerLabel = UILabel()
 
     var header: NSAttributedString? {
         get { return headerLabel.attributedText }

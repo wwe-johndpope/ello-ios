@@ -89,7 +89,7 @@ private extension ShareViewController {
                 Tracker.shared.shareFailed()
                 self.showFailedToPost()
             }
-            .always { _ in
+            .always { 
                 self.donePosting()
             }
     }

@@ -14,8 +14,8 @@ class ProfileBadgeScreen: Screen, ProfileBadgeScreenProtocol {
     let title: String
     let caption: String
 
-    fileprivate let titleLabel = StyledLabel(style: .largeWhite)
-    fileprivate let learnMoreButton = StyledButton(style: .grayUnderlined)
+    private let titleLabel = StyledLabel(style: .largeWhite)
+    private let learnMoreButton = StyledButton(style: .grayUnderlined)
 
     init(title: String, caption: String) {
         self.title = title
@@ -60,10 +60,12 @@ class ProfileBadgeScreen: Screen, ProfileBadgeScreenProtocol {
         }
     }
 
+    @objc
     func dismiss() {
         delegate?.dismiss()
     }
 
+    @objc
     func learnMoreTapped() {
         delegate?.learnMoreTapped()
     }

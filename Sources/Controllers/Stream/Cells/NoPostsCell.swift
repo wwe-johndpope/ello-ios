@@ -28,7 +28,7 @@ class NoPostsCell: UICollectionViewCell {
         noPostsHeader.font = UIFont.regularBoldFont(18)
         let paragraphStyle = NSMutableParagraphStyle()
         let attrString = NSMutableAttributedString(string: noPostsBodyText)
-        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSRange(location: 0, length: attrString.length))
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSRange(location: 0, length: attrString.length))
         paragraphStyle.lineSpacing = 4
 
         noPostsBody.font = UIFont.defaultFont()

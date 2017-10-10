@@ -35,9 +35,9 @@ class BadgeCell: CollectionViewCell {
         }
     }
 
-    fileprivate let label = ElloTextView()
-    fileprivate let imageView = UIImageView()
-    fileprivate let grayLine = UIImageView()
+    private let label = ElloTextView()
+    private let imageView = UIImageView()
+    private let grayLine = UIImageView()
 
     override func prepareForReuse() {
         super.prepareForReuse()

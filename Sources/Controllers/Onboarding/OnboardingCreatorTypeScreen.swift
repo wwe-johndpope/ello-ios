@@ -48,21 +48,21 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         }
     }
 
-    fileprivate let headerLabel = StyledLabel(style: .black)
-    fileprivate let scrollView = UIScrollView()
-    fileprivate let scrollableWidth = UIView()
-    fileprivate let creatorTypeContainer = UIView()
-    fileprivate let hereAsLabel = StyledLabel(style: .gray)
-    fileprivate let artistButton = StyledButton(style: .roundedGrayOutline)
-    fileprivate let fanButton = StyledButton(style: .roundedGrayOutline)
-    fileprivate var scrollViewWidth: Constraint!
-    fileprivate var scrollViewFanBottom: Constraint!
-    fileprivate var scrollViewArtistBottom: Constraint!
-    fileprivate var creatorTypeContainerTop: Constraint!
-    fileprivate var creatorTypeContainerIntroTop: Constraint!
-    fileprivate let creatorLabel = StyledLabel(style: .gray)
-    fileprivate let creatorButtonsContainer = UIView()
-    fileprivate var creatorButtons: [UIView] = []
+    private let headerLabel = StyledLabel(style: .black)
+    private let scrollView = UIScrollView()
+    private let scrollableWidth = UIView()
+    private let creatorTypeContainer = UIView()
+    private let hereAsLabel = StyledLabel(style: .gray)
+    private let artistButton = StyledButton(style: .roundedGrayOutline)
+    private let fanButton = StyledButton(style: .roundedGrayOutline)
+    private var scrollViewWidth: Constraint!
+    private var scrollViewFanBottom: Constraint!
+    private var scrollViewArtistBottom: Constraint!
+    private var creatorTypeContainerTop: Constraint!
+    private var creatorTypeContainerIntroTop: Constraint!
+    private let creatorLabel = StyledLabel(style: .gray)
+    private let creatorButtonsContainer = UIView()
+    private var creatorButtons: [UIView] = []
 
     override func style() {
         super.style()
@@ -163,7 +163,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         updateCreatorTypeLabels()
     }
 
-    fileprivate func addCreatorCategoriesSpinner() {
+    private func addCreatorCategoriesSpinner() {
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         spinner.startAnimating()
         creatorButtonsContainer.addSubview(spinner)
@@ -174,7 +174,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         creatorButtons = [spinner]
     }
 
-    fileprivate func updateCreatorTypeLabels() {
+    private func updateCreatorTypeLabels() {
         if showIntroText {
             creatorTypeContainerTop.deactivate()
             creatorTypeContainerIntroTop.activate()
@@ -187,7 +187,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         headerLabel.isHidden = !showIntroText
     }
 
-    fileprivate func updateCreatorCategories() {
+    private func updateCreatorCategories() {
         for view in creatorButtons {
             view.removeFromSuperview()
         }
@@ -331,7 +331,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         else {
             creatorTypeY = creatorTypeMargin
         }
-        animate(animated: animated, completion: completion) {
+        elloAnimate(animated: animated, completion: completion) {
             self.creatorTypeContainer.frame.origin.y = creatorTypeY
             self.creatorButtonsContainer.frame.origin.y = creatorTypeY + self.creatorTypeContainer.frame.height + Size.containerOffset
             self.creatorButtonsContainer.alpha = creatorButtonsAlpha

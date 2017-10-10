@@ -43,7 +43,7 @@ class Window {
         return width >= 768
     }
 
-    fileprivate static var _width: CGFloat?
+    private static var _width: CGFloat?
     static var width: CGFloat {
         get {
             return Window._width ?? UIWindow.mainWindow.frame.size.width
@@ -61,7 +61,7 @@ class DeviceScreen {
         return scale > 1
     }
 
-    fileprivate static var _scale: CGFloat?
+    private static var _scale: CGFloat?
     static var scale: CGFloat {
         get {
             return DeviceScreen._scale ?? UIScreen.main.scale

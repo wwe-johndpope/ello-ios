@@ -4,11 +4,11 @@
 
 class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
     let webView: UIWebView
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: Block)
-    fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var maxWidth: CGFloat
-    fileprivate var completion: Block = {}
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: Block)
+    private var cellJobs: [CellJob] = []
+    private var cellItems: [StreamCellItem] = []
+    private var maxWidth: CGFloat
+    private var completion: Block = {}
 
     init(webView: UIWebView = ElloWebView()) {
         self.webView = webView
@@ -34,7 +34,7 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
 
 // MARK: Private
 
-    fileprivate func processJob(_ job: CellJob) {
+    private func processJob(_ job: CellJob) {
         self.completion = {
             if self.cellJobs.count > 0 {
                 self.cellJobs.remove(at: 0)
@@ -54,7 +54,7 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
         loadNext()
     }
 
-    fileprivate func loadNext() {
+    private func loadNext() {
         guard !self.cellItems.isEmpty else {
             completion()
             return
@@ -88,7 +88,7 @@ class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
         assignCellHeight(textHeight ?? 0)
     }
 
-    fileprivate func assignCellHeight(_ height: CGFloat) {
+    private func assignCellHeight(_ height: CGFloat) {
         if let cellItem = self.cellItems.safeValue(0) {
             self.cellItems.remove(at: 0)
             cellItem.calculatedCellHeights.webContent = height

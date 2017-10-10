@@ -22,7 +22,7 @@ class ClearTextField: UITextField {
             }
         }
     }
-    fileprivate var line = UIView()
+    private var line = UIView()
     var hasOnePassword = false {
         didSet {
             onePasswordButton.isHidden = !hasOnePassword
@@ -82,8 +82,8 @@ class ClearTextField: UITextField {
 
     override func drawPlaceholder(in rect: CGRect) {
         placeholder?.draw(in: rect, withAttributes: [
-            NSFontAttributeName: UIFont.defaultFont(18),
-            NSForegroundColorAttributeName: UIColor.white,
+            NSAttributedStringKey.font: UIFont.defaultFont(18),
+            NSAttributedStringKey.foregroundColor: UIColor.white,
         ])
     }
 
@@ -125,7 +125,7 @@ class ClearTextField: UITextField {
         return rect
     }
 
-    fileprivate func rectForBounds(_ bounds: CGRect) -> CGRect {
+    private func rectForBounds(_ bounds: CGRect) -> CGRect {
         var rect = bounds.shrink(left: 15)
         if validationState.imageRepresentation != nil {
             rect = rect.shrink(left: 20)

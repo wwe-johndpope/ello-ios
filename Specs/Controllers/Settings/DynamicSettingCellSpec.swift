@@ -74,13 +74,13 @@ private class FakeDelegate: UIView, DynamicSettingCellResponder {
     var setting: DynamicSetting?
     var value: Bool?
 
-    fileprivate func toggleSetting(_ setting: DynamicSetting, value: Bool) {
+    private func toggleSetting(_ setting: DynamicSetting, value: Bool) {
         didCall = true
         self.setting = setting
         self.value = value
     }
 
-    fileprivate func deleteAccount() {
+    private func deleteAccount() {
         didCall = true
     }
 }

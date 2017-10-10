@@ -61,6 +61,7 @@ extension AlertPresentationController {
 }
 
 extension AlertPresentationController {
+    @objc
     func dismiss() {
         let alertViewController = presentedViewController as! AlertViewController
         if alertViewController.isDismissable {

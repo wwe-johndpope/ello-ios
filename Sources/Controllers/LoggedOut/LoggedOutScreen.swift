@@ -33,7 +33,7 @@ class LoggedOutScreen: Screen, LoggedOutScreenProtocol {
     let joinLabel = StyledLabel(style: .large)
     let tagLabel = StyledLabel(style: .black)
     weak var delegate: LoggedOutProtocol?
-    fileprivate let debouncedHideText = debounce(5)
+    private let debouncedHideText = debounce(5)
 
     var bottomBarCollapsedConstraint: Constraint!
     var bottomBarExpandedConstraint: Constraint!
@@ -134,7 +134,7 @@ extension LoggedOutScreen {
         bottomBarCollapsedConstraint.deactivate()
         bottomBarExpandedConstraint.activate()
         let height = Size.textMargin + joinLabel.frame.height + Size.textMargin + tagLabel.frame.height + Size.textMargin + joinButton.frame.height + Size.buttonInsets.bottom
-        animate {
+        elloAnimate {
             self.bottomBarView.frame = self.bounds.fromBottom().grow(up: height)
             self.joinLabel.frame.origin.y = Size.textMargin
             self.tagLabel.frame.origin.y = self.joinLabel.frame.maxY + Size.textMargin
@@ -159,7 +159,7 @@ extension LoggedOutScreen {
     func hideJoinText() {
         bottomBarCollapsedConstraint.activate()
         bottomBarExpandedConstraint.deactivate()
-        animate {
+        elloAnimate {
             self.layoutIfNeeded()
         }
     }

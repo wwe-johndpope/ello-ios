@@ -6,7 +6,7 @@ class InterpolatedLoadingView: UIView {
     var round = false {
         didSet { setNeedsLayout() }
     }
-    fileprivate var animating = false
+    private var animating = false
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
@@ -29,7 +29,7 @@ class InterpolatedLoadingView: UIView {
         }
     }
 
-    fileprivate func animateIfPossible() {
+    private func animateIfPossible() {
         if !animating && window != nil && superview != nil {
             animate()
         }
@@ -38,7 +38,7 @@ class InterpolatedLoadingView: UIView {
         }
     }
 
-    fileprivate func animate() {
+    private func animate() {
         animating = true
 
         self.layer.removeAnimation(forKey: "interpolate")

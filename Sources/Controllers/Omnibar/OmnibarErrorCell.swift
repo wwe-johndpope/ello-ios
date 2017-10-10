@@ -9,7 +9,7 @@ class OmnibarErrorCell: UITableViewCell {
         static let height = CGFloat(75)
     }
 
-    fileprivate let label = StyledLabel(style: .error)
+    private let label = StyledLabel(style: .error)
 
     var url: URL? {
         get { return nil }

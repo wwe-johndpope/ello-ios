@@ -20,19 +20,19 @@ class BlockUserModalScreen: View {
         static let closeButtonSize: CGFloat = 30
     }
 
-    fileprivate let backgroundButton = UIButton()
-    fileprivate let modalView = UIScrollView()
-    fileprivate let innerView = UIView()
-    fileprivate let closeButton = UIButton()
-    fileprivate let titleLabel = UILabel()
-    fileprivate let muteButton = StyledButton(style: .white)
-    fileprivate let muteLabel = UILabel()
-    fileprivate let blockButton = StyledButton(style: .white)
-    fileprivate let blockLabel = UILabel()
-    fileprivate let flagButton = StyledButton(style: .white)
-    fileprivate let flagLabel = UILabel()
+    private let backgroundButton = UIButton()
+    private let modalView = UIScrollView()
+    private let innerView = UIView()
+    private let closeButton = UIButton()
+    private let titleLabel = UILabel()
+    private let muteButton = StyledButton(style: .white)
+    private let muteLabel = UILabel()
+    private let blockButton = StyledButton(style: .white)
+    private let blockLabel = UILabel()
+    private let flagButton = StyledButton(style: .white)
+    private let flagLabel = UILabel()
 
-    fileprivate var delegate: BlockUserModalDelegate? {
+    private var delegate: BlockUserModalDelegate? {
         return next as? BlockUserModalDelegate
     }
 
@@ -84,7 +84,7 @@ class BlockUserModalScreen: View {
 }
 
 extension BlockUserModalScreen {
-    fileprivate func setDetails(userAtName: String, relationshipPriority: RelationshipPriority) {
+    private func setDetails(userAtName: String, relationshipPriority: RelationshipPriority) {
         let titleText: String
         switch relationshipPriority {
         case .mute: titleText = InterfaceString.Relationship.UnmuteAlert(atName: userAtName)
@@ -101,7 +101,7 @@ extension BlockUserModalScreen {
         let labels: [(UILabel, String)] = [(titleLabel, titleText), (muteLabel, muteText), (blockLabel, blockText), (flagLabel, flagText)]
         for (label, text) in labels {
             label.attributedText = NSAttributedString(string: text, attributes: [
-                NSParagraphStyleAttributeName: paragraphStyle
+                NSAttributedStringKey.paragraphStyle: paragraphStyle
             ])
         }
 
@@ -118,21 +118,21 @@ extension BlockUserModalScreen {
         }
     }
 
-    fileprivate func resetButtons() {
+    private func resetButtons() {
         muteButton.setTitle(InterfaceString.Relationship.MuteButton, for: .normal)
         blockButton.setTitle(InterfaceString.Relationship.BlockButton, for: .normal)
         muteButton.isSelected = false
         blockButton.isSelected = false
     }
 
-    fileprivate func styleLabel(_ label: UILabel) {
+    private func styleLabel(_ label: UILabel) {
         label.font = .defaultFont()
         label.textColor = .white
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
     }
 
-    fileprivate func styleButton(_ button: UIButton) {
+    private func styleButton(_ button: UIButton) {
         button.backgroundColor = .white
         button.titleLabel?.font = .defaultFont()
         button.titleLabel?.textColor = .white
@@ -142,6 +142,7 @@ extension BlockUserModalScreen {
 // MARK: ACTIONS
 extension BlockUserModalScreen {
 
+    @objc
     func blockTapped(_ sender: UIButton) {
         let relationshipPriority: RelationshipPriority
         if sender.isSelected == true {
@@ -152,6 +153,7 @@ extension BlockUserModalScreen {
         delegate?.updateRelationship(relationshipPriority)
     }
 
+    @objc
     func muteTapped(_ sender: UIButton) {
         let relationshipPriority: RelationshipPriority
         if sender.isSelected == true {
@@ -162,10 +164,12 @@ extension BlockUserModalScreen {
         delegate?.updateRelationship(relationshipPriority)
     }
 
+    @objc
     func flagTapped() {
         delegate?.flagTapped()
     }
 
+    @objc
     func closeModal() {
         delegate?.closeModal()
     }

@@ -15,7 +15,7 @@ class AlertViewController: UIViewController {
     // needs to be accessible for the AlertViewController keyboard extension
     let tableView = UITableView()
 
-    fileprivate let headerView = AlertHeaderView()
+    private let headerView = AlertHeaderView()
 
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
@@ -48,8 +48,8 @@ class AlertViewController: UIViewController {
     var isDismissable = true
     var shouldAutoDismiss = true
 
-    fileprivate(set) var actions: [AlertAction] = []
-    fileprivate var inputs: [String] = []
+    private(set) var actions: [AlertAction] = []
+    private var inputs: [String] = []
     var actionInputs: [String] {
         var retVals: [String] = []
         for (index, action) in actions.enumerated() where action.isInput {
@@ -58,7 +58,7 @@ class AlertViewController: UIViewController {
         return retVals
     }
 
-    fileprivate let textAlignment: NSTextAlignment
+    private let textAlignment: NSTextAlignment
 
     var message: String {
         get { return headerView.label.text ?? "" }
@@ -68,11 +68,11 @@ class AlertViewController: UIViewController {
         }
     }
 
-    fileprivate var totalHorizontalPadding: CGFloat {
+    private var totalHorizontalPadding: CGFloat {
         return Size.margins.left + Size.margins.right
     }
 
-    fileprivate var totalVerticalPadding: CGFloat {
+    private var totalVerticalPadding: CGFloat {
         return Size.margins.top + Size.margins.bottom
     }
 
@@ -172,13 +172,13 @@ extension AlertViewController {
 }
 
 extension AlertViewController {
-    fileprivate func willSetContentView() {
+    private func willSetContentView() {
         if let contentView = contentView {
             contentView.removeFromSuperview()
         }
     }
 
-    fileprivate func didSetContentView() {
+    private func didSetContentView() {
         if let contentView = contentView {
             self.tableView.isHidden = true
             self.view.addSubview(contentView)

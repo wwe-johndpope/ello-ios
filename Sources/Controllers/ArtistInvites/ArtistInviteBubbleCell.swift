@@ -45,16 +45,16 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         }
     }
 
-    fileprivate let bg = UIView()
-    fileprivate let headerImage = FLAnimatedImageView()
-    fileprivate let headerOverlay = UIView()
-    fileprivate let logoImage = UIImageView()
-    fileprivate let titleLabel = StyledLabel(style: .artistInviteTitle)
-    fileprivate let statusImage = UIImageView()
-    fileprivate let statusLabel = StyledLabel()
-    fileprivate let inviteTypeLabel = StyledLabel(style: .gray)
-    fileprivate let dateLabel = StyledLabel(style: .gray)
-    fileprivate let descriptionWebView = ElloWebView()
+    private let bg = UIView()
+    private let headerImage = FLAnimatedImageView()
+    private let headerOverlay = UIView()
+    private let logoImage = UIImageView()
+    private let titleLabel = StyledLabel(style: .artistInviteTitle)
+    private let statusImage = UIImageView()
+    private let statusLabel = StyledLabel()
+    private let inviteTypeLabel = StyledLabel(style: .gray)
+    private let dateLabel = StyledLabel(style: .gray)
+    private let descriptionWebView = ElloWebView()
 
     static func calculateDynamicHeights(title: String, inviteType: String, cellWidth: CGFloat) -> CGFloat {
         let textWidth = cellWidth - Size.bubbleMargins.left - Size.bubbleMargins.right - Size.infoMargins.left - Size.infoMargins.right
@@ -116,8 +116,8 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
             make.width.lessThanOrEqualTo(bg).priority(Priority.required)
             make.height.equalTo(logoImage.snp.width).multipliedBy(Size.logoImageSize.height / Size.logoImageSize.width).priority(Priority.required)
         }
-        logoImage.setContentCompressionResistancePriority(Priority.low.constraintPriorityTargetValue, for: .vertical)
-        logoImage.setContentCompressionResistancePriority(Priority.low.constraintPriorityTargetValue, for: .horizontal)
+        logoImage.setContentCompressionResistancePriority(UILayoutPriority(rawValue: Priority.low.constraintPriorityTargetValue), for: .vertical)
+        logoImage.setContentCompressionResistancePriority(UILayoutPriority(rawValue: Priority.low.constraintPriorityTargetValue), for: .horizontal)
 
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(bg).inset(Size.infoMargins)
@@ -302,7 +302,7 @@ extension ArtistInviteBubbleCell.Config {
         return ""
     }
 
-    fileprivate func dateTextRemaining(_ closedAt: Date) -> String {
+    private func dateTextRemaining(_ closedAt: Date) -> String {
         let now = AppSetup.shared.now
         let secondsRemaining = Int(closedAt.timeIntervalSince(now))
         let daysRemaining = Int(secondsRemaining / 24 / 3600)

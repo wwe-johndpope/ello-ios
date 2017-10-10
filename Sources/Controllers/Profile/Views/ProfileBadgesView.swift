@@ -17,8 +17,8 @@ class ProfileBadgesView: ProfileBaseView {
     }
     var badgeButtons: [UIButton] = []
 
-    fileprivate let badgesContainer = UIView()
-    fileprivate let moreBadgesButton = UIButton()
+    private let badgesContainer = UIView()
+    private let moreBadgesButton = UIButton()
 
     override func bindActions() {
         // the badgesContainer is "swallowing" tap events, but the entire badges area *other* than
@@ -48,7 +48,7 @@ class ProfileBadgesView: ProfileBaseView {
         }
     }
 
-    fileprivate func updateBadgeViews() {
+    private func updateBadgeViews() {
         for view in badgesContainer.subviews {
             view.removeFromSuperview()
         }
@@ -105,6 +105,7 @@ class ProfileBadgesView: ProfileBaseView {
 
 extension ProfileBadgesView {
 
+    @objc
     func badgeTapped(_ sender: UIButton) {
         guard
             let buttonIndex = badgeButtons.index(of: sender)
@@ -120,6 +121,7 @@ extension ProfileBadgesView {
         }
     }
 
+    @objc
     func moreBadgesTapped() {
         let responder: ProfileHeaderResponder? = findResponder()
         responder?.onMoreBadgesTapped()

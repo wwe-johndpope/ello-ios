@@ -47,15 +47,15 @@ struct StreamCellItemParser {
 
 // MARK: - Private
 
-    fileprivate func typicalCellItems(_ jsonable: JSONAble, type: StreamCellType) -> [StreamCellItem] {
+    private func typicalCellItems(_ jsonable: JSONAble, type: StreamCellType) -> [StreamCellItem] {
         return [StreamCellItem(jsonable: jsonable, type: type)]
     }
 
-    fileprivate func editorialCellItems(_ editorial: Editorial) -> [StreamCellItem] {
+    private func editorialCellItems(_ editorial: Editorial) -> [StreamCellItem] {
         return [StreamCellItem(jsonable: editorial, type: .editorial(editorial.kind))]
     }
 
-    fileprivate func artistInviteDetailItems(_ artistInvite: ArtistInvite) -> [StreamCellItem] {
+    private func artistInviteDetailItems(_ artistInvite: ArtistInvite) -> [StreamCellItem] {
         return [
             StreamCellItem(jsonable: artistInvite, type: .artistInviteHeader, placeholderType: .artistInvites),
             // <-- the ↓submissions button goes here, so to separate these items we tag the placeholderType
@@ -65,7 +65,7 @@ struct StreamCellItemParser {
         + [StreamCellItem(jsonable: artistInvite, type: .spacer(height: 30), placeholderType: .artistInviteDetails)]
     }
 
-    fileprivate func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool, submission: ArtistInviteSubmission? = nil) -> [StreamCellItem] {
+    private func postCellItems(_ post: Post, streamKind: StreamKind, forceGrid: Bool, submission: ArtistInviteSubmission? = nil) -> [StreamCellItem] {
         var cellItems: [StreamCellItem] = []
         let isGridView = streamKind.isGridView || forceGrid
 
@@ -111,7 +111,7 @@ struct StreamCellItemParser {
         return cellItems
     }
 
-    fileprivate func commentCellItems(_ comment: ElloComment) -> [StreamCellItem] {
+    private func commentCellItems(_ comment: ElloComment) -> [StreamCellItem] {
         var cellItems: [StreamCellItem] = [
             StreamCellItem(jsonable: comment, type: .commentHeader)
         ]
@@ -119,7 +119,7 @@ struct StreamCellItemParser {
         return cellItems
     }
 
-    fileprivate func postToggleItems(_ post: Post) -> [StreamCellItem] {
+    private func postToggleItems(_ post: Post) -> [StreamCellItem] {
         if post.isCollapsed {
             return [StreamCellItem(jsonable: post, type: .toggle)]
         }
@@ -128,7 +128,7 @@ struct StreamCellItemParser {
         }
     }
 
-    fileprivate func regionItems(_ jsonable: JSONAble, content: [Regionable]) -> [StreamCellItem] {
+    private func regionItems(_ jsonable: JSONAble, content: [Regionable]) -> [StreamCellItem] {
         return content.flatMap(regionStreamCells).map { StreamCellItem(jsonable: jsonable, type: $0) }
     }
 

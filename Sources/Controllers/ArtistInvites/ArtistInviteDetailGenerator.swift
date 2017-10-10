@@ -10,8 +10,8 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
     var artistInviteDetails: [StreamCellItem] = []
     weak var destination: StreamDestination?
 
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
 
     init(artistInviteId: String, currentUser: User?, destination: StreamDestination?) {
         self.streamKind = .artistInviteDetail(id: artistInviteId)
@@ -121,7 +121,7 @@ private extension ArtistInviteDetailGenerator {
             .catch { _ in
                 self.showSubmissionsError()
             }
-            .always { _ in
+            .always {
                 self.loadAdminTools(artistInvite)
                 self.destination?.replacePlaceholder(type: .artistInviteDetails, items: self.artistInviteDetails)
             }

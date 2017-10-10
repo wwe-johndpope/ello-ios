@@ -15,8 +15,8 @@ class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
     weak var delegate: ProfileCategoriesDelegate?
     let categories: [Category]
 
-    fileprivate let textView = ElloTextView()
-    fileprivate let learnMoreButton = StyledButton(style: .grayUnderlined)
+    private let textView = ElloTextView()
+    private let learnMoreButton = StyledButton(style: .grayUnderlined)
 
     init(categories: [Category]) {
         self.categories = categories
@@ -69,10 +69,12 @@ class ProfileCategoriesScreen: Screen, ProfileCategoriesProtocol {
         }
     }
 
+    @objc
     func dismiss() {
         delegate?.dismiss()
     }
 
+    @objc
     func learnMoreTapped() {
         delegate?.learnMoreTapped()
     }

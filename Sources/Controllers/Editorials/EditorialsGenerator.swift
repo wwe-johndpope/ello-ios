@@ -8,8 +8,8 @@ final class EditorialsGenerator: StreamGenerator {
     let streamKind: StreamKind = .editorials
     weak var destination: StreamDestination?
 
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
 
     init(currentUser: User?, destination: StreamDestination?) {
         self.currentUser = currentUser
@@ -85,7 +85,7 @@ private extension EditorialsGenerator {
                 guard let `self` = self else { return }
                 self.destination?.primaryJSONAbleNotFound()
             }
-            .always { _ in
+            .always {
                 receivedEditorials()
             }
         done()

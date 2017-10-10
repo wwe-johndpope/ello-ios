@@ -55,14 +55,14 @@ extension DrawerViewController: UITableViewDelegate {
         case .logout:
             isLoggingOut = true
             nextTick {
-                self.dismiss(animated: true, completion: { _ in
+                self.dismiss(animated: true, completion: {
                      postNotification(AuthenticationNotifications.userLoggedOut, value: ())
                 })
             }
         case .debugger:
             let appViewController = self.appViewController
             nextTick {
-                self.dismiss(animated: true, completion: { _ in
+                self.dismiss(animated: true, completion: {
                     nextTick {
                         appViewController?.showDebugController()
                     }

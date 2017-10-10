@@ -65,7 +65,7 @@ class ArtistInviteDetailController: StreamableViewController {
         streamViewController.loadInitialPage()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
     }
 

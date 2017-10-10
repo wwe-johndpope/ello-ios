@@ -13,7 +13,7 @@ class ArtistInviteSubmissionsButtonCell: CollectionViewCell {
         static let buttonMargins = UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15)
     }
 
-    fileprivate let submissionsButton = StyledButton(style: .artistInviteSubmissions)
+    private let submissionsButton = StyledButton(style: .artistInviteSubmissions)
 
     override func style() {
         submissionsButton.titleEdgeInsets.top = 4

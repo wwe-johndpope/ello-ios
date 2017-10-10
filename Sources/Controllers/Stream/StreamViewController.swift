@@ -33,7 +33,7 @@ final class StreamViewController: BaseElloViewController {
     let collectionView = ElloCollectionView(frame: .zero, collectionViewLayout: StreamCollectionViewLayout())
     let noResultsLabel = UILabel()
     var noResultsTopConstraint: NSLayoutConstraint!
-    fileprivate let defaultNoResultsTopConstant: CGFloat = 113
+    private let defaultNoResultsTopConstant: CGFloat = 113
 
     override var next: UIResponder? {
         return postbarController
@@ -47,18 +47,18 @@ final class StreamViewController: BaseElloViewController {
             titleParagraphStyle.lineSpacing = 17
 
             let titleAttributes = [
-                NSFontAttributeName: UIFont.defaultBoldFont(18),
-                NSForegroundColorAttributeName: UIColor.black,
-                NSParagraphStyleAttributeName: titleParagraphStyle
+                NSAttributedStringKey.font: UIFont.defaultBoldFont(18),
+                NSAttributedStringKey.foregroundColor: UIColor.black,
+                NSAttributedStringKey.paragraphStyle: titleParagraphStyle
             ]
 
             let bodyParagraphStyle = NSMutableParagraphStyle()
             bodyParagraphStyle.lineSpacing = 8
 
             let bodyAttributes = [
-                NSFontAttributeName: UIFont.defaultFont(),
-                NSForegroundColorAttributeName: UIColor.black,
-                NSParagraphStyleAttributeName: bodyParagraphStyle
+                NSAttributedStringKey.font: UIFont.defaultFont(),
+                NSAttributedStringKey.foregroundColor: UIColor.black,
+                NSAttributedStringKey.paragraphStyle: bodyParagraphStyle
             ]
 
             let title = NSAttributedString(string: self.noResultsMessages.title + "\n", attributes: titleAttributes)
@@ -102,12 +102,12 @@ final class StreamViewController: BaseElloViewController {
 
     weak var streamViewDelegate: StreamViewDelegate?
 
-    fileprivate var dataChangeJobs: [(
+    private var dataChangeJobs: [(
         newItems: [StreamCellItem],
         change: StreamViewDataChange,
         promise: Promise<Void>,
         resolve: () -> Void)] = []
-    fileprivate var isRunningDataChangeJobs = false
+    private var isRunningDataChangeJobs = false
 
     var contentInset: UIEdgeInsets {
         get { return collectionView.contentInset }
@@ -131,12 +131,12 @@ final class StreamViewController: BaseElloViewController {
         didSet { pullToRefreshView?.isHidden = !isPullToRefreshEnabled }
     }
     var isPagingEnabled = false
-    fileprivate var scrollToPaginateGuard = false
+    private var scrollToPaginateGuard = false
 
     lazy var loadingToken: LoadingToken = self.createLoadingToken()
 
     // moved into a separate function to save compile time
-    fileprivate func createLoadingToken() -> LoadingToken {
+    private func createLoadingToken() -> LoadingToken {
         var token = LoadingToken()
         token.cancelLoadingClosure = { [unowned self] in
             self.doneLoading()
@@ -161,14 +161,14 @@ final class StreamViewController: BaseElloViewController {
 
     // If we ever create an init() method that doesn't use nib/storyboards,
     // we'll need to call this.
-    fileprivate func initialSetup() {
+    private func initialSetup() {
         setupDataSources()
         setupImageViewDelegate()
         // most consumers of StreamViewController expect all outlets (esp collectionView) to be set
         if !isViewLoaded { _ = view }
     }
 
-    fileprivate func setupCollectionView() {
+    private func setupCollectionView() {
         let postbarController = PostbarController(streamViewController: self, collectionViewDataSource: collectionViewDataSource)
 
         // next is a closure due to the need
@@ -204,7 +204,7 @@ final class StreamViewController: BaseElloViewController {
     }
 
     // this gets reset whenever the streamKind changes
-    fileprivate func setupCollectionViewLayout() {
+    private func setupCollectionViewLayout() {
         guard let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout else { return }
         let columnCount = Window.columnCountFor(width: view.frame.width)
         layout.columnCount = columnCount
@@ -214,13 +214,13 @@ final class StreamViewController: BaseElloViewController {
         layout.minimumInteritemSpacing = 0
     }
 
-    fileprivate func setupImageViewDelegate() {
+    private func setupImageViewDelegate() {
         if imageViewer == nil {
             imageViewer = StreamImageViewer(presentingController: self)
         }
     }
 
-    fileprivate func setupDataSources() {
+    private func setupDataSources() {
         dataSource = StreamDataSource(streamKind: streamKind)
         collectionViewDataSource = CollectionViewDataSource(streamKind: streamKind)
     }
@@ -316,7 +316,7 @@ final class StreamViewController: BaseElloViewController {
             let indexPaths = self.dataSource.appendStreamCellItems(items)
             self.performDataChange { collectionView in
                 collectionView.insertItems(at: indexPaths)
-            }.always { _ in
+            }.always {
                 self.doneLoading()
                 completion?()
             }
@@ -334,7 +334,7 @@ final class StreamViewController: BaseElloViewController {
             let indexPaths = self.dataSource.insertStreamCellItems(cellItems, startingIndexPath: startingIndexPath)
             self.performDataChange { collectionView in
                 collectionView.insertItems(at: indexPaths)
-            }.always { _ in
+            }.always {
                 completion()
             }
         }
@@ -361,7 +361,7 @@ final class StreamViewController: BaseElloViewController {
         dataSource.calculateCellItems(streamCellItems, withWidth: width) {
             self.dataSource.replacePlaceholder(type: placeholderType, items: streamCellItems)
             self.performDataReload()
-                .always { _ in
+                .always {
                     completion()
                 }
         }
@@ -431,7 +431,7 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    fileprivate func generateStreamCellItems(_ jsonables: [JSONAble]) -> [StreamCellItem] {
+    private func generateStreamCellItems(_ jsonables: [JSONAble]) -> [StreamCellItem] {
         let defaultGenerator: StreamCellItemGenerator = {
             return StreamCellItemParser().parse(jsonables, streamKind: self.streamKind, currentUser: self.currentUser)
         }
@@ -443,7 +443,7 @@ final class StreamViewController: BaseElloViewController {
         return defaultGenerator()
     }
 
-    fileprivate func updateNoResultsLabel() {
+    private func updateNoResultsLabel() {
         let shouldShowNoResults = dataSource.visibleCellItems.count == 0
         if shouldShowNoResults {
             delay(0.666) {
@@ -478,7 +478,7 @@ final class StreamViewController: BaseElloViewController {
 
 // MARK: Private Functions
 
-    fileprivate func initialLoadFailure() {
+    private func initialLoadFailure() {
         guard streamViewDelegate?.streamViewCustomLoadFailed() == false else {
             return
         }
@@ -512,7 +512,7 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    fileprivate func addNotificationObservers() {
+    private func addNotificationObservers() {
         updateCellHeightNotification = NotificationObserver(notification: StreamNotification.UpdateCellHeightNotification) { [weak self] streamCellItem in
             guard let `self` = self, self.dataSource.visibleCellItems.contains(streamCellItem) else { return }
             nextTick {
@@ -614,7 +614,7 @@ final class StreamViewController: BaseElloViewController {
         performDataReload()
     }
 
-    fileprivate func removeNotificationObservers() {
+    private func removeNotificationObservers() {
         updateCellHeightNotification?.removeObserver()
         rotationNotification?.removeObserver()
         sizeChangedNotification?.removeObserver()
@@ -626,7 +626,7 @@ final class StreamViewController: BaseElloViewController {
         currentUserChangedNotification?.removeObserver()
     }
 
-    fileprivate func updateCellHeight(_ indexPath: IndexPath, height: CGFloat) {
+    private func updateCellHeight(_ indexPath: IndexPath, height: CGFloat) {
         let existingHeight = collectionViewDataSource.height(at: indexPath, numberOfColumns: columnCount)
         if height != existingHeight {
             performDataUpdate { collectionView in
@@ -662,7 +662,7 @@ extension StreamViewController: HasGridListButton {
         }
     }
 
-    fileprivate func toggleGrid(isGridView: Bool) {
+    private func toggleGrid(isGridView: Bool) {
         var emptyStreamCellItem: StreamCellItem?
         if let first = dataSource.visibleCellItems.first {
             switch first.type {
@@ -1003,7 +1003,7 @@ extension StreamViewController: WebLinkResponder {
         appViewController.navigateToURI(path: path, type: type.uri, data: data)
     }
 
-    fileprivate func selectTab(_ tab: ElloTab) {
+    private func selectTab(_ tab: ElloTab) {
         elloTabBarController?.selectedTab = tab
     }
 }
@@ -1209,7 +1209,7 @@ extension StreamViewController: UIScrollViewDelegate {
         scrollToPaginateGuard = false
     }
 
-    fileprivate func loadNextPage(scrollView: UIScrollView) {
+    private func loadNextPage(scrollView: UIScrollView) {
         guard
             isPagingEnabled &&
             scrollView.contentOffset.y + (self.view.frame.height * 1.666)
@@ -1253,7 +1253,7 @@ extension StreamViewController: UIScrollViewDelegate {
             }
     }
 
-    fileprivate func scrollLoaded(jsonables: [JSONAble] = [], placeholderType: StreamCellType.PlaceholderType? = nil) {
+    private func scrollLoaded(jsonables: [JSONAble] = [], placeholderType: StreamCellType.PlaceholderType? = nil) {
         guard
             let lastIndexPath = collectionView.lastIndexPathForSection(0)
         else { return }
@@ -1278,7 +1278,7 @@ extension StreamViewController: UIScrollViewDelegate {
         }
     }
 
-    fileprivate func removeLoadingCell() {
+    private func removeLoadingCell() {
         let lastIndexPath = IndexPath(item: dataSource.visibleCellItems.count - 1, section: 0)
         guard
             dataSource.visibleCellItems[lastIndexPath.row].type == .streamLoading
@@ -1331,7 +1331,7 @@ extension StreamViewController {
         isRunningDataChangeJobs = true
 
         let job = dataChangeJobs.removeFirst()
-        job.promise.always { _ in
+        job.promise.always {
             self.isRunningDataChangeJobs = false
             self.runNextDataChangeJob()
         }
@@ -1343,23 +1343,23 @@ extension StreamViewController {
             collectionView.reloadData()
             collectionView.layoutIfNeeded()
 
-            job.resolve(())
+            job.resolve()
         case let .delta(delta):
             collectionView.performBatchUpdates({
                 self.collectionViewDataSource.visibleCellItems = job.newItems
                 delta.applyUpdatesToCollectionView(self.collectionView, inSection: 0)
             }, completion: { _ in
-                job.resolve(())
+                job.resolve()
             })
         case let .update(block):
             block(collectionView)
-            job.resolve(())
+            job.resolve()
         case let .batch(block):
             collectionView.performBatchUpdates({
                 self.collectionViewDataSource.visibleCellItems = job.newItems
                 block(self.collectionView)
             }, completion: { _ in
-                job.resolve(())
+                job.resolve()
             })
         }
     }

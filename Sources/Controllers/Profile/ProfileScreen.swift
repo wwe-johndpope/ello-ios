@@ -44,24 +44,24 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     let inviteButton = StyledButton(style: .blackPill)
     let editButton = StyledButton(style: .blackPill)
 
-    fileprivate let whiteSolidView = UIView()
-    fileprivate let loaderView = InterpolatedLoadingView()
-    fileprivate let coverImageView = FLAnimatedImageView()
-    fileprivate let ghostLeftButton = StyledButton(style: .blackPill)
-    fileprivate let ghostRightButton = StyledButton(style: .blackPill)
-    fileprivate let profileButtonsEffect = UIVisualEffectView()
-    fileprivate var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
+    private let whiteSolidView = UIView()
+    private let loaderView = InterpolatedLoadingView()
+    private let coverImageView = FLAnimatedImageView()
+    private let ghostLeftButton = StyledButton(style: .blackPill)
+    private let ghostRightButton = StyledButton(style: .blackPill)
+    private let profileButtonsEffect = UIVisualEffectView()
+    private var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
 
     // constraints
-    fileprivate var whiteSolidTop: Constraint!
-    fileprivate var coverImageHeight: Constraint!
-    fileprivate var profileButtonsContainerTopConstraint: Constraint!
-    fileprivate var profileButtonsContainerHeightConstraint: Constraint!
-    fileprivate var hireLeftConstraint: Constraint!
-    fileprivate var hireRightConstraint: Constraint!
-    fileprivate var relationshipMentionConstraint: Constraint!
-    fileprivate var relationshipCollabConstraint: Constraint!
-    fileprivate var relationshipHireConstraint: Constraint!
+    private var whiteSolidTop: Constraint!
+    private var coverImageHeight: Constraint!
+    private var profileButtonsContainerTopConstraint: Constraint!
+    private var profileButtonsContainerHeightConstraint: Constraint!
+    private var hireLeftConstraint: Constraint!
+    private var hireRightConstraint: Constraint!
+    private var relationshipMentionConstraint: Constraint!
+    private var relationshipCollabConstraint: Constraint!
+    private var relationshipHireConstraint: Constraint!
 
     weak var delegate: ProfileScreenDelegate?
 
@@ -210,22 +210,27 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), for: .touchUpInside)
     }
 
+    @objc
     func mentionTapped(_ button: UIButton) {
         delegate?.mentionTapped()
     }
 
+    @objc
     func hireTapped(_ button: UIButton) {
         delegate?.hireTapped()
     }
 
+    @objc
     func editTapped(_ button: UIButton) {
         delegate?.editTapped()
     }
 
+    @objc
     func inviteTapped(_ button: UIButton) {
         delegate?.inviteTapped()
     }
 
+    @objc
     func collaborateTapped(_ button: UIButton) {
         delegate?.collaborateTapped()
     }
@@ -289,7 +294,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         ghostRightButton.isHidden = true
     }
 
-    fileprivate func setButtonsEnabled(_ enabled: Bool) {
+    private func setButtonsEnabled(_ enabled: Bool) {
         collaborateButton.isEnabled = enabled
         hireButton.isEnabled = enabled
         mentionButton.isEnabled = enabled
@@ -319,7 +324,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     func showNavBars() {
-        animate {
+        elloAnimate {
             let effectsTop = self.navigationBar.frame.height
             let effectsHeight = Size.profileButtonsContainerViewHeight
 
@@ -329,7 +334,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     }
 
     func hideNavBars(_ offset: CGPoint, isCurrentUser: Bool) {
-        animate {
+        elloAnimate {
             let effectsTop: CGFloat
             let effectsHeight: CGFloat
             if isCurrentUser {
@@ -345,7 +350,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         }
     }
 
-    fileprivate func updateNavBars(effectsTop: CGFloat, effectsHeight: CGFloat) {
+    private func updateNavBars(effectsTop: CGFloat, effectsHeight: CGFloat) {
         let buttonTop = effectsHeight - Size.buttonMargin - mentionButton.frame.size.height
 
         profileButtonsContainerTopConstraint.update(offset: effectsTop)

@@ -1329,7 +1329,7 @@ class StreamDataSourceSpec: QuickSpec {
                     ]
 
                     var done = false
-                    subject.calculateCellItems(items, withWidth: 375) { _ in
+                    subject.calculateCellItems(items, withWidth: 375) {
                         done = true
                     }
                     expect(done) == true

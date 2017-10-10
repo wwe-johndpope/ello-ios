@@ -3,7 +3,7 @@
 //
 
 struct LoadingToken {
-    fileprivate var loadInitialPageLoadingToken: String = ""
+    private var loadInitialPageLoadingToken: String = ""
     var cancelLoadingClosure: Block = {}
 
     mutating func resetInitialPageLoadingToken() -> String {

@@ -34,19 +34,19 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     // for specs
     let searchField = SearchNavBarField()
 
-    fileprivate let searchControlsContainer = UIView()
-    fileprivate let debounced: ThrottledBlock = debounce(0.8)
-    fileprivate let backButton = UIButton()
-    fileprivate let postsToggleButton = SearchToggleButton()
-    fileprivate let peopleToggleButton = SearchToggleButton()
-    fileprivate let findFriendsContainer = UIView()
-    fileprivate let findFriendsButton = StyledButton(style: .green)
-    fileprivate let findFriendsLabel = StyledLabel(style: .black)
-    fileprivate var bottomInset: CGFloat = 0
-    fileprivate let gridListButton = UIButton()
-    fileprivate var searchControlsContainerHeight: Constraint!
-    fileprivate var gridListVisibleConstraint: Constraint!
-    fileprivate var gridListHiddenConstraint: Constraint!
+    private let searchControlsContainer = UIView()
+    private let debounced: ThrottledBlock = debounce(0.8)
+    private let backButton = UIButton()
+    private let postsToggleButton = SearchToggleButton()
+    private let peopleToggleButton = SearchToggleButton()
+    private let findFriendsContainer = UIView()
+    private let findFriendsButton = StyledButton(style: .green)
+    private let findFriendsLabel = StyledLabel(style: .black)
+    private var bottomInset: CGFloat = 0
+    private let gridListButton = UIButton()
+    private var searchControlsContainerHeight: Constraint!
+    private var gridListVisibleConstraint: Constraint!
+    private var gridListHiddenConstraint: Constraint!
 
     override func setText() {
         postsToggleButton.setTitle(InterfaceString.Search.Posts, for: .normal)
@@ -165,14 +165,14 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
 extension SearchScreen {
 
     func showNavBars() {
-        animate {
+        elloAnimate {
             self.searchControlsContainerHeight.update(offset: Size.searchControlsHeight)
             self.searchControlsContainer.frame.origin.y = self.navigationBar.frame.size.height
         }
     }
 
     func hideNavBars() {
-        animate {
+        elloAnimate {
             if AppSetup.shared.isIphoneX {
                 self.searchControlsContainerHeight.update(offset: Size.searchControlsTallHeight)
                 self.searchControlsContainer.frame.size.height = Size.searchControlsTallHeight
@@ -195,12 +195,12 @@ extension SearchScreen {
 
 extension SearchScreen {
 
-    fileprivate func clearSearch() {
+    private func clearSearch() {
         delegate?.searchFieldCleared()
         debounced {}
     }
 
-    fileprivate func performSearch() {
+    private func performSearch() {
         guard
             let text = searchField.text,
             text.characters.count > 0
@@ -240,7 +240,7 @@ extension SearchScreen {
         delegate?.toggleChanged(searchFieldText, isPostSearch: postsToggleButton.isSelected)
     }
 
-    fileprivate func animateGridListButton(visible: Bool) {
+    private func animateGridListButton(visible: Bool) {
         if visible {
             self.gridListVisibleConstraint.activate()
             self.gridListHiddenConstraint.deactivate()
@@ -250,7 +250,7 @@ extension SearchScreen {
             self.gridListHiddenConstraint.activate()
         }
 
-        animate {
+        elloAnimate {
             self.gridListButton.alpha = visible ? 1 : 0
 
             let trailing: CGFloat
@@ -276,6 +276,7 @@ extension SearchScreen {
         delegate?.findFriendsTapped()
     }
 
+    @objc
     func gridListToggled() {
         delegate?.gridListToggled(sender: gridListButton)
     }
@@ -315,7 +316,7 @@ extension SearchScreen: UITextFieldDelegate {
 
 extension SearchScreen {
 
-    fileprivate func showHideFindFriends() {
+    private func showHideFindFriends() {
         if showsFindFriends && searchField.text.isEmpty {
             findFriendsContainer.isHidden = false
         }

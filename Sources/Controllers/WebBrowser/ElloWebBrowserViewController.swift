@@ -50,6 +50,7 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
         delegate = self
     }
 
+    @objc
     func shareButtonPressed(_ barButtonItem: UIBarButtonItem) {
         var webViewUrl: URL?
         if let wkWebView = wkWebView {
@@ -174,7 +175,7 @@ extension ElloWebBrowserViewController: WebLinkResponder {
         }
     }
 
-    fileprivate func selectTab(_ tab: ElloTab) {
+    private func selectTab(_ tab: ElloTab) {
         navigationController?.dismiss(animated: true) {
             ElloWebBrowserViewController.elloTabBarController?.selectedTab = tab
         }

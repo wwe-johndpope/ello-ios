@@ -10,7 +10,7 @@ final class CategoryGenerator: StreamGenerator {
 
     var currentUser: User?
     var streamKind: StreamKind
-    weak fileprivate var categoryStreamDestination: CategoryStreamDestination?
+    weak private var categoryStreamDestination: CategoryStreamDestination?
     weak var destination: StreamDestination? {
         get { return categoryStreamDestination }
         set {
@@ -19,15 +19,15 @@ final class CategoryGenerator: StreamGenerator {
         }
     }
 
-    fileprivate var category: Category?
-    fileprivate var categories: [Category]?
-    fileprivate var slug: String?
-    fileprivate var pagePromotional: PagePromotional?
-    fileprivate var posts: [Post]?
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
+    private var category: Category?
+    private var categories: [Category]?
+    private var slug: String?
+    private var pagePromotional: PagePromotional?
+    private var posts: [Post]?
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
 
-    fileprivate let queue = OperationQueue()
+    private let queue = OperationQueue()
 
     func headerItems() -> [StreamCellItem] {
         var items: [StreamCellItem] = []

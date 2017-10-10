@@ -61,7 +61,7 @@ class ArtistInviteAdminController: StreamableViewController {
         streamViewController.loadInitialPage()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
     }
 
@@ -93,7 +93,7 @@ extension ArtistInviteAdminController: ArtistInviteAdminScreenDelegate {
         loadStream(artistInvite.unapprovedSubmissionsStream)
     }
 
-    fileprivate func loadStream(_ stream: ArtistInvite.Stream?) {
+    private func loadStream(_ stream: ArtistInvite.Stream?) {
         guard let stream = stream else { return }
 
         screen.selectedSubmissionsStatus = stream.submissionsStatus
@@ -121,7 +121,7 @@ extension ArtistInviteAdminController: ArtistInviteAdminResponder {
                 collectionView.reloadItems(at: [indexPath])
             }
             .ignoreErrors()
-            .always { _ in
+            .always {
                 ElloHUD.hideLoadingHudInView(self.streamViewController.view)
             }
     }

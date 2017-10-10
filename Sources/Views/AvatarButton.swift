@@ -16,7 +16,7 @@ class AvatarButton: UIButton {
         setup()
     }
 
-    fileprivate func setup() {
+    private func setup() {
         clipsToBounds = false
     }
 

@@ -11,7 +11,7 @@ struct AssetsToRegions {
         nextPHAsset(assets, stack: [], completion: completion)
     }
 
-    fileprivate static func nextPHAsset(_ assets: [PHAsset], stack: [ImageRegionData], completion: @escaping ([ImageRegionData]) -> Void) {
+    private static func nextPHAsset(_ assets: [PHAsset], stack: [ImageRegionData], completion: @escaping ([ImageRegionData]) -> Void) {
         guard let asset = assets.first else {
             completion(stack)
             return

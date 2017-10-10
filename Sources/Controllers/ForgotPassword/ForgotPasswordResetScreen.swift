@@ -85,6 +85,7 @@ class ForgotPasswordResetScreen: CredentialsScreen {
         }
     }
 
+    @objc
     func submitAction() {
         delegate?.submit(password: passwordField.text ?? "")
     }
@@ -113,7 +114,7 @@ extension ForgotPasswordResetScreen: ForgotPasswordResetScreenProtocol {
         passwordErrorLabel.text = text
         isPasswordValid = false
 
-        animate {
+        elloAnimate {
             self.passwordMarginConstraint.activate()
             self.passwordErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
@@ -133,7 +134,7 @@ extension ForgotPasswordResetScreen: ForgotPasswordResetScreenProtocol {
 
 
     func hidePasswordError() {
-        animate {
+        elloAnimate {
             self.passwordMarginConstraint.deactivate()
             self.passwordErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -165,6 +166,7 @@ extension ForgotPasswordResetScreen: UITextFieldDelegate {
 }
 
 extension ForgotPasswordResetScreen {
+    @objc
     func activatePassword() {
       _ = passwordField.becomeFirstResponder()
     }

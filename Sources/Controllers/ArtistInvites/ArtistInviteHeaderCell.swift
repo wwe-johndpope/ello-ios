@@ -28,13 +28,13 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
         }
     }
 
-    fileprivate let headerImage = FLAnimatedImageView()
-    fileprivate let headerOverlay = UIView()
-    fileprivate let logoImage = UIImageView()
-    fileprivate let titleLabel = StyledLabel(style: .artistInviteTitle)
-    fileprivate let statusLabel = StyledLabel()
-    fileprivate let inviteTypeLabel = StyledLabel(style: .artistInviteDetailInfo)
-    fileprivate let dateLabel = StyledLabel(style: .artistInviteDetailInfo)
+    private let headerImage = FLAnimatedImageView()
+    private let headerOverlay = UIView()
+    private let logoImage = UIImageView()
+    private let titleLabel = StyledLabel(style: .artistInviteTitle)
+    private let statusLabel = StyledLabel()
+    private let inviteTypeLabel = StyledLabel(style: .artistInviteDetailInfo)
+    private let dateLabel = StyledLabel(style: .artistInviteDetailInfo)
 
     static func calculateDynamicHeights(title: String, inviteType: String, cellWidth: CGFloat) -> CGFloat {
         let textWidth = cellWidth - Size.textMargins.left - Size.textMargins.right
@@ -78,8 +78,8 @@ class ArtistInviteHeaderCell: CollectionViewCell, ArtistInviteConfigurableCell {
             make.width.lessThanOrEqualTo(contentView).priority(Priority.required)
             make.height.equalTo(logoImage.snp.width).multipliedBy(Size.logoImageSize.height / Size.logoImageSize.width).priority(Priority.required)
         }
-        logoImage.setContentCompressionResistancePriority(Priority.low.value, for: .vertical)
-        logoImage.setContentCompressionResistancePriority(Priority.low.value, for: .horizontal)
+        logoImage.setContentCompressionResistancePriority(UILayoutPriority(rawValue: Priority.low.value), for: .vertical)
+        logoImage.setContentCompressionResistancePriority(UILayoutPriority(rawValue: Priority.low.value), for: .horizontal)
 
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView).inset(Size.textMargins)

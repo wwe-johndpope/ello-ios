@@ -23,8 +23,8 @@ class ArtistInviteGuideCell: CollectionViewCell {
         }
     }
 
-    fileprivate let titleLabel = StyledLabel(style: .artistInviteGuide)
-    fileprivate let guideWebView = ElloWebView()
+    private let titleLabel = StyledLabel(style: .artistInviteGuide)
+    private let guideWebView = ElloWebView()
 
     override func bindActions() {
         guideWebView.delegate = self

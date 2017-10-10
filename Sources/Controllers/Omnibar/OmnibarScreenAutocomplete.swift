@@ -4,7 +4,7 @@
 
 // MARK: UITextViewDelegate
 extension OmnibarScreen: UITextViewDelegate {
-    fileprivate func throttleAutoComplete(_ textView: UITextView, text: String, location: Int) {
+    private func throttleAutoComplete(_ textView: UITextView, text: String, location: Int) {
         let autoComplete = AutoComplete()
         let mightMatch = autoComplete.eagerCheck(text, location: location)
         if mightMatch && textView.autocorrectionType == .yes {
@@ -65,7 +65,7 @@ extension OmnibarScreen: UITextViewDelegate {
             var currentText = textView.attributedText
             if currentText?.string.characters.count == 0 {
                 currentText = ElloAttributedString.style("")
-                textView.typingAttributes = ElloAttributedString.attrs()
+                textView.typingAttributes = ElloAttributedString.oldAttrs(ElloAttributedString.attrs())
                 boldButton.isSelected = false
                 italicButton.isSelected = false
             }
@@ -76,7 +76,7 @@ extension OmnibarScreen: UITextViewDelegate {
     }
 
     func textViewDidChangeSelection(_ textView: UITextView) {
-        let font = textView.typingAttributes[NSFontAttributeName] as? UIFont
+        let font = textView.typingAttributes[NSAttributedStringKey.font.rawValue] as? UIFont
         let fontName = font?.fontName ?? "AtlasGrotesk-Regular"
 
         switch fontName {
@@ -94,7 +94,7 @@ extension OmnibarScreen: UITextViewDelegate {
             italicButton.isSelected = false
         }
 
-        if textView.typingAttributes[NSLinkAttributeName] is URL {
+        if textView.typingAttributes[NSAttributedStringKey.link.rawValue] is URL {
             linkButton.isSelected = true
             linkButton.isEnabled = true
         }
@@ -108,7 +108,7 @@ extension OmnibarScreen: UITextViewDelegate {
         }
     }
 
-    fileprivate func emojiKeyboardShowing() -> Bool {
+    private func emojiKeyboardShowing() -> Bool {
         return textView.textInputMode?.primaryLanguage == nil || textView.textInputMode?.primaryLanguage == "emoji"
     }
 
@@ -122,7 +122,7 @@ extension OmnibarScreen: UITextViewDelegate {
         }
     }
 
-    fileprivate func showAutoComplete(_ textView: UITextView, count: Int) {
+    private func showAutoComplete(_ textView: UITextView, count: Int) {
         if !autoCompleteShowing {
             autoCompleteShowing = true
             textView.spellCheckingType = .no

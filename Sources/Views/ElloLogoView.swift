@@ -33,8 +33,8 @@ class ElloLogoView: UIImageView {
         static let loading = CGSize(width: 30, height: 30)
     }
 
-    fileprivate var wasAnimating = false
-    fileprivate var style: ElloLogoView.Style = .normal
+    private var wasAnimating = false
+    private var style: ElloLogoView.Style = .normal
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)

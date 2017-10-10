@@ -31,15 +31,15 @@ class ElloSegmentedControl: UISegmentedControl {
         updateStyle()
     }
 
-    fileprivate func updateStyle() {
+    private func updateStyle() {
         let fontSize = style.fontSize
         let normalTitleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.black,
-            NSFontAttributeName: UIFont.defaultFont(fontSize)
+            NSAttributedStringKey.foregroundColor: UIColor.black,
+            NSAttributedStringKey.font: UIFont.defaultFont(fontSize)
         ]
         let selectedTitleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont.defaultFont(fontSize)
+            NSAttributedStringKey.foregroundColor: UIColor.white,
+            NSAttributedStringKey.font: UIFont.defaultFont(fontSize)
         ]
         setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
         setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)

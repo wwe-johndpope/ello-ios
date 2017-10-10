@@ -55,17 +55,17 @@ class SimpleStreamViewController: StreamableViewController {
 
     // MARK: Private
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: navigationBar)
     }
 
-    fileprivate func setupNavigationBar() {
+    private func setupNavigationBar() {
         navigationBar = ElloNavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: ElloNavigationBar.Size.height))
         navigationBar.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
         view.addSubview(navigationBar)
     }
 
-    fileprivate func setupNavigationItems(streamKind: StreamKind) {
+    private func setupNavigationItems(streamKind: StreamKind) {
         navigationBar.leftItems = [.back]
 
         if streamKind.hasGridViewToggle {

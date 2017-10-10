@@ -13,7 +13,7 @@ class SearchToggleButton: Button {
     private let line = UIView()
     override var isSelected: Bool {
         didSet {
-            animate {
+            elloAnimate {
                 self.updateLineColor()
             }
         }

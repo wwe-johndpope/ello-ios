@@ -48,12 +48,12 @@ class LoginScreen: CredentialsScreen {
     }
 
     let usernameField = ClearTextField()
-    fileprivate let activateUsernameButton = UIButton()
+    private let activateUsernameButton = UIButton()
     let passwordField = ClearTextField()
-    fileprivate let activatePasswordButton = UIButton()
-    fileprivate let errorLabel = StyledLabel(style: .smallWhite)
+    private let activatePasswordButton = UIButton()
+    private let errorLabel = StyledLabel(style: .smallWhite)
 
-    fileprivate let forgotPasswordButton = UIButton()
+    private let forgotPasswordButton = UIButton()
 
     override func setText() {
         titleLabel.text = InterfaceString.Startup.Login
@@ -161,22 +161,27 @@ extension LoginScreen {
 // MARK: Actions
 extension LoginScreen {
 
+    @objc
     func forgotPasswordAction() {
         delegate?.forgotPasswordAction()
     }
 
+    @objc
     func submitAction() {
         delegate?.submit(username: username, password: password)
     }
 
+    @objc
     func onePasswordAction(_ sender: UIView) {
         delegate?.onePasswordAction(sender)
     }
 
+    @objc
     func activateUsername() {
         _ = usernameField.becomeFirstResponder()
     }
 
+    @objc
     func activatePassword() {
         _ = passwordField.becomeFirstResponder()
     }
@@ -184,6 +189,7 @@ extension LoginScreen {
 
 // MARK: UITextFieldDelegate
 extension LoginScreen: UITextFieldDelegate {
+    @objc
     func textFieldDidChange(_ textField: UITextField) {
         delegate?.validate(username: username, password: password)
     }
@@ -228,14 +234,14 @@ extension LoginScreen: LoginScreenProtocol {
         isUsernameValid = false
         isPasswordValid = false
 
-        animate {
+        elloAnimate {
             self.errorLabel.alpha = 1.0
             self.layoutIfNeeded()
         }
     }
 
     func hideError() {
-        animate {
+        elloAnimate {
             self.errorLabel.alpha = 0.0
             self.layoutIfNeeded()
         }
