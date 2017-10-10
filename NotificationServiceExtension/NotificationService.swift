@@ -12,6 +12,10 @@ class NotificationService: UNNotificationServiceExtension {
     var originalContent: UNNotificationContent?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        if let debugServer = DebugServer.fromDefaults {
+            APIKeys.shared = debugServer.apiKeys
+        }
+
         guard
             let path = request.content.userInfo["application_target"] as? String,
             let content = (request.content.mutableCopy() as? UNMutableNotificationContent)
