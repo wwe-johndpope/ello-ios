@@ -63,6 +63,10 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         return height1 + height2
     }
 
+    override func bindActions() {
+        descriptionWebView.delegate = self
+    }
+
     override func style() {
         bg.layer.cornerRadius = Size.cornerRadius
         bg.clipsToBounds = true
@@ -313,4 +317,17 @@ extension ArtistInviteBubbleCell.Config {
         return InterfaceString.ArtistInvites.Countdown(secondsRemaining)
     }
 
+}
+
+extension ArtistInviteBubbleCell: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let scheme = request.url?.scheme, scheme == "default" {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+            return false
+        }
+        else {
+            return ElloWebViewHelper.handle(request: request, origin: self)
+        }
+    }
 }

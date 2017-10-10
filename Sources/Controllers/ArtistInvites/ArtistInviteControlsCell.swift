@@ -35,6 +35,7 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
     }
 
     override func bindActions() {
+        descriptionWebView.delegate = self
         submitButton.addTarget(self, action: #selector(tappedSubmitButton), for: .touchUpInside)
     }
 
@@ -89,6 +90,19 @@ extension ArtistInviteControlsCell {
     func tappedSubmitButton() {
         let responder: ArtistInviteResponder? = findResponder()
         responder?.tappedArtistInviteSubmitButton()
+    }
+}
+
+extension ArtistInviteControlsCell: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let scheme = request.url?.scheme, scheme == "default" {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+            return false
+        }
+        else {
+            return ElloWebViewHelper.handle(request: request, origin: self)
+        }
     }
 }
 

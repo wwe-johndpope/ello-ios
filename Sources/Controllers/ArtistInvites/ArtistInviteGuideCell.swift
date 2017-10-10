@@ -26,6 +26,10 @@ class ArtistInviteGuideCell: CollectionViewCell {
     fileprivate let titleLabel = StyledLabel(style: .artistInviteGuide)
     fileprivate let guideWebView = ElloWebView()
 
+    override func bindActions() {
+        guideWebView.delegate = self
+    }
+
     override func arrange() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(guideWebView)
@@ -64,4 +68,17 @@ extension StyledLabel.Style {
         textColor: .greyA,
         fontFamily: .artistInviteTitle
         )
+}
+
+extension ArtistInviteGuideCell: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let scheme = request.url?.scheme, scheme == "default" {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+            return false
+        }
+        else {
+            return ElloWebViewHelper.handle(request: request, origin: self)
+        }
+    }
 }
