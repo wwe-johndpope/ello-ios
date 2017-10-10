@@ -135,7 +135,7 @@ enum ElloURI: String {
     static let usernameRegex = "([\\w\\-]+)"
     static var userPathRegex: String { return "\(ElloURI.fuzzyDomain)/\(ElloURI.usernameRegex)\\??.*" }
 
-    static func match(_ url: String) -> (type: ElloURI, data: String) {
+    static func match(_ url: String) -> (type: ElloURI, data: String?) {
         let trimmed = ElloURI.replaceElloScheme(url)
         for type in self.all where trimmed.range(of: type.regexPattern, options: .regularExpression) != nil {
             return (type, type.data(trimmed))
@@ -180,7 +180,7 @@ enum ElloURI: String {
         return path
     }
 
-    private func data(_ url: String) -> String {
+    private func data(_ url: String) -> String? {
         let regex = Regex(self.regexPattern)
         switch self {
         case .discover:
@@ -194,108 +194,105 @@ enum ElloURI: String {
         case .discoverTrending:
             return "trending"
         case .artistInvitesDetail:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .category:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .invite:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .notifications:
-            return regex?.matchingGroups(url).safeValue(1) ?? "notifications"
+            return regex?.matchingGroups(url).safeValue(1)
         case .profileFollowers, .profileFollowing, .profileLoves:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .post:
-            let last = regex?.matchingGroups(url).safeValue(2) ?? url
-            let lastArr = last.characters.split { $0 == "?" }.map { String($0) }
-            return lastArr.first ?? last
+            let last = regex?.matchingGroups(url).safeValue(2)
+            let lastArr = last?.characters.split { $0 == "?" }.map { String($0) }
+            return lastArr?.first ?? last
         case .pushNotificationArtistInvite:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .pushNotificationComment:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .pushNotificationPost:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .pushNotificationUser:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .profile:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .resetMyPassword:
-            return regex?.matchingGroups(url).safeValue(1) ?? url
+            return regex?.matchingGroups(url).safeValue(1)
         case .search, .searchPosts, .searchPeople:
-            if let urlComponents = URLComponents(string: url),
+            guard let urlComponents = URLComponents(string: url),
                 let queryItems = urlComponents.queryItems,
                 let terms = (queryItems.filter { $0.name == "terms" }.first?.value)
-            {
-                return terms
-            }
-            else {
-                return ""
-            }
-        default: return url
+            else { return nil }
+            return terms
+        default:
+            return nil
         }
     }
 
-    // Order matters: [MostSpecific, MostGeneric]
-    static let all = [
-        email,
-        subdomain,
-        post,
-        wtf,
-        root,
+    // Order matters: [most specific ... most generic]
+    static let all: [ElloURI] = [
+        .email,
+        .subdomain,
+        .post,
+        .wtf,
+        .root,
         // generic / pages
-        betaPublicProfiles,
-        confirm,
-        discover,
-        discoverRandom,
-        discoverRecent,
-        discoverRelated,
-        discoverTrending,
-        category,
-        artistInvitesBrowse,
-        artistInvitesDetail,
-        enter,
-        exit,
-        explore,
-        exploreRecommended,
-        exploreRecent,
-        exploreTrending,
-        forgotMyPassword,
-        freedomOfSpeech,
-        faceMaker,
-        friends,
-        following,
-        invitations,
-        invite,
-        join,
-        signup,
-        login,
-        manifesto,
-        nativeRedirect,
-        noise,
-        pushNotificationArtistInvite,
-        pushNotificationComment,
-        pushNotificationPost,
-        pushNotificationUser,
-        notifications,
-        onboarding,
-        passwordResetError,
-        randomSearch,
-        requestInvite,
-        requestInvitation,
-        requestInvitations,
-        resetMyPassword,
-        resetPasswordError,
-        searchPeople,
-        searchPosts,
-        search,
-        settings,
-        starred,
-        unblock,
-        whoMadeThis,
+        .betaPublicProfiles,
+        .confirm,
+        .discover,
+        .discoverRandom,
+        .discoverRecent,
+        .discoverRelated,
+        .discoverTrending,
+        .category,
+        .artistInvitesBrowse,
+        .artistInvitesDetail,
+        .enter,
+        .exit,
+        .explore,
+        .exploreRecommended,
+        .exploreRecent,
+        .exploreTrending,
+        .forgotMyPassword,
+        .freedomOfSpeech,
+        .faceMaker,
+        .friends,
+        .following,
+        .invitations,
+        .invite,
+        .join,
+        .signup,
+        .login,
+        .manifesto,
+        .nativeRedirect,
+        .noise,
+        .pushNotificationArtistInvite,
+        .pushNotificationComment,
+        .pushNotificationPost,
+        .pushNotificationUser,
+        .notifications,
+        .onboarding,
+        .passwordResetError,
+        .randomSearch,
+        .requestInvite,
+        .requestInvitation,
+        .requestInvitations,
+        .resetMyPassword,
+        .resetPasswordError,
+        .searchPeople,
+        .searchPosts,
+        .search,
+        .settings,
+        .starred,
+        .unblock,
+        .whoMadeThis,
         // profile specific
-        profileFollowing,
-        profileFollowers,
-        profileLoves,
-        profile,
+        .profileFollowing,
+        .profileFollowers,
+        .profileLoves,
+        .profile,
         // anything else
-        external
+        .external,
     ]
 }

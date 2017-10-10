@@ -23,7 +23,7 @@ struct ElloWebViewHelper {
             }
             else {
                 if fromWebView && type.loadsInWebViewFromWebView { return true }
-                let responder = origin?.target(forAction: #selector(WebLinkResponder.webLinkTapped(path:type:data:)), withSender: origin) as? WebLinkResponder
+                let responder: WebLinkResponder? = origin?.findResponder()
                 responder?.webLinkTapped(path: requestUrlString, type: ElloURIWrapper(uri: type), data: data)
                 return false
             }

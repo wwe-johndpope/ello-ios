@@ -994,7 +994,7 @@ extension StreamViewController {
 // MARK: StreamViewController: WebLinkResponder
 extension StreamViewController: WebLinkResponder {
 
-    func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String?) {
         guard
             let parentController = parent as? HasAppController,
             let appViewController = parentController.appViewController

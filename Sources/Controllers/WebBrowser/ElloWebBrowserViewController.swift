@@ -103,7 +103,7 @@ extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 // MARK: ElloWebBrowserViewController: WebLinkResponder
 extension ElloWebBrowserViewController: WebLinkResponder {
 
-    func webLinkTapped(path: String, type: ElloURIWrapper, data: String) {
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String?) {
         switch type.uri {
         case .confirm,
              .email,
@@ -146,11 +146,13 @@ extension ElloWebBrowserViewController: WebLinkResponder {
              .exploreRecommended,
              .exploreRecent,
              .exploreTrending:
-            DeepLinking.showCategory(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
+            guard let slug = data else { return }
+            DeepLinking.showCategory(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: slug)
         case .artistInvitesBrowse:
             DeepLinking.showArtistInvites(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
         case .artistInvitesDetail, .pushNotificationArtistInvite:
-            DeepLinking.showArtistInvites(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: data)
+            guard let slug = data else { return }
+            DeepLinking.showArtistInvites(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, slug: slug)
         case .betaPublicProfiles,
              .enter,
              .exit,
@@ -166,12 +168,17 @@ extension ElloWebBrowserViewController: WebLinkResponder {
         case .post,
              .pushNotificationPost,
              .pushNotificationComment:
-            DeepLinking.showPostDetail(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, token: data)
+            guard let slug = data else { return }
+            DeepLinking.showPostDetail(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, token: slug)
         case .profile,
              .pushNotificationUser:
-            DeepLinking.showProfile(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, username: data)
-        case .search: DeepLinking.showSearch(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, terms: data)
-        case .settings: DeepLinking.showSettings(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
+            guard let slug = data else { return }
+            DeepLinking.showProfile(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, username: slug)
+        case .search:
+            guard let slug = data else { return }
+            DeepLinking.showSearch(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser, terms: slug)
+        case .settings:
+            DeepLinking.showSettings(navVC: navigationController, currentUser: ElloWebBrowserViewController.currentUser)
         }
     }
 
