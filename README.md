@@ -4,6 +4,13 @@
 
 [![Build Status](https://travis-ci.org/ello/ello-ios.svg?branch=master)](https://travis-ci.org/ello/ello-ios)
 
+### Open source, but not open API
+
+Our API requires an application key and secret, which are currently being kept private.  You can browse the source, and
+you can compile it, but you won't be able to run it against our API.  Sorry, but we don't have the resources to support
+this kind of open access.  We have always planned to offer 3rd party access, so hopefully this will change soon!
+
+
 ### Environment Variables
 
 We use the `dotenv` gem to access application secrets in the terminal, and `cocoapods-keys` to store them in the app.
@@ -26,9 +33,6 @@ Add the following values to your `.env`.
 - `STAGE2_CLIENT_SECRET`: the secret used for oauth
 - `STAGE2_DOMAIN`: the domain for the API to hit
 - `STAGING_SEGMENT_KEY`: used for sending data to segment
-
-If you would like to run the iOS app, please [contact us](mailto:ios@ello.co) for client credentials.
-
 
 ### Setup
 
