@@ -296,20 +296,15 @@ extension ArtistInviteBubbleCell.Config {
         default: break
         }
 
-        if let openedAt = openedAt, let closedAt = closedAt {
-            return dateTextRemaining(openedAt, closedAt)
-        }
-        else if let openedAt = openedAt {
-            return InterfaceString.ArtistInvites.Opens(openedAt.monthDayYear())
-        }
-        else if let closedAt = closedAt {
-            return InterfaceString.ArtistInvites.Ends(closedAt.monthDayYear())
+        if let closedAt = closedAt {
+            return dateTextRemaining(closedAt)
         }
         return ""
     }
 
-    fileprivate func dateTextRemaining(_ openedAt: Date, _ closedAt: Date) -> String {
-        let secondsRemaining = Int(closedAt.timeIntervalSince(openedAt))
+    fileprivate func dateTextRemaining(_ closedAt: Date) -> String {
+        let now = AppSetup.shared.now
+        let secondsRemaining = Int(closedAt.timeIntervalSince(now))
         let daysRemaining = Int(secondsRemaining / 24 / 3600)
         if daysRemaining > 1 {
             return InterfaceString.ArtistInvites.DaysRemaining(daysRemaining)
