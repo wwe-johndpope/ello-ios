@@ -111,6 +111,7 @@ extension ArtistInviteSubmission.Action {
         case .approve: return InterfaceString.ArtistInvites.AdminApproveAction
         case .unapprove: return InterfaceString.ArtistInvites.AdminUnapproveAction
         case .unselect: return InterfaceString.ArtistInvites.AdminUnselectAction
+        case .decline: return InterfaceString.ArtistInvites.AdminDeclineAction
         default: return NSLocalizedString(label, comment: "")
         }
     }
@@ -121,6 +122,7 @@ extension ArtistInviteSubmission.Action {
         case .unselect: return InterfaceImage.star.orangeImage
         case .approve: return InterfaceImage.circleCheck.normalImage
         case .select: return InterfaceImage.star.normalImage
+        case .decline: return InterfaceImage.xBox.normalImage
         default: return nil
         }
     }

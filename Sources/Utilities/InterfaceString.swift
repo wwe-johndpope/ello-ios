@@ -78,14 +78,17 @@ struct InterfaceString {
         static let AdminUnapprovedStream: String = NSLocalizedString("Pending review", comment: "")
         static let AdminApprovedStream: String = NSLocalizedString("Accepted submissions", comment: "")
         static let AdminSelectedStream: String = NSLocalizedString("Selected submissions", comment: "")
+        static let AdminDeclinedStream: String = NSLocalizedString("Declined submissions", comment: "")
         static let AdminUnapprovedTab: String = NSLocalizedString("To Review", comment: "")
         static let AdminApprovedTab: String = NSLocalizedString("Accepted", comment: "")
         static let AdminSelectedTab: String = NSLocalizedString("Selected", comment: "")
+        static let AdminDeclinedTab: String = NSLocalizedString("Declined", comment: "")
 
         static let AdminUnapproveAction: String = NSLocalizedString("Accepted", comment: "")
         static let AdminUnselectAction: String = NSLocalizedString("Selected", comment: "")
         static let AdminApproveAction: String = NSLocalizedString("Accept", comment: "")
         static let AdminSelectAction: String = NSLocalizedString("Select", comment: "")
+        static let AdminDeclineAction: String = NSLocalizedString("Decline", comment: "")
 
         static let Selecting: String = NSLocalizedString("Hold Tight", comment: "")
         static func Opens(_ dateStr: String) -> String {

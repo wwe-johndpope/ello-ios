@@ -81,6 +81,10 @@ class ArtistInviteAdminController: StreamableViewController {
 
 extension ArtistInviteAdminController: ArtistInviteAdminScreenDelegate {
 
+    func tappedUnapprovedSubmissions() {
+        loadStream(artistInvite.unapprovedSubmissionsStream)
+    }
+
     func tappedApprovedSubmissions() {
         loadStream(artistInvite.approvedSubmissionsStream)
     }
@@ -89,8 +93,8 @@ extension ArtistInviteAdminController: ArtistInviteAdminScreenDelegate {
         loadStream(artistInvite.selectedSubmissionsStream)
     }
 
-    func tappedUnapprovedSubmissions() {
-        loadStream(artistInvite.unapprovedSubmissionsStream)
+    func tappedDeclinedSubmissions() {
+        loadStream(artistInvite.declinedSubmissionsStream)
     }
 
     private func loadStream(_ stream: ArtistInvite.Stream?) {

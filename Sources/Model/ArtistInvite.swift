@@ -59,6 +59,7 @@ final class ArtistInvite: JSONAble, Groupable {
     var approvedSubmissionsStream: Stream?
     var selectedSubmissionsStream: Stream?
     var unapprovedSubmissionsStream: Stream?
+    var declinedSubmissionsStream: Stream?
     var hasAdminLinks: Bool {
         return approvedSubmissionsStream != nil && unapprovedSubmissionsStream != nil
     }
@@ -163,6 +164,12 @@ final class ArtistInvite: JSONAble, Groupable {
             let stream = Stream(link: unapprovedSubmissionsLink, submissionsStatus: .unapproved)
         {
             artistInvite.unapprovedSubmissionsStream = stream
+        }
+
+        if let declinedSubmissionsLink = json["links"]["declined_submissions"].object as? [String: Any],
+            let stream = Stream(link: declinedSubmissionsLink, submissionsStatus: .declined)
+        {
+            artistInvite.declinedSubmissionsStream = stream
         }
 
         if let guide = json["guide"].array?.flatMap({ $0.object as? [String: String] }) {

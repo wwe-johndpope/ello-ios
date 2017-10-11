@@ -141,24 +141,26 @@ private extension ArtistInviteDetailGenerator {
 
     func loadAdminTools(_ artistInvite: ArtistInvite) {
         guard
-            artistInvite.hasAdminLinks,
-            let approvedSubmissionsStream = artistInvite.approvedSubmissionsStream,
-            let selectedSubmissionsStream = artistInvite.selectedSubmissionsStream,
-            let unapprovedSubmissionsStream = artistInvite.unapprovedSubmissionsStream
+            artistInvite.hasAdminLinks
         else { return }
 
         let header = NSAttributedString(label: "Admin Controls", style: .header)
         let submissionsHeader = StreamCellItem(type: .header(header))
-        let approvedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminApprovedStream, approvedSubmissionsStream))
-        let selectedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminSelectedStream, selectedSubmissionsStream))
-        let unapprovedButton = StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminUnapprovedStream, unapprovedSubmissionsStream))
         let spacer = StreamCellItem(type: .spacer(height: 30))
-        self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: [
+
+        let unapprovedButton: StreamCellItem? = artistInvite.unapprovedSubmissionsStream.map { StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminUnapprovedStream, $0)) }
+        let approvedButton: StreamCellItem? = artistInvite.approvedSubmissionsStream.map { StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminApprovedStream, $0)) }
+        let selectedButton: StreamCellItem? = artistInvite.selectedSubmissionsStream.map { StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminSelectedStream, $0)) }
+        let declinedButton: StreamCellItem? = artistInvite.declinedSubmissionsStream.map { StreamCellItem(type: .revealController(label: InterfaceString.ArtistInvites.AdminDeclinedStream, $0)) }
+
+        let items: [StreamCellItem] = [
             submissionsHeader,
             unapprovedButton,
             approvedButton,
             selectedButton,
+            declinedButton,
             spacer,
-            ])
+        ].flatMap { $0 }
+        self.destination?.replacePlaceholder(type: .artistInviteAdmin, items: items)
     }
 }
