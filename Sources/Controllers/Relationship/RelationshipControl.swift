@@ -70,7 +70,7 @@ class RelationshipControl: View {
         followingButton.frame = bounds
     }
 
-    private enum Config {
+    fileprivate enum Config {
         case following
         case muted
         case blocked
@@ -81,7 +81,7 @@ class RelationshipControl: View {
         var relationshipUsage: RelationshipControlUsage = .default {
             didSet { restyleUsage() }
         }
-        private var config: Config = .none {
+        fileprivate var config: Config = .none {
             didSet { restyleUsage() }
         }
 

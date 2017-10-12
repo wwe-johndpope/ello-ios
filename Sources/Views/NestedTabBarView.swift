@@ -12,8 +12,8 @@ class NestedTabBarView: View {
     }
 
     class Tab {
-        private let button = StyledButton(style: .clearGray)
-        private let line = UIView()
+        fileprivate let button = StyledButton(style: .clearGray)
+        fileprivate let line = UIView()
 
         static func == (lhs: Tab, rhs: Tab) -> Bool {
             return lhs.button == rhs.button

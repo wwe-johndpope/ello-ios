@@ -24,9 +24,7 @@ class Control: UIControl {
     convenience init() {
         self.init(frame: .zero)
     }
-}
 
-extension Control {
     func style() {}
     func bindActions() {}
     func setText() {}

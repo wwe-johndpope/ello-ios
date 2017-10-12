@@ -33,9 +33,6 @@ class ProfileAvatarView: ProfileBaseView {
     private var _avatarURL: URL?
 
     var onHeightMismatch: OnHeightMismatch?
-}
-
-extension ProfileAvatarView {
 
     override func style() {
         backgroundColor = .clear
@@ -75,7 +72,9 @@ extension ProfileAvatarView {
             onHeightMismatch?(desiredHeight)
         }
     }
+}
 
+extension ProfileAvatarView {
     func prepareForReuse() {
         avatarImageView.pin_cancelImageDownload()
         avatarImageView.image = nil

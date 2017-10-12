@@ -65,9 +65,6 @@ class ProfileStatsView: ProfileBaseView {
         get { return !grayLine.isHidden }
         set { grayLine.isHidden = !newValue }
     }
-}
-
-extension ProfileStatsView {
 
     override func style() {
         backgroundColor = .white
@@ -149,6 +146,9 @@ extension ProfileStatsView {
             prevCountLabel = countLabel
         }
     }
+}
+
+extension ProfileStatsView {
 
     func prepareForReuse() {
         for countLabel in countLabels {
@@ -156,9 +156,6 @@ extension ProfileStatsView {
         }
         grayLine.isHidden = false
     }
-}
-
-extension ProfileStatsView {
 
     @objc
     func postsButtonTapped() {

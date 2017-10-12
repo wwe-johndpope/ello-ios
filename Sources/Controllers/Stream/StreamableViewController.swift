@@ -279,6 +279,7 @@ extension StreamableViewController: StreamViewDelegate {
     func streamWillPullToRefresh() {
     }
 
+    @objc
     func streamViewDidScroll(scrollView: UIScrollView) {
         scrollLogic.scrollViewDidScroll(scrollView)
     }
@@ -288,6 +289,7 @@ extension StreamableViewController: StreamViewDelegate {
         scrollLogic.scrollViewWillBeginDragging(scrollView)
     }
 
+    @objc
     func streamViewDidEndDragging(scrollView: UIScrollView, willDecelerate: Bool) {
         scrollLogic.scrollViewDidEndDragging(scrollView, willDecelerate: willDecelerate)
     }

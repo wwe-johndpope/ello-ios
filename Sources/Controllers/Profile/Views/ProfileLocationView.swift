@@ -37,9 +37,6 @@ class ProfileLocationView: ProfileBaseView {
     }
 
     var onHeightMismatch: OnHeightMismatch?
-}
-
-extension ProfileLocationView {
 
     override func style() {
         clipsToBounds = true
@@ -71,7 +68,9 @@ extension ProfileLocationView {
             make.leading.equalTo(markerImageView.snp.trailing).offset(Size.markerLocationMargin)
         }
     }
+}
 
+extension ProfileLocationView {
     func prepareForReuse() {
         location = ""
     }
