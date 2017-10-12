@@ -147,10 +147,10 @@ struct StreamCellItemParser {
             }
             let truncatedParagraphs = paragraphs.map { line -> String in
                 let max = 7500
-                guard line.characters.count < max + 10 else {
-                    let startIndex = line.characters.startIndex
-                    let endIndex = line.characters.index(line.characters.startIndex, offsetBy: max)
-                    return String(line.characters[startIndex..<endIndex]) + "&hellip;</p>"
+                guard line.count < max + 10 else {
+                    let startIndex = line.startIndex
+                    let endIndex = line.index(line.startIndex, offsetBy: max)
+                    return String(line[startIndex ..< endIndex]) + "&hellip;</p>"
                 }
                 return line + "</p>"
             }

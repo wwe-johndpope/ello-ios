@@ -423,7 +423,7 @@ extension Tracker {
                 imageCount += 1
             }
             else if let region = region as? TextRegion {
-                textLength += region.content.characters.count
+                textLength += region.content.count
             }
         }
 

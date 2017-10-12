@@ -196,7 +196,7 @@ extension StreamableViewController: UserTappedResponder {
         {
             let param = profileVC.userParam
             if param.hasPrefix("~") {
-                let usernamePart = param.substring(from: param.index(after: param.startIndex))
+                let usernamePart = param[param.index(after: param.startIndex)...]
                 return user.username == usernamePart
             }
             else {

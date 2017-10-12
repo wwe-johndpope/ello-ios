@@ -19,7 +19,7 @@ extension OmnibarRegion {
     var isEditable: Bool {
         switch self {
         case .imageData, .image: return true
-        case let .attributedText(text): return text.string.characters.count > 0
+        case let .attributedText(text): return !text.string.isEmpty
         default: return false
         }
     }
@@ -55,7 +55,7 @@ extension OmnibarRegion {
 
     var isEmpty: Bool {
         switch self {
-        case let .attributedText(text): return text.string.characters.count == 0
+        case let .attributedText(text): return text.string.isEmpty
         case .spacer: return true
         default: return false
         }

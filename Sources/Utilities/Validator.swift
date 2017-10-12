@@ -101,7 +101,7 @@ struct Validator {
     }
 
     static func isValidPassword(_ string: String) -> Bool {
-        return string.characters.count >= 8
+        return string.count >= 8
     }
 
 }

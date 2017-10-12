@@ -4,7 +4,7 @@
 
 struct AddressBookHelpers {
     static func searchFilter(_ text: String) -> ((StreamCellItem) -> Bool)? {
-        if text.characters.count < 2 { return nil }
+        if text.count < 2 { return nil }
         return { item in
             if let user = item.jsonable as? User {
                 return user.name.contains(text) || user.username.contains(text)

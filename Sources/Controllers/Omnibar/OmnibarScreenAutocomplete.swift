@@ -52,8 +52,8 @@ extension OmnibarScreen: UITextViewDelegate {
         {
             text = text.replacingCharacters(in: range, with: replacementText)
 
-            var location: Int = text.characters.distance(from: text.characters.startIndex, to: range.lowerBound)
-            location += replacementText.characters.count
+            var location: Int = text.distance(from: text.startIndex, to: range.lowerBound)
+            location += replacementText.count
             throttleAutoComplete(textView, text: text, location: location)
         }
         return true
@@ -63,7 +63,7 @@ extension OmnibarScreen: UITextViewDelegate {
         if let path = currentTextPath, regionsTableView.cellForRow(at: path as IndexPath) != nil
         {
             var currentText = textView.attributedText
-            if currentText?.string.characters.count == 0 {
+            if currentText?.string.isEmpty == true {
                 currentText = ElloAttributedString.style("")
                 textView.typingAttributes = ElloAttributedString.oldAttrs(ElloAttributedString.attrs())
                 boldButton.isSelected = false

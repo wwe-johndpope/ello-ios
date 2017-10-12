@@ -241,7 +241,7 @@ enum ElloURI {
             return regex?.matchingGroups(url).safeValue(1)
         case .post:
             let last = regex?.matchingGroups(url).safeValue(2)
-            let lastArr = last?.characters.split { $0 == "?" }.map { String($0) }
+            let lastArr = last?.split { $0 == "?" }.map { String($0) }
             return lastArr?.first ?? last
         case .pushNotificationArtistInvite:
             return regex?.matchingGroups(url).safeValue(1)

@@ -483,7 +483,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
                 buffer = buffer.joinWithNewlines(text)
                 lastRegionIsText = true
             case .imageData, .image:
-                if buffer.string.characters.count > 0 {
+                if !buffer.string.isEmpty {
                     regions.append(.attributedText(buffer))
                 }
                 regions.append(region)
@@ -492,7 +492,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             default: break
             }
         }
-        if buffer.string.characters.count > 0 {
+        if !buffer.string.isEmpty {
             regions.append(.attributedText(buffer))
         }
         else if !lastRegionIsText {

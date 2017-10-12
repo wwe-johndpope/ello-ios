@@ -203,7 +203,7 @@ extension SearchScreen {
     private func performSearch() {
         guard
             let text = searchField.text,
-            text.characters.count > 0
+            !text.isEmpty
         else { return }
 
         showHideFindFriends()
@@ -285,7 +285,7 @@ extension SearchScreen {
     func searchFieldDidChange() {
         delegate?.searchShouldReset()
         let text = searchField.text ?? ""
-        if text.characters.count == 0 {
+        if text.isEmpty {
             clearSearch()
             showHideFindFriends()
         }

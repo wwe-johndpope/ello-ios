@@ -159,7 +159,7 @@ class ImageLabelControl: UIControl {
 
     private func attributedText(_ title: String, color: UIColor) -> NSAttributedString {
         let attributed = NSMutableAttributedString(string: title)
-        let range = NSRange(location: 0, length: title.characters.count)
+        let range = NSRange(location: 0, length: title.count)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
 

@@ -130,7 +130,7 @@ enum State: String {
         case .start:                  return true
         case .reset:                  return true
         case .doctype:                return str.lowercased() =~ "^<!doctype .*?>"
-        case .end:                    return str.characters.count == 0
+        case .end:                    return str.isEmpty
         case .tagOpen:                return str =~ "^<[a-zA-Z]([-_]?[a-zA-Z0-9])*"
         case .tagClose:               return str =~ "^</[a-zA-Z]([-_]?[a-zA-Z0-9])*>"
         case .tagWs:                  return str =~ "^[ \t\n]+"
@@ -196,9 +196,9 @@ class Tag: CustomStringConvertible {
         tmp = tmp.replacingOccurrences(of: "\r", with: "\n") as NSString
         let html = tmp as String
 
-        var c = html.characters.startIndex
+        var c = html.startIndex
         while state != .end {
-            let current = html.substring(with: Range<String.CharacterView.Index>(c ..< html.characters.endIndex))
+            let current = String(html[c ..< html.endIndex])
 
             var nextPossibleStates = [State]()
             for possible in state.nextPossibleStates {
@@ -212,7 +212,7 @@ class Tag: CustomStringConvertible {
 
             let nextState = nextPossibleStates.first!
             let value = nextState.match(current)
-            c = html.characters.index(c, offsetBy: value.characters.count)
+            c = html.index(c, offsetBy: value.count)
 
             switch nextState {
             case .doctype:
@@ -233,7 +233,7 @@ class Tag: CustomStringConvertible {
                 }
 
                 let newTag = Tag()
-                let name = (value as NSString).substring(with: NSRange(location: 1, length: value.characters.count - 1))
+                let name = String(value[value.secondIndex...])
                 newTag.name = name
                 newTag.isSingleton = Singletons.contains(name)
                 lastTag.tags.append(newTag)

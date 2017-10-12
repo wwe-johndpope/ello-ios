@@ -32,7 +32,7 @@ extension Int {
             suffix = ""
         }
         var strNum = "\(num)"
-        let strArr = strNum.characters.split { $0 == "." }.map { String($0) }
+        let strArr = strNum.split { $0 == "." }.map { String($0) }
         if strArr.last == "0" {
             strNum = strArr.first!
         }

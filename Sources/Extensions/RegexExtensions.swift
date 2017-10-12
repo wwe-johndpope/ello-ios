@@ -23,33 +23,31 @@ class Regex {
     }
 
     func match(_ input: String) -> String? {
-        if let range = input.range(of: pattern, options: .regularExpression) {
-            return input.substring(with: range)
-        }
-        return nil
+        guard let range = input.range(of: pattern, options: .regularExpression) else { return nil }
+        return String(input[range])
     }
 
     func matches(_ input: String) -> [String] {
-        let nsstring = input as NSString
-        let matches = self.regex.matches(in: input, options: [], range: NSRange(location: 0, length: nsstring.length))
+        let matches = self.regex.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
         var ret = [String]()
         for match in matches {
-            let range = match.range(at: 0)
-            ret.append(nsstring.substring(with: range))
+            let nsrange = match.range(at: 0)
+            guard let range = input.rangeFromNSRange(nsrange) else { continue }
+            ret.append(String(input[range]))
         }
         return ret
     }
 
     func matchingGroups(_ input: String) -> [String] {
-        let nsstring = input as NSString
         var ret = [String]()
-        if let match = self.regex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: nsstring.length)) {
+        if let match = self.regex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
 
             for i in 0..<match.numberOfRanges {
                 let range = match.range(at: i)
                 if range.location != NSNotFound {
-                    let matchedString = nsstring.substring(with: range)
-                    ret.append(matchedString)
+                    let nsrange = match.range(at: 0)
+                    guard let range = input.rangeFromNSRange(nsrange) else { continue }
+                    ret.append(String(input[range]))
                 }
             }
         }
