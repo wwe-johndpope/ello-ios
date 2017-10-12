@@ -153,25 +153,25 @@ extension PushNotificationController {
             var shouldInteract = true
             switch action ?? PushActions.view {
             case PushActions.postComment, PushActions.commentReply:
-                if let text = userInfo[PushActions.userInputKey] as? String {
-                    actionPostComment(postId: data, text: text, payload: payload)
+                if let text = userInfo[PushActions.userInputKey] as? String, let postId = data {
+                    actionPostComment(postId: postId, text: text, payload: payload)
                     shouldInteract = false
                 }
             case PushActions.messageUser:
                 guard let text = userInfo[PushActions.userInputKey] as? String else { return }
 
-                if case .pushNotificationUser = type {
-                    actionMessageUser(userId: data, text: text, payload: payload)
+                if case .pushNotificationUser = type, let userId = data {
+                    actionMessageUser(userId: userId, text: text, payload: payload)
                     shouldInteract = false
                 }
             case PushActions.followUser:
-                if case .pushNotificationUser = type {
-                    actionFollowUser(userId: data, payload: payload)
+                if case .pushNotificationUser = type, let userId = data {
+                    actionFollowUser(userId: userId, payload: payload)
                     shouldInteract = false
                 }
             case PushActions.lovePost:
-                if type == .pushNotificationPost || type == .pushNotificationComment {
-                    actionLovePost(postId: data, payload: payload)
+                if type == .pushNotificationPost || type == .pushNotificationComment, let postId = data {
+                    actionLovePost(postId: postId, payload: payload)
                     shouldInteract = false
                 }
             default:

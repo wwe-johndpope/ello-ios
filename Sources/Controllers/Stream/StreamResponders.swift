@@ -62,7 +62,7 @@ protocol UserResponder: class {
 
 @objc
 protocol WebLinkResponder: class {
-    func webLinkTapped(path: String, type: ElloURIWrapper, data: String)
+    func webLinkTapped(path: String, type: ElloURIWrapper, data: String?)
 }
 
 @objc

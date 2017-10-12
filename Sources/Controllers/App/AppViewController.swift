@@ -544,7 +544,7 @@ extension AppViewController {
         navigateToURI(path: path, type: type, data: data)
     }
 
-    func navigateToURI(path: String, type: ElloURI, data: String) {
+    func navigateToURI(path: String, type: ElloURI, data: String?) {
         guard type.shouldLoadInApp else {
             showExternalWebView(path)
             return
@@ -587,13 +587,15 @@ extension AppViewController {
              .discoverRelated,
              .discoverTrending,
              .category:
-            showCategoryScreen(slug: data)
+            guard let slug = data else { return }
+            showCategoryScreen(slug: slug)
         case .invitations:
             showInvitationScreen()
         case .forgotMyPassword:
             showForgotPasswordEmailScreen()
         case .resetMyPassword:
-            showForgotPasswordResetScreen(authToken: data)
+            guard let token = data else { return }
+            showForgotPasswordResetScreen(authToken: token)
         case .enter:
             showLoginScreen()
         case .exit, .root, .explore:
@@ -604,29 +606,35 @@ extension AppViewController {
              .starred:
             showFollowingScreen()
         case .notifications:
-            showNotificationsScreen(category: data)
+            guard let category = data else { return }
+            showNotificationsScreen(category: category)
         case .onboarding:
             guard let user = currentUser else { return }
             showOnboardingScreen(user)
         case .post:
-            showPostDetailScreen(data, path: path)
+            guard let postId = data else { return }
+            showPostDetailScreen(postParam: postId, path: path)
         case .pushNotificationComment,
              .pushNotificationPost:
-            showPostDetailScreen(data, path: path, isSlug: false)
+            guard let postId = data else { return }
+            showPostDetailScreen(postParam: postId, path: path, isSlug: false)
         case .profile:
-            showProfileScreen(data, path: path)
+            guard let userId = data else { return }
+            showProfileScreen(userParam: userId, path: path)
         case .pushNotificationUser:
-            showProfileScreen(data, path: path, isSlug: false)
-        case .profileFollowers:
-            showProfileFollowersScreen(data)
-        case .profileFollowing:
-            showProfileFollowingScreen(data)
+            guard let userId = data else { return }
+            showProfileScreen(userParam: userId, path: path, isSlug: false)
+        case .profileFollowers,
+             .profileFollowing:
+            guard let username = data else { return }
+            showProfileFollowersScreen(username: username)
         case .profileLoves:
-            showProfileLovesScreen(data)
+            guard let username = data else { return }
+            showProfileLovesScreen(username: username)
         case .search,
              .searchPeople,
              .searchPosts:
-            showSearchScreen(data)
+            showSearchScreen(terms: data)
         case .settings:
             showSettingsScreen()
         case .wtf:
@@ -754,7 +762,7 @@ extension AppViewController {
         notificationsVC.activatedCategory(notificationFilterType)
     }
 
-    private func showProfileScreen(_ userParam: String, path: String, isSlug: Bool = true) {
+    private func showProfileScreen(userParam: String, path: String, isSlug: Bool = true) {
         let param = isSlug ? "~\(userParam)" : userParam
         let profileVC = ProfileViewController(userParam: param)
         profileVC.deeplinkPath = path
@@ -762,7 +770,7 @@ extension AppViewController {
         pushDeepLinkViewController(profileVC)
     }
 
-    private func showPostDetailScreen(_ postParam: String, path: String, isSlug: Bool = true) {
+    private func showPostDetailScreen(postParam: String, path: String, isSlug: Bool = true) {
         let param = isSlug ? "~\(postParam)" : postParam
         let postDetailVC = PostDetailViewController(postParam: param)
         postDetailVC.deeplinkPath = path
@@ -770,7 +778,7 @@ extension AppViewController {
         pushDeepLinkViewController(postDetailVC)
     }
 
-    private func showProfileFollowersScreen(_ username: String) {
+    private func showProfileFollowersScreen(username: String) {
         let endpoint = ElloAPI.userStreamFollowers(userId: "~\(username)")
         let noResultsTitle: String
         let noResultsBody: String
@@ -806,7 +814,7 @@ extension AppViewController {
         pushDeepLinkViewController(vc)
     }
 
-    private func showProfileLovesScreen(_ username: String) {
+    private func showProfileLovesScreen(username: String) {
         let endpoint = ElloAPI.loves(userId: "~\(username)")
         let noResultsTitle: String
         let noResultsBody: String
@@ -824,10 +832,10 @@ extension AppViewController {
         pushDeepLinkViewController(vc)
     }
 
-    private func showSearchScreen(_ terms: String) {
+    private func showSearchScreen(terms: String?) {
         let search = SearchViewController()
         search.currentUser = currentUser
-        if !terms.isEmpty {
+        if let terms = terms, !terms.isEmpty {
             search.searchForPosts(terms.urlDecoded().replacingOccurrences(of: "+", with: " ", options: NSString.CompareOptions.literal, range: nil))
         }
         pushDeepLinkViewController(search)

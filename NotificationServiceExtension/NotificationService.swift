@@ -31,8 +31,10 @@ class NotificationService: UNNotificationServiceExtension {
         var handled = false
         switch type {
         case .pushNotificationComment, .pushNotificationPost:
-            handled = true
-            fetchPost(id: data, content: content)
+            if let postId = data {
+                handled = true
+                fetchPost(id: postId, content: content)
+            }
         default:
             break
         }
