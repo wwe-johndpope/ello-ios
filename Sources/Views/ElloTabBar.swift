@@ -18,6 +18,9 @@ class ElloTabBar: UITabBar {
             if AppSetup.shared.isIphoneX {
                 return 11
             }
+            if AppSetup.shared.isIpad {
+                return -5
+            }
             return 1
         }
     }
