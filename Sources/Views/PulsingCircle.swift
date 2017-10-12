@@ -9,10 +9,10 @@ class PulsingCircle: UIView {
         static let size: CGFloat = 60
     }
 
-    fileprivate lazy var pulser: UIView = self.createPulser()
+    private lazy var pulser: UIView = self.createPulser()
 
     // moved into a separate function to save compile time
-    fileprivate func createPulser() -> UIView {
+    private func createPulser() -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: Size.size, height: Size.size))
         view.center = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
         view.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
@@ -23,8 +23,8 @@ class PulsingCircle: UIView {
         return view
     }
 
-    fileprivate var isPulsing: Bool = false
-    fileprivate var shouldReanimate: Bool = false
+    private var isPulsing: Bool = false
+    private var shouldReanimate: Bool = false
 
     override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
@@ -64,7 +64,7 @@ class PulsingCircle: UIView {
         }
     }
 
-    fileprivate func keepPulsing() {
+    private func keepPulsing() {
         self.pulser.alpha = 1
         UIView.animate(withDuration: 0.65,
             delay: 0.0,

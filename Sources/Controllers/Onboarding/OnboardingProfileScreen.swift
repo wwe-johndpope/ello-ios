@@ -69,24 +69,24 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
         }
     }
 
-    fileprivate var uploading: ImageTarget?
+    private var uploading: ImageTarget?
 
-    fileprivate let scrollView = UIScrollView()
-    fileprivate var prevOffset: CGPoint = .zero
-    fileprivate var scrollViewWidthConstraint: Constraint!
-    fileprivate let headerLabel = UILabel()
+    private let scrollView = UIScrollView()
+    private var prevOffset: CGPoint = .zero
+    private var scrollViewWidthConstraint: Constraint!
+    private let headerLabel = UILabel()
 
-    fileprivate let coverImageView = FLAnimatedImageView()
-    fileprivate let uploadCoverImageButton = StyledButton(style: .green)
-    fileprivate let uploadCoverImagePrompt = UILabel()
+    private let coverImageView = FLAnimatedImageView()
+    private let uploadCoverImageButton = StyledButton(style: .green)
+    private let uploadCoverImagePrompt = UILabel()
 
-    fileprivate let avatarImageView = FLAnimatedImageView()
-    fileprivate let uploadAvatarButton = StyledButton(style: .green)
-    fileprivate let uploadAvatarPrompt = UILabel()
+    private let avatarImageView = FLAnimatedImageView()
+    private let uploadAvatarButton = StyledButton(style: .green)
+    private let uploadAvatarPrompt = UILabel()
 
-    fileprivate let nameTextView = ClearTextView()
-    fileprivate let bioTextView = ClearTextView()
-    fileprivate let linksTextView = ClearTextView()
+    private let nameTextView = ClearTextView()
+    private let bioTextView = ClearTextView()
+    private let linksTextView = ClearTextView()
 
     override func style() {
         headerLabel.numberOfLines = 0
@@ -184,7 +184,7 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
             scrollViewWidthConstraint = make.width.equalTo(bounds.size.width).priority(Priority.required).constraint
         }
 
-        headerLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        headerLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         headerLabel.snp.makeConstraints { make in
             make.top.equalTo(scrollView)
             make.leading.trailing.equalTo(scrollView).inset(Size.insets)
@@ -251,6 +251,7 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
 }
 
 extension OnboardingProfileScreen {
+    @objc
     func uploadCoverImageAction() {
 
         _ = resignFirstResponder()
@@ -264,6 +265,7 @@ extension OnboardingProfileScreen {
         delegate?.present(controller: pickerSheet)
     }
 
+    @objc
     func uploadAvatarAction() {
         _ = resignFirstResponder()
         uploading = .avatar

@@ -9,14 +9,14 @@ protocol NotificationsScreenDelegate {
 
 class NotificationsScreen: UIView {
 
-    fileprivate let filterAllButton = NotificationsScreen.filterButton(title: "All")
-    fileprivate let filterCommentsButton = NotificationsScreen.filterButton(image: .comments)
-    fileprivate let filterMentionButton = NotificationsScreen.filterButton(title: "@")
-    fileprivate let filterHeartButton = NotificationsScreen.filterButton(image: .heart)
-    fileprivate let filterRepostButton = NotificationsScreen.filterButton(image: .repost)
-    fileprivate let filterInviteButton = NotificationsScreen.filterButton(image: .invite)
+    private let filterAllButton = NotificationsScreen.filterButton(title: "All")
+    private let filterCommentsButton = NotificationsScreen.filterButton(image: .comments)
+    private let filterMentionButton = NotificationsScreen.filterButton(title: "@")
+    private let filterHeartButton = NotificationsScreen.filterButton(image: .heart)
+    private let filterRepostButton = NotificationsScreen.filterButton(image: .repost)
+    private let filterInviteButton = NotificationsScreen.filterButton(image: .invite)
 
-    fileprivate class func filterButton() -> UIButton {
+    private class func filterButton() -> UIButton {
         let button = UIButton()
         button.titleLabel?.font = .defaultFont()
         button.setTitleColor(.white, for: .selected)
@@ -25,14 +25,14 @@ class NotificationsScreen: UIView {
         button.setBackgroundImage(UIImage.imageWithColor(.greyE5), for: .normal)
         return button
     }
-    fileprivate class func filterButton(image interfaceImage: InterfaceImage) -> UIButton {
+    private class func filterButton(image interfaceImage: InterfaceImage) -> UIButton {
         let button = filterButton()
         button.setImage(interfaceImage.normalImage, for: .normal)
         button.setImage(interfaceImage.whiteImage, for: .selected)
         button.imageView!.contentMode = .scaleAspectFit
         return button
     }
-    fileprivate class func filterButton(title: String) -> UIButton {
+    private class func filterButton(title: String) -> UIButton {
         let button = filterButton()
         button.setTitle(title, for: .normal)
         return button
@@ -125,7 +125,7 @@ extension NotificationsScreen {
         }
     }
 
-    fileprivate func positionFilterBar() {
+    private func positionFilterBar() {
         filterBar.frame = self.bounds.with(height: NotificationsFilterBar.Size.height)
         if navBarVisible {
             filterBar.frame.origin.y = 0

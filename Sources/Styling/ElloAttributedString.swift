@@ -2,10 +2,10 @@
 ///  ElloAttributedString.swift
 //
 
-let ParagraphAlignmentAttributeName = "ParagraphAlignmentAttributeName"
+let ParagraphAlignmentAttributeName = NSAttributedStringKey("ParagraphAlignmentAttributeName")
 
 struct ElloAttributedString {
-    fileprivate struct HtmlTagTuple {
+    private struct HtmlTagTuple {
         let tag: String
         let attributes: String?
 
@@ -15,14 +15,20 @@ struct ElloAttributedString {
         }
     }
 
-    static func attrs(_ allAddlAttrs: [String: Any]...) -> [String: Any] {
+    static func oldAttrs(_ oldAddrs: [NSAttributedStringKey: Any]) -> [String: Any] {
+        return oldAddrs.convert { key, value in
+            return (key.rawValue, value)
+        }
+    }
+
+    static func attrs(_ allAddlAttrs: [NSAttributedStringKey: Any]...) -> [NSAttributedStringKey: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
 
-        var attrs: [String: Any] = [
-            NSParagraphStyleAttributeName: paragraphStyle,
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.black,
+        var attrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.paragraphStyle: paragraphStyle,
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.black,
         ]
         for addlAttrs in allAddlAttrs {
             attrs += addlAttrs
@@ -30,9 +36,9 @@ struct ElloAttributedString {
         return attrs
     }
 
-    static func linkAttrs() -> [String: Any] {
+    static func linkAttrs() -> [NSAttributedStringKey: Any] {
         return attrs([
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle,
         ])
     }
 
@@ -73,7 +79,7 @@ struct ElloAttributedString {
         return strings
     }
 
-    static func style(_ text: String, _ addlAttrs: [String: Any] = [:]) -> NSAttributedString {
+    static func style(_ text: String, _ addlAttrs: [NSAttributedStringKey: Any] = [:]) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: attrs(addlAttrs))
     }
 
@@ -89,11 +95,11 @@ struct ElloAttributedString {
         input.enumerateAttributes(in: NSRange(location: 0, length: input.length), options: .longestEffectiveRangeNotRequired) { attrs, range, stopPtr in
             // (tagName, attributes?)
             var tags = [HtmlTagTuple]()
-            if let underlineStyle = attrs[NSUnderlineStyleAttributeName] as? Int, underlineStyle == NSUnderlineStyle.styleSingle.rawValue {
+            if let underlineStyle = attrs[NSAttributedStringKey.underlineStyle] as? Int, underlineStyle == NSUnderlineStyle.styleSingle.rawValue {
                 tags.append(HtmlTagTuple("u"))
             }
 
-            if let font = attrs[NSFontAttributeName] as? UIFont {
+            if let font = attrs[NSAttributedStringKey.font] as? UIFont {
                 if font.fontName == UIFont.editorBoldFont().fontName {
                     tags.append(HtmlTagTuple("strong"))
                 }
@@ -106,7 +112,7 @@ struct ElloAttributedString {
                 }
             }
 
-            if let link = attrs[NSLinkAttributeName] as? URL {
+            if let link = attrs[NSAttributedStringKey.link] as? URL {
                 tags.append(HtmlTagTuple("a", attributes: "href=\"\(link.absoluteString.entitiesEncoded())\""))
             }
 
@@ -126,7 +132,7 @@ struct ElloAttributedString {
         return output
     }
 
-    static func featuredIn(categories: [Category], attrs: [String: Any] = [:]) -> NSAttributedString {
+    static func featuredIn(categories: [Category], attrs: [NSAttributedStringKey: Any] = [:]) -> NSAttributedString {
         let defaultAttributes = featuredInAttrs(attrs)
         var featuredIn = NSAttributedString(string: InterfaceString.Profile.FeaturedIn, attributes: featuredInAttrs(defaultAttributes, attrs))
 
@@ -149,15 +155,15 @@ struct ElloAttributedString {
         return featuredIn
     }
 
-    private static func featuredInAttrs(_ allAddlAttrs: [String: Any]...) -> [String: Any] {
+    private static func featuredInAttrs(_ allAddlAttrs: [NSAttributedStringKey: Any]...) -> [NSAttributedStringKey: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = .center
 
-        var attrs: [String: Any] = [
-            NSParagraphStyleAttributeName: paragraphStyle,
-            NSFontAttributeName: UIFont.defaultFont(18),
-            NSForegroundColorAttributeName: UIColor.white,
+        var attrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.paragraphStyle: paragraphStyle,
+            NSAttributedStringKey.font: UIFont.defaultFont(18),
+            NSAttributedStringKey.foregroundColor: UIColor.white,
         ]
         for addlAttrs in allAddlAttrs {
             attrs += addlAttrs
@@ -172,11 +178,11 @@ struct ElloAttributedString {
         return attrs
     }
 
-    private static func style(category: Category, attrs: [String: Any]) -> NSAttributedString {
+    private static func style(category: Category, attrs: [NSAttributedStringKey: Any]) -> NSAttributedString {
         return NSAttributedString(string: category.name, attributes: featuredInAttrs([
             ElloAttributedText.Link: "category",
             ElloAttributedText.Object: category,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle,
         ], attrs))
     }
 }

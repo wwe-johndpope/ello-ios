@@ -82,7 +82,7 @@ class StyledLabel: UILabel {
         didSet { style = Style.byName(styleName) }
     }
 
-    fileprivate func updateStyle() {
+    private func updateStyle() {
         backgroundColor = style.backgroundColor
 
         font = style.font
@@ -113,7 +113,7 @@ class StyledLabel: UILabel {
 
 // MARK: UIView Overrides
 extension StyledLabel {
-    fileprivate func heightForWidth(_ width: CGFloat) -> CGFloat {
+    private func heightForWidth(_ width: CGFloat) -> CGFloat {
         return (attributedText?.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading, .truncatesLastVisibleLine],
             context: nil).size.height).map(ceil) ?? 0

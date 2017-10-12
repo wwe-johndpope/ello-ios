@@ -73,19 +73,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setupGlobalStyles() {
         let attributes = [
-            NSForegroundColorAttributeName: UIColor.greyA,
-            NSFontAttributeName: UIFont.defaultFont(12),
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
+            NSAttributedStringKey.font: UIFont.defaultFont(12),
         ]
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .highlighted)
 
         let normalTitleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.black,
-            NSFontAttributeName: UIFont.defaultFont(11.0)
+            NSAttributedStringKey.foregroundColor: UIColor.black,
+            NSAttributedStringKey.font: UIFont.defaultFont(11.0)
         ]
         let selectedTitleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont.defaultFont(11.0)
+            NSAttributedStringKey.foregroundColor: UIColor.white,
+            NSAttributedStringKey.font: UIFont.defaultFont(11.0)
         ]
         UISegmentedControl.appearance().setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
         UISegmentedControl.appearance().setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)

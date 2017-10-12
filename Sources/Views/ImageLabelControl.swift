@@ -96,20 +96,20 @@ class ImageLabelControl: UIControl {
 
     // MARK: Private
 
-    fileprivate func addSubviews() {
+    private func addSubviews() {
         addSubview(contentContainer)
         addSubview(button)
         contentContainer.addSubview(icon.view)
         contentContainer.addSubview(label)
     }
 
-    fileprivate func addTargets() {
+    private func addTargets() {
         button.addTarget(self, action: #selector(ImageLabelControl.buttonTouchUpInside(_:)), for: .touchUpInside)
         button.addTarget(self, action: #selector(ImageLabelControl.buttonTouchDown(_:)), for: [.touchDown, .touchDragEnter])
         button.addTarget(self, action: #selector(ImageLabelControl.buttonTouchUpOutside(_:)), for: [.touchCancel, .touchDragExit])
     }
 
-    fileprivate func updateTextColor() {
+    private func updateTextColor() {
         if !isEnabled {
             label.attributedText = attributedDisabledTitle
         }
@@ -121,7 +121,7 @@ class ImageLabelControl: UIControl {
         }
     }
 
-    fileprivate func updateLayout() {
+    private func updateLayout() {
         label.attributedText = attributedNormalTitle
         label.sizeToFit()
 
@@ -157,16 +157,16 @@ class ImageLabelControl: UIControl {
         label.frame.origin.y = height / 2 - label.frame.size.height / 2
     }
 
-    fileprivate func attributedText(_ title: String, color: UIColor) -> NSAttributedString {
+    private func attributedText(_ title: String, color: UIColor) -> NSAttributedString {
         let attributed = NSMutableAttributedString(string: title)
         let range = NSRange(location: 0, length: title.characters.count)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
 
         let attributes = [
-            NSFontAttributeName: titleFont,
-            NSForegroundColorAttributeName: color,
-            NSParagraphStyleAttributeName: paragraphStyle
+            NSAttributedStringKey.font: titleFont,
+            NSAttributedStringKey.foregroundColor: color,
+            NSAttributedStringKey.paragraphStyle: paragraphStyle
         ]
         attributed.addAttributes(attributes, range: range)
         return attributed

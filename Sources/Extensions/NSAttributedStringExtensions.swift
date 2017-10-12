@@ -10,6 +10,7 @@ extension NSMutableAttributedString {
 }
 
 extension NSAttributedString {
+    @objc
     func appending(_ str: NSAttributedString) -> NSAttributedString {
         let retval: NSMutableAttributedString = NSMutableAttributedString(attributedString: self)
         retval.append(str)
@@ -26,11 +27,11 @@ extension NSAttributedString {
             paragraphStyle.lineBreakMode = lineBreakMode
         }
         let underlineValue = underlineStyle?.rawValue ?? 0
-        let attrs: [String: Any] = [
-            NSForegroundColorAttributeName: color,
-            NSFontAttributeName: font,
-            NSParagraphStyleAttributeName: paragraphStyle,
-            NSUnderlineStyleAttributeName: underlineValue,
+        let attrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.foregroundColor: color,
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.paragraphStyle: paragraphStyle,
+            NSAttributedStringKey.underlineStyle: underlineValue,
         ]
         self.init(string: string, attributes: attrs)
     }
@@ -64,15 +65,15 @@ extension NSAttributedString {
     convenience init(primaryHeader: String, secondaryHeader: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        let bold: [String: Any] = [
-            NSForegroundColorAttributeName: UIColor.black,
-            NSFontAttributeName: UIFont.defaultFont(16),
-            NSParagraphStyleAttributeName: paragraphStyle,
+        let bold: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.foregroundColor: UIColor.black,
+            NSAttributedStringKey.font: UIFont.defaultFont(16),
+            NSAttributedStringKey.paragraphStyle: paragraphStyle,
             ]
-        let plain: [String: Any] = [
-            NSForegroundColorAttributeName: UIColor.greyA,
-            NSFontAttributeName: UIFont.defaultFont(16),
-            NSParagraphStyleAttributeName: paragraphStyle,
+        let plain: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
+            NSAttributedStringKey.font: UIFont.defaultFont(16),
+            NSAttributedStringKey.paragraphStyle: paragraphStyle,
             ]
         let header = NSAttributedString(string: primaryHeader, attributes: bold) +
             NSAttributedString(string: " \(secondaryHeader)", attributes: plain)

@@ -48,8 +48,8 @@ class DynamicSettingsViewController: UITableViewController {
         return DynamicSettingsCellHeight * CGFloat(totalRows)
     }
 
-    fileprivate var blockedCountChangedNotification: NotificationObserver?
-    fileprivate var mutedCountChangedNotification: NotificationObserver?
+    private var blockedCountChangedNotification: NotificationObserver?
+    private var mutedCountChangedNotification: NotificationObserver?
 
     deinit {
         blockedCountChangedNotification?.removeObserver()
@@ -103,7 +103,7 @@ class DynamicSettingsViewController: UITableViewController {
             }
     }
 
-    fileprivate func reloadTables() {
+    private func reloadTables() {
         self.tableView.reloadData()
         (self.parent as? SettingsViewController)?.tableView.reloadData()
     }
@@ -178,7 +178,7 @@ class DynamicSettingsViewController: UITableViewController {
                     controller.creatorType = creatorType
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
-                .always { _ in
+                .always {
                     tableView.isUserInteractionEnabled = true
                 }
         case .blocked:

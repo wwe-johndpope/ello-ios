@@ -16,7 +16,7 @@ enum ElloErrorCode: Int {
 extension NSError {
 
     class func networkError(_ error: Any?, code: ElloErrorCode) -> NSError {
-        var userInfo: [AnyHashable: Any]?
+        var userInfo: [String: Any]?
         if let error: Any = error {
             userInfo = [NSLocalizedFailureReasonErrorKey: error]
         }

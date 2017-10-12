@@ -20,7 +20,7 @@ struct ElloLinkedStore {
         return connection
     }
     var writeConnection: YapDatabaseConnection
-    fileprivate var database: YapDatabase
+    private var database: YapDatabase
 
     init() {
         database = YapDatabase(path: ElloLinkedStore.databasePath())

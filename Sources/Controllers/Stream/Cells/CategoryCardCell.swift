@@ -31,12 +31,12 @@ class CategoryCardCell: CollectionViewCell {
         }
     }
 
-    fileprivate let label = StyledLabel()
-    fileprivate let colorFillView = UIView()
-    fileprivate let imageView = UIImageView()
-    fileprivate let selectedImageView = UIImageView()
+    private let label = StyledLabel()
+    private let colorFillView = UIView()
+    private let imageView = UIImageView()
+    private let selectedImageView = UIImageView()
 
-    fileprivate func updateSelected() {
+    private func updateSelected() {
         if isSelectable {
             colorFillView.alpha = isSelected ? 0.8 : 0.4
             label.style = isSelected ? .boldWhite : .white

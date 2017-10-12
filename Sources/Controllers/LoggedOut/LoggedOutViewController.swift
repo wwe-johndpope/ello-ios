@@ -27,7 +27,7 @@ class LoggedOutViewController: BaseElloViewController, BottomBarController {
         get { return _mockScreen ?? (self.view as! LoggedOutScreen) }
     }
 
-    fileprivate var userActionAttemptedObserver: NotificationObserver?
+    private var userActionAttemptedObserver: NotificationObserver?
 
     func setNavigationBarsVisible(_ visible: Bool, animated: Bool) {
         _navigationBarsVisible = visible

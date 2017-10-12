@@ -4,7 +4,7 @@
 
 class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
-    fileprivate var showing = false
+    private var showing = false
     let streamViewController = StreamViewController()
 
     override func didSetCurrentUser() {
@@ -166,7 +166,7 @@ extension StreamableViewController: PostTappedResponder {
         self.postTapped(postId: postId, scrollToComment: nil)
     }
 
-    fileprivate func postTapped(postId: String, scrollToComment lastComment: ElloComment?) {
+    private func postTapped(postId: String, scrollToComment lastComment: ElloComment?) {
         let vc = PostDetailViewController(postParam: postId)
         vc.scrollToComment = lastComment
         vc.currentUser = currentUser
@@ -191,7 +191,7 @@ extension StreamableViewController: UserTappedResponder {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    fileprivate func alreadyOnUserProfile(_ user: User) -> Bool {
+    private func alreadyOnUserProfile(_ user: User) -> Bool {
         if let profileVC = self.navigationController?.topViewController as? ProfileViewController
         {
             let param = profileVC.userParam
@@ -270,10 +270,12 @@ extension StreamableViewController: StreamViewDelegate {
         return false
     }
 
+    @objc
     func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         return nil
     }
 
+    @objc
     func streamWillPullToRefresh() {
     }
 
@@ -281,6 +283,7 @@ extension StreamableViewController: StreamViewDelegate {
         scrollLogic.scrollViewDidScroll(scrollView)
     }
 
+    @objc
     func streamViewWillBeginDragging(scrollView: UIScrollView) {
         scrollLogic.scrollViewWillBeginDragging(scrollView)
     }

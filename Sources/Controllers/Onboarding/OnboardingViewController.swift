@@ -6,7 +6,7 @@ import PINRemoteImage
 
 
 class OnboardingViewController: BaseElloViewController {
-    fileprivate enum OnboardingDirection: CGFloat {
+    private enum OnboardingDirection: CGFloat {
         case left = -1
         case right = 1
     }
@@ -35,9 +35,9 @@ class OnboardingViewController: BaseElloViewController {
     var isTransitioning: Bool { return transitioningViewController != nil }
     let onboardingData = OnboardingData()
     var visibleViewController: UIViewController?
-    fileprivate var transitioningViewController: UIViewController?
-    fileprivate var visibleViewControllerIndex: Int = 0
-    fileprivate var onboardingViewControllers = [UIViewController]()
+    private var transitioningViewController: UIViewController?
+    private var visibleViewControllerIndex: Int = 0
+    private var onboardingViewControllers = [UIViewController]()
 
     var hasAbortButton: Bool {
         get { return screen.hasAbortButton }
@@ -199,7 +199,7 @@ extension OnboardingViewController {
 // MARK: Screen transitions
 extension OnboardingViewController {
 
-    fileprivate func addOnboardingViewController(_ viewController: UIViewController) {
+    private func addOnboardingViewController(_ viewController: UIViewController) {
         if visibleViewController == nil {
             showFirstViewController(viewController)
         }
@@ -207,7 +207,7 @@ extension OnboardingViewController {
         onboardingViewControllers.append(viewController)
     }
 
-    fileprivate func showFirstViewController(_ viewController: UIViewController) {
+    private func showFirstViewController(_ viewController: UIViewController) {
         prepareOnboardingController(viewController)
 
         viewController.willMove(toParentViewController: nil)
@@ -262,7 +262,7 @@ extension OnboardingViewController {
         }
     }
 
-    fileprivate func doneOnboarding() {
+    private func doneOnboarding() {
         appViewController?.doneOnboarding()
     }
 
@@ -275,7 +275,7 @@ extension OnboardingViewController {
 // MARK: Controller transitions
 extension OnboardingViewController {
 
-    fileprivate func goToController(_ viewController: UIViewController, direction: OnboardingDirection) {
+    private func goToController(_ viewController: UIViewController, direction: OnboardingDirection) {
         guard let visibleViewController = visibleViewController else { return }
 
         if let step = OnboardingStep(rawValue: visibleViewControllerIndex) {
@@ -287,13 +287,13 @@ extension OnboardingViewController {
         transitionFromViewController(visibleViewController, toViewController: viewController, direction: direction)
     }
 
-    fileprivate func prepareOnboardingController(_ viewController: UIViewController) {
+    private func prepareOnboardingController(_ viewController: UIViewController) {
         guard let onboardingStep = viewController as? OnboardingStepController else { return }
         onboardingStep.onboardingData = onboardingData
         onboardingStep.onboardingStepBegin()
     }
 
-    fileprivate func transitionFromViewController(_ visibleViewController: UIViewController, toViewController nextViewController: UIViewController, direction: OnboardingDirection) {
+    private func transitionFromViewController(_ visibleViewController: UIViewController, toViewController nextViewController: UIViewController, direction: OnboardingDirection) {
         if isTransitioning {
             return
         }

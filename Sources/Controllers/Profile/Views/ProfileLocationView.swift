@@ -27,10 +27,10 @@ class ProfileLocationView: ProfileBaseView {
         }
     }
 
-    fileprivate let locationLabel = UILabel()
-    fileprivate let markerImageView = UIImageView(image: InterfaceImage.marker.normalImage)
+    private let locationLabel = UILabel()
+    private let markerImageView = UIImageView(image: InterfaceImage.marker.normalImage)
 
-    fileprivate let grayLine = UIView()
+    private let grayLine = UIView()
     var grayLineVisible: Bool {
         get { return !grayLine.isHidden }
         set { grayLine.isHidden = !newValue }

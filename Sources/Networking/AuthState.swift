@@ -20,7 +20,7 @@ enum AuthState {
     case anonymousCredsSent
     case shouldTryAnonymousCreds
 
-    fileprivate var nextStates: [AuthState] {
+    private var nextStates: [AuthState] {
         switch self {
         case .initial: return [.noToken, .shouldTryAnonymousCreds, .anonymous, .authenticated]
 

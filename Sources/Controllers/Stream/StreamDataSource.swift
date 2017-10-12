@@ -16,8 +16,8 @@ class StreamDataSource: ElloDataSource {
     // these are the items assigned from the parent controller
     var allStreamCellItems: [StreamCellItem] = []
 
-    fileprivate var streamFilter: StreamFilter?
-    fileprivate var streamCollapsedFilter: StreamFilter? = { item in
+    private var streamFilter: StreamFilter?
+    private var streamCollapsedFilter: StreamFilter? = { item in
         guard item.type.isCollapsable, item.jsonable is Post else { return true }
         return item.state != .collapsed
     }
@@ -534,7 +534,7 @@ class StreamDataSource: ElloDataSource {
 
     // the IndexPaths returned are guaranteed to be in order, so that the first
     // item has the lowest row/item value.
-    fileprivate func elementsFor(jsonable: JSONAble, change: ContentChange) -> ([IndexPath], [StreamCellItem]) {
+    private func elementsFor(jsonable: JSONAble, change: ContentChange) -> ([IndexPath], [StreamCellItem]) {
         var indexPaths = [IndexPath]()
         var items = [StreamCellItem]()
         if let post = jsonable as? Post {
@@ -654,7 +654,7 @@ extension StreamDataSource {
         done()
     }
 
-    fileprivate func filterTextCells(_ cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {
+    private func filterTextCells(_ cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {
         var cells = [StreamCellItem]()
         var repostCells = [StreamCellItem]()
         for item in cellItems {
@@ -670,7 +670,7 @@ extension StreamDataSource {
         return (cells, repostCells)
     }
 
-    fileprivate func filterImageCells(_ cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {
+    private func filterImageCells(_ cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {
         var cells = [StreamCellItem]()
         var repostCells = [StreamCellItem]()
         for item in cellItems {
@@ -694,7 +694,7 @@ extension StreamDataSource {
         return (cells, repostCells)
     }
 
-    fileprivate func temporarilyUnfilter(_ block: Block) {
+    private func temporarilyUnfilter(_ block: Block) {
         visibleCellItems = allStreamCellItems
 
         block()
@@ -702,7 +702,7 @@ extension StreamDataSource {
         updateFilteredItems()
     }
 
-    fileprivate func updateFilteredItems() {
+    private func updateFilteredItems() {
         visibleCellItems = allStreamCellItems.filter { item in
             guard !item.alwaysShow() else { return true }
             let streamFiltered = streamFilter?(item) ?? true

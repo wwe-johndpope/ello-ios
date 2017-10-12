@@ -110,7 +110,7 @@ class ProfileHeaderCell: CollectionViewCell {
         linksView.prepareForReuse()
     }
 
-    fileprivate func recalculateHeight(_ _calculatedCellHeights: CalculatedCellHeights) {
+    private func recalculateHeight(_ _calculatedCellHeights: CalculatedCellHeights) {
         var calculatedCellHeights = _calculatedCellHeights
         calculatedCellHeights.oneColumn = ProfileHeaderCellSizeCalculator.calculateHeightFromCellHeights(calculatedCellHeights)
         self.calculatedCellHeights = calculatedCellHeights

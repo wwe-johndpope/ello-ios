@@ -82,22 +82,22 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
     override func trackerName() -> String? { return nil }
 
     let tabBar = ElloTabBar()
-    fileprivate var systemLoggedOutObserver: NotificationObserver?
-    fileprivate var streamLoadedObserver: NotificationObserver?
+    private var systemLoggedOutObserver: NotificationObserver?
+    private var streamLoadedObserver: NotificationObserver?
 
-    fileprivate var newContentService = NewContentService()
-    fileprivate var foregroundObserver: NotificationObserver?
-    fileprivate var backgroundObserver: NotificationObserver?
-    fileprivate var newNotificationsObserver: NotificationObserver?
-    fileprivate var newStreamContentObserver: NotificationObserver?
+    private var newContentService = NewContentService()
+    private var foregroundObserver: NotificationObserver?
+    private var backgroundObserver: NotificationObserver?
+    private var newNotificationsObserver: NotificationObserver?
+    private var newStreamContentObserver: NotificationObserver?
 
-    fileprivate var visibleViewController = UIViewController()
+    private var visibleViewController = UIViewController()
 
     var appViewController: AppViewController? {
         return findViewController { vc in vc is AppViewController } as? AppViewController
     }
 
-    fileprivate(set) var notificationsDot: UIView?
+    private(set) var notificationsDot: UIView?
     var newNotificationsAvailable: Bool {
         set { notificationsDot?.isHidden = !newValue }
         get {
@@ -107,10 +107,10 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
             return false
         }
     }
-    fileprivate(set) var homeDot: UIView?
+    private(set) var homeDot: UIView?
 
     // MARK: BottomBarController
-    fileprivate var _bottomBarVisible = true
+    private var _bottomBarVisible = true
     var bottomBarVisible: Bool {
         return _bottomBarVisible
     }
@@ -123,7 +123,7 @@ class ElloTabBarController: UIViewController, HasAppController, ControllerThatMi
         return tabBar
     }
 
-    fileprivate(set) var previousTab: ElloTab = .DefaultTab
+    private(set) var previousTab: ElloTab = .DefaultTab
     var selectedTab: ElloTab = .DefaultTab {
         willSet {
             if selectedTab != previousTab {
@@ -209,7 +209,7 @@ extension ElloTabBarController {
         selectedViewController.view.frame = view.bounds
     }
 
-    fileprivate func positionTabBar() {
+    private func positionTabBar() {
         let upAmount: CGFloat
         if bottomBarVisible || isShowingNarration {
             upAmount = ElloTabBar.Size.height
@@ -267,7 +267,7 @@ extension ElloTabBarController {
         newContentService.stopPolling()
     }
 
-    fileprivate func setupNotificationObservers() {
+    private func setupNotificationObservers() {
 
         _ = Application.shared() // this is lame but we need Application to initialize to observe it's notifications
 
@@ -301,7 +301,7 @@ extension ElloTabBarController {
 
     }
 
-    fileprivate func removeNotificationObservers() {
+    private func removeNotificationObservers() {
         systemLoggedOutObserver?.removeObserver()
         streamLoadedObserver?.removeObserver()
         newNotificationsObserver?.removeObserver()
@@ -467,12 +467,12 @@ private extension ElloTabBarController {
 
 extension ElloTabBarController {
 
-    fileprivate func addDots() {
+    private func addDots() {
         notificationsDot = tabBar.addRedDotFor(tab: .notifications)
         homeDot = tabBar.addRedDotFor(tab: .home)
     }
 
-    fileprivate func prepareNarration() {
+    private func prepareNarration() {
         if shouldShowNarration {
             if !isShowingNarration {
                 animateInNarrationView()
@@ -484,12 +484,13 @@ extension ElloTabBarController {
         }
     }
 
+    @objc
     func dismissNarrationView() {
         shouldShowNarration = false
         animateOutNarrationView()
     }
 
-    fileprivate func updateNarrationTitle(_ animated: Bool = true) {
+    private func updateNarrationTitle(_ animated: Bool = true) {
         animate(options: [.curveEaseOut, .beginFromCurrentState], animated: animated) {
             if let rect = self.tabBar.itemPositionsIn(self.narrationView).safeValue(self.selectedTab.rawValue) {
                 self.narrationView.pointerX = rect.midX + self.selectedTab.pointerXoffset
@@ -499,7 +500,7 @@ extension ElloTabBarController {
         narrationView.text = selectedTab.narrationText
     }
 
-    fileprivate func animateInStartFrame() -> CGRect {
+    private func animateInStartFrame() -> CGRect {
         let upAmount = CGFloat(20)
         let narrationHeight = NarrationView.Size.height
         let bottomMargin = ElloTabBar.Size.height - NarrationView.Size.pointer.height
@@ -511,7 +512,7 @@ extension ElloTabBarController {
             )
     }
 
-    fileprivate func animateInFinalFrame() -> CGRect {
+    private func animateInFinalFrame() -> CGRect {
         let narrationHeight = NarrationView.Size.height
         let bottomMargin = ElloTabBar.Size.height - NarrationView.Size.pointer.height
         return CGRect(
@@ -522,7 +523,7 @@ extension ElloTabBarController {
             )
     }
 
-    fileprivate func animateInNarrationView() {
+    private func animateInNarrationView() {
         narrationView.alpha = 0
         narrationView.frame = animateInStartFrame()
         view.addSubview(narrationView)
@@ -534,7 +535,7 @@ extension ElloTabBarController {
         isShowingNarration = true
     }
 
-    fileprivate func animateOutNarrationView() {
+    private func animateOutNarrationView() {
         animate {
             self.narrationView.alpha = 0
             self.narrationView.frame = self.animateInStartFrame()

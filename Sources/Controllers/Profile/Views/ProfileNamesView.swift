@@ -43,9 +43,9 @@ class ProfileNamesView: ProfileBaseView {
         }
     }
 
-    fileprivate let nameLabel = UILabel()
-    fileprivate let usernameLabel = UILabel()
-    fileprivate let grayLine = UIView()
+    private let nameLabel = UILabel()
+    private let usernameLabel = UILabel()
+    private let grayLine = UIView()
 }
 
 extension ProfileNamesView {

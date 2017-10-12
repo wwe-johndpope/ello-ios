@@ -8,8 +8,8 @@ final class ArtistInvitesGenerator: StreamGenerator {
     let streamKind: StreamKind = .artistInvites
     weak var destination: StreamDestination?
 
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
 
     init(currentUser: User?, destination: StreamDestination?) {
         self.currentUser = currentUser

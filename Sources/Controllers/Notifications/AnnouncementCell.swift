@@ -35,13 +35,13 @@ class AnnouncementCell: CollectionViewCell {
         }
     }
 
-    fileprivate let blackView = UIView()
-    fileprivate let imageView = FLAnimatedImageView()
-    fileprivate let closeButton = UIButton()
-    fileprivate let titleLabel = StyledLabel(style: .boldWhite)
-    fileprivate let bodyLabel = StyledLabel(style: .white)
-    fileprivate let callToActionButton = StyledButton(style: .whiteUnderlined)
-    fileprivate var imageHeightConstraint: Constraint!
+    private let blackView = UIView()
+    private let imageView = FLAnimatedImageView()
+    private let closeButton = UIButton()
+    private let titleLabel = StyledLabel(style: .boldWhite)
+    private let bodyLabel = StyledLabel(style: .white)
+    private let callToActionButton = StyledButton(style: .whiteUnderlined)
+    private var imageHeightConstraint: Constraint!
 
     override func style() {
         closeButton.setImages(.x, white: true)
@@ -50,7 +50,7 @@ class AnnouncementCell: CollectionViewCell {
 
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .vertical)
+        imageView.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .vertical)
         titleLabel.isMultiline = true
         bodyLabel.isMultiline = true
         callToActionButton.contentHorizontalAlignment = .left
@@ -101,7 +101,7 @@ class AnnouncementCell: CollectionViewCell {
         config = Config()
     }
 
-    fileprivate func updateConfig() {
+    private func updateConfig() {
         titleLabel.text = config.title
         bodyLabel.text = config.body
         callToActionButton.title = config.callToAction
@@ -138,6 +138,7 @@ class AnnouncementCell: CollectionViewCell {
 
 extension AnnouncementCell {
 
+    @objc
     func markAsRead() {
         let responder: AnnouncementCellResponder? = findResponder()
         responder?.markAnnouncementAsRead(cell: self)

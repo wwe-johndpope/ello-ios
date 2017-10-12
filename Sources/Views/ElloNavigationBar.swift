@@ -130,29 +130,29 @@ class ElloNavigationBar: UIView {
     var title: String? {
         didSet { titleLabel.text = title }
     }
-    fileprivate var defaultTitle: String? {
+    private var defaultTitle: String? {
         guard
             let controller: UIViewController = findResponder()
         else { return nil }
         return controller.title
     }
-    fileprivate let titleLabel = StyledLabel(style: .gray)
-    fileprivate let navigationContainer = Container()
+    private let titleLabel = StyledLabel(style: .gray)
+    private let navigationContainer = Container()
 
     var leftItems: [Item] = [] {
         didSet { leftButtons = updateButtons(buttons: leftButtons, items: leftItems, container: leftButtonContainer) }
     }
-    fileprivate var leftButtonContainer = Container()
-    fileprivate var leftButtons: [UIButton] = []
+    private var leftButtonContainer = Container()
+    private var leftButtons: [UIButton] = []
 
     var rightItems: [Item] = [] {
         didSet { rightButtons = updateButtons(buttons: rightButtons, items: rightItems, container: rightButtonContainer) }
     }
-    fileprivate var rightButtonContainer = Container()
-    fileprivate var rightButtons: [UIButton] = []
+    private var rightButtonContainer = Container()
+    private var rightButtons: [UIButton] = []
 
-    fileprivate var leftLeadingConstraint: Constraint!
-    fileprivate var rightTrailingConstraint: Constraint!
+    private var leftLeadingConstraint: Constraint!
+    private var rightTrailingConstraint: Constraint!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -177,7 +177,7 @@ class ElloNavigationBar: UIView {
         titleLabel.text = title ?? defaultTitle
     }
 
-    fileprivate func privateInit() {
+    private func privateInit() {
         tintColor = .greyA
         clipsToBounds = true
         backgroundColor = .white
@@ -224,7 +224,7 @@ class ElloNavigationBar: UIView {
         return CGSize(width: UIViewNoIntrinsicMetric, height: sizeClass.height)
     }
 
-    fileprivate func updateButtons(buttons oldButtons: [UIButton], items: [Item], container: UIView) -> [UIButton] {
+    private func updateButtons(buttons oldButtons: [UIButton], items: [Item], container: UIView) -> [UIButton] {
         for button in oldButtons {
             button.removeFromSuperview()
         }

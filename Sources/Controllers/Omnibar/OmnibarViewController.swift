@@ -280,7 +280,7 @@ class OmnibarViewController: BaseElloViewController {
         screen.keyboardWillHide()
     }
 
-    fileprivate func goToPreviousTab() {
+    private func goToPreviousTab() {
         elloTabBarController?.selectedTab = previousTab
     }
 
@@ -391,7 +391,7 @@ extension OmnibarViewController {
         return content
     }
 
-    fileprivate func startPosting(_ authorId: String, _ content: [PostEditingService.PostContentRegion], buyButtonURL: URL?) {
+    private func startPosting(_ authorId: String, _ content: [PostEditingService.PostContentRegion], buyButtonURL: URL?) {
         let service: PostEditingService
         let didGoToPreviousTab: Bool
 
@@ -442,13 +442,13 @@ extension OmnibarViewController {
                     vc.selectedTab = .omnibar
                 }
             }
-            .always { _ in
+            .always {
                 log(comment: "authtoken", object: AuthToken().token)
                 postNotification(NewContentNotifications.resume, value: ())
             }
     }
 
-    fileprivate func emitSuccess(_ postOrComment: Any, didGoToPreviousTab: Bool) {
+    private func emitSuccess(_ postOrComment: Any, didGoToPreviousTab: Bool) {
         if let comment = postOrComment as? ElloComment {
             self.emitCommentSuccess(comment)
         }
@@ -459,7 +459,7 @@ extension OmnibarViewController {
         postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
     }
 
-    fileprivate func emitCommentSuccess(_ comment: ElloComment) {
+    private func emitCommentSuccess(_ comment: ElloComment) {
         if editComment != nil {
             Tracker.shared.commentEdited(comment)
             postNotification(CommentChangedNotification, value: (comment, .replaced))
@@ -491,7 +491,7 @@ extension OmnibarViewController {
         }
     }
 
-    fileprivate func emitPostSuccess(_ post: Post, didGoToPreviousTab: Bool) {
+    private func emitPostSuccess(_ post: Post, didGoToPreviousTab: Bool) {
         stopSpinner()
 
         if editPost != nil {

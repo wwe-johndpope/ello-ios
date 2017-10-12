@@ -13,9 +13,9 @@ class NewPostsButton: Control {
         static let height: CGFloat = 35
     }
 
-    fileprivate let bg = UIImageView()
-    fileprivate let arrow = UIImageView()
-    fileprivate let label = UILabel()
+    private let bg = UIImageView()
+    private let arrow = UIImageView()
+    private let label = UILabel()
 
     override var intrinsicContentSize: CGSize {
         guard

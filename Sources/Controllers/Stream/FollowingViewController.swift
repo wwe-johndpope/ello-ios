@@ -17,11 +17,11 @@ class FollowingViewController: StreamableViewController {
 
     var navigationBar = ElloNavigationBar()
     let newPostsButton = NewPostsButton()
-    fileprivate var loggedPromptEventForThisSession = false
-    fileprivate var reloadFollowingContentObserver: NotificationObserver?
-    fileprivate var appBackgroundObserver: NotificationObserver?
-    fileprivate var appForegroundObserver: NotificationObserver?
-    fileprivate var newFollowingContentObserver: NotificationObserver?
+    private var loggedPromptEventForThisSession = false
+    private var reloadFollowingContentObserver: NotificationObserver?
+    private var appBackgroundObserver: NotificationObserver?
+    private var appForegroundObserver: NotificationObserver?
+    private var newFollowingContentObserver: NotificationObserver?
 
     required init() {
         super.init(nibName: nil, bundle: nil)

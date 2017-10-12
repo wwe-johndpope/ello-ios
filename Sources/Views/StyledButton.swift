@@ -127,7 +127,7 @@ class StyledButton: UIButton {
         layer.cornerRadius = style.cornerRadius.size(in: frame)
     }
 
-    fileprivate func updateStyle() {
+    private func updateStyle() {
         let layerBorder: UIColor?
         if !isEnabled {
             backgroundColor = style.disabledBackgroundColor ?? style.backgroundColor

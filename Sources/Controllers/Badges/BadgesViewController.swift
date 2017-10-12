@@ -63,7 +63,7 @@ class BadgesViewController: StreamableViewController {
         updateInsets()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
     }
 

@@ -99,7 +99,7 @@ struct ProfileService {
                 .catch { uploadError in
                     error = error ?? uploadError
                 }
-                .always { _ in
+                .always {
                     bothImages()
                 }
         }
@@ -115,7 +115,7 @@ struct ProfileService {
                 .catch { uploadError in
                     error = error ?? uploadError
                 }
-                .always { _ in
+                .always {
                     bothImages()
                 }
         }
@@ -137,7 +137,7 @@ struct ProfileService {
             .asVoid()
     }
 
-    fileprivate func updateUserImage(
+    private func updateUserImage(
         _ image: ImageRegionData,
         key: Profile.Property,
         properties: [Profile.Property: Any])

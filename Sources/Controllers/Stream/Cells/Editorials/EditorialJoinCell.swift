@@ -3,16 +3,16 @@
 //
 
 class EditorialJoinCell: EditorialCell {
-    fileprivate let joinLabel = StyledLabel(style: .editorialHeader)
-    fileprivate let joinCaption = StyledLabel(style: .editorialCaption)
-    fileprivate let emailField = ElloTextField()
-    fileprivate let usernameField = ElloTextField()
-    fileprivate let passwordField = ElloTextField()
-    fileprivate let submitButton = StyledButton(style: .editorialJoin)
+    private let joinLabel = StyledLabel(style: .editorialHeader)
+    private let joinCaption = StyledLabel(style: .editorialCaption)
+    private let emailField = ElloTextField()
+    private let usernameField = ElloTextField()
+    private let passwordField = ElloTextField()
+    private let submitButton = StyledButton(style: .editorialJoin)
 
     var onJoinChange: ((Editorial.JoinInfo) -> Void)?
 
-    fileprivate var isValid: Bool {
+    private var isValid: Bool {
         guard
             let email = emailField.text,
             let username = usernameField.text,
@@ -152,6 +152,7 @@ class EditorialJoinCell: EditorialCell {
 }
 
 extension EditorialJoinCell {
+    @objc
     func textFieldDidChange() {
         let info: Editorial.JoinInfo = (email: emailField.text, username: usernameField.text, password: passwordField.text, submitted: false)
         onJoinChange?(info)

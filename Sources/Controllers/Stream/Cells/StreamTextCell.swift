@@ -50,11 +50,11 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
         }
     }
 
-    fileprivate var webView = ElloWebView()
-    fileprivate var webViewContainer = UIView()
-    fileprivate var leadingConstraint: Constraint!
-    fileprivate let doubleTapGesture = UITapGestureRecognizer()
-    fileprivate let longPressGesture = UILongPressGestureRecognizer()
+    private var webView = ElloWebView()
+    private var webViewContainer = UIView()
+    private var leadingConstraint: Constraint!
+    private let doubleTapGesture = UITapGestureRecognizer()
+    private let longPressGesture = UILongPressGestureRecognizer()
 
     func setupWebView(_ webView: ElloWebView) {
         self.webView.delegate = nil

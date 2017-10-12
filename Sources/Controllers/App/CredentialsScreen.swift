@@ -93,6 +93,7 @@ class CredentialsScreen: EmptyScreen {
         }
     }
 
+    @objc
     func backAction() {
     }
 

@@ -26,14 +26,14 @@ class UserAvatarsCell: UICollectionViewCell {
         style()
     }
 
-    fileprivate func style() {
+    private func style() {
         loadingLabel.textColor = UIColor.greyA
         loadingLabel.font = UIFont.defaultFont()
         seeAllButton.titleLabel?.textColor = UIColor.greyA
         seeAllButton.titleLabel?.font = UIFont.defaultFont()
     }
 
-    fileprivate func updateAvatars() {
+    private func updateAvatars() {
         clearButtons()
         let numToDisplay = min(users.count, maxAvatars)
         seeAllButton.isHidden = users.count <= numToDisplay
@@ -50,7 +50,7 @@ class UserAvatarsCell: UICollectionViewCell {
         }
     }
 
-    fileprivate func clearButtons() {
+    private func clearButtons() {
         for ab in avatarButtons {
             ab.removeFromSuperview()
         }

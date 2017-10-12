@@ -10,8 +10,8 @@ final class ArtistInviteAdminGenerator: StreamGenerator {
     var stream: ArtistInvite.Stream
     weak var destination: StreamDestination?
 
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
 
     init(artistInvite: ArtistInvite, stream: ArtistInvite.Stream, currentUser: User?, destination: StreamDestination?) {
         self.artistInvite = artistInvite

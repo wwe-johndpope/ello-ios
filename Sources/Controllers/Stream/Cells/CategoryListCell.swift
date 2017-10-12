@@ -24,13 +24,13 @@ class CategoryListCell: CollectionViewCell {
         }
     }
 
-    fileprivate var buttonCategoryLookup: [UIButton: CategoryInfo] = [:]
-    fileprivate var categoryButtons: [UIButton] = []
+    private var buttonCategoryLookup: [UIButton: CategoryInfo] = [:]
+    private var categoryButtons: [UIButton] = []
 
-    fileprivate class func buttonTitle(_ category: String) -> NSAttributedString {
-        let attrs: [String: Any] = [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.black
+    private class func buttonTitle(_ category: String) -> NSAttributedString {
+        let attrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.black
         ]
         let attributedString = NSAttributedString(string: category, attributes: attrs)
         return attributedString
@@ -48,7 +48,7 @@ class CategoryListCell: CollectionViewCell {
         responder?.categoryListCellTapped(slug: categoryInfo.slug, name: categoryInfo.title)
     }
 
-    fileprivate func updateCategoryViews() {
+    private func updateCategoryViews() {
         for view in categoryButtons {
             view.removeFromSuperview()
         }

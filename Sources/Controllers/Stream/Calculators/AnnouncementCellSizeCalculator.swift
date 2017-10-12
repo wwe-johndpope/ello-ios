@@ -5,9 +5,9 @@
 class AnnouncementCellSizeCalculator {
     var originalWidth: CGFloat = 0
 
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
-    fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellItems: [StreamCellItem] = []
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
+    private var cellJobs: [CellJob] = []
+    private var cellItems: [StreamCellItem] = []
 
 // MARK: Public
 
@@ -54,7 +54,7 @@ class AnnouncementCellSizeCalculator {
 
 // MARK: Private
 
-    fileprivate func finish() {
+    private func finish() {
         guard let job = cellJobs.first else { return }
         cellJobs.remove(at: 0)
         job.completion()
@@ -63,13 +63,13 @@ class AnnouncementCellSizeCalculator {
         }
     }
 
-    fileprivate func processJob(_ job: CellJob) {
+    private func processJob(_ job: CellJob) {
         self.cellItems = job.cellItems
         self.originalWidth = job.width
         loadNext()
     }
 
-    fileprivate func loadNext() {
+    private func loadNext() {
         if let item = self.cellItems.safeValue(0) {
             if let announcement = item.jsonable as? Announcement {
                 assignCellHeight(AnnouncementCellSizeCalculator.calculateAnnouncementHeight(announcement, cellWidth: originalWidth))
@@ -83,7 +83,7 @@ class AnnouncementCellSizeCalculator {
         }
     }
 
-    fileprivate func assignCellHeight(_ height: CGFloat) {
+    private func assignCellHeight(_ height: CGFloat) {
         if let cellItem = self.cellItems.safeValue(0) {
             self.cellItems.remove(at: 0)
             cellItem.calculatedCellHeights.oneColumn = height

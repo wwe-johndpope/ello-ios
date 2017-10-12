@@ -6,14 +6,14 @@ import SnapKit
 
 
 class ProfileHeaderCompactView: ProfileHeaderLayoutView {
-    fileprivate var totalCountFullConstraint: Constraint!
-    fileprivate var totalCountHalfConstraint: Constraint!
+    private var totalCountFullConstraint: Constraint!
+    private var totalCountHalfConstraint: Constraint!
 
-    fileprivate var badgesFullConstraint: Constraint!
-    fileprivate var badgesHalfConstraint: Constraint!
+    private var badgesFullConstraint: Constraint!
+    private var badgesHalfConstraint: Constraint!
 
-    fileprivate let totalCountVerticalGreyLine = UIView()
-    fileprivate let totalCountHorizontalGreyLine = UIView()
+    private let totalCountVerticalGreyLine = UIView()
+    private let totalCountHorizontalGreyLine = UIView()
 
     override var calculatedCellHeights: CalculatedCellHeights? {
         didSet {

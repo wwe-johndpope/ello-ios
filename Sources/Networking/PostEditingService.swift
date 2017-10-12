@@ -238,7 +238,7 @@ class PostEditingService {
     // this happens just before create(regions:).  The original index of each
     // section has been stored in `entry.0`, and this is used to sort the
     // entries, and then the sorted regions are returned.
-    fileprivate func sortedRegions(_ indexedRegions: [(Int, Regionable)]) -> [Regionable] {
+    private func sortedRegions(_ indexedRegions: [(Int, Regionable)]) -> [Regionable] {
         return indexedRegions.sorted { left, right in
             let (indexLeft, indexRight) = (left.0, right.0)
             return indexLeft < indexRight

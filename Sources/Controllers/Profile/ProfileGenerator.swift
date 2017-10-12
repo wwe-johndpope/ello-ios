@@ -8,13 +8,13 @@ final class ProfileGenerator: StreamGenerator {
     var streamKind: StreamKind
     weak var destination: StreamDestination?
 
-    fileprivate var user: User?
-    fileprivate let userParam: String
-    fileprivate var posts: [Post]?
-    fileprivate var hasPosts: Bool?
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
-    fileprivate let queue = OperationQueue()
+    private var user: User?
+    private let userParam: String
+    private var posts: [Post]?
+    private var hasPosts: Bool?
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
+    private let queue = OperationQueue()
 
     func headerItems() -> [StreamCellItem] {
         guard let user = user else { return [] }

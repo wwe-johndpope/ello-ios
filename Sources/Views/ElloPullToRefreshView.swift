@@ -7,9 +7,9 @@ import QuartzCore
 
 class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
 
-    fileprivate var pullProgress: CGFloat = 0
-    fileprivate var loading = false
-    fileprivate let toValue = (360.0 * Double.pi) / 180.0
+    private var pullProgress: CGFloat = 0
+    private var loading = false
+    private let toValue = (360.0 * Double.pi) / 180.0
 
     lazy var elloLogo: ElloLogoView = {
         let logo = ElloLogoView()
@@ -28,7 +28,7 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
         self.sharedInit()
     }
 
-    fileprivate func sharedInit() {
+    private func sharedInit() {
         self.addSubview(elloLogo)
     }
 

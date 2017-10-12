@@ -10,9 +10,9 @@ class ElloTextFieldView: UIView {
     weak var errorLabel: StyledLabel!
     weak var messageLabel: StyledLabel!
 
-    @IBOutlet fileprivate var errorLabelHeight: NSLayoutConstraint!
-    @IBOutlet fileprivate var messageLabelHeight: NSLayoutConstraint!
-    @IBOutlet fileprivate weak var errorLabelSeparationSpacing: NSLayoutConstraint!
+    @IBOutlet private var errorLabelHeight: NSLayoutConstraint!
+    @IBOutlet private var messageLabelHeight: NSLayoutConstraint!
+    @IBOutlet private weak var errorLabelSeparationSpacing: NSLayoutConstraint!
 
     var textFieldDidChange: ((String) -> Void)?
     var firstResponderDidChange: ((Bool) -> Void)? {
@@ -66,7 +66,7 @@ class ElloTextFieldView: UIView {
         sharedInit()
     }
 
-    fileprivate func sharedInit() {
+    private func sharedInit() {
         let view: UIView = loadFromNib()
         view.frame = bounds
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -84,6 +84,7 @@ class ElloTextFieldView: UIView {
         textField.validationState = state
     }
 
+    @objc
     func valueChanged() {
         setNeedsUpdateConstraints()
         if let textFieldDidChange = textFieldDidChange, let text = textField.text {
@@ -116,7 +117,7 @@ class ElloTextFieldView: UIView {
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
 
-    fileprivate func updateErrorConstraints() {
+    private func updateErrorConstraints() {
         errorLabelSeparationSpacing.isActive = errorHeight > 0 && messageHeight > 0
         errorLabelHeight.constant = errorHeight
         messageLabelHeight.constant = messageHeight
@@ -140,7 +141,7 @@ class ElloTextFieldView: UIView {
 
 
 extension ElloTextFieldView {
-    fileprivate class func styleCommonField(_ textField: UITextField) {
+    private class func styleCommonField(_ textField: UITextField) {
         textField.text = ""
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no

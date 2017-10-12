@@ -4,24 +4,24 @@
 
 struct NotificationAttributedTitle {
 
-    static fileprivate func attrs(_ addlAttrs: [String: Any] = [:]) -> [String: Any] {
-        let attrs: [String: Any] = [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA,
+    static private func attrs(_ addlAttrs: [NSAttributedStringKey: Any] = [:]) -> [NSAttributedStringKey: Any] {
+        let attrs: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
         ]
         return attrs + addlAttrs
     }
 
-    static fileprivate func styleText(_ text: String) -> NSAttributedString {
+    static private func styleText(_ text: String) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: attrs())
     }
 
-    static fileprivate func styleUser(_ user: User?) -> NSAttributedString {
+    static private func styleUser(_ user: User?) -> NSAttributedString {
         if let user = user {
             return NSAttributedString(string: user.atName, attributes: attrs([
                 ElloAttributedText.Link: "user",
                 ElloAttributedText.Object: user,
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
             ]))
         }
         else {
@@ -29,20 +29,20 @@ struct NotificationAttributedTitle {
         }
     }
 
-    static fileprivate func stylePost(_ text: String, _ post: Post) -> NSAttributedString {
+    static private func stylePost(_ text: String, _ post: Post) -> NSAttributedString {
         let attrs = self.attrs([
             ElloAttributedText.Link: "post",
             ElloAttributedText.Object: post,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ])
         return NSAttributedString(string: text, attributes: attrs)
     }
 
-    static fileprivate func styleComment(_ text: String, _ comment: ElloComment) -> NSAttributedString {
+    static private func styleComment(_ text: String, _ comment: ElloComment) -> NSAttributedString {
         let attrs = self.attrs([
             ElloAttributedText.Link: "comment",
             ElloAttributedText.Object: comment,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ])
         return NSAttributedString(string: text, attributes: attrs)
     }

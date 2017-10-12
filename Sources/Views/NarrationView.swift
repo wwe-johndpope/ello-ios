@@ -8,19 +8,19 @@ class NarrationView: UIView {
         static let height = CGFloat(112)
         static let pointer = CGSize(width: 12, height: 6)
     }
-    fileprivate let closeButton: StyledButton = {
+    private let closeButton: StyledButton = {
         let closeButton = StyledButton()
         closeButton.setTitle("\u{2573}", for: .normal)
         closeButton.sizeToFit()
         closeButton.isUserInteractionEnabled = false
         return closeButton
     }()
-    fileprivate let bg: UIView = {
+    private let bg: UIView = {
         let bg = UIView()
         bg.backgroundColor = .black
         return bg
     }()
-    fileprivate let label: ElloTextView = {
+    private let label: ElloTextView = {
         let label = ElloTextView()
         label.isUserInteractionEnabled = false
         label.isEditable = false
@@ -31,7 +31,7 @@ class NarrationView: UIView {
         label.backgroundColor = .clear
         return label
     }()
-    fileprivate let pointer: UIImageView = {
+    private let pointer: UIImageView = {
         let pointer = UIImageView()
         pointer.contentMode = .scaleAspectFit
         pointer.interfaceImage = .narrationPointer
@@ -66,19 +66,19 @@ class NarrationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func updateTitleAndText() {
+    private func updateTitleAndText() {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 6
 
         let titleAttributes = [
-            NSFontAttributeName: UIFont.defaultBoldFont(),
-            NSForegroundColorAttributeName: UIColor.white,
-            NSParagraphStyleAttributeName: style
+            NSAttributedStringKey.font: UIFont.defaultBoldFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.white,
+            NSAttributedStringKey.paragraphStyle: style
         ]
         let textAttributes = [
-            NSFontAttributeName: UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.white,
-            NSParagraphStyleAttributeName: style
+            NSAttributedStringKey.font: UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.white,
+            NSAttributedStringKey.paragraphStyle: style
         ]
 
         label.attributedText = NSMutableAttributedString(string: title + "\n", attributes: titleAttributes) + NSMutableAttributedString(string: text, attributes: textAttributes)

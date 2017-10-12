@@ -47,10 +47,10 @@ class ClearTextView: UITextView {
         }
     }
 
-    fileprivate var line = UIView()
-    fileprivate let placeholderLabel = StyledLabel()
-    fileprivate var placeholderTopConstraint: Constraint?
-    fileprivate let rightView = UIImageView()
+    private var line = UIView()
+    private let placeholderLabel = StyledLabel()
+    private var placeholderTopConstraint: Constraint?
+    private let rightView = UIImageView()
     var validationState = ValidationState.none {
         didSet {
             rightView.image = validationState.imageRepresentation
@@ -94,17 +94,17 @@ class ClearTextView: UITextView {
         invalidateIntrinsicContentSize()
     }
 
-    fileprivate func updateTextStyle() {
+    private func updateTextStyle() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 12
         var attributes: [String: Any] = [
-            NSParagraphStyleAttributeName: paragraphStyle
+            NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle
         ]
         if let font = font {
-            attributes[NSFontAttributeName] = font
+            attributes[NSAttributedStringKey.font.rawValue] = font
         }
         if let textColor = textColor {
-            attributes[NSForegroundColorAttributeName] = textColor
+            attributes[NSAttributedStringKey.foregroundColor.rawValue] = textColor
         }
         typingAttributes = attributes
     }

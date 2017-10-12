@@ -22,7 +22,7 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
         set { self.tabBarItem = newValue }
     }
 
-    fileprivate let usage: Usage
+    private let usage: Usage
 
     init(usage: Usage) {
         self.usage = usage
@@ -79,7 +79,7 @@ extension HomeViewController: HomeResponder {
         showController(discoverViewController)
     }
 
-    fileprivate func setupControllers() {
+    private func setupControllers() {
         let editorialsViewController = EditorialsViewController(usage: usage)
         editorialsViewController.currentUser = currentUser
         addChildViewController(editorialsViewController)
@@ -108,7 +108,7 @@ extension HomeViewController: HomeResponder {
         showController(editorialsViewController)
     }
 
-    fileprivate func showController(_ viewController: UIViewController) {
+    private func showController(_ viewController: UIViewController) {
         guard visibleViewController != viewController else { return }
 
         if let visibleViewController = visibleViewController {

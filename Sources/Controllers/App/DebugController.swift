@@ -9,7 +9,7 @@ import MessageUI
 
 
 class DebugController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    fileprivate var retainer: UIViewController?
+    private var retainer: UIViewController?
 
     let tableView = UITableView()
     var actions = [(String, Block)]()

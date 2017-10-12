@@ -85,6 +85,7 @@ class ForgotPasswordEmailScreen: CredentialsScreen {
         }
     }
 
+    @objc
     func submitAction() {
         delegate?.submit(email: emailField.text ?? "")
     }
@@ -115,7 +116,7 @@ extension ForgotPasswordEmailScreen: ForgotPasswordEmailScreenProtocol {
         emailErrorLabel.text = text
         isEmailValid = false
 
-        animate {
+        elloAnimate {
             self.emailMarginConstraint.activate()
             self.emailErrorLabel.alpha = 1.0
             self.layoutIfNeeded()
@@ -135,7 +136,7 @@ extension ForgotPasswordEmailScreen: ForgotPasswordEmailScreenProtocol {
 
 
     func hideEmailError() {
-        animate {
+        elloAnimate {
             self.emailMarginConstraint.deactivate()
             self.emailErrorLabel.alpha = 0.0
             self.layoutIfNeeded()
@@ -167,6 +168,7 @@ extension ForgotPasswordEmailScreen: UITextFieldDelegate {
 }
 
 extension ForgotPasswordEmailScreen {
+    @objc
     func activateEmail() {
       _ = emailField.becomeFirstResponder()
     }

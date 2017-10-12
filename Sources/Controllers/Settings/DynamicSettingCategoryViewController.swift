@@ -17,13 +17,13 @@ class DynamicSettingCategoryViewController: UIViewController, UITableViewDataSou
         setupNavigationBar()
     }
 
-    fileprivate func setupTableView() {
+    private func setupTableView() {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
         tableView.register(UINib(nibName: "DynamicSettingCell", bundle: .none), forCellReuseIdentifier: "DynamicSettingCell")
     }
 
-    fileprivate func setupNavigationBar() {
+    private func setupNavigationBar() {
         navigationBar?.title = category?.label
         navigationBar?.leftItems = [.back]
         postNotification(StatusBarNotifications.statusBarVisibility, value: true)
@@ -115,7 +115,7 @@ extension DynamicSettingCategoryViewController: DynamicSettingCellResponder {
             }
     }
 
-    fileprivate func settingChanged(_ config: SettingConfig, user: User) -> Bool {
+    private func settingChanged(_ config: SettingConfig, user: User) -> Bool {
         let setting = config.setting
         let currVisibility = DynamicSettingCellPresenter.isVisible(setting: setting, currentUser: user)
         let currValue = user.propertyForSettingsKey(key: setting.key)

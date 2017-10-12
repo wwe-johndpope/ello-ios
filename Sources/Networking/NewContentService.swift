@@ -18,11 +18,11 @@ struct NewContentNotifications {
 
 
 class NewContentService {
-    fileprivate var timer: Timer?
-    fileprivate var pauseCount = 0
-    fileprivate var pauseObserver: NotificationObserver?
-    fileprivate var resumeObserver: NotificationObserver?
-    fileprivate var postCreatedObserver: NotificationObserver?
+    private var timer: Timer?
+    private var pauseCount = 0
+    private var pauseObserver: NotificationObserver?
+    private var resumeObserver: NotificationObserver?
+    private var postCreatedObserver: NotificationObserver?
 
     init() {
         pauseObserver = NotificationObserver(notification: NewContentNotifications.pause) { [weak self] _ in
@@ -66,7 +66,7 @@ extension NewContentService {
         let check2 = checkForNewAnnouncements()
         let check3 = checkForNewFollowingContent()
         when(resolved: [check1, check2, check3])
-            .always { _ in
+            .always {
                 guard self.stillPolling() else { return }
                 self.restartPolling()
             }

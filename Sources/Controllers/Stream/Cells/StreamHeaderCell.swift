@@ -135,13 +135,13 @@ class StreamHeaderCell: UICollectionViewCell {
 
         if let category = category, repostedBy == nil {
             let attributedString = NSAttributedString(string: "in ", attributes: [
-                NSFontAttributeName: UIFont.defaultFont(),
-                NSForegroundColorAttributeName: UIColor.greyA,
+                NSAttributedStringKey.font: UIFont.defaultFont(),
+                NSAttributedStringKey.foregroundColor: UIColor.greyA,
                 ])
             let categoryName = NSAttributedString(string: category.name, attributes: [
-                NSFontAttributeName: UIFont.defaultFont(),
-                NSForegroundColorAttributeName: UIColor.greyA,
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                NSAttributedStringKey.font: UIFont.defaultFont(),
+                NSAttributedStringKey.foregroundColor: UIColor.greyA,
+                NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                 ])
             categoryButton.setAttributedTitle(attributedString + categoryName, for: .normal)
             categoryButton.isHidden = false
@@ -209,7 +209,7 @@ class StreamHeaderCell: UICollectionViewCell {
 
 // MARK: - Private
 
-    fileprivate func updateItems() {
+    private func updateItems() {
         if ownComment {
             bottomToolBar.items = [
                 flexibleItem(), editItem, deleteItem, fixedItem(-10)
@@ -232,7 +232,7 @@ class StreamHeaderCell: UICollectionViewCell {
         }
     }
 
-    fileprivate func positionTopContent() {
+    private func positionTopContent() {
         let leftSidePadding: CGFloat = 15
         let rightSidePadding: CGFloat = 15
         let avatarPadding: CGFloat = 15
@@ -369,21 +369,21 @@ class StreamHeaderCell: UICollectionViewCell {
         )
     }
 
-    fileprivate func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
+    private func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
         let item = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         item.width = width
         return item
     }
 
-    fileprivate func flexibleItem() -> UIBarButtonItem {
+    private func flexibleItem() -> UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     }
 
-    fileprivate func addObservers() {
+    private func addObservers() {
         cellOpenObserver = NotificationObserver(notification: streamCellDidOpenNotification) { cell in
             if cell != self && self.isOpen {
                 nextTick {
-                    animate {
+                    elloAnimate {
                         self.close()
                     }
                 }
@@ -391,26 +391,26 @@ class StreamHeaderCell: UICollectionViewCell {
         }
     }
 
-    fileprivate func addButtonHandlers() {
+    private func addButtonHandlers() {
         flagControl.addTarget(self, action: #selector(StreamHeaderCell.flagButtonTapped(_:)), for: .touchUpInside)
         replyButton.addTarget(self, action: #selector(StreamHeaderCell.replyButtonTapped(_:)), for: .touchUpInside)
         deleteControl.addTarget(self, action: #selector(StreamHeaderCell.deleteButtonTapped(_:)), for: .touchUpInside)
         editControl.addTarget(self, action: #selector(StreamHeaderCell.editButtonTapped(_:)), for: .touchUpInside)
     }
 
-    fileprivate func styleUsernameButton() {
+    private func styleUsernameButton() {
         usernameButton.titleLabel?.font = UIFont.defaultFont()
         usernameButton.setTitleColor(UIColor.greyA, for: .normal)
         usernameButton.titleLabel?.lineBreakMode = .byTruncatingTail
         usernameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
     }
 
-    fileprivate func styleTimestampLabel() {
+    private func styleTimestampLabel() {
         timestampLabel.textColor = UIColor.greyA
         timestampLabel.font = UIFont.defaultFont()
     }
 
-    fileprivate func repositionBottomContent() {
+    private func repositionBottomContent() {
         var frame = bottomContentView.frame
         frame.size.height = innerContentView.bounds.height
         frame.size.width = innerContentView.bounds.width
@@ -421,6 +421,7 @@ class StreamHeaderCell: UICollectionViewCell {
 
 // MARK: - IBActions
 
+    @objc
     func postTapped(_ recognizer: UITapGestureRecognizer) {
         let responder: PostbarResponder? = findResponder()
         responder?.viewsButtonTapped(self)
@@ -468,7 +469,7 @@ class StreamHeaderCell: UICollectionViewCell {
 
     @IBAction func chevronButtonTapped(_ sender: StreamFooterButton) {
         let contentOffset = isOpen ? .zero : CGPoint(x: revealWidth, y: 0)
-        animate {
+        elloAnimate {
             self.scrollView.contentOffset = contentOffset
             self.openChevron(isOpen: self.isOpen)
         }
@@ -485,7 +486,7 @@ class StreamHeaderCell: UICollectionViewCell {
 
 extension StreamHeaderCell {
 
-    fileprivate func openChevron(isOpen: Bool) {
+    private func openChevron(isOpen: Bool) {
         if isOpen {
             rotateChevron(CGFloat(0))
         }
@@ -494,11 +495,11 @@ extension StreamHeaderCell {
         }
     }
 
-    fileprivate func closeChevron() {
+    private func closeChevron() {
         openChevron(isOpen: false)
     }
 
-    fileprivate func rotateChevron(_ angle: CGFloat) {
+    private func rotateChevron(_ angle: CGFloat) {
         var normalized = angle
         if angle < -CGFloat.pi {
             normalized = -CGFloat.pi

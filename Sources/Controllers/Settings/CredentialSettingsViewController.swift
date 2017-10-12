@@ -47,17 +47,17 @@ class CredentialSettingsViewController: UITableViewController {
         return cellHeights + (isUpdatable ? submitViewHeight : 0)
     }
 
-    fileprivate var password: String { return passwordView.textField.text ?? "" }
-    fileprivate var currentPassword: String { return currentPasswordField.text ?? "" }
-    fileprivate var username: String { return usernameView.textField.text ?? "" }
-    fileprivate var email: String { return emailView.textField.text ?? "" }
+    private var password: String { return passwordView.textField.text ?? "" }
+    private var currentPassword: String { return currentPasswordField.text ?? "" }
+    private var username: String { return usernameView.textField.text ?? "" }
+    private var email: String { return emailView.textField.text ?? "" }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
 
-    fileprivate func setupViews() {
+    private func setupViews() {
         ElloTextFieldView.styleAsUsername(usernameView)
         usernameView.textField.keyboardAppearance = .dark
         usernameView.textField.text = currentUser?.username
@@ -78,7 +78,7 @@ class CredentialSettingsViewController: UITableViewController {
         tableView.scrollsToTop = false
     }
 
-    fileprivate func emailChanged(_ text: String) {
+    private func emailChanged(_ text: String) {
         self.emailView.setState(.loading)
         self.emailView.setErrorMessage("")
         self.updateView()
@@ -117,7 +117,7 @@ class CredentialSettingsViewController: UITableViewController {
         }
     }
 
-    fileprivate func usernameChanged(_ text: String) {
+    private func usernameChanged(_ text: String) {
         self.usernameView.setState(.loading)
         self.usernameView.setErrorMessage("")
         self.usernameView.setMessage("")
@@ -157,7 +157,7 @@ class CredentialSettingsViewController: UITableViewController {
         }
     }
 
-    fileprivate func passwordChanged(_ text: String) {
+    private func passwordChanged(_ text: String) {
         self.passwordView.setErrorMessage("")
 
         if text.isEmpty {
@@ -173,7 +173,7 @@ class CredentialSettingsViewController: UITableViewController {
         self.updateView()
     }
 
-    fileprivate func updateView() {
+    private func updateView() {
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
         valueChanged()
@@ -194,11 +194,12 @@ class CredentialSettingsViewController: UITableViewController {
         }
     }
 
-    fileprivate var submitViewHeight: CGFloat {
+    private var submitViewHeight: CGFloat {
         let height = CredentialSettingsSubmitViewHeight
         return height + (errorLabel.text?.isEmpty == false ? errorLabel.frame.height + 8 : 0)
     }
 
+    @objc
     func currentPasswordChanged() {
         saveButton.isEnabled = Validator.isValidPassword(currentPassword)
     }
@@ -235,7 +236,7 @@ class CredentialSettingsViewController: UITableViewController {
             }
     }
 
-    fileprivate func resetViews() {
+    private func resetViews() {
         currentPasswordField.text = ""
         passwordView.textField.text = ""
         errorLabel.text = ""
@@ -246,7 +247,7 @@ class CredentialSettingsViewController: UITableViewController {
         updateView()
     }
 
-    fileprivate func handleError(_ error: ElloNetworkError) {
+    private func handleError(_ error: ElloNetworkError) {
         if let message = error.attrs?["password"] {
             passwordView.setErrorMessage(message.first ?? "")
         }

@@ -11,7 +11,7 @@ class ElloScrollLogicSpec: QuickSpec {
     var didShow: Bool?
     var didHide: Bool?
 
-    fileprivate func resetShowHide() {
+    private func resetShowHide() {
         didShow = nil
         didHide = nil
     }

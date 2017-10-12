@@ -4,14 +4,14 @@
 
 
 class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
-    fileprivate static let textViewForSizing = ElloTextView(frame: CGRect.zero, textContainer: nil)
+    private static let textViewForSizing = ElloTextView(frame: CGRect.zero, textContainer: nil)
     let webView: UIWebView
     var originalWidth: CGFloat = 0
 
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
-    fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var completion: Block = {}
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
+    private var cellJobs: [CellJob] = []
+    private var cellItems: [StreamCellItem] = []
+    private var completion: Block = {}
 
     init(webView: UIWebView = ElloWebView()) {
         self.webView = webView
@@ -36,7 +36,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
 
 // MARK: Private
 
-    fileprivate func processJob(_ job: CellJob) {
+    private func processJob(_ job: CellJob) {
         self.completion = {
             if self.cellJobs.count > 0 {
                 self.cellJobs.remove(at: 0)
@@ -52,7 +52,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         loadNext()
     }
 
-    fileprivate func loadNext() {
+    private func loadNext() {
         if let item = self.cellItems.safeValue(0) {
             if let notification = item.jsonable as? Notification,
                 let textRegion = notification.textRegion
@@ -83,7 +83,7 @@ class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
     }
 
-    fileprivate func assignCellHeight(_ webContentHeight: CGFloat) {
+    private func assignCellHeight(_ webContentHeight: CGFloat) {
         if let cellItem = self.cellItems.safeValue(0) {
             self.cellItems.remove(at: 0)
             StreamNotificationCellSizeCalculator.assignTotalHeight(webContentHeight, cellItem: cellItem, cellWidth: originalWidth)

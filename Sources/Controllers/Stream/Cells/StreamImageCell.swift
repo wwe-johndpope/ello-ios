@@ -40,9 +40,9 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var failImage: UIImageView!
     @IBOutlet weak var failBackgroundView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    @IBOutlet fileprivate weak var failWidthConstraint: NSLayoutConstraint!
-    @IBOutlet fileprivate weak var failHeightConstraint: NSLayoutConstraint!
-    fileprivate var foregroundObserver: NotificationObserver?
+    @IBOutlet private weak var failWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var failHeightConstraint: NSLayoutConstraint!
+    private var foregroundObserver: NotificationObserver?
 
     // not used in StreamEmbedCell
     @IBOutlet weak var largeImagePlayButton: UIImageView?
@@ -112,8 +112,8 @@ class StreamImageCell: StreamRegionableCell {
         }
     }
 
-    fileprivate var imageSize: CGSize?
-    fileprivate var aspectRatio: CGFloat? {
+    private var imageSize: CGSize?
+    private var aspectRatio: CGFloat? {
         guard let imageSize = imageSize else { return nil }
         return imageSize.width / imageSize.height
     }
@@ -188,7 +188,7 @@ class StreamImageCell: StreamRegionableCell {
         }
     }
 
-    fileprivate func loadImage(_ url: URL) {
+    private func loadImage(_ url: URL) {
         guard url.scheme?.isEmpty == false else {
             if let urlWithScheme = URL(string: "https:\(url.absoluteString)") {
                 loadImage(urlWithScheme)
@@ -225,7 +225,7 @@ class StreamImageCell: StreamRegionableCell {
         }
     }
 
-    fileprivate func imageLoadFailed() {
+    private func imageLoadFailed() {
         buyButton?.isHidden = true
         buyButtonGreen?.isHidden = true
         failImage.isHidden = false

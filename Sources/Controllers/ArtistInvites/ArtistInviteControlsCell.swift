@@ -24,10 +24,10 @@ class ArtistInviteControlsCell: CollectionViewCell, ArtistInviteConfigurableCell
         }
     }
 
-    fileprivate let descriptionWebView = ElloWebView()
-    fileprivate let submitButton = StyledButton(style: .artistInviteSubmit)
-    fileprivate var submitVisibleConstraint: Constraint!
-    fileprivate var submitHiddenConstraint: Constraint!
+    private let descriptionWebView = ElloWebView()
+    private let submitButton = StyledButton(style: .artistInviteSubmit)
+    private var submitVisibleConstraint: Constraint!
+    private var submitHiddenConstraint: Constraint!
 
     override func style() {
         descriptionWebView.scrollView.isScrollEnabled = false

@@ -22,7 +22,7 @@ class CategoryCardView: View {
                 alpha = CategoryCardView.normalAlpha
             }
 
-            animate {
+            elloAnimate {
                 self.overlay.alpha = alpha
             }
         }
@@ -35,8 +35,8 @@ class CategoryCardView: View {
     }
 
     let button = UIButton()
-    fileprivate let overlay = UIView()
-    fileprivate var _selected = false
+    private let overlay = UIView()
+    private var _selected = false
 
     init(info: CategoryCardListView.CategoryInfo) {
         self.info = info

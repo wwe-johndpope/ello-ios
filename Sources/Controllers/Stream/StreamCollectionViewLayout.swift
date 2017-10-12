@@ -129,7 +129,7 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
         }
     }
 
-    fileprivate func addAttributesForSection(_ section: Int) {
+    private func addAttributesForSection(_ section: Int) {
 
         var attributes = UICollectionViewLayoutAttributes()
 
@@ -252,15 +252,15 @@ class StreamCollectionViewLayout: UICollectionViewLayout {
         return newBounds.width != oldBounds.width
     }
 
-    fileprivate func shortestColumnIndex() -> Int {
+    private func shortestColumnIndex() -> Int {
         return columnHeights.index(of: columnHeights.min()!) ?? 0
     }
 
-    fileprivate func longestColumnIndex () -> NSInteger {
+    private func longestColumnIndex () -> NSInteger {
         return columnHeights.index(of: columnHeights.max()!) ?? 0
     }
 
-    fileprivate func nextColumnIndexForItem (_ item: NSInteger) -> Int {
+    private func nextColumnIndexForItem (_ item: NSInteger) -> Int {
         switch itemRenderDirection {
         case .shortestFirst: return shortestColumnIndex()
         case .leftToRight: return (item % columnCount)

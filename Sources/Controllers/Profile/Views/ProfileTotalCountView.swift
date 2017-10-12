@@ -4,7 +4,7 @@
 
 class ProfileTotalCountView: ProfileBaseView {
 
-    fileprivate let totalLabel = UILabel()
+    private let totalLabel = UILabel()
 
     struct Size {
         static let height: CGFloat = 60

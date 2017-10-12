@@ -33,7 +33,7 @@ class SearchNavBarField: UITextField {
         sharedInit()
     }
 
-    fileprivate func sharedInit() {
+    private func sharedInit() {
         font = .defaultFont()
         backgroundColor = .greyE5
         clipsToBounds = true
@@ -51,7 +51,7 @@ class SearchNavBarField: UITextField {
         attributedPlaceholder = NSAttributedString(
             string: InterfaceString.Search.Prompt,
             attributes: [
-                NSForegroundColorAttributeName: UIColor.greyA
+                NSAttributedStringKey.foregroundColor: UIColor.greyA
             ])
 
         leftViewMode = .always
@@ -73,7 +73,7 @@ class SearchNavBarField: UITextField {
         return rectForBounds(bounds)
     }
 
-    fileprivate func rectForBounds(_ bounds: CGRect) -> CGRect {
+    private func rectForBounds(_ bounds: CGRect) -> CGRect {
         var rect = super.editingRect(forBounds: bounds)
         rect = rect.shrink(right: Size.textCorrection.x)
         rect = rect.shrink(down: Size.textCorrection.y)

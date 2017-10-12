@@ -20,7 +20,7 @@ class ForgotPasswordResetViewController: BaseElloViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func loadCurrentUser() {
+    private func loadCurrentUser() {
         appViewController?.loadCurrentUser()
             .catch { _ in
                 self.screen.loadingHUD(visible: false)

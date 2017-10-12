@@ -16,7 +16,7 @@ class EditorialsViewController: StreamableViewController {
 
     typealias Usage = HomeViewController.Usage
 
-    fileprivate let usage: Usage
+    private let usage: Usage
 
     init(usage: Usage) {
         self.usage = usage
@@ -60,7 +60,7 @@ class EditorialsViewController: StreamableViewController {
         streamViewController.loadInitialPage()
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
     }
 

@@ -99,8 +99,8 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         set { buyButtonImage.isHidden = !newValue }
     }
 
-    fileprivate var messageVisible = false
-    fileprivate var _messageHtml = ""
+    private var messageVisible = false
+    private var _messageHtml = ""
     var messageHeight: CGFloat = 0
     var messageHtml: String? {
         get { return _messageHtml }
@@ -222,7 +222,7 @@ class NotificationCell: UICollectionViewCell, UIWebViewDelegate {
         webContentReady = handler
     }
 
-    fileprivate func setUser(_ user: User?) {
+    private func setUser(_ user: User?) {
         avatarButton.setUserAvatarURL(user?.avatarURL())
 
         if let user = user {
@@ -377,6 +377,7 @@ extension NotificationCell: ElloTextViewDelegate {
 
 extension NotificationCell {
 
+    @objc
     func replyTapped() {
         guard let responder: NotificationResponder = findResponder() else { return }
         if let post = post {
@@ -387,6 +388,7 @@ extension NotificationCell {
         }
     }
 
+    @objc
     func avatarTapped() {
         if submission != nil {
             let responder: StreamCellResponder? = findResponder()

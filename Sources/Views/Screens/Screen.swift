@@ -9,9 +9,9 @@ import SnapKit
 // automatically, too.
 class Screen: UIView {
     let keyboardAnchor = UIView()
-    fileprivate var keyboardTopConstraint: Constraint!
-    fileprivate var keyboardWillShowObserver: NotificationObserver?
-    fileprivate var keyboardWillHideObserver: NotificationObserver?
+    private var keyboardTopConstraint: Constraint!
+    private var keyboardWillShowObserver: NotificationObserver?
+    private var keyboardWillHideObserver: NotificationObserver?
 
     convenience init() {
         self.init(frame: UIScreen.main.bounds)
@@ -63,12 +63,12 @@ class Screen: UIView {
         }
     }
 
-    fileprivate func setupKeyboardObservers() {
+    private func setupKeyboardObservers() {
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: keyboardWillChangeAnimated)
         keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: keyboardWillChangeAnimated)
     }
 
-    fileprivate func teardownKeyboardObservers() {
+    private func teardownKeyboardObservers() {
         keyboardWillShowObserver?.removeObserver()
         keyboardWillHideObserver?.removeObserver()
         keyboardWillShowObserver = nil
@@ -81,7 +81,7 @@ class Screen: UIView {
 
     func keyboardWillChange(_ keyboard: Keyboard, animated: Bool) {
         let bottomInset = keyboard.keyboardBottomInset(inView: self)
-        animate(duration: keyboard.duration, options: keyboard.options, animated: animated) {
+        elloAnimate(duration: keyboard.duration, options: keyboard.options, animated: animated) {
             self.keyboardTopConstraint.update(offset: -bottomInset)
             self.keyboardIsAnimating(keyboard)
             self.layoutIfNeeded()
@@ -90,7 +90,7 @@ class Screen: UIView {
 
     func keyboardIsAnimating(_ keyboard: Keyboard) {}
 
-    fileprivate func screenInit() {
+    private func screenInit() {
         keyboardAnchor.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
             keyboardTopConstraint = make.top.equalTo(self.snp.bottom).constraint

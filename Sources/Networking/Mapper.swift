@@ -15,7 +15,7 @@ struct Mapper {
         }
 
         if json == nil && error != nil {
-            let userInfo: [AnyHashable: Any]? = ["data": data]
+            let userInfo: [String: Any] = ["data": data]
             error = NSError(domain: ElloErrorDomain, code: ElloErrorCode.jsonMapping.rawValue, userInfo: userInfo)
         }
 

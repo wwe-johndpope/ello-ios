@@ -20,7 +20,7 @@ class OnboardingCreatorTypeViewController: BaseElloViewController {
             screen.updateCreatorType(type: newValue)
         }
     }
-    fileprivate var _creatorType: Profile.CreatorType = .none
+    private var _creatorType: Profile.CreatorType = .none
 
     var onboardingViewController: OnboardingViewController?
     var onboardingData: OnboardingData!

@@ -13,7 +13,7 @@ class StreamLoadMoreCommentsCell: CollectionViewCell {
         static let margin: CGFloat = 15
     }
 
-    fileprivate let button = StyledButton(style: .roundedGray)
+    private let button = StyledButton(style: .roundedGray)
 
     override func style() {
         button.setTitle(InterfaceString.Post.LoadMoreComments, for: .normal)

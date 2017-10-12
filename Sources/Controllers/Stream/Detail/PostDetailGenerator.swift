@@ -11,7 +11,7 @@ protocol PostDetailStreamDestination: StreamDestination {
 final class PostDetailGenerator: StreamGenerator {
     var currentUser: User?
     var streamKind: StreamKind
-    weak fileprivate var postDetailStreamDestination: PostDetailStreamDestination?
+    weak private var postDetailStreamDestination: PostDetailStreamDestination?
     weak var destination: StreamDestination? {
         get { return postDetailStreamDestination }
         set {
@@ -20,11 +20,11 @@ final class PostDetailGenerator: StreamGenerator {
         }
     }
 
-    fileprivate var post: Post?
-    fileprivate let postParam: String
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
-    fileprivate let queue = OperationQueue()
+    private var post: Post?
+    private let postParam: String
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
+    private let queue = OperationQueue()
 
     init(currentUser: User?,
          postParam: String,

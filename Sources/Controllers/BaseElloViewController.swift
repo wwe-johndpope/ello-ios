@@ -9,7 +9,7 @@ protocol ControllerThatMightHaveTheCurrentUser {
 
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
     var statusBarVisibility = true
-    fileprivate var statusBarVisibilityObserver: NotificationObserver?
+    private var statusBarVisibilityObserver: NotificationObserver?
 
     func showStatusBar(_ visible: Bool) {
         guard statusBarVisibility != visible else { return }
@@ -81,7 +81,7 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         setupStatusBarObservers()
     }
 
-    fileprivate func setupStatusBarObservers() {
+    private func setupStatusBarObservers() {
         statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
             self?.showStatusBar(visible)
         }

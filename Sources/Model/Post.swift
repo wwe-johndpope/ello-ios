@@ -88,8 +88,8 @@ final class Post: JSONAble, Authorable, Groupable {
         if isRepost { return repostContent }
         return content
     }
-    fileprivate var lovedChangedNotification: NotificationObserver?
-    fileprivate var commentsCountChangedNotification: NotificationObserver?
+    private var lovedChangedNotification: NotificationObserver?
+    private var commentsCountChangedNotification: NotificationObserver?
 
 // MARK: Initialization
 

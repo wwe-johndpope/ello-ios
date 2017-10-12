@@ -34,13 +34,13 @@ final class CategoryViewController: StreamableViewController {
 
     var category: Category?
     var slug: String?
-    fileprivate var prevSlug: String?
+    private var prevSlug: String?
     var allCategories: [Category]?
     var pagePromotional: PagePromotional?
     var categoryPromotional: Promotional?
     var generator: CategoryGenerator?
     var userDidScroll: Bool = false
-    fileprivate let usage: Usage
+    private let usage: Usage
 
     enum Usage {
         case `default`
@@ -110,7 +110,7 @@ final class CategoryViewController: StreamableViewController {
         self.loadCategory(initial: true)
     }
 
-    fileprivate func updateInsets() {
+    private func updateInsets() {
         updateInsets(navBar: screen.topInsetView)
 
         if !userDidScroll && screen.categoryCardsVisible {
@@ -274,7 +274,7 @@ extension CategoryViewController: CategoryScreenDelegate {
         select(category: category)
     }
 
-    fileprivate func categoryFor(slug: String) -> Category? {
+    private func categoryFor(slug: String) -> Category? {
         return allCategories?.find { $0.slug == slug }
     }
 

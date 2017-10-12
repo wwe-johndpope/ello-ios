@@ -9,16 +9,16 @@ import Nimble
 // GROSS, thanks Apple for making it hard to change Locale for testing purposes
 extension NSLocale {
     class func defaultToArab() {
-        method_exchangeImplementations(class_getClassMethod(self, #selector(getter: NSLocale.current)), class_getClassMethod(self, #selector(NSLocale.ello_currentLocale)))
+        method_exchangeImplementations(class_getClassMethod(self, #selector(getter: NSLocale.current))!, class_getClassMethod(self, #selector(NSLocale.ello_currentLocale))!)
     }
 
     class func defaultToNormal() {
-        method_exchangeImplementations(class_getClassMethod(self, #selector(NSLocale.ello_currentLocale)), class_getClassMethod(self, #selector(getter: NSLocale.current)))
+        method_exchangeImplementations(class_getClassMethod(self, #selector(NSLocale.ello_currentLocale))!, class_getClassMethod(self, #selector(getter: NSLocale.current))!)
     }
 
     // MARK: - Method Swizzling
 
-    class func ello_currentLocale() -> NSLocale {
+    @objc class func ello_currentLocale() -> NSLocale {
         return NSLocale(localeIdentifier: "uz_Arab")
     }
 }

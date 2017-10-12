@@ -10,6 +10,7 @@ class DrawerPopControl: UIControl {
         addTarget(self, action: #selector(DrawerPopControl.pop), for: .touchDown)
     }
 
+    @objc
     func pop() {
         presentingController?.dismiss(animated: true, completion: nil)
     }

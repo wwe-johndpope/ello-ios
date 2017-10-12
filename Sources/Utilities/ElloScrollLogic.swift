@@ -15,14 +15,14 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
     // showingState starts as "indeterminate".  That means that the first time
     // 'show' or 'hide' is called, it will call the appropriate handler no
     // matter what.
-    fileprivate var showingState: Bool?
+    private var showingState: Bool?
     var isShowing: Bool {
         get { return self.showingState ?? true }
         set { showingState = newValue }
     }
 
-    fileprivate var onShow: (() -> Void)!
-    fileprivate var onHide: (() -> Void)!
+    private var onShow: (() -> Void)!
+    private var onHide: (() -> Void)!
 
     init(onShow: @escaping () -> Void, onHide: @escaping () -> Void) {
         self.onShow = onShow
@@ -37,7 +37,7 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         self.onHide = handler
     }
 
-    fileprivate func changedRecently() -> Bool {
+    private func changedRecently() -> Bool {
         if isRunningSpecs {
             return false
         }
@@ -46,7 +46,7 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         return now - lastStateChange < 0.5
     }
 
-    fileprivate func show() {
+    private func show() {
         let wasShowing = self.showingState ?? false
 
         if !changedRecently() {
@@ -61,7 +61,7 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         }
     }
 
-    fileprivate func hide() {
+    private func hide() {
         let wasShowing = self.showingState ?? true
 
         if !changedRecently() {
@@ -120,7 +120,7 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         shouldIgnoreScroll = true
     }
 
-    fileprivate func shouldAcceptScroll(_ scrollView: UIScrollView) -> Bool {
+    private func shouldAcceptScroll(_ scrollView: UIScrollView) -> Bool {
         let nearBottom = self.nearBottom(scrollView)
         if shouldIgnoreScroll || nearBottom {
             return false
@@ -132,34 +132,34 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
         return scrollViewHeight + barHeights + buffer < contentSizeHeight
     }
 
-    fileprivate func nearBottom(_ scrollView: UIScrollView) -> Bool {
+    private func nearBottom(_ scrollView: UIScrollView) -> Bool {
         let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.size.height
         let contentSizeHeight = scrollView.contentSize.height
         return contentSizeHeight - contentOffsetBottom < 50
     }
 
-    fileprivate func didScrollDown(_ contentOffset: CGPoint, _ prevOffset: CGPoint) -> Bool {
+    private func didScrollDown(_ contentOffset: CGPoint, _ prevOffset: CGPoint) -> Bool {
         let contentOffsetY = contentOffset.y
         let prevOffsetY = prevOffset.y
         return contentOffsetY > prevOffsetY
     }
 
-    fileprivate func isAtTop(_ scrollView: UIScrollView) -> Bool {
+    private func isAtTop(_ scrollView: UIScrollView) -> Bool {
         let contentOffsetTop = scrollView.contentOffset.y
         return contentOffsetTop < 0
     }
 
-    fileprivate func isAtBottom(_ scrollView: UIScrollView) -> Bool {
+    private func isAtBottom(_ scrollView: UIScrollView) -> Bool {
         let contentOffsetBottom = scrollView.contentOffset.y + scrollView.frame.size.height
         let contentSizeHeight = scrollView.contentSize.height
         return contentOffsetBottom > contentSizeHeight
     }
 
-    fileprivate func movedALittle(_ contentOffset: CGPoint, _ prevOffset: CGPoint) -> Bool {
+    private func movedALittle(_ contentOffset: CGPoint, _ prevOffset: CGPoint) -> Bool {
         return prevOffset.y - contentOffset.y < 5
     }
 
-    fileprivate func movedALot(_ contentOffset: CGPoint, _ prevOffset: CGPoint) -> Bool {
+    private func movedALot(_ contentOffset: CGPoint, _ prevOffset: CGPoint) -> Bool {
         return prevOffset.y - contentOffset.y > 10
     }
 

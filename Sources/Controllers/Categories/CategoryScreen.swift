@@ -20,7 +20,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
     }
 
     weak var delegate: CategoryScreenDelegate?
-    fileprivate let usage: CategoryViewController.Usage
+    private let usage: CategoryViewController.Usage
 
     init(usage: CategoryViewController.Usage) {
         self.usage = usage
@@ -41,22 +41,22 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
         }
     }
 
-    fileprivate let categoryCardList = CategoryCardListView()
-    fileprivate let iPhoneBlackBar = UIView()
-    fileprivate let searchField = SearchNavBarField()
-    fileprivate let searchFieldButton = UIButton()
-    fileprivate let backButton = UIButton()
-    fileprivate let gridListButton = UIButton()
-    fileprivate let shareButton = UIButton()
-    fileprivate let navigationContainer = UIView()
+    private let categoryCardList = CategoryCardListView()
+    private let iPhoneBlackBar = UIView()
+    private let searchField = SearchNavBarField()
+    private let searchFieldButton = UIButton()
+    private let backButton = UIButton()
+    private let gridListButton = UIButton()
+    private let shareButton = UIButton()
+    private let navigationContainer = UIView()
 
-    fileprivate var categoryCardTopConstraint: Constraint!
-    fileprivate var iPhoneBlackBarTopConstraint: Constraint!
-    fileprivate var backVisibleConstraint: Constraint!
-    fileprivate var backHiddenConstraint: Constraint!
-    fileprivate var shareVisibleConstraint: Constraint!
-    fileprivate var shareHiddenConstraint: Constraint!
-    fileprivate var allHiddenConstraint: Constraint!
+    private var categoryCardTopConstraint: Constraint!
+    private var iPhoneBlackBarTopConstraint: Constraint!
+    private var backVisibleConstraint: Constraint!
+    private var backHiddenConstraint: Constraint!
+    private var shareVisibleConstraint: Constraint!
+    private var shareHiddenConstraint: Constraint!
+    private var allHiddenConstraint: Constraint!
 
     var topInsetView: UIView {
         if categoryCardsVisible {
@@ -67,7 +67,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
         }
     }
 
-    fileprivate var _categoryCardsVisible: Bool = true
+    private var _categoryCardsVisible: Bool = true
     var categoryCardsVisible: Bool {
         set {
             _categoryCardsVisible = newValue
@@ -195,16 +195,16 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
         }
     }
 
-    fileprivate func showCategoryCardList(completion: @escaping Block = {}) {
+    private func showCategoryCardList(completion: @escaping Block = {}) {
         let originalY = categoryCardList.frame.origin.y
         categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
-        animate(completion: { _ in completion() }) {
+        elloAnimate(completion: { _ in completion() }) {
             self.categoryCardList.frame.origin.y = originalY
         }
     }
 
     func animateCategoriesList(navBarVisible: Bool) {
-        animate {
+        elloAnimate {
             let categoryCardListTop: CGFloat
             if navBarVisible {
                 categoryCardListTop = self.navigationBar.frame.height
@@ -236,18 +236,22 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
         self.categoryCardList.selectCategory(index: index + 1)
     }
 
+    @objc
     func searchFieldButtonTapped() {
         delegate?.searchButtonTapped()
     }
 
+    @objc
     func backButtonTapped() {
         delegate?.backButtonTapped()
     }
 
+    @objc
     func gridListToggled() {
         delegate?.gridListToggled(sender: gridListButton)
     }
 
+    @objc
     func shareTapped() {
         delegate?.shareTapped(sender: shareButton)
     }
@@ -286,7 +290,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
             backVisibleConstraint.deactivate()
         }
 
-        animate(animated: animated) {
+        elloAnimate(animated: animated) {
             self.navigationBar.layoutIfNeeded()
             self.shareButton.alpha = shareButtonAlpha
             self.gridListButton.alpha = gridButtonAlpha

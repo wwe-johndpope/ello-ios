@@ -31,13 +31,17 @@ struct AnimationOptions {
 let DefaultAnimationDuration: TimeInterval = 0.2
 let DefaultAppleAnimationDuration: TimeInterval = 0.3
 func animate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
-    let shouldAnimate: Bool = animated ?? !AppSetup.shared.isTesting
-    let options = AnimationOptions(duration: duration, delay: delay, options: options, completion: completion)
-    animate(options: options, animated: shouldAnimate, animations: animations)
+    elloAnimate(duration: duration, delay: delay, options: options, animated: animated, completion: completion, animations: animations)
 }
 
 func animateWithKeyboard(animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
-    animate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, completion: completion, animations: animations)
+    elloAnimate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, completion: completion, animations: animations)
+}
+
+func elloAnimate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
+    let shouldAnimate: Bool = animated ?? !AppSetup.shared.isTesting
+    let options = AnimationOptions(duration: duration, delay: delay, options: options, completion: completion)
+    animate(options: options, animated: shouldAnimate, animations: animations)
 }
 
 func animate(options: AnimationOptions, animated: Bool = true, animations: @escaping () -> Void) {
@@ -49,7 +53,6 @@ func animate(options: AnimationOptions, animated: Bool = true, animations: @esca
         options.completion(true)
     }
 }
-
 
 // MARK: Async, Timed, and Throttled closures
 

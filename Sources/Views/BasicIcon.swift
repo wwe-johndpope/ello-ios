@@ -4,13 +4,13 @@
 
 class BasicIcon: UIView {
 
-    fileprivate var _enabled = false
-    fileprivate var _selected = false
-    fileprivate var _highlighted = false
+    private var _enabled = false
+    private var _selected = false
+    private var _highlighted = false
 
-    fileprivate let normalIconView: UIView
-    fileprivate let selectedIconView: UIView
-    fileprivate let disabledIconView: UIView?
+    private let normalIconView: UIView
+    private let selectedIconView: UIView
+    private let disabledIconView: UIView?
 
     // MARK: Initializers
 

@@ -32,35 +32,35 @@ class ProfileStatsView: ProfileBaseView {
     var followingEnabled = true
     var followersEnabled = true
 
-    fileprivate let postsCountLabel = UILabel()
-    fileprivate let followingCountLabel = UILabel()
-    fileprivate let followersCountLabel = UILabel()
-    fileprivate let lovesCountLabel = UILabel()
-    fileprivate var countLabels: [UILabel] {
+    private let postsCountLabel = UILabel()
+    private let followingCountLabel = UILabel()
+    private let followersCountLabel = UILabel()
+    private let lovesCountLabel = UILabel()
+    private var countLabels: [UILabel] {
         return [postsCountLabel, followingCountLabel, followersCountLabel, lovesCountLabel]
     }
 
-    fileprivate let postsCaptionLabel = UILabel()
-    fileprivate let followingCaptionLabel = UILabel()
-    fileprivate let followersCaptionLabel = UILabel()
-    fileprivate let lovesCaptionLabel = UILabel()
-    fileprivate var captionLabels: [UILabel] {
+    private let postsCaptionLabel = UILabel()
+    private let followingCaptionLabel = UILabel()
+    private let followersCaptionLabel = UILabel()
+    private let lovesCaptionLabel = UILabel()
+    private var captionLabels: [UILabel] {
         return [postsCaptionLabel, followingCaptionLabel, followersCaptionLabel, lovesCaptionLabel]
     }
 
-    fileprivate let postsButton = UIButton()
-    fileprivate let followingButton = UIButton()
-    fileprivate let followersButton = UIButton()
-    fileprivate let lovesButton = UIButton()
+    private let postsButton = UIButton()
+    private let followingButton = UIButton()
+    private let followersButton = UIButton()
+    private let lovesButton = UIButton()
 
-    fileprivate var allThreeViews: [(count: UILabel, caption: UILabel, button: UIButton)] { return [
+    private var allThreeViews: [(count: UILabel, caption: UILabel, button: UIButton)] { return [
         (postsCountLabel,     postsCaptionLabel,     postsButton),
         (followingCountLabel, followingCaptionLabel, followingButton),
         (followersCountLabel, followersCaptionLabel, followersButton),
         (lovesCountLabel,     lovesCaptionLabel,     lovesButton),
     ]}
 
-    fileprivate let grayLine = UIView()
+    private let grayLine = UIView()
     var grayLineVisible: Bool {
         get { return !grayLine.isHidden }
         set { grayLine.isHidden = !newValue }
@@ -160,11 +160,13 @@ extension ProfileStatsView {
 
 extension ProfileStatsView {
 
+    @objc
     func postsButtonTapped() {
         let responder: PostsTappedResponder? = findResponder()
         responder?.onPostsTapped()
     }
 
+    @objc
     func followingButtonTapped() {
         guard followingEnabled else { return }
 
@@ -172,6 +174,7 @@ extension ProfileStatsView {
         responder?.onFollowingTapped()
     }
 
+    @objc
     func followersButtonTapped() {
         guard followersEnabled else { return }
 
@@ -179,6 +182,7 @@ extension ProfileStatsView {
         responder?.onFollowersTapped()
     }
 
+    @objc
     func lovesButtonTapped() {
         let responder: ProfileHeaderResponder? = findResponder()
         responder?.onLovesTapped()
@@ -186,6 +190,7 @@ extension ProfileStatsView {
 }
 
 extension ProfileStatsView {
+    @objc
     func buttonDown(_ touchedButton: UIButton) {
         for (_, captionLabel, button) in allThreeViews {
             guard button == touchedButton else { continue }
@@ -193,6 +198,7 @@ extension ProfileStatsView {
         }
     }
 
+    @objc
     func buttonUp(_ touchedButton: UIButton) {
         for (_, captionLabel, _) in allThreeViews {
             captionLabel.textColor = .greyA

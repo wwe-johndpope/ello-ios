@@ -9,14 +9,14 @@ final class NotificationsGenerator: StreamGenerator {
     var currentUser: User?
     var streamKind: StreamKind
 
-    fileprivate var notificationActivities: [Activity] = []
-    fileprivate var announcements: [Announcement] = []
-    fileprivate var hasNotifications: Bool?
+    private var notificationActivities: [Activity] = []
+    private var announcements: [Announcement] = []
+    private var hasNotifications: Bool?
 
     weak var destination: StreamDestination?
 
-    fileprivate var localToken: String = ""
-    fileprivate var loadingToken = LoadingToken()
+    private var localToken: String = ""
+    private var loadingToken = LoadingToken()
 
     init(
         currentUser: User?,
@@ -85,7 +85,7 @@ final class NotificationsGenerator: StreamGenerator {
             }
     }
 
-    fileprivate func compareAndUpdateAnnouncements(_ newAnnouncements: [Announcement]) {
+    private func compareAndUpdateAnnouncements(_ newAnnouncements: [Announcement]) {
         guard !announcementsAreSame(newAnnouncements) else { return }
 
         self.announcements = newAnnouncements
@@ -149,7 +149,7 @@ final class NotificationsGenerator: StreamGenerator {
             }
     }
 
-    fileprivate func loadExtraNotificationContent(_ notificationActivities: [Activity]) -> Promise<Void> {
+    private func loadExtraNotificationContent(_ notificationActivities: [Activity]) -> Promise<Void> {
         let (promise, resolve, _) = Promise<Void>.pending()
         let (afterAll, done) = afterN {
             resolve(Void())
@@ -162,7 +162,7 @@ final class NotificationsGenerator: StreamGenerator {
                 .thenFinally { artistInvite in
                     ElloLinkedStore.shared.setObject(artistInvite, forKey: submission.artistInviteId, type: .artistInvitesType)
                 }
-                .always { _ in next() }
+                .always {  next() }
         }
         done()
         return promise

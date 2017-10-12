@@ -34,7 +34,7 @@ class Regex {
         let matches = self.regex.matches(in: input, options: [], range: NSRange(location: 0, length: nsstring.length))
         var ret = [String]()
         for match in matches {
-            let range = match.rangeAt(0)
+            let range = match.range(at: 0)
             ret.append(nsstring.substring(with: range))
         }
         return ret
@@ -46,7 +46,7 @@ class Regex {
         if let match = self.regex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: nsstring.length)) {
 
             for i in 0..<match.numberOfRanges {
-                let range = match.rangeAt(i)
+                let range = match.range(at: i)
                 if range.location != NSNotFound {
                     let matchedString = nsstring.substring(with: range)
                     ret.append(matchedString)

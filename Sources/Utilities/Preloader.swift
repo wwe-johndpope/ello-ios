@@ -72,7 +72,7 @@ struct Preloader {
         }
     }
 
-    fileprivate func preloadUserAvatar(_ post: Post, streamKind: StreamKind) {
+    private func preloadUserAvatar(_ post: Post, streamKind: StreamKind) {
         if let content = post.content {
             for region in content {
                 if let imageRegion = region as? ImageRegion,
@@ -85,13 +85,13 @@ struct Preloader {
         }
     }
 
-    fileprivate func preloadImagesinPost(_ post: Post) {
+    private func preloadImagesinPost(_ post: Post) {
         if let content = post.content {
             preloadImagesInRegions(content)
         }
     }
 
-    fileprivate func preloadImagesInRegions(_ regions: [Regionable]) {
+    private func preloadImagesInRegions(_ regions: [Regionable]) {
         for region in regions {
             if let imageRegion = region as? ImageRegion,
                 let asset = imageRegion.asset,
@@ -102,7 +102,7 @@ struct Preloader {
         }
     }
 
-    fileprivate func preloadUrl(_ url: URL) {
+    private func preloadUrl(_ url: URL) {
         if !url.hasGifExtension && !url.hasMP4Extension && DeviceScreen.isRetina {
             manager.prefetchImage(with: url, options: PINRemoteImageManagerDownloadOptions())
         }

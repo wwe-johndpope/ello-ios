@@ -66,13 +66,13 @@ class CategoryHeaderCell: CollectionViewCell {
     let failImage = UIImageView()
     let failBackgroundView = UIView()
 
-    fileprivate var imageSize: CGSize?
-    fileprivate var aspectRatio: CGFloat? {
+    private var imageSize: CGSize?
+    private var aspectRatio: CGFloat? {
         guard let imageSize = imageSize else { return nil }
         return imageSize.width / imageSize.height
     }
 
-    fileprivate var callToActionURL: URL?
+    private var callToActionURL: URL?
 
     var config: Config = Config(style: .category) {
         didSet {
@@ -192,7 +192,7 @@ class CategoryHeaderCell: CollectionViewCell {
         self.config = Config(style: .category)
     }
 
-    fileprivate func updateConfig() {
+    private func updateConfig() {
         titleLabel.attributedText = config.attributedTitle
         bodyLabel.attributedText = config.attributedBody
         setImageURL(config.imageURL)
@@ -241,6 +241,7 @@ class CategoryHeaderCell: CollectionViewCell {
 
 extension CategoryHeaderCell {
 
+    @objc
     func postedByTapped() {
         Tracker.shared.categoryHeaderPostedBy(config.tracking)
 
@@ -248,6 +249,7 @@ extension CategoryHeaderCell {
         responder?.userTappedAuthor(cell: self)
     }
 
+    @objc
     func callToActionTapped() {
         guard let url = callToActionURL else { return }
         Tracker.shared.categoryHeaderCallToAction(config.tracking)

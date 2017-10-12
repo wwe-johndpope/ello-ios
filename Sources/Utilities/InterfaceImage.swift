@@ -128,7 +128,7 @@ enum InterfaceImage: String {
         }
     }
 
-    fileprivate func svgNamed(_ name: String) -> UIImage {
+    private func svgNamed(_ name: String) -> UIImage {
         return SVGKImage(named: "\(name).svg").uiImage.withRenderingMode(.alwaysOriginal)
     }
 

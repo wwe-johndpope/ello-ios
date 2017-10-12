@@ -15,9 +15,9 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
     @IBOutlet weak var cancelView: UIView!
     weak var cancelLabel: StyledLabel!
 
-    fileprivate var state: DeleteAccountState = .askNicely
-    fileprivate var timer: Timer?
-    fileprivate var counter = 5
+    private var state: DeleteAccountState = .askNicely
+    private var timer: Timer?
+    private var counter = 5
 
     init() {
         super.init(nibName: "DeleteAccountConfirmationView", bundle: Bundle(for: DeleteAccountConfirmationViewController.self))
@@ -37,7 +37,7 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
         updateInterface()
     }
 
-    fileprivate func updateInterface() {
+    private func updateInterface() {
         switch state {
         case .askNicely:
             let title = InterfaceString.Settings.DeleteAccountConfirm
@@ -60,7 +60,7 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
     }
 
     @objc
-    fileprivate func tick() {
+    private func tick() {
         let text = InterfaceString.Settings.RedirectedCountdown(counter)
         nextTick {
             self.cancelLabel.text = text
@@ -71,7 +71,7 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
         }
     }
 
-    fileprivate func deleteAccount() {
+    private func deleteAccount() {
         timer?.invalidate()
         _ = ElloHUD.showLoadingHud()
 
@@ -82,7 +82,7 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
                     postNotification(AuthenticationNotifications.userLoggedOut, value: ())
                 }
             }
-            .always { _ in
+            .always {
                 ElloHUD.hideLoadingHud()
             }
     }
@@ -96,7 +96,7 @@ class DeleteAccountConfirmationViewController: BaseElloViewController {
         updateInterface()
     }
 
-    @IBAction fileprivate func dismiss() {
+    @IBAction private func dismiss() {
         timer?.invalidate()
         self.dismiss(animated: true, completion: .none)
     }

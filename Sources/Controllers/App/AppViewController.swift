@@ -43,14 +43,14 @@ class AppViewController: BaseElloViewController {
 
     var visibleViewController: UIViewController?
 
-    fileprivate var userLoggedOutObserver: NotificationObserver?
-    fileprivate var successfulUserEventObserver: NotificationObserver?
-    fileprivate var receivedPushNotificationObserver: NotificationObserver?
-    fileprivate var externalWebObserver: NotificationObserver?
-    fileprivate var internalWebObserver: NotificationObserver?
-    fileprivate var apiOutOfDateObserver: NotificationObserver?
-    fileprivate var pushPayload: PushPayload?
-    fileprivate var deepLinkPath: String?
+    private var userLoggedOutObserver: NotificationObserver?
+    private var successfulUserEventObserver: NotificationObserver?
+    private var receivedPushNotificationObserver: NotificationObserver?
+    private var externalWebObserver: NotificationObserver?
+    private var internalWebObserver: NotificationObserver?
+    private var apiOutOfDateObserver: NotificationObserver?
+    private var pushPayload: PushPayload?
+    private var deepLinkPath: String?
 
     override func loadView() {
         self.view = AppScreen()
@@ -91,7 +91,7 @@ class AppViewController: BaseElloViewController {
 
 // MARK: - Private
 
-    fileprivate func checkIfLoggedIn() {
+    private func checkIfLoggedIn() {
         let authToken = AuthToken()
 
         if authToken.isPasswordBased {
@@ -138,11 +138,11 @@ class AppViewController: BaseElloViewController {
             }
     }
 
-    fileprivate func setupNotificationObservers() {
+    private func setupNotificationObservers() {
         userLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.userLoggedOut) { [weak self] in
             self?.userLoggedOut()
         }
-        successfulUserEventObserver = NotificationObserver(notification: HapticFeedbackNotifications.successfulUserEvent) {
+        successfulUserEventObserver = NotificationObserver(notification: HapticFeedbackNotifications.successfulUserEvent) { _ in
             AudioServicesPlaySystemSound(1520)
         }
         receivedPushNotificationObserver = NotificationObserver(notification: PushNotificationNotifications.interactedWithPushNotification) { [weak self] payload in
@@ -167,7 +167,7 @@ class AppViewController: BaseElloViewController {
         }
     }
 
-    fileprivate func removeNotificationObservers() {
+    private func removeNotificationObservers() {
         userLoggedOutObserver?.removeObserver()
         successfulUserEventObserver?.removeObserver()
         receivedPushNotificationObserver?.removeObserver()
@@ -181,7 +181,7 @@ class AppViewController: BaseElloViewController {
 // MARK: Screens
 extension AppViewController {
 
-    fileprivate func showStartupScreen(_ completion: @escaping Block = {}) {
+    private func showStartupScreen(_ completion: @escaping Block = {}) {
         let initialController = HomeViewController(usage: .loggedOut)
         let childNavController = ElloNavigationController(rootViewController: initialController)
         let loggedOutController = LoggedOutViewController()
@@ -397,7 +397,7 @@ extension AppViewController {
         }
     }
 
-    fileprivate func prepareToShowViewController(_ newViewController: UIViewController) {
+    private func prepareToShowViewController(_ newViewController: UIViewController) {
         view.addSubview(newViewController.view)
         newViewController.view.frame = self.view.bounds
         newViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -442,12 +442,12 @@ extension AppViewController {
         return false
     }
 
-    fileprivate func logInNewUser() {
+    private func logInNewUser() {
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
     }
 
-    fileprivate func logOutCurrentUser() {
+    private func logOutCurrentUser() {
         PushNotificationController.shared.deregisterStoredToken()
         ElloProvider.shared.logout()
         GroupDefaults.resetOnLogout()
@@ -516,7 +516,7 @@ extension AppViewController: InviteResponder {
         }
         ElloHUD.showLoadingHudInView(view)
         InviteService().invite(email)
-            .always { [weak self] _ in
+            .always { [weak self] in
                 guard let `self` = self else { return }
                 ElloHUD.hideLoadingHudInView(self.view)
                 completion()
@@ -637,12 +637,12 @@ extension AppViewController {
         }
     }
 
-    fileprivate func stillLoggingIn() -> Bool {
+    private func stillLoggingIn() -> Bool {
         let authToken = AuthToken()
         return !isLoggedIn() && authToken.isPasswordBased
     }
 
-    fileprivate func stillSettingUpLoggedOut() -> Bool {
+    private func stillSettingUpLoggedOut() -> Bool {
         let authToken = AuthToken()
         let isLoggedOut = !isLoggedIn() && authToken.isAnonymous
         let nav = self.visibleViewController as? UINavigationController
@@ -651,7 +651,7 @@ extension AppViewController {
         return childNav == nil && isLoggedOut
     }
 
-    fileprivate func presentLoginOrSafariAlert(_ path: String) {
+    private func presentLoginOrSafariAlert(_ path: String) {
         guard !isLoggedIn() else {
             return
         }
@@ -673,7 +673,7 @@ extension AppViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    fileprivate func showInvitationScreen() {
+    private func showInvitationScreen() {
         guard
             let vc = self.visibleViewController as? ElloTabBarController
         else { return }
@@ -683,7 +683,7 @@ extension AppViewController {
         onInviteFriends()
     }
 
-    fileprivate func showArtistInvitesScreen(slug: String? = nil) {
+    private func showArtistInvitesScreen(slug: String? = nil) {
         if let slug = slug {
             guard !DeepLinking.alreadyOnArtistInvites(navVC: pushDeepNavigationController(), slug: slug) else { return }
 
@@ -702,7 +702,7 @@ extension AppViewController {
         }
     }
 
-    fileprivate func showCategoryScreen(slug: String) {
+    private func showCategoryScreen(slug: String) {
         if let vc = self.visibleViewController as? ElloTabBarController {
             Tracker.shared.categoryOpened(slug)
             vc.selectedTab = .discover
@@ -722,7 +722,7 @@ extension AppViewController {
         }
     }
 
-    fileprivate func showFollowingScreen() {
+    private func showFollowingScreen() {
         guard
             let vc = self.visibleViewController as? ElloTabBarController
         else { return }
@@ -737,7 +737,7 @@ extension AppViewController {
         homeVC.showFollowingViewController()
     }
 
-    fileprivate func showNotificationsScreen(category: String) {
+    private func showNotificationsScreen(category: String) {
         guard
             let vc = self.visibleViewController as? ElloTabBarController
         else { return }
@@ -754,7 +754,7 @@ extension AppViewController {
         notificationsVC.activatedCategory(notificationFilterType)
     }
 
-    fileprivate func showProfileScreen(_ userParam: String, path: String, isSlug: Bool = true) {
+    private func showProfileScreen(_ userParam: String, path: String, isSlug: Bool = true) {
         let param = isSlug ? "~\(userParam)" : userParam
         let profileVC = ProfileViewController(userParam: param)
         profileVC.deeplinkPath = path
@@ -762,7 +762,7 @@ extension AppViewController {
         pushDeepLinkViewController(profileVC)
     }
 
-    fileprivate func showPostDetailScreen(_ postParam: String, path: String, isSlug: Bool = true) {
+    private func showPostDetailScreen(_ postParam: String, path: String, isSlug: Bool = true) {
         let param = isSlug ? "~\(postParam)" : postParam
         let postDetailVC = PostDetailViewController(postParam: param)
         postDetailVC.deeplinkPath = path
@@ -770,7 +770,7 @@ extension AppViewController {
         pushDeepLinkViewController(postDetailVC)
     }
 
-    fileprivate func showProfileFollowersScreen(_ username: String) {
+    private func showProfileFollowersScreen(_ username: String) {
         let endpoint = ElloAPI.userStreamFollowers(userId: "~\(username)")
         let noResultsTitle: String
         let noResultsBody: String
@@ -788,7 +788,7 @@ extension AppViewController {
         pushDeepLinkViewController(followersVC)
     }
 
-    fileprivate func showProfileFollowingScreen(_ username: String) {
+    private func showProfileFollowingScreen(_ username: String) {
         let endpoint = ElloAPI.userStreamFollowing(userId: "~\(username)")
         let noResultsTitle: String
         let noResultsBody: String
@@ -806,7 +806,7 @@ extension AppViewController {
         pushDeepLinkViewController(vc)
     }
 
-    fileprivate func showProfileLovesScreen(_ username: String) {
+    private func showProfileLovesScreen(_ username: String) {
         let endpoint = ElloAPI.loves(userId: "~\(username)")
         let noResultsTitle: String
         let noResultsBody: String
@@ -824,7 +824,7 @@ extension AppViewController {
         pushDeepLinkViewController(vc)
     }
 
-    fileprivate func showSearchScreen(_ terms: String) {
+    private func showSearchScreen(_ terms: String) {
         let search = SearchViewController()
         search.currentUser = currentUser
         if !terms.isEmpty {
@@ -833,7 +833,7 @@ extension AppViewController {
         pushDeepLinkViewController(search)
     }
 
-    fileprivate func showSettingsScreen() {
+    private func showSettingsScreen() {
         guard
             let settings = UIStoryboard(name: "Settings", bundle: .none).instantiateInitialViewController() as? SettingsContainerViewController,
             let currentUser = currentUser
@@ -843,7 +843,7 @@ extension AppViewController {
         pushDeepLinkViewController(settings)
     }
 
-    fileprivate func pushDeepNavigationController() -> UINavigationController? {
+    private func pushDeepNavigationController() -> UINavigationController? {
         var navController: UINavigationController?
 
         if
@@ -864,11 +864,11 @@ extension AppViewController {
         return navController
     }
 
-    fileprivate func pushDeepLinkViewController(_ vc: UIViewController) {
+    private func pushDeepLinkViewController(_ vc: UIViewController) {
         pushDeepNavigationController()?.pushViewController(vc, animated: true)
     }
 
-    fileprivate func selectTab(_ tab: ElloTab) {
+    private func selectTab(_ tab: ElloTab) {
         ElloWebBrowserViewController.elloTabBarController?.selectedTab = tab
     }
 
@@ -938,6 +938,7 @@ extension AppViewController {
         present(nav, animated: true, completion: nil)
     }
 
+    @objc
     func closeDebugControllerTapped() {
         closeDebugController()
     }

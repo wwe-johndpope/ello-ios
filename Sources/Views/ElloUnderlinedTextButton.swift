@@ -14,7 +14,7 @@ class ElloUnderlinedTextButton: UIButton {
         sharedSetup()
     }
 
-    fileprivate func sharedSetup() {
+    private func sharedSetup() {
         self.backgroundColor = UIColor.clear
         let lineBreakMode = self.titleLabel?.lineBreakMode ?? .byWordWrapping
         if lineBreakMode != .byWordWrapping {
@@ -25,8 +25,8 @@ class ElloUnderlinedTextButton: UIButton {
 
         if let title = self.titleLabel?.text {
             let attributedString = NSAttributedString(string: title, attributes: [
-                NSFontAttributeName: UIFont.defaultFont(),
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                NSAttributedStringKey.font: UIFont.defaultFont(),
+                NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                 ])
             self.setAttributedTitle(attributedString, for: .normal)
         }

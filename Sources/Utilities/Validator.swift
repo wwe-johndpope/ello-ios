@@ -27,7 +27,7 @@ struct Validator {
         }
     }
 
-    fileprivate static func isValidHost(_ host: String?) -> Bool {
+    private static func isValidHost(_ host: String?) -> Bool {
         guard let host = host else { return false }
         return host.contains(".") && !host.hasPrefix(".") && !host.hasSuffix(".")
     }

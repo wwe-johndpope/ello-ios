@@ -34,8 +34,8 @@ struct PushActions {
 class PushNotificationController: NSObject {
     static let shared = PushNotificationController(defaults: GroupDefaults, keychain: ElloKeychain())
 
-    fileprivate let defaults: UserDefaults
-    fileprivate var keychain: KeychainType
+    private let defaults: UserDefaults
+    private var keychain: KeychainType
 
     var needsPermission: Bool {
         get { return defaults[NeedsPermissionKey].bool ?? true }
@@ -227,13 +227,13 @@ extension PushNotificationController {
 
     private func actionFollowUser(userId: String, payload: PushPayload) {
         let (_, promise) = RelationshipService().updateRelationship(userId: userId, relationshipPriority: .following)
-        promise.always { _ in
+        promise.always {
             postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
         }
     }
 
     private func actionLovePost(postId: String, payload: PushPayload) {
-        LovesService().lovePost(postId: postId).always { _ in
+        LovesService().lovePost(postId: postId).always {
             postNotification(PushNotificationNotifications.interactedWithPushNotification, value: payload)
         }
     }

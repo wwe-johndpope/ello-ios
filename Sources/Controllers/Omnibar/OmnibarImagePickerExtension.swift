@@ -17,7 +17,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
         }
     }
 
-    fileprivate func processPHAssets(_ assets: [PHAsset], done: @escaping Block = {}) {
+    private func processPHAssets(_ assets: [PHAsset], done: @escaping Block = {}) {
         self.isInteractionEnabled = false
         AssetsToRegions.processPHAssets(assets) { (imageData: [ImageRegionData]) in
             self.isInteractionEnabled = true
@@ -56,7 +56,7 @@ extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerController
         delegate?.omnibarDismissController()
     }
 
-    fileprivate func isGif(_ buffer: UnsafeMutablePointer<UInt8>, length: Int) -> Bool {
+    private func isGif(_ buffer: UnsafeMutablePointer<UInt8>, length: Int) -> Bool {
         if length >= 4 {
             let isG = Int(buffer[0]) == 71
             let isI = Int(buffer[1]) == 73

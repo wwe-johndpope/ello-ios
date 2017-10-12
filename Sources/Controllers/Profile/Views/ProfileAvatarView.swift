@@ -28,9 +28,9 @@ class ProfileAvatarView: ProfileBaseView {
         }
     }
 
-    fileprivate let avatarImageView = FLAnimatedImageView()
-    fileprivate let whiteBar = UIView()
-    fileprivate var _avatarURL: URL?
+    private let avatarImageView = FLAnimatedImageView()
+    private let whiteBar = UIView()
+    private var _avatarURL: URL?
 
     var onHeightMismatch: OnHeightMismatch?
 }

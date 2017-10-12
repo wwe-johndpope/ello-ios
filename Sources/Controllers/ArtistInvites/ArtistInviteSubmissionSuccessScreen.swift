@@ -8,9 +8,9 @@ class ArtistInviteSubmissionSuccessScreen: Screen {
         static let textSpacing: CGFloat = 24
     }
 
-    fileprivate let textContainer = UIView()
-    fileprivate let titleLabel = StyledLabel(style: .submissionSuccessTitle)
-    fileprivate let descriptionLabel = StyledLabel(style: .submissionSuccessDescription)
+    private let textContainer = UIView()
+    private let titleLabel = StyledLabel(style: .submissionSuccessTitle)
+    private let descriptionLabel = StyledLabel(style: .submissionSuccessDescription)
 
     override func setText() {
         titleLabel.text = InterfaceString.ArtistInvites.SubmissionSuccessTitle

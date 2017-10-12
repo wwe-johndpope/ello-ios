@@ -5,10 +5,10 @@
 class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol {
     weak var delegate: ArtistInviteAdminScreenDelegate?
 
-    fileprivate var tabBar = NestedTabBarView()
-    fileprivate var approvedTab: NestedTabBarView.Tab!
-    fileprivate var selectedTab: NestedTabBarView.Tab!
-    fileprivate var unapprovedTab: NestedTabBarView.Tab!
+    private var tabBar = NestedTabBarView()
+    private var approvedTab: NestedTabBarView.Tab!
+    private var selectedTab: NestedTabBarView.Tab!
+    private var unapprovedTab: NestedTabBarView.Tab!
 
     var selectedSubmissionsStatus: ArtistInviteSubmission.Status = .approved {
         didSet {
@@ -62,14 +62,17 @@ class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol
 
 extension ArtistInviteAdminScreen {
 
+    @objc
     func tappedApprovedSubmissions() {
         delegate?.tappedApprovedSubmissions()
     }
 
+    @objc
     func tappedSelectedSubmissions() {
         delegate?.tappedSelectedSubmissions()
     }
 
+    @objc
     func tappedUnapprovedSubmissions() {
         delegate?.tappedUnapprovedSubmissions()
     }

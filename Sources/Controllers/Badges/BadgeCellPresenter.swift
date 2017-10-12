@@ -20,9 +20,9 @@ struct BadgeCellPresenter {
             let categories = badge.categories
         {
             let title = ElloAttributedString.featuredIn(categories: categories, attrs: [
-                ParagraphAlignmentAttributeName: NSTextAlignment.left.rawValue,
-                NSFontAttributeName: UIFont.defaultFont(),
-                NSForegroundColorAttributeName: UIColor.black,
+                ParagraphAlignmentAttributeName: NSTextAlignment.left,
+                NSAttributedStringKey.font: UIFont.defaultFont(),
+                NSAttributedStringKey.foregroundColor: UIColor.black,
                 ])
             cell.attributedTitle = title
         }

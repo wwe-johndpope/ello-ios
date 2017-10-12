@@ -40,8 +40,8 @@ enum ElloAttributedObject {
 }
 
 struct ElloAttributedText {
-    static let Link: String = "ElloLinkAttributedString"
-    static let Object: String = "ElloObjectAttributedString"
+    static let Link: NSAttributedStringKey = NSAttributedStringKey("ElloLinkAttributedString")
+    static let Object: NSAttributedStringKey = NSAttributedStringKey("ElloObjectAttributedString")
 }
 
 class ElloTextView: UITextView {
@@ -68,19 +68,19 @@ class ElloTextView: UITextView {
 
 // MARK: Private
 
-    fileprivate func defaultAttrs() -> [String: Any]  {
+    private func defaultAttrs() -> [NSAttributedStringKey: Any]  {
         return [
-            NSFontAttributeName: self.customFont ?? UIFont.defaultFont(),
-            NSForegroundColorAttributeName: UIColor.greyA,
+            NSAttributedStringKey.font: self.customFont ?? UIFont.defaultFont(),
+            NSAttributedStringKey.foregroundColor: UIColor.greyA,
         ]
     }
 
-    fileprivate func internalInit() {
+    private func internalInit() {
         setDefaults()
         addTarget()
     }
 
-    fileprivate func setDefaults() {
+    private func setDefaults() {
         // some default styling
         font = UIFont.defaultFont()
         textColor = UIColor.greyA
@@ -96,27 +96,26 @@ class ElloTextView: UITextView {
         allowsEditingTextAttributes = false
     }
 
-    fileprivate func addTarget() {
+    private func addTarget() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(ElloTextView.textViewTapped(_:)))
         recognizer.numberOfTapsRequired = 1
         recognizer.numberOfTouchesRequired = 1
         addGestureRecognizer(recognizer)
     }
 
+    @objc
     func textViewTapped(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
         if self.frame.at(origin: .zero).contains(location) {
-            if let range = characterRange(at: location) {
-                if let pos = closestPosition(to: location, within: range) {
-                    if let style = textStyling(at: pos, in: .forward),
-                        let link = style[ElloAttributedText.Link] as? String
-                    {
-                        let object: Any? = style[ElloAttributedText.Object]
-                        let attributedObject = ElloAttributedObject.generate(link, object)
-                        textViewDelegate?.textViewTapped(link, object: attributedObject)
-                        return
-                    }
-                }
+            if let range = characterRange(at: location),
+                let pos = closestPosition(to: location, within: range),
+                let style = textStyling(at: pos, in: .forward),
+                let link = style[ElloAttributedText.Link.rawValue] as? String
+            {
+                let object: Any? = style[ElloAttributedText.Object.rawValue]
+                let attributedObject = ElloAttributedObject.generate(link, object)
+                textViewDelegate?.textViewTapped(link, object: attributedObject)
+                return
             }
 
             textViewDelegate?.textViewTappedDefault()

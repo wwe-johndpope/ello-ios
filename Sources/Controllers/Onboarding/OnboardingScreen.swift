@@ -9,10 +9,10 @@ class OnboardingScreen: EmptyScreen {
         static let abortButtonWidth: CGFloat = 70
     }
     var controllerContainer = UIView()
-    fileprivate var buttonContainer = UIView()
-    fileprivate var promptButton = StyledButton(style: .roundedGrayOutline)
-    fileprivate var nextButton = StyledButton(style: .green)
-    fileprivate var abortButton = StyledButton(style: .grayText)
+    private var buttonContainer = UIView()
+    private var promptButton = StyledButton(style: .roundedGrayOutline)
+    private var nextButton = StyledButton(style: .green)
+    private var abortButton = StyledButton(style: .grayText)
 
     weak var delegate: OnboardingDelegate?
 
@@ -86,7 +86,7 @@ class OnboardingScreen: EmptyScreen {
         }
     }
 
-    fileprivate func updateButtonVisibility() {
+    private func updateButtonVisibility() {
         if hasAbortButton && canGoNext {
             promptButton.isHidden = true
             nextButton.isHidden = false
@@ -119,10 +119,12 @@ class OnboardingScreen: EmptyScreen {
 }
 
 extension OnboardingScreen {
+    @objc
     func nextAction() {
         delegate?.nextAction()
     }
 
+    @objc
     func abortAction() {
         delegate?.abortAction()
     }

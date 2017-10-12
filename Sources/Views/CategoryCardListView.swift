@@ -33,9 +33,9 @@ class CategoryCardListView: View {
         }
     }
 
-    fileprivate var buttonIndexLookup: [UIButton: Int] = [:]
-    fileprivate var categoryViews: [CategoryCardView] = []
-    fileprivate var scrollView = UIScrollView()
+    private var buttonIndexLookup: [UIButton: Int] = [:]
+    private var categoryViews: [CategoryCardView] = []
+    private var scrollView = UIScrollView()
 
     override func style() {
         backgroundColor = .white
@@ -85,7 +85,7 @@ class CategoryCardListView: View {
         view.isSelected = true
     }
 
-    fileprivate func updateCategoryViews() {
+    private func updateCategoryViews() {
         for view in categoryViews {
             view.removeFromSuperview()
         }
@@ -111,14 +111,14 @@ class CategoryCardListView: View {
         layoutIfNeeded()
     }
 
-    fileprivate func categoryView(index: Int, info: CategoryInfo) -> CategoryCardView {
+    private func categoryView(index: Int, info: CategoryInfo) -> CategoryCardView {
         let card = CategoryCardView(info: info)
         card.addTarget(self, action: #selector(categoryButtonTapped(_:)))
         buttonIndexLookup[card.button] = index
         return card
     }
 
-    fileprivate func arrangeCategoryViews() {
+    private func arrangeCategoryViews() {
         var prevView: UIView? = nil
         for view in categoryViews {
             scrollView.addSubview(view)

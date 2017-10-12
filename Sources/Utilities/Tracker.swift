@@ -37,8 +37,8 @@ class Tracker {
     var overrideAgent: AnalyticsAgent?
     static let shared = Tracker()
     var settingChangedNotification: NotificationObserver?
-    fileprivate var shouldTrackUser = true
-    fileprivate var agent: AnalyticsAgent {
+    private var shouldTrackUser = true
+    private var agent: AnalyticsAgent {
         return overrideAgent ?? (shouldTrackUser ? SEGAnalytics.shared() : NullAgent())
     }
 
@@ -411,7 +411,7 @@ extension Tracker {
 
 // MARK: Content Actions
 extension Tracker {
-    fileprivate func regionDetails(_ regions: [Regionable]?) -> [String: Any] {
+    private func regionDetails(_ regions: [Regionable]?) -> [String: Any] {
         guard let regions = regions else {
             return [:]
         }
@@ -500,7 +500,7 @@ extension Tracker {
 }
 
 extension Tracker {
-    fileprivate func postProps(_ post: Post, additional: [String: Any] = [:]) -> [String: Any] {
+    private func postProps(_ post: Post, additional: [String: Any] = [:]) -> [String: Any] {
         var props: [String: Any] = ["post_id": post.id]
         if let artistInviteId = post.artistInviteId {
             props["artistInviteId"] = artistInviteId

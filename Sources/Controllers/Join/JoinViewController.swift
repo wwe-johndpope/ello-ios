@@ -28,11 +28,11 @@ class JoinViewController: BaseElloViewController {
         self.view = screen
     }
 
-    fileprivate func showOnboardingScreen(_ user: User) {
+    private func showOnboardingScreen(_ user: User) {
         appViewController?.showOnboardingScreen(user)
     }
 
-    fileprivate func showLoginScreen(_ email: String, _ password: String) {
+    private func showLoginScreen(_ email: String, _ password: String) {
         appViewController?.showLoginScreen()
     }
 }
@@ -184,7 +184,7 @@ extension JoinViewController: JoinDelegate {
 // MARK: Text field validation
 extension JoinViewController {
 
-    fileprivate func emailAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
+    private func emailAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
         AvailabilityService().emailAvailability(text)
             .thenFinally { availability in
                 if text != self.screen.email {
@@ -207,7 +207,7 @@ extension JoinViewController {
             }
     }
 
-    fileprivate func usernameAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
+    private func usernameAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
         AvailabilityService().usernameAvailability(text)
             .thenFinally { availability in
                 if text != self.screen.username {

@@ -6,11 +6,11 @@
 class CategoryHeaderCellSizeCalculator {
     static let ratio: CGFloat = 320 / 192
 
-    fileprivate typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
-    fileprivate var cellJobs: [CellJob] = []
-    fileprivate var cellWidth: CGFloat = 0.0
-    fileprivate var cellItems: [StreamCellItem] = []
-    fileprivate var completion: Block = {}
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, completion: Block)
+    private var cellJobs: [CellJob] = []
+    private var cellWidth: CGFloat = 0.0
+    private var cellItems: [StreamCellItem] = []
+    private var completion: Block = {}
 
     // MARK: Public
 
@@ -75,7 +75,7 @@ class CategoryHeaderCellSizeCalculator {
 
     // MARK: Private
 
-    fileprivate func processJob(_ job: CellJob) {
+    private func processJob(_ job: CellJob) {
         self.completion = {
             if self.cellJobs.count > 0 {
                 self.cellJobs.remove(at: 0)
@@ -90,7 +90,7 @@ class CategoryHeaderCellSizeCalculator {
         loadNext()
     }
 
-    fileprivate func loadNext() {
+    private func loadNext() {
         guard !self.cellItems.isEmpty else {
             completion()
             return

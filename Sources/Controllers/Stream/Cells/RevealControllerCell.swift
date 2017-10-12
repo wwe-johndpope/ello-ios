@@ -18,8 +18,8 @@ class RevealControllerCell: CollectionViewCell {
         set { label.text = newValue }
     }
 
-    fileprivate let label = StyledLabel(style: .gray)
-    fileprivate let arrow = UIImageView()
+    private let label = StyledLabel(style: .gray)
+    private let arrow = UIImageView()
 
     override func style() {
         arrow.interfaceImage = .angleBracket

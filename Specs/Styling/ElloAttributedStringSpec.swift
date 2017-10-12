@@ -18,18 +18,18 @@ class ElloAttributedStringSpec: QuickSpec {
             it("accepts additional options") {
                 let text = "text"
                 let c = UIColor.gray
-                let attrd = ElloAttributedString.style(text, [NSForegroundColorAttributeName: c])
+                let attrd = ElloAttributedString.style(text, [NSAttributedStringKey.foregroundColor: c])
                 expect(attrd).to(beAKindOf(NSAttributedString.self))
-                expect(attrd.attributes(at: 0, effectiveRange: nil)[NSForegroundColorAttributeName] as? UIColor) == c
+                expect(attrd.attributes(at: 0, effectiveRange: nil)[NSAttributedStringKey.foregroundColor] as? UIColor) == c
             }
             it("ElloAttributedString.attrs() accepts many additional options") {
                 let c1 = UIColor.lightGray
                 let c2 = UIColor.darkGray
-                let attrs1: [String: Any] = [NSForegroundColorAttributeName: c1]
-                let attrs2: [String: Any] = [NSBackgroundColorAttributeName: c2]
+                let attrs1: [String: Any] = [NSAttributedStringKey.foregroundColor: c1]
+                let attrs2: [String: Any] = [NSAttributedStringKey.backgroundColor: c2]
                 let attrs = ElloAttributedString.attrs(attrs1, attrs2)
-                expect(attrs[NSForegroundColorAttributeName] as? UIColor) == c1
-                expect(attrs[NSBackgroundColorAttributeName] as? UIColor) == c2
+                expect(attrs[NSAttributedStringKey.foregroundColor] as? UIColor) == c1
+                expect(attrs[NSAttributedStringKey.backgroundColor] as? UIColor) == c2
             }
         }
 

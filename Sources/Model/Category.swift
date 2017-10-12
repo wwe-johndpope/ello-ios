@@ -49,7 +49,7 @@ final class Category: JSONAble, Groupable {
 
     // links
     var promotionals: [Promotional]? { return getLinkArray("promotionals") as? [Promotional] }
-    fileprivate var _randomPromotional: Promotional?
+    private var _randomPromotional: Promotional?
     var randomPromotional: Promotional? {
         get {
             if _randomPromotional == nil {
