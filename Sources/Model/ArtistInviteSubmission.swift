@@ -27,6 +27,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
         case selected
         case unapproved
         case unspecified
+        case declined
     }
 
     struct Action {
@@ -35,6 +36,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
             case unapprove
             case select
             case unselect
+            case decline
             case other(String)
 
             init(_ name: String) {
@@ -43,6 +45,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
                 case "unselect": self = .unselect
                 case "approve": self = .approve
                 case "select": self = .select
+                case "decline": self = .decline
                 default: self = .other(name)
                 }
             }
@@ -53,6 +56,7 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
                 case .unselect: return "unselect"
                 case .approve: return "approve"
                 case .select: return "select"
+                case .decline: return "decline"
                 case let .other(string): return string
                 }
             }
@@ -69,7 +73,8 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
             case .approve: return 1
             case .unselect: return 2
             case .select: return 3
-            case .other: return 4
+            case .decline: return 4
+            case .other: return 5
             }
         }
 

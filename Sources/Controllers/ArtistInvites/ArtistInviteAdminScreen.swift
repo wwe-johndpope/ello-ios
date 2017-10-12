@@ -6,9 +6,10 @@ class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol
     weak var delegate: ArtistInviteAdminScreenDelegate?
 
     private var tabBar = NestedTabBarView()
+    private var unapprovedTab: NestedTabBarView.Tab!
     private var approvedTab: NestedTabBarView.Tab!
     private var selectedTab: NestedTabBarView.Tab!
-    private var unapprovedTab: NestedTabBarView.Tab!
+    private var declinedTab: NestedTabBarView.Tab!
 
     var selectedSubmissionsStatus: ArtistInviteSubmission.Status = .approved {
         didSet {
@@ -16,6 +17,7 @@ class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol
             case .approved: tabBar.select(tab: approvedTab)
             case .selected: tabBar.select(tab: selectedTab)
             case .unapproved: tabBar.select(tab: unapprovedTab)
+            case .declined: tabBar.select(tab: declinedTab)
             case .unspecified: break
             }
         }
@@ -45,10 +47,13 @@ class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol
         approvedTab.addTarget(self, action: #selector(tappedApprovedSubmissions))
         selectedTab = tabBar.createTab(title: InterfaceString.ArtistInvites.AdminSelectedTab)
         selectedTab.addTarget(self, action: #selector(tappedSelectedSubmissions))
+        declinedTab = tabBar.createTab(title: InterfaceString.ArtistInvites.AdminDeclinedTab)
+        declinedTab.addTarget(self, action: #selector(tappedDeclinedSubmissions))
 
         tabBar.addTab(unapprovedTab)
         tabBar.addTab(approvedTab)
         tabBar.addTab(selectedTab)
+        tabBar.addTab(declinedTab)
         tabBar.select(tab: approvedTab)
 
         navigationBar.sizeClass = .large
@@ -63,6 +68,11 @@ class ArtistInviteAdminScreen: StreamableScreen, ArtistInviteAdminScreenProtocol
 extension ArtistInviteAdminScreen {
 
     @objc
+    func tappedUnapprovedSubmissions() {
+        delegate?.tappedUnapprovedSubmissions()
+    }
+
+    @objc
     func tappedApprovedSubmissions() {
         delegate?.tappedApprovedSubmissions()
     }
@@ -73,7 +83,7 @@ extension ArtistInviteAdminScreen {
     }
 
     @objc
-    func tappedUnapprovedSubmissions() {
-        delegate?.tappedUnapprovedSubmissions()
+    func tappedDeclinedSubmissions() {
+        delegate?.tappedDeclinedSubmissions()
     }
 }

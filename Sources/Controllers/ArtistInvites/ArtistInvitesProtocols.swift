@@ -17,6 +17,7 @@ protocol ArtistInviteAdminScreenDelegate: class {
     func tappedApprovedSubmissions()
     func tappedSelectedSubmissions()
     func tappedUnapprovedSubmissions()
+    func tappedDeclinedSubmissions()
 }
 
 protocol ArtistInviteConfigurableCell: class {
