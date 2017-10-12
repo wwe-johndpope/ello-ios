@@ -478,6 +478,7 @@
 		1D1C162C1B1D034100C4F27C /* TemporaryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */; };
 		1D1C88AB1AC9B71600AFC56D /* UIImageSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */; };
 		1D1D564B1CD3D56A00B3EBED /* hearts_giant.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */; };
+		1D1F5F681F86CD4B00417A59 /* InterfaceStringSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1F5F671F86CD4B00417A59 /* InterfaceStringSpec.swift */; };
 		1D209BED1D9C249400CFBF92 /* watch_green.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D209BEB1D9C249400CFBF92 /* watch_green.svg */; };
 		1D209BEE1D9C249400CFBF92 /* watch_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D209BEC1D9C249400CFBF92 /* watch_normal.svg */; };
 		1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */; };
@@ -921,6 +922,8 @@
 		1DB8C6AF1D7A26BE007E1447 /* SearchStreamCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */; };
 		1DB8C6B11D7F1BE4007E1447 /* DismissableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */; };
 		1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B21D7F24B4007E1447 /* SearchString.swift */; };
+		1DBB23DB1F8C30350025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
+		1DBB23DC1F8C30390025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
 		1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */; };
 		1DBFD9F01DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD9EF1DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift */; };
@@ -1696,6 +1699,7 @@
 		1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemporaryCache.swift; sourceTree = "<group>"; };
 		1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageSpecs.swift; sourceTree = "<group>"; };
 		1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hearts_giant.svg; sourceTree = "<group>"; };
+		1D1F5F671F86CD4B00417A59 /* InterfaceStringSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceStringSpec.swift; sourceTree = "<group>"; };
 		1D209BEB1D9C249400CFBF92 /* watch_green.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = watch_green.svg; sourceTree = "<group>"; };
 		1D209BEC1D9C249400CFBF92 /* watch_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = watch_normal.svg; sourceTree = "<group>"; };
 		1D209BEF1DA2C39A00CFBF92 /* RecordedResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedResponse.swift; sourceTree = "<group>"; };
@@ -2028,6 +2032,7 @@
 		1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStreamCellPresenter.swift; sourceTree = "<group>"; };
 		1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissableCell.swift; sourceTree = "<group>"; };
 		1DB8C6B21D7F24B4007E1447 /* SearchString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchString.swift; sourceTree = "<group>"; };
+		1DBB23DA1F8C30350025FA07 /* DebugServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugServer.swift; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DBFD9EF1DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
@@ -2208,7 +2213,7 @@
 		7689B4D11AD4ED3B00E4A4A3 /* users_registering_an_account.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users_registering_an_account.json; sourceTree = "<group>"; };
 		7689B4D21AD4ED3B00E4A4A3 /* users_searching_for_users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users_searching_for_users.json; sourceTree = "<group>"; };
 		7689B4D31AD4ED3B00E4A4A3 /* users_user_details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users_user_details.json; sourceTree = "<group>"; };
-		769051001AFD2A720011B09A /* ello_logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ello_logo.svg; path = ../../Resources/CustomSVGs/ello_logo.svg; sourceTree = "<group>"; };
+		769051001AFD2A720011B09A /* ello_logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_logo.svg; sourceTree = "<group>"; };
 		769865C01A8D3E3F009B6292 /* ProfileHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCell.swift; sourceTree = "<group>"; };
 		76A628D61B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamSeeMoreCommentsCellSpec.swift; sourceTree = "<group>"; };
 		76A9664B1AE996C500FB1A52 /* StreamRegionableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamRegionableCell.swift; sourceTree = "<group>"; };
@@ -3065,6 +3070,7 @@
 		12D14C601A4375CA00C6F8E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1D1F5F671F86CD4B00417A59 /* InterfaceStringSpec.swift */,
 				1D6A02441C73CD390054603B /* AssetsToRegionsSpec.swift */,
 				12EC00011DDBD027007F22C5 /* DeepLinkingSpec.swift */,
 				1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */,
@@ -3123,10 +3129,9 @@
 		12F0E3A51A4333020012CEA2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1DF404061B150CE50073460B /* CustomSVGs */,
 				1D71529F1D6D212D005998FE /* ello-crazy-logo.gif */,
 				1DA9AA7D1C6A81AB000562E4 /* emojis.json */,
-				76CBD22D1AB2338F00D144F7 /* GeneratedSVGs */,
+				76CBD22D1AB2338F00D144F7 /* SVGs */,
 				12F0E3AA1A4333260012CEA2 /* Images.xcassets */,
 				12F0E3A61A4333150012CEA2 /* LaunchScreen.xib */,
 				1D6680431A8AC8E0003E93C8 /* selected-pixel@2x.png */,
@@ -3260,6 +3265,7 @@
 				12F6AE1D1A43386300493660 /* AppViewController.swift */,
 				1D7152C31D6F8189005998FE /* CredentialsScreen.swift */,
 				1D24AA501B7E8CD5004BAAFA /* DebugController.swift */,
+				1DBB23DA1F8C30350025FA07 /* DebugServer.swift */,
 				1D971CF21E1ED2BD00A167A2 /* DebugTrackingController.swift */,
 			);
 			path = App;
@@ -4011,88 +4017,6 @@
 			path = ForgotPassword;
 			sourceTree = "<group>";
 		};
-		1DF404061B150CE50073460B /* CustomSVGs */ = {
-			isa = PBXGroup;
-			children = (
-				1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */,
-				1D612BF71D3EA41700B4079C /* $_add_normal.svg */,
-				1D612BF51D3EA39500B4079C /* $_add_selected.svg */,
-				1D9CF9A21D496639004A95B7 /* $_set_normal.svg */,
-				1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */,
-				1D5A90171D39747E00C2AEFF /* $.svg */,
-				1D7152BD1D6F7350005998FE /* 1password_normal.svg */,
-				1D7152BE1D6F7350005998FE /* 1password_white.svg */,
-				1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */,
-				1D313F671F265FED00953EE2 /* artist_invite_status_open.svg */,
-				1D313F681F265FED00953EE2 /* artist_invite_status_preview.svg */,
-				1D313F691F265FED00953EE2 /* artist_invite_status_selecting.svg */,
-				1D313F6A1F265FED00953EE2 /* artist_invite_status_upcoming.svg */,
-				1D2ED1B31F82EF2700B19052 /* list_view_selected.svg */,
-				1D2ED1AB1F82D2E800B19052 /* back_disabled.svg */,
-				1D2ED1AD1F82D2E900B19052 /* back_normal.svg */,
-				1D2ED1AC1F82D2E800B19052 /* back_selected.svg */,
-				1D2ED1AA1F82D2E600B19052 /* back_white.svg */,
-				1D6E43071EA68AEA0029C9B1 /* badge_community_normal.svg */,
-				1D6E43081EA68AEA0029C9B1 /* badge_community_selected.svg */,
-				1D6E43091EA68AEA0029C9B1 /* badge_experimental_normal.svg */,
-				1D6E430A1EA68AEA0029C9B1 /* badge_experimental_selected.svg */,
-				12A1D82E1DAD4D0F00A327D6 /* badge_featured_normal.svg */,
-				12A1D8301DAD511A00A327D6 /* badge_featured_selected.svg */,
-				1D6E430B1EA68AEA0029C9B1 /* badge_nsfw_normal.svg */,
-				1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */,
-				1D6E430C1EA68AEA0029C9B1 /* badge_spam_normal.svg */,
-				1D6E430D1EA68AEA0029C9B1 /* badge_spam_selected.svg */,
-				1D6E430E1EA68AEA0029C9B1 /* badge_staff_normal.svg */,
-				1D6E430F1EA68AEA0029C9B1 /* badge_staff_selected.svg */,
-				1D472C251C1F349E00B61E55 /* breaklink_normal.svg */,
-				1DF741701BFAAC02000F5349 /* breaklink_white.svg */,
-				1D9B74CB1BB1E62500ACD028 /* bubble_body_normal.svg */,
-				1D9B74CC1BB1E62500ACD028 /* bubble_body_selected.svg */,
-				1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */,
-				1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */,
-				1DF741681BFA61B1000F5349 /* camera_white.svg */,
-				1DDC23471F32439400E68B0E /* circle_check_green.svg */,
-				1DDC23481F32439400E68B0E /* circle_check_normal.svg */,
-				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
-				12241CEE1E60CAC700100C41 /* create_post_selected.svg */,
-				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
-				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
-				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
-				769051001AFD2A720011B09A /* ello_logo.svg */,
-				1D6511BD1F01AD2F00A34AF8 /* ello_type_normal.svg */,
-				1D472C211C1F2E0400B61E55 /* embetter_audio_play.svg */,
-				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
-				1D242D611DDBCD87000A424C /* grid_view_normal.svg */,
-				1D2ED1B21F82EF2600B19052 /* grid_view_selected.svg */,
-				1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */,
-				12E2A5A11E5CD357000EFFBA /* home_normal.svg */,
-				12E2A5A21E5CD357000EFFBA /* home_selected.svg */,
-				1DF7416C1BFA65F0000F5349 /* link_normal.svg */,
-				1DF7416D1BFA65F0000F5349 /* link_selected.svg */,
-				1DF7416A1BFA650E000F5349 /* link_white.svg */,
-				1D242D621DDBCD87000A424C /* list_view_normal.svg */,
-				1D59EF931D6640C50029C106 /* mail_normal.svg */,
-				1D59EF941D6640C50029C106 /* mail_selected.svg */,
-				1D59EF951D6640C50029C106 /* mail_white.svg */,
-				1220347C1DECCDD80059E633 /* marker.svg */,
-				1DF404071B150CF20073460B /* narration_pointer.svg */,
-				1DF741661BF6869B000F5349 /* pencil_white.svg */,
-				1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */,
-				1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */,
-				1D405D9B1C47166D0059DAFD /* repost_disabled.svg */,
-				1D3EC0D91E97F5F70092C769 /* search_large_normal.svg */,
-				1D3EC0DA1E97F5F70092C769 /* search_large_selected.svg */,
-				1DF0B2E51E940572001B9F97 /* search_small_normal.svg */,
-				1DF0B2E61E940572001B9F97 /* search_small_selected.svg */,
-				1D7152DE1D74E79D005998FE /* small_check_green.svg */,
-				1DDC23491F32439400E68B0E /* star_normal.svg */,
-				1DDC234A1F32439400E68B0E /* star_orange.svg */,
-				1D209BEB1D9C249400CFBF92 /* watch_green.svg */,
-				1D209BEC1D9C249400CFBF92 /* watch_normal.svg */,
-			);
-			path = CustomSVGs;
-			sourceTree = "<group>";
-		};
 		1DFC5DC11AAB568B008DA855 /* Styling */ = {
 			isa = PBXGroup;
 			children = (
@@ -4130,9 +4054,17 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		76CBD22D1AB2338F00D144F7 /* GeneratedSVGs */ = {
+		76CBD22D1AB2338F00D144F7 /* SVGs */ = {
 			isa = PBXGroup;
 			children = (
+				1DB68E981D46CE0F00D446C7 /* $_add_disabled.svg */,
+				1D612BF71D3EA41700B4079C /* $_add_normal.svg */,
+				1D612BF51D3EA39500B4079C /* $_add_selected.svg */,
+				1D9CF9A21D496639004A95B7 /* $_set_normal.svg */,
+				1D9CF9A41D4966F7004A95B7 /* $_set_selected.svg */,
+				1D5A90171D39747E00C2AEFF /* $.svg */,
+				1D7152BD1D6F7350005998FE /* 1password_normal.svg */,
+				1D7152BE1D6F7350005998FE /* 1password_white.svg */,
 				76F8DE4E1B6C0BC4009BCF61 /* abracket_disabled.svg */,
 				76F8DE4F1B6C0BC4009BCF61 /* abracket_normal.svg */,
 				76F8DE501B6C0BC4009BCF61 /* abracket_selected.svg */,
@@ -4140,20 +4072,48 @@
 				76F8DE521B6C0BC4009BCF61 /* arrow_normal.svg */,
 				76F8DE531B6C0BC4009BCF61 /* arrow_selected.svg */,
 				76F8DE541B6C0BC4009BCF61 /* arrow_white.svg */,
+				1D7E82441F26A523006ACE7A /* artist_invite_status_closed.svg */,
+				1D313F671F265FED00953EE2 /* artist_invite_status_open.svg */,
+				1D313F681F265FED00953EE2 /* artist_invite_status_preview.svg */,
+				1D313F691F265FED00953EE2 /* artist_invite_status_selecting.svg */,
+				1D313F6A1F265FED00953EE2 /* artist_invite_status_upcoming.svg */,
+				1D2ED1AB1F82D2E800B19052 /* back_disabled.svg */,
+				1D2ED1AD1F82D2E900B19052 /* back_normal.svg */,
+				1D2ED1AC1F82D2E800B19052 /* back_selected.svg */,
+				1D2ED1AA1F82D2E600B19052 /* back_white.svg */,
+				1D6E43071EA68AEA0029C9B1 /* badge_community_normal.svg */,
+				1D6E43081EA68AEA0029C9B1 /* badge_community_selected.svg */,
+				1D6E43091EA68AEA0029C9B1 /* badge_experimental_normal.svg */,
+				1D6E430A1EA68AEA0029C9B1 /* badge_experimental_selected.svg */,
+				12A1D82E1DAD4D0F00A327D6 /* badge_featured_normal.svg */,
+				12A1D8301DAD511A00A327D6 /* badge_featured_selected.svg */,
+				1D6E430B1EA68AEA0029C9B1 /* badge_nsfw_normal.svg */,
+				1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */,
+				1D6E430C1EA68AEA0029C9B1 /* badge_spam_normal.svg */,
+				1D6E430D1EA68AEA0029C9B1 /* badge_spam_selected.svg */,
+				1D6E430E1EA68AEA0029C9B1 /* badge_staff_normal.svg */,
+				1D6E430F1EA68AEA0029C9B1 /* badge_staff_selected.svg */,
 				76F8DE551B6C0BC4009BCF61 /* bolt_normal.svg */,
 				76F8DE561B6C0BC4009BCF61 /* bolt_selected.svg */,
+				1D472C251C1F349E00B61E55 /* breaklink_normal.svg */,
+				1DF741701BFAAC02000F5349 /* breaklink_white.svg */,
 				76F8DE571B6C0BC4009BCF61 /* browse_normal.svg */,
 				76F8DE581B6C0BC4009BCF61 /* browse_selected.svg */,
+				1D9B74CB1BB1E62500ACD028 /* bubble_body_normal.svg */,
+				1D9B74CC1BB1E62500ACD028 /* bubble_body_selected.svg */,
+				1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */,
 				76F8DE591B6C0BC4009BCF61 /* bubble_normal.svg */,
 				1D942C061EC3AF8700056761 /* bubble_outline_normal.svg */,
 				1D942C071EC3AF8700056761 /* bubble_outline_selected.svg */,
 				1D942C081EC3AF8700056761 /* bubble_outline_white.svg */,
 				76F8DE5A1B6C0BC4009BCF61 /* bubble_selected.svg */,
+				1D9B74CF1BB1E62500ACD028 /* bubble_tail.svg */,
 				76F8DE5B1B6C0BC4009BCF61 /* bubble_white.svg */,
 				76F8DE5C1B6C0BC4009BCF61 /* burger_normal.svg */,
 				76F8DE5D1B6C0BC4009BCF61 /* burger_selected.svg */,
 				76F8DE5E1B6C0BC4009BCF61 /* camera_normal.svg */,
 				76F8DE5F1B6C0BC4009BCF61 /* camera_selected.svg */,
+				1DF741681BFA61B1000F5349 /* camera_white.svg */,
 				76F8DE601B6C0BC4009BCF61 /* check_green.svg */,
 				76F8DE611B6C0BC4009BCF61 /* check_normal.svg */,
 				76F8DE621B6C0BC4009BCF61 /* check_selected.svg */,
@@ -4166,27 +4126,54 @@
 				76F8DE671B6C0BC4009BCF61 /* circ_selected.svg */,
 				76F8DE681B6C0BC4009BCF61 /* circbig_normal.svg */,
 				76F8DE691B6C0BC4009BCF61 /* circbig_selected.svg */,
+				1DDC23471F32439400E68B0E /* circle_check_green.svg */,
+				1DDC23481F32439400E68B0E /* circle_check_normal.svg */,
+				12E2A5A51E5CD386000EFFBA /* create_post_normal.svg */,
+				12241CEE1E60CAC700100C41 /* create_post_selected.svg */,
 				76F8DE6A1B6C0BC4009BCF61 /* danger_normal.svg */,
 				76F8DE6B1B6C0BC4009BCF61 /* danger_red.svg */,
 				76F8DE6C1B6C0BC4009BCF61 /* danger_selected.svg */,
+				1D59337C1D1450E900EAF03D /* dots_light_normal.svg */,
 				76F8DE6D1B6C0BC4009BCF61 /* dots_normal.svg */,
 				76F8DE6E1B6C0BC4009BCF61 /* dots_selected.svg */,
+				1DDF86FA1D80785B0058204A /* ello_gray_line_logo.svg */,
+				122034731DE66A4A0059E633 /* ello_logo_grey.svg */,
+				769051001AFD2A720011B09A /* ello_logo.svg */,
 				76F8DE6F1B6C0BC4009BCF61 /* ello_normal.svg */,
 				76F8DE701B6C0BC4009BCF61 /* ello_selected.svg */,
+				1D6511BD1F01AD2F00A34AF8 /* ello_type_normal.svg */,
+				1D472C211C1F2E0400B61E55 /* embetter_audio_play.svg */,
+				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
 				76F8DE731B6C0BC4009BCF61 /* eye_normal.svg */,
 				76F8DE741B6C0BC4009BCF61 /* eye_selected.svg */,
 				76F8DE751B6C0BC4009BCF61 /* flag_normal.svg */,
 				76F8DE761B6C0BC4009BCF61 /* flag_selected.svg */,
+				1D242D611DDBCD87000A424C /* grid_view_normal.svg */,
+				1D2ED1B21F82EF2600B19052 /* grid_view_selected.svg */,
+				1D1D564A1CD3D56A00B3EBED /* hearts_giant.svg */,
 				76F8DE791B6C0BC4009BCF61 /* hearts_normal.svg */,
 				1D942C0C1EC3AF8B00056761 /* hearts_outline_normal.svg */,
 				1D942C0D1EC3AF8B00056761 /* hearts_outline_selected.svg */,
 				1D942C0E1EC3AF8B00056761 /* hearts_outline_white.svg */,
 				76F8DE7A1B6C0BC4009BCF61 /* hearts_selected.svg */,
 				76F8DE7B1B6C0BC4009BCF61 /* hearts_white.svg */,
+				12E2A5A11E5CD357000EFFBA /* home_normal.svg */,
+				12E2A5A21E5CD357000EFFBA /* home_selected.svg */,
+				1DF7416C1BFA65F0000F5349 /* link_normal.svg */,
+				1DF7416D1BFA65F0000F5349 /* link_selected.svg */,
+				1DF7416A1BFA650E000F5349 /* link_white.svg */,
+				1D242D621DDBCD87000A424C /* list_view_normal.svg */,
+				1D2ED1B31F82EF2700B19052 /* list_view_selected.svg */,
+				1D59EF931D6640C50029C106 /* mail_normal.svg */,
+				1D59EF941D6640C50029C106 /* mail_selected.svg */,
+				1D59EF951D6640C50029C106 /* mail_white.svg */,
+				1220347C1DECCDD80059E633 /* marker.svg */,
+				1DF404071B150CF20073460B /* narration_pointer.svg */,
 				76F8DE801B6C0BC4009BCF61 /* omni_normal.svg */,
 				76F8DE811B6C0BC4009BCF61 /* omni_selected.svg */,
 				76F8DE821B6C0BC4009BCF61 /* pencil_normal.svg */,
 				76F8DE831B6C0BC4009BCF61 /* pencil_selected.svg */,
+				1DF741661BF6869B000F5349 /* pencil_white.svg */,
 				76F8DE841B6C0BC4009BCF61 /* person_normal.svg */,
 				76F8DE851B6C0BC4009BCF61 /* person_selected.svg */,
 				76F8DE881B6C0BC4009BCF61 /* pinterest_normal.svg */,
@@ -4198,23 +4185,35 @@
 				76F8DE8E1B6C0BC4009BCF61 /* relationships_normal.svg */,
 				76F8DE8F1B6C0BC4009BCF61 /* relationships_selected.svg */,
 				76F8DE901B6C0BC4009BCF61 /* relationships_white.svg */,
+				1DA8FD6E1B98A63600472B1E /* reorder_normal.svg */,
+				1DA8FD6F1B98A63600472B1E /* reorder_selected.svg */,
 				76F8DE911B6C0BC4009BCF61 /* reply_normal.svg */,
 				76F8DE921B6C0BC4009BCF61 /* reply_selected.svg */,
 				76F8DE931B6C0BC4009BCF61 /* replyall_normal.svg */,
 				76F8DE941B6C0BC4009BCF61 /* replyall_selected.svg */,
+				1D405D9B1C47166D0059DAFD /* repost_disabled.svg */,
 				76F8DE951B6C0BC4009BCF61 /* repost_normal.svg */,
 				76F8DE961B6C0BC4009BCF61 /* repost_selected.svg */,
 				76F8DE971B6C0BC4009BCF61 /* repost_white.svg */,
+				1D3EC0D91E97F5F70092C769 /* search_large_normal.svg */,
+				1D3EC0DA1E97F5F70092C769 /* search_large_selected.svg */,
 				76F8DE981B6C0BC4009BCF61 /* search_normal.svg */,
 				76F8DE991B6C0BC4009BCF61 /* search_selected.svg */,
+				1DF0B2E51E940572001B9F97 /* search_small_normal.svg */,
+				1DF0B2E61E940572001B9F97 /* search_small_selected.svg */,
 				76F8DE9A1B6C0BC4009BCF61 /* share_normal.svg */,
 				76F8DE9B1B6C0BC4009BCF61 /* share_selected.svg */,
 				1D942C041EC3AA9F00056761 /* share_white.svg */,
+				1D7152DE1D74E79D005998FE /* small_check_green.svg */,
 				76F8DE9C1B6C0BC4009BCF61 /* sparkles_normal.svg */,
 				76F8DE9D1B6C0BC4009BCF61 /* sparkles_selected.svg */,
+				1DDC23491F32439400E68B0E /* star_normal.svg */,
+				1DDC234A1F32439400E68B0E /* star_orange.svg */,
 				76F8DEA01B6C0BC4009BCF61 /* trash_normal.svg */,
 				76F8DEA11B6C0BC4009BCF61 /* trash_selected.svg */,
 				76F8DEA21B6C0BC4009BCF61 /* trash_white.svg */,
+				1D209BEB1D9C249400CFBF92 /* watch_green.svg */,
+				1D209BEC1D9C249400CFBF92 /* watch_normal.svg */,
 				76F8DEA31B6C0BC4009BCF61 /* x_normal.svg */,
 				76F8DEA41B6C0BC4009BCF61 /* x_red.svg */,
 				76F8DEA51B6C0BC4009BCF61 /* x_selected.svg */,
@@ -4226,8 +4225,7 @@
 				12931BD11BFE8E30009B26F9 /* xpmmini_normal.svg */,
 				12931BD21BFE8E30009B26F9 /* xpmmini_selected.svg */,
 			);
-			name = GeneratedSVGs;
-			path = ../Resources/GeneratedSVGs;
+			path = SVGs;
 			sourceTree = "<group>";
 		};
 		76E5CBE71A92678500D6483F /* Relationship */ = {
@@ -5340,6 +5338,7 @@
 				124727651AB14AC8000079D7 /* ImageAttachmentSpec.swift in Sources */,
 				122C66441B4303400035F4CD /* AutoCompleteResultSpec.swift in Sources */,
 				12E06F3F1CE24AF00066E247 /* UsernameSpec.swift in Sources */,
+				1D1F5F681F86CD4B00417A59 /* InterfaceStringSpec.swift in Sources */,
 				12CF810E1AEFDFA5008FFC6F /* FakeImageManager.swift in Sources */,
 				12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */,
 				1D6E431C1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift in Sources */,
@@ -5741,6 +5740,7 @@
 				122C662D1B42403D0035F4CD /* AutoCompleteViewController.swift in Sources */,
 				1DC78A1F1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift in Sources */,
 				122B18FF1A867C7D00247A05 /* StreamHeaderCell.swift in Sources */,
+				1DBB23DB1F8C30350025FA07 /* DebugServer.swift in Sources */,
 				1207C9821C73FEE000939ADB /* LovesService.swift in Sources */,
 				1207C9721C73FEE000939ADB /* AuthToken.swift in Sources */,
 				122B30C51C6A3FBC00C1B9D8 /* AddressBook.swift in Sources */,
@@ -6068,6 +6068,7 @@
 				1D447EF71F3BC92900013384 /* Groupable.swift in Sources */,
 				1D447EC31F3BC62600013384 /* ImageRegion.swift in Sources */,
 				1D447EE21F3BC76900013384 /* TextRegion.swift in Sources */,
+				1DBB23DC1F8C30390025FA07 /* DebugServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

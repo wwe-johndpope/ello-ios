@@ -562,17 +562,16 @@ extension AppViewController {
 
         switch type {
         case .invite, .join, .signup, .login:
-            if !isLoggedIn() {
-                switch type {
-                case .invite:
-                    showJoinScreen(invitationCode: data)
-                case .join, .signup:
-                    showJoinScreen()
-                case .login:
-                    showLoginScreen()
-                default:
-                    break
-                }
+            guard !isLoggedIn() else { return }
+            switch type {
+            case .invite:
+                showJoinScreen(invitationCode: data)
+            case .join, .signup:
+                showJoinScreen()
+            case .login:
+                showLoginScreen()
+            default:
+                break
             }
         case .artistInvitesBrowse:
             showArtistInvitesScreen()
@@ -607,9 +606,8 @@ extension AppViewController {
         case .notifications:
             showNotificationsScreen(category: data)
         case .onboarding:
-            if let user = currentUser {
-                showOnboardingScreen(user)
-            }
+            guard let user = currentUser else { return }
+            showOnboardingScreen(user)
         case .post:
             showPostDetailScreen(data, path: path)
         case .pushNotificationComment,
@@ -634,9 +632,8 @@ extension AppViewController {
         case .wtf:
             showExternalWebView(path)
         default:
-            if let pathURL = URL(string: path) {
-                UIApplication.shared.openURL(pathURL)
-            }
+            guard let pathURL = URL(string: path) else { return }
+            UIApplication.shared.openURL(pathURL)
         }
     }
 
@@ -668,9 +665,8 @@ extension AppViewController {
         alertController.addAction(yes)
 
         let viewBrowser = AlertAction(title: InterfaceString.App.OpenInSafari, style: .light) { _ in
-            if let pathURL = URL(string: path) {
-                UIApplication.shared.openURL(pathURL)
-            }
+            guard let pathURL = URL(string: path) else { return }
+            UIApplication.shared.openURL(pathURL)
         }
         alertController.addAction(viewBrowser)
 

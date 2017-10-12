@@ -12,7 +12,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
 
     struct Size {
         static let headerImageHeight: CGFloat = 230
-        static let infoTotalHeight: CGFloat = 130
+        static let infoTotalHeight: CGFloat = 86
 
         static let logoImageSize = CGSize(width: 270, height: 152)
         static let cornerRadius: CGFloat = 5
@@ -36,6 +36,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         var openedAt: Date?
         var closedAt: Date?
         var hasCurrentUser = false
+        var isInCountdown: Bool { return status == .open }
     }
 
     var config = Config() {
@@ -55,6 +56,17 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
     fileprivate let dateLabel = StyledLabel(style: .gray)
     fileprivate let descriptionWebView = ElloWebView()
 
+    static func calculateDynamicHeights(title: String, inviteType: String, cellWidth: CGFloat) -> CGFloat {
+        let textWidth = cellWidth - Size.bubbleMargins.left - Size.bubbleMargins.right - Size.infoMargins.left - Size.infoMargins.right
+        let height1 = NSAttributedString(label: title, style: .artistInviteTitle, lineBreakMode: .byWordWrapping).heightForWidth(textWidth)
+        let height2 = NSAttributedString(label: inviteType, style: .gray, lineBreakMode: .byWordWrapping).heightForWidth(textWidth)
+        return height1 + height2
+    }
+
+    override func bindActions() {
+        descriptionWebView.delegate = self
+    }
+
     override func style() {
         bg.layer.cornerRadius = Size.cornerRadius
         bg.clipsToBounds = true
@@ -65,6 +77,8 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         headerOverlay.alpha = 0.3
         logoImage.contentMode = .scaleAspectFit
         logoImage.clipsToBounds = true
+        titleLabel.isMultiline = true
+        inviteTypeLabel.isMultiline = true
         descriptionWebView.scrollView.isScrollEnabled = false
         descriptionWebView.scrollView.scrollsToTop = false
         descriptionWebView.isUserInteractionEnabled = false
@@ -141,6 +155,30 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         config = Config()
     }
 
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        if superview != nil && config.isInCountdown {
+            startTimer()
+        }
+        else {
+            stopTimer()
+        }
+    }
+
+    private var timer: Timer?
+
+    private func startTimer() {
+        guard timer == nil else { return }
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(updateDateText), userInfo: nil, repeats: true)
+    }
+
+    private func stopTimer() {
+        guard let timer = timer else { return }
+        timer.invalidate()
+        self.timer = nil
+    }
+
     func updateConfig() {
         titleLabel.text = config.title
         inviteTypeLabel.text = config.inviteType
@@ -148,23 +186,7 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
         statusImage.image = config.status.image
         statusLabel.text = config.status.text
         statusLabel.style = config.status.labelStyle
-
-        let dateText: String
-        if let openedAt = config.openedAt {
-            if let closedAt = config.closedAt {
-                dateText = "\(openedAt.monthDay()) — \(closedAt.monthDayYear())"
-            }
-            else {
-                dateText = "Opens \(openedAt.monthDayYear())"
-            }
-        }
-        else if let closedAt = config.closedAt {
-            dateText = "Ends \(closedAt.monthDayYear())"
-        }
-        else {
-            dateText = ""
-        }
-        dateLabel.text = dateText
+        updateDateText()
 
         let images: [(URL?, UIImageView)] = [
             (config.headerURL, headerImage),
@@ -182,6 +204,11 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
 
         let html = StreamTextCellHTML.artistInviteHTML(config.shortDescription)
         descriptionWebView.loadHTMLString(html, baseURL: URL(string: "/"))
+    }
+
+    @objc
+    private func updateDateText() {
+        dateLabel.text = config.dateText()
     }
 }
 
@@ -235,6 +262,10 @@ extension ArtistInvite.Status {
 }
 
 extension StyledLabel.Style {
+    static let artistInviteTitle = StyledLabel.Style(
+        textColor: .black,
+        fontFamily: .artistInviteTitle
+        )
     static let artistInvitePreview = StyledLabel.Style(
         textColor: UIColor(hex: 0x0409FE)
         )
@@ -250,4 +281,48 @@ extension StyledLabel.Style {
     static let artistInviteClosed = StyledLabel.Style(
         textColor: UIColor(hex: 0xFE0404)
         )
+}
+
+extension ArtistInviteBubbleCell.Config {
+    func dateText() -> String {
+        switch status {
+        case .preview, .upcoming:
+            return ""
+        case .selecting:
+            return InterfaceString.ArtistInvites.Selecting
+        case .closed:
+            guard let closedAt = closedAt else { return "" }
+            return InterfaceString.ArtistInvites.Ended(closedAt.monthDayYear())
+        default: break
+        }
+
+        if let closedAt = closedAt {
+            return dateTextRemaining(closedAt)
+        }
+        return ""
+    }
+
+    fileprivate func dateTextRemaining(_ closedAt: Date) -> String {
+        let now = AppSetup.shared.now
+        let secondsRemaining = Int(closedAt.timeIntervalSince(now))
+        let daysRemaining = Int(secondsRemaining / 24 / 3600)
+        if daysRemaining > 1 {
+            return InterfaceString.ArtistInvites.DaysRemaining(daysRemaining)
+        }
+        return InterfaceString.ArtistInvites.Countdown(secondsRemaining)
+    }
+
+}
+
+extension ArtistInviteBubbleCell: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let scheme = request.url?.scheme, scheme == "default" {
+            let responder: StreamCellResponder? = findResponder()
+            responder?.streamCellTapped(cell: self)
+            return false
+        }
+        else {
+            return ElloWebViewHelper.handle(request: request, origin: self)
+        }
+    }
 }

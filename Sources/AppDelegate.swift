@@ -22,10 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             APIKeys.shared = debugServer.apiKeys
         }
 
-        // remove old sqlite stores
-        ElloLinkedStore.removeDB(name: "ello.sqlite")
-        ElloLinkedStore.removeDB(name: "ello_test.sqlite")
-
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
         #else
@@ -170,7 +166,6 @@ extension AppDelegate {
         return .all
     }
 }
-
 
 // universal links
 extension AppDelegate {

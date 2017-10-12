@@ -15,7 +15,6 @@ final class Badge: JSONAble {
     var name: String
     var caption: String
     var url: URL?
-    var interfaceImage: InterfaceImage?
     var imageURL: URL?
     var isFeatured: Bool { return slug == "featured" }
 
@@ -34,7 +33,6 @@ final class Badge: JSONAble {
         self.name = badge.name
         self.caption = badge.caption
         self.url = badge.url
-        self.interfaceImage = badge.interfaceImage
         self.imageURL = badge.imageURL
         self.categories = categories
         super.init(version: BadgeVersion)
@@ -51,22 +49,6 @@ final class Badge: JSONAble {
         self.name = name
         self.caption = caption
         self.url = url
-        switch slug {
-        case "featured":
-            self.interfaceImage = .badgeFeatured
-        case "community":
-            self.interfaceImage = .badgeCommunity
-        case "experimental":
-            self.interfaceImage = .badgeExperimental
-        case "staff":
-            self.interfaceImage = .badgeStaff
-        case "spam":
-            self.interfaceImage = .badgeSpam
-        case "nsfw":
-            self.interfaceImage = .badgeNsfw
-        default:
-            self.interfaceImage = nil
-        }
         self.imageURL = imageURL
         self.categories = nil
         super.init(version: BadgeVersion)
@@ -84,10 +66,6 @@ final class Badge: JSONAble {
         self.name = decoder.decodeKey("name")
         self.caption = decoder.decodeKey("link")
         self.url = decoder.decodeOptionalKey("url")
-        let interfaceImage: String? = decoder.decodeOptionalKey("interfaceImage")
-        if let interfaceImage = interfaceImage {
-            self.interfaceImage = InterfaceImage(rawValue: interfaceImage)
-        }
         self.imageURL = decoder.decodeOptionalKey("imageURL")
         self.categories = nil
         super.init(coder: coder)
@@ -99,7 +77,6 @@ final class Badge: JSONAble {
         encoder.encodeObject(name, forKey: "name")
         encoder.encodeObject(caption, forKey: "link")
         encoder.encodeObject(url, forKey: "url")
-        encoder.encodeObject(interfaceImage?.rawValue, forKey: "interfaceImage")
         encoder.encodeObject(imageURL, forKey: "imageURL")
         super.encode(with: coder)
     }

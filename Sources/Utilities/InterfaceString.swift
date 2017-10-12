@@ -86,6 +86,31 @@ struct InterfaceString {
         static let AdminUnselectAction: String = NSLocalizedString("Selected", comment: "")
         static let AdminApproveAction: String = NSLocalizedString("Accept", comment: "")
         static let AdminSelectAction: String = NSLocalizedString("Select", comment: "")
+
+        static let Selecting: String = NSLocalizedString("Hold Tight", comment: "")
+        static func Opens(_ dateStr: String) -> String {
+            return String.localizedStringWithFormat("Opens %@", dateStr)
+        }
+        static func Ends(_ dateStr: String) -> String {
+            return String.localizedStringWithFormat("Ends %@", dateStr)
+        }
+        static func Ended(_ dateStr: String) -> String {
+            return String.localizedStringWithFormat("Ended %@", dateStr)
+        }
+        static func DaysRemaining(_ days: Int) -> String {
+            return String.localizedStringWithFormat("%lu Days Remaining", days)
+        }
+        static func Countdown(_ totalSeconds: Int) -> String {
+            var remainingSeconds = totalSeconds
+            let seconds = totalSeconds % 60
+            remainingSeconds -= seconds
+
+            let minutes: Int = remainingSeconds / 60 % 60
+            remainingSeconds -= minutes * 60
+
+            let hours: Int = remainingSeconds / 3600 % 60
+            return String.localizedStringWithFormat("%02d:%02d:%02d Remaining", hours, minutes, seconds)
+        }
     }
 
     struct Notifications {
@@ -299,7 +324,7 @@ struct InterfaceString {
         static let PermissionNo: String = NSLocalizedString("No thanks", comment: "Disallow")
 
         static let CommentReply: String = NSLocalizedString("Reply", comment: "")
-        static let MessageUser: String = NSLocalizedString("Message", comment: "")
+        static let MessageUser: String = NSLocalizedString("Mention", comment: "")
         static let PostComment: String = NSLocalizedString("Comment", comment: "")
         static let LovePost: String = NSLocalizedString("Love", comment: "")
         static let FollowUser: String = NSLocalizedString("Follow", comment: "")

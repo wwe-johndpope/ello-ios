@@ -28,11 +28,8 @@ class FollowingViewControllerSpec: QuickSpec {
             }
 
             it("has a properly configured navigation bar") {
-                expect(subject.navigationBar.items?.count) == 1
-                let item = subject.navigationBar.items?.first
-
-                expect(item?.leftBarButtonItems?.count) == 1
-                expect(item?.rightBarButtonItems?.count) == 1
+                expect(subject.navigationBar.leftItems.count) == 1
+                expect(subject.navigationBar.rightItems.count) == 1
             }
 
             it("shows the more posts button when new content is available") {

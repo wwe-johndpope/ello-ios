@@ -60,11 +60,11 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has grid/list and share buttons") {
-                    expect(subject.navigationBar.count) == 2
+                    expect(screen.navigationBar.rightItems.count) == 2
                 }
 
                 it("has back left nav button") {
-                    expect(subject.navigationBar.leftItems.count) == 2
+                    expect(screen.navigationBar.leftItems.count) == 2
                 }
 
                 context("collaborateable and hireable don't affect currentUser profile") {
@@ -110,11 +110,11 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has grid/list and share right nav buttons") {
-                    expect(subject.navigationBar.rightItems.count) == 2
+                    expect(screen.navigationBar.rightItems.count) == 2
                 }
 
                 it("has back and more left nav buttons") {
-                    expect(subject.navigationBar.leftItems.count) == 4
+                    expect(screen.navigationBar.leftItems.count) == 4
                 }
 
                 let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [
@@ -170,6 +170,7 @@ class ProfileViewControllerSpec: QuickSpec {
             context("when displaying a private user") {
                 var currentUser: User!
                 var subject: ProfileViewController!
+                var screen: ProfileScreen!
 
                 beforeEach {
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
@@ -184,14 +185,16 @@ class ProfileViewControllerSpec: QuickSpec {
                     let nav = UINavigationController(rootViewController: UIViewController())
                     nav.pushViewController(subject, animated: false)
                     showController(nav)
+
+                    screen = subject.screen as! ProfileScreen
                 }
 
                 it("has grid/list right nav buttons") {
-                    expect(subject.navigationBar.rightItems.count) == 1
+                    expect(screen.navigationBar.rightItems.count) == 1
                 }
 
                 it("has back and more left nav buttons") {
-                    expect(subject.navigationBar.leftItems.count) == 4
+                    expect(screen.navigationBar.leftItems.count) == 4
                 }
             }
 
@@ -312,6 +315,7 @@ class ProfileViewControllerSpec: QuickSpec {
 
             context("logged out view") {
                 var subject: ProfileViewController!
+                var screen: ProfileScreen!
 
                 beforeEach {
                     subject = ProfileViewController(userParam: "42")
@@ -319,10 +323,12 @@ class ProfileViewControllerSpec: QuickSpec {
                     let nav = UINavigationController(rootViewController: UIViewController())
                     nav.pushViewController(subject, animated: false)
                     showController(nav)
+
+                    screen = subject.screen as! ProfileScreen
                 }
 
                 it("should not show ellipses button in navigation") {
-                    expect(subject.navigationBar.leftItems.count) == 3
+                    expect(screen.navigationBar.leftItems.count) == 3
                 }
             }
         }

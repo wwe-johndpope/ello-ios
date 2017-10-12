@@ -80,6 +80,8 @@ class ElloWebBrowserViewController: KINWebBrowserViewController {
 extension ElloWebBrowserViewController: KINWebBrowserDelegate {
 
     func webBrowser(_ webBrowser: KINWebBrowserViewController!, didFailToLoad url: URL?, error: Error!) {
+        if (error as NSError).code == -999 { return }
+
         if let url = url ?? prevRequestURL {
             UIApplication.shared.openURL(url)
         }

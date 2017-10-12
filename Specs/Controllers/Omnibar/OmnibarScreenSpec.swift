@@ -94,7 +94,7 @@ class OmnibarScreenSpec: QuickSpec {
                 context("var title: String") {
                     it("sets the navigation title") {
                         subject.title = "title"
-                        expect(subject.navigationItem.title) == "title"
+                        expect(subject.navigationBar.title) == "title"
                     }
                 }
                 context("var submitTitle: String") {

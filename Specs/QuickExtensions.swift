@@ -142,35 +142,33 @@ extension UIStoryboard {
 
 }
 
-func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> NonNilMatcherFunc<T> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "\(identifier) should be registered"
+func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> Predicate<T> {
+    return Predicate.define("\(identifier) should be registered") { actualExpression, msg in
         let tableView = try! actualExpression.evaluate()!
         tableView.reloadData()
         // Using the side effect of a runtime crash when dequeing a cell here, if it works :thumbsup:
         let _ = tableView.dequeueReusableCell(withIdentifier: identifier, for: IndexPath(row: 0, section: 0))
-        return true
+        return PredicateResult(status: PredicateStatus(bool: true), message: msg)
     }
 }
 
-func beVisibleIn<S: UIView>(_ view: UIView) -> NonNilMatcherFunc<S> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "be visible in \(view)"
+func beVisibleIn<S: UIView>(_ view: UIView) -> Predicate<S> {
+    return Predicate.define("be visible in \(view)") { actualExpression, msg -> PredicateResult in
         let childView = try! actualExpression.evaluate()
         if let childView = childView {
             if childView.isHidden || childView.alpha < 0.01 || childView.frame.size.width < 0.1 || childView.frame.size.height < 0.1 {
-                return false
+                return PredicateResult(status: .fail, message: msg)
             }
 
             var parentView: UIView? = childView.superview
             while parentView != nil {
                 if let parentView = parentView, parentView == view {
-                    return true
+                    return PredicateResult(status: PredicateStatus(bool: true), message: msg)
                 }
                 parentView = parentView!.superview
             }
         }
-        return false
+        return PredicateResult(status: .fail, message: msg)
     }
 }
 
@@ -202,33 +200,29 @@ func checkRegions(_ regions: [OmnibarRegion], equal text: String) {
     fail("could not find \(text) in regions \(regions)")
 }
 
-func haveImageRegion<S: OmnibarScreenProtocol>() -> NonNilMatcherFunc<S> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "have image"
-
+func haveImageRegion<S: OmnibarScreenProtocol>() -> Predicate<S> {
+    return Predicate.define("have image") { actualExpression, msg in
         if let screen = try! actualExpression.evaluate() {
             for region in screen.regions {
                 if region.image != nil {
-                    return true
+                    return PredicateResult(status: PredicateStatus(bool: true), message: msg)
                 }
             }
         }
-        return false
+        return PredicateResult(status: .fail, message: msg)
     }
 }
 
-func haveImageRegion<S: OmnibarScreenProtocol>(equal image: UIImage) -> NonNilMatcherFunc<S> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "have image that equals \(image)"
-
+func haveImageRegion<S: OmnibarScreenProtocol>(equal image: UIImage) -> Predicate<S> {
+    return Predicate.define("have image that equals \(image)") { actualExpression, msg in
         if let screen = try! actualExpression.evaluate() {
             for region in screen.regions {
                 if let regionImage = region.image, regionImage == image {
-                    return true
+                    return PredicateResult(status: PredicateStatus(bool: true), message: msg)
                 }
             }
         }
-        return false
+        return PredicateResult(status: .fail, message: msg)
     }
 }
 
@@ -251,14 +245,13 @@ func subview<T>(of view: UIView, thatMatches test: (UIView) -> Bool) -> T? where
     return nil
 }
 
-func haveSubview<V: UIView>(thatMatches test: @escaping (UIView) -> Bool) -> NonNilMatcherFunc<V> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "have subview that matches"
-
+func haveSubview<V: UIView>(thatMatches test: @escaping (UIView) -> Bool) -> Predicate<V> {
+    return Predicate.define("have subview that matches") { actualExpression, msg in
         let view = try! actualExpression.evaluate()
         if let view = view {
-            return subview(of: view, thatMatches: test) != nil
+            let found = subview(of: view, thatMatches: test) != nil
+            return PredicateResult(status: PredicateStatus(bool: found), message: msg)
         }
-        return false
+        return PredicateResult(status: .fail, message: msg)
     }
 }

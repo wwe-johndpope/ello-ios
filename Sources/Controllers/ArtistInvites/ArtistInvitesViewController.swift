@@ -62,6 +62,10 @@ class ArtistInvitesViewController: StreamableViewController {
         updateInsets(navBar: screen.navigationBar)
     }
 
+    override func calculateDefaultTopInset() -> CGFloat {
+        return max(ArtistInviteBubbleCell.Size.bubbleMargins.bottom, super.calculateDefaultTopInset())
+    }
+
     override func showNavBars() {
         super.showNavBars()
         positionNavBar(screen.navigationBar, visible: true, withConstraint: screen.navigationBarTopConstraint)
