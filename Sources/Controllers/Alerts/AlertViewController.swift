@@ -230,25 +230,18 @@ extension AlertViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if message.characters.count == 0 {
-            return nil
-        }
+        guard !message.isEmpty else { return nil }
         return headerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if message.characters.count == 0 {
-            return 0
-        }
+        guard !message.isEmpty else { return 0 }
         let size = CGSize(width: Size.width - totalHorizontalPadding, height: .greatestFiniteMagnitude)
-        let height = headerView.sizeThatFits(size).height
-        return height
+        return headerView.sizeThatFits(size).height
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let action = actions.safeValue(indexPath.row)
-        else { return 0 }
-
+        guard let action = actions.safeValue(indexPath.row) else { return 0 }
         return action.heightForWidth(Size.width)
     }
 }

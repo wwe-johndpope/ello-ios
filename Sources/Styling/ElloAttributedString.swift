@@ -73,7 +73,7 @@ struct ElloAttributedString {
                 startNewString = false
             }
         }
-        if current.string.characters.count > 0 {
+        if !current.string.isEmpty {
             strings.append(current)
         }
         return strings
@@ -92,7 +92,7 @@ struct ElloAttributedString {
 
     static func render(_ input: NSAttributedString) -> String {
         var output = ""
-        input.enumerateAttributes(in: NSRange(location: 0, length: input.length), options: .longestEffectiveRangeNotRequired) { attrs, range, stopPtr in
+        input.enumerateAttributes(in: NSRange(location: 0, length: input.length), options: .longestEffectiveRangeNotRequired) { attrs, nsrange, stopPtr in
             // (tagName, attributes?)
             var tags = [HtmlTagTuple]()
             if let underlineStyle = attrs[NSAttributedStringKey.underlineStyle] as? Int, underlineStyle == NSUnderlineStyle.styleSingle.rawValue {
@@ -124,7 +124,12 @@ struct ElloAttributedString {
                 }
                 output += ">"
             }
-            output += (input.string as NSString).substring(with: range).entitiesEncoded()
+
+            let string = input.string
+            if let range = string.rangeFromNSRange(nsrange) {
+                output += String(string[range]).entitiesEncoded()
+            }
+
             for htmlTag in tags.reversed() {
                 output += "</\(htmlTag.tag)>"
             }

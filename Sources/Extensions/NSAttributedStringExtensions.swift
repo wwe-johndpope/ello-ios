@@ -93,14 +93,13 @@ extension NSAttributedString {
     }
 
     func joinWithNewlines(_ other: NSAttributedString) -> NSAttributedString {
-
         let retVal: NSMutableAttributedString = NSMutableAttributedString(attributedString: self)
-        if other.string.characters.count > 0 {
-            if self.string.characters.count > 0 {
-                if !self.string.hasSuffix("\n") {
+        if !other.string.isEmpty {
+            if !string.isEmpty {
+                if !string.hasSuffix("\n") {
                     retVal.append(NSAttributedString("\n\n"))
                 }
-                else if !self.string.hasSuffix("\n\n") {
+                else if !string.hasSuffix("\n\n") {
                     retVal.append(NSAttributedString("\n"))
                 }
             }

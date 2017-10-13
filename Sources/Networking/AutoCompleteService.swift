@@ -26,7 +26,7 @@ struct AutoCompleteService {
     func loadEmojiResults(_ text: String) -> [AutoCompleteResult] {
         let emojiName: String
         if text[text.startIndex] == ":" {
-            emojiName = text.substring(from: text.characters.index(text.startIndex, offsetBy: 1))
+            emojiName = String(text[text.secondIndex...])
         }
         else {
             emojiName = text

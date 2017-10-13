@@ -380,7 +380,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                 ProfileService().updateUserProfile([.location: location])
                     .thenFinally { user in
                         self.updateCurrentUser(user)
-                        guard let count = self.locationTextFieldView.textField.text?.characters.count, count > 0 else {
+                        guard self.locationTextFieldView.textField.text?.isEmpty == false else {
                             self.locationTextFieldView.setState(.none)
                             return
                         }
@@ -391,7 +391,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
                     }
             }
 
-            self.autoCompleteVC.load(AutoCompleteMatch(type: .location, range: location.characters.startIndex..<location.characters.endIndex, text: location)) { count in
+            self.autoCompleteVC.load(AutoCompleteMatch(type: .location, range: location.startIndex ..< location.endIndex, text: location)) { count in
                 guard location == self.locationTextFieldView.textField.text else { return }
 
                 self.locationAutoCompleteResultCount = count

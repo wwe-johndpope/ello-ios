@@ -43,14 +43,14 @@ class StringExtensionSpec: QuickSpec {
                 expect(str.stripHtmlImgSrc()).to(beginWith("<img src=\""))
                 expect(str.stripHtmlImgSrc()).to(endWith("\" />"))
                 expect(str.stripHtmlImgSrc()).notTo(contain("foo"))
-                expect(str.stripHtmlImgSrc().characters.count) > str.characters.count
+                expect(str.stripHtmlImgSrc().count) > str.count
             }
             it("should replace the src= attribute with single quotes") {
                 let str = "<img src='foo' />"
                 expect(str.stripHtmlImgSrc()).to(beginWith("<img src=\""))
                 expect(str.stripHtmlImgSrc()).to(endWith("\" />"))
                 expect(str.stripHtmlImgSrc()).notTo(contain("foo"))
-                expect(str.stripHtmlImgSrc().characters.count) > str.characters.count
+                expect(str.stripHtmlImgSrc().count) > str.count
             }
         }
         describe("adding entities") {

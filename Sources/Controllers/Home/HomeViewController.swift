@@ -17,11 +17,6 @@ class HomeViewController: BaseElloViewController, HomeScreenDelegate {
         case loggedIn
     }
 
-    override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.home, insets: ElloTab.home.insets) }
-        set { self.tabBarItem = newValue }
-    }
-
     private let usage: Usage
 
     init(usage: Usage) {

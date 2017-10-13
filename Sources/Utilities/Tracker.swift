@@ -319,9 +319,10 @@ extension Tracker {
 
 extension UIViewController {
     // return 'nil' to disable tracking, e.g. in StreamViewController
-    func trackerName() -> String? { return readableClassName() }
-    func trackerProps() -> [String: Any]? { return nil }
+    @objc func trackerName() -> String? { return readableClassName() }
+    @objc func trackerProps() -> [String: Any]? { return nil }
 
+    @objc
     func trackScreenAppeared() {
         Tracker.shared.screenAppeared(self)
     }
@@ -423,7 +424,7 @@ extension Tracker {
                 imageCount += 1
             }
             else if let region = region as? TextRegion {
-                textLength += region.content.characters.count
+                textLength += region.content.count
             }
         }
 

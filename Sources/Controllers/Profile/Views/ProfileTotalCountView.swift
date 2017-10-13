@@ -18,9 +18,6 @@ class ProfileTotalCountView: ProfileBaseView {
     }
 
     var onHeightMismatch: OnHeightMismatch?
-}
-
-extension ProfileTotalCountView {
 
     override func style() {
         clipsToBounds = true
@@ -40,14 +37,14 @@ extension ProfileTotalCountView {
             make.centerY.equalTo(self).offset(Size.labelVerticalOffset)
         }
     }
+}
+
+extension ProfileTotalCountView {
 
     func prepareForReuse() {
     }
-}
 
-private extension ProfileTotalCountView {
-
-    func updateAttributedCountText() {
+    private func updateAttributedCountText() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
 

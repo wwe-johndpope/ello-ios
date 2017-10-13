@@ -220,7 +220,7 @@ class AutoCompleteSpec: QuickSpec {
                         let str = "@sean"
                         let result = subject.check(str, location: 3)
 
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 3)
+                        let endIndex = str.index(str.startIndex, offsetBy: 3)
 
                         expect(result?.type) == AutoCompleteType.username
                         expect(result?.range) == str.startIndex..<endIndex
@@ -233,8 +233,8 @@ class AutoCompleteSpec: QuickSpec {
                         let str = "hi there @sean"
                         let result = subject.check(str, location: 13)
 
-                        let startIndex = str.characters.index(str.startIndex, offsetBy: 9)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 13)
+                        let startIndex = str.index(str.startIndex, offsetBy: 9)
+                        let endIndex = str.index(str.startIndex, offsetBy: 13)
 
                         expect(result?.type) == AutoCompleteType.username
                         expect(result?.range) == startIndex..<endIndex
@@ -256,8 +256,8 @@ class AutoCompleteSpec: QuickSpec {
                         let str = "start :emoji"
                         let result = subject.check(str, location: 10)
 
-                        let startIndex = str.characters.index(str.startIndex, offsetBy: 6)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 10)
+                        let startIndex = str.index(str.startIndex, offsetBy: 6)
+                        let endIndex = str.index(str.startIndex, offsetBy: 10)
 
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex
@@ -270,8 +270,8 @@ class AutoCompleteSpec: QuickSpec {
                         let str = "😀 :emoji"
                         let result = subject.check(str, location: 6)
 
-                        let startIndex = str.characters.index(str.startIndex, offsetBy: 2)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 6)
+                        let startIndex = str.index(str.startIndex, offsetBy: 2)
+                        let endIndex = str.index(str.startIndex, offsetBy: 6)
 
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex
@@ -293,8 +293,8 @@ class AutoCompleteSpec: QuickSpec {
                         let str = "some long sentence :start::thumbsup"
                         let result = subject.check(str, location: 30)
 
-                        let startIndex = str.characters.index(str.startIndex, offsetBy: 26)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 30)
+                        let startIndex = str.index(str.startIndex, offsetBy: 26)
+                        let endIndex = str.index(str.startIndex, offsetBy: 30)
 
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex
@@ -306,7 +306,7 @@ class AutoCompleteSpec: QuickSpec {
                     it("returns the correct character range and string") {
                         let str = "@hi"
                         let result = subject.check(str, location: 3)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 3)
+                        let endIndex = str.index(str.startIndex, offsetBy: 3)
                         expect(result?.type) == AutoCompleteType.username
                         expect(result?.range) == str.startIndex..<endIndex
                         expect(result?.text) == "@hi"
@@ -363,8 +363,8 @@ class AutoCompleteSpec: QuickSpec {
                         let str = ":+1: :two"
                         let result = subject.check(str, location: 9)
 
-                        let startIndex = str.characters.index(str.startIndex, offsetBy: 5)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 9)
+                        let startIndex = str.index(str.startIndex, offsetBy: 5)
+                        let endIndex = str.index(str.startIndex, offsetBy: 9)
 
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex
@@ -374,8 +374,8 @@ class AutoCompleteSpec: QuickSpec {
                         let str = ":+1::two"
                         let result = subject.check(str, location: 8)
 
-                        let startIndex = str.characters.index(str.startIndex, offsetBy: 4)
-                        let endIndex = str.characters.index(str.startIndex, offsetBy: 8)
+                        let startIndex = str.index(str.startIndex, offsetBy: 4)
+                        let endIndex = str.index(str.startIndex, offsetBy: 8)
 
                         expect(result?.type) == AutoCompleteType.emoji
                         expect(result?.range) == startIndex..<endIndex

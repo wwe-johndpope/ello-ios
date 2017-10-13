@@ -10,6 +10,7 @@ class AppSetup {
     lazy var isTesting: Bool = _isTesting()
     lazy var isSimulator: Bool = _isRunningOnSimulator()
     lazy var isIphoneX: Bool = _isIphoneX()
+    lazy var isIpad: Bool = _isIpad()
 
     lazy var statusBarHeight: CGFloat = _statusBarHeight()
     lazy var bestBottomMargin: CGFloat = _bestBottomMargin()
@@ -50,4 +51,8 @@ private func _bestBottomMargin() -> CGFloat {
         return 23
     }
     return 10
+}
+
+private func _isIpad() -> Bool {
+    return UIDevice.current.userInterfaceIdiom == .pad
 }

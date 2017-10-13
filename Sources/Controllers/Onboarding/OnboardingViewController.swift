@@ -60,7 +60,7 @@ class OnboardingViewController: BaseElloViewController {
             onboardingData.bio = currentUser.profile?.shortBio
             if let links = currentUser.externalLinksList {
                 onboardingData.links = links.reduce("") { (memo: String, link) in
-                    if memo.characters.count == 0 {
+                    if memo.isEmpty {
                         return link.url.absoluteString
                     }
                     else {

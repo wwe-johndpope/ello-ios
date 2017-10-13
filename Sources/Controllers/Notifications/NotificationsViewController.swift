@@ -20,11 +20,6 @@ class NotificationsViewController: StreamableViewController, NotificationsScreen
     var categoryFilterType = NotificationFilterType.all
     var categoryStreamKind: StreamKind { return .notifications(category: categoryFilterType.category) }
 
-    override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.bolt, insets: ElloTab.notifications.insets) }
-        set { self.tabBarItem = newValue }
-    }
-
     override func loadView() {
         self.view = NotificationsScreen(frame: UIScreen.main.bounds)
     }

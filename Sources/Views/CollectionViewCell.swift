@@ -25,5 +25,4 @@ class CollectionViewCell: UICollectionViewCell {
     func bindActions() {}
     func setText() {}
     func arrange() {}
-
 }

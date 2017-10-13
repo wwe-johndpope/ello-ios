@@ -17,11 +17,6 @@ class ElloNavigationController: UINavigationController, ControllerThatMightHaveT
 
     var backGesture: UIScreenEdgePanGestureRecognizer?
 
-    override var tabBarItem: UITabBarItem? {
-        get { return childViewControllers.first?.tabBarItem ?? super.tabBarItem }
-        set { self.tabBarItem = newValue }
-    }
-
     func didSetCurrentUser() {
         for controller in self.viewControllers {
             guard let controller = controller as? ControllerThatMightHaveTheCurrentUser else { return }

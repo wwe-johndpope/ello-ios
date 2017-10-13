@@ -30,9 +30,6 @@ class ProfileLinksView: ProfileBaseView {
     private var buttonLinks: [UIButton: ExternalLink] = [:]
 
     var onHeightMismatch: OnHeightMismatch?
-}
-
-extension ProfileLinksView {
 
     override func style() {
         backgroundColor = .white

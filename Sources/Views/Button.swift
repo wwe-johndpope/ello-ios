@@ -24,9 +24,7 @@ class Button: UIButton {
     convenience init() {
         self.init(frame: .zero)
     }
-}
 
-extension Button {
     func style() {}
     func bindActions() {}
     func setText() {}

@@ -23,9 +23,6 @@ class ProfileBioView: ProfileBaseView {
     }
 
     var onHeightMismatch: OnHeightMismatch?
-}
-
-extension ProfileBioView {
 
     override func style() {
         backgroundColor = .white
@@ -50,7 +47,9 @@ extension ProfileBioView {
             make.leading.trailing.equalTo(self).inset(ProfileBaseView.Size.grayInset)
         }
     }
+}
 
+extension ProfileBioView {
     func prepareForReuse() {
         self.bio = ""
         grayLine.isHidden = false

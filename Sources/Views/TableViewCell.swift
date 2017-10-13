@@ -26,5 +26,4 @@ class TableViewCell: UITableViewCell {
     func bindActions() {}
     func setText() {}
     func arrange() {}
-
 }

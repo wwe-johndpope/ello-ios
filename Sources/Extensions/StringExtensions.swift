@@ -77,22 +77,22 @@ extension String {
             if scanner.scanString("&", into: nil) {
                 var afterAmpersandPtr: NSString?
                 if scanner.scanUpTo(";", into: &afterAmpersandPtr) {
-                    let afterAmpersand = afterAmpersandPtr!
+                    let afterAmpersand = afterAmpersandPtr! as String
 
                     if scanner.scanString(";", into: nil)  {
-                        if afterAmpersand.hasPrefix("#") && afterAmpersand.length <= 6 {
-                            let ch = Int(afterAmpersand.substring(from: 1))
+                        if afterAmpersand.hasPrefix("#") && afterAmpersand.count <= 6 {
+                            let ch = Int(afterAmpersand[secondIndex...])
                             if let ch = ch {
                                 entitiesDecoded += String(format: "%C", ch)
                             }
                             else {
                                 entitiesDecoded += "&"
-                                entitiesDecoded += afterAmpersand as String
+                                entitiesDecoded += afterAmpersand
                                 entitiesDecoded += ";"
                             }
                         }
                         else  {
-                            let converted = entityLookup[afterAmpersand as String]
+                            let converted = entityLookup[afterAmpersand]
 
                             if let converted = converted {
                                 entitiesDecoded += converted
@@ -100,7 +100,7 @@ extension String {
                             else  {
                                 // not a valid sequence
                                 entitiesDecoded += "&"
-                                entitiesDecoded += afterAmpersand as String
+                                entitiesDecoded += afterAmpersand
                                 entitiesDecoded += ";"
                             }
                         }
@@ -109,7 +109,7 @@ extension String {
                     else  {
                         // no semicolon
                         entitiesDecoded += "&"
-                        entitiesDecoded += afterAmpersand as String
+                        entitiesDecoded += afterAmpersand
                     }
                 }
             }
@@ -133,8 +133,7 @@ extension String {
     var camelCase: String {
         let splits = split("_")
         var capSplits: [String] = splits.map { s in
-            let index = s.characters.index(after: s.startIndex)
-            return s.substring(to: index).capitalized + s.substring(from: index)
+            return String(s[startIndex]).capitalized + String(s[secondIndex...])
         }
         capSplits.replaceSubrange(0..<1, with: [splits.first ?? ""])
         return capSplits.joined(separator: "")
@@ -143,6 +142,9 @@ extension String {
     var first: String {
         return String(characters.prefix(1))
     }
+
+    var secondIndex: String.Index { return index(after: startIndex) }
+    var secondToLastIndex: String.Index { return index(before: endIndex) }
 
     var last: String {
         return String(characters.suffix(1))

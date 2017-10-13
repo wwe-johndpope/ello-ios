@@ -21,14 +21,9 @@ class OmnibarViewController: BaseElloViewController {
         return ["creating": "post"]
     }
 
-    override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.omni, insets: ElloTab.omnibar.insets) }
-        set { self.tabBarItem = newValue }
-    }
-
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
-    var previousTab: ElloTab = .DefaultTab
+    var previousTab: ElloTab = .defaultTab
     var parentPostId: String?
     var editPost: Post?
     var editComment: ElloComment?
@@ -371,13 +366,13 @@ extension OmnibarViewController {
             switch region {
             case let .attributedText(attributedText):
                 let textString = attributedText.string
-                if textString.characters.count > 5000 {
+                if textString.count > 5000 {
                     contentCreationFailed(InterfaceString.Omnibar.TooLongError)
                     return []
                 }
 
                 let cleanedText = textString.trimmingCharacters(in: CharacterSet.whitespaces)
-                if cleanedText.characters.count > 0 {
+                if !cleanedText.isEmpty {
                     content.append(.text(ElloAttributedString.render(attributedText)))
                 }
             case let .image(image):

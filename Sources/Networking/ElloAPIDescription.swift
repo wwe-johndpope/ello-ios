@@ -79,9 +79,9 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case let .followingNewContent(createdAt):
             return "followingNewContent(createdAt: \(createdAt ?? Date())"
         case let .hire(userId, body):
-            return "hire(userId: \(userId), body: \(body.characters.count))"
+            return "hire(userId: \(userId), body: \(body.count))"
         case let .collaborate(userId, body):
-            return "collaborate(userId: \(userId), body: \(body.characters.count))"
+            return "collaborate(userId: \(userId), body: \(body.count))"
         case let .custom(path, api):
             return "custom(path: \(path), elloApi: \(api))"
         case let .customRequest(request, api):

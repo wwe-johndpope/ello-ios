@@ -34,33 +34,33 @@ struct AutoComplete {
     init(){}
 
     func eagerCheck(_ text: String, location: Int) -> Bool {
-        if location > text.characters.count { return false }
+        if location > text.count { return false }
         let wordStartIndex = getIndexOfWordStart(location, fromString: text)
-        let wordEndIndex = text.characters.index(text.startIndex, offsetBy: location)
+        let wordEndIndex = text.index(text.startIndex, offsetBy: location)
         let charEndIndex: String.Index
-        if wordStartIndex == text.characters.endIndex {
+        if wordStartIndex == text.endIndex {
             charEndIndex = wordStartIndex
         }
         else {
-            charEndIndex = text.characters.index(wordStartIndex, offsetBy: 1)
+            charEndIndex = text.index(wordStartIndex, offsetBy: 1)
         }
-        let char = text.substring(with: wordStartIndex..<charEndIndex)
-        let substr = text.substring(with: wordStartIndex..<wordEndIndex)
-        if (substr.characters.split { $0 == ":" }).count > 1 {
+        let char = text[wordStartIndex ..< charEndIndex]
+        let substr = text[wordStartIndex ..< wordEndIndex]
+        if (substr.split { $0 == ":" }).count > 1 {
             return false
         }
         return char == "@" || char == ":"
     }
 
     func check(_ text: String, location: Int) -> AutoCompleteMatch? {
-        if location > text.characters.count { return .none }
+        if location > text.count { return nil }
 
         let wordStartIndex = getIndexOfWordStart(location, fromString: text)
-        let wordEndIndex = text.characters.index(text.startIndex, offsetBy: location)
-        if wordStartIndex >= wordEndIndex { return .none }
+        let wordEndIndex = text.index(text.startIndex, offsetBy: location)
+        if wordStartIndex >= wordEndIndex { return nil }
 
         let range: Range<String.Index> = wordStartIndex..<wordEndIndex
-        let word = text.substring(with: range)
+        let word = String(text[range])
         if findUsername(word) {
             return AutoCompleteMatch(type: .username, range: range, text: word)
         }
@@ -68,7 +68,7 @@ struct AutoComplete {
             return AutoCompleteMatch(type: .emoji, range: range, text: word)
         }
 
-        return .none
+        return nil
     }
 }
 
@@ -83,7 +83,7 @@ private extension AutoComplete {
 
     func findEmoji(_ text: String) -> Bool {
         // this handles ':one:two'
-        if (text.characters.split { $0 == ":" }).count > 1 {
+        if (text.split { $0 == ":" }).count > 1 {
             return false
         }
         return text =~ emojiRegex
@@ -92,11 +92,11 @@ private extension AutoComplete {
     func getIndexOfWordStart(_ index: Int, fromString str: String) -> String.Index {
         guard index > 0 else { return str.startIndex }
         for indexOffset in (0 ..< index).reversed() {
-            let cursorIndex = str.characters.index(str.startIndex, offsetBy: indexOffset)
+            let cursorIndex = str.index(str.startIndex, offsetBy: indexOffset)
             let letter = str[cursorIndex]
             let prevLetter: Character?
             if indexOffset > 0 {
-                prevLetter = str[str.characters.index(before: cursorIndex)]
+                prevLetter = str[str.index(before: cursorIndex)]
             }
             else {
                 prevLetter = nil
@@ -105,14 +105,14 @@ private extension AutoComplete {
             switch letter {
             case " ", "\n", "\r", "\t":
                 if indexOffset == index {
-                    return str.characters.index(str.startIndex, offsetBy: indexOffset)
+                    return str.index(str.startIndex, offsetBy: indexOffset)
                 }
                 else {
-                    return str.characters.index(str.startIndex, offsetBy: indexOffset + 1)
+                    return str.index(str.startIndex, offsetBy: indexOffset + 1)
                 }
             case ":":
                 if prevLetter == " " || prevLetter == ":" {
-                    return str.characters.index(str.startIndex, offsetBy: indexOffset)
+                    return str.index(str.startIndex, offsetBy: indexOffset)
                 }
             default: break
             }

@@ -21,11 +21,6 @@ final class CategoryViewController: StreamableViewController {
         }
     }
 
-    override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.searchTabBar, insets: ElloTab.discover.insets) }
-        set { self.tabBarItem = newValue }
-    }
-
     private var _mockScreen: CategoryScreenProtocol?
     var screen: CategoryScreenProtocol {
         set(screen) { _mockScreen = screen }

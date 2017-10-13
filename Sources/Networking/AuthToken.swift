@@ -38,7 +38,7 @@ struct AuthToken {
     }
 
     var isPresent: Bool {
-        return (token ?? "").characters.count > 0
+        return !(token ?? "").isEmpty
     }
 
     var isPasswordBased: Bool {

@@ -13,7 +13,7 @@ class OmnibarTextCell: UITableViewCell {
     let textView: UITextView
     var isFirst = false {
         didSet {
-            if isFirst && attributedText.string.characters.count == 0 {
+            if isFirst && attributedText.string.isEmpty {
                 textView.attributedText = ElloAttributedString.style(InterfaceString.Omnibar.SayEllo, [NSAttributedStringKey.foregroundColor: UIColor.black])
             }
         }
@@ -39,7 +39,7 @@ class OmnibarTextCell: UITableViewCell {
 
     var attributedText: NSAttributedString {
         didSet {
-            if attributedText.string.characters.count > 0 {
+            if !attributedText.string.isEmpty {
                 textView.attributedText = attributedText
             }
             else if isFirst {

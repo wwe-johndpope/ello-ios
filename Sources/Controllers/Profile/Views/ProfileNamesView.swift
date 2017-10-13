@@ -46,9 +46,6 @@ class ProfileNamesView: ProfileBaseView {
     private let nameLabel = UILabel()
     private let usernameLabel = UILabel()
     private let grayLine = UIView()
-}
-
-extension ProfileNamesView {
 
     override func style() {
         backgroundColor = .white
@@ -98,7 +95,9 @@ extension ProfileNamesView {
             label.frame.size.width = min(frame.width - Size.outerMargins.left - Size.outerMargins.right, label.frame.size.width)
         }
     }
+}
 
+extension ProfileNamesView {
     func prepareForReuse() {
         // nothing here yet
     }

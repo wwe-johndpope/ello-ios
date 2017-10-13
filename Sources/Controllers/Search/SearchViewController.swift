@@ -110,7 +110,7 @@ extension SearchViewController: SearchScreenDelegate {
 
     private func loadEndpoint(_ text: String, isPostSearch: Bool, checkSearchText: Bool = true) {
         guard
-            text.characters.count > 2,  // just.. no (and the server doesn't guard against empty/short searches)
+            text.count > 2,  // just.. no (and the server doesn't guard against empty/short searches)
             !checkSearchText || searchText != text  // a search is already in progress for this text
         else { return }
 

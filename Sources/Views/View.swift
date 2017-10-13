@@ -24,9 +24,7 @@ class View: UIView {
     convenience init() {
         self.init(frame: .zero)
     }
-}
 
-extension View {
     func style() {}
     func bindActions() {}
     func setText() {}
