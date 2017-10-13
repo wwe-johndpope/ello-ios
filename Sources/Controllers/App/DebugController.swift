@@ -158,11 +158,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             appController.closeDebugController()
         }
 
-        addAction(name: "Reset Tooltips for 2.0") {
-            GroupDefaults[ElloTab.ToolTipsResetForTwoPointOhKey] = nil
-            appController.closeDebugController()
-        }
-
         addAction(name: "Crash the app") {
             Crashlytics.sharedInstance().crash()
         }

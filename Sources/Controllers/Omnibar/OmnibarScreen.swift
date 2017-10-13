@@ -880,7 +880,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     func userSetCurrentImageURL(_ imageURL: URL) {
-        _ = PINRemoteImageManager.shared().downloadImage(with: imageURL, options: []) { result in
+        PINRemoteImageManager.shared().downloadImage(with: imageURL, options: []) { result in
             if let image = result.image {
                 self.addImage(image)
             }

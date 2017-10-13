@@ -2,33 +2,47 @@
 ///  ElloTabBar.swift
 //
 
-class ElloTabBar: UITabBar {
+class ElloTabBar: UIView {
     struct Size {
         static let height: CGFloat = calculateHeight()
+        static let itemHeight: CGFloat = 44
         static let topOffset: CGFloat = calculateTopOffset()
 
         static private func calculateHeight() -> CGFloat {
             if AppSetup.shared.isIphoneX {
-                return 74
+                return 66
             }
             return 44
         }
 
         static private func calculateTopOffset() -> CGFloat {
             if AppSetup.shared.isIphoneX {
-                return 11
+                return 5
             }
-            if AppSetup.shared.isIpad {
-                return -5
-            }
-            return 1
+            return 0
         }
     }
 
-    private var redDotViews = [(ElloTab, UIView)]()
-    private var tabbarButtons: [UIControl] {
-        return subviews.flatMap { $0 as? UIControl }
+    weak var delegate: ElloTabBarDelegate?
+
+    var selectedTab: ElloTab? {
+        didSet {
+            for button in tabbarButtons {
+                button.isSelected = false
+            }
+
+            guard let selectedTab = selectedTab,
+                let index = tabs.index(of: selectedTab)
+            else { return }
+            tabbarButtons[index].isSelected = true
+        }
     }
+    var tabs: [ElloTab] = [] {
+        didSet { arrangeTabs() }
+    }
+
+    var buttonFrames: [CGRect] { return tabbarButtons.map { $0.frame } }
+    private var tabbarButtons: [UIButton] = []
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -47,66 +61,99 @@ class ElloTabBar: UITabBar {
 
     private func privateInit() {
         self.backgroundColor = UIColor.white
-        self.isTranslucent = false
         self.isOpaque = true
-        self.barTintColor = UIColor.white
         self.tintColor = UIColor.black
         self.clipsToBounds = true
-        self.shadowImage = UIImage.imageWithColor(UIColor.white)
+    }
+
+    func resetImages(profile: UIImage?) {
+        for (index, tab) in tabs.enumerated() {
+            let button = tabbarButtons[index]
+            if let (image, selectedImage) = tab.customImages(profile: profile) {
+                button.setImage(image, for: .normal)
+                button.setImage(selectedImage, for: .selected)
+                button.setImage(selectedImage, for: .highlighted)
+            }
+            else {
+                button.setImages(tab.interfaceImage)
+            }
+        }
+    }
+
+    private func arrangeTabs() {
+        for button in tabbarButtons {
+            button.removeFromSuperview()
+        }
+
+        tabbarButtons = tabs.map { tab in
+            let button = UIButton()
+            button.addTarget(self, action: #selector(tappedTabbarButton(_:)), for: .touchUpInside)
+            return button
+        }
+
+        resetImages(profile: nil)
+
+        tabbarButtons.eachPair { prevButton, button, isLast in
+            addSubview(button)
+            button.snp.makeConstraints { make in
+                make.top.equalTo(self).offset(Size.topOffset)
+                make.height.equalTo(Size.itemHeight)
+
+                if let prevButton = prevButton {
+                    make.width.equalTo(prevButton)
+                    make.leading.equalTo(prevButton.snp.trailing)
+                }
+                else {
+                    make.leading.equalTo(self)
+                }
+
+                if isLast {
+                    make.trailing.equalTo(self)
+                }
+            }
+        }
+    }
+
+    @objc
+    func tappedTabbarButton(_ sender: UIButton) {
+        guard
+            let delegate = delegate,
+            let index = tabbarButtons.index(of: sender)
+        else { return }
+
+        let tab = tabs[index]
+        selectedTab = tab
+        delegate.tabBar(self, didSelect: tab)
     }
 
     func addRedDotFor(tab: ElloTab) -> UIView {
-        let redDot: UIView
-        if let entryIndex = (redDotViews.index { $0.0 == tab }) {
-            redDot = redDotViews[entryIndex].1
-        }
-        else {
-            redDot = UIView()
-            redDot.backgroundColor = UIColor.red
-            redDot.isHidden = true
-            let redDotEntry = (tab, redDot)
-            redDotViews.append(redDotEntry)
-            addSubview(redDot)
-        }
+         let redDot = UIView()
+         redDot.backgroundColor = .red
+         redDot.isHidden = true
+         addSubview(redDot)
 
-        positionRedDot(redDot, forTab: tab)
-        return redDot
-    }
+         positionRedDot(redDot, forTab: tab)
+         return redDot
+     }
 
-    private func tabBarFrameAtIndex(_ index: Int) -> CGRect {
-        let tabBarButtons = subviews.filter {
-            $0 is UIControl
-        }.sorted {
-            $0.frame.minX < $1.frame.minX
-        }
-        return tabBarButtons.safeValue(index)?.frame ?? .zero
-    }
+     private func positionRedDot(_ redDot: UIView, forTab tab: ElloTab) {
+        layoutIfNeeded()
 
-    private func positionTabButton(_ button: UIControl) {
-        button.frame.origin.y = Size.topOffset
-    }
-
-    private func positionRedDot(_ redDot: UIView, forTab tab: ElloTab) {
         let radius: CGFloat = 3
         let diameter = radius * 2
-        let tabBarItemFrame = tabBarFrameAtIndex(tab.rawValue)
-        let item = items?[tab.rawValue]
-        let imageHalfWidth: CGFloat = (item?.selectedImage?.size.width ?? 0) / 2
-        let x = tabBarItemFrame.midX + imageHalfWidth + tab.redDotMargins.x
-        let frame = CGRect(x: x, y: tab.redDotMargins.y, width: diameter, height: diameter)
+        let tab = tabs[tab.rawValue]
+        let button = tabbarButtons[tab.rawValue]
 
         redDot.layer.cornerRadius = radius
-        redDot.frame = frame
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        for (tab, redDot) in redDotViews {
-            positionRedDot(redDot, forTab: tab)
-        }
-        for tabButton in tabbarButtons {
-            positionTabButton(tabButton)
+        redDot.snp.makeConstraints { make in
+            make.leading.equalTo(button.snp.centerX).offset(tab.redDotMargins.x)
+            make.top.equalTo(self).offset(tab.redDotMargins.y)
+            make.width.height.equalTo(diameter)
         }
     }
 
+}
+
+protocol ElloTabBarDelegate: class {
+    func tabBar(_ tabBar: ElloTabBar, didSelect item: ElloTab)
 }

@@ -21,14 +21,9 @@ class OmnibarViewController: BaseElloViewController {
         return ["creating": "post"]
     }
 
-    override var tabBarItem: UITabBarItem? {
-        get { return UITabBarItem.item(.omni, insets: ElloTab.omnibar.insets) }
-        set { self.tabBarItem = newValue }
-    }
-
     var keyboardWillShowObserver: NotificationObserver?
     var keyboardWillHideObserver: NotificationObserver?
-    var previousTab: ElloTab = .DefaultTab
+    var previousTab: ElloTab = .defaultTab
     var parentPostId: String?
     var editPost: Post?
     var editComment: ElloComment?

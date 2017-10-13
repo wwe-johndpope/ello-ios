@@ -18,24 +18,6 @@ final class ProfileViewController: StreamableViewController {
         return ("user", streamId)
     }
 
-    var _tabBarItem: UITabBarItem?
-    override var tabBarItem: UITabBarItem? {
-        get {
-            if _tabBarItem != nil {
-                return _tabBarItem
-            }
-
-            guard let imageURL = currentUser?.avatar?.large?.url else {
-                return UITabBarItem.item(.person, insets: ElloTab.profile.insets)
-            }
-            let item = AvatarBarItem()
-            item.setUserAvatarURL(imageURL)
-            _tabBarItem = item
-            return _tabBarItem
-        }
-        set { _tabBarItem = newValue }
-    }
-
     private var _mockScreen: ProfileScreenProtocol?
     var screen: ProfileScreenProtocol {
         set(screen) { _mockScreen = screen }
@@ -293,13 +275,6 @@ extension ProfileViewController {
     }
 
     func updateCachedImages() {
-        if
-            let cachedAvatar = cachedImage(.avatar),
-            let item = tabBarItem as? AvatarBarItem
-        {
-            item.setUserAvatar(cachedAvatar)
-        }
-
         if let cachedCoverImage = cachedImage(.coverImage) {
             screen.coverImage = cachedCoverImage
         }

@@ -51,8 +51,8 @@ extension UIImage {
             edge = originalWidth
         }
 
-        let posX = (originalWidth  - edge) / 2.0
-        let posY = (originalHeight - edge) / 2.0
+        let posX = (originalWidth  - edge) / 2
+        let posY = (originalHeight - edge) / 2
 
         let cropSquare = CGRect(x: posX, y: posY, width: edge, height: edge)
 
@@ -84,31 +84,13 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         let rect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
         let rectWithPadding = rect.insetBy(dx: padding, dy: padding)
-        UIBezierPath(roundedRect: rectWithPadding, cornerRadius: size.width - padding * 2 / 2.0).addClip()
+        UIBezierPath(roundedRect: rectWithPadding, cornerRadius: size.width - padding).addClip()
         self.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
     }
 
-    func circleOutline(color: UIColor) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
-        self.draw(in: rect)
-        let ctx = UIGraphicsGetCurrentContext()
-        ctx?.saveGState()
-        ctx?.setStrokeColor(UIColor.white.cgColor)
-        ctx?.setLineWidth(3)
-        ctx?.strokeEllipse(in: rect.insetBy(dx: 1, dy: 1))
-
-        ctx?.setStrokeColor(color.cgColor)
-        ctx?.setLineWidth(1)
-        ctx?.strokeEllipse(in: rect.insetBy(dx: 1, dy: 1))
-        ctx?.restoreGState()
-        let img = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return img
-    }
     func copyWithCorrectOrientationAndSize(_ completion:@escaping (_ image: UIImage?) -> Void) {
         inBackground {
             var sourceImage: UIImage?
