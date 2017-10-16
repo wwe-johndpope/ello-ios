@@ -40,8 +40,8 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var failImage: UIImageView!
     @IBOutlet weak var failBackgroundView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var failWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var failHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var failWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var failHeightConstraint: NSLayoutConstraint!
     private var foregroundObserver: NotificationObserver?
 
     // not used in StreamEmbedCell

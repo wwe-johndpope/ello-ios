@@ -10,10 +10,10 @@ private enum DeleteAccountState {
 
 class DeleteAccountConfirmationViewController: BaseElloViewController {
     @IBOutlet weak var titleLabel: UILabel!
-    weak var infoLabel: StyledLabel!
+    @IBOutlet weak var infoLabel: StyledLabel!
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var cancelView: UIView!
-    weak var cancelLabel: StyledLabel!
+    @IBOutlet weak var cancelLabel: StyledLabel!
 
     private var state: DeleteAccountState = .askNicely
     private var timer: Timer?

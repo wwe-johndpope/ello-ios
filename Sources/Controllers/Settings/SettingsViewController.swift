@@ -86,7 +86,7 @@ class SettingsContainerViewController: BaseElloViewController {
 class SettingsViewController: UITableViewController, ControllerThatMightHaveTheCurrentUser {
 
     @IBOutlet weak var avatarImageView: UIView!
-    weak var profileDescription: StyledLabel!
+    @IBOutlet weak var profileDescription: StyledLabel!
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var avatarImage: UIImageView!
     var scrollLogic: ElloScrollLogic!

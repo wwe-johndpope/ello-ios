@@ -11,7 +11,7 @@ protocol DynamicSettingCellResponder: class {
 class DynamicSettingCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: StyledLabel!
-    weak var descriptionLabel: StyledLabel!
+    @IBOutlet weak var descriptionLabel: StyledLabel!
     @IBOutlet weak var toggleButton: ElloToggleButton!
     @IBOutlet weak var deleteButton: ElloToggleButton!
 

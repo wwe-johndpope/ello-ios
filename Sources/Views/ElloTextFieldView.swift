@@ -5,14 +5,14 @@
 private let ElloTextFieldViewHeight: CGFloat = 89.0
 
 class ElloTextFieldView: UIView {
-    weak var label: StyledLabel!
+    @IBOutlet weak var label: StyledLabel!
     @IBOutlet weak var textField: ElloTextField!
-    weak var errorLabel: StyledLabel!
-    weak var messageLabel: StyledLabel!
+    @IBOutlet weak var errorLabel: StyledLabel!
+    @IBOutlet weak var messageLabel: StyledLabel!
 
-    @IBOutlet private var errorLabelHeight: NSLayoutConstraint!
-    @IBOutlet private var messageLabelHeight: NSLayoutConstraint!
-    @IBOutlet private weak var errorLabelSeparationSpacing: NSLayoutConstraint!
+    @IBOutlet weak var errorLabelHeight: NSLayoutConstraint!
+    @IBOutlet weak var messageLabelHeight: NSLayoutConstraint!
+    @IBOutlet weak var errorLabelSeparationSpacing: NSLayoutConstraint!
 
     var textFieldDidChange: ((String) -> Void)?
     var firstResponderDidChange: ((Bool) -> Void)? {
