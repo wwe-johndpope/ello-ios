@@ -544,10 +544,6 @@
 		1D447E691F338A2000013384 /* ProfileTotalCountSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E601F338A1F00013384 /* ProfileTotalCountSizeCalculatorSpec.swift */; };
 		1D447E6A1F338A2000013384 /* StreamNotificationCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E611F338A1F00013384 /* StreamNotificationCellSizeCalculatorSpec.swift */; };
 		1D447E6B1F338A2000013384 /* StreamTextCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E621F338A2000013384 /* StreamTextCellSizeCalculatorSpec.swift */; };
-		1D447E721F3395D300013384 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E6E1F33936100013384 /* CollectionViewCell.swift */; };
-		1D447E731F3395D900013384 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E6F1F33936100013384 /* TableViewCell.swift */; };
-		1D447E761F3397EE00013384 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E741F3397E800013384 /* Control.swift */; };
-		1D447E781F33985500013384 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E771F33985500013384 /* Button.swift */; };
 		1D447E7A1F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E791F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift */; };
 		1D447E7D1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E7C1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift */; };
 		1D447E801F38DB8700013384 /* ArtistInviteDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D447E7E1F38DB7D00013384 /* ArtistInviteDetailScreen.swift */; };
@@ -923,6 +919,11 @@
 		1DBB23DB1F8C30350025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
 		1DBB23DC1F8C30390025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
 		1DBD0BB61F9026F100DF9FC5 /* ElloTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BB51F9026F100DF9FC5 /* ElloTab.swift */; };
+		1DBD0BC01F950ADC00DF9FC5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBB1F950ADB00DF9FC5 /* View.swift */; };
+		1DBD0BC11F950ADC00DF9FC5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */; };
+		1DBD0BC21F950ADC00DF9FC5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBD1F950ADB00DF9FC5 /* TableViewCell.swift */; };
+		1DBD0BC31F950ADC00DF9FC5 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBE1F950ADB00DF9FC5 /* Control.swift */; };
+		1DBD0BC41F950ADC00DF9FC5 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBF1F950ADB00DF9FC5 /* Button.swift */; };
 		1DBF807C1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */; };
 		1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */; };
 		1DBFD9F01DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD9EF1DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift */; };
@@ -964,7 +965,6 @@
 		1DDC23341F30D68F00E68B0E /* RevealControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */; };
 		1DDC23391F30EB2D00E68B0E /* ArtistInviteAdminController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23371F30EB2D00E68B0E /* ArtistInviteAdminController.swift */; };
 		1DDC233A1F30EB2D00E68B0E /* ArtistInviteAdminGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23381F30EB2D00E68B0E /* ArtistInviteAdminGenerator.swift */; };
-		1DDC233C1F30FF7E00E68B0E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233B1F30FF7E00E68B0E /* View.swift */; };
 		1DDC233E1F30FF8400E68B0E /* NestedTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233D1F30FF8400E68B0E /* NestedTabBarView.swift */; };
 		1DDC23401F3115A200E68B0E /* ArtistInviteAdminScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC233F1F3115A200E68B0E /* ArtistInviteAdminScreen.swift */; };
 		1DDC23441F32250600E68B0E /* ArtistInviteAdminControlsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDC23411F32250600E68B0E /* ArtistInviteAdminControlsCell.swift */; };
@@ -1761,10 +1761,6 @@
 		1D447E601F338A1F00013384 /* ProfileTotalCountSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTotalCountSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D447E611F338A1F00013384 /* StreamNotificationCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamNotificationCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
 		1D447E621F338A2000013384 /* StreamTextCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTextCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
-		1D447E6E1F33936100013384 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		1D447E6F1F33936100013384 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		1D447E741F3397E800013384 /* Control.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
-		1D447E771F33985500013384 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1D447E791F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmissionSuccessScreen.swift; sourceTree = "<group>"; };
 		1D447E7C1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteSubmissionSuccessScreenSpec.swift; sourceTree = "<group>"; };
 		1D447E7E1F38DB7D00013384 /* ArtistInviteDetailScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteDetailScreen.swift; sourceTree = "<group>"; };
@@ -2030,6 +2026,11 @@
 		1DB8C6B21D7F24B4007E1447 /* SearchString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchString.swift; sourceTree = "<group>"; };
 		1DBB23DA1F8C30350025FA07 /* DebugServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugServer.swift; sourceTree = "<group>"; };
 		1DBD0BB51F9026F100DF9FC5 /* ElloTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElloTab.swift; sourceTree = "<group>"; };
+		1DBD0BBB1F950ADB00DF9FC5 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		1DBD0BBD1F950ADB00DF9FC5 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		1DBD0BBE1F950ADB00DF9FC5 /* Control.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
+		1DBD0BBF1F950ADB00DF9FC5 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1DBF807B1A9F9F7E00A73BDA /* ElloScrollLogicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloScrollLogicSpec.swift; sourceTree = "<group>"; };
 		1DBF85C01AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebBrowserViewControllerSpec.swift; sourceTree = "<group>"; };
 		1DBFD9EF1DFB33DC0058843D /* AnnouncementCellSizeCalculatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementCellSizeCalculatorSpec.swift; sourceTree = "<group>"; };
@@ -2067,7 +2068,6 @@
 		1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealControllerCell.swift; sourceTree = "<group>"; };
 		1DDC23371F30EB2D00E68B0E /* ArtistInviteAdminController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteAdminController.swift; sourceTree = "<group>"; };
 		1DDC23381F30EB2D00E68B0E /* ArtistInviteAdminGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteAdminGenerator.swift; sourceTree = "<group>"; };
-		1DDC233B1F30FF7E00E68B0E /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		1DDC233D1F30FF8400E68B0E /* NestedTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedTabBarView.swift; sourceTree = "<group>"; };
 		1DDC233F1F3115A200E68B0E /* ArtistInviteAdminScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteAdminScreen.swift; sourceTree = "<group>"; };
 		1DDC23411F32250600E68B0E /* ArtistInviteAdminControlsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistInviteAdminControlsCell.swift; sourceTree = "<group>"; };
@@ -3427,17 +3427,15 @@
 		12F6AE641A4339D100493660 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1DBD0BBA1F950AB400DF9FC5 /* Base */,
 				762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */,
 				1289F3971AF17937008A938C /* BasicIcon.swift */,
 				1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */,
-				1D447E771F33985500013384 /* Button.swift */,
 				1DA18E571DD12FE8000231CC /* CategoryCardListView.swift */,
 				12B291371DDF5E9F0056C52E /* CategoryCardView.swift */,
 				1D7152AF1D6E4782005998FE /* ClearTextField.swift */,
 				1DB8C6A01D789015007E1447 /* ClearTextView.swift */,
-				1D447E6E1F33936100013384 /* CollectionViewCell.swift */,
 				1D9B74C91BB1E3EF00ACD028 /* CommentsIcon.swift */,
-				1D447E741F3397E800013384 /* Control.swift */,
 				1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */,
 				122454AD1D9F1BC700D930E0 /* ElloCollectionView.swift */,
 				EA587A9E1ACDC6F4002AF389 /* ElloEditableTextView.swift */,
@@ -3471,9 +3469,7 @@
 				1D7152A31D6D3848005998FE /* StartupGradientLayer.swift */,
 				1DB8C6A21D78C85C007E1447 /* StyledButton.swift */,
 				1D70DE571DF23862008AF216 /* StyledLabel.swift */,
-				1D447E6F1F33936100013384 /* TableViewCell.swift */,
 				1D7152B31D6E4FCE005998FE /* ValidationState.swift */,
-				1DDC233B1F30FF7E00E68B0E /* View.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3901,6 +3897,18 @@
 				1DADC5791AF449B3000DAC88 /* ElloWebBrowserViewController.swift */,
 			);
 			path = WebBrowser;
+			sourceTree = "<group>";
+		};
+		1DBD0BBA1F950AB400DF9FC5 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				1DBD0BBF1F950ADB00DF9FC5 /* Button.swift */,
+				1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */,
+				1DBD0BBE1F950ADB00DF9FC5 /* Control.swift */,
+				1DBD0BBD1F950ADB00DF9FC5 /* TableViewCell.swift */,
+				1DBD0BBB1F950ADB00DF9FC5 /* View.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		1DBF85BF1AF8022200889349 /* WebBrowser */ = {
@@ -5473,6 +5481,7 @@
 				122B30F51C6A3FC500C1B9D8 /* RegionKind.swift in Sources */,
 				76A9664C1AE996C500FB1A52 /* StreamRegionableCell.swift in Sources */,
 				125F28841B1D0CD400BA501E /* DrawerCell.swift in Sources */,
+				1DBD0BC01F950ADC00DF9FC5 /* View.swift in Sources */,
 				1D7E82431F2692D3006ACE7A /* ArtistInviteGuideCell.swift in Sources */,
 				122943291C6BF534003FCD20 /* ExtensionItemPreview.swift in Sources */,
 				12F6AE311A43390900493660 /* ScreenExtensions.swift in Sources */,
@@ -5502,6 +5511,7 @@
 				1D87831E1ECCF5B300253602 /* EditorialTitledCell.swift in Sources */,
 				1D2D18651AC322070078AA05 /* UIWebView.swift in Sources */,
 				1217009B1A7841C400EBACA5 /* StreamCellItemParser.swift in Sources */,
+				1DBD0BC31F950ADC00DF9FC5 /* Control.swift in Sources */,
 				12431FFC1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift in Sources */,
 				1D6D8E701EF2ED4600472434 /* HomeViewController.swift in Sources */,
 				12224E581A72CEC300D087EC /* PostbarController.swift in Sources */,
@@ -5599,7 +5609,6 @@
 				1D69BBCF1C3EF5AA00FCBDE0 /* ElloSegmentedControl.swift in Sources */,
 				EAED46DE1ADC5D570081A9F7 /* DynamicSettingCell.swift in Sources */,
 				1DB8C6AB1D7A2349007E1447 /* SearchTextField.swift in Sources */,
-				1D447E781F33985500013384 /* Button.swift in Sources */,
 				122943281C6BF509003FCD20 /* ShareViewController.swift in Sources */,
 				76EB15A91B0295AA001BBB2A /* StreamSeeMoreCommentsCell.swift in Sources */,
 				1D7E823C1F26885D006ACE7A /* ArtistInviteDetailGenerator.swift in Sources */,
@@ -5637,6 +5646,7 @@
 				76C050AA1AA8C8CF0094E69A /* UserListItemCell.swift in Sources */,
 				12F6AE301A43390900493660 /* Optionals.swift in Sources */,
 				1D2F65AC1D186E7A0099D036 /* CategoryCardCell.swift in Sources */,
+				1DBD0BC21F950ADC00DF9FC5 /* TableViewCell.swift in Sources */,
 				1DCB124A1B5EB0E60023664C /* CGSizeExtensions.swift in Sources */,
 				1D8783161ECCF45E00253602 /* EditorialExternalCell.swift in Sources */,
 				1D6D8E6E1EF2ED4600472434 /* HomeProtocols.swift in Sources */,
@@ -5729,6 +5739,7 @@
 				1D5933711D10ADC300EAF03D /* CategoryListCellPresenter.swift in Sources */,
 				1D70DE751DF781AC008AF216 /* AnnouncementCellSizeCalculator.swift in Sources */,
 				F8BDA7551AA8F3C800A662B4 /* DrawerViewController.swift in Sources */,
+				1DBD0BC41F950ADC00DF9FC5 /* Button.swift in Sources */,
 				1DA18E041DAD911E000231CC /* ProfileBioPresenter.swift in Sources */,
 				1207C9841C73FEE000939ADB /* MappingType.swift in Sources */,
 				1DBFD9F61DFB50F10058843D /* NotificationService.swift in Sources */,
@@ -5796,12 +5807,12 @@
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				123375891DA6ECEC0019CFAD /* ProfileTotalCountView.swift in Sources */,
 				1DB2710D1F4F882D0044D475 /* StreamResponders.swift in Sources */,
-				1D447E761F3397EE00013384 /* Control.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,
 				76B0B18F1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift in Sources */,
 				1D7E82471F2A7249006ACE7A /* ArtistInviteSubmission.swift in Sources */,
 				1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */,
 				122B30EE1C6A3FC500C1B9D8 /* Attachment.swift in Sources */,
+				1DBD0BC11F950ADC00DF9FC5 /* CollectionViewCell.swift in Sources */,
 				122C66331B424DB20035F4CD /* AutoCompleteCell.swift in Sources */,
 				12F6AE451A43397400493660 /* Colors.swift in Sources */,
 				12F6AE6D1A4339EF00493660 /* ElloUnderlinedTextButton.swift in Sources */,
@@ -5861,7 +5872,6 @@
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DF0B2D31E8D59DD001B9F97 /* ForgotPasswordEmailViewController.swift in Sources */,
 				1207C9831C73FEE000939ADB /* Mapper.swift in Sources */,
-				1DDC233C1F30FF7E00E68B0E /* View.swift in Sources */,
 				1DB8C6A91D7A1BAA007E1447 /* AddressBookHelpers.swift in Sources */,
 				123DEBEF1D3D4B71007B5F86 /* LoadingToken.swift in Sources */,
 				123375771DA6B8BB0019CFAD /* ProfileHeaderRegularView.swift in Sources */,
@@ -5890,7 +5900,6 @@
 				12F6AE1E1A43386300493660 /* AppViewController.swift in Sources */,
 				12F6ADFD1A43380C00493660 /* ElloTabBarController.swift in Sources */,
 				1DC78A561F21302300BE2413 /* ArtistInvitesViewController.swift in Sources */,
-				1D447E721F3395D300013384 /* CollectionViewCell.swift in Sources */,
 				1D9309DA1EC1349C0099FCF8 /* EditorialCell.swift in Sources */,
 				1289F3921AF1468B008A938C /* ImageLabelControl.swift in Sources */,
 				123971521E4B626400481CB3 /* ResponderChainableController.swift in Sources */,
@@ -5935,7 +5944,6 @@
 				1DF4040A1B150DB40073460B /* NarrationView.swift in Sources */,
 				1DA18E1C1DB55D42000231CC /* ExternalLink.swift in Sources */,
 				1D7152D91D74C7FD005998FE /* OnboardingProtocols.swift in Sources */,
-				1D447E731F3395D900013384 /* TableViewCell.swift in Sources */,
 				1D7750F21ABA48F200D92191 /* Tmp.swift in Sources */,
 				1D971CF11E1ECD3100A167A2 /* Tracker.swift in Sources */,
 				12F6AE6C1A4339EF00493660 /* ElloTabBar.swift in Sources */,

@@ -5,10 +5,10 @@
 class UserListItemCell: UICollectionViewCell {
     static let reuseIdentifier = "UserListItemCell"
 
-    weak var avatarButton: AvatarButton!
+    @IBOutlet weak var avatarButton: AvatarButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    weak var relationshipControl: RelationshipControl!
+    @IBOutlet weak var relationshipControl: RelationshipControl!
     var bottomBorder = CALayer()
 
     override func awakeFromNib() {

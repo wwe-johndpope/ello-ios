@@ -5,5 +5,5 @@
 class StreamToggleCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamToggleCell"
 
-    weak var label: StyledLabel!
+    @IBOutlet weak var label: StyledLabel!
 }

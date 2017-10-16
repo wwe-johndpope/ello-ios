@@ -8,7 +8,7 @@ protocol DrawerResponder: class {
 
 class DrawerViewController: BaseElloViewController {
     @IBOutlet weak var tableView: UITableView!
-    weak var navigationBar: ElloNavigationBar!
+    @IBOutlet weak var navigationBar: UIView!
     var isLoggingOut = false
 
     override var backGestureEdges: UIRectEdge { return .right }
@@ -26,7 +26,7 @@ class DrawerViewController: BaseElloViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addLeftButtons()
+        setupNavigationBar()
         setupTableView()
         registerCells()
     }
@@ -81,7 +81,9 @@ private extension DrawerViewController {
         tableView.dataSource = dataSource
     }
 
-    func addLeftButtons() {
+    func setupNavigationBar() {
+        navigationBar.backgroundColor = .grey6
+
         let logoView = UIImageView(image: InterfaceImage.elloLogo.normalImage)
         let logoY: CGFloat = AppSetup.shared.statusBarHeight + 10
         logoView.frame = CGRect(x: 15, y: logoY, width: 24, height: 24)

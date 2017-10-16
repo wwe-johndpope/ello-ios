@@ -19,11 +19,11 @@ private enum CredentialSettingsRow: Int {
 }
 
 class CredentialSettingsViewController: UITableViewController {
-    weak var usernameView: ElloTextFieldView!
-    weak var emailView: ElloTextFieldView!
-    weak var passwordView: ElloTextFieldView!
+    @IBOutlet weak var usernameView: ElloTextFieldView!
+    @IBOutlet weak var emailView: ElloTextFieldView!
+    @IBOutlet weak var passwordView: ElloTextFieldView!
     @IBOutlet weak var currentPasswordField: ElloTextField!
-    weak var errorLabel: StyledLabel!
+    @IBOutlet weak var errorLabel: StyledLabel!
     @IBOutlet weak var saveButton: StyledButton!
 
     var currentUser: User? {
