@@ -38,7 +38,7 @@ struct ElloAttributedString {
 
     static func linkAttrs() -> [NSAttributedStringKey: Any] {
         return attrs([
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ])
     }
 
@@ -187,7 +187,7 @@ struct ElloAttributedString {
         return NSAttributedString(string: category.name, attributes: featuredInAttrs([
             ElloAttributedText.Link: "category",
             ElloAttributedText.Object: category,
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ], attrs))
     }
 }

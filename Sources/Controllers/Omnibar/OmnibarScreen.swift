@@ -811,7 +811,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
                 self.textView.textStorage.addAttributes([
                     NSAttributedStringKey.link: url,
-                    NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle,
+                    NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                     ], range: range)
                 self.linkButton.isSelected = true
                 self.linkButton.isEnabled = true
