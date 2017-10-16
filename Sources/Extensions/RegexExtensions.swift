@@ -43,9 +43,8 @@ class Regex {
         if let match = self.regex.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
 
             for i in 0..<match.numberOfRanges {
-                let range = match.range(at: i)
-                if range.location != NSNotFound {
-                    let nsrange = match.range(at: 0)
+                let nsrange = match.range(at: i)
+                if nsrange.location != NSNotFound {
                     guard let range = input.rangeFromNSRange(nsrange) else { continue }
                     ret.append(String(input[range]))
                 }
