@@ -20,9 +20,9 @@
                     <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IY4-CG-Xbd" customClass="ElloNavigationBar" customModule="Ello" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                </navigationBar>
+                <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="44" translatesAutoresizingMaskIntoConstraints="NO" id="IY4-CG-Xbd" userLabel="Navigation Bar" customClass="ElloNavigationBar" customModule="Ello" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
