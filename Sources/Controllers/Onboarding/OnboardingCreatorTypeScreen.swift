@@ -321,7 +321,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         creatorTypeContainerTop.update(offset: creatorTypeMargin)
         creatorTypeContainerIntroTop.update(offset: creatorTypeIntroMargin)
 
-        let completion: (Bool) -> Void = { _ in
+        let completion: () -> Void = {
             self.unselectAllCategories()
         }
         let creatorTypeY: CGFloat
@@ -331,11 +331,11 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         else {
             creatorTypeY = creatorTypeMargin
         }
-        elloAnimate(animated: animated, completion: completion) {
+        elloAnimate(animated: animated) {
             self.creatorTypeContainer.frame.origin.y = creatorTypeY
             self.creatorButtonsContainer.frame.origin.y = creatorTypeY + self.creatorTypeContainer.frame.height + Size.containerOffset
             self.creatorButtonsContainer.alpha = creatorButtonsAlpha
-        }
+        }.always(completion)
     }
 
     func unselectAllCategories() {

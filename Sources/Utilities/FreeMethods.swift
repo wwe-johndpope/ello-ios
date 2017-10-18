@@ -25,33 +25,90 @@ struct AnimationOptions {
     let duration: TimeInterval
     let delay: TimeInterval
     let options: UIViewAnimationOptions
-    let completion: ((Bool) -> Void)
+}
+
+class AnimationPromise {
+    var completionBlock: ((Bool) -> Void)?
+    var alwaysBlock: (() -> Void)?
+    var resolved: Bool?
+
+    func completion(_ block: @escaping (Bool) -> Void) {
+        if let resolved = resolved {
+            block(resolved)
+            return
+        }
+        completionBlock = block
+    }
+
+    func always(_ block: @escaping Block) {
+        if resolved != nil {
+            block()
+            return
+        }
+        alwaysBlock = block
+    }
+
+    func resolve(completed: Bool) {
+        resolved = completed
+        completionBlock?(completed)
+        alwaysBlock?()
+    }
 }
 
 let DefaultAnimationDuration: TimeInterval = 0.2
 let DefaultAppleAnimationDuration: TimeInterval = 0.3
-func animate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
-    elloAnimate(duration: duration, delay: delay, options: options, animated: animated, completion: completion, animations: animations)
+
+@discardableResult
+func animate(
+    duration: TimeInterval = DefaultAnimationDuration,
+    delay: TimeInterval = 0,
+    options: UIViewAnimationOptions = UIViewAnimationOptions(),
+    animated: Bool? = nil,
+    animations: @escaping () -> Void
+    ) -> AnimationPromise
+{
+    return elloAnimate(duration: duration, delay: delay, options: options, animated: animated, animations: animations)
 }
 
-func animateWithKeyboard(animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
-    elloAnimate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, completion: completion, animations: animations)
+@discardableResult
+func animateWithKeyboard(
+    animated: Bool? = nil,
+    animations: @escaping () -> Void
+    ) -> AnimationPromise
+{
+    return elloAnimate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, animations: animations)
 }
 
-func elloAnimate(duration: TimeInterval = DefaultAnimationDuration, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(), animated: Bool? = nil, completion: @escaping ((Bool) -> Void) = { _ in }, animations: @escaping () -> Void) {
+@discardableResult
+func elloAnimate(
+    duration: TimeInterval = DefaultAnimationDuration,
+    delay: TimeInterval = 0,
+    options: UIViewAnimationOptions = UIViewAnimationOptions(),
+    animated: Bool? = nil,
+    animations: @escaping () -> Void
+    ) -> AnimationPromise
+{
     let shouldAnimate: Bool = animated ?? !AppSetup.shared.isTesting
-    let options = AnimationOptions(duration: duration, delay: delay, options: options, completion: completion)
-    animate(options: options, animated: shouldAnimate, animations: animations)
+    let options = AnimationOptions(duration: duration, delay: delay, options: options)
+    return performAnimation(options: options, animated: shouldAnimate, animations: animations)
 }
 
-func animate(options: AnimationOptions, animated: Bool = true, animations: @escaping () -> Void) {
+@discardableResult
+private func performAnimation(
+    options: AnimationOptions,
+    animated: Bool = true,
+    animations: @escaping () -> Void
+    ) -> AnimationPromise
+{
+    let promise = AnimationPromise()
     if animated {
-        UIView.animate(withDuration: options.duration, delay: options.delay, options: options.options, animations: animations, completion: options.completion)
+        UIView.animate(withDuration: options.duration, delay: options.delay, options: options.options, animations: animations, completion: promise.resolve)
     }
     else {
         animations()
-        options.completion(true)
+        promise.resolve(completed: true)
     }
+    return promise
 }
 
 // MARK: Async, Timed, and Throttled closures

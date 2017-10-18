@@ -198,9 +198,9 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
     private func showCategoryCardList(completion: @escaping Block = {}) {
         let originalY = categoryCardList.frame.origin.y
         categoryCardList.frame.origin.y = -categoryCardList.frame.size.height
-        elloAnimate(completion: { _ in completion() }) {
+        elloAnimate {
             self.categoryCardList.frame.origin.y = originalY
-        }
+        }.always(completion)
     }
 
     func animateCategoriesList(navBarVisible: Bool) {

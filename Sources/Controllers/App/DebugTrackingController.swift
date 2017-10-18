@@ -95,10 +95,10 @@ class DebugAgent: AnalyticsAgent {
     }
 
     private func dismiss() {
-        animate(completion: { _ in
-            self.logTextView.text = ""
-        }) {
+        animate {
             self.logView.frame.origin.y = -self.logView.frame.height
+        }.always {
+            self.logTextView.text = ""
         }
 
         if let shouldHideStatusBar = shouldHideStatusBar {
