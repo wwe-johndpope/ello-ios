@@ -91,8 +91,8 @@
 		121E46BD1A6B2798004AEAB7 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */; };
 		122034741DE66A4A0059E633 /* ello_logo_grey.svg in Resources */ = {isa = PBXBuildFile; fileRef = 122034731DE66A4A0059E633 /* ello_logo_grey.svg */; };
 		122034751DE66A4A0059E633 /* ello_logo_grey.svg in Resources */ = {isa = PBXBuildFile; fileRef = 122034731DE66A4A0059E633 /* ello_logo_grey.svg */; };
-		122034771DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122034761DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift */; };
-		122034791DEC8B8A0059E633 /* EmptyStreamCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122034781DEC8B8A0059E633 /* EmptyStreamCellSpec.swift */; };
+		122034771DE9E7300059E633 /* SimpleMessageCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122034761DE9E7300059E633 /* SimpleMessageCellPresenterSpec.swift */; };
+		122034791DEC8B8A0059E633 /* SimpleMessageCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122034781DEC8B8A0059E633 /* SimpleMessageCellSpec.swift */; };
 		1220347B1DEC92C80059E633 /* StreamCellTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1220347A1DEC92C80059E633 /* StreamCellTypeSpec.swift */; };
 		1220347D1DECCDD80059E633 /* marker.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1220347C1DECCDD80059E633 /* marker.svg */; };
 		1220347F1DECCE890059E633 /* ProfileLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1220347E1DECCE890059E633 /* ProfileLocationView.swift */; };
@@ -360,8 +360,8 @@
 		12B093681A6E146C00BF104E /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B093671A6E146C00BF104E /* UIBarButtonItem.swift */; };
 		12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */; };
 		12B291381DDF5E9F0056C52E /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B291371DDF5E9F0056C52E /* CategoryCardView.swift */; };
-		12B2913A1DE4ED090056C52E /* EmptyStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B291391DE4ED090056C52E /* EmptyStreamCell.swift */; };
-		12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */; };
+		12B2913A1DE4ED090056C52E /* SimpleMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B291391DE4ED090056C52E /* SimpleMessageCell.swift */; };
+		12B2913C1DE4F7090056C52E /* SimpleMessageCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B2913B1DE4F7090056C52E /* SimpleMessageCellPresenter.swift */; };
 		12B531011A93B75700E01D72 /* ElloLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B531001A93B75700E01D72 /* ElloLogoView.swift */; };
 		12BCEA3E1B6C0D4500AD85A9 /* NewContentServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BCEA3D1B6C0D4500AD85A9 /* NewContentServiceSpec.swift */; };
 		12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BF3CC01B66D68000CF4AE0 /* DateFormattingSpec.swift */; };
@@ -1394,8 +1394,8 @@
 		121D92581A5CACEA004F0455 /* JoinViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewControllerSpec.swift; sourceTree = "<group>"; };
 		121E46BC1A6B2798004AEAB7 /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		122034731DE66A4A0059E633 /* ello_logo_grey.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ello_logo_grey.svg; sourceTree = "<group>"; };
-		122034761DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCellPresenterSpec.swift; sourceTree = "<group>"; };
-		122034781DEC8B8A0059E633 /* EmptyStreamCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCellSpec.swift; sourceTree = "<group>"; };
+		122034761DE9E7300059E633 /* SimpleMessageCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMessageCellPresenterSpec.swift; sourceTree = "<group>"; };
+		122034781DEC8B8A0059E633 /* SimpleMessageCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMessageCellSpec.swift; sourceTree = "<group>"; };
 		1220347A1DEC92C80059E633 /* StreamCellTypeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCellTypeSpec.swift; sourceTree = "<group>"; };
 		1220347C1DECCDD80059E633 /* marker.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marker.svg; sourceTree = "<group>"; };
 		1220347E1DECCE890059E633 /* ProfileLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLocationView.swift; sourceTree = "<group>"; };
@@ -1574,8 +1574,8 @@
 		12B093671A6E146C00BF104E /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		12B0936E1A6E1B1A00BF104E /* ElloNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloNavigationController.swift; sourceTree = "<group>"; };
 		12B291371DDF5E9F0056C52E /* CategoryCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CategoryCardView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		12B291391DE4ED090056C52E /* EmptyStreamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCell.swift; sourceTree = "<group>"; };
-		12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStreamCellPresenter.swift; sourceTree = "<group>"; };
+		12B291391DE4ED090056C52E /* SimpleMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMessageCell.swift; sourceTree = "<group>"; };
+		12B2913B1DE4F7090056C52E /* SimpleMessageCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMessageCellPresenter.swift; sourceTree = "<group>"; };
 		12B531001A93B75700E01D72 /* ElloLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloLogoView.swift; sourceTree = "<group>"; };
 		12BA14411AB20F7500D5018B /* amazon-credentials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "amazon-credentials.json"; path = "Resources/StubbedResponses/amazon-credentials.json"; sourceTree = SOURCE_ROOT; };
 		12BCEA3D1B6C0D4500AD85A9 /* NewContentServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewContentServiceSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2545,11 +2545,11 @@
 				1D9309D91EC1349C0099FCF8 /* EditorialCell.swift */,
 				1D8783121ECCF45100253602 /* Editorials */,
 				128D36BB1A952E3E00622833 /* ElloPostToolBarOption.swift */,
-				12B291391DE4ED090056C52E /* EmptyStreamCell.swift */,
 				1D7152951D6CBE0E005998FE /* NoPostsCell.swift */,
 				1D7152971D6CBE24005998FE /* NoPostsCell.xib */,
 				1DDC23331F30D68F00E68B0E /* RevealControllerCell.swift */,
 				1DB8C6AC1D7A26B1007E1447 /* SearchStreamCell.swift */,
+				12B291391DE4ED090056C52E /* SimpleMessageCell.swift */,
 				122B190C1A86894400247A05 /* StreamCellType.swift */,
 				1D22C8211AAF87F60048D415 /* StreamCreateCommentCell.swift */,
 				76B1A6401AE594DC00110D30 /* StreamEmbedCell.swift */,
@@ -2836,7 +2836,6 @@
 				12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */,
 				1D5933701D10ADC300EAF03D /* CategoryListCellPresenter.swift */,
 				1D9309DB1EC134A20099FCF8 /* EditorialCellPresenter.swift */,
-				12B2913B1DE4F7090056C52E /* EmptyStreamCellPresenter.swift */,
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
 				1DA18E531DCCFB8A000231CC /* PagePromotionalHeaderCellPresenter.swift */,
@@ -2851,6 +2850,7 @@
 				12A1D8361DAD783900A327D6 /* ProfileTotalCountPresenter.swift */,
 				1DDC23311F30D68600E68B0E /* RevealControllerCellPresenter.swift */,
 				1DB8C6AE1D7A26BE007E1447 /* SearchStreamCellPresenter.swift */,
+				12B2913B1DE4F7090056C52E /* SimpleMessageCellPresenter.swift */,
 				1D22C81F1AAF87F00048D415 /* StreamCreateCommentCellPresenter.swift */,
 				76B1A63E1AE5864900110D30 /* StreamEmbedCellPresenter.swift */,
 				128D36A91A951A6400622833 /* StreamFooterCellPresenter.swift */,
@@ -3174,10 +3174,10 @@
 				128FDF381DD0F5E300DBADD0 /* CategoryHeaderCellSpec.swift */,
 				1D59337A1D136E0500EAF03D /* CategoryListCellSpec.swift */,
 				1D9309DF1EC134BC0099FCF8 /* EditorialCellSpec.swift */,
-				122034781DEC8B8A0059E633 /* EmptyStreamCellSpec.swift */,
 				1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */,
 				1D70E7261D5A526C008758D7 /* ProfileHeaderCellSpec.swift */,
 				1DA18E481DB959B2000231CC /* ProfileHeaderGhostCellSpec.swift */,
+				122034781DEC8B8A0059E633 /* SimpleMessageCellSpec.swift */,
 				1220347A1DEC92C80059E633 /* StreamCellTypeSpec.swift */,
 				1DF9840B1D9B31690055EFC7 /* StreamCreateCommentCellSpec.swift */,
 				1D2F65BC1D1C5BC00099D036 /* StreamHeaderCellSpec.swift */,
@@ -3194,7 +3194,6 @@
 				1D2F65BE1D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift */,
 				1D2F65C01D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift */,
 				1D9309DD1EC134B50099FCF8 /* EditorialCellPresenterSpec.swift */,
-				122034761DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift */,
 				12A1D82C1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift */,
 				1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */,
 				1DA18E051DAD912A000231CC /* ProfileBioPresenterSpec.swift */,
@@ -3203,6 +3202,7 @@
 				1DA18DF61DA84773000231CC /* ProfileNamesPresenterSpec.swift */,
 				1DA18DFF1DAC3B73000231CC /* ProfileStatsPresenterSpec.swift */,
 				12A1D8381DAD78F100A327D6 /* ProfileTotalCountPresenterSpec.swift */,
+				122034761DE9E7300059E633 /* SimpleMessageCellPresenterSpec.swift */,
 				1DDA93AF1DA6F8E60007EFDE /* StreamCreateCommentCellPresenterSpec.swift */,
 				1294EBAB1B2B1CB30020F38A /* StreamEmbedCellPresenterSpec.swift */,
 				12F47DD01AD7139900A73B5F /* StreamFooterCellPresenterSpec.swift */,
@@ -5294,7 +5294,7 @@
 				1DA18E491DB959B2000231CC /* ProfileHeaderGhostCellSpec.swift in Sources */,
 				1D447E681F338A2000013384 /* ProfileStatsSizeCalculatorSpec.swift in Sources */,
 				1D73AB901C57C85600D708B9 /* AuthStateSpec.swift in Sources */,
-				122034791DEC8B8A0059E633 /* EmptyStreamCellSpec.swift in Sources */,
+				122034791DEC8B8A0059E633 /* SimpleMessageCellSpec.swift in Sources */,
 				F87A101E1AF1700F00A48E7F /* PushNotificationControllerSpec.swift in Sources */,
 				1264FEFA1B0E4C3D0011B646 /* StreamImageCellPresenterSpec.swift in Sources */,
 				EA9299301AEAC70200E22976 /* DeleteAccountConfirmationViewControllerSpec.swift in Sources */,
@@ -5404,7 +5404,7 @@
 				1D7152BA1D6F53C9005998FE /* LoginScreenSpec.swift in Sources */,
 				124E344E1B54239F00E5A475 /* AutoCompleteSpec.swift in Sources */,
 				12687A161BBED25A0055D0BA /* SpecsTrackingAgent.swift in Sources */,
-				122034771DE9E7300059E633 /* EmptyStreamCellPresenterSpec.swift in Sources */,
+				122034771DE9E7300059E633 /* SimpleMessageCellPresenterSpec.swift in Sources */,
 				1DEE2BEF1AF96F5300EB9DFA /* SearchViewControllerSpec.swift in Sources */,
 				1D447E641F338A2000013384 /* ProfileBadgesSizeCalculatorSpec.swift in Sources */,
 				125F288A1B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift in Sources */,
@@ -5593,7 +5593,7 @@
 				1207C9701C73FEE000939ADB /* AsyncOperation.swift in Sources */,
 				12F6ADFB1A43380C00493660 /* BaseElloViewController.swift in Sources */,
 				1DC78A5B1F2161E900BE2413 /* ArtistInviteBubbleCell.swift in Sources */,
-				12B2913C1DE4F7090056C52E /* EmptyStreamCellPresenter.swift in Sources */,
+				12B2913C1DE4F7090056C52E /* SimpleMessageCellPresenter.swift in Sources */,
 				120E64141E327B7A00CAF03E /* JWT.swift in Sources */,
 				122B30CB1C6A3FBC00C1B9D8 /* Comment.swift in Sources */,
 				1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */,
@@ -5768,7 +5768,7 @@
 				12E3A2751DBE811900D42599 /* Promotional.swift in Sources */,
 				1D45E5731D05F17500AAB730 /* BlockUserModalScreen.swift in Sources */,
 				1D22C8221AAF87F60048D415 /* StreamCreateCommentCell.swift in Sources */,
-				12B2913A1DE4ED090056C52E /* EmptyStreamCell.swift in Sources */,
+				12B2913A1DE4ED090056C52E /* SimpleMessageCell.swift in Sources */,
 				1D447E7A1F38D6CD00013384 /* ArtistInviteSubmissionSuccessScreen.swift in Sources */,
 				1DDC23321F30D68600E68B0E /* RevealControllerCellPresenter.swift in Sources */,
 				122B30D41C6A3FBC00C1B9D8 /* Love.swift in Sources */,

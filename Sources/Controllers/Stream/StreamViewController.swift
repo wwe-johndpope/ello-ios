@@ -496,6 +496,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         if isVisible {
+            appendStreamCellItems([StreamCellItem(type: .error(message: "Error loading your stream"))])
+
             let message = InterfaceString.GenericError
             let alertController = AlertViewController(error: message) { _ in
                 guard

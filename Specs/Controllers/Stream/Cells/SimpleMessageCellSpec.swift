@@ -1,5 +1,5 @@
 ////
-///  EmptyStreamCellSpec.swift
+///  SimpleMessageCellSpec.swift
 //
 
 @testable import Ello
@@ -7,10 +7,10 @@ import Quick
 import Nimble
 
 
-class EmptyStreamCellSpec: QuickSpec {
+class SimpleMessageCellSpec: QuickSpec {
 
     override func spec() {
-        describe("EmptyStreamCell") {
+        describe("SimpleMessageCell") {
 
             let sizes: [(CGSize, desc: String)] = [
                 (CGSize(width: 375, height: 225), "iPhone 7"),
@@ -20,7 +20,7 @@ class EmptyStreamCellSpec: QuickSpec {
 
             for (size, desc) in sizes {
                 it("\(desc) should match snapshot"){
-                    let subject = EmptyStreamCell()
+                    let subject = SimpleMessageCell()
                     subject.frame.size = size
                     subject.title = "Nothing To See Here"
                     expectValidSnapshot(subject)
