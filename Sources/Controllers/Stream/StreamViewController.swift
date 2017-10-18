@@ -479,9 +479,6 @@ final class StreamViewController: BaseElloViewController {
 // MARK: Private Functions
 
     private func initialLoadFailure() {
-        guard streamViewDelegate?.streamViewCustomLoadFailed() == false else {
-            return
-        }
         self.doneLoading()
 
         var isVisible = false

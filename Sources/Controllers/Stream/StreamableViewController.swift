@@ -266,10 +266,6 @@ extension StreamableViewController: CreatePostResponder {
 
 // MARK: StreamViewDelegate
 extension StreamableViewController: StreamViewDelegate {
-    func streamViewCustomLoadFailed() -> Bool {
-        return false
-    }
-
     @objc
     func streamViewStreamCellItems(jsonables: [JSONAble], defaultGenerator generator: StreamCellItemGenerator) -> [StreamCellItem]? {
         return nil
