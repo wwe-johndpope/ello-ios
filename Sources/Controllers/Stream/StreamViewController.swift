@@ -479,9 +479,6 @@ final class StreamViewController: BaseElloViewController {
 // MARK: Private Functions
 
     private func initialLoadFailure() {
-        guard streamViewDelegate?.streamViewCustomLoadFailed() == false else {
-            return
-        }
         self.doneLoading()
 
         var isVisible = false
@@ -496,6 +493,8 @@ final class StreamViewController: BaseElloViewController {
         }
 
         if isVisible {
+            appendStreamCellItems([StreamCellItem(type: .error(message: "Error loading your stream"))])
+
             let message = InterfaceString.GenericError
             let alertController = AlertViewController(error: message) { _ in
                 guard

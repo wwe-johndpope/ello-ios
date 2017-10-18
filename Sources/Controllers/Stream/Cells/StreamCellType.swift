@@ -32,6 +32,7 @@ enum StreamCellType: Equatable {
     case editorial(Editorial.Kind)
     case embed(data: Regionable?)
     case emptyStream(height: CGFloat)
+    case error(message: String)
     case fullWidthSpacer(height: CGFloat)
     case header(NSAttributedString?)
     case image(data: Regionable?)
@@ -113,6 +114,7 @@ enum StreamCellType: Equatable {
         .editorial(.postStream),
         .embed(data: nil),
         .emptyStream(height: 282),
+        .error(message: ""),
         .fullWidthSpacer(height: 0),
         .header(nil),
         .image(data: nil),
@@ -177,7 +179,8 @@ enum StreamCellType: Equatable {
         case .createComment: return StreamCreateCommentCell.reuseIdentifier
         case let .editorial(kind): return kind.reuseIdentifier
         case .embed: return StreamEmbedCell.reuseEmbedIdentifier
-        case .emptyStream: return EmptyStreamCell.reuseEmbedIdentifier
+        case .emptyStream: return SimpleMessageCell.reuseEmbedIdentifier
+        case .error: return SimpleMessageCell.reuseEmbedIdentifier
         case .fullWidthSpacer: return "StreamSpacerCell"
         case .header: return TextHeaderCell.reuseIdentifier
         case .image: return StreamImageCell.reuseIdentifier
@@ -243,7 +246,8 @@ enum StreamCellType: Equatable {
         case .createComment: return StreamCreateCommentCellPresenter.configure
         case .editorial: return EditorialCellPresenter.configure
         case .embed: return StreamEmbedCellPresenter.configure
-        case .emptyStream: return EmptyStreamCellPresenter.configure
+        case .emptyStream: return SimpleMessageCellPresenter.configureEmpty
+        case .error: return SimpleMessageCellPresenter.configureError
         case .fullWidthSpacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
         case .header: return TextHeaderCellPresenter.configure
         case .image: return StreamImageCellPresenter.configure
@@ -285,7 +289,8 @@ enum StreamCellType: Equatable {
         case .createComment: return StreamCreateCommentCell.self
         case let .editorial(kind): return kind.classType
         case .embed: return StreamEmbedCell.self
-        case .emptyStream: return EmptyStreamCell.self
+        case .emptyStream: return SimpleMessageCell.self
+        case .error: return SimpleMessageCell.self
         case .header: return TextHeaderCell.self
         case .image: return StreamImageCell.self
         case .inviteFriends, .onboardingInviteFriends: return StreamInviteFriendsCell.self
@@ -344,6 +349,8 @@ enum StreamCellType: Equatable {
             return height + 1
         case let .emptyStream(height):
             return height
+        case .error:
+            return 282
         case let .fullWidthSpacer(height):
             return height
         case .header:
@@ -411,6 +418,7 @@ enum StreamCellType: Equatable {
              .createComment,
              .editorial,
              .emptyStream,
+             .error,
              .fullWidthSpacer,
              .header,
              .inviteFriends,
@@ -483,6 +491,7 @@ enum StreamCellType: Equatable {
             .editorial(.post),
             .editorial(.postStream),
             .emptyStream(height: 282),
+            .error(message: ""),
             .fullWidthSpacer(height: 0),
             .header(nil),
             .loadMoreComments,

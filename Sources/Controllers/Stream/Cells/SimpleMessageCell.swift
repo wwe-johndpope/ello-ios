@@ -1,12 +1,12 @@
 ////
-///  EmptyStreamCell.swift
+///  SimpleMessageCell.swift
 //
 
 import SnapKit
 
 
-class EmptyStreamCell: CollectionViewCell {
-    static let reuseEmbedIdentifier = "EmptyStreamCell"
+class SimpleMessageCell: CollectionViewCell {
+    static let reuseEmbedIdentifier = "SimpleMessageCell"
 
     struct Size {
         static let bottomMargin: CGFloat = 15

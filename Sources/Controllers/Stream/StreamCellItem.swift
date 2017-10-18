@@ -52,7 +52,7 @@ final class StreamCellItem: NSObject, NSCopying {
     }
 
     func alwaysShow() -> Bool {
-        if type == .streamLoading {
+        if case .streamLoading = type {
             return true
         }
         return false
