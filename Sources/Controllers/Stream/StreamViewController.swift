@@ -654,11 +654,11 @@ extension StreamViewController: HasGridListButton {
             toggleClosure(isGridView)
         }
         else {
-            UIView.animate(withDuration: 0.2, animations: {
+            animate {
                 self.collectionView.alpha = 0
-            }, completion: { _ in
+            }.always {
                 self.toggleGrid(isGridView: isGridView)
-            })
+            }
         }
     }
 
@@ -800,12 +800,22 @@ extension StreamViewController: StreamEditingResponder {
             imageView.center = location
             imageView.alpha = 0
             imageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            let grow: () -> Void = { imageView.transform = CGAffineTransform(scaleX: 1, y: 1) }
-            let remove: (Bool) -> Void = { _ in imageView.removeFromSuperview() }
-            let fadeIn: () -> Void = { imageView.alpha = 0.5 }
-            let fadeOut: (Bool) -> Void = { _ in animate(duration: halfDuration, completion: remove) { imageView.alpha = 0 } }
-            animate(duration: halfDuration, completion: fadeOut, animations: fadeIn)
-            animate(duration: fullDuration, completion: remove, animations: grow)
+
+            // fade in, then fade out
+            animate(duration: halfDuration) {
+                imageView.alpha = 0.5
+            }.always {
+                animate(duration: halfDuration) {
+                    imageView.alpha = 0
+                }
+            }
+
+            // grow throughout the animation
+            animate(duration: fullDuration) {
+                imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }.always {
+                imageView.removeFromSuperview()
+            }
             window.addSubview(imageView)
         }
 
