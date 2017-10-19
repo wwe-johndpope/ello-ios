@@ -3,6 +3,7 @@
 //
 
 import SnapKit
+import FLAnimatedImage
 
 
 class BadgeCell: CollectionViewCell {
@@ -36,8 +37,8 @@ class BadgeCell: CollectionViewCell {
     }
 
     fileprivate let label = ElloTextView()
-    fileprivate let imageView = UIImageView()
-    fileprivate let grayLine = UIImageView()
+    fileprivate let imageView = FLAnimatedImageView()
+    fileprivate let grayLine = UIView()
 
     override func prepareForReuse() {
         super.prepareForReuse()

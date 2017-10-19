@@ -2,7 +2,8 @@
 ///  ProfileBadgesView.swift
 //
 
-private let maxBadges = 3
+import FLAnimatedImage
+
 
 
 class ProfileBadgesView: ProfileBaseView {
@@ -11,6 +12,7 @@ class ProfileBadgesView: ProfileBaseView {
         static let badgeSize = CGSize(width: 36, height: 44)
         static let imageEdgeInsets = UIEdgeInsets(top: 10, left: 6, bottom: 10, right: 6)
     }
+    private static let maxBadges = 3
 
     var badges: [Badge] = [] {
         didSet { updateBadgeViews() }
@@ -53,23 +55,30 @@ class ProfileBadgesView: ProfileBaseView {
             view.removeFromSuperview()
         }
 
-        badgeButtons = badges.safeRange(0 ..< maxBadges).map { (badge: Badge) -> UIButton in
+        badgeButtons = badges.safeRange(0 ..< ProfileBadgesView.maxBadges).flatMap { (badge: Badge) -> UIButton? in
+            guard let imageURL = badge.imageURL else { return nil }
+
             let button = UIButton()
+            let imageView = FLAnimatedImageView()
             button.addTarget(self, action: #selector(badgeTapped(_:)), for: .touchUpInside)
             button.snp.makeConstraints { make in
                 make.size.equalTo(Size.badgeSize)
             }
             button.imageEdgeInsets = Size.imageEdgeInsets
-            if let imageURL = badge.imageURL {
-                button.pin_setImage(from: imageURL)
+
+            imageView.pin_setImage(from: imageURL)
+            button.addSubview(imageView)
+            imageView.snp.makeConstraints { make in
+                make.edges.equalTo(button).inset(Size.imageEdgeInsets)
             }
+
             return button
         }
         var badgeViews: [UIView] = badgeButtons
 
-        if badges.count > maxBadges {
+        if badges.count > ProfileBadgesView.maxBadges {
             let view = UILabel()
-            let remaining = badges.count - maxBadges
+            let remaining = badges.count - ProfileBadgesView.maxBadges
             view.font = UIFont.defaultFont()
             view.text = "+\(remaining.numberToHuman())"
             view.textColor = .greyA
