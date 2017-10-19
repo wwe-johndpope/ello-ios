@@ -1331,6 +1331,12 @@ extension StreamViewController {
     }
 
     func runNextDataChangeJob() {
+        nextTick {
+            self._runNextDataChangeJob()
+        }
+    }
+
+    private func _runNextDataChangeJob() {
         guard dataChangeJobs.count > 0 else {
             isRunningDataChangeJobs = false
             return
@@ -1343,6 +1349,17 @@ extension StreamViewController {
         job.promise.always {
             self.isRunningDataChangeJobs = false
             self.runNextDataChangeJob()
+        }
+
+        // heroku run 'rails c' --remote production
+        // ['colinta', 'dizzymoon', 'jo-her', 'davidseibold', 'tehranchik'].map { |username|  User.where(username: username).first.try(:id) }
+        let userIds = ["548729", "2664793", "2742746", "355235", "328956"]
+        if let id = currentUser?.id, userIds.contains(id) {
+            collectionViewDataSource.visibleCellItems = job.newItems
+
+            collectionView.reloadData()
+            job.resolve()
+            return
         }
 
         switch job.change {
