@@ -92,6 +92,6 @@ private extension DrawerViewController {
     }
 
     func registerCells() {
-        tableView.register(DrawerCell.nib(), forCellReuseIdentifier: DrawerCell.reuseIdentifier)
+        tableView.register(DrawerCell.self, forCellReuseIdentifier: DrawerCell.reuseIdentifier)
     }
 }
