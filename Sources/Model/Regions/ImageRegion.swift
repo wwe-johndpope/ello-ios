@@ -11,13 +11,10 @@ let ImageRegionVersion = 1
 final class ImageRegion: JSONAble, Regionable {
     var isRepost: Bool  = false
 
-    // required
     let alt: String?
-    // optional
     var url: URL?
     var buyButtonURL: URL?
 
-    // links
     var asset: Asset? { return getLinkObject("assets") as? Asset }
 
 // MARK: Initialization
@@ -32,9 +29,7 @@ final class ImageRegion: JSONAble, Regionable {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // required
         self.isRepost = decoder.decodeKey("isRepost")
-        // optional
         self.alt = decoder.decodeOptionalKey("alt")
         self.url = decoder.decodeOptionalKey("url")
         self.buyButtonURL = decoder.decodeOptionalKey("buyButtonURL")
@@ -43,10 +38,8 @@ final class ImageRegion: JSONAble, Regionable {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // required
         coder.encodeObject(alt, forKey: "alt")
         coder.encodeObject(isRepost, forKey: "isRepost")
-        // optional
         coder.encodeObject(url, forKey: "url")
         coder.encodeObject(buyButtonURL, forKey: "buyButtonURL")
         super.encode(with: coder.coder)
@@ -60,7 +53,6 @@ final class ImageRegion: JSONAble, Regionable {
         let imageRegion = ImageRegion(
             alt: json["data"]["alt"].string
             )
-        // optional
         if var urlStr = json["data"]["url"].string {
             if urlStr.hasPrefix("//") {
                 urlStr = "https:\(urlStr)"
@@ -70,7 +62,6 @@ final class ImageRegion: JSONAble, Regionable {
         if let urlStr = json["link_url"].string {
             imageRegion.buyButtonURL = URL(string: urlStr)
         }
-        // links
         imageRegion.links = data["links"] as? [String: Any]
         return imageRegion
     }

@@ -47,7 +47,6 @@ final class Category: JSONAble, Groupable {
         }
     }
 
-    // links
     var promotionals: [Promotional]? { return getLinkArray("promotionals") as? [Promotional] }
     private var _randomPromotional: Promotional?
     var randomPromotional: Promotional? {
@@ -171,7 +170,6 @@ final class Category: JSONAble, Groupable {
             tileImage = nil
         }
 
-        // optional
         let isSponsored = json["is_sponsored"].bool
         let body = json["description"].string
         let header = json["header"].string
@@ -180,7 +178,6 @@ final class Category: JSONAble, Groupable {
 
         let category = Category(id: id, name: name, slug: slug, order: order, allowInOnboarding: allowInOnboarding, isCreatorType: isCreatorType, usesPagePromo: usesPagePromo, level: level, tileImage: tileImage)
 
-        // links
         category.links = data["links"] as? [String: Any]
         category.isSponsored = isSponsored
         category.body = body

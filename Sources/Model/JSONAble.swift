@@ -11,7 +11,6 @@ protocol JSONSaveable {
 
 @objc(JSONAble)
 class JSONAble: NSObject, NSCoding {
-    // links
     var links: [String: Any]?
     let version: Int
 

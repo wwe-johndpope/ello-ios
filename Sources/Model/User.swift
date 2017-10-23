@@ -18,9 +18,7 @@ let UserVersion: Int = 8
 @objc(User)
 final class User: JSONAble {
 
-    // active record
     let id: String
-    // required
     let href: String
     let username: String
     let name: String
@@ -32,18 +30,9 @@ final class User: JSONAble {
     }
     let experimentalFeatures: Bool
     var relationshipPriority: RelationshipPriority
-    let postsAdultContent: Bool
-    let viewsAdultContent: Bool
-    var hasCommentingEnabled: Bool
-    var hasSharingEnabled: Bool
-    var hasRepostingEnabled: Bool
-    var hasLovesEnabled: Bool
-    var isCollaborateable: Bool
-    var isHireable: Bool
     var isFeatured: Bool {
         return (categories?.count ?? 0) > 0
     }
-    // optional
     var avatar: Asset? // required, but kinda optional due to it being nested in json
     var identifiableBy: String?
     var postsCount: Int?
@@ -66,7 +55,15 @@ final class User: JSONAble {
     }
     var location: String?
 
-    // links
+    @objc var postsAdultContent: Bool
+    @objc var viewsAdultContent: Bool
+    @objc var hasCommentingEnabled: Bool
+    @objc var hasSharingEnabled: Bool
+    @objc var hasRepostingEnabled: Bool
+    @objc var hasLovesEnabled: Bool
+    @objc var isCollaborateable: Bool
+    @objc var isHireable: Bool
+
     var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     var categories: [Category]? { return getLinkArray("categories") as? [Category] }
     private var _badges: [Badge]?
@@ -124,9 +121,7 @@ final class User: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
-        // required
         self.href = decoder.decodeKey("href")
         self.username = decoder.decodeKey("username")
         self.name = decoder.decodeKey("name")
@@ -161,7 +156,6 @@ final class User: JSONAble {
             self._badges = badgeNames.flatMap { Badge.lookup(slug: $0) }
         }
 
-        // optional
         self.avatar = decoder.decodeOptionalKey("avatar")
         self.identifiableBy = decoder.decodeOptionalKey("identifiableBy")
         self.postsCount = decoder.decodeOptionalKey("postsCount")
@@ -204,10 +198,8 @@ final class User: JSONAble {
     override func encode(with coder: NSCoder) {
         let encoder = Coder(coder)
 
-        // active record
         encoder.encodeObject(id, forKey: "id")
 
-        // required
         encoder.encodeObject(href, forKey: "href")
         encoder.encodeObject(username, forKey: "username")
         encoder.encodeObject(name, forKey: "name")
@@ -222,7 +214,6 @@ final class User: JSONAble {
         encoder.encodeObject(isCollaborateable, forKey: "isCollaborateable")
         encoder.encodeObject(isHireable, forKey: "isHireable")
 
-        // optional
         encoder.encodeObject(avatar, forKey: "avatar")
         encoder.encodeObject(identifiableBy, forKey: "identifiableBy")
         encoder.encodeObject(postsCount, forKey: "postsCount")

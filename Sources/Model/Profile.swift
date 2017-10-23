@@ -80,10 +80,8 @@ final class Profile: JSONAble {
         case discoverable
     }
 
-    // active record
     let id: String
     let createdAt: Date
-    // required
     let shortBio: String
     let email: String
     let confirmedAt: Date
@@ -94,36 +92,35 @@ final class Profile: JSONAble {
     var creatorTypeCategoryIds: [String]
 
     // dynamic settings
-    var hasSharingEnabled: Bool
-    var hasAdNotificationsEnabled: Bool
-    var hasAutoWatchEnabled: Bool
-    let allowsAnalytics: Bool
-    let notifyOfCommentsViaEmail: Bool
-    let notifyOfLovesViaEmail: Bool
-    let notifyOfInvitationAcceptancesViaEmail: Bool
-    let notifyOfMentionsViaEmail: Bool
-    let notifyOfNewFollowersViaEmail: Bool
-    let notifyOfRepostsViaEmail: Bool
-    let subscribeToUsersEmailList: Bool
-    let subscribeToDailyEllo: Bool
-    let subscribeToWeeklyEllo: Bool
-    let subscribeToOnboardingDrip: Bool
-    let notifyOfAnnouncementsViaPush: Bool
-    let notifyOfApprovedSubmissionsViaPush: Bool
-    let notifyOfCommentsViaPush: Bool
-    let notifyOfLovesViaPush: Bool
-    let notifyOfMentionsViaPush: Bool
-    let notifyOfRepostsViaPush: Bool
-    let notifyOfNewFollowersViaPush: Bool
-    let notifyOfInvitationAcceptancesViaPush: Bool
-    var notifyOfWatchesViaPush: Bool
-    var notifyOfWatchesViaEmail: Bool
-    var notifyOfCommentsOnPostWatchViaPush: Bool
-    var notifyOfCommentsOnPostWatchViaEmail: Bool
-    var hasAnnouncementsEnabled: Bool
-    let discoverable: Bool
+    @objc var hasSharingEnabled: Bool
+    @objc var hasAdNotificationsEnabled: Bool
+    @objc var hasAutoWatchEnabled: Bool
+    @objc let allowsAnalytics: Bool
+    @objc let notifyOfCommentsViaEmail: Bool
+    @objc let notifyOfLovesViaEmail: Bool
+    @objc let notifyOfInvitationAcceptancesViaEmail: Bool
+    @objc let notifyOfMentionsViaEmail: Bool
+    @objc let notifyOfNewFollowersViaEmail: Bool
+    @objc let notifyOfRepostsViaEmail: Bool
+    @objc let subscribeToUsersEmailList: Bool
+    @objc let subscribeToDailyEllo: Bool
+    @objc let subscribeToWeeklyEllo: Bool
+    @objc let subscribeToOnboardingDrip: Bool
+    @objc let notifyOfAnnouncementsViaPush: Bool
+    @objc let notifyOfApprovedSubmissionsViaPush: Bool
+    @objc let notifyOfCommentsViaPush: Bool
+    @objc let notifyOfLovesViaPush: Bool
+    @objc let notifyOfMentionsViaPush: Bool
+    @objc let notifyOfRepostsViaPush: Bool
+    @objc let notifyOfNewFollowersViaPush: Bool
+    @objc let notifyOfInvitationAcceptancesViaPush: Bool
+    @objc var notifyOfWatchesViaPush: Bool
+    @objc var notifyOfWatchesViaEmail: Bool
+    @objc var notifyOfCommentsOnPostWatchViaPush: Bool
+    @objc var notifyOfCommentsOnPostWatchViaEmail: Bool
+    @objc var hasAnnouncementsEnabled: Bool
+    @objc let discoverable: Bool
 
-    // optional
     var gaUniqueId: String?
 
     init(
@@ -211,10 +208,8 @@ final class Profile: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeOptionalKey("id") ?? ""
         self.createdAt = decoder.decodeKey("createdAt")
-        // required
         self.shortBio = decoder.decodeKey("shortBio")
         self.email = decoder.decodeKey("email")
         self.confirmedAt = decoder.decodeKey("confirmedAt")
@@ -298,10 +293,8 @@ final class Profile: JSONAble {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
-        // required
         coder.encodeObject(shortBio, forKey: "shortBio")
         coder.encodeObject(email, forKey: "email")
         coder.encodeObject(confirmedAt, forKey: "confirmedAt")

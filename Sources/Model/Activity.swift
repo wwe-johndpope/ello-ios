@@ -10,13 +10,10 @@ let ActivityVersion = 1
 @objc(Activity)
 final class Activity: JSONAble {
 
-    // active record
     let id: String
     let createdAt: Date
-    // required
     let kind: Kind
     let subjectType: SubjectType
-    // links
     var subject: JSONAble? { return getLinkObject("subject") }
 
     enum Kind: String {
@@ -74,10 +71,8 @@ final class Activity: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
-        // required
         let rawKind: String = decoder.decodeKey("rawKind")
         self.kind = Kind(rawValue: rawKind) ?? Kind.unknown
         let rawSubjectType: String = decoder.decodeKey("rawSubjectType")
@@ -87,10 +82,8 @@ final class Activity: JSONAble {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
-        // required
         coder.encodeObject(kind.rawValue, forKey: "rawKind")
         coder.encodeObject(subjectType.rawValue, forKey: "rawSubjectType")
         super.encode(with: coder.coder)
@@ -100,7 +93,6 @@ final class Activity: JSONAble {
 
     override class func fromJSON(_ data: [String: Any]) -> JSONAble {
         let json = JSON(data)
-        // active record
         let id = json["created_at"].stringValue
         var createdAt: Date
         if let date = id.toDate() {
@@ -118,7 +110,6 @@ final class Activity: JSONAble {
             kind: Kind(rawValue: json["kind"].stringValue) ?? Kind.unknown,
             subjectType: SubjectType(rawValue: json["subject_type"].stringValue) ?? SubjectType.unknown
         )
-        // links
         activity.links = data["links"] as? [String: Any]
 
         return activity

@@ -22,11 +22,9 @@ class WatchSpec: QuickSpec {
                 let updatedAtString = "2015-10-22T17:04:06.789Z"
                 let updatedAt = updatedAtString.toDate()!
 
-                // active record
                 expect(watch.id) == "23"
                 expect(watch.createdAt) == createdAt
                 expect(watch.updatedAt) == updatedAt
-                // required
                 expect(watch.postId) == "222"
                 expect(watch.userId) == "42"
                 expect(watch.post).to(beAKindOf(Post.self))
@@ -90,11 +88,9 @@ class WatchSpec: QuickSpec {
                     expect(unArchivedWatch).toNot(beNil())
                     expect(unArchivedWatch.version) == 1
 
-                    // active record
                     expect(unArchivedWatch.id) == "999"
                     expect(unArchivedWatch.createdAt) == expectedCreatedAt
                     expect(unArchivedWatch.updatedAt) == expectedUpdatedAt
-                    // required
                     expect(unArchivedWatch.postId) == "888"
                     expect(unArchivedWatch.userId) == "444"
                 }

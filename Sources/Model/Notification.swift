@@ -45,9 +45,7 @@ let NotificationVersion = 1
 @objc(Notification)
 final class Notification: JSONAble, Authorable, Groupable {
 
-    // required
     let activity: Activity
-    // optional
     var author: User?
     // if postId is present, this notification is opened using "PostDetailViewController"
     var postId: String?

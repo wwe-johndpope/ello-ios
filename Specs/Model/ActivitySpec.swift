@@ -17,13 +17,10 @@ class ActivitySpec: QuickSpec {
                     let activity = Activity.fromJSON(parsedActivities[0]) as! Activity
                     let createdAtStr = "2014-06-15T00:00:00.000Z"
                     let createdAt = createdAtStr.toDate()!
-                    // active record
                     expect(activity.id) == createdAtStr
                     expect(activity.createdAt) == createdAt
-                    // required
                     expect(activity.kind) == Activity.Kind.repostNotification
                     expect(activity.subjectType) == Activity.SubjectType.post
-                    // links
                     expect(activity.subject).to(beAKindOf(Post.self))
                 }
 
@@ -32,13 +29,10 @@ class ActivitySpec: QuickSpec {
                     let activity = Activity.fromJSON(parsedActivities[1]) as! Activity
                     let createdAtStr = "2014-06-14T00:00:00.000Z"
                     let createdAt = createdAtStr.toDate()!
-                    // active record
                     expect(activity.id) == createdAtStr
                     expect(activity.createdAt) == createdAt
-                    // required
                     expect(activity.kind) == Activity.Kind.newFollowerPost
                     expect(activity.subjectType) == Activity.SubjectType.user
-                    // links
                     expect(activity.subject).to(beAKindOf(User.self))
                 }
 
@@ -47,13 +41,10 @@ class ActivitySpec: QuickSpec {
                     let activity = Activity.fromJSON(parsedActivities[2]) as! Activity
                     let createdAtStr = "2014-06-13T00:00:00.000Z"
                     let createdAt = createdAtStr.toDate()!
-                    // active record
                     expect(activity.id) == createdAtStr
                     expect(activity.createdAt) == createdAt
-                    // required
                     expect(activity.kind) == Activity.Kind.loveOnOriginalPostNotification
                     expect(activity.subjectType) == Activity.SubjectType.unknown
-                    // links
                     expect(activity.subject).to(beAKindOf(Love.self))
                 }
             }
@@ -102,13 +93,10 @@ class ActivitySpec: QuickSpec {
 
                     expect(unArchivedActivity).toNot(beNil())
                     expect(unArchivedActivity.version) == 1
-                    // active record
                     expect(unArchivedActivity.id) == "456"
                     expect(unArchivedActivity.createdAt) == expectedCreatedAt
-                    // required
                     expect(unArchivedActivity.kind) == Activity.Kind.newFollowerPost
                     expect(unArchivedActivity.subjectType) == Activity.SubjectType.post
-                    // links
                     let unArchivedPost = unArchivedActivity.subject as! Post
                     expect(unArchivedPost).to(beAKindOf(Post.self))
                     expect(unArchivedPost.id) == "768"
@@ -130,13 +118,10 @@ class ActivitySpec: QuickSpec {
 
                     expect(unArchivedActivity).toNot(beNil())
                     expect(unArchivedActivity.version) == 1
-                    // active record
                     expect(unArchivedActivity.id) == "456"
                     expect(unArchivedActivity.createdAt) == expectedCreatedAt
-                    // required
                     expect(unArchivedActivity.kind) == Activity.Kind.postMentionNotification
                     expect(unArchivedActivity.subjectType) == Activity.SubjectType.post
-                    // links
                     let unArchivedPost = unArchivedActivity.subject as! Post
                     expect(unArchivedPost).to(beAKindOf(Post.self))
                     expect(unArchivedPost.id) == "768"

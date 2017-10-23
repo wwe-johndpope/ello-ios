@@ -20,14 +20,11 @@ class CommentSpec: QuickSpec {
                 let createdAtString = "2014-06-02T00:00:00.000Z"
                 let comment = ElloComment.fromJSON(parsedComment) as! ElloComment
                 var createdAt = createdAtString.toDate()!
-                // active record
                 expect(comment.createdAt) == createdAt
-                // required
                 expect(comment.postId) == "79"
                 expect(comment.content.count) == 2
                 expect(comment.content[0].kind) == RegionKind.text
                 expect(comment.content[1].kind) == RegionKind.image
-                // links
                 expect(comment.author).to(beAKindOf(User.self))
                 expect(comment.parentPost).to(beAKindOf(Post.self))
                 expect(comment.loadedFromPost).to(beAKindOf(Post.self))
@@ -165,10 +162,8 @@ class CommentSpec: QuickSpec {
 
                     expect(unArchivedComment).toNot(beNil())
                     expect(unArchivedComment.version) == 1
-                    // active record
                     expect(unArchivedComment.id) == comment.id
                     expect(unArchivedComment.createdAt) == expectedCreatedAt
-                    // required
                     expect(unArchivedComment.postId) == parentPost.id
                     testRegionContent(unArchivedComment.content)
                 }

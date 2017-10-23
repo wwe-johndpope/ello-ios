@@ -10,10 +10,8 @@ let RelationshipVersion = 1
 @objc(Relationship)
 final class Relationship: JSONAble {
 
-    // active record
     let id: String
     let createdAt: Date
-    // required
     let ownerId: String
     let subjectId: String
     // computed
@@ -36,10 +34,8 @@ final class Relationship: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
-        // required
         self.ownerId = decoder.decodeKey("ownerId")
         self.subjectId = decoder.decodeKey("subjectId")
         super.init(coder: coder)
@@ -47,10 +43,8 @@ final class Relationship: JSONAble {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
-        // required
         coder.encodeObject(ownerId, forKey: "ownerId")
         coder.encodeObject(subjectId, forKey: "subjectId")
         super.encode(with: coder.coder)

@@ -19,7 +19,6 @@ final class PagePromotional: JSONAble {
     let image: Asset?
     var tileURL: URL? { return image?.oneColumnAttachment?.url as URL? }
 
-    // links
     var user: User? { return getLinkObject("user") as? User }
 
     init(

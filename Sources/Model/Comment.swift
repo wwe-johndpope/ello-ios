@@ -10,17 +10,13 @@ let CommentVersion = 1
 @objc(ElloComment)
 final class ElloComment: JSONAble, Authorable, Groupable {
 
-    // active record
     let id: String
     let createdAt: Date
-    // required
     let authorId: String
     let postId: String
     var content: [Regionable]
     var body: [Regionable]?
-    // optional
     var summary: [Regionable]?
-    // links
     var assets: [Asset] {
         return getLinkArray("assets") as? [Asset] ?? []
     }
@@ -61,15 +57,12 @@ final class ElloComment: JSONAble, Authorable, Groupable {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
-        // required
         self.authorId = decoder.decodeKey("authorId")
         self.postId = decoder.decodeKey("postId")
         self.content = decoder.decodeKey("content")
         self.loadedFromPostId = decoder.decodeKey("loadedFromPostId")
-        // optional
         self.body = decoder.decodeOptionalKey("body")
         self.summary = decoder.decodeOptionalKey("summary")
         super.init(coder: coder)
@@ -77,15 +70,12 @@ final class ElloComment: JSONAble, Authorable, Groupable {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
-        // required
         coder.encodeObject(authorId, forKey: "authorId")
         coder.encodeObject(postId, forKey: "postId")
         coder.encodeObject(content, forKey: "content")
         coder.encodeObject(loadedFromPostId, forKey: "loadedFromPostId")
-        // optional
         coder.encodeObject(body, forKey: "body")
         coder.encodeObject(summary, forKey: "summary")
         super.encode(with: coder.coder)
