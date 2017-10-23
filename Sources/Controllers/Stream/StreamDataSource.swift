@@ -80,9 +80,7 @@ class StreamDataSource: ElloDataSource {
         }
 
         var indexPaths: [IndexPath] = []
-
         for (index, cellItem) in cellItems.enumerated() {
-            indexPaths.append(IndexPath(item: startingIndex + index, section: startingIndexPath.section))
 
             let atIndex = arrayIndex + index
             if atIndex <= allStreamCellItems.count {
@@ -93,8 +91,10 @@ class StreamDataSource: ElloDataSource {
             }
         }
 
+        let initialCount = visibleCellItems.count
         updateFilteredItems()
-        return indexPaths
+        let finalCount = visibleCellItems.count - initialCount
+        return (0 ..< finalCount).map { IndexPath(item: startingIndex + $0, section: 0) }
     }
 
     // MARK: retrieving/searching for items

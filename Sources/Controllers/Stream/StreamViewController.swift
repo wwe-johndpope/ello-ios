@@ -493,7 +493,7 @@ final class StreamViewController: BaseElloViewController {
         }
 
         if isVisible {
-            appendStreamCellItems([StreamCellItem(type: .error(message: "Error loading your stream"))])
+            clearForInitialLoad(newItems: [StreamCellItem(type: .error(message: "Error loading your stream"))])
 
             let message = InterfaceString.GenericError
             let alertController = AlertViewController(error: message) { _ in
@@ -1347,17 +1347,6 @@ extension StreamViewController {
         job.promise.always {
             self.isRunningDataChangeJobs = false
             self.runNextDataChangeJob()
-        }
-
-        // heroku run 'rails c' --remote production
-        // ['colinta', 'dizzymoon', 'jo-her', 'davidseibold', 'tehranchik'].map { |username|  User.where(username: username).first.try(:id) }
-        let userIds = ["548729", "2664793", "2742746", "355235", "328956"]
-        if let id = currentUser?.id, userIds.contains(id) {
-            collectionViewDataSource.visibleCellItems = job.newItems
-
-            collectionView.reloadData()
-            job.resolve()
-            return
         }
 
         switch job.change {
