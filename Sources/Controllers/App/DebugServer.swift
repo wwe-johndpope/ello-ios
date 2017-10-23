@@ -20,12 +20,14 @@ enum DebugServer: String {
     case ninja = "Ninja"
     case stage1 = "Stage 1"
     case stage2 = "Stage 2"
+    case rainbow = "Rainbow"
 
     var apiKeys: APIKeys {
         switch self {
         case .ninja: return APIKeys.ninja
         case .stage1: return APIKeys.stage1
         case .stage2: return APIKeys.stage2
+        case .rainbow: return APIKeys.rainbow
         }
     }
 }
