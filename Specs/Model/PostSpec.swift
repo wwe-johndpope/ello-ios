@@ -29,9 +29,7 @@ class PostSpec: QuickSpec {
                 let createdAtString = "2014-06-01T00:00:00.000Z"
                 let post = Post.fromJSON(parsedPost) as! Post
                 var createdAt = createdAtString.toDate()!
-                // active record
                 expect(post.createdAt) == createdAt
-                // required
                 expect(post.token) == "l9XEKBzB_hB3xkbNb6LdfQ"
                 expect(post.contentWarning) == ""
                 expect(post.summary.count) == 2
@@ -39,7 +37,6 @@ class PostSpec: QuickSpec {
                 expect(post.summary[1].kind) == RegionKind.image
                 expect(post.isReposted) == false
                 expect(post.isLoved) == false
-                // optional
                 expect(post.content!.count) == 2
                 expect(post.content![0].kind) == RegionKind.text
                 expect(post.content![1].kind) == RegionKind.image
@@ -50,7 +47,6 @@ class PostSpec: QuickSpec {
                 expect(post.commentsCount) == 0
                 expect(post.repostsCount) == 0
                 // TODO: create a JSON that has all of these optionals in it
-                // links
                 expect(post.author).to(beAKindOf(User.self))
                 expect(post.comments!.count) == 2
                 expect(post.comments![0]).to(beAKindOf(ElloComment.self))
@@ -71,15 +67,12 @@ class PostSpec: QuickSpec {
                 let author: User = stub(["id": post.authorId, "username": "archer"])
                 ElloLinkedStore.shared.setObject(author, forKey: post.authorId, type: .usersType)
                 var createdAt = createdAtString.toDate()!
-                // active record
                 expect(post.createdAt) == createdAt
-                // required
                 expect(post.token) == "0U58x7Bb4ZZpmTDQhPsYBg"
                 expect(post.contentWarning) == ""
                 expect(post.summary.count) == 2
                 expect(post.summary[0].kind) == RegionKind.text
                 expect(post.summary[1].kind) == RegionKind.image
-                // optional
                 expect(post.content!.count) == 1
                 expect(post.repostContent![0].kind) == RegionKind.text
                 expect(post.viewsCount) == 0
@@ -89,7 +82,6 @@ class PostSpec: QuickSpec {
                 expect(post.repostContent![0].kind) == RegionKind.text
                 expect(post.repostContent![1].kind) == RegionKind.image
                 // TODO: create a JSON that has all of these optionals in it
-                // links
                 expect(post.repostAuthor!).to(beAKindOf(User.self))
                 expect(post.comments!.count) == 0
                 expect(post.assets.count) == 1
@@ -247,17 +239,14 @@ class PostSpec: QuickSpec {
 
                     expect(unArchivedPost).toNot(beNil())
                     expect(unArchivedPost.version) == 2
-                    // active record
                     expect(unArchivedPost.id) == post.id
                     expect(unArchivedPost.createdAt) == expectedCreatedAt as Date
-                    // required
                     expect(unArchivedPost.href) == "0987"
                     expect(unArchivedPost.token) == "toke-en"
                     expect(unArchivedPost.contentWarning) == "NSFW."
                     expect(unArchivedPost.isCollapsed) == true
                     expect(unArchivedPost.allowComments) == true
                     testRegionContent(unArchivedPost.summary)
-                    // optional
                     testRegionContent(unArchivedPost.content!)
                     testRegionContent(unArchivedPost.repostContent!)
                     expect(unArchivedPost.repostId) == "910"
@@ -270,7 +259,6 @@ class PostSpec: QuickSpec {
                     expect(unArchivedPost.lovesCount) == 100
                     expect(unArchivedPost.isReposted) == true
                     expect(unArchivedPost.isLoved) == true
-                    // links
                     expect(unArchivedPost.author?.id) == author.id
                     expect(unArchivedPost.assets.count) == 1
                     expect(unArchivedPost.comments!.count) == 1

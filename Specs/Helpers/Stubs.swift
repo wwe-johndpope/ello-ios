@@ -298,7 +298,6 @@ extension Post: Stubbable {
             post.addLinkArray("categories", array: categories.map { $0.id }, type: .categoriesType)
         }
 
-        // optional
         post.body = (values["body"] as? [Regionable]) ?? [stubbedTextRegion]
         post.content = (values["content"] as? [Regionable]) ?? [stubbedTextRegion]
         post.repostContent = (values["repostContent"] as? [Regionable])
@@ -363,7 +362,6 @@ extension ElloComment: Stubbable {
         comment.loadedFromPostId = loadedFromPost.id
         comment.summary = values["summary"] as? [Regionable] ?? comment.content
 
-        // links
         if let assets = values["assets"] as? [Asset] {
             var assetIds = [String]()
             for asset in assets {

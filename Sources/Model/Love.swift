@@ -10,11 +10,9 @@ let LoveVersion: Int = 1
 @objc(Love)
 final class Love: JSONAble, PostActionable {
 
-    // active record
     let id: String
     let createdAt: Date
     let updatedAt: Date
-    // required
     var isDeleted: Bool
     let postId: String
     let userId: String
@@ -36,11 +34,9 @@ final class Love: JSONAble, PostActionable {
         postId: String,
         userId: String )
     {
-        // active record
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        // required
         self.isDeleted = isDeleted
         self.postId = postId
         self.userId = userId
@@ -51,11 +47,9 @@ final class Love: JSONAble, PostActionable {
 // MARK: NSCoding
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
         self.updatedAt = decoder.decodeKey("updatedAt")
-        // required
         self.isDeleted = decoder.decodeKey("deleted")
         self.postId = decoder.decodeKey("postId")
         self.userId = decoder.decodeKey("userId")
@@ -64,11 +58,9 @@ final class Love: JSONAble, PostActionable {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
         coder.encodeObject(updatedAt, forKey: "updatedAt")
-        // required
         coder.encodeObject(isDeleted, forKey: "deleted")
         coder.encodeObject(postId, forKey: "postId")
         coder.encodeObject(userId, forKey: "userId")

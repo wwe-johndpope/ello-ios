@@ -10,9 +10,7 @@ let AttachmentVersion = 1
 @objc(Attachment)
 final class Attachment: JSONAble {
 
-    // required
     let url: URL
-    // optional
     var size: Int?
     var width: Int?
     var height: Int?
@@ -34,9 +32,7 @@ final class Attachment: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // required
         self.url = decoder.decodeKey("url")
-        // optional
         self.height = decoder.decodeOptionalKey("height")
         self.width = decoder.decodeOptionalKey("width")
         self.size = decoder.decodeOptionalKey("size")
@@ -47,9 +43,7 @@ final class Attachment: JSONAble {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // required
         coder.encodeObject(url, forKey: "url")
-        // optional
         coder.encodeObject(height, forKey: "height")
         coder.encodeObject(width, forKey: "width")
         coder.encodeObject(size, forKey: "size")
@@ -68,7 +62,6 @@ final class Attachment: JSONAble {
         }
         // create attachment
         let attachment = Attachment(url: URL(string: url)!)
-        // optional
         attachment.size = json["metadata"]["size"].int
         attachment.width = json["metadata"]["width"].int
         attachment.height = json["metadata"]["height"].int

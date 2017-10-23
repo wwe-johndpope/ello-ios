@@ -12,10 +12,8 @@ let PostVersion = 2
 @objc(Post)
 final class Post: JSONAble, Authorable, Groupable {
 
-    // active record
     let id: String
     let createdAt: Date
-    // required
     let authorId: String
     let href: String
     let token: String
@@ -26,7 +24,6 @@ final class Post: JSONAble, Authorable, Groupable {
     var isLoved: Bool
     var isWatching: Bool
     let summary: [Regionable]
-    // optional
     var content: [Regionable]?
     var body: [Regionable]?
     var repostContent: [Regionable]?
@@ -39,7 +36,6 @@ final class Post: JSONAble, Authorable, Groupable {
     var commentsCount: Int?
     var repostsCount: Int?
     var lovesCount: Int?
-    // links
     var assets: [Asset] {
         return getLinkArray("assets") as? [Asset] ?? []
     }
@@ -107,10 +103,8 @@ final class Post: JSONAble, Authorable, Groupable {
         summary: [Regionable]
         )
     {
-        // active record
         self.id = id
         self.createdAt = createdAt
-        // required
         self.authorId = authorId
         self.href = href
         self.token = token
@@ -145,10 +139,8 @@ final class Post: JSONAble, Authorable, Groupable {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
-        // required
         self.authorId = decoder.decodeKey("authorId")
         self.href = decoder.decodeKey("href")
         self.token = decoder.decodeKey("token")
@@ -165,7 +157,6 @@ final class Post: JSONAble, Authorable, Groupable {
         else {
             self.isWatching = false
         }
-        // optional
         self.content = decoder.decodeOptionalKey("content")
         self.body = decoder.decodeOptionalKey("body")
         self.repostContent = decoder.decodeOptionalKey("repostContent")
@@ -189,10 +180,8 @@ final class Post: JSONAble, Authorable, Groupable {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
-        // required
         coder.encodeObject(authorId, forKey: "authorId")
         coder.encodeObject(href, forKey: "href")
         coder.encodeObject(token, forKey: "token")
@@ -200,7 +189,6 @@ final class Post: JSONAble, Authorable, Groupable {
         coder.encodeObject(contentWarning, forKey: "contentWarning")
         coder.encodeObject(allowComments, forKey: "allowComments")
         coder.encodeObject(summary, forKey: "summary")
-        // optional
         coder.encodeObject(content, forKey: "content")
         coder.encodeObject(body, forKey: "body")
         coder.encodeObject(repostContent, forKey: "repostContent")
@@ -246,7 +234,6 @@ final class Post: JSONAble, Authorable, Groupable {
             isWatching: json["watching"].bool ?? false,
             summary: RegionParser.regions("summary", json: json)
         )
-        // optional
         post.content = RegionParser.regions("content", json: json, isRepostContent: repostContent.count > 0)
         post.body = RegionParser.regions("body", json: json, isRepostContent: repostContent.count > 0)
         post.repostContent = repostContent
@@ -259,7 +246,6 @@ final class Post: JSONAble, Authorable, Groupable {
         post.commentsCount = json["comments_count"].int
         post.repostsCount = json["reposts_count"].int
         post.lovesCount = json["loves_count"].int
-        // links
         post.links = data["links"] as? [String: Any]
         return post
     }

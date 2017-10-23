@@ -22,11 +22,9 @@ class LoveSpec: QuickSpec {
                 let updatedAtString = "2015-10-22T17:04:06.789Z"
                 let updatedAt = updatedAtString.toDate()!
 
-                // active record
                 expect(love.id) == "23"
                 expect(love.createdAt) == createdAt
                 expect(love.updatedAt) == updatedAt
-                // required
                 expect(love.isDeleted) == false
                 expect(love.postId) == "222"
                 expect(love.userId) == "42"
@@ -92,11 +90,9 @@ class LoveSpec: QuickSpec {
                     expect(unArchivedLove).toNot(beNil())
                     expect(unArchivedLove.version) == 1
 
-                    // active record
                     expect(unArchivedLove.id) == "999"
                     expect(unArchivedLove.createdAt) == expectedCreatedAt
                     expect(unArchivedLove.updatedAt) == expectedUpdatedAt
-                    // required
                     expect(unArchivedLove.isDeleted) == true
                     expect(unArchivedLove.postId) == "888"
                     expect(unArchivedLove.userId) == "444"

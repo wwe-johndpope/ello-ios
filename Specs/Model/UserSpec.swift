@@ -171,9 +171,7 @@ class UserSpec: QuickSpec {
                 it("parses correctly") {
                     let data = stubbedJSONData("users_user_details", "users")
                     let user = User.fromJSON(data) as! User
-                    // active record
                     expect(user.id) == "420"
-                    // required
                     expect(user.href) == "/api/v2/users/420"
                     expect(user.username) == "pam"
                     expect(user.name) == "Pamilanderson"
@@ -184,7 +182,6 @@ class UserSpec: QuickSpec {
                     expect(user.hasSharingEnabled) == true
                     expect(user.isCollaborateable) == true
                     expect(user.isHireable) == true
-                    // optional
                     expect(user.avatar).to(beAKindOf(Asset.self))
                     expect(user.identifiableBy) == ""
                     expect(user.postsCount!) == 4

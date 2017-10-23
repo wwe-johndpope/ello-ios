@@ -80,10 +80,8 @@ final class Profile: JSONAble {
         case discoverable
     }
 
-    // active record
     let id: String
     let createdAt: Date
-    // required
     let shortBio: String
     let email: String
     let confirmedAt: Date
@@ -123,7 +121,6 @@ final class Profile: JSONAble {
     var hasAnnouncementsEnabled: Bool
     let discoverable: Bool
 
-    // optional
     var gaUniqueId: String?
 
     init(
@@ -211,10 +208,8 @@ final class Profile: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeOptionalKey("id") ?? ""
         self.createdAt = decoder.decodeKey("createdAt")
-        // required
         self.shortBio = decoder.decodeKey("shortBio")
         self.email = decoder.decodeKey("email")
         self.confirmedAt = decoder.decodeKey("confirmedAt")
@@ -298,10 +293,8 @@ final class Profile: JSONAble {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
-        // required
         coder.encodeObject(shortBio, forKey: "shortBio")
         coder.encodeObject(email, forKey: "email")
         coder.encodeObject(confirmedAt, forKey: "confirmedAt")

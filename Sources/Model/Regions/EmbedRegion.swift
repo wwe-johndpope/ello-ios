@@ -51,9 +51,7 @@ final class EmbedRegion: JSONAble, Regionable {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
-        // required
         self.isRepost = decoder.decodeKey("isRepost")
         let serviceRaw: String = decoder.decodeKey("serviceRaw")
         self.service = EmbedType(rawValue: serviceRaw) ?? EmbedType.unknown
@@ -64,9 +62,7 @@ final class EmbedRegion: JSONAble, Regionable {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
-        // required
         coder.encodeObject(isRepost, forKey: "isRepost")
         coder.encodeObject(service.rawValue, forKey: "serviceRaw")
         coder.encodeObject(url, forKey: "url")

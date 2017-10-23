@@ -10,11 +10,9 @@ let WatchVersion: Int = 1
 @objc(Watch)
 final class Watch: JSONAble, PostActionable {
 
-    // active record
     let id: String
     let createdAt: Date
     let updatedAt: Date
-    // required
     let postId: String
     let userId: String
 
@@ -34,11 +32,9 @@ final class Watch: JSONAble, PostActionable {
         postId: String,
         userId: String )
     {
-        // active record
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        // required
         self.postId = postId
         self.userId = userId
         super.init(version: WatchVersion)
@@ -48,11 +44,9 @@ final class Watch: JSONAble, PostActionable {
 // MARK: NSCoding
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // active record
         self.id = decoder.decodeKey("id")
         self.createdAt = decoder.decodeKey("createdAt")
         self.updatedAt = decoder.decodeKey("updatedAt")
-        // required
         self.postId = decoder.decodeKey("postId")
         self.userId = decoder.decodeKey("userId")
         super.init(coder: coder)
@@ -60,11 +54,9 @@ final class Watch: JSONAble, PostActionable {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // active record
         coder.encodeObject(id, forKey: "id")
         coder.encodeObject(createdAt, forKey: "createdAt")
         coder.encodeObject(updatedAt, forKey: "updatedAt")
-        // required
         coder.encodeObject(postId, forKey: "postId")
         coder.encodeObject(userId, forKey: "userId")
         super.encode(with: coder.coder)

@@ -15,7 +15,6 @@ final class Promotional: JSONAble {
     let categoryId: String
     var image: Asset?
 
-    // links
     var user: User? { return getLinkObject("user") as? User }
 
     init(
@@ -68,7 +67,6 @@ final class Promotional: JSONAble {
             )
         promotional.image = image
 
-        // links
         promotional.links = data["links"] as? [String: Any]
 
         return promotional

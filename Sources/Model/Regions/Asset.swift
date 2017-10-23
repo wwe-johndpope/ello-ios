@@ -22,9 +22,7 @@ final class Asset: JSONAble {
         case small
     }
 
-    // active record
     let id: String
-    // optional
     var optimized: Attachment?
     var smallScreen: Attachment?
     var ldpi: Attachment?
@@ -171,9 +169,7 @@ final class Asset: JSONAble {
 
     required init(coder: NSCoder) {
         let decoder = Coder(coder)
-        // required
         self.id = decoder.decodeKey("id")
-        // optional
         self.optimized = decoder.decodeOptionalKey("optimized")
         self.smallScreen = decoder.decodeOptionalKey("smallScreen")
         self.ldpi = decoder.decodeOptionalKey("ldpi")
@@ -190,9 +186,7 @@ final class Asset: JSONAble {
 
     override func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
-        // required
         coder.encodeObject(id, forKey: "id")
-        // optional
         coder.encodeObject(optimized, forKey: "optimized")
         coder.encodeObject(smallScreen, forKey: "smallScreen")
         coder.encodeObject(ldpi, forKey: "ldpi")
@@ -218,7 +212,6 @@ final class Asset: JSONAble {
         let asset = Asset(id: id)
         guard let node = node else { return asset }
 
-        // optional
         if let optimized = node["optimized"] as? [String: Any] {
             asset.optimized = Attachment.fromJSON(optimized) as? Attachment
         }
