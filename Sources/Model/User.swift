@@ -30,14 +30,6 @@ final class User: JSONAble {
     }
     let experimentalFeatures: Bool
     var relationshipPriority: RelationshipPriority
-    let postsAdultContent: Bool
-    let viewsAdultContent: Bool
-    var hasCommentingEnabled: Bool
-    var hasSharingEnabled: Bool
-    var hasRepostingEnabled: Bool
-    var hasLovesEnabled: Bool
-    var isCollaborateable: Bool
-    var isHireable: Bool
     var isFeatured: Bool {
         return (categories?.count ?? 0) > 0
     }
@@ -62,6 +54,15 @@ final class User: JSONAble {
         return count.numberToHuman(rounding: 1, showZero: true)
     }
     var location: String?
+
+    @objc var postsAdultContent: Bool
+    @objc var viewsAdultContent: Bool
+    @objc var hasCommentingEnabled: Bool
+    @objc var hasSharingEnabled: Bool
+    @objc var hasRepostingEnabled: Bool
+    @objc var hasLovesEnabled: Bool
+    @objc var isCollaborateable: Bool
+    @objc var isHireable: Bool
 
     var posts: [Post]? { return getLinkArray("posts") as? [Post] }
     var categories: [Category]? { return getLinkArray("categories") as? [Category] }
