@@ -43,7 +43,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
             }
             alertController.addAction(option)
 
-            let options: [DebugServer] = [.ninja, .stage1, .stage2]
+            let options: [DebugServer] = [.ninja, .stage1, .stage2, .rainbow]
             for option in options {
                 let action = AlertAction(title: option.rawValue, style: .dark) { _ in
                     GroupDefaults[DebugSettings.useStaging] = option.rawValue

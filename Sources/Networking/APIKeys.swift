@@ -45,6 +45,14 @@ struct APIKeys {
             domain: ElloKeys().stage2Domain()
             )
     }()
+    static let rainbow: APIKeys = {
+        return APIKeys(
+            key: ElloKeys().rainbowOauthKey(),
+            secret: ElloKeys().rainbowOauthSecret(),
+            segmentKey: ElloKeys().stagingSegmentKey(),
+            domain: ElloKeys().rainbowDomain()
+            )
+    }()
 
     static var shared = APIKeys.default
 

@@ -32,6 +32,10 @@ namespace :generate do
       ['Stage2OauthSecret', 'STAGE2_CLIENT_SECRET'],
       ['Stage2Domain', 'STAGE2_DOMAIN'],
 
+      ['RainbowOauthKey', 'RAINBOW_CLIENT_KEY'],
+      ['RainbowOauthSecret', 'RAINBOW_CLIENT_SECRET'],
+      ['RainbowDomain', 'RAINBOW_DOMAIN'],
+
       ['StagingSegmentKey', 'STAGING_SEGMENT_KEY'],
 
       ['TeamId', 'ELLO_TEAM_ID'],
