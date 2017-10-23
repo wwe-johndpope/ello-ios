@@ -1088,10 +1088,8 @@ extension StreamViewController: UICollectionViewDelegate {
 
         var keepSelected = false
         if tappedCell is StreamToggleCell {
-            performDataUpdate { collectionView in
-                self.dataSource.toggleCollapsed(at: indexPath)
-                collectionView.reloadItems(at: [indexPath])
-            }
+            dataSource.toggleCollapsed(at: indexPath)
+            performDataReload()
         }
         else if tappedCell is UserListItemCell {
             if let user = collectionViewDataSource.user(at: indexPath) {
