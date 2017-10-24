@@ -85,19 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .highlighted)
 
-        let normalTitleTextAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor.black,
-            NSAttributedStringKey.font: UIFont.defaultFont(11.0)
-        ]
-        let selectedTitleTextAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor.white,
-            NSAttributedStringKey.font: UIFont.defaultFont(11.0)
-        ]
-        UISegmentedControl.appearance().setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
-        UISegmentedControl.appearance().setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
-        UISegmentedControl.appearance().setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .normal, barMetrics: .default)
-        UISegmentedControl.appearance().setBackgroundImage(UIImage.imageWithColor(UIColor.black), for: .selected, barMetrics: .default)
-
         // Kill all the tildes
         TimeAgoInWordsStrings.updateStrings(["about": ""])
     }
