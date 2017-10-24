@@ -118,11 +118,8 @@ class AppViewController: BaseElloViewController {
 
                 let shouldShowOnboarding = Onboarding.shared.shouldShowOnboarding(user)
                 let shouldShowCreatorType = Onboarding.shared.shouldShowCreatorType(user)
-                if shouldShowOnboarding {
+                if shouldShowOnboarding || shouldShowCreatorType {
                     self.showOnboardingScreen(user)
-                }
-                else if shouldShowCreatorType {
-                    self.showCreatorTypeScreen(user)
                 }
                 else {
                     self.showMainScreen(user)
@@ -272,15 +269,6 @@ extension AppViewController {
     func doneOnboarding() {
         Onboarding.shared.updateVersionToLatest()
         self.showMainScreen(currentUser!)
-    }
-
-    func showCreatorTypeScreen(_ user: User) {
-        currentUser = user
-
-        let vc = OnboardingViewController()
-        vc.currentUser = user
-
-        swapViewController(vc) {}
     }
 
     func showMainScreen(_ user: User) {

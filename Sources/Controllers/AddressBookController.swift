@@ -104,14 +104,16 @@ extension AddressBookController {
             let store = CNContactStore()
             store.requestAccess(for: .contacts) { granted, _ in
                 if granted {
-                    completion(.success(AddressBook(store: CNContactStore())))
+                    nextTick { completion(.success(AddressBook(store: CNContactStore()))) }
                 }
                 else {
-                    completion(.failure(.unauthorized))
+                    nextTick { completion(.failure(.unauthorized)) }
                 }
             }
-        case .authorized: completion(.success(AddressBook(store: CNContactStore())))
-        default: completion(.failure(.unauthorized))
+        case .authorized:
+            nextTick { completion(.success(AddressBook(store: CNContactStore()))) }
+        default:
+            nextTick { completion(.failure(.unauthorized)) }
         }
     }
 

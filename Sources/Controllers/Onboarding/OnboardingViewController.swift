@@ -236,7 +236,8 @@ extension OnboardingViewController {
             return
         }
 
-        if let onboardingVersion = currentUser?.onboardingVersion,
+        if visibleViewController is OnboardingCreatorTypeViewController,
+            let onboardingVersion = currentUser?.onboardingVersion,
             onboardingVersion >= Onboarding.minCreatorTypeVersion
         {
             doneOnboarding()
