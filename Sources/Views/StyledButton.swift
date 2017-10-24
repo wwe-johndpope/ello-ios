@@ -328,6 +328,10 @@ extension StyledButton.Style {
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .rounded
         )
+    static let notification = StyledButton.Style(
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
+        titleColor: .greyA, selectedTitleColor: .white
+        )
 
     static func byName(_ name: String) -> StyledButton.Style {
         switch name {

@@ -16,24 +16,16 @@ class NotificationsScreen: UIView {
     private let filterRepostButton = NotificationsScreen.filterButton(image: .repost)
     private let filterInviteButton = NotificationsScreen.filterButton(image: .invite)
 
-    private class func filterButton() -> UIButton {
-        let button = UIButton()
-        button.titleLabel?.font = .defaultFont()
-        button.setTitleColor(.white, for: .selected)
-        button.setTitleColor(.greyA, for: .normal)
-        button.setBackgroundImage(UIImage.imageWithColor(.black), for: .selected)
-        button.setBackgroundImage(UIImage.imageWithColor(.greyE5), for: .normal)
-        return button
-    }
     private class func filterButton(image interfaceImage: InterfaceImage) -> UIButton {
-        let button = filterButton()
+        let button = StyledButton(style: .notification)
         button.setImage(interfaceImage.normalImage, for: .normal)
         button.setImage(interfaceImage.whiteImage, for: .selected)
         button.imageView!.contentMode = .scaleAspectFit
         return button
     }
+
     private class func filterButton(title: String) -> UIButton {
-        let button = filterButton()
+        let button = StyledButton(style: .notification)
         button.setTitle(title, for: .normal)
         return button
     }
