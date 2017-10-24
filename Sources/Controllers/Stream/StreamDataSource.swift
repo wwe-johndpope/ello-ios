@@ -79,7 +79,6 @@ class StreamDataSource: ElloDataSource {
             arrayIndex = allStreamCellItems.count
         }
 
-        var indexPaths: [IndexPath] = []
         for (index, cellItem) in cellItems.enumerated() {
 
             let atIndex = arrayIndex + index
