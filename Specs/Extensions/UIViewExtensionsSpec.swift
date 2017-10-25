@@ -12,15 +12,15 @@ class UIViewSpec: QuickSpec {
         describe("UIView") {
 
             describe("findSubview()") {
-                it("finds correct type without passing a test paramater") {
-                    let child = UIView()
-                    let parent = UITextField()
+                fit("finds correct type without passing a test paramater") {
+                    let parent = UIView()
+                    let child = UITextField()
 
                     parent.addSubview(child)
                     showView(parent)
 
                     let found: UITextField? = parent.findSubview()
-                    expect(found!).to(equal(child))
+                    expect(found) == child
                 }
 
                 it("finds correct type with passing a test paramater") {
@@ -37,7 +37,7 @@ class UIViewSpec: QuickSpec {
                         return textView.text == "Hi, I am nested"
                     }
 
-                    expect(found!).to(equal(nestedChild))
+                    expect(found) == nestedChild
                 }
             }
 

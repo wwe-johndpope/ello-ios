@@ -11,15 +11,15 @@ class FakePersistentLayer: PersistentLayer {
 
     init() { }
 
-    func setObject(_ value: Any?, forKey: String) {
+    func set(_ value: Any?, forKey: String) {
         object = value as? [String]
     }
 
-    func objectForKey(_ defaultName: String) -> Any? {
+    func object(forKey defaultName: String) -> Any? {
         return object ?? []
     }
 
-    func removeObjectForKey(_ defaultName: String) {
+    func removeObject(forKey defaultName: String) {
         object = nil
     }
 }

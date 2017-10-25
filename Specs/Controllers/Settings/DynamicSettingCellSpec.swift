@@ -7,6 +7,23 @@ import Quick
 import Nimble
 
 class DynamicSettingCellSpec: QuickSpec {
+
+    class FakeDelegate: UIView, DynamicSettingCellResponder {
+        var didCall = false
+        var setting: DynamicSetting?
+        var value: Bool?
+
+        func toggleSetting(_ setting: DynamicSetting, value: Bool) {
+            didCall = true
+            self.setting = setting
+            self.value = value
+        }
+
+        func deleteAccount() {
+            didCall = true
+        }
+    }
+
     override func spec() {
         var subject = DynamicSettingCell()
 
@@ -69,18 +86,3 @@ class DynamicSettingCellSpec: QuickSpec {
     }
 }
 
-private class FakeDelegate: UIView, DynamicSettingCellResponder {
-    var didCall = false
-    var setting: DynamicSetting?
-    var value: Bool?
-
-    private func toggleSetting(_ setting: DynamicSetting, value: Bool) {
-        didCall = true
-        self.setting = setting
-        self.value = value
-    }
-
-    private func deleteAccount() {
-        didCall = true
-    }
-}

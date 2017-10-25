@@ -25,8 +25,8 @@ class ElloAttributedStringSpec: QuickSpec {
             it("ElloAttributedString.attrs() accepts many additional options") {
                 let c1 = UIColor.lightGray
                 let c2 = UIColor.darkGray
-                let attrs1: [String: Any] = [NSAttributedStringKey.foregroundColor: c1]
-                let attrs2: [String: Any] = [NSAttributedStringKey.backgroundColor: c2]
+                let attrs1: [NSAttributedStringKey: Any] = [NSAttributedStringKey.foregroundColor: c1]
+                let attrs2: [NSAttributedStringKey: Any] = [NSAttributedStringKey.backgroundColor: c2]
                 let attrs = ElloAttributedString.attrs(attrs1, attrs2)
                 expect(attrs[NSAttributedStringKey.foregroundColor] as? UIColor) == c1
                 expect(attrs[NSAttributedStringKey.backgroundColor] as? UIColor) == c2
@@ -141,8 +141,9 @@ class ElloAttributedStringSpec: QuickSpec {
             }
             it("should accept attrs") {
                 let categories = [Category.featured]
-                let subject = ElloAttributedString.featuredIn(categories: categories, attrs: ["some": "thing"])
-                expect(subject.attributes(at: 0, effectiveRange: nil)["some"] as? String) == "thing"
+                let key = NSAttributedStringKey("some")
+                let subject = ElloAttributedString.featuredIn(categories: categories, attrs: [key: "thing"])
+                expect(subject.attributes(at: 0, effectiveRange: nil)[key] as? String) == "thing"
             }
             it("should render two categories") {
                 let categories = [Category.featured, Category.trending]

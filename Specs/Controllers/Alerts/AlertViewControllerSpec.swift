@@ -17,7 +17,7 @@ class AlertViewControllerSpec: QuickSpec {
 
     override func spec() {
         describe("AlertViewController") {
-            describe("snapshots") {
+            fdescribe("snapshots") {
                 validateAllSnapshots {
                     let subject = AlertViewController(message: "hey there!")
                     let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: nil)
