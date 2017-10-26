@@ -375,7 +375,7 @@ enum StreamCellType: Equatable {
         case .streamFooter:
             return 44
         case .streamHeader:
-            return 70
+            return StreamHeaderCell.Size.height
         case .tallHeader:
             return 75
         case .toggle:
@@ -463,7 +463,7 @@ enum StreamCellType: Equatable {
 
     var showsUserRelationship: Bool {
         switch self {
-        case .commentHeader, .notification, .streamHeader, .userListItem:
+        case .notification, .streamHeader, .userListItem:
             return true
         default:
             return false

@@ -37,13 +37,13 @@ struct StreamHeaderCellPresenter {
         if let currentUser = currentUser,
             let comment = streamCellItem.jsonable as? ElloComment
         {
-            if currentUser.isOwnerOf(comment: comment) {
+            if currentUser.isAuthorOf(comment: comment) {
                 cell.ownComment = true
             }
             else if AuthToken().isStaff {
                 cell.canDeleteComment = true
             }
-            else if currentUser.isOwnerOfParentPost(comment: comment) {
+            else if currentUser.isAuthorOfParentPost(comment: comment) {
                 cell.ownPost = true
             }
         }

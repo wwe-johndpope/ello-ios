@@ -5,6 +5,7 @@
 class StreamHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamHeaderCell"
     struct Size {
+        static let height: CGFloat = 70
         static let gridAvatarHeight: CGFloat = 30
         static let listAvatarHeight: CGFloat = 40
     }
@@ -402,7 +403,7 @@ class StreamHeaderCell: UICollectionViewCell {
         usernameButton.titleLabel?.font = UIFont.defaultFont()
         usernameButton.setTitleColor(UIColor.greyA, for: .normal)
         usernameButton.titleLabel?.lineBreakMode = .byTruncatingTail
-        usernameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+        usernameButton.contentHorizontalAlignment = .left
     }
 
     private func styleTimestampLabel() {

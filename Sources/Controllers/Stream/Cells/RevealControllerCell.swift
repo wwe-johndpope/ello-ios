@@ -9,8 +9,8 @@ protocol RevealControllerResponder: class {
 class RevealControllerCell: CollectionViewCell {
     static let reuseIdentifier = "RevealControllerCell"
     struct Size {
-        static let margin: CGFloat = 15
         static let height: CGFloat = 40
+        static let margins: CGFloat = 15
     }
 
     var text: String? {
@@ -30,12 +30,12 @@ class RevealControllerCell: CollectionViewCell {
         contentView.addSubview(arrow)
 
         label.snp.makeConstraints { make in
-            make.leading.equalTo(contentView).offset(Size.margin)
+            make.leading.equalTo(contentView).offset(Size.margins)
             make.centerY.equalTo(contentView)
         }
 
         arrow.snp.makeConstraints { make in
-            make.trailing.equalTo(contentView).inset(Size.margin)
+            make.trailing.equalTo(contentView).inset(Size.margins)
             make.centerY.equalTo(contentView)
         }
     }

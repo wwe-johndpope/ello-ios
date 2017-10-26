@@ -462,13 +462,12 @@ class StreamDataSource: ElloDataSource {
         var changedItems = [StreamCellItem]()
         for (index, item) in visibleCellItems.enumerated() {
             guard item.type.showsUserRelationship,
-                let itemUserId = (item.jsonable as? User)?.id ?? (item.jsonable as? Authorable)?.author?.id
+                let itemUserId = (item.jsonable as? User)?.id ?? (item.jsonable as? Authorable)?.author?.id,
+                itemUserId == user.id
             else { continue}
 
-            if itemUserId == user.id {
-                indexPaths.append(IndexPath(item: index, section: 0))
-                changedItems.append(item)
-            }
+            indexPaths.append(IndexPath(item: index, section: 0))
+            changedItems.append(item)
         }
 
         guard changedItems.count > 0 else { return }

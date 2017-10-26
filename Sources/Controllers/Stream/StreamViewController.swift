@@ -831,13 +831,13 @@ extension StreamViewController: StreamEditingResponder {
         else { return }
 
         if let post = collectionViewDataSource.post(at: indexPath),
-            currentUser.isOwnerOf(post: post)
+            currentUser.isAuthorOf(post: post)
         {
             let responder: CreatePostResponder? = findResponder()
             responder?.editPost(post, fromController: self)
         }
         else if let comment = collectionViewDataSource.comment(at: indexPath),
-            currentUser.isOwnerOf(comment: comment)
+            currentUser.isAuthorOf(comment: comment)
         {
             let responder: CreatePostResponder? = findResponder()
             responder?.editComment(comment, fromController: self)
