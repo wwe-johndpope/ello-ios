@@ -243,7 +243,19 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
             }
 
+            context("when item is an Artist Invite Submission Post Header in Featured Category") {
+                beforeEach {
+                    let post: Post = stub(["artistInviteId": "12345"])
 
+                    cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
+                    item = StreamCellItem(jsonable: post, type: .streamHeader)
+                }
+                it("shows artistInviteSubmissionButton") {
+                    cell.artistInviteSubmissionButton.isHidden = true
+                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .discover(type: .featured), indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
+                    expect(cell.artistInviteSubmissionButton.isHidden) == false
+                }
+            }
         }
     }
 }

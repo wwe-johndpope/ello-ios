@@ -20,6 +20,7 @@ class StreamHeaderCellSpec: QuickSpec {
         case grid
         case list
         case detail
+        case submission
     }
     override func spec() {
         describe("StreamHeaderCell") {
@@ -43,6 +44,7 @@ class StreamHeaderCellSpec: QuickSpec {
                     ("own repost w category", owner: .me, content: .repost, category: true, follow: false, style: .list),
                     ("own repost w category in detail", owner: .me, content: .repost, category: true, follow: false, style: .detail),
                     ("own repost w category in grid", owner: .me, content: .repost, category: true, follow: false, style: .grid),
+                    ("artist invite post", owner: .other, content: .post, category: false, follow: false, style: .submission),
                     ("other post", owner: .other, content: .post, category: false, follow: false, style: .list),
                     ("other post in detail", owner: .other, content: .post, category: false, follow: false, style: .detail),
                     ("other post in grid", owner: .other, content: .post, category: false, follow: false, style: .grid),
@@ -64,6 +66,7 @@ class StreamHeaderCellSpec: QuickSpec {
                     it("has valid screenshot for \(desc)") {
                         let inGrid: Bool
                         let inDetail: Bool
+                        var isSubmission = false
                         switch style {
                             case .grid:
                                 inGrid = true
@@ -74,6 +77,10 @@ class StreamHeaderCellSpec: QuickSpec {
                             case .detail:
                                 inGrid = false
                                 inDetail = true
+                            case .submission:
+                                inGrid = false
+                                inDetail = true
+                                isSubmission = true
                         }
 
                         let subject = StreamHeaderCell.loadFromNib() as StreamHeaderCell
@@ -116,7 +123,7 @@ class StreamHeaderCellSpec: QuickSpec {
                         }
 
                         subject.timeStamp = "1m"
-                        subject.setDetails(user: user, repostedBy: repostedBy, category: cellCategory)
+                        subject.setDetails(user: user, repostedBy: repostedBy, category: cellCategory, isSubmission: isSubmission)
                         subject.avatarButton.setImage(specImage(named: "specs-avatar"), for: .normal)
 
                         expectValidSnapshot(subject)
