@@ -44,6 +44,7 @@ class ElloConfiguration: QuickConfiguration {
 
         config.beforeEach {
             let appSetup = AppSetup()
+            appSetup.windowSize = CGSize(width: 375, height: 768)
             appSetup.nowGenerator = { return now }
             appSetup.cachedCategories = nil
             AppSetup.shared = appSetup
@@ -64,9 +65,6 @@ class ElloConfiguration: QuickConfiguration {
         }
         config.afterEach {
             ElloProvider_Specs.errorStatusCode = .status404
-            let window = UIWindow()
-            window.rootViewController = UIViewController()
-            window.makeKeyAndVisible()
 
             ElloLinkedStore.shared.writeConnection.readWrite { transaction in
                 transaction.removeAllObjectsInAllCollections()

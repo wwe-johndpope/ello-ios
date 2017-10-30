@@ -32,25 +32,6 @@ class RelationshipControlSpec: QuickSpec {
                 showController(presentingController)
             }
 
-            describe("snapshots") {
-                let relationships: [(RelationshipControlUsage, RelationshipPriority)] = [
-                    (.default, .following),
-                    (.default, .mute),
-                    (.default, .none),
-                    (.profileView, .following),
-                    (.profileView, .mute),
-                    (.profileView, .none),
-                ]
-                for (usage, relationship) in relationships {
-                    it("setting usage to \(usage) and relationshipPriority to \(relationship)") {
-                        subject.usage = usage
-                        subject.relationshipPriority = relationship
-                        subject.frame.size = subject.intrinsicContentSize
-                        expectValidSnapshot(subject, named: "style_\(usage)_relationshipPriority_\(relationship)")
-                    }
-                }
-            }
-
             describe("intrinsicContentSize()") {
                 it("should calculate correctly") {
                     let expectedSize = CGSize(width: 105, height: 30)

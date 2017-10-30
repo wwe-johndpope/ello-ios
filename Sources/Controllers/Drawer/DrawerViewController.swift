@@ -79,6 +79,7 @@ private extension DrawerViewController {
         tableView.backgroundColor = .grey6
         tableView.delegate = self
         tableView.dataSource = dataSource
+        tableView.separatorStyle = .none
     }
 
     func setupNavigationBar() {

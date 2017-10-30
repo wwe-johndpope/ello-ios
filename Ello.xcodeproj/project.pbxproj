@@ -495,6 +495,8 @@
 		1D24AA511B7E8CD5004BAAFA /* DebugController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D24AA501B7E8CD5004BAAFA /* DebugController.swift */; };
 		1D26E1681C52E26D0034448D /* NotificationCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */; };
 		1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */; };
+		1D2896531FA25CBE004661C1 /* CommentHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2896521FA25CBD004661C1 /* CommentHeaderCell.swift */; };
+		1D2896551FA2640E004661C1 /* CommentHeaderCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2896541FA2640E004661C1 /* CommentHeaderCellPresenter.swift */; };
 		1D2B50BB1D272A6400F6CE90 /* BlackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */; };
 		1D2B50BD1D2C2FC000F6CE90 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B50BC1D2C2FC000F6CE90 /* CategoryService.swift */; };
 		1D2B6A7C1BE3FB0900D27DC9 /* AvatarButtonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B6A7B1BE3FB0900D27DC9 /* AvatarButtonSpec.swift */; };
@@ -723,7 +725,6 @@
 		1D6E43171EA68AEA0029C9B1 /* badge_staff_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E430E1EA68AEA0029C9B1 /* badge_staff_normal.svg */; };
 		1D6E43181EA68AEA0029C9B1 /* badge_staff_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E430F1EA68AEA0029C9B1 /* badge_staff_selected.svg */; };
 		1D6E431A1EA68B5E0029C9B1 /* badge_nsfw_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */; };
-		1D6E431C1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */; };
 		1D6E431E1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */; };
 		1D6E659E1F3E6E840072E946 /* UIViewNibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */; };
 		1D6E659F1F3E6EC00072E946 /* NSObjectClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */; };
@@ -940,6 +941,7 @@
 		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309FC1B03F29300EAD920 /* communities.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC309FB1B03F29300EAD920 /* communities.json */; };
 		1DC4285B1BBB021700D5E38B /* AppSetupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */; };
+		1DC546371FA3E8CE00B06592 /* CommentHeaderCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */; };
 		1DC78A1E1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */; };
 		1DC78A1F1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */; };
 		1DC78A201F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */; };
@@ -1714,6 +1716,8 @@
 		1D24AA501B7E8CD5004BAAFA /* DebugController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugController.swift; sourceTree = "<group>"; };
 		1D26E1671C52E26D0034448D /* NotificationCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCellSpec.swift; sourceTree = "<group>"; };
 		1D273A351D08A480009FD393 /* BlockUserModalConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockUserModalConfig.swift; sourceTree = "<group>"; };
+		1D2896521FA25CBD004661C1 /* CommentHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderCell.swift; sourceTree = "<group>"; };
+		1D2896541FA2640E004661C1 /* CommentHeaderCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderCellPresenter.swift; sourceTree = "<group>"; };
 		1D2B50BA1D272A6400F6CE90 /* BlackBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackBar.swift; sourceTree = "<group>"; };
 		1D2B50BC1D2C2FC000F6CE90 /* CategoryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		1D2B6A7B1BE3FB0900D27DC9 /* AvatarButtonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarButtonSpec.swift; sourceTree = "<group>"; };
@@ -1842,7 +1846,6 @@
 		1D6E430E1EA68AEA0029C9B1 /* badge_staff_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_staff_normal.svg; sourceTree = "<group>"; };
 		1D6E430F1EA68AEA0029C9B1 /* badge_staff_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_staff_selected.svg; sourceTree = "<group>"; };
 		1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_nsfw_selected.svg; sourceTree = "<group>"; };
-		1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesViewSpec.swift; sourceTree = "<group>"; };
 		1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesPresenterSpec.swift; sourceTree = "<group>"; };
 		1D70DE571DF23862008AF216 /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
 		1D70DE5A1DF6106B008AF216 /* AnnouncementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnnouncementCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2044,6 +2047,7 @@
 		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309FB1B03F29300EAD920 /* communities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = communities.json; sourceTree = "<group>"; };
 		1DC4285A1BBB021700D5E38B /* AppSetupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSetupSpec.swift; sourceTree = "<group>"; };
+		1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderCellPresenterSpec.swift; sourceTree = "<group>"; };
 		1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeProtocols.swift; sourceTree = "<group>"; };
 		1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeScreen.swift; sourceTree = "<group>"; };
 		1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeViewController.swift; sourceTree = "<group>"; };
@@ -2538,6 +2542,7 @@
 		122B18CC1A867BCE00247A05 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1D2896521FA25CBD004661C1 /* CommentHeaderCell.swift */,
 				1D2F65AB1D186E7A0099D036 /* CategoryCardCell.swift */,
 				12431FF91DBAAF27006808D4 /* CategoryHeaderCell.swift */,
 				1D59336E1D10ADB800EAF03D /* CategoryListCell.swift */,
@@ -2835,6 +2840,7 @@
 				1D2F65AD1D186E7F0099D036 /* CategoryCardCellPresenter.swift */,
 				12431FFB1DBAB005006808D4 /* CategoryHeaderCellPresenter.swift */,
 				1D5933701D10ADC300EAF03D /* CategoryListCellPresenter.swift */,
+				1D2896541FA2640E004661C1 /* CommentHeaderCellPresenter.swift */,
 				1D9309DB1EC134A20099FCF8 /* EditorialCellPresenter.swift */,
 				1D7152991D6CBFE2005998FE /* NoPostsCellPresenter.swift */,
 				128D36B51A951F4600622833 /* NotificationCellPresenter.swift */,
@@ -3193,6 +3199,7 @@
 			children = (
 				1D2F65BE1D1D88DD0099D036 /* CategoryCardCellPresenterSpec.swift */,
 				1D2F65C01D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift */,
+				1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */,
 				1D9309DD1EC134B50099FCF8 /* EditorialCellPresenterSpec.swift */,
 				12A1D82C1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift */,
 				1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */,
@@ -3880,7 +3887,6 @@
 			isa = PBXGroup;
 			children = (
 				12A1D82A1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift */,
-				1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */,
 				1DA18E091DAD969F000231CC /* ProfileBioViewSpec.swift */,
 				1DA18E151DB54AA0000231CC /* ProfileLinksViewSpec.swift */,
 				12F9EB3E1DEDFD4B00E127AE /* ProfileLocationViewSpec.swift */,
@@ -4365,6 +4371,7 @@
 				12D14C4D1A43752200C6F8E8 /* Resources */,
 				7DB05CC500A415E5E3871B64 /* [CP] Embed Pods Frameworks */,
 				856E1BA5C23FA76E5291A220 /* [CP] Copy Pods Resources */,
+				1D2896561FA28A54004661C1 /* Generate warnings for focused tests */,
 			);
 			buildRules = (
 			);
@@ -4386,7 +4393,6 @@
 				1246CD8C1CEE328400A5D77A /* SwiftLint */,
 				12FEBCFF1A4225F600933A02 /* Resources */,
 				F8C1F82B1AAF57C0000D87F0 /* Set version information */,
-				F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */,
 				EA78A4FF1AD31FB9008D456B /* Embed Frameworks */,
 				124CFBA71C5976E500727D11 /* Embed App Extensions */,
 				3E1A272FC989C6AE7364045C /* [CP] Embed Pods Frameworks */,
@@ -4887,6 +4893,20 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\nrm -fr Frameworks\nfi";
 		};
+		1D2896561FA28A54004661C1 /* Generate warnings for focused tests */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate warnings for focused tests";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"fdescribe|fcontext|fit\"\nFILE_EXTENSIONS=\"swift\"\nfind -E \"${SRCROOT}/Specs/\" -regex \".*\\.($FILE_EXTENSIONS)$\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS)\\(.*\\$\" | perl -p -e \"s/(?:$KEYWORDS)\\(\\\"(.*)\\\".*/ warning: Focused Spec: \\$1/\"";
+		};
 		1D447EAB1F3A6BB000013384 /* Set version information */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5064,20 +5084,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate warnings for focused tests";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "KEYWORDS=\"fdescribe|fcontext|fit\"\nFILE_EXTENSIONS=\"swift\"\nfind -E \"${SRCROOT}/Specs/\" -regex \".*\\.($FILE_EXTENSIONS)$\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS)\\(.*\\$\" | perl -p -e \"s/(?:$KEYWORDS)\\(\\\"(.*)\\\".*/ warning: Focused Spec: \\$1/\"";
 		};
 		F8C1F82B1AAF57C0000D87F0 /* Set version information */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5344,7 +5350,6 @@
 				1D1F5F681F86CD4B00417A59 /* InterfaceStringSpec.swift in Sources */,
 				12CF810E1AEFDFA5008FFC6F /* FakeImageManager.swift in Sources */,
 				12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */,
-				1D6E431C1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift in Sources */,
 				1D70DE6C1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift in Sources */,
 				122943301C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift in Sources */,
 				76FF80591A96921100617A1E /* RelationshipControllerSpec.swift in Sources */,
@@ -5374,6 +5379,7 @@
 				766375E31AA911530096FA51 /* UserListViewControllerSpec.swift in Sources */,
 				1D447E7D1F38DA9300013384 /* ArtistInviteSubmissionSuccessScreenSpec.swift in Sources */,
 				12551FBE1A6873D600ABC5D9 /* OmnibarViewControllerSpec.swift in Sources */,
+				1DC546371FA3E8CE00B06592 /* CommentHeaderCellPresenterSpec.swift in Sources */,
 				1D652F5E1BC2FDCD00AF3B06 /* ElloTabBarSpec.swift in Sources */,
 				1D5933781D10CD2F00EAF03D /* CategoryListSpec.swift in Sources */,
 				1D6A02451C73CD390054603B /* AssetsToRegionsSpec.swift in Sources */,
@@ -5706,6 +5712,7 @@
 				1D70DE741DF78096008AF216 /* Announcement.swift in Sources */,
 				1207C9731C73FEE000939ADB /* AutoCompleteService.swift in Sources */,
 				1D71528F1D6CA22C005998FE /* Screen.swift in Sources */,
+				1D2896551FA2640E004661C1 /* CommentHeaderCellPresenter.swift in Sources */,
 				1DDC23401F3115A200E68B0E /* ArtistInviteAdminScreen.swift in Sources */,
 				76B0B18D1B41AFD2004C2D7B /* UserAvatarsCell.swift in Sources */,
 				1D9A12C61EA95AB3003B3BD7 /* BadgesScreen.swift in Sources */,
@@ -5821,6 +5828,7 @@
 				EAED46DC1ADC13BF0081A9F7 /* DynamicSettingCategoryViewController.swift in Sources */,
 				1D59EF851D5CFC480029C106 /* InterpolatedLoadingView.swift in Sources */,
 				1D9201BC1B6AD7CD007528BF /* Tag.swift in Sources */,
+				1D2896531FA25CBE004661C1 /* CommentHeaderCell.swift in Sources */,
 				12B531011A93B75700E01D72 /* ElloLogoView.swift in Sources */,
 				1D4042CA1E0997DD00E4E74D /* SnapKitExtensions.swift in Sources */,
 				1207C96F1C73FEE000939ADB /* APIKeys.swift in Sources */,

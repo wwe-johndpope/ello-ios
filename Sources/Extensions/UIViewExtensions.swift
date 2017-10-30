@@ -4,6 +4,20 @@
 
 extension UIView {
 
+    func findAllSubviews<T>(_ test: ((T) -> Bool)? = nil) -> [T] where T: UIView {
+        var views: [T] = []
+        if let view = self as? T, test?(view) ?? true {
+            views.append(view)
+        }
+
+        for subview in subviews {
+            let subviews: [T] = subview.findAllSubviews(test)
+            views += subviews
+        }
+
+        return views
+    }
+
     func findSubview<T>(_ test: ((T) -> Bool)? = nil) -> T? where T: UIView {
         if let view = self as? T, test?(view) ?? true {
             return view

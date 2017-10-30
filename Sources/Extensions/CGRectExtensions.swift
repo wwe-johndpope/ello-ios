@@ -3,6 +3,7 @@
 //
 
 extension CGRect {
+    static var `default`: CGRect = CGRect(origin: .zero, size: CGSize(width: 600, height: 600))
 
 // MARK: debug
     func tap(_ name: String = "frame") -> CGRect {

@@ -45,6 +45,7 @@ class OmnibarImageCell: TableViewCell {
         buyButton.adjustsImageWhenHighlighted = false
         buyButton.setImage(.buyButton, imageStyle: .normal, for: .normal)
         buyButton.setImage(.buyButton, imageStyle: .normal, for: .disabled)
+        buyButton.layer.masksToBounds = true
         buyButton.layer.cornerRadius = buyButton.frame.size.width / 2
         buyButton.isHidden = true
         buyButton.isEnabled = false

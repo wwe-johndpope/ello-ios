@@ -286,7 +286,11 @@ extension Post: Stubbable {
             summary: (values["summary"] as? [Regionable]) ?? [stubbedTextRegion]
         )
 
-        if let repostAuthor = values["repostAuthor"] as? User {
+        let repostAuthor: User? = values["repostAuthor"] as? User ?? (values["repostAuthorId"] as? String).flatMap { id in
+            return User.stub(["id": id])
+        }
+
+        if let repostAuthor = repostAuthor {
             ElloLinkedStore.shared.setObject(repostAuthor, forKey: repostAuthor.id, type: .usersType)
             post.addLinkObject("repost_author", key: repostAuthor.id, type: .usersType)
         }
@@ -302,6 +306,7 @@ extension Post: Stubbable {
         post.content = (values["content"] as? [Regionable]) ?? [stubbedTextRegion]
         post.repostContent = (values["repostContent"] as? [Regionable])
         post.repostId = (values["repostId"] as? String)
+        post.artistInviteId = (values["artistInviteId"] as? String)
         post.repostPath = (values["repostPath"] as? String)
         post.repostViaId = (values["repostViaId"] as? String)
         post.repostViaPath = (values["repostViaPath"] as? String)

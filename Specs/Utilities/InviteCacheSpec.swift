@@ -10,13 +10,13 @@ import Nimble
 class InviteCacheSpec: QuickSpec {
     override func spec() {
         beforeEach {
-            GroupDefaults["ElloInviteCache"] = ["contact"]
+            GroupDefaults[InviteCache.Key] = ["contact"]
         }
         describe("saveInvite") {
             it("saves the contact id to the cache") {
                 var inviteCache = InviteCache()
                 inviteCache.saveInvite("contact id")
-                let invites = GroupDefaults["ElloInviteCache"].array as? [String]
+                let invites = GroupDefaults[InviteCache.Key].array as? [String]
                 expect(invites?.last) == "contact id"
             }
         }

@@ -15,14 +15,6 @@ extension UIWindow {
         return windowBounds().size
     }
 
-    class func windowWidth() -> CGFloat {
-        return windowSize().width
-    }
-
-    class func windowHeight() -> CGFloat {
-        return windowSize().height
-    }
-
 }
 
 

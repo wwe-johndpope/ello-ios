@@ -59,7 +59,7 @@ class CategoryViewControllerSpec: QuickSpec {
             }
 
             it("has a nice looking nav bar") {
-                expectValidSnapshot(subject)
+                expectValidSnapshot(subject, device: .phone6_Portrait)
             }
 
             it("shows the back button when necessary") {

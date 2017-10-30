@@ -29,7 +29,6 @@ class CategoryHeaderCellSpec: QuickSpec {
     }
 
     override func spec() {
-
         describe("CategoryHeaderCell") {
             var subject: CategoryHeaderCell!
 

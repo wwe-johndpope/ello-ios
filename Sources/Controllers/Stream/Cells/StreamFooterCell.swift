@@ -2,8 +2,6 @@
 ///  StreamFooterCell.swift
 //
 
-let streamCellDidOpenNotification = TypedNotification<UICollectionViewCell>(name: "StreamCellDidOpenNotification")
-
 class StreamFooterCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamFooterCell"
 

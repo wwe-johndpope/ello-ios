@@ -11,6 +11,7 @@ class AppSetup {
     lazy var isSimulator: Bool = _isRunningOnSimulator()
     lazy var isIphoneX: Bool = _isIphoneX()
     lazy var isIpad: Bool = _isIpad()
+    var windowSize: CGSize = .zero // assigned in AppDelegate due to extensions
 
     lazy var statusBarHeight: CGFloat = _statusBarHeight()
     lazy var bestBottomMargin: CGFloat = _bestBottomMargin()
