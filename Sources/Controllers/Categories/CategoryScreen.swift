@@ -24,7 +24,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
 
     init(usage: CategoryViewController.Usage) {
         self.usage = usage
-        super.init(frame: .zero)
+        super.init(frame: .default)
     }
 
     required init(frame: CGRect) {
@@ -153,6 +153,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
             shareVisibleConstraint = make.trailing.equalTo(shareButton.snp.leading).offset(-Size.buttonMargin).constraint
             allHiddenConstraint = make.trailing.equalTo(gridListButton.snp.trailing).offset(-Size.buttonMargin).constraint
         }
+        backVisibleConstraint.deactivate()
         shareVisibleConstraint.deactivate()
         allHiddenConstraint.deactivate()
 

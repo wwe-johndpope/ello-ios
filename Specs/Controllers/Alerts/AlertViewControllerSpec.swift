@@ -22,7 +22,6 @@ class AlertViewControllerSpec: QuickSpec {
                     let subject = AlertViewController(message: "hey there!")
                     let action = AlertAction(title: InterfaceString.OK, style: .dark, handler: nil)
                     subject.addAction(action)
-                    showController(subject)
                     return subject
                 }
             }

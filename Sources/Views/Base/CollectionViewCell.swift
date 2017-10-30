@@ -3,13 +3,16 @@
 //
 
 class CollectionViewCell: UICollectionViewCell {
+    convenience init() {
+        self.init(frame: .default)
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         style()
         bindActions()
         setText()
         arrange()
-        layoutIfNeeded()
     }
 
     required init?(coder: NSCoder) {
@@ -18,7 +21,6 @@ class CollectionViewCell: UICollectionViewCell {
         bindActions()
         setText()
         arrange()
-        layoutIfNeeded()
     }
 
     func style() {}

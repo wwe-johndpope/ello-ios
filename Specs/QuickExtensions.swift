@@ -8,7 +8,6 @@ import Nimble
 import Nimble_Snapshots
 
 
-var prevController: UITabBarController?
 func showController(_ viewController: UIViewController, window: UIWindow = UIWindow()) {
     let frame: CGRect
     let view: UIView = viewController.view
@@ -21,15 +20,10 @@ func showController(_ viewController: UIViewController, window: UIWindow = UIWin
 
     viewController.loadViewIfNeeded()
 
-    prevController?.viewControllers = []
-    let parentController = UITabBarController()
-    parentController.tabBar.isHidden = true
-    parentController.viewControllers = [viewController]
-    window.rootViewController = parentController
+    window.rootViewController = viewController
     window.frame = frame
     window.makeKeyAndVisible()
     viewController.view.layoutIfNeeded()
-    prevController = parentController
 }
 
 func showView(_ view: UIView, container: UIView = UIView()) {

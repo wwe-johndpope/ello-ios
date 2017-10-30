@@ -40,7 +40,7 @@ class CategoryCardView: View {
 
     init(info: CategoryCardListView.CategoryInfo) {
         self.info = info
-        super.init(frame: .zero)
+        super.init(frame: .default)
     }
 
     required init(frame: CGRect) {

@@ -28,7 +28,9 @@ class Screen: UIView {
         bindActions()
         setText()
         arrange()
-        layoutIfNeeded()
+        if frame.width > 0 && frame.height > 0 {
+            layoutIfNeeded()
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -39,7 +41,9 @@ class Screen: UIView {
         bindActions()
         setText()
         arrange()
-        layoutIfNeeded()
+        if frame.width > 0 && frame.height > 0 {
+            layoutIfNeeded()
+        }
     }
 
     deinit {
@@ -93,7 +97,7 @@ class Screen: UIView {
     private func screenInit() {
         keyboardAnchor.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(self)
-            keyboardTopConstraint = make.top.equalTo(self.snp.bottom).constraint
+            keyboardTopConstraint = make.top.equalTo(self.snp.bottom).priority(Priority.required).constraint
         }
     }
 }

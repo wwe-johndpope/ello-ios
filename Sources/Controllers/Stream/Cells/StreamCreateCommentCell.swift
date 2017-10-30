@@ -122,10 +122,6 @@ class StreamCreateCommentCell: CollectionViewCell {
             make.top.bottom.trailing.equalTo(createCommentBackground)
             make.leading.equalTo(createCommentBackground).offset(Size.ButtonLabelMargin)
         }
-
-        // if this doesn't fix the "stretched create comment" bug, please remove
-        setNeedsLayout()
-        layoutIfNeeded()
     }
 
     override func prepareForReuse() {
