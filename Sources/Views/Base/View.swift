@@ -32,3 +32,4 @@ class View: UIView {
 }
 
 class Container: UIView {}
+class Spacer: UIView {}

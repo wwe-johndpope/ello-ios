@@ -175,7 +175,8 @@ enum StreamCellType: Equatable {
         case .categoryCard: return CategoryCardCell.reuseIdentifier
         case .categoryList: return CategoryListCell.reuseIdentifier
         case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
-        case .commentHeader, .streamHeader: return StreamHeaderCell.reuseIdentifier
+        case .commentHeader: return CommentHeaderCell.reuseIdentifier
+        case .streamHeader: return StreamHeaderCell.reuseIdentifier
         case .createComment: return StreamCreateCommentCell.reuseIdentifier
         case let .editorial(kind): return kind.reuseIdentifier
         case .embed: return StreamEmbedCell.reuseEmbedIdentifier
@@ -242,7 +243,8 @@ enum StreamCellType: Equatable {
         case .categoryCard: return CategoryCardCellPresenter.configure
         case .categoryList: return CategoryListCellPresenter.configure
         case .categoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
-        case .commentHeader, .streamHeader: return StreamHeaderCellPresenter.configure
+        case .commentHeader: return CommentHeaderCellPresenter.configure
+        case .streamHeader: return StreamHeaderCellPresenter.configure
         case .createComment: return StreamCreateCommentCellPresenter.configure
         case .editorial: return EditorialCellPresenter.configure
         case .embed: return StreamEmbedCellPresenter.configure
@@ -285,7 +287,8 @@ enum StreamCellType: Equatable {
         case .categoryCard: return CategoryCardCell.self
         case .categoryList: return CategoryListCell.self
         case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.self
-        case .commentHeader, .streamHeader: return StreamHeaderCell.self
+        case .commentHeader: return CommentHeaderCell.self
+        case .streamHeader: return StreamHeaderCell.self
         case .createComment: return StreamCreateCommentCell.self
         case let .editorial(kind): return kind.classType
         case .embed: return StreamEmbedCell.self
@@ -334,8 +337,9 @@ enum StreamCellType: Equatable {
             return 150
         case .categoryList:
             return CategoryListCell.Size.height
-        case .commentHeader,
-             .inviteFriends,
+        case .commentHeader:
+            return CommentHeaderCell.Size.height
+        case .inviteFriends,
              .onboardingInviteFriends,
              .seeMoreComments:
                 return 60
@@ -415,6 +419,7 @@ enum StreamCellType: Equatable {
              .badge,
              .categoryList,
              .categoryPromotionalHeader,
+             .commentHeader,
              .createComment,
              .editorial,
              .emptyStream,
@@ -438,7 +443,6 @@ enum StreamCellType: Equatable {
              .userListItem:
             return true
         case .categoryCard,
-             .commentHeader,
              .embed,
              .image,
              .placeholder,
@@ -483,6 +487,7 @@ enum StreamCellType: Equatable {
             .categoryCard,
             .categoryList,
             .categoryPromotionalHeader,
+            .commentHeader,
             .createComment,
             .editorial(.external),
             .editorial(.internal),

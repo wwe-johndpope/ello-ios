@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="AtlasGroteskRegular.otf">
+        <array key="AtlasGroteskRegular.otf">
             <string>AtlasGrotesk-Regular</string>
-            <string>AtlasGrotesk-Regular</string>
-            <string>AtlasGrotesk-Regular</string>
-            <string>AtlasGrotesk-Regular</string>
-        </mutableArray>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -22,127 +23,86 @@
                 <rect key="frame" x="0.0" y="0.0" width="591" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" id="wSf-I7-82o" userLabel="scrollView">
-                        <rect key="frame" x="0.0" y="0.0" width="591" height="40"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="ksw-W9-asc" userLabel="bottomContentView">
-                                <rect key="frame" x="0.0" y="0.0" width="591" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="YYm-0T-f6n" userLabel="bottomToolbar">
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <items/>
-                                    </toolbar>
-                                </subviews>
-                            </view>
-                            <view contentMode="scaleToFill" id="GaF-Tx-YnB" userLabel="innerContentView">
-                                <rect key="frame" x="0.0" y="0.0" width="591" height="40"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="JtJ-e8-xTH" userLabel="goToPostView">
-                                        <rect key="frame" x="342" y="0.0" width="248" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xgh-dM-cqB" userLabel="avatarButton" customClass="AvatarButton" customModule="Ello" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="8" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="userTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="yia-2S-jH7"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="imV-Ww-GEq" userLabel="chevronButton" customClass="StreamFooterButton" customModule="Ello" customModuleProvider="target">
-                                        <rect key="frame" x="561" y="0.0" width="30" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
-                                        <connections>
-                                            <action selector="chevronButtonTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="3ku-Y7-iVI"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zST-5M-mHb" userLabel="timestampLabel">
-                                        <rect key="frame" x="474" y="0.0" width="50" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="S9N-jg-uFq" userLabel="usernameButton">
-                                        <rect key="frame" x="46" y="0.0" width="288" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
-                                        <state key="normal" title="@username">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="usernameTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gnL-P6-2WP"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" id="He7-hG-gQl" userLabel="relationshipControl" customClass="RelationshipControl" customModule="Ello" customModuleProvider="target">
-                                        <rect key="frame" x="46" y="8" width="152" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="MiT-PR-hRg" userLabel="replyButton">
-                                        <rect key="frame" x="527" y="0.0" width="34" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
-                                        <state key="normal">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <imageView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jN1-6u-O8Q" userLabel="repostIconView">
-                                        <rect key="frame" x="112" y="22" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="2Vt-SC-xuk" userLabel="repostedByButton">
-                                        <rect key="frame" x="139" y="25" width="291" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
-                                        <state key="normal" title="by @username">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="reposterTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gWP-Of-jwC"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="hn9-Xb-cM5" userLabel="categoryButton">
-                                        <rect key="frame" x="150" y="13" width="291" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
-                                        <state key="normal" title="in Art">
-                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="categoryTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gbm-Yb-ZFl"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xgh-dM-cqB" userLabel="avatarButton" customClass="AvatarButton" customModule="Ello" customModuleProvider="target">
+                        <rect key="frame" x="8" y="8" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
-                            <outlet property="delegate" destination="drA-zU-V9q" id="2EA-ck-dXk"/>
+                            <action selector="userTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="yia-2S-jH7"/>
                         </connections>
-                    </scrollView>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zST-5M-mHb" userLabel="timestampLabel">
+                        <rect key="frame" x="474" y="0.0" width="50" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="S9N-jg-uFq" userLabel="usernameButton">
+                        <rect key="frame" x="46" y="0.0" width="288" height="38"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                        <state key="normal" title="@username">
+                            <color key="titleColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="userTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gnL-P6-2WP"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" id="He7-hG-gQl" userLabel="relationshipControl" customClass="RelationshipControl" customModule="Ello" customModuleProvider="target">
+                        <rect key="frame" x="46" y="8" width="152" height="34"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <imageView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jN1-6u-O8Q" userLabel="repostIconView">
+                        <rect key="frame" x="112" y="22" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="2Vt-SC-xuk" userLabel="repostedByButton">
+                        <rect key="frame" x="139" y="25" width="291" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                        <state key="normal" title="by @username">
+                            <color key="titleColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="reposterTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gWP-Of-jwC"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="hn9-Xb-cM5" userLabel="categoryButton">
+                        <rect key="frame" x="150" y="13" width="291" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                        <state key="normal" title="in Art">
+                            <color key="titleColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="categoryTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="gbm-Yb-ZFl"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="left" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="Xab-FR-UdM" userLabel="artistInviteSubmissionButton">
+                        <rect key="frame" x="150" y="35" width="190" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="AtlasGrotesk-Regular" family="Atlas Grotesk" pointSize="14"/>
+                        <state key="normal" title="Artist Invite Submission">
+                            <color key="titleColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="categoryTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="Tm1-As-fdL"/>
+                        </connections>
+                    </button>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <size key="customSize" width="591" height="50"/>
             <connections>
+                <outlet property="artistInviteSubmissionButton" destination="Xab-FR-UdM" id="ZBk-oC-wPc"/>
                 <outlet property="avatarButton" destination="xgh-dM-cqB" id="osM-tD-Nz0"/>
-                <outlet property="bottomContentView" destination="ksw-W9-asc" id="Vh3-6x-aVT"/>
-                <outlet property="bottomToolBar" destination="YYm-0T-f6n" id="48X-3t-cxK"/>
                 <outlet property="categoryButton" destination="hn9-Xb-cM5" id="PUM-Me-TPg"/>
-                <outlet property="chevronButton" destination="imV-Ww-GEq" id="gAf-z8-PWU"/>
-                <outlet property="goToPostView" destination="JtJ-e8-xTH" id="d3f-SA-Fpq"/>
-                <outlet property="innerContentView" destination="GaF-Tx-YnB" id="MaJ-m3-eBU"/>
                 <outlet property="relationshipControl" destination="He7-hG-gQl" id="bVI-h5-win"/>
-                <outlet property="replyButton" destination="MiT-PR-hRg" id="MpA-gQ-2Re"/>
                 <outlet property="repostIconView" destination="jN1-6u-O8Q" id="Lbg-Ho-0YV"/>
                 <outlet property="repostedByButton" destination="2Vt-SC-xuk" id="iSF-5f-b6M"/>
-                <outlet property="scrollView" destination="wSf-I7-82o" id="Hrm-Me-eV1"/>
                 <outlet property="timestampLabel" destination="zST-5M-mHb" id="rz7-sL-nBo"/>
                 <outlet property="usernameButton" destination="S9N-jg-uFq" id="6qx-UK-Ym9"/>
             </connections>

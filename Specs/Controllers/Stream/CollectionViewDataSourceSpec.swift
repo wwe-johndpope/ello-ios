@@ -73,7 +73,7 @@ class CollectionViewDataSourceSpec: QuickSpec {
                     StreamKind.following.setIsGridView(true)
                     let items = [
                         StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment),
-                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .commentHeader)
+                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .streamHeader)
                     ]
                     subject.visibleCellItems = items
                 }

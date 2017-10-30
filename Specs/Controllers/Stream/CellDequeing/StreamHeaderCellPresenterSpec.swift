@@ -11,9 +11,6 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
     override func spec() {
         describe("StreamHeaderCellPresenter") {
             let currentUser: User = stub(["username": "ello"])
-            let textRegion: TextRegion = stub(["content": "I am your comment's content"])
-            let content = [textRegion]
-
             var cell: StreamHeaderCell!
             var item: StreamCellItem!
 
@@ -36,39 +33,6 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     item = StreamCellItem(jsonable: post, type: .streamHeader)
                 }
 
-                it("starts out closed") {
-                    cell.scrollView.contentOffset = CGPoint(x: 20, y: 0)
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.scrollView.contentOffset) == CGPoint.zero
-                }
-                it("ownPost should be false") {
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.ownPost) == false
-                }
-                it("ownComment should be false") {
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.ownComment) == false
-                }
-                it("sets scrollView.scrollEnabled") {
-                    cell.scrollView.isScrollEnabled = true
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.scrollView.isScrollEnabled) == false
-                }
-                it("sets chevronHidden") {
-                    cell.chevronHidden = false
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.chevronHidden) == true
-                }
-                it("sets goToPostView.isHidden") {
-                    cell.goToPostView.isHidden = true
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.goToPostView.isHidden) == false
-                }
-                it("sets canReply") {
-                    cell.canReply = true
-                    StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                    expect(cell.canReply) == false
-                }
                 it("sets timeStamp") {
                     cell.timeStamp = ""
                     StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
@@ -211,11 +175,6 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                     ])
                     let post: Post = stub([
                         "id": postId,
-                        "author": currentUser,
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 14,
                         "repostAuthor": repostAuthor,
                     ])
 
@@ -284,144 +243,7 @@ class StreamHeaderCellPresenterSpec: QuickSpec {
                 }
             }
 
-            context("when item is a CommentHeader") {
-                context("when currentUser is not the author") {
-                    beforeEach {
-                        let post: Post = stub([
-                            "viewsCount": 9,
-                            "repostsCount": 4,
-                            "commentsCount": 6,
-                            "lovesCount": 14,
-                        ])
-                        let comment: ElloComment = stub([
-                            "id": "362",
-                            "parentPost": post,
-                            "content": content
-                        ])
 
-                        cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                        item = StreamCellItem(jsonable: comment, type: .commentHeader)
-                    }
-                    it("sets avatarHeight") {
-                        cell.avatarHeight = 0
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.avatarHeight) == 30.0
-                    }
-                    it("sets scrollView.scrollEnabled") {
-                        cell.scrollView.isScrollEnabled = false
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.scrollView.isScrollEnabled) == true
-                    }
-                    it("sets chevronHidden") {
-                        cell.chevronHidden = true
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.chevronHidden) == false
-                    }
-                    it("sets goToPostView.isHidden") {
-                        cell.goToPostView.isHidden = false
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.goToPostView.isHidden) == true
-                    }
-                    it("sets canReply") {
-                        cell.canReply = false
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.canReply) == true
-                    }
-                    it("ownPost should be false") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownPost) == false
-                    }
-                    it("ownComment should be false") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownComment) == false
-                    }
-                }
-                context("when currentUser is the post author") {
-                    beforeEach {
-                        let post: Post = stub([
-                            "author": currentUser,
-                            "viewsCount": 9,
-                            "repostsCount": 4,
-                            "commentsCount": 6,
-                            "lovesCount": 14,
-                            ])
-                        let comment: ElloComment = stub([
-                            "id": "362",
-                            "loadedFromPost": post,
-                            "content": content
-                            ])
-
-                        cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                        item = StreamCellItem(jsonable: comment, type: .commentHeader)
-                    }
-                    it("ownPost should be true") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownPost) == true
-                    }
-                    it("ownComment should be false") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownComment) == false
-                    }
-                }
-                context("when currentUser is the repost author") {
-                    beforeEach {
-                        let reposter: User = stub([:])
-                        let repost: Post = stub([
-                            "id": "901",
-                            "author": reposter,
-                            "repostAuthor": currentUser,
-                            "viewsCount": 9,
-                            "repostsCount": 4,
-                            "commentsCount": 6,
-                            "lovesCount": 14,
-                            ])
-                        let comment: ElloComment = stub([
-                            "id": "362",
-                            "parentPost": repost,
-                            "loadedFromPost": repost,
-                            "content": content
-                            ])
-
-                        cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                        item = StreamCellItem(jsonable: comment, type: .commentHeader)
-                    }
-                    it("ownPost should be true") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownPost) == true
-                    }
-                    it("ownComment should be false") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownComment) == false
-                    }
-                }
-                context("when currentUser is the comment author") {
-                    beforeEach {
-                        let post: Post = stub([
-                            "viewsCount": 9,
-                            "repostsCount": 4,
-                            "commentsCount": 6,
-                            "lovesCount": 14,
-                            ])
-                        let comment: ElloComment = stub([
-                            "id": "362",
-                            "author": currentUser,
-                            "parentPost": post,
-                            "content": content
-                            ])
-
-                        cell = StreamHeaderCell.loadFromNib() as StreamHeaderCell
-                        item = StreamCellItem(jsonable: comment, type: .commentHeader)
-                    }
-                    it("ownPost should be false") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownPost) == false
-                    }
-                    it("ownComment should be true") {
-                        StreamHeaderCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
-                        expect(cell.ownComment) == true
-                    }
-                }
-            }
         }
     }
 }
