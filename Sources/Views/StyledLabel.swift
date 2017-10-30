@@ -78,7 +78,7 @@ class StyledLabel: UILabel {
     var style: Style = .default {
         didSet { updateStyle() }
     }
-    var styleName: String = "default" {
+    @objc var styleName: String = "default" {
         didSet { style = Style.byName(styleName) }
     }
 

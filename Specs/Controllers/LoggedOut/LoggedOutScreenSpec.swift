@@ -11,13 +11,13 @@ class LoggedOutScreenSpec: QuickSpec {
     override func spec() {
         describe("LoggedOutScreen") {
             describe("default snapshots") {
-                validateAllSnapshots() {
+                validateAllSnapshots {
                     let screen = LoggedOutScreen()
                     return screen
                 }
             }
             describe("expanded text") {
-                validateAllSnapshots() {
+                validateAllSnapshots {
                     let screen = LoggedOutScreen()
                     screen.showJoinText()
                     return screen

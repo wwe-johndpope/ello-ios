@@ -2,13 +2,13 @@
 ///  InviteCache.swift
 //
 
-private let key = "ElloInviteCache"
 
 struct InviteCache {
+    static let Key = "ElloInviteCache"
     var cache: [String]
 
     init() {
-        if let existing = GroupDefaults[key].array as? [String] {
+        if let existing = GroupDefaults[InviteCache.Key].array as? [String] {
             cache = existing
         }
         else {
@@ -20,7 +20,7 @@ struct InviteCache {
         guard !has(contactID) else { return }
 
         cache.append(contactID)
-        GroupDefaults[key] = cache
+        GroupDefaults[InviteCache.Key] = cache
     }
 
     func has(_ contactID: String) -> Bool {
@@ -29,6 +29,6 @@ struct InviteCache {
 
     mutating func clear() {
         cache = []
-        GroupDefaults[key] = nil
+        GroupDefaults[InviteCache.Key] = nil
     }
 }

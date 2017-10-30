@@ -126,11 +126,31 @@ func prepareForSnapshot(_ subject: Snapshotable, device: SnapshotDevice) {
 func prepareForSnapshot(_ subject: Snapshotable, size: CGSize) {
     let parent = UIView(frame: CGRect(origin: .zero, size: size))
     let view = subject.snapshotObject!
+
     view.frame = parent.bounds
     parent.addSubview(view)
     showView(view)
     view.setNeedsLayout()
     view.layoutIfNeeded()
+
+    // wtf is up w/ ios 11 / xcode 9?
+    let allClearSubviews = view.findAllSubviews { return $0.backgroundColor == nil }
+    allClearSubviews.forEach { v in
+        v.backgroundColor = .clear
+    }
+    // another weird fix, table view separators aren't hiding:
+    let tableViews: [UITableView] = view.findAllSubviews { v in v.separatorStyle == .none }
+    for separator in tableViews.flatMap({ $0.findAllSubviews { v in
+        return v.readableClassName() == "_UITableViewCellSeparatorView"
+    }}) {
+        separator.isHidden = true
+    }
+    // and UIPageControls don't display at all, so color them just to have
+    // something in the snapshot spec
+    let pageControls: [UIPageControl] = view.findAllSubviews()
+    for pc in pageControls {
+        pc.backgroundColor = .black
+    }
 }
 
 
@@ -154,19 +174,21 @@ func haveRegisteredIdentifier<T: UITableView>(_ identifier: String) -> Predicate
 
 func beVisibleIn<S: UIView>(_ view: UIView) -> Predicate<S> {
     return Predicate.define("be visible in \(view)") { actualExpression, msg -> PredicateResult in
-        let childView = try! actualExpression.evaluate()
-        if let childView = childView {
-            if childView.isHidden || childView.alpha < 0.01 || childView.frame.size.width < 0.1 || childView.frame.size.height < 0.1 {
-                return PredicateResult(status: .fail, message: msg)
-            }
+        guard
+            let subject = try? actualExpression.evaluate(),
+            let childView = subject
+        else { return PredicateResult(status: .fail, message: msg) }
 
-            var parentView: UIView? = childView.superview
-            while parentView != nil {
-                if let parentView = parentView, parentView == view {
-                    return PredicateResult(status: PredicateStatus(bool: true), message: msg)
-                }
-                parentView = parentView!.superview
+        if childView.isHidden || childView.alpha < 0.01 || childView.frame.size.width < 0.1 || childView.frame.size.height < 0.1 {
+            return PredicateResult(status: .fail, message: msg)
+        }
+
+        var parentView: UIView? = childView.superview
+        while parentView != nil {
+            if let parentView = parentView, parentView == view {
+                return PredicateResult(status: PredicateStatus(bool: true), message: msg)
             }
+            parentView = parentView!.superview
         }
         return PredicateResult(status: .fail, message: msg)
     }

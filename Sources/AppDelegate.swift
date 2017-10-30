@@ -63,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = appController
         window.makeKeyAndVisible()
         self.window = window
+        AppSetup.shared.windowSize = window.frame.size
 
         UIApplication.shared.statusBarStyle = .lightContent
 

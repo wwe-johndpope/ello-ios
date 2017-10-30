@@ -132,6 +132,7 @@ class StreamImageCell: StreamRegionableCell {
             buyButtonGreen.backgroundColor = .greenD1
             buyButtonGreen.setNeedsLayout()
             buyButtonGreen.layoutIfNeeded()
+            buyButtonGreen.layer.masksToBounds = true
             buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
 
         }

@@ -725,7 +725,6 @@
 		1D6E43171EA68AEA0029C9B1 /* badge_staff_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E430E1EA68AEA0029C9B1 /* badge_staff_normal.svg */; };
 		1D6E43181EA68AEA0029C9B1 /* badge_staff_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E430F1EA68AEA0029C9B1 /* badge_staff_selected.svg */; };
 		1D6E431A1EA68B5E0029C9B1 /* badge_nsfw_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */; };
-		1D6E431C1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */; };
 		1D6E431E1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */; };
 		1D6E659E1F3E6E840072E946 /* UIViewNibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D91AADF3D4003F0425 /* UIViewNibLoading.swift */; };
 		1D6E659F1F3E6EC00072E946 /* NSObjectClassName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA68A0D81AADF3D4003F0425 /* NSObjectClassName.swift */; };
@@ -1847,7 +1846,6 @@
 		1D6E430E1EA68AEA0029C9B1 /* badge_staff_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_staff_normal.svg; sourceTree = "<group>"; };
 		1D6E430F1EA68AEA0029C9B1 /* badge_staff_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_staff_selected.svg; sourceTree = "<group>"; };
 		1D6E43191EA68B5E0029C9B1 /* badge_nsfw_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = badge_nsfw_selected.svg; sourceTree = "<group>"; };
-		1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesViewSpec.swift; sourceTree = "<group>"; };
 		1D6E431D1EA69C550029C9B1 /* ProfileBadgesPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBadgesPresenterSpec.swift; sourceTree = "<group>"; };
 		1D70DE571DF23862008AF216 /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
 		1D70DE5A1DF6106B008AF216 /* AnnouncementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnnouncementCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -3889,7 +3887,6 @@
 			isa = PBXGroup;
 			children = (
 				12A1D82A1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift */,
-				1D6E431B1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift */,
 				1DA18E091DAD969F000231CC /* ProfileBioViewSpec.swift */,
 				1DA18E151DB54AA0000231CC /* ProfileLinksViewSpec.swift */,
 				12F9EB3E1DEDFD4B00E127AE /* ProfileLocationViewSpec.swift */,
@@ -4374,6 +4371,7 @@
 				12D14C4D1A43752200C6F8E8 /* Resources */,
 				7DB05CC500A415E5E3871B64 /* [CP] Embed Pods Frameworks */,
 				856E1BA5C23FA76E5291A220 /* [CP] Copy Pods Resources */,
+				1D2896561FA28A54004661C1 /* Generate warnings for focused tests */,
 			);
 			buildRules = (
 			);
@@ -4395,7 +4393,6 @@
 				1246CD8C1CEE328400A5D77A /* SwiftLint */,
 				12FEBCFF1A4225F600933A02 /* Resources */,
 				F8C1F82B1AAF57C0000D87F0 /* Set version information */,
-				F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */,
 				EA78A4FF1AD31FB9008D456B /* Embed Frameworks */,
 				124CFBA71C5976E500727D11 /* Embed App Extensions */,
 				3E1A272FC989C6AE7364045C /* [CP] Embed Pods Frameworks */,
@@ -4896,6 +4893,20 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\nrm -fr Frameworks\nfi";
 		};
+		1D2896561FA28A54004661C1 /* Generate warnings for focused tests */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate warnings for focused tests";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"fdescribe|fcontext|fit\"\nFILE_EXTENSIONS=\"swift\"\nfind -E \"${SRCROOT}/Specs/\" -regex \".*\\.($FILE_EXTENSIONS)$\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS)\\(.*\\$\" | perl -p -e \"s/(?:$KEYWORDS)\\(\\\"(.*)\\\".*/ warning: Focused Spec: \\$1/\"";
+		};
 		1D447EAB1F3A6BB000013384 /* Set version information */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5073,20 +5084,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		F872635E1AB08A5700FCB59D /* Generate warnings for focused tests */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate warnings for focused tests";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "KEYWORDS=\"fdescribe|fcontext|fit\"\nFILE_EXTENSIONS=\"swift\"\nfind -E \"${SRCROOT}/Specs/\" -regex \".*\\.($FILE_EXTENSIONS)$\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS)\\(.*\\$\" | perl -p -e \"s/(?:$KEYWORDS)\\(\\\"(.*)\\\".*/ warning: Focused Spec: \\$1/\"";
 		};
 		F8C1F82B1AAF57C0000D87F0 /* Set version information */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5353,7 +5350,6 @@
 				1D1F5F681F86CD4B00417A59 /* InterfaceStringSpec.swift in Sources */,
 				12CF810E1AEFDFA5008FFC6F /* FakeImageManager.swift in Sources */,
 				12BF3CC11B66D68000CF4AE0 /* DateFormattingSpec.swift in Sources */,
-				1D6E431C1EA69C310029C9B1 /* ProfileBadgesViewSpec.swift in Sources */,
 				1D70DE6C1DF7387A008AF216 /* StreamImageCellSizeCalculatorSpec.swift in Sources */,
 				122943301C6C355A003FCD20 /* NSItemProviderExtensionsSpec.swift in Sources */,
 				76FF80591A96921100617A1E /* RelationshipControllerSpec.swift in Sources */,

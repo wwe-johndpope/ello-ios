@@ -330,7 +330,7 @@ enum StreamCellType: Equatable {
         case .badge:
             return 64
         case .categoryCard, .selectableCategoryCard:
-            let width = UIWindow.windowWidth()
+            let width = AppSetup.shared.windowSize.width
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
         case .categoryPromotionalHeader, .pagePromotionalHeader:
@@ -346,9 +346,9 @@ enum StreamCellType: Equatable {
         case .createComment:
             return 75
         case .editorial:
-            let width = UIWindow.windowWidth()
+            let width = AppSetup.shared.windowSize.width
             let aspect = EditorialCell.Size.aspect
-            let maxHeight: CGFloat = UIWindow.windowHeight() - 256
+            let maxHeight: CGFloat = AppSetup.shared.windowSize.height - 256
             let height = min(ceil(width / aspect), maxHeight)
             return height + 1
         case let .emptyStream(height):
@@ -393,10 +393,10 @@ enum StreamCellType: Equatable {
     var multiColumnHeight: CGFloat {
         switch self {
         case .categoryCard, .selectableCategoryCard:
-            let windowWidth = UIWindow.windowWidth()
+            let windowWidth = AppSetup.shared.windowSize.width
             let columnCount = CGFloat(Window.columnCountFor(width: windowWidth))
             let columnSpacing: CGFloat = 1
-            let width = (UIWindow.windowWidth() - columnSpacing * (columnCount - 1)) / columnCount
+            let width = (AppSetup.shared.windowSize.width - columnSpacing * (columnCount - 1)) / columnCount
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
         case .streamHeader,

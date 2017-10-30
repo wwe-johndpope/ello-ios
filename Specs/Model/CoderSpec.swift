@@ -5,7 +5,6 @@ import Nimble
 
 class CoderSpec: QuickSpec {
     override func spec() {
-
         var filePath = ""
         if let url = URL(string: FileManager.ElloDocumentsDir()) {
             filePath = url.appendingPathComponent("DecoderSpec").absoluteString
@@ -20,37 +19,39 @@ class CoderSpec: QuickSpec {
             }
         }
 
-        it("encodes and decodes required properties") {
-            let obj = CoderSpecFake(stringProperty: "prop1", intProperty: 123, boolProperty: true)
-            NSKeyedArchiver.archiveRootObject(obj, toFile: filePath)
-            let unArchivedObject = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as! CoderSpecFake
-            expect(unArchivedObject.stringProperty) == "prop1"
-            expect(unArchivedObject.intProperty) == 123
-            expect(unArchivedObject.boolProperty) == true
-            expect(unArchivedObject.optionalStringProperty).to(beNil())
-            expect(unArchivedObject.optionalIntProperty).to(beNil())
-            expect(unArchivedObject.optionalBoolProperty).to(beNil())
-        }
+        describe("Coder") {
+            it("encodes and decodes required properties") {
+                let obj = CoderSpecFake(stringProperty: "prop1", intProperty: 123, boolProperty: true)
+                NSKeyedArchiver.archiveRootObject(obj, toFile: filePath)
+                let unArchivedObject = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as! CoderSpecFake
+                expect(unArchivedObject.stringProperty) == "prop1"
+                expect(unArchivedObject.intProperty) == 123
+                expect(unArchivedObject.boolProperty) == true
+                expect(unArchivedObject.optionalStringProperty).to(beNil())
+                expect(unArchivedObject.optionalIntProperty).to(beNil())
+                expect(unArchivedObject.optionalBoolProperty).to(beNil())
+            }
 
-        it("encodes and decodes optional properties") {
-            let obj = CoderSpecFake(stringProperty: "prop1", intProperty: 123, boolProperty: true)
-            obj.optionalStringProperty = "optionalString"
-            obj.optionalIntProperty = 666
-            obj.optionalBoolProperty = true
-            NSKeyedArchiver.archiveRootObject(obj, toFile: filePath)
-            let unArchivedObject = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as! CoderSpecFake
-            expect(unArchivedObject.stringProperty) == "prop1"
-            expect(unArchivedObject.intProperty) == 123
-            expect(unArchivedObject.boolProperty) == true
-            expect(unArchivedObject.optionalStringProperty) == "optionalString"
-            expect(unArchivedObject.optionalIntProperty) == 666
-            expect(unArchivedObject.optionalBoolProperty) == true
+            it("encodes and decodes optional properties") {
+                let obj = CoderSpecFake(stringProperty: "prop1", intProperty: 123, boolProperty: true)
+                obj.optionalStringProperty = "optionalString"
+                obj.optionalIntProperty = 666
+                obj.optionalBoolProperty = true
+                NSKeyedArchiver.archiveRootObject(obj, toFile: filePath)
+                let unArchivedObject = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as! CoderSpecFake
+                expect(unArchivedObject.stringProperty) == "prop1"
+                expect(unArchivedObject.intProperty) == 123
+                expect(unArchivedObject.boolProperty) == true
+                expect(unArchivedObject.optionalStringProperty) == "optionalString"
+                expect(unArchivedObject.optionalIntProperty) == 666
+                expect(unArchivedObject.optionalBoolProperty) == true
+            }
         }
     }
 }
 
-
-class CoderSpecFake: NSObject {
+@objc
+class CoderSpecFake: NSObject, NSCoding {
     let stringProperty: String
     let intProperty: Int
     let boolProperty: Bool
@@ -64,7 +65,7 @@ class CoderSpecFake: NSObject {
         self.boolProperty = boolProperty
     }
 
-    func encodeWithCoder(_ encoder: NSCoder) {
+    func encode(with encoder: NSCoder) {
         let coder = Coder(encoder)
         coder.encodeObject(stringProperty, forKey: "stringProperty")
         coder.encodeObject(intProperty, forKey: "intProperty")
@@ -74,7 +75,7 @@ class CoderSpecFake: NSObject {
         coder.encodeObject(optionalBoolProperty, forKey: "optionalBoolProperty")
     }
 
-    init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         let decoder = Coder(coder)
         self.stringProperty = decoder.decodeKey("stringProperty")
         self.intProperty = decoder.decodeKey("intProperty")

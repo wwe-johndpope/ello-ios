@@ -107,6 +107,7 @@ extension AlertViewController {
         view = UIView()
         view.addSubview(tableView)
 
+        // not using SnapKit because AlertViewController is used from the ShareExtension
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: Size.margins.top).isActive = true
         view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: Size.margins.bottom).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Size.margins.left).isActive = true

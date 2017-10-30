@@ -19,6 +19,9 @@ class EditorialPostStreamCell: EditorialCell {
     override func style() {
         super.style()
 
+        if AppSetup.shared.isTesting {
+            pageControl.backgroundColor = .black
+        }
         bg.backgroundColor = .black
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false

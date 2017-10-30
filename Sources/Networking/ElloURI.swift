@@ -219,6 +219,8 @@ enum ElloURI {
     private func data(_ url: String) -> String? {
         let regex = Regex(regexPattern)
         switch self {
+        case .subdomain, .email, .external, .root:
+            return url
         case .discover:
             return "recommended"
         case .discoverRandom:

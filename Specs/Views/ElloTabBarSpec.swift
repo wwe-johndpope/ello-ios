@@ -31,19 +31,13 @@ class ElloTabBarSpec: QuickSpec {
 
             context("red dot position") {
                 context("portait") {
-                    beforeEach {
-                        prepareForSnapshot(subject, size: portraitSize)
-                    }
                     it("should be in the correct location") {
-                        expectValidSnapshot(subject)
+                        expectValidSnapshot(subject, device: .custom(portraitSize))
                     }
                 }
                 context("landscape") {
-                    beforeEach {
-                        prepareForSnapshot(subject, size: landscapeSize)
-                    }
                     it("should be in the correct location") {
-                        expectValidSnapshot(subject)
+                        expectValidSnapshot(subject, device: .custom(landscapeSize))
                     }
                 }
             }

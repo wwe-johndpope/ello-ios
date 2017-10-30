@@ -117,6 +117,7 @@ extension ProfileLinksView {
         iconsBox.addSubview(button)
         iconButtons.append(button)
 
+        button.layer.masksToBounds = true
         button.layer.cornerRadius = Size.iconSize.width / 2
         button.backgroundColor = .greyE5
         button.snp.makeConstraints { make in
