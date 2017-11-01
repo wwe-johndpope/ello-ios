@@ -282,7 +282,6 @@
 		125A503D1A65DA5600FB979E /* activity-own-post.json in Resources */ = {isa = PBXBuildFile; fileRef = 125A503C1A65DA5600FB979E /* activity-own-post.json */; };
 		125A50401A65E4CE00FB979E /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 125A503F1A65E4CE00FB979E /* user.json */; };
 		125F28841B1D0CD400BA501E /* DrawerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F28831B1D0CD400BA501E /* DrawerCell.swift */; };
-		125F28861B1D0D8600BA501E /* DrawerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 125F28851B1D0D8600BA501E /* DrawerCell.xib */; };
 		125F28881B1D165700BA501E /* DrawerCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F28871B1D165700BA501E /* DrawerCellPresenter.swift */; };
 		125F288A1B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F28891B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift */; };
 		12614C581E705940006FB0E5 /* PINRemoteImageManagerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12614C571E705940006FB0E5 /* PINRemoteImageManagerResult.swift */; };
@@ -1506,7 +1505,6 @@
 		125A503F1A65E4CE00FB979E /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		125A50421A65EA0300FB979E /* activity-welcome-post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "activity-welcome-post.json"; sourceTree = "<group>"; };
 		125F28831B1D0CD400BA501E /* DrawerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerCell.swift; sourceTree = "<group>"; };
-		125F28851B1D0D8600BA501E /* DrawerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DrawerCell.xib; path = Sources/Controllers/Drawer/DrawerCell.xib; sourceTree = SOURCE_ROOT; };
 		125F28871B1D165700BA501E /* DrawerCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerCellPresenter.swift; sourceTree = "<group>"; };
 		125F28891B1DECCE00BA501E /* ProfileHeaderCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCellPresenterSpec.swift; sourceTree = "<group>"; };
 		12614C571E705940006FB0E5 /* PINRemoteImageManagerResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINRemoteImageManagerResult.swift; sourceTree = "<group>"; };
@@ -2650,7 +2648,6 @@
 			children = (
 				1D98563A1C6D7D3300C1BF78 /* DrawerAnimators.swift */,
 				125F28831B1D0CD400BA501E /* DrawerCell.swift */,
-				125F28851B1D0D8600BA501E /* DrawerCell.xib */,
 				125F28871B1D165700BA501E /* DrawerCellPresenter.swift */,
 				1D9856401C723E6100C1BF78 /* DrawerPopControl.swift */,
 				F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */,
@@ -4652,7 +4649,6 @@
 				76F8DEB11B6C0BC4009BCF61 /* arrow_white.svg in Resources */,
 				1D472C231C1F2E0400B61E55 /* embetter_audio_play.svg in Resources */,
 				76B53AD41B0AA89B00534548 /* relationship_batches__when_no_user_ids_are_specified.json in Resources */,
-				125F28861B1D0D8600BA501E /* DrawerCell.xib in Resources */,
 				76F8DEB81B6C0BC4009BCF61 /* bubble_white.svg in Resources */,
 				F8158C451ACDABF3008C15A1 /* AlertCell.xib in Resources */,
 				76F8DEF91B6C0BC4009BCF61 /* sparkles_normal.svg in Resources */,
