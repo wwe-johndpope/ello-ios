@@ -106,7 +106,7 @@ private extension CategoryGenerator {
 
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
-            StreamCellItem(type: .placeholder, placeholderType: .categoryHeader),
+            StreamCellItem(type: .placeholder, placeholderType: .promotionalHeader),
             StreamCellItem(type: .placeholder, placeholderType: .streamPosts)
         ])
     }
@@ -124,7 +124,7 @@ private extension CategoryGenerator {
 
         if let jsonable = jsonable {
             destination?.setPrimary(jsonable: jsonable)
-            destination?.replacePlaceholder(type: .categoryHeader, items: headerItems())
+            destination?.replacePlaceholder(type: .promotionalHeader, items: headerItems())
             doneOperation.run()
         }
     }
@@ -158,7 +158,7 @@ private extension CategoryGenerator {
 
                 self.category = category
                 self.destination?.setPrimary(jsonable: category)
-                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+                self.destination?.replacePlaceholder(type: .promotionalHeader, items: self.headerItems())
 
                 doneOperation.run()
             }
@@ -172,7 +172,7 @@ private extension CategoryGenerator {
     func loadPagePromotional(_ doneOperation: AsyncOperation) {
         guard usesPagePromo() else { return }
 
-        PagePromotionalService().loadPagePromotionals()
+        PagePromotionalService().loadCategoryPromotionals()
             .thenFinally { [weak self] promotionals in
                 guard
                     let `self` = self,
@@ -186,14 +186,14 @@ private extension CategoryGenerator {
                 else {
                     self.destination?.primaryJSONAbleNotFound()
                 }
-                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+                self.destination?.replacePlaceholder(type: .promotionalHeader, items: self.headerItems())
                 doneOperation.run()
             }
             .catch { [weak self] _ in
                 guard let `self` = self else { return }
                 self.destination?.primaryJSONAbleNotFound()
                 self.queue.cancelAllOperations()
-        }
+            }
     }
 
     func loadCategories() {
@@ -253,7 +253,7 @@ private extension CategoryGenerator {
                                 self.destination?.replacePlaceholder(type: .streamPosts, items: noItems) {
                                     self.destination?.isPagingEnabled = false
                                 }
-                                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+                                self.destination?.replacePlaceholder(type: .promotionalHeader, items: self.headerItems())
                             }
                             else {
                                 self.destination?.replacePlaceholder(type: .streamPosts, items: items) {

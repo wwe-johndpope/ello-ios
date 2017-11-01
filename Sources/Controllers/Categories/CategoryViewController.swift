@@ -180,7 +180,7 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
-            if self.streamViewController.hasCellItems(for: .categoryHeader) && !self.streamViewController.hasCellItems(for: .streamPosts) {
+            if self.streamViewController.hasCellItems(for: .promotionalHeader) && !self.streamViewController.hasCellItems(for: .streamPosts) {
                 self.streamViewController.replacePlaceholder(type: .streamPosts, items: [StreamCellItem(type: .streamLoading)])
             }
 
@@ -312,7 +312,7 @@ extension CategoryViewController: CategoryScreenDelegate {
 
         let sortedCategories = CategoryList(categories: allCategories).categories
         let categoryItems = allCategoryItems(categories: sortedCategories)
-        replacePlaceholder(type: .categoryHeader, items: [])
+        replacePlaceholder(type: .promotionalHeader, items: [])
         replacePlaceholder(type: .streamPosts, items: categoryItems)
 
         trackScreenAppeared()

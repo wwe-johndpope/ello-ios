@@ -26,7 +26,7 @@ class StreamDataSource: ElloDataSource {
     var notificationSizeCalculator = StreamNotificationCellSizeCalculator()
     var announcementSizeCalculator = AnnouncementCellSizeCalculator()
     var profileHeaderSizeCalculator = ProfileHeaderCellSizeCalculator()
-    var categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
+    var categoryHeaderSizeCalculator = PromotionalHeaderCellSizeCalculator()
     var imageSizeCalculator = StreamImageCellSizeCalculator()
     var editorialDownloader = EditorialDownloader()
     var artistInviteCalculator = ArtistInviteCellSizeCalculator()

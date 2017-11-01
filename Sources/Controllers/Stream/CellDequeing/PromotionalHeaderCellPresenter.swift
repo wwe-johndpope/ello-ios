@@ -1,8 +1,8 @@
 ////
-///  CategoryHeaderCellPresenter.swift
+///  PromotionalHeaderCellPresenter.swift
 //
 
-struct CategoryHeaderCellPresenter {
+struct PromotionalHeaderCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,
@@ -12,11 +12,11 @@ struct CategoryHeaderCellPresenter {
         currentUser: User?)
     {
         guard
-            let cell = cell as? CategoryHeaderCell,
+            let cell = cell as? PromotionalHeaderCell,
             let category = streamCellItem.jsonable as? Category
         else { return }
 
-        let config = CategoryHeaderCell.Config(category: category)
+        let config = PromotionalHeaderCell.Config(category: category)
         cell.config = config
     }
 }

@@ -747,6 +747,10 @@ extension ElloAPI: Moya.TargetType {
             return [
                 "per_page": 10,
             ]
+        case let .collaborate(_, body):
+            return [
+                "body": body
+            ]
         case .discover:
             return [
                 "per_page": 10,
@@ -763,10 +767,6 @@ extension ElloAPI: Moya.TargetType {
             }
             return ["contacts": hashedContacts]
         case let .hire(_, body):
-            return [
-                "body": body
-            ]
-        case let .collaborate(_, body):
             return [
                 "body": body
             ]
@@ -805,6 +805,10 @@ extension ElloAPI: Moya.TargetType {
                 params["category"] = category
             }
             return params
+        case .pagePromotionals:
+            return [
+                "include_extras": true,
+            ]
         case .postDetail:
             return [
                 "comment_count": 0,
