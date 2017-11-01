@@ -89,7 +89,7 @@
                             <color key="titleColor" red="0.66666668650000005" green="0.66666668650000005" blue="0.66666668650000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="categoryTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="Tm1-As-fdL"/>
+                            <action selector="artistInviteSubmissionTapped:" destination="drA-zU-V9q" eventType="touchUpInside" id="W8l-Gk-Y5Q"/>
                         </connections>
                     </button>
                 </subviews>

@@ -949,6 +949,20 @@ extension StreamViewController: StreamCellResponder {
         collectionView(collectionView, didSelectItemAt: indexPath)
     }
 
+    func artistInviteSubmissionTapped(cell: UICollectionViewCell) {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            collectionViewDataSource.isTappable(at: indexPath),
+            let post = jsonable(forPath: indexPath) as? Post,
+            let artistInviteId = post.artistInviteId
+        else { return }
+
+        Tracker.shared.artistInviteOpened(slug: artistInviteId)
+        let vc = ArtistInviteDetailController(id: artistInviteId)
+        vc.currentUser = currentUser
+
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: StreamViewController: UserResponder

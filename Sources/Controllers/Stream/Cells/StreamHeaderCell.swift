@@ -304,6 +304,11 @@ class StreamHeaderCell: UICollectionViewCell {
         responder?.categoryCellTapped(cell: self)
     }
 
+    @IBAction func artistInviteSubmissionTapped(_ sender: UIButton) {
+        let responder: StreamCellResponder? = findResponder()
+        responder?.artistInviteSubmissionTapped(cell: self)
+    }
+
     @IBAction func reposterTapped(_ sender: UIButton) {
         let responder: UserResponder? = findResponder()
         responder?.userTappedReposter(cell: self)
