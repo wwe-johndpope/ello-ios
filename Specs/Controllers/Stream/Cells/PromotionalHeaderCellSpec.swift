@@ -119,15 +119,13 @@ class PromotionalHeaderCellSpec: QuickSpec {
                             PromotionalHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .category(slug: "Art"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                         }
                         else {
-                            let height = PromotionalHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, cellWidth: style.width)
+                            let height = PromotionalHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, htmlHeight: nil, cellWidth: style.width)
                             subject = PromotionalHeaderCell(frame: style.frame(height))
                             let item = StreamCellItem(jsonable: pagePromotional, type: .pagePromotionalHeader)
                             PagePromotionalHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .category(slug: "Design"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                         }
                         setImages()
 
-                        subject.layoutIfNeeded()
-                        showView(subject)
                         expectValidSnapshot(subject)
                     }
                 }
