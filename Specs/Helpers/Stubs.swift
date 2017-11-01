@@ -592,9 +592,10 @@ extension PagePromotional: Stubbable {
             subheader: (values["subheader"] as? String) ?? "Default Subheader",
             ctaCaption: (values["ctaCaption"] as? String) ?? "Default CTA Caption",
             ctaURL: urlFromValue(values["ctaURL"]),
-            image: values["image"] as? Asset
+            image: values["image"] as? Asset,
+            isEditorial: (values["is_editorial"] as? Bool) ?? false,
+            isArtistInvite: (values["is_artist_invite"] as? Bool) ?? false
         )
-
 
         if let image = pagePromotional.image {
             pagePromotional.addLinkObject("image", key: image.id, type: .assetsType)

@@ -63,9 +63,9 @@ enum StreamCellType: Equatable {
 
     enum PlaceholderType {
         case streamPosts
+        case promotionalHeader
 
         case categoryList
-        case categoryHeader
         case peopleToFollow
 
         case announcements
@@ -174,7 +174,7 @@ enum StreamCellType: Equatable {
         case .badge: return BadgeCell.reuseIdentifier
         case .categoryCard: return CategoryCardCell.reuseIdentifier
         case .categoryList: return CategoryListCell.reuseIdentifier
-        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
+        case .categoryPromotionalHeader, .pagePromotionalHeader: return PromotionalHeaderCell.reuseIdentifier
         case .commentHeader: return CommentHeaderCell.reuseIdentifier
         case .streamHeader: return StreamHeaderCell.reuseIdentifier
         case .createComment: return StreamCreateCommentCell.reuseIdentifier
@@ -242,7 +242,7 @@ enum StreamCellType: Equatable {
         case .badge: return BadgeCellPresenter.configure
         case .categoryCard: return CategoryCardCellPresenter.configure
         case .categoryList: return CategoryListCellPresenter.configure
-        case .categoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
+        case .categoryPromotionalHeader: return PromotionalHeaderCellPresenter.configure
         case .commentHeader: return CommentHeaderCellPresenter.configure
         case .streamHeader: return StreamHeaderCellPresenter.configure
         case .createComment: return StreamCreateCommentCellPresenter.configure
@@ -286,7 +286,7 @@ enum StreamCellType: Equatable {
         case .badge: return BadgeCell.self
         case .categoryCard: return CategoryCardCell.self
         case .categoryList: return CategoryListCell.self
-        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.self
+        case .categoryPromotionalHeader, .pagePromotionalHeader: return PromotionalHeaderCell.self
         case .commentHeader: return CommentHeaderCell.self
         case .streamHeader: return StreamHeaderCell.self
         case .createComment: return StreamCreateCommentCell.self

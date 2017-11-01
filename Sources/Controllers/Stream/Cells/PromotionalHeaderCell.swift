@@ -1,23 +1,25 @@
 ////
-///  CategoryHeaderCell.swift
+///  PromotionalHeaderCell.swift
 //
 
 import SnapKit
 import FLAnimatedImage
 
 
-class CategoryHeaderCell: CollectionViewCell {
-    static let reuseIdentifier = "CategoryHeaderCell"
+class PromotionalHeaderCell: CollectionViewCell {
+    static let reuseIdentifier = "PromotionalHeaderCell"
 
     enum Style {
         case category
         case page
+        case editorial
+        case artistInvite
     }
 
     struct Config {
-        var style: Style
-        var title: String
-        var tracking: String
+        var style: Style = .category
+        var title: String = ""
+        var tracking: String = ""
         var body: String?
         var imageURL: URL?
         var user: User?
@@ -25,17 +27,18 @@ class CategoryHeaderCell: CollectionViewCell {
         var callToAction: String?
         var callToActionURL: URL?
 
-        init(style: Style) {
-            self.style = style
-            self.title = ""
-            self.tracking = ""
+        var hasHtml: Bool {
+            switch style {
+            case .editorial, .artistInvite: return true
+            case .category, .page: return false
+            }
         }
     }
 
     struct Size {
         static let defaultMargin: CGFloat = 15
         static let topMargin: CGFloat = 25
-        static let bodyMargin: CGFloat = 24
+        static let bodySpacing: CGFloat = 24
         static let stackedMargin: CGFloat = 6
         static let lineTopMargin: CGFloat = 4
         static let lineHeight: CGFloat = 2
@@ -53,6 +56,7 @@ class CategoryHeaderCell: CollectionViewCell {
     let titleLabel = UILabel()
     let titleUnderlineView = UIView()
     let bodyLabel = UILabel()
+    let bodyWebView = ElloWebView()
     let callToActionButton = UIButton()
     let postedByButton = UIButton()
     let postedByAvatar = AvatarButton()
@@ -74,7 +78,7 @@ class CategoryHeaderCell: CollectionViewCell {
 
     private var callToActionURL: URL?
 
-    var config: Config = Config(style: .category) {
+    var config: Config = Config() {
         didSet {
             updateConfig()
         }
@@ -84,6 +88,9 @@ class CategoryHeaderCell: CollectionViewCell {
         titleLabel.numberOfLines = 0
         titleUnderlineView.backgroundColor = .white
         bodyLabel.numberOfLines = 0
+        bodyWebView.scrollView.isScrollEnabled = false
+        bodyWebView.scrollView.scrollsToTop = false
+        bodyWebView.isUserInteractionEnabled = false
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -92,6 +99,7 @@ class CategoryHeaderCell: CollectionViewCell {
     }
 
     override func bindActions() {
+        bodyWebView.delegate = self
         callToActionButton.addTarget(self, action: #selector(callToActionTapped), for: .touchUpInside)
         postedByButton.addTarget(self, action: #selector(postedByTapped), for: .touchUpInside)
         postedByAvatar.addTarget(self, action: #selector(postedByTapped), for: .touchUpInside)
@@ -107,6 +115,7 @@ class CategoryHeaderCell: CollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(titleUnderlineView)
         contentView.addSubview(bodyLabel)
+        contentView.addSubview(bodyWebView)
         contentView.addSubview(callToActionButton)
         contentView.addSubview(postedByButton)
         contentView.addSubview(postedByAvatar)
@@ -146,7 +155,13 @@ class CategoryHeaderCell: CollectionViewCell {
         }
 
         bodyLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(Size.bodyMargin)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Size.bodySpacing)
+            make.leading.trailing.equalTo(contentView).inset(Size.defaultMargin)
+        }
+
+        bodyWebView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(Size.bodySpacing)
+            make.bottom.equalTo(contentView)
             make.leading.trailing.equalTo(contentView).inset(Size.defaultMargin)
         }
 
@@ -189,12 +204,18 @@ class CategoryHeaderCell: CollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.config = Config(style: .category)
+        self.config = Config()
     }
 
     private func updateConfig() {
         titleLabel.attributedText = config.attributedTitle
         bodyLabel.attributedText = config.attributedBody
+
+        if let html = config.html {
+            let fullHtml = StreamTextCellHTML.editorialHTML(html)
+            bodyWebView.loadHTMLString(fullHtml, baseURL: URL(string: "/"))
+        }
+
         setImageURL(config.imageURL)
         postedByAvatar.setUserAvatarURL(config.user?.avatarURL())
         postedByButton.setAttributedTitle(config.attributedPostedBy, for: .normal)
@@ -239,7 +260,7 @@ class CategoryHeaderCell: CollectionViewCell {
     }
 }
 
-extension CategoryHeaderCell {
+extension PromotionalHeaderCell {
 
     @objc
     func postedByTapped() {
@@ -258,7 +279,7 @@ extension CategoryHeaderCell {
     }
 }
 
-private extension CategoryHeaderCell {
+private extension PromotionalHeaderCell {
 
     func loadImage(_ url: URL) {
         guard url.scheme?.isEmpty == false else {
@@ -314,22 +335,41 @@ private extension CategoryHeaderCell {
     }
 }
 
-extension CategoryHeaderCell.Config {
+extension PromotionalHeaderCell: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let scheme = request.url?.scheme, scheme == "default" {
+            // let responder: StreamCellResponder? = findResponder()
+            // responder?.streamCellTapped(cell: self)
+            return false
+        }
+        else {
+            return ElloWebViewHelper.handle(request: request, origin: self)
+        }
+    }
+}
+
+extension PromotionalHeaderCell.Config {
 
     var attributedTitle: NSAttributedString {
         switch style {
         case .category: return NSAttributedString(title, color: .white, font: .regularBlackFont(16), alignment: .center)
-        case .page: return NSAttributedString(title, color: .white, font: .regularBlackFont(18))
+        case .page, .editorial, .artistInvite: return NSAttributedString(title, color: .white, font: .regularBlackFont(18))
         }
     }
 
     var attributedBody: NSAttributedString? {
-        guard let body = body else { return nil }
+        guard let body = body, !hasHtml else { return nil }
 
         switch style {
         case .category: return NSAttributedString(body, color: .white)
-        case .page: return NSAttributedString(body, color: .white, font: .defaultFont(16))
+        case .page, .editorial, .artistInvite: return NSAttributedString(body, color: .white, font: .defaultFont(16))
         }
+    }
+
+    var html: String? {
+        guard let body = body, hasHtml else { return nil}
+
+        return body
     }
 
     var attributedPostedBy: NSAttributedString? {
@@ -347,11 +387,12 @@ extension CategoryHeaderCell.Config {
    }
 }
 
-extension CategoryHeaderCell.Config {
+extension PromotionalHeaderCell.Config {
 
     init(category: Category) {
-        self.init(style: .category)
+        self.init()
 
+        style = .category
         title = category.name
         body = category.body
         tracking = category.slug
@@ -366,8 +407,17 @@ extension CategoryHeaderCell.Config {
     }
 
     init(pagePromotional: PagePromotional) {
-        self.init(style: .page)
+        self.init()
 
+        if pagePromotional.isEditorial {
+            style = .editorial
+        }
+        else if pagePromotional.isArtistInvite {
+            style = .artistInvite
+        }
+        else {
+            style = .page
+        }
         title = pagePromotional.header
         body = pagePromotional.subheader
         tracking = "general"

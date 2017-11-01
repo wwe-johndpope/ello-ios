@@ -1,5 +1,5 @@
 ////
-///  CategoryHeaderCellSpec.swift
+///  PromotionalHeaderCellSpec.swift
 //
 
 @testable import Ello
@@ -8,7 +8,7 @@ import Nimble
 import PINRemoteImage
 import PINCache
 
-class CategoryHeaderCellSpec: QuickSpec {
+class PromotionalHeaderCellSpec: QuickSpec {
 
     enum Style {
         case narrow
@@ -29,8 +29,8 @@ class CategoryHeaderCellSpec: QuickSpec {
     }
 
     override func spec() {
-        describe("CategoryHeaderCell") {
-            var subject: CategoryHeaderCell!
+        describe("PromotionalHeaderCell") {
+            var subject: PromotionalHeaderCell!
 
             func setImages() {
                 subject.postedByAvatar.setImage(specImage(named: "specs-avatar"), for: .normal)
@@ -113,14 +113,14 @@ class CategoryHeaderCellSpec: QuickSpec {
                         ])
 
                         if type == .categoryPromotionalHeader {
-                            let height = CategoryHeaderCellSizeCalculator.calculateCategoryHeight(category, cellWidth: style.width)
-                            subject = CategoryHeaderCell(frame: style.frame(height))
+                            let height = PromotionalHeaderCellSizeCalculator.calculateCategoryHeight(category, cellWidth: style.width)
+                            subject = PromotionalHeaderCell(frame: style.frame(height))
                             let item = StreamCellItem(jsonable: category, type: .categoryPromotionalHeader)
-                            CategoryHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .category(slug: "Art"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
+                            PromotionalHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .category(slug: "Art"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                         }
                         else {
-                            let height = CategoryHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, cellWidth: style.width)
-                            subject = CategoryHeaderCell(frame: style.frame(height))
+                            let height = PromotionalHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, cellWidth: style.width)
+                            subject = PromotionalHeaderCell(frame: style.frame(height))
                             let item = StreamCellItem(jsonable: pagePromotional, type: .pagePromotionalHeader)
                             PagePromotionalHeaderCellPresenter.configure(subject, streamCellItem: item, streamKind: .category(slug: "Design"), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                         }

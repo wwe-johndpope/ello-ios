@@ -21,6 +21,7 @@ final class ArtistInvitesGenerator: StreamGenerator {
         if !reload {
             setPlaceHolders()
         }
+        loadArtistInvitePromotionals()
         loadArtistInvites()
     }
 }
@@ -29,8 +30,27 @@ private extension ArtistInvitesGenerator {
 
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
-            StreamCellItem(type: .placeholder, placeholderType: .artistInvites)
+            StreamCellItem(type: .placeholder, placeholderType: .promotionalHeader),
+            StreamCellItem(type: .placeholder, placeholderType: .artistInvites),
         ])
+    }
+
+    func loadArtistInvitePromotionals() {
+        PagePromotionalService().loadArtistInvitePromotionals()
+            .thenFinally { [weak self] promotionals in
+                guard
+                    let `self` = self,
+                    let promotionals = promotionals
+                else { return }
+
+                if let pagePromotional = promotionals.randomItem() {
+                    self.destination?.replacePlaceholder(type: .promotionalHeader, items: [
+                        StreamCellItem(jsonable: pagePromotional, type: .pagePromotionalHeader),
+                        StreamCellItem(type: .spacer(height: ArtistInviteBubbleCell.Size.bubbleMargins.bottom)),
+                    ])
+                }
+            }
+            .ignoreErrors()
     }
 
     func loadArtistInvites() {
