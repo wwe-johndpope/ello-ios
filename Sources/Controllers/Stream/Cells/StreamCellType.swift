@@ -350,7 +350,7 @@ enum StreamCellType: Equatable {
             let aspect = EditorialCell.Size.aspect
             let maxHeight: CGFloat = AppSetup.shared.windowSize.height - 256
             let height = min(ceil(width / aspect), maxHeight)
-            return height + 1
+            return height + EditorialCell.Size.bgMargins.bottom
         case let .emptyStream(height):
             return height
         case .error:

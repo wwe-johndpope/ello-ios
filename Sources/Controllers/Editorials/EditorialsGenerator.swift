@@ -69,7 +69,7 @@ private extension EditorialsGenerator {
                 if let pagePromotional = promotionals.randomItem() {
                     self.destination?.replacePlaceholder(type: .promotionalHeader, items: [
                         StreamCellItem(jsonable: pagePromotional, type: .pagePromotionalHeader),
-                        StreamCellItem(type: .spacer(height: 1)),
+                        StreamCellItem(type: .spacer(height: EditorialCell.Size.bgMargins.bottom)),
                     ])
                 }
             }
