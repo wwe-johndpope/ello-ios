@@ -8,6 +8,8 @@ struct ImageRegionData {
     let contentType: String?
     let buyButtonURL: URL?
 
+    var isAnimatedGif: Bool { return contentType == "image/gif" }
+
     init(image: UIImage, buyButtonURL: URL? = nil) {
         self.image = image
         self.data = nil
