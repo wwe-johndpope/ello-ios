@@ -917,6 +917,10 @@
 		1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B21D7F24B4007E1447 /* SearchString.swift */; };
 		1DBB23DB1F8C30350025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
 		1DBB23DC1F8C30390025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
+		1DBC82F41FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
+		1DBC82F51FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
+		1DBC82F61FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
+		1DBC82F71FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
 		1DBD0BB61F9026F100DF9FC5 /* ElloTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BB51F9026F100DF9FC5 /* ElloTab.swift */; };
 		1DBD0BC01F950ADC00DF9FC5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBB1F950ADB00DF9FC5 /* View.swift */; };
 		1DBD0BC11F950ADC00DF9FC5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */; };
@@ -2023,6 +2027,7 @@
 		1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissableCell.swift; sourceTree = "<group>"; };
 		1DB8C6B21D7F24B4007E1447 /* SearchString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchString.swift; sourceTree = "<group>"; };
 		1DBB23DA1F8C30350025FA07 /* DebugServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugServer.swift; sourceTree = "<group>"; };
+		1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathKit.swift; sourceTree = "<group>"; };
 		1DBD0BB51F9026F100DF9FC5 /* ElloTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElloTab.swift; sourceTree = "<group>"; };
 		1DBD0BBB1F950ADB00DF9FC5 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2795,6 +2800,7 @@
 				1267C7331BA232530000D809 /* Box */,
 				1D513E071ED8DA660081BB2D /* PromiseKitExtensions.swift */,
 				1D4042C91E0997DD00E4E74D /* SnapKitExtensions.swift */,
+				1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */,
 			);
 			name = ThirdParty;
 			path = Sources/ThirdParty;
@@ -5157,6 +5163,7 @@
 				1207C9931C74CD3A00939ADB /* DateFormatting.swift in Sources */,
 				12DEB24B1C5BF9E600D4CDCE /* AppSetup.swift in Sources */,
 				122B30B91C6A3FBB00C1B9D8 /* ElloLinkedStore.swift in Sources */,
+				1DBC82F51FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				1207C9A21C752F1C00939ADB /* APIKeys.swift in Sources */,
 				122B30BF1C6A3FBB00C1B9D8 /* Notification.swift in Sources */,
 				122D1B4D1C602337001386CE /* Box.swift in Sources */,
@@ -5401,6 +5408,7 @@
 				76A628D71B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift in Sources */,
 				1D447E631F338A2000013384 /* PromotionalHeaderCellSizeCalculatorSpec.swift in Sources */,
 				12148F1B1DA31DF300D6296C /* ProfileScreenSpec.swift in Sources */,
+				1DBC82F71FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				1DBFD9F71DFB6DA30058843D /* FreeMethodsSpecs.swift in Sources */,
 				765670F01A8022B4008ED9A2 /* ElloURISpec.swift in Sources */,
 				12D14C631A4375FE00C6F8E8 /* ValidatorSpec.swift in Sources */,
@@ -5552,6 +5560,7 @@
 				1233758B1DA6ED150019CFAD /* ProfileStatsSizeCalculator.swift in Sources */,
 				12F0E3AF1A4333550012CEA2 /* AppDelegate.swift in Sources */,
 				1289F3941AF1474B008A938C /* NSAttributedStringExtensions.swift in Sources */,
+				1DBC82F41FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				122B30DF1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */,
 				1207C97D1C73FEE000939ADB /* ElloProviderErrors.swift in Sources */,
 				122B30CC1C6A3FBC00C1B9D8 /* DynamicSetting.swift in Sources */,
@@ -5978,6 +5987,7 @@
 				1D447EE01F3BC74A00013384 /* NSErrorExtensions.swift in Sources */,
 				1D447ECE1F3BC68000013384 /* FreeMethods.swift in Sources */,
 				1D447ED81F3BC6F100013384 /* CategoryLevel.swift in Sources */,
+				1DBC82F61FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				1D447EE91F3BC7A800013384 /* DateFormatting.swift in Sources */,
 				1D104FD61F3CFAA800B5487A /* ToData.swift in Sources */,
 				1D447EB11F3BC37B00013384 /* Asset.swift in Sources */,
