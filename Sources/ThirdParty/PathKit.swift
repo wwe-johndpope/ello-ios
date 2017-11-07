@@ -184,22 +184,14 @@ internal protocol FileSystemInfo {
 
 internal struct DefaultFileSystemInfo: FileSystemInfo {
     func isFSCaseSensitiveAt(path: Path) -> Bool {
-        #if os(Linux)
-            // URL resourceValues(forKeys:) is not supported on non-darwin platforms...
-            // But we can (fairly?) safely assume for now that the Linux FS is case sensitive.
-            // TODO: refactor when/if resourceValues is available, or look into using something
-            // like stat or pathconf to determine if the mountpoint is case sensitive.
-            return true
-        #else
-            var isCaseSensitive = false
-            // Calling resourceValues will fail if the path does not exist on the filesystem, which
-            // makes sense, but means we can only guarantee the return value is correct if the
-            // path actually exists.
-            if let resourceValues = try? path.url.resourceValues(forKeys: [.volumeSupportsCaseSensitiveNamesKey]) {
-                isCaseSensitive = resourceValues.volumeSupportsCaseSensitiveNames ?? isCaseSensitive
-            }
-            return isCaseSensitive
-        #endif
+        var isCaseSensitive = false
+        // Calling resourceValues will fail if the path does not exist on the filesystem, which
+        // makes sense, but means we can only guarantee the return value is correct if the
+        // path actually exists.
+        if let resourceValues = try? path.url.resourceValues(forKeys: [.volumeSupportsCaseSensitiveNamesKey]) {
+            isCaseSensitive = resourceValues.volumeSupportsCaseSensitiveNames ?? isCaseSensitive
+        }
+        return isCaseSensitive
     }
 }
 
@@ -271,11 +263,7 @@ extension Path {
         guard Path.fileManager.fileExists(atPath: normalize().path, isDirectory: &directory) else {
             return false
         }
-        #if os(Linux)
-            return directory
-        #else
-            return directory.boolValue
-        #endif
+        return directory.boolValue
     }
 
     /// Test whether a path is a regular file.
@@ -290,11 +278,7 @@ extension Path {
         guard Path.fileManager.fileExists(atPath: normalize().path, isDirectory: &directory) else {
             return false
         }
-        #if os(Linux)
-            return !directory
-        #else
-            return !directory.boolValue
-        #endif
+        return !directory.boolValue
     }
 
     /// Test whether a path is a symbolic link.
@@ -588,11 +572,7 @@ extension Path {
 
         let flags = GLOB_TILDE | GLOB_BRACE | GLOB_MARK
         if system_glob(cPattern, flags, nil, &gt) == 0 {
-            #if os(Linux)
-                let matchc = gt.gl_pathc
-            #else
-                let matchc = gt.gl_matchc
-            #endif
+            let matchc = gt.gl_matchc
             return (0..<Int(matchc)).flatMap { index in
                 if let path = String(validatingUTF8: gt.gl_pathv[index]!) {
                     return Path(path)

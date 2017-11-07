@@ -67,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupGlobalStyles()
         setupCaches()
+        monitorAppSize()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
             PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: payload)
@@ -99,6 +100,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         manager.pinCache?.diskCache.byteLimit = diskByteLimit
         manager.pinCache?.memoryCache.costLimit = memoryByteLimit
         _ = CategoryService().loadCategories()
+    }
+
+    func monitorAppSize() {
+        let paths = [
+            ElloLinkedStore.databaseFolder(),
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path,
+            FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.path,
+            FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.path,
+            URL(string: NSTemporaryDirectory())?.path,
+        ].flatMap { path -> Path? in path.map { Path($0) } }
+        for path in paths {
+            print("--------------------| \(path) |------------------------")
+            if let (desc, size) = sizeOf(path) {
+                // print(desc)
+                print("          total size: \(size)")
+            }
+            else {
+                print("          total size *unknown*")
+            }
+        }
+    }
+
+    private func sizeOf(_ path: Path, prefix: String? = nil, isLast: Bool = true) -> (String, Int)? {
+        guard
+            let fileDictionary = try? FileManager.default.attributesOfItem(atPath: path.path),
+            var size = fileDictionary[.size] as? Int
+        else { return nil }
+
+        if let children = try? path.children() {
+            let myPrefix = (prefix.map { $0 + (isLast ? "`--/" : "+--/") }) ?? ""
+            let childPrefix = (prefix.map { $0 + (isLast ? "   " : "|  ") } ?? "")
+            var childrenDesc = ""
+            for child in children {
+                guard let (childDesc, childSize) = sizeOf(child, prefix: childPrefix, isLast: child == children.last) else { continue }
+                childrenDesc += childDesc
+                size += childSize
+            }
+            return ("\(myPrefix)\(path.lastComponent) \(size)\n" + childrenDesc, size)
+        }
+        else {
+            let myPrefix = (prefix.map { $0 + (isLast ? "`---" : "+---") }) ?? ""
+            return ("\(myPrefix)\(path.lastComponent) \(size)\n", size)
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
