@@ -224,7 +224,17 @@ extension ProfileViewController: ProfileScreenDelegate {
         }
         guard let user = user else { return }
 
-        createPost(text: "\(user.atName) ", fromController: self)
+        let debugUsers = ["colinta"]
+        let username: String? = currentUser?.username
+        let isDebugger = username.map { debugUsers.contains($0) } == true
+        let text: String
+        if user.username == "colinta" && isDebugger {
+            text = "```\n\(Tmp.sizeDiagnostics())```"
+        }
+        else {
+            text = "\(user.atName) "
+        }
+        createPost(text: text, fromController: self)
     }
 
     func hireTapped() {
