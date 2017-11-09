@@ -105,11 +105,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkAppStorage() {
         let killDate = Date(timeIntervalSince1970: 1512879362)
         let (text, size) = Tmp.sizeDiagnostics()
-        guard AppSetup.shared.now < killDate, size > 100_000_000 else { return }
+        guard AppSetup.shared.now < killDate, size > 1 else { return }
 
         S3UploadingService(endpoint: .amazonLoggingCredentials)
             .upload(text, filename: "appsize.txt")
-            .ignoreErrors()
+            .then { url in
+                print("success: \(url)")
+            }
+            .catch { err in
+                print("error: \(err)")
+            }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
