@@ -226,7 +226,7 @@ extension ProfileViewController: ProfileScreenDelegate {
 
         let text: String
         if user.username == "colinta" {
-            text = "```\n\(Tmp.sizeDiagnostics())```"
+            text = "@colinta\n```\n\(Tmp.sizeDiagnostics())```"
         }
         else {
             text = "\(user.atName) "
