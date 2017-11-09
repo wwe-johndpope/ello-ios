@@ -38,7 +38,7 @@ extension ElloProvider {
     }
 
     static func failedToMapObjects(_ failure: ElloFailureCompletion) {
-        let jsonMappingError = ElloNetworkError(attrs: nil, code: ElloNetworkError.CodeType.unknown, detail: "NEED DEFAULT HERE", messages: nil, status: nil, title: "Unknown Error")
+        let jsonMappingError = ElloNetworkError(attrs: nil, code: ElloNetworkError.CodeType.unknown, detail: "Failed to map objects", messages: nil, status: nil, title: "Failed to map objects")
         let elloError = NSError.networkError(jsonMappingError, code: ElloErrorCode.jsonMapping)
         failure(elloError, nil)
     }

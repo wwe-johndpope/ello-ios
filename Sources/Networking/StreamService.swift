@@ -16,8 +16,6 @@ class StreamService {
         case empty
     }
 
-    init() {}
-
     func loadStream(streamKind: StreamKind) -> Promise<StreamResponse> {
         return loadStream(endpoint: streamKind.endpoint, streamKind: streamKind)
     }

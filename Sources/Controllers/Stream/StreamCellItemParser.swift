@@ -36,7 +36,7 @@ struct StreamCellItemParser {
                 if case .artistInvites = streamKind {
                     streamItems += typicalCellItems(artistInvite, type: .artistInviteBubble)
                 }
-                else if case .artistInviteDetail = streamKind {
+                else {
                     streamItems += artistInviteDetailItems(artistInvite)
                 }
             }
