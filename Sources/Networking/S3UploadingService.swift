@@ -15,7 +15,7 @@ class S3UploadingService {
 
     func upload(imageRegionData image: ImageRegionData) -> Promise<URL?> {
         if let data = image.data, let contentType = image.contentType {
-            return upload(data as Data, contentType: contentType)
+            return upload(data, contentType: contentType)
         }
         else {
             return upload(image.image)
