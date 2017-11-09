@@ -89,7 +89,7 @@ struct Tmp {
 }
 
 extension Tmp {
-    static func sizeDiagnostics() -> String {
+    static func sizeDiagnostics() -> (String, Int) {
         let paths = [
             ElloLinkedStore.databaseFolder(),
             FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path,
@@ -99,8 +99,10 @@ extension Tmp {
         ].flatMap { path -> Path? in path.map { Path($0) } }
 
         var text = ""
+        var totalSize = 0
         for path in paths {
-            guard let (desc, _) = sizeOf(path) else { continue }
+            guard let (desc, size) = sizeOf(path) else { continue }
+            totalSize += size
             if !text.isEmpty {
                 text += "------------------------------\n"
             }
@@ -108,7 +110,7 @@ extension Tmp {
             text += "\(desc)\n"
         }
 
-        return text
+        return (text, totalSize)
     }
 
     private static func sizeOf(_ path: Path, prefix: String? = nil, isLast: Bool = true) -> (String, Int)? {

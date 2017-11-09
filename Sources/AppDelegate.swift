@@ -67,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupGlobalStyles()
         setupCaches()
+        checkAppStorage()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
             PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: payload)
@@ -99,6 +100,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         manager.pinCache?.diskCache.byteLimit = diskByteLimit
         manager.pinCache?.memoryCache.costLimit = memoryByteLimit
         _ = CategoryService().loadCategories()
+    }
+
+    func checkAppStorage() {
+        let killDate = Date(timeIntervalSince1970: 1512879362)
+        let (text, size) = Tmp.sizeDiagnostics()
+        guard AppSetup.shared.now < killDate, size > 100_000_000 else { return }
+
+        S3UploadingService(endpoint: .amazonLoggingCredentials)
+            .upload(text, filename: "appsize.txt")
+            .ignoreErrors()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

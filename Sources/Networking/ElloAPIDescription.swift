@@ -147,6 +147,7 @@ extension ElloAPI: CustomStringConvertible, CustomDebugStringConvertible {
         case .announcements: return "announcements"
         case .announcementsNewContent: return "announcementsNewContent"
         case .amazonCredentials: return "amazonCredentials"
+        case .amazonLoggingCredentials: return "amazonLoggingCredentials"
         case .anonymousCredentials: return "anonymousCredentials"
         case .auth: return "auth"
         case .reAuth: return "reAuth"

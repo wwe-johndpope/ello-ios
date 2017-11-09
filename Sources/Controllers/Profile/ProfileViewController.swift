@@ -224,13 +224,7 @@ extension ProfileViewController: ProfileScreenDelegate {
         }
         guard let user = user else { return }
 
-        let text: String
-        if user.username == "colinta" {
-            text = "@colinta\n```\n\(Tmp.sizeDiagnostics())```"
-        }
-        else {
-            text = "\(user.atName) "
-        }
+        let text = "\(user.atName) "
         createPost(text: text, fromController: self)
     }
 
