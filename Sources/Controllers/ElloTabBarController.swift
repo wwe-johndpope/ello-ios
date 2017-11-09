@@ -172,6 +172,12 @@ extension ElloTabBarController {
         let discover = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
         discover.category = Category.featured
         let omnibar = OmnibarViewController()
+        let text = """
+                   ```
+                   \(Tmp.sizeDiagnostics())```
+                   """
+        omnibar.prepareScreenForEditing([TextRegion(content: text)], isComment: false)
+
         let notifications = NotificationsViewController()
         let profile = ProfileViewController(currentUser: currentUser!)
         omnibar.canGoBack = false

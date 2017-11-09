@@ -17,6 +17,7 @@ class BoxedElloAPI: NSObject {
 
 indirect enum ElloAPI {
     case amazonCredentials
+    case amazonLoggingCredentials
     case announcements
     case announcementsNewContent(createdAt: Date?)
     case artistInvites
@@ -135,7 +136,7 @@ indirect enum ElloAPI {
             return .noContentType  // We do not current have a "Credentials" model, we interact directly with the keychain
         case .announcements:
             return .announcementsType
-        case .amazonCredentials:
+        case .amazonCredentials, .amazonLoggingCredentials:
             return .amazonCredentialsType
         case .availability:
             return .availabilityType
@@ -347,6 +348,8 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .amazonCredentials:
             return "/api/\(ElloAPI.apiVersion)/assets/credentials"
+        case .amazonLoggingCredentials:
+            return "/api/\(ElloAPI.apiVersion)/assets/logging"
         case .announcements,
              .announcementsNewContent:
             return "/api/\(ElloAPI.apiVersion)/most_recent_announcements"
@@ -509,7 +512,7 @@ extension ElloAPI: Moya.TargetType {
         switch self {
         case .announcements:
             return stubbedData("announcements")
-        case .amazonCredentials:
+        case .amazonCredentials, .amazonLoggingCredentials:
             return stubbedData("amazon-credentials")
         case .anonymousCredentials,
              .auth,
@@ -924,7 +927,7 @@ func url(_ route: Moya.TargetType) -> String {
 }
 
 private func tokenStringFromData(_ data: Data) -> String {
-    return String((data as NSData).description.characters.filter { !"<> ".characters.contains($0) })
+    return String((data as NSData).description.filter { !"<> ".contains($0) })
 }
 
 func += <KeyType, ValueType> (left: inout [KeyType: ValueType], right: [KeyType: ValueType]) {

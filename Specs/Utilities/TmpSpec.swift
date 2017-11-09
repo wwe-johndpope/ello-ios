@@ -9,13 +9,16 @@ import Nimble
 
 class TmpSpec: QuickSpec {
     override func spec() {
+        afterEach {
+            try? FileManager.default.removeItem(atPath: Tmp.directoryURL())
+        }
+
         describe("Tmp.fileExists") {
             it("should return false") {
                 expect(Tmp.fileExists("non sensical file name")).to(equal(false))
             }
 
             it("should return true") {
-
                 var directoryName = ""
                 if let url = URL(string: NSTemporaryDirectory()) {
                     directoryName = url.appendingPathComponent(Tmp.uniqDir).absoluteString
@@ -33,6 +36,8 @@ class TmpSpec: QuickSpec {
                 let doesActuallyExist = FileManager.default.fileExists(atPath: filePath)
                 expect(doesActuallyExist).to(beTrue())
                 expect(Tmp.fileExists("exists")).to(beTrue())
+
+                try! FileManager.default.removeItem(atPath: directoryURL)
             }
         }
 

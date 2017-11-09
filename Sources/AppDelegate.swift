@@ -65,10 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         AppSetup.shared.windowSize = window.frame.size
 
-        UIApplication.shared.statusBarStyle = .lightContent
-
         setupGlobalStyles()
         setupCaches()
+        checkAppStorage()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
             PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: payload)
@@ -79,9 +78,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setupGlobalStyles() {
-        let attributes = [
-            NSAttributedStringKey.foregroundColor: UIColor.greyA,
-            NSAttributedStringKey.font: UIFont.defaultFont(12),
+        UIApplication.shared.statusBarStyle = .lightContent
+
+        let attributes: [NSAttributedStringKey: Any] = [
+            .foregroundColor: UIColor.greyA,
+            .font: UIFont.defaultFont(12),
         ]
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .highlighted)
@@ -101,7 +102,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = CategoryService().loadCategories()
     }
 
+    func checkAppStorage() {
+        let killDate = Date(timeIntervalSince1970: 1512879362)
+        let (text, size) = Tmp.sizeDiagnostics()
+        guard AppSetup.shared.now < killDate, size > 100_000_000 else { return }
+
+        S3UploadingService(endpoint: .amazonLoggingCredentials)
+            .upload(text, filename: "appsize.txt")
+            .ignoreErrors()
+    }
+
     func applicationDidEnterBackground(_ application: UIApplication) {
+        Tmp.clear()
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
 

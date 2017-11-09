@@ -224,7 +224,8 @@ extension ProfileViewController: ProfileScreenDelegate {
         }
         guard let user = user else { return }
 
-        createPost(text: "\(user.atName) ", fromController: self)
+        let text = "\(user.atName) "
+        createPost(text: text, fromController: self)
     }
 
     func hireTapped() {
@@ -459,7 +460,7 @@ extension ProfileViewController {
 }
 
 // MARK: ProfileViewController: StreamDestination
-extension ProfileViewController:  StreamDestination {
+extension ProfileViewController: StreamDestination {
 
     var isPagingEnabled: Bool {
         get { return streamViewController.isPagingEnabled }

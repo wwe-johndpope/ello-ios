@@ -1,12 +1,18 @@
 ////
 ///  ElloS3.swift
 //
-// creds = AmazonCredentials(...)
+// creds = AmazonCredentials(...)  (from ElloAPI.amazonCredentials)
 // data = NSData()
-// uploader = ElloS3(credentials: credentials, data: data)
+//
+// uploader = ElloS3(
+//  credentials: credentials,
+//  filename: "foo.txt",
+//  data: data,
+//  contentType: "text/plain"
+//   )
 //   .start()
-//   .thenFinally { (response: NSData) in }
-//   .catch { (error: NSError) in }
+//   .then { response -> Void in }
+//   .catch { error in }
 
 import PromiseKit
 

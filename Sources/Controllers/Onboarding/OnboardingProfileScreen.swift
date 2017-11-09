@@ -336,7 +336,7 @@ extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePicker
         if let imageRegion = imageRegion {
             imageView.contentMode = .scaleAspectFill
             if let data = imageRegion.data, imageRegion.isAnimatedGif {
-                imageView.animatedImage = FLAnimatedImage(animatedGIFData: data as Data!)
+                imageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
             }
             else {
                 imageView.image = imageRegion.image

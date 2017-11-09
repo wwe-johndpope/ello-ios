@@ -238,7 +238,6 @@
 		12384EBB1C56B3C200608BD8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */; };
 		12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */; };
 		123971521E4B626400481CB3 /* ResponderChainableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123971511E4B626400481CB3 /* ResponderChainableController.swift */; };
-		123D36171E53BF9000274B9D /* StoryboardIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123D36161E53BF9000274B9D /* StoryboardIdentifiers.swift */; };
 		123DEBE91D3D4087007B5F86 /* PostDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */; };
 		123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */; };
 		123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */; };
@@ -918,6 +917,10 @@
 		1DB8C6B31D7F24B4007E1447 /* SearchString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB8C6B21D7F24B4007E1447 /* SearchString.swift */; };
 		1DBB23DB1F8C30350025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
 		1DBB23DC1F8C30390025FA07 /* DebugServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB23DA1F8C30350025FA07 /* DebugServer.swift */; };
+		1DBC82F41FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
+		1DBC82F51FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
+		1DBC82F61FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
+		1DBC82F71FB0E5A3002BC6E4 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */; };
 		1DBD0BB61F9026F100DF9FC5 /* ElloTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BB51F9026F100DF9FC5 /* ElloTab.swift */; };
 		1DBD0BC01F950ADC00DF9FC5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBB1F950ADB00DF9FC5 /* View.swift */; };
 		1DBD0BC11F950ADC00DF9FC5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */; };
@@ -1277,7 +1280,6 @@
 		F8BDA7551AA8F3C800A662B4 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */; };
 		F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */; };
 		F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */; };
-		F8D1606A1AB75C2900575B25 /* DrawerViewDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160691AB75C2900575B25 /* DrawerViewDataSourceSpec.swift */; };
 		F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */; };
 		F8FDB1B81AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */; };
 /* End PBXBuildFile section */
@@ -1455,7 +1457,6 @@
 		12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensionsSpec.swift; sourceTree = "<group>"; };
 		123971511E4B626400481CB3 /* ResponderChainableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderChainableController.swift; sourceTree = "<group>"; };
-		123D36161E53BF9000274B9D /* StoryboardIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiers.swift; sourceTree = "<group>"; };
 		123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGenerator.swift; sourceTree = "<group>"; };
 		123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGenerator.swift; sourceTree = "<group>"; };
 		123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGeneratorSpec.swift; sourceTree = "<group>"; };
@@ -2026,6 +2027,7 @@
 		1DB8C6B01D7F1BE4007E1447 /* DismissableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissableCell.swift; sourceTree = "<group>"; };
 		1DB8C6B21D7F24B4007E1447 /* SearchString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchString.swift; sourceTree = "<group>"; };
 		1DBB23DA1F8C30350025FA07 /* DebugServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugServer.swift; sourceTree = "<group>"; };
+		1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathKit.swift; sourceTree = "<group>"; };
 		1DBD0BB51F9026F100DF9FC5 /* ElloTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElloTab.swift; sourceTree = "<group>"; };
 		1DBD0BBB1F950ADB00DF9FC5 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		1DBD0BBC1F950ADB00DF9FC5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2397,7 +2399,6 @@
 		F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewController.xib; sourceTree = "<group>"; };
 		F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewDataSource.swift; sourceTree = "<group>"; };
-		F8D160691AB75C2900575B25 /* DrawerViewDataSourceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewDataSourceSpec.swift; sourceTree = "<group>"; };
 		F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
 		F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScreenEdgePanGestureRecognizer.swift; sourceTree = "<group>"; };
 		FCC6D1CF14C9670467D6090C /* Pods-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2496,13 +2497,6 @@
 				1D447F141F3BCAD700013384 /* ImageRegionData.swift */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		121D92501A5AEE55004F0455 /* Post */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Post;
 			sourceTree = "<group>";
 		};
 		121D92571A5CACC7004F0455 /* Join */ = {
@@ -2662,7 +2656,6 @@
 			children = (
 				1D98563E1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift */,
 				F81ED61C1AAF499D00A20794 /* DrawerViewControllerSpec.swift */,
-				F8D160691AB75C2900575B25 /* DrawerViewDataSourceSpec.swift */,
 			);
 			path = Drawer;
 			sourceTree = "<group>";
@@ -2807,6 +2800,7 @@
 				1267C7331BA232530000D809 /* Box */,
 				1D513E071ED8DA660081BB2D /* PromiseKitExtensions.swift */,
 				1D4042C91E0997DD00E4E74D /* SnapKitExtensions.swift */,
+				1DBC82F31FB0E5A3002BC6E4 /* PathKit.swift */,
 			);
 			name = ThirdParty;
 			path = Sources/ThirdParty;
@@ -3004,7 +2998,6 @@
 				1D5A003D1CE3C0A80070B2BF /* FakeKeychain.swift */,
 				1D447E561F3388CA00013384 /* MockUIWebView.swift */,
 				12687A151BBED25A0055D0BA /* SpecsTrackingAgent.swift */,
-				123D36161E53BF9000274B9D /* StoryboardIdentifiers.swift */,
 				1D44F80B1B629606007E2DE4 /* StreamCellItemParserExt.swift */,
 				766CAEF11AAA5E2D009E9266 /* Stubs.swift */,
 			);
@@ -3246,7 +3239,6 @@
 				124357681A89276E008B24FB /* Notifications */,
 				12551FB81A68725100ABC5D9 /* Omnibar */,
 				1D7426371B02973200C16322 /* Onboarding */,
-				121D92501A5AEE55004F0455 /* Post */,
 				1D66801E1A89B862003E93C8 /* Profile */,
 				F8D4F60C1AE829C900AF4470 /* PushNotifications */,
 				76E5CBE71A92678500D6483F /* Relationship */,
@@ -4434,7 +4426,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Ello;
 				TargetAttributes = {
 					124CFB961C5976E500727D11 = {
@@ -5171,6 +5163,7 @@
 				1207C9931C74CD3A00939ADB /* DateFormatting.swift in Sources */,
 				12DEB24B1C5BF9E600D4CDCE /* AppSetup.swift in Sources */,
 				122B30B91C6A3FBB00C1B9D8 /* ElloLinkedStore.swift in Sources */,
+				1DBC82F51FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				1207C9A21C752F1C00939ADB /* APIKeys.swift in Sources */,
 				122B30BF1C6A3FBB00C1B9D8 /* Notification.swift in Sources */,
 				122D1B4D1C602337001386CE /* Box.swift in Sources */,
@@ -5317,7 +5310,6 @@
 				76BE9C551B2B773B007575AA /* StreamInviteFriendsCellSpec.swift in Sources */,
 				124BBEDF1BDFEDE900CBDF69 /* AppDelegateSpec.swift in Sources */,
 				1D2B6A7C1BE3FB0900D27DC9 /* AvatarButtonSpec.swift in Sources */,
-				F8D1606A1AB75C2900575B25 /* DrawerViewDataSourceSpec.swift in Sources */,
 				12D14C681A43761A00C6F8E8 /* AuthTokenSpec.swift in Sources */,
 				1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */,
 				1D7750F41ABB391500D92191 /* TmpSpec.swift in Sources */,
@@ -5416,6 +5408,7 @@
 				76A628D71B04F93600640B6D /* StreamSeeMoreCommentsCellSpec.swift in Sources */,
 				1D447E631F338A2000013384 /* PromotionalHeaderCellSizeCalculatorSpec.swift in Sources */,
 				12148F1B1DA31DF300D6296C /* ProfileScreenSpec.swift in Sources */,
+				1DBC82F71FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				1DBFD9F71DFB6DA30058843D /* FreeMethodsSpecs.swift in Sources */,
 				765670F01A8022B4008ED9A2 /* ElloURISpec.swift in Sources */,
 				12D14C631A4375FE00C6F8E8 /* ValidatorSpec.swift in Sources */,
@@ -5462,7 +5455,6 @@
 				1DF942351A9FC92D00838E9C /* NotificationsFilterBarSpec.swift in Sources */,
 				1D2C12AA1D4FD727007C4981 /* OmnibarScreenSnapshotSpecs.swift in Sources */,
 				1D066FF31B8BA19E002B303D /* ArraySpec.swift in Sources */,
-				123D36171E53BF9000274B9D /* StoryboardIdentifiers.swift in Sources */,
 				12A1D8331DAD747500A327D6 /* ProfileTotalCountViewSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5568,6 +5560,7 @@
 				1233758B1DA6ED150019CFAD /* ProfileStatsSizeCalculator.swift in Sources */,
 				12F0E3AF1A4333550012CEA2 /* AppDelegate.swift in Sources */,
 				1289F3941AF1474B008A938C /* NSAttributedStringExtensions.swift in Sources */,
+				1DBC82F41FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				122B30DF1C6A3FBF00C1B9D8 /* Relationship.swift in Sources */,
 				1207C97D1C73FEE000939ADB /* ElloProviderErrors.swift in Sources */,
 				122B30CC1C6A3FBC00C1B9D8 /* DynamicSetting.swift in Sources */,
@@ -5994,6 +5987,7 @@
 				1D447EE01F3BC74A00013384 /* NSErrorExtensions.swift in Sources */,
 				1D447ECE1F3BC68000013384 /* FreeMethods.swift in Sources */,
 				1D447ED81F3BC6F100013384 /* CategoryLevel.swift in Sources */,
+				1DBC82F61FB0E5A3002BC6E4 /* PathKit.swift in Sources */,
 				1D447EE91F3BC7A800013384 /* DateFormatting.swift in Sources */,
 				1D104FD61F3CFAA800B5487A /* ToData.swift in Sources */,
 				1D447EB11F3BC37B00013384 /* Asset.swift in Sources */,
@@ -6222,14 +6216,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -6270,14 +6270,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
