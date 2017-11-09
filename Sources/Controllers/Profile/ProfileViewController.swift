@@ -224,11 +224,8 @@ extension ProfileViewController: ProfileScreenDelegate {
         }
         guard let user = user else { return }
 
-        let debugUsers = ["colinta"]
-        let username: String? = currentUser?.username
-        let isDebugger = username.map { debugUsers.contains($0) } == true
         let text: String
-        if user.username == "colinta" && isDebugger {
+        if user.username == "colinta" {
             text = "```\n\(Tmp.sizeDiagnostics())```"
         }
         else {
