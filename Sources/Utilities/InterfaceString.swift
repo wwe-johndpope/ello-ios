@@ -153,7 +153,7 @@ struct InterfaceString {
         static let Version: String = {
             let marketingVersion: String
             let buildVersion: String
-            if AppSetup.shared.isSimulator {
+            if AppSetup.shared.isTesting {
                 marketingVersion = "SPECS"
                 buildVersion = "specs"
             }

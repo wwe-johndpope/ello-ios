@@ -105,15 +105,15 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         self.relationshipController = relationshipController
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        trackScreenAppeared()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
         updateNavBars()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreenAppeared()
     }
 
     override func viewDidLayoutSubviews() {
