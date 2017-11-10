@@ -213,52 +213,32 @@ extension AppViewController {
     }
 
     func showJoinScreen(invitationCode: String? = nil) {
-        guard
-            let nav = visibleViewController as? UINavigationController,
-            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
-        else { return }
-
-        if !(nav.visibleViewController is LoggedOutViewController) {
-            _ = nav.popToRootViewController(animated: false)
-        }
-
         pushPayload = .none
         let joinController = JoinViewController()
         joinController.invitationCode = invitationCode
-        nav.setViewControllers([loggedOutController, joinController], animated: true)
+        showLoggedOutControllers(joinController)
     }
 
     func showLoginScreen() {
-        guard
-            let nav = visibleViewController as? UINavigationController,
-            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
-        else { return }
-
-        if !(nav.visibleViewController is LoggedOutViewController) {
-            _ = nav.popToRootViewController(animated: false)
-        }
-
         pushPayload = .none
         let loginController = LoginViewController()
-        nav.setViewControllers([loggedOutController, loginController], animated: true)
+        showLoggedOutControllers(loginController)
     }
 
     func showForgotPasswordResetScreen(authToken: String) {
-        guard
-            let nav = visibleViewController as? UINavigationController,
-            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
-        else { return }
-
-        if !(nav.visibleViewController is LoggedOutViewController) {
-            _ = nav.popToRootViewController(animated: false)
-        }
-
         pushPayload = .none
         let forgotPasswordResetController = ForgotPasswordResetViewController(authToken: authToken)
-        nav.setViewControllers([loggedOutController, forgotPasswordResetController], animated: true)
+        showLoggedOutControllers(forgotPasswordResetController)
     }
 
     func showForgotPasswordEmailScreen() {
+        pushPayload = .none
+        let loginController = LoginViewController()
+        let forgotPasswordEmailController = ForgotPasswordEmailViewController()
+        showLoggedOutControllers(loginController, forgotPasswordEmailController)
+    }
+
+    private func showLoggedOutControllers(_ loggedOutControllers: BaseElloViewController...) {
         guard
             let nav = visibleViewController as? UINavigationController,
             let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
@@ -268,10 +248,22 @@ extension AppViewController {
             _ = nav.popToRootViewController(animated: false)
         }
 
-        pushPayload = .none
-        let loginController = LoginViewController()
-        let forgotPasswordEmailController = ForgotPasswordEmailViewController()
-        nav.setViewControllers([loggedOutController, loginController, forgotPasswordEmailController], animated: true)
+        if let loggedOutNav = loggedOutController.navigationController,
+            let bottomBarController = loggedOutNav.childViewControllers.first as? BottomBarController,
+            let navigationBarsVisible = bottomBarController.navigationBarsVisible
+        {
+            for loggedOutController in loggedOutControllers {
+                if navigationBarsVisible {
+                    loggedOutController.showNavBars()
+                }
+                else {
+                    loggedOutController.hideNavBars()
+                }
+            }
+        }
+
+        let allControllers = [loggedOutController] + loggedOutControllers
+        nav.setViewControllers(allControllers, animated: true)
     }
 
     func showOnboardingScreen(_ user: User) {
