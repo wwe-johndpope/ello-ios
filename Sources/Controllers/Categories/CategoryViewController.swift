@@ -222,8 +222,18 @@ extension CategoryViewController: CategoryStreamDestination, StreamDestination {
         streamViewController.doneLoading()
     }
 
-    func set(categories: [Category]) {
-        allCategories = categories
+    func set(categories allCategories: [Category]) {
+        self.allCategories = allCategories
+
+        let categories: [Category]
+        if let streamKind = generator?.streamKind,
+            case .allCategories = streamKind
+        {
+            categories = allCategories
+        }
+        else {
+            categories = allCategories.filter { $0.level == .meta || $0.level == .primary }
+        }
 
         let shouldAnimate = !screen.categoryCardsVisible
         let info = categories.map { (category: Category) -> CategoryCardListView.CategoryInfo in
