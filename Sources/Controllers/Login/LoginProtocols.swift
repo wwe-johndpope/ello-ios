@@ -11,6 +11,7 @@ protocol LoginDelegate: class {
 }
 
 protocol LoginScreenProtocol: class {
+    var blackBarIsVisible: Bool { get set }
     var username: String { get set }
     var isUsernameValid: Bool? { get set }
     var password: String { get set }

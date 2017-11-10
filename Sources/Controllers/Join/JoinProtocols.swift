@@ -11,6 +11,7 @@ protocol JoinDelegate: class {
 }
 
 protocol JoinScreenProtocol: class {
+    var blackBarIsVisible: Bool { get set }
     var prompt: String? { get set }
     var email: String { get set }
     var isEmailValid: Bool? { get set }
