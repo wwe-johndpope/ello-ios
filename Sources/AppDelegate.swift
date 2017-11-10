@@ -21,12 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let debugServer = DebugServer.fromDefaults {
             APIKeys.shared = debugServer.apiKeys
         }
+
+        #if DEBUG
         NSSetUncaughtExceptionHandler { exception in
             print(exception)
             for sym in exception.callStackSymbols {
                 print(sym)
             }
         }
+        #endif
 
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
