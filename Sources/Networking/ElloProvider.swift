@@ -6,6 +6,7 @@ import Moya
 import Result
 import Alamofire
 import PromiseKit
+import WebLinking
 
 
 typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
@@ -434,12 +435,21 @@ extension ElloProvider {
 
     private func parseResponse(_ response: HTTPURLResponse?) -> ResponseConfig {
         let config = ResponseConfig()
-        config.statusCode = response?.statusCode
-        config.lastModified = response?.allHeaderFields["Last-Modified"] as? String
-        config.totalPages = response?.allHeaderFields["X-Total-Pages"] as? String
-        config.totalCount = response?.allHeaderFields["X-Total-Count"] as? String
-        config.totalPagesRemaining = response?.allHeaderFields["X-Total-Pages-Remaining"] as? String
 
-        return parseLinks(response, config: config)
+        if let response = response {
+            config.statusCode = response.statusCode
+            config.lastModified = response.allHeaderFields["Last-Modified"] as? String
+            config.totalPages = response.allHeaderFields["X-Total-Pages"] as? String
+            config.totalCount = response.allHeaderFields["X-Total-Count"] as? String
+            config.totalPagesRemaining = response.allHeaderFields["X-Total-Pages-Remaining"] as? String
+            config.nextQuery = parseNextLink(response, config: config)
+        }
+
+        return config
     }
+
+    private func parseNextLink(_ response: HTTPURLResponse, config: ResponseConfig) -> URLComponents? {
+        return response.findLink(relation: "next").flatMap { URLComponents(string: $0.uri) }
+    }
+
 }
