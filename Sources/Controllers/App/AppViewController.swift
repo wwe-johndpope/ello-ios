@@ -182,10 +182,12 @@ extension AppViewController {
         let initialController = HomeViewController(usage: .loggedOut)
         let childNavController = ElloNavigationController(rootViewController: initialController)
         let loggedOutController = LoggedOutViewController()
-        let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
+        childNavController.willMove(toParentViewController: self)
         loggedOutController.addChildViewController(childNavController)
         childNavController.didMove(toParentViewController: loggedOutController)
+
+        let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
         swapViewController(parentNavController) {
             if let deepLinkPath = self.deepLinkPath {
