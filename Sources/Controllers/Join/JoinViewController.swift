@@ -13,6 +13,11 @@ class JoinViewController: BaseElloViewController {
 
     var invitationCode: String?
 
+    convenience init(prompt: String) {
+        self.init(nibName: nil, bundle: nil)
+        screen.prompt = prompt
+    }
+
     convenience init(email: String, username: String, password: String) {
         self.init(nibName: nil, bundle: nil)
         screen.email = email
