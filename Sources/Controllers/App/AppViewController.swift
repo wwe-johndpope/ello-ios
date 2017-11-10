@@ -207,32 +207,32 @@ extension AppViewController {
         swapViewController(parentNavController) {
             if let deepLinkPath = self.deepLinkPath {
                 self.navigateToDeepLink(deepLinkPath)
-                self.deepLinkPath = .none
+                self.deepLinkPath = nil
             }
         }
     }
 
     func showJoinScreen(invitationCode: String? = nil) {
-        pushPayload = .none
+        pushPayload = nil
         let joinController = JoinViewController()
         joinController.invitationCode = invitationCode
         showLoggedOutControllers(joinController)
     }
 
     func showLoginScreen() {
-        pushPayload = .none
+        pushPayload = nil
         let loginController = LoginViewController()
         showLoggedOutControllers(loginController)
     }
 
     func showForgotPasswordResetScreen(authToken: String) {
-        pushPayload = .none
+        pushPayload = nil
         let forgotPasswordResetController = ForgotPasswordResetViewController(authToken: authToken)
         showLoggedOutControllers(forgotPasswordResetController)
     }
 
     func showForgotPasswordEmailScreen() {
-        pushPayload = .none
+        pushPayload = nil
         let loginController = LoginViewController()
         let forgotPasswordEmailController = ForgotPasswordEmailViewController()
         showLoggedOutControllers(loginController, forgotPasswordEmailController)
@@ -290,11 +290,12 @@ extension AppViewController {
         swapViewController(vc) {
             if let payload = self.pushPayload {
                 self.navigateToDeepLink(payload.applicationTarget)
-                self.pushPayload = .none
+                self.pushPayload = nil
             }
+
             if let deepLinkPath = self.deepLinkPath {
                 self.navigateToDeepLink(deepLinkPath)
-                self.deepLinkPath = .none
+                self.deepLinkPath = nil
             }
 
             vc.activateTabBar()
