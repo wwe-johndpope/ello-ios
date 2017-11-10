@@ -43,6 +43,8 @@ class AppViewController: BaseElloViewController {
 
     var visibleViewController: UIViewController?
 
+    var statusBarIsVisible = true
+    private var statusBarVisibilityObserver: NotificationObserver?
     private var userLoggedOutObserver: NotificationObserver?
     private var successfulUserEventObserver: NotificationObserver?
     private var receivedPushNotificationObserver: NotificationObserver?
@@ -86,6 +88,15 @@ class AppViewController: BaseElloViewController {
 
         if let vc = visibleViewController as? ControllerThatMightHaveTheCurrentUser {
             vc.currentUser = currentUser
+        }
+    }
+
+    func showStatusBar(_ visible: Bool) {
+        guard statusBarIsVisible != visible else { return }
+
+        statusBarIsVisible = visible
+        animate {
+            self.setNeedsStatusBarAppearanceUpdate()
         }
     }
 
@@ -136,6 +147,9 @@ class AppViewController: BaseElloViewController {
     }
 
     private func setupNotificationObservers() {
+        statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
+            self?.showStatusBar(visible)
+        }
         userLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.userLoggedOut) { [weak self] in
             self?.userLoggedOut()
         }
@@ -165,6 +179,7 @@ class AppViewController: BaseElloViewController {
     }
 
     private func removeNotificationObservers() {
+        statusBarVisibilityObserver?.removeObserver()
         userLoggedOutObserver?.removeObserver()
         successfulUserEventObserver?.removeObserver()
         receivedPushNotificationObserver?.removeObserver()

@@ -8,20 +8,9 @@ protocol ControllerThatMightHaveTheCurrentUser {
 }
 
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
-    var statusBarVisibility = true
-    private var statusBarVisibilityObserver: NotificationObserver?
-
-    func showStatusBar(_ visible: Bool) {
-        guard statusBarVisibility != visible else { return }
-
-        statusBarVisibility = visible
-        animate {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-
     override var prefersStatusBarHidden: Bool {
-        return !statusBarVisibility
+        let visible = appViewController?.statusBarIsVisible ?? true
+        return !visible
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -78,17 +67,6 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         super.viewDidLoad()
 
         setupRelationshipController()
-        setupStatusBarObservers()
-    }
-
-    private func setupStatusBarObservers() {
-        statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
-            self?.showStatusBar(visible)
-        }
-    }
-
-    deinit {
-        statusBarVisibilityObserver?.removeObserver()
     }
 
     private func setupRelationshipController() {
