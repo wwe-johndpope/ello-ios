@@ -88,7 +88,13 @@ extension ArtistInvitesViewController: StreamDestination {
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
-        streamViewController.replacePlaceholder(type: type, items: items, completion: completion)
+        streamViewController.replacePlaceholder(type: type, items: items) {
+            if self.streamViewController.hasCellItems(for: .promotionalHeader) && !self.streamViewController.hasCellItems(for: .artistInvites) {
+                self.streamViewController.replacePlaceholder(type: .artistInvites, items: [StreamCellItem(type: .streamLoading)])
+            }
+
+            completion()
+        }
         streamViewController.doneLoading()
     }
 
