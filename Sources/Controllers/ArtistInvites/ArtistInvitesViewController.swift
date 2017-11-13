@@ -37,6 +37,9 @@ class ArtistInvitesViewController: StreamableViewController {
 
     override func didSetCurrentUser() {
         generator.currentUser = currentUser
+        if currentUser != nil {
+            screen.navigationBar.leftItems = [.burger]
+        }
         super.didSetCurrentUser()
     }
 
@@ -45,7 +48,9 @@ class ArtistInvitesViewController: StreamableViewController {
         screen.delegate = self
 
         screen.navigationBar.title = ""
-        screen.navigationBar.leftItems = [.burger]
+        if currentUser != nil {
+            screen.navigationBar.leftItems = [.burger]
+        }
 
         self.view = screen
         viewContainer = screen.streamContainer

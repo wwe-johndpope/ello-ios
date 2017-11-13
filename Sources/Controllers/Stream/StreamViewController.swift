@@ -65,8 +65,6 @@ final class StreamViewController: BaseElloViewController {
         }
     }
 
-    typealias ToggleClosure = (Bool) -> Void
-
     var dataSource: StreamDataSource!
     var collectionViewDataSource: CollectionViewDataSource!
 
@@ -77,7 +75,7 @@ final class StreamViewController: BaseElloViewController {
     var allOlderPagesLoaded = false
     var initialLoadClosure: Block?
     var reloadClosure: Block?
-    var toggleClosure: ToggleClosure?
+    var toggleClosure: BoolBlock?
     var initialDataLoaded = false
 
     var streamKind: StreamKind = StreamKind.unknown {
@@ -104,7 +102,7 @@ final class StreamViewController: BaseElloViewController {
         newItems: [StreamCellItem],
         change: StreamViewDataChange,
         promise: Promise<Void>,
-        resolve: () -> Void)] = []
+        resolve: Block)] = []
     private var isRunningDataChangeJobs = false
 
     var contentInset: UIEdgeInsets {

@@ -7,7 +7,7 @@ class PushNotificationControllerSpec: QuickSpec {
     class MockViewController: UIViewController {
         var presented = false
 
-        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: Block? = nil) {
             presented = true
         }
     }

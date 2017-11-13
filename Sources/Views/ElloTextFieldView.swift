@@ -15,7 +15,7 @@ class ElloTextFieldView: UIView {
     @IBOutlet weak var errorLabelSeparationSpacing: NSLayoutConstraint!
 
     var textFieldDidChange: ((String) -> Void)?
-    var firstResponderDidChange: ((Bool) -> Void)? {
+    var firstResponderDidChange: BoolBlock? {
         get { return textField.firstResponderDidChange }
         set { textField.firstResponderDidChange = newValue }
     }

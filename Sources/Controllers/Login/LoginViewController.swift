@@ -28,6 +28,15 @@ class LoginViewController: BaseElloViewController {
             }
     }
 
+    override func showNavBars() {
+        super.showNavBars()
+        screen.blackBarIsVisible = true
+    }
+
+    override func hideNavBars() {
+        super.hideNavBars()
+        screen.blackBarIsVisible = false
+    }
 }
 
 extension LoginViewController: LoginDelegate {

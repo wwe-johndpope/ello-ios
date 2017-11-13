@@ -43,6 +43,8 @@ class AppViewController: BaseElloViewController {
 
     var visibleViewController: UIViewController?
 
+    var statusBarIsVisible = true
+    private var statusBarVisibilityObserver: NotificationObserver?
     private var userLoggedOutObserver: NotificationObserver?
     private var successfulUserEventObserver: NotificationObserver?
     private var receivedPushNotificationObserver: NotificationObserver?
@@ -51,6 +53,7 @@ class AppViewController: BaseElloViewController {
     private var apiOutOfDateObserver: NotificationObserver?
     private var pushPayload: PushPayload?
     private var deepLinkPath: String?
+    private var didJoinHandler: Block?
 
     override func loadView() {
         self.view = AppScreen()
@@ -86,6 +89,15 @@ class AppViewController: BaseElloViewController {
 
         if let vc = visibleViewController as? ControllerThatMightHaveTheCurrentUser {
             vc.currentUser = currentUser
+        }
+    }
+
+    func showStatusBar(_ visible: Bool) {
+        guard statusBarIsVisible != visible else { return }
+
+        statusBarIsVisible = visible
+        animate {
+            self.setNeedsStatusBarAppearanceUpdate()
         }
     }
 
@@ -136,6 +148,9 @@ class AppViewController: BaseElloViewController {
     }
 
     private func setupNotificationObservers() {
+        statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
+            self?.showStatusBar(visible)
+        }
         userLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.userLoggedOut) { [weak self] in
             self?.userLoggedOut()
         }
@@ -165,6 +180,7 @@ class AppViewController: BaseElloViewController {
     }
 
     private func removeNotificationObservers() {
+        statusBarVisibilityObserver?.removeObserver()
         userLoggedOutObserver?.removeObserver()
         successfulUserEventObserver?.removeObserver()
         receivedPushNotificationObserver?.removeObserver()
@@ -182,66 +198,66 @@ extension AppViewController {
         let initialController = HomeViewController(usage: .loggedOut)
         let childNavController = ElloNavigationController(rootViewController: initialController)
         let loggedOutController = LoggedOutViewController()
-        let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
+        childNavController.willMove(toParentViewController: self)
         loggedOutController.addChildViewController(childNavController)
         childNavController.didMove(toParentViewController: loggedOutController)
 
-        swapViewController(parentNavController) {
-            if let deepLinkPath = self.deepLinkPath {
-                self.navigateToDeepLink(deepLinkPath)
-                self.deepLinkPath = .none
-            }
+        let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
+
+        swapViewController(parentNavController).always {
+            guard let deepLinkPath = self.deepLinkPath else { return }
+
+            self.navigateToDeepLink(deepLinkPath)
+            self.deepLinkPath = nil
         }
     }
 
     func showJoinScreen(invitationCode: String? = nil) {
-        guard
-            let nav = visibleViewController as? UINavigationController,
-            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
-        else { return }
-
-        if !(nav.visibleViewController is LoggedOutViewController) {
-            _ = nav.popToRootViewController(animated: false)
-        }
-
-        pushPayload = .none
+        pushPayload = nil
         let joinController = JoinViewController()
         joinController.invitationCode = invitationCode
-        nav.setViewControllers([loggedOutController, joinController], animated: true)
+        showLoggedOutControllers(joinController)
+    }
+
+    func showJoinScreen(artistInvite: ArtistInvite) {
+        pushPayload = nil
+        didJoinHandler = {
+            Tracker.shared.artistInviteOpened(slug: artistInvite.slug)
+            let vc = ArtistInviteDetailController(artistInvite: artistInvite)
+            vc.currentUser = self.currentUser
+            vc.submitOnLoad = true
+            self.pushDeepLinkViewController(vc)
+        }
+        let joinController = JoinViewController(prompt: InterfaceString.ArtistInvites.SubmissionJoinPrompt)
+        showLoggedOutControllers(joinController)
+    }
+
+    func cancelledJoin() {
+        deepLinkPath = nil
+        didJoinHandler = nil
     }
 
     func showLoginScreen() {
-        guard
-            let nav = visibleViewController as? UINavigationController,
-            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
-        else { return }
-
-        if !(nav.visibleViewController is LoggedOutViewController) {
-            _ = nav.popToRootViewController(animated: false)
-        }
-
-        pushPayload = .none
+        pushPayload = nil
         let loginController = LoginViewController()
-        nav.setViewControllers([loggedOutController, loginController], animated: true)
+        showLoggedOutControllers(loginController)
     }
 
     func showForgotPasswordResetScreen(authToken: String) {
-        guard
-            let nav = visibleViewController as? UINavigationController,
-            let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
-        else { return }
-
-        if !(nav.visibleViewController is LoggedOutViewController) {
-            _ = nav.popToRootViewController(animated: false)
-        }
-
-        pushPayload = .none
+        pushPayload = nil
         let forgotPasswordResetController = ForgotPasswordResetViewController(authToken: authToken)
-        nav.setViewControllers([loggedOutController, forgotPasswordResetController], animated: true)
+        showLoggedOutControllers(forgotPasswordResetController)
     }
 
     func showForgotPasswordEmailScreen() {
+        pushPayload = nil
+        let loginController = LoginViewController()
+        let forgotPasswordEmailController = ForgotPasswordEmailViewController()
+        showLoggedOutControllers(loginController, forgotPasswordEmailController)
+    }
+
+    private func showLoggedOutControllers(_ loggedOutControllers: BaseElloViewController...) {
         guard
             let nav = visibleViewController as? UINavigationController,
             let loggedOutController = nav.childViewControllers.first as? LoggedOutViewController
@@ -251,10 +267,22 @@ extension AppViewController {
             _ = nav.popToRootViewController(animated: false)
         }
 
-        pushPayload = .none
-        let loginController = LoginViewController()
-        let forgotPasswordEmailController = ForgotPasswordEmailViewController()
-        nav.setViewControllers([loggedOutController, loginController, forgotPasswordEmailController], animated: true)
+        if let loggedOutNav = loggedOutController.navigationController,
+            let bottomBarController = loggedOutNav.childViewControllers.first as? BottomBarController,
+            let navigationBarsVisible = bottomBarController.navigationBarsVisible
+        {
+            for loggedOutController in loggedOutControllers {
+                if navigationBarsVisible {
+                    loggedOutController.showNavBars()
+                }
+                else {
+                    loggedOutController.hideNavBars()
+                }
+            }
+        }
+
+        let allControllers = [loggedOutController] + loggedOutControllers
+        nav.setViewControllers(allControllers, animated: true)
     }
 
     func showOnboardingScreen(_ user: User) {
@@ -263,29 +291,34 @@ extension AppViewController {
         let vc = OnboardingViewController()
         vc.currentUser = user
 
-        swapViewController(vc) {}
+        swapViewController(vc)
     }
 
     func doneOnboarding() {
         Onboarding.shared.updateVersionToLatest()
-        self.showMainScreen(currentUser!)
+        self.showMainScreen(currentUser!).always {
+            guard let didJoinHandler = self.didJoinHandler else { return }
+            didJoinHandler()
+        }
     }
 
-    func showMainScreen(_ user: User) {
+    @discardableResult
+    func showMainScreen(_ user: User) -> Promise<Void> {
         Tracker.shared.identify(user: user)
 
         let vc = ElloTabBarController()
         ElloWebBrowserViewController.elloTabBarController = vc
         vc.currentUser = user
 
-        swapViewController(vc) {
+        return swapViewController(vc).always {
             if let payload = self.pushPayload {
                 self.navigateToDeepLink(payload.applicationTarget)
-                self.pushPayload = .none
+                self.pushPayload = nil
             }
+
             if let deepLinkPath = self.deepLinkPath {
                 self.navigateToDeepLink(deepLinkPath)
-                self.deepLinkPath = .none
+                self.deepLinkPath = nil
             }
 
             vc.activateTabBar()
@@ -312,7 +345,7 @@ extension AppViewController {
         Tracker.shared.webViewAppeared(url)
     }
 
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: Block?) {
         // Unsure why WKWebView calls this controller - instead of it's own parent controller
         if let vc = presentedViewController {
             vc.present(viewControllerToPresent, animated: flag, completion: completion)
@@ -326,7 +359,9 @@ extension AppViewController {
 // MARK: Screen transitions
 extension AppViewController {
 
-    func swapViewController(_ newViewController: UIViewController, completion: @escaping Block) {
+    @discardableResult
+    func swapViewController(_ newViewController: UIViewController) -> Promise<Void> {
+        let (promise, resolve, _) = Promise<Void>.pending()
         newViewController.view.alpha = 0
 
         visibleViewController?.willMove(toParentViewController: nil)
@@ -352,8 +387,10 @@ extension AppViewController {
             newViewController.didMove(toParentViewController: self)
 
             self.visibleViewController = newViewController
-            completion()
+            resolve(Void())
         })
+
+        return promise
     }
 
     func removeViewController(_ completion: @escaping Block = {}) {
@@ -526,8 +563,6 @@ extension AppViewController {
 // MARK: URL Handling
 extension AppViewController {
     func navigateToDeepLink(_ path: String) {
-        Tracker.shared.deepLinkVisited(path)
-
         let (type, data) = ElloURI.match(path)
         navigateToURI(path: path, type: type, data: data)
     }
@@ -939,7 +974,7 @@ extension AppViewController {
         closeDebugController()
     }
 
-    func closeDebugController(completion: (() -> Void)? = nil) {
+    func closeDebugController(completion: Block? = nil) {
         isShowingDebug = false
         dismiss(animated: true, completion: completion)
     }
