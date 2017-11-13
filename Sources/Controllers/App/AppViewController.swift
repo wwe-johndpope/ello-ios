@@ -53,6 +53,7 @@ class AppViewController: BaseElloViewController {
     private var apiOutOfDateObserver: NotificationObserver?
     private var pushPayload: PushPayload?
     private var deepLinkPath: String?
+    private var didJoinHandler: Block?
 
     override func loadView() {
         self.view = AppScreen()
@@ -219,6 +220,24 @@ extension AppViewController {
         showLoggedOutControllers(joinController)
     }
 
+    func showJoinScreen(artistInvite: ArtistInvite) {
+        pushPayload = nil
+        didJoinHandler = {
+            Tracker.shared.artistInviteOpened(slug: artistInvite.slug)
+            let vc = ArtistInviteDetailController(artistInvite: artistInvite)
+            vc.currentUser = self.currentUser
+            vc.submitOnLoad = true
+            self.pushDeepLinkViewController(vc)
+        }
+        let joinController = JoinViewController(prompt: InterfaceString.ArtistInvites.SubmissionJoinPrompt)
+        showLoggedOutControllers(joinController)
+    }
+
+    func cancelledJoin() {
+        deepLinkPath = nil
+        didJoinHandler = nil
+    }
+
     func showLoginScreen() {
         pushPayload = nil
         let loginController = LoginViewController()
@@ -277,7 +296,10 @@ extension AppViewController {
 
     func doneOnboarding() {
         Onboarding.shared.updateVersionToLatest()
-        self.showMainScreen(currentUser!)
+        self.showMainScreen(currentUser!).always {
+            guard let didJoinHandler = self.didJoinHandler else { return }
+            didJoinHandler()
+        }
     }
 
     @discardableResult

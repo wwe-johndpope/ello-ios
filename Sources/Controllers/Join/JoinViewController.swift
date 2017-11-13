@@ -54,6 +54,7 @@ class JoinViewController: BaseElloViewController {
 
 extension JoinViewController: JoinDelegate {
     func backAction() {
+        appViewController?.cancelledJoin()
         _ = navigationController?.popViewController(animated: true)
     }
 

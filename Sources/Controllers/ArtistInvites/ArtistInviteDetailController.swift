@@ -9,6 +9,7 @@ class ArtistInviteDetailController: StreamableViewController {
 
     let artistInviteId: String
     var artistInvite: ArtistInvite?
+    var submitOnLoad = false { didSet { checkSubmitOnLoad() } }
 
     private var _mockScreen: ArtistInviteDetailScreenProtocol?
     var screen: ArtistInviteDetailScreenProtocol {
@@ -58,6 +59,11 @@ class ArtistInviteDetailController: StreamableViewController {
         viewContainer = screen.streamContainer
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkSubmitOnLoad()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -104,6 +110,8 @@ extension ArtistInviteDetailController: StreamDestination {
 
         self.artistInvite = artistInvite
         title = artistInvite.title
+
+        checkSubmitOnLoad()
     }
 
     func setPagingConfig(responseConfig: ResponseConfig) {
@@ -119,6 +127,13 @@ extension ArtistInviteDetailController: StreamDestination {
 
 extension ArtistInviteDetailController: ArtistInviteResponder {
 
+    func checkSubmitOnLoad() {
+        guard submitOnLoad, artistInvite != nil, isViewLoaded, view.superview != nil else { return }
+
+        submitOnLoad = false
+        tappedArtistInviteSubmitButton()
+    }
+
     func tappedArtistInviteSubmissionsButton() {
         streamViewController.scrollTo(placeholderType: .artistInviteSubmissionsHeader, animated: true)
     }
@@ -126,8 +141,7 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
     func tappedArtistInviteSubmitButton() {
         guard let artistInvite = artistInvite else { return }
         guard let currentUser = currentUser else {
-            let joinController = JoinViewController(prompt: InterfaceString.ArtistInvites.SubmissionJoinPrompt)
-            navigationController?.pushViewController(joinController, animated: true)
+            appViewController?.showJoinScreen(artistInvite: artistInvite)
             return
         }
 
