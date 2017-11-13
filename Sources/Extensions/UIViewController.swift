@@ -36,7 +36,7 @@ extension UIViewController {
         to toViewController: UIViewController,
         duration: TimeInterval = 0,
         options: UIViewAnimationOptions = [],
-        animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil)
+        animations: Block? = nil, completion: BoolBlock? = nil)
     {
         if AppSetup.shared.isTesting {
             animations?()

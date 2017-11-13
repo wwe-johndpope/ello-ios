@@ -9,7 +9,7 @@ import Moya
 
 class FakeCollectionView: ElloCollectionView {
 
-    override func performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
+    override func performBatchUpdates(_ updates: Block?, completion: BoolBlock?) {
         updates?()
         completion?(true)
     }

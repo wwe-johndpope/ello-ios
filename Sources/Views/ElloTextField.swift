@@ -3,7 +3,7 @@
 //
 
 class ElloTextField: UITextField {
-    var firstResponderDidChange: ((Bool) -> Void)?
+    var firstResponderDidChange: BoolBlock?
     var hasOnePassword = false
     var validationState = ValidationState.none {
         didSet {

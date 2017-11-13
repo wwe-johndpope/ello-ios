@@ -93,7 +93,7 @@ extension JoinViewController: JoinDelegate {
             screen.loadingHUD(visible: true)
 
             var joinSuccessful = true
-            let joinAborted: () -> Void = {
+            let joinAborted: Block = {
                 self.screen.loadingHUD(visible: false)
             }
             let joinContinue = after(2) {
@@ -199,7 +199,7 @@ extension JoinViewController: JoinDelegate {
 // MARK: Text field validation
 extension JoinViewController {
 
-    private func emailAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
+    private func emailAvailability(_ text: String, completion: @escaping BoolBlock) {
         AvailabilityService().emailAvailability(text)
             .then { availability -> Void in
                 if text != self.screen.email {
@@ -222,7 +222,7 @@ extension JoinViewController {
             }
     }
 
-    private func usernameAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
+    private func usernameAvailability(_ text: String, completion: @escaping BoolBlock) {
         AvailabilityService().usernameAvailability(text)
             .then { availability -> Void in
                 if text != self.screen.username {

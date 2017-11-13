@@ -322,7 +322,7 @@ extension AppViewController {
         Tracker.shared.webViewAppeared(url)
     }
 
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: Block?) {
         // Unsure why WKWebView calls this controller - instead of it's own parent controller
         if let vc = presentedViewController {
             vc.present(viewControllerToPresent, animated: flag, completion: completion)
@@ -949,7 +949,7 @@ extension AppViewController {
         closeDebugController()
     }
 
-    func closeDebugController(completion: (() -> Void)? = nil) {
+    func closeDebugController(completion: Block? = nil) {
         isShowingDebug = false
         dismiss(animated: true, completion: completion)
     }

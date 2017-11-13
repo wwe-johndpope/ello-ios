@@ -2,7 +2,7 @@
 ///  DrawerAnimators.swift
 //
 
-typealias Animator = (_ animations: @escaping () -> Void, _ completion: @escaping (Bool) -> Void) -> Void
+typealias Animator = (_ animations: @escaping Block, _ completion: @escaping BoolBlock) -> Void
 
 class DrawerAnimator: NSObject, UIViewControllerTransitioningDelegate  {
     let popControl = DrawerPopControl()
@@ -59,7 +59,7 @@ class DrawerPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(
         streamView: UIView, drawerView: UIView, containerView: UIView,
-        animator: Animator, completion: @escaping () -> Void
+        animator: Animator, completion: @escaping Block
     ) {
         popControl.frame = streamView.bounds
 
@@ -118,7 +118,7 @@ class DrawerPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(
         streamView: UIView, drawerView: UIView, containerView: UIView,
-        animator: Animator, completed: @escaping () -> Void
+        animator: Animator, completed: @escaping Block
     ) {
         containerView.insertSubview(drawerView, at: 0)
 

@@ -3,7 +3,7 @@
 //
 
 class AsyncOperation: Operation {
-    typealias AsyncBlock = (@escaping () -> Void) -> Void
+    typealias AsyncBlock = (@escaping Block) -> Void
     var _block: AsyncBlock?
     var block: AsyncBlock? {
         get { return _block }
@@ -62,7 +62,7 @@ class AsyncOperation: Operation {
         block?(done)
     }
 
-    func run(_ block: @escaping () -> Void = {}) {
+    func run(_ block: @escaping Block = {}) {
         self.block = { done in
             block()
             done()
