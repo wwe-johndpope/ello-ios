@@ -563,8 +563,6 @@ extension AppViewController {
 // MARK: URL Handling
 extension AppViewController {
     func navigateToDeepLink(_ path: String) {
-        Tracker.shared.deepLinkVisited(path)
-
         let (type, data) = ElloURI.match(path)
         navigateToURI(path: path, type: type, data: data)
     }
