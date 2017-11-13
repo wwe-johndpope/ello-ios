@@ -204,11 +204,11 @@ extension AppViewController {
 
         let parentNavController = ElloNavigationController(rootViewController: loggedOutController)
 
-        swapViewController(parentNavController) {
-            if let deepLinkPath = self.deepLinkPath {
-                self.navigateToDeepLink(deepLinkPath)
-                self.deepLinkPath = nil
-            }
+        swapViewController(parentNavController).always {
+            guard let deepLinkPath = self.deepLinkPath else { return }
+
+            self.navigateToDeepLink(deepLinkPath)
+            self.deepLinkPath = nil
         }
     }
 
@@ -272,7 +272,7 @@ extension AppViewController {
         let vc = OnboardingViewController()
         vc.currentUser = user
 
-        swapViewController(vc) {}
+        swapViewController(vc)
     }
 
     func doneOnboarding() {
@@ -280,14 +280,15 @@ extension AppViewController {
         self.showMainScreen(currentUser!)
     }
 
-    func showMainScreen(_ user: User) {
+    @discardableResult
+    func showMainScreen(_ user: User) -> Promise<Void> {
         Tracker.shared.identify(user: user)
 
         let vc = ElloTabBarController()
         ElloWebBrowserViewController.elloTabBarController = vc
         vc.currentUser = user
 
-        swapViewController(vc) {
+        return swapViewController(vc).always {
             if let payload = self.pushPayload {
                 self.navigateToDeepLink(payload.applicationTarget)
                 self.pushPayload = nil
@@ -336,7 +337,9 @@ extension AppViewController {
 // MARK: Screen transitions
 extension AppViewController {
 
-    func swapViewController(_ newViewController: UIViewController, completion: @escaping Block) {
+    @discardableResult
+    func swapViewController(_ newViewController: UIViewController) -> Promise<Void> {
+        let (promise, resolve, _) = Promise<Void>.pending()
         newViewController.view.alpha = 0
 
         visibleViewController?.willMove(toParentViewController: nil)
@@ -362,8 +365,10 @@ extension AppViewController {
             newViewController.didMove(toParentViewController: self)
 
             self.visibleViewController = newViewController
-            completion()
+            resolve(Void())
         })
+
+        return promise
     }
 
     func removeViewController(_ completion: @escaping Block = {}) {
