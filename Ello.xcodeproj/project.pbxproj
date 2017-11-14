@@ -69,7 +69,6 @@
 		1207C9AB1C752FF700939ADB /* AnonymousAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94A1C73FEE000939ADB /* AnonymousAuthService.swift */; };
 		1207C9AC1C75312900939ADB /* ElloNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6AE361A43392D00493660 /* ElloNetworkError.swift */; };
 		1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */; };
-		1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
 		120E64141E327B7A00CAF03E /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
 		120E64151E327D6300CAF03E /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E64131E327B7A00CAF03E /* JWT.swift */; };
 		120E64191E32970800CAF03E /* jwt-auth-no-staff.json in Resources */ = {isa = PBXBuildFile; fileRef = 120E64181E32970800CAF03E /* jwt-auth-no-staff.json */; };
@@ -610,8 +609,6 @@
 		1D447EEC1F3BC7BE00013384 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94B1C73FEE000939ADB /* APIKeys.swift */; };
 		1D447EED1F3BC7FD00013384 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF2335B1A94005C0096DA65 /* Notification.swift */; };
 		1D447EEE1F3BC80000013384 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267C7341BA232530000D809 /* Box.swift */; };
-		1D447EEF1F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
-		1D447EF01F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
 		1D447EF11F3BC84D00013384 /* AutoCompleteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC91F741CF375F600336012 /* AutoCompleteResult.swift */; };
 		1D447EF21F3BC8B000013384 /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59336B1D10ADA600EAF03D /* CategoryList.swift */; };
 		1D447EF31F3BC8BB00013384 /* RegexExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB474FA1BAB5584000AA9DC /* RegexExtensions.swift */; };
@@ -1047,7 +1044,6 @@
 		761A662C1B0E8AD20088FF56 /* specs-4000x1000.png in Resources */ = {isa = PBXBuildFile; fileRef = 761A66291B0E8AD20088FF56 /* specs-4000x1000.png */; };
 		76224E451B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76224E441B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift */; };
 		762385C91B0143A500138780 /* NumberExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762385C81B0143A500138780 /* NumberExtensionsSpec.swift */; };
-		762ABBA51A8ACB7700B19E34 /* JSONAbleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762ABBA41A8ACB7700B19E34 /* JSONAbleSpec.swift */; };
 		762EE9EB1A840E4A00A3B805 /* AvatarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */; };
 		76351FDE1A9406EF006DB61B /* relationship.json in Resources */ = {isa = PBXBuildFile; fileRef = 76351FDD1A9406EF006DB61B /* relationship.json */; };
 		765319F51B62AA61009B0D7E /* CrashlyticsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */; };
@@ -1374,8 +1370,6 @@
 		1207C96C1C73FEE000939ADB /* StreamService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamService.swift; sourceTree = "<group>"; };
 		1207C96D1C73FEE000939ADB /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		1207C9991C750E4B00939ADB /* ExtensionOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionOverrides.swift; sourceTree = "<group>"; };
-		1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloProviderLinkExension.swift; sourceTree = "<group>"; };
-		1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareElloProviderLinkOverrides.swift; sourceTree = "<group>"; };
 		120E64131E327B7A00CAF03E /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		120E64181E32970800CAF03E /* jwt-auth-no-staff.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "jwt-auth-no-staff.json"; sourceTree = "<group>"; };
 		120E641A1E32A7B600CAF03E /* jwt-auth-is-staff.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "jwt-auth-is-staff.json"; sourceTree = "<group>"; };
@@ -2152,7 +2146,6 @@
 		761A66291B0E8AD20088FF56 /* specs-4000x1000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "specs-4000x1000.png"; sourceTree = "<group>"; };
 		76224E441B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloWebViewHelperSpec.swift; sourceTree = "<group>"; };
 		762385C81B0143A500138780 /* NumberExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensionsSpec.swift; sourceTree = "<group>"; };
-		762ABBA41A8ACB7700B19E34 /* JSONAbleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONAbleSpec.swift; sourceTree = "<group>"; };
 		762EE9EA1A840E4A00A3B805 /* AvatarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarButton.swift; sourceTree = "<group>"; };
 		76351FDD1A9406EF006DB61B /* relationship.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = relationship.json; sourceTree = "<group>"; };
 		765319F41B62AA61009B0D7E /* CrashlyticsKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CrashlyticsKey.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -2467,7 +2460,6 @@
 				1207C9571C73FEE000939ADB /* ElloProvider_Specs.swift */,
 				1207C9581C73FEE000939ADB /* ElloProvider.swift */,
 				1207C9591C73FEE000939ADB /* ElloProviderErrors.swift */,
-				1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */,
 				1DDC234F1F326F2200E68B0E /* ElloRequest.swift */,
 				1207C95A1C73FEE000939ADB /* ElloS3.swift */,
 				1207C95B1C73FEE000939ADB /* ElloURI.swift */,
@@ -2756,7 +2748,6 @@
 				120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */,
 				124CFB991C5976E500727D11 /* ShareViewController.swift */,
 				1207C9991C750E4B00939ADB /* ExtensionOverrides.swift */,
-				1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */,
 				1D447F101F3BCA4800013384 /* ShareExtensionOverrides.swift */,
 			);
 			path = ShareExtension;
@@ -3018,7 +3009,6 @@
 				127BAD5F1A8512AA00628696 /* ElloLinkedStoreSpec.swift */,
 				12D14C6D1A43762400C6F8E8 /* ElloNetworkErrorSpec.swift */,
 				1D9225531C3B23E000553BAE /* ExperienceUpdateSpec.swift */,
-				762ABBA41A8ACB7700B19E34 /* JSONAbleSpec.swift */,
 				120E641C1E32A84200CAF03E /* JWTSpec.swift */,
 				EA68A0EF1AAE1691003F0425 /* LocalPersonSpec.swift */,
 				12CFF6911B167717007CE68F /* LoveSpec.swift */,
@@ -5179,7 +5169,6 @@
 				12F7EB7F1C69686A0090209A /* ShareAttachmentProcessor.swift in Sources */,
 				1207C9AB1C752FF700939ADB /* AnonymousAuthService.swift in Sources */,
 				1207C9961C74CD5C00939ADB /* ElloAPI.swift in Sources */,
-				1D447EF01F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */,
 				1207C9951C74CD5100939ADB /* AuthToken.swift in Sources */,
 				122B30C21C6A3FBB00C1B9D8 /* Profile.swift in Sources */,
 				122D1B4F1C602337001386CE /* MutableBox.swift in Sources */,
@@ -5375,7 +5364,6 @@
 				12A1D82D1DAC378600A327D6 /* ProfileAvatarPresenterSpec.swift in Sources */,
 				1DA18E161DB54AA0000231CC /* ProfileLinksViewSpec.swift in Sources */,
 				76FF805D1A96A87A00617A1E /* BlockUserModalViewControllerSpec.swift in Sources */,
-				762ABBA51A8ACB7700B19E34 /* JSONAbleSpec.swift in Sources */,
 				12A1D8391DAD78F100A327D6 /* ProfileTotalCountPresenterSpec.swift in Sources */,
 				1D9309DE1EC134B50099FCF8 /* EditorialCellPresenterSpec.swift in Sources */,
 				1DF50C8D1C61452D00C62D89 /* UIImagePickerControllerSpec.swift in Sources */,
@@ -5948,7 +5936,6 @@
 				1D7152961D6CBE0E005998FE /* NoPostsCell.swift in Sources */,
 				76C050A71AA8C8780094E69A /* UserListItemCellPresenter.swift in Sources */,
 				1D70DE581DF23862008AF216 /* StyledLabel.swift in Sources */,
-				1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */,
 				1275351F1B73D1D1006B9A0F /* NSStringExtensions.swift in Sources */,
 				122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */,
 				1D7152B21D6E479A005998FE /* LoginScreen.swift in Sources */,
@@ -6017,7 +6004,6 @@
 				1D447ED01F3BC68C00013384 /* RegionKind.swift in Sources */,
 				1D447F121F3BCA6D00013384 /* ReAuthService.swift in Sources */,
 				1DB271191F547A0F0044D475 /* UserFlag.swift in Sources */,
-				1D447EEF1F3BC83600013384 /* ElloProviderLinkExension.swift in Sources */,
 				1D447EB21F3BC38600013384 /* Promotional.swift in Sources */,
 				1D447EC11F3BC61800013384 /* PushPayload.swift in Sources */,
 				1D447EBE1F3BC5F100013384 /* Attachment.swift in Sources */,

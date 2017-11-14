@@ -321,7 +321,7 @@ class OnboardingCreatorTypeScreen: StreamableScreen {
         creatorTypeContainerTop.update(offset: creatorTypeMargin)
         creatorTypeContainerIntroTop.update(offset: creatorTypeIntroMargin)
 
-        let completion: () -> Void = {
+        let completion: Block = {
             self.unselectAllCategories()
         }
         let creatorTypeY: CGFloat

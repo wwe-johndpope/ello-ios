@@ -8,20 +8,9 @@ protocol ControllerThatMightHaveTheCurrentUser {
 }
 
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
-    var statusBarVisibility = true
-    private var statusBarVisibilityObserver: NotificationObserver?
-
-    func showStatusBar(_ visible: Bool) {
-        guard statusBarVisibility != visible else { return }
-
-        statusBarVisibility = visible
-        animate {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-
     override var prefersStatusBarHidden: Bool {
-        return !statusBarVisibility
+        let visible = appViewController?.statusBarIsVisible ?? true
+        return !visible
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -78,17 +67,6 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         super.viewDidLoad()
 
         setupRelationshipController()
-        setupStatusBarObservers()
-    }
-
-    private func setupStatusBarObservers() {
-        statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
-            self?.showStatusBar(visible)
-        }
-    }
-
-    deinit {
-        statusBarVisibilityObserver?.removeObserver()
     }
 
     private func setupRelationshipController() {
@@ -105,15 +83,15 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         self.relationshipController = relationshipController
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        trackScreenAppeared()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
         updateNavBars()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreenAppeared()
     }
 
     override func viewDidLayoutSubviews() {

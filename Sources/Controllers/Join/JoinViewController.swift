@@ -13,6 +13,11 @@ class JoinViewController: BaseElloViewController {
 
     var invitationCode: String?
 
+    convenience init(prompt: String) {
+        self.init(nibName: nil, bundle: nil)
+        screen.prompt = prompt
+    }
+
     convenience init(email: String, username: String, password: String) {
         self.init(nibName: nil, bundle: nil)
         screen.email = email
@@ -35,10 +40,21 @@ class JoinViewController: BaseElloViewController {
     private func showLoginScreen(_ email: String, _ password: String) {
         appViewController?.showLoginScreen()
     }
+
+    override func showNavBars() {
+        super.showNavBars()
+        screen.blackBarIsVisible = true
+    }
+
+    override func hideNavBars() {
+        super.hideNavBars()
+        screen.blackBarIsVisible = false
+    }
 }
 
 extension JoinViewController: JoinDelegate {
     func backAction() {
+        appViewController?.cancelledJoin()
         _ = navigationController?.popViewController(animated: true)
     }
 
@@ -78,7 +94,7 @@ extension JoinViewController: JoinDelegate {
             screen.loadingHUD(visible: true)
 
             var joinSuccessful = true
-            let joinAborted: () -> Void = {
+            let joinAborted: Block = {
                 self.screen.loadingHUD(visible: false)
             }
             let joinContinue = after(2) {
@@ -184,7 +200,7 @@ extension JoinViewController: JoinDelegate {
 // MARK: Text field validation
 extension JoinViewController {
 
-    private func emailAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
+    private func emailAvailability(_ text: String, completion: @escaping BoolBlock) {
         AvailabilityService().emailAvailability(text)
             .then { availability -> Void in
                 if text != self.screen.email {
@@ -207,7 +223,7 @@ extension JoinViewController {
             }
     }
 
-    private func usernameAvailability(_ text: String, completion: @escaping (Bool) -> Void) {
+    private func usernameAvailability(_ text: String, completion: @escaping BoolBlock) {
         AvailabilityService().usernameAvailability(text)
             .then { availability -> Void in
                 if text != self.screen.username {

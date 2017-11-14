@@ -113,7 +113,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
     @IBOutlet weak var bioTextView: ElloEditableTextView!
     @IBOutlet weak var bioTextCountLabel: StyledLabel!
     @IBOutlet weak var bioTextStatusImage: UIImageView!
-    private var bioTextViewDidChange: (() -> Void)?
+    private var bioTextViewDidChange: Block?
 
     @IBOutlet weak var linksTextFieldView: ElloTextFieldView!
     @IBOutlet weak var locationTextFieldView: ElloTextFieldView!
