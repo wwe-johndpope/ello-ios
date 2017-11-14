@@ -349,7 +349,7 @@ extension PromotionalHeaderCell.Config {
     var attributedTitle: NSAttributedString {
         switch style {
         case .category: return NSAttributedString(title, color: .white, font: .regularBlackFont(16), alignment: .center)
-        case .page, .editorial, .artistInvite: return NSAttributedString(title, color: .white, font: .regularBlackFont(18))
+        case .page, .editorial, .artistInvite: return NSAttributedString(title, color: .white, font: .regularBlackFont(32))
         }
     }
 
@@ -358,7 +358,7 @@ extension PromotionalHeaderCell.Config {
 
         switch style {
         case .category: return NSAttributedString(body, color: .white)
-        case .page, .editorial, .artistInvite: return NSAttributedString(body, color: .white, font: .defaultFont(16))
+        case .page, .editorial, .artistInvite: return NSAttributedString(body, color: .white, font: .defaultFont(18))
         }
     }
 
