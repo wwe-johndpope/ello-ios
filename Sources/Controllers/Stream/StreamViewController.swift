@@ -739,7 +739,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize
     {
-        let width = calculateColumnWidth(frameWidth: AppSetup.shared.windowSize.width, columnCount: columnCount)
+        let width = calculateColumnWidth(frameWidth: Globals.windowSize.width, columnCount: columnCount)
         let height = self.collectionViewDataSource.height(at: indexPath, numberOfColumns: 1)
         return CGSize(width: width, height: height)
     }

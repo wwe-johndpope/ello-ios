@@ -19,7 +19,7 @@ class EditorialPostStreamCell: EditorialCell {
     override func style() {
         super.style()
 
-        if AppSetup.shared.isTesting {
+        if Globals.isTesting {
             pageControl.backgroundColor = .black
         }
         bg.backgroundColor = .black
