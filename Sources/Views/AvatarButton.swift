@@ -34,6 +34,7 @@ class AvatarButton: UIButton {
 
         pin_setImage(from: url) { result in
             guard result.image != nil else { return }
+            self.invalidateIntrinsicContentSize()
 
             if result.resultType != .memoryCache {
                 self.alpha = 0
