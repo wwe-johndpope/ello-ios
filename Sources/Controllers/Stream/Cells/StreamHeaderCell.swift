@@ -148,10 +148,6 @@ class StreamHeaderCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        positionTopContent()
-    }
-
-    private func positionTopContent() {
         let leftSidePadding: CGFloat = 15
         let rightSidePadding: CGFloat = 15
         let avatarPadding: CGFloat = 15

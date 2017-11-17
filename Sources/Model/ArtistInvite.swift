@@ -54,6 +54,9 @@ final class ArtistInvite: JSONAble, Groupable {
     var logoImage: Asset?
     var guide: [Guide] = []
     var groupId: String { return "ArtistInvite-\(id)" }
+    var shareLink: String {
+        return "\(ElloURI.baseURL)/artist-invite/\(slug)"
+    }
     override var description: String { return longDescription }
 
     var approvedSubmissionsStream: Stream?
