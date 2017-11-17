@@ -39,11 +39,11 @@ class AvatarButton: UIButton {
             if result.resultType != .memoryCache {
                 self.alpha = 0
                 elloAnimate {
-                    self.alpha = 0
+                    self.alpha = 1
                 }
             }
             else {
-                self.alpha = 1.0
+                self.alpha = 1
             }
         }
     }
