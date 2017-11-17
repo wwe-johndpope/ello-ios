@@ -56,7 +56,7 @@ struct StreamImageCellPresenter {
 
             if showGifInThisCell {
                 attachmentToLoad = asset.optimized
-                imageToLoad = asset.optimized?.url as URL?
+                imageToLoad = asset.optimized?.url
             }
             else {
                 attachmentToLoad = isGridView ? asset.gridLayoutAttachment : asset.oneColumnAttachment
@@ -75,7 +75,7 @@ struct StreamImageCellPresenter {
         }
 
         let imageToShow = attachmentToLoad?.image
-        imageToLoad = imageToLoad ?? attachmentToLoad?.url as URL?
+        imageToLoad = imageToLoad ?? attachmentToLoad?.url
 
         let cellMargin = calculateStreamImageMargin(cell, imageRegion: imageRegion, streamCellItem: streamCellItem)
         cell.marginType = cellMargin

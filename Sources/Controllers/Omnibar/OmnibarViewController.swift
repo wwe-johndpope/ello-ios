@@ -232,7 +232,7 @@ class OmnibarViewController: BaseElloViewController {
                 let url = region.url
             {
                 if let imageRegionURL = region.buyButtonURL {
-                    buyButtonURL = imageRegionURL as URL
+                    buyButtonURL = imageRegionURL
                 }
                 downloads.append((index, url))
                 regions.append(.imageURL(url))

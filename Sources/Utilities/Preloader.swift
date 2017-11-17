@@ -18,20 +18,20 @@ struct Preloader {
                 let author = authorable.author,
                 let avatarURL = author.avatarURL()
             {
-                preloadUrl(avatarURL as URL)
+                preloadUrl(avatarURL)
             }
             // post / comment avatars
             else if let authorable = jsonable as? Authorable,
                 let author = authorable.author,
                 let avatarURL = author.avatarURL()
             {
-                preloadUrl(avatarURL as URL)
+                preloadUrl(avatarURL)
             }
             // user's posts avatars
             else if let user = jsonable as? User,
                 let userAvatarURL = user.avatarURL()
             {
-                preloadUrl(userAvatarURL as URL)
+                preloadUrl(userAvatarURL)
             }
 
             // activity image regions
@@ -58,13 +58,13 @@ struct Preloader {
             else if let category = jsonable as? Category,
                 let url = category.tileURL
             {
-                preloadUrl(url as URL)
+                preloadUrl(url)
             }
             // promotionals
             else if let promotional = jsonable as? PagePromotional,
                 let url = promotional.tileURL
             {
-                preloadUrl(url as URL)
+                preloadUrl(url)
             }
 
             // TODO: account for discovery when the api includes assets in the discovery
@@ -79,7 +79,7 @@ struct Preloader {
                     let asset = imageRegion.asset,
                     let attachment = asset.oneColumnAttachment
                 {
-                    preloadUrl(attachment.url as URL)
+                    preloadUrl(attachment.url)
                 }
             }
         }
@@ -97,7 +97,7 @@ struct Preloader {
                 let asset = imageRegion.asset,
                 let attachment = asset.oneColumnAttachment
             {
-                preloadUrl(attachment.url as URL)
+                preloadUrl(attachment.url)
             }
         }
     }

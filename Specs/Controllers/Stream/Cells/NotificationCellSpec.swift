@@ -80,7 +80,7 @@ class NotificationCellSpec: QuickSpec {
                         subject.aspectRatio = aspectRatio
                         subject.buyButtonVisible = buyButton
                         if hasImage {
-                            subject.imageURL = URL(string: "http://ello.co/image.png") as URL?
+                            subject.imageURL = URL(string: "http://ello.co/image.png")
                             subject.notificationImageView.image = image
                         }
 

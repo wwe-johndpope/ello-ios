@@ -20,7 +20,7 @@ final class Category: JSONAble, Groupable {
     var groupId: String { return "Category-\(id)" }
     let name: String
     let slug: String
-    var tileURL: URL? { return tileImage?.url as URL? }
+    var tileURL: URL? { return tileImage?.url }
     var isSponsored: Bool?
     var body: String?
     var header: String?
