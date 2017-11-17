@@ -678,6 +678,10 @@ extension Tracker {
         track("Submitted Artist Invite", properties: ["artistInvite": slug])
     }
 
+    func artistInviteShared(slug: String) {
+        track("Artist Invite shared", properties: ["artistInvite": slug])
+    }
+
 }
 
 // MARK: LoggedOut
