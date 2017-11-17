@@ -391,16 +391,16 @@ extension User {
 extension User {
     func coverImageURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
         if animated && (!postsAdultContent || viewsAdultContent == true) && coverImage?.original?.url.absoluteString.hasSuffix(".gif") == true {
-            return coverImage?.original?.url as URL?
+            return coverImage?.original?.url
         }
-        return coverImage?.oneColumnAttachment?.url as URL?
+        return coverImage?.oneColumnAttachment?.url
     }
 
     func avatarURL(viewsAdultContent: Bool? = false, animated: Bool = false) -> URL? {
         if animated && (!postsAdultContent || viewsAdultContent == true) && avatar?.original?.url.absoluteString.hasSuffix(".gif") == true {
-            return avatar?.original?.url as URL?
+            return avatar?.original?.url
         }
-        return avatar?.largeOrBest?.url as URL?
+        return avatar?.largeOrBest?.url
     }
 }
 

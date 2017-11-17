@@ -68,7 +68,7 @@ class SafariActivitySpec: QuickSpec {
                             expect(subject.url).to(beNil())
                         }
                         else {
-                            expect(subject.url) == expected as URL?
+                            expect(subject.url) == expected
                         }
                     }
                 }

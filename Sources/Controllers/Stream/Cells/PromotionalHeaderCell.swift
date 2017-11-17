@@ -394,10 +394,10 @@ extension PromotionalHeaderCell.Config {
         tracking = category.slug
         isSponsored = category.isSponsored
         callToAction = category.ctaCaption
-        callToActionURL = category.ctaURL as URL?
+        callToActionURL = category.ctaURL
 
         if let promotional = category.randomPromotional {
-            imageURL = promotional.image?.oneColumnAttachment?.url as URL?
+            imageURL = promotional.image?.oneColumnAttachment?.url
             user = promotional.user
         }
     }
@@ -417,9 +417,9 @@ extension PromotionalHeaderCell.Config {
         title = pagePromotional.header
         body = pagePromotional.subheader
         tracking = "general"
-        imageURL = pagePromotional.tileURL as URL?
+        imageURL = pagePromotional.tileURL
         user = pagePromotional.user
         callToAction = pagePromotional.ctaCaption
-        callToActionURL = pagePromotional.ctaURL as URL?
+        callToActionURL = pagePromotional.ctaURL
     }
 }
