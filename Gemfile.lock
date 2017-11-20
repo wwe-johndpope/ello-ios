@@ -154,7 +154,7 @@ GEM
       uber (~> 0.0.7)
     retriable (2.1.0)
     rouge (1.11.1)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     sawyer (0.6.0)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
