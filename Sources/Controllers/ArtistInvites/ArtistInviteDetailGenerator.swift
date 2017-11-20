@@ -6,6 +6,7 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
 
     var currentUser: User?
     let streamKind: StreamKind
+    var artistInviteId: String
     var artistInvite: ArtistInvite?
     var artistInviteDetails: [StreamCellItem] = []
     weak var destination: StreamDestination?
@@ -14,7 +15,8 @@ final class ArtistInviteDetailGenerator: StreamGenerator {
     private var loadingToken = LoadingToken()
 
     init(artistInviteId: String, currentUser: User?, destination: StreamDestination?) {
-        self.streamKind = .artistInviteDetail(id: artistInviteId)
+        self.artistInviteId = artistInviteId
+        self.streamKind = .artistInviteSubmissions
         self.currentUser = currentUser
         self.destination = destination
     }
@@ -48,16 +50,12 @@ private extension ArtistInviteDetailGenerator {
     }
 
     func loadArtistInvite() {
-        StreamService().loadStream(streamKind: streamKind)
-            .thenFinally { response in
+        ArtistInviteService().load(id: artistInviteId)
+            .then { artistInvite -> Void in
                 guard
-                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken),
-                    case let .jsonables(jsonables, responseConfig) = response,
-                    let artistInvites = jsonables as? [ArtistInvite],
-                    let artistInvite = artistInvites.first
-                else { throw NSError.uncastableJSONAble() }
+                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
+                else { return }
 
-                self.destination?.setPagingConfig(responseConfig: responseConfig)
                 self.setArtistInvite(artistInvite)
             }
             .catch { _ in
@@ -87,7 +85,7 @@ private extension ArtistInviteDetailGenerator {
         }
 
         StreamService().loadStream(endpoint: endpoint)
-            .thenFinally { response in
+            .then { response -> Void in
                 guard
                     self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
                 else { return }
@@ -98,9 +96,11 @@ private extension ArtistInviteDetailGenerator {
                 }
 
                 guard
-                    case let .jsonables(jsonables, _) = response,
+                    case let .jsonables(jsonables, responseConfig) = response,
                     let submissions = jsonables as? [ArtistInviteSubmission]
                 else { throw NSError.uncastableJSONAble() }
+
+                self.destination?.setPagingConfig(responseConfig: responseConfig)
 
                 let posts = submissions.flatMap { $0.post }
                 if posts.count == 0 {
@@ -116,6 +116,8 @@ private extension ArtistInviteDetailGenerator {
 
                     let items = self.parse(jsonables: posts)
                     self.destination?.replacePlaceholder(type: .streamPosts, items: items)
+
+                    self.destination?.isPagingEnabled = responseConfig.nextQuery != nil
                 }
             }
             .catch { _ in

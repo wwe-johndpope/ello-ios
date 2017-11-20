@@ -8,7 +8,8 @@ import SwiftyJSON
 @objc(PagePromotional)
 final class PagePromotional: JSONAble {
     // version 1: initial
-    static let Version = 1
+    // version 2: isEditorial / isArtistInvite
+    static let Version = 2
 
     let id: String
     let postToken: String?
@@ -18,6 +19,9 @@ final class PagePromotional: JSONAble {
     let ctaURL: URL?
     let image: Asset?
     var tileURL: URL? { return image?.oneColumnAttachment?.url as URL? }
+    var isCategory: Bool { return !isEditorial && !isArtistInvite }
+    var isEditorial: Bool
+    var isArtistInvite: Bool
 
     var user: User? { return getLinkObject("user") as? User }
 
@@ -28,7 +32,9 @@ final class PagePromotional: JSONAble {
         subheader: String,
         ctaCaption: String,
         ctaURL: URL?,
-        image: Asset?
+        image: Asset?,
+        isEditorial: Bool,
+        isArtistInvite: Bool
     ) {
         self.id = id
         self.postToken = postToken
@@ -37,6 +43,8 @@ final class PagePromotional: JSONAble {
         self.ctaCaption = ctaCaption
         self.ctaURL = ctaURL
         self.image = image
+        self.isEditorial = isEditorial
+        self.isArtistInvite = isArtistInvite
         super.init(version: PagePromotional.Version)
     }
 
@@ -49,6 +57,15 @@ final class PagePromotional: JSONAble {
         ctaCaption = decoder.decodeKey("ctaCaption")
         ctaURL = decoder.decodeOptionalKey("ctaURL")
         image = decoder.decodeOptionalKey("image")
+        let version: Int = decoder.decodeKey("version")
+        if version > 1 {
+            isEditorial = decoder.decodeKey("isEditorial")
+            isArtistInvite = decoder.decodeKey("isArtistInvite")
+        }
+        else {
+            isEditorial = false
+            isArtistInvite = false
+        }
         super.init(coder: coder)
     }
 
@@ -61,6 +78,8 @@ final class PagePromotional: JSONAble {
         encoder.encodeObject(ctaCaption, forKey: "ctaCaption")
         encoder.encodeObject(ctaURL, forKey: "ctaURL")
         encoder.encodeObject(image, forKey: "image")
+        encoder.encodeObject(isEditorial, forKey: "isEditorial")
+        encoder.encodeObject(isArtistInvite, forKey: "isArtistInvite")
         super.encode(with: coder)
     }
 
@@ -74,6 +93,8 @@ final class PagePromotional: JSONAble {
         let postToken = json["post_token"].string
 
         let image = Asset.parseAsset(id, node: data["image"] as? [String: Any])
+        let isEditorial = json["is_editorial"].boolValue
+        let isArtistInvite = json["is_artist_invite"].boolValue
 
         let promotional = PagePromotional(
             id: id,
@@ -82,7 +103,9 @@ final class PagePromotional: JSONAble {
             subheader: subheader,
             ctaCaption: ctaCaption,
             ctaURL: ctaURL,
-            image: image
+            image: image,
+            isEditorial: isEditorial,
+            isArtistInvite: isArtistInvite
             )
         promotional.links = data["links"] as? [String: Any]
         return promotional

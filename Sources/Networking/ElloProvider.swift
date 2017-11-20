@@ -6,6 +6,7 @@ import Moya
 import Result
 import Alamofire
 import PromiseKit
+import WebLinking
 
 
 typealias ElloRequestClosure = (target: ElloAPI, success: ElloSuccessCompletion, failure: ElloFailureCompletion)
@@ -166,7 +167,7 @@ class ElloProvider {
                 },
                 failure: { _, _ in
                     self.advanceAuthState(.shouldTryUserCreds)
-                }, noNetwork:{
+                }, noNetwork: {
                     self.advanceAuthState(.shouldTryRefreshToken)
                 })
             case .shouldTryUserCreds:
@@ -178,7 +179,7 @@ class ElloProvider {
                 },
                 failure: { _, _ in
                     self.advanceAuthState(.noToken)
-                }, noNetwork:{
+                }, noNetwork: {
                     self.advanceAuthState(.shouldTryUserCreds)
                 })
             case .shouldTryAnonymousCreds, .noToken:
@@ -294,7 +295,7 @@ extension ElloProvider {
 
             switch statusCode {
             case 200...299, 300...399:
-                handleNetworkSuccess(data: data, elloAPI: target, statusCode:statusCode, response: response, success: success, failure: failure)
+                handleNetworkSuccess(data: data, elloAPI: target, statusCode: statusCode, response: response, success: success, failure: failure)
             case 401:
                 attemptAuthentication(request: (target: target, success: success, failure: failure), uuid: uuid)
             case 410:
@@ -319,7 +320,7 @@ extension ElloProvider {
             var newResponseConfig: ResponseConfig?
             if let pagingPath = elloAPI.pagingPath,
                 let links = (node as? [String: Any])?["links"] as? [String: Any],
-                let pagingPathNode = links[pagingPath] as? [String:Any],
+                let pagingPathNode = links[pagingPath] as? [String: Any],
                 let pagination = pagingPathNode["pagination"] as? [String: String]
             {
                 newResponseConfig = self.parsePagination(pagination)
@@ -349,7 +350,7 @@ extension ElloProvider {
             }
         }
 
-        if let linked = dict["linked"] as? [String:[[String:Any]]] {
+        if let linked = dict["linked"] as? [String: [[String: Any]]] {
             ElloLinkedStore.shared.parseLinked(linked, completion: completion)
         }
         else {
@@ -434,12 +435,21 @@ extension ElloProvider {
 
     private func parseResponse(_ response: HTTPURLResponse?) -> ResponseConfig {
         let config = ResponseConfig()
-        config.statusCode = response?.statusCode
-        config.lastModified = response?.allHeaderFields["Last-Modified"] as? String
-        config.totalPages = response?.allHeaderFields["X-Total-Pages"] as? String
-        config.totalCount = response?.allHeaderFields["X-Total-Count"] as? String
-        config.totalPagesRemaining = response?.allHeaderFields["X-Total-Pages-Remaining"] as? String
 
-        return parseLinks(response, config: config)
+        if let response = response {
+            config.statusCode = response.statusCode
+            config.lastModified = response.allHeaderFields["Last-Modified"] as? String
+            config.totalPages = response.allHeaderFields["X-Total-Pages"] as? String
+            config.totalCount = response.allHeaderFields["X-Total-Count"] as? String
+            config.totalPagesRemaining = response.allHeaderFields["X-Total-Pages-Remaining"] as? String
+            config.nextQuery = parseNextLink(response, config: config)
+        }
+
+        return config
     }
+
+    private func parseNextLink(_ response: HTTPURLResponse, config: ResponseConfig) -> URLComponents? {
+        return response.findLink(relation: "next").flatMap { URLComponents(string: $0.uri) }
+    }
+
 }

@@ -7,6 +7,8 @@ import SnapKit
 
 class JoinScreen: CredentialsScreen {
     struct Size {
+        static let promptTopMargin: CGFloat = 50
+        static let promptInset: CGFloat = 20
         static let fieldsTopMargin: CGFloat = 55
         static let fieldsErrorMargin: CGFloat = 15
         static let fieldsInnerMargin: CGFloat = 30
@@ -15,6 +17,11 @@ class JoinScreen: CredentialsScreen {
     }
 
     weak var delegate: JoinDelegate?
+
+    var prompt: String? {
+        get { return promptLabel.text }
+        set { promptLabel.text = newValue }
+    }
     var isEmailValid: Bool? = nil {
         didSet {
             if let isEmailValid = isEmailValid {
@@ -64,25 +71,27 @@ class JoinScreen: CredentialsScreen {
         didSet { passwordField.hasOnePassword = isOnePasswordAvailable }
     }
 
-    let emailField = ClearTextField()
-    let activateEmailButton = UIButton()
-    let emailErrorLabel = StyledLabel(style: .smallWhite)
-    var emailMarginConstraint: Constraint!
+    private let promptLabel = StyledLabel(style: .smallWhite)
 
-    let usernameField = ClearTextField()
-    let activateUsernameButton = UIButton()
-    let usernameErrorLabel = StyledLabel(style: .smallWhite)
-    var usernameMarginConstraint: Constraint!
+    private let emailField = ClearTextField()
+    private let activateEmailButton = UIButton()
+    private let emailErrorLabel = StyledLabel(style: .smallWhite)
+    private var emailMarginConstraint: Constraint!
 
-    let passwordField = ClearTextField()
-    let activatePasswordButton = UIButton()
-    let passwordErrorLabel = StyledLabel(style: .smallWhite)
-    var passwordMarginConstraint: Constraint!
+    private let usernameField = ClearTextField()
+    private let activateUsernameButton = UIButton()
+    private let usernameErrorLabel = StyledLabel(style: .smallWhite)
+    private var usernameMarginConstraint: Constraint!
 
-    let messageLabel = StyledLabel(style: .smallWhite)
-    var messageMarginConstraint: Constraint!
-    let termsButtonNormal = UIButton()
-    let termsButtonKeyboard = UIButton()
+    private let passwordField = ClearTextField()
+    private let activatePasswordButton = UIButton()
+    private let passwordErrorLabel = StyledLabel(style: .smallWhite)
+    private var passwordMarginConstraint: Constraint!
+
+    private let messageLabel = StyledLabel(style: .smallWhite)
+    private var messageMarginConstraint: Constraint!
+    private let termsButtonNormal = UIButton()
+    private let termsButtonKeyboard = UIButton()
 
     override func setText() {
         titleLabel.text = InterfaceString.Startup.SignUp
@@ -109,13 +118,14 @@ class JoinScreen: CredentialsScreen {
     override func style() {
         super.style()
 
-        let attrs = ElloAttributedString.attrs([
-            NSAttributedStringKey.foregroundColor: UIColor.greyA,
-            NSAttributedStringKey.font: UIFont.defaultFont(Size.termsFontSize),
+        let attrs = NSAttributedString.defaultAttrs([
+            .foregroundColor: UIColor.greyA,
+            .font: UIFont.defaultFont(Size.termsFontSize),
         ])
-        let linkAttrs = ElloAttributedString.attrs(ElloAttributedString.linkAttrs(), [
-            NSAttributedStringKey.foregroundColor: UIColor.greyA,
-            NSAttributedStringKey.font: UIFont.defaultFont(Size.termsFontSize),
+        let linkAttrs = NSAttributedString.defaultAttrs([
+            .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+            .foregroundColor: UIColor.greyA,
+            .font: UIFont.defaultFont(Size.termsFontSize),
         ])
         // needs i18n
         let attributedTitle = NSAttributedString(string: "By clicking Continue you are agreeing to our ", attributes: attrs) + NSAttributedString(string: "Terms", attributes: linkAttrs)
@@ -130,6 +140,7 @@ class JoinScreen: CredentialsScreen {
         passwordField.returnKeyType = .join
         passwordField.hasOnePassword = isOnePasswordAvailable
 
+        promptLabel.isMultiline = true
         messageLabel.isMultiline = true
 
         termsButtonNormal.isHidden = Keyboard.shared.active
@@ -141,6 +152,7 @@ class JoinScreen: CredentialsScreen {
     override func arrange() {
         super.arrange()
 
+        scrollView.addSubview(promptLabel)
         scrollView.addSubview(activateEmailButton)
         scrollView.addSubview(emailField)
         scrollView.addSubview(emailErrorLabel)
@@ -154,6 +166,11 @@ class JoinScreen: CredentialsScreen {
         scrollView.addSubview(termsButtonKeyboard)
 
         addSubview(termsButtonNormal)
+
+        promptLabel.snp.makeConstraints { make in
+            make.top.equalTo(scrollView).offset(Size.promptTopMargin)
+            make.leading.trailing.equalTo(scrollView).inset(Size.promptInset)
+        }
 
         activateEmailButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(scrollView)
@@ -355,11 +372,11 @@ extension JoinScreen: JoinScreenProtocol {
 
     func showUsernameSuggestions(_ usernames: [String]) {
         let usernameAttrs: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: UIFont.defaultFont(12),
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+            .font: UIFont.defaultFont(12),
+            .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
         ]
-        let plainAttrs = [
-            NSAttributedStringKey.font: UIFont.defaultFont(12),
+        let plainAttrs: [NSAttributedStringKey: Any] = [
+            .font: UIFont.defaultFont(12),
         ]
         let suggestions: NSAttributedString = usernames.reduce(NSAttributedString(string: "", attributes: plainAttrs)) { attrdString, username in
             let usernameAttrd = NSAttributedString(string: username, attributes: usernameAttrs)
@@ -373,8 +390,8 @@ extension JoinScreen: JoinScreenProtocol {
     }
 
     func showMessage(_ text: String) {
-        let plainAttrs = [
-            NSAttributedStringKey.font: UIFont.defaultFont(12),
+        let plainAttrs: [NSAttributedStringKey: Any] = [
+            .font: UIFont.defaultFont(12),
         ]
         showMessageAttributed(NSAttributedString(string: text, attributes: plainAttrs))
     }

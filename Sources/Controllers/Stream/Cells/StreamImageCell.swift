@@ -132,6 +132,7 @@ class StreamImageCell: StreamRegionableCell {
             buyButtonGreen.backgroundColor = .greenD1
             buyButtonGreen.setNeedsLayout()
             buyButtonGreen.layoutIfNeeded()
+            buyButtonGreen.layer.masksToBounds = true
             buyButtonGreen.layer.cornerRadius = buyButtonGreen.frame.size.width / 2
 
         }
@@ -207,14 +208,11 @@ class StreamImageCell: StreamRegionableCell {
 
             if result.resultType != .memoryCache {
                 self.imageView.alpha = 0
-                UIView.animate(withDuration: 0.3,
-                    delay:0.0,
-                    options:UIViewAnimationOptions.curveLinear,
-                    animations: {
-                        self.imageView.alpha = 1.0
-                    }, completion: { _ in
-                        self.circle.stopPulse()
-                    })
+                elloAnimate {
+                    self.imageView.alpha = 1
+                }.always {
+                    self.circle.stopPulse()
+                }
             }
             else {
                 self.imageView.alpha = 1.0

@@ -135,6 +135,8 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     var autoCompleteThrottle = debounce(0.4)
     var autoCompleteShowing = false
 
+    private var contentSizeObservation: NSKeyValueObservation?
+
 // MARK: init
 
     override init(frame: CGRect) {
@@ -154,40 +156,25 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         setupKeyboardViews()
         setupViewHierarchy()
 
-        regionsTableView.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
+        contentSizeObservation = regionsTableView.observe(\UITableView.contentSize) { [weak self] tableView, change in
+            guard let `self` = self else { return }
+            let contentSize = tableView.contentSize
+            let regionsTableView = self.regionsTableView
+
+            let contentHeight: CGFloat = ceil(contentSize.height) + regionsTableView.contentInset.bottom
+            let height: CGFloat = max(0, regionsTableView.frame.height - contentHeight)
+            let y = regionsTableView.frame.height - height - regionsTableView.contentInset.bottom
+            self.textEditingControl.frame = CGRect(
+                x: 0,
+                y: y,
+                width: self.frame.width,
+                height: height
+            )
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        regionsTableView.removeObserver(self, forKeyPath: "contentSize", context: nil)
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        let sup = { super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context) }
-        guard let keyPath = keyPath, let change = change else {
-            sup()
-            return
-        }
-
-        switch keyPath {
-        case "contentSize":
-            if let contentSize = (change[NSKeyValueChangeKey.newKey] as? NSValue)?.cgSizeValue {
-                let contentHeight: CGFloat = ceil(contentSize.height) + regionsTableView.contentInset.bottom
-                let height: CGFloat = max(0, regionsTableView.frame.height - contentHeight)
-                let y = regionsTableView.frame.height - height - regionsTableView.contentInset.bottom
-                textEditingControl.frame = CGRect(
-                    x: 0,
-                    y: y,
-                    width: self.frame.width,
-                    height: height
-                    )
-            }
-        default:
-            sup()
-        }
     }
 
 // MARK: View setup code
@@ -291,30 +278,30 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
         boldButton.addTarget(self, action: #selector(boldButtonTapped), for: .touchUpInside)
         boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultBoldFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.white
+            .font: UIFont.defaultBoldFont(),
+            .foregroundColor: UIColor.white
         ]), for: .normal)
         boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultBoldFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.grey6
+            .font: UIFont.defaultBoldFont(),
+            .foregroundColor: UIColor.grey6
         ]), for: .highlighted)
         boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultBoldFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.black
+            .font: UIFont.defaultBoldFont(),
+            .foregroundColor: UIColor.black
             ]), for: .selected)
 
         italicButton.addTarget(self, action: #selector(italicButtonTapped), for: .touchUpInside)
         italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultItalicFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.white
+            .font: UIFont.defaultItalicFont(),
+            .foregroundColor: UIColor.white
         ]), for: .normal)
         italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultItalicFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.grey6
+            .font: UIFont.defaultItalicFont(),
+            .foregroundColor: UIColor.grey6
         ]), for: .highlighted)
         italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultItalicFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.black
+            .font: UIFont.defaultItalicFont(),
+            .foregroundColor: UIColor.black
             ]), for: .selected)
 
         linkButton.addTarget(self, action: #selector(linkButtonTapped), for: .touchUpInside)
@@ -402,33 +389,39 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     func updateText(_ text: NSAttributedString, atPath path: IndexPath) {
-        let newRegion: OmnibarRegion = .attributedText(text)
-        let (index, _) = editableRegions[path.row]
-        if let index = index {
-            submitableRegions[index] = newRegion
-            editableRegions[path.row] = (index, newRegion)
+        guard
+            let (_index, _) = editableRegions.safeValue(path.row),
+            let index = _index
+        else { return }
 
-            regionsTableView.reloadData()
-            updateEditingAtPath(path, scrollPosition: .bottom)
-        }
+        let newRegion: OmnibarRegion = .attributedText(text)
+        submitableRegions[index] = newRegion
+        editableRegions[path.row] = (index, newRegion)
+
+        regionsTableView.beginUpdates()
+        regionsTableView.reloadRows(at: [path], with: .automatic)
+        regionsTableView.endUpdates()
+        updateEditingAtPath(path, scrollPosition: .bottom)
     }
 
     func startEditingAtPath(_ path: IndexPath) {
-        if let (_, region) = tableViewRegions.safeValue(path.row), region.isText {
-            currentTextPath = path
-            textScrollView.isHidden = false
-            textScrollView.contentOffset = regionsTableView.contentOffset
-            textScrollView.contentInset = regionsTableView.contentInset
-            textScrollView.scrollIndicatorInsets = regionsTableView.scrollIndicatorInsets
-            textScrollView.scrollsToTop = true
-            regionsTableView.scrollsToTop = false
-            textView.attributedText = region.text
-            updateEditingAtPath(path)
-        }
+        guard let (_, region) = tableViewRegions.safeValue(path.row), region.isText else { return }
+
+        currentTextPath = path
+        textScrollView.isHidden = false
+        textScrollView.contentOffset = regionsTableView.contentOffset
+        textScrollView.contentInset = regionsTableView.contentInset
+        textScrollView.scrollIndicatorInsets = regionsTableView.scrollIndicatorInsets
+        textScrollView.scrollsToTop = true
+        regionsTableView.scrollsToTop = false
+        textView.attributedText = region.text
+        updateEditingAtPath(path)
     }
 
     func updateEditingAtPath(_ path: IndexPath, scrollPosition: UITableViewScrollPosition = .middle) {
-        let rect = regionsTableView.rectForRow(at: path)
+        guard let cell = regionsTableView.cellForRow(at: path) else { return }
+
+        let rect = cell.frame//regionsTableView.rectForRow(at: path)
         textScrollView.contentSize = regionsTableView.contentSize
         textView.frame = OmnibarTextCell.boundsForTextView(rect)
         textContainer.frame = textView.frame.grow(all: 10)
@@ -475,7 +468,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     private func convertReorderableRegions(_ reorderableRegions: [IndexedRegion]) -> [OmnibarRegion] {
         var regions = [OmnibarRegion]()
-        var buffer = ElloAttributedString.style("")
+        var buffer = NSAttributedString(defaults: "")
         var lastRegionIsText = false
         for (_, region) in reorderableRegions {
             switch region {
@@ -487,7 +480,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
                     regions.append(.attributedText(buffer))
                 }
                 regions.append(region)
-                buffer = ElloAttributedString.style("")
+                buffer = NSAttributedString(defaults: "")
                 lastRegionIsText = false
             default: break
             }
@@ -766,16 +759,15 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         {
             let range = textView.selectedRange
             let currentText = NSMutableAttributedString(attributedString: textView.attributedText)
-            let attributes = [NSAttributedStringKey.font: newFont]
-            currentText.addAttributes(attributes, range: textView.selectedRange)
+            currentText.addAttributes([.font: newFont], range: textView.selectedRange)
             textView.attributedText = currentText
             textView.selectedRange = range
 
             updateCurrentText(currentText)
         }
         else {
-            textView.typingAttributes = ElloAttributedString.oldAttrs(ElloAttributedString.attrs([
-                NSAttributedStringKey.font: newFont,
+            textView.typingAttributes = NSAttributedString.oldAttrs(NSAttributedString.defaultAttrs([
+                .font: newFont,
             ]))
         }
     }
@@ -789,7 +781,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             range.location -= 1
 
             var effectiveRange: NSRange? = NSRange(location: 0, length: 0)
-            if textView.textStorage.attribute(NSAttributedStringKey.link, at: range.location, effectiveRange: &effectiveRange!) != nil,
+            if textView.textStorage.attribute(.link, at: range.location, effectiveRange: &effectiveRange!) != nil,
                 let effectiveRange = effectiveRange
             {
                 range = effectiveRange
@@ -798,9 +790,9 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         guard range.length > 0 else { return }
 
         let currentAttrs = textView.textStorage.attributes(at: range.location, effectiveRange: nil)
-        if currentAttrs[NSAttributedStringKey.link] != nil {
-            textView.textStorage.removeAttribute(NSAttributedStringKey.link, range: range)
-            textView.textStorage.removeAttribute(NSAttributedStringKey.underlineStyle, range: range)
+        if currentAttrs[.link] != nil {
+            textView.textStorage.removeAttribute(.link, range: range)
+            textView.textStorage.removeAttribute(.underlineStyle, range: range)
             linkButton.isSelected = false
         }
         else {
@@ -810,8 +802,8 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
                 }
 
                 self.textView.textStorage.addAttributes([
-                    NSAttributedStringKey.link: url,
-                    NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+                    .link: url,
+                    .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                     ], range: range)
                 self.linkButton.isSelected = true
                 self.linkButton.isEnabled = true

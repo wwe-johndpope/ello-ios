@@ -27,7 +27,7 @@ struct ElloLinkedStore {
         writeConnection = database.newConnection()
     }
 
-    func parseLinked(_ linked: [String:[[String: Any]]], completion: @escaping Block) {
+    func parseLinked(_ linked: [String: [[String: Any]]], completion: @escaping Block) {
         if AppSetup.shared.isTesting {
             parseLinkedSync(linked)
             completion()
@@ -90,12 +90,18 @@ extension ElloLinkedStore {
         }
     }
 
-    static func databasePath(name: String? = nil) -> String {
-        var path = ""
-        if let baseURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ElloGroupName) {
-            path = baseURL.appendingPathComponent(name ?? ElloLinkedStore.databaseName).path
+    static func databaseFolder(appending appendURL: String? = nil) -> String? {
+        guard var baseURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ElloGroupName) else { return nil }
+
+        if let appendURL = appendURL {
+            baseURL = baseURL.appendingPathComponent(appendURL)
         }
-        return path
+        return baseURL.path
+    }
+
+    static func databasePath(name: String? = nil) -> String {
+        let databaseName = name ?? ElloLinkedStore.databaseName
+        return databaseFolder(appending: databaseName) ?? databaseName
     }
 
     func parseLinkedSync(_ linked: [String: [[String: Any]]]) {

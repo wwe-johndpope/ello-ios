@@ -69,8 +69,8 @@ final class ProfileViewController: StreamableViewController {
 
         title = currentUser.atName
         sharedInit()
-        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] _ in
-            self?.updateCachedImages()
+        currentUserChangedNotification = NotificationObserver(notification: CurrentUserChangedNotification) { [weak self] user in
+            self?.updateCachedImages(user: user)
         }
     }
 
@@ -224,7 +224,8 @@ extension ProfileViewController: ProfileScreenDelegate {
         }
         guard let user = user else { return }
 
-        createPost(text: "\(user.atName) ", fromController: self)
+        let text = "\(user.atName) "
+        createPost(text: text, fromController: self)
     }
 
     func hireTapped() {
@@ -274,9 +275,12 @@ extension ProfileViewController {
         return TemporaryCache.load(key)
     }
 
-    func updateCachedImages() {
+    func updateCachedImages(user: User) {
         if let cachedCoverImage = cachedImage(.coverImage) {
             screen.coverImage = cachedCoverImage
+        }
+        else if let coverImageURL = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true) {
+            screen.coverImageURL = coverImageURL
         }
     }
 
@@ -456,7 +460,7 @@ extension ProfileViewController {
 }
 
 // MARK: ProfileViewController: StreamDestination
-extension ProfileViewController:  StreamDestination {
+extension ProfileViewController: StreamDestination {
 
     var isPagingEnabled: Bool {
         get { return streamViewController.isPagingEnabled }
@@ -495,8 +499,7 @@ extension ProfileViewController:  StreamDestination {
         if let cachedImage = cachedImage(.coverImage) {
             screen.coverImage = cachedImage
         }
-        else if let coverImageURL = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true)
-        {
+        else if let coverImageURL = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true) {
             screen.coverImageURL = coverImageURL
         }
     }

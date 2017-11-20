@@ -1,4 +1,3 @@
-
 ////
 ///  ElloTabBarControllerSpec.swift
 //
@@ -86,19 +85,19 @@ class ElloTabBarControllerSpec: QuickSpec {
             }
 
             it("should load child1") {
-                subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
+                subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 0)!)
                 expect(subject.selectedViewController).to(equal(child1))
                 expect(child1.isViewLoaded).to(beTrue())
             }
 
             it("should load child2") {
-                subject.tabBar(subject.tabBar, didSelect: child2.tabBarItem)
+                subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 1)!)
                 expect(subject.selectedViewController).to(equal(child2))
                 expect(child2.isViewLoaded).to(beTrue())
             }
 
             it("should load child3") {
-                subject.tabBar(subject.tabBar, didSelect: child3.tabBarItem)
+                subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 2)!)
                 expect(subject.selectedViewController).to(equal(child3))
                 expect(child3.isViewLoaded).to(beTrue())
             }
@@ -109,14 +108,14 @@ class ElloTabBarControllerSpec: QuickSpec {
                     let vc2 = UIViewController()
                     child2.pushViewController(vc2, animated: false)
 
-                    subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
+                    subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 0)!)
                     expect(subject.selectedViewController).to(equal(child1))
 
-                    subject.tabBar(subject.tabBar, didSelect: child2.tabBarItem)
+                    subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 1)!)
                     expect(subject.selectedViewController).to(equal(child2))
                     expect(child2.topViewController).to(equal(vc2))
 
-                    subject.tabBar(subject.tabBar, didSelect: child2.tabBarItem)
+                    subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 1)!)
                     expect(child2.topViewController).to(equal(vc1))
                 }
 
@@ -130,11 +129,11 @@ class ElloTabBarControllerSpec: QuickSpec {
                     let vc = child1.topViewController
                     scrollView.contentOffset = CGPoint(x: 0, y: 200)
 
-                    subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
+                    subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 0)!)
                     expect(subject.selectedViewController).to(equal(child1))
                     expect(child1.topViewController).to(equal(vc))
 
-                    subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
+                    subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 0)!)
                     expect(child1.topViewController).to(equal(vc))
                     expect(scrollView.contentOffset).toEventually(equal(CGPoint(x: 0, y: 0)))
                 }
@@ -151,11 +150,11 @@ class ElloTabBarControllerSpec: QuickSpec {
                             }
                             let vc = child3.topViewController
 
-                            subject.tabBar(subject.tabBar, didSelect: child3.tabBarItem)
+                            subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 2)!)
                             expect(subject.selectedViewController).to(equal(child3))
                             expect(child3.topViewController).to(equal(vc))
 
-                            subject.tabBar(subject.tabBar, didSelect: child3.tabBarItem)
+                            subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 2)!)
                             expect(child3.topViewController).to(equal(vc))
                             expect(reloadPosted) == true
                         }
@@ -166,7 +165,6 @@ class ElloTabBarControllerSpec: QuickSpec {
             describe("tapping notification item") {
                 var responder: NotificationObserver!
                 var responded = false
-                var notificationsItem: UITabBarItem!
 
                 beforeEach {
                     responder = NotificationObserver(notification: NewContentNotifications.reloadNotifications) {
@@ -184,8 +182,6 @@ class ElloTabBarControllerSpec: QuickSpec {
                     subject.addChildViewController(child4)
                     subject.addChildViewController(child5)
                     subject.selectedTab = .discover
-
-                    notificationsItem = subject.tabBar.items![ElloTab.notifications.rawValue]
                 }
 
                 afterEach {
@@ -194,14 +190,14 @@ class ElloTabBarControllerSpec: QuickSpec {
                 }
 
                 it("should not notify after one tap") {
-                    subject.tabBar(subject.tabBar, didSelect: notificationsItem)
+                    subject.tabBar(subject.tabBar, didSelect: .notifications)
                     expect(responded) == false
                 }
 
                 it("should notify after two taps") {
                     subject.newNotificationsAvailable = true
-                    subject.tabBar(subject.tabBar, didSelect: notificationsItem)
-                    subject.tabBar(subject.tabBar, didSelect: notificationsItem)
+                    subject.tabBar(subject.tabBar, didSelect: .notifications)
+                    subject.tabBar(subject.tabBar, didSelect: .notifications)
                     expect(responded) == true
                 }
             }
@@ -267,7 +263,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                 ElloTabBarController.didShowNarration(.notifications, true)
                 ElloTabBarController.didShowNarration(.profile, true)
 
-                subject.tabBar(subject.tabBar, didSelect: child2.tabBarItem)
+                subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 1)!)
                 expect(subject.selectedViewController).to(equal(child2))
                 expect(subject.shouldShowNarration).to(beFalse())
                 expect(subject.isShowingNarration).to(beFalse())
@@ -279,7 +275,7 @@ class ElloTabBarControllerSpec: QuickSpec {
                 ElloTabBarController.didShowNarration(.notifications, false)
                 ElloTabBarController.didShowNarration(.profile, false)
 
-                subject.tabBar(subject.tabBar, didSelect: child1.tabBarItem)
+                subject.tabBar(subject.tabBar, didSelect: ElloTab(rawValue: 0)!)
                 expect(subject.selectedViewController).to(equal(child1), description: "selectedViewController")
                 expect(subject.shouldShowNarration).to(beTrue(), description: "shouldShowNarration")
                 expect(subject.isShowingNarration).to(beTrue(), description: "isShowingNarration")

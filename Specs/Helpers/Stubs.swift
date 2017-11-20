@@ -286,7 +286,11 @@ extension Post: Stubbable {
             summary: (values["summary"] as? [Regionable]) ?? [stubbedTextRegion]
         )
 
-        if let repostAuthor = values["repostAuthor"] as? User {
+        let repostAuthor: User? = values["repostAuthor"] as? User ?? (values["repostAuthorId"] as? String).flatMap { id in
+            return User.stub(["id": id])
+        }
+
+        if let repostAuthor = repostAuthor {
             ElloLinkedStore.shared.setObject(repostAuthor, forKey: repostAuthor.id, type: .usersType)
             post.addLinkObject("repost_author", key: repostAuthor.id, type: .usersType)
         }
@@ -302,6 +306,7 @@ extension Post: Stubbable {
         post.content = (values["content"] as? [Regionable]) ?? [stubbedTextRegion]
         post.repostContent = (values["repostContent"] as? [Regionable])
         post.repostId = (values["repostId"] as? String)
+        post.artistInviteId = (values["artistInviteId"] as? String)
         post.repostPath = (values["repostPath"] as? String)
         post.repostViaId = (values["repostViaId"] as? String)
         post.repostViaPath = (values["repostViaPath"] as? String)
@@ -587,9 +592,10 @@ extension PagePromotional: Stubbable {
             subheader: (values["subheader"] as? String) ?? "Default Subheader",
             ctaCaption: (values["ctaCaption"] as? String) ?? "Default CTA Caption",
             ctaURL: urlFromValue(values["ctaURL"]),
-            image: values["image"] as? Asset
+            image: values["image"] as? Asset,
+            isEditorial: (values["is_editorial"] as? Bool) ?? false,
+            isArtistInvite: (values["is_artist_invite"] as? Bool) ?? false
         )
-
 
         if let image = pagePromotional.image {
             pagePromotional.addLinkObject("image", key: image.id, type: .assetsType)

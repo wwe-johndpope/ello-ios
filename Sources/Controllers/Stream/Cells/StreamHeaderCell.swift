@@ -2,9 +2,13 @@
 ///  StreamHeaderCell.swift
 //
 
+let streamHeaderCellDidOpenNotification = TypedNotification<UICollectionViewCell>(name: "StreamCellDidOpenNotification")
+
+
 class StreamHeaderCell: UICollectionViewCell {
     static let reuseIdentifier = "StreamHeaderCell"
     struct Size {
+        static let height: CGFloat = 70
         static let gridAvatarHeight: CGFloat = 30
         static let listAvatarHeight: CGFloat = 40
     }
@@ -13,61 +17,20 @@ class StreamHeaderCell: UICollectionViewCell {
         return isGridView ? Size.gridAvatarHeight : Size.listAvatarHeight
     }
 
-    var ownPost = false {
-        didSet {
-            self.updateItems()
-        }
-    }
-
-    var ownComment = false {
-        didSet {
-            self.updateItems()
-        }
-    }
-
-    var canDeleteComment = false {
-        didSet {
-            self.updateItems()
-        }
-    }
-
     var followButtonVisible = false {
         didSet {
             setNeedsLayout()
         }
     }
 
-    var revealWidth: CGFloat {
-        if let items = bottomToolBar.items, items.count == 4 {
-            return 106.0
-        }
-        else {
-            return 54.0
-        }
-    }
-    var canReply = false {
-        didSet {
-            self.setNeedsLayout()
-        }
-    }
-
-    var cellOpenObserver: NotificationObserver?
-    var isOpen = false
-
     @IBOutlet var avatarButton: AvatarButton!
-    @IBOutlet var goToPostView: UIView!
-    @IBOutlet var bottomToolBar: UIToolbar!
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var innerContentView: UIView!
-    @IBOutlet var bottomContentView: UIView!
     @IBOutlet var categoryButton: UIButton!
     @IBOutlet var timestampLabel: UILabel!
-    @IBOutlet var chevronButton: StreamFooterButton!
     @IBOutlet var usernameButton: UIButton!
     @IBOutlet var relationshipControl: RelationshipControl!
-    @IBOutlet var replyButton: UIButton!
     @IBOutlet var repostedByButton: UIButton!
     @IBOutlet var repostIconView: UIImageView!
+    @IBOutlet var artistInviteSubmissionButton: UIButton!
 
     var isGridLayout = false
     var showUsername = true {
@@ -110,7 +73,7 @@ class StreamHeaderCell: UICollectionViewCell {
         return self.deleteItem.customView as! ImageLabelControl
     }
 
-    func setDetails(user: User?, repostedBy: User?, category: Category?) {
+    func setDetails(user: User?, repostedBy: User?, category: Category?, isSubmission: Bool) {
         avatarButton.setUserAvatarURL(user?.avatarURL())
         let username = user?.atName ?? ""
         usernameButton.setTitle(username, for: .normal)
@@ -120,37 +83,38 @@ class StreamHeaderCell: UICollectionViewCell {
         relationshipControl.userId = user?.id ?? ""
         relationshipControl.userAtName = user?.atName ?? ""
 
-        let repostedHidden: Bool
+        let repostedVisible: Bool
+        let aiSubmissionVisible: Bool
         if let atName = repostedBy?.atName {
             repostedByButton.setTitle("by \(atName)", for: .normal)
-            repostedHidden = false
+            repostedByButton.sizeToFit()
+
+            repostedVisible = true
+            aiSubmissionVisible = false
         }
         else {
-            repostedByButton.setTitle("", for: .normal)
-            repostedHidden = true
+            repostedVisible = false
+            aiSubmissionVisible = isSubmission
         }
-        repostedByButton.sizeToFit()
-        repostedByButton.isHidden = repostedHidden
-        repostIconView.isHidden = repostedHidden
+        let categoryVisible: Bool = category != nil && !repostedVisible && !aiSubmissionVisible
+        repostedByButton.isHidden = !repostedVisible
+        repostIconView.isHidden = !repostedVisible
+        categoryButton.isHidden = !categoryVisible
+        artistInviteSubmissionButton.isHidden = !aiSubmissionVisible
 
-        if let category = category, repostedBy == nil {
+        if let category = category, categoryVisible {
             let attributedString = NSAttributedString(string: "in ", attributes: [
-                NSAttributedStringKey.font: UIFont.defaultFont(),
-                NSAttributedStringKey.foregroundColor: UIColor.greyA,
+                .font: UIFont.defaultFont(),
+                .foregroundColor: UIColor.greyA,
                 ])
             let categoryName = NSAttributedString(string: category.name, attributes: [
-                NSAttributedStringKey.font: UIFont.defaultFont(),
-                NSAttributedStringKey.foregroundColor: UIColor.greyA,
-                NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+                .font: UIFont.defaultFont(),
+                .foregroundColor: UIColor.greyA,
+                .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                 ])
             categoryButton.setAttributedTitle(attributedString + categoryName, for: .normal)
-            categoryButton.isHidden = false
+            categoryButton.sizeToFit()
         }
-        else {
-            categoryButton.setTitle("", for: .normal)
-            categoryButton.isHidden = true
-        }
-        categoryButton.sizeToFit()
 
         setNeedsLayout()
     }
@@ -158,78 +122,33 @@ class StreamHeaderCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        bottomToolBar.isTranslucent = false
-        bottomToolBar.barTintColor = UIColor.white
-        bottomToolBar.clipsToBounds = true
-        bottomToolBar.layer.borderColor = UIColor.white.cgColor
-
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.scrollsToTop = false
-        addObservers()
-        addButtonHandlers()
-
         styleUsernameButton()
         styleTimestampLabel()
 
         let goToPostTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(postTapped(_:)))
-        goToPostView.addGestureRecognizer(goToPostTapRecognizer)
+        contentView.addGestureRecognizer(goToPostTapRecognizer)
 
         let longPressGesture = UILongPressGestureRecognizer()
         longPressGesture.addTarget(self, action: #selector(longPressed(_:)))
         contentView.addGestureRecognizer(longPressGesture)
 
-        replyButton.setTitle("", for: .normal)
-        replyButton.setImages(.reply)
-
         repostIconView.setInterfaceImage(.repost, style: .selected)
+
+        let attributedSubmissionTitle = NSAttributedString(string: InterfaceString.ArtistInvites.PostSubmissionHeader, attributes: [
+            .font: UIFont.defaultFont(),
+            .foregroundColor: UIColor.greyA,
+            .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+            ])
+        artistInviteSubmissionButton.setAttributedTitle(attributedSubmissionTitle, for: .normal)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = bounds
-        innerContentView.frame = bounds
-        bottomContentView.frame = bounds
-        scrollView.frame = bounds
-        bottomToolBar.frame = bounds
-        goToPostView.frame = bounds
-        chevronButton.setImages(.angleBracket)
-        scrollView.contentSize = CGSize(width: contentView.frame.size.width + revealWidth, height: scrollView.frame.size.height)
         positionTopContent()
-        repositionBottomContent()
-    }
-
-// MARK: - Public
-
-    func close() {
-        isOpen = false
-        closeChevron()
-        scrollView.contentOffset = .zero
-    }
-
-// MARK: - Private
-
-    private func updateItems() {
-        if ownComment {
-            bottomToolBar.items = [
-                flexibleItem(), editItem, deleteItem, fixedItem(-10)
-            ]
-        }
-        else if canDeleteComment {
-            bottomToolBar.items = [
-                flexibleItem(), deleteItem, fixedItem(-10)
-            ]
-        }
-        else if ownPost {
-            bottomToolBar.items = [
-                flexibleItem(), flagItem, deleteItem, fixedItem(-10)
-            ]
-        }
-        else {
-            bottomToolBar.items = [
-                flexibleItem(), flagItem, fixedItem(-10)
-            ]
-        }
     }
 
     private func positionTopContent() {
@@ -237,9 +156,6 @@ class StreamHeaderCell: UICollectionViewCell {
         let rightSidePadding: CGFloat = 15
         let avatarPadding: CGFloat = 15
 
-        let timestampMargin: CGFloat = 11.5
-        let buttonWidth: CGFloat = 30
-        let buttonMargin: CGFloat = 5
         let minimumUsernameWidth: CGFloat = 44
         let minimumRepostedWidth: CGFloat = 44
 
@@ -251,25 +167,7 @@ class StreamHeaderCell: UICollectionViewCell {
             )
         let usernameX = avatarButton.frame.maxX + avatarPadding
 
-        if chevronHidden {
-            chevronButton.frame = CGRect(
-                x: contentView.frame.width - rightSidePadding,
-                y: 0,
-                width: 0,
-                height: frame.height
-                )
-        }
-        else {
-            chevronButton.frame = CGRect(
-                x: contentView.frame.width - buttonWidth - buttonMargin,
-                y: 0,
-                width: buttonWidth,
-                height: frame.height
-                )
-        }
-
         timestampLabel.sizeToFit()
-        var timestampX = chevronButton.frame.x - timestampLabel.frame.width
 
         relationshipControl.isHidden = !followButtonVisible
         usernameButton.isHidden = followButtonVisible
@@ -288,25 +186,7 @@ class StreamHeaderCell: UICollectionViewCell {
             }
         }
 
-        replyButton.frame.size.width = buttonWidth
-        replyButton.frame.size.height = contentView.frame.size.height
-        replyButton.frame.origin.x = timestampX - buttonWidth - buttonMargin - buttonMargin - rightSidePadding
-        replyButton.isHidden = isGridLayout || !canReply
-
-        var maxUsernameWidth: CGFloat = 0
-        if isGridLayout {
-            maxUsernameWidth = contentView.frame.width - usernameX - rightSidePadding
-        }
-        else {
-            maxUsernameWidth = timestampX - usernameX - rightSidePadding
-
-            if canReply {
-                maxUsernameWidth -= replyButton.frame.width - timestampMargin
-                timestampX -= timestampMargin
-            }
-        }
-        let maxRepostedWidth = maxUsernameWidth - 26
-
+        let timestampX = contentView.frame.width - rightSidePadding - timestampLabel.frame.width
         timestampLabel.frame = CGRect(
             x: timestampX,
             y: 0,
@@ -314,17 +194,27 @@ class StreamHeaderCell: UICollectionViewCell {
             height: contentView.frame.height
             )
 
+        var maxUsernameWidth: CGFloat = 0
+        if isGridLayout {
+            maxUsernameWidth = contentView.frame.width - usernameX - rightSidePadding
+        }
+        else {
+            maxUsernameWidth = timestampX - usernameX - rightSidePadding
+        }
+        let maxRepostedWidth = maxUsernameWidth - 26
+
         let usernameWidth = max(minimumUsernameWidth, min(usernameButton.frame.width, maxUsernameWidth))
         let repostedWidth = max(minimumRepostedWidth, min(repostedByButton.frame.width, maxRepostedWidth))
         let categoryWidth = max(minimumRepostedWidth, min(categoryButton.frame.width, maxUsernameWidth))
 
         let hasRepostAuthor = !repostedByButton.isHidden
         let hasCategory = !categoryButton.isHidden
+        let hasAISubmission = !artistInviteSubmissionButton.isHidden
         let usernameButtonHeight: CGFloat
         let usernameButtonY: CGFloat
 
         let secondaryLabelY: CGFloat
-        if hasRepostAuthor || hasCategory {
+        if hasRepostAuthor || hasCategory || hasAISubmission {
             usernameButtonHeight = 20
             usernameButtonY = contentView.frame.height / 2 - usernameButtonHeight
 
@@ -367,6 +257,11 @@ class StreamHeaderCell: UICollectionViewCell {
             width: categoryWidth,
             height: usernameButtonHeight
         )
+        artistInviteSubmissionButton.frame.origin = CGPoint(
+            x: usernameX,
+            y: secondaryLabelY
+            )
+        artistInviteSubmissionButton.frame.size.height = usernameButtonHeight
     }
 
     private func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
@@ -379,44 +274,16 @@ class StreamHeaderCell: UICollectionViewCell {
         return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     }
 
-    private func addObservers() {
-        cellOpenObserver = NotificationObserver(notification: streamCellDidOpenNotification) { cell in
-            if cell != self && self.isOpen {
-                nextTick {
-                    elloAnimate {
-                        self.close()
-                    }
-                }
-            }
-        }
-    }
-
-    private func addButtonHandlers() {
-        flagControl.addTarget(self, action: #selector(StreamHeaderCell.flagButtonTapped(_:)), for: .touchUpInside)
-        replyButton.addTarget(self, action: #selector(StreamHeaderCell.replyButtonTapped(_:)), for: .touchUpInside)
-        deleteControl.addTarget(self, action: #selector(StreamHeaderCell.deleteButtonTapped(_:)), for: .touchUpInside)
-        editControl.addTarget(self, action: #selector(StreamHeaderCell.editButtonTapped(_:)), for: .touchUpInside)
-    }
-
     private func styleUsernameButton() {
         usernameButton.titleLabel?.font = UIFont.defaultFont()
         usernameButton.setTitleColor(UIColor.greyA, for: .normal)
         usernameButton.titleLabel?.lineBreakMode = .byTruncatingTail
-        usernameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+        usernameButton.contentHorizontalAlignment = .left
     }
 
     private func styleTimestampLabel() {
         timestampLabel.textColor = UIColor.greyA
         timestampLabel.font = UIFont.defaultFont()
-    }
-
-    private func repositionBottomContent() {
-        var frame = bottomContentView.frame
-        frame.size.height = innerContentView.bounds.height
-        frame.size.width = innerContentView.bounds.width
-        frame.origin.y = innerContentView.frame.origin.y
-        frame.origin.x = scrollView.contentOffset.x
-        bottomContentView.frame = frame
     }
 
 // MARK: - IBActions
@@ -432,48 +299,19 @@ class StreamHeaderCell: UICollectionViewCell {
         responder?.userTappedAuthor(cell: self)
     }
 
-    @IBAction func usernameTapped(_ sender: UIButton) {
-        let responder: UserResponder? = findResponder()
-        responder?.userTappedAuthor(cell: self)
-    }
-
     @IBAction func categoryTapped(_ sender: UIButton) {
         let responder: CategoryResponder? = findResponder()
         responder?.categoryCellTapped(cell: self)
     }
 
+    @IBAction func artistInviteSubmissionTapped(_ sender: UIButton) {
+        let responder: StreamCellResponder? = findResponder()
+        responder?.artistInviteSubmissionTapped(cell: self)
+    }
+
     @IBAction func reposterTapped(_ sender: UIButton) {
         let responder: UserResponder? = findResponder()
         responder?.userTappedReposter(cell: self)
-    }
-
-    @IBAction func flagButtonTapped(_ sender: StreamFooterButton) {
-        let responder: PostbarResponder? = findResponder()
-        responder?.flagCommentButtonTapped(self)
-    }
-
-    @IBAction func replyButtonTapped(_ sender: StreamFooterButton) {
-        let responder: PostbarResponder? = findResponder()
-        responder?.replyToCommentButtonTapped(self)
-    }
-
-    @IBAction func deleteButtonTapped(_ sender: StreamFooterButton) {
-        let responder: PostbarResponder? = findResponder()
-        responder?.deleteCommentButtonTapped(self)
-    }
-
-    @IBAction func editButtonTapped(_ sender: StreamFooterButton) {
-        let responder: PostbarResponder? = findResponder()
-        responder?.editCommentButtonTapped(self)
-    }
-
-    @IBAction func chevronButtonTapped(_ sender: StreamFooterButton) {
-        let contentOffset = isOpen ? .zero : CGPoint(x: revealWidth, y: 0)
-        elloAnimate {
-            self.scrollView.contentOffset = contentOffset
-            self.openChevron(isOpen: self.isOpen)
-        }
-        Tracker.shared.commentBarVisibilityChanged(isOpen)
     }
 
     @IBAction func longPressed(_ gesture: UIGestureRecognizer) {
@@ -484,73 +322,10 @@ class StreamHeaderCell: UICollectionViewCell {
     }
 }
 
-extension StreamHeaderCell {
-
-    private func openChevron(isOpen: Bool) {
-        if isOpen {
-            rotateChevron(CGFloat(0))
-        }
-        else {
-            rotateChevron(CGFloat.pi)
-        }
-    }
-
-    private func closeChevron() {
-        openChevron(isOpen: false)
-    }
-
-    private func rotateChevron(_ angle: CGFloat) {
-        var normalized = angle
-        if angle < -CGFloat.pi {
-            normalized = -CGFloat.pi
-        }
-        else if angle > CGFloat.pi {
-            normalized = CGFloat.pi
-        }
-        self.chevronButton.transform = CGAffineTransform(rotationAngle: normalized)
-    }
-
-}
-
 extension StreamHeaderCell: ElloTextViewDelegate {
     func textViewTapped(_ link: String, object: ElloAttributedObject) {
         let responder: UserResponder? = findResponder()
         responder?.userTappedAuthor(cell: self)
     }
     func textViewTappedDefault() {}
-}
-
-// MARK: UIScrollViewDelegate
-extension StreamHeaderCell: UIScrollViewDelegate {
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        repositionBottomContent()
-
-        if scrollView.contentOffset.x < 0 {
-            scrollView.contentOffset = .zero
-        }
-
-        if scrollView.contentOffset.x >= revealWidth {
-            if !isOpen {
-                isOpen = true
-                openChevron(isOpen: true)
-                postNotification(streamCellDidOpenNotification, value: self)
-                Tracker.shared.commentBarVisibilityChanged(true)
-            }
-        } else {
-            let angle: CGFloat = -CGFloat.pi + CGFloat.pi * scrollView.contentOffset.x / revealWidth
-            rotateChevron(angle)
-            isOpen = false
-        }
-    }
-
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.x > 0 {
-            targetContentOffset.pointee.x = revealWidth
-        }
-        else {
-            targetContentOffset.pointee.x = 0
-        }
-    }
-
 }

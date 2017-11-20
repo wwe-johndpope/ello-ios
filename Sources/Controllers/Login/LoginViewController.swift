@@ -28,6 +28,15 @@ class LoginViewController: BaseElloViewController {
             }
     }
 
+    override func showNavBars() {
+        super.showNavBars()
+        screen.blackBarIsVisible = true
+    }
+
+    override func hideNavBars() {
+        super.hideNavBars()
+        screen.blackBarIsVisible = false
+    }
 }
 
 extension LoginViewController: LoginDelegate {
@@ -90,7 +99,7 @@ extension LoginViewController: LoginDelegate {
             screen.loadingHUD(visible: true)
 
             CredentialsAuthService().authenticate(email: username, password: password)
-                .thenFinally { _ in
+                .then { _ -> Void in
                     Tracker.shared.loginSuccessful()
                     self.loadCurrentUser()
                 }

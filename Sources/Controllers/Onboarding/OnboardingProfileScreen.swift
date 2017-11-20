@@ -253,7 +253,6 @@ class OnboardingProfileScreen: Screen, OnboardingProfileScreenProtocol {
 extension OnboardingProfileScreen {
     @objc
     func uploadCoverImageAction() {
-
         _ = resignFirstResponder()
         uploading = .coverImage
         var config = ImagePickerSheetConfig()
@@ -282,8 +281,7 @@ extension OnboardingProfileScreen {
 extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         guard
-            let uploading = uploading,
-            let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            let uploading = uploading
         else {
             delegate?.dismissController()
             return
@@ -295,7 +293,7 @@ extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePicker
             processPHAssets([asset])
             delegate?.dismissController()
         }
-        else {
+        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image.copyWithCorrectOrientationAndSize { image in
                 if let image = image {
                     self.setImage(ImageRegionData(image: image), target: uploading, updateDelegate: true)
@@ -303,6 +301,9 @@ extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePicker
 
                 self.delegate?.dismissController()
             }
+        }
+        else {
+            delegate?.dismissController()
         }
     }
 
@@ -314,10 +315,8 @@ extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePicker
         guard let uploading = uploading else { return }
 
         AssetsToRegions.processPHAssets(assets) { (images: [ImageRegionData]) in
-            for imageRegion in images {
-                self.setImage(imageRegion, target: uploading, updateDelegate: true)
-                break
-            }
+            guard let imageRegion = images.first else { return }
+            self.setImage(imageRegion, target: uploading, updateDelegate: true)
         }
     }
 
@@ -336,8 +335,8 @@ extension OnboardingProfileScreen: UINavigationControllerDelegate, UIImagePicker
 
         if let imageRegion = imageRegion {
             imageView.contentMode = .scaleAspectFill
-            if let data = imageRegion.data, imageRegion.contentType == "image/gif" {
-                imageView.animatedImage = FLAnimatedImage(animatedGIFData: data as Data!)
+            if let data = imageRegion.data, imageRegion.isAnimatedGif {
+                imageView.animatedImage = FLAnimatedImage(animatedGIFData: data)
             }
             else {
                 imageView.image = imageRegion.image

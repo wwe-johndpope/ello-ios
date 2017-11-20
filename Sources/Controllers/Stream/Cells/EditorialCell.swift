@@ -233,7 +233,7 @@ extension EditorialCell.Config {
         }
 
         let size: Editorial.Size
-        let width = UIWindow.windowWidth()
+        let width = AppSetup.shared.windowSize.width
         if width > 500 {
             size = .size2x2
         }

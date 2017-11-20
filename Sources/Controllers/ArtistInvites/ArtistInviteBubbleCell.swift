@@ -116,8 +116,8 @@ class ArtistInviteBubbleCell: CollectionViewCell, ArtistInviteConfigurableCell {
             make.width.lessThanOrEqualTo(bg).priority(Priority.required)
             make.height.equalTo(logoImage.snp.width).multipliedBy(Size.logoImageSize.height / Size.logoImageSize.width).priority(Priority.required)
         }
-        logoImage.setContentCompressionResistancePriority(UILayoutPriority(rawValue: Priority.low.constraintPriorityTargetValue), for: .vertical)
-        logoImage.setContentCompressionResistancePriority(UILayoutPriority(rawValue: Priority.low.constraintPriorityTargetValue), for: .horizontal)
+        logoImage.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .vertical)
+        logoImage.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
 
         titleLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(bg).inset(Size.infoMargins)

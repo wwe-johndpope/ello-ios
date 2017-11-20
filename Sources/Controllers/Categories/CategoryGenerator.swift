@@ -106,7 +106,7 @@ private extension CategoryGenerator {
 
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
-            StreamCellItem(type: .placeholder, placeholderType: .categoryHeader),
+            StreamCellItem(type: .placeholder, placeholderType: .promotionalHeader),
             StreamCellItem(type: .placeholder, placeholderType: .streamPosts)
         ])
     }
@@ -124,7 +124,7 @@ private extension CategoryGenerator {
 
         if let jsonable = jsonable {
             destination?.setPrimary(jsonable: jsonable)
-            destination?.replacePlaceholder(type: .categoryHeader, items: headerItems())
+            destination?.replacePlaceholder(type: .promotionalHeader, items: headerItems())
             doneOperation.run()
         }
     }
@@ -150,20 +150,16 @@ private extension CategoryGenerator {
         else { return }
 
         CategoryService().loadCategory(slug)
-            .thenFinally { [weak self] category in
-                guard
-                    let `self` = self,
-                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
-                else { return }
+            .then { category -> Void in
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
                 self.category = category
                 self.destination?.setPrimary(jsonable: category)
-                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+                self.destination?.replacePlaceholder(type: .promotionalHeader, items: self.headerItems())
 
                 doneOperation.run()
             }
-            .catch { [weak self] _ in
-                guard let `self` = self else { return }
+            .catch { _ in
                 self.destination?.primaryJSONAbleNotFound()
                 self.queue.cancelAllOperations()
             }
@@ -172,12 +168,9 @@ private extension CategoryGenerator {
     func loadPagePromotional(_ doneOperation: AsyncOperation) {
         guard usesPagePromo() else { return }
 
-        PagePromotionalService().loadPagePromotionals()
-            .thenFinally { [weak self] promotionals in
-                guard
-                    let `self` = self,
-                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
-                else { return }
+        PagePromotionalService().loadCategoryPromotionals()
+            .then { promotionals -> Void in
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
                 if let pagePromotional = promotionals?.randomItem() {
                     self.pagePromotional = pagePromotional
@@ -186,20 +179,18 @@ private extension CategoryGenerator {
                 else {
                     self.destination?.primaryJSONAbleNotFound()
                 }
-                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+                self.destination?.replacePlaceholder(type: .promotionalHeader, items: self.headerItems())
                 doneOperation.run()
             }
-            .catch { [weak self] _ in
-                guard let `self` = self else { return }
+            .catch { _ in
                 self.destination?.primaryJSONAbleNotFound()
                 self.queue.cancelAllOperations()
-        }
+            }
     }
 
     func loadCategories() {
         CategoryService().loadCategories()
-            .thenFinally { [weak self] categories in
-                guard let `self` = self else { return }
+            .then { categories -> Void in
                 self.categories = categories
                 self.categoryStreamDestination?.set(categories: categories)
             }
@@ -235,11 +226,8 @@ private extension CategoryGenerator {
             endpoint: endpoint,
             streamKind: streamKind
             )
-            .thenFinally { [weak self] response in
-                guard
-                    let `self` = self,
-                    self.loadingToken.isValidInitialPageLoadingToken(self.localToken)
-                else { return }
+            .then { response -> Void in
+                guard self.loadingToken.isValidInitialPageLoadingToken(self.localToken) else { return }
 
                 switch response {
                 case let .jsonables(jsonables, responseConfig):
@@ -253,7 +241,7 @@ private extension CategoryGenerator {
                                 self.destination?.replacePlaceholder(type: .streamPosts, items: noItems) {
                                     self.destination?.isPagingEnabled = false
                                 }
-                                self.destination?.replacePlaceholder(type: .categoryHeader, items: self.headerItems())
+                                self.destination?.replacePlaceholder(type: .promotionalHeader, items: self.headerItems())
                             }
                             else {
                                 self.destination?.replacePlaceholder(type: .streamPosts, items: items) {
@@ -269,10 +257,9 @@ private extension CategoryGenerator {
                     self.queue.cancelAllOperations()
                 }
             }
-            .catch { [weak self] _ in
-                    guard let `self` = self else { return }
-                    self.destination?.primaryJSONAbleNotFound()
-                    self.queue.cancelAllOperations()
+            .catch { _ in
+                self.destination?.primaryJSONAbleNotFound()
+                self.queue.cancelAllOperations()
             }
     }
 }

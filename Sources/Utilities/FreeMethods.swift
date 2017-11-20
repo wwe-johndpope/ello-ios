@@ -19,6 +19,14 @@ func getlog() -> [(String, String)] {
 }
 
 
+typealias Block = () -> Void
+typealias BoolBlock = (Bool) -> Void
+typealias AfterBlock = () -> Block
+typealias ThrottledBlock = (@escaping Block) -> Void
+typealias TakesIndexBlock = (Int) -> Void
+typealias OnHeightMismatch = (CGFloat) -> Void
+
+
 // MARK: Animations
 
 struct AnimationOptions {
@@ -28,11 +36,11 @@ struct AnimationOptions {
 }
 
 class AnimationPromise {
-    var completionBlock: ((Bool) -> Void)?
-    var alwaysBlock: (() -> Void)?
+    var completionBlock: BoolBlock?
+    var alwaysBlock: Block?
     var resolved: Bool?
 
-    func completion(_ block: @escaping (Bool) -> Void) {
+    func completion(_ block: @escaping BoolBlock) {
         if let resolved = resolved {
             block(resolved)
             return
@@ -64,7 +72,7 @@ func animate(
     delay: TimeInterval = 0,
     options: UIViewAnimationOptions = UIViewAnimationOptions(),
     animated: Bool? = nil,
-    animations: @escaping () -> Void
+    animations: @escaping Block
     ) -> AnimationPromise
 {
     return elloAnimate(duration: duration, delay: delay, options: options, animated: animated, animations: animations)
@@ -73,7 +81,7 @@ func animate(
 @discardableResult
 func animateWithKeyboard(
     animated: Bool? = nil,
-    animations: @escaping () -> Void
+    animations: @escaping Block
     ) -> AnimationPromise
 {
     return elloAnimate(duration: Keyboard.shared.duration, options: Keyboard.shared.options, animated: animated, animations: animations)
@@ -85,7 +93,7 @@ func elloAnimate(
     delay: TimeInterval = 0,
     options: UIViewAnimationOptions = UIViewAnimationOptions(),
     animated: Bool? = nil,
-    animations: @escaping () -> Void
+    animations: @escaping Block
     ) -> AnimationPromise
 {
     let shouldAnimate: Bool = animated ?? !AppSetup.shared.isTesting
@@ -97,7 +105,7 @@ func elloAnimate(
 private func performAnimation(
     options: AnimationOptions,
     animated: Bool = true,
-    animations: @escaping () -> Void
+    animations: @escaping Block
     ) -> AnimationPromise
 {
     let promise = AnimationPromise()
@@ -111,17 +119,8 @@ private func performAnimation(
     return promise
 }
 
-// MARK: Async, Timed, and Throttled closures
-
-typealias Block = () -> Void
-typealias AfterBlock = () -> Block
-typealias ThrottledBlock = (@escaping Block) -> Void
-typealias TakesIndexBlock = (Int) -> Void
-typealias OnHeightMismatch = (CGFloat) -> Void
-
-
 class Proc {
-    var block: Block
+    private var block: Block
 
     init(_ block: @escaping Block) {
         self.block = block

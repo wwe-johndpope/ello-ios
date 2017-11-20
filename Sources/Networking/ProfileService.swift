@@ -35,20 +35,24 @@ struct ProfileService {
             }
     }
 
-    func updateUserCoverImage(_ image: ImageRegionData, properties: [Profile.Property: Any] = [:]) -> Promise<UploadSuccess> {
-        return updateUserImage(image, key: .coverImageUrl, properties: properties)
+    func updateUserCoverImage(_ imageRegion: ImageRegionData, properties: [Profile.Property: Any] = [:]) -> Promise<UploadSuccess> {
+        return updateUserImage(imageRegion, key: .coverImageUrl, properties: properties)
             .then { (url, user) -> UploadSuccess in
                 user.updateDefaultImages(avatarURL: nil, coverImageURL: url)
-                TemporaryCache.save(.coverImage, image: image.image)
+                if !imageRegion.isAnimatedGif {
+                    TemporaryCache.save(.coverImage, image: imageRegion.image)
+                }
                 return (url, user)
             }
     }
 
-    func updateUserAvatarImage(_ image: ImageRegionData, properties: [Profile.Property: Any] = [:]) -> Promise<UploadSuccess> {
-        return updateUserImage(image, key: .avatarUrl, properties: properties)
+    func updateUserAvatarImage(_ imageRegion: ImageRegionData, properties: [Profile.Property: Any] = [:]) -> Promise<UploadSuccess> {
+        return updateUserImage(imageRegion, key: .avatarUrl, properties: properties)
             .then { (url, user) -> UploadSuccess in
                 user.updateDefaultImages(avatarURL: url, coverImageURL: nil)
-                TemporaryCache.save(.avatar, image: image.image)
+                if !imageRegion.isAnimatedGif {
+                    TemporaryCache.save(.avatar, image: imageRegion.image)
+                }
                 return (url, user)
             }
     }
@@ -127,7 +131,7 @@ struct ProfileService {
     }
 
     func updateUserDeviceToken(_ token: Data) -> Promise<Void> {
-        log(comment: "push token", object: String((token as NSData).description.characters.filter { !"<> ".characters.contains($0) }))
+        log(comment: "push token", object: String((token as NSData).description.filter { !"<> ".contains($0) }))
         return ElloProvider.shared.request(.pushSubscriptions(token: token))
             .asVoid()
     }

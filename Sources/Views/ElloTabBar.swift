@@ -144,6 +144,7 @@ class ElloTabBar: UIView {
         let tab = tabs[tab.rawValue]
         let button = tabbarButtons[tab.rawValue]
 
+        redDot.layer.masksToBounds = true
         redDot.layer.cornerRadius = radius
         redDot.snp.makeConstraints { make in
             make.leading.equalTo(button.snp.centerX).offset(tab.redDotMargins.x)

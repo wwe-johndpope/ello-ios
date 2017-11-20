@@ -34,18 +34,16 @@ class AvatarButton: UIButton {
 
         pin_setImage(from: url) { result in
             guard result.image != nil else { return }
+            self.invalidateIntrinsicContentSize()
 
             if result.resultType != .memoryCache {
                 self.alpha = 0
-                UIView.animate(withDuration: 0.3,
-                    delay:0.0,
-                    options:UIViewAnimationOptions.curveLinear,
-                    animations: {
-                        self.alpha = 1.0
-                    }, completion: nil)
+                elloAnimate {
+                    self.alpha = 1
+                }
             }
             else {
-                self.alpha = 1.0
+                self.alpha = 1
             }
         }
     }

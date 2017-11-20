@@ -2,6 +2,9 @@
 ///  SettingsViewController.swift
 //
 
+import Photos
+import FLAnimatedImage
+
 enum SettingsRow: Int {
     case coverImage
     case avatarImage
@@ -87,8 +90,8 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     @IBOutlet weak var avatarImageView: UIView!
     @IBOutlet weak var profileDescription: StyledLabel!
-    @IBOutlet weak var coverImage: UIImageView!
-    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var coverImage: FLAnimatedImageView!
+    @IBOutlet weak var avatarImage: FLAnimatedImageView!
     var scrollLogic: ElloScrollLogic!
     var appViewController: AppViewController? {
         return (parent as? SettingsContainerViewController)?.appViewController
@@ -110,7 +113,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
     @IBOutlet weak var bioTextView: ElloEditableTextView!
     @IBOutlet weak var bioTextCountLabel: StyledLabel!
     @IBOutlet weak var bioTextStatusImage: UIImageView!
-    private var bioTextViewDidChange: (() -> Void)?
+    private var bioTextViewDidChange: Block?
 
     @IBOutlet weak var linksTextFieldView: ElloTextFieldView!
     @IBOutlet weak var locationTextFieldView: ElloTextFieldView!
@@ -131,7 +134,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     var credentialSettingsViewController: CredentialSettingsViewController?
     var dynamicSettingsViewController: DynamicSettingsViewController?
-    var photoSaveCallback: ((UIImage) -> Void)?
+    var photoSaveCallback: ((ImageRegionData) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -190,7 +193,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
         }
 
         ProfileService().loadCurrentUser()
-            .thenFinally { [weak self] user in
+            .then { [weak self] user -> Void in
                 guard let `self` = self else { return }
                 self.updateCurrentUser(user)
             }
@@ -252,7 +255,7 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             bioLabel.text = InterfaceString.Settings.Bio
         }
 
-        bioTextView.attributedText = ElloAttributedString.style(currentUser?.profile?.shortBio ?? "")
+        bioTextView.attributedText = NSAttributedString(defaults: currentUser?.profile?.shortBio ?? "")
         nameTextFieldView.textField.text = currentUser?.name
 
         if let links = currentUser?.externalLinksList {
@@ -296,7 +299,9 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             guard let `self` = self else { return }
             let name = self.nameTextFieldView.textField.text ?? ""
             ProfileService().updateUserProfile([.name: name])
-                .thenFinally { user in
+                .then { [weak self] user -> Void in
+                    guard let `self` = self else { return }
+
                     self.updateCurrentUser(user)
                     self.nameTextFieldView.setState(.ok)
                 }
@@ -323,7 +328,9 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             else { return }
 
             ProfileService().updateUserProfile([.bio: bio])
-                .thenFinally { user in
+                .then { [weak self] user -> Void in
+                    guard let `self` = self else { return }
+
                     self.updateCurrentUser(user)
                     self.bioTextStatusImage.image = ValidationState.ok.imageRepresentation
                 }
@@ -348,7 +355,9 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             else { return }
 
             ProfileService().updateUserProfile([.links: links])
-                .thenFinally { user in
+                .then { [weak self] user -> Void in
+                    guard let `self` = self else { return }
+
                     self.updateCurrentUser(user)
                     self.linksTextFieldView.setState(.ok)
                 }
@@ -378,13 +387,12 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
             if location != self.currentUser?.location {
                 ProfileService().updateUserProfile([.location: location])
-                    .thenFinally { user in
+                    .then { [weak self] user -> Void in
+                        guard let `self` = self else { return }
+
                         self.updateCurrentUser(user)
-                        guard self.locationTextFieldView.textField.text?.isEmpty == false else {
-                            self.locationTextFieldView.setState(.none)
-                            return
-                        }
-                        self.locationTextFieldView.setState(.ok)
+                        let isValid = self.locationTextFieldView.textField.text?.isEmpty == false
+                        self.locationTextFieldView.setState(isValid ? .ok : .none)
                     }
                     .catch { _ in
                         self.locationTextFieldView.setState(.error)
@@ -449,17 +457,25 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     @IBAction
     func coverImageTapped() {
-        photoSaveCallback = { image in
+        photoSaveCallback = { imageRegion in
             _ = ElloHUD.showLoadingHud()
-            ProfileService().updateUserCoverImage(ImageRegionData(image: image))
-                .thenFinally { url, _ in
+            ProfileService().updateUserCoverImage(imageRegion)
+                .then { [weak self] url, _ -> Void in
+                    guard let `self` = self else { return }
+
                     if let user = self.currentUser {
-                        let asset = Asset(url: url, image: image)
+                        let asset = Asset(url: url)
                         user.coverImage = asset
 
                         postNotification(CurrentUserChangedNotification, value: user)
                     }
-                    self.coverImage.image = image
+
+                    if imageRegion.isAnimatedGif {
+                        self.coverImage.pin_setImage(from: url)
+                    }
+                    else {
+                        self.coverImage.image = imageRegion.image
+                    }
                     self.alertUserOfImageProcessing(InterfaceString.Settings.CoverImageUploaded)
                 }
                 .always {
@@ -471,17 +487,25 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
 
     @IBAction
     func avatarImageTapped() {
-        photoSaveCallback = { image in
+        photoSaveCallback = { imageRegion in
             _ = ElloHUD.showLoadingHud()
-            ProfileService().updateUserAvatarImage(ImageRegionData(image: image))
-                .thenFinally { url, _ in
+            ProfileService().updateUserAvatarImage(imageRegion)
+                .then { [weak self] url, _ -> Void in
+                    guard let `self` = self else { return }
+
                     if let user = self.currentUser {
-                        let asset = Asset(url: url, image: image)
+                        let asset = Asset(url: url)
                         user.avatar = asset
 
                         postNotification(CurrentUserChangedNotification, value: user)
                     }
-                    self.avatarImage.image = image
+
+                    if imageRegion.isAnimatedGif {
+                        self.avatarImage.pin_setImage(from: url)
+                    }
+                    else {
+                        self.avatarImage.image = imageRegion.image
+                    }
                     self.alertUserOfImageProcessing(InterfaceString.Settings.AvatarUploaded)
                 }
                 .always {
@@ -542,16 +566,27 @@ extension SettingsViewController: CredentialSettingsResponder, DynamicSettingsDe
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let url = info[UIImagePickerControllerReferenceURL] as? URL,
+            let asset = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil).firstObject
+        {
+            AssetsToRegions.processPHAssets([asset]) { (images: [ImageRegionData]) in
+                guard let imageRegion = images.first else { return }
+                self.photoSaveCallback?(imageRegion)
+            }
+
+            dismiss(animated: true, completion: .none)
+        }
+        else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image.copyWithCorrectOrientationAndSize { image in
                 if let image = image {
-                    self.photoSaveCallback?(image)
+                    let imageRegion = ImageRegionData(image: image)
+                    self.photoSaveCallback?(imageRegion)
                 }
                 self.dismiss(animated: true, completion: .none)
             }
         }
         else {
-            self.dismiss(animated: true, completion: .none)
+            dismiss(animated: true, completion: .none)
         }
     }
 

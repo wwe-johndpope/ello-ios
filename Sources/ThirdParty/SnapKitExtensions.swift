@@ -15,7 +15,7 @@ enum Priority: ConstraintPriorityTarget {
     var constraintPriorityTargetValue: Float {
         switch self {
         case .high: return UILayoutPriority.defaultHigh.rawValue
-        case .medium: return Float((Double(UILayoutPriority.defaultHigh.rawValue) + TimeInterval(UILayoutPriority.defaultLow.rawValue)) / 2)
+        case .medium: return (UILayoutPriority.defaultHigh.rawValue + UILayoutPriority.defaultLow.rawValue) / 2
         case .low: return UILayoutPriority.defaultLow.rawValue
         case .required: return UILayoutPriority.required.rawValue
         }

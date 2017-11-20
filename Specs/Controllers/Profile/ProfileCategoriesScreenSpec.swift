@@ -21,7 +21,6 @@ class ProfileCategoriesScreenSpec: QuickSpec {
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
-                    showView(subject)
                     expectValidSnapshot(subject, named: "ProfileCategoriesScreen_1", device: .phone6_Portrait)
                 }
 
@@ -32,7 +31,6 @@ class ProfileCategoriesScreenSpec: QuickSpec {
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
-                    showView(subject)
                     expectValidSnapshot(subject, named: "ProfileCategoriesScreen_2", device: .phone6_Portrait)
                 }
 
@@ -44,7 +42,6 @@ class ProfileCategoriesScreenSpec: QuickSpec {
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
-                    showView(subject)
                     expectValidSnapshot(subject, named: "ProfileCategoriesScreen_3", device: .phone6_Portrait)
                 }
 
@@ -61,7 +58,6 @@ class ProfileCategoriesScreenSpec: QuickSpec {
                     ]
 
                     let subject = ProfileCategoriesScreen(categories: categories)
-                    showView(subject)
                     expectValidSnapshot(subject, named: "ProfileCategoriesScreen_3_plus", device: .phone6_Portrait)
                 }
             }

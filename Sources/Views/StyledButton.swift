@@ -100,7 +100,7 @@ class StyledButton: UIButton {
     var style: Style = .default {
         didSet { updateStyle() }
     }
-    var styleName: String = "default" {
+    @objc var styleName: String = "default" {
         didSet { style = Style.byName(styleName) }
     }
 
@@ -124,6 +124,7 @@ class StyledButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        layer.masksToBounds = true
         layer.cornerRadius = style.cornerRadius.size(in: frame)
     }
 

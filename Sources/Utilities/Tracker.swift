@@ -400,10 +400,6 @@ extension Tracker {
         track("Views button tapped", properties: ["post_id": post.id])
     }
 
-    func deepLinkVisited(_ path: String) {
-        track("Deep Link Visited", properties: ["path": path])
-    }
-
     func buyButtonLinkVisited(_ path: String) {
         track("Buy Button Link Visited", properties: ["link": path])
     }

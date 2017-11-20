@@ -2,23 +2,39 @@
 ///  DrawerCell.swift
 //
 
-class DrawerCell: UITableViewCell {
+class DrawerCell: TableViewCell {
     static let reuseIdentifier = "DrawerCell"
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var line: UIView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    struct Size {
+        static let height: CGFloat = 72
+        static let inset = UIEdgeInsets(sides: 15)
+        static let lineHeight: CGFloat = 1
+    }
 
+    let label: UILabel = StyledLabel(style: .white)
+    let line: UIView = UIView()
+
+    override func styleCell() {
         backgroundColor = .grey6
         line.backgroundColor = .grey5
-        label.font = UIFont.defaultFont()
-        label.textColor = .white
     }
-}
 
-extension DrawerCell {
-    class func nib() -> UINib {
-        return UINib(nibName: "DrawerCell", bundle: .none)
+    override func arrange() {
+        contentView.addSubview(label)
+        contentView.addSubview(line)
+
+        contentView.snp.makeConstraints { make in
+            make.height.equalTo(Size.height)
+        }
+
+        label.snp.makeConstraints { make in
+            make.centerY.equalTo(self)
+            make.leading.trailing.equalTo(self).inset(Size.inset)
+        }
+
+        line.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalTo(self)
+            make.height.equalTo(Size.lineHeight)
+        }
     }
 }

@@ -84,7 +84,7 @@ class CategoryGeneratorSpec: QuickSpec {
                         expect(destination.placeholderItems.count) == 2
                     }
 
-                    it("replaces only CategoryHeader and CategoryPosts") {
+                    it("replaces only PromotionalHeader and CategoryPosts") {
                         subject.load()
                         expect(destination.headerItems.count) > 0
                         expect(destination.postItems.count) > 0
@@ -125,7 +125,7 @@ class CategoryDestination: CategoryStreamDestination {
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         switch type {
-        case .categoryHeader:
+        case .promotionalHeader:
             headerItems = items
         case .streamPosts:
             postItems = items

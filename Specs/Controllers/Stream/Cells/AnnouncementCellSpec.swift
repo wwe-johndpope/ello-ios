@@ -37,8 +37,7 @@ class AnnouncementCellSpec: QuickSpec {
                         let announcement = Announcement(id: "1", isStaffPreview: false, header: config.title!, body: config.body!, ctaURL: nil, ctaCaption: config.callToAction!, createdAt: AppSetup.shared.now)
                         let width: CGFloat = 375
                         let height = AnnouncementCellSizeCalculator.calculateAnnouncementHeight(announcement, cellWidth: width)
-                        let subject = AnnouncementCell()
-                        subject.frame.size = CGSize(width: width, height: height)
+                        let subject = AnnouncementCell(frame: CGRect(origin: .zero, size: CGSize(width: width, height: height)))
                         subject.config = config
                         expectValidSnapshot(subject)
                     }

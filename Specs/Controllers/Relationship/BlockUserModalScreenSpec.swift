@@ -60,7 +60,7 @@ class BlockUserModalScreenSpec: QuickSpec {
                 }
                 validateAllSnapshots(named: "BlockUserModalScreen") { return subject }
             }
-            
+
             describe("button targets") {
 
                 describe("@muteButton") {

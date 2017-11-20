@@ -46,28 +46,24 @@ final class StreamViewController: BaseElloViewController {
             let titleParagraphStyle = NSMutableParagraphStyle()
             titleParagraphStyle.lineSpacing = 17
 
-            let titleAttributes = [
-                NSAttributedStringKey.font: UIFont.defaultBoldFont(18),
-                NSAttributedStringKey.foregroundColor: UIColor.black,
-                NSAttributedStringKey.paragraphStyle: titleParagraphStyle
-            ]
+            let title = NSAttributedString(string: self.noResultsMessages.title + "\n", attributes: [
+                .font: UIFont.defaultBoldFont(18),
+                .foregroundColor: UIColor.black,
+                .paragraphStyle: titleParagraphStyle
+            ])
 
             let bodyParagraphStyle = NSMutableParagraphStyle()
             bodyParagraphStyle.lineSpacing = 8
 
-            let bodyAttributes = [
-                NSAttributedStringKey.font: UIFont.defaultFont(),
-                NSAttributedStringKey.foregroundColor: UIColor.black,
-                NSAttributedStringKey.paragraphStyle: bodyParagraphStyle
-            ]
+            let body = NSAttributedString(string: self.noResultsMessages.body, attributes: [
+                .font: UIFont.defaultFont(),
+                .foregroundColor: UIColor.black,
+                .paragraphStyle: bodyParagraphStyle
+            ])
 
-            let title = NSAttributedString(string: self.noResultsMessages.title + "\n", attributes: titleAttributes)
-            let body = NSAttributedString(string: self.noResultsMessages.body, attributes: bodyAttributes)
             self.noResultsLabel.attributedText = title.appending(body)
         }
     }
-
-    typealias ToggleClosure = (Bool) -> Void
 
     var dataSource: StreamDataSource!
     var collectionViewDataSource: CollectionViewDataSource!
@@ -79,7 +75,7 @@ final class StreamViewController: BaseElloViewController {
     var allOlderPagesLoaded = false
     var initialLoadClosure: Block?
     var reloadClosure: Block?
-    var toggleClosure: ToggleClosure?
+    var toggleClosure: BoolBlock?
     var initialDataLoaded = false
 
     var streamKind: StreamKind = StreamKind.unknown {
@@ -106,7 +102,7 @@ final class StreamViewController: BaseElloViewController {
         newItems: [StreamCellItem],
         change: StreamViewDataChange,
         promise: Promise<Void>,
-        resolve: () -> Void)] = []
+        resolve: Block)] = []
     private var isRunningDataChangeJobs = false
 
     var contentInset: UIEdgeInsets {
@@ -399,7 +395,7 @@ final class StreamViewController: BaseElloViewController {
             let localToken = loadingToken.resetInitialPageLoadingToken()
 
             StreamService().loadStream(streamKind: streamKind)
-                .thenFinally { response in
+                .then { response -> Void in
                     guard self.loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
 
                     switch response {
@@ -743,7 +739,7 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize
     {
-        let width = calculateColumnWidth(frameWidth: UIWindow.windowWidth(), columnCount: columnCount)
+        let width = calculateColumnWidth(frameWidth: AppSetup.shared.windowSize.width, columnCount: columnCount)
         let height = self.collectionViewDataSource.height(at: indexPath, numberOfColumns: 1)
         return CGSize(width: width, height: height)
     }
@@ -831,13 +827,13 @@ extension StreamViewController: StreamEditingResponder {
         else { return }
 
         if let post = collectionViewDataSource.post(at: indexPath),
-            currentUser.isOwnerOf(post: post)
+            currentUser.isAuthorOf(post: post)
         {
             let responder: CreatePostResponder? = findResponder()
             responder?.editPost(post, fromController: self)
         }
         else if let comment = collectionViewDataSource.comment(at: indexPath),
-            currentUser.isOwnerOf(comment: comment)
+            currentUser.isAuthorOf(comment: comment)
         {
             let responder: CreatePostResponder? = findResponder()
             responder?.editComment(comment, fromController: self)
@@ -949,6 +945,20 @@ extension StreamViewController: StreamCellResponder {
         collectionView(collectionView, didSelectItemAt: indexPath)
     }
 
+    func artistInviteSubmissionTapped(cell: UICollectionViewCell) {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            collectionViewDataSource.isTappable(at: indexPath),
+            let post = jsonable(forPath: indexPath) as? Post,
+            let artistInviteId = post.artistInviteId
+        else { return }
+
+        Tracker.shared.artistInviteOpened(slug: artistInviteId)
+        let vc = ArtistInviteDetailController(id: artistInviteId)
+        vc.currentUser = currentUser
+
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: StreamViewController: UserResponder
@@ -1244,7 +1254,7 @@ extension StreamViewController: UIScrollViewDelegate {
 
         let scrollAPI = ElloAPI.infiniteScroll(query: nextQuery, api: streamKind.endpoint)
         StreamService().loadStream(endpoint: scrollAPI, streamKind: streamKind)
-            .thenFinally { response in
+            .then { response -> Void in
                 switch response {
                 case let .jsonables(jsonables, responseConfig):
                     self.allOlderPagesLoaded = jsonables.count == 0

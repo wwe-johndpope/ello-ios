@@ -7,7 +7,7 @@ import SnapKit
 
 class SearchScreen: StreamableScreen, SearchScreenProtocol {
     struct Size {
-        static let margin: CGFloat = 15
+        static let margins: CGFloat = 15
         static let buttonMargin: CGFloat = 5
         static let buttonWidth: CGFloat = 40
         static let searchControlsHeight: CGFloat = 30
@@ -102,7 +102,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
 
         searchField.snp.makeConstraints { make in
             var insets = SearchNavBarField.Size.searchInsets
-            insets.right = Size.margin
+            insets.right = Size.margins
             make.leading.equalTo(backButton.snp.trailing)
             make.bottom.top.equalTo(navigationBar).inset(insets)
             gridListVisibleConstraint = make.trailing.equalTo(gridListButton.snp.leading).offset(-Size.buttonMargin).constraint
@@ -124,13 +124,13 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         }
 
         postsToggleButton.snp.makeConstraints { make in
-            make.leading.equalTo(searchControlsContainer).offset(Size.margin)
+            make.leading.equalTo(searchControlsContainer).offset(Size.margins)
             make.bottom.equalTo(searchControlsContainer)
             make.height.equalTo(Size.searchControlsHeight)
         }
 
         peopleToggleButton.snp.makeConstraints { make in
-            make.trailing.equalTo(searchControlsContainer).offset(-Size.margin)
+            make.trailing.equalTo(searchControlsContainer).offset(-Size.margins)
             make.leading.equalTo(postsToggleButton.snp.trailing)
             make.width.equalTo(postsToggleButton)
             make.bottom.equalTo(searchControlsContainer)
@@ -138,8 +138,8 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         }
 
         findFriendsContainer.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self).inset(Size.margin)
-            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.margin)
+            make.leading.trailing.equalTo(self).inset(Size.margins)
+            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.margins)
             make.bottom.lessThanOrEqualTo(self).inset(ElloTabBar.Size.height).priority(Priority.required)
         }
 
@@ -259,7 +259,7 @@ extension SearchScreen {
             }
             else {
                 var insets = SearchNavBarField.Size.searchInsets
-                insets.right = Size.margin
+                insets.right = Size.margins
                 trailing = self.navigationBar.frame.maxX - insets.right
             }
             self.searchField.frame.size.width = trailing - self.searchField.frame.minX

@@ -5,7 +5,7 @@
 class DarkModalPresentationController: UIPresentationController {
 
     let background: UIView = {
-        let background = UIView(frame: .zero)
+        let background = UIView(frame: .default)
         background.backgroundColor = UIColor.dimmedModalBackground
         return background
     }()

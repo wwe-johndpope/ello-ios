@@ -21,12 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let debugServer = DebugServer.fromDefaults {
             APIKeys.shared = debugServer.apiKeys
         }
+
+        #if DEBUG
         NSSetUncaughtExceptionHandler { exception in
             print(exception)
             for sym in exception.callStackSymbols {
                 print(sym)
             }
         }
+        #endif
 
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
@@ -63,11 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = appController
         window.makeKeyAndVisible()
         self.window = window
-
-        UIApplication.shared.statusBarStyle = .lightContent
+        AppSetup.shared.windowSize = window.frame.size
 
         setupGlobalStyles()
         setupCaches()
+        checkAppStorage()
 
         if let payload = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: Any] {
             PushNotificationController.shared.receivedNotification(application, action: nil, userInfo: payload)
@@ -78,9 +81,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setupGlobalStyles() {
-        let attributes = [
-            NSAttributedStringKey.foregroundColor: UIColor.greyA,
-            NSAttributedStringKey.font: UIFont.defaultFont(12),
+        UIApplication.shared.statusBarStyle = .lightContent
+
+        let attributes: [NSAttributedStringKey: Any] = [
+            .foregroundColor: UIColor.greyA,
+            .font: UIFont.defaultFont(12),
         ]
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .highlighted)
@@ -100,7 +105,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = CategoryService().loadCategories()
     }
 
+    func checkAppStorage() {
+        let killDate = Date(timeIntervalSince1970: 1512879362)
+        let (text, size) = Tmp.sizeDiagnostics()
+        guard AppSetup.shared.now < killDate, size > 100_000_000 else { return }
+
+        S3UploadingService(endpoint: .amazonLoggingCredentials)
+            .upload(text, filename: "appsize.txt")
+            .ignoreErrors()
+    }
+
     func applicationDidEnterBackground(_ application: UIApplication) {
+        Tmp.clear()
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
 

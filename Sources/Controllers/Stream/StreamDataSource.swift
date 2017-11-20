@@ -26,7 +26,7 @@ class StreamDataSource: ElloDataSource {
     var notificationSizeCalculator = StreamNotificationCellSizeCalculator()
     var announcementSizeCalculator = AnnouncementCellSizeCalculator()
     var profileHeaderSizeCalculator = ProfileHeaderCellSizeCalculator()
-    var categoryHeaderSizeCalculator = CategoryHeaderCellSizeCalculator()
+    var categoryHeaderSizeCalculator = PromotionalHeaderCellSizeCalculator()
     var imageSizeCalculator = StreamImageCellSizeCalculator()
     var editorialDownloader = EditorialDownloader()
     var artistInviteCalculator = ArtistInviteCellSizeCalculator()
@@ -317,7 +317,7 @@ class StreamDataSource: ElloDataSource {
                     for item in items {
                         item.placeholderType = postCreatedPlaceholder
                     }
-                    calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
+                    calculateCellItems(items, withWidth: AppSetup.shared.windowSize.width) {
                         let indexPaths = self.insertStreamCellItems(items, startingIndexPath: indexPath)
                         streamViewController.performDataChange { collectionView in
                             collectionView.insertItems(at: indexPaths)
@@ -371,7 +371,7 @@ class StreamDataSource: ElloDataSource {
             guard let firstIndexPath = oldIndexPaths.first else { return }
 
             let items = StreamCellItemParser().parse([jsonable], streamKind: self.streamKind, currentUser: currentUser)
-            calculateCellItems(items, withWidth: UIWindow.windowWidth()) {
+            calculateCellItems(items, withWidth: AppSetup.shared.windowSize.width) {
                 self.removeItems(at: oldIndexPaths)
                 let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
                 streamViewController.performDataChange { collectionView in
@@ -462,13 +462,12 @@ class StreamDataSource: ElloDataSource {
         var changedItems = [StreamCellItem]()
         for (index, item) in visibleCellItems.enumerated() {
             guard item.type.showsUserRelationship,
-                let itemUserId = (item.jsonable as? User)?.id ?? (item.jsonable as? Authorable)?.author?.id
+                let itemUserId = (item.jsonable as? User)?.id ?? (item.jsonable as? Authorable)?.author?.id,
+                itemUserId == user.id
             else { continue}
 
-            if itemUserId == user.id {
-                indexPaths.append(IndexPath(item: index, section: 0))
-                changedItems.append(item)
-            }
+            indexPaths.append(IndexPath(item: index, section: 0))
+            changedItems.append(item)
         }
 
         guard changedItems.count > 0 else { return }

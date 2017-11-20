@@ -172,6 +172,7 @@ extension ElloTabBarController {
         let discover = CategoryViewController(slug: Category.featured.slug, name: Category.featured.name)
         discover.category = Category.featured
         let omnibar = OmnibarViewController()
+
         let notifications = NotificationsViewController()
         let profile = ProfileViewController(currentUser: currentUser!)
         omnibar.canGoBack = false

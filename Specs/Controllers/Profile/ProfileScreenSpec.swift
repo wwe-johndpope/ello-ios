@@ -76,28 +76,26 @@ class ProfileScreenSpec: QuickSpec {
                         expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_is_collaborateable", device: .phone6_Portrait)
                     }
 
-                    context("is hireable and collaborateable") {
-                        validateAllSnapshots(named: "ProfileScreen_not_current_user_hireable_and_collaborateable") {
-                            let user = User.stub(["username": "Archer", "relationshipPriority": "friend"])
-                            subject.configureButtonsForNonCurrentUser(isHireable: true, isCollaborateable: true)
-                            subject.relationshipControl.userId = user.id
-                            subject.relationshipControl.userAtName = user.atName
-                            subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                            subject.showNavBars()
-                            return subject
-                        }
+                    it("is hireable and collaborateable") {
+                        let user = User.stub(["username": "Archer", "relationshipPriority": "friend"])
+                        subject.configureButtonsForNonCurrentUser(isHireable: true, isCollaborateable: true)
+                        subject.relationshipControl.userId = user.id
+                        subject.relationshipControl.userAtName = user.atName
+                        subject.relationshipControl.relationshipPriority = user.relationshipPriority
+                        subject.showNavBars()
+
+                        expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_hireable_and_collaborateable", device: .phone6_Portrait)
                     }
 
-                    context("is mentionable") {
-                        validateAllSnapshots(named: "ProfileScreen_not_current_user_is_mentionable") {
-                            let user = User.stub(["username": "Archer", "relationshipPriority": "noise"])
-                            subject.configureButtonsForNonCurrentUser(isHireable: false, isCollaborateable: false)
-                            subject.relationshipControl.userId = user.id
-                            subject.relationshipControl.userAtName = user.atName
-                            subject.relationshipControl.relationshipPriority = user.relationshipPriority
-                            subject.showNavBars()
-                            return subject
-                        }
+                    it("is mentionable") {
+                        let user = User.stub(["username": "Archer", "relationshipPriority": "noise"])
+                        subject.configureButtonsForNonCurrentUser(isHireable: false, isCollaborateable: false)
+                        subject.relationshipControl.userId = user.id
+                        subject.relationshipControl.userAtName = user.atName
+                        subject.relationshipControl.relationshipPriority = user.relationshipPriority
+                        subject.showNavBars()
+
+                        expectValidSnapshot(subject, named: "ProfileScreen_not_current_user_is_mentionable", device: .phone6_Portrait)
                     }
                 }
             }

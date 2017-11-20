@@ -113,7 +113,7 @@ final class PostDetailViewController: StreamableViewController {
 
         var rightItems: [ElloNavigationBar.Item] = []
 
-        if isOwnerOfPost() {
+        if isAuthorOfPost() {
             rightItems = [.delete, .edit]
         }
         else if currentUser != nil {
@@ -152,11 +152,11 @@ final class PostDetailViewController: StreamableViewController {
         }
     }
 
-    private func isOwnerOfPost() -> Bool {
+    private func isAuthorOfPost() -> Bool {
         guard let post = post, let currentUser = currentUser else {
             return false
         }
-        return currentUser.isOwnerOf(post: post)
+        return currentUser.isAuthorOf(post: post)
     }
 
 }
@@ -218,7 +218,7 @@ extension PostDetailViewController: PostDetailStreamDestination {
 
         setupNavigationItems()
 
-        if isOwnerOfPost() {
+        if isAuthorOfPost() {
             showNavBars()
         }
     }
@@ -259,7 +259,7 @@ extension PostDetailViewController: HasMoreButton {
 
 extension PostDetailViewController: HasDeleteButton {
     func deleteButtonTapped() {
-        guard let post = post, let currentUser = currentUser, isOwnerOfPost() else {
+        guard let post = post, let currentUser = currentUser, isAuthorOfPost() else {
             return
         }
 
@@ -292,7 +292,7 @@ extension PostDetailViewController: HasDeleteButton {
 
 extension PostDetailViewController: HasEditButton {
     func editButtonTapped() {
-        guard let post = post, isOwnerOfPost() else {
+        guard let post = post, isAuthorOfPost() else {
             return
         }
 

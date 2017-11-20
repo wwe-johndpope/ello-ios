@@ -21,6 +21,7 @@ final class EditorialsGenerator: StreamGenerator {
         if !reload {
             setPlaceHolders()
         }
+        loadEditorialPromotionals()
         loadEditorials()
     }
 
@@ -33,7 +34,7 @@ final class EditorialsGenerator: StreamGenerator {
 
             let next = afterAll()
             ElloProvider.shared.request(.custom(url: path, mimics: .discover(type: .trending)))
-                .thenFinally { data, responseConfig in
+                .then { data, responseConfig -> Void in
                     guard let posts = data as? [Post] else {
                         next()
                         return
@@ -52,15 +53,29 @@ private extension EditorialsGenerator {
 
     func setPlaceHolders() {
         destination?.setPlaceholders(items: [
+            StreamCellItem(type: .placeholder, placeholderType: .promotionalHeader),
             StreamCellItem(type: .placeholder, placeholderType: .editorials)
         ])
     }
 
+    func loadEditorialPromotionals() {
+        PagePromotionalService().loadEditorialPromotionals()
+            .then { promotionals -> Void in
+                guard let promotionals = promotionals else { return }
+
+                if let pagePromotional = promotionals.randomItem() {
+                    self.destination?.replacePlaceholder(type: .promotionalHeader, items: [
+                        StreamCellItem(jsonable: pagePromotional, type: .pagePromotionalHeader),
+                        StreamCellItem(type: .spacer(height: EditorialCell.Size.bgMargins.bottom)),
+                    ])
+                }
+            }
+            .ignoreErrors()
+    }
+
     func loadEditorials() {
         var editorialItems: [StreamCellItem] = []
-        let (afterAll, done) = afterN { [weak self] in
-            guard let `self` = self else { return }
-
+        let (afterAll, done) = afterN {
             self.destination?.replacePlaceholder(type: .editorials, items: editorialItems) {
                 self.destination?.isPagingEnabled = editorialItems.count > 0
             }
@@ -68,9 +83,8 @@ private extension EditorialsGenerator {
 
         let receivedEditorials = afterAll()
         StreamService().loadStream(streamKind: streamKind)
-            .thenFinally { [weak self] response in
+            .then { response -> Void in
                 guard
-                    let `self` = self,
                     case let .jsonables(jsonables, responseConfig) = response,
                     let editorials = jsonables as? [Editorial]
                 else { return }
@@ -81,8 +95,7 @@ private extension EditorialsGenerator {
                 let postStreamEditorials = editorials.filter { $0.kind == .postStream }
                 EditorialsGenerator.loadPostStreamEditorials(postStreamEditorials, afterAll: afterAll)
             }
-            .catch { [weak self] _ in
-                guard let `self` = self else { return }
+            .catch { _ in
                 self.destination?.primaryJSONAbleNotFound()
             }
             .always {

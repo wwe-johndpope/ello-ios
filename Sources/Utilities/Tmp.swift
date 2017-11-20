@@ -5,6 +5,10 @@
 struct Tmp {
     static let uniqDir = Tmp.uniqueName()
 
+    static func clear() {
+        try? FileManager.default.removeItem(atPath: NSTemporaryDirectory())
+    }
+
     static func fileExists(_ fileName: String) -> Bool {
         guard let fileURL = self.fileURL(fileName) else { return false }
         return FileManager.default.fileExists(atPath: fileURL.path)
@@ -82,4 +86,54 @@ struct Tmp {
             return false
         }
     }
+}
+
+extension Tmp {
+    static func sizeDiagnostics() -> (String, Int) {
+        let paths = [
+            ElloLinkedStore.databaseFolder(),
+            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path,
+            FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.path,
+            FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.path,
+            URL(string: NSTemporaryDirectory())?.path,
+        ].flatMap { path -> Path? in path.map { Path($0) } }
+
+        var text = ""
+        var totalSize = 0
+        for path in paths {
+            guard let (desc, size) = sizeOf(path) else { continue }
+            totalSize += size
+            if !text.isEmpty {
+                text += "------------------------------\n"
+            }
+            text += "---- \(path.abbreviate()) ----\n"
+            text += "\(desc)\n"
+        }
+
+        return (text, totalSize)
+    }
+
+    private static func sizeOf(_ path: Path, prefix: String? = nil, isLast: Bool = true) -> (String, Int)? {
+        guard
+            let fileDictionary = try? FileManager.default.attributesOfItem(atPath: path.path),
+            var size = fileDictionary[.size] as? Int
+        else { return nil }
+
+        if let children = try? path.children() {
+            let myPrefix = (prefix.map { $0 + (isLast ? "`--/" : "+--/") }) ?? ""
+            let childPrefix = (prefix.map { $0 + (isLast ? "   " : "|  ") } ?? "")
+            var childrenDesc = ""
+            for child in children {
+                guard let (childDesc, childSize) = sizeOf(child, prefix: childPrefix, isLast: child == children.last) else { continue }
+                childrenDesc += childDesc
+                size += childSize
+            }
+            return ("\(myPrefix)\(path.lastComponent) \(size)\n" + childrenDesc, size)
+        }
+        else {
+            return ("", size)
+        }
+    }
+
+
 }

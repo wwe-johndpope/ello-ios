@@ -48,7 +48,7 @@ class MultipartRequestBuilder {
     func buildRequest() -> URLRequest {
         requestIsBuilt = true
         body.append("--\(boundaryConstant)--\r\n".data(using: String.Encoding.utf8)!)
-        request.httpBody = body as Data
+        request.httpBody = body
 
         return request
     }

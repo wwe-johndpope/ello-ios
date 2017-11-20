@@ -17,8 +17,7 @@ extension UIViewController: GestureNavigation {
     }
 
     func findViewController(_ find: (UIViewController) -> Bool) -> UIViewController? {
-        var controller: UIViewController?
-        controller = self
+        var controller: UIViewController? = self
         while controller != nil {
             if find(controller!) {
                 return controller
@@ -37,7 +36,7 @@ extension UIViewController {
         to toViewController: UIViewController,
         duration: TimeInterval = 0,
         options: UIViewAnimationOptions = [],
-        animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil)
+        animations: Block? = nil, completion: BoolBlock? = nil)
     {
         if AppSetup.shared.isTesting {
             animations?()

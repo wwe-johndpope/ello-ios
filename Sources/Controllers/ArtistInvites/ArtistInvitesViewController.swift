@@ -37,6 +37,9 @@ class ArtistInvitesViewController: StreamableViewController {
 
     override func didSetCurrentUser() {
         generator.currentUser = currentUser
+        if currentUser != nil, isViewLoaded {
+            screen.navigationBar.leftItems = [.burger]
+        }
         super.didSetCurrentUser()
     }
 
@@ -45,7 +48,9 @@ class ArtistInvitesViewController: StreamableViewController {
         screen.delegate = self
 
         screen.navigationBar.title = ""
-        screen.navigationBar.leftItems = [.burger]
+        if currentUser != nil {
+            screen.navigationBar.leftItems = [.burger]
+        }
 
         self.view = screen
         viewContainer = screen.streamContainer
@@ -60,10 +65,6 @@ class ArtistInvitesViewController: StreamableViewController {
 
     private func updateInsets() {
         updateInsets(navBar: screen.navigationBar)
-    }
-
-    override func calculateDefaultTopInset() -> CGFloat {
-        return max(ArtistInviteBubbleCell.Size.bubbleMargins.bottom, super.calculateDefaultTopInset())
     }
 
     override func showNavBars() {
@@ -92,7 +93,13 @@ extension ArtistInvitesViewController: StreamDestination {
     }
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
-        streamViewController.replacePlaceholder(type: type, items: items, completion: completion)
+        streamViewController.replacePlaceholder(type: type, items: items) {
+            if self.streamViewController.hasCellItems(for: .promotionalHeader) && !self.streamViewController.hasCellItems(for: .artistInvites) {
+                self.streamViewController.replacePlaceholder(type: .artistInvites, items: [StreamCellItem(type: .streamLoading)])
+            }
+
+            completion()
+        }
         streamViewController.doneLoading()
     }
 

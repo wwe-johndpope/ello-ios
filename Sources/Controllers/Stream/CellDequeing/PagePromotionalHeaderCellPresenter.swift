@@ -12,11 +12,11 @@ struct PagePromotionalHeaderCellPresenter {
         currentUser: User?)
     {
         guard
-            let cell = cell as? CategoryHeaderCell,
+            let cell = cell as? PromotionalHeaderCell,
             let pagePromotional = streamCellItem.jsonable as? PagePromotional
         else { return }
 
-        let config = CategoryHeaderCell.Config(pagePromotional: pagePromotional)
+        let config = PromotionalHeaderCell.Config(pagePromotional: pagePromotional)
         cell.config = config
     }
 }

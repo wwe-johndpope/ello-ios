@@ -64,7 +64,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has back left nav button") {
-                    expect(screen.navigationBar.leftItems.count) == 2
+                    expect(screen.navigationBar.leftItems.count) == 1
                 }
 
                 context("collaborateable and hireable don't affect currentUser profile") {
@@ -114,7 +114,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has back and more left nav buttons") {
-                    expect(screen.navigationBar.leftItems.count) == 4
+                    expect(screen.navigationBar.leftItems.count) == 2
                 }
 
                 let expectations: [(collaborateable: Bool, hireable: Bool, collaborateButton: Bool, hireButtonVisible: Bool, mentionButtonVisible: Bool)] = [
@@ -194,7 +194,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("has back and more left nav buttons") {
-                    expect(screen.navigationBar.leftItems.count) == 4
+                    expect(screen.navigationBar.leftItems.count) == 2
                 }
             }
 
@@ -328,7 +328,7 @@ class ProfileViewControllerSpec: QuickSpec {
                 }
 
                 it("should not show ellipses button in navigation") {
-                    expect(screen.navigationBar.leftItems.count) == 3
+                    expect(screen.navigationBar.leftItems.count) == 1
                 }
             }
         }

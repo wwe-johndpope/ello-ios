@@ -60,6 +60,7 @@ struct InterfaceString {
     struct ArtistInvites {
         static let Title: String = NSLocalizedString("Artist Invites", comment: "")
         static let Submissions: String = NSLocalizedString("Submissions", comment: "")
+        static let PostSubmissionHeader: String = NSLocalizedString("Artist Invite Submission", comment: "")
         static let SubmissionsError: String = NSLocalizedString("Error while loading submissions", comment: "")
         static let SeeSubmissions: String = NSLocalizedString("↓ See Submissions", comment: "")
         static let Submit: String = NSLocalizedString("SUBMIT", comment: "")
@@ -68,7 +69,7 @@ struct InterfaceString {
         static let OpenStatus: String = NSLocalizedString("Open For Submissions", comment: "")
         static let SelectingStatus: String = NSLocalizedString("Selections In Progress", comment: "")
         static let ClosedStatus: String = NSLocalizedString("Invite Closed", comment: "")
-        static let SubmissionLoggedOutError: String = NSLocalizedString("To submit to an Artist Invite you first need to create an Ello account.", comment: "")
+        static let SubmissionJoinPrompt: String = NSLocalizedString("To submit to an Artist Invite you first need to create an Ello account.", comment: "")
         static let SubmissionSuccessTitle: String = NSLocalizedString("Submission received!", comment: "")
         static let SubmissionSuccessDescription: String = NSLocalizedString("Our team of curators will review your submission and you’ll recieve a notification when it is accepted.", comment: "")
 
@@ -152,7 +153,7 @@ struct InterfaceString {
         static let Version: String = {
             let marketingVersion: String
             let buildVersion: String
-            if AppSetup.shared.isSimulator {
+            if AppSetup.shared.isTesting {
                 marketingVersion = "SPECS"
                 buildVersion = "specs"
             }

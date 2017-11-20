@@ -73,7 +73,7 @@ class CollectionViewDataSourceSpec: QuickSpec {
                     StreamKind.following.setIsGridView(true)
                     let items = [
                         StreamCellItem(jsonable: ElloComment.stub([:]), type: .createComment),
-                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .commentHeader)
+                        StreamCellItem(jsonable: ElloComment.stub([:]), type: .streamHeader)
                     ]
                     subject.visibleCellItems = items
                 }
@@ -161,12 +161,13 @@ class CollectionViewDataSourceSpec: QuickSpec {
 
                 it("does not return the same value for two different posts") {
                     let firstPostIndexPath = IndexPath(item: 0, section: 0)
-                    let secondPostIndexPath = IndexPath(item: subject.visibleCellItems.count, section: 0)
 
                     let parser = StreamCellItemParser()
+                    let post1 = Post.stub(["id": "111"])
                     let post2 = Post.stub(["id": "555"])
-                    let items = parser.parse([post2], streamKind: .following)
+                    let items = parser.parse([post1, post2], streamKind: .following)
                     subject.visibleCellItems = items
+                    let secondPostIndexPath = IndexPath(item: subject.visibleCellItems.count - 1, section: 0)
 
                     let firstGroupId = subject.group(at: firstPostIndexPath)
                     let secondGroupId = subject.group(at: secondPostIndexPath)

@@ -14,11 +14,11 @@ enum StreamKind {
     case notifications(category: String?)
     case postDetail(postParam: String)
     case simpleStream(endpoint: ElloAPI, title: String)
-    case unknown
     case userStream(userParam: String)
     case category(slug: String)
     case artistInvites
-    case artistInviteDetail(id: String)
+    case artistInviteSubmissions
+    case unknown
 
     var name: String {
         switch self {
@@ -29,7 +29,7 @@ enum StreamKind {
         case .following: return InterfaceString.Following.Title
         case .notifications: return InterfaceString.Notifications.Title
         case .artistInvites: return InterfaceString.ArtistInvites.Title
-        case .artistInviteDetail: return ""
+        case .artistInviteSubmissions: return ""
         case .category: return ""
         case .postDetail: return ""
         case let .simpleStream(_, title): return title
@@ -41,7 +41,7 @@ enum StreamKind {
     var cacheKey: String {
         switch self {
         case .artistInvites: return "ArtistInvites"
-        case .artistInviteDetail: return "ArtistInviteDetail"
+        case .artistInviteSubmissions: return "ArtistInviteSubmissions"
         case .allCategories: return "AllCategories"
         case .announcements: return "Announcements"
         case .discover, .category: return "CategoryPosts"
@@ -103,7 +103,7 @@ enum StreamKind {
         case let .discover(type): return .discover(type: type)
         case .editorials: return .editorials
         case .artistInvites: return .artistInvites
-        case let .artistInviteDetail(id): return .artistInviteDetail(id: id)
+        case .artistInviteSubmissions: return .artistInviteSubmissions
         case .following: return .following
         case let .notifications(category): return .notificationsStream(category: category)
         case let .postDetail(postParam): return .postDetail(postParam: postParam)

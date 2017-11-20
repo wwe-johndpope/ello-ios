@@ -63,9 +63,9 @@ enum StreamCellType: Equatable {
 
     enum PlaceholderType {
         case streamPosts
+        case promotionalHeader
 
         case categoryList
-        case categoryHeader
         case peopleToFollow
 
         case announcements
@@ -174,8 +174,9 @@ enum StreamCellType: Equatable {
         case .badge: return BadgeCell.reuseIdentifier
         case .categoryCard: return CategoryCardCell.reuseIdentifier
         case .categoryList: return CategoryListCell.reuseIdentifier
-        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.reuseIdentifier
-        case .commentHeader, .streamHeader: return StreamHeaderCell.reuseIdentifier
+        case .categoryPromotionalHeader, .pagePromotionalHeader: return PromotionalHeaderCell.reuseIdentifier
+        case .commentHeader: return CommentHeaderCell.reuseIdentifier
+        case .streamHeader: return StreamHeaderCell.reuseIdentifier
         case .createComment: return StreamCreateCommentCell.reuseIdentifier
         case let .editorial(kind): return kind.reuseIdentifier
         case .embed: return StreamEmbedCell.reuseEmbedIdentifier
@@ -241,8 +242,9 @@ enum StreamCellType: Equatable {
         case .badge: return BadgeCellPresenter.configure
         case .categoryCard: return CategoryCardCellPresenter.configure
         case .categoryList: return CategoryListCellPresenter.configure
-        case .categoryPromotionalHeader: return CategoryHeaderCellPresenter.configure
-        case .commentHeader, .streamHeader: return StreamHeaderCellPresenter.configure
+        case .categoryPromotionalHeader: return PromotionalHeaderCellPresenter.configure
+        case .commentHeader: return CommentHeaderCellPresenter.configure
+        case .streamHeader: return StreamHeaderCellPresenter.configure
         case .createComment: return StreamCreateCommentCellPresenter.configure
         case .editorial: return EditorialCellPresenter.configure
         case .embed: return StreamEmbedCellPresenter.configure
@@ -284,8 +286,9 @@ enum StreamCellType: Equatable {
         case .badge: return BadgeCell.self
         case .categoryCard: return CategoryCardCell.self
         case .categoryList: return CategoryListCell.self
-        case .categoryPromotionalHeader, .pagePromotionalHeader: return CategoryHeaderCell.self
-        case .commentHeader, .streamHeader: return StreamHeaderCell.self
+        case .categoryPromotionalHeader, .pagePromotionalHeader: return PromotionalHeaderCell.self
+        case .commentHeader: return CommentHeaderCell.self
+        case .streamHeader: return StreamHeaderCell.self
         case .createComment: return StreamCreateCommentCell.self
         case let .editorial(kind): return kind.classType
         case .embed: return StreamEmbedCell.self
@@ -327,26 +330,27 @@ enum StreamCellType: Equatable {
         case .badge:
             return 64
         case .categoryCard, .selectableCategoryCard:
-            let width = UIWindow.windowWidth()
+            let width = AppSetup.shared.windowSize.width
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
         case .categoryPromotionalHeader, .pagePromotionalHeader:
             return 150
         case .categoryList:
             return CategoryListCell.Size.height
-        case .commentHeader,
-             .inviteFriends,
+        case .commentHeader:
+            return CommentHeaderCell.Size.height
+        case .inviteFriends,
              .onboardingInviteFriends,
              .seeMoreComments:
                 return 60
         case .createComment:
             return 75
         case .editorial:
-            let width = UIWindow.windowWidth()
+            let width = AppSetup.shared.windowSize.width
             let aspect = EditorialCell.Size.aspect
-            let maxHeight: CGFloat = UIWindow.windowHeight() - 256
+            let maxHeight: CGFloat = AppSetup.shared.windowSize.height - 256
             let height = min(ceil(width / aspect), maxHeight)
-            return height + 1
+            return height + EditorialCell.Size.bgMargins.bottom
         case let .emptyStream(height):
             return height
         case .error:
@@ -375,7 +379,7 @@ enum StreamCellType: Equatable {
         case .streamFooter:
             return 44
         case .streamHeader:
-            return 70
+            return StreamHeaderCell.Size.height
         case .tallHeader:
             return 75
         case .toggle:
@@ -389,10 +393,10 @@ enum StreamCellType: Equatable {
     var multiColumnHeight: CGFloat {
         switch self {
         case .categoryCard, .selectableCategoryCard:
-            let windowWidth = UIWindow.windowWidth()
+            let windowWidth = AppSetup.shared.windowSize.width
             let columnCount = CGFloat(Window.columnCountFor(width: windowWidth))
             let columnSpacing: CGFloat = 1
-            let width = (UIWindow.windowWidth() - columnSpacing * (columnCount - 1)) / columnCount
+            let width = (AppSetup.shared.windowSize.width - columnSpacing * (columnCount - 1)) / columnCount
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
         case .streamHeader,
@@ -415,6 +419,7 @@ enum StreamCellType: Equatable {
              .badge,
              .categoryList,
              .categoryPromotionalHeader,
+             .commentHeader,
              .createComment,
              .editorial,
              .emptyStream,
@@ -438,7 +443,6 @@ enum StreamCellType: Equatable {
              .userListItem:
             return true
         case .categoryCard,
-             .commentHeader,
              .embed,
              .image,
              .placeholder,
@@ -463,7 +467,7 @@ enum StreamCellType: Equatable {
 
     var showsUserRelationship: Bool {
         switch self {
-        case .commentHeader, .notification, .streamHeader, .userListItem:
+        case .notification, .streamHeader, .userListItem:
             return true
         default:
             return false
@@ -483,6 +487,7 @@ enum StreamCellType: Equatable {
             .categoryCard,
             .categoryList,
             .categoryPromotionalHeader,
+            .commentHeader,
             .createComment,
             .editorial(.external),
             .editorial(.internal),

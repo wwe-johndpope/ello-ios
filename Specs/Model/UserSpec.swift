@@ -9,6 +9,8 @@ import Nimble
 
 class UserSpec: QuickSpec {
     override func spec() {
+        let correctId = "correctId"
+        let wrongId = "wrongId"
 
         describe("User") {
 
@@ -101,33 +103,33 @@ class UserSpec: QuickSpec {
                 }
             }
 
-            describe("isOwnerOfPost(_:)") {
+            describe("isAuthorOfPost(_:)") {
 
-                let subject: User = stub(["id": "correctId"])
+                let subject: User = stub(["id": correctId])
 
                 it("should return true if post's author is the current user") {
-                    let post: Post = stub(["authorId": "correctId"])
-                    expect(subject.isOwnerOf(post: post)) == true
+                    let post: Post = stub(["authorId": correctId])
+                    expect(subject.isAuthorOf(post: post)) == true
                 }
 
                 it("should return false if post's author is not the user") {
-                    let post: Post = stub(["authorId": "WRONG ID"])
-                    expect(subject.isOwnerOf(post: post)) == false
+                    let post: Post = stub(["authorId": wrongId])
+                    expect(subject.isAuthorOf(post: post)) == false
                 }
             }
 
-            describe("isOwnerOfComment(_:)") {
+            describe("isAuthorOfComment(_:)") {
 
-                let subject: User = stub(["id": "correctId"])
+                let subject: User = stub(["id": correctId])
 
                 it("should return true if comment's author is the current user") {
-                    let comment: ElloComment = stub(["authorId": "correctId"])
-                    expect(subject.isOwnerOf(comment: comment)) == true
+                    let comment: ElloComment = stub(["authorId": correctId])
+                    expect(subject.isAuthorOf(comment: comment)) == true
                 }
 
                 it("should return false if comment's author is not the user") {
-                    let comment: ElloComment = stub(["authorId": "WRONG ID"])
-                    expect(subject.isOwnerOf(comment: comment)) == false
+                    let comment: ElloComment = stub(["authorId": wrongId])
+                    expect(subject.isAuthorOf(comment: comment)) == false
                 }
             }
 
@@ -149,20 +151,31 @@ class UserSpec: QuickSpec {
                 }
             }
 
-            describe("isOwnerOfParentPost(comment:)") {
-
-                let subject: User = stub(["id": "correctId"])
+            describe("isAuthorOfParentPost(comment:)") {
+                let subject: User = stub(["id": correctId])
 
                 it("should return true if comment parentPost's author is the current user") {
-                    let post: Post = stub(["authorId": "correctId"])
+                    let post: Post = stub(["authorId": correctId])
                     let comment: ElloComment = stub(["loadedFromPost": post])
-                    expect(subject.isOwnerOfParentPost(comment: comment)) == true
+                    expect(subject.isAuthorOfParentPost(comment: comment)) == true
                 }
 
-                it("should return false if comment parentPost's author is not the user") {
-                    let post: Post = stub(["authorId": "WRONG ID"])
+                it("should return true if comment parentPost's repostAuthor is the current user") {
+                    let post: Post = stub(["repostAuthorId": correctId])
                     let comment: ElloComment = stub(["loadedFromPost": post])
-                    expect(subject.isOwnerOfParentPost(comment: comment)) == false
+                    expect(subject.isAuthorOfParentPost(comment: comment)) == true
+                }
+
+                it("should return false if comment parentPost's author is not the current user") {
+                    let post: Post = stub(["authorId": wrongId])
+                    let comment: ElloComment = stub(["loadedFromPost": post])
+                    expect(subject.isAuthorOfParentPost(comment: comment)) == false
+                }
+
+                it("should return false if comment parentPost's repostAuthor is not the current user") {
+                    let post: Post = stub(["repostAuthorId": wrongId, "authorId": correctId])
+                    let comment: ElloComment = stub(["loadedFromPost": post])
+                    expect(subject.isAuthorOfParentPost(comment: comment)) == false
                 }
             }
 

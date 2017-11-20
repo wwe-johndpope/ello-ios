@@ -1,12 +1,18 @@
 ////
 ///  ElloS3.swift
 //
-// creds = AmazonCredentials(...)
+// creds = AmazonCredentials(...)  (from ElloAPI.amazonCredentials)
 // data = NSData()
-// uploader = ElloS3(credentials: credentials, data: data)
+//
+// uploader = ElloS3(
+//  credentials: credentials,
+//  filename: "foo.txt",
+//  data: data,
+//  contentType: "text/plain"
+//   )
 //   .start()
-//   .thenFinally { (response: NSData) in }
-//   .catch { (error: NSError) in }
+//   .then { response -> Void in }
+//   .catch { error in }
 
 import PromiseKit
 
@@ -34,7 +40,12 @@ class ElloS3 {
         let builder = MultipartRequestBuilder(url: url, capacity: data.count)
         builder.addParam("key", value: key)
         builder.addParam("AWSAccessKeyId", value: credentials.accessKey)
-        builder.addParam("acl", value: "public-read")
+        if credentials.prefix.hasPrefix("logs/") {
+            builder.addParam("acl", value: "private")
+        }
+        else {
+            builder.addParam("acl", value: "public-read")
+        }
         builder.addParam("success_action_status", value: "201")
         builder.addParam("policy", value: credentials.policy)
         builder.addParam("signature", value: credentials.signature)
@@ -45,24 +56,22 @@ class ElloS3 {
 
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
-            nextTick {
-                let httpResponse = response as? HTTPURLResponse
-                if let error = error {
-                    self.reject(error)
-                }
-                else if let statusCode = httpResponse?.statusCode,
-                    statusCode >= 200 && statusCode < 300
-                {
-                    if let data = data {
-                        self.resolve(data)
-                    }
-                    else {
-                        self.reject(NSError(domain: ElloErrorDomain, code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: "failure"]))
-                    }
+            let httpResponse = response as? HTTPURLResponse
+            if let error = error {
+                self.reject(error)
+            }
+            else if let statusCode = httpResponse?.statusCode,
+                statusCode >= 200 && statusCode < 300
+            {
+                if let data = data {
+                    self.resolve(data)
                 }
                 else {
                     self.reject(NSError(domain: ElloErrorDomain, code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: "failure"]))
                 }
+            }
+            else {
+                self.reject(NSError(domain: ElloErrorDomain, code: 0, userInfo: [NSLocalizedFailureReasonErrorKey: "failure"]))
             }
         })
         task.resume()

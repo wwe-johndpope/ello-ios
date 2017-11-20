@@ -5,8 +5,8 @@
 class OmnibarErrorCell: UITableViewCell {
     static let reuseIdentifier = "OmnibarErrorCell"
     struct Size {
-        static let margin = CGFloat(10)
         static let height = CGFloat(75)
+        static let margins = CGFloat(10)
     }
 
     private let label = StyledLabel(style: .error)
@@ -24,7 +24,7 @@ class OmnibarErrorCell: UITableViewCell {
         label.numberOfLines = 2
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        label.frame = contentView.bounds.inset(all: Size.margin)
+        label.frame = contentView.bounds.inset(all: Size.margins)
         label.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
         contentView.addSubview(label)

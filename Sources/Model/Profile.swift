@@ -85,13 +85,13 @@ final class Profile: JSONAble {
     let shortBio: String
     let email: String
     let confirmedAt: Date
-    var isPublic: Bool
-    var isCommunity: Bool
     var mutedCount: Int
     var blockedCount: Int
     var creatorTypeCategoryIds: [String]
 
     // dynamic settings
+    @objc var isPublic: Bool
+    @objc var isCommunity: Bool
     @objc var hasSharingEnabled: Bool
     @objc var hasAdNotificationsEnabled: Bool
     @objc var hasAutoWatchEnabled: Bool
