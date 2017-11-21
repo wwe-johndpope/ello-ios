@@ -6,6 +6,11 @@ class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
+    let tapToShow = UIView()
+
+    struct Size {
+        static let tapToShowHeight: CGFloat = 20
+    }
 
     override func didSetCurrentUser() {
         if isViewLoaded {
@@ -52,6 +57,19 @@ class StreamableViewController: BaseElloViewController {
             onShow: { [weak self] in self?.showNavBars() },
             onHide: { [weak self] in self?.hideNavBars() }
         )
+
+        if let parent = streamViewController.view {
+            parent.addSubview(tapToShow)
+            tapToShow.isUserInteractionEnabled = false
+            tapToShow.snp.makeConstraints { make in
+                make.bottom.leading.trailing.equalTo(parent)
+                make.height.equalTo(Size.tapToShowHeight)
+            }
+
+            let tapGesture = UITapGestureRecognizer()
+            tapGesture.addTarget(self, action: #selector(tapToShowTapped))
+            tapToShow.addGestureRecognizer(tapGesture)
+        }
     }
 
     func trackerStreamInfo() -> (String, String?)? {
@@ -82,6 +100,19 @@ class StreamableViewController: BaseElloViewController {
             scrollLogic.isShowing = navigationBarsVisible
         }
     }
+
+    override func showNavBars() {
+        guard updatesBottomBar else { return }
+        super.showNavBars()
+        tapToShow.isUserInteractionEnabled = true
+    }
+
+    override func hideNavBars() {
+        guard updatesBottomBar else { return }
+        super.hideNavBars()
+        tapToShow.isUserInteractionEnabled = true
+    }
+
 
     func updateInsets(navBar: UIView?, navigationBarsVisible visible: Bool? = nil) {
         updateInsets(maxY: navBar?.frame.maxY ?? 0, navigationBarsVisible: visible)
@@ -141,6 +172,13 @@ class StreamableViewController: BaseElloViewController {
         if showing {
             postNotification(StatusBarNotifications.statusBarVisibility, value: visible)
         }
+    }
+}
+
+extension StreamableViewController {
+    @objc
+    func tapToShowTapped() {
+        showNavBars()
     }
 }
 
