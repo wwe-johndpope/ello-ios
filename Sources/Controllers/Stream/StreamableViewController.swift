@@ -6,7 +6,8 @@ class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
-    let tapToShow = UIView()
+    let tapToShowTop = UIView()
+    let tapToShowBottom = UIView()
 
     struct Size {
         static let tapToShowHeight: CGFloat = 20
@@ -58,17 +59,22 @@ class StreamableViewController: BaseElloViewController {
             onHide: { [weak self] in self?.hideNavBars() }
         )
 
-        if let parent = streamViewController.view {
-            parent.addSubview(tapToShow)
+        for tapToShow in [tapToShowTop, tapToShowBottom] {
+            view.addSubview(tapToShow)
             tapToShow.isUserInteractionEnabled = false
-            tapToShow.snp.makeConstraints { make in
-                make.bottom.leading.trailing.equalTo(parent)
-                make.height.equalTo(Size.tapToShowHeight)
-            }
 
             let tapGesture = UITapGestureRecognizer()
             tapGesture.addTarget(self, action: #selector(tapToShowTapped))
             tapToShow.addGestureRecognizer(tapGesture)
+        }
+
+        tapToShowTop.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalTo(view)
+            make.height.equalTo(Size.tapToShowHeight)
+        }
+        tapToShowBottom.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view)
+            make.height.equalTo(Size.tapToShowHeight)
         }
     }
 
@@ -104,13 +110,15 @@ class StreamableViewController: BaseElloViewController {
     override func showNavBars() {
         guard updatesBottomBar else { return }
         super.showNavBars()
-        tapToShow.isUserInteractionEnabled = true
+        tapToShowTop.isUserInteractionEnabled = true
+        tapToShowBottom.isUserInteractionEnabled = true
     }
 
     override func hideNavBars() {
         guard updatesBottomBar else { return }
         super.hideNavBars()
-        tapToShow.isUserInteractionEnabled = true
+        tapToShowTop.isUserInteractionEnabled = true
+        tapToShowBottom.isUserInteractionEnabled = true
     }
 
 
