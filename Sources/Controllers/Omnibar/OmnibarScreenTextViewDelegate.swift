@@ -41,16 +41,22 @@ extension OmnibarScreen: UITextViewDelegate {
         let font = textView.typingAttributes[NSAttributedStringKey.font.rawValue] as? UIFont
         let fontName = font?.fontName ?? "AtlasGrotesk-Regular"
 
+        let selectionIsEmpty = textView.selectedTextRange?.isEmpty ?? true
+        var isStyled = false
+
         switch fontName {
         case UIFont.editorItalicFont().fontName:
             boldButton.isSelected = false
             italicButton.isSelected = true
+            isStyled = true
         case UIFont.editorBoldFont().fontName:
             boldButton.isSelected = true
             italicButton.isSelected = false
+            isStyled = true
         case UIFont.editorBoldItalicFont().fontName:
             boldButton.isSelected = true
             italicButton.isSelected = true
+            isStyled = true
         default:
             boldButton.isSelected = false
             italicButton.isSelected = false
@@ -59,11 +65,13 @@ extension OmnibarScreen: UITextViewDelegate {
         if textView.typingAttributes[NSAttributedStringKey.link.rawValue] is URL {
             linkButton.isSelected = true
             linkButton.isEnabled = true
+            isStyled = true
         }
         else {
-            let linkEnabled = textView.selectedTextRange?.isEmpty == false
             linkButton.isSelected = false
-            linkButton.isEnabled = linkEnabled
+            linkButton.isEnabled = !selectionIsEmpty
         }
+
+        toggleStylingButtons(visible: isStyled || !selectionIsEmpty)
     }
 }

@@ -255,7 +255,7 @@ extension StyledButton.Style {
         titleColor: .black, highlightedTitleColor: .grey6, selectedTitleColor: .white, disabledTitleColor: .greyC
         )
     static let green = StyledButton.Style(
-        backgroundColor: .greenD1, disabledBackgroundColor: .grey6,
+        backgroundColor: .greenD1, disabledBackgroundColor: .greyA,
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .rounded
         )
@@ -296,12 +296,12 @@ extension StyledButton.Style {
         cornerRadius: .pill
         )
     static let greenPill = StyledButton.Style(
-        backgroundColor: .greenD1, disabledBackgroundColor: .grey6,
+        backgroundColor: .greenD1, disabledBackgroundColor: .greyA,
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .pill
         )
     static let redPill = StyledButton.Style(
-        backgroundColor: .red, disabledBackgroundColor: .grey6,
+        backgroundColor: .red, disabledBackgroundColor: .greyA,
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .pill
         )

@@ -106,7 +106,6 @@ class OmnibarViewController: BaseElloViewController {
         self.view = OmnibarScreen(frame: UIScreen.main.bounds)
 
         screen.canGoBack = canGoBack
-        screen.currentUser = currentUser
         var defaultRegions: [Regionable] = []
         if let text = defaultText {
             defaultRegions = [TextRegion(content: text)]

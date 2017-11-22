@@ -16,7 +16,6 @@ class OmnibarMockScreen: OmnibarScreenProtocol {
     var title: String = ""
     var submitTitle: String = ""
     var buyButtonURL: URL?
-    var currentUser: User?
     var regions = [OmnibarRegion]()
 
     var canGoBack = false

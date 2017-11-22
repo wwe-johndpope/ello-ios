@@ -148,12 +148,6 @@ class OmnibarScreenSpec: QuickSpec {
                     }
                 }
 
-                context("var currentUser: User?") {
-                    it("should set the user") {
-                        subject.currentUser = User.stub(["id": "12345"])
-                        expect(subject.currentUser?.id) == "12345"
-                    }
-                }
                 context("var canGoBack: Bool") {
                     context("when true") {
                         it("should show the navigationBar") {
