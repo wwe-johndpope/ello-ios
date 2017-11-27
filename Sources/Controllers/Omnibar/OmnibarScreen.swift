@@ -260,7 +260,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         reorderButton.addTarget(self, action: #selector(toggleReorderingTable), for: .touchUpInside)
 
         addImageButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 3.5)
-        addImageButton.setImages(.camera, style: .selected)
+        addImageButton.setImages(.photoPicker, style: .selected)
         addImageButton.addTarget(self, action: #selector(addImageButtonTapped), for: .touchUpInside)
         addImageButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
 

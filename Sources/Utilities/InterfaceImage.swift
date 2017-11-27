@@ -74,6 +74,7 @@ enum InterfaceImage: String {
 
     // Omnibar
     case reorder = "reorder"
+    case photoPicker = "photo_picker"
     case camera = "camera"
     case browse = "browse"
     case library = "library"
@@ -197,6 +198,7 @@ enum InterfaceImage: String {
              .mail,
              .onePassword,
              .pencil,
+             .photoPicker,
              .plusSmall,
              .share,
              .repost,
