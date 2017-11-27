@@ -76,10 +76,8 @@ enum InterfaceImage: String {
     case reorder = "reorder"
     case photoPicker = "photo_picker"
     case camera = "camera"
-    case browse = "browse"
     case library = "library"
     case check = "check"
-    case arrow = "arrow"
     case link = "link"
     case breakLink = "breaklink"
 
@@ -105,6 +103,9 @@ enum InterfaceImage: String {
     // Artist Invites
     case circleCheck = "circle_check"
     case star = "star"
+
+    // "New Posts" arrow
+    case arrow = "arrow"
 
     // Generic
     case x = "x"
