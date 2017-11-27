@@ -1014,6 +1014,10 @@
 		1DF233641A9537590096DA65 /* CGRectSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF233631A9537590096DA65 /* CGRectSpec.swift */; };
 		1DF404081B150CF20073460B /* narration_pointer.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DF404071B150CF20073460B /* narration_pointer.svg */; };
 		1DF4040A1B150DB40073460B /* NarrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF404091B150DB40073460B /* NarrationView.swift */; };
+		1DF4907A1FCCC2D400C0ACAC /* chevron_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DF490761FCCC2D100C0ACAC /* chevron_white.svg */; };
+		1DF4907B1FCCC2D400C0ACAC /* chevron_disabled.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DF490771FCCC2D100C0ACAC /* chevron_disabled.svg */; };
+		1DF4907C1FCCC2D400C0ACAC /* chevron_selected.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DF490781FCCC2D300C0ACAC /* chevron_selected.svg */; };
+		1DF4907D1FCCC2D400C0ACAC /* chevron_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1DF490791FCCC2D400C0ACAC /* chevron_normal.svg */; };
 		1DF50C8D1C61452D00C62D89 /* UIImagePickerControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C8C1C61452D00C62D89 /* UIImagePickerControllerSpec.swift */; };
 		1DF50C991C614E0700C62D89 /* OmnibarProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C8F1C614C4400C62D89 /* OmnibarProtocols.swift */; };
 		1DF50C9B1C614E0F00C62D89 /* OmnibarScreenAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C961C614C6900C62D89 /* OmnibarScreenAutocomplete.swift */; };
@@ -2112,6 +2116,10 @@
 		1DF233661A9655860096DA65 /* FreeMethodsSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeMethodsSpecs.swift; sourceTree = "<group>"; };
 		1DF404071B150CF20073460B /* narration_pointer.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = narration_pointer.svg; sourceTree = "<group>"; };
 		1DF404091B150DB40073460B /* NarrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NarrationView.swift; sourceTree = "<group>"; };
+		1DF490761FCCC2D100C0ACAC /* chevron_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chevron_white.svg; sourceTree = "<group>"; };
+		1DF490771FCCC2D100C0ACAC /* chevron_disabled.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chevron_disabled.svg; sourceTree = "<group>"; };
+		1DF490781FCCC2D300C0ACAC /* chevron_selected.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chevron_selected.svg; sourceTree = "<group>"; };
+		1DF490791FCCC2D400C0ACAC /* chevron_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chevron_normal.svg; sourceTree = "<group>"; };
 		1DF50C8C1C61452D00C62D89 /* UIImagePickerControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImagePickerControllerSpec.swift; sourceTree = "<group>"; };
 		1DF50C8F1C614C4400C62D89 /* OmnibarProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarProtocols.swift; sourceTree = "<group>"; };
 		1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarRegion.swift; sourceTree = "<group>"; };
@@ -4107,6 +4115,10 @@
 				76F8DE631B6C0BC4009BCF61 /* checksmall_normal.svg */,
 				76F8DE641B6C0BC4009BCF61 /* checksmall_selected.svg */,
 				76F8DE651B6C0BC4009BCF61 /* checksmall_white.svg */,
+				1DF490771FCCC2D100C0ACAC /* chevron_disabled.svg */,
+				1DF490791FCCC2D400C0ACAC /* chevron_normal.svg */,
+				1DF490781FCCC2D300C0ACAC /* chevron_selected.svg */,
+				1DF490761FCCC2D100C0ACAC /* chevron_white.svg */,
 				76F8DE661B6C0BC4009BCF61 /* circ_normal.svg */,
 				76F8DE671B6C0BC4009BCF61 /* circ_selected.svg */,
 				76F8DE681B6C0BC4009BCF61 /* circbig_normal.svg */,
@@ -4581,6 +4593,7 @@
 				7689B4F31AD4ED3B00E4A4A3 /* posts_listing_users_who_have_commented_on_a_post.json in Resources */,
 				1DDC234E1F32439400E68B0E /* star_orange.svg in Resources */,
 				76F8DEB51B6C0BC4009BCF61 /* library_selected.svg in Resources */,
+				1DF4907D1FCCC2D400C0ACAC /* chevron_normal.svg in Resources */,
 				76F8DEB01B6C0BC4009BCF61 /* arrow_selected.svg in Resources */,
 				1D942C091EC3AF8700056761 /* bubble_outline_normal.svg in Resources */,
 				7689B4DA1AD4ED3B00E4A4A3 /* activity_streams__when_a_category_is_specified.json in Resources */,
@@ -4723,6 +4736,7 @@
 				76F8DEE61B6C0BC4009BCF61 /* pinterest_selected.svg in Resources */,
 				76F8DED11B6C0BC4009BCF61 /* eye_selected.svg in Resources */,
 				7689B4FE1AD4ED3B00E4A4A3 /* profile_listing_muted_users.json in Resources */,
+				1DF4907B1FCCC2D400C0ACAC /* chevron_disabled.svg in Resources */,
 				12F6AE9D1A433F2700493660 /* 500.json in Resources */,
 				1DE3EC4A1D81CC3400BDE16F /* ElloDev.entitlements in Resources */,
 				1D6E43151EA68AEA0029C9B1 /* badge_spam_normal.svg in Resources */,
@@ -4755,6 +4769,7 @@
 				12FEEB551A60396A00E32248 /* posts.json in Resources */,
 				12931BDA1BFE8E30009B26F9 /* xpmmini_selected.svg in Resources */,
 				7689B5021AD4ED3B00E4A4A3 /* profile_user_profile_and_settings.json in Resources */,
+				1DF4907A1FCCC2D400C0ACAC /* chevron_white.svg in Resources */,
 				120E641B1E32A7B600CAF03E /* jwt-auth-is-staff.json in Resources */,
 				7689B4F61AD4ED3B00E4A4A3 /* posts_post_details.json in Resources */,
 				76F8DED21B6C0BC4009BCF61 /* flag_normal.svg in Resources */,
@@ -4820,6 +4835,7 @@
 				12CFF68A1B16760C007CE68F /* loves_listing_loves_for_a_user.json in Resources */,
 				1212FDED1A66E5CB00AD4AF7 /* comments-for-a-post.json in Resources */,
 				7689B5061AD4ED3B00E4A4A3 /* users_checking_usernameemail_availability.json in Resources */,
+				1DF4907C1FCCC2D400C0ACAC /* chevron_selected.svg in Resources */,
 				76F8DEFF1B6C0BC4009BCF61 /* trash_white.svg in Resources */,
 				1247276D1AB14D1B000079D7 /* text-region.json in Resources */,
 				1D472C241C1F2E0400B61E55 /* embetter_video_play.svg in Resources */,

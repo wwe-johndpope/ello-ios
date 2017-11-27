@@ -79,7 +79,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
     override func style() {
         super.style()
         iPhoneBlackBar.backgroundColor = .black
-        backButton.setImages(.angleBracket, degree: 180)
+        backButton.setImages(.chevron)
         shareButton.alpha = 0
         shareButton.setImage(.share, imageStyle: .normal, for: .normal)
     }

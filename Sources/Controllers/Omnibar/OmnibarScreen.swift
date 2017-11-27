@@ -244,7 +244,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
     // buttons that make up the "toolbar"
     private func setupToolbarButtons() {
         cancelButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
-        cancelButton.setImages(.x)
+        cancelButton.setImages(.x, style: .selected)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
 
         buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 11, bottom: 4, right: 3)
@@ -256,11 +256,11 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
 
         reorderButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
-        reorderButton.setImages(.reorder)
+        reorderButton.setImages(.reorder, style: .selected)
         reorderButton.addTarget(self, action: #selector(toggleReorderingTable), for: .touchUpInside)
 
         addImageButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 3.5)
-        addImageButton.setImages(.camera)
+        addImageButton.setImages(.camera, style: .selected)
         addImageButton.addTarget(self, action: #selector(addImageButtonTapped), for: .touchUpInside)
         addImageButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
 
@@ -384,7 +384,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         linkButton.setImage(.link, imageStyle: .white, for: .normal)
         linkButton.setImage(.breakLink, imageStyle: .white, for: .selected)
 
-        submitButton.setImages(.pencil, white: true)
+        submitButton.setImages(.pencil, style: .white)
         submitButton.setTitle(InterfaceString.Omnibar.CreatePostButton, for: .normal)
         submitButton.contentEdgeInsets.left = -5
         submitButton.imageEdgeInsets.right = 5

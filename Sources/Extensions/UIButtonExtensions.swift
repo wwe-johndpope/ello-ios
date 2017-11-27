@@ -8,25 +8,8 @@ extension UIButton {
         self.setImage(interfaceImage.image(imageStyle), for: state)
     }
 
-    func setImage(_ interfaceImage: InterfaceImage, imageStyle: InterfaceImage.Style, for state: UIControlState, degree: Double) {
-        self.setImage(interfaceImage.image(imageStyle), for: state, degree: degree)
-    }
-
-    func setImages(_ interfaceImage: InterfaceImage, degree: Double = 0, white: Bool = false) {
-        if white {
-            self.setImage(interfaceImage.whiteImage, for: .normal, degree: degree)
-        }
-        else {
-            self.setImage(interfaceImage.normalImage, for: .normal, degree: degree)
-        }
-        self.setImage(interfaceImage.selectedImage, for: .selected, degree: degree)
-    }
-
-    func setImage(_ image: UIImage!, for state: UIControlState = .normal, degree: Double) {
-        self.setImage(image, for: state)
-        if degree != 0 {
-            let radians = (degree * Double.pi) / 180.0
-            transform = CGAffineTransform(rotationAngle: CGFloat(radians))
-        }
+    func setImages(_ interfaceImage: InterfaceImage, style imageStyle: InterfaceImage.Style = .normal) {
+        self.setImage(interfaceImage.image(imageStyle), for: .normal)
+        self.setImage(interfaceImage.selectedImage, for: .selected)
     }
 }

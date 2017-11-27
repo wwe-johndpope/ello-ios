@@ -66,7 +66,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     }
 
     override func style() {
-        backButton.setImages(.angleBracket, degree: 180)
+        backButton.setImages(.chevron)
 
         searchControlsContainer.backgroundColor = .white
 

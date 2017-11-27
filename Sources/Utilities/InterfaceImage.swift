@@ -112,6 +112,7 @@ enum InterfaceImage: String {
     case plusSmall = "plussmall"
     case checkSmall = "checksmall"
     case angleBracket = "abracket"
+    case chevron = "chevron"
     case back = "back"
 
     // Embeds

@@ -44,7 +44,7 @@ class AnnouncementCell: CollectionViewCell {
     private var imageHeightConstraint: Constraint!
 
     override func style() {
-        closeButton.setImages(.x, white: true)
+        closeButton.setImages(.x, style: .white)
         contentView.backgroundColor = .white
         blackView.backgroundColor = .black
 
