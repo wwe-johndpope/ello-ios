@@ -940,8 +940,8 @@
 		1DC29BB71D3824D30041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC29BB81D3824DE0041B1DC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB61D3824D30041B1DC /* Defaults.swift */; };
 		1DC309FC1B03F29300EAD920 /* communities.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC309FB1B03F29300EAD920 /* communities.json */; };
-		1DC546371FA3E8CE00B06592 /* CommentHeaderCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */; };
 		1DC4285B1BBB021700D5E38B /* GlobalsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4285A1BBB021700D5E38B /* GlobalsSpec.swift */; };
+		1DC546371FA3E8CE00B06592 /* CommentHeaderCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */; };
 		1DC78A1E1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */; };
 		1DC78A1F1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */; };
 		1DC78A201F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */; };
@@ -2041,8 +2041,8 @@
 		1DC10FA41C3DEB7600846ED6 /* availability.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = availability.json; sourceTree = "<group>"; };
 		1DC29BB61D3824D30041B1DC /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		1DC309FB1B03F29300EAD920 /* communities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = communities.json; sourceTree = "<group>"; };
-		1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderCellPresenterSpec.swift; sourceTree = "<group>"; };
 		1DC4285A1BBB021700D5E38B /* GlobalsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpec.swift; sourceTree = "<group>"; };
+		1DC546361FA3E8CD00B06592 /* CommentHeaderCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderCellPresenterSpec.swift; sourceTree = "<group>"; };
 		1DC78A1B1F17F0B700BE2413 /* OnboardingCreatorTypeProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeProtocols.swift; sourceTree = "<group>"; };
 		1DC78A1C1F17F0B700BE2413 /* OnboardingCreatorTypeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeScreen.swift; sourceTree = "<group>"; };
 		1DC78A1D1F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCreatorTypeViewController.swift; sourceTree = "<group>"; };
@@ -4084,8 +4084,6 @@
 				76F8DE561B6C0BC4009BCF61 /* bolt_selected.svg */,
 				1D472C251C1F349E00B61E55 /* breaklink_normal.svg */,
 				1DF741701BFAAC02000F5349 /* breaklink_white.svg */,
-				76F8DE571B6C0BC4009BCF61 /* library_normal.svg */,
-				76F8DE581B6C0BC4009BCF61 /* library_selected.svg */,
 				1D9B74CB1BB1E62500ACD028 /* bubble_body_normal.svg */,
 				1D9B74CC1BB1E62500ACD028 /* bubble_body_selected.svg */,
 				1D9B74CD1BB1E62500ACD028 /* bubble_body_white.svg */,
@@ -4146,6 +4144,8 @@
 				76F8DE7B1B6C0BC4009BCF61 /* hearts_white.svg */,
 				12E2A5A11E5CD357000EFFBA /* home_normal.svg */,
 				12E2A5A21E5CD357000EFFBA /* home_selected.svg */,
+				76F8DE571B6C0BC4009BCF61 /* library_normal.svg */,
+				76F8DE581B6C0BC4009BCF61 /* library_selected.svg */,
 				1DF7416C1BFA65F0000F5349 /* link_normal.svg */,
 				1DF7416D1BFA65F0000F5349 /* link_selected.svg */,
 				1DF7416A1BFA650E000F5349 /* link_white.svg */,
