@@ -272,7 +272,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         cancelImageButton.isHidden = true
 
         let line = UIView()
-        line.backgroundColor = .greyA
+        line.backgroundColor = .greyF2
 
         addSubview(toolbarContainer)
         toolbarContainer.snp.makeConstraints { make in
