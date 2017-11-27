@@ -1208,19 +1208,19 @@ extension OmnibarScreen: HasBackButton {
 
 extension StyledButton.Style {
     static let boldButton = StyledButton.Style(
-        backgroundColor: .greyA, selectedBackgroundColor: .black,
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
         titleColor: .white,
         font: .defaultBoldFont(),
         cornerRadius: .pill
         )
     static let italicButton = StyledButton.Style(
-        backgroundColor: .greyA, selectedBackgroundColor: .black,
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
         titleColor: .white,
         font: .defaultItalicFont(),
         cornerRadius: .pill
         )
     static let linkButton = StyledButton.Style(
-        backgroundColor: .greyA, selectedBackgroundColor: .black,
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
         titleColor: .white,
         cornerRadius: .pill
         )
