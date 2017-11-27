@@ -106,20 +106,20 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
 
     var canGoBack: Bool = false {
         didSet {
-            toolbarTopConstraint.update(offset: toolbarTopOffset)
+            if canGoBack {
+                toolbarPinToTopConstraint.deactivate()
+                toolbarPinToNavConstraint.activate()
+            }
+            else {
+                toolbarPinToTopConstraint.activate()
+                toolbarPinToNavConstraint.deactivate()
+            }
             setNeedsLayout()
         }
     }
 
-    private var toolbarTopOffset: CGFloat {
-        if canGoBack {
-            return navigationBar.frame.height + Size.margins.top
-        }
-        else {
-            return BlackBar.Size.height + Size.margins.top
-        }
-    }
-    private var toolbarTopConstraint: Constraint!
+    private var toolbarPinToTopConstraint: Constraint!
+    private var toolbarPinToNavConstraint: Constraint!
 
 // MARK: photo picker assets
     var currentAssets: [PHAsset] = []
@@ -277,7 +277,8 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         addSubview(toolbarContainer)
         toolbarContainer.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self)
-            toolbarTopConstraint = make.top.equalTo(self).offset(toolbarTopOffset).constraint
+            toolbarPinToTopConstraint = make.top.equalTo(self).offset(BlackBar.Size.height + Size.margins.top).constraint
+            toolbarPinToNavConstraint = make.top.equalTo(navigationBar.snp.bottom).constraint
         }
         toolbarContainer.addSubview(cancelButton)
         toolbarContainer.addSubview(buyButton)
