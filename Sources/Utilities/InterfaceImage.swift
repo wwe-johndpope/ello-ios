@@ -75,6 +75,7 @@ enum InterfaceImage: String {
     // Omnibar
     case reorder = "reorder"
     case photoPicker = "photo_picker"
+    case textPicker = "text_picker"
     case camera = "camera"
     case library = "library"
     case check = "check"
@@ -196,12 +197,14 @@ enum InterfaceImage: String {
              .heartOutline,
              .invite,
              .link,
+             .library,
              .mail,
              .onePassword,
              .pencil,
              .photoPicker,
              .plusSmall,
              .share,
+             .textPicker,
              .repost,
              .x:
             return svgNamed("\(self.rawValue)_white")

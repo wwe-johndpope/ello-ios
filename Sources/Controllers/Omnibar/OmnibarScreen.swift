@@ -17,7 +17,7 @@ private let imageFetchLimit = 100
 
 class OmnibarScreen: Screen, OmnibarScreenProtocol {
     struct Size {
-        static let margins = UIEdgeInsets(top: 8, left: 2, bottom: 10, right: 5)
+        static let margins = UIEdgeInsets(top: 8, left: 2, bottom: 10, right: 10)
         static let toolbarMargin = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         static let toolbarButtonSpacing: CGFloat = 20
         static let additionalBuyPadding: CGFloat = 5
@@ -247,7 +247,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         cancelButton.setImages(.x, style: .selected)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
 
-        buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 11, bottom: 4, right: 3)
+        buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7)
         buyButton.adjustsImageWhenDisabled = false
         buyButton.adjustsImageWhenHighlighted = false
         buyButton.setImages(.addBuyButton)
@@ -264,10 +264,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         addImageButton.addTarget(self, action: #selector(addImageButtonTapped), for: .touchUpInside)
         addImageButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
 
-        cancelImageButton.setAttributedTitle(NSAttributedString(string: "T", attributes: [
-            NSAttributedStringKey.font: UIFont.defaultItalicFont(),
-            NSAttributedStringKey.foregroundColor: UIColor.greyA
-        ]), for: .normal)
+        cancelImageButton.setImages(.textPicker, style: .selected)
         cancelImageButton.addTarget(self, action: #selector(cancelImageButtonTapped), for: .touchUpInside)
         cancelImageButton.isHidden = true
 
