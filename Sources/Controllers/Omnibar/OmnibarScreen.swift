@@ -13,7 +13,7 @@ private let imageManager = PHCachingImageManager()
 private let imageHeight: CGFloat = 150
 private let imageMargin: CGFloat = 2
 private let imageContentHeight = imageHeight + 2 * imageMargin
-private let imageFetchLimit = 100
+private let imageFetchLimit = 25
 
 class OmnibarScreen: Screen, OmnibarScreenProtocol {
     struct Size {
