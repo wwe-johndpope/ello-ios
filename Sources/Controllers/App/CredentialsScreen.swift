@@ -84,6 +84,7 @@ class CredentialsScreen: EmptyScreen {
         continueButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self).inset(Size.buttonInset)
             make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.buttonInset)
+            make.bottom.lessThanOrEqualTo(self).inset(Globals.bestBottomMargin)
             make.height.equalTo(Size.buttonHeight)
         }
 
