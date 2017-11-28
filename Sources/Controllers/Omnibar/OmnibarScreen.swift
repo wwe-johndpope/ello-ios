@@ -11,7 +11,7 @@ import Photos
 
 private let imageManager = PHCachingImageManager()
 private let imageHeight: CGFloat = 150
-private let imageMargin: CGFloat = 1
+private let imageMargin: CGFloat = 2
 private let imageContentHeight = imageHeight + 2 * imageMargin
 private let imageFetchLimit = 100
 
@@ -431,19 +431,19 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         nativeLibraryButton.setImage(.library, imageStyle: .normal, for: .normal)
         nativeLibraryButton.backgroundColor = .white
 
-        let extraButtonsSize = CGSize(width: 50, height: imageContentHeight)
-        nativeCameraButton.frame = CGRect(x: 0, y: 0, width: extraButtonsSize.width, height: extraButtonsSize.height / 2)
+        let extraButtonsSize = CGSize(width: 60, height: (imageContentHeight - 3 * imageMargin) / 2)
+        nativeCameraButton.frame = CGRect(x: imageMargin, y: imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height)
         nativeCameraButton.addTarget(self, action: #selector(openNativeCameraTapped), for: .touchUpInside)
         imagesScrollView.addSubview(nativeCameraButton)
 
-        nativeLibraryButton.frame = CGRect(x: 0, y: extraButtonsSize.height / 2, width: extraButtonsSize.width, height: extraButtonsSize.height / 2)
+        nativeLibraryButton.frame = CGRect(x: imageMargin, y: nativeCameraButton.frame.maxY + imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height)
         nativeLibraryButton.addTarget(self, action: #selector(openNativeLibraryTapped), for: .touchUpInside)
         imagesScrollView.addSubview(nativeLibraryButton)
 
         nativeAdditionalImagesButton.setImage(.dots, imageStyle: .normal, for: .normal)
         nativeAdditionalImagesButton.backgroundColor = .white
         nativeAdditionalImagesButton.addTarget(self, action: #selector(openNativeLibraryTapped), for: .touchUpInside)
-        nativeAdditionalImagesButton.frame = CGRect(x: 0, y: 0, width: extraButtonsSize.width, height: extraButtonsSize.height)
+        nativeAdditionalImagesButton.frame = CGRect(x: 0, y: imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height * 2 + imageMargin)
         imagesScrollView.addSubview(nativeAdditionalImagesButton)
     }
 
@@ -1095,7 +1095,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         }
 
         imageButtons = []
-        var x: CGFloat = nativeCameraButton.frame.maxX, y: CGFloat = 1
+        var x: CGFloat = nativeCameraButton.frame.maxX, y: CGFloat = imageMargin
         for asset in assets {
             guard let image = image(forAsset: asset) else { continue }
 
