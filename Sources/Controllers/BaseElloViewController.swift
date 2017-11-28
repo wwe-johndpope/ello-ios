@@ -122,15 +122,13 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
     }
 
     func showNavBars() {
-        if updatesBottomBar {
-            bottomBarController?.setNavigationBarsVisible(true, animated: true)
-        }
+        guard updatesBottomBar else { return }
+        bottomBarController?.setNavigationBarsVisible(true, animated: true)
     }
 
     func hideNavBars() {
-        if updatesBottomBar {
-            bottomBarController?.setNavigationBarsVisible(false, animated: true)
-        }
+        guard updatesBottomBar else { return }
+        bottomBarController?.setNavigationBarsVisible(false, animated: true)
     }
 
     func didSetCurrentUser() {

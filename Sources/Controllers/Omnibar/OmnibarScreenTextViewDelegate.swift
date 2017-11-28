@@ -60,13 +60,10 @@ extension OmnibarScreen: UITextViewDelegate {
             linkButton.isSelected = true
             linkButton.isEnabled = true
         }
-        else if let selection = textView.selectedTextRange, selection.isEmpty {
-            linkButton.isSelected = false
-            linkButton.isEnabled = false
-        }
         else {
+            let linkEnabled = textView.selectedTextRange?.isEmpty == false
             linkButton.isSelected = false
-            linkButton.isEnabled = true
+            linkButton.isEnabled = linkEnabled
         }
     }
 }
