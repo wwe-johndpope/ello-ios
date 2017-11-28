@@ -425,11 +425,13 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         imagesScrollView.backgroundColor = .white
 
         nativeCameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-        nativeCameraButton.setImage(.camera, imageStyle: .normal, for: .normal)
-        nativeCameraButton.backgroundColor = .white
+        nativeCameraButton.setImage(.camera, imageStyle: .selected, for: .normal)
+        nativeCameraButton.setImage(.camera, imageStyle: .selected, for: .selected)
+        nativeCameraButton.backgroundColor = .greyF2
 
-        nativeLibraryButton.setImage(.library, imageStyle: .normal, for: .normal)
-        nativeLibraryButton.backgroundColor = .white
+        nativeLibraryButton.setImage(.library, imageStyle: .selected, for: .normal)
+        nativeLibraryButton.setImage(.library, imageStyle: .selected, for: .selected)
+        nativeLibraryButton.backgroundColor = .greyF2
 
         let extraButtonsSize = CGSize(width: 60, height: (imageContentHeight - 3 * imageMargin) / 2)
         nativeCameraButton.frame = CGRect(x: imageMargin, y: imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height)
