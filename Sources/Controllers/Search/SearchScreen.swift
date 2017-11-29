@@ -44,6 +44,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     private let findFriendsLabel = StyledLabel(style: .black)
     private var bottomInset: CGFloat = 0
     private let gridListButton = UIButton()
+    private var searchControlsContainerTop: Constraint!
     private var searchControlsContainerHeight: Constraint!
     private var gridListVisibleConstraint: Constraint!
     private var gridListHiddenConstraint: Constraint!
@@ -118,7 +119,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         }
 
         searchControlsContainer.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom)
+            searchControlsContainerTop = make.top.equalTo(self).offset(ElloNavigationBar.Size.height).constraint
             make.leading.trailing.equalTo(self)
             searchControlsContainerHeight = make.height.equalTo(Size.searchControlsHeight).constraint
         }
@@ -166,18 +167,29 @@ extension SearchScreen {
 
     func showNavBars() {
         elloAnimate {
-            self.searchControlsContainerHeight.update(offset: Size.searchControlsHeight)
-            self.searchControlsContainer.frame.origin.y = self.navigationBar.frame.size.height
+            self.searchControlsContainerTop.update(offset: ElloNavigationBar.Size.height)
+            if Globals.isIphoneX {
+                let newHeight = Size.searchControlsHeight
+                let delta = self.searchControlsContainer.frame.height - Size.searchControlsHeight
+                self.postsToggleButton.frame.origin.y -= delta
+                self.peopleToggleButton.frame.origin.y -= delta
+                self.searchControlsContainerHeight.update(offset: newHeight)
+            }
+            self.layoutIfNeeded()
         }
     }
 
     func hideNavBars() {
         elloAnimate {
+            self.searchControlsContainerTop.update(offset: 0)
             if Globals.isIphoneX {
-                self.searchControlsContainerHeight.update(offset: Size.searchControlsTallHeight)
-                self.searchControlsContainer.frame.size.height = Size.searchControlsTallHeight
+                let newHeight = Size.searchControlsTallHeight
+                let delta = self.searchControlsContainer.frame.height - Size.searchControlsTallHeight
+                self.postsToggleButton.frame.origin.y -= delta
+                self.peopleToggleButton.frame.origin.y -= delta
+                self.searchControlsContainerHeight.update(offset: newHeight)
             }
-            self.searchControlsContainer.frame.origin.y = -1
+            self.layoutIfNeeded()
         }
     }
 
