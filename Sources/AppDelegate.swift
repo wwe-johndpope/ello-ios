@@ -106,19 +106,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func checkAppStorage() {
-        let killDate = Date(timeIntervalSince1970: 1512879362)
+        clearCaches()
+
+        let killDate = Date(timeIntervalSince1970: 1512879362) // dec 9, 2017
         let (text, size) = Tmp.sizeDiagnostics()
-        guard Globals.now < killDate, size > 100_000_000 else { return }
+        guard Globals.now < killDate, size > 300_000_000 else { return }
 
         S3UploadingService(endpoint: .amazonLoggingCredentials)
             .upload(text, filename: "appsize.txt")
             .ignoreErrors()
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func clearCaches() {
         Tmp.clear()
         URLCache.shared.removeAllCachedResponses()
         TemporaryCache.clear()
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        clearCaches()
 
         let manager = PINRemoteImageManager.shared()
         manager.pinCache?.diskCache.trim(toSize: 0)
