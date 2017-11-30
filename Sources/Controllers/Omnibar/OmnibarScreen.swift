@@ -381,7 +381,8 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         linkButton.setImage(.link, imageStyle: .white, for: .normal)
         linkButton.setImage(.breakLink, imageStyle: .white, for: .selected)
 
-        submitButton.setImages(.pencil, style: .white)
+        submitButton.setImage(.pencil, imageStyle: .white, for: .normal)
+        submitButton.setImage(.pencil, imageStyle: .selected, for: .highlighted)
         submitButton.setTitle(InterfaceString.Omnibar.CreatePostButton, for: .normal)
         submitButton.contentEdgeInsets.left = -5
         submitButton.imageEdgeInsets.right = 5

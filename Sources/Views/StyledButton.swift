@@ -256,7 +256,7 @@ extension StyledButton.Style {
         )
     static let green = StyledButton.Style(
         backgroundColor: .greenD1, disabledBackgroundColor: .greyA,
-        titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
+        titleColor: .white, highlightedTitleColor: .black, disabledTitleColor: .white,
         cornerRadius: .rounded
         )
     static let whiteUnderlined = StyledButton.Style(
