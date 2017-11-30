@@ -191,6 +191,7 @@ enum InterfaceImage: String {
              .bubbleBody,
              .camera,
              .checkSmall,
+             .chevron,
              .comments,
              .commentsOutline,
              .heart,
@@ -214,7 +215,7 @@ enum InterfaceImage: String {
     }
     var disabledImage: UIImage? {
         switch self {
-        case .angleBracket, .addBuyButton, .back, .repost:
+        case .angleBracket, .addBuyButton, .back, .chevron, .repost:
             return svgNamed("\(self.rawValue)_disabled")
         default:
             return nil
