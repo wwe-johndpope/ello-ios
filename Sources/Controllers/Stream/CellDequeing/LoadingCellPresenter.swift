@@ -1,8 +1,8 @@
 ////
-///  StreamLoadingCellPresenter.swift
+///  LoadingCellPresenter.swift
 //
 
-struct StreamLoadingCellPresenter {
+struct LoadingCellPresenter {
 
     static func configure(
         _ cell: UICollectionViewCell,
@@ -11,8 +11,7 @@ struct StreamLoadingCellPresenter {
         indexPath: IndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? StreamLoadingCell {
-            cell.start()
-        }
+        guard let cell = cell as? LoadingCell else { return }
+        cell.startAnimating()
     }
 }
