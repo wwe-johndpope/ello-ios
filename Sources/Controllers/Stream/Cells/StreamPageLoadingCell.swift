@@ -5,7 +5,7 @@
 class StreamPageLoadingCell: CollectionViewCell {
     static let reuseIdentifier = "StreamPageLoadingCell"
     struct Size {
-        static let height: CGFloat = 10
+        static let height: CGFloat = 40
     }
 
     let gradientLayer = LoadingGradientLayer()
