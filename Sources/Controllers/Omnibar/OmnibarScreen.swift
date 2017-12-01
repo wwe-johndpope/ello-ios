@@ -2,21 +2,31 @@
 ///  OmnibarScreen.swift
 //
 
+import SnapKit
 import MobileCoreServices
 import FLAnimatedImage
 import PINRemoteImage
+import Photos
 
 
-class OmnibarScreen: UIView, OmnibarScreenProtocol {
+private let imageManager = PHCachingImageManager()
+private let imageHeight: CGFloat = 150
+private let imageMargin: CGFloat = 2
+private let imageContentHeight = imageHeight + 2 * imageMargin
+private let imageFetchLimit = 25
+
+class OmnibarScreen: Screen, OmnibarScreenProtocol {
     struct Size {
-        static let margins = UIEdgeInsets(top: 8, left: 2, bottom: 10, right: 5)
-        static let toolbarMargin: CGFloat = 10
-        static let toolbarRightPadding: CGFloat = 20
+        static let margins = UIEdgeInsets(top: 8, left: 2, bottom: 10, right: 10)
+        static let toolbarMargin = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        static let toolbarButtonSpacing: CGFloat = 20
         static let additionalBuyPadding: CGFloat = 5
         static let tableTopInset: CGFloat = 22.5
-        static let bottomTextMargin: CGFloat = 1
-        static let keyboardButtonSize = CGSize(width: 54, height: 44)
-        static let keyboardButtonMargin: CGFloat = 1
+        static var keyboardContainerHeight: CGFloat { return Size.keyboardContainerMargin.top + Size.keyboardContainerMargin.bottom + Size.keyboardButtonSize.height }
+        static let keyboardContainerMargin = UIEdgeInsets(all: 10)
+        static let keyboardButtonsMargin = UIEdgeInsets(top: 13, left: 10, bottom: 13, right: 10)
+        static let keyboardButtonSize = CGSize(width: 40, height: 40)
+        static let keyboardButtonSpacing: CGFloat = 5
     }
 
     class func canEditRegions(_ regions: [Regionable]?) -> Bool {
@@ -28,7 +38,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         return false
     }
 
-    var autoCompleteVC = AutoCompleteViewController()
+    weak var delegate: OmnibarScreenDelegate?
 
     var isComment: Bool = false {
         didSet { updateButtons() }
@@ -45,7 +55,6 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
             boldButton.isUserInteractionEnabled = isInteractionEnabled
             italicButton.isUserInteractionEnabled = isInteractionEnabled
             linkButton.isUserInteractionEnabled = isInteractionEnabled
-            keyboardSubmitButton.isUserInteractionEnabled = isInteractionEnabled
         }
     }
 
@@ -85,9 +94,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
     var submitTitle: String = "" {
         didSet {
-            for button in [tabbarSubmitButton, keyboardSubmitButton] {
-                button.setTitle(submitTitle, for: .normal)
-            }
+            submitButton.setTitle(submitTitle, for: .normal)
         }
     }
 
@@ -98,40 +105,65 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     var canGoBack: Bool = false {
-        didSet { setNeedsLayout() }
+        didSet {
+            if canGoBack {
+                toolbarPinToTopConstraint.deactivate()
+                toolbarPinToNavConstraint.activate()
+            }
+            else {
+                toolbarPinToTopConstraint.activate()
+                toolbarPinToNavConstraint.deactivate()
+            }
+            setNeedsLayout()
+        }
     }
 
-    var currentUser: User?
+    private var toolbarPinToTopConstraint: Constraint!
+    private var toolbarPinToNavConstraint: Constraint!
 
-// MARK: internal and/or private vars
+// MARK: photo picker assets
+    var currentAssets: [PHAsset] = []
+    var imageButtons: [UIButton] = []
 
-    weak var delegate: OmnibarScreenDelegate?
+// MARK: views and private vars
+    var autoCompleteVC = AutoCompleteViewController()
 
-    let statusBarUnderlay = UIView()
-    let navigationBar = ElloNavigationBar(frame: .zero)
+    let blackBar = BlackBar()
+    let navigationBar = ElloNavigationBar()
 
 // MARK: toolbar buttons
-    var toolbarButtonViews: [UIView]!
-    let buyButton = UIButton()
-    let cancelButton = UIButton()
-    let reorderButton = UIButton()
-    let cameraButton = UIButton()
+    private let toolbarContainer = Container()
+    private let cancelButton = UIButton()
+    private let buyButton = UIButton()
+    private let reorderButton = UIButton()
+    private let addImageButton = UIButton()
+    private let cancelImageButton = UIButton()
+
+// MARK: image picker views
+    let photoAccessoryContainer = Container()
+    let imagesScrollView = UIScrollView()
+    let nativeCameraButton = UIButton()
+    let nativeLibraryButton = UIButton()
+    let nativeAdditionalImagesButton = UIButton()
 
 // MARK: keyboard buttons
-    var keyboardButtonViews: [UIView]!
-    var keyboardButtonsContainer = UIView()
-    let boldButton = UIButton()
-    let italicButton = UIButton()
-    let linkButton = UIButton()
-    let keyboardSubmitButton = UIButton()
-    let tabbarSubmitButton = UIButton()
+    private let keyboardButtonsEffect = UIVisualEffectView()
+    private var keyboardButtonsContainer: UIView { return keyboardButtonsEffect.contentView }
+    let boldButton = StyledButton(style: .boldButton)
+    let italicButton = StyledButton(style: .italicButton)
+    let linkButton = StyledButton(style: .linkButton)
+    private let submitButton = StyledButton(style: .green)
+    private var styleButtonsVisibleConstraint: Constraint!
+    private var styleButtonsHiddenConstraint: Constraint!
 
     let regionsTableView = UITableView()
-    let textEditingControl = UIControl()
+    private let textEditingControl = UIControl()
     let textScrollView = UIScrollView()
-    let textContainer = UIView()
+    let textContainer = Container()
     let textView: UITextView
-    var autoCompleteContainer = UIView()
+
+// MARK: autocomplete views (keyboard accessory)
+    var autoCompleteContainer = Container()
     var autoCompleteThrottle = debounce(0.4)
     var autoCompleteShowing = false
 
@@ -139,22 +171,23 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 
 // MARK: init
 
-    override init(frame: CGRect) {
+    required init(frame: CGRect) {
         submitableRegions = [.text("")]
         textView = OmnibarTextCell.generateTextView()
 
         super.init(frame: frame)
 
-        backgroundColor = UIColor.white
+        backgroundColor = .white
         autoCompleteContainer.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: 0)
 
         editableRegions = generateEditableRegions(submitableRegions)
+
         setupAutoComplete()
         setupNavigationBar()
         setupToolbarButtons()
         setupTableViews()
         setupKeyboardViews()
-        setupViewHierarchy()
+        setupImageViews()
 
         contentSizeObservation = regionsTableView.observe(\UITableView.contentSize) { [weak self] tableView, change in
             guard let `self` = self else { return }
@@ -177,24 +210,44 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func didMoveToWindow() {
+        if window == nil, photoAccessoryContainer.superview != nil {
+            photoAccessoryContainer.removeFromSuperview()
+        }
+        else if let window = window, photoAccessoryContainer.window != window {
+            window.addSubview(photoAccessoryContainer)
+        }
+    }
+
 // MARK: View setup code
 
     private func setupAutoComplete() {
-        autoCompleteVC.view.frame = autoCompleteContainer.frame
+        autoCompleteVC.view.frame = autoCompleteContainer.bounds
         autoCompleteVC.delegate = self
         autoCompleteContainer.addSubview(autoCompleteVC.view)
     }
 
     private func setupNavigationBar() {
         navigationBar.leftItems = [.back]
+        addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(self)
+            make.height.equalTo(ElloNavigationBar.Size.height)
+        }
 
-        statusBarUnderlay.backgroundColor = .black
-        addSubview(statusBarUnderlay)
+        addSubview(blackBar)
+        blackBar.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(self)
+        }
     }
 
     // buttons that make up the "toolbar"
     private func setupToolbarButtons() {
-        buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 11, bottom: 4, right: 3)
+        cancelButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
+        cancelButton.setImages(.x, style: .selected)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+
+        buyButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7)
         buyButton.adjustsImageWhenDisabled = false
         buyButton.adjustsImageWhenHighlighted = false
         buyButton.setImages(.addBuyButton)
@@ -202,29 +255,58 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         buyButton.isEnabled = false
         buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
 
-        cancelButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
-        cancelButton.setImages(.x)
-        cancelButton.addTarget(self, action: #selector(cancelEditingAction), for: .touchUpInside)
-
         reorderButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
-        reorderButton.setImages(.reorder)
+        reorderButton.setImages(.reorder, style: .selected)
         reorderButton.addTarget(self, action: #selector(toggleReorderingTable), for: .touchUpInside)
 
-        cameraButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 9.5)
-        cameraButton.setImages(.camera)
-        cameraButton.addTarget(self, action: #selector(addImageAction), for: .touchUpInside)
+        addImageButton.contentEdgeInsets = UIEdgeInsets(tops: 4, sides: 3.5)
+        addImageButton.setImages(.photoPicker, style: .selected)
+        addImageButton.addTarget(self, action: #selector(addImageButtonTapped), for: .touchUpInside)
+        addImageButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
 
-        for button in [tabbarSubmitButton, keyboardSubmitButton] {
-            button.backgroundColor = UIColor.black
-            button.setImages(.pencil, white: true)
-            button.setTitle(InterfaceString.Omnibar.CreatePostButton, for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.setTitleColor(.grey6, for: .disabled)
-            button.titleLabel?.font = UIFont.defaultFont()
-            button.contentEdgeInsets.left = -5
-            button.imageEdgeInsets.right = 5
-            button.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
-            button.frame.size.height = Size.keyboardButtonSize.height
+        cancelImageButton.setImages(.textPicker, style: .selected)
+        cancelImageButton.addTarget(self, action: #selector(cancelImageButtonTapped), for: .touchUpInside)
+        cancelImageButton.isHidden = true
+
+        let line = UIView()
+        line.backgroundColor = .greyF2
+
+        addSubview(toolbarContainer)
+        toolbarContainer.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            toolbarPinToTopConstraint = make.top.equalTo(self).offset(BlackBar.Size.height + Size.margins.top).constraint
+            toolbarPinToNavConstraint = make.top.equalTo(navigationBar.snp.bottom).constraint
+        }
+        toolbarContainer.addSubview(cancelButton)
+        toolbarContainer.addSubview(buyButton)
+        toolbarContainer.addSubview(reorderButton)
+        toolbarContainer.addSubview(addImageButton)
+        toolbarContainer.addSubview(cancelImageButton)
+        toolbarContainer.addSubview(line)
+
+        cancelButton.snp.makeConstraints { make in
+            make.leading.equalTo(toolbarContainer).inset(Size.margins)
+            make.top.bottom.equalTo(toolbarContainer).inset(Size.toolbarMargin)
+        }
+        addImageButton.snp.makeConstraints { make in
+            make.trailing.equalTo(toolbarContainer).inset(Size.margins)
+            make.top.bottom.equalTo(toolbarContainer).inset(Size.toolbarMargin)
+        }
+        reorderButton.snp.makeConstraints { make in
+            make.top.bottom.equalTo(toolbarContainer).inset(Size.toolbarMargin)
+            make.trailing.equalTo(addImageButton.snp.leading).offset(-Size.toolbarButtonSpacing)
+        }
+        buyButton.snp.makeConstraints { make in
+            make.top.bottom.equalTo(toolbarContainer).inset(Size.toolbarMargin)
+            make.trailing.equalTo(reorderButton.snp.leading).offset(-Size.toolbarButtonSpacing - Size.additionalBuyPadding)
+        }
+        cancelImageButton.snp.makeConstraints { make in
+            make.edges.equalTo(addImageButton)
+        }
+        line.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(toolbarContainer)
+            make.bottom.equalTo(toolbarContainer)
+            make.height.equalTo(1)
         }
     }
 
@@ -240,6 +322,13 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.register(OmnibarImageDownloadCell.self, forCellReuseIdentifier: OmnibarImageDownloadCell.reuseIdentifier)
         regionsTableView.register(UITableViewCell.self, forCellReuseIdentifier: OmnibarRegion.OmnibarSpacerCell)
         regionsTableView.register(OmnibarErrorCell.self, forCellReuseIdentifier: OmnibarErrorCell.reuseIdentifier)
+        addSubview(regionsTableView)
+
+        regionsTableView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            make.top.equalTo(toolbarContainer.snp.bottom)
+            make.bottom.equalTo(self)
+        }
 
         textEditingControl.addTarget(self, action: #selector(startEditingLast), for: .touchUpInside)
         regionsTableView.addSubview(textEditingControl)
@@ -251,7 +340,16 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         stopEditingSwipeGesture.direction = .down
         textScrollView.addGestureRecognizer(stopEditingSwipeGesture)
         textScrollView.clipsToBounds = true
-        textContainer.backgroundColor = UIColor.white
+        textContainer.backgroundColor = .white
+        addSubview(textScrollView)
+
+        textScrollView.snp.makeConstraints { make in
+            make.edges.equalTo(regionsTableView)
+        }
+
+        textScrollView.addSubview(textContainer)
+        textScrollView.addSubview(textView)
+        textScrollView.isHidden = true
 
         textView.clipsToBounds = false
         textView.isEditable = true
@@ -264,83 +362,89 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     private func setupKeyboardViews() {
-        keyboardButtonViews = [
-            boldButton,
-            italicButton,
-            linkButton,
-        ]
-
-        keyboardButtonsContainer.backgroundColor = UIColor.greyC
-        for button in keyboardButtonViews as [UIView] {
-            button.backgroundColor = UIColor.greyA
-            button.frame.size = Size.keyboardButtonSize
+        keyboardButtonsEffect.effect = UIBlurEffect(style: .light)
+        addSubview(keyboardButtonsEffect)
+        keyboardButtonsEffect.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            make.bottom.equalTo(keyboardAnchor.snp.top)
+            make.bottom.lessThanOrEqualTo(self).offset(-ElloTabBar.Size.height)
         }
 
         boldButton.addTarget(self, action: #selector(boldButtonTapped), for: .touchUpInside)
-        boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
-            .font: UIFont.defaultBoldFont(),
-            .foregroundColor: UIColor.white
-        ]), for: .normal)
-        boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
-            .font: UIFont.defaultBoldFont(),
-            .foregroundColor: UIColor.grey6
-        ]), for: .highlighted)
-        boldButton.setAttributedTitle(NSAttributedString(string: "B", attributes: [
-            .font: UIFont.defaultBoldFont(),
-            .foregroundColor: UIColor.black
-            ]), for: .selected)
+        boldButton.setTitle("B", for: .normal)
 
         italicButton.addTarget(self, action: #selector(italicButtonTapped), for: .touchUpInside)
-        italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
-            .font: UIFont.defaultItalicFont(),
-            .foregroundColor: UIColor.white
-        ]), for: .normal)
-        italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
-            .font: UIFont.defaultItalicFont(),
-            .foregroundColor: UIColor.grey6
-        ]), for: .highlighted)
-        italicButton.setAttributedTitle(NSAttributedString(string: "I", attributes: [
-            .font: UIFont.defaultItalicFont(),
-            .foregroundColor: UIColor.black
-            ]), for: .selected)
+        italicButton.setTitle("I", for: .normal)
 
         linkButton.addTarget(self, action: #selector(linkButtonTapped), for: .touchUpInside)
         linkButton.isEnabled = false
         linkButton.setImage(.link, imageStyle: .white, for: .normal)
         linkButton.setImage(.breakLink, imageStyle: .white, for: .selected)
+
+        submitButton.setImage(.pencil, imageStyle: .white, for: .normal)
+        submitButton.setImage(.pencil, imageStyle: .selected, for: .highlighted)
+        submitButton.setTitle(InterfaceString.Omnibar.CreatePostButton, for: .normal)
+        submitButton.contentEdgeInsets.left = -5
+        submitButton.imageEdgeInsets.right = 5
+        submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+        submitButton.frame.size.height = Size.keyboardButtonSize.height
+
+        keyboardButtonsContainer.addSubview(boldButton)
+        keyboardButtonsContainer.addSubview(italicButton)
+        keyboardButtonsContainer.addSubview(linkButton)
+        keyboardButtonsContainer.addSubview(submitButton)
+
+        [boldButton, italicButton, linkButton].eachPair { prevButton, button, isLast in
+            button.snp.makeConstraints { make in
+                make.top.bottom.equalTo(keyboardButtonsContainer).inset(Size.keyboardButtonsMargin)
+                make.size.equalTo(Size.keyboardButtonSize)
+
+                if isLast {
+                    make.trailing.equalTo(submitButton.snp.leading).offset(-Size.keyboardButtonsMargin.right)
+                    styleButtonsHiddenConstraint = make.trailing.equalTo(keyboardButtonsContainer.snp.leading).constraint
+                }
+
+                if let prevButton = prevButton {
+                    make.leading.equalTo(prevButton.snp.trailing).offset(Size.keyboardButtonSpacing)
+                }
+                else {
+                    styleButtonsVisibleConstraint = make.leading.equalTo(keyboardButtonsContainer).inset(Size.keyboardButtonsMargin).constraint
+                }
+            }
+        }
+        styleButtonsVisibleConstraint.deactivate()
+
+        submitButton.snp.makeConstraints { make in
+            make.top.bottom.trailing.equalTo(keyboardButtonsContainer).inset(Size.keyboardContainerMargin)
+        }
     }
 
-    private func setupViewHierarchy() {
-        let views = [
-            regionsTableView,
-            textScrollView,
-            navigationBar,
-            cancelButton,
-        ]
-        for view in views as [UIView] {
-            self.addSubview(view)
-        }
+    private func setupImageViews() {
+        imagesScrollView.backgroundColor = .white
 
-        toolbarButtonViews = [
-            buyButton,
-            reorderButton,
-            cameraButton,
-        ]
-        for button in toolbarButtonViews as [UIView] {
-            self.addSubview(button)
-        }
+        nativeCameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        nativeCameraButton.setImage(.camera, imageStyle: .selected, for: .normal)
+        nativeCameraButton.setImage(.camera, imageStyle: .selected, for: .selected)
+        nativeCameraButton.backgroundColor = .greyF2
 
-        for button in keyboardButtonViews as [UIView] {
-            keyboardButtonsContainer.addSubview(button)
-        }
+        nativeLibraryButton.setImage(.library, imageStyle: .selected, for: .normal)
+        nativeLibraryButton.setImage(.library, imageStyle: .selected, for: .selected)
+        nativeLibraryButton.backgroundColor = .greyF2
 
-        addSubview(tabbarSubmitButton)
-        keyboardButtonsContainer.addSubview(keyboardSubmitButton)
+        let extraButtonsSize = CGSize(width: 60, height: (imageContentHeight - 3 * imageMargin) / 2)
+        nativeCameraButton.frame = CGRect(x: imageMargin, y: imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height)
+        nativeCameraButton.addTarget(self, action: #selector(openNativeCameraTapped), for: .touchUpInside)
+        imagesScrollView.addSubview(nativeCameraButton)
 
-        textScrollView.addSubview(textContainer)
-        textScrollView.addSubview(textView)
-        textView.inputAccessoryView = keyboardButtonsContainer
-        textScrollView.isHidden = true
+        nativeLibraryButton.frame = CGRect(x: imageMargin, y: nativeCameraButton.frame.maxY + imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height)
+        nativeLibraryButton.addTarget(self, action: #selector(openNativeLibraryTapped), for: .touchUpInside)
+        imagesScrollView.addSubview(nativeLibraryButton)
+
+        nativeAdditionalImagesButton.setImage(.dots, imageStyle: .normal, for: .normal)
+        nativeAdditionalImagesButton.backgroundColor = .white
+        nativeAdditionalImagesButton.addTarget(self, action: #selector(openNativeLibraryTapped), for: .touchUpInside)
+        nativeAdditionalImagesButton.frame = CGRect(x: 0, y: imageMargin, width: extraButtonsSize.width, height: extraButtonsSize.height * 2 + imageMargin)
+        imagesScrollView.addSubview(nativeAdditionalImagesButton)
     }
 
 // MARK: Generate regions
@@ -370,6 +474,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     func stopEditing() {
         resignKeyboard()
         editingCanceled()
+        toggleStylingButtons(visible: false)
     }
 
 // MARK: Internal, but might need to be testable
@@ -416,6 +521,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regionsTableView.scrollsToTop = false
         textView.attributedText = region.text
         updateEditingAtPath(path)
+        textViewDidChangeSelection(textView)
     }
 
     func updateEditingAtPath(_ path: IndexPath, scrollPosition: UITableViewScrollPosition = .middle) {
@@ -533,6 +639,8 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 // MARK: Keyboard events - animate layout update in conjunction with keyboard animation
 
     func keyboardWillShow() {
+        resetToImageButton()
+
         self.setNeedsLayout()
         animateWithKeyboard {
             self.layoutIfNeeded()
@@ -551,75 +659,34 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         regions = regions.filter { !$0.isEmpty }
     }
 
-// MARK: Layout and update views
-
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        statusBarUnderlay.frame = CGRect(x: 0, y: 0, width: frame.width, height: BlackBar.Size.height)
-
-        let screenTop: CGFloat
         if canGoBack {
             postNotification(StatusBarNotifications.statusBarVisibility, value: true)
-            navigationBar.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: ElloNavigationBar.Size.height)
-            screenTop = navigationBar.frame.height
-            statusBarUnderlay.isHidden = true
+            navigationBar.isHidden = false
+            blackBar.isHidden = true
         }
         else {
-            screenTop = BlackBar.Size.height
-            navigationBar.frame = .zero
-            statusBarUnderlay.isHidden = false
+            navigationBar.isHidden = true
+            blackBar.isHidden = false
         }
-
-        let toolbarTop = screenTop + Size.margins.top
-        var buttonX = frame.width - Size.margins.right + Size.toolbarRightPadding
-        for view in toolbarButtonViews.reversed() {
-            view.frame.size = view.intrinsicContentSize
-            buttonX -= view.frame.size.width + Size.toolbarRightPadding
-            view.frame.origin = CGPoint(x: buttonX, y: toolbarTop)
-        }
-
-        buyButton.frame = buyButton.frame.shift(left: Size.additionalBuyPadding)
-
-        let cancelButtonSize = cancelButton.intrinsicContentSize
-        cancelButton.frame = CGRect(x: Size.margins.left, y: toolbarTop, width: cancelButtonSize.width, height: cancelButtonSize.height)
-
-        regionsTableView.frame = CGRect(x: 0, y: cancelButton.frame.maxY + Size.toolbarMargin, right: bounds.size.width, bottom: bounds.size.height)
-        textScrollView.frame = regionsTableView.frame
 
         var bottomInset = Keyboard.shared.keyboardBottomInset(inView: self)
 
         if bottomInset == 0 {
             bottomInset = ElloTabBar.Size.height
         }
-        bottomInset += Size.keyboardButtonSize.height
+        bottomInset += Size.keyboardContainerHeight
 
         regionsTableView.contentInset.top = Size.tableTopInset
         regionsTableView.contentInset.bottom = bottomInset
         regionsTableView.scrollIndicatorInsets.bottom = bottomInset
         synchronizeScrollViews()
 
-        let keyboardButtonHeight = Size.keyboardButtonSize.height
-        keyboardButtonsContainer.frame.size = CGSize(width: frame.width, height: keyboardButtonHeight)
-        tabbarSubmitButton.frame.size = CGSize(width: frame.width, height: keyboardButtonHeight)
-
-        if Keyboard.shared.active {
-            tabbarSubmitButton.frame.origin.y = frame.height
-        }
-        else {
-            tabbarSubmitButton.frame.origin.y = frame.height - ElloTabBar.Size.height - keyboardButtonHeight
-        }
-
-        var x: CGFloat = 0
-        for view in keyboardButtonViews {
-            view.frame.origin.x = x
-            x += view.frame.size.width
-            x += Size.keyboardButtonMargin
-            view.frame.size.height = keyboardButtonHeight
-        }
-        let remainingCameraWidth = frame.width - x
-        keyboardSubmitButton.frame.origin.x = keyboardButtonsContainer.frame.width - remainingCameraWidth
-        keyboardSubmitButton.frame.size.width = remainingCameraWidth
+        photoAccessoryContainer.frame.size.width = frame.width
+        photoAccessoryContainer.frame.origin.x = 0
+        photoAccessoryContainer.frame.origin.y = frame.height - Keyboard.shared.keyboardBottomInset(inView: self) - photoAccessoryContainer.frame.height
     }
 
     func synchronizeScrollViews() {
@@ -645,8 +712,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
         }
 
         let canSubmit = !reordering && canPost()
-        keyboardSubmitButton.isEnabled = canSubmit
-        tabbarSubmitButton.isEnabled = canSubmit
+        submitButton.isEnabled = canSubmit
 
         let canAddBuyButtonLink = !reordering && hasImage()
         buyButton.isEnabled = canAddBuyButtonLink
@@ -663,7 +729,7 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 // MARK: Button Actions
 
     @objc
-    func cancelEditingAction() {
+    func cancelButtonTapped() {
         if reordering {
             reorderingTable(false)
         }
@@ -686,11 +752,11 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
     }
 
     @objc
-    func submitAction() {
-        if canPost() {
-            stopEditing()
-            delegate?.omnibarSubmitted(submitableRegions, buyButtonURL: buyButtonURL)
-        }
+    func submitButtonTapped() {
+        guard canPost() else { return }
+
+        stopEditing()
+        delegate?.omnibarSubmitted(submitableRegions, buyButtonURL: buyButtonURL)
     }
 
     @objc
@@ -882,16 +948,280 @@ class OmnibarScreen: UIView, OmnibarScreenProtocol {
 // MARK: Camera / Image Picker
 
     @objc
-    func addImageAction() {
+    func addImageButtonTapped() {
+        addImageButton.isHidden = true
+        cancelImageButton.isHidden = false
         stopEditing()
-        let pickerSheet = UIImagePickerController.imagePickerSheetForImagePicker(callback: openImageSheet)
-        self.delegate?.omnibarPresentController(pickerSheet)
+
+        let status = UIImagePickerController.alreadyDeterminedStatus()
+        if let status = status {
+            showKeyboardImages(isAuthorized: status == .authorized)
+        }
+        else {
+            UIImagePickerController.requestStatus()
+                .then { status -> Void in
+                    self.showKeyboardImages(isAuthorized: status == .authorized)
+                }
+                .ignoreErrors()
+        }
     }
 
+    private func resetToImageButton() {
+        currentAssets = []
+        addImageButton.isHidden = false
+        cancelImageButton.isHidden = true
+        setPhotoAccessoryView(nil)
+    }
+
+    @objc
+    func cancelImageButtonTapped() {
+        resetToImageButton()
+    }
+
+    func toggleStylingButtons(visible: Bool) {
+        if visible {
+            styleButtonsVisibleConstraint.activate()
+            styleButtonsHiddenConstraint.deactivate()
+        }
+        else {
+            styleButtonsVisibleConstraint.deactivate()
+            styleButtonsHiddenConstraint.activate()
+        }
+
+        elloAnimate {
+            self.layoutIfNeeded()
+        }
+    }
+
+    private func showKeyboardImages(isAuthorized: Bool) {
+        guard isAuthorized else { return }
+
+        showKeyboardSpinner()
+        loadPhotos()
+    }
+
+    fileprivate func setPhotoAccessoryView(_ view: UIView?) {
+        for subview in photoAccessoryContainer.subviews {
+            subview.removeFromSuperview()
+        }
+
+        if let view = view {
+            photoAccessoryContainer.addSubview(view)
+            photoAccessoryContainer.frame.size.height = view.frame.size.height
+        }
+        else {
+            photoAccessoryContainer.frame.size.height = 0
+        }
+        setNeedsLayout()
+    }
+
+    private func showKeyboardSpinner() {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        spinner.startAnimating()
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: imageContentHeight))
+        spinner.center = view.center
+        spinner.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        view.addSubview(spinner)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        setPhotoAccessoryView(view)
+    }
+
+    private func loadPhotos() {
+        var assetsInfo: [(Int, PHAsset)] = []
+        let (afterAll, done) = afterN {
+            assetsInfo.sort { $0.0 < $1.0 }
+            let onlyAssets = assetsInfo.map { $0.1 }
+            self.createImageViews(assets: onlyAssets)
+        }
+
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+        options.fetchLimit = imageFetchLimit + 1
+
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = false
+        requestOptions.deliveryMode = .fastFormat
+
+        Globals.fetchAssets(with: options) { asset, index in
+            let next = afterAll()
+            imageManager.requestImageData(for: asset, options: requestOptions) { data, _, _, _ in
+                defer { next() }
+                guard data != nil else { return }
+                assetsInfo.append((index, asset))
+            }
+        }
+        done()
+    }
+
+    private func image(forAsset asset: PHAsset) -> UIImage? {
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        requestOptions.deliveryMode = .fastFormat
+
+        let targetSize = size(forAsset: asset, scale: UIScreen.main.scale)
+        var retVal: UIImage?
+        if asset.representsBurst {
+            imageManager.requestImageData(for: asset, options: requestOptions) { data, _, _, _ in
+                retVal = data.flatMap { UIImage(data: $0) }
+            }
+        }
+        else {
+            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: requestOptions) { image, _ in
+                retVal = image
+            }
+        }
+
+        return retVal
+    }
+
+    private func size(forAsset asset: PHAsset, scale: CGFloat = 1) -> CGSize {
+        let proportion = CGFloat(asset.pixelWidth) / CGFloat(asset.pixelHeight)
+        let imageWidth = floor(proportion * imageHeight)
+        return CGSize(width: scale * imageWidth, height: scale * imageHeight)
+    }
+
+    private func createImageViews(assets: [PHAsset]) {
+        guard assets.count > 0 else {
+            setPhotoAccessoryView(nil)
+            return
+        }
+
+        imagesScrollView.frame = CGRect(x: 0, y: 0, width: frame.width, height: imageContentHeight)
+        currentAssets = []
+
+        for view in imageButtons {
+            view.removeFromSuperview()
+        }
+
+        imageButtons = []
+        var x: CGFloat = nativeCameraButton.frame.maxX, y: CGFloat = imageMargin
+        for asset in assets {
+            guard let image = image(forAsset: asset) else { continue }
+
+            x += imageMargin
+            let size = self.size(forAsset: asset)
+
+            let imageButton = UIButton()
+            imageButton.setImage(image, for: .normal)
+            imageButton.contentMode = .scaleAspectFit
+            imageButton.clipsToBounds = true
+            imageButton.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
+            imageButton.addTarget(self, action: #selector(selectedImage(_:)), for: .touchUpInside)
+
+            currentAssets.append(asset)
+            imageButtons.append(imageButton)
+            imagesScrollView.addSubview(imageButton)
+
+            x += size.width
+        }
+
+        if assets.count > imageFetchLimit {
+            nativeAdditionalImagesButton.isHidden = false
+            nativeAdditionalImagesButton.frame.origin.x = x
+
+            x += nativeAdditionalImagesButton.frame.width
+        }
+        else if nativeAdditionalImagesButton.superview != nil {
+            nativeAdditionalImagesButton.isHidden = true
+        }
+
+        let contentWidth = x + imageMargin
+        imagesScrollView.contentSize = CGSize(width: contentWidth, height: imageContentHeight)
+        setPhotoAccessoryView(imagesScrollView)
+    }
+
+    @objc
+    func openNativeCameraTapped() {
+        let controller = UIImagePickerController.elloCameraPickerController
+        controller.delegate = self
+        delegate?.omnibarPresentController(controller)
+        resetToImageButton()
+    }
+
+    @objc
+    func openNativeLibraryTapped() {
+        let controller = UIImagePickerController.elloPhotoLibraryPickerController
+        controller.delegate = self
+        delegate?.omnibarPresentController(controller)
+        resetToImageButton()
+    }
+
+    @objc
+    private func selectedImage(_ sender: UIButton) {
+        guard
+            let index = imageButtons.index(of: sender),
+            let asset = currentAssets.safeValue(index)
+        else { return }
+
+        stopEditing()
+        cancelImageButtonTapped()
+        AssetsToRegions.processPHAssets([asset]) { imageData in
+            for imageDatum in imageData {
+                self.addImage(imageDatum.image, data: imageDatum.data, type: imageDatum.contentType)
+            }
+        }
+    }
+
+}
+
+extension OmnibarScreen: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerController(_ controller: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+        guard
+            let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        else {
+            delegate?.omnibarDismissController()
+            return
+        }
+
+        if let url = info[UIImagePickerControllerReferenceURL] as? URL,
+            let asset = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil).firstObject
+        {
+            AssetsToRegions.processPHAssets([asset]) { imageData in
+                for imageDatum in imageData {
+                    self.addImage(imageDatum.image, data: imageDatum.data, type: imageDatum.contentType)
+                }
+            }
+            delegate?.omnibarDismissController()
+        }
+        else {
+            image.copyWithCorrectOrientationAndSize { image in
+                if let image = image {
+                    self.addImage(image, data: nil, type: nil)
+                }
+
+                self.delegate?.omnibarDismissController()
+            }
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ controller: UIImagePickerController) {
+        delegate?.omnibarDismissController()
+    }
 }
 
 extension OmnibarScreen: HasBackButton {
     func backButtonTapped() {
         delegate?.omnibarCancel()
     }
+}
+
+extension StyledButton.Style {
+    static let boldButton = StyledButton.Style(
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
+        titleColor: .white,
+        font: .defaultBoldFont(),
+        cornerRadius: .pill
+        )
+    static let italicButton = StyledButton.Style(
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
+        titleColor: .white,
+        font: .defaultItalicFont(),
+        cornerRadius: .pill
+        )
+    static let linkButton = StyledButton.Style(
+        backgroundColor: .greyE5, selectedBackgroundColor: .black,
+        titleColor: .white,
+        cornerRadius: .pill
+        )
 }

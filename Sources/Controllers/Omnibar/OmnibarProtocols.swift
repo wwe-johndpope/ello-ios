@@ -18,7 +18,6 @@ protocol OmnibarScreenProtocol: class {
     var title: String { get set }
     var submitTitle: String { get set }
     var regions: [OmnibarRegion] { get set }
-    var currentUser: User? { get set }
     var canGoBack: Bool { get set }
     var isEditing: Bool { get set }
     var isInteractionEnabled: Bool { get set }

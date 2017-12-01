@@ -5,6 +5,7 @@
 @testable import Ello
 import Quick
 import Nimble
+import Photos
 
 
 class OmnibarScreenMockDelegate: OmnibarScreenDelegate {
@@ -56,6 +57,11 @@ enum RegionExpectation {
 
 
 class OmnibarScreenSpec: QuickSpec {
+    class FakeGlobal: GlobalFactory {
+        override func fetchAssets(with options: PHFetchOptions, completion: @escaping (PHAsset, Int) -> Void) {
+        }
+    }
+
     override func spec() {
         var subject: OmnibarScreen!
         var delegate: OmnibarScreenMockDelegate!
@@ -76,11 +82,30 @@ class OmnibarScreenSpec: QuickSpec {
             }
 
             describe("pressing add image") {
-                beforeEach {
-                    subject.addImageAction()
+                let status = UIImagePickerController.alreadyDeterminedStatus()
+
+                if status != .authorized {
+                    it("should already have image access") { fail("\(status) should be .authorized") }
                 }
-                it("should open an image selector") {
-                    expect(delegate.didPresentController) == true
+                else {
+                    beforeEach {
+                        overrideGlobals(FakeGlobal())
+                        subject.addImageButtonTapped()
+                    }
+                    afterEach {
+                        overrideGlobals(nil)
+                    }
+
+                    it("should toggle buttons") {
+                        expect(subject.addImageButton.isHidden) == true
+                        expect(subject.textButton.isHidden) == false
+                    }
+                    it("should stop editing text") {
+                        expect(Keyboard.shared.active) == false
+                    }
+                    it("should show the photoAccessoryContainer") {
+                        expect(subject.photoAccessoryContainer.isHidden) == false
+                    }
                 }
             }
 
@@ -123,12 +148,6 @@ class OmnibarScreenSpec: QuickSpec {
                     }
                 }
 
-                context("var currentUser: User?") {
-                    it("should set the user") {
-                        subject.currentUser = User.stub(["id": "12345"])
-                        expect(subject.currentUser?.id) == "12345"
-                    }
-                }
                 context("var canGoBack: Bool") {
                     context("when true") {
                         it("should show the navigationBar") {
@@ -175,7 +194,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.isEditing = false
                             subject.regions = [.text("foo")]
                             expect(subject.canPost()) == true
-                            subject.cancelEditingAction()
+                            subject.cancelButtonTapped()
                             expect(delegate.didPresentController) == true
                             expect(delegate.didGoBack) == false
                         }
@@ -185,7 +204,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.isEditing = true
                             subject.regions = [.text("foo")]
                             expect(subject.canPost()) == true
-                            subject.cancelEditingAction()
+                            subject.cancelButtonTapped()
                             expect(delegate.didPresentController) == false
                             expect(delegate.didGoBack) == true
                         }

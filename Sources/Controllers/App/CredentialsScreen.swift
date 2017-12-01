@@ -40,7 +40,7 @@ class CredentialsScreen: EmptyScreen {
     }
 
     override func style() {
-        backButton.setImages(.angleBracket, degree: 180, white: true)
+        backButton.setImages(.chevron, style: .white)
         backButton.contentMode = .center
         layer.masksToBounds = true
     }

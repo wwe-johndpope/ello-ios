@@ -74,9 +74,11 @@ enum InterfaceImage: String {
 
     // Omnibar
     case reorder = "reorder"
+    case photoPicker = "photo_picker"
+    case textPicker = "text_picker"
     case camera = "camera"
+    case library = "library"
     case check = "check"
-    case arrow = "arrow"
     case link = "link"
     case breakLink = "breaklink"
 
@@ -103,6 +105,9 @@ enum InterfaceImage: String {
     case circleCheck = "circle_check"
     case star = "star"
 
+    // "New Posts" arrow
+    case arrow = "arrow"
+
     // Generic
     case x = "x"
     case dots = "dots"
@@ -110,6 +115,7 @@ enum InterfaceImage: String {
     case plusSmall = "plussmall"
     case checkSmall = "checksmall"
     case angleBracket = "abracket"
+    case chevron = "chevron"
     case back = "back"
 
     // Embeds
@@ -185,17 +191,21 @@ enum InterfaceImage: String {
              .bubbleBody,
              .camera,
              .checkSmall,
+             .chevron,
              .comments,
              .commentsOutline,
              .heart,
              .heartOutline,
              .invite,
              .link,
+             .library,
              .mail,
              .onePassword,
              .pencil,
+             .photoPicker,
              .plusSmall,
              .share,
+             .textPicker,
              .repost,
              .x:
             return svgNamed("\(self.rawValue)_white")
@@ -205,7 +215,7 @@ enum InterfaceImage: String {
     }
     var disabledImage: UIImage? {
         switch self {
-        case .angleBracket, .addBuyButton, .back, .repost:
+        case .angleBracket, .addBuyButton, .back, .chevron, .repost:
             return svgNamed("\(self.rawValue)_disabled")
         default:
             return nil

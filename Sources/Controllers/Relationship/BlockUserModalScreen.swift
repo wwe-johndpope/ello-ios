@@ -50,7 +50,7 @@ class BlockUserModalScreen: View {
         for button in [muteButton, blockButton, flagButton] {
             styleButton(button)
         }
-        closeButton.setImages(.x, white: true)
+        closeButton.setImages(.x, style: .white)
     }
 
     override func bindActions() {
