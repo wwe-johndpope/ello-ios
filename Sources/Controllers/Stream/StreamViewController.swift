@@ -1244,11 +1244,11 @@ extension StreamViewController: UIScrollViewDelegate {
 
         guard
             let lastCellItem = dataSource.visibleCellItems.last,
-            lastCellItem.type != .streamLoading
+            lastCellItem.type != .streamPageLoading
         else { return }
 
         let placeholderType = lastCellItem.placeholderType
-        appendStreamCellItems([StreamCellItem(type: .streamLoading)])
+        appendStreamCellItems([StreamCellItem(type: .streamPageLoading)])
 
         scrollToPaginateGuard = false
 
@@ -1298,7 +1298,7 @@ extension StreamViewController: UIScrollViewDelegate {
     private func removeLoadingCell() {
         let lastIndexPath = IndexPath(item: dataSource.visibleCellItems.count - 1, section: 0)
         guard
-            dataSource.visibleCellItems[lastIndexPath.row].type == .streamLoading
+            dataSource.visibleCellItems[lastIndexPath.row].type == .streamPageLoading
         else { return }
 
         dataSource.removeItems(at: [lastIndexPath])

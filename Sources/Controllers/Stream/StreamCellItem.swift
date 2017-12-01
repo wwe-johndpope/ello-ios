@@ -55,6 +55,9 @@ final class StreamCellItem: NSObject, NSCopying {
         if case .streamLoading = type {
             return true
         }
+        if case .streamPageLoading = type {
+            return true
+        }
         return false
     }
 

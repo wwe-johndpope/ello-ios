@@ -18,7 +18,12 @@ class ElloScrollLogic: NSObject, UIScrollViewDelegate {
     private var showingState: Bool?
     var isShowing: Bool {
         get { return self.showingState ?? true }
-        set { showingState = newValue }
+        set {
+            if showingState != newValue {
+                lastStateChange = CACurrentMediaTime()
+            }
+            showingState = newValue
+        }
     }
 
     private var onShow: Block

@@ -186,6 +186,7 @@ class StreamableViewController: BaseElloViewController {
 extension StreamableViewController {
     @objc
     func tapToShowTapped() {
+        scrollLogic.isShowing = true
         showNavBars()
     }
 }
