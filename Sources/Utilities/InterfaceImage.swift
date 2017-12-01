@@ -202,10 +202,8 @@ enum InterfaceImage: String {
              .mail,
              .onePassword,
              .pencil,
-             .photoPicker,
              .plusSmall,
              .share,
-             .textPicker,
              .repost,
              .x:
             return svgNamed("\(self.rawValue)_white")

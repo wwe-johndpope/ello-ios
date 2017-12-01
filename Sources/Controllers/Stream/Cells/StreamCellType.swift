@@ -332,8 +332,6 @@ enum StreamCellType: Equatable {
             let width = Globals.windowSize.width
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
-        case .categoryPromotionalHeader, .pagePromotionalHeader:
-            return 150
         case .categoryList:
             return CategoryListCell.Size.height
         case .commentHeader:
@@ -341,7 +339,7 @@ enum StreamCellType: Equatable {
         case .inviteFriends,
              .onboardingInviteFriends,
              .seeMoreComments:
-                return 60
+            return 60
         case .createComment:
             return 75
         case .editorial:
@@ -386,7 +384,20 @@ enum StreamCellType: Equatable {
             return 40
         case .userListItem:
             return 85
-        default: return 0
+        case .artistInviteBubble,
+             .artistInviteControls,
+             .artistInviteGuide,
+             .artistInviteHeader,
+             .categoryPromotionalHeader,
+             .embed,
+             .image,
+             .pagePromotionalHeader,
+             .placeholder,
+             .profileHeader,
+             .profileHeaderGhost,
+             .text,
+             .unknown:
+            return 0
         }
     }
 
