@@ -2407,7 +2407,6 @@
 		F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		F8BB4D881AA64F8700C022B0 /* AddressBookError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookError.swift; sourceTree = "<group>"; };
 		F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
-		F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewController.xib; sourceTree = "<group>"; };
 		F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewDataSource.swift; sourceTree = "<group>"; };
 		F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
 		F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScreenEdgePanGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -2655,7 +2654,6 @@
 				125F28871B1D165700BA501E /* DrawerCellPresenter.swift */,
 				1D9856401C723E6100C1BF78 /* DrawerPopControl.swift */,
 				F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */,
-				F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */,
 				F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */,
 			);
 			path = Drawer;
