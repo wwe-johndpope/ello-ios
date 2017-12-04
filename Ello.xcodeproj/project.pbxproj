@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01BA14787BB2CA507020C9C4 /* Pods_Ello.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A38EE9D399B7D9C67F9E78 /* Pods_Ello.framework */; };
-		12028E971C64F1B40042AA53 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8158C441ACDABF3008C15A1 /* AlertCell.xib */; };
 		1207C96E1C73FEE000939ADB /* AnonymousAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94A1C73FEE000939ADB /* AnonymousAuthService.swift */; };
 		1207C96F1C73FEE000939ADB /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94B1C73FEE000939ADB /* APIKeys.swift */; };
 		1207C9701C73FEE000939ADB /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C94C1C73FEE000939ADB /* AsyncOperation.swift */; };
@@ -1027,6 +1026,9 @@
 		1DF4908D1FD08B9A00C0ACAC /* LoadingGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF4908C1FD08B9900C0ACAC /* LoadingGradientLayer.swift */; };
 		1DF4908F1FD09B6200C0ACAC /* StreamPageLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF4908E1FD09B6200C0ACAC /* StreamPageLoadingCell.swift */; };
 		1DF490911FD0A1AB00C0ACAC /* LoadingCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF490901FD0A1A900C0ACAC /* LoadingCellPresenter.swift */; };
+		1DF490921FD5ECD500C0ACAC /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD0BBD1F950ADB00DF9FC5 /* TableViewCell.swift */; };
+		1DF490931FD5EE7800C0ACAC /* UIEdgeInsetsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59337F1D1462E900EAF03D /* UIEdgeInsetsExtensions.swift */; };
+		1DF490941FD5EE8200C0ACAC /* SnapKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4042C91E0997DD00E4E74D /* SnapKitExtensions.swift */; };
 		1DF50C8D1C61452D00C62D89 /* UIImagePickerControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C8C1C61452D00C62D89 /* UIImagePickerControllerSpec.swift */; };
 		1DF50C991C614E0700C62D89 /* OmnibarProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C8F1C614C4400C62D89 /* OmnibarProtocols.swift */; };
 		1DF50C9B1C614E0F00C62D89 /* OmnibarScreenAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C961C614C6900C62D89 /* OmnibarScreenAutocomplete.swift */; };
@@ -1268,7 +1270,6 @@
 		EAF43D971AB0DEF70016E110 /* ObjectCacheSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF43D961AB0DEF70016E110 /* ObjectCacheSpec.swift */; };
 		EAF43D991AB0EBE60016E110 /* InviteCacheSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF43D981AB0EBE60016E110 /* InviteCacheSpec.swift */; };
 		F8006EE51AB9FE670008BB42 /* Animators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8006EE41AB9FE670008BB42 /* Animators.swift */; };
-		F8158C451ACDABF3008C15A1 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8158C441ACDABF3008C15A1 /* AlertCell.xib */; };
 		F8158C471ACDAF7F008C15A1 /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C461ACDAF7F008C15A1 /* AlertCell.swift */; };
 		F8158C491ACDD4C1008C15A1 /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C481ACDD4C1008C15A1 /* AlertAction.swift */; };
 		F8158C4B1ACDD4EF008C15A1 /* AlertCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */; };
@@ -1283,7 +1284,6 @@
 		F8A33EDF1AB0D5B9005DE9BB /* RelationshipSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A33EDE1AB0D5B9005DE9BB /* RelationshipSpec.swift */; };
 		F8A3B6451AC457CA00806224 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */; };
 		F8BDA7551AA8F3C800A662B4 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */; };
-		F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */; };
 		F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */; };
 		F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */; };
 		F8FDB1B81AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */; };
@@ -2388,7 +2388,6 @@
 		EAF43D961AB0DEF70016E110 /* ObjectCacheSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectCacheSpec.swift; sourceTree = "<group>"; };
 		EAF43D981AB0EBE60016E110 /* InviteCacheSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCacheSpec.swift; sourceTree = "<group>"; };
 		F8006EE41AB9FE670008BB42 /* Animators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animators.swift; sourceTree = "<group>"; };
-		F8158C441ACDABF3008C15A1 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		F8158C461ACDAF7F008C15A1 /* AlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertCell.swift; sourceTree = "<group>"; };
 		F8158C481ACDD4C1008C15A1 /* AlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
 		F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertCellPresenter.swift; sourceTree = "<group>"; };
@@ -4325,7 +4324,6 @@
 			children = (
 				F8158C481ACDD4C1008C15A1 /* AlertAction.swift */,
 				F8158C461ACDAF7F008C15A1 /* AlertCell.swift */,
-				F8158C441ACDABF3008C15A1 /* AlertCell.xib */,
 				F8158C4A1ACDD4EF008C15A1 /* AlertCellPresenter.swift */,
 				126E05301B152DD70036DFA6 /* AlertHeaderView.swift */,
 				F8158C4C1ACDD52D008C15A1 /* AlertPresentationController.swift */,
@@ -4533,7 +4531,6 @@
 				124CFB9D1C5976E500727D11 /* MainInterface.storyboard in Resources */,
 				122034751DE66A4A0059E633 /* ello_logo_grey.svg in Resources */,
 				123466161C65468100E61110 /* ello_logo.svg in Resources */,
-				12028E971C64F1B40042AA53 /* AlertCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4660,7 +4657,6 @@
 				1D472C231C1F2E0400B61E55 /* embetter_audio_play.svg in Resources */,
 				76B53AD41B0AA89B00534548 /* relationship_batches__when_no_user_ids_are_specified.json in Resources */,
 				76F8DEB81B6C0BC4009BCF61 /* bubble_white.svg in Resources */,
-				F8158C451ACDABF3008C15A1 /* AlertCell.xib in Resources */,
 				76F8DEF91B6C0BC4009BCF61 /* sparkles_normal.svg in Resources */,
 				EA8990141ABA180100339CBE /* Settings.storyboard in Resources */,
 				76F8DEBD1B6C0BC4009BCF61 /* check_green.svg in Resources */,
@@ -4850,7 +4846,6 @@
 				76F8DEF81B6C0BC4009BCF61 /* share_selected.svg in Resources */,
 				7689B4E71AD4ED3B00E4A4A3 /* comments_updating_a_comment.json in Resources */,
 				76F8DEED1B6C0BC4009BCF61 /* relationships_white.svg in Resources */,
-				F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */,
 				12CFF68A1B16760C007CE68F /* loves_listing_loves_for_a_user.json in Resources */,
 				1212FDED1A66E5CB00AD4AF7 /* comments-for-a-post.json in Resources */,
 				7689B5061AD4ED3B00E4A4A3 /* users_checking_usernameemail_availability.json in Resources */,
@@ -5151,6 +5146,7 @@
 				122D1B4E1C602337001386CE /* BoxType.swift in Sources */,
 				126F2C031C5C1D8D00D22BAB /* DictionaryExtensions.swift in Sources */,
 				122D1B9E1C61311F001386CE /* AlertCell.swift in Sources */,
+				1DF490931FD5EE7800C0ACAC /* UIEdgeInsetsExtensions.swift in Sources */,
 				122D1B491C602271001386CE /* FreeMethods.swift in Sources */,
 				1DDC85271D91F60000C29552 /* PostActionable.swift in Sources */,
 				122B30F81C6A41E900C1B9D8 /* RegionKind.swift in Sources */,
@@ -5171,6 +5167,7 @@
 				122B30B11C6A3FBB00C1B9D8 /* AmazonCredentials.swift in Sources */,
 				1DA18E1D1DB55D4E000231CC /* ExternalLink.swift in Sources */,
 				122B30E61C6A3FC400C1B9D8 /* EmbedRegion.swift in Sources */,
+				1DF490921FD5ECD500C0ACAC /* TableViewCell.swift in Sources */,
 				122D1B9D1C6130FB001386CE /* NSErrorExtensions.swift in Sources */,
 				120FF6C91C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */,
 				122D1B9B1C6130D9001386CE /* AlertHeaderView.swift in Sources */,
@@ -5178,6 +5175,7 @@
 				122D1BA11C613161001386CE /* Colors.swift in Sources */,
 				122B30EA1C6A3FC400C1B9D8 /* TextRegion.swift in Sources */,
 				1D104FD01F3CEBCD00B5487A /* ElloTextField.swift in Sources */,
+				1DF490941FD5EE8200C0ACAC /* SnapKitExtensions.swift in Sources */,
 				122D1B4C1C60232D001386CE /* TypedNotifications.swift in Sources */,
 				122B30AE1C6A3FBB00C1B9D8 /* Activity.swift in Sources */,
 				1D9309CD1EBCEBAF0099FCF8 /* Badge.swift in Sources */,

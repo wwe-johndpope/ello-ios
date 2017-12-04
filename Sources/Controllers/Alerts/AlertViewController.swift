@@ -2,6 +2,8 @@
 ///  AlertViewController.swift
 //
 
+import SnapKit
+
 
 class AlertViewController: UIViewController {
 
@@ -108,10 +110,9 @@ extension AlertViewController {
         view.addSubview(tableView)
 
         // not using SnapKit because AlertViewController is used from the ShareExtension
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: Size.margins.top).isActive = true
-        view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: Size.margins.bottom).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Size.margins.left).isActive = true
-        view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: Size.margins.right).isActive = true
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view).inset(Size.margins)
+        }
     }
 
     override func viewDidLoad() {
@@ -122,7 +123,7 @@ extension AlertViewController {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(AlertCell.nib(), forCellReuseIdentifier: AlertCell.reuseIdentifier)
+        tableView.register(AlertCell.self, forCellReuseIdentifier: AlertCell.reuseIdentifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
