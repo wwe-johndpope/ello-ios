@@ -73,7 +73,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         addAction(name: "Show Onboarding") {
             appController.closeDebugController {
-                let user: User! = appController.currentUser
+                guard let user = appController.currentUser else { return }
                 user.onboardingVersion = nil
                 appController.showOnboardingScreen(user)
             }
@@ -81,7 +81,7 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         addAction(name: "Show Creator Type") {
             appController.closeDebugController {
-                let user: User! = appController.currentUser
+                guard let user = appController.currentUser else { return }
                 user.onboardingVersion = Onboarding.minCreatorTypeVersion
                 appController.showOnboardingScreen(user)
             }
