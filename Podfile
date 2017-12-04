@@ -26,7 +26,6 @@ def ello_app_pods
   pod 'iRate', '~> 1.11'
   # swift pods
   pod 'TimeAgoInWords', git: 'https://github.com/ello/TimeAgoInWords'
-  pod 'SnapKit', git: 'https://github.com/ello/SnapKit'
   pod 'DeltaCalculator', git: 'https://github.com/ello/DeltaCalculator'
 
 end
@@ -39,6 +38,7 @@ def ui_pods
   else
     pod 'ElloOSSUIFonts', '~> 2.2'
   end
+  pod 'SnapKit', git: 'https://github.com/ello/SnapKit'
 end
 
 def common_pods
