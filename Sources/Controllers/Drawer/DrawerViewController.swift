@@ -7,8 +7,9 @@ protocol DrawerResponder: class {
 }
 
 class DrawerViewController: BaseElloViewController {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var navigationBar: UIView!
+    let tableView = UITableView()
+    let navigationBar = ElloNavigationBar()
+
     var isLoggingOut = false
 
     override var backGestureEdges: UIRectEdge { return .right }
@@ -16,7 +17,7 @@ class DrawerViewController: BaseElloViewController {
     let dataSource = DrawerViewDataSource()
 
     required init() {
-        super.init(nibName: "DrawerViewController", bundle: .none)
+        super.init(nibName: nil, bundle: .none)
     }
 
     required init?(coder: NSCoder) {
@@ -26,6 +27,7 @@ class DrawerViewController: BaseElloViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        arrange()
         setupNavigationBar()
         setupTableView()
         registerCells()
@@ -75,6 +77,20 @@ extension DrawerViewController: UITableViewDelegate {
 
 // MARK: View Helpers
 private extension DrawerViewController {
+    func arrange() {
+        view.addSubview(tableView)
+        view.addSubview(navigationBar)
+
+        navigationBar.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(self.view)
+        }
+
+        tableView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self.view)
+            make.top.equalTo(navigationBar.snp.bottom)
+        }
+    }
+
     func setupTableView() {
         tableView.backgroundColor = .grey6
         tableView.delegate = self

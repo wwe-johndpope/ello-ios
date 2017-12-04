@@ -1284,7 +1284,6 @@
 		F8A33EDF1AB0D5B9005DE9BB /* RelationshipSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A33EDE1AB0D5B9005DE9BB /* RelationshipSpec.swift */; };
 		F8A3B6451AC457CA00806224 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3B6441AC457CA00806224 /* ArrayExtensions.swift */; };
 		F8BDA7551AA8F3C800A662B4 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BDA7541AA8F3C800A662B4 /* DrawerViewController.swift */; };
-		F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8BDA7571AA8F3E000A662B4 /* DrawerViewController.xib */; };
 		F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D160671AB75B1D00575B25 /* DrawerViewDataSource.swift */; };
 		F8D4F60E1AE82A1600AF4470 /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4F60D1AE82A1600AF4470 /* PushNotificationController.swift */; };
 		F8FDB1B81AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FDB1B71AC0B81500A59266 /* UIScreenEdgePanGestureRecognizer.swift */; };
@@ -4847,7 +4846,6 @@
 				76F8DEF81B6C0BC4009BCF61 /* share_selected.svg in Resources */,
 				7689B4E71AD4ED3B00E4A4A3 /* comments_updating_a_comment.json in Resources */,
 				76F8DEED1B6C0BC4009BCF61 /* relationships_white.svg in Resources */,
-				F8BDA7581AA8F3E000A662B4 /* DrawerViewController.xib in Resources */,
 				12CFF68A1B16760C007CE68F /* loves_listing_loves_for_a_user.json in Resources */,
 				1212FDED1A66E5CB00AD4AF7 /* comments-for-a-post.json in Resources */,
 				7689B5061AD4ED3B00E4A4A3 /* users_checking_usernameemail_availability.json in Resources */,
