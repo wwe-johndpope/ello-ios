@@ -521,6 +521,7 @@ enum StreamCellType: Equatable {
             .search(placeholder: ""),
             .selectableCategoryCard,
             .spacer(height: 0),
+            .streamFooter,
             .streamLoading,
             .streamPageLoading,
             .tallHeader(nil),

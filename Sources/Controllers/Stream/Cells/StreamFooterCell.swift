@@ -2,12 +2,10 @@
 ///  StreamFooterCell.swift
 //
 
-class StreamFooterCell: UICollectionViewCell {
+class StreamFooterCell: CollectionViewCell {
     static let reuseIdentifier = "StreamFooterCell"
 
-    @IBOutlet weak var toolBar: UIToolbar!
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var innerContentView: UIView!
+    private let toolBar = UIToolbar()
 
     var commentsOpened = false
 
@@ -39,6 +37,21 @@ class StreamFooterCell: UICollectionViewCell {
     let replyItem = ElloPostToolBarOption.reply.barButtonItem()
     var replyControl: ImageLabelControl {
         return self.replyItem.customView as! ImageLabelControl
+    }
+
+    override func style() {
+        backgroundColor = .white
+        contentView.backgroundColor = .white
+        toolBar.clipsToBounds = true
+        toolBar.isTranslucent = false
+    }
+
+    override func arrange() {
+        contentView.addSubview(toolBar)
+
+        toolBar.snp.makeConstraints { make in
+            make.edges.equalTo(contentView)
+        }
     }
 
     private func updateButtonVisibility(_ button: UIControl, visibility: InteractionVisibility) {
@@ -164,11 +177,7 @@ class StreamFooterCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let newBounds = CGRect(x: 0, y: 0, width: bounds.width, height: 44)
-        contentView.frame = newBounds
-        innerContentView.frame = newBounds
-        containerView.frame = newBounds
-        toolBar.frame = newBounds
+        toolBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 44)
     }
 
 // MARK: - IBActions
