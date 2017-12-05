@@ -511,6 +511,7 @@ enum StreamCellType: Equatable {
             .fullWidthSpacer(height: 0),
             .header(nil),
             .loadMoreComments,
+            .noPosts,
             .notification,
             .pagePromotionalHeader,
             .placeholder,
