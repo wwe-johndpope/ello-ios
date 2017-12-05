@@ -1231,7 +1231,6 @@
 		C7EE78CC0CA7B5B463A2A74F /* Pods_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A54199AC75D0009416AD802 /* Pods_ShareExtension.framework */; };
 		DEE56AC3CCFF91CD26DA2E60 /* Pods_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1874F06AFC92C6F62E966AC5 /* Pods_NotificationServiceExtension.framework */; };
 		EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */; };
-		EA004C941AC357320021B44B /* ElloTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA004C931AC357320021B44B /* ElloTextFieldView.xib */; };
 		EA0977C91AE6C42000F898CA /* UIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0977C81AE6C42000F898CA /* UIImagePickerController.swift */; };
 		EA34DAC21AD84184002F566D /* dynamic_settings.json in Resources */ = {isa = PBXBuildFile; fileRef = EA34DAC11AD84184002F566D /* dynamic_settings.json */; };
 		EA34DAC41AD851DC002F566D /* DynamicSettingsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA34DAC31AD851DC002F566D /* DynamicSettingsSpec.swift */; };
@@ -2346,7 +2345,6 @@
 		DF40AE99DBB4807FA4CA6BA5 /* Pods-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		E5DE3DFF4328700595DA8FCD /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
 		EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloTextFieldView.swift; sourceTree = "<group>"; };
-		EA004C931AC357320021B44B /* ElloTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ElloTextFieldView.xib; sourceTree = "<group>"; };
 		EA0977C81AE6C42000F898CA /* UIImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImagePickerController.swift; sourceTree = "<group>"; };
 		EA34DABD1AD83C8F002F566D /* DynamicSettingCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSettingCategory.swift; sourceTree = "<group>"; };
 		EA34DABF1AD83CA3002F566D /* DynamicSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSetting.swift; sourceTree = "<group>"; };
@@ -3441,7 +3439,6 @@
 				12F6AE671A4339EF00493660 /* ElloTabBar.swift */,
 				12F6AE691A4339EF00493660 /* ElloTextField.swift */,
 				EA004C911AC356CB0021B44B /* ElloTextFieldView.swift */,
-				EA004C931AC357320021B44B /* ElloTextFieldView.xib */,
 				767399801AA679CB00C4222C /* ElloTextView.swift */,
 				EAED46DF1ADC6AE10081A9F7 /* ElloToggleButton.swift */,
 				12F6AE681A4339EF00493660 /* ElloUnderlinedTextButton.swift */,
@@ -4561,7 +4558,6 @@
 				76F8DEF01B6C0BC4009BCF61 /* replyall_normal.svg in Resources */,
 				7689B4EF1AD4ED3B00E4A4A3 /* posts_creating_a_repost.json in Resources */,
 				7689B5091AD4ED3B00E4A4A3 /* users_listing_user_followings.json in Resources */,
-				EA004C941AC357320021B44B /* ElloTextFieldView.xib in Resources */,
 				76F8DEEB1B6C0BC4009BCF61 /* relationships_normal.svg in Resources */,
 				76F8DEAF1B6C0BC4009BCF61 /* arrow_normal.svg in Resources */,
 				EA68A0E81AADF62F003F0425 /* empty.json in Resources */,
