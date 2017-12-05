@@ -8,10 +8,6 @@ protocol AutoCompleteDelegate: NSObjectProtocol {
 }
 
 class AutoCompleteViewController: UIViewController {
-    struct Size {
-        static let rowHeight: CGFloat = 49
-    }
-
     let tableView = UITableView()
     let dataSource = AutoCompleteDataSource()
     let service = AutoCompleteService()
@@ -36,7 +32,7 @@ extension AutoCompleteViewController {
             make.edges.equalTo(view)
         }
 
-        tableView.rowHeight = Size.rowHeight
+        tableView.rowHeight = AutoCompleteCell.Size.height
         tableView.delegate = self
         tableView.dataSource = dataSource
         tableView.separatorStyle = .none
@@ -44,7 +40,6 @@ extension AutoCompleteViewController {
         style()
     }
 }
-
 
 // MARK: Public
 extension AutoCompleteViewController {
@@ -101,7 +96,7 @@ extension AutoCompleteViewController: UITableViewDelegate {
 // MARK: Private
 private extension AutoCompleteViewController {
     func registerCells() {
-        tableView.register(AutoCompleteCell.nib(), forCellReuseIdentifier: AutoCompleteCell.reuseIdentifier)
+        tableView.register(AutoCompleteCell.self, forCellReuseIdentifier: AutoCompleteCell.reuseIdentifier)
     }
 
     func style() {

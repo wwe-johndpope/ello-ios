@@ -179,7 +179,6 @@
 		122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */; };
 		122C66331B424DB20035F4CD /* AutoCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66321B424DB20035F4CD /* AutoCompleteCell.swift */; };
 		122C66351B424E530035F4CD /* AutoCompleteCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */; };
-		122C66371B424EE50035F4CD /* AutoCompleteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122C66361B424EE50035F4CD /* AutoCompleteCell.xib */; };
 		122C663A1B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66391B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift */; };
 		122C663C1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C663B1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift */; };
 		122C663E1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C663D1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift */; };
@@ -1422,7 +1421,6 @@
 		122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteDataSource.swift; sourceTree = "<group>"; };
 		122C66321B424DB20035F4CD /* AutoCompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCell.swift; sourceTree = "<group>"; };
 		122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCellPresenter.swift; sourceTree = "<group>"; };
-		122C66361B424EE50035F4CD /* AutoCompleteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoCompleteCell.xib; sourceTree = "<group>"; };
 		122C66391B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteViewControllerSpec.swift; sourceTree = "<group>"; };
 		122C663B1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteDataSourceSpec.swift; sourceTree = "<group>"; };
 		122C663D1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCellPresenterSpec.swift; sourceTree = "<group>"; };
@@ -2587,7 +2585,6 @@
 			children = (
 				124E344B1B54229300E5A475 /* AutoComplete.swift */,
 				122C66321B424DB20035F4CD /* AutoCompleteCell.swift */,
-				122C66361B424EE50035F4CD /* AutoCompleteCell.xib */,
 				122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */,
 				122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */,
 				122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */,
@@ -4691,7 +4688,6 @@
 				122B19101A8692C700247A05 /* StreamImageCell.xib in Resources */,
 				12F0E3AB1A4333260012CEA2 /* Images.xcassets in Resources */,
 				7689B4FB1AD4ED3B00E4A4A3 /* profile_finding_users_by_hashes.json in Resources */,
-				122C66371B424EE50035F4CD /* AutoCompleteCell.xib in Resources */,
 				7689B50D1AD4ED3B00E4A4A3 /* users_searching_for_users.json in Resources */,
 				76B53AD31B0AA89B00534548 /* relationship_batches__when_an_unknown_priority_is_specified.json in Resources */,
 				1D6E43161EA68AEA0029C9B1 /* badge_spam_selected.svg in Resources */,
