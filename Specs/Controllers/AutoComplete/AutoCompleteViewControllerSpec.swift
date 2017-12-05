@@ -12,31 +12,22 @@ class AutoCompleteViewControllerSpec: QuickSpec {
         describe("AutoCompleteViewController") {
             describe("nib") {
 
-                var subject = AutoCompleteViewController()
+                var subject: AutoCompleteViewController!
 
                 beforeEach {
                     subject = AutoCompleteViewController()
                     showController(subject)
                 }
 
-                it("IBOutlets are not nil") {
-                    expect(subject.tableView).toNot(beNil())
-                }
-
                 it("sets up the tableView's delegate and dataSource") {
-                    subject.viewDidLoad()
-                    subject.viewWillAppear(false)
-                    let delegate = subject.tableView.delegate! as! AutoCompleteViewController
-                    let dataSource = subject.tableView.dataSource! as! AutoCompleteDataSource
-
-                    expect(delegate).to(equal(subject))
-                    expect(dataSource).to(equal(subject.dataSource))
+                    expect(subject.tableView.delegate).to(equal(subject))
+                    expect(subject.tableView.dataSource).to(beKindOf(AutoCompleteDataSource))
                 }
             }
 
             describe("viewDidLoad()") {
 
-                var subject = AutoCompleteViewController()
+                var subject: AutoCompleteViewController!
 
                 beforeEach {
                     subject = AutoCompleteViewController()
@@ -48,7 +39,6 @@ class AutoCompleteViewControllerSpec: QuickSpec {
                 }
 
                 it("registers cells") {
-                    subject.viewWillAppear(false)
                     let match = AutoCompleteMatch(type: AutoCompleteType.username, range: "test".startIndex..<"test".endIndex, text: "test")
                     subject.dataSource.items = [AutoCompleteItem(result: AutoCompleteResult(name: "test"), type: AutoCompleteType.emoji, match: match)]
 

@@ -176,7 +176,6 @@
 		122B30F51C6A3FC500C1B9D8 /* RegionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B921C612FB9001386CE /* RegionKind.swift */; };
 		122B30F81C6A41E900C1B9D8 /* RegionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D1B921C612FB9001386CE /* RegionKind.swift */; };
 		122C662D1B42403D0035F4CD /* AutoCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */; };
-		122C662F1B42411E0035F4CD /* AutoCompleteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122C662E1B42411E0035F4CD /* AutoCompleteViewController.xib */; };
 		122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */; };
 		122C66331B424DB20035F4CD /* AutoCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66321B424DB20035F4CD /* AutoCompleteCell.swift */; };
 		122C66351B424E530035F4CD /* AutoCompleteCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */; };
@@ -1420,7 +1419,6 @@
 		122B190F1A8692C700247A05 /* StreamImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamImageCell.xib; sourceTree = "<group>"; };
 		122B19151A86972900247A05 /* StreamFooterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamFooterCell.xib; sourceTree = "<group>"; };
 		122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteViewController.swift; sourceTree = "<group>"; };
-		122C662E1B42411E0035F4CD /* AutoCompleteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoCompleteViewController.xib; sourceTree = "<group>"; };
 		122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteDataSource.swift; sourceTree = "<group>"; };
 		122C66321B424DB20035F4CD /* AutoCompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCell.swift; sourceTree = "<group>"; };
 		122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCellPresenter.swift; sourceTree = "<group>"; };
@@ -2593,7 +2591,6 @@
 				122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */,
 				122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */,
 				122C662C1B42403D0035F4CD /* AutoCompleteViewController.swift */,
-				122C662E1B42411E0035F4CD /* AutoCompleteViewController.xib */,
 			);
 			name = AutoComplete;
 			path = ../../Sources/Controllers/AutoComplete;
@@ -4546,7 +4543,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				122C662F1B42411E0035F4CD /* AutoCompleteViewController.xib in Resources */,
 				76B53AD11B0AA89B00534548 /* profile_available_user_profile_toggles.json in Resources */,
 				76F8DEE71B6C0BC4009BCF61 /* plussmall_normal.svg in Resources */,
 				76F8DEC11B6C0BC4009BCF61 /* checksmall_selected.svg in Resources */,

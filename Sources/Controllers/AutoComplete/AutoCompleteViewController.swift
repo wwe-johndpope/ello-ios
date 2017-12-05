@@ -8,13 +8,17 @@ protocol AutoCompleteDelegate: NSObjectProtocol {
 }
 
 class AutoCompleteViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    struct Size {
+        static let rowHeight: CGFloat = 49
+    }
+
+    let tableView = UITableView()
     let dataSource = AutoCompleteDataSource()
     let service = AutoCompleteService()
     weak var delegate: AutoCompleteDelegate?
 
     required init() {
-        super.init(nibName: "AutoCompleteViewController", bundle: .none)
+        super.init(nibName: nil, bundle: .none)
     }
 
     required init?(coder: NSCoder) {
@@ -26,8 +30,16 @@ class AutoCompleteViewController: UIViewController {
 extension AutoCompleteViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view)
+        }
+
+        tableView.rowHeight = Size.rowHeight
         tableView.delegate = self
         tableView.dataSource = dataSource
+        tableView.separatorStyle = .none
         registerCells()
         style()
     }
