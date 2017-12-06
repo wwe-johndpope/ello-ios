@@ -44,6 +44,22 @@ class StreamFooterCell: CollectionViewCell {
         contentView.backgroundColor = .white
         toolBar.clipsToBounds = true
         toolBar.isTranslucent = false
+        toolBar.barTintColor = UIColor.white
+        toolBar.layer.borderColor = UIColor.white.cgColor
+
+        let longPressGesture = UILongPressGestureRecognizer()
+        longPressGesture.addTarget(self, action: #selector(longPressed(_:)))
+        contentView.addGestureRecognizer(longPressGesture)
+
+    }
+
+    override func bindActions() {
+        commentsControl.addTarget(self, action: #selector(StreamFooterCell.commentsButtonTapped), for: .touchUpInside)
+        lovesControl.addTarget(self, action: #selector(StreamFooterCell.lovesButtonTapped), for: .touchUpInside)
+        replyControl.addTarget(self, action: #selector(StreamFooterCell.replyButtonTapped), for: .touchUpInside)
+        repostControl.addTarget(self, action: #selector(StreamFooterCell.repostButtonTapped), for: .touchUpInside)
+        shareControl.addTarget(self, action: #selector(StreamFooterCell.shareButtonTapped), for: .touchUpInside)
+        viewsControl.addTarget(self, action: #selector(StreamFooterCell.viewsButtonTapped), for: .touchUpInside)
     }
 
     override func arrange() {
@@ -120,20 +136,6 @@ class StreamFooterCell: CollectionViewCell {
         super.touchesEnded(touches, with: event)
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        toolBar.isTranslucent = false
-        toolBar.barTintColor = UIColor.white
-        toolBar.clipsToBounds = true
-        toolBar.layer.borderColor = UIColor.white.cgColor
-
-        let longPressGesture = UILongPressGestureRecognizer()
-        longPressGesture.addTarget(self, action: #selector(longPressed(_:)))
-        contentView.addGestureRecognizer(longPressGesture)
-
-        addButtonHandlers()
-    }
-
     var views: String? {
         get { return viewsControl.title }
         set { viewsControl.title = newValue }
@@ -164,15 +166,6 @@ class StreamFooterCell: CollectionViewCell {
 
     private func flexibleItem() -> UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    }
-
-    private func addButtonHandlers() {
-        commentsControl.addTarget(self, action: #selector(StreamFooterCell.commentsButtonTapped), for: .touchUpInside)
-        lovesControl.addTarget(self, action: #selector(StreamFooterCell.lovesButtonTapped), for: .touchUpInside)
-        replyControl.addTarget(self, action: #selector(StreamFooterCell.replyButtonTapped), for: .touchUpInside)
-        repostControl.addTarget(self, action: #selector(StreamFooterCell.repostButtonTapped), for: .touchUpInside)
-        shareControl.addTarget(self, action: #selector(StreamFooterCell.shareButtonTapped), for: .touchUpInside)
-        viewsControl.addTarget(self, action: #selector(StreamFooterCell.viewsButtonTapped), for: .touchUpInside)
     }
 
     override func layoutSubviews() {
@@ -235,4 +228,19 @@ extension StreamFooterCell: LoveableCell {
     func toggleLoveState(loved: Bool) {
     }
 
+}
+
+extension StreamFooterCell {
+    class Specs {
+        weak var target: StreamFooterCell!
+        var toolBar: UIToolbar! { return target.toolBar }
+
+        init(_ target: StreamFooterCell) {
+            self.target = target
+        }
+    }
+
+    func specs() -> Specs {
+        return Specs(self)
+    }
 }
