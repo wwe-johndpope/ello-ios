@@ -178,7 +178,6 @@
 		122C66311B424C060035F4CD /* AutoCompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */; };
 		122C66331B424DB20035F4CD /* AutoCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66321B424DB20035F4CD /* AutoCompleteCell.swift */; };
 		122C66351B424E530035F4CD /* AutoCompleteCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */; };
-		122C663A1B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66391B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift */; };
 		122C663C1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C663B1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift */; };
 		122C663E1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C663D1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift */; };
 		122C66441B4303400035F4CD /* AutoCompleteResultSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122C66431B4303400035F4CD /* AutoCompleteResultSpec.swift */; };
@@ -481,7 +480,6 @@
 		1D22C8261AAFAD760048D415 /* CreateCommentBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */; };
 		1D22C8281AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22C8271AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift */; };
 		1D22C82B1AB100340048D415 /* create-comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D22C82A1AB100340048D415 /* create-comment.json */; };
-		1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */; };
 		1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */; };
 		1D242D631DDBCD87000A424C /* grid_view_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D242D611DDBCD87000A424C /* grid_view_normal.svg */; };
 		1D242D641DDBCD87000A424C /* list_view_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D242D621DDBCD87000A424C /* list_view_normal.svg */; };
@@ -1418,7 +1416,6 @@
 		122C66301B424C060035F4CD /* AutoCompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteDataSource.swift; sourceTree = "<group>"; };
 		122C66321B424DB20035F4CD /* AutoCompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCell.swift; sourceTree = "<group>"; };
 		122C66341B424E530035F4CD /* AutoCompleteCellPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCellPresenter.swift; sourceTree = "<group>"; };
-		122C66391B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteViewControllerSpec.swift; sourceTree = "<group>"; };
 		122C663B1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteDataSourceSpec.swift; sourceTree = "<group>"; };
 		122C663D1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteCellPresenterSpec.swift; sourceTree = "<group>"; };
 		122C66431B4303400035F4CD /* AutoCompleteResultSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteResultSpec.swift; sourceTree = "<group>"; };
@@ -1703,7 +1700,6 @@
 		1D22C8251AAFAD760048D415 /* CreateCommentBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentBackgroundView.swift; sourceTree = "<group>"; };
 		1D22C8271AAFADD50048D415 /* CreateCommentBackgroundViewSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentBackgroundViewSpec.swift; sourceTree = "<group>"; };
 		1D22C82A1AB100340048D415 /* create-comment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "create-comment.json"; sourceTree = "<group>"; };
-		1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D2370871D4673EC004D1DD1 /* ElloKeychainSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloKeychainSpec.swift; sourceTree = "<group>"; };
 		1D242D611DDBCD87000A424C /* grid_view_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grid_view_normal.svg; sourceTree = "<group>"; };
 		1D242D621DDBCD87000A424C /* list_view_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_view_normal.svg; sourceTree = "<group>"; };
@@ -2594,7 +2590,6 @@
 				122C663D1B4253890035F4CD /* AutoCompleteCellPresenterSpec.swift */,
 				122C663B1B4253250035F4CD /* AutoCompleteDataSourceSpec.swift */,
 				124E344D1B54239F00E5A475 /* AutoCompleteSpec.swift */,
-				122C66391B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift */,
 			);
 			name = AutoComplete;
 			path = ../../Specs/Controllers/AutoComplete;
@@ -3086,7 +3081,6 @@
 			isa = PBXGroup;
 			children = (
 				1D7152A81D6E0F9A005998FE /* AppScreenSpec.swift */,
-				1D22F0CF1AF8420000DCED1D /* AppViewControllerSpec.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -5357,7 +5351,6 @@
 				1DF984031D9B0C1E0055EFC7 /* OnboardingProfileScreenSpec.swift in Sources */,
 				12F9EB3F1DEDFD4B00E127AE /* ProfileLocationViewSpec.swift in Sources */,
 				1D8AFACD1A9664480034DDAD /* NotificationSpec.swift in Sources */,
-				1D22F0D01AF8420000DCED1D /* AppViewControllerSpec.swift in Sources */,
 				1DB17B981AAA70B200DCF59E /* MultipartRequestBuilderSpec.swift in Sources */,
 				12A1D82B1DAC1A1800A327D6 /* ProfileAvatarViewSpec.swift in Sources */,
 				12D14C751A43762A00C6F8E8 /* ElloConfiguration.swift in Sources */,
@@ -5422,7 +5415,6 @@
 				1DA18DFA1DA84978000231CC /* ProfileNamesViewSpec.swift in Sources */,
 				1D2370881D4673EC004D1DD1 /* ElloKeychainSpec.swift in Sources */,
 				12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */,
-				122C663A1B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift in Sources */,
 				120E641D1E32A84200CAF03E /* JWTSpec.swift in Sources */,
 				1266E5101A9E2BDF00270E1C /* ContentFlaggerSpec.swift in Sources */,
 				12916A421B7AA88D005B9CCF /* StreamKindSpec.swift in Sources */,

@@ -96,6 +96,7 @@ private extension DrawerViewController {
         tableView.delegate = self
         tableView.dataSource = dataSource
         tableView.separatorStyle = .none
+        tableView.rowHeight = DrawerCell.Size.height
     }
 
     func setupNavigationBar() {

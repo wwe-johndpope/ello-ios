@@ -31,6 +31,10 @@ class OmnibarViewController: BaseElloViewController {
     var defaultText: String?
     var canGoBack: Bool = true {
         didSet {
+            if canGoBack {
+                postNotification(StatusBarNotifications.statusBarVisibility, value: true)
+            }
+
             if isViewLoaded {
                 screen.canGoBack = canGoBack
             }
