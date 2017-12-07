@@ -10,11 +10,11 @@ import Nimble
 class PromotionalHeaderCellSizeCalculatorSpec: QuickSpec {
     override func spec() {
         describe("PromotionalHeaderCellSizeCalculator") {
-            describe("should size proportionally according to frame width") {
+            describe("should size according to frame width") {
                 let expectations: [(CGFloat, CGFloat)] = [
-                    (320, 192),
-                    (375, 225),
-                    (414, 249),
+                    (100, 316),
+                    (320, 163),
+                    (414, 163),
                 ]
                 for (frameWidth, calcHeight) in expectations {
                     it("should size width \(frameWidth) to \(calcHeight)") {
@@ -26,14 +26,14 @@ class PromotionalHeaderCellSizeCalculatorSpec: QuickSpec {
                     }
                 }
 
-                it("should size correctly with text") {
+                it("should use minHeight") {
                     let calculator = PromotionalHeaderCellSizeCalculator()
                     let category: Ello.Category = stub([:])
                     category.body = "Short body."
                     category.ctaCaption = "Read More"
                     let cellItem = StreamCellItem(jsonable: category, type: .categoryPromotionalHeader)
                     calculator.processCells([cellItem], withWidth: 320) {
-                        expect(cellItem.calculatedCellHeights.oneColumn) == 192
+                        expect(cellItem.calculatedCellHeights.oneColumn) == 150
                     }
                 }
 

@@ -44,7 +44,7 @@ class ElloConfiguration: QuickConfiguration {
 
         config.beforeEach {
             let specGlobals = GlobalFactory()
-            appSetup.windowSize = CGSize(width: 375, height: 768)
+            specGlobals.windowSize = CGSize(width: 375, height: 768)
             specGlobals.nowGenerator = { return now }
             specGlobals.cachedCategories = nil
             overrideGlobals(specGlobals)

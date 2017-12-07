@@ -109,11 +109,16 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
             if canGoBack {
                 toolbarPinToTopConstraint.deactivate()
                 toolbarPinToNavConstraint.activate()
+                navigationBar.isHidden = false
+                blackBar.isHidden = true
             }
             else {
                 toolbarPinToTopConstraint.activate()
                 toolbarPinToNavConstraint.deactivate()
+                navigationBar.isHidden = true
+                blackBar.isHidden = false
             }
+
             setNeedsLayout()
         }
     }
@@ -661,16 +666,6 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        if canGoBack {
-            postNotification(StatusBarNotifications.statusBarVisibility, value: true)
-            navigationBar.isHidden = false
-            blackBar.isHidden = true
-        }
-        else {
-            navigationBar.isHidden = true
-            blackBar.isHidden = false
-        }
 
         var bottomInset = Keyboard.shared.keyboardBottomInset(inView: self)
 
@@ -1224,4 +1219,24 @@ extension StyledButton.Style {
         titleColor: .white,
         cornerRadius: .pill
         )
+}
+
+extension OmnibarScreen {
+    class Specs {
+        weak var target: OmnibarScreen!
+        var addImageButton: UIButton! { return target.addImageButton }
+        var cancelImageButton: UIButton! { return target.cancelImageButton }
+        var submitButton: UIButton! { return target.submitButton }
+        var buyButton: UIButton! { return target.buyButton }
+        var cancelButton: UIButton! { return target.cancelButton }
+        var toolbarContainer: Container! { return target.toolbarContainer }
+
+        init(_ target: OmnibarScreen) {
+            self.target = target
+        }
+    }
+
+    public func specs() -> Specs {
+        return Specs(self)
+    }
 }

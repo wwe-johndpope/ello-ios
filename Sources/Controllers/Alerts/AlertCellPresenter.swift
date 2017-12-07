@@ -9,6 +9,7 @@ struct AlertCellPresenter {
         cell.contentView.backgroundColor = .white
 
         cell.background.layer.borderColor = nil
+        cell.background.layer.masksToBounds = true
         cell.background.layer.cornerRadius = 5
 
         cell.label.text = ""

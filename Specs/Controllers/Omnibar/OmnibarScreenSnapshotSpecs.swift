@@ -19,7 +19,7 @@ class OmnibarScreenSnapshotSpecs: QuickSpec {
 
         describe("OmnibarScreenSnapshots") {
             context("default layout") {
-                validateAllSnapshots(named: "OmnibarScreenSnapshots") { return OmnibarScreen() }
+                validateAllSnapshots(named: "OmnibarScreenSnapshots") { return subject }
             }
 
             context("creating a post") {

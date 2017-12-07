@@ -15,7 +15,8 @@ class AutoCompleteCellPresenterSpec: QuickSpec {
                     let result = AutoCompleteResult(name: "Billy", url: "http://www.example.com/avatar")
                     let item = AutoCompleteItem(result: result, type: AutoCompleteType.username, match: match)
 
-                    let cell: AutoCompleteCell = AutoCompleteCell.loadFromNib()
+                    let cell = AutoCompleteCell()
+                    cell.frame = CGRect(x: 0, y: 0, width: 337, height: 59)
 
                     AutoCompleteCellPresenter.configure(cell, item: item)
                     expectValidSnapshot(cell)
@@ -28,7 +29,8 @@ class AutoCompleteCellPresenterSpec: QuickSpec {
                     let result = AutoCompleteResult(name: "thumbsup", url: "http://www.example.com/emoji")
                     let item = AutoCompleteItem(result: result, type: AutoCompleteType.emoji, match: match)
 
-                    let cell: AutoCompleteCell = AutoCompleteCell.loadFromNib()
+                    let cell = AutoCompleteCell()
+                    cell.frame = CGRect(x: 0, y: 0, width: 337, height: 59)
 
                     AutoCompleteCellPresenter.configure(cell, item: item)
                     expectValidSnapshot(cell)
