@@ -29,8 +29,6 @@ class AlertViewController: UIViewController {
         didSet { didSetContentView() }
     }
 
-    var modalBackgroundColor: UIColor = .dimmedModalBackground
-
     var desiredSize: CGSize {
         if let contentView = contentView {
             return contentView.frame.size
@@ -203,10 +201,9 @@ extension AlertViewController {
 // MARK: UIViewControllerTransitioningDelegate
 extension AlertViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        guard presented == self
-            else { return .none }
+        guard presented == self else { return nil }
 
-        return AlertPresentationController(presentedViewController: presented, presentingViewController: presenting, backgroundColor: self.modalBackgroundColor)
+        return AlertPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 

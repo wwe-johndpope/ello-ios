@@ -61,7 +61,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == true
                         expect(cell.isLargeImage) == false
                         expect(cell.largeImagePlayButton?.isHidden) == true
-                        expect(cell.presentedImageUrl).to(beNil())
                     }
                 }
 
@@ -82,7 +81,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == false
                         expect(cell.isLargeImage) == false
                         expect(cell.largeImagePlayButton?.isHidden) == true
-                        expect(cell.presentedImageUrl).to(beNil())
                     }
 
                 }
@@ -125,7 +123,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == false
                         expect(cell.isLargeImage) == false
                         expect(cell.largeImagePlayButton?.isHidden) == true
-                        expect(cell.presentedImageUrl).to(beNil())
                     }
                 }
 
@@ -171,7 +168,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == true
                         expect(cell.isLargeImage) == true
                         expect(cell.largeImagePlayButton?.isHidden) == false
-                        expect(cell.presentedImageUrl).notTo(beNil())
                     }
                 }
 
@@ -217,7 +213,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == true
                         expect(cell.isLargeImage) == false
                         expect(cell.largeImagePlayButton?.isHidden) == true
-                        expect(cell.presentedImageUrl).to(beNil())
                     }
                 }
 
@@ -256,7 +251,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == true
                         expect(cell.isLargeImage) == true
                         expect(cell.largeImagePlayButton?.isHidden) == false
-                        expect(cell.presentedImageUrl).notTo(beNil())
                     }
                 }
 
@@ -295,7 +289,6 @@ class StreamImageCellPresenterSpec: QuickSpec {
                         expect(cell.isGif) == true
                         expect(cell.isLargeImage) == false
                         expect(cell.largeImagePlayButton?.isHidden) == true
-                        expect(cell.presentedImageUrl).to(beNil())
                     }
                 }
 

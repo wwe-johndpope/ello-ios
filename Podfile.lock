@@ -26,7 +26,6 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - ImagePickerSheetController (0.9.3)
   - iRate (1.11.7)
-  - JTSImageViewController (1.5)
   - JWTDecode (2.0.0)
   - KeychainAccess (3.0.1)
   - Keys (1.0.0)
@@ -141,7 +140,6 @@ DEPENDENCIES:
   - FLAnimatedImage (~> 1.0)
   - ImagePickerSheetController (from `https://github.com/ello/ImagePickerSheetController`, branch `swift3`)
   - iRate (~> 1.11)
-  - JTSImageViewController (from `https://github.com/ello/JTSImageViewController`)
   - JWTDecode (~> 2.0)
   - KeychainAccess (~> 3.0)
   - Keys (from `Pods/CocoaPodsKeys`)
@@ -177,8 +175,6 @@ EXTERNAL SOURCES:
   ImagePickerSheetController:
     :branch: swift3
     :git: https://github.com/ello/ImagePickerSheetController
-  JTSImageViewController:
-    :git: https://github.com/ello/JTSImageViewController
   Keys:
     :path: Pods/CocoaPodsKeys
   KINWebBrowser:
@@ -214,9 +210,6 @@ CHECKOUT OPTIONS:
   ImagePickerSheetController:
     :commit: 18e8d063a15c9d081d510f82ba25b46edfda7e28
     :git: https://github.com/ello/ImagePickerSheetController
-  JTSImageViewController:
-    :commit: 4f0a918c38c7606fc5f876774cd3b96701b3f548
-    :git: https://github.com/ello/JTSImageViewController
   KINWebBrowser:
     :commit: bcf29fd0beb6afb1c28a236306ad0fa1b8677bf3
     :git: https://github.com/ello/KINWebBrowser
@@ -251,7 +244,6 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   ImagePickerSheetController: 4789b06940e299431455c61be77fda440883c36c
   iRate: adae3f183d83c925ac42d7a2e86e89e838963f57
-  JTSImageViewController: 89ae3c003060c65418fd3224ebbd67acc6046608
   JWTDecode: 178e47e5d28d3abcff778bacced8342858cd6cb5
   KeychainAccess: 017ea25e313a49eda10bb19b0bb0760fb1edfe1a
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
@@ -275,6 +267,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: 0fe61489a2e2ecc75f785660ff6cb5aa6cbe3b49
+PODFILE CHECKSUM: e1bbd29c4876b529b246c36ff9abb1e9ebdcb799
 
 COCOAPODS: 1.1.1

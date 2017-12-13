@@ -52,7 +52,6 @@ class StreamImageCell: StreamRegionableCell {
     var isGif = false
     var onHeightMismatch: OnHeightMismatch?
     var tallEnoughForFailToShow = true
-    var presentedImageUrl: URL?
     var buyButtonURL: URL? {
         didSet {
             let hidden = (buyButtonURL == nil)
@@ -255,7 +254,6 @@ class StreamImageCell: StreamRegionableCell {
 
         hideBorder()
         isGif = false
-        presentedImageUrl = nil
         isLargeImage = false
         failImage.isHidden = true
         failImage.alpha = 0
@@ -265,7 +263,7 @@ class StreamImageCell: StreamRegionableCell {
 
     @IBAction func imageTapped() {
         let responder: StreamImageCellResponder? = findResponder()
-        responder?.imageTapped(imageView: imageView, cell: self)
+        responder?.imageTapped(cell: self)
     }
 
     @IBAction func buyButtonTapped() {

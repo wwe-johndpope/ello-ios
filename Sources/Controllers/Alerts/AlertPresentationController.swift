@@ -3,16 +3,14 @@
 //
 
 class AlertPresentationController: UIPresentationController {
+    private let backgroundView = UIView()
 
-    let background: UIView = {
-        let background = UIView(frame: .zero)
-        background.backgroundColor = UIColor.dimmedModalBackground
-        return background
-    }()
-
-    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, backgroundColor: UIColor) {
+    override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
-        self.background.backgroundColor = backgroundColor
+        backgroundView.backgroundColor = .dimmedModalBackground
+
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+        backgroundView.addGestureRecognizer(gesture)
     }
 }
 
@@ -20,42 +18,53 @@ class AlertPresentationController: UIPresentationController {
 extension AlertPresentationController {
     override func containerViewDidLayoutSubviews() {
         super.containerViewDidLayoutSubviews()
-        let alertViewController = presentedViewController as! AlertViewController
-        alertViewController.resize()
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(AlertPresentationController.dismiss))
-        background.addGestureRecognizer(gesture)
+        if let alertViewController = presentedViewController as? AlertViewController {
+            alertViewController.resize()
+        }
+        else if
+            let containerView = containerView,
+            let presentedView = presentedView
+        {
+            backgroundView.frame = containerView.bounds
+            presentedView.frame = containerView.bounds
+        }
     }
 }
 
 // MARK: Presentation
 extension AlertPresentationController {
     override func presentationTransitionWillBegin() {
-        if let containerView = containerView {
-            background.alpha = 0
-            background.frame = containerView.bounds
-            containerView.addSubview(background)
+        guard
+            let containerView = containerView,
+            let presentedView = presentedView
+        else { return }
 
-            let transitionCoordinator = presentingViewController.transitionCoordinator
-            transitionCoordinator?.animate(alongsideTransition: { _ in
-                self.background.alpha = 1
-                }, completion: .none)
-            if let presentedView = presentedView {
-                containerView.addSubview(presentedView)
-            }
-        }
+        containerView.addSubview(backgroundView)
+        containerView.addSubview(presentedView)
+
+        backgroundView.alpha = 0
+        backgroundView.frame = containerView.bounds
+
+        presentedView.frame = containerView.bounds
+
+        let transitionCoordinator = presentingViewController.transitionCoordinator
+        transitionCoordinator?.animate(alongsideTransition: { _ in
+            presentedView.frame = containerView.bounds
+            presentedView.alpha = 1
+            self.backgroundView.alpha = 1
+        }, completion: .none)
     }
 
     override func dismissalTransitionWillBegin() {
         let transitionCoordinator = presentingViewController.transitionCoordinator
         transitionCoordinator?.animate(alongsideTransition: { _ in
-            self.background.alpha = 0
+            self.backgroundView.alpha = 0
         }, completion: .none)
     }
 
     override func dismissalTransitionDidEnd(_ completed: Bool) {
         if completed {
-            background.removeFromSuperview()
+            backgroundView.removeFromSuperview()
         }
     }
 }
@@ -63,9 +72,9 @@ extension AlertPresentationController {
 extension AlertPresentationController {
     @objc
     func dismiss() {
-        let alertViewController = presentedViewController as! AlertViewController
-        if alertViewController.isDismissable {
-            presentedViewController.dismiss(animated: true, completion: .none)
-        }
+        if let alertViewController = presentedViewController as? AlertViewController,
+            !alertViewController.isDismissable { return }
+
+        presentedViewController.dismiss(animated: true, completion: .none)
     }
 }

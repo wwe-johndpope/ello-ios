@@ -136,7 +136,7 @@ extension ArtistInviteDetailController: ArtistInviteResponder {
     }
 
     func tappedArtistInviteSubmissionsButton() {
-        streamViewController.scrollTo(placeholderType: .artistInviteSubmissionsHeader, animated: true)
+        streamViewController.scrollTo(placeholderType: .artistInviteSubmissionsHeader)
     }
 
     func tappedArtistInviteSubmitButton() {

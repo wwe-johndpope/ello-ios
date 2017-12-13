@@ -67,9 +67,10 @@ final class StreamViewController: BaseElloViewController {
 
     var dataSource: StreamDataSource!
     var collectionViewDataSource: CollectionViewDataSource!
+    var responseConfig: ResponseConfig?
 
     var postbarController: PostbarController?
-    var responseConfig: ResponseConfig?
+    lazy var imageViewer: StreamImageViewer = StreamImageViewer(presentingController: self)
 
     var pullToRefreshView: SSPullToRefreshView?
     var allOlderPagesLoaded = false
@@ -85,7 +86,6 @@ final class StreamViewController: BaseElloViewController {
             setupCollectionViewLayout()
         }
     }
-    var imageViewer: StreamImageViewer?
     var updateCellHeightNotification: NotificationObserver?
     var rotationNotification: NotificationObserver?
     var sizeChangedNotification: NotificationObserver?
@@ -159,7 +159,6 @@ final class StreamViewController: BaseElloViewController {
     // we'll need to call this.
     private func initialSetup() {
         setupDataSources()
-        setupImageViewDelegate()
         // most consumers of StreamViewController expect all outlets (esp collectionView) to be set
         if !isViewLoaded { _ = view }
     }
@@ -208,12 +207,6 @@ final class StreamViewController: BaseElloViewController {
         layout.sectionInset = UIEdgeInsets.zero
         layout.minimumColumnSpacing = streamKind.columnSpacing
         layout.minimumInteritemSpacing = 0
-    }
-
-    private func setupImageViewDelegate() {
-        if imageViewer == nil {
-            imageViewer = StreamImageViewer(presentingController: self)
-        }
     }
 
     private func setupDataSources() {
@@ -281,7 +274,11 @@ final class StreamViewController: BaseElloViewController {
         collectionView.setContentOffset(CGPoint(x: 0, y: -contentInset.top), animated: animated)
     }
 
-    func scrollTo(placeholderType: StreamCellType.PlaceholderType, animated: Bool) {
+    func scrollTo(indexPath: IndexPath, animated: Bool = true) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: animated)
+    }
+
+    func scrollTo(placeholderType: StreamCellType.PlaceholderType, animated: Bool = true) {
         guard let indexPath = collectionViewDataSource.firstIndexPath(forPlaceholderType: placeholderType) else { return }
 
         collectionView.scrollToItem(at: indexPath, at: .top, animated: animated)
@@ -843,23 +840,41 @@ extension StreamViewController: StreamEditingResponder {
 
 // MARK: StreamViewController: StreamImageCellResponder
 extension StreamViewController: StreamImageCellResponder {
-    func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell) {
+    func imageTapped(cell: StreamImageCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
-            let streamCellItem = collectionViewDataSource.streamCellItem(at: indexPath)
+            let streamCellItem = collectionViewDataSource.streamCellItem(at: indexPath),
+            let imageRegion = streamCellItem.type.data as? ImageRegion
         else { return }
 
         let post = collectionViewDataSource.post(at: indexPath)
         let imageAsset = collectionViewDataSource.imageAsset(at: indexPath)
-
         let isGridView = streamCellItem.isGridView(streamKind: streamKind)
+
         if isGridView || cell.isGif {
-            if let post = post {
-                sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
-            }
+            guard let post = post else { return }
+            sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
         }
-        else if let imageViewer = imageViewer {
-            imageViewer.imageTapped(imageView, imageURL: cell.presentedImageUrl)
+        else {
+            var selectedIndex: Int?
+            var imageItems: [(IndexPath, URL)] = []
+            for index in 0 ..< collectionViewDataSource.visibleCellItems.count {
+                let indexPath = IndexPath(item: index, section: 0)
+                guard
+                    let rowImageRegion = collectionViewDataSource.imageRegion(at: indexPath),
+                    let imageURL = rowImageRegion.fullScreenURL
+                else { continue }
+
+                if rowImageRegion == imageRegion {
+                    selectedIndex = imageItems.count
+                }
+                imageItems.append((indexPath, imageURL))
+            }
+
+            if let selectedIndex = selectedIndex {
+                imageViewer.imageTapped(selected: selectedIndex, allItems: imageItems)
+            }
+
             if let post = post, let asset = imageAsset {
                 Tracker.shared.viewedImage(asset, post: post)
             }

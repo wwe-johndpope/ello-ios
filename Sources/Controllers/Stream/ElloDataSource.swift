@@ -119,10 +119,13 @@ class ElloDataSource: NSObject {
         return item.jsonable as? User
     }
 
-    func imageAsset(at indexPath: IndexPath) -> Asset? {
+    func imageRegion(at indexPath: IndexPath) -> ImageRegion? {
         let item = streamCellItem(at: indexPath)
-        let region = item?.type.data as? ImageRegion
-        return region?.asset
+        return item?.type.data as? ImageRegion
+    }
+
+    func imageAsset(at indexPath: IndexPath) -> Asset? {
+        return imageRegion(at: indexPath)?.asset
     }
 
 }

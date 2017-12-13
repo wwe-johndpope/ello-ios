@@ -17,6 +17,8 @@ final class ImageRegion: JSONAble, Regionable {
 
     var asset: Asset? { return getLinkObject("assets") as? Asset }
 
+    var fullScreenURL: URL? { return asset?.optimized?.url }
+
 // MARK: Initialization
 
     init(alt: String?)
