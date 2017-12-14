@@ -29,6 +29,10 @@ class LightboxScreen: Screen {
     private var nextURL: URL?
 
     override func style() {
+        prevImageView.alpha = 0.5
+        currImageView.alpha = 1
+        nextImageView.alpha = 0.5
+
         backgroundColor = .clear
         prevImageView.contentMode = .scaleAspectFit
         currImageView.contentMode = .scaleAspectFit
@@ -110,17 +114,15 @@ class LightboxScreen: Screen {
             let imageWidth = frame.width - 2 * Size.insets - 2 * Size.lilBits
             switch delta {
             case -1:
-                (nextImageView, currImageView, prevImageView) = (currImageView, prevImageView, nextImageView)
-                (currURL, nextURL) = (prevURL, currURL)
-                prevURL = nil
+                (prevImageView, currImageView, nextImageView) = (nextImageView, prevImageView, currImageView)
+                (prevURL, currURL, nextURL) = (nil, prevURL, currURL)
 
                 setNeedsLayout()
                 layoutIfNeeded()
                 imagesContainer.frame.origin.x -= imageWidth
             case 1:
                 (prevImageView, currImageView, nextImageView) = (currImageView, nextImageView, prevImageView)
-                (prevURL, currURL) = (currURL, nextURL)
-                nextURL = nil
+                (prevURL, currURL, nextURL) = (currURL, nextURL, nil)
 
                 setNeedsLayout()
                 layoutIfNeeded()
@@ -133,6 +135,10 @@ class LightboxScreen: Screen {
                 self.setNeedsLayout()
                 self.layoutIfNeeded()
                 self.panGesture.isEnabled = false
+
+                self.prevImageView.alpha = 0.5
+                self.currImageView.alpha = 1
+                self.nextImageView.alpha = 0.5
             }
             .always {
                 self.panGesture.isEnabled = true
