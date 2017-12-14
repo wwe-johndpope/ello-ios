@@ -3,6 +3,7 @@
 //
 
 import FLAnimatedImage
+import Photos
 
 
 enum StreamImageCellMode {
@@ -48,6 +49,48 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var largeImagePlayButton: UIImageView?
     @IBOutlet weak var imageRightConstraint: NSLayoutConstraint!
 
+    override var canBecomeFirstResponder: Bool { return true }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        guard image != nil else { return false }
+
+        if action == #selector(copy(_:)) {
+            return true
+        }
+
+        if action == #selector(save(_:)) {
+            return UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
+        }
+
+        return false
+    }
+
+    @objc
+    override func copy(_ sender: Any?) {
+        guard let image = image else { return }
+        UIPasteboard.general.image = image
+    }
+
+    @objc
+    func save(_ sender: Any?) {
+        guard let image = image, UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
+
+        if let status = UIImagePickerController.alreadyDeterminedStatus() {
+            save(image, status: status)
+        }
+        else {
+            UIImagePickerController.requestStatus()
+                .then { status -> Void in
+                    self.save(image, status: status)
+                }
+                .ignoreErrors()
+        }
+    }
+
+    private func save(_ image: UIImage, status: PHAuthorizationStatus) {
+        guard status == .authorized else { return }
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    }
 
     var isGif = false
     var onHeightMismatch: OnHeightMismatch?
@@ -81,6 +124,9 @@ class StreamImageCell: StreamRegionableCell {
                 failHeightConstraint.constant = Size.singleColumnFailHeight
             }
         }
+    }
+    var image: UIImage? {
+        get { return imageView.image }
     }
 
     enum StreamImageMargin {

@@ -838,6 +838,17 @@ extension StreamViewController: StreamEditingResponder {
             let responder: CreatePostResponder? = findResponder()
             responder?.editComment(comment, fromController: self)
         }
+        else if let streamCellItem = collectionViewDataSource.streamCellItem(at: indexPath),
+            let cell = cell as? StreamImageCell,
+            cell.becomeFirstResponder()
+        {
+            let menuController = UIMenuController.shared
+            menuController.setTargetRect(cell.frame, in: collectionView)
+            menuController.setMenuVisible(true, animated: true)
+
+            let saveMenuItem = UIMenuItem(title: InterfaceString.Save, action: #selector(StreamImageCell.save(_:)))
+            menuController.menuItems = [saveMenuItem]
+        }
     }
 }
 
