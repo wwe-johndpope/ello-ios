@@ -52,8 +52,11 @@ class LightboxScreen: Screen {
         imagesContainer.addSubview(currImageView)
         imagesContainer.addSubview(nextImageView)
 
+        let loadingSize = StreamPageLoadingCell.Size.height
+        currLoadingLayer.frame.size = CGSize(width: loadingSize, height: loadingSize)
+        currLoadingLayer.cornerRadius = loadingSize / 2
+        currLoadingLayer.masksToBounds = true
         currLoadingLayer.zPosition = 1
-        currLoadingLayer.startAnimating()
 
         prevImageView.layer.zPosition = 2
         currImageView.layer.zPosition = 2
@@ -64,9 +67,6 @@ class LightboxScreen: Screen {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        let loadingSize = StreamPageLoadingCell.Size.height
-        currLoadingLayer.frame.size = CGSize(width: loadingSize, height: loadingSize)
 
         let imageWidth = frame.width - 2 * Size.insets - 2 * Size.lilBits
         let imageHeight = frame.height - 2 * Size.insets
@@ -92,6 +92,14 @@ class LightboxScreen: Screen {
         }
 
         currLoadingLayer.position = currImageView.frame.center
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+
+        if window != nil {
+            currLoadingLayer.startAnimating()
+        }
     }
 
     @objc
