@@ -502,4 +502,5 @@ struct InterfaceString {
     static let Skip: String = NSLocalizedString("Skip", comment: "")
     static let SeeAll: String = NSLocalizedString("See All", comment: "")
     static let Send: String = NSLocalizedString("Send", comment: "")
+    static let Save: String = NSLocalizedString("Save", comment: "")
 }
