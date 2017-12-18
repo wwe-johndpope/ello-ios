@@ -142,7 +142,9 @@ extension ProfileLinksView {
             }
         }
 
-        button.pin_setImage(from: externalLink.iconURL! as URL!)
+        if let iconURL = externalLink.iconURL {
+            button.pin_setImage(from: iconURL)
+        }
         return button
     }
 
@@ -187,7 +189,7 @@ extension ProfileLinksView {
             let externalLink = buttonLinks[button]
             else { return }
 
-        let request = URLRequest(url: externalLink.url as URL)
+        let request = URLRequest(url: externalLink.url)
         ElloWebViewHelper.handle(request: request, origin: self)
     }
 }

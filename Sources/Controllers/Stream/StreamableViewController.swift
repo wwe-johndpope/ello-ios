@@ -6,6 +6,12 @@ class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
+    let tapToShowTop = UIView()
+    let tapToShowBottom = UIView()
+
+    struct Size {
+        static let tapToShowHeight: CGFloat = 20
+    }
 
     override func didSetCurrentUser() {
         if isViewLoaded {
@@ -52,6 +58,24 @@ class StreamableViewController: BaseElloViewController {
             onShow: { [weak self] in self?.showNavBars() },
             onHide: { [weak self] in self?.hideNavBars() }
         )
+
+        for tapToShow in [tapToShowTop, tapToShowBottom] {
+            view.addSubview(tapToShow)
+            tapToShow.isUserInteractionEnabled = false
+
+            let tapGesture = UITapGestureRecognizer()
+            tapGesture.addTarget(self, action: #selector(tapToShowTapped))
+            tapToShow.addGestureRecognizer(tapGesture)
+        }
+
+        tapToShowTop.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalTo(view)
+            make.height.equalTo(Size.tapToShowHeight)
+        }
+        tapToShowBottom.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view)
+            make.height.equalTo(Size.tapToShowHeight)
+        }
     }
 
     func trackerStreamInfo() -> (String, String?)? {
@@ -83,12 +107,27 @@ class StreamableViewController: BaseElloViewController {
         }
     }
 
+    override func showNavBars() {
+        guard updatesBottomBar else { return }
+        super.showNavBars()
+        tapToShowTop.isUserInteractionEnabled = true
+        tapToShowBottom.isUserInteractionEnabled = true
+    }
+
+    override func hideNavBars() {
+        guard updatesBottomBar else { return }
+        super.hideNavBars()
+        tapToShowTop.isUserInteractionEnabled = true
+        tapToShowBottom.isUserInteractionEnabled = true
+    }
+
+
     func updateInsets(navBar: UIView?, navigationBarsVisible visible: Bool? = nil) {
         updateInsets(maxY: navBar?.frame.maxY ?? 0, navigationBarsVisible: visible)
     }
 
     func calculateDefaultTopInset() -> CGFloat {
-        if AppSetup.shared.isIphoneX {
+        if Globals.isIphoneX {
             return 44
         }
         else {
@@ -141,6 +180,14 @@ class StreamableViewController: BaseElloViewController {
         if showing {
             postNotification(StatusBarNotifications.statusBarVisibility, value: visible)
         }
+    }
+}
+
+extension StreamableViewController {
+    @objc
+    func tapToShowTapped() {
+        scrollLogic.isShowing = true
+        showNavBars()
     }
 }
 

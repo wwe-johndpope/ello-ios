@@ -107,7 +107,7 @@ class HireScreen: StreamableScreen {
     override func setText() {
         super.setText()
 
-        keyboardSubmitButton.setImages(.mail, white: true)
+        keyboardSubmitButton.setImages(.mail, style: .white)
         keyboardSubmitButton.setTitle(InterfaceString.Send, for: .normal)
     }
 

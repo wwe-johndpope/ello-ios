@@ -4,7 +4,10 @@
 
 
 class PromotionalHeaderCellSizeCalculator: NSObject {
-    static let ratio: CGFloat = 320 / 192
+    struct Size {
+        static let minIpadHeight: CGFloat = 300
+        static let minPhoneHeight: CGFloat = 150
+    }
 
     let webView: UIWebView
 
@@ -113,7 +116,14 @@ class PromotionalHeaderCellSizeCalculator: NSObject {
         let item = cellItems.remove(at: 0)
         self.cellItem = item
 
-        let minHeight = ceil(cellWidth / PromotionalHeaderCellSizeCalculator.ratio)
+        let minHeight: CGFloat
+        if Globals.isIpad {
+            minHeight = Size.minIpadHeight
+        }
+        else {
+            minHeight = Size.minPhoneHeight
+        }
+
         var calcHeight: CGFloat?
         if let category = item.jsonable as? Category {
             calcHeight = PromotionalHeaderCellSizeCalculator.calculateCategoryHeight(category, cellWidth: cellWidth)
@@ -156,6 +166,14 @@ extension PromotionalHeaderCellSizeCalculator: UIWebViewDelegate {
 
         let textHeight = webView.windowContentSize()?.height
         let calcHeight = PromotionalHeaderCellSizeCalculator.calculatePagePromotionalHeight(pagePromotional, htmlHeight: textHeight, cellWidth: cellWidth)
-        assignHeight(calcHeight)
+        let minHeight: CGFloat
+        if Globals.isIpad {
+            minHeight = Size.minIpadHeight
+        }
+        else {
+            minHeight = Size.minPhoneHeight
+        }
+        let actualHeight = max(minHeight, calcHeight)
+        assignHeight(actualHeight)
     }
 }

@@ -70,9 +70,7 @@ final class Post: JSONAble, Authorable, Groupable {
         }
         return nil
     }
-    // links post with comments
     var groupId: String { return "Post-\(id)" }
-    // computed properties
     var shareLink: String? {
         return author.map { "\(ElloURI.baseURL)/\($0.username)/post/\(self.token)" }
     }
@@ -217,7 +215,7 @@ final class Post: JSONAble, Authorable, Groupable {
             createdAt = date
         }
         else {
-            createdAt = AppSetup.shared.now
+            createdAt = Globals.now
         }
         // create post
         let post = Post(

@@ -174,7 +174,7 @@ class PostbarControllerSpec: QuickSpec {
                 context("post has not been loved") {
                     it("loves the post") {
                         stubCellItems(loved: false)
-                        let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
+                        let cell = StreamFooterCell()
 
                         var lovesCount: Int?
                         var contentChange: ContentChange?
@@ -191,7 +191,7 @@ class PostbarControllerSpec: QuickSpec {
 
                     it("increases currentUser lovesCount") {
                         stubCellItems(loved: false)
-                        let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
+                        let cell = StreamFooterCell()
 
                         let prevLovesCount = currentUser.lovesCount!
                         var lovesCount: Int?
@@ -208,7 +208,7 @@ class PostbarControllerSpec: QuickSpec {
                 context("post has already been loved") {
                     it("unloves the post") {
                         stubCellItems(loved: true)
-                        let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
+                        let cell = StreamFooterCell()
 
                         var lovesCount: Int?
                         var contentChange: ContentChange?
@@ -225,7 +225,7 @@ class PostbarControllerSpec: QuickSpec {
 
                     it("decreases currentUser lovesCount") {
                         stubCellItems(loved: true)
-                        let cell = StreamFooterCell.loadFromNib() as StreamFooterCell
+                        let cell = StreamFooterCell()
 
                         let prevLovesCount = currentUser.lovesCount!
                         var lovesCount = 0

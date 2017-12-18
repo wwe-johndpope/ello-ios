@@ -6,7 +6,7 @@ class DrawerCell: TableViewCell {
     static let reuseIdentifier = "DrawerCell"
 
     struct Size {
-        static let height: CGFloat = 72
+        static let height: CGFloat = 60
         static let inset = UIEdgeInsets(sides: 15)
         static let lineHeight: CGFloat = 1
     }

@@ -31,6 +31,10 @@ class OmnibarViewController: BaseElloViewController {
     var defaultText: String?
     var canGoBack: Bool = true {
         didSet {
+            if canGoBack {
+                postNotification(StatusBarNotifications.statusBarVisibility, value: true)
+            }
+
             if isViewLoaded {
                 screen.canGoBack = canGoBack
             }
@@ -106,7 +110,6 @@ class OmnibarViewController: BaseElloViewController {
         self.view = OmnibarScreen(frame: UIScreen.main.bounds)
 
         screen.canGoBack = canGoBack
-        screen.currentUser = currentUser
         var defaultRegions: [Regionable] = []
         if let text = defaultText {
             defaultRegions = [TextRegion(content: text)]
@@ -232,7 +235,7 @@ class OmnibarViewController: BaseElloViewController {
                 let url = region.url
             {
                 if let imageRegionURL = region.buyButtonURL {
-                    buyButtonURL = imageRegionURL as URL
+                    buyButtonURL = imageRegionURL
                 }
                 downloads.append((index, url))
                 regions.append(.imageURL(url))

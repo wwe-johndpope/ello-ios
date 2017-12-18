@@ -79,7 +79,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
     override func style() {
         super.style()
         iPhoneBlackBar.backgroundColor = .black
-        backButton.setImages(.angleBracket, degree: 180)
+        backButton.setImages(.chevron)
         shareButton.alpha = 0
         shareButton.setImage(.share, imageStyle: .normal, for: .normal)
     }
@@ -110,12 +110,12 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
             arrangeHomeScreenNavBar(type: .discover, navigationBar: navigationBar)
         }
 
-        if AppSetup.shared.isIphoneX {
+        if Globals.isIphoneX {
             addSubview(iPhoneBlackBar)
             iPhoneBlackBar.snp.makeConstraints { make in
                 iPhoneBlackBarTopConstraint = make.top.equalTo(self).constraint
                 make.leading.trailing.equalTo(self)
-                make.height.equalTo(AppSetup.shared.statusBarHeight + Size.navigationBarHeight)
+                make.height.equalTo(Globals.statusBarHeight + Size.navigationBarHeight)
             }
             iPhoneBlackBar.alpha = 0
         }
@@ -210,8 +210,8 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
             if navBarVisible {
                 categoryCardListTop = self.navigationBar.frame.height
             }
-            else if AppSetup.shared.isIphoneX {
-                categoryCardListTop = AppSetup.shared.statusBarHeight
+            else if Globals.isIphoneX {
+                categoryCardListTop = Globals.statusBarHeight
             }
             else {
                 categoryCardListTop = 0
@@ -220,7 +220,7 @@ class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
             self.categoryCardTopConstraint.update(offset: categoryCardListTop)
             self.categoryCardList.frame.origin.y = categoryCardListTop
 
-            if AppSetup.shared.isIphoneX {
+            if Globals.isIphoneX {
                 let iPhoneBlackBarTop = self.categoryCardList.frame.minY - self.iPhoneBlackBar.frame.height
                 self.iPhoneBlackBarTopConstraint.update(offset: iPhoneBlackBarTop)
                 self.iPhoneBlackBar.frame.origin.y = iPhoneBlackBarTop

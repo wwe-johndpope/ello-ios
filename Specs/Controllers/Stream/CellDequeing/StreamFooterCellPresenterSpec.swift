@@ -2,24 +2,30 @@
 import Quick
 import Nimble
 
-
 class StreamFooterCellPresenterSpec: QuickSpec {
     override func spec() {
         describe("configure") {
+            var cell: StreamFooterCell!
+            var item: StreamCellItem!
+            var toolBar: UIToolbar!
+            var post: Post!
+
+            beforeEach {
+                cell = StreamFooterCell()
+                post = Post.stub([
+                    "viewsCount": 9,
+                    "repostsCount": 4,
+                    "commentsCount": 6,
+                    "lovesCount": 14
+                ])
+                item = StreamCellItem(jsonable: post, type: .streamFooter)
+                toolBar = cell.specs().toolBar
+            }
 
             context("single column view") {
 
                 it("configures a stream footer cell") {
                     StreamKind.following.setIsGridView(false)
-
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 14
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
@@ -35,15 +41,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
             context("grid layout") {
 
                 it("configures a thin stream footer cell") {
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 14
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     cell.frame = CGRect(origin: .zero, size: CGSize(width: 150, height: 60))
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamKind.following.setIsGridView(true)
 
@@ -58,15 +56,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 }
 
                 it("configures a wide stream footer cell") {
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 14
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
                     cell.frame = CGRect(origin: .zero, size: CGSize(width: 180, height: 60))
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamKind.following.setIsGridView(true)
 
@@ -84,22 +74,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
             context("detail streamkind") {
 
                 it("configures a stream footer cell") {
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 22
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: post.id), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                     expect(cell.commentsControl.isSelected).to(beTrue())
                     expect(cell.views) == "9"
                     expect(cell.reposts) == "4"
                     expect(cell.comments) == "6"
-                    expect(cell.loves) == "22"
+                    expect(cell.loves) == "14"
 
                     // details should have open comments
                     expect(cell.commentsOpened).to(beTrue())
@@ -109,86 +90,57 @@ class StreamFooterCellPresenterSpec: QuickSpec {
             context("comment button") {
 
                 it("usually enabled and visible") {
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 22
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.commentsItem))
+                    expect(toolBar.items).to(contain(cell.commentsItem))
                 }
 
                 it("shown if author allows it") {
                     let author: User = stub(["hasCommentingEnabled": true])
                     let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
                         "author": author,
-                        "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.commentsItem))
+                    expect(toolBar.items).to(contain(cell.commentsItem))
                 }
 
                 it("shown if author allows it in grid view") {
                     let author: User = stub(["hasCommentingEnabled": true])
                     let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
                         "author": author,
-                        "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.commentsItem))
+                    expect(toolBar.items).to(contain(cell.commentsItem))
                 }
 
                 it("hidden if author doesn't allow it") {
                     let author: User = stub(["hasCommentingEnabled": false])
                     let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
                         "author": author,
-                        "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.commentsItem))
+                    expect(toolBar.items).toNot(contain(cell.commentsItem))
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
                     let author: User = stub(["hasCommentingEnabled": false])
                     let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
                         "author": author,
-                        "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.commentsItem))
+                    expect(toolBar.items).toNot(contain(cell.commentsItem))
                 }
             }
 
@@ -201,15 +153,13 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "commentsCount": 6,
                         "lovesCount": 22
                     ])
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
                     StreamKind.following.setIsGridView(false)
-
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.shareItem))
+                    expect(toolBar.items).to(contain(cell.shareItem))
                 }
 
                 it("shown if author allows it") {
@@ -221,12 +171,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.shareItem))
+                    expect(toolBar.items).to(contain(cell.shareItem))
                 }
 
                 it("never shown in grid view") {
@@ -238,14 +187,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
                     StreamKind.following.setIsGridView(true)
-
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).notTo(contain(cell.shareItem))
+                    expect(toolBar.items).notTo(contain(cell.shareItem))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -257,12 +204,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.shareItem))
+                    expect(toolBar.items).toNot(contain(cell.shareItem))
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
@@ -274,12 +220,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.shareItem))
+                    expect(toolBar.items).toNot(contain(cell.shareItem))
                 }
             }
 
@@ -287,19 +232,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                 it("usually enabled and visible") {
                     let user: User = stub([:])
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 55
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: user)
 
                     expect(cell.repostControl.isEnabled).to(beTrue())
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("enabled if currentUser, post.author and post.repostAuthor are all nil") {
@@ -309,13 +245,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "commentsCount": 6,
                         "lovesCount": 55
                         ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                     expect(cell.repostControl.isEnabled).to(beTrue())
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("shown if author allows it") {
@@ -327,12 +262,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("shown if author allows it, in grid view") {
@@ -344,12 +278,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("disabled if current user already reposted") {
@@ -363,13 +296,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
 
                     expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -381,12 +313,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.repostItem))
+                    expect(toolBar.items).toNot(contain(cell.repostItem))
                 }
 
                 it("hidden if author doesn't allow it, in grid view") {
@@ -398,12 +329,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.repostItem))
+                    expect(toolBar.items).toNot(contain(cell.repostItem))
                 }
 
                 it("disabled if author is current user") {
@@ -415,13 +345,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
                     expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("disabled if author is repost author") {
@@ -435,13 +364,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "repostAuthor": repostAuthor,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: repostAuthor)
 
                     expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("disabled if author is current user in grid view") {
@@ -453,13 +381,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
                     expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(cell.toolBar!.items).to(contain(cell.repostItem))
+                    expect(toolBar.items).to(contain(cell.repostItem))
                 }
 
                 it("hidden if author is current user, and reposting isn't allowed") {
@@ -471,12 +398,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.repostItem))
+                    expect(toolBar.items).toNot(contain(cell.repostItem))
                 }
 
                 it("hidden if author is current user, and reposting isn't allowed in grid view") {
@@ -488,31 +414,21 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.repostItem))
+                    expect(toolBar.items).toNot(contain(cell.repostItem))
                 }
             }
 
             context("loves button") {
 
                 it("usually enabled and visible") {
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 55
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                     expect(cell.lovesControl.isEnabled).to(beTrue())
-                    expect(cell.toolBar!.items).to(contain(cell.lovesItem))
+                    expect(toolBar.items).to(contain(cell.lovesItem))
                 }
 
                 it("shown if author allows it") {
@@ -524,12 +440,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.lovesItem))
+                    expect(toolBar.items).to(contain(cell.lovesItem))
                 }
 
                 it("shown if author allows it in grid view") {
@@ -541,12 +456,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).to(contain(cell.lovesItem))
+                    expect(toolBar.items).to(contain(cell.lovesItem))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -558,12 +472,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.lovesItem))
+                    expect(toolBar.items).toNot(contain(cell.lovesItem))
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
@@ -575,12 +488,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.lovesItem))
+                    expect(toolBar.items).toNot(contain(cell.lovesItem))
                 }
 
                 it("enabled if author is current user") {
@@ -592,13 +504,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
                     expect(cell.lovesControl.isEnabled) == true
-                    expect(cell.toolBar!.items).to(contain(cell.lovesItem))
+                    expect(toolBar.items).to(contain(cell.lovesItem))
                 }
 
                 it("enabled if author is current user in grid view") {
@@ -610,13 +521,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
                     expect(cell.lovesControl.isEnabled) == true
-                    expect(cell.toolBar!.items).to(contain(cell.lovesItem))
+                    expect(toolBar.items).to(contain(cell.lovesItem))
                 }
 
                 it("hidden if author is current user, and loving isn't allowed") {
@@ -628,12 +538,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.lovesItem))
+                    expect(toolBar.items).toNot(contain(cell.lovesItem))
                 }
 
                 it("hidden if author is current user, and loving isn't allowed in grid view") {
@@ -645,27 +554,17 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         "author": author,
                         "lovesCount": 55
                     ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
+                    item = StreamCellItem(jsonable: post, type: .streamFooter)
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.toolBar!.items).toNot(contain(cell.lovesItem))
+                    expect(toolBar.items).toNot(contain(cell.lovesItem))
                 }
             }
 
             context("loading") {
 
                 it("configures a stream footer cell") {
-                    let post: Post = stub([
-                        "viewsCount": 9,
-                        "repostsCount": 4,
-                        "commentsCount": 6,
-                        "lovesCount": 55
-                    ])
-                    let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                    let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                     // set the state to loading
                     item.state = .loading
 
@@ -686,15 +585,6 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 context("expanded") {
 
                     it("configures a stream footer cell") {
-                        let post: Post = stub([
-                            "viewsCount": 9,
-                            "repostsCount": 4,
-                            "commentsCount": 6,
-                            "lovesCount": 55
-                        ])
-                        let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                         // set the state to expanded
                         item.state = .expanded
 
@@ -714,15 +604,6 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 context("not expanded") {
 
                     it("configures a stream footer cell") {
-                        let post: Post = stub([
-                            "viewsCount": 9,
-                            "repostsCount": 4,
-                            "commentsCount": 6,
-                            "lovesCount": 55
-                        ])
-                        let cell: StreamFooterCell = StreamFooterCell.loadFromNib()
-                        let item: StreamCellItem = StreamCellItem(jsonable: post, type: .streamFooter)
-
                         // set the state to none
                         item.state = .none
 

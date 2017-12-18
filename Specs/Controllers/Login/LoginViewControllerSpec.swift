@@ -9,6 +9,7 @@ import Nimble
 
 class LoginViewControllerSpec: QuickSpec {
     class MockScreen: LoginScreenProtocol {
+        var blackBarIsVisible: Bool = false
         var username: String = ""
         var isUsernameValid: Bool? = nil
         var password: String = ""

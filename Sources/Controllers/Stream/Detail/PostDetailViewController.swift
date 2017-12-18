@@ -117,7 +117,10 @@ final class PostDetailViewController: StreamableViewController {
             rightItems = [.delete, .edit]
         }
         else if currentUser != nil {
-            rightItems = [.more]
+            rightItems = [.more, .share]
+        }
+        else if post?.author?.hasSharingEnabled == true {
+            rightItems = [.share]
         }
 
         navigationBar.rightItems = rightItems
@@ -243,6 +246,19 @@ extension PostDetailViewController: PostDetailStreamDestination {
             self.showGenericLoadFailure()
         }
         self.streamViewController.doneLoading()
+    }
+}
+
+extension PostDetailViewController: HasShareButton {
+    func shareButtonTapped(_ sender: UIView) {
+        guard
+            let post = post,
+            let shareLink = post.shareLink,
+            let shareURL = URL(string: shareLink)
+        else { return }
+
+        Tracker.shared.postShared(post)
+        showShareActivity(sender: sender, url: shareURL)
     }
 }
 

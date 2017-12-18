@@ -2,17 +2,24 @@
 ///  ElloTextFieldView.swift
 //
 
-private let ElloTextFieldViewHeight: CGFloat = 89.0
+import SnapKit
 
-class ElloTextFieldView: UIView {
-    @IBOutlet weak var label: StyledLabel!
-    @IBOutlet weak var textField: ElloTextField!
-    @IBOutlet weak var errorLabel: StyledLabel!
-    @IBOutlet weak var messageLabel: StyledLabel!
 
-    @IBOutlet weak var errorLabelHeight: NSLayoutConstraint!
-    @IBOutlet weak var messageLabelHeight: NSLayoutConstraint!
-    @IBOutlet weak var errorLabelSeparationSpacing: NSLayoutConstraint!
+class ElloTextFieldView: View {
+    struct Size {
+        static let margins = UIEdgeInsets(tops: 8, sides: 15)
+        static let verticalSpacing: CGFloat = 8
+        static let height: CGFloat = 89
+    }
+
+    let textField = ElloTextField()
+    let label = StyledLabel(style: .lightGray)
+
+    private let errorLabel = StyledLabel(style: .error)
+    private let messageLabel = StyledLabel(style: .black)
+    private var errorLabelHeight: Constraint!
+    private var messageLabelHeight: Constraint!
+    private var errorLabelSeparationSpacing: Constraint!
 
     var textFieldDidChange: ((String) -> Void)?
     var firstResponderDidChange: BoolBlock? {
@@ -21,7 +28,7 @@ class ElloTextFieldView: UIView {
     }
 
     var height: CGFloat {
-        var height = ElloTextFieldViewHeight
+        var height = Size.height
         if hasError {
             height += errorHeight
             if hasMessage {
@@ -37,9 +44,10 @@ class ElloTextFieldView: UIView {
         return height
     }
 
-    var hasError: Bool { return !(errorLabel.text?.isEmpty ?? true) }
-    var hasMessage: Bool { return !(messageLabel.text?.isEmpty ?? true) }
-    var errorHeight: CGFloat {
+    private var hasError: Bool { return !(errorLabel.text?.isEmpty ?? true) }
+    private var hasMessage: Bool { return !(messageLabel.text?.isEmpty ?? true) }
+
+    private var errorHeight: CGFloat {
         if hasError {
             return errorLabel.sizeThatFits(CGSize(width: errorLabel.frame.width, height: 0)).height
         }
@@ -47,7 +55,7 @@ class ElloTextFieldView: UIView {
             return 0
         }
     }
-    var messageHeight: CGFloat {
+    private var messageHeight: CGFloat {
         if hasMessage {
             return messageLabel.sizeThatFits(CGSize(width: messageLabel.frame.width, height: 0)).height
         }
@@ -56,21 +64,33 @@ class ElloTextFieldView: UIView {
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        sharedInit()
-    }
+    override func arrange() {
+        addSubview(label)
+        addSubview(textField)
+        addSubview(errorLabel)
+        addSubview(messageLabel)
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        sharedInit()
-    }
+        label.snp.makeConstraints { make in
+            make.leading.top.equalTo(self).inset(Size.margins)
+        }
 
-    private func sharedInit() {
-        let view: UIView = loadFromNib()
-        view.frame = bounds
-        view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        addSubview(view)
+        textField.snp.makeConstraints { make in
+            make.top.equalTo(label.snp.bottom).offset(Size.verticalSpacing)
+            make.leading.trailing.equalTo(self).inset(Size.margins)
+        }
+
+        errorLabel.snp.makeConstraints { make in
+            errorLabelHeight = make.height.equalTo(0).constraint
+
+            make.top.equalTo(textField.snp.bottom).offset(Size.verticalSpacing)
+            make.leading.equalTo(self).inset(Size.margins)
+        }
+
+        messageLabel.snp.makeConstraints { make in
+            messageLabelHeight = make.height.equalTo(0).constraint
+            errorLabelSeparationSpacing = make.top.equalTo(errorLabel.snp.bottom).offset(Size.verticalSpacing).constraint
+            make.leading.bottom.equalTo(self).inset(Size.margins)
+        }
 
         textField.addTarget(self, action: #selector(valueChanged), for: .editingChanged)
     }
@@ -118,9 +138,14 @@ class ElloTextFieldView: UIView {
     }
 
     private func updateErrorConstraints() {
-        errorLabelSeparationSpacing.isActive = errorHeight > 0 && messageHeight > 0
-        errorLabelHeight.constant = errorHeight
-        messageLabelHeight.constant = messageHeight
+        if errorHeight > 0 && messageHeight > 0 {
+            errorLabelSeparationSpacing.activate()
+        }
+        else {
+            errorLabelSeparationSpacing.deactivate()
+        }
+        errorLabelHeight.update(offset: errorHeight)
+        messageLabelHeight.update(offset: messageHeight)
     }
 
     func clearState() {

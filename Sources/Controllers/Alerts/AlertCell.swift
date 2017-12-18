@@ -11,41 +11,92 @@ protocol AlertCellResponder: class {
     func tappedCancelButton()
 }
 
-class AlertCell: UITableViewCell {
+class AlertCell: TableViewCell {
     static let reuseIdentifier = "AlertCell"
 
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: UILabel!
-    @IBOutlet weak var input: ElloTextField!
-    @IBOutlet weak var background: UIView!
-    @IBOutlet weak var okButton: StyledButton!
-    @IBOutlet weak var cancelButton: StyledButton!
+    struct Size {
+        static let backgroundInsets = UIEdgeInsets(tops: 5, sides: 0)
+        static let buttonSpacing: CGFloat = 10
+        static let inputInsets = UIEdgeInsets(top: 0, left: 2, bottom: 8, right: 10)
+        static let buttonInsets = UIEdgeInsets(tops: 0, sides: 18)
+    }
 
-    let inputBorder = UIView()
+    let background = UIView()
+    let okButton = StyledButton(style: .default)
+    let cancelButton = StyledButton(style: .default)
+    let label = StyledLabel(style: .black)
+    let button = UILabel()
+    let input = ElloTextField()
+    let inputBottomBorder = UIView()
 
     var onInputChanged: ((String) -> Void)?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func setText() {
+        okButton.setTitle(InterfaceString.OK, for: .normal)
+        cancelButton.setTitle(InterfaceString.Cancel, for: .normal)
+    }
 
-        label.font = .defaultFont()
-        label.textColor = .black
+    override func styleCell() {
+        selectionStyle = .none
         label.textAlignment = .left
-        label.numberOfLines = 0
+        label.isMultiline = true
 
-        input.backgroundColor = UIColor.white
-        input.font = UIFont.defaultFont()
-        input.textColor = UIColor.black
-        input.tintColor = UIColor.black
+        input.backgroundColor = .white
+        input.font = .defaultFont()
+        input.textColor = .black
+        input.tintColor = .black
         input.clipsToBounds = false
 
-        inputBorder.backgroundColor = UIColor.black
-        input.addSubview(inputBorder)
+        inputBottomBorder.backgroundColor = .black
+    }
+
+    override func arrange() {
+        contentView.addSubview(background)
+        background.addSubview(okButton)
+        background.addSubview(cancelButton)
+
+        contentView.addSubview(label)
+        contentView.addSubview(button)
+        contentView.addSubview(input)
+        input.addSubview(inputBottomBorder)
+
+        background.snp.makeConstraints { make in
+            make.edges.equalTo(contentView).inset(Size.backgroundInsets)
+        }
+
+        okButton.snp.makeConstraints { make in
+            make.width.equalTo(cancelButton)
+            make.leading.top.bottom.equalTo(background)
+        }
+
+        cancelButton.snp.makeConstraints { make in
+            make.leading.equalTo(okButton.snp.trailing).offset(Size.buttonSpacing)
+            make.trailing.top.bottom.equalTo(background)
+        }
+
+        label.snp.makeConstraints { make in
+            make.leading.centerY.equalTo(contentView)
+        }
+
+        button.snp.makeConstraints { make in
+            make.edges.equalTo(contentView).inset(Size.buttonInsets).priority(Priority.required)
+        }
+
+        input.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(contentView).inset(Size.inputInsets)
+        }
+
+        inputBottomBorder.snp.makeConstraints { make in
+            make.bottom.equalTo(input)
+            make.leading.equalTo(input).offset(-10)
+            make.trailing.equalTo(input).offset(10)
+            make.height.equalTo(1)
+        }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        inputBorder.frame = input.bounds.fromBottom().grow(top: 1, sides: 10, bottom: 0)
+        inputBottomBorder.frame = input.bounds.fromBottom().grow(top: 1, sides: 10, bottom: 0)
     }
 
     override func prepareForReuse() {
@@ -77,10 +128,4 @@ extension AlertCell {
         responder?.tappedCancelButton()
     }
 
-}
-
-extension AlertCell {
-    class func nib() -> UINib {
-        return UINib(nibName: "AlertCell", bundle: .none)
-    }
 }

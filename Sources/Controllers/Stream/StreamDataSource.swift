@@ -317,7 +317,7 @@ class StreamDataSource: ElloDataSource {
                     for item in items {
                         item.placeholderType = postCreatedPlaceholder
                     }
-                    calculateCellItems(items, withWidth: AppSetup.shared.windowSize.width) {
+                    calculateCellItems(items, withWidth: Globals.windowSize.width) {
                         let indexPaths = self.insertStreamCellItems(items, startingIndexPath: indexPath)
                         streamViewController.performDataChange { collectionView in
                             collectionView.insertItems(at: indexPaths)
@@ -371,7 +371,7 @@ class StreamDataSource: ElloDataSource {
             guard let firstIndexPath = oldIndexPaths.first else { return }
 
             let items = StreamCellItemParser().parse([jsonable], streamKind: self.streamKind, currentUser: currentUser)
-            calculateCellItems(items, withWidth: AppSetup.shared.windowSize.width) {
+            calculateCellItems(items, withWidth: Globals.windowSize.width) {
                 self.removeItems(at: oldIndexPaths)
                 let newIndexPaths = self.insertStreamCellItems(items, startingIndexPath: firstIndexPath)
                 streamViewController.performDataChange { collectionView in

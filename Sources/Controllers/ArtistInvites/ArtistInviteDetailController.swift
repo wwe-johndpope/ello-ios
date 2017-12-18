@@ -54,6 +54,7 @@ class ArtistInviteDetailController: StreamableViewController {
     override func loadView() {
         let screen = ArtistInviteDetailScreen()
         screen.navigationBar.leftItems = [.back]
+        screen.navigationBar.rightItems = [.share]
 
         self.view = screen
         viewContainer = screen.streamContainer
@@ -169,4 +170,16 @@ extension ArtistInviteDetailController: RevealControllerResponder {
         navigationController?.pushViewController(vc, animated: true)
     }
 
+}
+
+extension ArtistInviteDetailController: HasShareButton {
+    func shareButtonTapped(_ sender: UIView) {
+        guard
+            let artistInvite = artistInvite,
+            let shareURL = URL(string: artistInvite.shareLink)
+        else { return }
+
+        Tracker.shared.artistInviteShared(slug: artistInvite.slug)
+        showShareActivity(sender: sender, url: shareURL)
+    }
 }

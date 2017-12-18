@@ -9,6 +9,8 @@ import Nimble
 
 class JoinViewControllerSpec: QuickSpec {
     class MockScreen: JoinScreenProtocol {
+        var blackBarIsVisible: Bool = false
+        var prompt: String? = ""
         var email: String = ""
         var username: String = ""
         var password: String = ""

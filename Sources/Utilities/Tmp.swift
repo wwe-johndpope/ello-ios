@@ -110,6 +110,9 @@ extension Tmp {
             text += "\(desc)\n"
         }
 
+        text += "---- TOTAL ----\n"
+        text += "\(totalSize)\n"
+
         return (text, totalSize)
     }
 

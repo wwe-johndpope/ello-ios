@@ -238,14 +238,14 @@ class SettingsViewController: UITableViewController, ControllerThatMightHaveTheC
             coverImage.image = cachedImage
         }
         else if let imageURL = currentUser?.coverImageURL(viewsAdultContent: true, animated: true) {
-            coverImage.pin_setImage(from: imageURL as URL!)
+            coverImage.pin_setImage(from: imageURL)
         }
 
         if let cachedImage = TemporaryCache.load(.avatar) {
             avatarImage.image = cachedImage
         }
         else if let imageURL = currentUser?.avatar?.large?.url {
-            avatarImage.pin_setImage(from: imageURL as URL!)
+            avatarImage.pin_setImage(from: imageURL)
         }
 
         if currentUser?.profile?.isCommunity == true {

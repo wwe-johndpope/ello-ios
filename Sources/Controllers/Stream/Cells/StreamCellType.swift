@@ -50,10 +50,10 @@ enum StreamCellType: Equatable {
     case seeMoreComments
     case selectableCategoryCard
     case spacer(height: CGFloat)
-    case spinner(height: CGFloat)
     case streamFooter
     case streamHeader
     case streamLoading
+    case streamPageLoading
     case tallHeader(NSAttributedString?)
     case text(data: Regionable?)
     case toggle
@@ -132,10 +132,10 @@ enum StreamCellType: Equatable {
         .seeMoreComments,
         .selectableCategoryCard,
         .spacer(height: 0),
-        .spinner(height: 0),
         .streamFooter,
         .streamHeader,
         .streamLoading,
+        .streamPageLoading,
         .tallHeader(nil),
         .text(data: nil),
         .toggle,
@@ -197,9 +197,9 @@ enum StreamCellType: Equatable {
         case .seeMoreComments: return StreamSeeMoreCommentsCell.reuseIdentifier
         case .selectableCategoryCard: return CategoryCardCell.selectableReuseIdentifier
         case .spacer: return "StreamSpacerCell"
-        case .spinner: return StreamLoadingCell.reuseIdentifier
         case .streamFooter: return StreamFooterCell.reuseIdentifier
         case .streamLoading: return StreamLoadingCell.reuseIdentifier
+        case .streamPageLoading: return StreamPageLoadingCell.reuseIdentifier
         case .tallHeader: return TextHeaderCell.reuseIdentifier
         case .text: return StreamTextCell.reuseIdentifier
         case .toggle: return StreamToggleCell.reuseIdentifier
@@ -262,9 +262,8 @@ enum StreamCellType: Equatable {
         case .search: return SearchStreamCellPresenter.configure
         case .selectableCategoryCard: return CategoryCardCellPresenter.configure
         case .spacer: return { (cell, _, _, _, _) in cell.backgroundColor = .white }
-        case .spinner: return StreamLoadingCellPresenter.configure
+        case .streamLoading, .streamPageLoading: return LoadingCellPresenter.configure
         case .streamFooter: return StreamFooterCellPresenter.configure
-        case .streamLoading: return StreamLoadingCellPresenter.configure
         case .tallHeader: return TextHeaderCellPresenter.configure
         case .text: return StreamTextCellPresenter.configure
         case .toggle: return StreamToggleCellPresenter.configure
@@ -307,9 +306,9 @@ enum StreamCellType: Equatable {
         case .search: return SearchStreamCell.self
         case .seeMoreComments: return StreamSeeMoreCommentsCell.self
         case .selectableCategoryCard: return CategoryCardCell.self
-        case .spinner: return StreamLoadingCell.self
         case .streamFooter: return StreamFooterCell.self
         case .streamLoading: return StreamLoadingCell.self
+        case .streamPageLoading: return StreamPageLoadingCell.self
         case .tallHeader: return TextHeaderCell.self
         case .text: return StreamTextCell.self
         case .toggle: return StreamToggleCell.self
@@ -330,11 +329,9 @@ enum StreamCellType: Equatable {
         case .badge:
             return 64
         case .categoryCard, .selectableCategoryCard:
-            let width = AppSetup.shared.windowSize.width
+            let width = Globals.windowSize.width
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
-        case .categoryPromotionalHeader, .pagePromotionalHeader:
-            return 150
         case .categoryList:
             return CategoryListCell.Size.height
         case .commentHeader:
@@ -342,13 +339,13 @@ enum StreamCellType: Equatable {
         case .inviteFriends,
              .onboardingInviteFriends,
              .seeMoreComments:
-                return 60
+            return 60
         case .createComment:
             return 75
         case .editorial:
-            let width = AppSetup.shared.windowSize.width
+            let width = Globals.windowSize.width
             let aspect = EditorialCell.Size.aspect
-            let maxHeight: CGFloat = AppSetup.shared.windowSize.height - 256
+            let maxHeight: CGFloat = Globals.windowSize.height - 256
             let height = min(ceil(width / aspect), maxHeight)
             return height + EditorialCell.Size.bgMargins.bottom
         case let .emptyStream(height):
@@ -371,11 +368,12 @@ enum StreamCellType: Equatable {
             return 68
         case let .spacer(height):
             return height
-        case let .spinner(height):
-            return height
-        case .streamLoading,
-             .userAvatars:
-                return 50
+        case .streamLoading:
+            return StreamLoadingCell.Size.height
+        case .streamPageLoading:
+            return StreamPageLoadingCell.Size.height
+        case .userAvatars:
+            return 50
         case .streamFooter:
             return 44
         case .streamHeader:
@@ -386,17 +384,30 @@ enum StreamCellType: Equatable {
             return 40
         case .userListItem:
             return 85
-        default: return 0
+        case .artistInviteBubble,
+             .artistInviteControls,
+             .artistInviteGuide,
+             .artistInviteHeader,
+             .categoryPromotionalHeader,
+             .embed,
+             .image,
+             .pagePromotionalHeader,
+             .placeholder,
+             .profileHeader,
+             .profileHeaderGhost,
+             .text,
+             .unknown:
+            return 0
         }
     }
 
     var multiColumnHeight: CGFloat {
         switch self {
         case .categoryCard, .selectableCategoryCard:
-            let windowWidth = AppSetup.shared.windowSize.width
+            let windowWidth = Globals.windowSize.width
             let columnCount = CGFloat(Window.columnCountFor(width: windowWidth))
             let columnSpacing: CGFloat = 1
-            let width = (AppSetup.shared.windowSize.width - columnSpacing * (columnCount - 1)) / columnCount
+            let width = (Globals.windowSize.width - columnSpacing * (columnCount - 1)) / columnCount
             let aspect = CategoryCardCell.Size.aspect
             return ceil(width / aspect)
         case .streamHeader,
@@ -438,6 +449,7 @@ enum StreamCellType: Equatable {
              .search,
              .seeMoreComments,
              .streamLoading,
+             .streamPageLoading,
              .tallHeader,
              .userAvatars,
              .userListItem:
@@ -448,7 +460,6 @@ enum StreamCellType: Equatable {
              .placeholder,
              .selectableCategoryCard,
              .spacer,
-             .spinner,
              .streamFooter,
              .streamHeader,
              .text,
@@ -500,6 +511,7 @@ enum StreamCellType: Equatable {
             .fullWidthSpacer(height: 0),
             .header(nil),
             .loadMoreComments,
+            .noPosts,
             .notification,
             .pagePromotionalHeader,
             .placeholder,
@@ -509,8 +521,9 @@ enum StreamCellType: Equatable {
             .search(placeholder: ""),
             .selectableCategoryCard,
             .spacer(height: 0),
-            .spinner(height: 0),
+            .streamFooter,
             .streamLoading,
+            .streamPageLoading,
             .tallHeader(nil),
             .text(data: nil),
             .unknown,

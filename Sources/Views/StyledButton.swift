@@ -228,6 +228,7 @@ extension StyledButton.Style {
         backgroundColor: .black, disabledBackgroundColor: .grey231F20,
         titleColor: .white, disabledTitleColor: .greyA
         )
+
     static let clearWhite = StyledButton.Style(
         titleColor: .white, disabledTitleColor: .greyA
         )
@@ -243,6 +244,7 @@ extension StyledButton.Style {
     static let clearOrange = StyledButton.Style(
         titleColor: .orangeC6, highlightedTitleColor: .greyA, disabledTitleColor: .greyC
         )
+
     static let grayText = StyledButton.Style(
         titleColor: .greyA
         )
@@ -255,10 +257,11 @@ extension StyledButton.Style {
         titleColor: .black, highlightedTitleColor: .grey6, selectedTitleColor: .white, disabledTitleColor: .greyC
         )
     static let green = StyledButton.Style(
-        backgroundColor: .greenD1, disabledBackgroundColor: .grey6,
-        titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
+        backgroundColor: .greenD1, disabledBackgroundColor: .greyA,
+        titleColor: .white, highlightedTitleColor: .black, disabledTitleColor: .white,
         cornerRadius: .rounded
         )
+
     static let whiteUnderlined = StyledButton.Style(
         backgroundColor: .clear,
         titleColor: .white,
@@ -269,11 +272,7 @@ extension StyledButton.Style {
         titleColor: .greyA,
         underline: true
         )
-    static let squareBlack = StyledButton.Style(
-        backgroundColor: .white, selectedBackgroundColor: .black, disabledBackgroundColor: .greyA,
-        titleColor: .black, highlightedTitleColor: .grey6, selectedTitleColor: .white, disabledTitleColor: .greyC,
-        borderColor: .black, highlightedBorderColor: .greyE5
-        )
+
     static let roundedGrayOutline = StyledButton.Style(
         backgroundColor: .clear, selectedBackgroundColor: .black,
         titleColor: .greyA, highlightedTitleColor: .black, unselectHighlightedTitleColor: .greyA, selectedTitleColor: .white,
@@ -296,12 +295,12 @@ extension StyledButton.Style {
         cornerRadius: .pill
         )
     static let greenPill = StyledButton.Style(
-        backgroundColor: .greenD1, disabledBackgroundColor: .grey6,
+        backgroundColor: .greenD1, disabledBackgroundColor: .greyA,
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .pill
         )
     static let redPill = StyledButton.Style(
-        backgroundColor: .red, disabledBackgroundColor: .grey6,
+        backgroundColor: .red, disabledBackgroundColor: .greyA,
         titleColor: .white, highlightedTitleColor: .greyA, disabledTitleColor: .white,
         cornerRadius: .pill
         )
@@ -319,10 +318,6 @@ extension StyledButton.Style {
         backgroundColor: .greyE5,
         titleColor: .grey6,
         cornerRadius: .pill
-        )
-    static let blockUserModal = StyledButton.Style(
-        backgroundColor: .white, selectedBackgroundColor: .black, disabledBackgroundColor: .greyA,
-        titleColor: .black, highlightedTitleColor: .grey6, selectedTitleColor: .white, disabledTitleColor: .greyC
         )
     static let editorialJoin = StyledButton.Style(
         backgroundColor: .greenD1, disabledBackgroundColor: UIColor(hex: 0x7AC97A),

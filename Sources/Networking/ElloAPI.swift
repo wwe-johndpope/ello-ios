@@ -702,6 +702,10 @@ extension ElloAPI: Moya.TargetType {
 
     var parameters: [String: Any]? {
         switch self {
+        case .amazonLoggingCredentials:
+            return [
+                "folder": "v2",
+            ]
         case .anonymousCredentials:
             return [
                 "client_id": APIKeys.shared.key,

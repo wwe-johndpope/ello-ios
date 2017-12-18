@@ -8,13 +8,13 @@ protocol AutoCompleteDelegate: NSObjectProtocol {
 }
 
 class AutoCompleteViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    let tableView = UITableView()
     let dataSource = AutoCompleteDataSource()
     let service = AutoCompleteService()
     weak var delegate: AutoCompleteDelegate?
 
     required init() {
-        super.init(nibName: "AutoCompleteViewController", bundle: .none)
+        super.init(nibName: nil, bundle: .none)
     }
 
     required init?(coder: NSCoder) {
@@ -26,13 +26,20 @@ class AutoCompleteViewController: UIViewController {
 extension AutoCompleteViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view)
+        }
+
+        tableView.rowHeight = AutoCompleteCell.Size.height
         tableView.delegate = self
         tableView.dataSource = dataSource
+        tableView.separatorStyle = .none
         registerCells()
         style()
     }
 }
-
 
 // MARK: Public
 extension AutoCompleteViewController {
@@ -89,7 +96,7 @@ extension AutoCompleteViewController: UITableViewDelegate {
 // MARK: Private
 private extension AutoCompleteViewController {
     func registerCells() {
-        tableView.register(AutoCompleteCell.nib(), forCellReuseIdentifier: AutoCompleteCell.reuseIdentifier)
+        tableView.register(AutoCompleteCell.self, forCellReuseIdentifier: AutoCompleteCell.reuseIdentifier)
     }
 
     func style() {

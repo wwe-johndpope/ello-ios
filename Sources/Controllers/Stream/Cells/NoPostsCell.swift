@@ -2,17 +2,42 @@
 ///  NoPostsCell.swift
 //
 
-class NoPostsCell: UICollectionViewCell {
+class NoPostsCell: CollectionViewCell {
     static let reuseIdentifier = "NoPostsCell"
+    struct Size {
+        static let headerTop: CGFloat = 14
+        static let bodyTop: CGFloat = 17
+        static let labelInsets: CGFloat = 10
+    }
 
-    @IBOutlet weak var noPostsHeader: UILabel!
-    @IBOutlet weak var noPostsBody: UILabel!
+    private let noPostsHeader = StyledLabel(style: .largeBold)
+    private let noPostsBody = StyledLabel()
 
     var isCurrentUser: Bool = false {
         didSet { updateText() }
     }
 
-    func updateText() {
+    override func style() {
+        noPostsHeader.textAlignment = .left
+        noPostsBody.textAlignment = .left
+    }
+
+    override func arrange() {
+        contentView.addSubview(noPostsHeader)
+        contentView.addSubview(noPostsBody)
+
+        noPostsHeader.snp.makeConstraints { make in
+            make.top.equalTo(contentView).inset(Size.headerTop)
+            make.leading.trailing.equalTo(contentView).inset(Size.labelInsets)
+        }
+
+        noPostsBody.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(contentView).inset(Size.labelInsets)
+            make.top.equalTo(noPostsHeader.snp.bottom).offset(Size.bodyTop)
+        }
+    }
+
+    private func updateText() {
         let noPostsHeaderText: String
         let noPostsBodyText: String
         if isCurrentUser {

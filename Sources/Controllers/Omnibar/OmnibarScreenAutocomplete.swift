@@ -50,7 +50,7 @@ extension OmnibarScreen {
 
         autoCompleteShowing = false
         textView.spellCheckingType = .yes
-        textView.inputAccessoryView = keyboardButtonsContainer
+        textView.inputAccessoryView = nil
         _ = textView.resignFirstResponder()
         _ = textView.becomeFirstResponder()
     }
@@ -74,7 +74,6 @@ extension OmnibarScreen {
             let constraint = inputAccessoryView.constraints.safeValue(index)
         {
             constraint.constant = height
-            inputAccessoryView.setNeedsUpdateConstraints()
             inputAccessoryView.frame.size.height = height
             inputAccessoryView.setNeedsLayout()
         }

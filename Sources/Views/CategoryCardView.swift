@@ -72,7 +72,7 @@ class CategoryCardView: View {
             let imageView = UIImageView()
             imageView.clipsToBounds = true
             imageView.contentMode = .scaleAspectFill
-            imageView.pin_setImage(from: url as URL!)
+            imageView.pin_setImage(from: url)
             addSubview(imageView)
             imageView.snp.makeConstraints { $0.edges.equalTo(self) }
         }

@@ -10,7 +10,8 @@ import Nimble
 class TmpSpec: QuickSpec {
     override func spec() {
         afterEach {
-            try? FileManager.default.removeItem(atPath: Tmp.directoryURL())
+            guard let path = Tmp.directoryURL()?.path else { return }
+            try? FileManager.default.removeItem(atPath: path)
         }
 
         describe("Tmp.fileExists") {
@@ -37,7 +38,7 @@ class TmpSpec: QuickSpec {
                 expect(doesActuallyExist).to(beTrue())
                 expect(Tmp.fileExists("exists")).to(beTrue())
 
-                try! FileManager.default.removeItem(atPath: directoryURL)
+                try! FileManager.default.removeItem(atPath: directoryURL.path)
             }
         }
 

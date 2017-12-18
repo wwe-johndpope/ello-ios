@@ -98,7 +98,7 @@ struct ProfileService {
         if let avatarImage = avatarImage {
             S3UploadingService().upload(imageRegionData: avatarImage)
                 .then { url in
-                    avatarURL = url as URL?
+                    avatarURL = url
                 }
                 .catch { uploadError in
                     error = error ?? uploadError
@@ -114,7 +114,7 @@ struct ProfileService {
         if let coverImage = coverImage {
             S3UploadingService().upload(imageRegionData: coverImage)
                 .then { url in
-                    coverImageURL = url as URL?
+                    coverImageURL = url
                 }
                 .catch { uploadError in
                     error = error ?? uploadError

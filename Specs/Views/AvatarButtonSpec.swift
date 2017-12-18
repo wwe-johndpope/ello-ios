@@ -21,33 +21,33 @@ class AvatarButtonSpec: QuickSpec {
                 }
 
                 it("should assign the asset url via User") {
-                    let asset = Asset(url: url as URL)
+                    let asset = Asset(url: url)
                     user.avatar = asset
                     subject.setUserAvatarURL(user.avatarURL())
-                    expect(subject.imageURL) == url as URL
+                    expect(subject.imageURL) == url
                 }
 
                 it("should assign the asset url") {
-                    subject.setUserAvatarURL(url as URL)
-                    expect(subject.imageURL) == url as URL
+                    subject.setUserAvatarURL(url)
+                    expect(subject.imageURL) == url
                 }
 
                 it("should assign the asset large url") {
                     let asset = Asset(id: NSUUID().uuidString)
-                    let attachment = Attachment(url: url as URL)
+                    let attachment = Attachment(url: url)
                     asset.large = attachment
                     user.avatar = asset
                     subject.setUserAvatarURL(user.avatarURL())
-                    expect(subject.imageURL) == url as URL
+                    expect(subject.imageURL) == url
                 }
 
                 it("should assign the asset optimized url") {
                     let asset = Asset(id: NSUUID().uuidString)
-                    let attachment = Attachment(url: url as URL)
+                    let attachment = Attachment(url: url)
                     asset.optimized = attachment
                     user.avatar = asset
                     subject.setUserAvatarURL(user.avatarURL())
-                    expect(subject.imageURL) == url as URL
+                    expect(subject.imageURL) == url
                 }
 
             }

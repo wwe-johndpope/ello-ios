@@ -47,13 +47,13 @@ struct NotificationCellPresenter {
             let aspectRatio = StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageRegion)
             var imageURL: URL?
             if let asset = imageRegion.asset, !asset.isGif {
-                imageURL = asset.optimized?.url as URL?
+                imageURL = asset.optimized?.url
             }
-            else if let hdpiURL = imageRegion.asset?.hdpi?.url{
-                imageURL = hdpiURL as URL
+            else if let hdpiURL = imageRegion.asset?.hdpi?.url {
+                imageURL = hdpiURL
             }
             else {
-                imageURL = imageRegion.url as URL?
+                imageURL = imageRegion.url
             }
             cell.aspectRatio = aspectRatio
             cell.imageURL = imageURL

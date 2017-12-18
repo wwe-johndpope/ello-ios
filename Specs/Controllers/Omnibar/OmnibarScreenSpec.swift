@@ -5,6 +5,7 @@
 @testable import Ello
 import Quick
 import Nimble
+import Photos
 
 
 class OmnibarScreenMockDelegate: OmnibarScreenDelegate {
@@ -56,6 +57,11 @@ enum RegionExpectation {
 
 
 class OmnibarScreenSpec: QuickSpec {
+    class FakeGlobal: GlobalFactory {
+        override func fetchAssets(with options: PHFetchOptions, completion: @escaping (PHAsset, Int) -> Void) {
+        }
+    }
+
     override func spec() {
         var subject: OmnibarScreen!
         var delegate: OmnibarScreenMockDelegate!
@@ -76,11 +82,29 @@ class OmnibarScreenSpec: QuickSpec {
             }
 
             describe("pressing add image") {
-                beforeEach {
-                    subject.addImageAction()
+                let status = UIImagePickerController.alreadyDeterminedStatus() ?? .notDetermined
+                guard status == .authorized else {
+                    it("should already have image access") { fail("\(status) should be .authorized") }
+                    return
                 }
-                it("should open an image selector") {
-                    expect(delegate.didPresentController) == true
+
+                beforeEach {
+                    overrideGlobals(FakeGlobal())
+                    subject.addImageButtonTapped()
+                }
+                afterEach {
+                    overrideGlobals(nil)
+                }
+
+                it("should toggle buttons") {
+                    expect(subject.specs().addImageButton.isHidden) == true
+                    expect(subject.specs().cancelImageButton.isHidden) == false
+                }
+                it("should stop editing text") {
+                    expect(Keyboard.shared.active) == false
+                }
+                it("should show the photoAccessoryContainer") {
+                    expect(subject.photoAccessoryContainer.isHidden) == false
                 }
             }
 
@@ -100,8 +124,7 @@ class OmnibarScreenSpec: QuickSpec {
                 context("var submitTitle: String") {
                     it("sets the button title") {
                         subject.submitTitle = "post here"
-                        expect(subject.tabbarSubmitButton.title(for: .normal)) == "post here"
-                        expect(subject.keyboardSubmitButton.title(for: .normal)) == "post here"
+                        expect(subject.specs().submitButton.title(for: .normal)) == "post here"
                     }
                 }
                 context("var isComment: Bool") {
@@ -110,7 +133,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.isComment = false
                         }
                         it("should show the buyButton") {
-                            expect(subject.buyButton.isHidden) == false
+                            expect(subject.specs().buyButton.isHidden) == false
                         }
                     }
                     context("when true") {
@@ -118,54 +141,44 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.isComment = true
                         }
                         it("should hide the buyButton") {
-                            expect(subject.buyButton.isHidden) == true
+                            expect(subject.specs().buyButton.isHidden) == true
                         }
                     }
                 }
 
-                context("var currentUser: User?") {
-                    it("should set the user") {
-                        subject.currentUser = User.stub(["id": "12345"])
-                        expect(subject.currentUser?.id) == "12345"
-                    }
-                }
                 context("var canGoBack: Bool") {
                     context("when true") {
                         it("should show the navigationBar") {
                             subject.canGoBack = true
-                            subject.layoutIfNeeded()
-                            expect(subject.navigationBar.frame.height) > 0
+                            expect(subject.navigationBar.isHidden) == false
                         }
-                        it("should position the toolbarButtonViews") {
+                        it("should position the toolbarContainer subviews") {
+                            let toolbarContainer = subject.specs().toolbarContainer!
                             subject.canGoBack = false
                             subject.layoutIfNeeded()
-                            let toolbarY = subject.toolbarButtonViews[0].frame.minY
+                            let toolbarY = toolbarContainer.frame.minY
 
                             subject.canGoBack = true
                             subject.layoutIfNeeded()
 
-                            for button in subject.toolbarButtonViews {
-                                expect(button.frame.minY) > toolbarY
-                            }
+                            expect(toolbarContainer.frame.minY) > toolbarY
                         }
                     }
                     context("when false") {
                         it("should hide the navigationBar") {
                             subject.canGoBack = false
-                            subject.layoutIfNeeded()
-                            expect(subject.navigationBar.frame.height) <= 0
+                            expect(subject.navigationBar.isHidden) == true
                         }
                         it("should position the toolbarButtonViews") {
+                            let toolbarContainer = subject.specs().toolbarContainer!
                             subject.canGoBack = true
                             subject.layoutIfNeeded()
-                            let toolbarY = subject.toolbarButtonViews[0].frame.minY
+                            let toolbarY = toolbarContainer.frame.minY
 
                             subject.canGoBack = false
                             subject.layoutIfNeeded()
 
-                            for button in subject.toolbarButtonViews {
-                                expect(button.frame.minY) < toolbarY
-                            }
+                            expect(toolbarContainer.frame.minY) < toolbarY
                         }
                     }
                 }
@@ -175,7 +188,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.isEditing = false
                             subject.regions = [.text("foo")]
                             expect(subject.canPost()) == true
-                            subject.cancelEditingAction()
+                            subject.cancelButtonTapped()
                             expect(delegate.didPresentController) == true
                             expect(delegate.didGoBack) == false
                         }
@@ -185,7 +198,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.isEditing = true
                             subject.regions = [.text("foo")]
                             expect(subject.canPost()) == true
-                            subject.cancelEditingAction()
+                            subject.cancelButtonTapped()
                             expect(delegate.didPresentController) == false
                             expect(delegate.didGoBack) == true
                         }
@@ -298,11 +311,10 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.updateButtons()
                         }
                         it("should disable posting") {
-                            expect(subject.keyboardSubmitButton.isEnabled) == false
-                            expect(subject.tabbarSubmitButton.isEnabled) == false
+                            expect(subject.specs().submitButton.isEnabled) == false
                         }
                         it("should disable buyButton") {
-                            expect(subject.buyButton.isEnabled) == false
+                            expect(subject.specs().buyButton.isEnabled) == false
                         }
                     }
                     context("if posts have text") {
@@ -311,11 +323,10 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.updateButtons()
                         }
                         it("should enable posting") {
-                            expect(subject.keyboardSubmitButton.isEnabled) == true
-                            expect(subject.tabbarSubmitButton.isEnabled) == true
+                            expect(subject.specs().submitButton.isEnabled) == true
                         }
                         it("should disable buyButton") {
-                            expect(subject.buyButton.isEnabled) == false
+                            expect(subject.specs().buyButton.isEnabled) == false
                         }
                     }
                     context("if posts have text and images") {
@@ -324,11 +335,10 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.updateButtons()
                         }
                         it("should enable posting") {
-                            expect(subject.keyboardSubmitButton.isEnabled) == true
-                            expect(subject.tabbarSubmitButton.isEnabled) == true
+                            expect(subject.specs().submitButton.isEnabled) == true
                         }
                         it("should enable buyButton") {
-                            expect(subject.buyButton.isEnabled) == true
+                            expect(subject.specs().buyButton.isEnabled) == true
                         }
                     }
                     context("if reordering and posts have text") {
@@ -338,14 +348,13 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.updateButtons()
                         }
                         it("should disable posting") {
-                            expect(subject.keyboardSubmitButton.isEnabled) == false
-                            expect(subject.tabbarSubmitButton.isEnabled) == false
+                            expect(subject.specs().submitButton.isEnabled) == false
                         }
                         it("should enable cancelling") {
-                            expect(subject.cancelButton.isEnabled) == true
+                            expect(subject.specs().cancelButton.isEnabled) == true
                         }
                         it("should disable buyButton button") {
-                            expect(subject.buyButton.isEnabled) == false
+                            expect(subject.specs().buyButton.isEnabled) == false
                         }
                     }
                     context("if reordering and posts have text and images") {
@@ -355,14 +364,13 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.updateButtons()
                         }
                         it("should disable posting") {
-                            expect(subject.keyboardSubmitButton.isEnabled) == false
-                            expect(subject.tabbarSubmitButton.isEnabled) == false
+                            expect(subject.specs().submitButton.isEnabled) == false
                         }
                         it("should enable cancelling") {
-                            expect(subject.cancelButton.isEnabled) == true
+                            expect(subject.specs().cancelButton.isEnabled) == true
                         }
                         it("should disable buyButton button") {
-                            expect(subject.buyButton.isEnabled) == false
+                            expect(subject.specs().buyButton.isEnabled) == false
                         }
                     }
                     context("if not reordering") {
@@ -372,7 +380,7 @@ class OmnibarScreenSpec: QuickSpec {
                             subject.updateButtons()
                         }
                         it("should enable cancelling") {
-                            expect(subject.cancelButton.isEnabled) == true
+                            expect(subject.specs().cancelButton.isEnabled) == true
                         }
                     }
                 }
@@ -385,7 +393,7 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.regions[0].isEmpty) == true
                         }
                         it("should disable buyButton") {
-                            expect(subject.buyButton.isEnabled) == false
+                            expect(subject.specs().buyButton.isEnabled) == false
                         }
                     }
                     context("setting to one text region array") {
@@ -398,7 +406,7 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.regions[0].isEmpty) == false
                         }
                         it("should disable buyButton") {
-                            expect(subject.buyButton.isEnabled) == false
+                            expect(subject.specs().buyButton.isEnabled) == false
                         }
                     }
                     context("setting to one image region") {
@@ -412,7 +420,7 @@ class OmnibarScreenSpec: QuickSpec {
                             expect(subject.regions[1].text?.string) == ""
                         }
                         it("should enable buyButton") {
-                            expect(subject.buyButton.isEnabled) == true
+                            expect(subject.specs().buyButton.isEnabled) == true
                         }
                     }
                 }
@@ -806,7 +814,7 @@ class OmnibarScreenSpec: QuickSpec {
                         }
 
                         it("should set buyButton.enabled to \(expectedBuyButton)") {
-                            expect(subject.buyButton.isEnabled) == expectedBuyButton
+                            expect(subject.specs().buyButton.isEnabled) == expectedBuyButton
                         }
                     }
                 }
@@ -843,7 +851,7 @@ class OmnibarScreenSpec: QuickSpec {
                             }
                         }
                         it("should enable buyButton") {
-                            expect(subject.buyButton.isEnabled) == true
+                            expect(subject.specs().buyButton.isEnabled) == true
                         }
                     }
                 }

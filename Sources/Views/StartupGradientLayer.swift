@@ -43,7 +43,7 @@ class StartupGradientLayer: CAGradientLayer {
         ]
         animation.duration = 30
         animation.repeatCount = Float.infinity
-        add(animation, forKey: "comments")
+        add(animation, forKey: "colors")
     }
 
 }

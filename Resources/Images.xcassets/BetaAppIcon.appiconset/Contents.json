@@ -1,107 +1,111 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "ello-pride-20_2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "ello-pride-20_3x.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "BetaAppIcon29x29@2x.png",
+      "filename" : "ello-pride-29_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "BetaAppIcon29x29@3x.png",
+      "filename" : "ello-pride-29_3x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "BetaAppIcon40x40@2x.png",
+      "filename" : "ello-pride-40_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "BetaAppIcon40x40@3x.png",
+      "filename" : "ello-pride-40_3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "BetaAppIcon60x60@2x.png",
+      "filename" : "ello-pride-60_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "BetaAppIcon60x60@3x.png",
+      "filename" : "ello-pride-60_3x.png",
       "scale" : "3x"
     },
     {
-      "idiom" : "ipad",
       "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "ello-pride-20_1x.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "ello-pride-20_2x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon29x29.png",
+      "filename" : "ello-pride-29_1x.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon29x29@2x.png",
+      "filename" : "ello-pride-29_2x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon40x40.png",
+      "filename" : "ello-pride-40_1x.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon40x40@2x.png",
+      "filename" : "ello-pride-40_2x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon76x76.png",
+      "filename" : "ello-pride-76_1x.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon76x76@2x.png",
+      "filename" : "ello-pride-76_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "BetaAppIcon83.5x83.5@2x.png",
+      "filename" : "ello-pride-83_2x.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "Ello.Pride.png",
+      "filename" : "ello-pride-1024.png",
       "scale" : "1x"
     }
   ],
