@@ -31,6 +31,12 @@ class AlertCell: TableViewCell {
 
     var onInputChanged: ((String) -> Void)?
 
+    override func bindActions() {
+        input.addTarget(self, action: #selector(didUpdateInput), for: .editingChanged)
+        okButton.addTarget(self, action: #selector(didTapOkButton), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+    }
+
     override func setText() {
         okButton.setTitle(InterfaceString.OK, for: .normal)
         cancelButton.setTitle(InterfaceString.Cancel, for: .normal)
@@ -114,16 +120,19 @@ class AlertCell: TableViewCell {
 
 extension AlertCell {
 
-    @IBAction func didUpdateInput() {
+    @objc
+    func didUpdateInput() {
         onInputChanged?(input.text ?? "")
     }
 
-    @IBAction func didTapOkButton() {
+    @objc
+    func didTapOkButton() {
         let responder: AlertCellResponder? = findResponder()
         responder?.tappedOkButton()
     }
 
-    @IBAction func didTapCancelButton() {
+    @objc7
+    func didTapCancelButton() {
         let responder: AlertCellResponder? = findResponder()
         responder?.tappedCancelButton()
     }

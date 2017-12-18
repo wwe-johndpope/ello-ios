@@ -1003,6 +1003,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         if let view = view {
             photoAccessoryContainer.addSubview(view)
             photoAccessoryContainer.frame.size.height = view.frame.size.height
+            view.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
         }
         else {
             photoAccessoryContainer.frame.size.height = 0

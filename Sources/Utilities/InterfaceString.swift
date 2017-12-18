@@ -263,6 +263,10 @@ struct InterfaceString {
         static func LoadingImageError(url: URL) -> String {
             return String.localizedStringWithFormat("There was a problem loading the image\n%@", url.absoluteString)
         }
+        static let UpdatingPost: String = NSLocalizedString("Updating your post…", comment: "")
+        static let UpdatingComment: String = NSLocalizedString("Updating your comment…", comment: "")
+        static let CreatingPost: String = NSLocalizedString("Creating your post…", comment: "")
+        static let CreatingComment: String = NSLocalizedString("Creating your comment…", comment: "")
         static let CreatedPost: String = NSLocalizedString("Post successfully created!", comment: "")
         static let CreatedComment: String = NSLocalizedString("Comment successfully created!", comment: "")
         static let SellYourWorkTitle: String = NSLocalizedString("Sell your work", comment: "Sell your work title")

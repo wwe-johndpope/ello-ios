@@ -392,20 +392,25 @@ extension OmnibarViewController {
     private func startPosting(_ authorId: String, _ content: [PostEditingService.PostContentRegion], buyButtonURL: URL?) {
         let service: PostEditingService
         let didGoToPreviousTab: Bool
+        let alertText: String
 
         if let parentPostId = parentPostId {
+            alertText = InterfaceString.Omnibar.CreatingComment
             service = PostEditingService(parentPostId: parentPostId)
             didGoToPreviousTab = false
         }
         else if let editPost = editPost {
+            alertText = InterfaceString.Omnibar.UpdatingPost
             service = PostEditingService(editPostId: editPost.id)
             didGoToPreviousTab = false
         }
         else if let editComment = editComment {
+            alertText = InterfaceString.Omnibar.UpdatingComment
             service = PostEditingService(editComment: editComment)
             didGoToPreviousTab = false
         }
         else {
+            alertText = InterfaceString.Omnibar.CreatingPost
             service = PostEditingService()
 
             if artistInvite == nil {
@@ -418,6 +423,7 @@ extension OmnibarViewController {
         }
 
         startSpinner()
+        NotificationBanner.displayAlert(message: alertText)
         postNotification(NewContentNotifications.pause, value: ())
 
         service.create(
