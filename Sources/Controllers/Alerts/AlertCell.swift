@@ -131,7 +131,7 @@ extension AlertCell {
         responder?.tappedOkButton()
     }
 
-    @objc7
+    @objc
     func didTapCancelButton() {
         let responder: AlertCellResponder? = findResponder()
         responder?.tappedCancelButton()
