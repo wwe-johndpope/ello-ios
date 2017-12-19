@@ -522,6 +522,7 @@ extension OmnibarViewController {
         self.screen.resetAfterSuccessfulPost()
 
         if didGoToPreviousTab {
+            NotificationBanner.dismissAlert()
             NotificationBanner.displayAlert(message: InterfaceString.Omnibar.CreatedPost)
         }
     }
