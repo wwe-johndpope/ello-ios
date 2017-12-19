@@ -22,8 +22,8 @@ class AlertCell: TableViewCell {
     }
 
     let background = UIView()
-    let okButton = StyledButton(style: .default)
-    let cancelButton = StyledButton(style: .default)
+    let okButton = StyledButton(style: .roundedBlack)
+    let cancelButton = StyledButton(style: .roundedBlack)
     let label = StyledLabel(style: .black)
     let button = UILabel()
     let input = ElloTextField()
