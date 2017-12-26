@@ -10,6 +10,7 @@ import TimeAgoInWords
 protocol NotificationResponder: class {
     func userTapped(_ user: User)
     func commentTapped(_ comment: ElloComment)
+    func artistInviteTapped(_ artistInvite: ArtistInvite)
     func postTapped(_ post: Post)
 }
 
@@ -362,6 +363,9 @@ extension NotificationCell: ElloTextViewDelegate {
         case let .attributedComment(comment):
             let responder: NotificationResponder? = findResponder()
             responder?.commentTapped(comment)
+        case let .attributedArtistInvite(artistInvite):
+            let responder: NotificationResponder? = findResponder()
+            responder?.artistInviteTapped(artistInvite)
         case let .attributedUser(user):
             let responder: NotificationResponder? = findResponder()
             responder?.userTapped(user)

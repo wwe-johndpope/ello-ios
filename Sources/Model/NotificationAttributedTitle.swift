@@ -47,6 +47,15 @@ struct NotificationAttributedTitle {
         return NSAttributedString(string: text, attributes: attrs)
     }
 
+    static private func styleArtistInvite(_ artistInvite: ArtistInvite) -> NSAttributedString {
+        let attrs = self.attrs([
+            ElloAttributedText.Link: "artistInvite",
+            ElloAttributedText.Object: artistInvite,
+            .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+        ])
+        return NSAttributedString(string: artistInvite.title, attributes: attrs)
+    }
+
     static func from(notification: Notification) -> NSAttributedString {
         let kind = notification.activity.kind
         let author = notification.author
@@ -230,11 +239,27 @@ struct NotificationAttributedTitle {
             }
         case .approvedArtistInviteSubmission:
             if let submission = subject as? ArtistInviteSubmission,
-                let artistInvite = submission.artistInvite {
-                return styleText("Your submission to \(artistInvite.title) has been accepted!")
+                let artistInvite = submission.artistInvite
+            {
+                return styleText("Your submission to ")
+                    .appending(styleArtistInvite(artistInvite))
+                    .appending(styleText(" has been accepted!"))
             }
             else {
                 return styleText("Your submission has been accepted!")
+            }
+        case .approvedArtistInviteSubmissionNotificationForFollowers:
+            if let submission = subject as? ArtistInviteSubmission,
+                let artistInvite = submission.artistInvite,
+                let author = submission.post?.author
+            {
+                return styleUser(author)
+                    .appending(styleText("’s submission to "))
+                    .appending(styleArtistInvite(artistInvite))
+                    .appending(styleText(" has been accepted!"))
+            }
+            else {
+                return styleText("A followers submission has been accepted!")
             }
         case .welcomeNotification:
             return styleText("Welcome to Ello!")
