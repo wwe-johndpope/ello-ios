@@ -4,12 +4,12 @@
 
 class PersistentBackButton: Button {
     struct Size {
-        static let height: CGFloat = 44
+        static let size = CGSize(width: 30, height: 30)
         static let margin: CGFloat = 5
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: Size.height, height: Size.height)
+        return Size.size
     }
 
     override func layoutSubviews() {
