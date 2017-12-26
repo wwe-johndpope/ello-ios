@@ -10,6 +10,7 @@ protocol ElloTextViewDelegate: NSObjectProtocol {
 enum ElloAttributedObject {
     case attributedPost(post: Post)
     case attributedComment(comment: ElloComment)
+    case attributedArtistInvite(artistInvite: ArtistInvite)
     case attributedUser(user: User)
     case attributedCategory(category: Category)
     case attributedFollowers(user: User)
@@ -23,6 +24,8 @@ enum ElloAttributedObject {
             if let post = object as? Post { return ElloAttributedObject.attributedPost(post: post) }
         case "comment":
             if let comment = object as? ElloComment { return ElloAttributedObject.attributedComment(comment: comment) }
+        case "artistInvite":
+            if let artistInvite = object as? ArtistInvite { return ElloAttributedObject.attributedArtistInvite(artistInvite: artistInvite) }
         case "user":
             if let user = object as? User { return ElloAttributedObject.attributedUser(user: user) }
         case "category":
