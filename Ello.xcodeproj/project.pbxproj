@@ -795,6 +795,7 @@
 		1D87831D1ECCF5B300253602 /* EditorialJoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D87831A1ECCF5B300253602 /* EditorialJoinCell.swift */; };
 		1D87831E1ECCF5B300253602 /* EditorialTitledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D87831B1ECCF5B300253602 /* EditorialTitledCell.swift */; };
 		1D8783201ECF4F2F00253602 /* editorials.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D87831F1ECF4F2F00253602 /* editorials.json */; };
+		1D87CBDA1FF2E54300F77A26 /* PersistentBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D87CBD91FF2E54300F77A26 /* PersistentBackButton.swift */; };
 		1D8835A41CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8835A31CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift */; };
 		1D8AFACD1A9664480034DDAD /* NotificationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACC1A9664480034DDAD /* NotificationSpec.swift */; };
 		1D8AFAD01A9691F90034DDAD /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
@@ -1917,6 +1918,7 @@
 		1D87831A1ECCF5B300253602 /* EditorialJoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialJoinCell.swift; sourceTree = "<group>"; };
 		1D87831B1ECCF5B300253602 /* EditorialTitledCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialTitledCell.swift; sourceTree = "<group>"; };
 		1D87831F1ECF4F2F00253602 /* editorials.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = editorials.json; sourceTree = "<group>"; };
+		1D87CBD91FF2E54300F77A26 /* PersistentBackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentBackButton.swift; sourceTree = "<group>"; };
 		1D8835A31CD90B7700E1C387 /* DynamicSettingsViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSettingsViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D8AFACC1A9664480034DDAD /* NotificationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSpec.swift; sourceTree = "<group>"; };
 		1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
@@ -3450,6 +3452,7 @@
 				1DF0B2DD1E8EBACE001B9F97 /* NewPostsButton.swift */,
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
 				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
+				1D87CBD91FF2E54300F77A26 /* PersistentBackButton.swift */,
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
 				1D59338F1D14854700EAF03D /* Screens */,
 				1DF0B2EA1E94247C001B9F97 /* SearchNavBarField.swift */,
@@ -5696,6 +5699,7 @@
 				122B30D81C6A3FBC00C1B9D8 /* Profile.swift in Sources */,
 				12F9EB3D1DEDF40600E127AE /* ProfileLocationPresenter.swift in Sources */,
 				1DDF3C491A9D0D05000D0945 /* ElloNavigationBar.swift in Sources */,
+				1D87CBDA1FF2E54300F77A26 /* PersistentBackButton.swift in Sources */,
 				EA68A0DA1AADF3D4003F0425 /* NSObjectClassName.swift in Sources */,
 				1D59EF8C1D63C74F0029C106 /* HireViewController.swift in Sources */,
 				1D066FF61B8BAF43002B303D /* OmnibarImageDownloadCell.swift in Sources */,

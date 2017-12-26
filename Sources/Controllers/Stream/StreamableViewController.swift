@@ -177,6 +177,10 @@ class StreamableViewController: BaseElloViewController {
             navBar.frame.origin.y = -upAmount
         }
 
+        if let elloNavBar = navBar as? ElloNavigationBar {
+            elloNavBar.showBackButton = !visible
+        }
+
         if showing {
             postNotification(StatusBarNotifications.statusBarVisibility, value: visible)
         }

@@ -2,21 +2,12 @@
 ///  AvatarButton.swift
 //
 
-class AvatarButton: UIButton {
+class AvatarButton: Button {
     // for specs; ensure the correct URL is assigned
     var imageURL: URL?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
-
-    private func setup() {
+    override func style() {
+        super.style()
         clipsToBounds = false
     }
 
