@@ -24,4 +24,5 @@ protocol ProfileScreenProtocol: StreamableScreenProtocol {
     var topInsetView: UIView { get }
     var coverImage: UIImage? { get set }
     var coverImageURL: URL? { get set }
+    var hasBackButton: Bool { get set }
 }
