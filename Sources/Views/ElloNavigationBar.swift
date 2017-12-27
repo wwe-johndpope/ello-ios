@@ -17,17 +17,21 @@ import SnapKit
 
 class ElloNavigationBar: UIView {
     struct Size {
-        static let height: CGFloat = calculateHeight()
-        static let largeHeight: CGFloat = calculateLargeHeight()
+        static let height = calculateHeight()
+        static let largeHeight = calculateLargeHeight()
         static let discoverLargeHeight: CGFloat = 162
         static let navigationHeight: CGFloat = 44
         static let buttonWidth: CGFloat = 39
+        static let backButtonMargins = calculateButtonMargins()
 
         static private func calculateHeight() -> CGFloat {
             return Size.navigationHeight + BlackBar.Size.height
         }
         static private func calculateLargeHeight() -> CGFloat {
             return 105 + BlackBar.Size.height
+        }
+        static private func calculateButtonMargins() -> UIEdgeInsets {
+            return UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0)
         }
     }
 
@@ -194,8 +198,7 @@ class ElloNavigationBar: UIView {
                 superview.insertSubview(persistentBackButton, belowSubview: self)
 
                 persistentBackButton.snp.makeConstraints { make in
-                    make.top.equalTo(superview.snp.top).offset(PersistentBackButton.Size.margin)
-                    make.leading.equalTo(superview).offset(PersistentBackButton.Size.margin)
+                    make.top.leading.equalTo(superview).inset(Size.backButtonMargins)
                 }
 
             }

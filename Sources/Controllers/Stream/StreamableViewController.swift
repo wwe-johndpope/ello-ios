@@ -60,7 +60,7 @@ class StreamableViewController: BaseElloViewController {
         )
 
         for tapToShow in [tapToShowTop, tapToShowBottom] {
-            view.addSubview(tapToShow)
+            viewForStream().addSubview(tapToShow)
             tapToShow.isUserInteractionEnabled = false
 
             let tapGesture = UITapGestureRecognizer()
@@ -69,11 +69,11 @@ class StreamableViewController: BaseElloViewController {
         }
 
         tapToShowTop.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalTo(view)
+            make.top.leading.trailing.equalTo(view)
             make.height.equalTo(Size.tapToShowHeight)
         }
         tapToShowBottom.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view)
+            make.bottom.leading.trailing.equalTo(view)
             make.height.equalTo(Size.tapToShowHeight)
         }
     }

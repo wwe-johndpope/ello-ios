@@ -46,7 +46,6 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
 
     // 'internal' visibitility for testing
     let relationshipControl = RelationshipControl()
-    let profileButtonsLeadingGuide = UILayoutGuide()
     let collaborateButton = StyledButton(style: .blackPill)
     let hireButton = StyledButton(style: .blackPill)
     let mentionButton = StyledButton(style: .blackPill)
@@ -60,7 +59,8 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     private let ghostRightButton = StyledButton(style: .blackPill)
     private let profileButtonsEffect = UIVisualEffectView()
     private var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
-    private var persistentBackButton = PersistentBackButton()
+    private let profileButtonsLeadingGuide = UILayoutGuide()
+    private let persistentBackButton = PersistentBackButton()
 
     // constraints
     private var whiteSolidTop: Constraint!
@@ -157,17 +157,17 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             profileButtonsContainerHeightConstraint = make.height.equalTo(Size.profileButtonsContainerViewHeight).constraint
         }
 
-        persistentBackButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        persistentBackButton.snp.makeConstraints { make in
-            make.leading.equalTo(profileButtonsContainer).offset(PersistentBackButton.Size.margin)
-            make.centerY.equalTo(profileButtonsContainer)
-        }
-
         profileButtonsLeadingGuide.snp.makeConstraints { make in
             showBackButtonConstraint = make.leading.trailing.equalTo(persistentBackButton.snp.trailing).constraint
             hideBackButtonConstraint = make.leading.trailing.equalTo(profileButtonsContainer.snp.leading).constraint
         }
         showBackButtonConstraint.deactivate()
+
+        persistentBackButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        persistentBackButton.snp.makeConstraints { make in
+            make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
+            make.centerY.equalTo(profileButtonsContainer)
+        }
 
         mentionButton.snp.makeConstraints { make in
             make.leading.equalTo(profileButtonsLeadingGuide.snp.trailing).offset(Size.buttonMargin)

@@ -5,7 +5,6 @@
 class PersistentBackButton: Button {
     struct Size {
         static let size = CGSize(width: 30, height: 30)
-        static let margin: CGFloat = 5
     }
 
     override var intrinsicContentSize: CGSize {
