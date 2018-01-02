@@ -8,15 +8,19 @@ import ElloCerts
 
 struct ElloManager {
     static var serverTrustPolicies: [String: ServerTrustPolicy] {
-        let policyDict: [String: ServerTrustPolicy]
-        if Globals.isSimulator {
-            // make Charles plays nice in the sim by not setting a policy
-            policyDict = [:]
-        }
-        else {
-            policyDict = ElloCerts.policy
-        }
-        return policyDict
+        #if DEBUG
+            return [String: ServerTrustPolicy]()
+        #else
+            let policyDict: [String: ServerTrustPolicy]
+            if Globals.isSimulator {
+                // make Charles plays nice in the sim by not setting a policy
+                policyDict = [:]
+            }
+            else {
+                policyDict = ElloCerts.policy
+            }
+            return policyDict
+        #endif
     }
 
     static var manager: SessionManager {
