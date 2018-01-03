@@ -6,8 +6,8 @@ class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
-    let tapToShowTop = UIView()
-    let tapToShowBottom = UIView()
+    let tapToShowTop = UIControl()
+    let tapToShowBottom = UIControl()
 
     struct Size {
         static let tapToShowHeight: CGFloat = 20
@@ -62,10 +62,7 @@ class StreamableViewController: BaseElloViewController {
         for tapToShow in [tapToShowTop, tapToShowBottom] {
             viewForStream().addSubview(tapToShow)
             tapToShow.isUserInteractionEnabled = false
-
-            let tapGesture = UITapGestureRecognizer()
-            tapGesture.addTarget(self, action: #selector(tapToShowTapped))
-            tapToShow.addGestureRecognizer(tapGesture)
+            tapToShow.addTarget(self, action: #selector(tapToShowTapped), for: .touchUpInside)
         }
 
         tapToShowTop.snp.makeConstraints { make in
