@@ -19,7 +19,7 @@ class ElloNavigationBar: UIView {
     struct Size {
         static let height = calculateHeight()
         static let largeHeight = calculateLargeHeight()
-        static let discoverLargeHeight: CGFloat = 162
+        static let discoverLargeHeight = calculateDiscoverHeight()
         static let navigationHeight: CGFloat = 44
         static let buttonWidth: CGFloat = 39
         static let backButtonMargins = calculateButtonMargins()
@@ -30,7 +30,13 @@ class ElloNavigationBar: UIView {
         static private func calculateLargeHeight() -> CGFloat {
             return 105 + BlackBar.Size.height
         }
+        static private func calculateDiscoverHeight() -> CGFloat {
+            return 142 + BlackBar.Size.height
+        }
         static private func calculateButtonMargins() -> UIEdgeInsets {
+            if Globals.isIphoneX {
+                return UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
+            }
             return UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0)
         }
     }

@@ -149,7 +149,8 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         persistentBackButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         persistentBackButton.snp.makeConstraints { make in
             make.leading.equalTo(searchControlsContainer).offset(Size.backButtonMargin)
-            make.centerY.equalTo(searchControlsContainer)
+            make.bottom.equalTo(searchControlsContainer).offset(-Size.bottomMargin)
+            make.height.equalTo(Size.searchButtonsHeight)
         }
 
         postsToggleButton.snp.makeConstraints { make in

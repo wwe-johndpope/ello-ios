@@ -166,7 +166,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         persistentBackButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         persistentBackButton.snp.makeConstraints { make in
             make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
-            make.centerY.equalTo(profileButtonsContainer)
+            make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
         }
 
         mentionButton.snp.makeConstraints { make in
