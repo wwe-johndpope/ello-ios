@@ -948,17 +948,11 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         cancelImageButton.isHidden = false
         stopEditing()
 
-        let status = UIImagePickerController.alreadyDeterminedStatus()
-        if let status = status {
-            showKeyboardImages(isAuthorized: status == .authorized)
-        }
-        else {
-            UIImagePickerController.requestStatus()
-                .then { status -> Void in
-                    self.showKeyboardImages(isAuthorized: status == .authorized)
-                }
-                .ignoreErrors()
-        }
+        UIImagePickerController.requestStatus()
+            .then { status -> Void in
+                self.showKeyboardImages(isAuthorized: status == .authorized)
+            }
+            .ignoreErrors()
     }
 
     private func resetToImageButton() {
