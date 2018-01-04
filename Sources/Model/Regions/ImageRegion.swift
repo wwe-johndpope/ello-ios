@@ -17,7 +17,11 @@ final class ImageRegion: JSONAble, Regionable {
 
     var asset: Asset? { return getLinkObject("assets") as? Asset }
 
-    var fullScreenURL: URL? { return asset?.optimized?.url }
+    var fullScreenURL: URL? {
+        guard let asset = asset else { return nil }
+        if asset.isGif { return asset.optimized?.url }
+        return asset.oneColumnAttachment?.url
+    }
 
 // MARK: Initialization
 
