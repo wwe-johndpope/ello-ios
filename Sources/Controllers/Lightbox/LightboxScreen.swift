@@ -14,6 +14,11 @@ class LightboxScreen: Screen {
         didSet { updateImages() }
     }
 
+    enum Delta: Int {
+        case prev = -1
+        case next = 1
+    }
+
     private let imagesContainer = UIControl()
     private var gestureDeltaX: CGFloat = 0
     private var panGesture: UIPanGestureRecognizer!
@@ -108,34 +113,35 @@ class LightboxScreen: Screen {
 
         if gesture.state == .ended {
             let velocity = gesture.velocity(in: self)
-            let delta: Int
+            let delta: Delta?
             if translation.x < -20 && velocity.x < 0 && delegate?.imageURLsForScreen().next != nil {
-                delta = 1
+                delta = .next
             }
             else if translation.x > 20 && velocity.x > 0 && delegate?.imageURLsForScreen().prev != nil {
-                delta = -1
+                delta = .prev
             }
             else {
-                delta = 0
+                delta = nil
             }
 
             let imageWidth = frame.width - 2 * Size.insets - 2 * Size.lilBits
-            switch delta {
-            case -1:
-                (prevImageView, currImageView, nextImageView) = (nextImageView, prevImageView, currImageView)
-                (prevURL, currURL, nextURL) = (nil, prevURL, currURL)
+            if let delta = delta {
+                switch delta {
+                case .prev:
+                    (prevImageView, currImageView, nextImageView) = (nextImageView, prevImageView, currImageView)
+                    (prevURL, currURL, nextURL) = (nil, prevURL, currURL)
 
-                setNeedsLayout()
-                layoutIfNeeded()
-                imagesContainer.frame.origin.x -= imageWidth
-            case 1:
-                (prevImageView, currImageView, nextImageView) = (currImageView, nextImageView, prevImageView)
-                (prevURL, currURL, nextURL) = (currURL, nextURL, nil)
+                    setNeedsLayout()
+                    layoutIfNeeded()
+                    imagesContainer.frame.origin.x -= imageWidth
+                case .next:
+                    (prevImageView, currImageView, nextImageView) = (currImageView, nextImageView, prevImageView)
+                    (prevURL, currURL, nextURL) = (currURL, nextURL, nil)
 
-                setNeedsLayout()
-                layoutIfNeeded()
-                imagesContainer.frame.origin.x += imageWidth
-            default: break
+                    setNeedsLayout()
+                    layoutIfNeeded()
+                    imagesContainer.frame.origin.x += imageWidth
+                }
             }
 
             elloAnimate {
@@ -152,8 +158,8 @@ class LightboxScreen: Screen {
                 self.panGesture.isEnabled = true
             }
 
-            if delta != 0 {
-                delegate?.didMoveBy(delta: delta)
+            if let delta = delta {
+                delegate?.didMoveBy(delta: delta.rawValue)
                 updateImages()
             }
         }
