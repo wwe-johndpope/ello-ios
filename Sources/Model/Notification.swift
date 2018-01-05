@@ -119,7 +119,7 @@ final class Notification: JSONAble, Authorable, Groupable {
                 assignRegionsFromContent(comment.content, parentSummary: parentSummary)
             }
         }
-        else if let post = (activity.subject as? Love)?.post {
+        else if let post = (activity.subject as? PostActionable)?.post {
             assignRegionsFromContent(post.summary)
         }
 
@@ -156,8 +156,7 @@ final class Notification: JSONAble, Authorable, Groupable {
                 if let newTextRegion = region as? TextRegion {
                     textContent.append(newTextRegion.content)
                 }
-                else if let newImageRegion = region as? ImageRegion, parentImage == nil
-                {
+                else if let newImageRegion = region as? ImageRegion, parentImage == nil {
                     parentImage = newImageRegion
                 }
             }
@@ -167,8 +166,7 @@ final class Notification: JSONAble, Authorable, Groupable {
             if let newTextRegion = region as? TextRegion {
                 textContent.append(newTextRegion.content)
             }
-            else if let newImageRegion = region as? ImageRegion, contentImage == nil
-            {
+            else if let newImageRegion = region as? ImageRegion, contentImage == nil {
                 contentImage = newImageRegion
             }
         }

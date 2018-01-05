@@ -7,7 +7,7 @@ import Moya
 
 
 @objc(ArtistInviteSubmission)
-final class ArtistInviteSubmission: JSONAble, Groupable {
+final class ArtistInviteSubmission: JSONAble, Groupable, PostActionable {
     // Version 1: initial
     // Version 2: artistInviteId, postId
     static let Version = 2
@@ -21,6 +21,14 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
     let status: Status
     var actions: [Action] = []
     var groupId: String { return "ArtistInviteSubmission-\(id)" }
+
+    var post: Post? {
+        return getLinkObject("post") as? Post
+    }
+
+    var user: User? {
+        return post?.author
+    }
 
     enum Status: String {
         case approved
@@ -94,10 +102,6 @@ final class ArtistInviteSubmission: JSONAble, Groupable {
 
             self.init(name: Name(nameStr), label: label, request: ElloRequest(url: url, method: method, parameters: parameters))
         }
-    }
-
-    var post: Post? {
-        return getLinkObject("post") as? Post
     }
 
     init(id: String, artistInviteId: String, postId: String, status: Status) {
