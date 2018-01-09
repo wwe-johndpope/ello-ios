@@ -13,7 +13,8 @@ import SwiftyJSON
 // version 6: added creatorTypeCategoryIds
 // version 7: added notifyOfApprovedSubmissionsViaPush
 // version 8: added notifyOfApprovedSubmissionsFromFollowingViaPush
-let ProfileVersion: Int = 8
+// version 9: added notifyOfWhatYouMissedViaEmail
+let ProfileVersion: Int = 9
 
 @objc(Profile)
 final class Profile: JSONAble {
@@ -61,6 +62,7 @@ final class Profile: JSONAble {
         case notifyOfMentionsViaEmail = "notify_of_mentions_via_email"
         case notifyOfNewFollowersViaEmail = "notify_of_new_followers_via_email"
         case notifyOfRepostsViaEmail = "notify_of_reposts_via_email"
+        case notifyOfWhatYouMissedViaEmail = "notify_of_what_you_missed_via_email"
         case subscribeToUsersEmailList = "subscribe_to_users_email_list"
         case subscribeToDailyEllo = "subscribe_to_daily_ello"
         case subscribeToWeeklyEllo = "subscribe_to_weekly_ello"
@@ -104,6 +106,7 @@ final class Profile: JSONAble {
     @objc let notifyOfMentionsViaEmail: Bool
     @objc let notifyOfNewFollowersViaEmail: Bool
     @objc let notifyOfRepostsViaEmail: Bool
+    @objc let notifyOfWhatYouMissedViaEmail: Bool
     @objc let subscribeToUsersEmailList: Bool
     @objc let subscribeToDailyEllo: Bool
     @objc let subscribeToWeeklyEllo: Bool
@@ -147,6 +150,7 @@ final class Profile: JSONAble {
         notifyOfMentionsViaEmail: Bool,
         notifyOfNewFollowersViaEmail: Bool,
         notifyOfRepostsViaEmail: Bool,
+        notifyOfWhatYouMissedViaEmail: Bool,
         subscribeToUsersEmailList: Bool,
         subscribeToDailyEllo: Bool,
         subscribeToWeeklyEllo: Bool,
@@ -187,6 +191,7 @@ final class Profile: JSONAble {
         self.notifyOfMentionsViaEmail = notifyOfMentionsViaEmail
         self.notifyOfNewFollowersViaEmail = notifyOfNewFollowersViaEmail
         self.notifyOfRepostsViaEmail = notifyOfRepostsViaEmail
+        self.notifyOfWhatYouMissedViaEmail = notifyOfWhatYouMissedViaEmail
         self.subscribeToUsersEmailList = subscribeToUsersEmailList
         self.subscribeToDailyEllo = subscribeToDailyEllo
         self.subscribeToWeeklyEllo = subscribeToWeeklyEllo
@@ -223,6 +228,13 @@ final class Profile: JSONAble {
         self.blockedCount = decoder.decodeKey("blockedCount")
 
         let version: Int = decoder.decodeKey("version")
+        if version < 8 {
+            self.notifyOfWhatYouMissedViaEmail = true
+        }
+        else {
+            self.notifyOfWhatYouMissedViaEmail = decoder.decodeKey("notifyOfWhatYouMissedViaEmail")
+        }
+
         if version < 8 {
             self.notifyOfApprovedSubmissionsFromFollowingViaPush = true
         }
@@ -325,6 +337,7 @@ final class Profile: JSONAble {
         coder.encodeObject(notifyOfMentionsViaEmail, forKey: "notifyOfMentionsViaEmail")
         coder.encodeObject(notifyOfNewFollowersViaEmail, forKey: "notifyOfNewFollowersViaEmail")
         coder.encodeObject(notifyOfRepostsViaEmail, forKey: "notifyOfRepostsViaEmail")
+        coder.encodeObject(notifyOfWhatYouMissedViaEmail, forKey: "notifyOfWhatYouMissedViaEmail")
         coder.encodeObject(subscribeToUsersEmailList, forKey: "subscribeToUsersEmailList")
         coder.encodeObject(subscribeToDailyEllo, forKey: "subscribeToDailyEllo")
         coder.encodeObject(subscribeToWeeklyEllo, forKey: "subscribeToWeeklyEllo")
@@ -374,6 +387,7 @@ final class Profile: JSONAble {
             notifyOfMentionsViaEmail: json["notify_of_mentions_via_email"].boolValue,
             notifyOfNewFollowersViaEmail: json["notify_of_new_followers_via_email"].boolValue,
             notifyOfRepostsViaEmail: json["notify_of_reposts_via_email"].boolValue,
+            notifyOfWhatYouMissedViaEmail: json["notify_of_what_you_missed_via_email"].boolValue,
             subscribeToUsersEmailList: json["subscribe_to_users_email_list"].boolValue,
             subscribeToDailyEllo: json["subscribe_to_daily_ello"].boolValue,
             subscribeToWeeklyEllo: json["subscribe_to_weekly_ello"].boolValue,
