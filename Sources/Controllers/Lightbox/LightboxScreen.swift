@@ -260,21 +260,28 @@ class LightboxScreen: Screen {
         }
 
         let items = [
-            (newPrevURL, prevURL, prevImageView, false),
-            (newCurrURL, currURL, currImageView, true),
-            (newNextURL, nextURL, nextImageView, false),
+            (newPrevURL, prevURL, prevImageView),
+            (newCurrURL, currURL, currImageView),
+            (newNextURL, nextURL, nextImageView),
             ]
-        for (newURL, oldURL, imageView, isCurrent) in items {
+        for (newURL, oldURL, imageView) in items {
             if newURL == nil || newURL != oldURL {
                 imageView.pin_cancelImageDownload()
                 imageView.image = nil
             }
 
+            let wasCurrent = (imageView == currImageView)
+            if wasCurrent { currLoadingLayer.opacity = 1 }
             if let url = newURL, newURL != oldURL {
-                if isCurrent { currLoadingLayer.opacity = 1 }
                 imageView.pin_setImage(from: url) { result in
-                    if isCurrent { self.currLoadingLayer.opacity = 0 }
+                    let isCurrent = imageView == self.currImageView
+                    if isCurrent && result.image != nil {
+                        self.currLoadingLayer.opacity = 0
+                    }
                 }
+            }
+            else if wasCurrent && imageView.image != nil {
+                currLoadingLayer.opacity = 0
             }
         }
 
