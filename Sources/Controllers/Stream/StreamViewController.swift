@@ -835,8 +835,7 @@ extension StreamViewController: StreamEditingResponder {
             let responder: CreatePostResponder? = findResponder()
             responder?.editComment(comment, fromController: self)
         }
-        else if let streamCellItem = collectionViewDataSource.streamCellItem(at: indexPath),
-            let cell = cell as? StreamImageCell,
+        else if let cell = cell as? StreamImageCell,
             let imageURL = cell.imageURL
         {
             showShareActivity(sender: cell, url: imageURL, image: cell.image)
