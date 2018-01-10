@@ -88,6 +88,12 @@ class ArtistInviteDetailController: StreamableViewController {
         updateInsets()
     }
 
+    override func calculateDefaultTopInset() -> CGFloat {
+        if Globals.isIphoneX {
+            return 0
+        }
+        return super.calculateDefaultTopInset()
+    }
 }
 
 extension ArtistInviteDetailController: StreamDestination {
