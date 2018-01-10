@@ -135,8 +135,13 @@ class BaseElloViewController: UIViewController, HasAppController, ControllerThat
         relationshipController?.currentUser = currentUser
     }
 
-    func showShareActivity(sender: UIView, url shareURL: URL) {
-        let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
+    func showShareActivity(sender: UIView, url shareURL: URL, image: UIImage? = nil) {
+        var items: [Any] = [shareURL]
+        if let image = image {
+            items.append(image)
+        }
+
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: [SafariActivity()])
         if UI_USER_INTERFACE_IDIOM() == .phone {
             activityVC.modalPresentationStyle = .fullScreen
             present(activityVC, animated: true) { }

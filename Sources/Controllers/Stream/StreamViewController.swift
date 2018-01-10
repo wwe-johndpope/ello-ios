@@ -837,14 +837,9 @@ extension StreamViewController: StreamEditingResponder {
         }
         else if let streamCellItem = collectionViewDataSource.streamCellItem(at: indexPath),
             let cell = cell as? StreamImageCell,
-            cell.becomeFirstResponder()
+            let imageURL = cell.imageURL
         {
-            let menuController = UIMenuController.shared
-            menuController.setTargetRect(cell.frame, in: collectionView)
-            menuController.setMenuVisible(true, animated: true)
-
-            let saveMenuItem = UIMenuItem(title: InterfaceString.Save, action: #selector(StreamImageCell.save(_:)))
-            menuController.menuItems = [saveMenuItem]
+            showShareActivity(sender: cell, url: imageURL, image: cell.image)
         }
     }
 }
@@ -861,8 +856,9 @@ extension StreamViewController: StreamImageCellResponder {
         let post = collectionViewDataSource.post(at: indexPath)
         let imageAsset = collectionViewDataSource.imageAsset(at: indexPath)
         let isGridView = streamCellItem.isGridView(streamKind: streamKind)
+        let isDetail = post.map({ streamKind.isDetail(post: $0) }) ?? false
 
-        if isGridView || cell.isGif {
+        if (isGridView || cell.isGif) && !isDetail {
             guard let post = post else { return }
             sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
         }
