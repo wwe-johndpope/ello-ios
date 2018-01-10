@@ -49,52 +49,10 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var largeImagePlayButton: UIImageView?
     @IBOutlet weak var imageRightConstraint: NSLayoutConstraint!
 
-    override var canBecomeFirstResponder: Bool { return true }
-
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        guard image != nil else { return false }
-
-        if action == #selector(copy(_:)) {
-            return true
-        }
-
-        if action == #selector(save(_:)) {
-            return UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
-        }
-
-        return false
-    }
-
-    @objc
-    override func copy(_ sender: Any?) {
-        guard let image = image else { return }
-        UIPasteboard.general.image = image
-    }
-
-    @objc
-    func save(_ sender: Any?) {
-        guard let image = image, UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
-
-        if let status = UIImagePickerController.alreadyDeterminedStatus() {
-            save(image, status: status)
-        }
-        else {
-            UIImagePickerController.requestStatus()
-                .then { status -> Void in
-                    self.save(image, status: status)
-                }
-                .ignoreErrors()
-        }
-    }
-
-    private func save(_ image: UIImage, status: PHAuthorizationStatus) {
-        guard status == .authorized else { return }
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-    }
-
     var isGif = false
     var onHeightMismatch: OnHeightMismatch?
     var tallEnoughForFailToShow = true
+    var imageURL: URL?
     var buyButtonURL: URL? {
         didSet {
             let hidden = (buyButtonURL == nil)
@@ -124,9 +82,7 @@ class StreamImageCell: StreamRegionableCell {
             }
         }
     }
-    var image: UIImage? {
-        get { return imageView.image }
-    }
+    var image: UIImage? { return imageView.image }
 
     enum StreamImageMargin {
         case post
@@ -235,6 +191,8 @@ class StreamImageCell: StreamRegionableCell {
     }
 
     private func loadImage(_ url: URL) {
+        imageURL = url
+
         guard url.scheme?.isEmpty == false else {
             if let urlWithScheme = URL(string: "https:\(url.absoluteString)") {
                 loadImage(urlWithScheme)

@@ -54,6 +54,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow Ello to save images to your photo library. Change this anytime in your device settings.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow camera access to post images from your camera on Ello. Change this anytime in your device settings.</string>
 	<key>NSContactsUsageDescription</key>
