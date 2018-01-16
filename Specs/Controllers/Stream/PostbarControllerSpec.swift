@@ -182,7 +182,7 @@ class PostbarControllerSpec: QuickSpec {
                             lovesCount = post.lovesCount
                             contentChange = change
                         }
-                        subject.lovesButtonTapped(cell)
+                        subject.lovesButtonTapped(cell: cell)
                         observer.removeObserver()
 
                         expect(lovesCount) == 6
@@ -198,7 +198,7 @@ class PostbarControllerSpec: QuickSpec {
                         let observer = NotificationObserver(notification: CurrentUserChangedNotification) { (user) in
                             lovesCount = user.lovesCount
                         }
-                        subject.lovesButtonTapped(cell)
+                        subject.lovesButtonTapped(cell: cell)
                         observer.removeObserver()
 
                         expect(lovesCount) == prevLovesCount + 1
@@ -216,7 +216,7 @@ class PostbarControllerSpec: QuickSpec {
                             lovesCount = post.lovesCount
                             contentChange = change
                         }
-                        subject.lovesButtonTapped(cell)
+                        subject.lovesButtonTapped(cell: cell)
                         observer.removeObserver()
 
                         expect(lovesCount) == 4
@@ -232,7 +232,7 @@ class PostbarControllerSpec: QuickSpec {
                         let observer = NotificationObserver(notification: CurrentUserChangedNotification) { (user) in
                             lovesCount = user.lovesCount!
                         }
-                        subject.lovesButtonTapped(cell)
+                        subject.lovesButtonTapped(cell: cell)
                         observer.removeObserver()
 
                         expect(lovesCount) == prevLovesCount - 1

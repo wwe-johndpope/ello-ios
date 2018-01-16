@@ -409,10 +409,9 @@ class StreamDataSource: ElloDataSource {
         let T = type(of: jsonable)
         var modified = false
         for item in items {
-            if item.jsonable.isKind(of: T) {
-                item.jsonable = item.jsonable.merge(jsonable)
-                modified = true
-            }
+            guard item.jsonable.isKind(of: T) else { continue }
+            item.jsonable = item.jsonable.merge(jsonable)
+            modified = true
         }
 
         if modified {

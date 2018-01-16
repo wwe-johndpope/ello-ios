@@ -650,6 +650,9 @@
 		1D472C241C1F2E0400B61E55 /* embetter_video_play.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */; };
 		1D472C261C1F349E00B61E55 /* breaklink_normal.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D472C251C1F349E00B61E55 /* breaklink_normal.svg */; };
 		1D472C281C1F42BA00B61E55 /* InterfaceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */; };
+		1D493C682009604C002BB6C2 /* PostToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D493C672009604C002BB6C2 /* PostToolbar.swift */; };
+		1D493C6A200D6614002BB6C2 /* eye_white.svg in Resources */ = {isa = PBXBuildFile; fileRef = 1D493C69200D6612002BB6C2 /* eye_white.svg */; };
+		1D493C6C200EADF0002BB6C2 /* LoveAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D493C6B200EADF0002BB6C2 /* LoveAnimation.swift */; };
 		1D513E061ED735910081BB2D /* EditorialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D513E051ED735910081BB2D /* EditorialsGenerator.swift */; };
 		1D513E081ED8DA660081BB2D /* PromiseKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D513E071ED8DA660081BB2D /* PromiseKitExtensions.swift */; };
 		1D55ADA91FBCF95A00018195 /* OmnibarScreenTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D55ADA81FBCF95800018195 /* OmnibarScreenTextViewDelegate.swift */; };
@@ -1778,6 +1781,9 @@
 		1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = embetter_video_play.svg; sourceTree = "<group>"; };
 		1D472C251C1F349E00B61E55 /* breaklink_normal.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = breaklink_normal.svg; sourceTree = "<group>"; };
 		1D472C271C1F42BA00B61E55 /* InterfaceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceSpec.swift; sourceTree = "<group>"; };
+		1D493C672009604C002BB6C2 /* PostToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostToolbar.swift; sourceTree = "<group>"; };
+		1D493C69200D6612002BB6C2 /* eye_white.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eye_white.svg; sourceTree = "<group>"; };
+		1D493C6B200EADF0002BB6C2 /* LoveAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoveAnimation.swift; sourceTree = "<group>"; };
 		1D513E051ED735910081BB2D /* EditorialsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorialsGenerator.swift; sourceTree = "<group>"; };
 		1D513E071ED8DA660081BB2D /* PromiseKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseKitExtensions.swift; sourceTree = "<group>"; };
 		1D55ADA81FBCF95800018195 /* OmnibarScreenTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnibarScreenTextViewDelegate.swift; sourceTree = "<group>"; };
@@ -3447,12 +3453,14 @@
 				1289F3911AF1468B008A938C /* ImageLabelControl.swift */,
 				1D59EF841D5CFC480029C106 /* InterpolatedLoadingView.swift */,
 				1DF4908C1FD08B9900C0ACAC /* LoadingGradientLayer.swift */,
+				1D493C6B200EADF0002BB6C2 /* LoveAnimation.swift */,
 				1DF404091B150DB40073460B /* NarrationView.swift */,
 				1DDC233D1F30FF8400E68B0E /* NestedTabBarView.swift */,
 				1DF0B2DD1E8EBACE001B9F97 /* NewPostsButton.swift */,
 				F847BC231B0E1FE8006E5F3E /* NotificationBanner.swift */,
 				1DE3EC4B1D83245D00BDE16F /* OnePasswordButton.swift */,
 				1D87CBD91FF2E54300F77A26 /* PersistentBackButton.swift */,
+				1D493C672009604C002BB6C2 /* PostToolbar.swift */,
 				12F717571A800D7C00A12A00 /* PulsingCircle.swift */,
 				1D59338F1D14854700EAF03D /* Screens */,
 				1DF0B2EA1E94247C001B9F97 /* SearchNavBarField.swift */,
@@ -4151,6 +4159,7 @@
 				1D472C221C1F2E0400B61E55 /* embetter_video_play.svg */,
 				76F8DE731B6C0BC4009BCF61 /* eye_normal.svg */,
 				76F8DE741B6C0BC4009BCF61 /* eye_selected.svg */,
+				1D493C69200D6612002BB6C2 /* eye_white.svg */,
 				76F8DE751B6C0BC4009BCF61 /* flag_normal.svg */,
 				76F8DE761B6C0BC4009BCF61 /* flag_selected.svg */,
 				1D242D611DDBCD87000A424C /* grid_view_normal.svg */,
@@ -4706,6 +4715,7 @@
 				1DF490851FCDD57F00C0ACAC /* library_white.svg in Resources */,
 				1D942C0B1EC3AF8700056761 /* bubble_outline_white.svg in Resources */,
 				76F8DEC71B6C0BC4009BCF61 /* danger_normal.svg in Resources */,
+				1D493C6A200D6614002BB6C2 /* eye_white.svg in Resources */,
 				1DF4908B1FCDE26500C0ACAC /* text_picker_selected.svg in Resources */,
 				1212FDEA1A66377100AD4AF7 /* comments.json in Resources */,
 				1D612BF61D3EA39500B4079C /* $_add_selected.svg in Resources */,
@@ -5730,6 +5740,7 @@
 				1D2B50BB1D272A6400F6CE90 /* BlackBar.swift in Sources */,
 				1D98563B1C6D7D3300C1BF78 /* DrawerAnimators.swift in Sources */,
 				EAF43D8E1AB0B5AC0016E110 /* InviteCache.swift in Sources */,
+				1D493C6C200EADF0002BB6C2 /* LoveAnimation.swift in Sources */,
 				121E46BD1A6B2798004AEAB7 /* FollowingViewController.swift in Sources */,
 				12B0936F1A6E1B1A00BF104E /* ElloNavigationController.swift in Sources */,
 				1D9A12D61EAA69BB003B3BD7 /* ProfileBadgeViewController.swift in Sources */,
@@ -5876,6 +5887,7 @@
 				1D59EF921D6624DC0029C106 /* HireService.swift in Sources */,
 				1DC78A201F17F0B700BE2413 /* OnboardingCreatorTypeViewController.swift in Sources */,
 				EA004C921AC356CB0021B44B /* ElloTextFieldView.swift in Sources */,
+				1D493C682009604C002BB6C2 /* PostToolbar.swift in Sources */,
 				1D71529E1D6D1040005998FE /* EmptyScreen.swift in Sources */,
 				1D209BF21DA2C5D700CFBF92 /* RecordedResponse.swift in Sources */,
 				1DDA93AC1DA6F74C0007EFDE /* NilSafeEquals.swift in Sources */,

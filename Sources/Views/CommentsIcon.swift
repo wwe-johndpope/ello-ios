@@ -5,14 +5,22 @@
 class CommentsIcon: BasicIcon {
     private let commentTailView: UIView
 
-    init() {
-        let iconImage = InterfaceImage.bubbleBody.normalImage
-        let iconSelectedImage = InterfaceImage.bubbleBody.selectedImage
-        let icon = UIImageView(image: iconImage)
-        let iconSelected = UIImageView(image: iconSelectedImage)
+    init(isDark: Bool) {
+        let tailStyle: InterfaceImage.Style
+        let selectedStyle: InterfaceImage.Style
+        if isDark {
+            tailStyle = .white
+            selectedStyle = .white
+        }
+        else {
+            tailStyle = .normal
+            selectedStyle = .selected
+        }
 
-        let commentTail = InterfaceImage.bubbleTail.normalImage
-        commentTailView = UIImageView(image: commentTail)
+        let icon = UIImageView(image: InterfaceImage.bubbleBody.normalImage)
+        let iconSelected = UIImageView(image: InterfaceImage.bubbleBody.image(selectedStyle))
+
+        commentTailView = UIImageView(image: InterfaceImage.bubbleTail.image(tailStyle))
         super.init(normalIconView: icon, selectedIconView: iconSelected)
         addSubview(commentTailView)
         commentTailView.isHidden = true

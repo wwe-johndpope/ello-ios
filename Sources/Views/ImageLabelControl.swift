@@ -5,24 +5,30 @@
 import ElloUIFonts
 
 class ImageLabelControl: UIControl {
+    struct Size {
+        static let innerPadding: CGFloat = 5
+        static let outerPadding: CGFloat = 5
+        static let minWidth: CGFloat = 44
+        static let height: CGFloat = 44
+    }
+
+    override var intrinsicContentSize: CGSize { return frame.size }
+
+    var normalColor: UIColor = .greyA { didSet { updateText() } }
+    var selectedColor: UIColor = .black { didSet { updateText() } }
+    var disabledColor: UIColor = .greyC { didSet { updateText() } }
 
     var title: String? {
-        get { return self.attributedNormalTitle?.string }
-        set {
-            if let value = newValue, label.text != value {
-                attributedNormalTitle = attributedText(value, color: .greyA)
-                attributedSelectedTitle = attributedText(value, color: .black)
-                attributedDisabledTitle = attributedText(value, color: .greyC)
-                updateLayout()
-                updateTextColor()
-            }
+        didSet {
+            updateText()
+            updateLayout()
         }
     }
 
     override var isSelected: Bool {
         didSet {
             icon.isSelected = isSelected
-            updateTextColor()
+            updateText()
 
         }
     }
@@ -30,7 +36,7 @@ class ImageLabelControl: UIControl {
     override var isHighlighted: Bool {
         didSet {
             icon.isHighlighted = isHighlighted
-            updateTextColor()
+            updateText()
         }
     }
 
@@ -40,18 +46,10 @@ class ImageLabelControl: UIControl {
         }
     }
 
-    let innerPadding: CGFloat = 5
-    let outerPadding: CGFloat = 5
-    let minWidth: CGFloat = 44
-    let height: CGFloat = 44
     let titleFont = UIFont.defaultFont()
     let contentContainer = UIView(frame: .zero)
     let label = UILabel(frame: .zero)
-    let button = UIButton(frame: .zero)
     var icon: ImageLabelAnimatable
-    var attributedNormalTitle: NSAttributedString!
-    var attributedSelectedTitle: NSAttributedString!
-    var attributedDisabledTitle: NSAttributedString!
 
     // MARK: Initializers
 
@@ -79,18 +77,11 @@ class ImageLabelControl: UIControl {
 
     // MARK: IBActions
 
-    @IBAction func buttonTouchUpInside(_ sender: ImageLabelControl) {
-        sendActions(for: .touchUpInside)
+    @IBAction func buttonTouchExit() {
         isHighlighted = false
     }
 
-    @IBAction func buttonTouchUpOutside(_ sender: ImageLabelControl) {
-        sendActions(for: .touchUpOutside)
-        isHighlighted = false
-    }
-
-    @IBAction func buttonTouchDown(_ sender: ImageLabelControl) {
-        sendActions(for: .touchDown)
+    @IBAction func buttonTouchEnter() {
         isHighlighted = true
     }
 
@@ -98,63 +89,61 @@ class ImageLabelControl: UIControl {
 
     private func addSubviews() {
         addSubview(contentContainer)
-        addSubview(button)
         contentContainer.addSubview(icon.view)
         contentContainer.addSubview(label)
     }
 
     private func addTargets() {
-        button.addTarget(self, action: #selector(ImageLabelControl.buttonTouchUpInside(_:)), for: .touchUpInside)
-        button.addTarget(self, action: #selector(ImageLabelControl.buttonTouchDown(_:)), for: [.touchDown, .touchDragEnter])
-        button.addTarget(self, action: #selector(ImageLabelControl.buttonTouchUpOutside(_:)), for: [.touchCancel, .touchDragExit])
+        contentContainer.isUserInteractionEnabled = false
+        addTarget(self, action: #selector(buttonTouchEnter), for: [.touchDown, .touchDragEnter])
+        addTarget(self, action: #selector(buttonTouchExit), for: [.touchCancel, .touchDragExit, .touchUpInside])
     }
 
-    private func updateTextColor() {
+    private func updateText() {
+        let title = self.title ?? ""
+
         if !isEnabled {
-            label.attributedText = attributedDisabledTitle
+            label.attributedText = NSAttributedString(title, color: disabledColor)
         }
         else if isHighlighted || isSelected {
-            label.attributedText = attributedSelectedTitle
+            label.attributedText = NSAttributedString(title, color: selectedColor)
         }
         else {
-            label.attributedText = attributedNormalTitle
+            label.attributedText = NSAttributedString(title, color: normalColor)
         }
     }
 
     private func updateLayout() {
-        label.attributedText = attributedNormalTitle
         label.sizeToFit()
 
-        let textWidth = attributedNormalTitle.widthForHeight(0)
+        let textWidth = label.frame.width
         let contentWidth = textWidth == 0 ?
             icon.view.frame.width :
-            icon.view.frame.width + textWidth + innerPadding
+            icon.view.frame.width + Size.innerPadding + textWidth
 
-        var width: CGFloat = contentWidth + outerPadding * 2
+        var totalWidth: CGFloat = contentWidth + Size.outerPadding * 2
 
-        // force a minimum width of 44 pts
-        width = max(width, minWidth)
+        // force a minimum totalWidth of 44 pts
+        totalWidth = max(totalWidth, Size.minWidth)
 
-        self.frame.size.width = width
-        self.frame.size.height = height
+        self.frame.size.width = totalWidth
+        self.frame.size.height = Size.height
+        invalidateIntrinsicContentSize()
 
-        let iconViewY: CGFloat = height / 2 - icon.view.frame.size.height / 2
+        let iconViewY: CGFloat = Size.height / 2 - icon.view.frame.size.height / 2
         icon.view.frame.origin.y = iconViewY
 
-        let contentX: CGFloat = width / 2 - contentWidth / 2
+        let contentX: CGFloat = totalWidth / 2 - contentWidth / 2
         contentContainer.frame =
             CGRect(
                 x: contentX,
                 y: 0,
                 width: contentWidth,
-                height: height
+                height: Size.height
             )
 
-        button.frame.size.width = width
-        button.frame.size.height = height
-
-        label.frame.origin.x = icon.view.frame.origin.x + icon.view.frame.width + innerPadding
-        label.frame.origin.y = height / 2 - label.frame.size.height / 2
+        label.frame.origin.x = icon.view.frame.origin.x + icon.view.frame.width + Size.innerPadding
+        label.frame.origin.y = Size.height / 2 - label.frame.size.height / 2
     }
 
     private func attributedText(_ title: String, color: UIColor) -> NSAttributedString {

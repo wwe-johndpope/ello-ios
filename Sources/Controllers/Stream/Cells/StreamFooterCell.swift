@@ -5,47 +5,17 @@
 class StreamFooterCell: CollectionViewCell {
     static let reuseIdentifier = "StreamFooterCell"
 
-    private let toolBar = UIToolbar()
+    private let toolbar = PostToolbar()
 
     var commentsOpened = false
-
-    let viewsItem = ElloPostToolBarOption.views.barButtonItem()
-    var viewsControl: ImageLabelControl {
-        return self.viewsItem.customView as! ImageLabelControl
-    }
-
-    let lovesItem = ElloPostToolBarOption.loves.barButtonItem()
-    var lovesControl: ImageLabelControl {
-        return self.lovesItem.customView as! ImageLabelControl
-    }
-
-    let commentsItem = ElloPostToolBarOption.comments.barButtonItem()
-    var commentsControl: ImageLabelControl {
-        return self.commentsItem.customView as! ImageLabelControl
-    }
-
-    let repostItem = ElloPostToolBarOption.repost.barButtonItem()
-    var repostControl: ImageLabelControl {
-        return self.repostItem.customView as! ImageLabelControl
-    }
-
-    let shareItem = ElloPostToolBarOption.share.barButtonItem()
-    var shareControl: ImageLabelControl {
-        return self.shareItem.customView as! ImageLabelControl
-    }
-
-    let replyItem = ElloPostToolBarOption.reply.barButtonItem()
-    var replyControl: ImageLabelControl {
-        return self.replyItem.customView as! ImageLabelControl
-    }
 
     override func style() {
         backgroundColor = .white
         contentView.backgroundColor = .white
-        toolBar.clipsToBounds = true
-        toolBar.isTranslucent = false
-        toolBar.barTintColor = UIColor.white
-        toolBar.layer.borderColor = UIColor.white.cgColor
+        toolbar.clipsToBounds = true
+        toolbar.isTranslucent = false
+        toolbar.barTintColor = UIColor.white
+        toolbar.layer.borderColor = UIColor.white.cgColor
 
         let longPressGesture = UILongPressGestureRecognizer()
         longPressGesture.addTarget(self, action: #selector(longPressed(_:)))
@@ -54,164 +24,98 @@ class StreamFooterCell: CollectionViewCell {
     }
 
     override func bindActions() {
-        commentsControl.addTarget(self, action: #selector(StreamFooterCell.commentsButtonTapped), for: .touchUpInside)
-        lovesControl.addTarget(self, action: #selector(StreamFooterCell.lovesButtonTapped), for: .touchUpInside)
-        replyControl.addTarget(self, action: #selector(StreamFooterCell.replyButtonTapped), for: .touchUpInside)
-        repostControl.addTarget(self, action: #selector(StreamFooterCell.repostButtonTapped), for: .touchUpInside)
-        shareControl.addTarget(self, action: #selector(StreamFooterCell.shareButtonTapped), for: .touchUpInside)
-        viewsControl.addTarget(self, action: #selector(StreamFooterCell.viewsButtonTapped), for: .touchUpInside)
+        toolbar.postToolsDelegate = self
     }
 
     override func arrange() {
-        contentView.addSubview(toolBar)
+        contentView.addSubview(toolbar)
 
-        toolBar.snp.makeConstraints { make in
+        toolbar.snp.makeConstraints { make in
             make.edges.equalTo(contentView)
         }
     }
 
-    private func updateButtonVisibility(_ button: UIControl, visibility: InteractionVisibility) {
-        button.isHidden = !visibility.isVisible
-        button.isEnabled = visibility.isEnabled
-        button.isSelected = visibility.isSelected
-    }
-
     func updateToolbarItems(
         isGridView: Bool,
-        repostVisibility: InteractionVisibility,
         commentVisibility: InteractionVisibility,
-        shareVisibility: InteractionVisibility,
-        loveVisibility: InteractionVisibility
+        loveVisibility: InteractionVisibility,
+        repostVisibility: InteractionVisibility,
+        shareVisibility: InteractionVisibility
         )
     {
-        updateButtonVisibility(self.repostControl, visibility: repostVisibility)
-        updateButtonVisibility(self.lovesControl, visibility: loveVisibility)
-        var toolbarItems: [UIBarButtonItem] = []
+        var toolbarItems: [PostToolbar.Item] = []
+
+        toolbar.loves.isEnabled = loveVisibility.isEnabled
+        toolbar.loves.isSelected = loveVisibility.isSelected
+
+        toolbar.reposts.isEnabled = repostVisibility.isEnabled
+        toolbar.reposts.isSelected = repostVisibility.isSelected
 
         let desiredCount: Int
         if isGridView {
             desiredCount = 3
 
             if commentVisibility.isVisible {
-                toolbarItems.append(commentsItem)
+                toolbarItems.append(.comments)
             }
 
             if loveVisibility.isVisible {
-                toolbarItems.append(lovesItem)
+                toolbarItems.append(.loves)
             }
 
             if repostVisibility.isVisible {
-                toolbarItems.append(repostItem)
+                toolbarItems.append(.repost)
             }
         }
         else {
             desiredCount = 5
 
-            toolbarItems.append(viewsItem)
+            toolbarItems.append(.views)
 
             if commentVisibility.isVisible {
-                toolbarItems.append(commentsItem)
+                toolbarItems.append(.comments)
             }
 
             if loveVisibility.isVisible {
-                toolbarItems.append(lovesItem)
+                toolbarItems.append(.loves)
             }
 
             if repostVisibility.isVisible {
-                toolbarItems.append(repostItem)
+                toolbarItems.append(.repost)
             }
 
             if shareVisibility.isVisible {
-                toolbarItems.append(shareItem)
+                toolbarItems.append(.share)
             }
         }
 
         while toolbarItems.count < desiredCount {
-            toolbarItems.append(fixedItem(44))
+            toolbarItems.append(.space)
         }
-        self.toolBar.items = Array(toolbarItems.flatMap { [self.flexibleItem(), $0] }.dropFirst())
+        self.toolbar.postItems = toolbarItems
     }
 
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-    }
-
-    var views: String? {
-        get { return viewsControl.title }
-        set { viewsControl.title = newValue }
-    }
-
-    var comments: String? {
-        get { return commentsControl.title }
-        set { commentsControl.title = newValue }
-    }
-
-    var loves: String? {
-        get { return lovesControl.title }
-        set { lovesControl.title = newValue }
-    }
-
-    var reposts: String? {
-        get { return repostControl.title }
-        set { repostControl.title = newValue }
-    }
+    var views: PostToolbar.ImageLabelAccess { return toolbar.views }
+    var comments: PostToolbar.ImageLabelAccess { return toolbar.comments }
+    var loves: PostToolbar.ImageLabelAccess { return toolbar.loves }
+    var reposts: PostToolbar.ImageLabelAccess { return toolbar.reposts }
 
 // MARK: - Private
 
-    private func fixedItem(_ width: CGFloat) -> UIBarButtonItem {
-        let item = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        item.width = width
-        return item
-    }
-
-    private func flexibleItem() -> UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
-        toolBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 44)
-    }
-
-// MARK: - IBActions
-
-    @IBAction func viewsButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.viewsButtonTapped(self)
-    }
-
-    @IBAction func commentsButtonTapped() {
-        commentsOpened = !commentsOpened
-        let responder: PostbarResponder? = findResponder()
-        responder?.commentsButtonTapped(self, imageLabelControl: commentsControl)
+        toolbar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 44)
     }
 
     func cancelCommentLoading() {
-        commentsControl.isEnabled = true
-        commentsControl.finishAnimation()
-        commentsControl.isSelected = false
+        comments.isEnabled = true
+        comments.isSelected = false
+        commentsFinishAnimation()
         commentsOpened = false
     }
 
-    @IBAction func lovesButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.lovesButtonTapped(self)
-    }
-
-    @IBAction func repostButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.repostButtonTapped(self)
-    }
-
-    @IBAction func shareButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.shareButtonTapped(self, sourceView: shareControl)
-    }
-
-    @IBAction func replyButtonTapped() {
-    }
-
-    @IBAction func longPressed(_ gesture: UIGestureRecognizer) {
+    @objc
+    func longPressed(_ gesture: UIGestureRecognizer) {
         guard gesture.state == .began else { return }
 
         let responder: StreamEditingResponder? = findResponder()
@@ -219,13 +123,55 @@ class StreamFooterCell: CollectionViewCell {
     }
 }
 
+extension StreamFooterCell: PostToolbarDelegate {
+    func commentsAnimate() {
+        toolbar.commentsAnimate()
+    }
+
+    func commentsFinishAnimation() {
+        toolbar.commentsFinishAnimation()
+    }
+
+    @objc
+    func toolbarViewsButtonTapped(viewsControl: ImageLabelControl) {
+        let responder: PostbarController? = findResponder()
+        responder?.viewsButtonTapped(cell: self)
+    }
+
+    @objc
+    func toolbarCommentsButtonTapped(commentsControl: ImageLabelControl) {
+        commentsOpened = !commentsOpened
+        let responder: PostbarController? = findResponder()
+        responder?.commentsButtonTapped(cell: self, imageLabelControl: commentsControl)
+    }
+
+    @objc
+    func toolbarLovesButtonTapped(lovesControl: ImageLabelControl) {
+        let responder: PostbarController? = findResponder()
+        responder?.lovesButtonTapped(cell: self)
+    }
+
+    @objc
+    func toolbarRepostButtonTapped(repostControl: ImageLabelControl) {
+        let responder: PostbarController? = findResponder()
+        responder?.repostButtonTapped(cell: self)
+    }
+
+    @objc
+    func toolbarShareButtonTapped(shareControl: UIView) {
+        let responder: PostbarController? = findResponder()
+        responder?.shareButtonTapped(cell: self, sourceView: shareControl)
+    }
+}
+
 extension StreamFooterCell: LoveableCell {
 
     func toggleLoveControl(enabled: Bool) {
-        lovesControl.isUserInteractionEnabled = enabled
+        toolbar.loves.isInteractable = enabled
     }
 
     func toggleLoveState(loved: Bool) {
+        toolbar.loves.isSelected = loved
     }
 
 }
@@ -233,7 +179,7 @@ extension StreamFooterCell: LoveableCell {
 extension StreamFooterCell {
     class Specs {
         weak var target: StreamFooterCell!
-        var toolBar: UIToolbar! { return target.toolBar }
+        var toolbar: UIToolbar! { return target.toolbar }
 
         init(_ target: StreamFooterCell) {
             self.target = target

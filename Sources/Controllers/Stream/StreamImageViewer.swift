@@ -18,7 +18,7 @@ class StreamImageViewer {
 
 // MARK: Public
 extension StreamImageViewer {
-    func imageTapped(selected index: Int, allItems: [(IndexPath, URL)]) {
+    func imageTapped(selected index: Int, allItems: [LightboxViewController.Item], currentUser: User?) {
         guard let presentingController = presentingController else { return }
 
         // tell AppDelegate to allow rotation
@@ -29,7 +29,9 @@ extension StreamImageViewer {
         postNotification(StatusBarNotifications.statusBarVisibility, value: false)
 
         let lightboxViewController = LightboxViewController(selected: index, allItems: allItems)
+        lightboxViewController.currentUser = currentUser
         lightboxViewController.delegate = self
+        lightboxViewController.postbarController = presentingController.postbarController
         presentingController.present(lightboxViewController, animated: true, completion: .none)
     }
 }

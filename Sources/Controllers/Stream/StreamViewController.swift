@@ -783,32 +783,7 @@ extension StreamViewController: StreamEditingResponder {
         guard post.author?.hasLovesEnabled == true else { return }
 
         if let window = cell.window {
-            let fullDuration: TimeInterval = 0.4
-            let halfDuration: TimeInterval = fullDuration / 2
-
-            let imageView = UIImageView(image: InterfaceImage.giantHeart.normalImage)
-            imageView.contentMode = .scaleAspectFit
-            imageView.frame = window.bounds
-            imageView.center = location
-            imageView.alpha = 0
-            imageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-
-            // fade in, then fade out
-            animate(duration: halfDuration) {
-                imageView.alpha = 0.5
-            }.always {
-                animate(duration: halfDuration) {
-                    imageView.alpha = 0
-                }
-            }
-
-            // grow throughout the animation
-            animate(duration: fullDuration) {
-                imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            }.always {
-                imageView.removeFromSuperview()
-            }
-            window.addSubview(imageView)
+            LoveAnimation.perform(inWindow: window, at: location)
         }
 
         if !post.isLoved {
@@ -865,10 +840,11 @@ extension StreamViewController: StreamImageCellResponder {
         }
         else {
             var selectedIndex: Int?
-            var imageItems: [(IndexPath, URL)] = []
+            var imageItems: [LightboxViewController.Item] = []
             for index in 0 ..< collectionViewDataSource.visibleCellItems.count {
                 let indexPath = IndexPath(item: index, section: 0)
                 guard
+                    let post = collectionViewDataSource.post(at: indexPath),
                     let rowImageRegion = collectionViewDataSource.imageRegion(at: indexPath),
                     let imageURL = rowImageRegion.fullScreenURL
                 else { continue }
@@ -876,11 +852,11 @@ extension StreamViewController: StreamImageCellResponder {
                 if rowImageRegion == imageRegion {
                     selectedIndex = imageItems.count
                 }
-                imageItems.append((indexPath, imageURL))
+                imageItems.append(LightboxViewController.Item(path: indexPath, url: imageURL, post: post))
             }
 
             if let selectedIndex = selectedIndex {
-                imageViewer.imageTapped(selected: selectedIndex, allItems: imageItems)
+                imageViewer.imageTapped(selected: selectedIndex, allItems: imageItems, currentUser: currentUser)
             }
 
             if let post = post, let asset = imageAsset {
@@ -1075,6 +1051,15 @@ extension StreamViewController: UICollectionViewDelegate {
     func jsonable(forCell cell: UICollectionViewCell) -> JSONAble? {
         guard let indexPath = collectionView.indexPath(for: cell) else { return nil}
         return jsonable(forPath: indexPath)
+    }
+
+    func footerCell(forPost post: Post) -> StreamFooterCell? {
+        guard
+            let footerPath = collectionViewDataSource.footerIndexPath(forPost: post),
+            let cell = collectionView.cellForItem(at: footerPath) as? StreamFooterCell
+        else { return nil}
+
+        return cell
     }
 
     func loveableCell(for cell: UICollectionViewCell) -> LoveableCell? {

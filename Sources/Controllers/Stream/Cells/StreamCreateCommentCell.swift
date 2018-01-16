@@ -164,13 +164,13 @@ class StreamCreateCommentCell: CollectionViewCell {
 
     @objc
     func replyAllTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.replyToAllButtonTapped(self)
+        let responder: PostbarController? = findResponder()
+        responder?.replyToAllButtonTapped(cell: self)
     }
 
     @objc
     func watchTapped() {
-        let responder: PostbarResponder? = findResponder()
+        let responder: PostbarController? = findResponder()
         responder?.watchPostTapped(!isWatching, cell: self)
     }
 

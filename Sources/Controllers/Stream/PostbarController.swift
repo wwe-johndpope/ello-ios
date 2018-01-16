@@ -3,27 +3,12 @@
 //
 
 @objc
-protocol PostbarResponder: class {
-    func viewsButtonTapped(_ cell: UICollectionViewCell)
-    func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl)
-    func deleteCommentButtonTapped(_ cell: UICollectionViewCell)
-    func editCommentButtonTapped(_ cell: UICollectionViewCell)
-    func lovesButtonTapped(_ cell: StreamFooterCell)
-    func repostButtonTapped(_ cell: UICollectionViewCell)
-    func shareButtonTapped(_ cell: UICollectionViewCell, sourceView: UIView)
-    func flagCommentButtonTapped(_ cell: UICollectionViewCell)
-    func replyToCommentButtonTapped(_ cell: UICollectionViewCell)
-    func replyToAllButtonTapped(_ cell: UICollectionViewCell)
-    func watchPostTapped(_ isWatching: Bool, cell: StreamCreateCommentCell)
-}
-
-@objc
 protocol LoveableCell: class {
     func toggleLoveControl(enabled: Bool)
     func toggleLoveState(loved: Bool)
 }
 
-class PostbarController: UIResponder, PostbarResponder {
+class PostbarController: UIResponder {
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -63,7 +48,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
     }
 
-    func viewsButtonTapped(_ cell: UICollectionViewCell) {
+    func viewsButtonTapped(cell: UICollectionViewCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let post = collectionViewDataSource.post(at: indexPath)
@@ -75,7 +60,14 @@ class PostbarController: UIResponder, PostbarResponder {
         responder?.postTappedInStream(cell)
     }
 
-    func commentsButtonTapped(_ cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
+    func viewsButtonTapped(post: Post) {
+        Tracker.shared.viewsButtonTapped(post: post)
+
+        let responder: PostTappedResponder? = findProperResponder()
+        responder?.postTapped(post)
+    }
+
+    func commentsButtonTapped(cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let item = collectionViewDataSource.streamCellItem(at: indexPath)
@@ -83,7 +75,7 @@ class PostbarController: UIResponder, PostbarResponder {
 
         guard collectionViewDataSource.isFullWidth(at: indexPath) else {
             cell.cancelCommentLoading()
-            viewsButtonTapped(cell)
+            viewsButtonTapped(cell: cell)
             return
         }
 
@@ -109,7 +101,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
 
         imageLabelControl.isSelected = cell.commentsOpened
-        cell.commentsControl.isEnabled = false
+        cell.comments.isEnabled = false
 
         if !cell.commentsOpened {
             streamViewController.removeComments(forPost: post)
@@ -144,7 +136,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
     }
 
-    func deleteCommentButtonTapped(_ cell: UICollectionViewCell) {
+    func deleteCommentButtonTapped(cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
@@ -174,7 +166,7 @@ class PostbarController: UIResponder, PostbarResponder {
         responderChainable?.controller?.present(alertController, animated: true, completion: .none)
     }
 
-    func editCommentButtonTapped(_ cell: UICollectionViewCell) {
+    func editCommentButtonTapped(cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
@@ -189,13 +181,17 @@ class PostbarController: UIResponder, PostbarResponder {
         responder?.editComment(comment, fromController: presentingController)
     }
 
-    func lovesButtonTapped(_ cell: StreamFooterCell) {
+    func lovesButtonTapped(cell: StreamFooterCell) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let post = collectionViewDataSource.post(at: indexPath)
         else { return }
 
         toggleLove(cell, post: post, via: "button")
+    }
+
+    func lovesButtonTapped(post: Post) {
+        toggleLove(nil, post: post, via: "button")
     }
 
     func toggleLove(_ cell: LoveableCell?, post: Post, via: String) {
@@ -217,13 +213,13 @@ class PostbarController: UIResponder, PostbarResponder {
         if let count = post.lovesCount {
             post.lovesCount = count - 1
         }
-        postNotification(PostChangedNotification, value: (post, .loved))
         ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
+        postNotification(PostChangedNotification, value: (post, .loved))
 
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount - 1
-            postNotification(CurrentUserChangedNotification, value: user)
             ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
+            postNotification(CurrentUserChangedNotification, value: user)
         }
 
         LovesService().unlovePost(postId: post.id)
@@ -248,13 +244,13 @@ class PostbarController: UIResponder, PostbarResponder {
         if let count = post.lovesCount {
             post.lovesCount = count + 1
         }
-        postNotification(PostChangedNotification, value: (post, .loved))
         ElloLinkedStore.shared.setObject(post, forKey: post.id, type: .postsType)
+        postNotification(PostChangedNotification, value: (post, .loved))
 
         if let user = currentUser, let userLoveCount = user.lovesCount {
             user.lovesCount = userLoveCount + 1
-            postNotification(CurrentUserChangedNotification, value: user)
             ElloLinkedStore.shared.setObject(user, forKey: user.id, type: .usersType)
+            postNotification(CurrentUserChangedNotification, value: user)
         }
 
         postNotification(HapticFeedbackNotifications.successfulUserEvent, value: ())
@@ -268,16 +264,21 @@ class PostbarController: UIResponder, PostbarResponder {
             }
     }
 
-    func repostButtonTapped(_ cell: UICollectionViewCell) {
+    func repostButtonTapped(cell: UICollectionViewCell) {
+        guard
+            let indexPath = collectionView.indexPath(for: cell),
+            let post = collectionViewDataSource.post(at: indexPath)
+        else { return }
+
+        repostButtonTapped(post: post)
+    }
+
+    func repostButtonTapped(post: Post, presentingController presenter: UIViewController? = nil) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
         }
-        guard
-            let indexPath = collectionView.indexPath(for: cell),
-            let post = collectionViewDataSource.post(at: indexPath),
-            let presentingController = responderChainable?.controller
-        else { return }
+        guard let presentingController = presenter ?? responderChainable?.controller else { return }
 
         Tracker.shared.postReposted(post)
         let message = InterfaceString.Post.RepostConfirm
@@ -342,20 +343,20 @@ class PostbarController: UIResponder, PostbarResponder {
             }
     }
 
-    func shareButtonTapped(_ cell: UICollectionViewCell, sourceView: UIView) {
+    func shareButtonTapped(cell: UICollectionViewCell, sourceView: UIView) {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let post = collectionViewDataSource.post(at: indexPath)
         else { return }
 
-        sharePost(post, sourceView: sourceView)
+        shareButtonTapped(post: post, sourceView: sourceView)
     }
 
-    func sharePost(_ post: Post, sourceView: UIView) {
+    func shareButtonTapped(post: Post, sourceView: UIView, presentingController presenter: UIViewController? = nil) {
         guard
             let shareLink = post.shareLink,
             let shareURL = URL(string: shareLink),
-            let presentingController = responderChainable?.controller
+            let presentingController = presenter ?? responderChainable?.controller
         else { return }
 
         Tracker.shared.postShared(post)
@@ -371,7 +372,7 @@ class PostbarController: UIResponder, PostbarResponder {
         }
     }
 
-    func flagCommentButtonTapped(_ cell: UICollectionViewCell) {
+    func flagCommentButtonTapped(cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
@@ -392,7 +393,7 @@ class PostbarController: UIResponder, PostbarResponder {
         flagger.displayFlaggingSheet()
     }
 
-    func replyToCommentButtonTapped(_ cell: UICollectionViewCell) {
+    func replyToCommentButtonTapped(cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
@@ -410,7 +411,7 @@ class PostbarController: UIResponder, PostbarResponder {
         responder?.createComment(postId, text: "\(atName) ", fromController: presentingController)
     }
 
-    func replyToAllButtonTapped(_ cell: UICollectionViewCell) {
+    func replyToAllButtonTapped(cell: UICollectionViewCell) {
         guard currentUser != nil else {
             postNotification(LoggedOutNotifications.userActionAttempted, value: .postTool)
             return
@@ -491,7 +492,7 @@ class PostbarController: UIResponder, PostbarResponder {
         streamViewController.insertUnsizedCellItems(items, startingIndexPath: indexPath) { [weak self] in
             guard let `self` = self else { return }
 
-            cell.commentsControl.isEnabled = true
+            cell.comments.isEnabled = true
 
             if let controller = self.responderChainable?.controller,
                 createCommentNow,

@@ -254,26 +254,26 @@ extension CommentHeaderCell {
 
     @objc
     func flagButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.flagCommentButtonTapped(self)
+        let responder: PostbarController? = findResponder()
+        responder?.flagCommentButtonTapped(cell: self)
     }
 
     @objc
     func replyButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.replyToCommentButtonTapped(self)
+        let responder: PostbarController? = findResponder()
+        responder?.replyToCommentButtonTapped(cell: self)
     }
 
     @objc
     func deleteButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.deleteCommentButtonTapped(self)
+        let responder: PostbarController? = findResponder()
+        responder?.deleteCommentButtonTapped(cell: self)
     }
 
     @objc
     func editButtonTapped() {
-        let responder: PostbarResponder? = findResponder()
-        responder?.editCommentButtonTapped(self)
+        let responder: PostbarController? = findResponder()
+        responder?.editCommentButtonTapped(cell: self)
     }
 
     @objc

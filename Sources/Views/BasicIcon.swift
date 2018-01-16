@@ -3,6 +3,7 @@
 //
 
 class BasicIcon: UIView {
+    override var intrinsicContentSize: CGSize { return frame.size }
 
     private var _enabled = false
     private var _selected = false
@@ -15,6 +16,8 @@ class BasicIcon: UIView {
     // MARK: Initializers
 
     init(normalIconView: UIView, selectedIconView: UIView, disabledIconView: UIView? = nil) {
+        normalIconView.sizeToFit()
+
         self.normalIconView = normalIconView
         self.selectedIconView = selectedIconView
         self.disabledIconView = disabledIconView

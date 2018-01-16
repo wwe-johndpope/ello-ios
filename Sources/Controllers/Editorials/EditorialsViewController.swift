@@ -169,7 +169,7 @@ extension EditorialsViewController: EditorialToolsResponder {
     }
 
     func shareTapped(post: Post, cell: EditorialPostCell) {
-        streamViewController.postbarController?.sharePost(post, sourceView: cell)
+        streamViewController.postbarController?.shareButtonTapped(post: post, sourceView: cell)
     }
 }
 

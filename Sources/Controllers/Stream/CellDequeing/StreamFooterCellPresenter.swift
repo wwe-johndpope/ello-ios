@@ -42,16 +42,16 @@ struct StreamFooterCellPresenter {
     {
         let rounding = isGridView ? 0 : 1
         if cell.frame.width < 155 {
-            cell.views = ""
-            cell.reposts = ""
-            cell.loves = ""
+            cell.views.title = ""
+            cell.reposts.title = ""
+            cell.loves.title = ""
         }
         else {
-            cell.views = post.viewsCount?.numberToHuman(rounding: rounding)
-            cell.reposts = post.repostsCount?.numberToHuman(rounding: rounding)
-            cell.loves = post.lovesCount?.numberToHuman(rounding: rounding)
+            cell.views.title = post.viewsCount?.numberToHuman(rounding: rounding)
+            cell.reposts.title = post.repostsCount?.numberToHuman(rounding: rounding)
+            cell.loves.title = post.lovesCount?.numberToHuman(rounding: rounding)
         }
-        cell.comments = post.commentsCount?.numberToHuman(rounding: rounding)
+        cell.comments.title = post.commentsCount?.numberToHuman(rounding: rounding)
     }
 
     private static func configureToolBarItems(
@@ -60,7 +60,30 @@ struct StreamFooterCellPresenter {
         currentUser: User?,
         isGridView: Bool)
     {
+        let (commentVisibility, loveVisibility, repostVisibility, shareVisibility) = toolbarItemVisibility(post: post, currentUser: currentUser, isGridView: isGridView)
+
+        cell.updateToolbarItems(
+            isGridView: isGridView,
+            commentVisibility: commentVisibility,
+            loveVisibility: loveVisibility,
+            repostVisibility: repostVisibility,
+            shareVisibility: shareVisibility
+        )
+    }
+
+    static func toolbarItemVisibility(post: Post,
+        currentUser: User?,
+        isGridView: Bool) -> (commentVisibility: InteractionVisibility, loveVisibility: InteractionVisibility, repostVisibility: InteractionVisibility, shareVisibility: InteractionVisibility)
+    {
         let ownPost = (currentUser?.id == post.authorId || (post.repostAuthor?.id != nil && currentUser?.id == post.repostAuthor?.id))
+
+        let commentingEnabled = post.author?.hasCommentingEnabled ?? true
+        let commentVisibility: InteractionVisibility = commentingEnabled ? .enabled : .hidden
+
+        let lovingEnabled = post.author?.hasLovesEnabled ?? true
+        var loveVisibility: InteractionVisibility = .enabled
+        if post.isLoved { loveVisibility = .selectedAndEnabled }
+        if !lovingEnabled { loveVisibility = .hidden }
 
         let repostingEnabled = post.author?.hasRepostingEnabled ?? true
         var repostVisibility: InteractionVisibility = .enabled
@@ -68,24 +91,11 @@ struct StreamFooterCellPresenter {
         else if !repostingEnabled { repostVisibility = .hidden }
         else if ownPost { repostVisibility = .disabled }
 
-        let commentingEnabled = post.author?.hasCommentingEnabled ?? true
-        let commentVisibility: InteractionVisibility = commentingEnabled ? .enabled : .hidden
-
         let sharingEnabled = post.author?.hasSharingEnabled ?? true
         let shareVisibility: InteractionVisibility = sharingEnabled ? .enabled : .hidden
 
-        let lovingEnabled = post.author?.hasLovesEnabled ?? true
-        var loveVisibility: InteractionVisibility = .enabled
-        if post.isLoved { loveVisibility = .selectedAndEnabled }
-        if !lovingEnabled { loveVisibility = .hidden }
 
-        cell.updateToolbarItems(
-            isGridView: isGridView,
-            repostVisibility: repostVisibility,
-            commentVisibility: commentVisibility,
-            shareVisibility: shareVisibility,
-            loveVisibility: loveVisibility
-        )
+        return (commentVisibility: commentVisibility, loveVisibility: loveVisibility, repostVisibility: repostVisibility, shareVisibility: shareVisibility)
     }
 
     private static func configureCommentControl(
@@ -99,11 +109,11 @@ struct StreamFooterCellPresenter {
             let count = post.commentsCount ?? 0
             let open = count > 0
             cell.commentsOpened = open
-            cell.commentsControl.isSelected = open
+            cell.comments.isSelected = open
         }
         else if streamKind.isDetail(post: post) {
             cell.commentsOpened = true
-            cell.commentsControl.isSelected = true
+            cell.comments.isSelected = true
         }
         else {
             let isLoading = streamCellItem.state == .loading
@@ -113,18 +123,18 @@ struct StreamFooterCellPresenter {
                 // this should be set via a custom accessor or method,
                 // me thinks.
                 // `StreamFooterCell.state = streamCellItem.state` ??
-                cell.commentsControl.animate()
-                cell.commentsControl.isSelected = true
+                cell.commentsAnimate()
+                cell.comments.isSelected = true
             }
             else {
-                cell.commentsControl.finishAnimation()
+                cell.commentsFinishAnimation()
 
                 if isExpanded {
-                    cell.commentsControl.isSelected = true
+                    cell.comments.isSelected = true
                     cell.commentsOpened = true
                 }
                 else {
-                    cell.commentsControl.isSelected = false
+                    cell.comments.isSelected = false
                     cell.commentsOpened = false
                     streamCellItem.state = .collapsed
                 }
