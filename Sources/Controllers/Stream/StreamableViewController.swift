@@ -6,8 +6,8 @@ class StreamableViewController: BaseElloViewController {
     @IBOutlet weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
-    let tapToShowTop = UIView()
-    let tapToShowBottom = UIView()
+    let tapToShowTop = UIControl()
+    let tapToShowBottom = UIControl()
 
     struct Size {
         static let tapToShowHeight: CGFloat = 20
@@ -60,20 +60,17 @@ class StreamableViewController: BaseElloViewController {
         )
 
         for tapToShow in [tapToShowTop, tapToShowBottom] {
-            view.addSubview(tapToShow)
+            viewForStream().addSubview(tapToShow)
             tapToShow.isUserInteractionEnabled = false
-
-            let tapGesture = UITapGestureRecognizer()
-            tapGesture.addTarget(self, action: #selector(tapToShowTapped))
-            tapToShow.addGestureRecognizer(tapGesture)
+            tapToShow.addTarget(self, action: #selector(tapToShowTapped), for: .touchUpInside)
         }
 
         tapToShowTop.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalTo(view)
+            make.top.leading.trailing.equalTo(view)
             make.height.equalTo(Size.tapToShowHeight)
         }
         tapToShowBottom.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view)
+            make.bottom.leading.trailing.equalTo(view)
             make.height.equalTo(Size.tapToShowHeight)
         }
     }
@@ -175,6 +172,10 @@ class StreamableViewController: BaseElloViewController {
 
         animate(animated: animated) {
             navBar.frame.origin.y = -upAmount
+        }
+
+        if let elloNavBar = navBar as? ElloNavigationBar {
+            elloNavBar.showBackButton = !visible
         }
 
         if showing {

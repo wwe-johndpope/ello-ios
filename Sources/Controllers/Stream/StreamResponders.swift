@@ -18,7 +18,7 @@ protocol SimpleStreamResponder: class {
 
 @objc
 protocol StreamImageCellResponder: class {
-    func imageTapped(imageView: FLAnimatedImageView, cell: StreamImageCell)
+    func imageTapped(cell: StreamImageCell)
 }
 
 @objc

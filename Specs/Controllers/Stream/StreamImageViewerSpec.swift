@@ -6,15 +6,12 @@
 import Quick
 import Nimble
 import Moya
-import JTSImageViewController
 import FLAnimatedImage
 
 class StreamImageViewerSpec: QuickSpec {
 
     override func spec() {
-
         describe("StreamImageViewer") {
-
             var presentingVC: StreamViewController!
             var subject: StreamImageViewer!
             beforeEach {
@@ -23,34 +20,16 @@ class StreamImageViewerSpec: QuickSpec {
             }
 
             describe("imageTapped(_:cell:)") {
-
                 it("configures AppDelegate to allow rotation") {
-                    let image = FLAnimatedImageView()
-                    subject.imageTapped(image, imageURL: URL(string: "http://www.example.com/image.jpg"))
-
+                    subject.imageTapped(FLAnimatedImageView(), imageURL: URL(string: "http://www.example.com/image.jpg"))
                     expect(AppDelegate.restrictRotation) == false
                 }
             }
 
-            context("JTSImageViewControllerOptionsDelegate") {
-
-                describe("alphaForBackgroundDimmingOverlayInImageViewer(_:)") {
-
-                    it("returns 1.0") {
-                        expect(subject.alphaForBackgroundDimmingOverlay(inImageViewer: JTSImageViewController())) == 1.0
-                    }
-                }
-            }
-
-            context("JTSImageViewControllerDismissalDelegate") {
-
-                describe("imageViewerWillDismiss(_:)") {
-
-                    it("configures AppDelegate to prevent rotation") {
-                        subject.imageViewerWillDismiss(JTSImageViewController())
-
-                        expect(AppDelegate.restrictRotation) == true
-                    }
+            describe("imageViewerWillDismiss(_:)") {
+                it("configures AppDelegate to prevent rotation") {
+                    subject.imageViewerWillDismiss()
+                    expect(AppDelegate.restrictRotation) == true
                 }
             }
         }

@@ -36,7 +36,15 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         return profileButtonsEffect
     }
 
-    // for testing
+    var hasBackButton: Bool = false {
+        didSet { updateBackButton() }
+    }
+
+    var showBackButton: Bool = false {
+        didSet { updateBackButton() }
+    }
+
+    // 'internal' visibitility for testing
     let relationshipControl = RelationshipControl()
     let collaborateButton = StyledButton(style: .blackPill)
     let hireButton = StyledButton(style: .blackPill)
@@ -51,6 +59,8 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     private let ghostRightButton = StyledButton(style: .blackPill)
     private let profileButtonsEffect = UIVisualEffectView()
     private var profileButtonsContainer: UIView { return profileButtonsEffect.contentView }
+    private let profileButtonsLeadingGuide = UILayoutGuide()
+    private let persistentBackButton = PersistentBackButton()
 
     // constraints
     private var whiteSolidTop: Constraint!
@@ -62,8 +72,46 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
     private var relationshipMentionConstraint: Constraint!
     private var relationshipCollabConstraint: Constraint!
     private var relationshipHireConstraint: Constraint!
+    private var showBackButtonConstraint: Constraint!
+    private var hideBackButtonConstraint: Constraint!
 
     weak var delegate: ProfileScreenDelegate?
+
+    override func setText() {
+        collaborateButton.setTitle(InterfaceString.Profile.Collaborate, for: .normal)
+        hireButton.setTitle(InterfaceString.Profile.Hire, for: .normal)
+        inviteButton.setTitle(InterfaceString.Profile.Invite, for: .normal)
+        editButton.setTitle(InterfaceString.Profile.EditProfile, for: .normal)
+        mentionButton.setTitle(InterfaceString.Profile.Mention, for: .normal)
+    }
+
+    override func style() {
+        persistentBackButton.alpha = 0
+        whiteSolidView.backgroundColor = .white
+        relationshipControl.usage = .profileView
+        profileButtonsEffect.effect = UIBlurEffect(style: .light)
+        coverImageView.contentMode = .scaleAspectFill
+
+        collaborateButton.isHidden = true
+        hireButton.isHidden = true
+        mentionButton.isHidden = true
+        relationshipControl.isHidden = true
+        editButton.isHidden = true
+        inviteButton.isHidden = true
+        ghostLeftButton.isHidden = false
+        ghostRightButton.isHidden = false
+        ghostLeftButton.isEnabled = false
+        ghostRightButton.isEnabled = false
+    }
+
+    override func bindActions() {
+        mentionButton.addTarget(self, action: #selector(mentionTapped(_:)), for: .touchUpInside)
+        collaborateButton.addTarget(self, action: #selector(collaborateTapped(_:)), for: .touchUpInside)
+        hireButton.addTarget(self, action: #selector(hireTapped(_:)), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(editTapped(_:)), for: .touchUpInside)
+        inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), for: .touchUpInside)
+        persistentBackButton.addTarget(navigationBar, action: #selector(ElloNavigationBar.backButtonTapped), for: .touchUpInside)
+    }
 
     override func arrange() {
         super.arrange()
@@ -75,6 +123,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         addSubview(navigationBar)
 
         // relationship controls sub views
+        profileButtonsContainer.addLayoutGuide(profileButtonsLeadingGuide)
         profileButtonsContainer.addSubview(mentionButton)
         profileButtonsContainer.addSubview(collaborateButton)
         profileButtonsContainer.addSubview(hireButton)
@@ -83,6 +132,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         profileButtonsContainer.addSubview(editButton)
         profileButtonsContainer.addSubview(ghostLeftButton)
         profileButtonsContainer.addSubview(ghostRightButton)
+        profileButtonsContainer.addSubview(persistentBackButton)
 
         loaderView.snp.makeConstraints { make in
             make.edges.equalTo(coverImageView)
@@ -107,8 +157,20 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             profileButtonsContainerHeightConstraint = make.height.equalTo(Size.profileButtonsContainerViewHeight).constraint
         }
 
-        mentionButton.snp.makeConstraints { make in
+        profileButtonsLeadingGuide.snp.makeConstraints { make in
+            showBackButtonConstraint = make.leading.trailing.equalTo(persistentBackButton.snp.trailing).constraint
+            hideBackButtonConstraint = make.leading.trailing.equalTo(profileButtonsContainer.snp.leading).constraint
+        }
+        showBackButtonConstraint.deactivate()
+
+        persistentBackButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        persistentBackButton.snp.makeConstraints { make in
             make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
+            make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
+        }
+
+        mentionButton.snp.makeConstraints { make in
+            make.leading.equalTo(profileButtonsLeadingGuide.snp.trailing).offset(Size.buttonMargin)
             make.width.equalTo(Size.mentionButtonWidth).priority(Priority.required)
             make.height.equalTo(Size.buttonHeight)
             make.bottom.equalTo(profileButtonsContainer).offset(-Size.buttonMargin)
@@ -132,7 +194,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         hireRightConstraint.deactivate()
 
         inviteButton.snp.makeConstraints { make in
-            make.leading.equalTo(profileButtonsContainer).offset(Size.buttonMargin)
+            make.leading.equalTo(profileButtonsLeadingGuide.snp.trailing).offset(Size.buttonMargin)
             make.width.equalTo(Size.mentionButtonWidth).priority(Priority.medium)
             make.width.greaterThanOrEqualTo(Size.mentionButtonWidth)
             make.height.equalTo(Size.buttonHeight)
@@ -174,40 +236,6 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             make.trailing.equalTo(profileButtonsContainer).offset(-Size.editButtonMargin)
             make.bottom.equalTo(-Size.buttonMargin)
         }
-    }
-
-    override func setText() {
-        collaborateButton.setTitle(InterfaceString.Profile.Collaborate, for: .normal)
-        hireButton.setTitle(InterfaceString.Profile.Hire, for: .normal)
-        inviteButton.setTitle(InterfaceString.Profile.Invite, for: .normal)
-        editButton.setTitle(InterfaceString.Profile.EditProfile, for: .normal)
-        mentionButton.setTitle(InterfaceString.Profile.Mention, for: .normal)
-    }
-
-    override func style() {
-        whiteSolidView.backgroundColor = .white
-        relationshipControl.usage = .profileView
-        profileButtonsEffect.effect = UIBlurEffect(style: .light)
-        coverImageView.contentMode = .scaleAspectFill
-
-        collaborateButton.isHidden = true
-        hireButton.isHidden = true
-        mentionButton.isHidden = true
-        relationshipControl.isHidden = true
-        editButton.isHidden = true
-        inviteButton.isHidden = true
-        ghostLeftButton.isHidden = false
-        ghostRightButton.isHidden = false
-        ghostLeftButton.isEnabled = false
-        ghostRightButton.isEnabled = false
-    }
-
-    override func bindActions() {
-        mentionButton.addTarget(self, action: #selector(mentionTapped(_:)), for: .touchUpInside)
-        collaborateButton.addTarget(self, action: #selector(collaborateTapped(_:)), for: .touchUpInside)
-        hireButton.addTarget(self, action: #selector(hireTapped(_:)), for: .touchUpInside)
-        editButton.addTarget(self, action: #selector(editTapped(_:)), for: .touchUpInside)
-        inviteButton.addTarget(self, action: #selector(inviteTapped(_:)), for: .touchUpInside)
     }
 
     @objc
@@ -329,7 +357,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             let effectsHeight = Size.profileButtonsContainerViewHeight
 
             self.updateNavBars(effectsTop: effectsTop, effectsHeight: effectsHeight)
-
+            self.showBackButton = false
         }
     }
 
@@ -347,6 +375,7 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
             }
 
             self.updateNavBars(effectsTop: effectsTop, effectsHeight: effectsHeight)
+            self.showBackButton = true
         }
     }
 
@@ -361,5 +390,24 @@ class ProfileScreen: StreamableScreen, ProfileScreenProtocol {
         [relationshipControl, collaborateButton, hireButton, mentionButton, inviteButton, editButton].forEach { button in
             button.frame.origin.y = buttonTop
         }
+    }
+}
+
+extension ProfileScreen: ArrangeNavBackButton {
+    func arrangeNavBackButton(_ button: UIButton) {
+    }
+
+    private func updateBackButton() {
+        if hasBackButton && showBackButton {
+            persistentBackButton.alpha = 1
+            showBackButtonConstraint.activate()
+            hideBackButtonConstraint.deactivate()
+        }
+        else {
+            persistentBackButton.alpha = 0
+            showBackButtonConstraint.deactivate()
+            hideBackButtonConstraint.activate()
+        }
+        profileButtonsEffect.layoutIfNeeded()
     }
 }

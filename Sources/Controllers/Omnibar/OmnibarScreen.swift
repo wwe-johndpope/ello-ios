@@ -319,6 +319,9 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
     // configured to fill that container (only the container and the text view
     // insets are modified in layoutSubviews)
     private func setupTableViews() {
+        if #available(iOS 11.0, *) {
+            regionsTableView.contentInsetAdjustmentBehavior = .never
+        }
         regionsTableView.dataSource = self
         regionsTableView.delegate = self
         regionsTableView.separatorStyle = .none
@@ -327,6 +330,10 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         regionsTableView.register(OmnibarImageDownloadCell.self, forCellReuseIdentifier: OmnibarImageDownloadCell.reuseIdentifier)
         regionsTableView.register(UITableViewCell.self, forCellReuseIdentifier: OmnibarRegion.OmnibarSpacerCell)
         regionsTableView.register(OmnibarErrorCell.self, forCellReuseIdentifier: OmnibarErrorCell.reuseIdentifier)
+        regionsTableView.contentInset.top = Size.tableTopInset
+        regionsTableView.estimatedRowHeight = 0
+        regionsTableView.estimatedSectionHeaderHeight = 0
+        regionsTableView.estimatedSectionFooterHeight = 0
         addSubview(regionsTableView)
 
         regionsTableView.snp.makeConstraints { make in
@@ -674,7 +681,6 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         }
         bottomInset += Size.keyboardContainerHeight
 
-        regionsTableView.contentInset.top = Size.tableTopInset
         regionsTableView.contentInset.bottom = bottomInset
         regionsTableView.scrollIndicatorInsets.bottom = bottomInset
         synchronizeScrollViews()
@@ -948,17 +954,11 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         cancelImageButton.isHidden = false
         stopEditing()
 
-        let status = UIImagePickerController.alreadyDeterminedStatus()
-        if let status = status {
-            showKeyboardImages(isAuthorized: status == .authorized)
-        }
-        else {
-            UIImagePickerController.requestStatus()
-                .then { status -> Void in
-                    self.showKeyboardImages(isAuthorized: status == .authorized)
-                }
-                .ignoreErrors()
-        }
+        UIImagePickerController.requestStatus()
+            .then { status -> Void in
+                self.showKeyboardImages(isAuthorized: status == .authorized)
+            }
+            .ignoreErrors()
     }
 
     private func resetToImageButton() {
@@ -1003,6 +1003,7 @@ class OmnibarScreen: Screen, OmnibarScreenProtocol {
         if let view = view {
             photoAccessoryContainer.addSubview(view)
             photoAccessoryContainer.frame.size.height = view.frame.size.height
+            view.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
         }
         else {
             photoAccessoryContainer.frame.size.height = 0

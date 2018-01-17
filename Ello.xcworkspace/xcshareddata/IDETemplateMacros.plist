@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>FILEHEADER</key>
-	<string>////
+	<string><![CDATA[//
 ///  ___FILENAME___
 //
-</string>
+]]></string>
 </dict>
 </plist>

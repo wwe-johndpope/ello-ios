@@ -22,14 +22,20 @@ class AlertCell: TableViewCell {
     }
 
     let background = UIView()
-    let okButton = StyledButton(style: .default)
-    let cancelButton = StyledButton(style: .default)
+    let okButton = StyledButton(style: .roundedBlack)
+    let cancelButton = StyledButton(style: .roundedBlack)
     let label = StyledLabel(style: .black)
     let button = UILabel()
     let input = ElloTextField()
     let inputBottomBorder = UIView()
 
     var onInputChanged: ((String) -> Void)?
+
+    override func bindActions() {
+        input.addTarget(self, action: #selector(didUpdateInput), for: .editingChanged)
+        okButton.addTarget(self, action: #selector(didTapOkButton), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+    }
 
     override func setText() {
         okButton.setTitle(InterfaceString.OK, for: .normal)
@@ -114,16 +120,19 @@ class AlertCell: TableViewCell {
 
 extension AlertCell {
 
-    @IBAction func didUpdateInput() {
+    @objc
+    func didUpdateInput() {
         onInputChanged?(input.text ?? "")
     }
 
-    @IBAction func didTapOkButton() {
+    @objc
+    func didTapOkButton() {
         let responder: AlertCellResponder? = findResponder()
         responder?.tappedOkButton()
     }
 
-    @IBAction func didTapCancelButton() {
+    @objc
+    func didTapCancelButton() {
         let responder: AlertCellResponder? = findResponder()
         responder?.tappedCancelButton()
     }

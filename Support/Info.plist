@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.14</string>
+	<string>2.15</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7086</string>
+	<string>7138</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -58,6 +58,8 @@
 	<string>Allow camera access to post images from your camera on Ello. Change this anytime in your device settings.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Import your contacts to find people you know on Ello. We will extract the e-mail addresses, irreversibly hash them, and send them to our servers for matching. Ello will never receive nor store a copy of your address book.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow Ello to save images to your photo library. Change this anytime in your device settings.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow photo library access to post images from your library on Ello. Change this anytime in your device settings.</string>
 	<key>UIAppFonts</key>

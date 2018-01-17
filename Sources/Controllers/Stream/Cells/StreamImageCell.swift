@@ -3,6 +3,7 @@
 //
 
 import FLAnimatedImage
+import Photos
 
 
 enum StreamImageCellMode {
@@ -48,11 +49,10 @@ class StreamImageCell: StreamRegionableCell {
     @IBOutlet weak var largeImagePlayButton: UIImageView?
     @IBOutlet weak var imageRightConstraint: NSLayoutConstraint!
 
-
     var isGif = false
     var onHeightMismatch: OnHeightMismatch?
     var tallEnoughForFailToShow = true
-    var presentedImageUrl: URL?
+    var imageURL: URL?
     var buyButtonURL: URL? {
         didSet {
             let hidden = (buyButtonURL == nil)
@@ -82,6 +82,7 @@ class StreamImageCell: StreamRegionableCell {
             }
         }
     }
+    var image: UIImage? { return imageView.image }
 
     enum StreamImageMargin {
         case post
@@ -190,6 +191,8 @@ class StreamImageCell: StreamRegionableCell {
     }
 
     private func loadImage(_ url: URL) {
+        imageURL = url
+
         guard url.scheme?.isEmpty == false else {
             if let urlWithScheme = URL(string: "https:\(url.absoluteString)") {
                 loadImage(urlWithScheme)
@@ -255,7 +258,6 @@ class StreamImageCell: StreamRegionableCell {
 
         hideBorder()
         isGif = false
-        presentedImageUrl = nil
         isLargeImage = false
         failImage.isHidden = true
         failImage.alpha = 0
@@ -265,7 +267,7 @@ class StreamImageCell: StreamRegionableCell {
 
     @IBAction func imageTapped() {
         let responder: StreamImageCellResponder? = findResponder()
-        responder?.imageTapped(imageView: imageView, cell: self)
+        responder?.imageTapped(cell: self)
     }
 
     @IBAction func buyButtonTapped() {

@@ -13,20 +13,31 @@ import SnapKit
 @objc protocol HasHamburgerButton { func hamburgerButtonTapped() }
 @objc protocol HasMoreButton { func moreButtonTapped() }
 @objc protocol HasShareButton { func shareButtonTapped(_ sender: UIView) }
+@objc protocol ArrangeNavBackButton { func arrangeNavBackButton(_ button: UIButton) }
 
 class ElloNavigationBar: UIView {
     struct Size {
-        static let height: CGFloat = calculateHeight()
-        static let largeHeight: CGFloat = calculateLargeHeight()
-        static let discoverLargeHeight: CGFloat = 162
+        static let height = calculateHeight()
+        static let largeHeight = calculateLargeHeight()
+        static let discoverLargeHeight = calculateDiscoverHeight()
         static let navigationHeight: CGFloat = 44
         static let buttonWidth: CGFloat = 39
+        static let backButtonMargins = calculateButtonMargins()
 
         static private func calculateHeight() -> CGFloat {
             return Size.navigationHeight + BlackBar.Size.height
         }
         static private func calculateLargeHeight() -> CGFloat {
             return 105 + BlackBar.Size.height
+        }
+        static private func calculateDiscoverHeight() -> CGFloat {
+            return 142 + BlackBar.Size.height
+        }
+        static private func calculateButtonMargins() -> UIEdgeInsets {
+            if Globals.isIphoneX {
+                return UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
+            }
+            return UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0)
         }
     }
 
@@ -45,6 +56,10 @@ class ElloNavigationBar: UIView {
     }
 
     enum Item {
+        static func == (lhs: Item, rhs: Item) -> Bool {
+            return lhs.image == rhs.image
+        }
+
         case back
         case burger
         case close
@@ -154,6 +169,12 @@ class ElloNavigationBar: UIView {
     private var leftLeadingConstraint: Constraint!
     private var rightTrailingConstraint: Constraint!
 
+    private let persistentBackButton = PersistentBackButton()
+
+    var showBackButton: Bool = false {
+        didSet { updateBackButton() }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         privateInit()
@@ -166,6 +187,28 @@ class ElloNavigationBar: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         privateInit()
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        if persistentBackButton.superview != superview {
+            if persistentBackButton.superview != nil {
+                persistentBackButton.removeFromSuperview()
+            }
+
+            if let superview: ArrangeNavBackButton = findResponder() {
+                superview.arrangeNavBackButton(persistentBackButton)
+            }
+            else if let superview = superview {
+                superview.insertSubview(persistentBackButton, belowSubview: self)
+
+                persistentBackButton.snp.makeConstraints { make in
+                    make.top.leading.equalTo(superview).inset(Size.backButtonMargins)
+                }
+
+            }
+        }
     }
 
     override func didMoveToWindow() {
@@ -183,6 +226,9 @@ class ElloNavigationBar: UIView {
         backgroundColor = .white
         isOpaque = true
         titleLabel.lineBreakMode = .byTruncatingTail
+
+        persistentBackButton.isHidden = true
+        persistentBackButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 
         let bar = BlackBar()
 
@@ -260,9 +306,23 @@ class ElloNavigationBar: UIView {
             rightTrailingConstraint.update(offset: rightInset)
         }
 
+        updateBackButton()
+
         return newButtons
     }
 
+    private func updateBackButton() {
+        let hasBackButton = leftItems.contains(where: { $0 == .back })
+        if hasBackButton && showBackButton {
+            persistentBackButton.isHidden = false
+        }
+        else {
+            persistentBackButton.isHidden = true
+        }
+    }
+}
+
+extension ElloNavigationBar {
     @objc
     private func tappedButton(_ sender: UIButton) {
         var item: Item?
@@ -276,4 +336,9 @@ class ElloNavigationBar: UIView {
         item?.trigger(from: self, sender: sender)
     }
 
+    @objc
+    func backButtonTapped() {
+        let responder: HasBackButton? = self.findResponder()
+        responder?.backButtonTapped()
+    }
 }

@@ -183,6 +183,13 @@ extension NotificationsViewController: NotificationResponder {
         }
     }
 
+    func artistInviteTapped(_ artistInvite: ArtistInvite) {
+        let vc = ArtistInviteDetailController(artistInvite: artistInvite)
+        vc.currentUser = currentUser
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+
     // userTapped(_ user: _) defined in StreamableViewController
     // postTapped(_ post: _) defined in StreamableViewController
 }

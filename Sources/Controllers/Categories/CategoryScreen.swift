@@ -8,7 +8,6 @@ import SnapKit
 class CategoryScreen: HomeSubviewScreen, CategoryScreenProtocol {
     struct Size {
         static let navigationBarHeight: CGFloat = 43
-        static let largeNavigationBarHeight: CGFloat = 128
         static let buttonWidth: CGFloat = 40
         static let buttonMargin: CGFloat = 5
     }

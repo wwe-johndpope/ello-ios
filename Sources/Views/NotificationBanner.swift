@@ -18,6 +18,13 @@ struct NotificationBanner {
         configureDefaults()
         CRToastManager.showNotification(withMessage: message) { }
     }
+
+    static func dismissAlert() {
+        guard !Globals.isTesting else { return }
+
+        configureDefaults()
+        CRToastManager.dismissNotification(true)
+    }
 }
 
 private extension NotificationBanner {

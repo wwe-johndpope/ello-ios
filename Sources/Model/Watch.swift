@@ -9,7 +9,6 @@ let WatchVersion: Int = 1
 
 @objc(Watch)
 final class Watch: JSONAble, PostActionable {
-
     let id: String
     let createdAt: Date
     let updatedAt: Date

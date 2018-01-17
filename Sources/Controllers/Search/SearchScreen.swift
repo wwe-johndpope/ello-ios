@@ -8,10 +8,13 @@ import SnapKit
 class SearchScreen: StreamableScreen, SearchScreenProtocol {
     struct Size {
         static let margins: CGFloat = 15
+        static let backButtonMargin: CGFloat = 10
         static let buttonMargin: CGFloat = 5
         static let buttonWidth: CGFloat = 40
-        static let searchControlsHeight: CGFloat = 30
-        static let searchControlsTallHeight: CGFloat = 74
+        static let bottomMargin: CGFloat = 10
+        static let searchButtonsHeight: CGFloat = 30
+        static let searchControlsHeight: CGFloat = searchButtonsHeight + bottomMargin
+        static let searchControlsTallHeight: CGFloat = searchControlsHeight + 44
         static let cornerRadius: CGFloat = 5
         static let findFriendsInsets = UIEdgeInsets(all: 20)
         static let findFriendsLabelLeft: CGFloat = 25
@@ -25,10 +28,15 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     var showsFindFriends: Bool = true {
         didSet { showHideFindFriends() }
     }
+
     var isGridView = false {
         didSet {
             gridListButton.setImage(isGridView ? .listView : .gridView, imageStyle: .normal, for: .normal)
         }
+    }
+
+    var showBackButton: Bool = false {
+        didSet { updateBackButton() }
     }
 
     // for specs
@@ -37,6 +45,8 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     private let searchControlsContainer = UIView()
     private let debounced: ThrottledBlock = debounce(0.8)
     private let backButton = UIButton()
+    private let persistentBackButton = PersistentBackButton()
+    private let toggleButtonsLeadingGuide = UILayoutGuide()
     private let postsToggleButton = SearchToggleButton()
     private let peopleToggleButton = SearchToggleButton()
     private let findFriendsContainer = UIView()
@@ -48,6 +58,8 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     private var searchControlsContainerHeight: Constraint!
     private var gridListVisibleConstraint: Constraint!
     private var gridListHiddenConstraint: Constraint!
+    private var showBackButtonConstraint: Constraint!
+    private var hideBackButtonConstraint: Constraint!
 
     override func setText() {
         postsToggleButton.setTitle(InterfaceString.Search.Posts, for: .normal)
@@ -63,6 +75,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         peopleToggleButton.addTarget(self, action: #selector(onPeopleTapped), for: .touchUpInside)
         findFriendsButton.addTarget(self, action: #selector(findFriendsTapped), for: .touchUpInside)
         gridListButton.addTarget(self, action: #selector(gridListToggled), for: .touchUpInside)
+        persistentBackButton.addTarget(navigationBar, action: #selector(ElloNavigationBar.backButtonTapped), for: .touchUpInside)
         searchField.delegate = self
     }
 
@@ -70,6 +83,7 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         backButton.setImages(.chevron)
 
         searchControlsContainer.backgroundColor = .white
+        persistentBackButton.alpha = 0
 
         findFriendsContainer.backgroundColor = .greyF2
         findFriendsContainer.isHidden = !showsFindFriends
@@ -88,6 +102,8 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
         navigationBar.addSubview(gridListButton)
 
         addSubview(searchControlsContainer)
+        searchControlsContainer.addLayoutGuide(toggleButtonsLeadingGuide)
+        searchControlsContainer.addSubview(persistentBackButton)
         searchControlsContainer.addSubview(postsToggleButton)
         searchControlsContainer.addSubview(peopleToggleButton)
 
@@ -124,18 +140,31 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
             searchControlsContainerHeight = make.height.equalTo(Size.searchControlsHeight).constraint
         }
 
+        toggleButtonsLeadingGuide.snp.makeConstraints { make in
+            showBackButtonConstraint = make.leading.trailing.equalTo(persistentBackButton.snp.trailing).offset(Size.backButtonMargin).constraint
+            hideBackButtonConstraint = make.leading.trailing.equalTo(searchControlsContainer.snp.leading).offset(Size.margins).constraint
+        }
+        showBackButtonConstraint.deactivate()
+
+        persistentBackButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        persistentBackButton.snp.makeConstraints { make in
+            make.leading.equalTo(searchControlsContainer).offset(Size.backButtonMargin)
+            make.bottom.equalTo(searchControlsContainer).offset(-Size.bottomMargin)
+            make.height.equalTo(Size.searchButtonsHeight)
+        }
+
         postsToggleButton.snp.makeConstraints { make in
-            make.leading.equalTo(searchControlsContainer).offset(Size.margins)
-            make.bottom.equalTo(searchControlsContainer)
-            make.height.equalTo(Size.searchControlsHeight)
+            make.leading.equalTo(toggleButtonsLeadingGuide)
+            make.bottom.equalTo(searchControlsContainer).offset(-Size.bottomMargin)
+            make.height.equalTo(Size.searchButtonsHeight)
         }
 
         peopleToggleButton.snp.makeConstraints { make in
             make.trailing.equalTo(searchControlsContainer).offset(-Size.margins)
             make.leading.equalTo(postsToggleButton.snp.trailing)
             make.width.equalTo(postsToggleButton)
-            make.bottom.equalTo(searchControlsContainer)
-            make.height.equalTo(Size.searchControlsHeight)
+            make.bottom.equalTo(searchControlsContainer).offset(-Size.bottomMargin)
+            make.height.equalTo(Size.searchButtonsHeight)
         }
 
         findFriendsContainer.snp.makeConstraints { make in
@@ -169,12 +198,9 @@ extension SearchScreen {
         elloAnimate {
             self.searchControlsContainerTop.update(offset: ElloNavigationBar.Size.height)
             if Globals.isIphoneX {
-                let newHeight = Size.searchControlsHeight
-                let delta = self.searchControlsContainer.frame.height - Size.searchControlsHeight
-                self.postsToggleButton.frame.origin.y -= delta
-                self.peopleToggleButton.frame.origin.y -= delta
-                self.searchControlsContainerHeight.update(offset: newHeight)
+                self.updateSearchControlsHeight(Size.searchControlsHeight)
             }
+            self.showBackButton = false
             self.layoutIfNeeded()
         }
     }
@@ -183,14 +209,18 @@ extension SearchScreen {
         elloAnimate {
             self.searchControlsContainerTop.update(offset: 0)
             if Globals.isIphoneX {
-                let newHeight = Size.searchControlsTallHeight
-                let delta = self.searchControlsContainer.frame.height - Size.searchControlsTallHeight
-                self.postsToggleButton.frame.origin.y -= delta
-                self.peopleToggleButton.frame.origin.y -= delta
-                self.searchControlsContainerHeight.update(offset: newHeight)
+                self.updateSearchControlsHeight(Size.searchControlsTallHeight)
             }
+            self.showBackButton = true
             self.layoutIfNeeded()
         }
+    }
+
+    private func updateSearchControlsHeight(_ newHeight: CGFloat) {
+        let delta = searchControlsContainer.frame.height - newHeight
+        postsToggleButton.frame.origin.y -= delta
+        peopleToggleButton.frame.origin.y -= delta
+        searchControlsContainerHeight.update(offset: newHeight)
     }
 
     func updateInsets(bottom: CGFloat) {
@@ -337,4 +367,23 @@ extension SearchScreen {
         }
     }
 
+}
+
+extension SearchScreen: ArrangeNavBackButton {
+    func arrangeNavBackButton(_ button: UIButton) {
+    }
+
+    private func updateBackButton() {
+        if showBackButton {
+            persistentBackButton.alpha = 1
+            showBackButtonConstraint.activate()
+            hideBackButtonConstraint.deactivate()
+        }
+        else {
+            persistentBackButton.alpha = 0
+            showBackButtonConstraint.deactivate()
+            hideBackButtonConstraint.activate()
+        }
+        searchControlsContainer.layoutIfNeeded()
+    }
 }

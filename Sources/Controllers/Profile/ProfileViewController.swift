@@ -184,6 +184,8 @@ final class ProfileViewController: StreamableViewController {
         var leftItems: [ElloNavigationBar.Item] = []
         if !isRootViewController() {
             leftItems.append(.back)
+            screen.hasBackButton = true
+
             if !isCurrentUser, currentUser != nil {
                 leftItems.append(.more)
             }
