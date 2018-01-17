@@ -60,11 +60,11 @@ class PostbarController: UIResponder {
         responder?.postTappedInStream(cell)
     }
 
-    func viewsButtonTapped(post: Post) {
+    func viewsButtonTapped(post: Post, scrollToComments: Bool) {
         Tracker.shared.viewsButtonTapped(post: post)
 
         let responder: PostTappedResponder? = findProperResponder()
-        responder?.postTapped(post)
+        responder?.postTapped(post, scrollToComments: scrollToComments)
     }
 
     func commentsButtonTapped(cell: StreamFooterCell, imageLabelControl: ImageLabelControl) {
@@ -142,7 +142,6 @@ class PostbarController: UIResponder {
             return
         }
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
-
 
         let message = InterfaceString.Post.DeleteCommentConfirm
         let alertController = AlertViewController(message: message)

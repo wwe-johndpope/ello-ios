@@ -489,7 +489,7 @@ extension LightboxScreen: PostToolbarDelegate {
 
     @objc
     func toolbarCommentsButtonTapped(commentsControl control: ImageLabelControl) {
-        delegate?.viewAction()
+        delegate?.commentsAction()
     }
 
     @objc

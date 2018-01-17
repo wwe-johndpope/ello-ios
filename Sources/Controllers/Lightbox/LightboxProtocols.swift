@@ -9,6 +9,7 @@ protocol LightboxControllerDelegate: class {
 
 protocol LightboxScreenDelegate: class {
     func viewAction()
+    func commentsAction()
     func loveAction(animationLocation: CGPoint)
     func loveAction()
     func repostAction()

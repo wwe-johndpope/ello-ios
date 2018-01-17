@@ -203,22 +203,29 @@ extension StreamableViewController: HasHamburgerButton {
 extension StreamableViewController: PostTappedResponder {
 
     func postTapped(_ post: Post) {
-        self.postTapped(postId: post.id, scrollToComment: nil)
+        postTapped(postId: post.id, scrollToComment: nil)
     }
 
-    func postTapped(_ post: Post, scrollToComment lastComment: ElloComment?) {
-        self.postTapped(postId: post.id, scrollToComment: lastComment)
+    func postTapped(_ post: Post, scrollToComment comment: ElloComment?) {
+        postTapped(postId: post.id, scrollToComment: comment)
     }
 
     func postTapped(postId: String) {
-        self.postTapped(postId: postId, scrollToComment: nil)
+        postTapped(postId: postId, scrollToComment: nil)
     }
 
-    private func postTapped(postId: String, scrollToComment lastComment: ElloComment?) {
+    func postTapped(_ post: Post, scrollToComments: Bool) {
+        let vc = postTapped(postId: post.id, scrollToComment: nil)
+        vc.scrollToComments = scrollToComments
+    }
+
+    @discardableResult
+    private func postTapped(postId: String, scrollToComment comment: ElloComment?) -> PostDetailViewController {
         let vc = PostDetailViewController(postParam: postId)
-        vc.scrollToComment = lastComment
+        vc.scrollToComment = comment
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
+        return vc
     }
 }
 

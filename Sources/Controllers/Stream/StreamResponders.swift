@@ -94,6 +94,7 @@ protocol PostCommentsResponder: class {
 protocol PostTappedResponder: class {
     func postTapped(_ post: Post)
     func postTapped(_ post: Post, scrollToComment: ElloComment?)
+    func postTapped(_ post: Post, scrollToComments: Bool)
     func postTapped(postId: String)
 }
 

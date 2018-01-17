@@ -75,7 +75,15 @@ extension LightboxViewController: LightboxScreenDelegate {
         dismissAction()
 
         let post = allItems[selectedIndex].post
-        postbarController?.viewsButtonTapped(post: post)
+        postbarController?.viewsButtonTapped(post: post, scrollToComments: false)
+    }
+
+    @objc
+    func commentsAction() {
+        dismissAction()
+
+        let post = allItems[selectedIndex].post
+        postbarController?.viewsButtonTapped(post: post, scrollToComments: true)
     }
 
     @objc
