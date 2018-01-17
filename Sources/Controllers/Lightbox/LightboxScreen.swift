@@ -463,7 +463,7 @@ class LightboxScreen: Screen {
 
     @objc
     func loveAction(gesture: UITapGestureRecognizer) {
-        let location = gesture.location(in: nil)
+        let location = gesture.location(in: self)
         delegate?.loveAction(animationLocation: location)
     }
 
