@@ -179,7 +179,7 @@ extension StreamFooterCell: LoveableCell {
 extension StreamFooterCell {
     class Specs {
         weak var target: StreamFooterCell!
-        var toolbar: UIToolbar! { return target.toolbar }
+        var toolbar: PostToolbar! { return target.toolbar }
 
         init(_ target: StreamFooterCell) {
             self.target = target

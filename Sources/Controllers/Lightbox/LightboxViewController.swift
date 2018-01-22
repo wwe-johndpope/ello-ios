@@ -2,6 +2,9 @@
 ///  LightboxViewController.swift
 //
 
+import PromiseKit
+
+
 class LightboxViewController: BaseElloViewController {
     struct Item {
         let path: IndexPath
@@ -13,7 +16,7 @@ class LightboxViewController: BaseElloViewController {
     private var selectedIndex: Int
     private var postChangedNotification: NotificationObserver?
     weak var delegate: LightboxControllerDelegate?
-    weak var postbarController: PostbarController?
+    weak var streamViewController: StreamViewController?
 
     private var _mockScreen: LightboxScreen?
     var screen: LightboxScreen {
@@ -77,24 +80,30 @@ class LightboxViewController: BaseElloViewController {
 extension LightboxViewController: LightboxScreenDelegate {
     @objc
     func viewAction() {
+        guard let postbarController = streamViewController?.postbarController else { return }
+
         dismissAction()
 
         let post = allItems[selectedIndex].post
-        postbarController?.viewsButtonTapped(post: post, scrollToComments: false)
+        postbarController.viewsButtonTapped(post: post, scrollToComments: false)
     }
 
     @objc
     func commentsAction() {
+        guard let postbarController = streamViewController?.postbarController else { return }
+
         dismissAction()
 
         let post = allItems[selectedIndex].post
-        postbarController?.viewsButtonTapped(post: post, scrollToComments: true)
+        postbarController.viewsButtonTapped(post: post, scrollToComments: true)
     }
 
     @objc
     func loveAction() {
+        guard let postbarController = streamViewController?.postbarController else { return }
+
         let post = allItems[selectedIndex].post
-        postbarController?.lovesButtonTapped(post: post)
+        postbarController.lovesButtonTapped(post: post)
     }
 
     @objc
@@ -111,14 +120,18 @@ extension LightboxViewController: LightboxScreenDelegate {
 
     @objc
     func repostAction() {
+        guard let postbarController = streamViewController?.postbarController else { return }
+
         let post = allItems[selectedIndex].post
-        postbarController?.repostButtonTapped(post: post, presentingController: self)
+        postbarController.repostButtonTapped(post: post, presentingController: self)
     }
 
     @objc
     func shareAction(control: UIView) {
+        guard let postbarController = streamViewController?.postbarController else { return }
+
         let post = allItems[selectedIndex].post
-        postbarController?.shareButtonTapped(post: post, sourceView: control, presentingController: self)
+        postbarController.shareButtonTapped(post: post, sourceView: control, presentingController: self)
     }
 
     @objc
@@ -136,7 +149,8 @@ extension LightboxViewController: LightboxScreenDelegate {
     func didMoveBy(delta: Int) {
         guard selectedIndex + delta >= 0 && selectedIndex + delta < allItems.count else { return }
         selectedIndex += delta
-        delegate?.lightboxShouldScrollTo(indexPath: allItems[selectedIndex].path)
+
+        streamViewController?.scrollTo(indexPath: allItems[selectedIndex].path)
     }
 
     func configureToolbar(_ toolbar: PostToolbar) {
@@ -180,6 +194,24 @@ extension LightboxViewController: LightboxScreenDelegate {
         let current = allItems[selectedIndex].url
         let next = selectedIndex + 1 < allItems.count ? allItems[selectedIndex + 1].url : nil
         return (prev: prev, current: current, next: next)
+    }
+
+    func canLoadMore() -> Bool {
+        return streamViewController?.canLoadNextPage() == true
+    }
+
+    func loadMoreImages() -> Promise<Void> {
+        guard let streamViewController = streamViewController else {
+            let promise = Promise(value: Void())
+            return promise
+        }
+
+        return streamViewController.actuallyLoadNextPage()
+            .then { _ -> Void in
+                let (_, imageItems) = streamViewController.gatherLightboxItems()
+                self.allItems = imageItems
+                self.screen.updateImages(updateToolbar: false)
+            }
     }
 }
 

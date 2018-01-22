@@ -3,14 +3,16 @@
 //
 
 import FLAnimatedImage
+import PromiseKit
+
 
 class StreamImageViewer {
     var prevWindowSize: CGSize?
 
-    weak var presentingController: StreamViewController?
+    weak var streamViewController: StreamViewController?
 
-    init(presentingController: StreamViewController) {
-        self.presentingController = presentingController
+    init(streamViewController: StreamViewController) {
+        self.streamViewController = streamViewController
     }
 }
 
@@ -18,7 +20,7 @@ class StreamImageViewer {
 // MARK: Public
 extension StreamImageViewer {
     func imageTapped(selected index: Int, allItems: [LightboxViewController.Item], currentUser: User?) {
-        guard let presentingController = presentingController else { return }
+        guard let streamViewController = streamViewController else { return }
 
         // tell AppDelegate to allow rotation
         AppDelegate.restrictRotation = false
@@ -27,16 +29,12 @@ extension StreamImageViewer {
         let lightboxViewController = LightboxViewController(selected: index, allItems: allItems)
         lightboxViewController.currentUser = currentUser
         lightboxViewController.delegate = self
-        lightboxViewController.postbarController = presentingController.postbarController
-        presentingController.present(lightboxViewController, animated: true, completion: .none)
+        lightboxViewController.streamViewController = streamViewController
+        streamViewController.present(lightboxViewController, animated: true, completion: .none)
     }
 }
 
 extension StreamImageViewer: LightboxControllerDelegate {
-    func lightboxShouldScrollTo(indexPath: IndexPath) {
-        presentingController?.scrollTo(indexPath: indexPath)
-    }
-
     func lightboxWillDismiss() {
         AppDelegate.restrictRotation = true
 

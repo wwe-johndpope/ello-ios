@@ -55,7 +55,7 @@ class ElloPullToRefreshView: UIView, SSPullToRefreshContentView {
     func setPullProgress(_ pullProgress: CGFloat) {
         self.pullProgress = pullProgress
         if !loading {
-            let progress = min(Double(self.pullProgress), 1.0)
+            let progress = min(Double(pullProgress), 1.0)
             let rotation = interpolate(from: Double.pi, to: Double.pi * 2, at: progress)
             elloLogo.transform = CGAffineTransform( rotationAngle: CGFloat(rotation) )
             setNeedsDisplay()

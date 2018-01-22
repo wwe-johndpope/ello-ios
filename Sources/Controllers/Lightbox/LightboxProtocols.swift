@@ -2,8 +2,10 @@
 ///  LightboxProtocols.swift
 //
 
+import PromiseKit
+
+
 protocol LightboxControllerDelegate: class {
-    func lightboxShouldScrollTo(indexPath: IndexPath)
     func lightboxWillDismiss()
 }
 
@@ -18,6 +20,9 @@ protocol LightboxScreenDelegate: class {
     func dismissAction()
     func isDifferentPost(delta: Int) -> Bool
     func didMoveBy(delta: Int)
-    func imageURLsForScreen() ->(prev: URL?, current: URL, next: URL?)
+    func imageURLsForScreen() -> (prev: URL?, current: URL, next: URL?)
+    func canLoadMore() -> Bool
     func configureToolbar(_: PostToolbar)
+
+    func loadMoreImages() -> Promise<Void>
 }

@@ -70,7 +70,7 @@ final class StreamViewController: BaseElloViewController {
     var responseConfig: ResponseConfig?
 
     var postbarController: PostbarController?
-    lazy var imageViewer: StreamImageViewer = StreamImageViewer(presentingController: self)
+    lazy var imageViewer = StreamImageViewer(streamViewController: self)
 
     var pullToRefreshView: SSPullToRefreshView?
     var allOlderPagesLoaded = false
@@ -826,43 +826,44 @@ extension StreamViewController: StreamImageCellResponder {
         guard
             let indexPath = collectionView.indexPath(for: cell),
             let streamCellItem = collectionViewDataSource.streamCellItem(at: indexPath),
-            let imageRegion = streamCellItem.type.data as? ImageRegion
+            let imageRegion = streamCellItem.type.data as? ImageRegion,
+            let post = collectionViewDataSource.post(at: indexPath)
         else { return }
 
-        let post = collectionViewDataSource.post(at: indexPath)
-        let imageAsset = collectionViewDataSource.imageAsset(at: indexPath)
-        let isGridView = streamCellItem.isGridView(streamKind: streamKind)
-        let isDetail = post.map({ streamKind.isDetail(post: $0) }) ?? false
-
-        if (isGridView || cell.isGif) && !isDetail {
-            guard let post = post else { return }
+        if streamCellItem.isGridView(streamKind: streamKind) {
             sendToPostTappedResponder(post: post, streamCellItem: streamCellItem)
         }
         else {
-            var selectedIndex: Int?
-            var imageItems: [LightboxViewController.Item] = []
-            for index in 0 ..< collectionViewDataSource.visibleCellItems.count {
-                let indexPath = IndexPath(item: index, section: 0)
-                guard
-                    let post = collectionViewDataSource.post(at: indexPath),
-                    let rowImageRegion = collectionViewDataSource.imageRegion(at: indexPath),
-                    let imageURL = rowImageRegion.fullScreenURL
-                else { continue }
-
-                if rowImageRegion == imageRegion {
-                    selectedIndex = imageItems.count
-                }
-                imageItems.append(LightboxViewController.Item(path: indexPath, url: imageURL, post: post))
-            }
+            let (selectedIndex, imageItems) = gatherLightboxItems(selectedImageRegion: imageRegion)
 
             if let selectedIndex = selectedIndex {
                 imageViewer.imageTapped(selected: selectedIndex, allItems: imageItems, currentUser: currentUser)
             }
 
-            if let post = post, let asset = imageAsset {
+            if let asset = collectionViewDataSource.imageAsset(at: indexPath) {
                 Tracker.shared.viewedImage(asset, post: post)
             }
         }
+    }
+
+    func gatherLightboxItems(selectedImageRegion imageRegion: ImageRegion? = nil) -> (Int?, [LightboxViewController.Item]) {
+        var selectedIndex: Int?
+        var imageItems: [LightboxViewController.Item] = []
+        for index in 0 ..< collectionViewDataSource.visibleCellItems.count {
+            let imageIndexPath = IndexPath(item: index, section: 0)
+            guard
+                let imagePost = collectionViewDataSource.post(at: imageIndexPath),
+                let rowImageRegion = collectionViewDataSource.imageRegion(at: imageIndexPath),
+                let imageURL = rowImageRegion.fullScreenURL
+            else { continue }
+
+            if rowImageRegion == imageRegion {
+                selectedIndex = imageItems.count
+            }
+            imageItems.append(LightboxViewController.Item(path: imageIndexPath, url: imageURL, post: imagePost))
+        }
+
+        return (selectedIndex, imageItems)
     }
 }
 
@@ -1217,7 +1218,7 @@ extension StreamViewController: UIScrollViewDelegate {
         }
 
         if scrollToPaginateGuard {
-            self.loadNextPage(scrollView: scrollView)
+            self.maybeLoadNextPage(scrollView: scrollView)
         }
     }
 
@@ -1234,54 +1235,64 @@ extension StreamViewController: UIScrollViewDelegate {
         scrollToPaginateGuard = false
     }
 
-    private func loadNextPage(scrollView: UIScrollView) {
+    private func maybeLoadNextPage(scrollView: UIScrollView) {
         guard
-            isPagingEnabled &&
-            scrollView.contentOffset.y + (self.view.frame.height * 1.666)
-            > scrollView.contentSize.height
+            canLoadNextPage() &&
+            scrollView.contentOffset.y + (view.frame.height * 1.666) > scrollView.contentSize.height
         else { return }
 
-        guard
-            !allOlderPagesLoaded &&
-            responseConfig?.totalPagesRemaining != "0"
-        else { return }
+        actuallyLoadNextPage()
+    }
 
+    func canLoadNextPage() -> Bool {
+        return isPagingEnabled
+            && !allOlderPagesLoaded
+            && responseConfig?.totalPagesRemaining != "0"
+            && responseConfig?.nextQuery != nil
+    }
+
+    @discardableResult
+    func actuallyLoadNextPage() -> Promise<Void> {
         guard
+            canLoadNextPage(),
             let nextQuery = responseConfig?.nextQuery
-        else { return }
+        else { return Promise(value: Void()) }
 
         guard
             let lastCellItem = dataSource.visibleCellItems.last,
             lastCellItem.type != .streamPageLoading
-        else { return }
+        else { return Promise(value: Void()) }
 
         let placeholderType = lastCellItem.placeholderType
         appendStreamCellItems([StreamCellItem(type: .streamPageLoading)])
 
         scrollToPaginateGuard = false
-
         let scrollAPI = ElloAPI.infiniteScroll(query: nextQuery, api: streamKind.endpoint)
-        StreamService().loadStream(endpoint: scrollAPI, streamKind: streamKind)
-            .then { response -> Void in
+        return StreamService().loadStream(endpoint: scrollAPI, streamKind: streamKind)
+            .then { response -> Promise<Void> in
+                let promise: Promise<Void>
                 switch response {
                 case let .jsonables(jsonables, responseConfig):
                     self.allOlderPagesLoaded = jsonables.count == 0
-                    self.scrollLoaded(jsonables: jsonables, placeholderType: placeholderType)
                     self.responseConfig = responseConfig
+                    promise = self.scrollLoaded(jsonables: jsonables, placeholderType: placeholderType)
                 case .empty:
                     self.allOlderPagesLoaded = true
-                    self.scrollLoaded()
+                    promise = self.scrollLoaded()
                 }
+
+                return promise
             }
             .catch { error in
                 self.scrollLoaded()
             }
     }
 
-    private func scrollLoaded(jsonables: [JSONAble] = [], placeholderType: StreamCellType.PlaceholderType? = nil) {
+    @discardableResult
+    private func scrollLoaded(jsonables: [JSONAble] = [], placeholderType: StreamCellType.PlaceholderType? = nil) -> Promise<Void> {
         guard
             let lastIndexPath = collectionView.lastIndexPathForSection(0)
-        else { return }
+        else { return Promise(value: Void()) }
 
         if jsonables.count > 0 {
             if let controller = parent as? BaseElloViewController {
@@ -1292,14 +1303,18 @@ extension StreamViewController: UIScrollViewDelegate {
             for item in items {
                 item.placeholderType = placeholderType
             }
+            let (promise, fulfill, _) = Promise<Void>.pending()
             insertUnsizedCellItems(items, startingIndexPath: lastIndexPath) {
                 self.removeLoadingCell()
                 self.doneLoading()
+                fulfill(Void())
             }
+            return promise
         }
         else {
             removeLoadingCell()
             self.doneLoading()
+            return Promise(value: Void())
         }
     }
 
