@@ -56,6 +56,11 @@ class LightboxViewController: BaseElloViewController {
         self.view = view
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        postNotification(StatusBarNotifications.alertStatusBarVisibility, value: false)
+    }
+
     private func updateItems(post: Post) {
         for (index, item) in allItems.enumerated() {
             guard item.post.id == post.id else { continue }
@@ -118,6 +123,7 @@ extension LightboxViewController: LightboxScreenDelegate {
 
     @objc
     func dismissAction() {
+        postNotification(StatusBarNotifications.alertStatusBarVisibility, value: true)
         delegate?.lightboxWillDismiss()
         dismiss(animated: true, completion: .none)
     }

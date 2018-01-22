@@ -6,7 +6,6 @@ import FLAnimatedImage
 
 class StreamImageViewer {
     var prevWindowSize: CGSize?
-    var statusBarWasVisible: Bool?
 
     weak var presentingController: StreamViewController?
 
@@ -24,9 +23,6 @@ extension StreamImageViewer {
         // tell AppDelegate to allow rotation
         AppDelegate.restrictRotation = false
         prevWindowSize = UIWindow.windowSize()
-
-        statusBarWasVisible = presentingController.appViewController?.statusBarIsVisible
-        postNotification(StatusBarNotifications.statusBarVisibility, value: false)
 
         let lightboxViewController = LightboxViewController(selected: index, allItems: allItems)
         lightboxViewController.currentUser = currentUser
@@ -46,10 +42,6 @@ extension StreamImageViewer: LightboxControllerDelegate {
 
         if let prevSize = prevWindowSize, prevSize != UIWindow.windowSize() {
             postNotification(Application.Notifications.ViewSizeWillChange, value: UIWindow.windowSize())
-        }
-
-        if let statusBarWasVisible = statusBarWasVisible {
-            postNotification(StatusBarNotifications.statusBarVisibility, value: statusBarWasVisible)
         }
     }
 }
