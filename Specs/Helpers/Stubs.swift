@@ -199,6 +199,7 @@ extension Profile: Stubbable {
         let notifyOfMentionsViaEmail: Bool = (values["notifyOfMentionsViaEmail"] as? Bool) ?? true
         let notifyOfNewFollowersViaEmail: Bool = (values["notifyOfNewFollowersViaEmail"] as? Bool) ?? true
         let notifyOfRepostsViaEmail: Bool = (values["notifyOfRepostsViaEmail"] as? Bool) ?? true
+        let notifyOfWhatYouMissedViaEmail: Bool = (values["notifyOfWhatYouMissedViaEmail"] as? Bool) ?? true
         let subscribeToUsersEmailList: Bool = (values["subscribeToUsersEmailList"] as? Bool) ?? true
         let subscribeToDailyEllo: Bool = (values["subscribeToDailyEllo"] as? Bool) ?? true
         let subscribeToWeeklyEllo: Bool = (values["subscribeToWeeklyEllo"] as? Bool) ?? true
@@ -215,6 +216,7 @@ extension Profile: Stubbable {
         let notifyOfWatchesViaEmail: Bool = (values["notifyOfWatchesViaEmail"] as? Bool) ?? true
         let notifyOfCommentsOnPostWatchViaPush: Bool = (values["notifyOfCommentsOnPostWatchViaPush"] as? Bool) ?? true
         let notifyOfCommentsOnPostWatchViaEmail: Bool = (values["notifyOfCommentsOnPostWatchViaEmail"] as? Bool) ?? true
+        let notifyOfApprovedSubmissionsFromFollowingViaPush: Bool = (values["notifyOfApprovedSubmissionsFromFollowingViaPush"] as? Bool) ?? true
         let hasAnnouncementsEnabled: Bool = (values["hasAnnouncementsEnabled"] as? Bool) ?? true
         let discoverable: Bool = (values["discoverable"] as? Bool) ?? true
         let creatorTypeCategoryIds: [String] = []
@@ -240,6 +242,7 @@ extension Profile: Stubbable {
             notifyOfMentionsViaEmail: notifyOfMentionsViaEmail,
             notifyOfNewFollowersViaEmail: notifyOfNewFollowersViaEmail,
             notifyOfRepostsViaEmail: notifyOfRepostsViaEmail,
+            notifyOfWhatYouMissedViaEmail: notifyOfWhatYouMissedViaEmail,
             subscribeToUsersEmailList: subscribeToUsersEmailList,
             subscribeToDailyEllo: subscribeToDailyEllo,
             subscribeToWeeklyEllo: subscribeToWeeklyEllo,
@@ -256,6 +259,7 @@ extension Profile: Stubbable {
             notifyOfWatchesViaEmail: notifyOfWatchesViaEmail,
             notifyOfCommentsOnPostWatchViaPush: notifyOfCommentsOnPostWatchViaPush,
             notifyOfCommentsOnPostWatchViaEmail: notifyOfCommentsOnPostWatchViaEmail,
+            notifyOfApprovedSubmissionsFromFollowingViaPush: notifyOfApprovedSubmissionsFromFollowingViaPush,
             hasAnnouncementsEnabled: hasAnnouncementsEnabled,
             discoverable: discoverable
         )
