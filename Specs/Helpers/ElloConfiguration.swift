@@ -40,6 +40,8 @@ class ElloConfiguration: QuickConfiguration {
             ]
 
             Globals.nowGenerator = { return now }
+
+            UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         }
 
         config.beforeEach {
@@ -73,6 +75,7 @@ class ElloConfiguration: QuickConfiguration {
         config.afterSuite {
             AuthToken.sharedKeychain = ElloKeychain()
             ElloProvider.sharedProvider = ElloProvider.DefaultProvider()
+            UserDefaults.standard.setValue(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         }
     }
 }
