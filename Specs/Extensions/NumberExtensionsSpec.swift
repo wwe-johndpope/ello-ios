@@ -8,7 +8,7 @@ import Nimble
 
 class NumberExtensionsSpec: QuickSpec {
     override func spec() {
-        describe("NumberExtensions") {
+        describe("Number") {
             let expectations: [(Int, String)] = [
                 (123, "123"),
                 (1234, "1.2K"),

@@ -90,7 +90,7 @@ class PostbarControllerSpec: QuickSpec {
 
                 context("tapping replyToAll") {
                     it("opens an OmnibarViewController with usernames set") {
-                        subject.replyToAllButtonTapped(cell)
+                        subject.replyToAllButtonTapped(cell: cell)
                         expect(responder.text) == "@user1 @user2 "
                     }
                 }

@@ -15,24 +15,7 @@ class SimpleStreamViewControllerSpec: QuickSpec {
             subject = SimpleStreamViewController(endpoint: ElloAPI.userStreamFollowers(userId: "666"), title: "Followers")
         }
 
-        describe("initialization") {
-
-            it("can be instantiated") {
-                expect(subject).notTo(beNil())
-            }
-
-            it("is a BaseElloViewController") {
-                expect(subject).to(beAKindOf(BaseElloViewController.self))
-            }
-
-            it("is a StreamableViewController") {
-                expect(subject).to(beAKindOf(StreamableViewController.self))
-            }
-
-            it("is a SimpleStreamViewController") {
-                expect(subject).to(beAKindOf(SimpleStreamViewController.self))
-            }
-
+        describe("SimpleStreamViewController") {
             it("sets the title") {
                 expect(subject.title) == "Followers"
             }

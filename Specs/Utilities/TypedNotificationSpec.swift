@@ -22,48 +22,50 @@ class TypedNotificationSpec: QuickSpec {
     }
 
     override func spec() {
-        describe("posting a notification") {
-            beforeEach() {
-                self.didNotify = nil
-                NotificationCenter.default.addObserver(self, selector: #selector(TypedNotificationSpec.receivedNotification(_:)), name: self.notification.name, object: nil)
-            }
+        describe("TypedNotification") {
+            describe("posting a notification") {
+                beforeEach() {
+                    self.didNotify = nil
+                    NotificationCenter.default.addObserver(self, selector: #selector(TypedNotificationSpec.receivedNotification(_:)), name: self.notification.name, object: nil)
+                }
 
-            afterEach() {
-                NotificationCenter.default.removeObserver(self)
-            }
+                afterEach() {
+                    NotificationCenter.default.removeObserver(self)
+                }
 
-            it("should post a notification") {
-                postNotification(self.notification, value: "testing")
-                expect(self.didNotify).to(equal("testing"))
-            }
-        }
-
-        describe("observing a notification") {
-            beforeEach() {
-                self.didNotify = nil
-                self.observer = NotificationObserver(notification: self.notification) { value in
-                    self.didNotify = value
+                it("should post a notification") {
+                    postNotification(self.notification, value: "testing")
+                    expect(self.didNotify).to(equal("testing"))
                 }
             }
 
-            it("should receive a notification") {
-                NotificationCenter.default.post(name: self.notification.name, object: nil, userInfo: ["value": Box("testing")])
-                expect(self.didNotify).to(equal("testing"))
-            }
-        }
+            describe("observing a notification") {
+                beforeEach() {
+                    self.didNotify = nil
+                    self.observer = NotificationObserver(notification: self.notification) { value in
+                        self.didNotify = value
+                    }
+                }
 
-        describe("stop observing a notification") {
-            beforeEach() {
-                self.didNotify = nil
-                self.observer = NotificationObserver(notification: self.notification) { value in
-                    self.didNotify = value
+                it("should receive a notification") {
+                    NotificationCenter.default.post(name: self.notification.name, object: nil, userInfo: ["value": Box("testing")])
+                    expect(self.didNotify).to(equal("testing"))
                 }
             }
 
-            it("should be able to stop observing") {
-                self.observer!.removeObserver()
-                NotificationCenter.default.post(name: self.notification.name, object: nil, userInfo: ["value": Box("testing")])
-                expect(self.didNotify).to(beNil())
+            describe("stop observing a notification") {
+                beforeEach() {
+                    self.didNotify = nil
+                    self.observer = NotificationObserver(notification: self.notification) { value in
+                        self.didNotify = value
+                    }
+                }
+
+                it("should be able to stop observing") {
+                    self.observer!.removeObserver()
+                    NotificationCenter.default.post(name: self.notification.name, object: nil, userInfo: ["value": Box("testing")])
+                    expect(self.didNotify).to(beNil())
+                }
             }
         }
     }

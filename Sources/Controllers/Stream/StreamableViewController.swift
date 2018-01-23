@@ -3,7 +3,7 @@
 //
 
 class StreamableViewController: BaseElloViewController {
-    @IBOutlet weak var viewContainer: UIView!
+    weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
     let tapToShowTop = UIControl()
@@ -52,6 +52,11 @@ class StreamableViewController: BaseElloViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let streamView = viewForStream()
+        if streamView.superview != view && streamView != view {
+            view.addSubview(streamView)
+        }
+
         setupStreamController()
         scrollLogic = ElloScrollLogic(
             onShow: { [weak self] in self?.showNavBars() },
@@ -59,7 +64,7 @@ class StreamableViewController: BaseElloViewController {
         )
 
         for tapToShow in [tapToShowTop, tapToShowBottom] {
-            viewForStream().addSubview(tapToShow)
+            streamView.addSubview(tapToShow)
             tapToShow.isUserInteractionEnabled = false
             tapToShow.addTarget(self, action: #selector(tapToShowTapped), for: .touchUpInside)
         }

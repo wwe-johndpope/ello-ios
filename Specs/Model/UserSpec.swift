@@ -15,7 +15,6 @@ class UserSpec: QuickSpec {
         describe("User") {
 
             describe("coverImageURL") {
-
                 let originalPng: Attachment = stub(["url": "http://original.png"])
                 let originalGif: Attachment = stub(["url": "http://original.gif"])
                 let optimized: Attachment = stub(["url": "http://optimized.png"])
@@ -58,8 +57,8 @@ class UserSpec: QuickSpec {
                     expect(subject.coverImageURL(viewsAdultContent: true, animated: true)) == originalGif.url
                 }
             }
-            describe("avatarURL") {
 
+            describe("avatarURL") {
                 let originalPng: Attachment = stub(["url": "http://original.png"])
                 let originalGif: Attachment = stub(["url": "http://original.gif"])
                 let large: Attachment = stub(["url": "http://large.png"])
@@ -179,188 +178,67 @@ class UserSpec: QuickSpec {
                 }
             }
 
-            describe("+fromJSON:") {
-
-                it("parses correctly") {
-                    let data = stubbedJSONData("users_user_details", "users")
-                    let user = User.fromJSON(data) as! User
-                    expect(user.id) == "420"
-                    expect(user.href) == "/api/v2/users/420"
-                    expect(user.username) == "pam"
-                    expect(user.name) == "Pamilanderson"
-                    expect(user.experimentalFeatures) == true
-                    expect(user.relationshipPriority) == RelationshipPriority.none
-                    expect(user.hasLovesEnabled) == true
-                    expect(user.hasRepostingEnabled) == false
-                    expect(user.hasSharingEnabled) == true
-                    expect(user.isCollaborateable) == true
-                    expect(user.isHireable) == true
-                    expect(user.avatar).to(beAKindOf(Asset.self))
-                    expect(user.identifiableBy) == ""
-                    expect(user.postsCount!) == 4
-                    expect(user.followersCount!) == "0"
-                    expect(user.followingCount!) == 0
-                    expect(user.totalViewsCount!) == 9762
-                    expect(user.location) == "Denver"
-                    expect(user.formattedShortBio) == "<p>Have been spying for a while now.</p>"
-    //                expect(user.externalLinks) == "http://isis.com http://ello.co"
-                    expect(user.coverImage).to(beAKindOf(Asset.self))
-                    expect(user.backgroundPosition) == ""
-                    expect(user.isCurrentUser) == false
+            describe("merge(JSONAble)") {
+                it("returns non-User objects") {
+                    let post: Post = stub([:])
+                    let user: User = stub([:])
+                    expect(user.merge(post)) == post
+                }
+                it("returns User objects") {
+                    let userA: User = stub([:])
+                    let userB: User = stub([:])
+                    expect(userA.merge(userB)) == userB
+                }
+                it("merges the formattedShortBio") {
+                    let userA: User = stub(["formattedShortBio": "userA"])
+                    let userB: User = stub(["formattedShortBio": "userB"])
+                    let merged = userA.merge(userB) as! User
+                    expect(merged.formattedShortBio) == "userB"
+                }
+                it("preserves the formattedShortBio") {
+                    let userA: User = stub(["formattedShortBio": "userA"])
+                    let userB: User = stub([:])
+                    let merged = userA.merge(userB) as! User
+                    expect(merged.formattedShortBio) == "userA"
                 }
             }
 
-           context("NSCoding") {
+            describe("updateDefaultImages") {
+                let uploadedURL = URL(string: "https://assets0.ello.co/images/uploaded.png")
+                let defaultAsset: Asset = stub(["url": "https://assets0.ello.co/images/ello-default-large.png"])
+                let customAsset: Asset = stub(["url": "https://assets0.ello.co/images/custom.png"])
 
-                var filePath = ""
-                if let url = URL(string: FileManager.ElloDocumentsDir()) {
-                    filePath = url.appendingPathComponent("UserSpec").absoluteString
+                it("ignores nil URLs") {
+                    let user = User.stub(["avatar": defaultAsset, "coverImage": defaultAsset])
+                    user.updateDefaultImages(avatarURL: nil, coverImageURL: nil)
+                    expect(user.avatarURL()?.absoluteString).to(contain("ello-default-large"))
                 }
-
-                afterEach {
-                    do {
-                        try FileManager.default.removeItem(atPath: filePath)
-                    }
-                    catch {
-
-                    }
+                it("ignores replaces nil assets") {
+                    let user = User.stub([:])
+                    user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: uploadedURL)
+                    expect(user.avatarURL()?.absoluteString).to(contain("uploaded"))
+                    expect(user.coverImageURL()?.absoluteString).to(contain("uploaded"))
                 }
-
-                context("encoding") {
-
-                    it("encodes successfully") {
-                        let user: User = stub([:])
-
-                        let wasSuccessfulArchived = NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
-
-                        expect(wasSuccessfulArchived).to(beTrue())
-                    }
+                it("replaces default avatar") {
+                    let user = User.stub(["avatar": defaultAsset])
+                    user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: nil)
+                    expect(user.avatarURL()?.absoluteString).to(contain("uploaded"))
                 }
-
-                context("decoding") {
-
-                    it("decodes successfully") {
-                        let post: Post = stub(["id": "sample-post-id"])
-                        let attachment: Attachment = stub(["url": URL(string: "http://www.example.com")!, "height": 0, "width": 0, "type": "png", "size": 0 ])
-                        let asset: Asset = stub(["regular": attachment])
-                        let coverAttachment: Attachment = stub(["url": URL(string: "http://www.example2.com")!, "height": 0, "width": 0, "type": "png", "size": 0 ])
-                        let coverAsset: Asset = stub(["hdpi": coverAttachment])
-
-                        let user: User = stub([
-                            "avatar": asset,
-                            "coverImage": coverAsset,
-                            "experimentalFeatures": true,
-                            "followersCount": "6",
-                            "followingCount": 8,
-                            "href": "sample-href",
-                            "name": "sample-name",
-                            "posts": [post],
-                            "postsCount": 9,
-                            "relationshipPriority": "self",
-                            "id": "sample-userId",
-                            "username": "sample-username",
-                            "profile": Profile.stub(["email": "sample@email.com"]) ,
-                            "formattedShortBio": "sample-short-bio",
-                            "externalLinks": "sample-external-links"
-                        ])
-
-                        user.totalViewsCount = 5003
-                        user.location = "Boulder"
-
-                        NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
-                        let unArchivedUser = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as! User
-
-                        expect(unArchivedUser).toNot(beNil())
-                        expect(unArchivedUser.version) == UserVersion
-
-                        expect(unArchivedUser.avatarURL()?.absoluteString) == "http://www.example.com"
-                        expect(unArchivedUser.coverImageURL(viewsAdultContent: true)?.absoluteString) == "http://www.example2.com"
-                        expect(unArchivedUser.experimentalFeatures).to(beTrue())
-                        expect(unArchivedUser.followersCount) == "6"
-                        expect(unArchivedUser.followingCount) == 8
-                        expect(unArchivedUser.href) == "sample-href"
-                        expect(unArchivedUser.name) == "sample-name"
-                        expect(unArchivedUser.hasCommentingEnabled) == true
-                        expect(unArchivedUser.hasLovesEnabled) == true
-                        expect(unArchivedUser.hasSharingEnabled) == true
-                        expect(unArchivedUser.hasRepostingEnabled) == true
-                        expect(unArchivedUser.totalViewsCount) == 5003
-                        expect(unArchivedUser.location) == "Boulder"
-
-                        let firstPost = unArchivedUser.posts!.first!
-                        expect(firstPost.id) == "sample-post-id"
-
-                        expect(unArchivedUser.relationshipPriority.rawValue) == "self"
-                        expect(unArchivedUser.id) == "sample-userId"
-                        expect(unArchivedUser.username) == "sample-username"
-                        expect(unArchivedUser.formattedShortBio) == "sample-short-bio"
-    //                    expect(unArchivedUser.externalLinks) == "sample-external-links"
-                        expect(unArchivedUser.isCurrentUser).to(beTrue())
-                    }
+                it("replaces default cover image") {
+                    let user = User.stub(["coverImage": defaultAsset])
+                    user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: nil)
+                    expect(user.coverImageURL()?.absoluteString).to(contain("uploaded"))
                 }
-            }
-        }
-
-        describe("merge(JSONAble)") {
-            it("returns non-User objects") {
-                let post: Post = stub([:])
-                let user: User = stub([:])
-                expect(user.merge(post)) == post
-            }
-            it("returns User objects") {
-                let userA: User = stub([:])
-                let userB: User = stub([:])
-                expect(userA.merge(userB)) == userB
-            }
-            it("merges the formattedShortBio") {
-                let userA: User = stub(["formattedShortBio": "userA"])
-                let userB: User = stub(["formattedShortBio": "userB"])
-                let merged = userA.merge(userB) as! User
-                expect(merged.formattedShortBio) == "userB"
-            }
-            it("preserves the formattedShortBio") {
-                let userA: User = stub(["formattedShortBio": "userA"])
-                let userB: User = stub([:])
-                let merged = userA.merge(userB) as! User
-                expect(merged.formattedShortBio) == "userA"
-            }
-        }
-
-        describe("updateDefaultImages") {
-            let uploadedURL = URL(string: "https://assets0.ello.co/images/uploaded.png")
-            let defaultAsset: Asset = stub(["url": "https://assets0.ello.co/images/ello-default-large.png"])
-            let customAsset: Asset = stub(["url": "https://assets0.ello.co/images/custom.png"])
-
-            it("ignores nil URLs") {
-                let user = User.stub(["avatar": defaultAsset, "coverImage": defaultAsset])
-                user.updateDefaultImages(avatarURL: nil, coverImageURL: nil)
-                expect(user.avatarURL()?.absoluteString).to(contain("ello-default-large"))
-            }
-            it("ignores replaces nil assets") {
-                let user = User.stub([:])
-                user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: uploadedURL)
-                expect(user.avatarURL()?.absoluteString).to(contain("uploaded"))
-                expect(user.coverImageURL()?.absoluteString).to(contain("uploaded"))
-            }
-            it("replaces default avatar") {
-                let user = User.stub(["avatar": defaultAsset])
-                user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: nil)
-                expect(user.avatarURL()?.absoluteString).to(contain("uploaded"))
-            }
-            it("replaces default cover image") {
-                let user = User.stub(["coverImage": defaultAsset])
-                user.updateDefaultImages(avatarURL: uploadedURL, coverImageURL: nil)
-                expect(user.coverImageURL()?.absoluteString).to(contain("uploaded"))
-            }
-            it("ignores custom avatar") {
-                let user = User.stub(["avatar": customAsset])
-                user.updateDefaultImages(avatarURL: nil, coverImageURL: uploadedURL)
-                expect(user.avatarURL()?.absoluteString).to(contain("custom"))
-            }
-            it("ignores custom cover image") {
-                let user = User.stub(["coverImage": customAsset])
-                user.updateDefaultImages(avatarURL: nil, coverImageURL: uploadedURL)
-                expect(user.coverImageURL()?.absoluteString).to(contain("custom"))
+                it("ignores custom avatar") {
+                    let user = User.stub(["avatar": customAsset])
+                    user.updateDefaultImages(avatarURL: nil, coverImageURL: uploadedURL)
+                    expect(user.avatarURL()?.absoluteString).to(contain("custom"))
+                }
+                it("ignores custom cover image") {
+                    let user = User.stub(["coverImage": customAsset])
+                    user.updateDefaultImages(avatarURL: nil, coverImageURL: uploadedURL)
+                    expect(user.coverImageURL()?.absoluteString).to(contain("custom"))
+                }
             }
         }
     }

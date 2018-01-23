@@ -31,9 +31,7 @@ class ProfileStatsViewSpec: QuickSpec {
                 subject.followingCount = "4.5K"
                 subject.followersCount = "∞"
                 subject.lovesCount = "6.8M"
-                let button: UIButton! = subview(of: subject, thatMatches: { view in
-                    return view is UIButton
-                })
+                let button: UIButton! = subview(of: subject)
                 button.sendActions(for: .touchDown)
                 expectValidSnapshot(subject, named: "ProfileStatsView-highlighted")
             }

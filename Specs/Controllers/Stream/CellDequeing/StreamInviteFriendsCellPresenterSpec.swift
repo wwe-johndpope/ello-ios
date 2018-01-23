@@ -9,8 +9,7 @@ import Nimble
 class StreamInviteFriendsCellPresenterSpec: QuickSpec {
 
     override func spec() {
-
-        describe("configure") {
+        describe("StreamInviteFriendsCellPresenter") {
             var cell: StreamInviteFriendsCell = StreamInviteFriendsCell.loadFromNib()
             var person: LocalPerson = stub([:])
             var item: StreamCellItem = stub([:])
@@ -33,12 +32,11 @@ class StreamInviteFriendsCellPresenterSpec: QuickSpec {
             }
 
             // not 100% sure why this isn't doing what I expect it to
-            xit("sets the button text to Re-send if in the cache") {
+            it("sets the button text to Re-send if in the cache") {
                 cell.inviteCache?.saveInvite(person.identifier)
                 StreamInviteFriendsCellPresenter.configure(cell, streamCellItem: item, streamKind: StreamKind.following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
                 expect(cell.inviteButton.titleLabel?.text) == "Re-send"
             }
         }
-
     }
 }

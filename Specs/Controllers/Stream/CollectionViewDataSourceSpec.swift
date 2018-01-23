@@ -194,7 +194,6 @@ class CollectionViewDataSourceSpec: QuickSpec {
                     expect(subject.group(at: lastIndexPath)).to(beNil())
                 }
             }
-
         }
     }
 }

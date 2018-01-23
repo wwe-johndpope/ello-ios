@@ -44,13 +44,13 @@ class CategoryCardListViewSpec: QuickSpec {
 
             describe("CategoryCardListDelegate") {
                 it("informs delegates of all categories selection") {
-                    let button: UIButton! = allSubviews(of: subject, thatMatch: { $0 is UIButton }).first
+                    let button: UIButton! = allSubviews(of: subject).first
                     button.sendActions(for: .touchUpInside)
                     expect(delegate.allCategoriesTappedCount) == 1
                 }
 
                 it("informs delegates of category selection") {
-                    let button: UIButton! = allSubviews(of: subject, thatMatch: { $0 is UIButton }).last
+                    let button: UIButton! = allSubviews(of: subject).last
                     button.sendActions(for: .touchUpInside)
                     expect(delegate.selectedIndex) == subject.categoriesInfo.count - 1
                 }

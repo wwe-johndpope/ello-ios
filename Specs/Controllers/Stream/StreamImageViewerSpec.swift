@@ -16,19 +16,19 @@ class StreamImageViewerSpec: QuickSpec {
             var subject: StreamImageViewer!
             beforeEach {
                 presentingVC = StreamViewController()
-                subject = StreamImageViewer(presentingController: presentingVC)
+                subject = StreamImageViewer(streamViewController: presentingVC)
             }
 
             describe("imageTapped(_:cell:)") {
                 it("configures AppDelegate to allow rotation") {
-                    subject.imageTapped(FLAnimatedImageView(), imageURL: URL(string: "http://www.example.com/image.jpg"))
+                    subject.imageTapped(selected: 0, allItems: [], currentUser: nil)
                     expect(AppDelegate.restrictRotation) == false
                 }
             }
 
             describe("imageViewerWillDismiss(_:)") {
                 it("configures AppDelegate to prevent rotation") {
-                    subject.imageViewerWillDismiss()
+                    subject.lightboxWillDismiss()
                     expect(AppDelegate.restrictRotation) == true
                 }
             }

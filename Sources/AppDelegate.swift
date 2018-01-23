@@ -2,7 +2,6 @@
 ///  AppDelegate.swift
 //
 
-import Crashlytics
 import Keys
 import TimeAgoInWords
 import PINRemoteImage
@@ -33,8 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
-        #else
-        Crashlytics.start(withAPIKey: ElloKeys().crashlyticsKey())
         #endif
 
         Keyboard.setup()

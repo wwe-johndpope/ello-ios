@@ -50,7 +50,11 @@ class ElloManagerSpec: QuickSpec {
                 if !ElloCerts.isPublic {
                     it("includes 2 ssl certificates in the app") {
                         Globals.isSimulator = false
-                        let policy = ElloManager.serverTrustPolicies["ello.co"]!
+                        guard let policy = ElloManager.serverTrustPolicies["ello.co"] else {
+                            fail("no trust policy for ello.co")
+                            return
+                        }
+
                         var doesValidateChain = false
                         var doesValidateHost = false
                         let keys: [SecKey]

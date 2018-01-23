@@ -14,7 +14,7 @@ class MultipartRequestBuilderSpec: QuickSpec {
         var content = ""
         var builder: MultipartRequestBuilder!
 
-        describe("building a multipart request") {
+        describe("MultipartRequestBuilder") {
             beforeEach {
                 builder = MultipartRequestBuilder(url: url, capacity: 100)
                 builder.addParam("foo", value: "bar")

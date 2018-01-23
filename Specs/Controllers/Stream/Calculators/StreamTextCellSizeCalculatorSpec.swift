@@ -11,11 +11,13 @@ class StreamTextCellSizeCalculatorSpec: QuickSpec {
     override func spec() {
         var subject: StreamTextCellSizeCalculator!
         let mockHeight: CGFloat = 50
+
         beforeEach {
             let webView = MockUIWebView()
             webView.mockHeight = mockHeight
             subject = StreamTextCellSizeCalculator(webView: webView)
         }
+
         describe("StreamTextCellSizeCalculator") {
             it("assigns cell height to all cell items") {
                 let post = Post.stub([:])

@@ -9,7 +9,7 @@ import Nimble
 
 class ElloTextFieldViewSpec: QuickSpec {
     override func spec() {
-        describe("Styling helpers") {
+        describe("ElloTextFieldView") {
             it("should style a text field as an email input") {
                 let usernameView = ElloTextFieldView(frame: .zero)
                 ElloTextFieldView.styleAsUsername(usernameView)

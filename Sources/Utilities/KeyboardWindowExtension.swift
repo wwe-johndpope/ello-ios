@@ -5,12 +5,12 @@
 extension Keyboard {
     @objc
     func willShow(_ notification: Foundation.Notification) {
-        active = true
+        isActive = true
         setFromNotification(notification)
         endFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let window = UIWindow.mainWindow
         bottomInset = window.frame.size.height - endFrame.origin.y
-        external = endFrame.size.height > bottomInset
+        isExternal = endFrame.size.height > bottomInset
 
         postNotification(Notifications.KeyboardWillShow, value: self)
     }
@@ -23,11 +23,11 @@ extension Keyboard {
 
         let windowBottom = UIWindow.mainWindow.frame.size.height
         if endFrame.origin.y >= windowBottom {
-            active = false
-            external = false
+            isActive = false
+            isExternal = false
         }
         else {
-            external = true
+            isExternal = true
         }
 
         postNotification(Notifications.KeyboardWillHide, value: self)

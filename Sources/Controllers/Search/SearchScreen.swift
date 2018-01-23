@@ -50,6 +50,8 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
     private let postsToggleButton = SearchToggleButton()
     private let peopleToggleButton = SearchToggleButton()
     private let findFriendsContainer = UIView()
+    private var findFriendsPinToKeyboard: Constraint!
+    private var findFriendsPinToBottom: Constraint!
     private let findFriendsButton = StyledButton(style: .green)
     private let findFriendsLabel = StyledLabel(style: .black)
     private var bottomInset: CGFloat = 0
@@ -169,9 +171,10 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
 
         findFriendsContainer.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self).inset(Size.margins)
-            make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.margins)
-            make.bottom.lessThanOrEqualTo(self).inset(ElloTabBar.Size.height).priority(Priority.required)
+            findFriendsPinToKeyboard = make.bottom.equalTo(keyboardAnchor.snp.top).offset(-Size.margins).constraint
+            findFriendsPinToBottom = make.bottom.equalTo(self).inset(ElloTabBar.Size.height).constraint
         }
+        findFriendsPinToKeyboard.deactivate()
 
         findFriendsLabel.snp.makeConstraints { make in
             make.leading.equalTo(findFriendsContainer).offset(Size.findFriendsLabelLeft)
@@ -183,6 +186,19 @@ class SearchScreen: StreamableScreen, SearchScreenProtocol {
             make.bottom.leading.trailing.equalTo(findFriendsContainer).inset(Size.findFriendsInsets)
             make.height.equalTo(Size.findFriendsButtonHeight)
         }
+    }
+
+    override func keyboardWillChange(_ keyboard: Keyboard, animated: Bool) {
+        if keyboard.isActive {
+            findFriendsPinToKeyboard.activate()
+            findFriendsPinToBottom.deactivate()
+        }
+        else {
+            findFriendsPinToKeyboard.deactivate()
+            findFriendsPinToBottom.activate()
+        }
+
+        super.keyboardWillChange(keyboard, animated: animated)
     }
 
     override func didMoveToSuperview() {

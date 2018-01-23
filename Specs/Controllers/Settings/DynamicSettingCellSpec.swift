@@ -25,62 +25,67 @@ class DynamicSettingCellSpec: QuickSpec {
     }
 
     override func spec() {
-        var subject = DynamicSettingCell()
+        describe("DynamicSettingCell") {
+            var subject: DynamicSettingCell!
 
-        describe("initialization") {
             beforeEach {
-                subject = DynamicSettingCell.loadFromNib()
+                subject = DynamicSettingCell()
             }
 
-            describe("nib") {
-                it("IBOutlets are not nil") {
-                    expect(subject.titleLabel).notTo(beNil())
-                    expect(subject.descriptionLabel).notTo(beNil())
-                    expect(subject.toggleButton).notTo(beNil())
-                    expect(subject.deleteButton).notTo(beNil())
+            describe("initialization") {
+                beforeEach {
+                    subject = DynamicSettingCell.loadFromNib()
+                }
+
+                describe("nib") {
+                    it("IBOutlets are not nil") {
+                        expect(subject.titleLabel).notTo(beNil())
+                        expect(subject.descriptionLabel).notTo(beNil())
+                        expect(subject.toggleButton).notTo(beNil())
+                        expect(subject.deleteButton).notTo(beNil())
+                    }
                 }
             }
-        }
 
-        describe("toggleButtonTapped") {
-            beforeEach {
-                subject = DynamicSettingCell.loadFromNib()
+            describe("toggleButtonTapped") {
+                beforeEach {
+                    subject = DynamicSettingCell.loadFromNib()
+                }
+
+                it("calls the delegate function") {
+                    let fake = FakeDelegate()
+                    let setting = DynamicSetting(label: "", key: "")
+                    fake.addSubview(subject)
+                    showView(fake)
+                    subject.setting = setting
+                    subject.toggleButtonTapped()
+                    expect(fake.didCall).to(beTrue())
+                }
+
+                it("hands the setting and value to the delegate function") {
+                    let fake = FakeDelegate()
+                    let setting = DynamicSetting(label: "test", key: "")
+                    fake.addSubview(subject)
+                    showView(fake)
+                    subject.setting = setting
+                    subject.toggleButtonTapped()
+                    expect(fake.setting?.label) == setting.label
+                    expect(fake.value) == true
+                }
             }
 
-            it("calls the delegate function") {
+            describe("deleteButtonTapped") {
+                beforeEach {
+                    subject = DynamicSettingCell.loadFromNib()
+                }
 
-                let fake = FakeDelegate()
-                let setting = DynamicSetting(label: "", key: "")
-                fake.addSubview(subject)
-                showView(fake)
-                subject.setting = setting
-                subject.toggleButtonTapped()
-                expect(fake.didCall).to(beTrue())
-            }
-
-            it("hands the setting and value to the delegate function") {
-                let fake = FakeDelegate()
-                let setting = DynamicSetting(label: "test", key: "")
-                fake.addSubview(subject)
-                showView(fake)
-                subject.setting = setting
-                subject.toggleButtonTapped()
-                expect(fake.setting?.label) == setting.label
-                expect(fake.value) == true
-            }
-        }
-
-        describe("deleteButtonTapped") {
-            beforeEach {
-                subject = DynamicSettingCell.loadFromNib()
-            }
-
-            it("calls the delegate function") {
-                let fake = FakeDelegate()
-                fake.addSubview(subject)
-                showView(fake)
-                subject.deleteButtonTapped()
-                expect(fake.didCall).to(beTrue())
+                it("calls the delegate function") {
+                    let fake = FakeDelegate()
+                    fake.addSubview(subject)
+                    showView(fake)
+                    subject.deleteButtonTapped()
+                    expect(fake.didCall).to(beTrue())
+                }
             }
         }
     }

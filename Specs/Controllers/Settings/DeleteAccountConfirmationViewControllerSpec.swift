@@ -9,9 +9,9 @@ import Nimble
 
 class DeleteAccountConfirmationViewControllerSpec: QuickSpec {
     override func spec() {
-        var subject = DeleteAccountConfirmationViewController()
+        describe("DeleteAccountConfirmationViewController") {
+            var subject: DeleteAccountConfirmationViewController!
 
-        describe("initialization") {
             beforeEach {
                 subject = DeleteAccountConfirmationViewController()
                 showController(subject)

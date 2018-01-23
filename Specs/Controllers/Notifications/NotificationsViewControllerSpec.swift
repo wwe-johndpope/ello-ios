@@ -19,9 +19,8 @@ class FakeNavigationController: UINavigationController {
 
 class NotificationsViewControllerSpec: QuickSpec {
     override func spec() {
-
-        var subject: NotificationsViewController!
         describe("NotificationsViewController") {
+            var subject: NotificationsViewController!
 
             beforeEach {
                 subject = NotificationsViewController()

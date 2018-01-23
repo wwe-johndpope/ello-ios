@@ -12,27 +12,30 @@ class InviteCacheSpec: QuickSpec {
         beforeEach {
             GroupDefaults[InviteCache.Key] = ["contact"]
         }
-        describe("saveInvite") {
-            it("saves the contact id to the cache") {
-                var inviteCache = InviteCache()
-                inviteCache.saveInvite("contact id")
-                let invites = GroupDefaults[InviteCache.Key].array as? [String]
-                expect(invites?.last) == "contact id"
-            }
-        }
 
-        describe("has") {
-            context("'contact' has been saved") {
-                it("returns true") {
-                    let inviteCache = InviteCache()
-                    expect(inviteCache.has("contact")).to(beTrue())
+        describe("InviteCache") {
+            describe("saveInvite") {
+                it("saves the contact id to the cache") {
+                    var inviteCache = InviteCache()
+                    inviteCache.saveInvite("contact id")
+                    let invites = GroupDefaults[InviteCache.Key].array as? [String]
+                    expect(invites?.last) == "contact id"
                 }
             }
 
-            context("'made up' has not been saved") {
-                it("returns false") {
-                    let inviteCache = InviteCache()
-                    expect(inviteCache.has("'made up'")).to(beFalse())
+            describe("has") {
+                context("'contact' has been saved") {
+                    it("returns true") {
+                        let inviteCache = InviteCache()
+                        expect(inviteCache.has("contact")).to(beTrue())
+                    }
+                }
+
+                context("'made up' has not been saved") {
+                    it("returns false") {
+                        let inviteCache = InviteCache()
+                        expect(inviteCache.has("'made up'")).to(beFalse())
+                    }
                 }
             }
         }

@@ -5,7 +5,7 @@ import Nimble
 
 class ProfileHeaderCellPresenterSpec: QuickSpec {
     override func spec() {
-        describe("configure") {
+        describe("ProfileHeaderCellPresenter") {
 
             context("no user") {
                 it("can still configure") {

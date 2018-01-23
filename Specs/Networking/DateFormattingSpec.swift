@@ -26,67 +26,68 @@ extension NSLocale {
 
 class DateFormattingSpec: QuickSpec {
     override func spec() {
+        describe("DateFormatting") {
+            describe("NSString.toDate()") {
 
-        describe("NSString.toDate()") {
+                context("HTTP Date") {
 
-            context("HTTP Date") {
+                    it("returns an Date from an http data string") {
+                        let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
+                        expect("Sat, 30 Sep 1978 00:00:00 GMT".toDate(HTTPDateFormatter)) == sep_30_1978
+                    }
+                }
 
-                it("returns an Date from an http data string") {
-                    let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
-                    expect("Sat, 30 Sep 1978 00:00:00 GMT".toDate(HTTPDateFormatter)) == sep_30_1978
+                context("database date") {
+
+                    it("returns an Date from a server formatted string") {
+                        let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
+                        expect("1978-09-30T00:00:00.000Z".toDate()) == sep_30_1978
+                    }
                 }
             }
 
-            context("database date") {
+            describe("ServerDateFormatter") {
 
-                it("returns an Date from a server formatted string") {
-                    let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
-                    expect("1978-09-30T00:00:00.000Z".toDate()) == sep_30_1978
+                context("arabic locale") {
+                    it("outputs the correct string") {
+                        NSLocale.defaultToArab()
+                        let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
+
+                        expect(sep_30_1978.toServerDateString()) == "1978-09-30T00:00:00.000Z"
+
+                        NSLocale.defaultToNormal()
+                    }
                 }
-            }
-        }
 
-        describe("ServerDateFormatter") {
+                context("non arabic locale") {
+                    it("outputs the correct string") {
+                        let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
 
-            context("arabic locale") {
-                it("outputs the correct string") {
-                    NSLocale.defaultToArab()
-                    let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
-
-                    expect(sep_30_1978.toServerDateString()) == "1978-09-30T00:00:00.000Z"
-
-                    NSLocale.defaultToNormal()
+                        expect(sep_30_1978.toServerDateString()) == "1978-09-30T00:00:00.000Z"
+                    }
                 }
-            }
 
-            context("non arabic locale") {
-                it("outputs the correct string") {
-                    let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
-
-                    expect(sep_30_1978.toServerDateString()) == "1978-09-30T00:00:00.000Z"
-                }
             }
 
-        }
+            describe("HTTPDateFormatter") {
 
-        describe("HTTPDateFormatter") {
+                context("arabic locale") {
+                    it("outputs the correct string") {
+                        NSLocale.defaultToArab()
+                        let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
 
-            context("arabic locale") {
-                it("outputs the correct string") {
-                    NSLocale.defaultToArab()
-                    let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
+                        expect(sep_30_1978.toHTTPDateString()) == "Sat, 30 Sep 1978 00:00:00 GMT"
 
-                    expect(sep_30_1978.toHTTPDateString()) == "Sat, 30 Sep 1978 00:00:00 GMT"
-
-                    NSLocale.defaultToNormal()
+                        NSLocale.defaultToNormal()
+                    }
                 }
-            }
 
-            context("non arabic locale") {
-                it("outputs the correct string") {
-                    let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
+                context("non arabic locale") {
+                    it("outputs the correct string") {
+                        let sep_30_1978 = Date(timeIntervalSince1970: 275961600)
 
-                    expect(sep_30_1978.toHTTPDateString()) == "Sat, 30 Sep 1978 00:00:00 GMT"
+                        expect(sep_30_1978.toHTTPDateString()) == "Sat, 30 Sep 1978 00:00:00 GMT"
+                    }
                 }
             }
         }

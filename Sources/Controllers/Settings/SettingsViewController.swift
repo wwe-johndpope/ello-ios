@@ -639,10 +639,10 @@ extension SettingsViewController: AutoCompleteDelegate {
         let height: CGFloat = min(maxHeight, CGFloat(locationAutoCompleteResultCount) * rowHeight)
         let inset = Keyboard.shared.keyboardBottomInset(inView: view) + height
         let y = view.frame.height - inset
-        if locationTextViewSelected && Keyboard.shared.active {
+        if locationTextViewSelected && Keyboard.shared.isActive {
             tableView.contentInset.bottom = inset
         }
-        else if !Keyboard.shared.active {
+        else if !Keyboard.shared.isActive {
             containerController?.updateNavBars()
         }
 

@@ -10,11 +10,9 @@ import Nimble
 class ProfileCategoriesScreenSpec: QuickSpec {
 
     override func spec() {
-
         describe("ProfileCategoriesScreen") {
 
             context("snapshots") {
-
                 it("renders correctly with 1 category") {
                     let categories = [
                         Category.stub(["name": "Photography", "order": 1])

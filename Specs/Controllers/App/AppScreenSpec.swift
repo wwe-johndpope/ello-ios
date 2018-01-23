@@ -11,11 +11,7 @@ class AppScreenSpec: QuickSpec {
     override func spec() {
         describe("AppScreen") {
             describe("snapshots") {
-                var subject: AppScreen!
-                beforeEach {
-                    subject = AppScreen()
-                }
-                validateAllSnapshots { return subject }
+                validateAllSnapshots(named: "AppScreen") { return AppScreen() }
             }
         }
     }

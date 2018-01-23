@@ -9,9 +9,7 @@ import Nimble
 
 class ProfileBadgesSizeCalculatorSpec: QuickSpec {
     override func spec() {
-
         describe("ProfileBadgesSizeCalculator") {
-
             it("returns 0 if badge count is 0") {
                 let user: User = stub([:])
                 let calc = ProfileBadgesSizeCalculator()

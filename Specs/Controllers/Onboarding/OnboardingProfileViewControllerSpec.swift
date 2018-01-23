@@ -16,8 +16,10 @@ class OnboardingProfileViewControllerSpec: QuickSpec {
         var coverImage: ImageRegionData?
         var avatarImage: ImageRegionData?
     }
+
     class MockOnboardingViewController: OnboardingViewController {
     }
+
     override func spec() {
         var subject: OnboardingProfileViewController!
         var mockScreen: OnboardingProfileScreenProtocol!

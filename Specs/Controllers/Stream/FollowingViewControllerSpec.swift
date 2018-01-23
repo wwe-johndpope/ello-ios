@@ -11,25 +11,11 @@ import SwiftyUserDefaults
 class FollowingViewControllerSpec: QuickSpec {
     override func spec() {
         describe("FollowingViewController") {
-
             var subject: FollowingViewController!
 
             beforeEach {
                 subject = FollowingViewController()
                 showController(subject)
-            }
-
-            it("has the correct title") {
-                expect(subject.title) == ""
-            }
-
-            it("has a streamKind of .following") {
-                expect(subject.streamViewController.streamKind.name) == StreamKind.following.name
-            }
-
-            it("has a properly configured navigation bar") {
-                expect(subject.navigationBar.leftItems.count) == 1
-                expect(subject.navigationBar.rightItems.count) == 1
             }
 
             it("shows the more posts button when new content is available") {

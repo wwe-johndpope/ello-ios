@@ -101,7 +101,7 @@ class OmnibarScreenSpec: QuickSpec {
                     expect(subject.specs().cancelImageButton.isHidden) == false
                 }
                 it("should stop editing text") {
-                    expect(Keyboard.shared.active) == false
+                    expect(Keyboard.shared.isActive) == false
                 }
                 it("should show the photoAccessoryContainer") {
                     expect(subject.photoAccessoryContainer.isHidden) == false

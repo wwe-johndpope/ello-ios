@@ -14,6 +14,9 @@ class HireScreen: StreamableScreen {
         static let successLabelLeading: CGFloat = 55
         static let successImageLeading: CGFloat = 20
     }
+    struct Specs {
+        static let successButtonTag = 1
+    }
 
     var recipient: String = "" {
         didSet {
@@ -36,6 +39,7 @@ class HireScreen: StreamableScreen {
         addSubview(textView)
         addSubview(placeholder)
         addSubview(keyboardSubmitButton)
+        keyboardSubmitButton.tag = Specs.successButtonTag
 
         textView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self).inset(Size.textViewSideMargins)

@@ -9,7 +9,6 @@ class View: UIView {
         bindActions()
         setText()
         arrange()
-        layoutIfNeeded()
     }
 
     required init?(coder: NSCoder) {
@@ -18,7 +17,6 @@ class View: UIView {
         bindActions()
         setText()
         arrange()
-        layoutIfNeeded()
     }
 
     convenience init() {
