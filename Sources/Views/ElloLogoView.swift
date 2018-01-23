@@ -33,10 +33,12 @@ class ElloLogoView: UIImageView {
         static let loading = CGSize(width: 30, height: 30)
     }
 
-    private var wasAnimating = false
-    private var style: ElloLogoView.Style = .normal
+    var isLogoAnimating: Bool { return _isAnimating }
+    private var _isAnimating = false
+    private let style: ElloLogoView.Style
 
     required init?(coder: NSCoder) {
+        self.style = .normal
         super.init(coder: coder)
     }
 
@@ -44,40 +46,45 @@ class ElloLogoView: UIImageView {
         self.init(frame: .zero)
     }
 
-    convenience init(style: Style) {
-        self.init(frame: .zero)
+    init(style: Style) {
         self.style = style
-        self.image = self.style.image
+        super.init(frame: .zero)
+        privateInit()
     }
 
     override init(frame: CGRect) {
+        self.style = .normal
         super.init(frame: frame)
-        self.image = self.style.image
-        self.contentMode = .scaleAspectFit
+        privateInit()
+    }
+
+    private func privateInit() {
+        image = style.image
+        contentMode = .scaleAspectFit
     }
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        if window != nil && wasAnimating {
+        if window != nil && _isAnimating {
             animateLogo()
         }
     }
 
     func animateLogo() {
-        wasAnimating = true
+        _isAnimating = true
 
         self.layer.removeAnimation(forKey: "logo-spin")
         let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
-        let angle = layer.value(forKeyPath: "transform.rotation.z") as! NSNumber
+        let angle = layer.value(forKeyPath: "transform.rotation.z") as! Double
         rotate.fromValue = angle
-        rotate.toValue = 2 * Double.pi
+        rotate.toValue = angle + 2 * Double.pi
         rotate.duration = 0.35
         rotate.repeatCount = 1_000_000
         self.layer.add(rotate, forKey: "logo-spin")
     }
 
     func stopAnimatingLogo() {
-        wasAnimating = false
+        _isAnimating = false
 
         self.layer.removeAllAnimations()
 

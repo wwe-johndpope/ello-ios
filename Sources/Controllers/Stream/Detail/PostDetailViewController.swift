@@ -19,6 +19,7 @@ final class PostDetailViewController: StreamableViewController {
     var post: Post?
     var postParam: String
     var scrollToComment: ElloComment?
+    var scrollToComments: Bool = false
 
     var navigationBar: ElloNavigationBar!
     var deeplinkPath: String?
@@ -127,25 +128,40 @@ final class PostDetailViewController: StreamableViewController {
     }
 
     private func checkScrollToComment() {
-        guard let comment = self.scrollToComment else { return }
-
-        let commentItem = streamViewController.collectionViewDataSource.visibleCellItems.find { item in
-            return (item.jsonable as? ElloComment)?.id == comment.id
-        }
-
-        if let commentItem = commentItem,
-            let indexPath = streamViewController.collectionViewDataSource.indexPath(forItem: commentItem)
-        {
-            self.scrollToComment = nil
-            // nextTick didn't work, the collection view hadn't shown its
-            // cells or updated contentView.  so this.
-            delay(0.1) {
-                self.streamViewController.collectionView.scrollToItem(
-                    at: indexPath,
-                    at: .top,
-                    animated: true
-                )
+        if let comment = self.scrollToComment {
+            let commentItem = streamViewController.collectionViewDataSource.visibleCellItems.find { item in
+                return (item.jsonable as? ElloComment)?.id == comment.id
             }
+
+            if let commentItem = commentItem {
+                scrollToItem(commentItem)
+            }
+        }
+        else if scrollToComments {
+            let commentItem = streamViewController.collectionViewDataSource.visibleCellItems.find { item in
+                return item.type == .createComment
+            }
+
+            if let commentItem = commentItem {
+                scrollToItem(commentItem)
+            }
+        }
+    }
+
+    private func scrollToItem(_ commentItem: StreamCellItem) {
+        guard let indexPath = streamViewController.collectionViewDataSource.indexPath(forItem: commentItem) else { return }
+
+        scrollToComment = nil
+        scrollToComments = false
+
+        // nextTick didn't work, the collection view hadn't shown its
+        // cells or updated contentView.  so this.
+        delay(0.1) {
+            self.streamViewController.collectionView.scrollToItem(
+                at: indexPath,
+                at: .centeredVertically,
+                animated: true
+            )
         }
     }
 
@@ -184,7 +200,9 @@ extension PostDetailViewController: PostDetailStreamDestination {
 
     func replacePlaceholder(type: StreamCellType.PlaceholderType, items: [StreamCellItem], completion: @escaping Block) {
         streamViewController.replacePlaceholder(type: type, items: items) {
-            self.checkScrollToComment()
+            if type == .postComments {
+                self.checkScrollToComment()
+            }
 
             if self.streamViewController.hasCellItems(for: .profileHeader) && !self.streamViewController.hasCellItems(for: .streamPosts) {
                 self.streamViewController.replacePlaceholder(type: .streamPosts, items: [StreamCellItem(type: .streamLoading)])

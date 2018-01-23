@@ -11,7 +11,6 @@ import Moya
 class StreamKindSpec: QuickSpec {
 
     override func spec() {
-
         describe("StreamKind") {
 
             // TODO: convert these tests to the looping input/output style used on other enums

@@ -24,26 +24,6 @@ class CategorySpec: QuickSpec {
                     }
                 }
             }
-
-            describe("+fromJSON(:)") {
-                it("parses correctly") {
-                    let data: [String: Any] = [
-                        "id": "1",
-                        "name": "Featured",
-                        "slug": "featured",
-                        "order": 0,
-                        "uses_page_promotionals": true,
-                        "level": "primary"
-                    ]
-                    let category = Category.fromJSON(data) as? Ello.Category
-                    expect(category?.id) == "1"
-                    expect(category?.name) == "Featured"
-                    expect(category?.slug) == "featured"
-                    expect(category?.usesPagePromo) == true
-                    expect(category?.order) == 0
-                    expect(category?.level) == .primary
-                }
-            }
         }
     }
 }

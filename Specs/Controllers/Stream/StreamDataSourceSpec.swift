@@ -54,7 +54,7 @@ class StreamDataSourceSpec: QuickSpec {
             showController(streamViewController)
         }
 
-        describe("StreamDataSourceSpec") {
+        describe("StreamDataSource") {
             context("appendStreamCellItems(_:)") {
                 let post = Post.stub([:])
                 let cellItems = [

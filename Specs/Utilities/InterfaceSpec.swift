@@ -8,9 +8,9 @@ import Nimble
 import SVGKit
 
 
-class InterfaceSpec: QuickSpec {
+class InterfaceImageSpec: QuickSpec {
     override func spec() {
-        describe("Interface") {
+        describe("InterfaceImage") {
             describe("Image") {
                 describe("image(style:)") {
                     let styles: [(InterfaceImage, InterfaceImage.Style)] = [

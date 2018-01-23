@@ -8,12 +8,8 @@ import Nimble
 
 class RegexExtensionsSpec: QuickSpec {
     override func spec() {
-        describe("RegexExtensions") {
-            context("Regex class") {
-                it("should create an instance") {
-                    let regex = Regex("^$")
-                    expect(regex).notTo(beNil())
-                }
+        describe("Regex extensions") {
+            context("Regex") {
                 it("should be nil if invalid regex") {
                     let regex = Regex("[")
                     expect(regex).to(beNil())

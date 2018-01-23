@@ -9,26 +9,11 @@ import Nimble
 class ShareViewControllerSpec: QuickSpec {
     override func spec() {
         describe("ShareViewController") {
-            var subject = ShareViewController()
+            var subject: ShareViewController!
 
             beforeEach {
                 subject = ShareViewController()
                 showController(subject)
-            }
-
-            describe("initialization") {
-
-                it("can be instantiated") {
-                    expect(subject).notTo(beNil())
-                }
-
-                it("is a UIViewController") {
-                    expect(subject).to(beAKindOf(UIViewController.self))
-                }
-
-                it("is a ShareViewController") {
-                    expect(subject).to(beAKindOf(ShareViewController.self))
-                }
             }
 
             describe("presentationAnimationDidFinish()"){

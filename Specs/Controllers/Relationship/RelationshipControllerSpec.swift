@@ -12,7 +12,6 @@ import Moya
 class RelationshipControllerSpec: QuickSpec {
 
     override func spec() {
-
         var subject: RelationshipController!
 
         beforeEach({
@@ -27,7 +26,7 @@ class RelationshipControllerSpec: QuickSpec {
 
         })
 
-        context("RelationshipResponder") {
+        describe("RelationshipController") {
 
             describe("-relationshipTapped:relationship:complete:") {
                 // extensively tested in RelationshipControlSpec
@@ -36,7 +35,7 @@ class RelationshipControllerSpec: QuickSpec {
             describe("-updateRelationship:relationship:complete:") {
 
                 it("succeeds") {
-                    var expectedStatus = RelationshipRequestStatus.failure
+                    var expectedStatus: RelationshipRequestStatus = .failure
 
                     subject.updateRelationship("", userId: "test-user-id", prev: RelationshipPriorityWrapper(priority: .none), relationshipPriority: RelationshipPriorityWrapper(priority: .following)) {
                         (statusWrapper, _, _) in
@@ -48,7 +47,7 @@ class RelationshipControllerSpec: QuickSpec {
                 it("fails") {
                     ElloProvider.sharedProvider = ElloProvider.ErrorStubbingProvider()
 
-                    var expectedStatus = RelationshipRequestStatus.success
+                    var expectedStatus: RelationshipRequestStatus = .success
 
                     subject.updateRelationship("", userId: "test-user-id", prev: RelationshipPriorityWrapper(priority: .none), relationshipPriority: RelationshipPriorityWrapper(priority: .following)) {
                         (statusWrapper, _, _) in

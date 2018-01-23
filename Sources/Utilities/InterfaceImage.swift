@@ -194,6 +194,7 @@ enum InterfaceImage: String {
              .chevron,
              .comments,
              .commentsOutline,
+             .eye,
              .heart,
              .heartOutline,
              .invite,

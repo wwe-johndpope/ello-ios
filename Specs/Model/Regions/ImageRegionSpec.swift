@@ -8,8 +8,7 @@ import Nimble
 
 class ImageRegionSpec: QuickSpec {
     override func spec() {
-
-        describe("+fromJSON:") {
+        describe("ImageRegion") {
 
             it("parses image region correctly") {
                 let imageRegionData = stubbedJSONData("image-region", "region")
@@ -80,93 +79,6 @@ class ImageRegionSpec: QuickSpec {
                 expect(xhdpi.height) == 641
             }
 
-        }
-
-        context("NSCoding") {
-
-            var filePath = ""
-            if let url = URL(string: FileManager.ElloDocumentsDir()) {
-                filePath = url.appendingPathComponent("ImageRegionSpec").absoluteString
-            }
-
-            afterEach {
-                do {
-                    try FileManager.default.removeItem(atPath: filePath)
-                }
-                catch {
-
-                }
-            }
-
-            context("encoding") {
-
-                it("encodes successfully") {
-                    let region: ImageRegion = stub([:])
-
-                    let wasSuccessfulArchived = NSKeyedArchiver.archiveRootObject(region, toFile: filePath)
-
-                    expect(wasSuccessfulArchived).to(beTrue())
-                }
-            }
-
-            context("decoding") {
-
-                it("decodes successfully") {
-                    let hdpi: Attachment = stub([
-                        "url": URL(string: "http://www.example.com")!,
-                        "height": 2,
-                        "width": 5,
-                        "type": "jpeg",
-                        "size": 45644
-                    ])
-
-                    let xhdpi: Attachment = stub([
-                        "url": URL(string: "http://www.example2.com")!,
-                        "height": 67,
-                        "width": 999,
-                        "type": "png",
-                        "size": 114574
-                    ])
-
-                    let asset: Asset = stub([
-                        "id": "qwerty",
-                        "hdpi": hdpi,
-                        "xhdpi": xhdpi
-                    ])
-
-                    let imageRegion: ImageRegion = stub([
-                        "asset": asset,
-                        "alt": "some-altness",
-                        "url": URL(string: "http://www.example5.com")!
-                    ])
-
-                    NSKeyedArchiver.archiveRootObject(imageRegion, toFile: filePath)
-                    let unArchivedRegion = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as! ImageRegion
-
-                    expect(unArchivedRegion).toNot(beNil())
-                    expect(unArchivedRegion.version) == 1
-
-                    expect(unArchivedRegion.url!.absoluteString) == "http://www.example5.com"
-                    expect(unArchivedRegion.alt) == "some-altness"
-
-                    let unArchivedAsset = unArchivedRegion.asset!
-                    expect(unArchivedAsset.id) == "qwerty"
-
-                    let unArchivedHdpi = unArchivedAsset.hdpi!
-                    expect(unArchivedHdpi.url.absoluteString) == "http://www.example.com"
-                    expect(unArchivedHdpi.size) == 45644
-                    expect(unArchivedHdpi.type) == "jpeg"
-                    expect(unArchivedHdpi.width) == 5
-                    expect(unArchivedHdpi.height) == 2
-
-                    let unArchivedXhdpi = unArchivedAsset.xhdpi!
-                    expect(unArchivedXhdpi.url.absoluteString) == "http://www.example2.com"
-                    expect(unArchivedXhdpi.size) == 114574
-                    expect(unArchivedXhdpi.type) == "png"
-                    expect(unArchivedXhdpi.width) == 999
-                    expect(unArchivedXhdpi.height) == 67
-                }
-            }
         }
     }
 }

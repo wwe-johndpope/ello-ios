@@ -2,7 +2,6 @@
 ///  AppDelegate.swift
 //
 
-import Crashlytics
 import Keys
 import TimeAgoInWords
 import PINRemoteImage
@@ -33,8 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         #if DEBUG
         Tracker.shared.overrideAgent = NullAgent()
-        #else
-        Crashlytics.start(withAPIKey: ElloKeys().crashlyticsKey())
         #endif
 
         Keyboard.setup()
@@ -108,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkAppStorage() {
         clearCaches()
 
-        let killDate = Date(timeIntervalSince1970: 1512879362) // dec 9, 2017
+        let killDate = Date(timeIntervalSince1970: 1516655690) // jan 22, 2018
         let (text, size) = Tmp.sizeDiagnostics()
         guard Globals.now < killDate, size > 300_000_000 else { return }
 

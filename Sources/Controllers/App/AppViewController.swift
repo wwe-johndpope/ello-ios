@@ -13,6 +13,7 @@ struct HapticFeedbackNotifications {
 
 struct StatusBarNotifications {
     static let statusBarVisibility = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.statusBarVisibility")
+    static let alertStatusBarVisibility = TypedNotification<(Bool)>(name: "co.ello.StatusBarNotifications.alertStatusBarVisibility")
 }
 
 enum LoggedOutAction {
@@ -43,8 +44,23 @@ class AppViewController: BaseElloViewController {
 
     var visibleViewController: UIViewController?
 
-    var statusBarIsVisible = true
+    var statusBarShouldBeVisible: Bool { return alertStatusBarIsVisible ?? statusBarIsVisible }
+    private var statusBarIsVisible = true {
+        didSet {
+            if oldValue != statusBarIsVisible {
+                updateStatusBar()
+            }
+        }
+    }
+    private var alertStatusBarIsVisible: Bool? {
+        didSet {
+            if oldValue != alertStatusBarIsVisible {
+                updateStatusBar()
+            }
+        }
+    }
     private var statusBarVisibilityObserver: NotificationObserver?
+    private var alertStatusBarVisibilityObserver: NotificationObserver?
     private var userLoggedOutObserver: NotificationObserver?
     private var successfulUserEventObserver: NotificationObserver?
     private var receivedPushNotificationObserver: NotificationObserver?
@@ -92,10 +108,7 @@ class AppViewController: BaseElloViewController {
         }
     }
 
-    func showStatusBar(_ visible: Bool) {
-        guard statusBarIsVisible != visible else { return }
-
-        statusBarIsVisible = visible
+    private func updateStatusBar() {
         animate {
             self.setNeedsStatusBarAppearanceUpdate()
         }
@@ -149,7 +162,15 @@ class AppViewController: BaseElloViewController {
 
     private func setupNotificationObservers() {
         statusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.statusBarVisibility) { [weak self] visible in
-            self?.showStatusBar(visible)
+            self?.statusBarIsVisible = visible
+        }
+        alertStatusBarVisibilityObserver = NotificationObserver(notification: StatusBarNotifications.alertStatusBarVisibility) { [weak self] visible in
+            if !visible {
+                self?.alertStatusBarIsVisible = false
+            }
+            else {
+                self?.alertStatusBarIsVisible = nil
+            }
         }
         userLoggedOutObserver = NotificationObserver(notification: AuthenticationNotifications.userLoggedOut) { [weak self] in
             self?.userLoggedOut()
@@ -181,6 +202,7 @@ class AppViewController: BaseElloViewController {
 
     private func removeNotificationObservers() {
         statusBarVisibilityObserver?.removeObserver()
+        alertStatusBarVisibilityObserver?.removeObserver()
         userLoggedOutObserver?.removeObserver()
         successfulUserEventObserver?.removeObserver()
         receivedPushNotificationObserver?.removeObserver()
@@ -397,7 +419,7 @@ extension AppViewController {
         if presentingViewController != nil {
             dismiss(animated: false, completion: .none)
         }
-        self.showStatusBar(true)
+        statusBarIsVisible = true
 
         if let visibleViewController = visibleViewController {
             visibleViewController.willMove(toParentViewController: nil)

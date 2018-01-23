@@ -10,14 +10,11 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.4.0):
     - CocoaLumberjack/Default
-  - Crashlytics (3.8.3):
-    - Fabric (~> 1.6.3)
   - CRToast (0.0.7)
   - DeltaCalculator (1.0.4)
   - ElloCerts (3.0.0):
     - Alamofire (~> 4.0)
   - ElloUIFonts (2.2.0)
-  - Fabric (1.6.11)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
@@ -130,12 +127,10 @@ DEPENDENCIES:
   - 1PasswordExtension (from `https://github.com/ello/onepassword-app-extension`)
   - Alamofire (~> 4.0)
   - Analytics (~> 3.0)
-  - Crashlytics (~> 3.4)
   - CRToast (from `https://github.com/ello/CRToast`)
   - DeltaCalculator (from `https://github.com/ello/DeltaCalculator`)
   - ElloCerts (from `git@github.com:ello/Ello-iOS-Certs`)
   - ElloUIFonts (from `git@github.com:ello/ElloUIFonts`)
-  - Fabric (~> 1.6)
   - FBSnapshotTestCase
   - FLAnimatedImage (~> 1.0)
   - ImagePickerSheetController (from `https://github.com/ello/ImagePickerSheetController`, branch `swift3`)
@@ -234,13 +229,11 @@ SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   Analytics: 2c09a50e3478a3a7ced08a22d00c43ba6f7011e6
   CocoaLumberjack: aa9dcab71bdf9eaf2a63bbd9ddc87863efe45457
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
   DeltaCalculator: 97ea120ac2ebcf55e472d7ba872c8bc79c138454
   ElloCerts: 7c27117e2281761c81acf31b81a44a38869220c2
   ElloUIFonts: 74434eb284b5938d0f58b42a16af5d706626d99b
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   ImagePickerSheetController: 4789b06940e299431455c61be77fda440883c36c
   iRate: adae3f183d83c925ac42d7a2e86e89e838963f57
@@ -267,6 +260,6 @@ SPEC CHECKSUMS:
   WebLinking: 3f71787c14a225148e8be29fe6e7c98597cbc459
   YapDatabase: 861c720d5850a59f9e5c0bad0fd95334012b9dc9
 
-PODFILE CHECKSUM: e1bbd29c4876b529b246c36ff9abb1e9ebdcb799
+PODFILE CHECKSUM: a32e9aa15f24ce592cd0f666a177e87bd906a519
 
 COCOAPODS: 1.1.1

@@ -16,7 +16,6 @@ use_frameworks!
 def ello_app_pods
   pod '1PasswordExtension', git: 'https://github.com/ello/onepassword-app-extension'
   pod 'CRToast', git: 'https://github.com/ello/CRToast'
-  pod 'Fabric', '~> 1.6'
   pod 'KINWebBrowser', git: 'https://github.com/ello/KINWebBrowser'
   pod 'PINRemoteImage', '3.0.0-beta.8'
   pod 'PINCache', git: 'https://github.com/ello/PINCache', commit: '78c3461'
@@ -58,7 +57,6 @@ def common_pods
   pod 'SwiftyJSON', '~> 3.1'
   pod 'JWTDecode', '~> 2.0'
   pod 'WebLinking', git: 'https://github.com/kylef/WebLinking.swift'
-  pod 'Crashlytics', '~> 3.4'
   pod 'Analytics', '~> 3.0'
 end
 

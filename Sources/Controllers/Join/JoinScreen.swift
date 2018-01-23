@@ -143,8 +143,8 @@ class JoinScreen: CredentialsScreen {
         promptLabel.isMultiline = true
         messageLabel.isMultiline = true
 
-        termsButtonNormal.isHidden = Keyboard.shared.active
-        termsButtonKeyboard.isHidden = !Keyboard.shared.active
+        termsButtonNormal.isHidden = Keyboard.shared.isActive
+        termsButtonKeyboard.isHidden = !Keyboard.shared.isActive
 
         continueBackground.backgroundColor = .white
     }
@@ -248,8 +248,8 @@ class JoinScreen: CredentialsScreen {
     }
 
     override func keyboardIsAnimating(_ keyboard: Keyboard) {
-        termsButtonNormal.isHidden = keyboard.active
-        termsButtonKeyboard.isHidden = !keyboard.active
+        termsButtonNormal.isHidden = keyboard.isActive
+        termsButtonKeyboard.isHidden = !keyboard.isActive
     }
 
     override func backAction() {

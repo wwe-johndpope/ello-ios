@@ -3,7 +3,6 @@
 //
 
 import SwiftyUserDefaults
-import Crashlytics
 import ImagePickerSheetController
 import MessageUI
 
@@ -156,10 +155,6 @@ class DebugController: UIViewController, UITableViewDataSource, UITableViewDeleg
         addAction(name: "Reset Tab bar Tooltips") {
             ElloTab.resetToolTips()
             appController.closeDebugController()
-        }
-
-        addAction(name: "Crash the app") {
-            Crashlytics.sharedInstance().crash()
         }
 
         addAction(name: "Show Notification") {

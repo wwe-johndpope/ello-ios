@@ -111,7 +111,7 @@ extension Tmp {
         }
 
         text += "---- TOTAL ----\n"
-        text += "\(totalSize)\n"
+        text += "\(totalSize.numberToHuman())\n"
 
         return (text, totalSize)
     }
@@ -131,7 +131,7 @@ extension Tmp {
                 childrenDesc += childDesc
                 size += childSize
             }
-            return ("\(myPrefix)\(path.lastComponent) \(size)\n" + childrenDesc, size)
+            return ("\(myPrefix)\(path.lastComponent) \(size.numberToHuman())\n" + childrenDesc, size)
         }
         else {
             return ("", size)

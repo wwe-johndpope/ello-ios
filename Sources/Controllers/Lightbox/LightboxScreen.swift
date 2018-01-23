@@ -3,22 +3,24 @@
 //
 
 import FLAnimatedImage
+import SnapKit
 
 
 class LightboxScreen: Screen {
     struct Size {
         static let insets = calculateInsets()
         static let lilBits: CGFloat = 15
+        static let toolbarGradientHeight: CGFloat = 60
 
         private static func calculateInsets() -> UIEdgeInsets {
             if Globals.isIphoneX {
                 return UIEdgeInsets(top: Globals.statusBarHeight, left: 10, bottom: Globals.bestBottomMargin, right: 10)
             }
-            return UIEdgeInsets(all: 10)
+            return UIEdgeInsets(tops: 30, sides: 10)
         }
     }
-    weak var delegate: LightboxScreenDelegate? {
-        didSet { updateImages() }
+    weak var delegate: LightboxScreenDelegate! {
+        didSet { updateImages(updateToolbar: true) }
     }
 
     enum Delta: Int {
@@ -26,14 +28,22 @@ class LightboxScreen: Screen {
         case next = 1
     }
 
-    private let imagesContainer = UIControl()
+    private let imagesContainer = UIView()
+    let toolbar = PostToolbar()
+    private let toolbarBlackBar = UIView()
+    private let toolbarGradientLayer = LightboxScreen.generateGradientLayer()
+    private var toolbarVisibleConstraint: Constraint!
+    private var toolbarHiddenConstraint: Constraint!
+
     private var gestureDeltaX: CGFloat = 0
     private var scrollPanGesture: UIPanGestureRecognizer!
     private var imagePanGesture: UIPanGestureRecognizer!
-    private var scaleGesture: UIPinchGestureRecognizer!
-    private var doubleTapGesture: UITapGestureRecognizer!
-    private var singleTapGesture: UITapGestureRecognizer!
+    private var imageScaleGesture: UIPinchGestureRecognizer!
+    private var zoomOutGesture: UITapGestureRecognizer!
+    private var loveGesture: UITapGestureRecognizer!
+    private var dismissGesture: UITapGestureRecognizer!
 
+    private var isZoomed: Bool { return imageScale > 1 }
     private var imageScale: CGFloat = 1
     private var imageOffset: CGPoint = .zero
     private var tempOffset: CGPoint = .zero
@@ -49,15 +59,36 @@ class LightboxScreen: Screen {
     private var nextImageView = FLAnimatedImageView()
     private var nextURL: URL?
 
+    private var isLoadingMore: Bool { return nextPageView.isLogoAnimating }
+    private let nextPageView = ElloLogoView()
+    private var nextPageViewWidth: CGFloat!
+    private var minX: CGFloat!
+    private var maxX: CGFloat!
+    private var minAngle: CGFloat!
+    private var maxAngle: CGFloat!
+
+
     override func style() {
+        toolbar.style = .dark
+        toolbar.postToolsDelegate = self
+        toolbarBlackBar.backgroundColor = .black
+
         prevImageView.alpha = 0.5
         currImageView.alpha = 1
         nextImageView.alpha = 0.5
+
+        nextPageView.isHidden = true
 
         backgroundColor = .clear
         prevImageView.contentMode = .scaleAspectFit
         currImageView.contentMode = .scaleAspectFit
         nextImageView.contentMode = .scaleAspectFit
+
+        nextPageViewWidth = nextPageView.intrinsicContentSize.width
+        minX = nextPageViewWidth * 3/4
+        maxX = minX + nextPageViewWidth
+        minAngle = 0
+        maxAngle = CGFloat.pi
     }
 
     override func bindActions() {
@@ -68,29 +99,42 @@ class LightboxScreen: Screen {
         imagePanGesture.isEnabled = false
         imagesContainer.addGestureRecognizer(imagePanGesture)
 
-        scaleGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureMovement(gesture:)))
-        imagesContainer.addGestureRecognizer(scaleGesture)
+        imageScaleGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureMovement(gesture:)))
+        imagesContainer.addGestureRecognizer(imageScaleGesture)
 
-        doubleTapGesture = UITapGestureRecognizer()
-        doubleTapGesture.numberOfTouchesRequired = 1
-        doubleTapGesture.numberOfTapsRequired = 2
-        doubleTapGesture.addTarget(self, action: #selector(imageDoubleTapped))
-        doubleTapGesture.isEnabled = false
-        imagesContainer.addGestureRecognizer(doubleTapGesture)
+        loveGesture = UITapGestureRecognizer()
+        loveGesture.numberOfTouchesRequired = 1
+        loveGesture.numberOfTapsRequired = 2
+        loveGesture.addTarget(self, action: #selector(loveAction(gesture:)))
+        loveGesture.isEnabled = true
+        imagesContainer.addGestureRecognizer(loveGesture)
 
-        singleTapGesture = UITapGestureRecognizer()
-        singleTapGesture.numberOfTouchesRequired = 1
-        singleTapGesture.numberOfTapsRequired = 1
-        singleTapGesture.addTarget(self, action: #selector(dismiss))
-        imagesContainer.addGestureRecognizer(singleTapGesture)
+        zoomOutGesture = UITapGestureRecognizer()
+        zoomOutGesture.numberOfTouchesRequired = 1
+        zoomOutGesture.numberOfTapsRequired = 2
+        zoomOutGesture.addTarget(self, action: #selector(zoomOutAction))
+        zoomOutGesture.isEnabled = false
+        imagesContainer.addGestureRecognizer(zoomOutGesture)
+
+        dismissGesture = UITapGestureRecognizer()
+        dismissGesture.numberOfTouchesRequired = 1
+        dismissGesture.numberOfTapsRequired = 1
+        dismissGesture.addTarget(self, action: #selector(dismissAction))
+        dismissGesture.require(toFail: loveGesture)
+        imagesContainer.addGestureRecognizer(dismissGesture)
     }
 
     override func arrange() {
+        toolbarGradientLayer.zPosition = -1
+        toolbar.layer.insertSublayer(toolbarGradientLayer, at: 0)
         addSubview(imagesContainer)
+        addSubview(toolbar)
+        addSubview(toolbarBlackBar)
 
         imagesContainer.addSubview(prevImageView)
         imagesContainer.addSubview(nextImageView)
         imagesContainer.addSubview(currImageView)
+        imagesContainer.addSubview(nextPageView)
 
         let loadingSize = StreamPageLoadingCell.Size.height
         currLoadingLayer.frame.size = CGSize(width: loadingSize, height: loadingSize)
@@ -103,6 +147,20 @@ class LightboxScreen: Screen {
         nextImageView.layer.zPosition = 2
 
         imagesContainer.layer.addSublayer(currLoadingLayer)
+        nextPageView.frame.size = nextPageView.intrinsicContentSize
+
+        toolbar.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            toolbarVisibleConstraint = make.bottom.equalTo(self).offset(-Globals.bestBottomMargin).constraint
+            toolbarHiddenConstraint = make.top.equalTo(self.snp.bottom).constraint
+        }
+        toolbarHiddenConstraint.deactivate()
+
+        toolbarBlackBar.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            make.top.equalTo(toolbar.snp.bottom)
+            make.height.equalTo(Globals.bestBottomMargin)
+        }
     }
 
     override func layoutSubviews() {
@@ -137,6 +195,17 @@ class LightboxScreen: Screen {
         nextImageView.layer.zPosition = 2
 
         currLoadingLayer.position = currImageView.frame.center
+        toolbarGradientLayer.frame = toolbar.bounds.fromBottom().grow(up: Size.toolbarGradientHeight)
+
+        nextPageView.center = CGPoint(x: nextImageView.frame.minX + nextPageViewWidth, y: nextImageView.frame.midY)
+
+        if !isLoadingMore {
+            let theta: CGFloat = clip(
+                map(-gestureDeltaX, fromInterval: (minX, maxX), toInterval: (minAngle, maxAngle)),
+                min: minAngle, max: maxAngle)
+            let transform = CGAffineTransform(rotationAngle: theta)
+            nextPageView.transform = transform
+        }
     }
 
     override func didMoveToWindow() {
@@ -154,7 +223,7 @@ class LightboxScreen: Screen {
         }
         else if gesture.state == .changed {
             imageScale = gesture.scale
-            updateImageTransform(animated: false)
+            updateImageTransform()
         }
         else if gesture.state == .ended {
             normalizeImageTransform()
@@ -174,7 +243,7 @@ class LightboxScreen: Screen {
             imageOffset = CGPoint(
                 x: tempOffset.x + translation.x,
                 y: tempOffset.y + translation.y)
-            updateImageTransform(animated: false)
+            updateImageTransform()
         }
         else if gesture.state == .ended {
             normalizeImageTransform()
@@ -188,21 +257,24 @@ class LightboxScreen: Screen {
         if gesture.state == .began {
             imageScale = 1
             imageOffset = .zero
-            updateImageTransform(animated: true)
+            updateImageTransform()
         }
         else if gesture.state == .ended {
             let velocity = gesture.velocity(in: self)
+
             let delta: Delta?
-            if translation.x < -20 && velocity.x < 0 && delegate?.imageURLsForScreen().next != nil {
+            let urls = delegate.imageURLsForScreen()
+            if translation.x < -20 && velocity.x < 0 && urls.next != nil {
                 delta = .next
             }
-            else if translation.x > 20 && velocity.x > 0 && delegate?.imageURLsForScreen().prev != nil {
+            else if translation.x > 20 && velocity.x > 0 && urls.prev != nil {
                 delta = .prev
             }
             else {
                 delta = nil
             }
 
+            let shouldLoadMore = -gestureDeltaX >= maxX && canLoadMore()
             let imageWidth = frame.width - Size.insets.left - Size.insets.right - 2 * Size.lilBits
             if let delta = delta {
                 switch delta {
@@ -223,8 +295,24 @@ class LightboxScreen: Screen {
                 }
             }
 
+            if let delta = delta {
+                let showHideToolbar = delegate.isDifferentPost(delta: delta.rawValue)
+                if showHideToolbar {
+                    toggleToolbar()
+                }
+                delegate.didMoveBy(delta: delta.rawValue)
+                updateImages(updateToolbar: !showHideToolbar)
+            }
+
             elloAnimate {
-                self.gestureDeltaX = 0
+                if shouldLoadMore {
+                    self.nextPageView.animateLogo()
+                    self.gestureDeltaX = -self.maxX
+                }
+                else {
+                    self.gestureDeltaX = 0
+                }
+
                 self.setNeedsLayout()
                 self.layoutIfNeeded()
                 self.scrollPanGesture.isEnabled = false
@@ -234,12 +322,11 @@ class LightboxScreen: Screen {
                 self.nextImageView.alpha = 0.5
             }
             .always {
-                self.scrollPanGesture.isEnabled = true
+                self.enableGestures()
             }
 
-            if let delta = delta {
-                delegate?.didMoveBy(delta: delta.rawValue)
-                updateImages()
+            if shouldLoadMore {
+                loadMoreImages()
             }
         }
         else {
@@ -248,11 +335,67 @@ class LightboxScreen: Screen {
         }
     }
 
-    private func updateImages() {
-        let urls = delegate?.imageURLsForScreen()
-        let newPrevURL = urls?.prev
-        let newCurrURL = urls?.current
-        let newNextURL = urls?.next
+    private func canLoadMore() -> Bool {
+        return nextURL == nil && delegate.canLoadMore()
+    }
+
+    private func loadMoreImages() {
+        delegate.loadMoreImages().always {
+            elloAnimate {
+                self.gestureDeltaX = 0
+                self.setNeedsLayout()
+                self.layoutIfNeeded()
+            }.always {
+                self.nextPageView.stopAnimatingLogo()
+                self.enableGestures()
+            }
+        }
+    }
+
+    private func enableGestures() {
+        imagePanGesture.isEnabled = isZoomed
+        zoomOutGesture.isEnabled = isZoomed
+
+        scrollPanGesture.isEnabled = !isZoomed && !isLoadingMore
+        loveGesture.isEnabled = !isZoomed && !isLoadingMore
+        dismissGesture.isEnabled = !isZoomed
+    }
+
+    private func showToolbar() {
+        elloAnimate {
+            self.toolbarVisibleConstraint.activate()
+            self.toolbarHiddenConstraint.deactivate()
+            self.toolbar.frame.origin.y = self.frame.height - self.toolbar.frame.height - Globals.bestBottomMargin
+            self.toolbarBlackBar.frame.origin.y = self.toolbar.frame.maxY
+        }
+    }
+
+    private func hideToolbar() {
+        elloAnimate {
+            self.toolbarVisibleConstraint.deactivate()
+            self.toolbarHiddenConstraint.activate()
+            self.toolbar.frame.origin.y = self.frame.height
+            self.toolbarBlackBar.frame.origin.y = self.toolbar.frame.maxY
+        }
+    }
+
+    private func toggleToolbar() {
+        elloAnimate {
+            self.hideToolbar()
+        }.always {
+            delay(0.3) {
+                self.delegate.configureToolbar(self.toolbar)
+                self.toolbar.layoutIfNeeded()
+                self.showToolbar()
+            }
+        }
+    }
+
+    func updateImages(updateToolbar: Bool) {
+        let urls = delegate.imageURLsForScreen()
+        let newPrevURL = urls.prev
+        let newCurrURL = urls.current
+        let newNextURL = urls.next
 
         if let imageSuperview = currImageView.superview {
             currImageView.removeFromSuperview()
@@ -288,6 +431,15 @@ class LightboxScreen: Screen {
         prevURL = newPrevURL
         currURL = newCurrURL
         nextURL = newNextURL
+
+        nextPageView.isHidden = true
+        if updateToolbar {
+            delegate.configureToolbar(toolbar)
+        }
+
+        if canLoadMore() {
+            nextPageView.isHidden = false
+        }
     }
 
     private func normalizeImageTransform() {
@@ -361,43 +513,86 @@ class LightboxScreen: Screen {
         }
 
         if adjusted {
-            updateImageTransform(animated: true)
+            updateImageTransform()
         }
     }
 
-    private func updateImageTransform(animated: Bool) {
+    private func updateImageTransform() {
         if imageScale > 1 {
-            imagePanGesture.isEnabled = true
-            scrollPanGesture.isEnabled = false
-            doubleTapGesture.isEnabled = true
-            singleTapGesture.isEnabled = false
+            hideToolbar()
         }
         else {
-            imagePanGesture.isEnabled = false
-            scrollPanGesture.isEnabled = true
-            doubleTapGesture.isEnabled = false
-            singleTapGesture.isEnabled = true
+            showToolbar()
         }
+        enableGestures()
 
         var transform = CATransform3DIdentity
         transform = CATransform3DScale(transform, imageScale, imageScale, 1.01)
         transform = CATransform3DTranslate(transform, imageOffset.x, imageOffset.y, 0)
 
-        elloAnimate(animated: animated) {
+        elloAnimate {
             self.currImageView.layer.transform = transform
         }
     }
+}
+
+extension LightboxScreen {
+    @objc
+    func loveAction(gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: self)
+        delegate.loveAction(animationLocation: location)
+    }
 
     @objc
-    func imageDoubleTapped() {
+    func zoomOutAction() {
         imageScale = 1
         imageOffset = .zero
-        updateImageTransform(animated: true)
+        updateImageTransform()
     }
 
     @objc
-    func dismiss() {
-        delegate?.dismiss()
+    func dismissAction() {
+        delegate.dismissAction()
+    }
+}
+
+extension LightboxScreen: PostToolbarDelegate {
+    @objc
+    func toolbarViewsButtonTapped(viewsControl control: ImageLabelControl) {
+        delegate.viewAction()
     }
 
+    @objc
+    func toolbarCommentsButtonTapped(commentsControl control: ImageLabelControl) {
+        delegate.commentsAction()
+    }
+
+    @objc
+    func toolbarLovesButtonTapped(lovesControl control: ImageLabelControl) {
+        delegate.loveAction()
+    }
+
+    @objc
+    func toolbarRepostButtonTapped(repostControl control: ImageLabelControl) {
+        delegate.repostAction()
+    }
+
+    @objc
+    func toolbarShareButtonTapped(shareControl control: UIView) {
+        delegate.shareAction(control: control)
+    }
+}
+
+extension LightboxScreen {
+    private static func generateGradientLayer() -> CAGradientLayer {
+        let layer = CAGradientLayer()
+        layer.locations = [0, 1]
+        layer.colors = [
+            UIColor(hex: 0x000000, alpha: 1).cgColor,
+            UIColor(hex: 0x000000, alpha: 0).cgColor,
+        ]
+        layer.startPoint = CGPoint(x: 0.5, y: 1)
+        layer.endPoint = CGPoint(x: 0.5, y: 0)
+        return layer
+    }
 }

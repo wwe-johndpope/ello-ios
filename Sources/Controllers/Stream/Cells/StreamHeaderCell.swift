@@ -58,17 +58,17 @@ class StreamHeaderCell: UICollectionViewCell {
 
     var chevronHidden = false
 
-    let flagItem = ElloPostToolBarOption.flag.barButtonItem()
+    let flagItem = ElloPostToolBarOption.flag.barButtonItem(isDark: false)
     var flagControl: ImageLabelControl {
         return self.flagItem.customView as! ImageLabelControl
     }
 
-    let editItem = ElloPostToolBarOption.edit.barButtonItem()
+    let editItem = ElloPostToolBarOption.edit.barButtonItem(isDark: false)
     var editControl: ImageLabelControl {
        return self.editItem.customView as! ImageLabelControl
     }
 
-    let deleteItem = ElloPostToolBarOption.delete.barButtonItem()
+    let deleteItem = ElloPostToolBarOption.delete.barButtonItem(isDark: false)
     var deleteControl: ImageLabelControl {
         return self.deleteItem.customView as! ImageLabelControl
     }
@@ -286,8 +286,8 @@ class StreamHeaderCell: UICollectionViewCell {
 
     @objc
     func postTapped(_ recognizer: UITapGestureRecognizer) {
-        let responder: PostbarResponder? = findResponder()
-        responder?.viewsButtonTapped(self)
+        let responder: PostbarController? = findResponder()
+        responder?.viewsButtonTapped(cell: self)
     }
 
     @IBAction func userTapped(_ sender: AvatarButton) {

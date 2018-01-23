@@ -16,8 +16,8 @@ class Keyboard {
         _ = shared
     }
 
-    var active = false
-    var external = false
+    var isActive = false
+    var isExternal = false
     var bottomInset: CGFloat = 0.0
     var endFrame: CGRect = .zero
     var curve = UIViewAnimationCurve.linear
@@ -66,6 +66,7 @@ class Keyboard {
         else {
             duration = 0
         }
+
         if let rawCurveValue = (notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber) {
             let rawCurve = rawCurveValue.intValue
             curve = UIViewAnimationCurve(rawValue: rawCurve) ?? .easeOut

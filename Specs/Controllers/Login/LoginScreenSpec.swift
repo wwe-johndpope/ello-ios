@@ -39,12 +39,12 @@ class LoginScreenSpec: QuickSpec {
 
             describe("snapshot, keyboard shown") {
                 beforeEach {
-                    Keyboard.shared.active = true
+                    Keyboard.shared.isActive = true
                     Keyboard.shared.bottomInset = 216
                     subject.keyboardWillChange(Keyboard.shared, animated: false)
                 }
                 afterEach {
-                    Keyboard.shared.active = false
+                    Keyboard.shared.isActive = false
                     Keyboard.shared.bottomInset = 0
                 }
                 it("should have a valid snapshot") {

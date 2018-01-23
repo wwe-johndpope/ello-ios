@@ -15,6 +15,7 @@ class HireViewControllerSpec: QuickSpec {
             return super.popViewController(animated: animated)
         }
     }
+
     class MockScreen: HireScreenProtocol {
         var keyboardVisible = false
         var successCalled = false

@@ -9,7 +9,7 @@ protocol ControllerThatMightHaveTheCurrentUser {
 
 class BaseElloViewController: UIViewController, HasAppController, ControllerThatMightHaveTheCurrentUser {
     override var prefersStatusBarHidden: Bool {
-        let visible = appViewController?.statusBarIsVisible ?? true
+        let visible = appViewController?.statusBarShouldBeVisible ?? true
         return !visible
     }
 

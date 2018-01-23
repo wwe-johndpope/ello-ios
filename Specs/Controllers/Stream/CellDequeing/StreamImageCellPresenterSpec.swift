@@ -8,12 +8,11 @@ import Nimble
 
 class StreamImageCellPresenterSpec: QuickSpec {
     override func spec() {
-
         beforeEach {
             StreamKind.following.setIsGridView(false)
         }
 
-        describe("configure") {
+        describe("StreamImageCellPresenter") {
 
             context("column number differences") {
                 let post: Post = stub([:])

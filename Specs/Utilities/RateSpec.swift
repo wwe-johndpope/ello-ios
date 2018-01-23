@@ -53,7 +53,6 @@ class RateSpec: QuickSpec {
                 expect(iRate.sharedInstance().previewMode) == false
             }
 
-
             it("has the correct labels") {
                 expect(iRate.sharedInstance().messageTitle) == "Love Ello?"
                 expect(iRate.sharedInstance().message) == ""

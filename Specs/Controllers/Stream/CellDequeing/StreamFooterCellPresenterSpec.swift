@@ -4,10 +4,10 @@ import Nimble
 
 class StreamFooterCellPresenterSpec: QuickSpec {
     override func spec() {
-        describe("configure") {
+        describe("StreamFooterCellPresenter") {
             var cell: StreamFooterCell!
             var item: StreamCellItem!
-            var toolBar: UIToolbar!
+            var toolbar: PostToolbar!
             var post: Post!
 
             beforeEach {
@@ -19,7 +19,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     "lovesCount": 14
                 ])
                 item = StreamCellItem(jsonable: post, type: .streamFooter)
-                toolBar = cell.specs().toolBar
+                toolbar = cell.specs().toolbar
             }
 
             context("single column view") {
@@ -29,12 +29,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.commentsControl.isSelected).to(beFalse())
+                    expect(cell.comments.isSelected).to(beFalse())
                     expect(cell.commentsOpened).to(beFalse())
-                    expect(cell.views) == "9"
-                    expect(cell.reposts) == "4"
-                    expect(cell.comments) == "6"
-                    expect(cell.loves) == "14"
+                    expect(cell.views.title) == "9"
+                    expect(cell.reposts.title) == "4"
+                    expect(cell.comments.title) == "6"
+                    expect(cell.loves.title) == "14"
                 }
             }
 
@@ -47,12 +47,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.commentsControl.isSelected).to(beFalse())
+                    expect(cell.comments.isSelected).to(beFalse())
                     expect(cell.commentsOpened).to(beFalse())
-                    expect(cell.views) == ""
-                    expect(cell.reposts) == ""
-                    expect(cell.comments) == "6"
-                    expect(cell.loves) == ""
+                    expect(cell.views.title) == ""
+                    expect(cell.reposts.title) == ""
+                    expect(cell.comments.title) == "6"
+                    expect(cell.loves.title) == ""
                 }
 
                 it("configures a wide stream footer cell") {
@@ -62,12 +62,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.commentsControl.isSelected).to(beFalse())
+                    expect(cell.comments.isSelected).to(beFalse())
                     expect(cell.commentsOpened).to(beFalse())
-                    expect(cell.views) == "9"
-                    expect(cell.reposts) == "4"
-                    expect(cell.comments) == "6"
-                    expect(cell.loves) == "14"
+                    expect(cell.views.title) == "9"
+                    expect(cell.reposts.title) == "4"
+                    expect(cell.comments.title) == "6"
+                    expect(cell.loves.title) == "14"
                 }
             }
 
@@ -76,11 +76,11 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 it("configures a stream footer cell") {
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .postDetail(postParam: post.id), indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.commentsControl.isSelected).to(beTrue())
-                    expect(cell.views) == "9"
-                    expect(cell.reposts) == "4"
-                    expect(cell.comments) == "6"
-                    expect(cell.loves) == "14"
+                    expect(cell.comments.isSelected).to(beTrue())
+                    expect(cell.views.title) == "9"
+                    expect(cell.reposts.title) == "4"
+                    expect(cell.comments.title) == "6"
+                    expect(cell.loves.title) == "14"
 
                     // details should have open comments
                     expect(cell.commentsOpened).to(beTrue())
@@ -92,7 +92,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 it("usually enabled and visible") {
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.commentsItem))
+                    expect(toolbar.postItems).to(contain(.comments))
                 }
 
                 it("shown if author allows it") {
@@ -104,7 +104,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.commentsItem))
+                    expect(toolbar.postItems).to(contain(.comments))
                 }
 
                 it("shown if author allows it in grid view") {
@@ -116,7 +116,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.commentsItem))
+                    expect(toolbar.postItems).to(contain(.comments))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -128,7 +128,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.commentsItem))
+                    expect(toolbar.postItems).toNot(contain(.comments))
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
@@ -140,7 +140,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.commentsItem))
+                    expect(toolbar.postItems).toNot(contain(.comments))
                 }
             }
 
@@ -159,7 +159,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.shareItem))
+                    expect(toolbar.postItems).to(contain(.share))
                 }
 
                 it("shown if author allows it") {
@@ -175,7 +175,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.shareItem))
+                    expect(toolbar.postItems).to(contain(.share))
                 }
 
                 it("never shown in grid view") {
@@ -192,7 +192,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).notTo(contain(cell.shareItem))
+                    expect(toolbar.postItems).notTo(contain(.share))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -208,7 +208,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.shareItem))
+                    expect(toolbar.postItems).toNot(contain(.share))
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
@@ -224,7 +224,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.shareItem))
+                    expect(toolbar.postItems).toNot(contain(.share))
                 }
             }
 
@@ -234,8 +234,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     let user: User = stub([:])
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: user)
 
-                    expect(cell.repostControl.isEnabled).to(beTrue())
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(cell.reposts.isEnabled).to(beTrue())
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("enabled if currentUser, post.author and post.repostAuthor are all nil") {
@@ -249,8 +249,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.repostControl.isEnabled).to(beTrue())
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(cell.reposts.isEnabled).to(beTrue())
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("shown if author allows it") {
@@ -266,7 +266,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("shown if author allows it, in grid view") {
@@ -282,7 +282,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("disabled if current user already reposted") {
@@ -300,8 +300,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: currentUser)
 
-                    expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(cell.reposts.isEnabled).to(beFalse())
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -317,7 +317,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.repostItem))
+                    expect(toolbar.postItems).toNot(contain(.repost))
                 }
 
                 it("hidden if author doesn't allow it, in grid view") {
@@ -333,7 +333,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.repostItem))
+                    expect(toolbar.postItems).toNot(contain(.repost))
                 }
 
                 it("disabled if author is current user") {
@@ -349,8 +349,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(cell.reposts.isEnabled).to(beFalse())
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("disabled if author is repost author") {
@@ -368,8 +368,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: repostAuthor)
 
-                    expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(cell.reposts.isEnabled).to(beFalse())
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("disabled if author is current user in grid view") {
@@ -385,8 +385,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.repostControl.isEnabled).to(beFalse())
-                    expect(toolBar.items).to(contain(cell.repostItem))
+                    expect(cell.reposts.isEnabled).to(beFalse())
+                    expect(toolbar.postItems).to(contain(.repost))
                 }
 
                 it("hidden if author is current user, and reposting isn't allowed") {
@@ -402,7 +402,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(toolBar.items).toNot(contain(cell.repostItem))
+                    expect(toolbar.postItems).toNot(contain(.repost))
                 }
 
                 it("hidden if author is current user, and reposting isn't allowed in grid view") {
@@ -418,7 +418,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(toolBar.items).toNot(contain(cell.repostItem))
+                    expect(toolbar.postItems).toNot(contain(.repost))
                 }
             }
 
@@ -427,8 +427,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                 it("usually enabled and visible") {
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(cell.lovesControl.isEnabled).to(beTrue())
-                    expect(toolBar.items).to(contain(cell.lovesItem))
+                    expect(cell.loves.isEnabled).to(beTrue())
+                    expect(toolbar.postItems).to(contain(.loves))
                 }
 
                 it("shown if author allows it") {
@@ -444,7 +444,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.lovesItem))
+                    expect(toolbar.postItems).to(contain(.loves))
                 }
 
                 it("shown if author allows it in grid view") {
@@ -460,7 +460,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).to(contain(cell.lovesItem))
+                    expect(toolbar.postItems).to(contain(.loves))
                 }
 
                 it("hidden if author doesn't allow it") {
@@ -476,7 +476,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.lovesItem))
+                    expect(toolbar.postItems).toNot(contain(.loves))
                 }
 
                 it("hidden if author doesn't allow it in grid view") {
@@ -492,7 +492,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
-                    expect(toolBar.items).toNot(contain(cell.lovesItem))
+                    expect(toolbar.postItems).toNot(contain(.loves))
                 }
 
                 it("enabled if author is current user") {
@@ -508,8 +508,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.lovesControl.isEnabled) == true
-                    expect(toolBar.items).to(contain(cell.lovesItem))
+                    expect(cell.loves.isEnabled) == true
+                    expect(toolbar.postItems).to(contain(.loves))
                 }
 
                 it("enabled if author is current user in grid view") {
@@ -525,8 +525,8 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(cell.lovesControl.isEnabled) == true
-                    expect(toolBar.items).to(contain(cell.lovesItem))
+                    expect(cell.loves.isEnabled) == true
+                    expect(toolbar.postItems).to(contain(.loves))
                 }
 
                 it("hidden if author is current user, and loving isn't allowed") {
@@ -542,7 +542,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(toolBar.items).toNot(contain(cell.lovesItem))
+                    expect(toolbar.postItems).toNot(contain(.loves))
                 }
 
                 it("hidden if author is current user, and loving isn't allowed in grid view") {
@@ -558,7 +558,7 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: author)
 
-                    expect(toolBar.items).toNot(contain(cell.lovesItem))
+                    expect(toolbar.postItems).toNot(contain(.loves))
                 }
             }
 
@@ -571,12 +571,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                     StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                     expect(cell.commentsOpened).to(beFalse())
-                    expect(cell.views) == "9"
-                    expect(cell.reposts) == "4"
-                    expect(cell.comments) == "6"
+                    expect(cell.views.title) == "9"
+                    expect(cell.reposts.title) == "4"
+                    expect(cell.comments.title) == "6"
 
                     // commentsButton should be selected when the state is loading
-                    expect(cell.commentsControl.isSelected).to(beTrue())
+                    expect(cell.comments.isSelected).to(beTrue())
                 }
             }
 
@@ -591,12 +591,12 @@ class StreamFooterCellPresenterSpec: QuickSpec {
                         StreamFooterCellPresenter.configure(cell, streamCellItem: item, streamKind: .following, indexPath: IndexPath(item: 0, section: 0), currentUser: nil)
 
                         expect(cell.commentsOpened).to(beTrue())
-                        expect(cell.views) == "9"
-                        expect(cell.reposts) == "4"
-                        expect(cell.comments) == "6"
+                        expect(cell.views.title) == "9"
+                        expect(cell.reposts.title) == "4"
+                        expect(cell.comments.title) == "6"
 
                         // commentsButton should be selected when expanded
-                        expect(cell.commentsControl.isSelected).to(beTrue())
+                        expect(cell.comments.isSelected).to(beTrue())
                     }
 
                 }
@@ -611,10 +611,10 @@ class StreamFooterCellPresenterSpec: QuickSpec {
 
                         expect(cell.commentsOpened).to(beFalse())
                         expect(item.state) == StreamCellState.collapsed
-                        expect(cell.views) == "9"
-                        expect(cell.reposts) == "4"
-                        expect(cell.comments) == "6"
-                        expect(cell.commentsControl.isSelected).to(beFalse())
+                        expect(cell.views.title) == "9"
+                        expect(cell.reposts.title) == "4"
+                        expect(cell.comments.title) == "6"
+                        expect(cell.comments.isSelected).to(beFalse())
                     }
                 }
             }

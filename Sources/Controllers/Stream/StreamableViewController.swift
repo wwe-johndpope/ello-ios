@@ -3,7 +3,7 @@
 //
 
 class StreamableViewController: BaseElloViewController {
-    @IBOutlet weak var viewContainer: UIView!
+    weak var viewContainer: UIView!
     private var showing = false
     let streamViewController = StreamViewController()
     let tapToShowTop = UIControl()
@@ -41,7 +41,6 @@ class StreamableViewController: BaseElloViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        AppDelegate.restrictRotation = true
         showing = true
     }
 
@@ -53,6 +52,11 @@ class StreamableViewController: BaseElloViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let streamView = viewForStream()
+        if streamView.superview != view && streamView != view {
+            view.addSubview(streamView)
+        }
+
         setupStreamController()
         scrollLogic = ElloScrollLogic(
             onShow: { [weak self] in self?.showNavBars() },
@@ -60,7 +64,7 @@ class StreamableViewController: BaseElloViewController {
         )
 
         for tapToShow in [tapToShowTop, tapToShowBottom] {
-            viewForStream().addSubview(tapToShow)
+            streamView.addSubview(tapToShow)
             tapToShow.isUserInteractionEnabled = false
             tapToShow.addTarget(self, action: #selector(tapToShowTapped), for: .touchUpInside)
         }
@@ -203,22 +207,29 @@ extension StreamableViewController: HasHamburgerButton {
 extension StreamableViewController: PostTappedResponder {
 
     func postTapped(_ post: Post) {
-        self.postTapped(postId: post.id, scrollToComment: nil)
+        postTapped(postId: post.id, scrollToComment: nil)
     }
 
-    func postTapped(_ post: Post, scrollToComment lastComment: ElloComment?) {
-        self.postTapped(postId: post.id, scrollToComment: lastComment)
+    func postTapped(_ post: Post, scrollToComment comment: ElloComment?) {
+        postTapped(postId: post.id, scrollToComment: comment)
     }
 
     func postTapped(postId: String) {
-        self.postTapped(postId: postId, scrollToComment: nil)
+        postTapped(postId: postId, scrollToComment: nil)
     }
 
-    private func postTapped(postId: String, scrollToComment lastComment: ElloComment?) {
+    func postTapped(_ post: Post, scrollToComments: Bool) {
+        let vc = postTapped(postId: post.id, scrollToComment: nil)
+        vc.scrollToComments = scrollToComments
+    }
+
+    @discardableResult
+    private func postTapped(postId: String, scrollToComment comment: ElloComment?) -> PostDetailViewController {
         let vc = PostDetailViewController(postParam: postId)
-        vc.scrollToComment = lastComment
+        vc.scrollToComment = comment
         vc.currentUser = currentUser
         navigationController?.pushViewController(vc, animated: true)
+        return vc
     }
 }
 

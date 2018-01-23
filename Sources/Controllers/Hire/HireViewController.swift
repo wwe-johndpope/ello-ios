@@ -67,7 +67,7 @@ class HireViewController: BaseElloViewController {
 
         keyboardWillShowObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillShow, block: self.keyboardWillShow)
         keyboardWillHideObserver = NotificationObserver(notification: Keyboard.Notifications.KeyboardWillHide, block: self.keyboardWillHide)
-        screen.toggleKeyboard(visible: Keyboard.shared.active)
+        screen.toggleKeyboard(visible: Keyboard.shared.isActive)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

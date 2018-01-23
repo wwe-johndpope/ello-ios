@@ -78,9 +78,12 @@ class EditorialPostCell: EditorialTitledCell {
 
     @objc
     override func doubleTapped(_ gesture: UIGestureRecognizer) {
-        guard let post = config.post else { return }
+        guard
+            let post = config.post,
+            let appViewController: AppViewController = findResponder()
+        else { return }
 
-        let location = gesture.location(in: nil)
+        let location = gesture.location(in: appViewController.view)
 
         let responder: StreamEditingResponder? = findResponder()
         responder?.cellDoubleTapped(cell: self, post: post, location: location)

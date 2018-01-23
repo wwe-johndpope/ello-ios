@@ -21,12 +21,12 @@ class HireScreenSpec: QuickSpec {
                 var subject: HireScreen!
                 beforeEach {
                     subject = HireScreen()
-                    Keyboard.shared.active = true
+                    Keyboard.shared.isActive = true
                     Keyboard.shared.bottomInset = 216
                     subject.toggleKeyboard(visible: true)
                 }
                 afterEach {
-                    Keyboard.shared.active = false
+                    Keyboard.shared.isActive = false
                     Keyboard.shared.bottomInset = 0
                 }
                 it("should have a valid snapshot") {
@@ -35,7 +35,7 @@ class HireScreenSpec: QuickSpec {
 
                 describe("submit button enabled") {
                     beforeEach {
-                        let textView: UITextView! = subview(of: subject, thatMatches: { $0 is UITextView })
+                        let textView: UITextView! = subview(of: subject)
                         textView.text = "has text"
                         subject.textViewDidChange(textView)
                     }
@@ -49,12 +49,12 @@ class HireScreenSpec: QuickSpec {
                 var submitButton: UIButton?
                 beforeEach {
                     subject = HireScreen()
-                    submitButton = subview(of: subject, thatMatches: { $0 is UIButton })
-                    let textView: UITextView! = subview(of: subject, thatMatches: { $0 is UITextView })
-                    textView.text = ""
-                    subject.textViewDidChange(textView)
+                    submitButton = subview(of: subject, thatMatches: { return $0.tag == HireScreen.Specs.successButtonTag })
                 }
                 it("submitButton is disabled") {
+                    let textView: UITextView! = subview(of: subject)
+                    textView.text = ""
+                    subject.textViewDidChange(textView)
                     expect(submitButton?.isEnabled) == false
                 }
             }
@@ -63,8 +63,8 @@ class HireScreenSpec: QuickSpec {
                 var submitButton: UIButton?
                 beforeEach {
                     subject = HireScreen()
-                    submitButton = subview(of: subject, thatMatches: { $0 is UIButton })
-                    let textView: UITextView! = subview(of: subject, thatMatches: { $0 is UITextView })
+                    submitButton = subview(of: subject)
+                    let textView: UITextView! = subview(of: subject)
                     textView.text = "hey there!"
                     subject.textViewDidChange(textView)
                 }

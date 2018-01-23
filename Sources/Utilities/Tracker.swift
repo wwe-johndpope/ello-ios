@@ -4,7 +4,6 @@
 
 import Analytics
 import Keys
-import Crashlytics
 
 
 enum ContentType: String {
@@ -48,7 +47,6 @@ class Tracker {
 
         settingChangedNotification = NotificationObserver(notification: SettingChangedNotification) { user in
             self.shouldTrackUser = user.profile?.allowsAnalytics ?? true
-            Crashlytics.sharedInstance().setUserIdentifier(self.shouldTrackUser ? user.id : "")
         }
     }
 }
@@ -64,7 +62,6 @@ extension Tracker {
         }
 
         shouldTrackUser = user.profile?.allowsAnalytics ?? true
-        Crashlytics.sharedInstance().setUserIdentifier(shouldTrackUser ? user.id : "")
 
         if let analyticsId = user.profile?.gaUniqueId {
             let authToken = AuthToken()

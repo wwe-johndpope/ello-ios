@@ -100,7 +100,8 @@ class StreamTextCell: StreamRegionableCell, UIWebViewDelegate, UIGestureRecogniz
     }
 
     @IBAction func doubleTapped(_ gesture: UIGestureRecognizer) {
-        let location = gesture.location(in: nil)
+        guard let appViewController: AppViewController = findResponder() else { return }
+        let location = gesture.location(in: appViewController.view)
 
         let responder: StreamEditingResponder? = findResponder()
         responder?.cellDoubleTapped(cell: self, location: location)

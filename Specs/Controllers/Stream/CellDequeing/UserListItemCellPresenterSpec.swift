@@ -9,9 +9,7 @@ import Nimble
 class UserListItemCellPresenterSpec: QuickSpec {
 
     override func spec() {
-
-        describe("configure") {
-
+        describe("UserListItemCellPresenter") {
             it("sets the relationship priority and username") {
                 let cell: UserListItemCell = UserListItemCell.loadFromNib()
                 let user: User = stub([
@@ -25,8 +23,6 @@ class UserListItemCellPresenterSpec: QuickSpec {
                 expect(cell.relationshipControl.relationshipPriority) == RelationshipPriority.following
                 expect(cell.usernameLabel.text) == "@sterling_archer"
             }
-
         }
-
     }
 }

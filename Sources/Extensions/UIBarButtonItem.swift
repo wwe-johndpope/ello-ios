@@ -5,7 +5,7 @@
 extension UIBarButtonItem {
 
     class func closeButton(target: Any, action: Selector) -> UIBarButtonItem {
-        let closeItem = UIBarButtonItem(image: InterfaceImage.x.normalImage, style: UIBarButtonItemStyle.plain, target: target, action: action)
+        let closeItem = UIBarButtonItem(image: InterfaceImage.x.normalImage, style: .plain, target: target, action: action)
         return closeItem
     }
 

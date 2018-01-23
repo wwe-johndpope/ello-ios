@@ -9,9 +9,7 @@ import Nimble
 
 class ProfileTotalCountSizeCalculatorSpec: QuickSpec {
     override func spec() {
-
         describe("ProfileTotalCountSizeCalculator") {
-
             it("returns 0 if totalViewsCount is nil") {
                 let user: User = stub([:])
                 let calc = ProfileTotalCountSizeCalculator()

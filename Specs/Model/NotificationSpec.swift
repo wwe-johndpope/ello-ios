@@ -128,63 +128,6 @@ class NotificationSpec: QuickSpec {
                 expect(notification.textRegion?.content) == "<p>summary1!</p><br/><p>summary2!</p><br/><p>comment summary1!</p><br/><p>comment summary2!</p>"
                 expect(notification.imageRegion?.alt) == commentRegion1.alt
             }
-
-            context("NSCoding") {
-
-                var filePath = ""
-                if let url = URL(string: FileManager.ElloDocumentsDir()) {
-                    filePath = url.appendingPathComponent("NotificationSpec").absoluteString
-                }
-
-                afterEach {
-                    do {
-                        try FileManager.default.removeItem(atPath: filePath)
-                    }
-                    catch {
-
-                    }
-                }
-
-                context("encoding") {
-
-                    it("encodes successfully") {
-                        let notification: Ello.Notification = stub([:])
-
-                        let wasSuccessfulArchived = NSKeyedArchiver.archiveRootObject(notification, toFile: filePath)
-
-                        expect(wasSuccessfulArchived).to(beTrue())
-                    }
-                }
-
-                context("decoding") {
-
-                    it("decodes successfully") {
-                        let expectedCreatedAt = Globals.now
-
-                        let author: User = stub(["id": "author-id"])
-
-                        let activity: Activity = stub([
-                            "subject": author,
-                            "createdAt": expectedCreatedAt,
-                            "id": "test-notication-id",
-                            "kind": "new_follower_post",
-                            "subjectType": "Post"
-                            ])
-                        let notification: Ello.Notification = stub(["activity": activity])
-
-                        NSKeyedArchiver.archiveRootObject(notification, toFile: filePath)
-                        let unArchivedNotification = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? Ello.Notification
-
-                        expect(unArchivedNotification).toNot(beNil())
-                        expect(unArchivedNotification?.version) == 1
-                        expect(unArchivedNotification?.author?.id) == "author-id"
-                        expect(unArchivedNotification?.createdAt) == expectedCreatedAt
-                        expect(unArchivedNotification?.activity.id) == "test-notication-id"
-                        expect(unArchivedNotification?.activity.kind) == Activity.Kind.newFollowerPost
-                        expect(unArchivedNotification?.activity.subjectType.rawValue) == Activity.SubjectType.post.rawValue
-                    }
-                }
-            }
         }
     }
 }

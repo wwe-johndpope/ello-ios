@@ -17,7 +17,7 @@ class ElloScrollLogicSpec: QuickSpec {
     }
 
     override func spec() {
-        describe("scrolling behavior") {
+        describe("ElloScrollLogic") {
             var logic: ElloScrollLogic!
             let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
             let scrollHeight = scrollView.frame.size.height * CGFloat(2)

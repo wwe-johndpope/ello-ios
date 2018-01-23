@@ -21,7 +21,6 @@ class MockSearchScreenDelegate: NSObject, SearchScreenDelegate {
 
 class SearchScreenSpec: QuickSpec {
     override func spec() {
-
         describe("SearchScreen") {
             var subject: SearchScreen!
 

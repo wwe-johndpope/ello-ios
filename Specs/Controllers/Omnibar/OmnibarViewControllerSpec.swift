@@ -62,35 +62,6 @@ class OmnibarViewControllerSpec: QuickSpec {
         var screen: OmnibarMockScreen!
 
         describe("OmnibarViewController") {
-
-            context("initialization") {
-
-                beforeEach {
-                    subject = OmnibarViewController()
-                }
-
-                it("can be instantiated") {
-                    subject = OmnibarViewController()
-                    expect(subject).notTo(beNil())
-                }
-
-                it("can be instantiated with a post") {
-                    let post = Post.stub([
-                        "author": User.stub(["username": "colinta"])
-                        ])
-                    subject = OmnibarViewController(parentPostId: post.id)
-                    expect(subject).notTo(beNil())
-                }
-
-                it("is a BaseElloViewController") {
-                    expect(subject).to(beAKindOf(BaseElloViewController.self))
-                }
-
-                it("is a OmnibarViewController") {
-                    expect(subject).to(beAKindOf(OmnibarViewController.self))
-                }
-            }
-
             context("determining screen isComment") {
                 it("should be false for a new post") {
                     subject = OmnibarViewController()

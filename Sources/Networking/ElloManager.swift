@@ -8,19 +8,24 @@ import ElloCerts
 
 struct ElloManager {
     static var serverTrustPolicies: [String: ServerTrustPolicy] {
-        #if DEBUG
-            return [String: ServerTrustPolicy]()
-        #else
-            let policyDict: [String: ServerTrustPolicy]
-            if Globals.isSimulator {
-                // make Charles plays nice in the sim by not setting a policy
-                policyDict = [:]
-            }
-            else {
-                policyDict = ElloCerts.policy
-            }
-            return policyDict
-        #endif
+        let policyDict: [String: ServerTrustPolicy]
+        if Globals.isSimulator {
+            // make Charles plays nice in the sim by not setting a policy
+            policyDict = [:]
+        }
+        else if Globals.isTesting {
+            // allow testing of policy certs
+            policyDict = ElloCerts.policy
+        }
+        else {
+#if DEBUG
+            // avoid policy certs on any debug build
+            policyDict = [:]
+#else
+            policyDict = ElloCerts.policy
+#endif
+        }
+        return policyDict
     }
 
     static var manager: SessionManager {

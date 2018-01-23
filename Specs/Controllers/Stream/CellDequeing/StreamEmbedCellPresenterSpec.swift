@@ -5,7 +5,7 @@ import Nimble
 
 class StreamEmbedCellPresenterSpec: QuickSpec {
     override func spec() {
-        describe("configure") {
+        describe("StreamEmbedCellPresenter") {
             context("is a repost") {
                 it("configures a stream footer cell") {
                     let post: Post = stub([

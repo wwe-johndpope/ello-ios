@@ -9,16 +9,16 @@ import Nimble
 class StreamInviteFriendsCellSpec: QuickSpec {
 
     override func spec() {
-        let subject: StreamInviteFriendsCell = StreamInviteFriendsCell.loadFromNib()
+        var subject: StreamInviteFriendsCell!
 
-        describe("initialization") {
+        beforeEach {
+            subject = StreamInviteFriendsCell.loadFromNib()
+        }
 
-            describe("nib") {
-
-                it("IBOutlets are not nil") {
-                    expect(subject.inviteButton).notTo(beNil())
-                    expect(subject.nameLabel).notTo(beNil())
-                }
+        describe("StreamInviteFriendsCell") {
+            it("IBOutlets are not nil") {
+                expect(subject.inviteButton).notTo(beNil())
+                expect(subject.nameLabel).notTo(beNil())
             }
         }
     }

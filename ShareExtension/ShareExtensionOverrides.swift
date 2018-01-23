@@ -11,7 +11,7 @@ extension Keyboard {
 
     @objc
     func willShow(_ notification : Foundation.Notification) {
-        active = true
+        isActive = true
         setFromNotification(notification)
         endFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         postNotification(Notifications.KeyboardWillShow, value: self)
@@ -19,6 +19,7 @@ extension Keyboard {
 
     @objc
     func willHide(_ notification : Foundation.Notification) {
+        isActive = false
         setFromNotification(notification)
         postNotification(Notifications.KeyboardWillHide, value: self)
     }

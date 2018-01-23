@@ -8,7 +8,7 @@ import Nimble
 
 class DynamicSettingCellPresenterSpec: QuickSpec {
     override func spec() {
-        describe("configure") {
+        describe("DynamicSettingCellPresenter") {
             context("toggle setting") {
                 it("configures the cell from the setting") {
                     let setting = DynamicSetting(label: "Test", key: "has_sharing_enabled", info: "info")

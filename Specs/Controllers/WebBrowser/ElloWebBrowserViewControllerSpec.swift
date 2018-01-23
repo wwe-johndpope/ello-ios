@@ -9,7 +9,7 @@ import Nimble
 
 class ElloWebBrowserViewControllerSpec: QuickSpec {
     override func spec() {
-        describe("instantiating an ElloWebBrowserViewControllerSpec") {
+        describe("ElloWebBrowserViewController") {
             it("is easy to create a navigation controller w/ browser") {
                 let nav = ElloWebBrowserViewController.navigationControllerWithWebBrowser()
                 expect(nav.rootWebBrowser()).to(beAKindOf(ElloWebBrowserViewController.self))
