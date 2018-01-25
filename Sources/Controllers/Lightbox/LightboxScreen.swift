@@ -67,7 +67,6 @@ class LightboxScreen: Screen {
     private var minAngle: CGFloat!
     private var maxAngle: CGFloat!
 
-
     override func style() {
         toolbar.style = .dark
         toolbar.postToolsDelegate = self
@@ -87,8 +86,8 @@ class LightboxScreen: Screen {
         nextPageViewWidth = nextPageView.intrinsicContentSize.width
         minX = nextPageViewWidth * 3/4
         maxX = minX + nextPageViewWidth
-        minAngle = 0
-        maxAngle = CGFloat.pi
+        minAngle = .pi
+        maxAngle = 2 * .pi
     }
 
     override func bindActions() {
