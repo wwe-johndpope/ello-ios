@@ -4,26 +4,16 @@
 
 extension ElloProvider {
 
-    static func unCastableJSONAble(_ failure: ElloFailureCompletion) {
-        let elloError = NSError.uncastableJSONAble()
-        failure(elloError, 200)
-    }
-
-    static func generateElloError(_ data: Data?, statusCode: Int?) -> NSError {
+    static func generateElloError(_ data: Data, statusCode: Int?) -> NSError {
         var elloNetworkError: ElloNetworkError?
-
-        if let data = data {
-            let (mappedJSON, _): (Any?, NSError?) = Mapper.mapJSON(data)
-            let dictJSON = mappedJSON as? [String: Any]
-
-            if dictJSON != nil {
-                if let node = dictJSON?[MappingType.errorsType.rawValue] as? [String: Any] {
-                    elloNetworkError = Mapper.mapToObject(node, type: MappingType.errorType) as? ElloNetworkError
-                }
-            }
+        if let dictJSONDecoded = try? JSONSerialization.jsonObject(with: data),
+            let dictJSON = dictJSONDecoded as? [String: Any],
+            let node = dictJSON[MappingType.errorsType.rawValue] as? [String: Any]
+        {
+            elloNetworkError = Mapper.mapToObject(node, type: .errorType) as? ElloNetworkError
         }
-        else if statusCode == 401 {
-            elloNetworkError = ElloNetworkError(attrs: nil, code: .unauthenticated, detail: nil, messages: nil, status: "401", title: "unauthenticated")
+        else if let string = String(data: data, encoding: .utf8) {
+            print("error: \(string)")
         }
 
         let errorCodeType = (statusCode == nil) ? ElloErrorCode.data : ElloErrorCode.statusCode
@@ -32,14 +22,9 @@ extension ElloProvider {
         return elloError
     }
 
-    static func failedToSendRequest(_ failure: ElloFailureCompletion) {
-        let elloError = NSError.networkError("Failed to send request", code: ElloErrorCode.networkFailure)
-        failure(elloError, nil)
-    }
-
-    static func failedToMapObjects(_ failure: ElloFailureCompletion) {
+    static func failedToMapObjects(_ reject: ErrorBlock) {
         let jsonMappingError = ElloNetworkError(attrs: nil, code: ElloNetworkError.CodeType.unknown, detail: "Failed to map objects", messages: nil, status: nil, title: "Failed to map objects")
         let elloError = NSError.networkError(jsonMappingError, code: ElloErrorCode.jsonMapping)
-        failure(elloError, nil)
+        reject(elloError)
     }
 }

@@ -44,7 +44,6 @@ extension User: Stubbable {
 
         let user =  User(
             id: (values["id"] as? String) ?? generateID(),
-            href: (values["href"] as? String) ?? "href",
             username: (values["username"] as? String) ?? "username",
             name: (values["name"] as? String) ?? "name",
             experimentalFeatures: (values["experimentalFeatures"] as? Bool) ?? false,
@@ -93,7 +92,6 @@ extension User: Stubbable {
             user.externalLinksList = [ExternalLink(url: URL(string: "http://ello.co")!, text: "ello.co")]
         }
         user.coverImage = values["coverImage"] as? Asset
-        user.backgroundPosition = (values["backgroundPosition"] as? String)
         user.onboardingVersion = (values["onboardingVersion"] as? Int)
         // links / nested resources
         if let posts = values["posts"] as? [Post] {
@@ -279,7 +277,6 @@ extension Post: Stubbable {
             id: (values["id"] as? String) ?? generateID(),
             createdAt: (values["createdAt"] as? Date) ?? Globals.now,
             authorId: author.id,
-            href: (values["href"] as? String) ?? "sample-href",
             token: (values["token"] as? String) ?? "sample-token",
             isAdultContent: (values["isAdultContent"] as? Bool) ?? false,
             contentWarning: (values["contentWarning"] as? String) ?? "",
@@ -309,11 +306,7 @@ extension Post: Stubbable {
         post.body = (values["body"] as? [Regionable]) ?? [stubbedTextRegion]
         post.content = (values["content"] as? [Regionable]) ?? [stubbedTextRegion]
         post.repostContent = (values["repostContent"] as? [Regionable])
-        post.repostId = (values["repostId"] as? String)
         post.artistInviteId = (values["artistInviteId"] as? String)
-        post.repostPath = (values["repostPath"] as? String)
-        post.repostViaId = (values["repostViaId"] as? String)
-        post.repostViaPath = (values["repostViaPath"] as? String)
         post.viewsCount = values["viewsCount"] as? Int
         post.commentsCount = values["commentsCount"] as? Int
         post.repostsCount = values["repostsCount"] as? Int
@@ -394,8 +387,7 @@ extension TextRegion: Stubbable {
 
 extension ImageRegion: Stubbable {
     class func stub(_ values: [String: Any]) -> ImageRegion {
-        let imageRegion = ImageRegion(alt: (values["alt"] as? String) ?? "imageRegion")
-        imageRegion.url = urlFromValue(values["url"])
+        let imageRegion = ImageRegion(url: urlFromValue(values["url"]))
         imageRegion.buyButtonURL = urlFromValue(values["buyButtonURL"])
         if let asset = values["asset"] as? Asset {
             imageRegion.addLinkObject("assets", key: asset.id, type: .assetsType)

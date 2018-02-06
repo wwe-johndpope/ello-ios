@@ -12,10 +12,9 @@ class ImageRegionSpec: QuickSpec {
 
             it("parses image region correctly") {
                 let imageRegionData = stubbedJSONData("image-region", "region")
-                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
+                let region = ImageRegion.fromJSON(imageRegionData)
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
-                expect(region.alt) == "region-alt.jpeg"
 
                 let asset = region.asset!
                 expect(asset.id) == "85"
@@ -47,19 +46,17 @@ class ImageRegionSpec: QuickSpec {
                 data["url"] = urlString.replacingOccurrences(of: "https://", with: "//")
                 expect(data["url"]) == "//example.com/test.jpg"
                 imageRegionData["data"] = data
-                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
+                let region = ImageRegion.fromJSON(imageRegionData)
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
-                expect(region.alt) == "region-alt.jpeg"
             }
 
             it("parses buy-button region correctly") {
                 let imageRegionData = stubbedJSONData("buy-button-image-region", "region")
-                let region = ImageRegion.fromJSON(imageRegionData) as! ImageRegion
+                let region = ImageRegion.fromJSON(imageRegionData)
 
                 expect(region.url!.absoluteString) == "https://example.com/test.jpg"
                 expect(region.buyButtonURL!.absoluteString) == "https://amazon.com"
-                expect(region.alt) == "region-alt.jpeg"
 
                 let asset = region.asset!
                 expect(asset.id) == "85"

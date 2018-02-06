@@ -2,7 +2,6 @@
 ///  JSONAble.swift
 //
 
-let JSONAbleVersion = 1
 
 protocol JSONSaveable {
     var uniqueId: String? { get }
@@ -29,10 +28,6 @@ class JSONAble: NSObject, NSCoding {
         let coder = Coder(encoder)
         coder.encodeObject(links, forKey: "links")
         coder.encodeObject(version, forKey: "version")
-    }
-
-    class func fromJSON(_ data: [String: Any]) -> JSONAble {
-        return JSONAble(version: JSONAbleVersion)
     }
 
     func merge(_ other: JSONAble) -> JSONAble {
@@ -75,10 +70,12 @@ extension JSONAble {
                 linksMap?["ids"] as? [String]
         else { return [] }
 
+        let collection = (linksMap?["type"] as? String) ?? identifier
+
         var arr = [JSONAble]()
         ElloLinkedStore.shared.readConnection.read { transaction in
             for key in ids {
-                if let jsonable = transaction.object(forKey: key, inCollection: identifier) as? JSONAble {
+                if let jsonable = transaction.object(forKey: key, inCollection: collection) as? JSONAble {
                     arr.append(jsonable)
                 }
             }
